@@ -94,4 +94,3 @@ The app template is based on [HTML5](http://whatwg.org/html), [TypeScript](http:
 - [Unit tests](docs/coding-guides/unit-tests.md)
 - [End-to-end tests](docs/coding-guides/e2e-tests.md)
 
-
