@@ -68,21 +68,22 @@ The app template is based on [HTML5](http://whatwg.org/html), [TypeScript](http:
 
  1. Create a module using 
  `ng generate module [name]`
+ 
  2. Go to *app.module.ts* 
  -  import the module
 	
-
-     import { module_name } from './module'
-
+	`
+     import { module_name } from './module_path' `
+     
 -  declare the module in 
 	 
 
-```
-    @NgModule({
-    imports: [ module_name ]})
- ```
+    `
+    @NgModule({  imports: [ module_name ]})
+  `
+  
+3. Go to module folder 
 
-3. Setup routing in newly created module
 
 
 #### Coding guides
