@@ -24,7 +24,6 @@
             "polyfills": "src/polyfills.ts",
             "assets": [
               "src/favicon.ico",
-              "src/apple-touch-icon.png",
               "src/robots.txt",
               "src/manifest.json",
               "src/assets"
@@ -85,7 +84,6 @@
             ],
             "assets": [
               "src/favicon.ico",
-              "src/apple-touch-icon.png",
               "src/robots.txt",
               "src/manifest.json",
               "src/assets"
