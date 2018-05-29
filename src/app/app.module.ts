@@ -11,7 +11,7 @@ import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
 import { HomeModule } from './home/home.module';
 import { AboutModule } from './about/about.module';
-import { ClientsModule} from './clients/clients.module'
+import { ClientsModule} from './clients/clients.module';
 import { LoginModule } from './login/login.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -32,7 +32,7 @@ import { AppRoutingModule } from './app-routing.module';
     LoginModule,
     AppRoutingModule
   ],
-  declarations: [AppComponent,],
+  declarations: [AppComponent],
   providers: [
   ],
   bootstrap: [AppComponent]

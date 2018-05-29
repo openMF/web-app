@@ -23,7 +23,7 @@ import { CacheInterceptor } from './http/cache.interceptor';
     HttpClientModule,
     TranslateModule,
     NgbModule,
-    RouterModule  
+    RouterModule
   ],
 
   declarations: [
@@ -31,8 +31,8 @@ import { CacheInterceptor } from './http/cache.interceptor';
     ShellComponent
   ],
   exports: [
-    HeaderComponent],
-    
+    HeaderComponent
+  ],
   providers: [
     AuthenticationService,
     AuthenticationGuard,
