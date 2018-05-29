@@ -15,10 +15,10 @@ before_install:
 
 before_script:
   - npm install -g --silent @angular/cli
+  - npm install
 
 script:
   - ng lint
-  - ng e2e
   - ng build --prod
 
 after_success:
