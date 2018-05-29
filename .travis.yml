@@ -18,7 +18,6 @@ before_script:
 
 script:
   - ng lint
-  - ng test
   - ng e2e
   - ng build --prod
 
