@@ -20,6 +20,9 @@
 @import "~bootstrap/scss/bootstrap";
 @import "styles/bootstrap-material/_bootswatch.scss";
 
+// 3rd party libraries
+
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fontawesome.scss";
 
 //other scss imports
 @import "styles/_loader.scss"
