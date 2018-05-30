@@ -2,7 +2,11 @@
 
 Revamped codebase of community-app
 
-# Getting started
+The app template is based on [HTML5](http://whatwg.org/html), [TypeScript](http://www.typescriptlang.org) and
+[Sass](http://sass-lang.com). 
+
+
+## Getting started
 
 1. Go to project folder and install dependencies:
  ```bash
@@ -14,7 +18,7 @@ Revamped codebase of community-app
  npm start
  ```
 
-# Main tasks
+## Main tasks
 
 Task automation is based on [NPM scripts](https://docs.npmjs.com/misc/scripts).
 
@@ -53,39 +57,19 @@ you can also use the command `ng generate` directly.
 Tasks are mostly based on the `angular-cli` tool. Use `ng help` to get more help or go check out the
 [Angular-CLI README](https://github.com/angular/angular-cli).
 
-# What's in the box
 
-The app template is based on [HTML5](http://whatwg.org/html), [TypeScript](http://www.typescriptlang.org) and
-[Sass](http://sass-lang.com). 
+# How to contribute 
 
-#### Design guides
+## Design guides
 
 - [Bootstrap Material](https://bootswatch.com/materia/)
 - [Angular Material](https://material.angular.io/components/categories)
 
+## Creating new modules/components
 
-#### Steps to add component
+- [Setup modules](https://github.com/openMF/web-app/wiki/Create-a-new-module-component)
 
- 1. Create a module using 
- `ng generate module [name]`
- 
- 2. Go to *app.module.ts* 
- -  import the module
-	
-	`
-     import { module_name } from './module_path' `
-     
--  declare the module in 
-	 
-
-    `
-    @NgModule({  imports: [ module_name ]})
-  `
-  
-3. Setup routing in newly created module.
-
-
-#### Coding guides
+## Coding guides
 
 - [Angular](docs/coding-guides/angular.md)
 - [TypeScript](docs/coding-guides/typescript.md)
