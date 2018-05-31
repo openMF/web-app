@@ -2,6 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ClientsComponent } from './clients.component';
+import { CreateClientComponent} from './create-client/create-client.component';
 import { ClientsRoutingModule } from './clients-routing.module';
 import { CoreModule } from '../core/core.module';
 
@@ -13,7 +14,8 @@ import { CoreModule } from '../core/core.module';
 
   ],
   declarations: [
-  ClientsComponent
+  ClientsComponent,
+  CreateClientComponent
  ],
  schemas: [
   CUSTOM_ELEMENTS_SCHEMA
