@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AlertModule } from 'ngx-bootstrap';
 
 import { environment } from '@env/environment';
 import { CoreModule } from '@app/core';
@@ -12,6 +13,7 @@ import { SharedModule } from '@app/shared';
 import { HomeModule } from './home/home.module';
 import { AboutModule } from './about/about.module';
 import { ClientsModule} from './clients/clients.module';
+import { AccountingModule } from './accounting/accounting.module';
 import { LoginModule } from './login/login.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -24,11 +26,13 @@ import { AppRoutingModule } from './app-routing.module';
     HttpClientModule,
     TranslateModule.forRoot(),
     NgbModule.forRoot(),
+    AlertModule.forRoot(),
     CoreModule,
     SharedModule,
     HomeModule,
     AboutModule,
     ClientsModule,
+    AccountingModule,
     LoginModule,
     AppRoutingModule
   ],
