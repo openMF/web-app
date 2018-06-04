@@ -57,9 +57,15 @@
       <li class="nav-item">
         <a class="nav-link" href="#"><h5 class="font-weight-normal">Groups</h5></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#"><h5 class="font-weight-normal">Loans</h5></a>
-      </li>
+      <div ngbDropdown class="d-inline-block">
+          <a class="nav-link" id="dropdownBasic2" ngbDropdownToggle>Toggle dropup</a>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic2">                                                                                  
+            <button class="dropdown-item">Action - 1</button>
+            <button class="dropdown-item">Another Action</button>
+            <button class="dropdown-item">Something else is here</button>
+          </div>
+        </div>
+      
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" placeholder="Search" type="text">
