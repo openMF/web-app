@@ -127,4 +127,9 @@ git branch -D branch-name
 git pull upstream develop
 ```
 
+
+## Skipping a Travis CI Build
+If running a build is not required for a particular commit (in some cases like an update to README.md), add [ci skip] or [skip ci] to the git commit message. Commits that have [ci skip] or [skip ci] anywhere in the commit messages are ignored by Travis CI.
+
+
 That's it! Thank you for your contribution!
