@@ -1,7 +1,8 @@
 <app-header> </app-header>
 <div class="container">
- <aw-wizard class="mt-5">
-  <aw-wizard-step stepTitle="Title of step 1">
+
+ <aw-wizard class="mt-5" #wizard [navBarLayout]="'large-empty-symbols'">
+  <aw-wizard-step stepTitle="Title of step 1" [navigationSymbol]="{ symbol: '1' }">
   
           <div class="col-sm-6 mx-auto">
               <div class="card mt-5">
@@ -69,7 +70,7 @@
 
     
   </aw-wizard-step>
-  <aw-wizard-step stepTitle="Title of step 2" awOptionalStep>
+  <aw-wizard-step stepTitle="Title of step 2" [navigationSymbol]="{ symbol: '2' }" awOptionalStep>
       <div class="col-sm-6 mx-auto">
           <div class="card mt-5">
         <!--     <div class="card-header"><legend> Loan</legend></div>
@@ -168,10 +169,10 @@
           </div>
 
   </aw-wizard-step>
-  <aw-wizard-step stepTitle="Title of step 3">
+  <aw-wizard-step stepTitle="Title of step 3" [navigationSymbol]="{ symbol: '3' }">
     Content of Step 3
-    <button type="button" class="btn btn-primary" awPreviousStep>Previous Step</button>
-    <button type="button" class="btn btn-primary" (click)="finishFunction()">Finish</button>
+    <button type="button" class="btn btn-primary"  awPreviousStep>Previous Step</button>
+    <button type="button" class="btn btn-primary" >Finish</button>
   </aw-wizard-step>
 </aw-wizard>
 </div>
