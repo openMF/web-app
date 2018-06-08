@@ -69,13 +69,3 @@ Tasks are mostly based on the `angular-cli` tool. Use `ng help` to get more help
 ## Creating new modules/components
 
 - [Setup modules](https://github.com/openMF/web-app/wiki/Create-a-new-module-component)
-
-## Coding guides
-
-- [Angular](docs/coding-guides/angular.md)
-- [TypeScript](docs/coding-guides/typescript.md)
-- [Sass](docs/coding-guides/sass.md)
-- [HTML](docs/coding-guides/html.md)
-- [Unit tests](docs/coding-guides/unit-tests.md)
-- [End-to-end tests](docs/coding-guides/e2e-tests.md)
-
