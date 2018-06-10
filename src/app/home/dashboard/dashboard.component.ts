@@ -7,7 +7,7 @@ import { single } from './data';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit{
+export class DashboardComponent implements OnInit {
   single: any[];
   multi: any[];
 
@@ -27,10 +27,11 @@ export class DashboardComponent implements OnInit{
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
   constructor() {
-    Object.assign(this, { single })
+    Object.assign(this, { single });
   }
- ngOnInit(){
+  ngOnInit() {
 
- }
+  }
 
 }
+
