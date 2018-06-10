@@ -32,6 +32,7 @@
     "@fortawesome/fontawesome-free-webfonts": "^1.0.9",
     "@ng-bootstrap/ng-bootstrap": "^2.0.0",
     "@ngx-translate/core": "^10.0.1",
+    "@swimlane/ngx-charts": "^8.0.2",
     "angular-archwizard": "^3.0.0",
     "bootstrap": "^4.1.1",
     "core-js": "^2.5.6",
