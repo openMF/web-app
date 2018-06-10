@@ -6,6 +6,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AlertModule } from 'ngx-bootstrap';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { environment } from '@env/environment';
 import { CoreModule } from '@app/core';
@@ -28,6 +29,7 @@ import { NavigationModule } from './navigation/navigation.module';
     TranslateModule.forRoot(),
     NgbModule.forRoot(),
     AlertModule.forRoot(),
+    NgxChartsModule,
     CoreModule,
     SharedModule,
     HomeModule,
