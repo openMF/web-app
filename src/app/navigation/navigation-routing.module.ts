@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { Route, extract } from '@app/core';
 import { NavigationComponent } from './navigation.component';
 
 const routes: Routes = [
-  { path: 'navigation', component: NavigationComponent},
+  Route.withShell([
+    { path: 'navigation', component: NavigationComponent}
+  ])
 ];
 
 @NgModule({
