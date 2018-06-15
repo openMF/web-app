@@ -1,0 +1,182 @@
+<div class="fluid-container">
+ <div class="container">
+  <div class="card mt-5">
+    <div class="card-header">
+        <h3 class="font-weight-bold">Users</h3>
+        <div class="row">
+          <div class="col-sm-10">
+            <div class="row">
+              <div class="col-sm-6" [ngbCollapse]="!isCollapsed">
+                <input class="form-control mr-sm-2" placeholder="Search" type="text">
+              </div>
+              <div class="col-sm-2">
+                <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed" [ngbCollapse]="!isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"><i class="fas fa-chevron-down mr-2"></i>
+                  Parameters
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="float-right">
+              <button type="button" class="btn btn-primary btn-large" routerLink="/self-service/users/create" routerLinkActive="active"><i class="fas fa-plus mr-2"></i>Create User</button>
+            </div>
+          </div>
+        </div>
+          <div id="collapseExample" [ngbCollapse]="isCollapsed">
+            <div class="row">
+              <div class="col-sm-4">
+                  <input class="form-control mr-sm-2 mb-sm-2" placeholder="Name" type="text">
+              </div>
+              <div class="col-sm-4">
+                  <input class="form-control mr-sm-2 mb-sm-2" placeholder="User ID" type="text">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                  <input class="form-control mr-sm-2 mb-sm-2" placeholder="Staff" type="text">
+              </div>
+              <div class="col-sm-4">
+                  <input class="form-control mr-sm-2 mb-sm-2" placeholder="Office" type="text">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                  <input class="form-control mr-sm-2 mb-sm-2" placeholder="Activation Date" type="text">
+              </div>
+              <div class="col-sm-4">
+                <div class="row">
+                  <div class="col-sm-6">
+                      <button type="button" class="btn btn-primary mb-sm-2">Advance Search</button>
+                  </div>
+                  <div class="col-sm-3">
+                      <button type="button" class="btn btn-outline-primary mb-sm-2">Reset</button>
+                  </div>
+                  <div class="col-sm-3">
+                    <button type="button" class="btn btn-outline-primary float-right mb-sm-2" (click)="isCollapsed = !isCollapsed" [ngbCollapse]="isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"><i class="fas fa-chevron-up"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+
+        <!--Table-->
+        <table class="table table-hover table-responsive-md table-fixed">
+
+            <!--Table head-->
+            <thead>
+                <tr>
+                    <th>
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck">
+                        <label class="custom-control-label" for="customCheck">&nbsp;</label>
+                      </div>
+                    </th>
+                    <th>Name</th>
+                    <th>User ID</th>
+                    <th>Status</th>
+                    <th>Office</th>
+                    <th>Staff</th>
+                </tr>
+            </thead>
+            <!--Table head-->
+
+            <!--Table body-->
+            <tbody>
+                <tr>
+                    <th scope="row">
+                          <div class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input" id="customCheck1">
+                              <label class="custom-control-label" for="customCheck1">&nbsp;</label>
+                            </div>
+                    </th>
+                    <td>Data</td>
+                    <td>Data</td>
+                    <td><i class="fas fa-stop" style="color: #00ce00" placement="top" ngbTooltip="Active"></i></td>
+                    <td>Data</td>
+                    <td>Data</td>
+
+                </tr>
+                <tr>
+                    <th scope="row">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck2">
+                        <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                      </div>
+                    </th>
+                    <td>Data</td>
+                    <td>Data</td>
+                    <td><i class="fas fa-stop" style="color: #00ce00" placement="top" ngbTooltip="Active"></i></td>
+                    <td>Data</td>
+                    <td>Data</td>
+
+                </tr>
+                <tr>
+                    <th scope="row">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck3">
+                        <label class="custom-control-label" for="customCheck3">&nbsp;</label>
+                      </div>
+                    </th>
+                    <td>Data</td>
+                    <td>Data</td>
+                    <td><i class="fas fa-stop" style="color: #00ce00" placement="top" ngbTooltip="Active"></i></td>
+                    <td>Data</td>
+                    <td>Data</td>
+
+                </tr>
+                <tr>
+                    <th scope="row">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck4">
+                        <label class="custom-control-label" for="customCheck4">&nbsp;</label>
+                      </div>
+                    </th>
+                    <td>Data</td>
+                    <td>Data</td>
+                    <td><i class="fas fa-stop" placement="top" ngbTooltip="Inactive"></i></td>
+                    <td>Data</td>
+                    <td>Data</td>
+
+                </tr>
+                <tr>
+                    <th scope="row">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck5">
+                        <label class="custom-control-label" for="customCheck5">&nbsp;</label>
+                      </div>
+                    </th>
+                    <td>Data</td>
+                    <td>Data</td>
+                    <td><i class="fas fa-stop" placement="top" ngbTooltip="Inactive"></i></td>
+                    <td>Data</td>
+                    <td>Data</td>
+
+                </tr>
+                <tr>
+                    <th scope="row">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck6">
+                        <label class="custom-control-label" for="customCheck6">&nbsp;</label>
+                      </div>
+                    </th>
+                    <td>Data</td>
+                    <td>Data</td>
+                    <td><i class="fas fa-stop" style="color: #00ce00" placement="top" ngbTooltip="Active"></i></td>
+                    <td>Data</td>
+                    <td>Data</td>
+
+                </tr>
+            </tbody>
+            <!--Table body-->
+
+        </table>
+        <!--Table-->
+
+      </div>
+    </div>
+    <ngb-pagination  class="d-flex justify-content-center" [collectionSize]="70" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
+  </div>
+</div>
