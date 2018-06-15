@@ -1,0 +1,124 @@
+<div class="fluid-container">
+  <div class="container">
+    <div class="card mt-5">
+      <div class="card-header">
+          <h3 class="font-weight-bold">Create User</h3>
+      </div>
+      <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-sm-12">
+                <!-- <div class="form-group"> -->
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" (change)="isCollapsed = false" [ngbCollapse]="isCollapsed" checked>
+                      <label class="custom-control-label" for="customRadio1">Existing User</label>
+                    </div>
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" (change)="isCollapsed = true" [ngbCollapse]="!isCollapsed">
+                    <label class="custom-control-label" for="customRadio2">New User</label>
+                  </div>
+                <!-- </div> -->
+            </div>
+          </div>
+          <div id="collapseExample" [ngbCollapse]="isCollapsed">
+              <div class="row">
+                <div class="offset-sm-1 col-sm-5 my-3">
+                    <select class="custom-select">
+                        <option selected>Office</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="offset-sm-1 col-sm-5 my-3">
+                      <select class="custom-select">
+                          <option selected>Staff</option>
+                          <option value="1">One</option>
+                          <option value="2">Two</option>
+                          <option value="3">Three</option>
+                        </select>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="offset-sm-1 col-sm-5 my-3">
+                      <select class="custom-select">
+                          <option selected>Client</option>
+                          <option value="1">One</option>
+                          <option value="2">Two</option>
+                          <option value="3">Three</option>
+                        </select>
+                  </div>
+              </div>
+              <div class="row">
+                <div class="offset-sm-1 col-sm-5">
+                    <button type="button" class="btn btn-success my-sm-4 btn-block"><i class="fas fa-unlock mr-2"></i>Activate Self Service User</button>
+                </div>
+              </div>
+          </div>
+
+          <div id="collapseExample" [ngbCollapse]="!isCollapsed">
+              <div class="row">
+                <div class="offset-sm-1 col-sm-4 my-3">
+                    <select class="custom-select">
+                        <option selected>Office</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>
+                </div>
+                <div class="offset-sm-1 col-sm-4 my-3">
+                    <select class="custom-select">
+                        <option selected>Staff</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="offset-sm-1 col-sm-4 my-3">
+                      <input class="form-control mr-sm-2 mb-sm-2" placeholder="Username" type="text">
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="offset-sm-1 col-sm-4 my-3">
+                      <input class="form-control mr-sm-2 mb-sm-2" placeholder="First Name" type="text">
+                  </div>
+                  <div class="offset-sm-1 col-sm-4 my-3">
+                      <input class="form-control mr-sm-2 mb-sm-2" placeholder="Last Name" type="text">
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="offset-sm-1 col-sm-4 my-3">
+                      <select class="custom-select">
+                          <option selected>Gender</option>
+                          <option value="1">Male</option>
+                          <option value="2">Female</option>
+                        </select>
+                  </div>
+                  <div class="offset-sm-1 col-sm-4 my-3">
+                      <input class="form-control mr-sm-2 mb-sm-2" placeholder="Date of Birth" type="text">
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="offset-sm-1 col-sm-4 my-3">
+                      <input class="form-control mr-sm-2 mb-sm-2" placeholder="Email" type="text">
+                  </div>
+                  <div class="offset-sm-1 col-sm-4 my-3">
+                      <input class="form-control mr-sm-2 mb-sm-2" placeholder="Mobile No" type="text">
+                  </div>
+              </div>
+              <div class="row">
+                <div class="offset-sm-3 col-sm-2">
+                    <button type="button" class="btn btn-default my-sm-2 btn-block">Cancel</button>
+                </div>
+                <div class="offset-sm-1 col-sm-2">
+                    <button type="button" class="btn btn-primary my-sm-2 btn-block">Submit</button>
+                </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

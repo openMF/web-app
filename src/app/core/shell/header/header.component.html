@@ -59,13 +59,20 @@
       </li>
       <li ngbDropdown class="nav-item dropdown d-inline-block">
           <div class="nav-link" id="dropdownBasic2" ngbDropdownToggle>Toggle dropup</div>
-          <div ngbDropdownMenu aria-labelledby="dropdownBasic2">                                                                                  
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
             <button class="dropdown-item">Action - 1</button>
             <button class="dropdown-item">Another Action</button>
             <button class="dropdown-item">Something else is here</button>
           </div>
         </li>
-      
+        <li class="nav-item dropdown" ngbDropdown>
+            <a class="nav-link" id="self-service-dropdown">
+              <h5 class="font-weight-normal" ngbDropdownToggle>Self Service</h5>
+            </a>
+              <div class="dropdown-menu" ngbDropdownMenu arial-labelledby="self-service-dropdown">
+                <a class="dropdown-item" routerLink="/self-service/users" routerLinkActive="active">User Management</a>
+              </div>
+          </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" placeholder="Search" type="text">

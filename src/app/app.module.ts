@@ -19,6 +19,7 @@ import { LoginModule } from './login/login.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NavigationModule } from './navigation/navigation.module';
+import { SelfServiceModule } from './self-service/self-service.module';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { NavigationModule } from './navigation/navigation.module';
     AccountingModule,
     LoginModule,
     NavigationModule,
+    SelfServiceModule,
     AppRoutingModule
   ],
   declarations: [AppComponent],
