@@ -9,10 +9,10 @@
       "urls": [
         "/web-app/favicon.ico",
         "/web-app/index.html",
-        "/web-app/main.35cfd5562f027276882c.js",
+        "/web-app/main.17d49aa0fb3321bd2422.js",
         "/web-app/polyfills.2345134cc89d861b451e.js",
         "/web-app/runtime.a66f828dca56eeb90e02.js",
-        "/web-app/styles.e8191f357870a82f9311.css"
+        "/web-app/styles.76ae0047675ba0cd2172.css"
       ],
       "patterns": []
     },
@@ -58,11 +58,11 @@
     "/web-app/assets/images/user_new.png": "284859da1d53cdd7e3794999e809c9b2befd919f",
     "/web-app/assets/ngx-rocket-logo.png": "0ac53fd27406fe5a36e68285315fb0012e54058e",
     "/web-app/favicon.ico": "31d1d887b9dec1f49614f289d6855f5ffa7c0902",
-    "/web-app/index.html": "b9df3d79ce39a60ef69a43d425b83e22257733e7",
-    "/web-app/main.35cfd5562f027276882c.js": "31c33bafd6c1e80cb66605639b5ff04010952187",
+    "/web-app/index.html": "fad12c52403d5eb3ec68b83d21e58a101f3248fe",
+    "/web-app/main.17d49aa0fb3321bd2422.js": "a40117fad5f0699b47ee7c2756dbb865287f01b6",
     "/web-app/polyfills.2345134cc89d861b451e.js": "193f6d7b77c2bce633da2f543082303b4f32d7ed",
     "/web-app/runtime.a66f828dca56eeb90e02.js": "078e320cc6fdaf355836c3b1c52b059cdd33fc7e",
-    "/web-app/styles.e8191f357870a82f9311.css": "96604cf7e37484f5b4a26c5b8a657d904da5376f"
+    "/web-app/styles.76ae0047675ba0cd2172.css": "c82d18cea4cbaf17d42c933daad7c106ec90b447"
   },
   "navigationUrls": [
     {
