@@ -4,6 +4,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 
 import { ArchwizardModule } from 'angular-archwizard';
 import { CoreModule } from '../core/core.module';
+import {MatTableModule} from '@angular/material/table';
 
 import { ClientsRoutingModule } from './clients-routing.module';
 import { ClientsComponent } from './clients.component';
