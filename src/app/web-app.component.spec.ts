@@ -2,8 +2,8 @@ import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { CoreModule } from '@app/core';
-import { AppComponent } from './app.component';
+import { CoreModule } from './core/core.module';
+import { WebAppComponent } from './web-app.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -13,14 +13,14 @@ describe('AppComponent', () => {
         TranslateModule.forRoot(),
         CoreModule
       ],
-      declarations: [AppComponent],
+      declarations: [WebAppComponent],
       providers: []
     });
     TestBed.compileComponents();
   }));
 
   it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
+    const fixture = TestBed.createComponent(WebAppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));

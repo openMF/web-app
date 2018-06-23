@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-view-user',
+  selector: 'mifosx-view-user',
   templateUrl: './view-user.component.html',
   styleUrls: ['./view-user.component.scss']
 })

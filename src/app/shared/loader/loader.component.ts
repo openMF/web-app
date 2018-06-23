@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-loader',
+  selector: 'mifosx-loader',
   templateUrl: './loader.component.html',
   styleUrls: ['./loader.component.scss']
 })

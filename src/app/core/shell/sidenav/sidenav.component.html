@@ -1,0 +1,75 @@
+<div
+  [ngClass]="{
+  'sidebar-full': !sidenavCollapsed,
+  'sidebar-compact': sidenavCollapsed
+  }">
+
+  <div class="navigation-panel" fxLayout="column">
+
+    <div class="app-brand">
+      <img src="assets/images/MifosX_logo.png" alt="app-logo" class="app-logo">
+      <span class="app-logo-text text-muted">Mifos</span>
+    </div>
+
+    <div class="app-user">
+      <div class="app-user-photo">
+        <img src="assets/images/user_placeholder.png" alt="app-user-photo">
+      </div>
+      <span class="app-user-name mb-05">
+        Abhay Chawla
+      </span>
+      <div class="app-user-controls">
+        <button class="text-muted xs-button" mat-icon-button>
+          <mat-icon>settings</mat-icon>
+        </button>
+        <button class="text-muted xs-button" mat-icon-button matTooltip="Sign Out" (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="app-sidenav">
+
+      <div class="icon-menu">
+        <div class="mt-1 mb-1 nav-item-sep">
+          <mat-divider></mat-divider>
+          <span class="text-muted icon-menu-title">Frequently Accessed</span>
+        </div>
+        <div class="icon-menu-item">
+          <button mat-raised-button matTooltip="Home">
+            <mat-icon>home</mat-icon>
+          </button>
+        </div>
+        <div class="icon-menu-item">
+          <button mat-raised-button matTooltip="Dashboard">
+            <mat-icon>dashboard</mat-icon>
+          </button>
+        </div>
+        <div class="icon-menu-item">
+          <button mat-raised-button matTooltip="Navigation">
+            <mat-icon>navigation</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="nav-item-sep">
+        <mat-divider></mat-divider>
+        <span class="text-muted">Main Items</span>
+      </div>
+
+      <mat-nav-list>
+        <mat-list-item routerLink="/dashboard">
+          <mat-icon matListIcon>dashboard</mat-icon>
+          <a matLine>Dashboard</a>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon matListIcon>navigation</mat-icon>
+          <a matLine>Navigation</a>
+        </mat-list-item>
+      </mat-nav-list>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,20 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+
 import { TranslateService } from '@ngx-translate/core';
 import { merge } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
 
 import { environment } from '../environments/environment';
-import { Logger, I18nService } from '../app/core';
-const log = new Logger('App');
+import { Logger, I18nService } from './core';
+
+const log = new Logger('MifosX');
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'mifosx-web-app',
+  templateUrl: './web-app.component.html',
+  styleUrls: ['./web-app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class WebAppComponent implements OnInit {
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -29,7 +31,6 @@ export class AppComponent implements OnInit {
     }
 
     log.debug('init');
-
 
     // Setup translations
     this.i18nService.init(environment.defaultLanguage, environment.supportedLanguages);
@@ -55,6 +56,7 @@ export class AppComponent implements OnInit {
           this.titleService.setTitle(this.translateService.instant(title));
         }
       });
+
   }
 
 }

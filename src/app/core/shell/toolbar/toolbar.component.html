@@ -1,0 +1,115 @@
+<mat-toolbar fxLayout="row" color="primary" class="toolbar">
+
+  <button mat-icon-button *ngIf="!sidenavCollapsed" (click)="toggleSidenav()" matTooltip="Toggle Hide/Open">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <button mat-icon-button *ngIf="sidenav.opened" (click)="toggleCollapse()" matTooltip="Toggle Collapse" fxHide.lt-md="true">
+    <mat-icon *ngIf="!sidenavCollapsed">chevron_left</mat-icon>
+    <mat-icon *ngIf="sidenavCollapsed">chevron_right</mat-icon>
+  </button>
+
+  <nav mat-tab-nav-bar backgroundColor="primary" class="ml-1">
+
+    <a mat-tab-link [active]="true" class="tab-link" [matMenuTriggerFor]="institutionMenu" #institutionMenuTrigger="matMenuTrigger" (mouseenter)="onMouseEnter(institutionMenuTrigger)">
+      <mat-icon class="mr-05">business</mat-icon>
+      Institution
+    </a>
+
+    <span fxHide.lt-lg="true">
+
+      <a mat-tab-link class="tab-link">
+          <mat-icon class="mr-05">account_balance</mat-icon>
+        Accounting
+      </a>
+      <a mat-tab-link class="tab-link" [matMenuTriggerFor]="reportsMenu" #reportsMenuTrigger="matMenuTrigger" (mouseenter)="reportsMenuTrigger.openMenu()">
+        <mat-icon class="mr-05">insert_chart_outlined</mat-icon>
+        Reports
+      </a>
+      <a mat-tab-link class="tab-link" [matMenuTriggerFor]="adminMenu" #adminMenuTrigger="matMenuTrigger" (mouseenter)="adminMenuTrigger.openMenu()">
+          <mat-icon class="mr-05">security</mat-icon>
+        Admin
+      </a>
+      <a mat-tab-link class="tab-link" [matMenuTriggerFor]="selfServiceMenu" #selfServiceMenuTrigger="matMenuTrigger" (mouseenter)="selfServiceMenuTrigger.openMenu()">
+          <mat-icon class="mr-05">people</mat-icon>
+        Self Service
+      </a>
+
+    </span>
+
+  </nav>
+
+  <span fxFlex="auto"></span>
+
+  <div *ngIf="searchVisible" class="search-bar" fxFlex="auto" fxHide.lt-sm="true" [@fadeInOut]>
+    <mat-form-field class="search">
+      <input matInput type="text" placeholder="Search">
+    </mat-form-field>
+  </div>
+
+  <button mat-icon-button class="ml-1" (click)="toggleVisibility()" fxHide.lt-sm="true">
+    <mat-icon>search</mat-icon>
+  </button>
+
+  <mat-select placeholder="Language" [(value)]="selectedLanguage" class="ml-1 language" fxHide.lt-md>
+    <mat-option value="English">English</mat-option>
+    <mat-option value="Hindi">Hindi</mat-option>
+  </mat-select>
+
+  <button mat-icon-button class="ml-1" matTooltip="Color Schemes" fxHide.lt-md>
+    <mat-icon>format_color_fill</mat-icon>
+  </button>
+
+  <button mat-icon-button class="ml-1" matTooltip="Notifications">
+    <mat-icon>notifications</mat-icon>
+  </button>
+
+  <button mat-icon-button class="ml-1 img-button">
+    <img src="assets/images/user_placeholder.png">
+  </button>
+
+</mat-toolbar>
+
+<mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
+  <span (mouseleave)="institutionMenuTrigger.closeMenu()">
+    <button mat-menu-item>Clients</button>
+    <button mat-menu-item>Groups</button>
+    <button mat-menu-item>Centers</button>
+    <span fxHide.lg>
+      <button mat-menu-item>Accounting</button>
+      <button mat-menu-item [matMenuTriggerFor]="reportsMenu">Reports</button>
+      <button mat-menu-item [matMenuTriggerFor]="adminMenu">Admin</button>
+      <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">Self Service</button>
+    </span>
+  </span>
+</mat-menu>
+
+<mat-menu #reportsMenu="matMenu" [overlapTrigger]="false">
+  <span (mouseleave)="reportsMenuTrigger.closeMenu()">
+    <button mat-menu-item>All</button>
+    <button mat-menu-item>Clients</button>
+    <button mat-menu-item>Loans</button>
+    <button mat-menu-item>Savings</button>
+    <button mat-menu-item>Funds</button>
+    <button mat-menu-item>Accounting</button>
+    <button mat-menu-item>XBRL</button>
+  </span>
+</mat-menu>
+
+<mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
+  <span (mouseleave)="adminMenuTrigger.closeMenu()">
+    <button mat-menu-item>Users</button>
+    <button mat-menu-item>Organisation</button>
+    <button mat-menu-item>System</button>
+    <button mat-menu-item>Products</button>
+    <button mat-menu-item>Templates</button>
+  </span>
+</mat-menu>
+
+<mat-menu #selfServiceMenu="matMenu" [overlapTrigger]="false">
+  <span (mouseleave)="selfServiceMenuTrigger.closeMenu()">
+    <button mat-menu-item>User Management</button>
+    <button mat-menu-item>App Configuration</button>
+    <button mat-menu-item>Task Management</button>
+  </span>
+</mat-menu>

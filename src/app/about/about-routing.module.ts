@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { Route, extract } from '../../app/core';
+import { Route, extract } from '../core';
 import { AboutComponent } from './about.component';
 
 const routes: Routes = [
   Route.withShell([
-    { path: 'about', component: AboutComponent, data: { title: extract('About') } }
+    {
+      path: 'about',
+      component: AboutComponent,
+      data: { title: extract('About') }
+    }
   ])
 ];
 

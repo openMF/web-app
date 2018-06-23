@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
 import { finalize } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
-import { Logger, I18nService, AuthenticationService } from '../../app/core';
+import { Logger, I18nService, AuthenticationService } from '../core';
 
 const log = new Logger('Login');
 
 @Component({
-  selector: 'app-login',
+  selector: 'mifosx-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })

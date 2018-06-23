@@ -1,2 +1,26 @@
-<app-header></app-header>
-<router-outlet></router-outlet>
+<mat-sidenav-container id="mifosx-shell-container" autosize>
+
+  <mat-sidenav
+    #sidenav
+    class="sidebar-panel"
+    [ngClass]="{
+      'sidebar-full': !sidenavCollapsed,
+      'sidebar-compact': sidenavCollapsed
+    }"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)">
+
+    <mifosx-sidenav [sidenavCollapsed]="sidenavCollapsed"></mifosx-sidenav>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+
+    <mifosx-toolbar [sidenav]="sidenav" (collapse)="toggleCollapse($event)"></mifosx-toolbar>
+
+    <mifosx-content></mifosx-content>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

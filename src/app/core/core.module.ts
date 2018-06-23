@@ -2,10 +2,27 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
+import { LayoutModule } from '@angular/cdk/layout';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
+import {  MatToolbarModule,
+          MatButtonModule,
+          MatSidenavModule,
+          MatIconModule,
+          MatListModule,
+          MatGridListModule,
+          MatCardModule,
+          MatMenuModule,
+          MatCheckboxModule,
+          MatTooltipModule,
+          MatDividerModule,
+          MatSelectModule,
+          MatInputModule,
+          MatFormFieldModule,
+          MatTabsModule } from '@angular/material';
+
 import { TranslateModule } from '@ngx-translate/core';
 
-import { ShellComponent } from './shell/shell.component';
-import { HeaderComponent } from './shell/header/header.component';
 import { RouteReusableStrategy } from './route-reusable-strategy';
 import { AuthenticationService } from './authentication/authentication.service';
 import { AuthenticationGuard } from './authentication/authentication.guard';
@@ -16,20 +33,42 @@ import { ApiPrefixInterceptor } from './http/api-prefix.interceptor';
 import { ErrorHandlerInterceptor } from './http/error-handler.interceptor';
 import { CacheInterceptor } from './http/cache.interceptor';
 
+import { ShellComponent } from './shell/shell.component';
+import { SidenavComponent } from './shell/sidenav/sidenav.component';
+import { ToolbarComponent } from './shell/toolbar/toolbar.component';
+import { ContentComponent } from './shell/content/content.component';
+
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
     TranslateModule,
-    RouterModule
+    RouterModule,
+    LayoutModule,
+    FlexLayoutModule,
+    MatSidenavModule,
+    MatGridListModule,
+    MatToolbarModule,
+    MatTabsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatListModule,
+    MatCardModule,
+    MatMenuModule,
+    MatCheckboxModule,
+    MatTooltipModule,
+    MatDividerModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
-
   declarations: [
-    HeaderComponent,
-    ShellComponent
+    ShellComponent,
+    SidenavComponent,
+    ToolbarComponent,
+    ContentComponent
   ],
   exports: [
-    HeaderComponent
   ],
   providers: [
     AuthenticationService,
