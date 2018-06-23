@@ -1,95 +1,46 @@
-<!-- <div class="fluid-container">
- <div class="container">
-  <div class="card mt-5">
-    <div class="card-header">
-        <h3 class="font-weight-bold">Clients</h3>
-        <div class="row">
-          <div class="col-sm-6">
-             <input class="form-control mr-sm-2" placeholder="Search" type="text">
-          </div>
-          <div class="col-sm-6">
-            <div class="float-right">
-              <button type="button" class="btn btn-secondary btn-large" routerLink="/clients/create" routerLinkActive="active">Create Client</button>
-            </div>
-          </div>
-        </div>
-    </div>
-    <div class="card-body">
+<div class="mat-app-background container">
 
-        <table class="table table-hover table-responsive-md table-fixed">
-
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Surname</th>
-                    <th>Country</th>
-                    <th>City</th>
-                    <th>Position</th>
-
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <th scope="row">4</th>
-                    <td>Jerry</td>
-                    <td>Horwitz</td>
-                    <td>Italy</td>
-                    <td>Bari</td>
-                    <td>Editor-in-chief</td>
-
-                </tr>
-                <tr>
-                    <th scope="row">5</th>
-                    <td>Janis</td>
-                    <td>Joplin</td>
-                    <td>Poland</td>
-                    <td>Warsaw</td>
-                    <td>Video Maker</td>
-
-                </tr>
-                <tr>
-                    <th scope="row">6</th>
-                    <td>Gary</td>
-                    <td>Winogrand</td>
-                    <td>Germany</td>
-                    <td>Berlin</td>
-                    <td>Photographer</td>
-
-                </tr>
-                <tr>
-                    <th scope="row">7</th>
-                    <td>Angie</td>
-                    <td>Smith</td>
-                    <td>USA</td>
-                    <td>San Francisco</td>
-                    <td>Teacher</td>
-
-                </tr>
-                <tr>
-                    <th scope="row">8</th>
-                    <td>John</td>
-                    <td>Mattis</td>
-                    <td>France</td>
-                    <td>Paris</td>
-                    <td>Actor</td>
-
-                </tr>
-                <tr>
-                    <th scope="row">9</th>
-                    <td>Otto</td>
-                    <td>Morris</td>
-                    <td>Germany</td>
-                    <td>Munich</td>
-                    <td>Singer</td>
-
-                </tr>
-            </tbody>
-
-        </table>
-
-      </div>
-    </div>
+<mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+  
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+  
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+        <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+      </ng-container>
+  
+      <!-- Progress Column -->
+      <ng-container matColumnDef="progress">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
+        <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
+      </ng-container>
+  
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+      </ng-container>
+  
+      <!-- Color Column -->
+      <ng-container matColumnDef="color">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
+        <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+      </tr>
+    </table>
+  
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </div>
-</div> -->
+  
+  
+  <!-- Copyright 2018 Google Inc. All Rights Reserved.
+      Use of this source code is governed by an MIT-style license that
+      can be found in the LICENSE file at http://angular.io/license -->
+</div>

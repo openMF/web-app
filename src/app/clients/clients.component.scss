@@ -1,4 +1,18 @@
-// .table-fixed {
-//     table-layout: fixed;
-//     overflow: hidden;
-// }
+.container {
+    margin: 0 auto;
+    max-width: 48rem;
+    width: 90%;
+  }
+
+  table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
+}
