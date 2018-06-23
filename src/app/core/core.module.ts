@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { ShellComponent } from './shell/shell.component';
 import { HeaderComponent } from './shell/header/header.component';
@@ -22,7 +21,6 @@ import { CacheInterceptor } from './http/cache.interceptor';
     CommonModule,
     HttpClientModule,
     TranslateModule,
-    NgbModule,
     RouterModule
   ],
 

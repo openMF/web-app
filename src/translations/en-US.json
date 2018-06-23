@@ -1,7 +1,6 @@
 {
   "APP_NAME": "MifosX",
   "About": "About",
-  "Hello world !": "Hello world !",
   "Home": "Home",
   "Logged in as": "Logged in as",
   "Login": "Login",
@@ -10,7 +9,7 @@
   "Password is required": "Password is required",
   "Username": "Username",
   "Username is required": "Username is required",
-  "Username or password incorrect.": "Username or password incorrect.",
+  "Username or password incorrect.": "Username or password incorrect",
   "Remember me": "Remember me",
   "Version": "Version"
 }

@@ -9,17 +9,17 @@
             <div class="col-sm-12">
                 <!-- <div class="form-group"> -->
                     <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" (change)="isCollapsed = false" [ngbCollapse]="isCollapsed" checked>
+                      <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" (change)="isCollapsed = false" checked>
                       <label class="custom-control-label" for="customRadio1">Existing User</label>
                     </div>
                   <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" (change)="isCollapsed = true" [ngbCollapse]="!isCollapsed">
+                    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" (change)="isCollapsed = true">
                     <label class="custom-control-label" for="customRadio2">New User</label>
                   </div>
                 <!-- </div> -->
             </div>
           </div>
-          <div id="collapseExample" [ngbCollapse]="isCollapsed">
+          <div id="collapseExample">
               <div class="row">
                 <div class="offset-sm-1 col-sm-5 my-3">
                     <select class="custom-select">
@@ -57,7 +57,7 @@
               </div>
           </div>
 
-          <div id="collapseExample" [ngbCollapse]="!isCollapsed">
+          <div id="collapseExample">
               <div class="row">
                 <div class="offset-sm-1 col-sm-4 my-3">
                     <select class="custom-select">

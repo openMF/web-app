@@ -1,49 +1,48 @@
 .wrapper {
-    margin: 50px auto;
-    height: 250px;
-    width: 240px;
-    position: relative;
-    
-   .triangle {
+  margin: 50px auto;
+  height: 250px;
+  width: 240px;
+  position: relative;
+
+  .triangle {
     width: 0;
     height: 0;
     border-style: solid;
     position: absolute;
     animation: rotate 0.7s infinite 1s;
   }
-  
+
   .bottom {
     border-width: 0 100px 100px 100px;
     border-color: transparent transparent #1fb050 transparent;
     bottom: 10px;
     left: calc(50% - 100px);
   }
-  
+
   .top {
     border-width: 100px 100px 0 100px;
     border-color: #b4d575 transparent transparent transparent;
     top: 10px;
     left: calc(50% - 100px);
   }
-  
+
   .left {
     border-width: 100px 0 100px 100px;
     border-color: transparent transparent transparent #1074b9;
     top: calc(50% - 100px);
     left: 10px;
   }
-  
+
   .right {
     border-width: 100px 100px 100px 0;
     border-color: transparent #1daeec transparent transparent;
     top: calc(50% - 100px);
     right: 10px;
   }
-  
+
   @keyframes rotate {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
-    }
   }
-  
-  
+
+}
