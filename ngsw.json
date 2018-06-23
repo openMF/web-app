@@ -9,7 +9,7 @@
       "urls": [
         "/web-app/favicon.ico",
         "/web-app/index.html",
-        "/web-app/main.57c0d050928292d331bd.js",
+        "/web-app/main.7952ac6ab4bd105aad86.js",
         "/web-app/polyfills.250ef2a4b02c50c382fe.js",
         "/web-app/runtime.a66f828dca56eeb90e02.js",
         "/web-app/styles.f0d26f7903560fab2fd0.css"
@@ -40,8 +40,8 @@
     "/web-app/assets/images/user_placeholder.png": "688be4adfb344e0f9662a40f59788f39e7b907af",
     "/web-app/assets/styles/_loader.scss": "866beeef811df17734b96a989aee2b52d3c43dd2",
     "/web-app/favicon.ico": "31d1d887b9dec1f49614f289d6855f5ffa7c0902",
-    "/web-app/index.html": "ca036fc66ade4f0c4063815f6c46519bc0fdfc0a",
-    "/web-app/main.57c0d050928292d331bd.js": "d2c98f0481e547a58b6499132930a3a5a409befd",
+    "/web-app/index.html": "a441d4588b3819023b73612e041fecf943f90d7a",
+    "/web-app/main.7952ac6ab4bd105aad86.js": "5bb71d13c2fa74eb25d13ee19b5e910bc68099ea",
     "/web-app/polyfills.250ef2a4b02c50c382fe.js": "8949bb1b1e302dda246f6ed9c2da703270360b1f",
     "/web-app/runtime.a66f828dca56eeb90e02.js": "078e320cc6fdaf355836c3b1c52b059cdd33fc7e",
     "/web-app/styles.f0d26f7903560fab2fd0.css": "690c2455fda93e7ef6e877a7363e62e7b5be015a"
