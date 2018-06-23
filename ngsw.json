@@ -9,10 +9,10 @@
       "urls": [
         "/web-app/favicon.ico",
         "/web-app/index.html",
-        "/web-app/main.7952ac6ab4bd105aad86.js",
+        "/web-app/main.5e881123abf25c873855.js",
         "/web-app/polyfills.250ef2a4b02c50c382fe.js",
         "/web-app/runtime.a66f828dca56eeb90e02.js",
-        "/web-app/styles.f0d26f7903560fab2fd0.css"
+        "/web-app/styles.bd1c2aefe669ac179932.css"
       ],
       "patterns": []
     },
@@ -26,6 +26,8 @@
         "/web-app/assets/images/mifos-logo-flat.png",
         "/web-app/assets/images/mifos_lg-logo.jpg",
         "/web-app/assets/images/user_placeholder.png",
+        "/web-app/assets/styles/_colours.scss",
+        "/web-app/assets/styles/_helper.scss",
         "/web-app/assets/styles/_loader.scss"
       ],
       "patterns": []
@@ -38,13 +40,15 @@
     "/web-app/assets/images/mifos-logo-flat.png": "998100b024c81bac0fd272134f282e410c96ad8a",
     "/web-app/assets/images/mifos_lg-logo.jpg": "c316949191be5b355cfc3bc803516cca29ed1265",
     "/web-app/assets/images/user_placeholder.png": "688be4adfb344e0f9662a40f59788f39e7b907af",
+    "/web-app/assets/styles/_colours.scss": "945fe246977e6da1428a1e1edfa5c7ca4748c56e",
+    "/web-app/assets/styles/_helper.scss": "18ff9d9f78413fc0d718719c04579344feb2e1d0",
     "/web-app/assets/styles/_loader.scss": "866beeef811df17734b96a989aee2b52d3c43dd2",
     "/web-app/favicon.ico": "31d1d887b9dec1f49614f289d6855f5ffa7c0902",
-    "/web-app/index.html": "a441d4588b3819023b73612e041fecf943f90d7a",
-    "/web-app/main.7952ac6ab4bd105aad86.js": "5bb71d13c2fa74eb25d13ee19b5e910bc68099ea",
+    "/web-app/index.html": "10a728453ece7d2e1baf95e7150d61db732f51c5",
+    "/web-app/main.5e881123abf25c873855.js": "37fe9e911ad5c86a0520b32b80c9da1e0b5b14c1",
     "/web-app/polyfills.250ef2a4b02c50c382fe.js": "8949bb1b1e302dda246f6ed9c2da703270360b1f",
     "/web-app/runtime.a66f828dca56eeb90e02.js": "078e320cc6fdaf355836c3b1c52b059cdd33fc7e",
-    "/web-app/styles.f0d26f7903560fab2fd0.css": "690c2455fda93e7ef6e877a7363e62e7b5be015a"
+    "/web-app/styles.bd1c2aefe669ac179932.css": "dde84a21061312be32cfcf056c24d2330d671603"
   },
   "navigationUrls": [
     {
