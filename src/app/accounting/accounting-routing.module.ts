@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { Route, extract } from '../../app/core';
+import { Route, extract } from '../core';
 import { AccountingComponent } from './accounting.component';
 
 const routes: Routes = [
   Route.withShell([
-    { path: 'accounting', component: AccountingComponent}
+    {
+      path: 'accounting',
+      component: AccountingComponent,
+      data: { title: extract('Accounting') }
+    }
   ])
 ];
 

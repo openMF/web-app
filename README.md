@@ -62,8 +62,6 @@ Tasks are mostly based on the `angular-cli` tool. Use `ng help` to get more help
 
 ## Design guides
 
-- [Bootstrap Material](https://bootswatch.com/materia/)
-- [Angular Bootstrap](https://valor-software.com/ngx-bootstrap/#/)
 - [Angular Material](https://material.angular.io/components/categories)
 
 ## Creating new modules/components

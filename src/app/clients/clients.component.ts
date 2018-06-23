@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from '../../environments/environment';
-
-import { HeaderComponent } from '../core/shell/header/header.component';
 
 @Component({
-  selector: 'app-clients',
+  selector: 'mifosx-clients',
   templateUrl: './clients.component.html',
   styleUrls: ['./clients.component.scss']
 })

@@ -1,7 +1,7 @@
 /*
  * Entry point of the application.
  * Only platform bootstrapping code should be here.
- * For app-specific initialization, use `app/app.component.ts`.
+ * For app-specific initialization, use `app/web-app.component.ts`.
  */
 
 import { enableProdMode } from '@angular/core';

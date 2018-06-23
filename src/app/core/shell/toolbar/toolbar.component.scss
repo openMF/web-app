@@ -1,0 +1,45 @@
+mat-form-field {
+  font-size: 1rem;
+  margin-top: 6px;
+}
+
+.toolbar {
+  position: relative;
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.tab-link {
+  min-width: auto;
+  padding: 0 16px;
+}
+
+.search-bar {
+  mat-form-field {
+    margin-right: 1rem;
+    max-width: 400px;
+    width: 100%;
+    margin-left: 20px;
+  }
+}
+
+.language {
+  min-width: 80px;
+  width: 80px;
+  font-size: .875rem;
+}
+
+.ml-1 {
+  margin-left: 1rem;
+}
+
+.mr-1 {
+  margin-right: 1rem;
+}
+
+.img-button {
+  img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+}
