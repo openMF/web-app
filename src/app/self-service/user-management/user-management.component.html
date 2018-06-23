@@ -6,11 +6,11 @@
         <div class="row">
           <div class="col-sm-10">
             <div class="row">
-              <div class="col-sm-6" [ngbCollapse]="!isCollapsed">
+              <div class="col-sm-6">
                 <input class="form-control mr-sm-2" placeholder="Search" type="text">
               </div>
               <div class="col-sm-2">
-                <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed" [ngbCollapse]="!isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"><i class="fas fa-chevron-down mr-2"></i>
+                <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"><i class="fas fa-chevron-down mr-2"></i>
                   Parameters
                 </button>
               </div>
@@ -22,7 +22,7 @@
             </div>
           </div>
         </div>
-          <div id="collapseExample" [ngbCollapse]="isCollapsed">
+          <div id="collapseExample">
             <div class="row">
               <div class="col-sm-4">
                   <input class="form-control mr-sm-2 mb-sm-2" placeholder="Name" type="text">
@@ -52,7 +52,7 @@
                       <button type="button" class="btn btn-outline-primary mb-sm-2">Reset</button>
                   </div>
                   <div class="col-sm-3">
-                    <button type="button" class="btn btn-outline-primary float-right mb-sm-2" (click)="isCollapsed = !isCollapsed" [ngbCollapse]="isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"><i class="fas fa-chevron-up"></i>
+                    <button type="button" class="btn btn-outline-primary float-right mb-sm-2" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"><i class="fas fa-chevron-up"></i>
                     </button>
                   </div>
                 </div>
@@ -94,7 +94,7 @@
                     </th>
                     <td>Data</td>
                     <td>Data</td>
-                    <td><i class="fas fa-stop" style="color: #00ce00" placement="top" ngbTooltip="Active"></i></td>
+                    <td><i class="fas fa-stop" style="color: #00ce00" placement="top"></i></td>
                     <td>Data</td>
                     <td>Data</td>
 
@@ -108,7 +108,7 @@
                     </th>
                     <td>Data</td>
                     <td>Data</td>
-                    <td><i class="fas fa-stop" style="color: #00ce00" placement="top" ngbTooltip="Active"></i></td>
+                    <td><i class="fas fa-stop" style="color: #00ce00" placement="top"></i></td>
                     <td>Data</td>
                     <td>Data</td>
 
@@ -122,7 +122,7 @@
                     </th>
                     <td>Data</td>
                     <td>Data</td>
-                    <td><i class="fas fa-stop" style="color: #00ce00" placement="top" ngbTooltip="Active"></i></td>
+                    <td><i class="fas fa-stop" style="color: #00ce00" placement="top"></i></td>
                     <td>Data</td>
                     <td>Data</td>
 
@@ -136,7 +136,7 @@
                     </th>
                     <td>Data</td>
                     <td>Data</td>
-                    <td><i class="fas fa-stop" placement="top" ngbTooltip="Inactive"></i></td>
+                    <td><i class="fas fa-stop" placement="top"></i></td>
                     <td>Data</td>
                     <td>Data</td>
 
@@ -150,7 +150,7 @@
                     </th>
                     <td>Data</td>
                     <td>Data</td>
-                    <td><i class="fas fa-stop" placement="top" ngbTooltip="Inactive"></i></td>
+                    <td><i class="fas fa-stop" placement="top"></i></td>
                     <td>Data</td>
                     <td>Data</td>
 
@@ -164,7 +164,7 @@
                     </th>
                     <td>Data</td>
                     <td>Data</td>
-                    <td><i class="fas fa-stop" style="color: #00ce00" placement="top" ngbTooltip="Active"></i></td>
+                    <td><i class="fas fa-stop" style="color: #00ce00" placement="top"></i></td>
                     <td>Data</td>
                     <td>Data</td>
 
@@ -177,6 +177,6 @@
 
       </div>
     </div>
-    <ngb-pagination  class="d-flex justify-content-center" [collectionSize]="70" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
+    <!-- <ngb-pagination  class="d-flex justify-content-center" [collectionSize]="70" [(page)]="page" [boundaryLinks]="true"></ngb-pagination> -->
   </div>
 </div>

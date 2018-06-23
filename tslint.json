@@ -129,13 +129,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "app",
+      "mifosx",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "app",
+      "mifosx",
       "kebab-case"
     ],
     "no-output-on-prefix": true,

@@ -1,11 +1,9 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { UserManagementComponent } from './user-management/user-management.component';
 import { SelfServiceRoutingModule } from './self-service-routing.module';
-import { CoreModule } from '@app/core';
+import { CoreModule } from '../../app/core';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { ViewUserComponent } from './view-user/view-user.component';
 
@@ -13,8 +11,7 @@ import { ViewUserComponent } from './view-user/view-user.component';
   imports: [
     CommonModule,
     CoreModule,
-    SelfServiceRoutingModule,
-    NgbModule
+    SelfServiceRoutingModule
   ],
   declarations: [
     UserManagementComponent,

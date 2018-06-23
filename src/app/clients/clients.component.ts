@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from '@env/environment';
+import { environment } from '../../environments/environment';
 
 import { HeaderComponent } from '../core/shell/header/header.component';
 
