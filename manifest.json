@@ -1,14 +1,17 @@
 {
-  "name": "MifosX",
-  "short_name": "Mifosx",
-  "theme_color": "#488aff",
-  "background_color": "#488aff",
-  "scope": "/",
+  "short_name": "MifosX",
+  "name": "MifosX Web App",
   "start_url": "/",
+  "scope": "/",
+  "theme_color": "#fff",
+  "background_color": "#fff",
   "display": "standalone",
-  "icons": [{
-    "src": "assets/ngx-rocket-logo.png",
-    "sizes": "512x512",
-    "type": "image/png"
-  }],
+  "description": "MifosX Web App is the default web application built on top of the Fineract platform for the Mifos user community leveraging the popular Angular framework.",
+  "icons": [
+    {
+      "src": "assets/images/MifosX_logo.png",
+      "sizes": "182x184",
+      "type": "image/png"
+    }
+  ]
 }

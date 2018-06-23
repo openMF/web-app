@@ -9,10 +9,10 @@
       "urls": [
         "/web-app/favicon.ico",
         "/web-app/index.html",
-        "/web-app/main.17d49aa0fb3321bd2422.js",
-        "/web-app/polyfills.2345134cc89d861b451e.js",
+        "/web-app/main.57c0d050928292d331bd.js",
+        "/web-app/polyfills.250ef2a4b02c50c382fe.js",
         "/web-app/runtime.a66f828dca56eeb90e02.js",
-        "/web-app/styles.76ae0047675ba0cd2172.css"
+        "/web-app/styles.f0d26f7903560fab2fd0.css"
       ],
       "patterns": []
     },
@@ -21,48 +21,30 @@
       "installMode": "lazy",
       "updateMode": "prefetch",
       "urls": [
-        "/web-app/assets/images/833.svg",
         "/web-app/assets/images/MifosX_logo.png",
         "/web-app/assets/images/MifosX_logoSmall.png",
-        "/web-app/assets/images/chosen-sprite.png",
-        "/web-app/assets/images/client-image-placeholder.png",
-        "/web-app/assets/images/cubic_loader.gif",
-        "/web-app/assets/images/favicon.ico",
-        "/web-app/assets/images/loader.gif",
-        "/web-app/assets/images/logo.jpg",
         "/web-app/assets/images/mifos-logo-flat.png",
         "/web-app/assets/images/mifos_lg-logo.jpg",
-        "/web-app/assets/images/ring.svg",
-        "/web-app/assets/images/small-loader.gif",
-        "/web-app/assets/images/user_new.png",
-        "/web-app/assets/ngx-rocket-logo.png"
+        "/web-app/assets/images/user_placeholder.png",
+        "/web-app/assets/styles/_loader.scss"
       ],
       "patterns": []
     }
   ],
   "dataGroups": [],
   "hashTable": {
-    "/web-app/assets/images/833.svg": "4fc939bb9174535efd3c7d8fe5eb4afdeeea5dc6",
     "/web-app/assets/images/MifosX_logo.png": "fc66de5965e6054007a0e0c9e68f24f1ee250c21",
     "/web-app/assets/images/MifosX_logoSmall.png": "ebd340185b4888fdbe26b364303d2c072412b46e",
-    "/web-app/assets/images/chosen-sprite.png": "172409938ed29b8936bcfb22b9bc74cd6f9e6515",
-    "/web-app/assets/images/client-image-placeholder.png": "2fb9e111a89900309568ddc361217e6526be87c5",
-    "/web-app/assets/images/cubic_loader.gif": "4e8221dd61f16a55445117ab4b0d91239a5da6f3",
-    "/web-app/assets/images/favicon.ico": "31d1d887b9dec1f49614f289d6855f5ffa7c0902",
-    "/web-app/assets/images/loader.gif": "e6ba769ce8804fc75504d7272e69250f53f9e377",
-    "/web-app/assets/images/logo.jpg": "3d2055fc360367685066f5d79ca350c396645dd8",
     "/web-app/assets/images/mifos-logo-flat.png": "998100b024c81bac0fd272134f282e410c96ad8a",
     "/web-app/assets/images/mifos_lg-logo.jpg": "c316949191be5b355cfc3bc803516cca29ed1265",
-    "/web-app/assets/images/ring.svg": "a87321d943d50edffb045d71fd7b39b2616aeb02",
-    "/web-app/assets/images/small-loader.gif": "d766aa3187c7467914e5148d1728eceac6b60e92",
-    "/web-app/assets/images/user_new.png": "284859da1d53cdd7e3794999e809c9b2befd919f",
-    "/web-app/assets/ngx-rocket-logo.png": "0ac53fd27406fe5a36e68285315fb0012e54058e",
+    "/web-app/assets/images/user_placeholder.png": "688be4adfb344e0f9662a40f59788f39e7b907af",
+    "/web-app/assets/styles/_loader.scss": "866beeef811df17734b96a989aee2b52d3c43dd2",
     "/web-app/favicon.ico": "31d1d887b9dec1f49614f289d6855f5ffa7c0902",
-    "/web-app/index.html": "fad12c52403d5eb3ec68b83d21e58a101f3248fe",
-    "/web-app/main.17d49aa0fb3321bd2422.js": "a40117fad5f0699b47ee7c2756dbb865287f01b6",
-    "/web-app/polyfills.2345134cc89d861b451e.js": "193f6d7b77c2bce633da2f543082303b4f32d7ed",
+    "/web-app/index.html": "ca036fc66ade4f0c4063815f6c46519bc0fdfc0a",
+    "/web-app/main.57c0d050928292d331bd.js": "d2c98f0481e547a58b6499132930a3a5a409befd",
+    "/web-app/polyfills.250ef2a4b02c50c382fe.js": "8949bb1b1e302dda246f6ed9c2da703270360b1f",
     "/web-app/runtime.a66f828dca56eeb90e02.js": "078e320cc6fdaf355836c3b1c52b059cdd33fc7e",
-    "/web-app/styles.76ae0047675ba0cd2172.css": "c82d18cea4cbaf17d42c933daad7c106ec90b447"
+    "/web-app/styles.f0d26f7903560fab2fd0.css": "690c2455fda93e7ef6e877a7363e62e7b5be015a"
   },
   "navigationUrls": [
     {

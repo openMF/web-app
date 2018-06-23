@@ -3,27 +3,40 @@
 <head>
   <meta charset="utf-8"/>
   <title>MifosX</title>
-  <base href="/web-app/">  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="theme-color" content="#4e8ef7"/>
-  <link rel="manifest" href="manifest.json"/>
+  <base href="/web-app/">  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+
   <link rel="icon" type="image/x-icon" href="favicon.ico"/>
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
+  <link rel="icon" type="image/png" href="assets/images/MifosX_logo.png" sizes="182x184">
+  <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon.png" sizes="182x184"/>
+  <link rel="manifest" href="manifest.json"/>
+
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="styles.76ae0047675ba0cd2172.css"></head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Mono:300" rel="stylesheet">
+<link rel="stylesheet" href="styles.f0d26f7903560fab2fd0.css"></head>
 <body>
   <!--[if lt IE 10]>
-  <p>
-    You are using an <strong>outdated</strong> browser.
-    Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
-  </p>
+    <p>
+      You are using an <strong>outdated</strong> browser.
+      Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
+    </p>
   <![endif]-->
+
   <noscript>
     <p>
       This page requires JavaScript to work properly. Please enable JavaScript in your browser.
     </p>
   </noscript>
-  <app-root>
 
-</app-root>
-<script type="text/javascript" src="runtime.a66f828dca56eeb90e02.js"></script><script type="text/javascript" src="polyfills.2345134cc89d861b451e.js"></script><script type="text/javascript" src="main.17d49aa0fb3321bd2422.js"></script></body>
+  <script>
+    // This hides the address bar on mobile browsers
+    // https://developers.google.com/web/fundamentals/native-hardware/fullscreen/
+    window.addEventListener('load',function() { window.scrollTo(0, 1); });
+  </script>
+
+  <mifosx-web-app>
+    Loading...
+  </mifosx-web-app>
+<script type="text/javascript" src="runtime.a66f828dca56eeb90e02.js"></script><script type="text/javascript" src="polyfills.250ef2a4b02c50c382fe.js"></script><script type="text/javascript" src="main.57c0d050928292d331bd.js"></script></body>
 </html>
