@@ -11,17 +11,17 @@ const routes: Routes = [
     {
       path: 'self-service/users',
       component: UserManagementComponent,
-      data: { title: extract('Self Service Users') }
+      data: { title: extract('Self Service Users'), breadcrumb: 'Self Service Users' }
     },
     {
       path: 'self-service/users/create',
       component: CreateUserComponent,
-      data: { title: extract('Create Self Service User') }
+      data: { title: extract('Create Self Service User'), breadcrumb: 'Create' }
     },
     {
       path: 'self-service/users/view',
       component: ViewUserComponent,
-      data: { title: extract('View Self Service User') }
+      data: { title: extract('View Self Service User'), breadcrumb: 'View' },
     }
   ])
 ];

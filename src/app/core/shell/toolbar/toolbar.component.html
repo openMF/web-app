@@ -108,7 +108,7 @@
 
 <mat-menu #selfServiceMenu="matMenu" [overlapTrigger]="false">
   <span (mouseleave)="selfServiceMenuTrigger.closeMenu()">
-    <button mat-menu-item>User Management</button>
+    <button mat-menu-item routerLink="/self-service/users">User Management</button>
     <button mat-menu-item>App Configuration</button>
     <button mat-menu-item>Task Management</button>
   </span>

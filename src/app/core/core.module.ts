@@ -53,6 +53,7 @@ import { ShellComponent } from './shell/shell.component';
 import { SidenavComponent } from './shell/sidenav/sidenav.component';
 import { ToolbarComponent } from './shell/toolbar/toolbar.component';
 import { ContentComponent } from './shell/content/content.component';
+import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
 
 @NgModule({
   imports: [
@@ -100,7 +101,8 @@ import { ContentComponent } from './shell/content/content.component';
     ShellComponent,
     SidenavComponent,
     ToolbarComponent,
-    ContentComponent
+    ContentComponent,
+    BreadcrumbComponent
   ],
   exports: [
     LayoutModule,
