@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ProgressBarService } from '../progress-bar.service';
 
 @Component({
   selector: 'mifosx-shell',
@@ -16,10 +17,15 @@ export class ShellComponent implements OnInit {
     map(result => result.matches)
   );
   sidenavCollapsed = false;
+  progressBarMode: string;
 
-  constructor(private breakpointObserver: BreakpointObserver) { }
+  constructor(private breakpointObserver: BreakpointObserver,
+              private progressBarService: ProgressBarService) { }
 
   ngOnInit() {
+    this.progressBarService.updateProgressBar.subscribe((mode: string) => {
+      this.progressBarMode = mode;
+    });
   }
 
   toggleCollapse($event: boolean) {

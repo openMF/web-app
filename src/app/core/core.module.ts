@@ -45,6 +45,8 @@ import { AuthenticationGuard } from './authentication/authentication.guard';
 import { I18nService } from './i18n.service';
 import { HttpService } from './http/http.service';
 import { HttpCacheService } from './http/http-cache.service';
+import { ProgressBarService } from './progress-bar.service';
+import { ProgressInterceptor } from './progress.interceptor';
 import { ApiPrefixInterceptor } from './http/api-prefix.interceptor';
 import { ErrorHandlerInterceptor } from './http/error-handler.interceptor';
 import { CacheInterceptor } from './http/cache.interceptor';
@@ -145,6 +147,8 @@ import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
     AuthenticationGuard,
     I18nService,
     HttpCacheService,
+    ProgressBarService,
+    ProgressInterceptor,
     ApiPrefixInterceptor,
     ErrorHandlerInterceptor,
     CacheInterceptor,
