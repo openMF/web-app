@@ -53,6 +53,7 @@ import { CacheInterceptor } from './http/cache.interceptor';
 
 import { ShellComponent } from './shell/shell.component';
 import { SidenavComponent } from './shell/sidenav/sidenav.component';
+import { ThemePickerComponent } from './shell/toolbar/theme-picker/theme-picker.component';
 import { ToolbarComponent } from './shell/toolbar/toolbar.component';
 import { ContentComponent } from './shell/content/content.component';
 import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
@@ -102,6 +103,7 @@ import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
   declarations: [
     ShellComponent,
     SidenavComponent,
+    ThemePickerComponent,
     ToolbarComponent,
     ContentComponent,
     BreadcrumbComponent
