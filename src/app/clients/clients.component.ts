@@ -13,7 +13,7 @@ export class ClientsComponent implements OnInit {
   post: any = [];
   jsonpost: any = {};
   private ELEMENT_DATA: any = null;
-  displayedColumns = ['id', 'name', 'progress', 'color'];
+  displayedColumns = ['id', 'name', 'externalid', 'office', 'clientno'];
   dataSource = new MatTableDataSource();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
