@@ -12,7 +12,7 @@
   "license": "MPL-2.0",
   "scripts": {
     "ng": "ng",
-    "build": "npm run env -s && ng build --prod",
+    "build": "npm run env -s && ng build --prod --output-hashing=none",
     "start": "npm run env -s && ng serve --aot --proxy-config proxy.conf.js",
     "serve:sw": "npm run build -s && npx http-server ./dist -p 4200",
     "lint": "ng lint && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc",
