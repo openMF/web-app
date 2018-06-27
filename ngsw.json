@@ -9,10 +9,10 @@
       "urls": [
         "/web-app/favicon.ico",
         "/web-app/index.html",
-        "/web-app/main.4d1da1d7ebee8fe8bc32.js",
-        "/web-app/polyfills.01bbb2431fa8030263b7.js",
-        "/web-app/runtime.a66f828dca56eeb90e02.js",
-        "/web-app/styles.fc7b5b9bf398d88fd426.css"
+        "/web-app/main.js",
+        "/web-app/polyfills.js",
+        "/web-app/runtime.js",
+        "/web-app/styles.css"
       ],
       "patterns": []
     },
@@ -48,11 +48,11 @@
     "/web-app/assets/styles/_width-height.scss": "b388b593c298e8799737ea2829275ffac06ce113",
     "/web-app/assets/styles/_z-index.scss": "18048038bb66d1375e3a8c11cee30b7460b47191",
     "/web-app/favicon.ico": "31d1d887b9dec1f49614f289d6855f5ffa7c0902",
-    "/web-app/index.html": "4361f434d466d0bd2c4d746c9ace9df2f111b9ee",
-    "/web-app/main.4d1da1d7ebee8fe8bc32.js": "7132d8972e5d33936f45faeda07a95a8b673e5a1",
-    "/web-app/polyfills.01bbb2431fa8030263b7.js": "a26ede58356b8bd5e413b54c069fec50adc5c544",
-    "/web-app/runtime.a66f828dca56eeb90e02.js": "078e320cc6fdaf355836c3b1c52b059cdd33fc7e",
-    "/web-app/styles.fc7b5b9bf398d88fd426.css": "8997ff8fea2655411eb71840109f255d779884b1"
+    "/web-app/index.html": "8eb1e48cfd5d6b5fd6efffdc56441a18f2d951da",
+    "/web-app/main.js": "7132d8972e5d33936f45faeda07a95a8b673e5a1",
+    "/web-app/polyfills.js": "a26ede58356b8bd5e413b54c069fec50adc5c544",
+    "/web-app/runtime.js": "078e320cc6fdaf355836c3b1c52b059cdd33fc7e",
+    "/web-app/styles.css": "8997ff8fea2655411eb71840109f255d779884b1"
   },
   "navigationUrls": [
     {
