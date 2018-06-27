@@ -12,8 +12,9 @@ import { Observable } from 'rxjs';
 export class ClientsComponent implements OnInit {
   post: any = [];
   jsonpost: any = {};
+  private ELEMENT_DATA: any = null;
   displayedColumns = ['id', 'name', 'progress', 'color'];
-  dataSource: MatTableDataSource<any>;
+  dataSource = new MatTableDataSource();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -23,22 +24,26 @@ export class ClientsComponent implements OnInit {
       // GET from clients API
       this.clientService.getServer()
       .subscribe(
-        (res) => {
-          this.post = res;
-        console.log('print');
-        console.table(res[1]);
-        console.log(this.post);
-        console.table(JSON.stringify(res));
-        });
-        
+        (res => {
+        //  this.post = res;
+        //  this.ELEMENT_DATA = res;
+        console.log(res);
+        this.ELEMENT_DATA = res;
+ // this.displayedColumns = [.............];
+        this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+        // console.log('print');
+      //  console.table(res[1]);
+       // console.log(this.dataSource.data);
+      //  console.table(JSON.stringify(res));
+        })
+      );
     // Create 100 users
-    const users: UserData[] = [];
-    for (let i = 1; i <= 100; i++) { users.push(createNewUser(i)); }
-    const ELEMENT_DATA: any = JSON.stringify(this.post);
+   /*  const users: UserData[] = [];
+    for (let i = 1; i <= 100; i++) { users.push(createNewUser(i)); } */
+   // const ELEMENT_DATA: any = JSON.stringify(this.post);
     // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
+// this.dataSource =  new MatTableDataSource(this.ELEMENT_DATA);
 
-  
   }
 
   ngOnInit() {
@@ -72,13 +77,13 @@ export class ClientsComponent implements OnInit {
   }
   disconnect() {}
 }  */
-/** Constants used to fill up our data base. */
+/* 
 const COLORS = ['maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple',
   'fuchsia', 'lime', 'teal', 'aqua', 'blue', 'navy', 'black', 'gray'];
 const NAMES = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
   'Charlotte', 'Theodore', 'Isla', 'Oliver', 'Isabella', 'Jasper',
   'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'];
-/** Builds and returns a new User. */
+
 function createNewUser(id: number): UserData {
   const name =
       NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
@@ -99,5 +104,5 @@ export interface UserData {
   name: string;
   progress: string;
   color: string;
-}
+} */
 

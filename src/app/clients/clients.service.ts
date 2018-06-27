@@ -16,6 +16,7 @@ export class ClientsService {
     headers.append('Authorization', 'Basic ' + btoa(username + ':' + password)); 
     headers.append('Content-Type', 'application/json');
     headers.append('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    headers.append('Access-Control-Allow-Origin', '*');
     return this.http.get
     ('https://demo.openmf.org/fineract-provider/api/v1/clients?tenantIdentifier=default&pretty=true',
     {headers: headers})
