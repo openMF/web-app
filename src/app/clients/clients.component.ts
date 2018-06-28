@@ -1,26 +1,33 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-
+import { Response} from '@angular/http';
+import {ClientsService} from './clients.service';
+import {DataSource} from '@angular/cdk/collections';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'mifosx-clients',
   templateUrl: './clients.component.html',
   styleUrls: ['./clients.component.scss']
 })
 export class ClientsComponent implements OnInit {
-
-  displayedColumns = ['id', 'name', 'progress', 'color'];
-  dataSource: MatTableDataSource<UserData>;
+  post: any = [];
+  private ELEMENT_DATA: any = null;
+  displayedColumns =  ['name', 'clientno', 'externalid', 'status', 'office', 'staff'];
+  dataSource = new MatTableDataSource();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() {
-    // Create 100 users
-    const users: UserData[] = [];
-    for (let i = 1; i <= 100; i++) { users.push(createNewUser(i)); }
-
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
+  constructor(private clientService: ClientsService) {
+      // GET from clients API
+      this.clientService.getServer()
+      .subscribe(
+        (res => {
+        console.log(res);
+        this.ELEMENT_DATA = res;
+        this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+        })
+      );
   }
 
   ngOnInit() {
@@ -38,32 +45,3 @@ export class ClientsComponent implements OnInit {
   }
 
 }
-/** Constants used to fill up our data base. */
-const COLORS = ['maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple',
-  'fuchsia', 'lime', 'teal', 'aqua', 'blue', 'navy', 'black', 'gray'];
-const NAMES = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
-  'Charlotte', 'Theodore', 'Isla', 'Oliver', 'Isabella', 'Jasper',
-  'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'];
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const name =
-      NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-      NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
-
-  return {
-    id: id.toString(),
-    name: name,
-    progress: Math.round(Math.random() * 100).toString(),
-    color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
-  };
-}
-
-
-
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  color: string;
-}
-
