@@ -24,8 +24,8 @@ import { ClientsService } from './clients.service';
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    BrowserModule,
-    HttpModule,
+    BrowserModule,  // tslint:disable
+    HttpModule, 
     MatTableModule
   ],
   declarations: [
@@ -36,7 +36,7 @@ import { ClientsService } from './clients.service';
   ],
   providers: [
     ClientsService,
-    HttpModule
+    HttpModule  // tslint:disable
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

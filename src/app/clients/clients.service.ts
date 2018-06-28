@@ -8,11 +8,11 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class ClientsService {
-    constructor(private http: Http) {}
+    constructor(private http: Http) {} // tslint:disable-line
    getServer() {
     const username = 'mifos';
     const password = 'password';
-    const headers = new Headers();
+    const headers = new Headers();   // tslint:disable-line
     headers.append('Authorization', 'Basic ' + btoa(username + ':' + password));
     headers.append('Content-Type', 'application/json');
     headers.append('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -22,7 +22,7 @@ export class ClientsService {
     {headers: headers})
     .pipe(
     map(
-        (response: Response) => {
+        (response: Response) => {  // tslint:disable-line
           response = response.json();
           return response['pageItems'];
 
