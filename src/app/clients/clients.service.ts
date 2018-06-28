@@ -13,7 +13,7 @@ export class ClientsService {
     const username = 'mifos';
     const password = 'password';
     const headers = new Headers();
-    headers.append('Authorization', 'Basic ' + btoa(username + ':' + password)); 
+    headers.append('Authorization', 'Basic ' + btoa(username + ':' + password));
     headers.append('Content-Type', 'application/json');
     headers.append('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     headers.append('Access-Control-Allow-Origin', '*');
@@ -24,7 +24,7 @@ export class ClientsService {
     map(
         (response: Response) => {
           response = response.json();
-          return response["pageItems"];
+          return response['pageItems'];
 
         }
     )
