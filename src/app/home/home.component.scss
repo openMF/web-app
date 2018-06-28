@@ -7,3 +7,9 @@
 //   font-size: 1.2rem;
 //   quotes: "« " " »";
 // }
+
+.button-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}

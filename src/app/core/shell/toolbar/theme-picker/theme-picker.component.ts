@@ -17,7 +17,7 @@ export class ThemePickerComponent implements OnInit {
     primary: '#3F51B5',
     accent: '#E91E63',
     isDark: false,
-    isDefault: true,
+    isDefault: true
   };
   themes = [
     this.currentTheme,
@@ -25,20 +25,32 @@ export class ThemePickerComponent implements OnInit {
       href: 'deeppurple-amber.css',
       primary: '#673AB7',
       accent: '#FFC107',
-      isDark: false,
+      isDark: false
     },
     {
       href: 'pink-bluegrey.css',
       primary: '#E91E63',
       accent: '#607D8B',
-      isDark: true,
+      isDark: true
     },
     {
       href: 'purple-green.css',
       primary: '#9C27B0',
       accent: '#4CAF50',
-      isDark: true,
+      isDark: true
     },
+    {
+      href: 'denim-yellowgreen.css',
+      primary: '#1074B9',
+      accent: '#B4D575',
+      isDark: false
+    },
+    {
+      href: 'pictonblue-yellowgreen.css',
+      primary: '#1DAEEC',
+      accent: '#B4D575',
+      isDark: false
+    }
   ];
 
   constructor(public themeManagerService: ThemeManagerService,
