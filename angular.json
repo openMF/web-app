@@ -50,6 +50,16 @@
                 "input": "src/theme/purple-green.scss",
                 "bundleName": "theme/purple-green",
                 "lazy": true
+              },
+              {
+                "input": "src/theme/custom/denim-yellowgreen.scss",
+                "bundleName": "theme/denim-yellowgreen",
+                "lazy": true
+              },
+              {
+                "input": "src/theme/custom/pictonblue-yellowgreen.scss",
+                "bundleName": "theme/pictonblue-yellowgreen",
+                "lazy": true
               }
             ],
             "scripts": []
@@ -120,6 +130,16 @@
               {
                 "input": "src/theme/purple-green.scss",
                 "bundleName": "theme/purple-green",
+                "lazy": true
+              },
+              {
+                "input": "src/theme/custom/denim-yellowgreen.scss",
+                "bundleName": "theme/denim-yellowgreen",
+                "lazy": true
+              },
+              {
+                "input": "src/theme/custom/pictonblue-yellowgreen.scss",
+                "bundleName": "theme/pictonblue-yellowgreen",
                 "lazy": true
               }
             ],

@@ -1,0 +1,47 @@
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Custom material palette
+$mat-denim: (
+  100: #5ba2ec,
+  500: #1074b9,
+  700: #004989,
+  contrast: (
+    100: $dark-primary-text,
+    500: $light-primary-text,
+    700: $light-primary-text
+  )
+);
+
+$mat-yellow-green: (
+  100: #e7ffa5,
+  500: #b4d575,
+  700: #83a447,
+  contrast: (
+    100: $dark-primary-text,
+    500: $dark-primary-text,
+    700: $dark-primary-text
+  )
+);
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$mifosx-app-primary: mat-palette($mat-denim);
+$mifosx-app-accent:  mat-palette($mat-yellow-green);
+
+// The warn palette is optional (defaults to red).
+$mifosx-app-warn:    mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$mifosx-app-theme: mat-light-theme($mifosx-app-primary, $mifosx-app-accent, $mifosx-app-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($mifosx-app-theme);
