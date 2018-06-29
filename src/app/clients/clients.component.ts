@@ -23,7 +23,7 @@ export class ClientsComponent implements OnInit {
       this.clientService.getServer()
       .subscribe(
         (res => {
-        console.log(res);
+     //   console.log(res);
         this.ELEMENT_DATA = res;
         this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
         })
