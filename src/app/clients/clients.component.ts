@@ -20,7 +20,7 @@ export class ClientsComponent implements OnInit {
 
   constructor(private clientService: ClientsService) {
       // GET from clients API
-      this.clientService.getServer()
+      this.clientService.getClients()
       .subscribe(
         (res => {
      //   console.log(res);
