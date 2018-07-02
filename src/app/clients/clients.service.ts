@@ -18,7 +18,7 @@ export class ClientsService {
     headers.append('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     headers.append('Access-Control-Allow-Origin', '*');
     return this.http.get
-    ('https://mobile.openmf.org/fineract-provider/api/v1/clients?tenantIdentifier=mobile&pretty=true',
+    ('https://demo.openmf.org/fineract-provider/api/v1/clients?tenantIdentifier=default&pretty=true',
     {headers: headers})
     .pipe(
     map(
@@ -30,7 +30,7 @@ export class ClientsService {
     )
   );
 }
-  getClientId(ide: number) {
+  getClientId(clientId: number) {
     const username = 'mifos';
     const password = 'password';
     const headers = new Headers();   // tslint:disable-line
@@ -39,7 +39,7 @@ export class ClientsService {
     headers.append('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     headers.append('Access-Control-Allow-Origin', '*');
     return this.http.get
-    ('https://mobile.openmf.org/fineract-provider/api/v1/clients/' + ide + '?tenantIdentifier=mobile&pretty=true',
+    ('https://demo.openmf.org/fineract-provider/api/v1/clients/' + clientId + '?tenantIdentifier=default&pretty=true',
     {headers: headers})
     .pipe(
     map(
@@ -52,7 +52,7 @@ export class ClientsService {
   );
   }
 
-  getClientAccounts(ide: number) {
+  getClientAccounts(clientId: number) {
     const username = 'mifos';
     const password = 'password';
     const headers = new Headers();   // tslint:disable-line
@@ -61,8 +61,31 @@ export class ClientsService {
     headers.append('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     headers.append('Access-Control-Allow-Origin', '*');
     return this.http.get
-    ('https://mobile.openmf.org/fineract-provider/api/v1/clients/' + ide
-      + '/accounts' + '?tenantIdentifier=mobile&pretty=true',
+    ('https://demo.openmf.org/fineract-provider/api/v1/clients/' + clientId
+      + '/accounts' + '?tenantIdentifier=default&pretty=true',
+    {headers: headers})
+    .pipe(
+    map(
+        (response: Response) => {  // tslint:disable-line
+          response = response.json();
+          return response;
+
+        }
+    )
+  );
+  }
+
+  getClientCharges(clientId: number) {
+    const username = 'mifos';
+    const password = 'password';
+    const headers = new Headers();   // tslint:disable-line
+    headers.append('Authorization', 'Basic ' + btoa(username + ':' + password));
+    headers.append('Content-Type', 'application/json');
+    headers.append('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    headers.append('Access-Control-Allow-Origin', '*');
+    return this.http.get
+    ('https://demo.openmf.org/fineract-provider/api/v1/clients/' + clientId
+      + '/charges' + '?tenantIdentifier=default&pretty=true',
     {headers: headers})
     .pipe(
     map(

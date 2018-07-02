@@ -9,9 +9,11 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./view-client.component.scss']
 })
 export class ViewClientComponent implements OnInit, OnDestroy {
-  id: number = null;
-  loan: any = null;
-  savings: any = null;
+  id: number = undefined;
+  loanAccounts: any = undefined;
+  savingsAccounts: any = undefined;
+  shareAccounts: any = undefined;
+  upcomingCharges: any = undefined;
   paramsSubscription: Subscription;
 
   constructor(private route: ActivatedRoute, private clientService: ClientsService) {}
@@ -32,11 +34,20 @@ export class ViewClientComponent implements OnInit, OnDestroy {
     this.clientService.getClientAccounts(this.id)
     .subscribe(
       (res => {
-      this.loan = res['loanAccounts'];
-      this.savings = res['savingsAccounts'];
-      console.log(res);
-      console.log(this.loan);
-      console.log(this.savings);
+      this.loanAccounts = res['loanAccounts'];
+      this.savingsAccounts = res['savingsAccounts'];
+      this.shareAccounts = res['shareAccounts'];
+    /*   console.log(res);
+      console.log(this.loanAccounts);
+      console.log(this.savingsAccounts);
+      console.log(this.shareAccounts); */
+      })
+    );
+    this.clientService.getClientCharges(this.id)
+    .subscribe(
+      (res => {
+      this.upcomingCharges = res['pageItems'];
+      console.log(this.upcomingCharges);
       })
     );
   }
