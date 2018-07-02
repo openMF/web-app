@@ -12,4 +12,8 @@ export class ViewUserComponent implements OnInit {
   ngOnInit() {
   }
 
+  openDialog() {
+    // TODO: Change Password Dialog
+  }
+
 }

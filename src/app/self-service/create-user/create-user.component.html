@@ -1,122 +1,140 @@
-<!-- <div class="fluid-container">
-  <div class="container">
-    <div class="card mt-5">
-      <div class="card-header">
-          <h3 class="font-weight-bold">Create User</h3>
-      </div>
-      <div class="card-body">
-          <div class="row mb-3">
-            <div class="col-sm-12">
-                    <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" (change)="isCollapsed = false" checked>
-                      <label class="custom-control-label" for="customRadio1">Existing User</label>
-                    </div>
-                  <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" (change)="isCollapsed = true">
-                    <label class="custom-control-label" for="customRadio2">New User</label>
-                  </div>
-            </div>
-          </div>
-          <div id="collapseExample">
-              <div class="row">
-                <div class="offset-sm-1 col-sm-5 my-3">
-                    <select class="custom-select">
-                        <option selected>Office</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
-                </div>
-              </div>
-              <div class="row">
-                  <div class="offset-sm-1 col-sm-5 my-3">
-                      <select class="custom-select">
-                          <option selected>Staff</option>
-                          <option value="1">One</option>
-                          <option value="2">Two</option>
-                          <option value="3">Three</option>
-                        </select>
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="offset-sm-1 col-sm-5 my-3">
-                      <select class="custom-select">
-                          <option selected>Client</option>
-                          <option value="1">One</option>
-                          <option value="2">Two</option>
-                          <option value="3">Three</option>
-                        </select>
-                  </div>
-              </div>
-              <div class="row">
-                <div class="offset-sm-1 col-sm-5">
-                    <button type="button" class="btn btn-success my-sm-4 btn-block"><i class="fas fa-unlock mr-2"></i>Activate Self Service User</button>
-                </div>
-              </div>
-          </div>
+<mat-card class="container m-t-40">
 
-          <div id="collapseExample">
-              <div class="row">
-                <div class="offset-sm-1 col-sm-4 my-3">
-                    <select class="custom-select">
-                        <option selected>Office</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
-                </div>
-                <div class="offset-sm-1 col-sm-4 my-3">
-                    <select class="custom-select">
-                        <option selected>Staff</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
-                </div>
-              </div>
-              <div class="row">
-                  <div class="offset-sm-1 col-sm-4 my-3">
-                      <input class="form-control mr-sm-2 mb-sm-2" placeholder="Username" type="text">
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="offset-sm-1 col-sm-4 my-3">
-                      <input class="form-control mr-sm-2 mb-sm-2" placeholder="First Name" type="text">
-                  </div>
-                  <div class="offset-sm-1 col-sm-4 my-3">
-                      <input class="form-control mr-sm-2 mb-sm-2" placeholder="Last Name" type="text">
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="offset-sm-1 col-sm-4 my-3">
-                      <select class="custom-select">
-                          <option selected>Gender</option>
-                          <option value="1">Male</option>
-                          <option value="2">Female</option>
-                        </select>
-                  </div>
-                  <div class="offset-sm-1 col-sm-4 my-3">
-                      <input class="form-control mr-sm-2 mb-sm-2" placeholder="Date of Birth" type="text">
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="offset-sm-1 col-sm-4 my-3">
-                      <input class="form-control mr-sm-2 mb-sm-2" placeholder="Email" type="text">
-                  </div>
-                  <div class="offset-sm-1 col-sm-4 my-3">
-                      <input class="form-control mr-sm-2 mb-sm-2" placeholder="Mobile No" type="text">
-                  </div>
-              </div>
-              <div class="row">
-                <div class="offset-sm-3 col-sm-2">
-                    <button type="button" class="btn btn-default my-sm-2 btn-block">Cancel</button>
-                </div>
-                <div class="offset-sm-1 col-sm-2">
-                    <button type="button" class="btn btn-primary my-sm-2 btn-block">Submit</button>
-                </div>
-              </div>
-          </div>
-      </div>
-    </div>
-  </div>
-</div> -->
+  <mat-card-header>
+    <mat-radio-group class="example-radio-group" [(ngModel)]="currentUserType" fxLayout="row" fxLayoutGap="50px">
+      <mat-radio-button class="example-radio-button" *ngFor="let userType of userTypes" [value]="userType">
+        {{ userType }}
+      </mat-radio-button>
+    </mat-radio-group>
+  </mat-card-header>
+
+  <ng-container *ngIf="currentUserType === 'Existing User'">
+
+    <mat-card-content class="m-t-20">
+
+      <form fxLayout="column" fxLayoutGap="10px">
+        <mat-form-field>
+          <mat-select placeholder="Office">
+            <mat-option *ngFor="let office of officeData" [value]="office.value">
+              {{ office.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Staff">
+            <mat-option *ngFor="let staff of staffData" [value]="staff.value">
+              {{ staff.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Client">
+            <mat-option *ngFor="let client of clientData" [value]="client.value">
+              {{ client.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+
+    </mat-card-content>
+
+    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <button mat-raised-button color="primary"><mat-icon>lock_open</mat-icon>&nbsp;&nbsp;Activate Self Service User</button>
+      <button mat-raised-button>Cancel</button>
+    </mat-card-actions>
+
+  </ng-container>
+
+  <ng-container *ngIf="currentUserType === 'New User'">
+
+    <mat-card-content class="m-t-20">
+
+      <form>
+        <mat-grid-list cols="2" rowHeight="80px"> <!-- TODO: Dynamic columns to make responsive and hide the blank tile or find some other way -->
+
+          <mat-grid-tile>
+            <mat-form-field fxFlex class="m-10">
+              <mat-select placeholder="Office">
+                <mat-option *ngFor="let office of officeData" [value]="office.value">
+                  {{ office.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-form-field fxFlex class="m-10">
+              <mat-select placeholder="Staff">
+                <mat-option *ngFor="let staff of staffData" [value]="staff.value">
+                  {{ staff.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-form-field fxFlex class="m-10">
+              <input matInput placeholder="Username">
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-form-field fxFlex class="m-10">
+              <input matInput placeholder="First Name">
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-form-field fxFlex class="m-10">
+              <input matInput placeholder="Last Name">
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-form-field fxFlex class="m-10">
+              <mat-select placeholder="Gender">
+                <mat-option *ngFor="let gender of genderData" [value]="gender.value">
+                  {{ gender.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-form-field fxFlex class="m-10">
+              <input matInput [matDatepicker]="picker" placeholder="Date of Birth">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-form-field fxFlex class="m-10">
+              <input matInput placeholder="Email">
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-form-field fxFlex class="m-10">
+                <input matInput placeholder="Mobile No">
+            </mat-form-field>
+          </mat-grid-tile>
+
+        </mat-grid-list>
+
+      </form>
+
+    </mat-card-content>
+
+    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <button mat-raised-button color="primary"><mat-icon>create</mat-icon>&nbsp;&nbsp;Create Self Service User</button>
+      <button mat-raised-button>Cancel</button>
+    </mat-card-actions>
+
+  </ng-container>
+
+</mat-card>

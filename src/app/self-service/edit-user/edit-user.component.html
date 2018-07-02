@@ -1,0 +1,94 @@
+<mat-card class="container m-t-40">
+
+  <mat-card-header>
+  </mat-card-header>
+
+  <mat-card-content class="m-t-20">
+
+    <form>
+      <mat-grid-list cols="2" rowHeight="80px"> <!-- TODO: Dynamic columns to make responsive and hide the blank tile or find some other way -->
+
+        <mat-grid-tile>
+          <mat-form-field fxFlex class="m-10">
+            <mat-select placeholder="Office">
+              <mat-option *ngFor="let office of officeData" [value]="office.value">
+                {{ office.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field fxFlex class="m-10">
+            <mat-select placeholder="Staff">
+              <mat-option *ngFor="let staff of staffData" [value]="staff.value">
+                {{ staff.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field fxFlex class="m-10">
+            <input matInput placeholder="Username">
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field fxFlex class="m-10">
+            <input matInput placeholder="First Name">
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field fxFlex class="m-10">
+            <input matInput placeholder="Last Name">
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field fxFlex class="m-10">
+            <mat-select placeholder="Gender">
+              <mat-option *ngFor="let gender of genderData" [value]="gender.value">
+                {{ gender.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field fxFlex class="m-10">
+            <input matInput [matDatepicker]="picker" placeholder="Date of Birth">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field fxFlex class="m-10">
+            <input matInput placeholder="Email">
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field fxFlex class="m-10">
+              <input matInput placeholder="Mobile No">
+          </mat-form-field>
+        </mat-grid-tile>
+
+      </mat-grid-list>
+
+    </form>
+
+  </mat-card-content>
+
+  <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+    <button mat-raised-button color="primary">Submit</button>
+    <button mat-raised-button>Cancel</button>
+  </mat-card-actions>
+
+</mat-card>
