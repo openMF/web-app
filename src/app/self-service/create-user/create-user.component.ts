@@ -8,6 +8,12 @@ import { Component, OnInit } from '@angular/core';
 export class CreateUserComponent implements OnInit {
 
   isCollapsed = false;
+  userTypes = ['Existing User', 'New User'];
+  currentUserType = this.userTypes[0];
+  officeData: string[];
+  staffData: string[];
+  clientData: string[];
+  genderData: string[];
 
   constructor() { }
 

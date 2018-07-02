@@ -35,7 +35,8 @@ import {  MatCheckboxModule,
           MatTableModule,
           MatSortModule,
           MatPaginatorModule,
-          MatDividerModule, } from '@angular/material';
+          MatDividerModule,
+          MatNativeDateModule} from '@angular/material';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -72,6 +73,7 @@ import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
     MatInputModule,
     MatAutocompleteModule,
     MatDatepickerModule,
+    MatNativeDateModule,
     MatFormFieldModule,
     MatRadioModule,
     MatSelectModule,
@@ -97,8 +99,7 @@ import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatDividerModule,
-
+    MatDividerModule
   ],
   declarations: [
     ShellComponent,
@@ -117,6 +118,7 @@ import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
     MatInputModule,
     MatAutocompleteModule,
     MatDatepickerModule,
+    MatNativeDateModule,
     MatFormFieldModule,
     MatRadioModule,
     MatSelectModule,
@@ -142,7 +144,7 @@ import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatDividerModule,
+    MatDividerModule
   ],
   providers: [
     AuthenticationService,

@@ -1,79 +1,102 @@
-<!-- <div class="fluid-container">
-  <div class="container">
-    <div class="card mt-5">
-      <div class="card-header">
-          <h3 class="font-weight-bold">Users > Abhay Chawla</h3>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-sm-3 ml-2">
-              <h5>
-                <i class="fas fa-stop" style="color: #00ce00" placement="top" ngbTooltip="Active"></i>
-                User ID: 24651
-              </h5>
-          </div>
-        </div>
-        <div class="row">
-            <div class="offset-sm-6 col-sm-1">
-                <button type="button" class="btn btn-primary my-sm-2"><i class="fas fa-edit mr-2"></i>Edit</button>
-            </div>
-            <div class="col-sm-3">
-                <button type="button" class="btn btn-default my-sm-2 float-right"><i class="fas fa-cog mr-2"></i>Change Password</button>
-            </div>
-            <div class="col-sm-2">
-                <button type="button" class="btn btn-danger my-sm-2 float-right"><i class="fas fa-lock mr-2"></i>Deactivate</button>
-            </div>
-        </div>
-        <div class="row mt-2">
-          <div class="col-sm-6">
-            <table class="table table-striped">
+<mat-card class="container m-t-40">
 
-                <tbody>
-                  <tr>
-                    <th scope="row">Username</th>
-                    <td>username</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">First Name</th>
-                    <td>fname</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Last Name</th>
-                    <td>lname</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Gender</th>
-                    <td>gender</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Date of Birth</th>
-                    <td>01/01/2018</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Email</th>
-                    <td>email@gmail.com</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Mobile No</th>
-                    <td>1234567890</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Office</th>
-                    <td>Head Office</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Staff</th>
-                    <td>Smith W</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Activation Date</th>
-                    <td>12/03/2018</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
+  <mat-card-header>
+    <mat-icon matTooltip="Status" matTooltipPosition="above">lens</mat-icon>&nbsp;&nbsp;User ID: 123456
+  </mat-card-header>
+
+  <mat-card-actions align="right">
+    <button mat-raised-button color="primary" routerLink="/self-service/users/edit"><mat-icon>edit</mat-icon>&nbsp;&nbsp;Edit</button>
+    <button mat-raised-button color="primary" (click)="openDialog()"><mat-icon>settings</mat-icon>&nbsp;&nbsp;Change Password</button>
+    <button mat-raised-button color="primary"><mat-icon>lock</mat-icon>&nbsp;&nbsp;Deactivate</button>
+  </mat-card-actions>
+
+  <mat-card-content>
+
+    <mat-grid-list cols="2" rowHeight="40px" style="width: 600px;">
+
+      <mat-grid-tile>
+        Username
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        abhaychawla
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        First Name
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        Abhay
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        Last Name
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        Chawla
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        Gender
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        Male
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        Date of Birth
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        18/06/1997
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        Email
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        abhay.chawla97@gmail.com
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        Mobile
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        9871105236
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        Office
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        Head Office
+      </mat-grid-tile>
+
+
+      <mat-grid-tile>
+        Staff
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        Smith W
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        Activation Date
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        12/03/2018
+      </mat-grid-tile>
+
+    </mat-grid-list>
+
+  </mat-card-content>
+
+</mat-card>

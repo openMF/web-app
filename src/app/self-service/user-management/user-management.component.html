@@ -1,176 +1,85 @@
-SELF SERVICE USER MANAGEMENT
-<!-- <div class="fluid-container">
- <div class="container">
-  <div class="card mt-5">
-    <div class="card-header">
-        <h3 class="font-weight-bold">Users</h3>
-        <div class="row">
-          <div class="col-sm-10">
-            <div class="row">
-              <div class="col-sm-6">
-                <input class="form-control mr-sm-2" placeholder="Search" type="text">
-              </div>
-              <div class="col-sm-2">
-                <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"><i class="fas fa-chevron-down mr-2"></i>
-                  Parameters
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-2">
-            <div class="float-right">
-              <button type="button" class="btn btn-primary btn-large" routerLink="/self-service/users/create" routerLinkActive="active"><i class="fas fa-plus mr-2"></i>Create User</button>
-            </div>
-          </div>
-        </div>
-          <div id="collapseExample">
-            <div class="row">
-              <div class="col-sm-4">
-                  <input class="form-control mr-sm-2 mb-sm-2" placeholder="Name" type="text">
-              </div>
-              <div class="col-sm-4">
-                  <input class="form-control mr-sm-2 mb-sm-2" placeholder="User ID" type="text">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-4">
-                  <input class="form-control mr-sm-2 mb-sm-2" placeholder="Staff" type="text">
-              </div>
-              <div class="col-sm-4">
-                  <input class="form-control mr-sm-2 mb-sm-2" placeholder="Office" type="text">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-4">
-                  <input class="form-control mr-sm-2 mb-sm-2" placeholder="Activation Date" type="text">
-              </div>
-              <div class="col-sm-4">
-                <div class="row">
-                  <div class="col-sm-6">
-                      <button type="button" class="btn btn-primary mb-sm-2">Advance Search</button>
-                  </div>
-                  <div class="col-sm-3">
-                      <button type="button" class="btn btn-outline-primary mb-sm-2">Reset</button>
-                  </div>
-                  <div class="col-sm-3">
-                    <button type="button" class="btn btn-outline-primary float-right mb-sm-2" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"><i class="fas fa-chevron-up"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
-    </div>
-    <div class="card-body">
+<mat-card class="container m-t-40">
 
-        <table class="table table-hover table-responsive-md table-fixed">
+  <!-- <mat-card-header> -->
 
-            <thead>
-                <tr>
-                    <th>
-                      <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck">
-                        <label class="custom-control-label" for="customCheck">&nbsp;</label>
-                      </div>
-                    </th>
-                    <th>Name</th>
-                    <th>User ID</th>
-                    <th>Status</th>
-                    <th>Office</th>
-                    <th>Staff</th>
-                </tr>
-            </thead>
+    <mat-grid-list cols="2" rowHeight="80px">
 
-            <tbody>
-                <tr>
-                    <th scope="row">
-                          <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" id="customCheck1">
-                              <label class="custom-control-label" for="customCheck1">&nbsp;</label>
-                            </div>
-                    </th>
-                    <td>Data</td>
-                    <td>Data</td>
-                    <td><i class="fas fa-stop" style="color: #00ce00" placement="top"></i></td>
-                    <td>Data</td>
-                    <td>Data</td>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+      </mat-grid-tile>
 
-                </tr>
-                <tr>
-                    <th scope="row">
-                      <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck2">
-                        <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                      </div>
-                    </th>
-                    <td>Data</td>
-                    <td>Data</td>
-                    <td><i class="fas fa-stop" style="color: #00ce00" placement="top"></i></td>
-                    <td>Data</td>
-                    <td>Data</td>
+      <mat-grid-tile>
+        <mat-card-actions>
+            <button mat-raised-button color="primary"><mat-icon>lock_open</mat-icon>&nbsp;&nbsp;Activate</button>
+            <button mat-raised-button color="primary"><mat-icon>lock</mat-icon>&nbsp;&nbsp;Deactivate</button>
+            <button mat-raised-button color="primary" routerLink="/self-service/users/create"><mat-icon>add</mat-icon>&nbsp;&nbsp;Create User</button>
+        </mat-card-actions>
+      </mat-grid-tile>
 
-                </tr>
-                <tr>
-                    <th scope="row">
-                      <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck3">
-                        <label class="custom-control-label" for="customCheck3">&nbsp;</label>
-                      </div>
-                    </th>
-                    <td>Data</td>
-                    <td>Data</td>
-                    <td><i class="fas fa-stop" style="color: #00ce00" placement="top"></i></td>
-                    <td>Data</td>
-                    <td>Data</td>
+    </mat-grid-list>
 
-                </tr>
-                <tr>
-                    <th scope="row">
-                      <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck4">
-                        <label class="custom-control-label" for="customCheck4">&nbsp;</label>
-                      </div>
-                    </th>
-                    <td>Data</td>
-                    <td>Data</td>
-                    <td><i class="fas fa-stop" placement="top"></i></td>
-                    <td>Data</td>
-                    <td>Data</td>
+  <!-- </mat-card-header> -->
 
-                </tr>
-                <tr>
-                    <th scope="row">
-                      <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck5">
-                        <label class="custom-control-label" for="customCheck5">&nbsp;</label>
-                      </div>
-                    </th>
-                    <td>Data</td>
-                    <td>Data</td>
-                    <td><i class="fas fa-stop" placement="top"></i></td>
-                    <td>Data</td>
-                    <td>Data</td>
+  <mat-card-content class="mat-elevation-z8">
 
-                </tr>
-                <tr>
-                    <th scope="row">
-                      <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck6">
-                        <label class="custom-control-label" for="customCheck6">&nbsp;</label>
-                      </div>
-                    </th>
-                    <td>Data</td>
-                    <td>Data</td>
-                    <td><i class="fas fa-stop" style="color: #00ce00" placement="top"></i></td>
-                    <td>Data</td>
-                    <td>Data</td>
+    <mat-table [dataSource]="dataSource" matSort>
 
-                </tr>
-            </tbody>
+      <ng-container matColumnDef="select">
+        <mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
 
-        </table>
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{ user.name }} </mat-cell>
+      </ng-container>
 
-      </div>
-    </div>
-  </div>
-</div> -->
+      <ng-container matColumnDef="userID">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> User ID </mat-header-cell>
+        <mat-cell *matCellDef="let user">{{ user.userID }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="emailID">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Email ID </mat-header-cell>
+        <mat-cell *matCellDef="let user">{{ user.emailID }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+        <mat-cell *matCellDef="let user">
+          <mat-icon matTooltip="{{ user.status }}" matTooltipPosition="right">lens</mat-icon>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="office">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Office </mat-header-cell>
+        <mat-cell *matCellDef="let user">{{ user.office }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="staff">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Staff </mat-header-cell>
+        <mat-cell *matCellDef="let user">{{ user.staff }}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></mat-row>
+
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+  </mat-card-content>
+
+</mat-card>
