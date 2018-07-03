@@ -163,18 +163,63 @@
     <div fxLayout="row" fxLayoutGap="20px">
         <div fxFlex="30%" ><mat-card class="example-card">
             <mat-card-header>
-              <div mat-card-avatar class="example-header-image"></div>
-              <mat-card-title>Shiba Inu</mat-card-title>
-              <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+              <mat-card-title><h3>{{clientInfo.displayName}}</h3></mat-card-title>
+              <mat-card-subtitle> </mat-card-subtitle>
             </mat-card-header>
             <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-            <mat-card-content>
-              <p>
-                The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-                A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-                bred for hunting.
-              </p>
+            <mat-card-content  class="border">
+                
+                <table>
+                    <tr>
+                      <th>Name:</th>
+                      <td>{{clientInfo.displayName}}</td>
+                    </tr>
+                    <tr>
+                      <th>Activation date</th>
+                      <td>{{clientInfo.activationDate}}</td>
+                    </tr>
+                   
+                    <tr>
+                      <th>Member</th>
+                      <td>{{clientInfo.groupNames}}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Is Staff</th>
+                        <td>{{clientInfo.isStaff}}</td>
+                      </tr>
+
+                      <tr>
+                        <th>Mobile No</th>
+                        <td>{{clientInfo.mobileNo}}</td>
+                      </tr>
+                      <tr>
+                        <th>Mobile No</th>
+                        <td>{{clientInfo.mobileNo}}</td>
+                      </tr>
+                      <tr>
+                        <th>Gender</th>
+                        <td>{{clientInfo.gender.name }}</td>
+                      </tr>
+                      <tr>
+                        <th>Client Type</th>
+                        <td>{{clientInfo.clientType.name}}</td>
+                      </tr>
+                      <tr>
+                        <th>Client Classification</th>
+                        <td>{{clientInfo.clientClassification.name}}</td>
+                      </tr>
+                   
+                      <tr>
+                        <th>Date of Birth</th>
+                        <td>{{clientInfo.dateOfBirth}}</td>
+                      </tr>
+                   
+                     
+                   
+                  </table>
             </mat-card-content>
+
             <mat-card-actions>
               <button mat-button>LIKE</button>
               <button mat-button>SHARE</button>

@@ -14,6 +14,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   savingsAccounts: any = undefined;
   shareAccounts: any = undefined;
   upcomingCharges: any = undefined;
+  clientInfo: any = undefined;
   paramsSubscription: Subscription;
 
   constructor(private route: ActivatedRoute, private clientService: ClientsService) {}
@@ -28,7 +29,19 @@ export class ViewClientComponent implements OnInit, OnDestroy {
     this.clientService.getClientId(this.id)
       .subscribe(
         (res => {
-       // console.log(res);
+          const groupArray = new Array;
+          this.clientInfo = res;
+          this.clientInfo.dateOfBirth = this.clientInfo.dateOfBirth.reverse().join('-');
+          this.clientInfo.activationDate = this.clientInfo.activationDate.reverse().join('-');
+
+          this.clientInfo.groups.forEach(function (item: any) {
+            groupArray.push(item.name);
+            console.log(item.name);
+        });
+          this.clientInfo.groupNames = groupArray.join('|');
+
+       console.log( this.clientInfo.groupNames);
+  //     console.log(res['dateOfBirth'][1]);
         })
       );
     this.clientService.getClientAccounts(this.id)
@@ -47,7 +60,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
     .subscribe(
       (res => {
       this.upcomingCharges = res['pageItems'];
-      console.log(this.upcomingCharges);
+    //  console.log(this.upcomingCharges);
       })
     );
   }

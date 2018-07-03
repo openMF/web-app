@@ -14,5 +14,16 @@
     border-left-width: 0;
     border-radius: 0;
    }
+
+   th {
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: left;
+    padding: 6px 3px 6px;
+  }
+
  
- 
+   tr {
+    word-wrap: break-word;
+    padding: 6px 0px 6px;
+   }
