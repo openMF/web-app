@@ -23,6 +23,7 @@ import { AccountingModule } from './accounting/accounting.module';
 import { SelfServiceModule } from './self-service/self-service.module';
 
 import { AppRoutingModule } from './app-routing.module';
+import { SettingsModule } from './settings/settings.module';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import { AppRoutingModule } from './app-routing.module';
     ClientsModule,
     AccountingModule,
     SelfServiceModule,
+    SettingsModule,
     AppRoutingModule
   ],
   declarations: [WebAppComponent],

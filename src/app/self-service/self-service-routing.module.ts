@@ -6,6 +6,7 @@ import { UserManagementComponent } from './user-management/user-management.compo
 import { CreateUserComponent } from './create-user/create-user.component';
 import { ViewUserComponent } from './view-user/view-user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
+import { AppConfigurationComponent } from './app-configuration/app-configuration.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -28,6 +29,11 @@ const routes: Routes = [
       path: 'self-service/users/edit',
       component: EditUserComponent,
       data: { title: extract('Edit Self Service User'), breadcrumb: 'Self Service Users  >  Edit' },
+    },
+    {
+      path: 'self-service/app-configuration',
+      component: AppConfigurationComponent,
+      data: { title: extract('App Configuration'), breadcrumb: 'App Configuration' },
     }
   ])
 ];
