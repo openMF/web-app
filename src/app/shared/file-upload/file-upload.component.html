@@ -1,0 +1,6 @@
+<button mat-button (click)="inputFile.click()">
+  <mat-icon>file_upload</mat-icon>
+  Upload an image
+</button>
+{{ filename }}
+<input type="file" #inputFile (change)="onFileSelected($event)" [style.display]="'none'" />

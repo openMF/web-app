@@ -1,0 +1,142 @@
+<mat-card class="container">
+
+  <mat-accordion>
+
+    <mat-expansion-panel>
+
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Main Configuration
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div fxLayout="column">
+
+        <mat-form-field>
+          <input matInput placeholder="Name of the Organisation">
+        </mat-form-field>
+
+        <mat-form-field>
+          <textarea matInput placeholder="Description"></textarea>
+        </mat-form-field>
+
+        <mat-form-field>
+          <textarea matInput placeholder="Summary"></textarea>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="Default Language">
+            <mat-option *ngFor="let language of languages" [value]="language.value">
+              {{ language.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="Default Date Format">
+            <mat-option *ngFor="let dateFormat of dateFormats" [value]="dateFormat.value">
+              {{ dateFormat.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Images
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div fxLayout="column">
+
+        Favicon <mifosx-file-upload></mifosx-file-upload>
+        Cover Image <mifosx-file-upload></mifosx-file-upload>
+        Logo <mifosx-file-upload></mifosx-file-upload>
+        Logo with Organisation Name <mifosx-file-upload></mifosx-file-upload>
+
+      </div>
+
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Theme and Font
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div fxLayout="column">
+
+        Mobile Banking App
+        <mat-form-field>
+          <mat-select placeholder="Default Theme">
+            <mat-option *ngFor="let theme of mobileAppThemes" [value]="theme.value">
+              {{ theme.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="Default Font">
+            <mat-option *ngFor="let font of mobileAppFonts" [value]="font.value">
+              {{ font.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        Online Banking App
+        <mat-form-field>
+          <mat-select placeholder="Default Theme">
+            <mat-option *ngFor="let theme of onlineBankingAppThemes" [value]="theme.value">
+              {{ theme.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="Default Font">
+            <mat-option *ngFor="let font of onlineBankingAppFonts" [value]="font.value">
+              {{ font.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Contact Information
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div fxLayout="column">
+
+        <mat-form-field>
+          <input type="url" matInput placeholder="Website">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input type="email" matInput placeholder="Email">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input type="tel" matInput placeholder="Contact No">
+        </mat-form-field>
+
+      </div>
+
+    </mat-expansion-panel>
+
+  </mat-accordion>
+
+</mat-card>

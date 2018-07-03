@@ -144,7 +144,8 @@ import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatDividerModule
+    MatDividerModule,
+    ThemePickerComponent
   ],
   providers: [
     AuthenticationService,

@@ -8,19 +8,23 @@ import { UserManagementComponent } from './user-management/user-management.compo
 import { CreateUserComponent } from './create-user/create-user.component';
 import { ViewUserComponent } from './view-user/view-user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
+import { AppConfigurationComponent } from './app-configuration/app-configuration.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     CoreModule,
     FormsModule,
+    SharedModule,
     SelfServiceRoutingModule
   ],
   declarations: [
     UserManagementComponent,
     CreateUserComponent,
     ViewUserComponent,
-    EditUserComponent
+    EditUserComponent,
+    AppConfigurationComponent
   ],
   schemas: [
    CUSTOM_ELEMENTS_SCHEMA

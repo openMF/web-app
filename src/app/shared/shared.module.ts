@@ -2,16 +2,21 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { LoaderComponent } from './loader/loader.component';
+import { FileUploadComponent } from './file-upload/file-upload.component';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    CoreModule
   ],
   declarations: [
-    LoaderComponent
+    LoaderComponent,
+    FileUploadComponent
   ],
   exports: [
-    LoaderComponent
+    LoaderComponent,
+    FileUploadComponent
   ]
 })
 export class SharedModule { }
