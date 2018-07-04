@@ -2,6 +2,8 @@ import { ClientsService } from 'app/clients/clients.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { DataSource } from '@angular/cdk/collections';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'mifosx-view-client',
@@ -16,6 +18,18 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   upcomingCharges: any = undefined;
   clientInfo: any = undefined;
   paramsSubscription: Subscription;
+  post: any = [];
+  private LOAN_DATA: any = undefined;
+  private SAVINGS_DATA: any = undefined;
+  private SHARES_DATA: any = undefined;
+  displayedLoanColumns =  ['account', 'loanAccount', 'originalLoan', 'loanBalance', 'amountPaid', 'type'];
+  displayedSavingsColumns =  ['account', 'savingsAccount', 'lastActive', 'balance'];
+  displayedSharesColumns =  ['account', 'shareAccount', 'approvedShares', 'pending'];
+
+  dataSourceLoan = new MatTableDataSource();
+  dataSourceSavings = new MatTableDataSource();
+  dataSourceShares = new MatTableDataSource();
+
 
   constructor(private route: ActivatedRoute, private clientService: ClientsService) {}
 
@@ -50,7 +64,18 @@ export class ViewClientComponent implements OnInit, OnDestroy {
       this.loanAccounts = res['loanAccounts'];
       this.savingsAccounts = res['savingsAccounts'];
       this.shareAccounts = res['shareAccounts'];
-    /*   console.log(res);
+     // this.savingsAccounts.lastActiveTransactionDate = this.savingsAccounts
+      //                                                 .lastActiveTransactionDate.reverse().join('-');
+      console.log(this.savingsAccounts.lastActiveTransactionDate);
+      this.LOAN_DATA  = this.loanAccounts;
+      this.SAVINGS_DATA = this.savingsAccounts;
+      this.SHARES_DATA = this.shareAccounts;
+      this.dataSourceLoan = new MatTableDataSource(this.LOAN_DATA);
+      this.dataSourceSavings = new MatTableDataSource(this.SAVINGS_DATA);
+      this.dataSourceShares =  new MatTableDataSource(this.SHARES_DATA);
+
+    /*
+      console.log(res);
       console.log(this.loanAccounts);
       console.log(this.savingsAccounts);
       console.log(this.shareAccounts); */
