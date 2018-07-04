@@ -59,10 +59,13 @@
           </mat-card>
           </div >
         <div fxFlex="70%">
-            <div class="mat-elevation-z8 m-b-20">
+            <div class="mat-elevation-z8 m-b-55">
 
                     <!-- LOAN TABLE -->
-
+                    <mat-toolbar>
+                            <span><h4>Loan Account Overview</h4> </span>
+                    </mat-toolbar>
+                          
                     <table mat-table [dataSource]="dataSourceLoan" matSort>
                 
                         <!-- Name Column -->
@@ -112,7 +115,10 @@
             </div>   
             <!-- SAVINGS TABLE -->
 
-            <div class="mat-elevation-z8 m-b-20">
+            <div class="mat-elevation-z8 m-b-55">
+                    <mat-toolbar>
+                            <span><h4>Savings Account Overview</h4> </span>
+                    </mat-toolbar>
                     <table mat-table [dataSource]="dataSourceSavings" matSort>
                 
                         <!-- Name Column -->
@@ -152,9 +158,12 @@
 
               <!-- SHARES TABLE -->
 
-              <div class="mat-elevation-z8 m-b-20">
+              <div class="mat-elevation-z8 m-b-55">
+                    <mat-toolbar>
+                            <span><h4>Shares Account Overview</h4> </span>
+                    </mat-toolbar>
                     <table mat-table [dataSource]="dataSourceShares" matSort>
-                
+                      
                         <!-- Name Column -->
                         <ng-container matColumnDef="account">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Account #  </th>
