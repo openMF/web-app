@@ -1,161 +1,203 @@
-<!-- <div class="fluid-container">
-  <div class="container">
-    <div class="row">
+<div class="container m-t-40 m-b-40">
+    <div fxLayout="row" fxLayoutGap="20px">
+        <div fxFlex="30%" ><mat-card class="example-card">
+            <mat-card-header>
+              <mat-card-title><h3>{{clientInfo.displayName}}</h3></mat-card-title>
+              <mat-card-subtitle> </mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+            <mat-card-content  class="border">
+                
+                <table>
+                    <tr>
+                      <th>Name:</th>
+                      <td>{{clientInfo.displayName}}</td>
+                    </tr>
+                    <tr>
+                      <th>Activation date</th>
+                      <td>{{clientInfo.activationDate}}</td>
+                    </tr>
+                   
+                    <tr>
+                      <th>Member</th>
+                      <td>{{clientInfo.groupNames}}</td>
+                    </tr>
 
-      <div class="col-sm-4">
-          <div class="card mt-5 mb-5">
-              <h3 class="card-header">Client Information</h3>
-              <div class="card-body">
-                <h5 class="card-title">Name</h5>
-                <h6 class="card-subtitle text-muted">Other details</h6>
-              </div>
-              <img style="height: 200px; width: 100%; display: block;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22318%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20318%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_158bd1d28ef%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A16pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_158bd1d28ef%22%3E%3Crect%20width%3D%22318%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22129.359375%22%20y%3D%2297.35%22%3EImage%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Card image">
-              <div class="card-body">
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              </div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">Cras justo odio</li>
-                <li class="list-group-item">Dapibus ac facilisis in</li>
-                <li class="list-group-item">Vestibulum at eros</li>
-              </ul>
-              <div class="card-body">
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
-              </div>
-              <div class="card-footer text-muted">
-                2 days ago
-              </div>
-            </div>
+                    <tr>
+                        <th>Is Staff</th>
+                        <td>{{clientInfo.isStaff}}</td>
+                      </tr>
 
-      </div>
+                      <tr>
+                        <th>Mobile No</th>
+                        <td>{{clientInfo.mobileNo}}</td>
+                      </tr>
 
+                      <tr>
+                        <th>Gender</th>
+                        <td>{{clientInfo.gender.name }}</td>
+                      </tr>
+                      <tr>
+                        <th>Client Type</th>
+                        <td>{{clientInfo.clientType.name}}</td>
+                      </tr>
+                      <tr>
+                        <th>Client Classification</th>
+                        <td>{{clientInfo.clientClassification.name}}</td>
+                      </tr>
+                   
+                      <tr>
+                        <th>Date of Birth</th>
+                        <td>{{clientInfo.dateOfBirth}}</td>
+                      </tr>
+                   
+                     
+                   
+                  </table>
+            </mat-card-content>
 
-      <div class="col-sm-8">
-          <div class="card mt-5 mb-5">
-              <div class="card-header">Loan table</div>
-                 <div class="card-body">
-                    <table class="table table-hover table-responsive-md table-fixed">
+          </mat-card>
+          </div >
+        <div fxFlex="70%">
+            <div class="mat-elevation-z8 m-b-55">
 
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Surname</th>
-                                <th>Country</th>
-                                <th>City</th>
-                                <th>Position</th>
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>Jerry</td>
-                                <td>Horwitz</td>
-                                <td>Italy</td>
-                                <td>Bari</td>
-                                <td>Editor-in-chief</td>
-
-                            </tr>
-                            <tr>
-                                <th scope="row">5</th>
-                                <td>Janis</td>
-                                <td>Joplin</td>
-                                <td>Poland</td>
-                                <td>Warsaw</td>
-                                <td>Video Maker</td>
-
-                            </tr>
-                            <tr>
-                                <th scope="row">6</th>
-                                <td>Gary</td>
-                                <td>Winogrand</td>
-                                <td>Germany</td>
-                                <td>Berlin</td>
-                                <td>Photographer</td>
-
-                            </tr>
-                            <tr>
-                                <th scope="row">7</th>
-                                <td>Angie</td>
-                                <td>Smith</td>
-                                <td>USA</td>
-                                <td>San Francisco</td>
-                                <td>Teacher</td>
-
-                            </tr>
-                            <tr>
-                                <th scope="row">8</th>
-                                <td>John</td>
-                                <td>Mattis</td>
-                                <td>France</td>
-                                <td>Paris</td>
-                                <td>Actor</td>
-
-                            </tr>
-                            <tr>
-                                <th scope="row">9</th>
-                                <td>Otto</td>
-                                <td>Morris</td>
-                                <td>Germany</td>
-                                <td>Munich</td>
-                                <td>Singer</td>
-
-                            </tr>
-                            <tr>
-                                <th scope="row">9</th>
-                                <td>Otto</td>
-                                <td>Morris</td>
-                                <td>Germany</td>
-                                <td>Munich</td>
-                                <td>Singer</td>
-
-                            </tr>
-                            <tr>
-                                <th scope="row">9</th>
-                                <td>Otto</td>
-                                <td>Morris</td>
-                                <td>Germany</td>
-                                <td>Munich</td>
-                                <td>Singer</td>
-
-                            </tr>
-                            <tr>
-                                <th scope="row">9</th>
-                                <td>Otto</td>
-                                <td>Morris</td>
-                                <td>Germany</td>
-                                <td>Munich</td>
-                                <td>Singer</td>
-
-                            </tr>
-                            <tr>
-                                <th scope="row">9</th>
-                                <td>Otto</td>
-                                <td>Morris</td>
-                                <td>Germany</td>
-                                <td>Munich</td>
-                                <td>Singer</td>
-
-                            </tr>
-                            <tr>
-                                <th scope="row">9</th>
-                                <td>Otto</td>
-                                <td>Morris</td>
-                                <td>Germany</td>
-                                <td>Munich</td>
-                                <td>Singer</td>
-
-                            </tr>
-                        </tbody>
-
+                    <!-- LOAN TABLE -->
+                    <mat-toolbar>
+                            <span><h4>Loan Account Overview</h4> </span>
+                    </mat-toolbar>
+                          
+                    <table mat-table [dataSource]="dataSourceLoan" matSort>
+                
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="account">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Account #ng  </th>
+                        <td mat-cell *matCellDef="let row"> {{row.accountNo}} </td>
+                        </ng-container>
+                
+                        <!-- Account no Column -->
+                        <ng-container matColumnDef="loanAccount">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Loan Account </th>
+                        <td mat-cell *matCellDef="let row"> {{row.productName}} </td>
+                        </ng-container>
+                
+                        <!-- External ID Column -->
+                        <ng-container matColumnDef="originalLoan">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Original Loan </th>
+                        <td mat-cell *matCellDef="let row"> {{row.originalLoan}} </td>
+                        </ng-container>
+                
+                
+                
+                        <!-- Status Column -->
+                        <ng-container matColumnDef="loanBalance">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Loan Balance </th>
+                        <td mat-cell *matCellDef="let row"> {{row.loanBalance}} </td>
+                        </ng-container>
+                
+                        <!-- Color Column -->
+                        <ng-container matColumnDef="amountPaid">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount Paid </th>
+                        <td mat-cell *matCellDef="let row"> {{row.amountPaid}} </td>
+                        </ng-container>
+                
+                
+                        <!-- ID Column -->
+                        <ng-container matColumnDef="type">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+                        <td mat-cell *matCellDef="let row"> {{row.loanType.value}} </td>
+                        </ng-container>
+                
+                        <tr mat-header-row *matHeaderRowDef="displayedLoanColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedLoanColumns;" [routerLink]="[]">
+                            
+                        </tr>
                     </table>
-                 </div>
-              </div>
-      </div>
+            </div>   
+            <!-- SAVINGS TABLE -->
 
-    </div>
+            <div class="mat-elevation-z8 m-b-55">
+                    <mat-toolbar>
+                            <span><h4>Savings Account Overview</h4> </span>
+                    </mat-toolbar>
+                    <table mat-table [dataSource]="dataSourceSavings" matSort>
+                
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="account">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Account # </th>
+                        <td mat-cell *matCellDef="let row"> {{row.accountNo}} </td>
+                        </ng-container>
+                
+                        <!-- Account no Column -->
+                        <ng-container matColumnDef="savingsAccount">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Saving Account </th>
+                        <td mat-cell *matCellDef="let row"> {{row.productName}} </td>
+                        </ng-container>
+                
+                        <!-- External ID Column -->
+                        <ng-container matColumnDef="lastActive">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Active </th>
+                        <td mat-cell *matCellDef="let row"> {{row.lastActiveTransactionDate}} </td>
+                        </ng-container>
+                
+                
+                
+                        <!-- Status Column -->
+                        <ng-container matColumnDef="balance">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Balance </th>
+                        <td mat-cell *matCellDef="let row"> {{row.accountBalance}} </td>
+                        </ng-container>
+                
+                
+                        <tr mat-header-row *matHeaderRowDef="displayedSavingsColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedSavingsColumns;" [routerLink]="[]">
+                            
+                        </tr>
+                    </table>
+            </div> 
+
+
+              <!-- SHARES TABLE -->
+
+              <div class="mat-elevation-z8 m-b-55">
+                    <mat-toolbar>
+                            <span><h4>Shares Account Overview</h4> </span>
+                    </mat-toolbar>
+                    <table mat-table [dataSource]="dataSourceShares" matSort>
+                      
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="account">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Account #  </th>
+                        <td mat-cell *matCellDef="let row"> {{row.accountNo}} </td>
+                        </ng-container>
+                
+                        <!-- Account no Column -->
+                        <ng-container matColumnDef="shareAccount">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Share Account#</th>
+                        <td mat-cell *matCellDef="let row"> {{row.productName}} </td>
+                        </ng-container>
+                
+                        <!-- External ID Column -->
+                        <ng-container matColumnDef="approvedShares">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Approved Shares </th>
+                        <td mat-cell *matCellDef="let row"> {{row.totalApprovedShares}} </td>
+                        </ng-container>
+                
+                
+                
+                        <!-- Status Column -->
+                        <ng-container matColumnDef="pending">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Pending for Approval Shares </th>
+                        <td mat-cell *matCellDef="let row"> {{row.totalPendingForApprovalShares}} </td>
+                        </ng-container>
+            
+                
+                        <tr mat-header-row *matHeaderRowDef="displayedSharesColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedSharesColumns;" [routerLink]="[]">
+                            
+                        </tr>
+                    </table>
+            </div> 
+      </div>
     
-  </div>
-</div> -->
+</div>
+<p>User with ID {{ id }} loaded.</p>

@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class ClientsComponent implements OnInit {
   post: any = [];
-  private ELEMENT_DATA: any = null;
+  private ELEMENT_DATA: any = undefined;
   displayedColumns =  ['name', 'clientno', 'externalid', 'status', 'office', 'staff'];
   dataSource = new MatTableDataSource();
 
@@ -20,10 +20,10 @@ export class ClientsComponent implements OnInit {
 
   constructor(private clientService: ClientsService) {
       // GET from clients API
-      this.clientService.getServer()
+      this.clientService.getClients()
       .subscribe(
         (res => {
-        console.log(res);
+     //   console.log(res);
         this.ELEMENT_DATA = res;
         this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
         })

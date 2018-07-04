@@ -20,7 +20,7 @@ const routes: Routes = [
       data: { title: extract('Create Client') }
     },
     {
-      path: 'clients/view',
+      path: 'clients/view/:id',
       component: ViewClientComponent,
       data: { title: extract('View Client') }
     },
