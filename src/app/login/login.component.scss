@@ -1,3 +1,71 @@
+.cover {
+  background: url("../../assets/images/cover_image.jpg") no-repeat center center;
+  background-size: contain;
+  // opacity: 0.4
+  position: relative;
+  z-index: 0;;
+  max-width: 70vw;
+}
+
+.cover::after {
+  content: '';
+  opacity: 0.4;
+  background: linear-gradient(black, black);
+  width: 100%;
+  height: 100%;
+  opacity: 0.7;
+  top: 0;
+  left: 0;
+  display: block;
+  z-index: 1;
+  position: absolute;
+}
+
+.cover-content {
+  display: block;
+  max-width: 80%;
+  margin: 100px;
+  color: white;
+  text-align: justify;
+  z-index: 2;
+}
+
+.cover-title {
+  border-bottom: 2px solid white;
+  margin: 0 0 20px;
+  padding-bottom: 10px;
+}
+
+.login-container {
+  box-shadow: 1px 1px 50px black;
+  height: 100vh;
+  overflow: auto;
+}
+
+.language-selector {
+  max-width: 4rem;
+}
+
+.img-container {
+  max-width: 18rem;
+}
+
+.textfield {
+  width: 14rem;
+}
+
+.b {
+  width: 14rem;
+  margin-top: 1rem;
+}
+
+p {
+  margin: 0;
+}
+
+.divider {
+  margin: 10px 30px;
+}
 // @import "../../theme/theme-variables";
 // @import "~bootstrap/scss/mixins/_breakpoints";
 

@@ -20,6 +20,8 @@ export class LoginComponent implements OnInit {
   error: string;
   loginForm: FormGroup;
   isLoading = false;
+  languages = ['en-US', 'fr'];
+  language = this.languages[0];
 
   constructor(private router: Router,
               private formBuilder: FormBuilder,
@@ -54,9 +56,9 @@ export class LoginComponent implements OnInit {
     return this.i18nService.language;
   }
 
-  get languages(): string[] {
-    return this.i18nService.supportedLanguages;
-  }
+  // get languages(): string[] {
+  //   return this.i18nService.supportedLanguages;
+  // }
 
   private createForm() {
     this.loginForm = this.formBuilder.group({
