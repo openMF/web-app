@@ -1,6 +1,90 @@
 <!-- TODO: UPDATE WITH ANGULAR MATERIAL -->
 
-<div class="login-container bg-light">
+<div fxLayout="row">
+  <!-- I want a row divided into 2 parts 70% and 30% -->
+
+  <!-- In 70% we have a cover pic, org/app name, description, contact information -->
+  <!-- Column disappers on small screens -->
+
+  <div fxFlex="70%" fxLayout="column" fxLayoutAlign="center center" fxHide.lt-md class="cover">
+    <div class="cover-content">
+      <h1 class="mat-display-1 cover-title">Mifos</h1>
+      <p class="mat-headline">
+        Mifos X is designed by the Mifos Initiative. A global community that aims to speed the elimination of poverty by enabling Organizations to more effectively and efficiently deliver responsible financial services to the world’s poor and unbanked.
+        Sounds interesting? Get involved!
+      </p>
+    </div>
+  </div>
+
+  <!-- In 30% when gt md otherwise fully covering -->
+
+  <div fxLayout="column" fxFlex.gt-md="1 0 30%" class="login-container">
+
+    <!-- First row we have language selector in the right of row -->
+    <div fxLayout="row-reverse" fxFlex="1 0 auto">
+      <mat-form-field class="p-r-10 p-t-10 language-selector">
+        <mat-select placeholder="Language" [(ngModel)]="language">
+          <mat-option *ngFor="let language of languages" [value]="language">
+            {{ language }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Next we have the logo -->
+    <div fxLayout="row" fxLayoutAlign="center center" fxFlex="1 0 auto">
+      <img src="assets/images/mifos-logo-flat.png" alt="" class="img-container">
+    </div>
+
+    <!-- Next we have the form -->
+    <!-- <div> -->
+      <form fxLayout="column" fxFlex="3 0 auto" (ngSubmit)="login()" [formGroup]="loginForm">
+        <mat-form-field fxFlexAlign="center" class="textfield">
+          <input matInput placeholder="Username">
+        </mat-form-field>
+        <mat-form-field fxFlexAlign="center" class="textfield">
+          <input matInput type="password" placeholder="Password">
+        </mat-form-field>
+        <mat-checkbox fxFlexAlign="center">Remember me</mat-checkbox>
+        <button mat-raised-button color="primary" fxFlexAlign="center" class="b">Login</button>
+        <button mat-button fxFlexAlign="center" class="b">Forgot Password?</button>
+      </form>
+    <!-- </div> -->
+    <mat-list fxHide.lt-md fxLayout="row" fxFlexAlign="center" fxFlex="3 0 auto" class="list">
+      <mat-list-item><button mat-button [matMenuTriggerFor]="resourcesMenu">Resources</button></mat-list-item>
+      <mat-list-item><button mat-button [matMenuTriggerFor]="communityMenu">Community</button></mat-list-item>
+      <mat-list-item><button mat-button [matMenuTriggerFor]="contributeMenu">Contribute</button></mat-list-item>
+    </mat-list>
+
+    <div fxLayout="column" fxFlexAlign="center" fxFlex="1 0 auto">
+      <mat-divider class="divider"></mat-divider>
+      <p fxFlexAlign="center">Version {{ version }}</p>
+      <p fxFlexAlign="center">Mifos X is up to date</p>
+    </div>
+
+  </div>
+
+</div>
+
+<mat-menu #resourcesMenu="matMenu">
+  <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual" mat-menu-item>User Manual</a>
+  <a href="https://cwiki.apache.org/confluence/display/FINERACT/Apache+Fineract+1.0+Functional+Specifications" mat-menu-item>Functional Specifications</a>
+  <a href="https://cwiki.apache.org/confluence/display/FINERACT/Contributor%27s+Zone" mat-menu-item>Developer Zone</a>
+</mat-menu>
+
+<mat-menu #communityMenu="matMenu">
+  <a href="https://groups.google.com/forum/#!forum/mifosusers" mat-menu-item>User Group</a>
+  <a href="https://groups.google.com/forum/#!forum/mifosdeveloper" mat-menu-item>Developer Group</a>
+  <a href="http://mifos.org/resources/community/communications/#mifos-irc" mat-menu-item>IRC</a>
+</mat-menu>
+
+<mat-menu #contributeMenu="matMenu">
+  <a href="https://mifosforge.jira.com/wiki/spaces/MDZ/pages/92012624/Key+Design+Principles" mat-menu-item>Key Design Principles</a>
+  <a href="https://sourceforge.net/projects/mifos/" mat-menu-item>Working with Code</a>
+  <a href="http://mifos.org/donate/" mat-menu-item>Donate</a>
+</mat-menu>
+
+<!-- <div class="login-container bg-light">
   <div class="login-box">
     <img class="text-center img-responsive" src="assets/images/mifos-logo-flat.png" style="width:30%">
     <div>
@@ -61,4 +145,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
