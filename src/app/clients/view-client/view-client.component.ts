@@ -1,5 +1,5 @@
 import { ClientsService } from 'app/clients/clients.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DataSource } from '@angular/cdk/collections';
@@ -8,7 +8,8 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 @Component({
   selector: 'mifosx-view-client',
   templateUrl: './view-client.component.html',
-  styleUrls: ['./view-client.component.scss']
+  styleUrls: ['./view-client.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ViewClientComponent implements OnInit, OnDestroy {
   id: number = undefined;
