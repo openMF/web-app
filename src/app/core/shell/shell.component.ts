@@ -23,6 +23,7 @@ export class ShellComponent implements OnInit {
               private progressBarService: ProgressBarService) { }
 
   ngOnInit() {
+    this.sidenavCollapsed = true;
     this.progressBarService.updateProgressBar.subscribe((mode: string) => {
       this.progressBarMode = mode;
     });
