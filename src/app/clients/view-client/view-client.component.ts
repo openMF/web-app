@@ -20,12 +20,13 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   clientInfo: any = undefined;
   paramsSubscription: Subscription;
   post: any = [];
+  clientAddress: any = undefined;
   private LOAN_DATA: any = undefined;
   private SAVINGS_DATA: any = undefined;
   private SHARES_DATA: any = undefined;
-  displayedLoanColumns =  ['account', 'loanAccount', 'originalLoan', 'loanBalance', 'amountPaid', 'type'];
-  displayedSavingsColumns =  ['account', 'savingsAccount', 'lastActive', 'balance'];
-  displayedSharesColumns =  ['account', 'shareAccount', 'approvedShares', 'pending'];
+  displayedLoanColumns = ['account', 'loanAccount', 'originalLoan', 'loanBalance', 'amountPaid', 'type'];
+  displayedSavingsColumns = ['account', 'savingsAccount', 'lastActive', 'balance'];
+  displayedSharesColumns = ['account', 'shareAccount', 'approvedShares', 'pending'];
 
   dataSourceLoan = new MatTableDataSource();
   dataSourceSavings = new MatTableDataSource();
@@ -36,11 +37,11 @@ export class ViewClientComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.paramsSubscription = this.route.params
-    .subscribe(
-      (params: Params) => {
-        this.id = params['id'];
-      }
-    );
+      .subscribe(
+        (params: Params) => {
+          this.id = params['id'];
+        }
+      );
     this.clientService.getClientId(this.id)
       .subscribe(
         (res => {
@@ -51,47 +52,42 @@ export class ViewClientComponent implements OnInit, OnDestroy {
 
           this.clientInfo.groups.forEach(function (item: any) {
             groupArray.push(item.name);
-            console.log(item.name);
-        });
+          });
           this.clientInfo.groupNames = groupArray.join('|');
 
-       console.log( this.clientInfo.groupNames);
-  //     console.log(res['dateOfBirth'][1]);
         })
       );
     this.clientService.getClientAccounts(this.id)
-    .subscribe(
-      (res => {
-      this.loanAccounts = res['loanAccounts'];
-      this.savingsAccounts = res['savingsAccounts'];
-      this.shareAccounts = res['shareAccounts'];
-     // this.savingsAccounts.lastActiveTransactionDate = this.savingsAccounts
-      //                                                 .lastActiveTransactionDate.reverse().join('-');
-      console.log(this.savingsAccounts.lastActiveTransactionDate);
-      this.LOAN_DATA  = this.loanAccounts;
-      this.SAVINGS_DATA = this.savingsAccounts;
-      this.SHARES_DATA = this.shareAccounts;
-      this.dataSourceLoan = new MatTableDataSource(this.LOAN_DATA);
-      this.dataSourceSavings = new MatTableDataSource(this.SAVINGS_DATA);
-      this.dataSourceShares =  new MatTableDataSource(this.SHARES_DATA);
-
-    /*
-      console.log(res);
-      console.log(this.loanAccounts);
-      console.log(this.savingsAccounts);
-      console.log(this.shareAccounts); */
-      })
-    );
+      .subscribe(
+        (res => {
+          this.loanAccounts = res['loanAccounts'];
+          this.savingsAccounts = res['savingsAccounts'];
+          this.shareAccounts = res['shareAccounts'];
+          this.LOAN_DATA = this.loanAccounts;
+          this.SAVINGS_DATA = this.savingsAccounts;
+          this.SHARES_DATA = this.shareAccounts;
+          this.dataSourceLoan = new MatTableDataSource(this.LOAN_DATA);
+          this.dataSourceSavings = new MatTableDataSource(this.SAVINGS_DATA);
+          this.dataSourceShares = new MatTableDataSource(this.SHARES_DATA);
+        })
+      );
     this.clientService.getClientCharges(this.id)
-    .subscribe(
-      (res => {
-      this.upcomingCharges = res['pageItems'];
-    //  console.log(this.upcomingCharges);
-      })
-    );
+      .subscribe(
+        (res => {
+          this.upcomingCharges = res['pageItems'];
+        })
+      );
+    this.clientService.getClientAddress(this.id)
+      .subscribe(
+        (res => {
+          this.clientAddress = res;
+          console.log(res);
+        })
+      );
   }
 
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
   }
 }
+

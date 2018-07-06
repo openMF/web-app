@@ -1,5 +1,9 @@
 .example-card {
-  //  max-width: 700px;
+  //  width:40%;
+}
+
+.address-card {
+  width: 470px;
 }
 
 .example-header-image {
@@ -26,13 +30,13 @@ tr {
   padding: 6px 0px 6px;
 }
 
-.mat-row:nth-child(even) {
-  background-color: #FAFAFA;
+/* .mat-row:nth-child(even) {
+  background-color: #fafafa;
 }
 
 .mat-header-row {
-  background-color: #FAFAFA;
-}
+  background-color: #fafafa;
+} */
 
 table {
   width: 100%;
@@ -56,7 +60,7 @@ th {
 
 .mat-toolbar {
   font-size: 18px;
-  background-color: #FAFAFA;
+  background-color: #fafafa;
 }
 
 .custom-table {
@@ -87,7 +91,7 @@ th {
     letter-spacing: 1px;
   }
   tr:nth-child(even) {
-    background-color: #f2f2f2;
+    //  background-color: #fafafa;
   }
   @media screen and (max-width: 600px) {
     table {
