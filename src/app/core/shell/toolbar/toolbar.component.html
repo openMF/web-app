@@ -11,7 +11,7 @@
 
   <nav mat-tab-nav-bar backgroundColor="primary" class="ml-1">
 
-    <a mat-tab-link [active]="true" class="tab-link" [matMenuTriggerFor]="institutionMenu" #institutionMenuTrigger="matMenuTrigger" (mouseenter)="onMouseEnter(institutionMenuTrigger)">
+    <a mat-tab-link class="tab-link" [matMenuTriggerFor]="institutionMenu" #institutionMenuTrigger="matMenuTrigger">
       <mat-icon class="mr-05">business</mat-icon>
       Institution
     </a>
@@ -22,15 +22,15 @@
           <mat-icon class="mr-05">account_balance</mat-icon>
         Accounting
       </a>
-      <a mat-tab-link class="tab-link" [matMenuTriggerFor]="reportsMenu" #reportsMenuTrigger="matMenuTrigger" (mouseenter)="reportsMenuTrigger.openMenu()">
+      <a mat-tab-link class="tab-link" [matMenuTriggerFor]="reportsMenu" #reportsMenuTrigger="matMenuTrigger" >
         <mat-icon class="mr-05">insert_chart_outlined</mat-icon>
         Reports
       </a>
-      <a mat-tab-link class="tab-link" [matMenuTriggerFor]="adminMenu" #adminMenuTrigger="matMenuTrigger" (mouseenter)="adminMenuTrigger.openMenu()">
+      <a mat-tab-link class="tab-link" [matMenuTriggerFor]="adminMenu" #adminMenuTrigger="matMenuTrigger">
           <mat-icon class="mr-05">security</mat-icon>
         Admin
       </a>
-      <a mat-tab-link class="tab-link" [matMenuTriggerFor]="selfServiceMenu" #selfServiceMenuTrigger="matMenuTrigger" (mouseenter)="selfServiceMenuTrigger.openMenu()">
+      <a mat-tab-link class="tab-link" [matMenuTriggerFor]="selfServiceMenu" #selfServiceMenuTrigger="matMenuTrigger">
           <mat-icon class="mr-05">people</mat-icon>
         Self Service
       </a>
