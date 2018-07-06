@@ -59,10 +59,10 @@ export class ToolbarComponent implements OnInit {
     this.searchVisible = !this.searchVisible;
   }
 
-  onMouseEnter(menuTrigger: MatMenuTrigger) {
+/*   onMouseEnter(menuTrigger: MatMenuTrigger) {
     if (!this.isHandset) {
       menuTrigger.openMenu();
     }
   }
-
+ */
 }
