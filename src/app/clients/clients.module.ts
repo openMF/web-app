@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '../core/core.module';
 import { MatTableModule } from '@angular/material/table';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ArchwizardModule } from 'angular-archwizard';
 
 import { ClientsRoutingModule } from './clients-routing.module';
 import { ClientsComponent } from './clients.component';
@@ -26,7 +27,8 @@ import { ClientsService } from './clients.service';
     FlexLayoutModule,
     BrowserModule,  // tslint:disable
     HttpModule, 
-    MatTableModule
+    MatTableModule,
+    ArchwizardModule
   ],
   declarations: [
     ClientsComponent,
