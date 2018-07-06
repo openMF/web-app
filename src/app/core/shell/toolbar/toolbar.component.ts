@@ -40,6 +40,7 @@ export class ToolbarComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit() {
+    this.sidenavCollapsed = !this.sidenavCollapsed;
     this.isHandset$.subscribe(isHandset => {
       this.isHandset = isHandset;
     });
