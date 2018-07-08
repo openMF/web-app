@@ -106,4 +106,39 @@ export class ClientsService {
     )
   );
   }
+
+  getClientNote (clientId: number) {
+    const headers = new Headers();   // tslint:disable-line
+    this.createAuthorizationHeader(headers);
+    return this.http.get
+    ('https://demo.openmf.org/fineract-provider/api/v1/clients/' + clientId
+      + '/notes' + '?tenantIdentifier=default&pretty=true',
+    {headers: headers})
+    .pipe(
+    map(
+        (response: Response) => {  // tslint:disable-line
+          response = response.json();
+          return response;
+
+        }
+    )
+  );
+  }
+
+  postClientNote (clientId: number, notes: any) {
+    const headers = new Headers();   // tslint:disable-line
+    this.createAuthorizationHeader(headers);
+    const body = JSON.stringify(notes);
+    return this.http.post
+    ('https://demo.openmf.org/fineract-provider/api/v1/clients/' + clientId
+      + '/notes' + '?tenantIdentifier=default&pretty=true', notes ,
+    {headers: headers})
+    .pipe(
+      map(
+          (response: Response) => {  // tslint:disable-line
+            response.json();
+          }
+      )
+    );
+  }
 }

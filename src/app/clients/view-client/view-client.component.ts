@@ -1,9 +1,10 @@
 import { ClientsService } from 'app/clients/clients.service';
-import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'mifosx-view-client',
@@ -12,7 +13,8 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
   encapsulation: ViewEncapsulation.None
 })
 export class ViewClientComponent implements OnInit, OnDestroy {
-  public id: number = undefined;
+  notes: any = undefined;
+  id: number = undefined;
   loanAccounts: any = undefined;
   savingsAccounts: any = undefined;
   shareAccounts: any = undefined;
@@ -21,6 +23,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   paramsSubscription: Subscription;
   post: any = [];
   clientAddress: any = undefined;
+  allNotes: any = undefined;
   private LOAN_DATA: any = undefined;
   private SAVINGS_DATA: any = undefined;
   private SHARES_DATA: any = undefined;
@@ -32,6 +35,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   dataSourceSavings = new MatTableDataSource();
   dataSourceShares = new MatTableDataSource();
 
+  @ViewChild('f') noteForm: NgForm;
 
   constructor(private route: ActivatedRoute, private clientService: ClientsService) {}
 
@@ -47,6 +51,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
     this.getClientAccounts(this.id);
     this.getClientCharges(this.id);
     this.getClientAddress(this.id);
+    this.getClientNotes(this.id);
   }
 
   getClientId(id: any) {
@@ -94,7 +99,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   }
 
   getClientAddress(id: any) {
-    this.clientService.getClientAddress(this.id)
+    this.clientService.getClientAddress(id)
       .subscribe(
         (res => {
           this.clientAddress = res;
@@ -103,8 +108,38 @@ export class ViewClientComponent implements OnInit, OnDestroy {
       );
   }
 
+  getClientNotes(id: any) {
+    this.clientService.getClientNote(id)
+      .subscribe(
+        (res => {
+          this.allNotes = res;
+          console.log(res);
+        })
+      );
+  }
+
+
+  onSubmit() {
+    //  this.submitted = true;
+    this.notes = {};
+  //  const d = new Date();
+    this.notes.note = this.noteForm.value.clientnotes;
+   // this.notes.createdOn =  d;
+    console.log(this.notes);
+    this.clientService.postClientNote(this.id, this.notes)
+      .subscribe(
+        (res => {
+          this.getClientNotes(this.id);
+          return true;
+        })
+      );
+    this.noteForm.reset();
+
+  }
+
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
   }
+
 }
 
