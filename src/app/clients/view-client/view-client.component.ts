@@ -119,7 +119,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   }
 
 
-  onSubmit(form: NgForm) {
+  onSubmit() {
     //  this.submitted = true;
     this.notes = {};
   //  const d = new Date();
