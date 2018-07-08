@@ -18,21 +18,22 @@ export class ClientsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private clientService: ClientsService) {
-      // GET from clients API
-      this.clientService.getClients()
-      .subscribe(
-        (res => {
-     //   console.log(res);
-        this.ELEMENT_DATA = res;
-        this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
-        })
-      );
-  }
+  constructor(private clientService: ClientsService) {}
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+       this.getClients();
+  }
+
+  // GET from clients API
+  getClients() {
+    this.clientService.getClients()
+    .subscribe(
+      (res => {
+      this.dataSource = new MatTableDataSource(res);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      })
+    );
   }
 
   applyFilter(filterValue: string) {

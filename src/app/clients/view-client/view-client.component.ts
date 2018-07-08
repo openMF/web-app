@@ -36,6 +36,8 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   dataSourceShares = new MatTableDataSource();
 
   @ViewChild('f') noteForm: NgForm;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private route: ActivatedRoute, private clientService: ClientsService) {}
 
@@ -85,6 +87,13 @@ export class ViewClientComponent implements OnInit, OnDestroy {
           this.dataSourceLoan = new MatTableDataSource(this.LOAN_DATA);
           this.dataSourceSavings = new MatTableDataSource(this.SAVINGS_DATA);
           this.dataSourceShares = new MatTableDataSource(this.SHARES_DATA);
+          this.dataSourceLoan.paginator = this.paginator;
+          this.dataSourceSavings.paginator = this.paginator;
+          this.dataSourceShares.paginator = this.paginator;
+          this.dataSourceLoan.sort = this.sort;
+          this.dataSourceSavings.sort = this.sort;
+          this.dataSourceShares.sort = this.sort;
+
         })
       );
   }
