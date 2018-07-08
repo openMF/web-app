@@ -12,7 +12,7 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
   encapsulation: ViewEncapsulation.None
 })
 export class ViewClientComponent implements OnInit, OnDestroy {
-  id: number = undefined;
+  public id: number = undefined;
   loanAccounts: any = undefined;
   savingsAccounts: any = undefined;
   shareAccounts: any = undefined;
@@ -42,7 +42,15 @@ export class ViewClientComponent implements OnInit, OnDestroy {
           this.id = params['id'];
         }
       );
-    this.clientService.getClientId(this.id)
+
+    this.getClientId(this.id);
+    this.getClientAccounts(this.id);
+    this.getClientCharges(this.id);
+    this.getClientAddress(this.id);
+  }
+
+  getClientId(id: any) {
+    this.clientService.getClientId(id)
       .subscribe(
         (res => {
           const groupArray = new Array;
@@ -57,7 +65,10 @@ export class ViewClientComponent implements OnInit, OnDestroy {
 
         })
       );
-    this.clientService.getClientAccounts(this.id)
+  }
+
+  getClientAccounts(id: any) {
+    this.clientService.getClientAccounts(id)
       .subscribe(
         (res => {
           this.loanAccounts = res['loanAccounts'];
@@ -71,12 +82,18 @@ export class ViewClientComponent implements OnInit, OnDestroy {
           this.dataSourceShares = new MatTableDataSource(this.SHARES_DATA);
         })
       );
-    this.clientService.getClientCharges(this.id)
+  }
+
+  getClientCharges(id: any) {
+    this.clientService.getClientCharges(id)
       .subscribe(
         (res => {
           this.upcomingCharges = res['pageItems'];
         })
       );
+  }
+
+  getClientAddress(id: any) {
     this.clientService.getClientAddress(this.id)
       .subscribe(
         (res => {
