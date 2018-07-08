@@ -1,9 +1,10 @@
 import { ClientsService } from 'app/clients/clients.service';
-import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'mifosx-view-client',
@@ -12,7 +13,10 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
   encapsulation: ViewEncapsulation.None
 })
 export class ViewClientComponent implements OnInit, OnDestroy {
-  public id: number = undefined;
+  notes = {
+    note: '',
+  };
+  id: number = undefined;
   loanAccounts: any = undefined;
   savingsAccounts: any = undefined;
   shareAccounts: any = undefined;
@@ -32,6 +36,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   dataSourceSavings = new MatTableDataSource();
   dataSourceShares = new MatTableDataSource();
 
+  @ViewChild('f') noteForm: NgForm;
 
   constructor(private route: ActivatedRoute, private clientService: ClientsService) {}
 
@@ -47,6 +52,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
     this.getClientAccounts(this.id);
     this.getClientCharges(this.id);
     this.getClientAddress(this.id);
+    this.getClientNotes(this.id);
   }
 
   getClientId(id: any) {
@@ -94,7 +100,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   }
 
   getClientAddress(id: any) {
-    this.clientService.getClientAddress(this.id)
+    this.clientService.getClientAddress(id)
       .subscribe(
         (res => {
           this.clientAddress = res;
@@ -103,8 +109,36 @@ export class ViewClientComponent implements OnInit, OnDestroy {
       );
   }
 
+  getClientNotes(id: any) {
+    this.clientService.getClientNote(id)
+      .subscribe(
+        (res => {
+          this.clientAddress = res;
+          console.log(res);
+        })
+      );
+  }
+
+
+  onSubmit(form: NgForm) {
+    //  this.submitted = true;
+    const d: Date = new Date(); 
+    this.notes.note = this.noteForm.value.clientnotes;
+    console.log(this.notes);
+    this.clientService.postClientNote(this.id, this.notes)
+      .subscribe(
+        (res => {
+          this.getClientNotes(this.id);
+          return true;
+        })
+      );
+    this.noteForm.reset();
+
+  }
+
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
   }
+
 }
 

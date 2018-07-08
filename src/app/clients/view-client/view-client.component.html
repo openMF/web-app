@@ -266,7 +266,26 @@
         </div>
       </div>
     </mat-tab>
-    <mat-tab label="First"> Content 1 </mat-tab>
+    <mat-tab label="Notes"> 
+        <div fxLayout="row" fxLayoutGap="20px" class="m-t-30"  fxLayoutAlign="center center">
+            <mat-card fxFlex="70%">
+            <form (ngSubmit)="onSubmit()" #f="ngForm">
+
+            <mat-form-field>
+                <input matInput 
+                  name = "clientnotes" 
+                  placeholder="Textarea"
+                  ngModel>
+              </mat-form-field>
+              <mat-card-actions>
+                  <button mat-raised-button>Create</button>
+              </mat-card-actions>
+            
+          </form>
+        </mat-card>   
+       </div>
+    
+    </mat-tab>
     <mat-tab label="Second"> Content 2 </mat-tab>
     <mat-tab label="Third"> Content 3 </mat-tab>
 
