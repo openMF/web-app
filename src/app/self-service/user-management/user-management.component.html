@@ -1,82 +1,87 @@
 <mat-card class="container m-t-40">
 
-  <!-- <mat-card-header> -->
+  <div fxLayout="row" fxLayoutGap="30px" class="m-b-20">
+    <!-- <mat-card-header> -->
 
-    <mat-grid-list cols="2" rowHeight="80px">
+    <!-- <mat-grid-list cols="1" rowHeight="80px">
 
-      <mat-grid-tile>
-        <mat-form-field>
-          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-        </mat-form-field>
-      </mat-grid-tile>
+      <mat-grid-tile> -->
+          <mat-form-field fxFlex>
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+            </mat-form-field>
+          <!-- </mat-grid-tile> -->
 
-      <mat-grid-tile>
-        <mat-card-actions>
-            <button mat-raised-button color="primary"><mat-icon>lock_open</mat-icon>&nbsp;&nbsp;Activate</button>
-            <button mat-raised-button color="primary"><mat-icon>lock</mat-icon>&nbsp;&nbsp;Deactivate</button>
-            <button mat-raised-button color="primary" routerLink="/self-service/users/create"><mat-icon>add</mat-icon>&nbsp;&nbsp;Create User</button>
-        </mat-card-actions>
-      </mat-grid-tile>
+          <!-- <mat-grid-tile> -->
+            <!-- <mat-card-actions> -->
+                <!-- <button mat-raised-button color="primary"><mat-icon>lock_open</mat-icon>&nbsp;&nbsp;Activate</button> -->
+                <!-- <button mat-raised-button color="primary"><mat-icon>lock</mat-icon>&nbsp;&nbsp;Deactivate</button> -->
+                <button mat-raised-button color="primary" routerLink="/self-service/users/create"><mat-icon>add</mat-icon>&nbsp;&nbsp;Create User</button>
+            <!-- </mat-card-actions> -->
+          <!-- </mat-grid-tile> -->
 
-    </mat-grid-list>
+        <!-- </mat-grid-list> -->
 
-  <!-- </mat-card-header> -->
+      <!-- </mat-card-header> -->
+  </div>
 
   <mat-card-content class="mat-elevation-z8">
 
-    <mat-table [dataSource]="dataSource" matSort>
+    <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="select">
-        <mat-header-cell *matHeaderCellDef>
+        <th mat-header-cell *matHeaderCellDef>
           <mat-checkbox (change)="$event ? masterToggle() : null"
                         [checked]="selection.hasValue() && isAllSelected()"
                         [indeterminate]="selection.hasValue() && !isAllSelected()">
           </mat-checkbox>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let row">
+        </th>
+        <td mat-cell *matCellDef="let row">
           <mat-checkbox (click)="$event.stopPropagation()"
                         (change)="$event ? selection.toggle(row) : null"
                         [checked]="selection.isSelected(row)">
           </mat-checkbox>
-        </mat-cell>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-        <mat-cell *matCellDef="let user"> {{ user.name }} </mat-cell>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <td mat-cell *matCellDef="let user"><span class="mobile-label">Name: </span>{{ user.name }} </td>
       </ng-container>
 
-      <ng-container matColumnDef="userID">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> User ID </mat-header-cell>
-        <mat-cell *matCellDef="let user">{{ user.userID }}</mat-cell>
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> User ID </th>
+        <td mat-cell *matCellDef="let user"><span class="mobile-label">User ID: </span>{{ user.id }}</td>
       </ng-container>
 
-      <ng-container matColumnDef="emailID">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Email ID </mat-header-cell>
-        <mat-cell *matCellDef="let user">{{ user.emailID }}</mat-cell>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email ID </th>
+        <td mat-cell *matCellDef="let user"><span class="mobile-label">Email ID: </span>{{ user.email }}</td>
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
-        <mat-cell *matCellDef="let user">
-          <mat-icon matTooltip="{{ user.status }}" matTooltipPosition="right">lens</mat-icon>
-        </mat-cell>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="isSelfServiceUser"> Status </th>
+        <td mat-cell *matCellDef="let user">
+          <span class="mobile-label">Status: </span>
+          <div [className]="user.isSelfServiceUser === true ? 'active' : 'inactive'">
+            <mat-icon matTooltip="{{ user.isSelfServiceUser === true ? 'Active' : 'Inactive' }}" matTooltipPosition="right">lens</mat-icon>
+          </div>
+        </td>
       </ng-container>
 
-      <ng-container matColumnDef="office">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Office </mat-header-cell>
-        <mat-cell *matCellDef="let user">{{ user.office }}</mat-cell>
+      <ng-container matColumnDef="officeName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Office </th>
+        <td mat-cell *matCellDef="let user"><span class="mobile-label">Office: </span>{{ user.officeName }}</td>
       </ng-container>
 
       <ng-container matColumnDef="staff">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Staff </mat-header-cell>
-        <mat-cell *matCellDef="let user">{{ user.staff }}</mat-cell>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Staff </th>
+        <td mat-cell *matCellDef="let user"><span class="mobile-label">Staff: </span>{{ user.staff }}</td>
       </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></mat-row>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></tr>
 
-    </mat-table>
+    </table>
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
 

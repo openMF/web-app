@@ -9,6 +9,45 @@
   width: 100%;
 }
 
-.mat-form-field {
-  width: 100%;
+// .mat-form-field {
+//   width: 100%;
+// }
+
+.mobile-label {
+  display: none;
 }
+
+.inactive {
+  color: grey;
+}
+
+.active {
+  color: green;
+}
+
+// @media(max-width: 600px) {
+//   .mobile-label {
+//     width: 80px;
+//     display: inline-block;
+//         font-weight: bold;
+//   }
+
+//   .mat-header-row {
+//     display: none;
+//   }
+
+//   .mat-row {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: start;
+//     padding: 68px 24px;
+//     min-height: 108px;
+//   }
+
+//   .mat-cell {
+//     flex: 1;
+//     display: flex;
+//     align-items: center;
+//     min-height: inherit;
+//   }
+// }
