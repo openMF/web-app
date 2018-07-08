@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 export class ClientsService {
     constructor(private http: Http) {} // tslint:disable-line
 
-    createAuthorizationHeader(headers: Headers) {
+    createAuthorizationHeader(headers: Headers) { // tslint:disable-line
       const username = 'mifos';
       const password = 'password';
       headers.append('Authorization', 'Basic ' + btoa(username + ':' + password));
