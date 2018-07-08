@@ -13,9 +13,7 @@ import { NgForm } from '@angular/forms';
   encapsulation: ViewEncapsulation.None
 })
 export class ViewClientComponent implements OnInit, OnDestroy {
-  notes = {
-    note: '',
-  };
+  notes: any = undefined;
   id: number = undefined;
   loanAccounts: any = undefined;
   savingsAccounts: any = undefined;
@@ -25,6 +23,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   paramsSubscription: Subscription;
   post: any = [];
   clientAddress: any = undefined;
+  allNotes: any = undefined;
   private LOAN_DATA: any = undefined;
   private SAVINGS_DATA: any = undefined;
   private SHARES_DATA: any = undefined;
@@ -113,7 +112,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
     this.clientService.getClientNote(id)
       .subscribe(
         (res => {
-          this.clientAddress = res;
+          this.allNotes = res;
           console.log(res);
         })
       );
@@ -122,8 +121,10 @@ export class ViewClientComponent implements OnInit, OnDestroy {
 
   onSubmit(form: NgForm) {
     //  this.submitted = true;
-    const d: Date = new Date(); 
+    this.notes = {};
+  //  const d = new Date();
     this.notes.note = this.noteForm.value.clientnotes;
+   // this.notes.createdOn =  d;
     console.log(this.notes);
     this.clientService.postClientNote(this.id, this.notes)
       .subscribe(

@@ -268,7 +268,7 @@
     </mat-tab>
     <mat-tab label="Notes"> 
         <div fxLayout="row" fxLayoutGap="20px" class="m-t-30"  fxLayoutAlign="center center">
-            <mat-card fxFlex="70%">
+            <div fxFlex="70%">
             <form (ngSubmit)="onSubmit()" #f="ngForm">
 
             <mat-form-field>
@@ -282,7 +282,13 @@
               </mat-card-actions>
             
           </form>
-        </mat-card>   
+          <div *ngFor="let item of allNotes">
+            <mat-card class="m-t-30">
+              {{item.note}}
+            </mat-card>
+          </div>
+
+        </div>   
        </div>
     
     </mat-tab>
