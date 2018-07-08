@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 import { Observable } from 'rxjs';
@@ -20,12 +20,14 @@ export class ShellComponent implements OnInit {
   progressBarMode: string;
 
   constructor(private breakpointObserver: BreakpointObserver,
-              private progressBarService: ProgressBarService) { }
+              private progressBarService: ProgressBarService,
+              private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.sidenavCollapsed = true;
     this.progressBarService.updateProgressBar.subscribe((mode: string) => {
       this.progressBarMode = mode;
+      this.cdr.detectChanges();
     });
   }
 

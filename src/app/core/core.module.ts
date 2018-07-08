@@ -158,6 +158,11 @@ import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
     ErrorHandlerInterceptor,
     CacheInterceptor,
     {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ProgressInterceptor,
+      multi: true
+    },
+    {
       provide: HttpClient,
       useClass: HttpService
     },
