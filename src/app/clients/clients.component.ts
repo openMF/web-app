@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import { Response} from '@angular/http';
 import {ClientsService} from './clients.service';
@@ -7,7 +7,9 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'mifosx-clients',
   templateUrl: './clients.component.html',
-  styleUrls: ['./clients.component.scss']
+  styleUrls: ['./clients.component.scss'],
+  encapsulation: ViewEncapsulation.None
+
 })
 export class ClientsComponent implements OnInit {
   post: any = [];
@@ -29,9 +31,11 @@ export class ClientsComponent implements OnInit {
     this.clientService.getClients()
     .subscribe(
       (res => {
+        console.log(res);
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.dataSource.sortingDataAccessor = (data, header) => data[header];
       })
     );
   }

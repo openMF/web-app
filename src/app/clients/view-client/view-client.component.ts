@@ -31,9 +31,9 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   displayedSavingsColumns = ['account', 'savingsAccount', 'lastActive', 'balance'];
   displayedSharesColumns = ['account', 'shareAccount', 'approvedShares', 'pending'];
 
-  dataSourceLoan = new MatTableDataSource();
-  dataSourceSavings = new MatTableDataSource();
-  dataSourceShares = new MatTableDataSource();
+  dataSourceLoan = new MatTableDataSource([]);
+  dataSourceSavings = new MatTableDataSource([]);
+  dataSourceShares = new MatTableDataSource([]);
 
   @ViewChild('f') noteForm: NgForm;
   @ViewChild(MatPaginator) paginator: MatPaginator;
