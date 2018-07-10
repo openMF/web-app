@@ -14,6 +14,7 @@ import { ClientsComponent } from './clients.component';
 import { CreateClientComponent} from './create-client/create-client.component';
 import { ViewClientComponent } from './view-client/view-client.component';
 import { ViewLoanComponent } from './view-loan/view-loan.component';
+import { CreateAddressComponent } from './create-address/create-address.component';
 
 import { ClientsService } from './clients.service';
 
@@ -34,8 +35,9 @@ import { ClientsService } from './clients.service';
     ClientsComponent,
     CreateClientComponent,
     ViewClientComponent,
-    ViewLoanComponent
-  ],
+    ViewLoanComponent,
+    CreateAddressComponent
+],
   providers: [
     ClientsService,
     HttpModule  // tslint:disable

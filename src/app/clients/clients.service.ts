@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
+import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angular/http';
 /* import { HttpHeaders, HttpClient } from '@angular/common/http';
  */
 import { Observable } from 'rxjs';
@@ -133,6 +133,47 @@ export class ClientsService {
     ('https://demo.openmf.org/fineract-provider/api/v1/clients/' + clientId
       + '/notes' + '?tenantIdentifier=default&pretty=true', notes ,
     {headers: headers})
+    .pipe(
+      map(
+          (response: Response) => {  // tslint:disable-line
+            response.json();
+          }
+      )
+    );
+  }
+
+  getClientAddressTemplate() {
+    const headers = new Headers();   // tslint:disable-line
+    this.createAuthorizationHeader(headers);
+    return this.http.get
+    ('https://demo.openmf.org/fineract-provider/api/v1/client/'
+      + 'addresses/template?tenantIdentifier=default',
+    {headers: headers})
+    .pipe(
+    map(
+        (response: Response) => {  // tslint:disable-line
+          response = response.json();
+          return response;
+
+        }
+    )
+  );
+  }
+
+  postClientAddress (clientId: number, body: any, type: any) {
+    const headers = new Headers();   // tslint:disable-line
+    const params = new URLSearchParams(); // tslint:disable-line
+    params.set('type', type);
+    this.createAuthorizationHeader(headers);
+    body = JSON.stringify(body);
+      const options = new RequestOptions({ // tslint:disable-line
+       headers: headers,
+       params: params,
+    });
+    return this.http.post
+    ('https://demo.openmf.org/fineract-provider/api/v1/client/' + clientId
+      + '/addresses' + '?type=type&tenantIdentifier=default&pretty=true', body ,
+    options)
     .pipe(
       map(
           (response: Response) => {  // tslint:disable-line

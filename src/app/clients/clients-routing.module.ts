@@ -6,6 +6,7 @@ import { ClientsComponent } from './clients.component';
 import { CreateClientComponent} from './create-client/create-client.component';
 import { ViewClientComponent } from './view-client/view-client.component';
 import { ViewLoanComponent } from './view-loan/view-loan.component';
+import { CreateAddressComponent } from './create-address/create-address.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -28,6 +29,11 @@ const routes: Routes = [
       path: 'clients/viewloan',
       component: ViewLoanComponent,
       data: { title: extract('View Loan') }
+    },
+    {
+      path: 'clients/address',
+      component: CreateAddressComponent,
+      data: { title: extract('Create Address') }
     }
   ])
 ];
