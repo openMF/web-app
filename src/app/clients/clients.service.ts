@@ -172,7 +172,7 @@ export class ClientsService {
     });
     return this.http.post
     ('https://demo.openmf.org/fineract-provider/api/v1/client/' + clientId
-      + '/addresses' + '?type=type&tenantIdentifier=default&pretty=true', body ,
+      + '/addresses?' + '&tenantIdentifier=default&pretty=true', body ,
     options)
     .pipe(
       map(

@@ -11,34 +11,52 @@
                  <mat-card-content>
                      <form class="example-form" (ngSubmit)="onSubmit()" #f="ngForm">
                         <mat-form-field class="example-full-width">
-                            <mat-select placeholder="Address Type"  [(ngModel)]="address" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+                            <mat-select placeholder="Address Type"  [(ngModel)]="addressTypeId" [ngModelOptions]="{standalone: true}" ngDefaultControl>
                                 <div > 
 
                                   <mat-option *ngFor="let item of clientAddress?.addressTypeIdOptions" 
-                                  name="option" [value]="item.id">{{item?.name}}</mat-option>
+                                  name="option" [value]="item?.id">{{item?.name}}</mat-option>
                                   </div>
                             </mat-select>
                           </mat-form-field>
                        
                          <mat-form-field class="example-full-width">
-                             <input matInput placeholder="First name">
+                             <input matInput name="street" placeholder="Street" ngModel>
                            </mat-form-field>
                            <mat-form-field class="example-full-width">
-                             <input matInput placeholder="Long Last Name That Will Be Truncated">
+                             <input matInput name="addressLine1" placeholder="Address Line 1" ngModel>
                           </mat-form-field>
                        
                          
+                          <mat-form-field class="example-full-width">
+                            <input matInput name="addressLine2" placeholder="Address Line 2" ngModel>
+                          </mat-form-field>
                            <mat-form-field class="example-full-width">
-                             <textarea matInput placeholder="Address">1600 Amphitheatre Pkwy</textarea>
-                           </mat-form-field>
+                            <input matInput name="addressLine3" placeholder="Address Line 3" ngModel>
+                          </mat-form-field>
                            <mat-form-field class="example-full-width">
-                             <textarea matInput placeholder="Address 2"></textarea>
-                           </mat-form-field>
-                           <mat-form-field class="example-full-width">
-                              <textarea matInput placeholder="Address">1600 Amphitheatre Pkwy</textarea>
+                              <input matInput name="city" placeholder="City" ngModel>
                             </mat-form-field>
                             <mat-form-field class="example-full-width">
-                              <textarea matInput placeholder="Address 2"></textarea>
+                              <mat-select placeholder="State" [(ngModel)]="addressStateId" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+                                <div > 
+
+                                  <mat-option *ngFor="let item of clientAddress?.stateProvinceIdOptions" 
+                                  name="option" [value]="item?.id">{{item?.name}}</mat-option>
+                                  </div>
+                            </mat-select>
+                            </mat-form-field>
+                            <mat-form-field class="example-full-width">
+                              <mat-select placeholder="State" [(ngModel)]="addressStateId" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+                                <div > 
+
+                                  <mat-option *ngFor="let item of clientAddress?.stateProvinceIdOptions" 
+                                  name="option" [value]="item?.id">{{item?.name}}</mat-option>
+                                  </div>
+                            </mat-select>
+                            </mat-form-field>
+                            <mat-form-field class="example-full-width">
+                              <input matInput name="postalCode" placeholder="Postal Code" ngModel>
                             </mat-form-field>
                         
                             <button mat-raised-button>Create</button>

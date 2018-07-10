@@ -16,13 +16,15 @@ export class CreateAddressComponent implements OnInit {
   clientAddress: any = undefined;
   value: any = undefined;
   mymodel: any = undefined;
-  address: any = undefined;
-  /* address: {
-    id: ''
-  }; */
+  addressTypeId: any  = undefined;
+  addressStateId: any  = undefined;
+  addressCountryId: any  = undefined;
+
+  address: any  = undefined;
+
   constructor(private route: ActivatedRoute, private clientService: ClientsService) {}
 
-  @ViewChild('f') noteForm: NgForm;
+  @ViewChild('f') addressForm: NgForm;
 
 
   ngOnInit() {
@@ -47,6 +49,17 @@ export class CreateAddressComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     //  this.submitted = true;
+    this.address = {};
+    console.log(this.addressTypeId);
+    this.address.street = this.addressForm.value.street;
+    this.address.addressLine1 = this.addressForm.value.addressLine1;
+    this.address.addressLine2 =  this.addressForm.value.addressLine2;
+    this.address.addressLine3 = this.addressForm.value.addressLine3;
+    this.address.city =  this.addressForm.value.city;
+    this.address.stateProvinceId =  this.addressStateId;
+    this.address.postalCode =  this.addressForm.value.postalCode;
+
+
     console.log(this.address);
   //  const d = new Date();
   //  this.value = this.noteForm.value.value;
@@ -57,14 +70,14 @@ export class CreateAddressComponent implements OnInit {
     this.noteForm.reset();
     alert("Thanks for submitting! Data: " + JSON.stringify(this.address)); */
 
-   /*  this.clientService.postClientNote(this.id, this.notes)
+   this.clientService.postClientAddress(this.id, this.address, this.addressTypeId)
       .subscribe(
         (res => {
-          this.getClientNotes(this.id);
+          
           return true;
         })
       );
-    this.noteForm.reset(); */
+    this.addressForm.reset(); 
 
   }
 
