@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { NgForm } from '@angular/forms';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'mifosx-view-client',
   templateUrl: './view-client.component.html',
@@ -31,13 +31,15 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   displayedSavingsColumns = ['account', 'savingsAccount', 'lastActive', 'balance'];
   displayedSharesColumns = ['account', 'shareAccount', 'approvedShares', 'pending'];
 
-  dataSourceLoan = new MatTableDataSource();
-  dataSourceSavings = new MatTableDataSource();
-  dataSourceShares = new MatTableDataSource();
+  dataSourceLoan = new MatTableDataSource([]);
+  dataSourceSavings = new MatTableDataSource([]);
+  dataSourceShares = new MatTableDataSource([]);
 
   @ViewChild('f') noteForm: NgForm;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private route: ActivatedRoute, private clientService: ClientsService) {}
+  constructor(private route: ActivatedRoute, private clientService: ClientsService, private router: Router) {}
 
   ngOnInit() {
     this.paramsSubscription = this.route.params
@@ -85,6 +87,13 @@ export class ViewClientComponent implements OnInit, OnDestroy {
           this.dataSourceLoan = new MatTableDataSource(this.LOAN_DATA);
           this.dataSourceSavings = new MatTableDataSource(this.SAVINGS_DATA);
           this.dataSourceShares = new MatTableDataSource(this.SHARES_DATA);
+          this.dataSourceLoan.paginator = this.paginator;
+          this.dataSourceSavings.paginator = this.paginator;
+          this.dataSourceShares.paginator = this.paginator;
+          this.dataSourceLoan.sort = this.sort;
+          this.dataSourceSavings.sort = this.sort;
+          this.dataSourceShares.sort = this.sort;
+
         })
       );
   }
