@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { NgForm } from '@angular/forms';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'mifosx-view-client',
   templateUrl: './view-client.component.html',
@@ -39,7 +39,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private route: ActivatedRoute, private clientService: ClientsService) {}
+  constructor(private route: ActivatedRoute, private clientService: ClientsService, private router: Router) {}
 
   ngOnInit() {
     this.paramsSubscription = this.route.params

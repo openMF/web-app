@@ -31,7 +31,7 @@ const routes: Routes = [
       data: { title: extract('View Loan') }
     },
     {
-      path: 'clients/address',
+      path: 'clients/address/:id',
       component: CreateAddressComponent,
       data: { title: extract('Create Address') }
     }

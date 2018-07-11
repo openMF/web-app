@@ -29,7 +29,7 @@ import { ClientsService } from './clients.service';
     BrowserModule,  // tslint:disable
     HttpModule, 
     MatTableModule,
-    ArchwizardModule
+    ArchwizardModule,
   ],
   declarations: [
     ClientsComponent,
