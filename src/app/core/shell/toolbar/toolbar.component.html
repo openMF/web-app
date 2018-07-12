@@ -69,8 +69,8 @@
 </mat-toolbar>
 
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
-  <span (mouseleave)="institutionMenuTrigger.closeMenu()">
-    <button mat-menu-item>Clients</button>
+  <span>
+    <button mat-menu-item routerLink="/clients">Clients</button>
     <button mat-menu-item>Groups</button>
     <button mat-menu-item>Centers</button>
     <span fxHide.lg>
