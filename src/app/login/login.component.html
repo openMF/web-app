@@ -1,5 +1,3 @@
-<!-- TODO: UPDATE WITH ANGULAR MATERIAL -->
-
 <div fxLayout="row">
   <!-- I want a row divided into 2 parts 70% and 30% -->
 
@@ -36,20 +34,15 @@
       <img src="assets/images/mifos-logo-flat.png" alt="" class="img-container">
     </div>
 
-    <!-- Next we have the form -->
-    <!-- <div> -->
-      <form fxLayout="column" fxFlex="3 0 auto" (ngSubmit)="login()" [formGroup]="loginForm">
-        <mat-form-field fxFlexAlign="center" class="textfield">
-          <input matInput placeholder="Username">
-        </mat-form-field>
-        <mat-form-field fxFlexAlign="center" class="textfield">
-          <input matInput type="password" placeholder="Password">
-        </mat-form-field>
-        <mat-checkbox fxFlexAlign="center">Remember me</mat-checkbox>
-        <button mat-raised-button color="primary" fxFlexAlign="center" class="b">Login</button>
-        <button mat-button fxFlexAlign="center" class="b">Forgot Password?</button>
-      </form>
-    <!-- </div> -->
+    <!-- Next we have the type of form -->
+    <div fxLayout="row" fxFlex="3 0 auto" fxLayoutAlign="center start">
+      <mifosx-login-form *ngIf="!resetPassword && !twoFactorAuthenticationRequired"></mifosx-login-form>
+      <mifosx-reset-password *ngIf="resetPassword"></mifosx-reset-password>
+      <mifosx-two-factor-authentication *ngIf="twoFactorAuthenticationRequired"></mifosx-two-factor-authentication>
+      <!-- TODO: Discuss about providing a feature of Forgot password -->
+    </div>
+
+    <!-- Footer -->
     <mat-list fxHide.lt-md fxLayout="row" fxFlexAlign="center" fxFlex="3 0 auto" class="list">
       <mat-list-item><button mat-button [matMenuTriggerFor]="resourcesMenu">Resources</button></mat-list-item>
       <mat-list-item><button mat-button [matMenuTriggerFor]="communityMenu">Community</button></mat-list-item>
@@ -83,66 +76,3 @@
   <a href="https://sourceforge.net/projects/mifos/" mat-menu-item>Working with Code</a>
   <a href="http://mifos.org/donate/" mat-menu-item>Donate</a>
 </mat-menu>
-
-<!-- <div class="login-container bg-light">
-  <div class="login-box">
-    <img class="text-center img-responsive" src="assets/images/mifos-logo-flat.png" style="width:30%">
-    <div>
-      <h6 class="d-inline-block">v{{version}}</h6>
-      <div class="d-inline-block ml-3" ngbDropdown>
-        <button id="language-dropdown" class="btn btn-sm btn-secondary" ngbDropdownToggle>
-          {{currentLanguage}}
-        </button>
-        <div ngbDropdownMenu aria-labelledby="language-dropdown">
-          <button class="dropdown-item" *ngFor="let language of languages" (click)="setLanguage(language)">
-            {{language}}
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="card col-md-6 mt-3 mx-auto">
-        <div class="card-body">
-          <h4 class="card-title text-center">
-            <i class="far fa-3x fa-user-circle text-muted"></i>
-          </h4>
-          <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
-            <div class="alert alert-danger" [hidden]="!error || isLoading" translate>
-              Username or password incorrect.
-            </div>
-            <div class="form-group">
-              <label class="d-block">
-                <input type="text" class="form-control" formControlName="username" autocomplete="username"
-                       [placeholder]="'Username' | translate"/>
-                <span hidden translate>Username</span>
-                <small [hidden]="loginForm.controls.username.valid || loginForm.controls.username.untouched"
-                       class="text-danger" translate>
-                  Username is required
-                </small>
-              </label>
-              <label class="d-block">
-                <input type="password" class="form-control" formControlName="password" autocomplete="current-password"
-                       [placeholder]="'Password' | translate" required/>
-                <span hidden translate>Password</span>
-                <small [hidden]="loginForm.controls.password.valid || loginForm.controls.password.untouched"
-                       class="text-danger" translate>
-                  Password is required
-                </small>
-              </label>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input type="checkbox" class="form-check-input" formControlName="remember"/>
-                  <span translate>Remember me</span>
-                </label>
-              </div>
-            </div>
-            <button class="btn btn-primary w-100" type="submit" [disabled]="loginForm.invalid || isLoading">
-              <i class="fas fa-cog fa-spin" [hidden]="!isLoading"></i>
-              <span translate>Login</span>
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->

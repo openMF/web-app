@@ -1,51 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { finalize } from 'rxjs/operators';
+import { I18nService } from '../core/i18n.service';
+import { AlertService } from '../core/alert.service';
 
 import { environment } from '../../environments/environment';
-import { Logger, I18nService, AuthenticationService } from '../core';
-
-const log = new Logger('Login');
 
 @Component({
   selector: 'mifosx-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   version: string = environment.version;
-  error: string;
-  loginForm: FormGroup;
-  isLoading = false;
-  languages = ['en-US', 'fr'];
+  languages = ['en-US', 'fr-FR'];
   language = this.languages[0];
+  resetPassword = false;
+  twoFactorAuthenticationRequired = false;
+  alert$: any;
 
-  constructor(private router: Router,
-              private formBuilder: FormBuilder,
-              private i18nService: I18nService,
-              private authenticationService: AuthenticationService) {
-    this.createForm();
-  }
+  constructor(private i18nService: I18nService,
+              private alertService: AlertService,
+              private router: Router) { }
 
-  ngOnInit() { }
-
-  login() {
-    this.isLoading = true;
-    this.authenticationService.login(this.loginForm.value)
-      .pipe(finalize(() => {
-        this.loginForm.markAsPristine();
-        this.isLoading = false;
-      }))
-      .subscribe(credentials => {
-        log.debug(`${credentials.username} successfully logged in`);
+  ngOnInit() {
+    this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: any) => {
+      const alertType = alertEvent.type;
+      if (alertType === 'Password Expired') {
+        this.twoFactorAuthenticationRequired = false;
+        this.resetPassword = true;
+      } else if (alertType === 'Two Factor Authentication Required') {
+        this.resetPassword = false;
+        this.twoFactorAuthenticationRequired = true;
+      } else if (alertType === 'Authentication Success') {
+        this.resetPassword = false;
+        this.twoFactorAuthenticationRequired = false;
         this.router.navigate(['/'], { replaceUrl: true });
-      }, error => {
-        log.debug(`Login error: ${error}`);
-        this.error = error;
-      });
+      }
+    });
   }
 
   setLanguage(language: string) {
@@ -60,12 +53,8 @@ export class LoginComponent implements OnInit {
   //   return this.i18nService.supportedLanguages;
   // }
 
-  private createForm() {
-    this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      remember: true
-    });
+  ngOnDestroy() {
+    this.alert$.unsubscribe();
   }
 
 }

@@ -27,7 +27,7 @@ export class ThemeStorageService {
   }
 
   clearTheme() {
-    this.localStorage.removeItem(this.themeStorageKey);
+    this.localStorage.removeItemSubscribe(this.themeStorageKey);
   }
 
 }

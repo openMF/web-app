@@ -58,6 +58,7 @@ import { ThemePickerComponent } from './shell/toolbar/theme-picker/theme-picker.
 import { ToolbarComponent } from './shell/toolbar/toolbar.component';
 import { ContentComponent } from './shell/content/content.component';
 import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
+import { AuthenticationInterceptor } from './authentication/authentication.interceptor';
 
 @NgModule({
   imports: [
@@ -157,9 +158,15 @@ import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
     ApiPrefixInterceptor,
     ErrorHandlerInterceptor,
     CacheInterceptor,
+    AuthenticationInterceptor,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ProgressInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticationInterceptor,
       multi: true
     },
     {

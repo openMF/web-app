@@ -17,7 +17,8 @@ export class AuthenticationGuard implements CanActivate {
       return true;
     }
 
-    log.debug('Not authenticated, redirecting...');
+    log.debug('User not authenticated, redirecting to login...');
+    this.authenticationService.logout();
     this.router.navigate(['/login'], { replaceUrl: true });
     return false;
   }

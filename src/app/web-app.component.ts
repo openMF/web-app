@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { MatSnackBar } from '@angular/material';
 
 import { TranslateService } from '@ngx-translate/core';
 import { merge } from 'rxjs';
@@ -8,6 +9,7 @@ import { filter, map, mergeMap } from 'rxjs/operators';
 
 import { environment } from '../environments/environment';
 import { Logger, I18nService } from './core';
+import { AlertService } from './core/alert.service';
 
 const log = new Logger('MifosX');
 
@@ -22,7 +24,9 @@ export class WebAppComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private titleService: Title,
               private translateService: TranslateService,
-              private i18nService: I18nService) { }
+              private i18nService: I18nService,
+              public snackBar: MatSnackBar,
+              private alertService: AlertService) { }
 
   ngOnInit() {
     // Setup logger
@@ -57,6 +61,13 @@ export class WebAppComponent implements OnInit {
         }
       });
 
+    this.alertService.alertEvent.subscribe((alertEvent: any) => {
+      this.snackBar.open(`${alertEvent.message}`, 'Close', {
+        duration: 2000,
+        horizontalPosition: 'right',
+        verticalPosition: 'top'
+      });
+    });
   }
 
 }

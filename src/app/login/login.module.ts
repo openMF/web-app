@@ -7,6 +7,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from './login.component';
 import { CoreModule } from '../core/core.module';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { TwoFactorAuthenticationComponent } from './two-factor-authentication/two-factor-authentication.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   imports: [
@@ -18,7 +21,10 @@ import { CoreModule } from '../core/core.module';
     LoginRoutingModule
   ],
   declarations: [
-    LoginComponent
+    LoginComponent,
+    LoginFormComponent,
+    TwoFactorAuthenticationComponent,
+    ResetPasswordComponent
   ]
 })
 export class LoginModule { }
