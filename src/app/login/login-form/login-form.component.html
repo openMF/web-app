@@ -1,0 +1,27 @@
+<form fxLayout="column" [formGroup]="loginForm" (ngSubmit)="login()">
+  <mat-form-field fxFlexAlign="center" class="textfield">
+    <span matPrefix><mat-icon>account_circle</mat-icon>&nbsp;&nbsp;</span>
+    <input matInput placeholder="Username" autocomplete="off" formControlName="username">
+    <mat-error *ngIf="loginForm.controls.username.hasError('required')">
+      Username is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field fxFlexAlign="center" class="textfield">
+    <span matPrefix><mat-icon>lock</mat-icon>&nbsp;&nbsp;</span>
+    <input matInput type="{{ passwordInputType }}" placeholder="Password" formControlName="password">
+    <button mat-button *ngIf="loginForm.controls.password.value && !loading" matSuffix mat-icon-button
+    aria-label="Clear" (mousedown)="passwordInputType = 'text'" (mouseup)="passwordInputType = 'password'">
+      <mat-icon *ngIf="passwordInputType === 'password'">visibility</mat-icon>
+      <mat-icon *ngIf="passwordInputType === 'text'">visibility_off</mat-icon>
+    </button>
+    <mat-error *ngIf="loginForm.controls.password.hasError('required')">
+      Password is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-checkbox fxFlexAlign="center" formControlName="remember" class="m-t-10">Remember me</mat-checkbox>
+  <button mat-raised-button color="primary" fxFlexAlign="center" class="btn" [disabled]="!loginForm.valid">
+    Login
+    <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
+  </button>
+  <button type="button" mat-button fxFlexAlign="center" class="btn" (click)="forgotPassword()" [disabled]="loading">Forgot Password?</button>
+</form>

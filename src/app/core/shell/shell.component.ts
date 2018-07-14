@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 import { Observable } from 'rxjs';
@@ -10,7 +10,7 @@ import { ProgressBarService } from '../progress-bar.service';
   templateUrl: './shell.component.html',
   styleUrls: ['./shell.component.scss']
 })
-export class ShellComponent implements OnInit {
+export class ShellComponent implements OnInit, OnDestroy {
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
   .pipe(
@@ -18,6 +18,7 @@ export class ShellComponent implements OnInit {
   );
   sidenavCollapsed = false;
   progressBarMode: string;
+  progressBar$: any;
 
   constructor(private breakpointObserver: BreakpointObserver,
               private progressBarService: ProgressBarService,
@@ -25,7 +26,7 @@ export class ShellComponent implements OnInit {
 
   ngOnInit() {
     this.sidenavCollapsed = true;
-    this.progressBarService.updateProgressBar.subscribe((mode: string) => {
+    this.progressBar$ = this.progressBarService.updateProgressBar.subscribe((mode: string) => {
       this.progressBarMode = mode;
       this.cdr.detectChanges();
     });
@@ -33,6 +34,10 @@ export class ShellComponent implements OnInit {
 
   toggleCollapse($event: boolean) {
     this.sidenavCollapsed = $event;
+  }
+
+  ngOnDestroy() {
+    this.progressBar$.unsubscribe();
   }
 
 }
