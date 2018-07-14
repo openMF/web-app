@@ -1,8 +1,5 @@
 import {Injectable, EventEmitter} from '@angular/core';
 
-import { LocalStorage } from '@ngx-pwa/local-storage';
-import { Observable } from 'rxjs';
-
 import { Theme } from './theme.model';
 
 @Injectable({
@@ -13,21 +10,21 @@ export class ThemeStorageService {
   private themeStorageKey = 'mifosXTheme';
   onThemeUpdate: EventEmitter<Theme>;
 
-  constructor(private localStorage: LocalStorage) {
+  constructor() {
     this.onThemeUpdate = new EventEmitter<Theme>();
   }
 
   storeTheme(mifosXTheme: Theme) {
-    this.localStorage.setItem(this.themeStorageKey, mifosXTheme)
-      .subscribe(() => this.onThemeUpdate.emit(mifosXTheme));
+    localStorage.setItem(this.themeStorageKey, JSON.stringify(mifosXTheme));
+    this.onThemeUpdate.emit(mifosXTheme);
   }
 
-  getTheme(): Observable<Theme> {
-    return this.localStorage.getItem<Theme>(this.themeStorageKey);
+  getTheme(): Theme {
+    return JSON.parse(localStorage.getItem(this.themeStorageKey));
   }
 
   clearTheme() {
-    this.localStorage.removeItemSubscribe(this.themeStorageKey);
+    localStorage.removeItem(this.themeStorageKey);
   }
 
 }
