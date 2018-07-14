@@ -1,6 +1,7 @@
 import {Injectable, EventEmitter} from '@angular/core';
 
 import { Theme } from './theme.model';
+import { ThemeManagerService } from './theme-manager.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class ThemeStorageService {
   private themeStorageKey = 'mifosXTheme';
   onThemeUpdate: EventEmitter<Theme>;
 
-  constructor() {
+  constructor(public themeManagerService: ThemeManagerService) {
     this.onThemeUpdate = new EventEmitter<Theme>();
   }
 
@@ -25,6 +26,15 @@ export class ThemeStorageService {
 
   clearTheme() {
     localStorage.removeItem(this.themeStorageKey);
+  }
+
+  installTheme(theme: Theme) {
+    if (theme.isDefault) {
+      this.themeManagerService.removeTheme();
+    } else {
+      this.themeManagerService.setTheme(`theme/${theme.href}`);
+    }
+    this.storeTheme(theme);
   }
 
 }
