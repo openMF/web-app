@@ -92,16 +92,13 @@ export class AuthenticationService {
     this.storage = this.rememberMe ? localStorage : sessionStorage;
 
     if (environment.oauth.enabled) {
-      return this.http.disableApiPrefix().post(
-        `${environment.oauth.serverUrl}
-        /oauth/token?username=${loginContext.username}&password=${loginContext.password}
-        &client_id=community-app&grant_type=password&client_secret=123`, {}
-        ).pipe(
-            map((tokenResponse: OAuth2Token) => {
-              this.getUserDetails(tokenResponse);
-              return of(true);
-            })
-          );
+      return this.http.disableApiPrefix().post(`${environment.oauth.serverUrl}/oauth/token?username=${loginContext.username}&password=${loginContext.password}&client_id=community-app&grant_type=password&client_secret=123`, {})
+        .pipe(
+          map((tokenResponse: OAuth2Token) => {
+            this.getUserDetails(tokenResponse);
+            return of(true);
+          })
+        );
     } else {
       return this.http.post(`/authentication?username=${loginContext.username}&password=${loginContext.password}`, {})
         .pipe(
@@ -131,11 +128,8 @@ export class AuthenticationService {
   refreshOAuthAccessToken() {
     const oAuthRefreshToken = JSON.parse(this.storage.getItem(oAuthTokenDetailsStorageKey)).refresh_token;
     this.authenticationInterceptor.removeAuthorization();
-    this.http.disableApiPrefix().post(
-        `${environment.oauth.serverUrl}
-        /oauth/token?client_id=community-app&grant_type=refresh_token&client_secret=123
-        &refresh_token=${oAuthRefreshToken}`, {}
-      ).subscribe((tokenResponse: OAuth2Token) => {
+    this.http.disableApiPrefix().post(`${environment.oauth.serverUrl}/oauth/token?client_id=community-app&grant_type=refresh_token&client_secret=123&refresh_token=${oAuthRefreshToken}`, {})
+      .subscribe((tokenResponse: OAuth2Token) => {
           this.storage.setItem(oAuthTokenDetailsStorageKey, JSON.stringify(tokenResponse));
           this.authenticationInterceptor.setAuthorizationToken(tokenResponse.access_token);
           this.refreshTokenOnExpiry(tokenResponse.expires_in);
