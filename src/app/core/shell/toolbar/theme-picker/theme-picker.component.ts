@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { Theme } from './theme.model';
-import { ThemeManagerService } from './theme-manager.service';
 import { ThemeStorageService } from './theme-storage.service';
 
 @Component({
@@ -13,21 +12,33 @@ import { ThemeStorageService } from './theme-storage.service';
 export class ThemePickerComponent implements OnInit {
 
   currentTheme: Theme = {
-    href: 'indigo-pink.css',
-    primary: '#3F51B5',
-    accent: '#E91E63',
+    href: 'denim-yellowgreen.css',
+    primary: '#1074B9',
+    accent: '#B4D575',
     isDark: false,
     isDefault: true
   };
   themes = [
     this.currentTheme,
     {
+      href: 'pictonblue-yellowgreen.css',
+      primary: '#1DAEEC',
+      accent: '#B4D575',
+      isDark: false
+    },
+    {
+      href: 'indigo-pink.css',
+      primary: '#3F51B5',
+      accent: '#E91E63',
+      isDark: false,
+    },
+    {
       href: 'deeppurple-amber.css',
       primary: '#673AB7',
       accent: '#FFC107',
       isDark: false
     },
-    {
+    { // TODO: Remove Dark Themes
       href: 'pink-bluegrey.css',
       primary: '#E91E63',
       accent: '#607D8B',
@@ -38,41 +49,21 @@ export class ThemePickerComponent implements OnInit {
       primary: '#9C27B0',
       accent: '#4CAF50',
       isDark: true
-    },
-    {
-      href: 'denim-yellowgreen.css',
-      primary: '#1074B9',
-      accent: '#B4D575',
-      isDark: false
-    },
-    {
-      href: 'pictonblue-yellowgreen.css',
-      primary: '#1DAEEC',
-      accent: '#B4D575',
-      isDark: false
     }
   ];
 
-  constructor(public themeManagerService: ThemeManagerService,
-              private themeStorageService: ThemeStorageService) {
+  constructor(public themeStorageService: ThemeStorageService) {  }
+
+  ngOnInit() {
     const theme = this.themeStorageService.getTheme();
-    if (theme) {
-      this.installTheme(theme);
-    }
-  }
-
-  ngOnInit() { }
-
-  installTheme(theme: Theme) {
     if (theme) {
       this.currentTheme = theme;
     }
-    if (this.currentTheme.isDefault) {
-      this.themeManagerService.removeTheme();
-    } else {
-      this.themeManagerService.setTheme(`theme/${this.currentTheme.href}`);
-    }
-    this.themeStorageService.storeTheme(this.currentTheme);
+  }
+
+  installTheme(theme: Theme) {
+    this.currentTheme = theme;
+    this.themeStorageService.installTheme(theme);
   }
 
 }

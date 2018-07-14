@@ -9,6 +9,7 @@ import { filter, map, mergeMap } from 'rxjs/operators';
 
 import { environment } from '../environments/environment';
 import { Logger, I18nService } from './core';
+import { ThemeStorageService } from './core/shell/toolbar/theme-picker/theme-storage.service';
 import { AlertService } from './core/alert.service';
 
 const log = new Logger('MifosX');
@@ -25,6 +26,7 @@ export class WebAppComponent implements OnInit {
               private titleService: Title,
               private translateService: TranslateService,
               private i18nService: I18nService,
+              private themeStorageService: ThemeStorageService,
               public snackBar: MatSnackBar,
               private alertService: AlertService) { }
 
@@ -60,6 +62,11 @@ export class WebAppComponent implements OnInit {
           this.titleService.setTitle(this.translateService.instant(title));
         }
       });
+
+    const theme = this.themeStorageService.getTheme();
+    if (theme) {
+      this.themeStorageService.installTheme(theme);
+    }
 
     this.alertService.alertEvent.subscribe((alertEvent: any) => {
       this.snackBar.open(`${alertEvent.message}`, 'Close', {
