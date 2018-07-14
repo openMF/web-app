@@ -55,9 +55,10 @@ export class ThemePickerComponent implements OnInit {
 
   constructor(public themeManagerService: ThemeManagerService,
               private themeStorageService: ThemeStorageService) {
-    this.themeStorageService.getTheme().subscribe((theme) => {
+    const theme = this.themeStorageService.getTheme();
+    if (theme) {
       this.installTheme(theme);
-    });
+    }
   }
 
   ngOnInit() { }
