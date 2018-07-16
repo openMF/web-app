@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { UserService } from '../user.service';
+import { UserService } from './user.service';
 
 export interface User {
   name: string;
@@ -13,11 +13,11 @@ export interface User {
 }
 
 @Component({
-  selector: 'mifosx-user-management',
-  templateUrl: './user-management.component.html',
-  styleUrls: ['./user-management.component.scss']
+  selector: 'mifosx-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.scss']
 })
-export class UserManagementComponent implements OnInit {
+export class UsersComponent implements OnInit {
 
   displayedColumns: string[] = ['select', 'name', 'id', 'email', 'status', 'officeName', 'staff'];
   dataSource: any;

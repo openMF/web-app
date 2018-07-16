@@ -5,7 +5,7 @@
   </mat-card-header>
 
   <mat-card-actions align="right">
-    <button mat-raised-button color="primary" routerLink="/self-service/users/edit"><mat-icon>edit</mat-icon>&nbsp;&nbsp;Edit</button>
+    <button mat-raised-button color="primary" [routerLink]="['/self-service/users/view/123456/edit']"><mat-icon>edit</mat-icon>&nbsp;&nbsp;Edit</button>
     <button mat-raised-button color="primary" (click)="openDialog()"><mat-icon>settings</mat-icon>&nbsp;&nbsp;Change Password</button>
     <button mat-raised-button color="primary"><mat-icon>lock</mat-icon>&nbsp;&nbsp;Deactivate</button>
   </mat-card-actions>

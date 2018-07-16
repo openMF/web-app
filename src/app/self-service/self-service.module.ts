@@ -4,12 +4,13 @@ import { FormsModule } from '@angular/forms';
 
 import { CoreModule } from '../core/core.module';
 import { SelfServiceRoutingModule } from './self-service-routing.module';
-import { UserManagementComponent } from './user-management/user-management.component';
-import { CreateUserComponent } from './create-user/create-user.component';
-import { ViewUserComponent } from './view-user/view-user.component';
-import { EditUserComponent } from './edit-user/edit-user.component';
+import { CreateUserComponent } from './users/create-user/create-user.component';
+import { ViewUserComponent } from './users/view-user/view-user.component';
+import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { AppConfigurationComponent } from './app-configuration/app-configuration.component';
 import { SharedModule } from '../shared/shared.module';
+import { SelfServiceComponent } from './self-service.component';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { SharedModule } from '../shared/shared.module';
     SelfServiceRoutingModule
   ],
   declarations: [
-    UserManagementComponent,
+    SelfServiceComponent,
+    UsersComponent,
     CreateUserComponent,
     ViewUserComponent,
     EditUserComponent,

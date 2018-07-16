@@ -25,4 +25,8 @@ export class UserService {
       );
   }
 
+  getUser(): Observable<any> {
+    return this.http.disableApiPrefix().get('http://localhost:4200/assets/mock/user.mock.json');
+  }
+
 }
