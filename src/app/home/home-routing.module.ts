@@ -18,9 +18,9 @@ const routes: Routes = [
       data: { title: extract('Home') }
     },
     {
-      path: 'home/dashboard',
+      path: 'dashboard',
       component: DashboardComponent,
-      data: { title: extract('Dashboard') }
+      data: { title: extract('Dashboard'), breadcrumb: 'Dashboard' }
     }
   ])
 ];

@@ -22,40 +22,63 @@ export class BreadcrumbComponent implements OnInit {
   generateBreadcrumbs() {
     const routeDataBreadcrumb = 'breadcrumb';
     const routeParamBreadcrumb = 'routeParamBreadcrumb';
+    const routeResolveBreadcrumb = 'routeResolveBreadcrumb';
+    const routeAddBreadcrumbLink = 'addBreadcrumbLink';
+
     const onNavigationEnd = this.router.events.pipe(filter(event => event instanceof NavigationEnd));
 
     onNavigationEnd.subscribe(() => {
       this.breadcrumbs = [];
       let currentRoute = this.activatedRoute.root;
-      let url = '';
+      let currentUrl = '';
 
       while (currentRoute.children.length > 0) {
         const childrenRoutes = currentRoute.children;
-        let breadcrumbLabel = 'Home';
+        let breadcrumbLabel: any;
+        let url: any;
 
         childrenRoutes.forEach(route => {
           currentRoute = route;
+          breadcrumbLabel = false;
+
           if (route.outlet !== 'primary') {
             return;
           }
+
+          const routeURL = route.snapshot.url.map(segment => segment.path).join('/');
+          currentUrl += `/${routeURL}`;
+
+          if (currentUrl === '/') {
+            breadcrumbLabel = 'Home';
+          }
+
           const hasData = (route.routeConfig && route.routeConfig.data);
+
           if (hasData) {
-            if (route.snapshot.data.hasOwnProperty(routeParamBreadcrumb)) {
-              breadcrumbLabel = route.snapshot.params[route.snapshot.data[routeParamBreadcrumb]];
+            if (route.snapshot.data.hasOwnProperty(routeResolveBreadcrumb) && route.snapshot.data[routeResolveBreadcrumb]) {
+              breadcrumbLabel = route.snapshot.data;
+              route.snapshot.data[routeResolveBreadcrumb].forEach((property: any) => {
+                breadcrumbLabel = breadcrumbLabel[property];
+              });
+            } else if (route.snapshot.data.hasOwnProperty(routeParamBreadcrumb) && route.snapshot.paramMap.get(route.snapshot.data[routeParamBreadcrumb])) {
+              breadcrumbLabel = route.snapshot.paramMap.get(route.snapshot.data[routeParamBreadcrumb]);
             } else if (route.snapshot.data.hasOwnProperty(routeDataBreadcrumb)) {
               breadcrumbLabel = route.snapshot.data[routeDataBreadcrumb];
             }
-          }
 
-          const routeURL = route.snapshot.url.map(segment => segment.path).join('/');
-          url += `/${routeURL}`;
+            if (route.snapshot.data.hasOwnProperty(routeAddBreadcrumbLink)) {
+              url = route.snapshot.data[routeAddBreadcrumbLink];
+            } else {
+              url = currentUrl;
+            }
+          }
 
           const breadcrumb: Breadcrumb = {
             label: breadcrumbLabel,
             url: url
           };
 
-          if (breadcrumb.url !== '//home') {
+          if (breadcrumbLabel) {
             this.breadcrumbs.push(breadcrumb);
           }
         });

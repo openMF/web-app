@@ -1,4 +1,48 @@
-li {
-  display: inline;
-  list-style-type: none;
+.breadcrumb-wrapper {
+  margin: 0 auto;
+  max-width: 74rem;
+  width: 90%;
+
+  .breadcrumb {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0;
+    line-height: 40px;
+
+    .breadcrumb-title {
+      font-size: 1.25rem;
+      font-weight: 400;
+    }
+
+    .separator:before {
+      content: "";
+      border: 1.5px solid #000;
+      margin: 0 0.6rem;
+      font-size: 1.25rem;
+      font-weight: 400;
+    }
+
+    .breadcrumb-label {
+      display: inline;
+      font-size: 1rem;
+
+      .breadcrumb-link {
+        a {
+          text-decoration: none;
+          color: #0275d8;
+        }
+        a:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .breadcrumb-link:after {
+        content: "/";
+        margin: 0 0.4rem;
+      }
+
+    }
+
+  }
+
 }
