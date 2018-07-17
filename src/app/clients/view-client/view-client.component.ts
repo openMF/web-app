@@ -24,16 +24,19 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   post: any = [];
   clientAddress: any = undefined;
   allNotes: any = undefined;
+  clientIdentifiers: any = undefined;
   private LOAN_DATA: any = undefined;
   private SAVINGS_DATA: any = undefined;
   private SHARES_DATA: any = undefined;
   displayedLoanColumns = ['account', 'loanAccount', 'originalLoan', 'loanBalance', 'amountPaid', 'type'];
   displayedSavingsColumns = ['account', 'savingsAccount', 'lastActive', 'balance'];
   displayedSharesColumns = ['account', 'shareAccount', 'approvedShares', 'pending'];
+  displayedIdentifierColumns = ['id', 'description', 'type', 'status'];
 
   dataSourceLoan = new MatTableDataSource([]);
   dataSourceSavings = new MatTableDataSource([]);
   dataSourceShares = new MatTableDataSource([]);
+  dataSourceIdentifiers = new MatTableDataSource([]);
 
   @ViewChild('f') noteForm: NgForm;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -54,6 +57,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
     this.getClientCharges(this.id);
     this.getClientAddress(this.id);
     this.getClientNotes(this.id);
+    this.getClientIdentifier(this.id);
   }
 
   getClientId(id: any) {
@@ -112,7 +116,6 @@ export class ViewClientComponent implements OnInit, OnDestroy {
       .subscribe(
         (res => {
           this.clientAddress = res;
-          console.log(res);
         })
       );
   }
@@ -122,9 +125,26 @@ export class ViewClientComponent implements OnInit, OnDestroy {
       .subscribe(
         (res => {
           this.allNotes = res;
-          console.log(res);
         })
       );
+  }
+
+  getClientIdentifier(id: any) {
+    this.clientService.getClientIdentifiers(id)
+    .subscribe(
+      (res => {
+        this.clientIdentifiers = res;
+        this.clientIdentifiers.forEach(function (item: any) {
+          item.status = item.status.split('.')[1];
+          console.log(item.status);
+        });
+
+       // this.clientIdentifiers.status = this.clientIdentifiers.status.split('.')[1];
+        this.dataSourceIdentifiers = new MatTableDataSource(this.clientIdentifiers);
+        this.dataSourceIdentifiers.paginator = this.paginator;
+        this.dataSourceIdentifiers.sort = this.sort;
+      })
+    );
   }
 
 

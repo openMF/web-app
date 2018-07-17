@@ -294,7 +294,51 @@
       </div>
 
     </mat-tab>
-    <mat-tab label="Second"> Content 2 </mat-tab>
+    <mat-tab label="Identities">  
+      
+      <div class="mat-elevation-z8 m-b-55">
+
+      <!-- LOAN TABLE -->
+      <mat-toolbar>
+        <span>Identifiers</span>
+
+      </mat-toolbar>
+
+      <table mat-table [dataSource]="dataSourceIdentifiers" matSort>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header='id'> ID </th>
+          <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+        </ng-container>
+
+        <!-- Account no Column -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header='description'> Description </th>
+          <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+        </ng-container>
+
+        <!-- External ID Column -->
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header='type'> Type </th>
+          <td mat-cell *matCellDef="let row"> {{row.documentType.name}} </td>
+        </ng-container>
+
+
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header='status'> Status </th>
+          <td mat-cell *matCellDef="let row"> {{row.status}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedIdentifierColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedIdentifierColumns;" [routerLink]="[]">
+
+        </tr>
+      </table>
+    </div>
+   </mat-tab>
     <mat-tab label="Third"> Content 3 </mat-tab>
 
   </mat-tab-group>

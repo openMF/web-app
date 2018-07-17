@@ -182,4 +182,57 @@ export class ClientsService {
       )
     );
   }
+
+  getClientIdentifierTemplate (clientId: number) {
+    const headers = new Headers();   // tslint:disable-line
+    this.createAuthorizationHeader(headers);
+    return this.http.get
+    ('https://demo.openmf.org/fineract-provider/api/v1/clients/' + clientId
+      + '/identifiers/template?tenantIdentifier=default',
+    {headers: headers})
+    .pipe(
+    map(
+        (response: Response) => {  // tslint:disable-line
+          response = response.json();
+          return response;
+
+        }
+    )
+  );
+  }
+
+  getClientIdentifiers (clientId: number) {
+    const headers = new Headers();   // tslint:disable-line
+    this.createAuthorizationHeader(headers);
+    return this.http.get
+    ('https://demo.openmf.org/fineract-provider/api/v1/clients/' + clientId
+      + '/identifiers/?tenantIdentifier=default',
+    {headers: headers})
+    .pipe(
+    map(
+        (response: Response) => {  // tslint:disable-line
+          response = response.json();
+          return response;
+
+        }
+    )
+  );
+  }
+
+  postClientIdentifier (clientId: number, body: any) {
+    const headers = new Headers();   // tslint:disable-line
+    this.createAuthorizationHeader(headers);
+    return this.http.post
+    ('https://demo.openmf.org/fineract-provider/api/v1/clients/' + clientId
+      + '/identifiers/?tenantIdentifier=default', body,
+    {headers: headers})
+    .pipe(
+    map(
+        (response: Response) => {  // tslint:disable-line
+          response.json();
+        }
+    )
+  );
+  }
+
 }
