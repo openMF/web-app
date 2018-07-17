@@ -1,0 +1,53 @@
+<div class="container m-t-40 m-b-40">
+
+    <aw-wizard class="m-t-10" #wizard [navBarLayout]="'large-empty-symbols'">
+      <aw-wizard-step stepTitle="Address" [navigationSymbol]="{ symbol: '1' }">
+  
+        <!--         [(ngModel)]="item.id" [ngModelOptions]="{standalone: true}" ngDefaultControl
+   -->
+        <div fxLayoutAlign="center">
+          <mat-card class="example-card">
+            <mat-card-header>
+            </mat-card-header>
+            <mat-card-content>
+              <form class="example-form" (ngSubmit)="onSubmit()" #f="ngForm">
+                <mat-form-field class="example-full-width">
+                  <mat-select placeholder="Document Type" [(ngModel)]="document" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+                    <div>
+  
+                      <mat-option *ngFor="let item of clientIdentifierDocument" name="option" [value]="item?.id">{{item?.name}}</mat-option>
+                    </div>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-select placeholder="Status" [(ngModel)]="status" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+                      <div>
+    
+                        <mat-option *ngFor="let item of statusTypes" name="option" [value]="item?.label">{{item?.label}}</mat-option>
+                      </div>
+                    </mat-select>
+                  </mat-form-field>
+  
+                <mat-form-field class="example-full-width">
+                  <input matInput name="uniqueid" placeholder="Unique ID #" ngModel>
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                  <input matInput name="description" placeholder="Description" ngModel>
+                </mat-form-field>
+  
+  
+                <button mat-raised-button>Create</button>
+  
+              </form>
+  
+            </mat-card-content>
+          </mat-card>
+  
+  
+        </div>
+  
+  
+      </aw-wizard-step>
+    </aw-wizard>
+  </div>
+  

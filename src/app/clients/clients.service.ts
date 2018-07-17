@@ -194,7 +194,7 @@ export class ClientsService {
     map(
         (response: Response) => {  // tslint:disable-line
           response = response.json();
-          return response;
+          return response['allowedDocumentTypes'];
 
         }
     )
