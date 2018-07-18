@@ -14,7 +14,7 @@ export class ClientsService {
       const username = 'mifos';
       const password = 'password';
       headers.append('Authorization', 'Basic ' + btoa(username + ':' + password));
-      headers.append('Content-Type', 'application/json');
+     // headers.append('Content-Type', 'application/json');
       headers.append('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
       headers.append('Access-Control-Allow-Origin', '*');
     }
@@ -235,4 +235,23 @@ export class ClientsService {
   );
   }
 
+  postClientDocument (clientId: number, body: any) {
+    const headers = new Headers();   // tslint:disable-line
+    this.createAuthorizationHeader(headers);
+    headers.append('Content-Type', null);
+    headers.append('Accept', 'multipart/form-data');
+    body = JSON.stringify(body);
+
+    return this.http.post
+    ('https://demo.openmf.org/fineract-provider/api/v1/clients/' + clientId
+      + '/documents/?tenantIdentifier=default', body,
+    {headers: headers})
+    .pipe(
+    map(
+        (response: Response) => {  // tslint:disable-line
+          response.json();
+        }
+    )
+  );
+  }
 }

@@ -18,6 +18,7 @@ import { CreateAddressComponent } from './create-address/create-address.componen
 import { CreateIdentityComponent } from './create-identity/create-identity.component';
 
 import { ClientsService } from './clients.service';
+import { UploadDocumentComponent } from './upload-document/upload-document.component';
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { ClientsService } from './clients.service';
     ViewClientComponent,
     ViewLoanComponent,
     CreateAddressComponent,
-    CreateIdentityComponent
+    CreateIdentityComponent,
+    UploadDocumentComponent
 ],
   providers: [
     ClientsService,
