@@ -1,0 +1,43 @@
+<div class="container m-t-40 m-b-40">
+
+  <aw-wizard class="m-t-10" #wizard [navBarLayout]="'large-empty-symbols'">
+    <aw-wizard-step stepTitle="Document" [navigationSymbol]="{ symbol: '1' }">
+
+      <!--         [(ngModel)]="item.id" [ngModelOptions]="{standalone: true}" ngDefaultControl
+   -->
+      <div fxLayoutAlign="center">
+        <mat-card class="example-card">
+          <mat-card-header>
+          </mat-card-header>
+          <mat-card-content>
+            <form class="example-form" (ngSubmit)="onSubmit()" #f="ngForm">
+              <mat-form-field class="example-full-width">
+                <input matInput name="name" placeholder="Name" ngModel>
+              </mat-form-field>
+
+              <mat-form-field class="example-full-width">
+                <input matInput name="description" placeholder="Description" ngModel>
+              </mat-form-field>
+
+              <div class="example-full-width">
+                <input type="file" #inputFile (change)="onFileSelected($event)" [style.display]="'none'" />
+
+                <button mat-button (click)="inputFile.click()">Import file</button> {{ inputFile.value }}
+              </div>
+
+
+              <button mat-raised-button>Create</button>
+
+            </form>
+
+          </mat-card-content>
+        </mat-card>
+
+
+      </div>
+
+
+    </aw-wizard-step>
+  </aw-wizard>
+</div>
+

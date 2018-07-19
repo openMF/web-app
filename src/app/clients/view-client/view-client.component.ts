@@ -24,16 +24,22 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   post: any = [];
   clientAddress: any = undefined;
   allNotes: any = undefined;
+  clientIdentifiers: any = undefined;
+  clientDocuments: any = undefined;
   private LOAN_DATA: any = undefined;
   private SAVINGS_DATA: any = undefined;
   private SHARES_DATA: any = undefined;
   displayedLoanColumns = ['account', 'loanAccount', 'originalLoan', 'loanBalance', 'amountPaid', 'type'];
   displayedSavingsColumns = ['account', 'savingsAccount', 'lastActive', 'balance'];
   displayedSharesColumns = ['account', 'shareAccount', 'approvedShares', 'pending'];
+  displayedIdentifierColumns = ['id', 'description', 'type', 'status', 'actions'];
+  displayedDocumentColumns = ['name', 'description', 'filename', 'actions'];
 
   dataSourceLoan = new MatTableDataSource([]);
   dataSourceSavings = new MatTableDataSource([]);
   dataSourceShares = new MatTableDataSource([]);
+  dataSourceIdentifiers = new MatTableDataSource([]);
+  dataSourceDocuments = new MatTableDataSource([]);
 
   @ViewChild('f') noteForm: NgForm;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -54,6 +60,9 @@ export class ViewClientComponent implements OnInit, OnDestroy {
     this.getClientCharges(this.id);
     this.getClientAddress(this.id);
     this.getClientNotes(this.id);
+    this.getClientIdentifier(this.id);
+    this.getClientDocuments(this.id);
+    // this.deleteClientDocuments(this.id, this.docId);
   }
 
   getClientId(id: any) {
@@ -112,7 +121,6 @@ export class ViewClientComponent implements OnInit, OnDestroy {
       .subscribe(
         (res => {
           this.clientAddress = res;
-          console.log(res);
         })
       );
   }
@@ -122,18 +130,46 @@ export class ViewClientComponent implements OnInit, OnDestroy {
       .subscribe(
         (res => {
           this.allNotes = res;
-          console.log(res);
         })
       );
   }
 
+  getClientIdentifier(id: any) {
+    this.clientService.getClientIdentifiers(id)
+      .subscribe(
+        (res => {
+          this.clientIdentifiers = res;
+          this.clientIdentifiers.forEach(function (item: any) {
+            item.status = item.status.split('.')[1];
+            console.log(item.status);
+          });
 
+          // this.clientIdentifiers.status = this.clientIdentifiers.status.split('.')[1];
+          this.dataSourceIdentifiers = new MatTableDataSource(this.clientIdentifiers);
+          this.dataSourceIdentifiers.paginator = this.paginator;
+          this.dataSourceIdentifiers.sort = this.sort;
+        })
+      );
+  }
+
+  getClientDocuments(id: any) {
+    this.clientService.getClientDocuments(id)
+      .subscribe(
+        (res => {
+          this.clientDocuments = res;
+          this.dataSourceDocuments = new MatTableDataSource(res);
+          this.dataSourceDocuments.paginator = this.paginator;
+          this.dataSourceDocuments.sort = this.sort;
+        })
+      );
+
+  }
   onSubmit() {
     //  this.submitted = true;
     this.notes = {};
-  //  const d = new Date();
+    //  const d = new Date();
     this.notes.note = this.noteForm.value.clientnotes;
-   // this.notes.createdOn =  d;
+    // this.notes.createdOn =  d;
     console.log(this.notes);
     this.clientService.postClientNote(this.id, this.notes)
       .subscribe(
@@ -146,9 +182,30 @@ export class ViewClientComponent implements OnInit, OnDestroy {
 
   }
 
+  deleteClientIdentifier(id: number, identifierId: number) {
+    this.clientService.deleteClientIdentifier(id, identifierId)
+      .subscribe(
+        (res => {
+          this.getClientIdentifier(this.id);
+          return true;
+        })
+      );
+  }
+  deleteClientDocuments(id: number, docId: number) {
+    console.log(docId);
+    this.clientService.deleteClientDocuments(id, docId)
+      .subscribe(
+        (res => {
+          this.getClientDocuments(this.id);
+          return true;
+        })
+      );
+  }
+
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
   }
 
 }
+
 
