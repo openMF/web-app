@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 export class ViewClientComponent implements OnInit, OnDestroy {
   notes: any = undefined;
   id: number = undefined;
+  //docId: number = undefined;
   loanAccounts: any = undefined;
   savingsAccounts: any = undefined;
   shareAccounts: any = undefined;
@@ -62,6 +63,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
     this.getClientNotes(this.id);
     this.getClientIdentifier(this.id);
     this.getClientDocuments(this.id);
+   // this.deleteClientDocuments(this.id, this.docId);
   }
 
   getClientId(id: any) {
@@ -179,6 +181,17 @@ export class ViewClientComponent implements OnInit, OnDestroy {
       );
     this.noteForm.reset();
 
+  }
+
+  deleteClientDocuments(id: number, docId: number){
+    console.log(docId);
+    this.clientService.deleteClientDocuments(this.id, docId)
+    .subscribe(
+      (res => {
+        this.getClientDocuments(this.id);
+        return true;
+      })
+    );
   }
 
   ngOnDestroy() {

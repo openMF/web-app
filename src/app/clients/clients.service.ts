@@ -270,5 +270,21 @@ export class ClientsService {
         )
       );
   }
+
+  deleteClientDocuments(clientId: number, documentId: any) {
+    const headers = new Headers(); // tslint:disable-line
+    this.createAuthorizationHeader(headers);
+    return this.http.delete('https://demo.openmf.org/fineract-provider/api/v1/clients/' + clientId +
+        '/documents/' + documentId + '/?tenantIdentifier=default', {
+          headers: headers
+        })
+      .pipe(
+        map(
+          (response: Response) => { // tslint:disable-line
+            response.json();
+          }
+        )
+      );
+  }
 }
 

@@ -376,7 +376,7 @@
         </table>
       </div> -->
       <div fxLayout="row wrap" fxLayoutGap=" " class="m-t-30 m-b-30">
-            <mat-card class="m-t-20 m-l-20">
+            <mat-card class="">
               <mat-card-header>
                 <div mat-card-avatar class=""></div>
                 <mat-card-title> </mat-card-title>
@@ -400,6 +400,8 @@
                       <td>{{item?.description}}</td>
                       <td>{{item?.fileName}}</td>
                       <td> <i class="fa fa-cloud-download"></i></td>
+                      <td><i class="zindex-4 fa fa-times" (click)="$event.stopPropagation(); deleteClientDocuments(id,item.id)"></i></td>
+
                     </tr>
                   </tbody>
                   </table>
