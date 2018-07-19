@@ -9,7 +9,7 @@ const routes: Routes = [
     {
       path: 'accounting',
       component: AccountingComponent,
-      data: { title: extract('Accounting') }
+      data: { title: extract('Accounting'), breadcrumb: 'Accounting' }
     }
   ])
 ];
