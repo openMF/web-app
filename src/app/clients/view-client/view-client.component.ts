@@ -15,7 +15,6 @@ import { Router } from '@angular/router';
 export class ViewClientComponent implements OnInit, OnDestroy {
   notes: any = undefined;
   id: number = undefined;
-  //docId: number = undefined;
   loanAccounts: any = undefined;
   savingsAccounts: any = undefined;
   shareAccounts: any = undefined;
@@ -33,8 +32,8 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   displayedLoanColumns = ['account', 'loanAccount', 'originalLoan', 'loanBalance', 'amountPaid', 'type'];
   displayedSavingsColumns = ['account', 'savingsAccount', 'lastActive', 'balance'];
   displayedSharesColumns = ['account', 'shareAccount', 'approvedShares', 'pending'];
-  displayedIdentifierColumns = ['id', 'description', 'type', 'status'];
-  displayedDocumentColumns = ['name', 'description', 'filename'];
+  displayedIdentifierColumns = ['id', 'description', 'type', 'status', 'actions'];
+  displayedDocumentColumns = ['name', 'description', 'filename', 'actions'];
 
   dataSourceLoan = new MatTableDataSource([]);
   dataSourceSavings = new MatTableDataSource([]);
@@ -63,7 +62,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
     this.getClientNotes(this.id);
     this.getClientIdentifier(this.id);
     this.getClientDocuments(this.id);
-   // this.deleteClientDocuments(this.id, this.docId);
+    // this.deleteClientDocuments(this.id, this.docId);
   }
 
   getClientId(id: any) {
@@ -183,15 +182,24 @@ export class ViewClientComponent implements OnInit, OnDestroy {
 
   }
 
-  deleteClientDocuments(id: number, docId: number){
+  deleteClientIdentifier(id: number, identifierId: number) {
+    this.clientService.deleteClientIdentifier(id, identifierId)
+      .subscribe(
+        (res => {
+          this.getClientIdentifier(this.id);
+          return true;
+        })
+      );
+  }
+  deleteClientDocuments(id: number, docId: number) {
     console.log(docId);
-    this.clientService.deleteClientDocuments(this.id, docId)
-    .subscribe(
-      (res => {
-        this.getClientDocuments(this.id);
-        return true;
-      })
-    );
+    this.clientService.deleteClientDocuments(id, docId)
+      .subscribe(
+        (res => {
+          this.getClientDocuments(this.id);
+          return true;
+        })
+      );
   }
 
   ngOnDestroy() {
@@ -199,4 +207,5 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   }
 
 }
+
 
