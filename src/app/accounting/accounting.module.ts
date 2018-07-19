@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CoreModule } from '../core/core.module';
 import { AccountingComponent } from './accounting.component';
 import { AccountingRoutingModule } from './accounting-routing.module';
+import { FrequentPostingsComponent } from './frequent-postings/frequent-postings.component';
 
 @NgModule({
   imports: [
@@ -11,6 +12,6 @@ import { AccountingRoutingModule } from './accounting-routing.module';
     CommonModule,
     AccountingRoutingModule
   ],
-  declarations: [AccountingComponent]
+  declarations: [AccountingComponent, FrequentPostingsComponent]
 })
 export class AccountingModule { }
