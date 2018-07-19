@@ -25,6 +25,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   clientAddress: any = undefined;
   allNotes: any = undefined;
   clientIdentifiers: any = undefined;
+  clientDocuments: any = undefined;
   private LOAN_DATA: any = undefined;
   private SAVINGS_DATA: any = undefined;
   private SHARES_DATA: any = undefined;
@@ -32,11 +33,13 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   displayedSavingsColumns = ['account', 'savingsAccount', 'lastActive', 'balance'];
   displayedSharesColumns = ['account', 'shareAccount', 'approvedShares', 'pending'];
   displayedIdentifierColumns = ['id', 'description', 'type', 'status'];
+  displayedDocumentColumns = ['name', 'description', 'filename'];
 
   dataSourceLoan = new MatTableDataSource([]);
   dataSourceSavings = new MatTableDataSource([]);
   dataSourceShares = new MatTableDataSource([]);
   dataSourceIdentifiers = new MatTableDataSource([]);
+  dataSourceDocuments = new MatTableDataSource([]);
 
   @ViewChild('f') noteForm: NgForm;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -58,6 +61,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
     this.getClientAddress(this.id);
     this.getClientNotes(this.id);
     this.getClientIdentifier(this.id);
+    this.getClientDocuments(this.id);
   }
 
   getClientId(id: any) {
@@ -131,29 +135,40 @@ export class ViewClientComponent implements OnInit, OnDestroy {
 
   getClientIdentifier(id: any) {
     this.clientService.getClientIdentifiers(id)
-    .subscribe(
-      (res => {
-        this.clientIdentifiers = res;
-        this.clientIdentifiers.forEach(function (item: any) {
-          item.status = item.status.split('.')[1];
-          console.log(item.status);
-        });
+      .subscribe(
+        (res => {
+          this.clientIdentifiers = res;
+          this.clientIdentifiers.forEach(function (item: any) {
+            item.status = item.status.split('.')[1];
+            console.log(item.status);
+          });
 
-       // this.clientIdentifiers.status = this.clientIdentifiers.status.split('.')[1];
-        this.dataSourceIdentifiers = new MatTableDataSource(this.clientIdentifiers);
-        this.dataSourceIdentifiers.paginator = this.paginator;
-        this.dataSourceIdentifiers.sort = this.sort;
-      })
-    );
+          // this.clientIdentifiers.status = this.clientIdentifiers.status.split('.')[1];
+          this.dataSourceIdentifiers = new MatTableDataSource(this.clientIdentifiers);
+          this.dataSourceIdentifiers.paginator = this.paginator;
+          this.dataSourceIdentifiers.sort = this.sort;
+        })
+      );
   }
 
+  getClientDocuments(id: any) {
+    this.clientService.getClientDocuments(id)
+      .subscribe(
+        (res => {
+          this.clientDocuments = res;
+          this.dataSourceDocuments = new MatTableDataSource(res);
+          this.dataSourceDocuments.paginator = this.paginator;
+          this.dataSourceDocuments.sort = this.sort;
+        })
+      );
 
+  }
   onSubmit() {
     //  this.submitted = true;
     this.notes = {};
-  //  const d = new Date();
+    //  const d = new Date();
     this.notes.note = this.noteForm.value.clientnotes;
-   // this.notes.createdOn =  d;
+    // this.notes.createdOn =  d;
     console.log(this.notes);
     this.clientService.postClientNote(this.id, this.notes)
       .subscribe(

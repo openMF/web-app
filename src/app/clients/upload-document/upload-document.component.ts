@@ -15,7 +15,7 @@ export class UploadDocumentComponent implements OnInit {
 
   id: number = undefined;
   paramsSubscription: Subscription;
-  
+
   document: any = undefined;
 
 
@@ -33,7 +33,7 @@ export class UploadDocumentComponent implements OnInit {
         }
       );
     console.log(this.id);
-   // this.getClientIdentifierTemplate(this.id);
+    // this.getClientIdentifierTemplate(this.id);
   }
 
 
@@ -59,3 +59,4 @@ export class UploadDocumentComponent implements OnInit {
     this.documentForm.reset();
   }
 }
+
