@@ -1,0 +1,140 @@
+<mat-card class="container">
+
+  <form [formGroup]="frequentPostingsForm" (ngSubmit)="submit()">
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+        <mat-form-field fxFlex="48%">
+          <mat-select placeholder="Office" required formControlName="officeId">
+            <mat-option *ngFor="let office of officeData" [value]="office.id">
+              {{ office.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48%">
+          <mat-select placeholder="Accounting Rule" required formControlName="accountingRule">
+            <mat-option *ngFor="let accountingRule of accountingRuleData" [value]="accountingRule">
+              {{ accountingRule.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48%">
+          <mat-select placeholder="Currency" required formControlName="currencyCode">
+            <mat-option *ngFor="let currency of currencyData" [value]="currency.code">
+              {{ currency.displayLabel }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <span fxFlex="48%" fxHide.lt-md></span>
+
+        <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column" formArrayName="debits"
+          *ngFor="let debit of frequentPostingsForm.get('debits').controls; let i = index;">
+
+          <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroupName]="i">
+
+            <mat-form-field fxFlex="48%">
+              <mat-select placeholder="Affected GL Entry (Debit)" required formControlName="glAccountId">
+                <mat-option *ngFor="let affectedGLEntryDebit of debitAccountData" [value]="affectedGLEntryDebit.id">
+                  {{ affectedGLEntryDebit.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="43%">
+              <input type="number" matInput placeholder="Debit Amount" required formControlName="amount">
+            </mat-form-field>
+
+            <span fxFlex>
+              <button *ngIf="i !== 0" type="button" mat-icon-button (click)="removeAffectedGLEntry(frequentPostingsForm.get('debits'), i)"><mat-icon>remove_circle</mat-icon></button>
+              <button *ngIf="i === 0 && allowMultipleDebitEntries" type="button" mat-icon-button color="primary" (click)="addAffectedGLEntry(frequentPostingsForm.get('debits'))"><mat-icon>add_circle</mat-icon></button>
+            </span>
+
+          </div>
+
+        </div>
+
+        <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column" formArrayName="credits"
+          *ngFor="let credit of frequentPostingsForm.get('credits').controls; let i = index;">
+
+          <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroupName]="i">
+
+            <mat-form-field fxFlex="48%">
+              <mat-select placeholder="Affected GL Entry (Credit)" required formControlName="glAccountId">
+                <mat-option *ngFor="let affectedGLEntryCredit of creditAccountData" [value]="affectedGLEntryCredit.id">
+                  {{ affectedGLEntryCredit.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="43%">
+              <input type="number" matInput placeholder="Credit Amount" required formControlName="amount">
+            </mat-form-field>
+
+            <span fxFlex>
+              <button *ngIf="i !== 0" type="button" mat-icon-button (click)="removeAffectedGLEntry(frequentPostingsForm.get('credits'), i)"><mat-icon>remove_circle</mat-icon></button>
+              <button *ngIf="i === 0 && allowMultipleCreditEntries" type="button" mat-icon-button color="primary" (click)="addAffectedGLEntry(frequentPostingsForm.get('credits'))"><mat-icon>add_circle</mat-icon></button>
+            </span>
+
+          </div>
+
+        </div>
+
+        <mat-form-field fxFlex="48%">
+          <input matInput placeholder="Reference Number" formControlName="referenceNumber">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48%">
+          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDatePicker" placeholder="Transaction Date" required formControlName="transactionDate">
+          <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #transactionDatePicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48%">
+          <mat-select placeholder="Payment Type" formControlName="paymentTypeId">
+            <mat-option *ngFor="let paymentType of paymentTypeData" [value]="paymentType.id">
+              {{ paymentType.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48%">
+          <input matInput placeholder="Account Number" formControlName="accountNumber">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48%">
+          <input matInput placeholder="Cheque Number" formControlName="checkNumber">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48%">
+          <input matInput placeholder="Routing Code" formControlName="routingCode">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48%">
+          <input matInput placeholder="Receipt Number" formControlName="receiptNumber">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48%">
+          <input matInput placeholder="Bank Number" formControlName="bankNumber">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="98%">
+          <textarea matInput placeholder="Comments" formControlName="comments"></textarea>
+        </mat-form-field>
+
+      </div>
+
+    </mat-card-content>
+
+    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <button mat-raised-button color="primary">Submit</button>
+      <button type="button" mat-raised-button>Cancel</button>
+    </mat-card-actions>
+
+  </form>
+
+</mat-card>

@@ -3,13 +3,24 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { Route, extract } from '../core';
 import { AccountingComponent } from './accounting.component';
+import { FrequentPostingsComponent } from './frequent-postings/frequent-postings.component';
 
 const routes: Routes = [
   Route.withShell([
     {
       path: 'accounting',
-      component: AccountingComponent,
-      data: { title: extract('Accounting'), breadcrumb: 'Accounting' }
+      data: { title: extract('Accounting'), breadcrumb: 'Accounting' },
+      children: [
+        {
+          path: '',
+          component: AccountingComponent
+        },
+        {
+          path: 'frequent-postings',
+          component: FrequentPostingsComponent,
+          data: { title: extract('Frequent Postings'), breadcrumb: 'Frequent Postings' }
+        }
+      ]
     }
   ])
 ];
