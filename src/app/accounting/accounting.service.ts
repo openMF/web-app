@@ -1,0 +1,33 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AccountingService {
+
+  constructor(private http: HttpClient) { }
+
+  getOffices(): Observable<any> {
+    return  this.http.get('/offices?orderBy=id');
+  }
+
+  getAccountingRules(): Observable<any> {
+    return this.http.get('/accountingrules?associations=all');
+  }
+
+  getCurrencies(): Observable<any> {
+    return this.http.get('/currencies');
+  }
+
+  getPaymentTypes(): Observable<any> {
+    return this.http.get('/paymenttypes');
+  }
+
+  createJournalEntry(journalEntry: any): Observable<any> {
+    return this.http.post('/journalentries', journalEntry);
+  }
+
+
+}
