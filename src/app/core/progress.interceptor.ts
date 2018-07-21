@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, catchError } from 'rxjs/operators';
 
 import { ProgressBarService } from './progress-bar.service';
 
@@ -13,12 +13,18 @@ export class ProgressInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.progressBarService.increase();
-    return next
-      .handle(request).pipe(
+    return next.handle(request)
+      .pipe(
         tap(event => {
           if (event instanceof HttpResponse) {
             this.progressBarService.decrease();
           }
+        })
+      )
+      .pipe(
+        catchError(error => {
+          this.progressBarService.decrease();
+          throw error;
         })
       );
   }
