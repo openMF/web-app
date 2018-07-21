@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -29,5 +29,21 @@ export class AccountingService {
     return this.http.post('/journalentries', journalEntry);
   }
 
+  getJournalEntry(transactionId: string) {
+    let httpParams = new HttpParams();
+    httpParams = httpParams.set('transactionId', transactionId);
+    httpParams = httpParams.set('transactionDetails', 'true');
+    return this.http.get(`/journalentries`, { params: httpParams });
+  }
+
+  revertTransaction(transactionId: string, comments: string) {
+    let httpParams = new HttpParams();
+    httpParams = httpParams.set('command', 'reverse');
+    let data = {};
+    if (comments) {
+      data = { comments: comments };
+    }
+    return this.http.post(`/journalentries/${transactionId}`, data, { params: httpParams });
+  }
 
 }
