@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { AccountingService } from '../accounting.service';
 
@@ -12,7 +13,6 @@ export class FrequentPostingsComponent implements OnInit {
 
   // TODO: Validations
   // https://github.com/openMF/incubator-fineract/blob/master/fineract-provider/src/main/java/org/apache/fineract/accounting/journalentry/exception/JournalEntryInvalidException.java
-  // TESTING: transactionId: 8b5748a57b73
 
   minDate = new Date(2000, 0, 1);
   maxDate = new Date();
@@ -28,7 +28,8 @@ export class FrequentPostingsComponent implements OnInit {
   allowMultipleDebitEntries: boolean;
 
   constructor(private formBuilder: FormBuilder,
-              private accountingService: AccountingService) { }
+              private accountingService: AccountingService,
+              private router: Router) { }
 
   ngOnInit() {
     this.createFrequentPostingsForm();
@@ -84,6 +85,10 @@ export class FrequentPostingsComponent implements OnInit {
     });
   }
 
+  getFormArrayData(type: string): FormArray {
+    return <FormArray>this.frequentPostingsForm.get(type);
+  }
+
   addAffectedGLEntry(affectedGLEntryFormArray: FormArray) {
     affectedGLEntryFormArray.push(this.createAffectedGLEntryForm());
   }
@@ -124,8 +129,7 @@ export class FrequentPostingsComponent implements OnInit {
     journalEntry.dateFormat = 'dd MMMM yyyy';
     journalEntry.transactionDate = '20 July 2018';
     this.accountingService.createJournalEntry(journalEntry).subscribe(response => {
-      console.log(response);
-      // navigate to view transaction with response.transactionId
+      this.router.navigate(['/accounting/transactions/view', response.transactionId]);
     });
   }
 

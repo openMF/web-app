@@ -33,7 +33,7 @@
         <span fxFlex="48%" fxHide.lt-md></span>
 
         <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column" formArrayName="debits"
-          *ngFor="let debit of frequentPostingsForm.get('debits').controls; let i = index;">
+          *ngFor="let debit of getFormArrayData('debits').controls; let i = index;">
 
           <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroupName]="i">
 
@@ -59,7 +59,7 @@
         </div>
 
         <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column" formArrayName="credits"
-          *ngFor="let credit of frequentPostingsForm.get('credits').controls; let i = index;">
+          *ngFor="let credit of getFormArrayData('credits').controls; let i = index;">
 
           <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroupName]="i">
 

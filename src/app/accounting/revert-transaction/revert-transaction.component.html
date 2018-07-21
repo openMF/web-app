@@ -1,0 +1,30 @@
+<div *ngIf="!data.reverted; else reverted">
+
+  <h1 mat-dialog-title>Revert Transaction</h1>
+  <div mat-dialog-content>
+    <p>Are you sure you want to revert this transaction?</p>
+    <mat-form-field fxFlexFill>
+      <textarea matInput placeholder="Comments" [formControl]="comments"></textarea>
+    </mat-form-field>
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>No</button>
+    <button mat-button [mat-dialog-close]="{ revert: true, comments: comments.value }">Yes</button>
+  </mat-dialog-actions>
+
+</div>
+
+<ng-template #reverted>
+
+    <h1 mat-dialog-title>Transaction Reverted</h1>
+    <div mat-dialog-content>
+      <h4>Success!</h4>
+      <p>A new journal entry has been created to reverse this transaction:</p>
+      <p>Transaction ID: {{ data.transactionId }}</p>
+    </div>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Close</button>
+      <button mat-button [mat-dialog-close]="{ redirect: true }">Redirect to New Transaction</button>
+    </mat-dialog-actions>
+
+</ng-template>
