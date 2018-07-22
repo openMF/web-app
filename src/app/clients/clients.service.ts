@@ -301,5 +301,25 @@ export class ClientsService {
         )
       );
   }
+
+  downloadClientDocuments(clientId: number, documentId: number) {
+    const headers = new Headers(); // tslint:disable-line
+    this.createAuthorizationHeader(headers);
+    return this.http.get('https://demo.openmf.org/fineract-provider/api/v1/clients/' + clientId +
+        '/documents/' + documentId + '/attachment/?tenantIdentifier=default', {
+          headers: headers
+        })
+      .pipe(
+        map(
+          (response: Response) => { // tslint:disable-line
+            return response.json();
+          }
+        )
+      );
+  }
+
+
+
+
 }
 

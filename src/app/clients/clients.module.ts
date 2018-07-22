@@ -12,7 +12,7 @@ import { ArchwizardModule } from 'angular-archwizard';
 import { ClientsRoutingModule } from './clients-routing.module';
 import { ClientsComponent } from './clients.component';
 import { CreateClientComponent} from './create-client/create-client.component';
-import { ViewClientComponent } from './view-client/view-client.component';
+import { ViewClientComponent, ViewClientDialogComponent } from './view-client/view-client.component';
 import { ViewLoanComponent } from './view-loan/view-loan.component';
 import { CreateAddressComponent } from './create-address/create-address.component';
 import { CreateIdentityComponent } from './create-identity/create-identity.component';
@@ -37,6 +37,7 @@ import { UploadDocumentComponent } from './upload-document/upload-document.compo
     ClientsComponent,
     CreateClientComponent,
     ViewClientComponent,
+    ViewClientDialogComponent,
     ViewLoanComponent,
     CreateAddressComponent,
     CreateIdentityComponent,
