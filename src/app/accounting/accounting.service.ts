@@ -46,4 +46,12 @@ export class AccountingService {
     return this.http.post(`/journalentries/${transactionId}`, data, { params: httpParams });
   }
 
+  getGlAccounts() {
+    let httpParams = new HttpParams();
+    httpParams = httpParams.set('manualEntriesAllowed', 'true');
+    httpParams = httpParams.set('usage', '1');
+    httpParams = httpParams.set('disabled', 'false');
+    return this.http.get(`/glaccounts`, { params: httpParams });
+  }
+
 }

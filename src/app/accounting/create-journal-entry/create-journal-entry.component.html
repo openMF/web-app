@@ -1,6 +1,6 @@
 <mat-card class="container">
 
-  <form [formGroup]="frequentPostingsForm" (ngSubmit)="submit()">
+  <form [formGroup]="journalEntryForm" (ngSubmit)="submit()">
 
     <mat-card-content>
 
@@ -15,22 +15,12 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="48%">
-          <mat-select placeholder="Accounting Rule" required formControlName="accountingRule">
-            <mat-option *ngFor="let accountingRule of accountingRuleData" [value]="accountingRule">
-              {{ accountingRule.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field fxFlex="48%">
           <mat-select placeholder="Currency" required formControlName="currencyCode">
             <mat-option *ngFor="let currency of currencyData" [value]="currency.code">
               {{ currency.displayLabel }}
             </mat-option>
           </mat-select>
         </mat-form-field>
-
-        <span fxFlex="48%" fxHide.lt-md></span>
 
         <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column" formArrayName="debits"
           *ngFor="let debit of getFormArrayData('debits').controls; let i = index;">
@@ -39,8 +29,8 @@
 
             <mat-form-field fxFlex="48%">
               <mat-select placeholder="Affected GL Entry (Debit)" required formControlName="glAccountId">
-                <mat-option *ngFor="let affectedGLEntryDebit of debitAccountData" [value]="affectedGLEntryDebit.id">
-                  {{ affectedGLEntryDebit.name }}
+                <mat-option *ngFor="let affectedGLEntryDebit of glAccountData" [value]="affectedGLEntryDebit.id">
+                  {{ affectedGLEntryDebit.name + ' (' + affectedGLEntryDebit.glCode + ')' }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -50,8 +40,8 @@
             </mat-form-field>
 
             <span fxFlex>
-              <button *ngIf="i !== 0" type="button" mat-icon-button (click)="removeAffectedGLEntry(frequentPostingsForm.get('debits'), i)"><mat-icon>remove_circle</mat-icon></button>
-              <button *ngIf="i === 0 && allowMultipleDebitEntries" type="button" mat-icon-button color="primary" (click)="addAffectedGLEntry(frequentPostingsForm.get('debits'))"><mat-icon>add_circle</mat-icon></button>
+              <button *ngIf="i !== 0" type="button" mat-icon-button (click)="removeAffectedGLEntry(journalEntryForm.get('debits'), i)"><mat-icon>remove_circle</mat-icon></button>
+              <button *ngIf="i === 0" type="button" mat-icon-button color="primary" (click)="addAffectedGLEntry(journalEntryForm.get('debits'))"><mat-icon>add_circle</mat-icon></button>
             </span>
 
           </div>
@@ -65,8 +55,8 @@
 
             <mat-form-field fxFlex="48%">
               <mat-select placeholder="Affected GL Entry (Credit)" required formControlName="glAccountId">
-                <mat-option *ngFor="let affectedGLEntryCredit of creditAccountData" [value]="affectedGLEntryCredit.id">
-                  {{ affectedGLEntryCredit.name }}
+                <mat-option *ngFor="let affectedGLEntryCredit of glAccountData" [value]="affectedGLEntryCredit.id">
+                  {{ affectedGLEntryCredit.name + ' (' + affectedGLEntryCredit.glCode + ')' }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -76,8 +66,8 @@
             </mat-form-field>
 
             <span fxFlex>
-              <button *ngIf="i !== 0" type="button" mat-icon-button (click)="removeAffectedGLEntry(frequentPostingsForm.get('credits'), i)"><mat-icon>remove_circle</mat-icon></button>
-              <button *ngIf="i === 0 && allowMultipleCreditEntries" type="button" mat-icon-button color="primary" (click)="addAffectedGLEntry(frequentPostingsForm.get('credits'))"><mat-icon>add_circle</mat-icon></button>
+              <button *ngIf="i !== 0" type="button" mat-icon-button (click)="removeAffectedGLEntry(journalEntryForm.get('credits'), i)"><mat-icon>remove_circle</mat-icon></button>
+              <button *ngIf="i === 0 glAccountData" type="button" mat-icon-button color="primary" (click)="addAffectedGLEntry(journalEntryForm.get('credits'))"><mat-icon>add_circle</mat-icon></button>
             </span>
 
           </div>
@@ -138,3 +128,4 @@
   </form>
 
 </mat-card>
+

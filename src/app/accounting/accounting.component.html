@@ -12,11 +12,9 @@
           <p matLine>These are predefined postings</p>
         </mat-list-item>
 
-        <mat-list-item>
+        <mat-list-item [routerLink]="['/accounting/journal-entries/create']">
           <mat-icon matListIcon>add</mat-icon>
-          <a matLine href="https://www.google.com">
-            Add Journal Entries
-          </a>
+          <h4 matLine>Create Journal Entries</h4>
           <p matLine>Manual journal entry transactions recorded in a journal</p>
         </mat-list-item>
 

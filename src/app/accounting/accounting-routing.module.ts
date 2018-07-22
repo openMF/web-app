@@ -5,6 +5,7 @@ import { Route, extract } from '../core';
 import { AccountingComponent } from './accounting.component';
 import { FrequentPostingsComponent } from './frequent-postings/frequent-postings.component';
 import { ViewTransactionComponent } from './view-transaction/view-transaction.component';
+import { CreateJournalEntryComponent } from './create-journal-entry/create-journal-entry.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -31,6 +32,11 @@ const routes: Routes = [
               data: { title: extract('View Transaction'), routeParamBreadcrumb: 'id' }
             }
           ]
+        },
+        {
+          path: 'journal-entries/create',
+          component: CreateJournalEntryComponent,
+          data: { title: extract('Create Journal Entry'), breadcrumb: 'Create Journal Entry' }
         }
       ]
     }

@@ -9,6 +9,7 @@ import { FrequentPostingsComponent } from './frequent-postings/frequent-postings
 import { ViewTransactionComponent } from './view-transaction/view-transaction.component';
 import { RevertTransactionComponent } from './revert-transaction/revert-transaction.component';
 import { ViewJournalEntryComponent } from './view-journal-entry/view-journal-entry.component';
+import { CreateJournalEntryComponent } from './create-journal-entry/create-journal-entry.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { ViewJournalEntryComponent } from './view-journal-entry/view-journal-ent
     FrequentPostingsComponent,
     ViewTransactionComponent,
     RevertTransactionComponent,
-    ViewJournalEntryComponent
+    ViewJournalEntryComponent,
+    CreateJournalEntryComponent
   ],
   entryComponents: [
     RevertTransactionComponent,
