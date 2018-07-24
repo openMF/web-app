@@ -9,8 +9,8 @@ import env from './.env';
 export const environment = {
   production: false,
   version: env.npm_package_version + '-dev',
-  fineractPlatformTenantId: 'default',  // For connecting the API running elsewhere update the tenant identifier
-  baseApiUrl: 'https://demo.openmf.org',  // For connecting the API running elsewhere update the base API URL
+  fineractPlatformTenantId: 'default',  // For connecting to server running elsewhere update the tenant identifier
+  baseApiUrl: 'https://demo.openmf.org',  // For connecting to server running elsewhere update the base API URL
   apiProvider: '/fineract-provider/api',
   apiVersion: '/v1',
   serverUrl: '',
