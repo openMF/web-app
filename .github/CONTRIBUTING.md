@@ -1,10 +1,12 @@
-# Contributing Guidelines
+# Contributing Guidelines [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/openMF/web-app/issues)
 
 When contributing to this repository, please first discuss the change you wish to make via an issue.
 
 Make sure you read the [Wiki](https://github.com/openMF/web-app/wiki).
 
-Do not open issues for general support questions as we want to keep GitHub issues for bug reports and feature requests. You can join our [gitter channel](https://gitter.im/openMF/community-app) if you have any queries. Each active repository has its own channel to direct questions to. Also join the [official gitter channel](https://gitter.im/openMF/mifos) of Mifos.
+Do not open issues for general support questions as we want to keep GitHub issues for bug reports and feature requests. If you have got any questions, please email to our [mailing list](https://sourceforge.net/projects/mifos/lists/mifos-developer). You can also join our [gitter channel](https://gitter.im/openMF/web-app) to chat about your queries in real-time. 
+
+Each active repository has its own channel to direct questions to. Also join the [official gitter channel](https://gitter.im/openMF/mifos) of Mifos.
 
 Remember that this is an inclusive community, commited to creating a safe, positive environment. See the whole [Code of Conduct](https://github.com/openMF/web-app/tree/master/.github/CODE_OF_CONDUCT.md) and please follow it in all your interactions with the project.
 
@@ -32,9 +34,9 @@ Note: Please do not work on an issue which is already being worked on by another
 ```
 git clone https://github.com/your-username/web-app.git
 ```
-  - Make sure you are in the `develop` branch.
+  - Make sure you are in the `master` branch.
 ```
-git checkout develop
+git checkout master
 ```
   - Create a new branch with a meaningful name before adding and commiting your changes.
 ```
@@ -64,7 +66,7 @@ git push origin branch-name
 ```
 git push origin remote-branch-name --force
 ```
-  - Follow the Pull request template and submit a pull request with a motive for your change and the method you used to achieve it to be merged with the `develop` branch.
+  - Follow the Pull request template and submit a pull request with a motive for your change and the method you used to achieve it to be merged with the `master` branch.
   - If you can, please submit the pull request with the fix or improvements including tests.
   - During review, if you are requested to make changes, rebase your branch and squash the multiple commits into one. Once you push these changes the pull request will edit automatically.
 
@@ -83,15 +85,15 @@ git remote add upstream https://github.com/openMF/web-app.git
   > upstream  https://github.com/openMF/web-app.git (fetch)
   > upstream  https://github.com/openMF/web-app.git (push)
 ```
-3. To update your local copy with remote changes, run the following: (This will give you an exact copy of the current remote. You should not have any local changes on your develop branch, if you do, use rebase instead.)
+3. To update your local copy with remote changes, run the following: (This will give you an exact copy of the current remote. You should not have any local changes on your master branch, if you do, use rebase instead.)
 ```
 git fetch upstream
-git checkout develop
-git merge upstream/develop
+git checkout master
+git merge upstream/master
 ```
-4. Push these merged changes to the develop branch on your fork. Ensure to pull in upstream changes regularly to keep your forked repository up to date.
+4. Push these merged changes to the master branch on your fork. Ensure to pull in upstream changes regularly to keep your forked repository up to date.
 ```
-git push origin develop
+git push origin master
 ```
 5. Switch to the branch you are using for some piece of work.
 ```
@@ -99,7 +101,7 @@ git checkout branch-name
 ```
 6. Rebase your branch, which means, take in all latest changes and replay your work in the branch on top of this - this produces cleaner versions/history.
 ```
-git rebase develop
+git rebase master
 ```
 7. Push the final changes when you're ready.
 ```
@@ -114,17 +116,17 @@ After your pull request is merged, you can safely delete your branch and pull th
 ```
 git push origin --delete branch-name
 ```
-2. Checkout the develop branch.
+2. Checkout the master branch.
 ```
-git checkout develop
+git checkout master
 ```
 3. Delete the local branch.
 ```
 git branch -D branch-name
 ```
-4. Update your develop branch with the latest upstream version.
+4. Update your master branch with the latest upstream version.
 ```
-git pull upstream develop
+git pull upstream master
 ```
 
 

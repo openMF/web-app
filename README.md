@@ -1,69 +1,81 @@
-# MifosX
+# Mifos X Web App [![Build Status](https://travis-ci.com/openMF/web-app.svg?branch=master)](https://travis-ci.com/openMF/web-app) [![Gitter](https://badges.gitter.im/openMF/web-app.svg)](https://gitter.im/openMF/web-app?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-Revamped codebase of community-app
+Mifos X Web App is the revamped version of the Mifos X Community App, an effective financial inclusion solution and the default web application built on top of the Mifos X platform for the Mifos User Community.
 
-The app template is based on [HTML5](http://whatwg.org/html), [TypeScript](http://www.typescriptlang.org) and
-[Sass](http://sass-lang.com). 
+It is a Single-Page App (SPA) written in standard web technologies [HTML5](http://whatwg.org/html), [SCSS](http://sass-lang.com) and [TypeScript](http://www.typescriptlang.org). It leverages the popular [Angular](https://angular.io/) framework and [Angular Material](https://material.angular.io/) for material design components.
 
 
 ## Getting started
 
-1. Go to project folder and install dependencies:
- ```bash
- npm install
- ```
+1. Ensure you have the following installed in your system:
+
+    [`git`](https://git-scm.com/downloads)
+
+    [`npm`](https://git-scm.com/downloads)
+
+2. Install [angular-cli](https://github.com/angular/angular-cli) globally.
+```
+npm install -g @angular/cli
+```
+
+3. Clone the project locally into your system.
+```
+git clone https://github.com/openMF/web-app.git
+```
+
+4. `cd` into project root directory and make sure you are on the master branch.
+
+5. Install the dependencies.
+```
+npm install
+```
+
+6. To preview the app, run the following command and navigate to `http://localhost:4200/`.
+```
+ng serve
+```
+
+The application is using the demo server with basic authentication by default. The credentials for the same are:
  
-2. Launch development server, and open `localhost:4200` in your browser:
- ```bash
- npm start
- ```
+Username - mifos
 
-## Main tasks
+Password - password
 
-Task automation is based on [NPM scripts](https://docs.npmjs.com/misc/scripts).
+Important Note: Please do not make any alterations to these credentials.
 
-Tasks                         | Description
-------------------------------|---------------------------------------------------------------------------------------
-npm start                     | Run development server on `http://localhost:4200/`
-npm run build [-- --env=prod] | Lint code and build app for production in `dist/` folder
-npm test                      | Run unit tests via [Karma](https://karma-runner.github.io) in watch mode
-npm run test:ci               | Lint code and run unit tests once for continuous integration
-npm run e2e                   | Run e2e tests using [Protractor](http://www.protractortest.org)
-npm run lint                  | Lint code
-npm run translations:extract  | Extract strings from code and templates to `src/app/translations/template.json`
-npm run docs                  | Display project documentation
 
-When building the application, you can specify the target environment using the additional flag `--env <name>` (do not
-forget to prepend `--` to pass arguments to npm scripts).
+### Development server
 
-The default build environment is `prod`.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Development server
+### Code scaffolding
 
-Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change
-any of the source files.
-You should not use `ng serve` directly, as it does not use the backend proxy configuration by default.
+Run `ng generate component component-name` to generate a new component. You can also use
+`ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Code scaffolding
+### Build
 
-Run `npm run generate -- component <name>` to generate a new component. You can also use
-`npm run generate -- directive|pipe|service|class|module`.
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 
-If you have installed [angular-cli](https://github.com/angular/angular-cli) globally with `npm install -g @angular/cli`,
-you can also use the command `ng generate` directly.
+### Further help
 
-## Additional tools
-
-Tasks are mostly based on the `angular-cli` tool. Use `ng help` to get more help or go check out the
+To get more help on the Angular CLI use `ng help` or go check out the
 [Angular-CLI README](https://github.com/angular/angular-cli).
 
 
-# How to contribute 
+## Setting up a local server
 
-## Design guides
+Follow the given instructions for your operating system to setup a local server for the Mifos X platform.
 
-- [Angular Material](https://material.angular.io/components/categories)
+[Windows](https://cwiki.apache.org/confluence/display/FINERACT/Fineract-platform+Installation+on+Windows)
 
-## Creating new modules/components
+[Ubuntu](https://cwiki.apache.org/confluence/display/FINERACT/Fineract+Installation+on+Ubuntu+Server)
 
-- [Setup modules](https://github.com/openMF/web-app/wiki/Create-a-new-module-component)
+For connecting to server running elsewhere update the base API URL and/or tenant identifier property in the `environments/environment.ts` file and `environments/environment.prod.ts` file for development and production use respectively.
+
+By default OAuth2 is disabled. To enable it, change the value of oauth.enabled property to true in the `environments/environment.ts` file and `environments/environment.prod.ts` file for development and production use respectively.
+
+
+## Want to help? [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/openMF/web-app/issues)
+
+Want to file a bug, request a feature, contribute some code, or improve documentation? Excellent! Read up on our guidelines for [contributing](https://github.com/openMF/web-app/blob/master/.github/CONTRIBUTING.md) and then check out one of our [issues](https://github.com/openMF/web-app/issues). Make sure you follow the guidelines before sending a contribution!
