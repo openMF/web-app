@@ -1,0 +1,106 @@
+<div class="container" fxLayout="row wrap" fxLayoutGap="2%">
+  <mat-form-field fxFlex="31%">
+    <mat-select placeholder="Office" [formControl]="officeName" (selectionChange)="applyFilter($event.value, 'officeName')">
+      <mat-option *ngFor="let office of officeData" [value]="office.name">
+        {{ office.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field fxFlex="31%">
+    <mat-select placeholder="Affected GL Entry" [formControl]="glAccountCode" (selectionChange)="applyFilter($event.value, 'glAccountCode')">
+      <mat-option *ngFor="let affectedGLEntryDebit of glAccountData" [value]="affectedGLEntryDebit.glCode">
+        {{ affectedGLEntryDebit.name + ' (' + affectedGLEntryDebit.glCode + ')' }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field fxFlex="31%">
+    <mat-select placeholder="Filter" [formControl]="filter" (selectionChange)="applyFilter($event.value, 'filter')">
+      <mat-option *ngFor="let filter of filterData" [value]="filter.value">
+        {{ filter.option }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field fxFlex="31%">
+    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDateFromPicker" placeholder="Transaction Date From" [formControl]="transactionDateFrom">
+    <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
+    <mat-datepicker #transactionDateFromPicker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field fxFlex="31%">
+    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDateToPicker" placeholder="Transaction Date To" [formControl]="transactionDateTo">
+    <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
+    <mat-datepicker #transactionDateToPicker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field fxFlex="31%">
+    <input matInput placeholder="Transaction ID" [formControl]="transactionId" (keyup)="applyFilter($event.target.value, 'transactionId')">
+  </mat-form-field>
+  <!-- <mat-form-field fxFlex="33%">
+    <mat-select placeholder="Transaction ID" [formControl]="transactionId">
+      <mat-option *ngFor="let transaction of dataSource?.data" [value]="transaction.transactionId">
+        {{ transaction.transactionId }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field> -->
+</div>
+
+<div class="mat-elevation-z8 container">
+
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Entry ID </th>
+      <td mat-cell *matCellDef="let transaction"> {{ transaction.id }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="officeName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Office </th>
+      <td mat-cell *matCellDef="let transaction"> {{ transaction.officeName }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="transactionId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction ID </th>
+      <td mat-cell *matCellDef="let transaction"> {{ transaction.transactionId }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="transactionDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Date </th>
+      <td mat-cell *matCellDef="let transaction"> {{ transaction.transactionDate }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="glAccountType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+      <td mat-cell *matCellDef="let transaction"> {{ transaction.glAccountType.value }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="createdByUserName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Created by </th>
+      <td mat-cell *matCellDef="let transaction"> {{ transaction.createdByUserName }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="glAccountCode">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Account Code </th>
+      <td mat-cell *matCellDef="let transaction"> {{ transaction.glAccountCode }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="glAccountName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Account Name </th>
+      <td mat-cell *matCellDef="let transaction"> {{ transaction.glAccountName }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="debit">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Debit </th>
+      <td mat-cell *matCellDef="let transaction"><span *ngIf="transaction.entryType.value === 'DEBIT'"> {{ (transaction.currency.displaySymbol || transaction.currency.code) + ' ' + transaction.amount }} </span></td>
+    </ng-container>
+
+    <ng-container matColumnDef="credit">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Credit </th>
+      <td mat-cell *matCellDef="let transaction"><span *ngIf="transaction.entryType.value === 'CREDIT'"> {{ (transaction.currency.displaySymbol || transaction.currency.code) + ' ' + transaction.amount }} </span></td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="viewTransaction(row)" class="select"></tr>
+
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+</div>
