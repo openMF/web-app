@@ -183,6 +183,28 @@ export class ClientsService {
       );
   }
 
+  putClientAddress(clientId: number, body: any, type: any) {
+    const headers = new Headers(); // tslint:disable-line
+    const params = new URLSearchParams(); // tslint:disable-line
+    params.set('type', type);
+    this.createAuthorizationHeader(headers);
+   // body = JSON.stringify(body);
+    const options = new RequestOptions({ // tslint:disable-line
+      headers: headers,
+      params: params,
+    });
+    return this.http.put('https://demo.openmf.org/fineract-provider/api/v1/client/' + clientId +
+        '/addresses?' + 'tenantIdentifier=default', body,
+        options)
+      .pipe(
+        map(
+          (response: Response) => { // tslint:disable-line
+            response.json();
+          }
+        )
+      );
+  }
+
   getClientIdentifierTemplate(clientId: number) {
     const headers = new Headers(); // tslint:disable-line
     this.createAuthorizationHeader(headers);

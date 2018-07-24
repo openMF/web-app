@@ -8,35 +8,28 @@
           <mat-card-header>
           </mat-card-header>
           <mat-card-content>
-            <form class="example-form" (ngSubmit)="onSubmit()" #f="ngForm">
-              <mat-form-field class="example-full-width">
-                <mat-select placeholder="Address Type" [(ngModel)]="addressTypeId" [ngModelOptions]="{standalone: true}" ngDefaultControl>
-                  <div>
+            <form class="example-form" *ngIf="form" (ngSubmit)="onSubmit()" #f="ngForm">
 
-                    <mat-option *ngFor="let item of clientAddress?.addressTypeIdOptions" name="option" [value]="item?.id">{{item?.name}}</mat-option>
-                  </div>
-                </mat-select>
-              </mat-form-field>
 
               <mat-form-field class="example-full-width">
-                <input matInput name="street" placeholder="Street" ngModel>
+                <input matInput name="street" placeholder="Street" [(ngModel)]="form.street">
               </mat-form-field>
               <mat-form-field class="example-full-width">
-                <input matInput name="addressLine1" placeholder="Address Line 1" ngModel>
+                <input matInput name="addressLine1" placeholder="Address Line 1" [(ngModel)]="form.addressLine1">
               </mat-form-field>
 
 
               <mat-form-field class="example-full-width">
-                <input matInput name="addressLine2" placeholder="Address Line 2" ngModel>
+                <input matInput name="addressLine2" placeholder="Address Line 2" [(ngModel)]="form.addressLine2">
               </mat-form-field>
               <mat-form-field class="example-full-width">
-                <input matInput name="addressLine3" placeholder="Address Line 3" ngModel>
+                <input matInput name="addressLine3" placeholder="Address Line 3" [(ngModel)]="form.addressLine3">
               </mat-form-field>
               <mat-form-field class="example-full-width">
-                <input matInput name="city" placeholder="City" ngModel>
+                <input matInput name="city" placeholder="City" [(ngModel)]="form.city">
               </mat-form-field>
               <mat-form-field class="example-full-width">
-                <mat-select placeholder="State" [(ngModel)]="addressStateId" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+                <mat-select placeholder="State" [(ngModel)]="form.stateProvinceId" [ngModelOptions]="{standalone: true}" ngDefaultControl>
                   <div>
 
                     <mat-option *ngFor="let item of clientAddress?.stateProvinceIdOptions" name="option" [value]="item?.id">{{item?.name}}</mat-option>
@@ -44,7 +37,7 @@
                 </mat-select>
               </mat-form-field>
               <mat-form-field class="example-full-width">
-                <mat-select placeholder="Country" [(ngModel)]="addressCountryId" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+                <mat-select placeholder="Country" [(ngModel)]="form.countryId" [ngModelOptions]="{standalone: true}" ngDefaultControl>
                   <div>
 
                     <mat-option *ngFor="let item of clientAddress?.countryIdOptions" name="option" [value]="item?.id">{{item?.name}}</mat-option>
@@ -52,10 +45,10 @@
                 </mat-select>
               </mat-form-field>
               <mat-form-field class="example-full-width">
-                <input matInput name="postalCode" placeholder="Postal Code" ngModel>
+                <input matInput name="postalCode" placeholder="Postal Code" [(ngModel)]="form.postalCode">
               </mat-form-field>
 
-              <button mat-raised-button>Create</button>
+              <button mat-raised-button>Update</button>
 
             </form>
 

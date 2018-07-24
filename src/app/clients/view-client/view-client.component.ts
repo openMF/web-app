@@ -46,9 +46,6 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  docUrl: any = 'https://demo.openmf.org/fineract-provider/api/v1/clients/' + this.id +
-        '/documents/' + this.docId + '/attachment/?tenantIdentifier=default';
-
   constructor(private route: ActivatedRoute, private clientService: ClientsService,
               private router: Router, public dialog: MatDialog) {}
 
@@ -205,7 +202,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
       );
   }
 
-  openDialog() {
+/*   openDialog() {
     const dialogRef = this.dialog.open(ViewClientDialogComponent, {
       height: '350px'
     });
@@ -214,7 +211,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
       console.log(`Dialog result: ${result}`);
     });
   }
-
+ */
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
   }
@@ -222,7 +219,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
 }
 
 
-
+/*
 @Component({
   selector: 'mifosx-view-client-component-dialog',
   templateUrl: 'view-client-component-dialog.html',
@@ -259,3 +256,4 @@ export class ViewClientDialogComponent implements OnInit, OnDestroy {
     }
 
 }
+ */

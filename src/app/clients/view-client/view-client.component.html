@@ -264,7 +264,7 @@
               </div>
             </mat-card-content>
             <mat-card-actions>
-              <button mat-button>EDIT</button>
+              <button mat-button  [routerLink]="['/clients/editaddress', id, item.addressTypeId, item.addressId]" routerLinkActive="active">EDIT</button>
               <button mat-button>ENABLE</button>
             </mat-card-actions>
           </mat-card>

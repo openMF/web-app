@@ -9,6 +9,7 @@ import { ViewLoanComponent } from './view-loan/view-loan.component';
 import { CreateAddressComponent } from './create-address/create-address.component';
 import { CreateIdentityComponent } from './create-identity/create-identity.component';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
+import { EditAddressComponent } from './edit-address/edit-address.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -36,6 +37,11 @@ const routes: Routes = [
       path: 'clients/address/:id',
       component: CreateAddressComponent,
       data: { title: extract('Create Address') }
+    },
+    {
+      path: 'clients/editaddress/:id/:addressTypeId/:addressId',
+      component: EditAddressComponent,
+      data: { title: extract('Edit Address') }
     },
     {
       path: 'clients/addclientidentifier/:id',
