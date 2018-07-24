@@ -36,6 +36,10 @@ export class AccountingService {
     return this.http.get(`/journalentries`, { params: httpParams });
   }
 
+  getJournalEntries() {
+    return this.http.get('/journalentries');
+  }
+
   revertTransaction(transactionId: string, comments: string) {
     let httpParams = new HttpParams();
     httpParams = httpParams.set('command', 'reverse');

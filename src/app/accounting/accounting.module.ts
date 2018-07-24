@@ -10,6 +10,7 @@ import { ViewTransactionComponent } from './view-transaction/view-transaction.co
 import { RevertTransactionComponent } from './revert-transaction/revert-transaction.component';
 import { ViewJournalEntryComponent } from './view-journal-entry/view-journal-entry.component';
 import { CreateJournalEntryComponent } from './create-journal-entry/create-journal-entry.component';
+import { SearchJournalEntryComponent } from './search-journal-entry/search-journal-entry.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { CreateJournalEntryComponent } from './create-journal-entry/create-journ
     ViewTransactionComponent,
     RevertTransactionComponent,
     ViewJournalEntryComponent,
-    CreateJournalEntryComponent
+    CreateJournalEntryComponent,
+    SearchJournalEntryComponent
   ],
   entryComponents: [
     RevertTransactionComponent,
