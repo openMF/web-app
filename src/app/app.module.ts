@@ -21,6 +21,8 @@ import { LoginModule } from './login/login.module';
 import { ClientsModule} from './clients/clients.module';
 import { AccountingModule } from './accounting/accounting.module';
 import { SelfServiceModule } from './self-service/self-service.module';
+import { CentersModule } from './centers/centers.module';
+import { GroupsModule } from './groups/groups.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { SettingsModule } from './settings/settings.module';
@@ -44,6 +46,8 @@ import { SettingsModule } from './settings/settings.module';
     AccountingModule,
     SelfServiceModule,
     SettingsModule,
+    CentersModule,
+    GroupsModule,
     AppRoutingModule
   ],
   declarations: [WebAppComponent],
