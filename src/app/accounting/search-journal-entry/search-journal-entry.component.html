@@ -1,20 +1,20 @@
 <div class="container" fxLayout="row wrap" fxLayoutGap="2%">
   <mat-form-field fxFlex="31%">
-    <mat-select placeholder="Office" [formControl]="officeName" (selectionChange)="applyFilter($event.value, 'officeName')">
-      <mat-option *ngFor="let office of officeData" [value]="office.name">
+    <mat-select placeholder="Office" [formControl]="officeName" (selectionChange)="applyFilter($event.value, 'officeId')">
+      <mat-option *ngFor="let office of officeData" [value]="office.id">
         {{ office.name }}
       </mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field fxFlex="31%">
-    <mat-select placeholder="Affected GL Entry" [formControl]="glAccountCode" (selectionChange)="applyFilter($event.value, 'glAccountCode')">
-      <mat-option *ngFor="let affectedGLEntryDebit of glAccountData" [value]="affectedGLEntryDebit.glCode">
-        {{ affectedGLEntryDebit.name + ' (' + affectedGLEntryDebit.glCode + ')' }}
+    <mat-select placeholder="Affected GL Entry" [formControl]="glAccountCode" (selectionChange)="applyFilter($event.value, 'glAccountId')">
+      <mat-option *ngFor="let affectedGLEntry of glAccountData" [value]="affectedGLEntry.id">
+        {{ affectedGLEntry.name + ' (' + affectedGLEntry.glCode + ')' }}
       </mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field fxFlex="31%">
-    <mat-select placeholder="Filter" [formControl]="filter" (selectionChange)="applyFilter($event.value, 'filter')">
+    <mat-select placeholder="Filter" [formControl]="filter" (selectionChange)="applyFilter($event.value, 'manualEntriesOnly')">
       <mat-option *ngFor="let filter of filterData" [value]="filter.value">
         {{ filter.option }}
       </mat-option>
@@ -33,13 +33,6 @@
   <mat-form-field fxFlex="31%">
     <input matInput placeholder="Transaction ID" [formControl]="transactionId" (keyup)="applyFilter($event.target.value, 'transactionId')">
   </mat-form-field>
-  <!-- <mat-form-field fxFlex="33%">
-    <mat-select placeholder="Transaction ID" [formControl]="transactionId">
-      <mat-option *ngFor="let transaction of dataSource?.data" [value]="transaction.transactionId">
-        {{ transaction.transactionId }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field> -->
 </div>
 
 <div class="mat-elevation-z8 container">
@@ -67,12 +60,12 @@
     </ng-container>
 
     <ng-container matColumnDef="glAccountType">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+      <th mat-header-cell *matHeaderCellDef> Type </th>
       <td mat-cell *matCellDef="let transaction"> {{ transaction.glAccountType.value }} </td>
     </ng-container>
 
     <ng-container matColumnDef="createdByUserName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Created by </th>
+      <th mat-header-cell *matHeaderCellDef> Created by </th>
       <td mat-cell *matCellDef="let transaction"> {{ transaction.createdByUserName }} </td>
     </ng-container>
 
@@ -101,6 +94,6 @@
 
   </table>
 
-  <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+  <mat-paginator [length]="dataSource?.records$ | async" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
 
 </div>
