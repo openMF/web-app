@@ -10,7 +10,7 @@ const routes: Routes = [
     {
       path: 'centers',
       component: CentersComponent,
-      data: { title: extract('Centers'),  breadcrumb: 'Dashboard' }
+      data: { title: extract('Centers'),  breadcrumb: 'Centers' }
     }
   ])
 ];
