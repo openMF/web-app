@@ -36,8 +36,24 @@ export class AccountingService {
     return this.http.get(`/journalentries`, { params: httpParams });
   }
 
-  getJournalEntries() {
-    return this.http.get('/journalentries');
+  // filterBy: officeId, glAccountId, manualEntriesOnly, fromDate, toDate, transactionId
+  getJournalEntries(filterBy: any, orderBy: any, sortBy: any, offset: number, limit: number) {
+    console.log('Order By:', orderBy);
+    console.log('Sort By:', sortBy);
+    console.log('Filter By:', filterBy);
+    let httpParams = new HttpParams()
+      .set('offset', offset.toString())
+      .set('limit', limit.toString())
+      .set('sortBy', sortBy)
+      .set('orderBy', orderBy);
+    filterBy.forEach(function (filter: any) {
+      if(filter.value) {
+        httpParams = httpParams.set(filter.type, filter.value);
+      }
+    });
+    return this.http.get('/journalentries', {
+      params: httpParams
+    });
   }
 
   revertTransaction(transactionId: string, comments: string) {
