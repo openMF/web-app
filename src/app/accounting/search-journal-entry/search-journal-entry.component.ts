@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { merge } from 'rxjs';
-import { tap} from 'rxjs/operators';
+import { tap, startWith, map, distinctUntilChanged, debounceTime} from 'rxjs/operators';
 
 import { AccountingService } from '../accounting.service';
 import { JournalEntriesDataSource } from './journal-entry.datasource';
@@ -14,22 +14,22 @@ import { JournalEntriesDataSource } from './journal-entry.datasource';
   templateUrl: './search-journal-entry.component.html',
   styleUrls: ['./search-journal-entry.component.scss']
 })
-export class SearchJournalEntryComponent implements OnInit {
+export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
 
-  // TODO: Update when date and language are set up throughout the application
+  // TODO: Update once language and date settings are setup
   minDate = new Date(2000, 0, 1);
   maxDate = new Date();
+
   officeName = new FormControl();
-  glAccountCode = new FormControl();
-  transactionDateFrom = new FormControl(new Date(2000, 0, 1));
-  transactionDateTo = new FormControl(new Date());
-  transactionId = new FormControl();
-  filter = new FormControl('');
-  displayedColumns: string[] = ['id', 'officeName', 'transactionId', 'transactionDate', 'glAccountType', 'createdByUserName', 'glAccountCode', 'glAccountName', 'debit', 'credit'];
-  dataSource: any;
   officeData: any;
+  filteredOfficeData: any;
+
+  glAccount = new FormControl();
   glAccountData: any;
-  filterData = [
+  filteredGLAccountData: any;
+
+  filter = new FormControl('');
+  entryTypeFilterData = [
     {
       option: 'All',
       value: ''
@@ -43,7 +43,16 @@ export class SearchJournalEntryComponent implements OnInit {
       value: false  // Bug: unable to implement from server side
     }
   ];
-  filterBy = [
+
+  transactionDateFrom = new FormControl(new Date(2000, 0, 1));
+  transactionDateTo = new FormControl(new Date());
+
+  transactionId = new FormControl();
+
+  displayedColumns: string[] = ['id', 'officeName', 'transactionId', 'transactionDate', 'glAccountType', 'createdByUserName', 'glAccountCode', 'glAccountName', 'debit', 'credit'];
+  dataSource: any;
+
+  filterJournalEntriesBy = [
     {
       type: 'officeId',
       value: ''
@@ -91,7 +100,40 @@ export class SearchJournalEntryComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    this.officeName.valueChanges
+      .pipe(
+        map(value => value.id ? value.id : ''),
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap((filterValue) => {
+          this.applyFilter(filterValue, 'officeId');
+        })
+      )
+      .subscribe();
+
+    this.glAccount.valueChanges
+      .pipe(
+        map(value => value.id ? value.id : ''),
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap((filterValue) => {
+          this.applyFilter(filterValue, 'glAccountId');
+        })
+      )
+      .subscribe();
+
+    this.transactionId.valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap((filterValue) => {
+          this.applyFilter(filterValue, 'transactionId');
+        })
+      )
+      .subscribe();
+
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         tap(() => this.loadJournalEntriesPage())
@@ -99,39 +141,67 @@ export class SearchJournalEntryComponent implements OnInit {
       .subscribe();
   }
 
-  getJournalEntries() {
-    this.dataSource = new JournalEntriesDataSource(this.accountingService);
-    this.dataSource.loadJournalEntries(this.filterBy, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
-  }
-
   loadJournalEntriesPage() {
-    if(!this.sort.direction) {
+    if (!this.sort.direction) {
       delete this.sort.active;
     }
-    this.dataSource.loadJournalEntries(this.filterBy, this.sort.active, this.sort.direction, this.paginator.pageIndex * this.paginator.pageSize, this.paginator.pageSize);
+    this.dataSource.getJournalEntries(this.filterJournalEntriesBy, this.sort.active, this.sort.direction, this.paginator.pageIndex * this.paginator.pageSize, this.paginator.pageSize);
   }
 
   applyFilter(filterValue: string, property: string) {
     this.paginator.pageIndex = 0;
-    let findIndex = this.filterBy.findIndex(filter => filter.type === property);
-    this.filterBy[findIndex].value = filterValue;
+    const findIndex = this.filterJournalEntriesBy.findIndex(filter => filter.type === property);
+    this.filterJournalEntriesBy[findIndex].value = filterValue;
     this.loadJournalEntriesPage();
+  }
+
+  viewTransaction(journalEntry: any) {
+    this.router.navigate(['/accounting/transactions/view', journalEntry.transactionId]);
+  }
+
+  displayOfficeName(office?: any): string | undefined {
+    return office ? office.name : undefined;
+  }
+
+  displayGLAccount(glAccount?: any): string | undefined {
+    return glAccount ? glAccount.name + ' (' + glAccount.glCode + ')' : undefined;
   }
 
   getOffices() {
     this.accountingService.getOffices().subscribe(officeData => {
       this.officeData = officeData;
+      this.filteredOfficeData = this.officeName.valueChanges
+      .pipe(
+        startWith(''),
+        map((office: any) => typeof office === 'string' ? office : office.name),
+        map((officeName: string) => officeName ? this.filterOfficeAutocompleteData(this.officeData, officeName) : this.officeData)
+      );
     });
   }
 
   getGlAccounts() {
     this.accountingService.getGlAccounts().subscribe(glAccountData => {
       this.glAccountData = glAccountData;
+      this.filteredGLAccountData = this.glAccount.valueChanges
+      .pipe(
+        startWith(''),
+        map((glAccount: any) => typeof glAccount === 'string' ? glAccount : glAccount.name + ' (' + glAccount.glCode + ')'),
+        map((glAccount: string) => glAccount ? this.filterGLAccountAutocompleteData(this.glAccountData, glAccount) : this.glAccountData)
+      );
     });
   }
 
-  viewTransaction(journalEntry: any) {
-    this.router.navigate(['/accounting/transactions/view', journalEntry.transactionId]);
+  private filterOfficeAutocompleteData(officeData: any, officeName: string): any {
+    return officeData.filter((office: any) => office.name.toLowerCase().includes(officeName.toLowerCase()));
+  }
+
+  private filterGLAccountAutocompleteData(glAccountData: any, glAccount: string): any {
+    return glAccountData.filter((option: any) => (option.name + ' (' + option.glCode + ')').toLowerCase().includes(glAccount.toLowerCase()));
+  }
+
+  getJournalEntries() {
+    this.dataSource = new JournalEntriesDataSource(this.accountingService);
+    this.dataSource.getJournalEntries(this.filterJournalEntriesBy, this.sort.active, this.sort.direction, this.paginator.pageIndex * this.paginator.pageSize, this.paginator.pageSize);
   }
 
 }
