@@ -37,17 +37,14 @@ export class AccountingService {
   }
 
   // filterBy: officeId, glAccountId, manualEntriesOnly, fromDate, toDate, transactionId
-  getJournalEntries(filterBy: any, orderBy: any, sortBy: any, offset: number, limit: number) {
-    console.log('Order By:', orderBy);
-    console.log('Sort By:', sortBy);
-    console.log('Filter By:', filterBy);
+  getJournalEntries(filterBy: any, orderBy: string, sortOrder: string, offset: number, limit: number) {
     let httpParams = new HttpParams()
       .set('offset', offset.toString())
       .set('limit', limit.toString())
-      .set('sortBy', sortBy)
+      .set('sortOrder', sortOrder)
       .set('orderBy', orderBy);
     filterBy.forEach(function (filter: any) {
-      if(filter.value) {
+      if (filter.value) {
         httpParams = httpParams.set(filter.type, filter.value);
       }
     });
