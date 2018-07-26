@@ -71,4 +71,8 @@ export class AccountingService {
     return this.http.get(`/glaccounts`, { params: httpParams });
   }
 
+  getFinancialActivityAccounts() {
+    return this.http.get('/financialactivityaccounts');
+  }
+
 }

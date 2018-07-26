@@ -11,6 +11,7 @@ import { RevertTransactionComponent } from './revert-transaction/revert-transact
 import { ViewJournalEntryComponent } from './view-journal-entry/view-journal-entry.component';
 import { CreateJournalEntryComponent } from './create-journal-entry/create-journal-entry.component';
 import { SearchJournalEntryComponent } from './search-journal-entry/search-journal-entry.component';
+import { FinancialActivityMappingsComponent } from './financial-activity-mappings/financial-activity-mappings.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { SearchJournalEntryComponent } from './search-journal-entry/search-journ
     RevertTransactionComponent,
     ViewJournalEntryComponent,
     CreateJournalEntryComponent,
-    SearchJournalEntryComponent
+    SearchJournalEntryComponent,
+    FinancialActivityMappingsComponent
   ],
   entryComponents: [
     RevertTransactionComponent,
