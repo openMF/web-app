@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CoreModule } from '../core/core.module';
 import { AccountingComponent } from './accounting.component';
@@ -12,11 +12,13 @@ import { ViewJournalEntryComponent } from './view-journal-entry/view-journal-ent
 import { CreateJournalEntryComponent } from './create-journal-entry/create-journal-entry.component';
 import { SearchJournalEntryComponent } from './search-journal-entry/search-journal-entry.component';
 import { FinancialActivityMappingsComponent } from './financial-activity-mappings/financial-activity-mappings.component';
+import { CreateFinancialActivityMappingComponent } from './financial-activity-mappings/create-financial-activity-mapping/create-financial-activity-mapping.component';
 
 @NgModule({
   imports: [
     CoreModule,
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
     AccountingRoutingModule
   ],
@@ -28,7 +30,8 @@ import { FinancialActivityMappingsComponent } from './financial-activity-mapping
     ViewJournalEntryComponent,
     CreateJournalEntryComponent,
     SearchJournalEntryComponent,
-    FinancialActivityMappingsComponent
+    FinancialActivityMappingsComponent,
+    CreateFinancialActivityMappingComponent
   ],
   entryComponents: [
     RevertTransactionComponent,

@@ -35,7 +35,6 @@ export class FinancialActivityMappingsComponent implements OnInit {
         }
       };
       this.dataSource.sort = this.sort;
-      console.log(financialActivityAccounts);
     });
   }
 

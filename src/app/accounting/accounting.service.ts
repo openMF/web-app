@@ -75,4 +75,12 @@ export class AccountingService {
     return this.http.get('/financialactivityaccounts');
   }
 
+  getFinancialActivityAccountsTemplate() {
+    return this.http.get('/financialactivityaccounts/template');
+  }
+
+  createFinancialActivityAccount(financialActivityAccount: any) {
+    return this.http.post('/financialactivityaccounts', financialActivityAccount);
+  }
+
 }

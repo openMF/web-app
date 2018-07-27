@@ -1,0 +1,35 @@
+<mat-card class="container">
+  <form [formGroup]="financialActivityMappingForm" (ngSubmit)="submit()">
+
+    <mat-card-content>
+
+      <div fxLayout="column">
+
+        <mat-form-field>
+          <mat-select placeholder="Financial Activity" required formControlName="financialActivityId">
+            <mat-option *ngFor="let financialActivity of financialActivityData" [value]="financialActivity.id">
+              {{ financialActivity.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="Account" required formControlName="glAccountId">
+            <mat-option *ngFor="let glAccount of glAccountData" [value]="glAccount.id">
+              {{ glAccount.name + ' (' + glAccount.glCode + ')' }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+    </mat-card-content>
+
+    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <button type="button" mat-raised-button [routerLink]="['/accounting/financial-activity-mappings']">Cancel</button>
+      <button mat-raised-button color="primary">Submit</button>
+    </mat-card-actions>
+
+  </form>
+
+</mat-card>
