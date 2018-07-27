@@ -1,6 +1,6 @@
 
 # Getting Started
-- View the README or [watch this video] (https://youtu.be/OnxxC3K2oro) to get your development environment up and running. 
+- View the [README] or [watch this video](https://youtu.be/OnxxC3K2oro) to get your development environment up and running. 
 # Contributing Guidelines [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/openMF/web-app/issues)
 
 When contributing to this repository, please first discuss the change you wish to make via an issue.
