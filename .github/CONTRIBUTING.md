@@ -7,6 +7,7 @@
 - Sign our [Mifos CLA](http://mifos.org/about-us/financial-legal/mifos-contributor-agreement/)
 - [Find an issue to work on](https://github.com/orgs/openMF/projects/1) and start smashing!
 - [Ask a question on Gitter](https://gitter.im/openMF/web-app)
+- Follow our [code of conduct](https://github.com/openMF/web-app/blob/master/.github/CODE_OF_CONDUCT.md)
 - Learn more at our [wiki](https://mifosforge.jira.com/wiki/spaces/RES/pages/464322561/Code+4+Good+Week+2018+Wiki)
 
 # Contributing Guidelines [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/openMF/web-app/issues)
