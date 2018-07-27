@@ -2,11 +2,13 @@
 # Getting Started
 - View the [README](https://github.com/openMF/web-app/blob/master/README.md) or [watch this video](https://youtu.be/OnxxC3K2oro) to get your development environment up and running. 
 - Learn how to [format pull requests](https://github.com/openMF/web-app/blob/master/.github/CONTRIBUTING.md#contributing-guidelines-)
-- Read how to [rebase/merge upstream branches](
+- Read how to [rebase/merge upstream branches](https://github.com/openMF/web-app/blob/master/.github/CONTRIBUTING.md#configuring-remotes)
 - Understand our [coding conventions](https://github.com/openMF/web-app/blob/master/.github/COMMIT_MESSAGE.md)
 - Sign our [Mifos CLA](http://mifos.org/about-us/financial-legal/mifos-contributor-agreement/)
-[Find an issue to work on](https://github.com/orgs/openMF/projects/1) and start smashing!
+- [Find an issue to work on](https://github.com/orgs/openMF/projects/1) and start smashing!
 - [Ask a question on Gitter](https://gitter.im/openMF/web-app)
+- Learn more at our [wiki](https://mifosforge.jira.com/wiki/spaces/RES/pages/464322561/Code+4+Good+Week+2018+Wiki)
+
 # Contributing Guidelines [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/openMF/web-app/issues)
 
 When contributing to this repository, please first discuss the change you wish to make via an issue.
