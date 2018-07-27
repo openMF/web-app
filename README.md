@@ -11,7 +11,7 @@ It is a Single-Page App (SPA) written in standard web technologies [HTML5](http:
 
     [`git`](https://git-scm.com/downloads)
 
-    [`npm`](https://git-scm.com/downloads)
+    [`npm`](https://nodejs.org/en/download/)
 
 2. Install [angular-cli](https://github.com/angular/angular-cli) globally.
 ```
@@ -37,11 +37,10 @@ ng serve
 
 The application is using the demo server with basic authentication by default. The credentials for the same are:
  
-Username - mifos
+    Username - mifos
+    Password - password
 
-Password - password
-
-Important Note: Please do not make any alterations to these credentials.
+**Important Note:** Please do not make any alterations to these credentials.
 
 
 ### Development server
