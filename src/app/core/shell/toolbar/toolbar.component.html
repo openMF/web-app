@@ -71,8 +71,8 @@
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
   <span>
     <button mat-menu-item routerLink="/clients">Clients</button>
-    <button mat-menu-item>Groups</button>
-    <button mat-menu-item>Centers</button>
+    <button mat-menu-item routerLink="/groups">Groups</button>
+    <button mat-menu-item routerLink="/centers">Centers</button>
     <span fxHide.lg>
       <button mat-menu-item>Accounting</button>
       <button mat-menu-item [matMenuTriggerFor]="reportsMenu">Reports</button>
