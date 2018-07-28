@@ -10,6 +10,7 @@ import { SearchJournalEntryComponent } from './search-journal-entry/search-journ
 import { FinancialActivityMappingsComponent } from './financial-activity-mappings/financial-activity-mappings.component';
 import { CreateFinancialActivityMappingComponent } from './financial-activity-mappings/create-financial-activity-mapping/create-financial-activity-mapping.component';
 import { ViewFinancialActivityMappingComponent } from './financial-activity-mappings/view-financial-activity-mapping/view-financial-activity-mapping.component';
+import { EditFinancialActivityMappingComponent } from './financial-activity-mappings/edit-financial-activity-mapping/edit-financial-activity-mapping.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -62,8 +63,18 @@ const routes: Routes = [
             },
             {
               path: 'view/:id',
-              component: ViewFinancialActivityMappingComponent,
-              data: {title: extract('View Financial Activity Mapping'), routeParamBreadcrumb: 'id' }
+              data: { title: extract('View Financial Activity Mapping'), routeParamBreadcrumb: 'id' },
+              children: [
+                {
+                  path: '',
+                  component: ViewFinancialActivityMappingComponent
+                },
+                {
+                  path: 'edit',
+                  component: EditFinancialActivityMappingComponent,
+                  data: { title:  extract('Edit Financial Activity Mapping'), breadcrumb: 'Edit', routeParamBreadcrumb: false }
+                }
+              ]
             }
           ]
         }

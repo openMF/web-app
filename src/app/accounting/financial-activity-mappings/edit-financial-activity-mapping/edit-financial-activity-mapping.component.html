@@ -1,7 +1,7 @@
 <div class="container">
 
   <mat-card>
-    
+
     <form [formGroup]="financialActivityMappingForm" (ngSubmit)="submit()">
 
       <mat-card-content>
@@ -29,7 +29,7 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['/accounting/financial-activity-mappings']">Cancel</button>
+        <button type="button" mat-raised-button [routerLink]="['/accounting/financial-activity-mappings/view', financialActivityAccountId]">Cancel</button>
         <button mat-raised-button color="primary">Submit</button>
       </mat-card-actions>
 

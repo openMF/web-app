@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { LoaderComponent } from './loader/loader.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { CoreModule } from '../core/core.module';
+import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 
 @NgModule({
   imports: [
@@ -12,11 +13,15 @@ import { CoreModule } from '../core/core.module';
   ],
   declarations: [
     LoaderComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    DeleteDialogComponent
   ],
   exports: [
     LoaderComponent,
     FileUploadComponent
+  ],
+  entryComponents: [
+    DeleteDialogComponent
   ]
 })
 export class SharedModule { }
