@@ -16,7 +16,6 @@ import { CentersService } from './centers.service';
     CommonModule,
     CentersRoutingModule,
     FormsModule,
-    HttpModule,
     MatTableModule,
     FlexLayoutModule
 

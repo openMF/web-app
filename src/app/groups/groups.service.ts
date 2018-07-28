@@ -7,11 +7,11 @@ import { Observable } from 'rxjs';
   })
 
 
-export class CentersService {
+export class GroupsService {
     constructor(private http: HttpClient) { }
 
-    getCenters(): Observable<any> {
-        return  this.http.get('/centers');
+    getGroups(): Observable<any> {
+        return  this.http.get('/groups');
     }
 
 }

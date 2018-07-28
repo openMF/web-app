@@ -24,6 +24,8 @@ export class CentersComponent implements OnInit {
       .subscribe(
         (res => {
          console.log(res);
+        // console.log(res.active);
+         res.active = !!res.active;
          this.dataSource = new MatTableDataSource(res);
          this.dataSource.paginator = this.paginator;
          this.dataSource.sort = this.sort;
@@ -31,7 +33,7 @@ export class CentersComponent implements OnInit {
       );
   }
 
- 
+
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches

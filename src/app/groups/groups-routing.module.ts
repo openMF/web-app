@@ -10,7 +10,7 @@ const routes: Routes = [
     {
       path: 'groups',
       component: GroupsComponent,
-      data: { title: extract('Groups') }
+      data: { title: extract('Groups'), breadcrumb: 'Groups' }
     }
   ])
 ];
