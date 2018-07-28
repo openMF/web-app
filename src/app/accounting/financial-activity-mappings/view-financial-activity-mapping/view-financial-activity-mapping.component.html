@@ -1,8 +1,8 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" class="container m-b-20">
-  <button mat-raised-button color="primary">
+  <button mat-raised-button color="primary" [routerLink]="['/accounting/financial-activity-mappings/view', financialActivityAccountId, 'edit']">
     <mat-icon>edit</mat-icon>&nbsp;&nbsp;Edit
   </button>
-  <button mat-raised-button color="warn">
+  <button mat-raised-button color="warn" (click)="deleteFinancialActivityAccount()">
     <mat-icon>delete</mat-icon>&nbsp;&nbsp;Delete
   </button>
 </div>

@@ -83,8 +83,17 @@ export class AccountingService {
     return this.http.post('/financialactivityaccounts', financialActivityAccount);
   }
 
-  getFinancialActivityAccount(financialActivityAccountId: number) {
-    return this.http.get(`/financialactivityaccounts/${financialActivityAccountId}`);
+  getFinancialActivityAccount(financialActivityAccountId: number, template: boolean) {
+    const httpParams = new HttpParams().set('template', template.toString());
+    return this.http.get(`/financialactivityaccounts/${financialActivityAccountId}`, { params: httpParams });
+  }
+
+  updateFinancialActivityAccount(financialActivityAccountId: number, financialActivityAccount: any) {
+    return this.http.put(`/financialactivityaccounts/${financialActivityAccountId}`, financialActivityAccount);
+  }
+
+  deleteFinancialActivityAccount(financialActivityAccountId: number) {
+    return this.http.delete(`/financialactivityaccounts/${financialActivityAccountId}`);
   }
 
 }

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+
 import { AccountingService } from '../../accounting.service';
+import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'mifosx-view-financial-activity-mapping',
@@ -13,7 +16,9 @@ export class ViewFinancialActivityMappingComponent implements OnInit {
   financialActivityAccountData: any;
 
   constructor(private route: ActivatedRoute,
-              private accountingService: AccountingService) { }
+              private router: Router,
+              private accountingService: AccountingService,
+              public dialog: MatDialog) { }
 
   ngOnInit() {
     this.financialActivityAccountId = this.route.snapshot.paramMap.get('id');
@@ -21,11 +26,24 @@ export class ViewFinancialActivityMappingComponent implements OnInit {
   }
 
   getFinancialActivityAccount() {
-    this.accountingService.getFinancialActivityAccount(this.financialActivityAccountId)
+    this.accountingService.getFinancialActivityAccount(this.financialActivityAccountId, false)
       .subscribe((financialActivityAccountData: any) => {
         this.financialActivityAccountData = financialActivityAccountData;
-        console.log(financialActivityAccountData);
       });
+  }
+
+  deleteFinancialActivityAccount() {
+    const deleteFinancialActivityAccountDialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { deleteContext: `financial activity mapping ${this.financialActivityAccountId}` }
+    });
+    deleteFinancialActivityAccountDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.delete) {
+        this.accountingService.deleteFinancialActivityAccount(this.financialActivityAccountId)
+          .subscribe(() => {
+            this.router.navigate(['/accounting/financial-activity-mappings']);
+          });
+      }
+    });
   }
 
 }
