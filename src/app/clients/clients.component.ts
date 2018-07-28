@@ -32,6 +32,7 @@ export class ClientsComponent implements OnInit {
     .subscribe(
       (res => {
         console.log(res);
+        res.active = !!res.active;
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
