@@ -1,0 +1,40 @@
+<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" class="container m-b-20">
+  <button mat-raised-button color="primary">
+    <mat-icon>edit</mat-icon>&nbsp;&nbsp;Edit
+  </button>
+  <button mat-raised-button color="warn">
+    <mat-icon>delete</mat-icon>&nbsp;&nbsp;Delete
+  </button>
+</div>
+
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" class="content">
+
+        <div fxFlex="50%" class="header">
+          Financial Activity
+        </div>
+
+        <div fxFlex="50%">
+          {{ financialActivityAccountData?.financialActivityData.name }}
+        </div>
+
+        <div fxFlex="50%" class="header">
+          Account Name
+        </div>
+
+        <div fxFlex="50%">
+          {{ financialActivityAccountData?.glAccountData.name }}
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

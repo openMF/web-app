@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { AccountingService } from '../../accounting.service';
 
@@ -16,7 +17,8 @@ export class CreateFinancialActivityMappingComponent implements OnInit {
   financialActivityData: any;
 
   constructor(private formBuider: FormBuilder,
-              private accountingService: AccountingService) { }
+              private accountingService: AccountingService,
+              private router: Router) { }
 
   ngOnInit() {
     this.createFinancialActivityMappingForm();
@@ -57,8 +59,8 @@ export class CreateFinancialActivityMappingComponent implements OnInit {
 
   submit() {
     this.accountingService.createFinancialActivityAccount(this.financialActivityMappingForm.value)
-      .subscribe(response => {
-        console.log(response);
+      .subscribe((response: any) => {
+        this.router.navigate(['/accounting/financial-activity-mappings/view', response.resourceId]);
     });
   }
 

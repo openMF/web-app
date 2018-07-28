@@ -13,6 +13,7 @@ import { CreateJournalEntryComponent } from './create-journal-entry/create-journ
 import { SearchJournalEntryComponent } from './search-journal-entry/search-journal-entry.component';
 import { FinancialActivityMappingsComponent } from './financial-activity-mappings/financial-activity-mappings.component';
 import { CreateFinancialActivityMappingComponent } from './financial-activity-mappings/create-financial-activity-mapping/create-financial-activity-mapping.component';
+import { ViewFinancialActivityMappingComponent } from './financial-activity-mappings/view-financial-activity-mapping/view-financial-activity-mapping.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { CreateFinancialActivityMappingComponent } from './financial-activity-ma
     CreateJournalEntryComponent,
     SearchJournalEntryComponent,
     FinancialActivityMappingsComponent,
-    CreateFinancialActivityMappingComponent
+    CreateFinancialActivityMappingComponent,
+    ViewFinancialActivityMappingComponent
   ],
   entryComponents: [
     RevertTransactionComponent,

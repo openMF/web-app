@@ -83,4 +83,8 @@ export class AccountingService {
     return this.http.post('/financialactivityaccounts', financialActivityAccount);
   }
 
+  getFinancialActivityAccount(financialActivityAccountId: number) {
+    return this.http.get(`/financialactivityaccounts/${financialActivityAccountId}`);
+  }
+
 }
