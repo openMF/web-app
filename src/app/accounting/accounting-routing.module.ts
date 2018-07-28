@@ -9,6 +9,7 @@ import { CreateJournalEntryComponent } from './create-journal-entry/create-journ
 import { SearchJournalEntryComponent } from './search-journal-entry/search-journal-entry.component';
 import { FinancialActivityMappingsComponent } from './financial-activity-mappings/financial-activity-mappings.component';
 import { CreateFinancialActivityMappingComponent } from './financial-activity-mappings/create-financial-activity-mapping/create-financial-activity-mapping.component';
+import { ViewFinancialActivityMappingComponent } from './financial-activity-mappings/view-financial-activity-mapping/view-financial-activity-mapping.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -58,6 +59,11 @@ const routes: Routes = [
               path: 'create',
               component: CreateFinancialActivityMappingComponent,
               data: { title: extract('Create Financial Activity Mapping'), breadcrumb: 'Create' },
+            },
+            {
+              path: 'view/:id',
+              component: ViewFinancialActivityMappingComponent,
+              data: {title: extract('View Financial Activity Mapping'), routeParamBreadcrumb: 'id' }
             }
           ]
         }
