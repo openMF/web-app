@@ -96,4 +96,8 @@ export class AccountingService {
     return this.http.delete(`/financialactivityaccounts/${financialActivityAccountId}`);
   }
 
+  getChartOfAccounts() {
+    return this.http.get('/glaccounts');
+  }
+
 }

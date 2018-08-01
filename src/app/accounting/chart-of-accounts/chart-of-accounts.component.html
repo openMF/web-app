@@ -1,0 +1,85 @@
+<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+  <mat-button-toggle-group [formControl]="viewGroup">
+    <mat-button-toggle value="listView">
+      <mat-icon>list</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="treeView">
+      <mat-icon>device_hub</mat-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+  <button mat-raised-button color="primary">
+    <mat-icon>add</mat-icon>&nbsp;&nbsp;Add Account
+  </button>
+</div>
+
+
+<!-- List View -->
+
+<div class="container" *ngIf="viewGroup.value === 'listView'">
+
+  <div fxLayout="row" fxLayoutGap="20px">
+    <mat-form-field fxFlex>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
+
+  <div class="mat-elevation-z8">
+
+    <table mat-table [dataSource]="tableDataSource" matSort>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Account </th>
+        <td mat-cell *matCellDef="let glAccount"> {{ glAccount.name }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="glCode">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> GL Code </th>
+        <td mat-cell *matCellDef="let glAccount"> {{ glAccount.glCode }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="glAccountType">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+        <td mat-cell *matCellDef="let glAccount"> {{ glAccount.type.value }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="disabled">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Disabled </th>
+        <td mat-cell *matCellDef="let glAccount">
+          <div [className]="glAccount.disabled === true ? 'disabled' : 'enabled'">
+            <mat-icon matTooltip="{{ glAccount.disabled === true ? 'Disabled' : 'Enabled' }}" matTooltipPosition="right">lens</mat-icon>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="manualEntriesAllowed">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Manual Entries Allowed </th>
+        <td mat-cell *matCellDef="let glAccount">
+          <mat-icon *ngIf="glAccount.manualEntriesAllowed" class="manual-entries-allowed" matTooltip="Allowed" matTooltipPosition="right">check_circle</mat-icon>
+          <mat-icon *ngIf="!glAccount.manualEntriesAllowed" class="manual-entries-not-allowed" matTooltip="Not Allowed" matTooltipPosition="right">cancel</mat-icon>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="usedAs">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Used as </th>
+        <td mat-cell *matCellDef="let glAccount"> {{ glAccount.usage.value }} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="viewGLAccount(row)" class="select"></tr>
+
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+  </div>
+
+</div>
+
+
+<!-- Tree View -->
+
+<div class="container" *ngIf="viewGroup.value === 'treeView'">
+
+  TREE VIEW
+
+</div>

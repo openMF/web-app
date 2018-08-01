@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { Route, extract } from '../core';
+
 import { AccountingComponent } from './accounting.component';
 import { FrequentPostingsComponent } from './frequent-postings/frequent-postings.component';
 import { ViewTransactionComponent } from './view-transaction/view-transaction.component';
@@ -11,6 +12,9 @@ import { FinancialActivityMappingsComponent } from './financial-activity-mapping
 import { CreateFinancialActivityMappingComponent } from './financial-activity-mappings/create-financial-activity-mapping/create-financial-activity-mapping.component';
 import { ViewFinancialActivityMappingComponent } from './financial-activity-mappings/view-financial-activity-mapping/view-financial-activity-mapping.component';
 import { EditFinancialActivityMappingComponent } from './financial-activity-mappings/edit-financial-activity-mapping/edit-financial-activity-mapping.component';
+import { ChartOfAccountsComponent } from './chart-of-accounts/chart-of-accounts.component';
+
+import { ChartOfAccountsResolver } from './chart-of-accounts/chart-of-accounts.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -77,6 +81,14 @@ const routes: Routes = [
               ]
             }
           ]
+        },
+        {
+          path: 'chart-of-accounts',
+          component: ChartOfAccountsComponent,
+          data: { title: extract('Chart of Accounts'), breadcrumb: 'Chart of Accounts' },
+          resolve: {
+            glAccountData: ChartOfAccountsResolver
+          }
         }
       ]
     }
@@ -86,6 +98,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: []
+  providers: [ChartOfAccountsResolver]
 })
 export class AccountingRoutingModule { }
