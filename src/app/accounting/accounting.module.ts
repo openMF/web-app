@@ -15,6 +15,7 @@ import { FinancialActivityMappingsComponent } from './financial-activity-mapping
 import { CreateFinancialActivityMappingComponent } from './financial-activity-mappings/create-financial-activity-mapping/create-financial-activity-mapping.component';
 import { ViewFinancialActivityMappingComponent } from './financial-activity-mappings/view-financial-activity-mapping/view-financial-activity-mapping.component';
 import { EditFinancialActivityMappingComponent } from './financial-activity-mappings/edit-financial-activity-mapping/edit-financial-activity-mapping.component';
+import { ChartOfAccountsComponent } from './chart-of-accounts/chart-of-accounts.component';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { EditFinancialActivityMappingComponent } from './financial-activity-mapp
     FinancialActivityMappingsComponent,
     CreateFinancialActivityMappingComponent,
     ViewFinancialActivityMappingComponent,
-    EditFinancialActivityMappingComponent
+    EditFinancialActivityMappingComponent,
+    ChartOfAccountsComponent
   ],
   entryComponents: [
     RevertTransactionComponent,
