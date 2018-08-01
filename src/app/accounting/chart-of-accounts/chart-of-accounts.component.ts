@@ -1,7 +1,13 @@
 import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, MatTreeNestedDataSource } from '@angular/material';
+import { NestedTreeControl } from '@angular/cdk/tree';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+
+import { of } from 'rxjs';
+
+import { GLAccountNode } from './gl-account-node.model';
+import { GlAccountTreeService } from './gl-account-tree.service';
 
 @Component({
   selector: 'mifosx-chart-of-accounts',
@@ -19,14 +25,32 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private route: ActivatedRoute) {
+  //
+  nestedTreeControl: NestedTreeControl<GLAccountNode>;
+  nestedTreeDataSource: MatTreeNestedDataSource<GLAccountNode>;
+  glAccount: GLAccountNode;
+  //
+
+  constructor(private glAccountTreeService: GlAccountTreeService,
+              private route: ActivatedRoute) {
     this.route.data.subscribe((data: { glAccountData: any }) => {
       this.glAccountData = data.glAccountData;
+      glAccountTreeService.initialize(this.glAccountData);
     });
+    //
+    this.nestedTreeControl = new NestedTreeControl<GLAccountNode>(this._getChildren);
+    this.nestedTreeDataSource = new MatTreeNestedDataSource();
+    //
   }
 
   ngOnInit() {
     this.tableDataSource = new MatTableDataSource(this.glAccountData);
+    //
+    this.glAccountTreeService.treeDataChange.subscribe((glAccountTreeData: any) => {
+      this.nestedTreeDataSource.data = glAccountTreeData;
+      this.nestedTreeControl.expand(this.nestedTreeDataSource.data[0]);
+    });
+    //
   }
 
   ngAfterViewInit() {
@@ -48,5 +72,19 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
   viewGLAccount(glAccount: any) {
     console.log(glAccount);
   }
+
+  //
+  hasNestedChild = (_: number, node: GLAccountNode) => node.children.length;
+
+  viewGLAccountNode(glAccount: GLAccountNode) {
+    if (glAccount.glCode) {
+      this.glAccount = glAccount;
+    } else {
+      delete this.glAccount;
+    }
+  }
+
+  private _getChildren = (node: GLAccountNode) => of(node.children);
+  //
 
 }
