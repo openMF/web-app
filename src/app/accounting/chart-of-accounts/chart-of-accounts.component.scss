@@ -2,6 +2,36 @@ table {
   width: 100%;
 }
 
+.gl-account-tree-invisible {
+  display: none;
+}
+
+.gl-account-tree ul,
+.gl-account-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+
+.gl-account-tree {
+  li {
+    span {
+      cursor: pointer;
+    }
+  }
+}
+
+.content {
+  div {
+    margin: 1rem 0;
+    word-wrap: break-word;
+  }
+
+  .header {
+    font-weight: 500;
+  }
+}
+
 .disabled {
   color: red;
 }
