@@ -100,4 +100,12 @@ export class AccountingService {
     return this.http.get('/glaccounts');
   }
 
+  getChartOfAccountsTemplate() {
+    return this.http.get('/glaccounts/template');
+  }
+
+  createGlAccount(glAccount: any) {
+    return this.http.post('/glaccounts', glAccount);
+  }
+
 }
