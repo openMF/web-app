@@ -15,6 +15,7 @@ import { EditFinancialActivityMappingComponent } from './financial-activity-mapp
 import { ChartOfAccountsComponent } from './chart-of-accounts/chart-of-accounts.component';
 
 import { ChartOfAccountsResolver } from './chart-of-accounts/chart-of-accounts.resolver';
+import { CreateGlAccountComponent } from './chart-of-accounts/create-gl-account/create-gl-account.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -84,11 +85,21 @@ const routes: Routes = [
         },
         {
           path: 'chart-of-accounts',
-          component: ChartOfAccountsComponent,
           data: { title: extract('Chart of Accounts'), breadcrumb: 'Chart of Accounts' },
-          resolve: {
-            glAccountData: ChartOfAccountsResolver
-          }
+          children: [
+            {
+              path: '',
+              component: ChartOfAccountsComponent,
+              resolve: {
+                glAccountData: ChartOfAccountsResolver
+              }
+            },
+            {
+              path: 'gl-accounts/create',
+              component: CreateGlAccountComponent,
+              data: { title: extract('Create GL Account'), breadcrumb: 'Create GL Account' },
+            }
+          ]
         }
       ]
     }
