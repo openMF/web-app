@@ -5,10 +5,10 @@
   <button mat-raised-button color="primary" [routerLink]="['/accounting/chart-of-accounts/gl-accounts/view', glAccount.id, 'edit']">
     <mat-icon>edit</mat-icon>&nbsp;&nbsp;Edit
   </button>
-  <button mat-raised-button color="warn" *ngIf="!glAccount.disabled">
+  <button mat-raised-button color="warn" *ngIf="!glAccount.disabled" (click)="changeGlAccountState()">
     <mat-icon>lock</mat-icon>&nbsp;&nbsp;Disable
   </button>
-  <button mat-raised-button color="accent" *ngIf="glAccount.disabled">
+  <button mat-raised-button color="accent" *ngIf="glAccount.disabled" (click)="changeGlAccountState()">
     <mat-icon>lock_open</mat-icon>&nbsp;&nbsp;Enable
   </button>
   <button mat-raised-button color="warn" (click)="deleteGlAccount()">

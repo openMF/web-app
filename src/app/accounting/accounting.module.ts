@@ -18,6 +18,7 @@ import { EditFinancialActivityMappingComponent } from './financial-activity-mapp
 import { ChartOfAccountsComponent } from './chart-of-accounts/chart-of-accounts.component';
 import { CreateGlAccountComponent } from './chart-of-accounts/create-gl-account/create-gl-account.component';
 import { ViewGlAccountComponent } from './chart-of-accounts/view-gl-account/view-gl-account.component';
+import { EditGlAccountComponent } from './chart-of-accounts/edit-gl-account/edit-gl-account.component';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { ViewGlAccountComponent } from './chart-of-accounts/view-gl-account/view
     EditFinancialActivityMappingComponent,
     ChartOfAccountsComponent,
     CreateGlAccountComponent,
-    ViewGlAccountComponent
+    ViewGlAccountComponent,
+    EditGlAccountComponent
   ],
   entryComponents: [
     RevertTransactionComponent,

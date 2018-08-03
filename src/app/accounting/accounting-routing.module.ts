@@ -18,6 +18,7 @@ import { ChartOfAccountsResolver } from './chart-of-accounts/chart-of-accounts.r
 import { CreateGlAccountComponent } from './chart-of-accounts/create-gl-account/create-gl-account.component';
 import { ViewGlAccountComponent } from './chart-of-accounts/view-gl-account/view-gl-account.component';
 import { ViewGlAccountResolver } from './chart-of-accounts/view-gl-account/view-gl-account.resolver';
+import { EditGlAccountComponent } from './chart-of-accounts/edit-gl-account/edit-gl-account.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -103,11 +104,22 @@ const routes: Routes = [
             },
             {
               path: 'gl-accounts/view/:id',
-              component: ViewGlAccountComponent,
               data: { title: extract('View GL Account'), routeResolveBreadcrumb: ['glAccount', 'name'] },
               resolve: {
                 glAccount: ViewGlAccountResolver
-              }
+              },
+              runGuardsAndResolvers: 'always',
+              children: [
+                {
+                  path: '',
+                  component: ViewGlAccountComponent
+                },
+                {
+                  path: 'edit',
+                  component: EditGlAccountComponent,
+                  data: { title: extract('Edit GL Account'), breadcrumb: 'Edit', routeResolveBreadcrumb: false }
+                }
+              ]
             }
           ]
         }
