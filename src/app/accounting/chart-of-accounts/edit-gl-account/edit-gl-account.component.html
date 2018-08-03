@@ -1,0 +1,74 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="glAccountForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+          <mat-form-field fxFlex="48%">
+            <mat-select placeholder="Account Type" required formControlName="type">
+              <mat-option *ngFor="let accountType of accountTypeData" [value]="accountType.id">
+                {{ accountType.value }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <input matInput placeholder="Account Name" required formControlName="name">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-select placeholder="Account Usage" required formControlName="usage">
+              <mat-option *ngFor="let accountUsage of accountUsageData" [value]="accountUsage.id">
+                {{ accountUsage.value }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <input matInput placeholder="GL Code" required formControlName="glCode">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-select placeholder="Parent" formControlName="parentId">
+              <mat-option *ngFor="let parent of parentData" [value]="parent.id">
+                {{ parent.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="28%">
+            <mat-select placeholder="Tag" formControlName="tagId">
+              <mat-option *ngFor="let tag of tagData" [value]="tag.id">
+                {{ tag.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div fxFlex="18%" class="manualEntriesAllowedWrapper">
+            <mat-checkbox labelPosition="before" required formControlName="manualEntriesAllowed" class="manualEntriesAllowed">
+              Manual Entries Allowed
+            </mat-checkbox>
+          </div>
+
+          <mat-form-field fxFlex="98%">
+            <textarea matInput placeholder="Description" formControlName="description"></textarea>
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['/accounting/chart-of-accounts']">Cancel</button>
+        <button mat-raised-button color="primary">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>

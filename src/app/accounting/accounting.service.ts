@@ -113,4 +113,12 @@ export class AccountingService {
     return this.http.get(`/glaccounts/${glAccountId}`, { params: httpParams });
   }
 
+  updateGlAccount(glAccountId: number, glAccount: any) {
+    return this.http.put(`/glaccounts/${glAccountId}`, glAccount);
+  }
+
+  deleteGlAccount(glAccountId: number) {
+    return this.http.delete(`/glaccounts/${glAccountId}`);
+  }
+
 }
