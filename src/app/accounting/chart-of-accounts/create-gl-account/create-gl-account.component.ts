@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
 import { AccountingService } from '../../accounting.service';
 
 @Component({
@@ -17,7 +19,8 @@ export class CreateGlAccountComponent implements OnInit {
   tagData: any;
 
   constructor(private formBuilder: FormBuilder,
-              private accountingService: AccountingService) { }
+              private accountingService: AccountingService,
+              private router: Router) { }
 
   ngOnInit() {
     this.createGlAccountForm();
@@ -69,8 +72,8 @@ export class CreateGlAccountComponent implements OnInit {
   }
 
   submit() {
-    this.accountingService.createGlAccount(this.glAccountForm.value).subscribe(response => {
-      console.log(response);
+    this.accountingService.createGlAccount(this.glAccountForm.value).subscribe((response: any) => {
+      this.router.navigate(['/accounting/chart-of-accounts/gl-accounts/view', response.resourceId]);
     });
   }
 
