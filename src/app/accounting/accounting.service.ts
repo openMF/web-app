@@ -108,4 +108,9 @@ export class AccountingService {
     return this.http.post('/glaccounts', glAccount);
   }
 
+  getGlAccount(glAccountId: string, template: boolean = false) {
+    const httpParams = new HttpParams().set('template', template.toString());
+    return this.http.get(`/glaccounts/${glAccountId}`, { params: httpParams });
+  }
+
 }

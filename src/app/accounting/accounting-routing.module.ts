@@ -16,6 +16,8 @@ import { ChartOfAccountsComponent } from './chart-of-accounts/chart-of-accounts.
 
 import { ChartOfAccountsResolver } from './chart-of-accounts/chart-of-accounts.resolver';
 import { CreateGlAccountComponent } from './chart-of-accounts/create-gl-account/create-gl-account.component';
+import { ViewGlAccountComponent } from './chart-of-accounts/view-gl-account/view-gl-account.component';
+import { ViewGlAccountResolver } from './chart-of-accounts/view-gl-account/view-gl-account.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -98,6 +100,14 @@ const routes: Routes = [
               path: 'gl-accounts/create',
               component: CreateGlAccountComponent,
               data: { title: extract('Create GL Account'), breadcrumb: 'Create GL Account' },
+            },
+            {
+              path: 'gl-accounts/view/:id',
+              component: ViewGlAccountComponent,
+              data: { title: extract('View GL Account'), routeResolveBreadcrumb: ['glAccount', 'name'] },
+              resolve: {
+                glAccount: ViewGlAccountResolver
+              }
             }
           ]
         }
@@ -109,6 +119,9 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [ChartOfAccountsResolver]
+  providers: [
+    ChartOfAccountsResolver,
+    ViewGlAccountResolver
+  ]
 })
 export class AccountingRoutingModule { }

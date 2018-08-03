@@ -25,11 +25,9 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  //
   nestedTreeControl: NestedTreeControl<GLAccountNode>;
   nestedTreeDataSource: MatTreeNestedDataSource<GLAccountNode>;
   glAccount: GLAccountNode;
-  //
 
   constructor(private glAccountTreeService: GlAccountTreeService,
               private route: ActivatedRoute) {
@@ -37,20 +35,16 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
       this.glAccountData = data.glAccountData;
       glAccountTreeService.initialize(this.glAccountData);
     });
-    //
     this.nestedTreeControl = new NestedTreeControl<GLAccountNode>(this._getChildren);
     this.nestedTreeDataSource = new MatTreeNestedDataSource();
-    //
   }
 
   ngOnInit() {
     this.tableDataSource = new MatTableDataSource(this.glAccountData);
-    //
     this.glAccountTreeService.treeDataChange.subscribe((glAccountTreeData: any) => {
       this.nestedTreeDataSource.data = glAccountTreeData;
       this.nestedTreeControl.expand(this.nestedTreeDataSource.data[0]);
     });
-    //
   }
 
   ngAfterViewInit() {
@@ -69,11 +63,6 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
     this.tableDataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  viewGLAccount(glAccount: any) {
-    console.log(glAccount);
-  }
-
-  //
   hasNestedChild = (_: number, node: GLAccountNode) => node.children.length;
 
   viewGLAccountNode(glAccount: GLAccountNode) {
@@ -85,6 +74,5 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
   }
 
   private _getChildren = (node: GLAccountNode) => of(node.children);
-  //
 
 }
