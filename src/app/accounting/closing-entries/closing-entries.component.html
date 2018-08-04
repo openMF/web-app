@@ -1,0 +1,55 @@
+<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+  <button mat-raised-button color="primary">
+    <mat-icon>add</mat-icon>&nbsp;&nbsp;Create Closure
+  </button>
+</div>
+
+<div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <mat-form-field fxFlex>
+    <input matInput placeholder="Office Name" [formControl]="officeName" [matAutocomplete]="officeNameAutocomplete">
+  </mat-form-field>
+</div>
+
+<!-- Autocomplete data -->
+<mat-autocomplete autoActiveFirstOption #officeNameAutocomplete="matAutocomplete">
+  <mat-option *ngFor="let office of filteredOfficeData | async" [value]="office.name">
+    {{ office.name }}
+  </mat-option>
+</mat-autocomplete>
+
+<div class="container">
+
+  <div class="mat-elevation-z8">
+
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="officeName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Office </th>
+        <td mat-cell *matCellDef="let glAccountClosure"> {{ glAccountClosure.officeName }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="closingDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Closure Date </th>
+        <td mat-cell *matCellDef="let glAccountClosure"> {{ glAccountClosure.closingDate }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="comments">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Comments </th>
+        <td mat-cell *matCellDef="let glAccountClosure"> {{ glAccountClosure.comments }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="createdByUsername">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Created By </th>
+        <td mat-cell *matCellDef="let glAccountClosure">{{ glAccountClosure.createdByUsername }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+  </div>
+
+</div>
