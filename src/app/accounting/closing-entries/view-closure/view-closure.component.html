@@ -1,4 +1,7 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+  <button mat-raised-button color="primary" [routerLink]="['/accounting/closing-entries/view', accountingClosure?.id, 'edit']">
+    <mat-icon>edit</mat-icon>&nbsp;&nbsp;Edit
+  </button>
   <button mat-raised-button color="warn" (click)="deleteAccountingClosure()">
     <mat-icon>delete</mat-icon>&nbsp;&nbsp;Delete
   </button>

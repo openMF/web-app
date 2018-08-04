@@ -133,4 +133,12 @@ export class AccountingService {
     return this.http.get(`/glclosures/${accountingClosureId}`);
   }
 
+  deleteAccountingClosure(accountingClosureId: number) {
+    return this.http.delete(`/glclosures/${accountingClosureId}`);
+  }
+
+  updateAccountingClosure(accountingClosureId: number, accountingClosure: any) {
+    return this.http.put(`/glclosures/${accountingClosureId}`, accountingClosure);
+  }
+
 }
