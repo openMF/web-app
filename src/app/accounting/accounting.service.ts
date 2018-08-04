@@ -125,4 +125,8 @@ export class AccountingService {
     return this.http.get('/glclosures');
   }
 
+  createAccountingClosure(accountingClosure: any) {
+    return this.http.post('/glclosures', accountingClosure);
+  }
+
 }
