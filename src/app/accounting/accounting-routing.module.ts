@@ -15,10 +15,13 @@ import { EditFinancialActivityMappingComponent } from './financial-activity-mapp
 import { ChartOfAccountsComponent } from './chart-of-accounts/chart-of-accounts.component';
 
 import { ChartOfAccountsResolver } from './chart-of-accounts/chart-of-accounts.resolver';
+
 import { CreateGlAccountComponent } from './chart-of-accounts/create-gl-account/create-gl-account.component';
 import { ViewGlAccountComponent } from './chart-of-accounts/view-gl-account/view-gl-account.component';
 import { ViewGlAccountResolver } from './chart-of-accounts/view-gl-account/view-gl-account.resolver';
 import { EditGlAccountComponent } from './chart-of-accounts/edit-gl-account/edit-gl-account.component';
+
+import { ClosingEntriesComponent } from './closing-entries/closing-entries.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -89,6 +92,9 @@ const routes: Routes = [
         {
           path: 'chart-of-accounts',
           data: { title: extract('Chart of Accounts'), breadcrumb: 'Chart of Accounts' },
+          resolve: {
+            glAccountData: ChartOfAccountsResolver
+          },
           children: [
             {
               path: '',
@@ -122,6 +128,11 @@ const routes: Routes = [
               ]
             }
           ]
+        },
+        {
+          path: 'closing-entries',
+          component: ClosingEntriesComponent,
+          data: { title: extract('Accounting Closures'), breadcrumb: 'Closing Entries' }
         }
       ]
     }

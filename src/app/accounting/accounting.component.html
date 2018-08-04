@@ -52,11 +52,9 @@
           <p matLine>List of accounts used by the organisation</p>
         </mat-list-item>
 
-        <mat-list-item>
+        <mat-list-item [routerLink]="['/accounting/closing-entries']">
           <mat-icon matListIcon>archive</mat-icon>
-          <a matLine href="https://www.google.com">
-            Closing Entries
-          </a>
+          <h4 matLine>Closing Entries</h4>
           <p matLine>Journal entries made at the end of accounting period</p>
         </mat-list-item>
 

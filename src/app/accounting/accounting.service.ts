@@ -121,4 +121,8 @@ export class AccountingService {
     return this.http.delete(`/glaccounts/${glAccountId}`);
   }
 
+  getAccountingClosures() {
+    return this.http.get('/glclosures');
+  }
+
 }
