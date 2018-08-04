@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
-  <button mat-raised-button color="primary" *ngIf="glAccount.usage.value === 'HEADER'">
+  <button mat-raised-button color="primary" *ngIf="glAccount.usage.value === 'HEADER'" [routerLink]="['/accounting/chart-of-accounts/gl-accounts/create']" [queryParams]="{ parent: glAccount.id, accountType: glAccount.type.id }">
     <mat-icon>add</mat-icon>&nbsp;&nbsp;Subledger Account
   </button>
   <button mat-raised-button color="primary" [routerLink]="['/accounting/chart-of-accounts/gl-accounts/view', glAccount.id, 'edit']">
