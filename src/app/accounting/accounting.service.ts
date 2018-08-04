@@ -129,4 +129,8 @@ export class AccountingService {
     return this.http.post('/glclosures', accountingClosure);
   }
 
+  getAccountingClosure(accountingClosureId: number) {
+    return this.http.get(`/glclosures/${accountingClosureId}`);
+  }
+
 }

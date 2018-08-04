@@ -1,0 +1,77 @@
+<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+  <button mat-raised-button color="warn" (click)="deleteAccountingClosure()">
+    <mat-icon>delete</mat-icon>&nbsp;&nbsp;Delete
+  </button>
+</div>
+
+<div class="container" *ngIf="accountingClosure">
+
+  <mat-card>
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" class="content">
+
+        <div fxFlex="50%" class="header">
+          Office
+        </div>
+
+        <div fxFlex="50%">
+          {{ accountingClosure.officeName }}
+        </div>
+
+        <div fxFlex="50%" class="header">
+          Closure Date
+        </div>
+
+        <div fxFlex="50%">
+          {{ accountingClosure.closingDate }}
+        </div>
+
+        <div fxFlex="50%" class="header">
+          Closed By
+        </div>
+
+        <div fxFlex="50%">
+          {{ accountingClosure.createdByUsername }}
+        </div>
+
+        <div fxFlex="50%" class="header">
+          Updated By
+        </div>
+
+        <div fxFlex="50%">
+          {{ accountingClosure.lastUpdatedByUsername }}
+        </div>
+
+        <div fxFlex="50%" class="header">
+          Updated On
+        </div>
+
+        <div fxFlex="50%">
+          {{ accountingClosure.lastUpdatedDate }}
+        </div>
+
+        <div fxFlex="50%" class="header">
+          Closure Creation Date
+        </div>
+
+        <div fxFlex="50%">
+          {{ accountingClosure.createdDate }}
+        </div>
+
+        <div fxFlex="50%" class="header">
+          Comments
+        </div>
+
+        <div fxFlex="50%">
+          {{ accountingClosure.comments }}
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

@@ -23,6 +23,7 @@ import { EditGlAccountComponent } from './chart-of-accounts/edit-gl-account/edit
 
 import { ClosingEntriesComponent } from './closing-entries/closing-entries.component';
 import { CreateClosureComponent } from './closing-entries/create-closure/create-closure.component';
+import { ViewClosureComponent } from './closing-entries/view-closure/view-closure.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -142,6 +143,11 @@ const routes: Routes = [
               path: 'create',
               component: CreateClosureComponent,
               data: { title: extract('Create Accounting Closure'), breadcrumb: 'Create' }
+            },
+            {
+              path: 'view/:id',
+              component: ViewClosureComponent,
+              data: { title: extract('View Accounting Closure'), routeParamBreadcrumb: 'id' }
             }
           ]
         }
