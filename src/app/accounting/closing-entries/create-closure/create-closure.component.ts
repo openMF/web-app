@@ -11,7 +11,7 @@ import { AccountingService } from '../../accounting.service';
 })
 export class CreateClosureComponent implements OnInit {
 
-    // TODO: Validations, Hints
+  // TODO: Validations, Hints
 
   minDate = new Date(2000, 0, 1);
   maxDate = new Date();

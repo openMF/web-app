@@ -23,6 +23,7 @@ import { EditGlAccountComponent } from './chart-of-accounts/edit-gl-account/edit
 import { ClosingEntriesComponent } from './closing-entries/closing-entries.component';
 import { CreateClosureComponent } from './closing-entries/create-closure/create-closure.component';
 import { ViewClosureComponent } from './closing-entries/view-closure/view-closure.component';
+import { EditClosureComponent } from './closing-entries/edit-closure/edit-closure.component';
 
 @NgModule({
   imports: [
@@ -50,7 +51,8 @@ import { ViewClosureComponent } from './closing-entries/view-closure/view-closur
     EditGlAccountComponent,
     ClosingEntriesComponent,
     CreateClosureComponent,
-    ViewClosureComponent
+    ViewClosureComponent,
+    EditClosureComponent
   ],
   entryComponents: [
     RevertTransactionComponent,

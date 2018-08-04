@@ -24,6 +24,7 @@ import { EditGlAccountComponent } from './chart-of-accounts/edit-gl-account/edit
 import { ClosingEntriesComponent } from './closing-entries/closing-entries.component';
 import { CreateClosureComponent } from './closing-entries/create-closure/create-closure.component';
 import { ViewClosureComponent } from './closing-entries/view-closure/view-closure.component';
+import { EditClosureComponent } from './closing-entries/edit-closure/edit-closure.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -146,8 +147,18 @@ const routes: Routes = [
             },
             {
               path: 'view/:id',
-              component: ViewClosureComponent,
-              data: { title: extract('View Accounting Closure'), routeParamBreadcrumb: 'id' }
+              data: { title: extract('View Accounting Closure'), routeParamBreadcrumb: 'id' },
+              children: [
+                {
+                  path: '',
+                  component: ViewClosureComponent
+                },
+                {
+                  path: 'edit',
+                  component: EditClosureComponent,
+                  data: { title:  extract('Edit Accounting Closure'), breadcrumb: 'Edit', routeParamBreadcrumb: false }
+                }
+              ]
             }
           ]
         }
