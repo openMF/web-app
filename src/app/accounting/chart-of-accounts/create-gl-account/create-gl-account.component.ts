@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { AccountingService } from '../../accounting.service';
 
@@ -18,9 +18,23 @@ export class CreateGlAccountComponent implements OnInit {
   accountUsageData: any;
   tagData: any;
 
+  accountTypeId: number;
+  parentId: number;
+
+  cancelRoute = '/accounting/chart-of-accounts';
+
   constructor(private formBuilder: FormBuilder,
               private accountingService: AccountingService,
-              private router: Router) { }
+              private route: ActivatedRoute,
+              private router: Router) {
+    this.route.queryParamMap.subscribe(params => {
+      this.accountTypeId = Number(params.get('accountType'));
+      this.parentId = Number(params.get('parent'));
+      if (this.parentId) {
+        this.cancelRoute = `/accounting/chart-of-accounts/gl-accounts/view/${this.parentId}`;
+      }
+    });
+  }
 
   ngOnInit() {
     this.createGlAccountForm();
@@ -34,7 +48,7 @@ export class CreateGlAccountComponent implements OnInit {
       'name': ['', Validators.required],
       'usage': ['', Validators.required],
       'glCode': ['', Validators.required],
-      'parentId': [''],
+      'parentId': [this.parentId],
       'tagId': [''],
       'manualEntriesAllowed': [true, Validators.required],
       'description': ['']
@@ -46,6 +60,7 @@ export class CreateGlAccountComponent implements OnInit {
       this.chartOfAccountsData = chartOfAccountsData;
       this.accountTypeData = chartOfAccountsData.accountTypeOptions;
       this.accountUsageData = chartOfAccountsData.usageOptions;
+      this.glAccountForm.get('type').setValue(this.accountTypeId);
     });
   }
 
