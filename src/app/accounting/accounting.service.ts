@@ -13,8 +13,12 @@ export class AccountingService {
     return  this.http.get('/offices?orderBy=id');
   }
 
-  getAccountingRules(): Observable<any> {
-    return this.http.get('/accountingrules?associations=all');
+  getAccountingRules(useHttpParams?: boolean): Observable<any> {
+    let httpParams = new HttpParams();
+    if (useHttpParams) {
+      httpParams = httpParams.set('associations', 'all');
+    }
+    return this.http.get('/accountingrules', { params: httpParams });
   }
 
   getCurrencies(): Observable<any> {

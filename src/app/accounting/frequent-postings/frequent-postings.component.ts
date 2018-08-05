@@ -104,7 +104,7 @@ export class FrequentPostingsComponent implements OnInit {
   }
 
   getAccountingRules() {
-    this.accountingService.getAccountingRules().subscribe(accountingRuleData => {
+    this.accountingService.getAccountingRules(true).subscribe(accountingRuleData => {
       this.accountingRuleData = accountingRuleData;
     });
   }
