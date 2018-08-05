@@ -145,4 +145,12 @@ export class AccountingService {
     return this.http.put(`/glclosures/${accountingClosureId}`, accountingClosure);
   }
 
+  getAccountingRulesTemplate() {
+    return this.http.get('/accountingrules/template');
+  }
+
+  createAccountingRule(accountingRule: any) {
+    return this.http.post('/accountingrules', accountingRule);
+  }
+
 }

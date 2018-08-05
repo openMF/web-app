@@ -26,6 +26,7 @@ import { CreateClosureComponent } from './closing-entries/create-closure/create-
 import { ViewClosureComponent } from './closing-entries/view-closure/view-closure.component';
 import { EditClosureComponent } from './closing-entries/edit-closure/edit-closure.component';
 import { AccountingRulesComponent } from './accounting-rules/accounting-rules.component';
+import { CreateRuleComponent } from './accounting-rules/create-rule/create-rule.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -165,8 +166,18 @@ const routes: Routes = [
         },
         {
           path: 'accounting-rules',
-          component: AccountingRulesComponent,
           data: { title: extract('Accounting Rules'), breadcrumb: 'Rules' },
+          children: [
+            {
+              path: '',
+              component: AccountingRulesComponent
+            },
+            {
+              path: 'create',
+              component: CreateRuleComponent,
+              data: { title: extract('Create Accounting Rule'), breadcrumb: 'Create' }
+            }
+          ]
         }
       ]
     }
