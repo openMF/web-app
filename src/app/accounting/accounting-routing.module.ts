@@ -29,6 +29,7 @@ import { AccountingRulesComponent } from './accounting-rules/accounting-rules.co
 import { CreateRuleComponent } from './accounting-rules/create-rule/create-rule.component';
 import { ViewRuleComponent } from './accounting-rules/view-rule/view-rule.component';
 import { ViewAccountingRuleResolver } from './accounting-rules/view-rule/view-rule.resolver';
+import { EditRuleComponent } from './accounting-rules/edit-rule/edit-rule.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -181,11 +182,22 @@ const routes: Routes = [
             },
             {
               path: 'view/:id',
-              component: ViewRuleComponent,
               data: { title: extract('View Accounting Rule'), routeResolveBreadcrumb: ['accountingRule', 'name'] },
               resolve: {
                 accountingRule: ViewAccountingRuleResolver
-              }
+              },
+              runGuardsAndResolvers: 'always',
+              children: [
+                {
+                  path: '',
+                  component: ViewRuleComponent
+                },
+                {
+                  path: 'edit',
+                  component: EditRuleComponent,
+                  data: { title:  extract('Edit Accounting Rules'), breadcrumb: 'Edit', routeResolveBreadcrumb: false }
+                }
+              ]
             }
           ]
         }
