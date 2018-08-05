@@ -157,4 +157,12 @@ export class AccountingService {
     return this.http.get(`/accountingrules/${accountingRuleId}`);
   }
 
+  deleteAccountingRule(accountingRuleId: number) {
+    return this.http.delete(`/accountingrules/${accountingRuleId}`);
+  }
+
+  updateAccountingRule(accoutingRuleId: number, accountingRule: any) {
+    return this.http.put(`/accountingrules/${accoutingRuleId}`, accountingRule);
+  }
+
 }
