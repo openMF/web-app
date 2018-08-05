@@ -165,4 +165,8 @@ export class AccountingService {
     return this.http.put(`/accountingrules/${accoutingRuleId}`, accountingRule);
   }
 
+  executePeriodicAccruals(periodicAccruals: any) {
+    return this.http.post('/runaccruals', periodicAccruals);
+  }
+
 }
