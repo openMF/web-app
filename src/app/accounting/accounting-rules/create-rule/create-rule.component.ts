@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { AccountingService } from '../../accounting.service';
 
@@ -25,7 +26,8 @@ export class CreateRuleComponent implements OnInit {
   creditTagData: any;
 
   constructor(private formBuilder: FormBuilder,
-              private accountingService: AccountingService) { }
+              private accountingService: AccountingService,
+              private router: Router) { }
 
   ngOnInit() {
     this.createAccountingRulesForm();
@@ -82,7 +84,7 @@ export class CreateRuleComponent implements OnInit {
     delete accountingRule.debitRuleType;
     delete accountingRule.creditRuleType;
     this.accountingService.createAccountingRule(accountingRule).subscribe((response: any) => {
-      console.log(response);
+      this.router.navigate(['/accounting/accounting-rules/view', response.resourceId]);
     });
   }
 

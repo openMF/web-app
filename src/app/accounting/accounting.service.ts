@@ -153,4 +153,8 @@ export class AccountingService {
     return this.http.post('/accountingrules', accountingRule);
   }
 
+  getAccountingRule(accountingRuleId: string) {
+    return this.http.get(`/accountingrules/${accountingRuleId}`);
+  }
+
 }
