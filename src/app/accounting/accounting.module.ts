@@ -26,6 +26,7 @@ import { ViewClosureComponent } from './closing-entries/view-closure/view-closur
 import { EditClosureComponent } from './closing-entries/edit-closure/edit-closure.component';
 import { AccountingRulesComponent } from './accounting-rules/accounting-rules.component';
 import { CreateRuleComponent } from './accounting-rules/create-rule/create-rule.component';
+import { ViewRuleComponent } from './accounting-rules/view-rule/view-rule.component';
 
 @NgModule({
   imports: [
@@ -56,7 +57,8 @@ import { CreateRuleComponent } from './accounting-rules/create-rule/create-rule.
     ViewClosureComponent,
     EditClosureComponent,
     AccountingRulesComponent,
-    CreateRuleComponent
+    CreateRuleComponent,
+    ViewRuleComponent
   ],
   entryComponents: [
     RevertTransactionComponent,

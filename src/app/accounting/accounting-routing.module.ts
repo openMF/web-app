@@ -27,6 +27,8 @@ import { ViewClosureComponent } from './closing-entries/view-closure/view-closur
 import { EditClosureComponent } from './closing-entries/edit-closure/edit-closure.component';
 import { AccountingRulesComponent } from './accounting-rules/accounting-rules.component';
 import { CreateRuleComponent } from './accounting-rules/create-rule/create-rule.component';
+import { ViewRuleComponent } from './accounting-rules/view-rule/view-rule.component';
+import { ViewAccountingRuleResolver } from './accounting-rules/view-rule/view-rule.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -176,6 +178,14 @@ const routes: Routes = [
               path: 'create',
               component: CreateRuleComponent,
               data: { title: extract('Create Accounting Rule'), breadcrumb: 'Create' }
+            },
+            {
+              path: 'view/:id',
+              component: ViewRuleComponent,
+              data: { title: extract('View Accounting Rule'), routeResolveBreadcrumb: ['accountingRule', 'name'] },
+              resolve: {
+                accountingRule: ViewAccountingRuleResolver
+              }
             }
           ]
         }
@@ -189,7 +199,8 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     ChartOfAccountsResolver,
-    ViewGlAccountResolver
+    ViewGlAccountResolver,
+    ViewAccountingRuleResolver
   ]
 })
 export class AccountingRoutingModule { }
