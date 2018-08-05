@@ -64,11 +64,9 @@
           <p matLine>List of all accounting rules</p>
         </mat-list-item>
 
-        <mat-list-item>
+        <mat-list-item [routerLink]="['/accounting/periodic-accruals']">
           <mat-icon matListIcon>calendar_today</mat-icon>
-          <a matLine href="https://www.google.com">
-            Accruals
-          </a>
+          <h4 matLine>Accruals</h4>
           <p matLine>Accrues income, expenses and liabilities as on the provided date</p>
         </mat-list-item>
 

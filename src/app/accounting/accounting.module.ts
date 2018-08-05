@@ -28,6 +28,7 @@ import { AccountingRulesComponent } from './accounting-rules/accounting-rules.co
 import { CreateRuleComponent } from './accounting-rules/create-rule/create-rule.component';
 import { ViewRuleComponent } from './accounting-rules/view-rule/view-rule.component';
 import { EditRuleComponent } from './accounting-rules/edit-rule/edit-rule.component';
+import { PeriodicAccrualsComponent } from './periodic-accruals/periodic-accruals.component';
 
 @NgModule({
   imports: [
@@ -60,7 +61,8 @@ import { EditRuleComponent } from './accounting-rules/edit-rule/edit-rule.compon
     AccountingRulesComponent,
     CreateRuleComponent,
     ViewRuleComponent,
-    EditRuleComponent
+    EditRuleComponent,
+    PeriodicAccrualsComponent
   ],
   entryComponents: [
     RevertTransactionComponent,
