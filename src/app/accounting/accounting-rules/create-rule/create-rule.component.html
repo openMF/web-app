@@ -1,0 +1,104 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="accountingRuleForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+          <mat-form-field fxFlex="48%">
+            <input matInput placeholder="Accounting Rule Name" required formControlName="name">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-select placeholder="Office" required formControlName="officeId">
+              <mat-option *ngFor="let office of officeData" [value]="office.id">
+                {{ office.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div fxFlex="48%" fxLayout="row" fxLayout.lt-md="column" class="rule-wrapper">
+            <label fxFlex="50%">Affected GL Entry (Debit) Rule Type *</label>
+            <mat-radio-group fxFlex="50%" fxLayout="row" fxLayoutGap="5%" formControlName="debitRuleType">
+              <mat-radio-button value="fixedAccount">Fixed Account</mat-radio-button>
+              <mat-radio-button value="listOfAccounts">List of Accounts</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <mat-form-field fxFlex="48%" *ngIf="accountingRuleForm.controls.debitRuleType.value === 'fixedAccount'">
+            <mat-select placeholder="Account to Debit" required formControlName="accountToDebit">
+              <mat-option *ngFor="let glAccount of glAccountData" [value]="glAccount.id">
+                {{ glAccount.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div fxFlex="48%" fxLayout="row" fxLayoutGap="2%" fxLayout.lt-md="column" *ngIf="accountingRuleForm.controls.debitRuleType.value === 'listOfAccounts'">
+            <mat-form-field fxFlex="50%">
+              <mat-select placeholder="Debit Tags" required formControlName="debitTags" multiple>
+                <mat-option *ngFor="let debitTag of debitTagData" [value]="debitTag.id">
+                  {{ debitTag.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <div fxFlex="50%" class="entries-wrapper">
+              <mat-checkbox labelPosition="before" required formControlName="allowMultipleDebitEntries" class="entries">
+                Multiple Debit Entries Allowed
+              </mat-checkbox>
+            </div>
+          </div>
+
+          <div fxFlex="48%" fxLayout="row" fxLayout.lt-md="column" class="rule-wrapper">
+            <label fxFlex="50%">Affected GL Entry (Credit) Rule Type *</label>
+            <mat-radio-group fxFlex="50%" fxLayout="row" fxLayoutGap="5%" formControlName="creditRuleType">
+              <mat-radio-button value="fixedAccount">Fixed Account</mat-radio-button>
+              <mat-radio-button value="listOfAccounts">List of Accounts</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <mat-form-field fxFlex="48%" *ngIf="accountingRuleForm.controls.creditRuleType.value === 'fixedAccount'">
+            <mat-select placeholder="Account to Credit" required formControlName="accountToCredit">
+              <mat-option *ngFor="let glAccount of glAccountData" [value]="glAccount.id">
+                {{ glAccount.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div fxFlex="48%" fxLayout="row" fxLayoutGap="2%" fxLayout.lt-md="column" *ngIf="accountingRuleForm.controls.creditRuleType.value === 'listOfAccounts'">
+            <mat-form-field fxFlex="50%">
+              <mat-select placeholder="Credit Tags" required formControlName="creditTags" multiple>
+                <mat-option *ngFor="let creditTag of creditTagData" [value]="creditTag.id">
+                  {{ creditTag.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <div fxFlex="50%" class="entries-wrapper">
+              <mat-checkbox labelPosition="before" required formControlName="allowMultipleCreditEntries" class="entries">
+                Multiple Credit Entries Allowed
+              </mat-checkbox>
+            </div>
+          </div>
+
+          <mat-form-field fxFlex="98%">
+            <textarea matInput placeholder="Description" formControlName="description"></textarea>
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['/accounting/accounting-rules']">Cancel</button>
+        <button mat-raised-button color="primary">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>
