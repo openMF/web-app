@@ -177,4 +177,21 @@ export class AccountingService {
     return this.http.post('/provisioningentries', provisioningEntry);
   }
 
+  getProvisioningEntry(provisioningEntryId: string) {
+    return this.http.get(`/provisioningentries/${provisioningEntryId}`);
+  }
+
+  getLoanProducts() {
+    return this.http.get('/loanproducts');
+  }
+
+  getProvisioningCategories() {
+    return this.http.get('/provisioningcategory');
+  }
+
+  getProvisioningEntryEntries(entryId: string) {
+    const httpParams = new HttpParams().set('entryId', entryId);
+    return this.http.get('/provisioningentries/entries', { params: httpParams });
+  }
+
 }

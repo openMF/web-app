@@ -33,6 +33,7 @@ import { EditRuleComponent } from './accounting-rules/edit-rule/edit-rule.compon
 import { PeriodicAccrualsComponent } from './periodic-accruals/periodic-accruals.component';
 import { ProvisioningEntriesComponent } from './provisioning-entries/provisioning-entries.component';
 import { CreateProvisioningEntryComponent } from './provisioning-entries/create-provisioning-entry/create-provisioning-entry.component';
+import { ViewProvisioningEntryComponent } from './provisioning-entries/view-provisioning-entry/view-provisioning-entry.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -221,6 +222,11 @@ const routes: Routes = [
               path: 'create',
               component: CreateProvisioningEntryComponent,
               data: { title: extract('Create Provisioning Entry'), breadcrumb: 'Create' }
+            },
+            {
+              path: 'view/:id',
+              component: ViewProvisioningEntryComponent,
+              data: { title: extract('View Provisioning Entry'), routeParamBreadcrumb: 'id' }
             }
           ]
         }
