@@ -70,11 +70,9 @@
           <p matLine>Accrues income, expenses and liabilities as on the provided date</p>
         </mat-list-item>
 
-        <mat-list-item>
+        <mat-list-item [routerLink]="['/accounting/provisioning-entries']">
           <mat-icon matListIcon>settings_backup_restore</mat-icon>
-          <a matLine href="https://www.google.com">
-            Provisioning Entries
-          </a>
+          <h4 matLine>Provisioning Entries</h4>
           <p matLine>Create provisioning entries</p>
         </mat-list-item>
 

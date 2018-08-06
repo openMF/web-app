@@ -169,4 +169,8 @@ export class AccountingService {
     return this.http.post('/runaccruals', periodicAccruals);
   }
 
+  getProvisioningEntries() {
+    return this.http.get('/provisioningentries');
+  }
+
 }
