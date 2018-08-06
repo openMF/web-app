@@ -1,5 +1,11 @@
 <div class="container" *ngIf="provisioningEntry">
 
+  <div class="m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+    <button mat-raised-button color="primary" (click)="createProvisioningJournalEntries()" [disabled]="provisioningEntry.journalEntry">
+      <mat-icon>add</mat-icon>&nbsp;&nbsp;Create Journal Entries
+    </button>
+  </div>
+
   <mat-card>
 
     <mat-card-content>

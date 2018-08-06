@@ -32,6 +32,7 @@ import { PeriodicAccrualsComponent } from './periodic-accruals/periodic-accruals
 import { ProvisioningEntriesComponent } from './provisioning-entries/provisioning-entries.component';
 import { CreateProvisioningEntryComponent } from './provisioning-entries/create-provisioning-entry/create-provisioning-entry.component';
 import { ViewProvisioningEntryComponent } from './provisioning-entries/view-provisioning-entry/view-provisioning-entry.component';
+import { ViewProvisioningJournalEntriesComponent } from './provisioning-entries/view-provisioning-journal-entries/view-provisioning-journal-entries.component';
 
 @NgModule({
   imports: [
@@ -68,7 +69,8 @@ import { ViewProvisioningEntryComponent } from './provisioning-entries/view-prov
     PeriodicAccrualsComponent,
     ProvisioningEntriesComponent,
     CreateProvisioningEntryComponent,
-    ViewProvisioningEntryComponent
+    ViewProvisioningEntryComponent,
+    ViewProvisioningJournalEntriesComponent
   ],
   entryComponents: [
     RevertTransactionComponent,

@@ -28,27 +28,36 @@
 
       <ng-container matColumnDef="journalEntry">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Journal Entry Created </th>
-        <td mat-cell *matCellDef="let provisioningEntry"> {{ provisioningEntry.journalEntry }} </td>
+        <td mat-cell *matCellDef="let provisioningEntry">
+          <mat-checkbox [disabled]="true" [checked]="provisioningEntry.journalEntry"></mat-checkbox>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="viewReport">
         <th mat-header-cell *matHeaderCellDef> View Report </th>
         <td mat-cell *matCellDef="let provisioningEntry">
-          <button mat-button>View</button>
+          <button mat-button (click)="viewReport($event, provisioningEntry.id)" [disabled]="true" color="primary">
+            <!-- Tenant Customizable -->
+            <mat-icon>remove_red_eye</mat-icon>&nbsp;&nbsp;View
+          </button>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="recreateProvisioning">
         <th mat-header-cell *matHeaderCellDef> Recreate Provisioning </th>
         <td mat-cell *matCellDef="let provisioningEntry">
-          <button mat-button>Recreate</button>
+          <button mat-button (click)="recreateProvisioning($event, provisioningEntry.id)" [disabled]="provisioningEntry.journalEntry" color="primary">
+            <mat-icon>edit</mat-icon>&nbsp;&nbsp;Recreate
+          </button>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="viewJournalEntry">
         <th mat-header-cell *matHeaderCellDef> View Journal Entry </th>
         <td mat-cell *matCellDef="let provisioningEntry">
-          <button mat-button>View</button>
+          <button mat-button (click)="viewJournalEntry($event, provisioningEntry.id)" [disabled]="!provisioningEntry.journalEntry" color="primary">
+            <mat-icon>remove_red_eye</mat-icon>&nbsp;&nbsp;View
+          </button>
         </td>
       </ng-container>
 
