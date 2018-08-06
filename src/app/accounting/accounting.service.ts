@@ -173,4 +173,8 @@ export class AccountingService {
     return this.http.get('/provisioningentries');
   }
 
+  createProvisioningEntry(provisioningEntry: any) {
+    return this.http.post('/provisioningentries', provisioningEntry);
+  }
+
 }

@@ -32,6 +32,7 @@ import { ViewAccountingRuleResolver } from './accounting-rules/view-rule/view-ru
 import { EditRuleComponent } from './accounting-rules/edit-rule/edit-rule.component';
 import { PeriodicAccrualsComponent } from './periodic-accruals/periodic-accruals.component';
 import { ProvisioningEntriesComponent } from './provisioning-entries/provisioning-entries.component';
+import { CreateProvisioningEntryComponent } from './provisioning-entries/create-provisioning-entry/create-provisioning-entry.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -93,7 +94,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditFinancialActivityMappingComponent,
-                  data: { title:  extract('Edit Financial Activity Mapping'), breadcrumb: 'Edit', routeParamBreadcrumb: false }
+                  data: { title: extract('Edit Financial Activity Mapping'), breadcrumb: 'Edit', routeParamBreadcrumb: false }
                 }
               ]
             }
@@ -163,7 +164,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditClosureComponent,
-                  data: { title:  extract('Edit Accounting Closure'), breadcrumb: 'Edit', routeParamBreadcrumb: false }
+                  data: { title: extract('Edit Accounting Closure'), breadcrumb: 'Edit', routeParamBreadcrumb: false }
                 }
               ]
             }
@@ -197,7 +198,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditRuleComponent,
-                  data: { title:  extract('Edit Accounting Rules'), breadcrumb: 'Edit', routeResolveBreadcrumb: false }
+                  data: { title: extract('Edit Accounting Rules'), breadcrumb: 'Edit', routeResolveBreadcrumb: false }
                 }
               ]
             }
@@ -206,12 +207,22 @@ const routes: Routes = [
         {
           path: 'periodic-accruals',
           component: PeriodicAccrualsComponent,
-          data: { title:  extract('Periodic Accrual Accounting'), breadcrumb: 'Execute Periodic Accrual Accounting' }
+          data: { title: extract('Periodic Accrual Accounting'), breadcrumb: 'Execute Periodic Accrual Accounting' }
         },
         {
           path: 'provisioning-entries',
-          component: ProvisioningEntriesComponent,
-          data: { title:  extract('Provisioning Entries'), breadcrumb: 'Provisioning Entries' }
+          data: { title: extract('Provisioning Entries'), breadcrumb: 'Provisioning Entries' },
+          children: [
+            {
+              path: '',
+              component: ProvisioningEntriesComponent
+            },
+            {
+              path: 'create',
+              component: CreateProvisioningEntryComponent,
+              data: { title: extract('Create Provisioning Entry'), breadcrumb: 'Create' }
+            }
+          ]
         }
       ]
     }
