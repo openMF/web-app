@@ -31,6 +31,7 @@ import { ViewRuleComponent } from './accounting-rules/view-rule/view-rule.compon
 import { ViewAccountingRuleResolver } from './accounting-rules/view-rule/view-rule.resolver';
 import { EditRuleComponent } from './accounting-rules/edit-rule/edit-rule.component';
 import { PeriodicAccrualsComponent } from './periodic-accruals/periodic-accruals.component';
+import { ProvisioningEntriesComponent } from './provisioning-entries/provisioning-entries.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -206,6 +207,11 @@ const routes: Routes = [
           path: 'periodic-accruals',
           component: PeriodicAccrualsComponent,
           data: { title:  extract('Periodic Accrual Accounting'), breadcrumb: 'Execute Periodic Accrual Accounting' }
+        },
+        {
+          path: 'provisioning-entries',
+          component: ProvisioningEntriesComponent,
+          data: { title:  extract('Provisioning Entries'), breadcrumb: 'Provisioning Entries' }
         }
       ]
     }
