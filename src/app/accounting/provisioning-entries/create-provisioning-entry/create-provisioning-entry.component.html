@@ -1,0 +1,36 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="provisioningEntriesForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field fxFlex>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="datePicker" placeholder="Date" required formControlName="date">
+            <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+            <mat-datepicker #datePicker></mat-datepicker>
+          </mat-form-field>
+
+          <div fxFlex>
+            <mat-checkbox labelPosition="before" formControlName="createjournalentries">
+              Create Journal Entries
+            </mat-checkbox>
+          </div>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['/accounting/provisioning-entries']">Cancel</button>
+        <button mat-raised-button color="primary">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>

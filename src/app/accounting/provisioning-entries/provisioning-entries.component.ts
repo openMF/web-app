@@ -24,10 +24,14 @@ export class ProvisioningEntriesComponent implements OnInit {
 
   getProvisioningEntries() {
     this.accountingService.getProvisioningEntries().subscribe((provisioningEntryData: any) => {
-      this.dataSource = new MatTableDataSource(provisioningEntryData);
+      this.dataSource = new MatTableDataSource(provisioningEntryData.pageItems);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
 }
