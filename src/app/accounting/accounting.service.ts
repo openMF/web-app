@@ -194,4 +194,19 @@ export class AccountingService {
     return this.http.get('/provisioningentries/entries', { params: httpParams });
   }
 
+  getProvisioningJournalEntries(entryId: string) {
+    const httpParams = new HttpParams().set('entryId', entryId);
+    return this.http.get('/journalentries/provisioning', { params: httpParams });
+  }
+
+  createProvisioningJournalEntries(provisioningEntryId: string) {
+    const httpParams = new HttpParams().set('command', 'createjournalentry');
+    return this.http.post(`/provisioningentries/${provisioningEntryId}`, {}, { params: httpParams });
+  }
+
+  recreateProvisioningEntries(provisioningEntryId: string) {
+    const httpParams = new HttpParams().set('command', 'recreateprovisioningentry');
+    return this.http.post(`/provisioningentries/${provisioningEntryId}`, {}, { params: httpParams });
+  }
+
 }

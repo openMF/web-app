@@ -34,6 +34,7 @@ import { PeriodicAccrualsComponent } from './periodic-accruals/periodic-accruals
 import { ProvisioningEntriesComponent } from './provisioning-entries/provisioning-entries.component';
 import { CreateProvisioningEntryComponent } from './provisioning-entries/create-provisioning-entry/create-provisioning-entry.component';
 import { ViewProvisioningEntryComponent } from './provisioning-entries/view-provisioning-entry/view-provisioning-entry.component';
+import { ViewProvisioningJournalEntriesComponent } from './provisioning-entries/view-provisioning-journal-entries/view-provisioning-journal-entries.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -227,6 +228,17 @@ const routes: Routes = [
               path: 'view/:id',
               component: ViewProvisioningEntryComponent,
               data: { title: extract('View Provisioning Entry'), routeParamBreadcrumb: 'id' }
+            },
+            {
+              path: 'journal-entries',
+              data: { title: extract('View Provisioning Journal Entry'), breadcrumb: 'Journal Entries', addBreadcrumbLink: false },
+              children: [
+                {
+                  path: 'view/:id',
+                  component: ViewProvisioningJournalEntriesComponent,
+                  data: { title: extract('View Provisioning Journal Entry'), routeParamBreadcrumb: 'id' }
+                }
+              ]
             }
           ]
         }

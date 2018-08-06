@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
@@ -26,7 +26,7 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
 
   officeName = new FormControl();
   officeData: any;
-  filteredOfficeData: any
+  filteredOfficeData: any;
 
   loanProduct = new FormControl();
   loanProductData: any;
@@ -37,6 +37,7 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
   filteredProvisioningCategoryData: any;
 
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private accountingService: AccountingService) { }
 
   ngOnInit() {
@@ -84,9 +85,9 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
   }
 
   filterPredicate(data: any, filterValue: any) {
-    return data.officeName.toLowerCase().indexOf(filterValue['officeName']) != -1
-      && data.productName.toLowerCase().indexOf(filterValue['productName']) != -1
-      && data.categoryName.toLowerCase().indexOf(filterValue['categoryName']) != -1;
+    return data.officeName.toLowerCase().indexOf(filterValue['officeName']) !== -1
+      && data.productName.toLowerCase().indexOf(filterValue['productName']) !== -1
+      && data.categoryName.toLowerCase().indexOf(filterValue['categoryName']) !== -1;
   }
 
    applyFilter(filterValue: string, property: string) {
@@ -157,6 +158,13 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
 
   private filterProvisioningCategoryAutocompleteData(provisioningCategoryData: any, provisioningCategoryName: string): any {
     return provisioningCategoryData.filter((provisioningCategory: any) => provisioningCategory.categoryName.toLowerCase().includes(provisioningCategoryName.toLocaleLowerCase()));
+  }
+
+  createProvisioningJournalEntries() {
+    this.accountingService.createProvisioningJournalEntries(this.provisioningEntryId)
+      .subscribe((response: any) => {
+        this.router.navigate(['/accounting/provisioning-entries/journal-entries/view', response.resourceId]);
+      });
   }
 
 }
