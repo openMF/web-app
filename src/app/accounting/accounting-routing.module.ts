@@ -35,6 +35,7 @@ import { ProvisioningEntriesComponent } from './provisioning-entries/provisionin
 import { CreateProvisioningEntryComponent } from './provisioning-entries/create-provisioning-entry/create-provisioning-entry.component';
 import { ViewProvisioningEntryComponent } from './provisioning-entries/view-provisioning-entry/view-provisioning-entry.component';
 import { ViewProvisioningJournalEntriesComponent } from './provisioning-entries/view-provisioning-journal-entries/view-provisioning-journal-entries.component';
+import { MigrateOpeningBalancesComponent } from './migrate-opening-balances/migrate-opening-balances.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -241,6 +242,11 @@ const routes: Routes = [
               ]
             }
           ]
+        },
+        {
+          path: 'migrate-opening-balances',
+          component: MigrateOpeningBalancesComponent,
+          data: { title:  extract('Migrate Opening Balances'), breadcrumb: 'Migrate Opening Balances' }
         }
       ]
     }

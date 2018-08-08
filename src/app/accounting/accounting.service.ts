@@ -209,4 +209,16 @@ export class AccountingService {
     return this.http.post(`/provisioningentries/${provisioningEntryId}`, {}, { params: httpParams });
   }
 
+  retrieveOpeningBalances(officeId: number) {
+    let httpParams = new HttpParams();
+    httpParams = httpParams.set('officeId', officeId.toString());
+    return this.http.get('/journalentries/openingbalance', { params: httpParams });
+  }
+
+  defineOpeningBalances(openingBalances: any) {
+    let httpParams = new HttpParams();
+    httpParams = httpParams.set('command', 'defineOpeningBalance');
+    return this.http.post(`/journalentries`, openingBalances, { params: httpParams });
+  }
+
 }

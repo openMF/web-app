@@ -30,11 +30,9 @@
           <p matLine>List of Financial Activities and GL Account Mappings</p>
         </mat-list-item>
 
-        <mat-list-item>
+        <mat-list-item [routerLink]="['/accounting/migrate-opening-balances']">
           <mat-icon matListIcon>monetization_on</mat-icon>
-          <a matLine href="https://www.google.com">
-            Migrate Opening Balances (Office-wise)
-          </a>
+          <h4 matLine>Migrate Opening Balances (Office-wise)</h4>
           <p matLine>Set or update office-level opening balances for GL accounts</p>
         </mat-list-item>
 
