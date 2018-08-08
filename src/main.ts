@@ -1,4 +1,4 @@
-/*
+/**
  * Entry point of the application.
  * Only platform bootstrapping code should be here.
  * For app-specific initialization, use `app/web-app.component.ts`.
@@ -7,6 +7,7 @@
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
+/** Provides gesture support for angular-material components */
 import 'hammerjs';
 
 import { AppModule } from './app/app.module';
