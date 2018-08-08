@@ -1,6 +1,7 @@
 <button mat-button (click)="inputFile.click()">
-  <mat-icon>file_upload</mat-icon>
+  <fa-icon icon="file-upload" size="lg"></fa-icon>
+  &nbsp;&nbsp;
   Upload an image
 </button>
-{{ filename }}
+{{ filename || 'No File Uploaded' }}
 <input type="file" #inputFile (change)="onFileSelected($event)" [style.display]="'none'" />
