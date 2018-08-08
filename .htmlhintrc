@@ -8,7 +8,7 @@
   "src-not-empty": true,
   "attr-no-duplication": true,
   "title-require": true,
-  "tag-self-close": true,
+  "tag-self-close": false,
   "head-script-disabled": true,
   "doctype-html5": true,
   "id-class-value": "dash",

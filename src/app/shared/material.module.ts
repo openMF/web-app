@@ -1,7 +1,9 @@
+/** Angular Imports */
 import { NgModule } from '@angular/core';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {
+  MAT_FORM_FIELD_DEFAULT_OPTIONS,
   MatAutocompleteModule,
   MatButtonModule,
   MatButtonToggleModule,
@@ -37,9 +39,11 @@ import {
   MatTreeModule
 } from '@angular/material';
 
+/**
+ * Material Module
+ * Angular CDK, Angular Material and Flex Layout modules are exported here.
+ */
 @NgModule({
-  imports: [],
-  declarations: [],
   exports: [
     FlexLayoutModule,
     LayoutModule,
@@ -76,6 +80,12 @@ import {
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule
+  ],
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { appearance: 'standard' }
+    }
   ]
 })
 export class MaterialModule { }

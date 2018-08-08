@@ -1,13 +1,19 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+ /** Angular Imports */
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { LoaderComponent } from './loader/loader.component';
+/** Custom Components */
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 
+/** Custom Modules */
 import { MaterialModule } from './material.module';
 import { IconsModule } from './icons.module';
 
+/**
+ * Shared Module
+ * Modules and components that are shared throughout the application should be here.
+ */
 @NgModule({
   imports: [
     CommonModule,
@@ -15,15 +21,13 @@ import { IconsModule } from './icons.module';
     MaterialModule
   ],
   declarations: [
-    LoaderComponent,
-    FileUploadComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    FileUploadComponent
   ],
   exports: [
-    CommonModule,
     FileUploadComponent,
+    CommonModule,
     IconsModule,
-    LoaderComponent,
     MaterialModule
   ],
   entryComponents: [
