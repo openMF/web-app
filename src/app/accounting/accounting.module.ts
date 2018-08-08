@@ -33,6 +33,7 @@ import { ProvisioningEntriesComponent } from './provisioning-entries/provisionin
 import { CreateProvisioningEntryComponent } from './provisioning-entries/create-provisioning-entry/create-provisioning-entry.component';
 import { ViewProvisioningEntryComponent } from './provisioning-entries/view-provisioning-entry/view-provisioning-entry.component';
 import { ViewProvisioningJournalEntriesComponent } from './provisioning-entries/view-provisioning-journal-entries/view-provisioning-journal-entries.component';
+import { MigrateOpeningBalancesComponent } from './migrate-opening-balances/migrate-opening-balances.component';
 
 @NgModule({
   imports: [
@@ -70,7 +71,8 @@ import { ViewProvisioningJournalEntriesComponent } from './provisioning-entries/
     ProvisioningEntriesComponent,
     CreateProvisioningEntryComponent,
     ViewProvisioningEntryComponent,
-    ViewProvisioningJournalEntriesComponent
+    ViewProvisioningJournalEntriesComponent,
+    MigrateOpeningBalancesComponent
   ],
   entryComponents: [
     RevertTransactionComponent,

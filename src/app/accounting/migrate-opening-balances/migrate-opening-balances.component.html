@@ -1,0 +1,111 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="openingBalancesForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+          <mat-form-field fxFlex="88%">
+            <mat-select placeholder="Office" required formControlName="officeId">
+              <mat-option *ngFor="let office of officeData" [value]="office.id">
+                {{ office.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <button mat-button type="button" color="primary" fxFlex="4%" (click)="retrieveOpeningBalances()">Retrieve</button>
+
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" *ngIf="openingBalancesData">
+
+          <label fxFlex="98%" class="content"><span class="header">Opening Balances Contra Account:</span>&nbsp;&nbsp;{{ openingBalancesData.contraAccount.name + ' (' + openingBalancesData.contraAccount.glCode + ')' }}</label>
+
+          <mat-form-field fxFlex="48%">
+            <mat-select placeholder="Currency" required formControlName="currencyCode">
+              <mat-option *ngFor="let currency of currencyData" [value]="currency.code">
+                {{ currency.displayLabel }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="openingBalancesDatePicker" placeholder="Opening Balances Date" required formControlName="transactionDate">
+            <mat-datepicker-toggle matSuffix [for]="openingBalancesDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #openingBalancesDatePicker></mat-datepicker>
+          </mat-form-field>
+
+          <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" class="content" fxFlex="100%">
+
+            <div class="header" fxFlex="8%">
+              Type
+            </div>
+
+            <div class="header" fxFlex="18%">
+              GL Code
+            </div>
+
+            <div class="header" fxFlex="18%">
+              Account
+            </div>
+
+            <div class="header" fxFlex="23%">
+              Total Debit: {{ debitsSum }}
+            </div>
+
+            <div class="header" fxFlex="23%">
+              Total Credit: {{ creditsSum }}
+            </div>
+
+          </div>
+
+          <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column" class="content" formArrayName="glAccountEntries"
+            *ngFor="let credit of getFormArrayData('glAccountEntries').controls; let i = index;">
+
+            <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroupName]="i">
+
+              <div fxFlex="8%">
+                {{ (openingBalancesData.glAccounts[i].glAccountType.value !== openingBalancesData.glAccounts[i-1]?.glAccountType.value) ? openingBalancesData.glAccounts[i].glAccountType.value : '' }}
+              </div>
+
+              <div fxFlex="18%">
+                {{ openingBalancesData.glAccounts[i].glAccountCode }}
+              </div>
+
+              <div fxFlex="18%">
+                {{ openingBalancesData.glAccounts[i].glAccountName }}
+              </div>
+
+              <div fxFlex="23%">
+                <mat-form-field>
+                  <input matInput type="number" placeholder="Debit" formControlName="debit">
+                </mat-form-field>
+              </div>
+
+              <div fxFlex="23%">
+                <mat-form-field>
+                  <input matInput type="number" placeholder="Credit" formControlName="credit">
+                </mat-form-field>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px" *ngIf="openingBalancesData">
+        <button type="button" mat-raised-button [routerLink]="['/accounting']">Cancel</button>
+        <button mat-raised-button color="primary">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>
