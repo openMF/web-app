@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { LoaderComponent } from './loader/loader.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
-import { CoreModule } from '../core/core.module';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    CoreModule
+    MaterialModule
   ],
   declarations: [
     LoaderComponent,
@@ -17,8 +17,10 @@ import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
     DeleteDialogComponent
   ],
   exports: [
+    CommonModule,
+    FileUploadComponent,
     LoaderComponent,
-    FileUploadComponent
+    MaterialModule
   ],
   entryComponents: [
     DeleteDialogComponent
