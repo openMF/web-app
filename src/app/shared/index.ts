@@ -1,2 +1,2 @@
 export * from './shared.module';
-export * from './loader/loader.component';
+export { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';

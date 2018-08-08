@@ -1,5 +1,7 @@
+/** Angular Imports */
 import { NgModule } from '@angular/core';
 
+/** Angular Font Awesome Imports */
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -7,15 +9,17 @@ import {
   faSearch
 } from '@fortawesome/free-solid-svg-icons';
 
-// Add an icon to the library for convenient access in other components
+/** Add icons to the library for convenient access in other components. */
 library.add(
   faFileUpload,
   faSearch
 );
 
+/**
+ * Icons Module
+ * Angular Font Awesome module is exported here.
+ */
 @NgModule({
-  imports: [],
-  declarations: [],
   exports: [FontAwesomeModule]
 })
 export class IconsModule { }

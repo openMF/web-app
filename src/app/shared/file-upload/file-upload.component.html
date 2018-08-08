@@ -1,7 +1,13 @@
-<button mat-button (click)="inputFile.click()">
-  <fa-icon icon="file-upload" size="lg"></fa-icon>
-  &nbsp;&nbsp;
-  Upload an image
-</button>
-{{ filename || 'No File Uploaded' }}
-<input type="file" #inputFile (change)="onFileSelected($event)" [style.display]="'none'" />
+<div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2%">
+  <mat-form-field fxFlex="83%">
+    <input matInput [readonly]="true" [value]="fileName" placeholder="No file uploaded">
+  </mat-form-field>
+  <span fxFlex="13%" fxFlexAlign="center">
+    <button mat-button (click)="uploadFile.click()">
+      <fa-icon icon="file-upload" size="lg"></fa-icon>
+      &nbsp;&nbsp;
+      Upload a file
+    </button>
+  </span>
+</div>
+<input type="file" #uploadFile (change)="onFileSelected($event)" [style.display]="'none'">
