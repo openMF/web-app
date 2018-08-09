@@ -1,37 +1,60 @@
 <p><strong>Two Factor Authentication</strong></p>
+
 <mat-divider></mat-divider>
+
+<!-- Select delivery method to receive OTP -->
 <p *ngIf="!otpRequested">Please select a delivery method:</p>
-<form fxLayout="column" *ngIf="!otpRequested" [formGroup]="twoFactorAuthenticationDeliveryMethodForm" (ngSubmit)="requestOTP()">
+
+<form fxLayout="column" *ngIf="!otpRequested" [formGroup]="twoFactorAuthenticationDeliveryMethodForm" class="two-factor-auth-form"
+  (ngSubmit)="requestOTP()">
+
   <mat-radio-group fxLayout="column" fxFlexAlign="center" formControlName="twoFactorAuthenticationDeliveryMethod">
     <mat-radio-button *ngFor="let twoFactorAuthenticationDeliveryMethod of twoFactorAuthenticationDeliveryMethods"
       [value]="twoFactorAuthenticationDeliveryMethod">
         Send {{ twoFactorAuthenticationDeliveryMethod.name }} to {{ twoFactorAuthenticationDeliveryMethod.target }}
     </mat-radio-button>
   </mat-radio-group>
+
   <button mat-raised-button color="primary" fxFlexAlign="center" fxFlexFill [disabled]="!twoFactorAuthenticationDeliveryMethodForm.valid">
     Request OTP
     <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
   </button>
+
 </form>
 
- <!-- show input for otp request -->
+<!-- Show input for OTP -->
 <p *ngIf="otpRequested">Please enter the OTP:</p>
-<form fxLayout="column" *ngIf="otpRequested" [formGroup]="twoFactorAuthenticationForm" (ngSubmit)="validateOTP()">
-  <mat-form-field fxFlexAlign="center" class="textfield">
-    <span matPrefix><mat-icon>verified_user</mat-icon>&nbsp;&nbsp;</span>
-    <input matInput placeholder="OTP" autocomplete="off" formControlName="otp">
-    <mat-hint align="start"><strong>Delivery Method:</strong> {{ selectedTwoFactorAuthenticationDeliveryMethod.name }} </mat-hint>
-    <mat-hint align="end"><strong>Validity:</strong> {{ tokenValidityTime / 60 }} mins </mat-hint>
+
+<form fxLayout="column" *ngIf="otpRequested" [formGroup]="twoFactorAuthenticationForm" class="two-factor-auth-form"
+  (ngSubmit)="validateOTP()">
+
+  <mat-form-field fxFlexAlign="center" class="two-factor-auth-input">
+    <span matPrefix>
+      <fa-icon icon="user-shield"></fa-icon>&nbsp;&nbsp;
+    </span>
+    <mat-label>OTP</mat-label>
+    <input type="password" matInput autocomplete="off" required formControlName="otp">
+    <mat-hint align="start">
+      <strong>Delivery Method:</strong> {{ selectedTwoFactorAuthenticationDeliveryMethod.name }}
+    </mat-hint>
+    <mat-hint align="end">
+      <strong>Validity:</strong> {{ tokenValidityTime / 60 }} mins
+    </mat-hint>
     <mat-error *ngIf="twoFactorAuthenticationForm.controls.otp.hasError('required')">
       OTP is <strong>required</strong>
     </mat-error>
   </mat-form-field>
-  <button mat-raised-button color="primary" fxFlexAlign="center" class="btn" [disabled]="!twoFactorAuthenticationForm.valid">
+
+  <button mat-raised-button color="primary" fxFlexAlign="center" class="two-factor-auth-button"
+    [disabled]="!twoFactorAuthenticationForm.valid">
     Validate OTP
     <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
   </button>
-  <button type="button" mat-button fxFlexAlign="center" class="btn" (click)="resendOTP()" [disabled]="loading || resendOTPLoading">
+
+  <button type="button" mat-button fxFlexAlign="center" class="two-factor-auth-button" (click)="resendOTP()"
+    [disabled]="loading || resendOTPLoading">
     Resend OTP
     <mat-spinner [diameter]="20" *ngIf="resendOTPLoading"></mat-spinner>
   </button>
+
 </form>

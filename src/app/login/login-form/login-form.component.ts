@@ -1,12 +1,16 @@
+/** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+/** rxjs Imports */
 import { finalize } from 'rxjs/operators';
 
-import { Logger, AuthenticationService } from '../../core';
+/** Custom Services */
+import { AuthenticationService } from '../../core';
 
-const log = new Logger('Login');
-
+/**
+ * Login form component.
+ */
 @Component({
   selector: 'mifosx-login-form',
   templateUrl: './login-form.component.html',
@@ -14,37 +18,56 @@ const log = new Logger('Login');
 })
 export class LoginFormComponent implements OnInit {
 
+  /** Login form group. */
   loginForm: FormGroup;
+  /** Password input field type. */
   passwordInputType: string;
-  error: string;
+  /** True if loading. */
   loading = false;
-  authenticationEvent: any;
 
+  /**
+   * @param {FormBuilder} formBuilder Form Builder.
+   * @param {AuthenticationService} authenticationService Authentication Service.
+   */
   constructor(private formBuilder: FormBuilder,
               private authenticationService: AuthenticationService) {  }
 
+  /**
+   * Creates login form.
+   *
+   * Initializes password input field type.
+   */
   ngOnInit() {
     this.createLoginForm();
     this.passwordInputType = 'password';
   }
 
-  public login() {
+  /**
+   * Authenticates the user if the credentials are valid.
+   */
+  login() {
     this.loading = true;
     this.loginForm.disable();
     this.authenticationService.login(this.loginForm.value)
       .pipe(finalize(() => {
         this.loginForm.reset();
         this.loginForm.markAsPristine();
-        // Bug: Validation errors won't get removed on reset
+        // Angular Material Bug: Validation errors won't get removed on reset.
         this.loginForm.enable();
         this.loading = false;
       })).subscribe();
   }
 
-  public forgotPassword() {
-    console.log('TODO: Forgot Password');
+  /**
+   * TODO: Decision to be taken on providing this feature.
+   */
+  forgotPassword() {
+    console.log('Forgot Password feature currently unavailable.');
   }
 
+  /**
+   * Creates login form.
+   */
   private createLoginForm() {
     this.loginForm = this.formBuilder.group({
       'username': ['', Validators.required],

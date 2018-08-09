@@ -11,3 +11,4 @@ export * from './http/error-handler.interceptor';
 export * from './route.service';
 export * from './route-reusable-strategy';
 export * from './logger.service';
+export * from './alert.service';

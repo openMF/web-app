@@ -1,78 +1,88 @@
+<!-- The viewport is divided into two parts having max-width 70% and 30% -->
 <div fxLayout="row">
-  <!-- I want a row divided into 2 parts 70% and 30% -->
 
-  <!-- In 70% we have a cover pic, org/app name, description, contact information -->
-  <!-- Column disappers on small screens -->
+  <!--
+    Content in 70%: (TODO: Allow customization by organization)
+      Cover Image
+      Organization/Application Name
+      Organization/Application Description
+
+    This content will be hidden for smaller screens.
+  -->
 
   <div fxFlex="70%" fxLayout="column" fxLayoutAlign="center center" fxHide.lt-md class="cover">
     <div class="cover-content">
       <h1 class="mat-display-1 cover-title">Mifos</h1>
-      <p class="mat-headline">
-        Mifos X is designed by the <a href="http://www.openmf.org">Mifos Initiative</a>. A <a href="http://mifos.org/resources/community/">global community</a> that aims to speed the elimination of poverty by enabling Organizations to more effectively and efficiently deliver responsible financial services to the world’s poor and unbanked.
-        Sounds interesting? <a href="http://mifos.org/take-action/volunteer/">Get involved!</a>
+      <p class="mat-headline cover-description">
+        Mifos X is designed by the <a href="http://www.openmf.org" target="_blank" class="cover-link">Mifos Initiative</a>. A <a href="http://mifos.org/resources/community/" target="_blank" class="cover-link">global community</a> that aims to speed the elimination of poverty by enabling Organizations to more effectively and efficiently deliver responsible financial services to the world’s poor and unbanked.
+        Sounds interesting? <a href="http://mifos.org/take-action/volunteer/" target="_blank" class="cover-link">Get involved!</a>
       </p>
     </div>
   </div>
 
-  <!-- In 30% when gt md otherwise fully covering -->
+  <!--
+    Content in 30%: (TODO: Allow customization of Name, Logo and Contact Information by organization)
+      Language Selector
+      Organization/Application Name with Logo
+      Form
+      Contact Information/Resources
+      Footer
+  -->
 
   <div fxLayout="column" fxFlex.gt-md="1 0 30%" class="login-container">
 
-    <!-- First row we have language selector in the right of row -->
+    <!-- Language Selector to the extreme right -->
     <div fxLayout="row-reverse" fxFlex="1 0 auto">
-      <mat-form-field class="p-r-10 p-t-10 language-selector">
-        <mat-select placeholder="Language" [(ngModel)]="language">
-          <mat-option *ngFor="let language of languages" [value]="language">
-            {{ language }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <mifosx-language-selector class="p-r-10 p-t-10"></mifosx-language-selector>
     </div>
 
-    <!-- Next we have the logo -->
+    <!-- Logo with Organisation Name -->
     <div fxLayout="row" fxLayoutAlign="center center" fxFlex="1 0 auto">
-      <img src="assets/images/mifos-logo-flat.png" alt="" class="img-container">
+      <img src="assets/images/mifos-logo-flat.png" alt="Mifos X Logo" class="img-container">
     </div>
 
-    <!-- Next we have the type of form -->
+    <!--
+      Type of Form:
+        Login
+        Reset Password
+        Two Factor Authentication
+        Forgot Password (TODO: Decision to be taken on providing this feature.)
+    -->
     <div fxLayout="row" fxFlex="3 0 auto" fxLayoutAlign="center start">
       <mifosx-login-form *ngIf="!resetPassword && !twoFactorAuthenticationRequired"></mifosx-login-form>
       <mifosx-reset-password *ngIf="resetPassword"></mifosx-reset-password>
       <mifosx-two-factor-authentication *ngIf="twoFactorAuthenticationRequired"></mifosx-two-factor-authentication>
-      <!-- TODO: Discuss about providing a feature of Forgot password -->
     </div>
 
-    <!-- Footer -->
-    <mat-list fxHide.lt-md fxLayout="row" fxFlexAlign="center" fxFlex="3 0 auto" class="list">
+    <!-- Contact Information/Resources (hidden on smaller screens) -->
+    <mat-list fxHide.lt-md fxLayout="row" fxFlexAlign="center" fxFlex="3 0 auto" class="information-list">
       <mat-list-item><button mat-button [matMenuTriggerFor]="resourcesMenu">Resources</button></mat-list-item>
       <mat-list-item><button mat-button [matMenuTriggerFor]="communityMenu">Community</button></mat-list-item>
       <mat-list-item><button mat-button [matMenuTriggerFor]="contributeMenu">Contribute</button></mat-list-item>
     </mat-list>
 
-    <div fxLayout="column" fxFlexAlign="center" fxFlex="1 0 auto">
-      <mat-divider class="divider"></mat-divider>
-      <p fxFlexAlign="center">Version {{ version }}</p>
-      <p fxFlexAlign="center">Mifos X is up to date</p>
-    </div>
+    <!-- Footer -->
+    <mifosx-footer></mifosx-footer>
 
   </div>
 
 </div>
 
+<!-- Contact Information/Resources Menus -->
 <mat-menu #resourcesMenu="matMenu">
-  <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual" mat-menu-item>User Manual</a>
-  <a href="https://cwiki.apache.org/confluence/display/FINERACT/Apache+Fineract+1.0+Functional+Specifications" mat-menu-item>Functional Specifications</a>
-  <a href="https://cwiki.apache.org/confluence/display/FINERACT/Contributor%27s+Zone" mat-menu-item>Developer Zone</a>
+  <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual" target="_blank" mat-menu-item>User Manual</a>
+  <a href="https://cwiki.apache.org/confluence/display/FINERACT/Apache+Fineract+1.0+Functional+Specifications" target="_blank" mat-menu-item>Functional Specifications</a>
+  <a href="https://cwiki.apache.org/confluence/display/FINERACT/Contributor%27s+Zone" target="_blank" mat-menu-item>Developer Zone</a>
 </mat-menu>
 
 <mat-menu #communityMenu="matMenu">
-  <a href="https://groups.google.com/forum/#!forum/mifosusers" mat-menu-item>User Group</a>
-  <a href="https://groups.google.com/forum/#!forum/mifosdeveloper" mat-menu-item>Developer Group</a>
-  <a href="http://mifos.org/resources/community/communications/#mifos-irc" mat-menu-item>IRC</a>
+  <a href="https://groups.google.com/forum/#!forum/mifosusers" target="_blank" mat-menu-item>User Group</a>
+  <a href="https://groups.google.com/forum/#!forum/mifosdeveloper" target="_blank" mat-menu-item>Developer Group</a>
+  <a href="http://mifos.org/resources/community/communications/#mifos-irc" target="_blank" mat-menu-item>IRC</a>
 </mat-menu>
 
 <mat-menu #contributeMenu="matMenu">
-  <a href="https://mifosforge.jira.com/wiki/spaces/MDZ/pages/92012624/Key+Design+Principles" mat-menu-item>Key Design Principles</a>
-  <a href="https://sourceforge.net/projects/mifos/" mat-menu-item>Working with Code</a>
-  <a href="http://mifos.org/donate/" mat-menu-item>Donate</a>
+  <a href="https://mifosforge.jira.com/wiki/spaces/MDZ/pages/92012624/Key+Design+Principles" target="_blank" mat-menu-item>Key Design Principles</a>
+  <a href="https://sourceforge.net/projects/mifos/" target="_blank" mat-menu-item>Working with Code</a>
+  <a href="http://mifos.org/donate/" target="_blank" mat-menu-item>Donate</a>
 </mat-menu>
