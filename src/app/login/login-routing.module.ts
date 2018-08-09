@@ -1,9 +1,14 @@
+/** Angular Imports */
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+/** Transalation Imports */
 import { extract } from '../core';
+
+/** Custom Components */
 import { LoginComponent } from './login.component';
 
+/** Login Routes */
 const routes: Routes = [
   {
     path: 'login',
@@ -12,6 +17,11 @@ const routes: Routes = [
   }
 ];
 
+/**
+ * Login Routing Module
+ *
+ * Configures the login routes.
+ */
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],

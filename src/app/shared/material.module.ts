@@ -41,6 +41,7 @@ import {
 
 /**
  * Material Module
+ *
  * Angular CDK, Angular Material and Flex Layout modules are exported here.
  */
 @NgModule({

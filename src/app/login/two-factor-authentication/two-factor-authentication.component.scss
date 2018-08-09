@@ -1,22 +1,23 @@
-.btn {
-  width: 14rem;
-  margin-top: 0.5rem;
-}
+.two-factor-auth-form {
+  mat-radio-button {
+    margin-bottom: 0.5rem;
 
-mat-radio-button {
-  margin-bottom: 0.5rem;
-}
+    &:last-child {
+      margin-bottom: 1rem;
+    }
+  }
 
-mat-radio-button:last-child {
-  margin-bottom: 1rem;
-}
+  .two-factor-auth-button {
+    width: 14rem;
+    margin-top: 0.5rem;
+  }
 
-.textfield {
-  width: 14rem;
-}
+  .two-factor-auth-input {
+    width: 14rem;
+  }
 
-mat-spinner {
-  z-index: 4;
-  float: right;
-  margin: 0.5rem 0;
+  mat-spinner {
+    float: right;
+    margin: 0.5rem 0;
+  }
 }

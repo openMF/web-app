@@ -10,9 +10,9 @@
     ],
     "selector-attribute-quotes": "always",
     "string-quotes": "double",
-    "max-nesting-depth": 3,
-    "selector-max-compound-selectors": 3,
-    "selector-max-specificity": "0,3,2",
+    "max-nesting-depth": 5,
+    "selector-max-compound-selectors": 5,
+    "selector-max-specificity": "1,3,2",
     "declaration-no-important": true,
     "at-rule-no-vendor-prefix": true,
     "media-feature-name-no-vendor-prefix": true,
@@ -22,9 +22,18 @@
     "no-empty-source": null,
     "selector-class-pattern": "[a-z-]+",
     "selector-id-pattern": "[a-z-]+",
-    "selector-max-id": 0,
+    "selector-max-id": 1,
     "selector-no-qualifying-type": true,
     "selector-max-universal": 0,
+    "selector-type-no-unknown": [
+      true,
+      {
+        "ignoreTypes": [
+          "mat-spinner",
+          "mat-radio-button"
+        ]
+      }
+    ],
     "selector-pseudo-element-no-unknown": [
       true,
       {

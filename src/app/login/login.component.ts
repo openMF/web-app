@@ -1,11 +1,16 @@
+/** Angular Imports */
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { I18nService } from '../core/i18n.service';
-import { AlertService } from '../core/alert.service';
+/** rxjs Imports */
+import { Subscription } from 'rxjs';
 
-import { environment } from '../../environments/environment';
+/** Custom Services and Models */
+import { AlertService, Alert } from '../core';
 
+/**
+ * Login component.
+ */
 @Component({
   selector: 'mifosx-login',
   templateUrl: './login.component.html',
@@ -13,19 +18,25 @@ import { environment } from '../../environments/environment';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  version: string = environment.version;
-  languages = ['en-US', 'fr-FR'];
-  language = this.languages[0];
+  /** True if password requires a reset. */
   resetPassword = false;
+  /** True if user requires two factor authentication. */
   twoFactorAuthenticationRequired = false;
-  alert$: any;
+  /** Subscription to alerts. */
+  alert$: Subscription;
 
-  constructor(private i18nService: I18nService,
-              private alertService: AlertService,
+  /**
+   * @param {AlertService} alertService Alert Service.
+   * @param {Router} router Router for navigation.
+   */
+  constructor(private alertService: AlertService,
               private router: Router) { }
 
+  /**
+   * Subscribes to alert event of alert service.
+   */
   ngOnInit() {
-    this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: any) => {
+    this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
       const alertType = alertEvent.type;
       if (alertType === 'Password Expired') {
         this.twoFactorAuthenticationRequired = false;
@@ -41,18 +52,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  setLanguage(language: string) {
-    this.i18nService.language = language;
-  }
-
-  get currentLanguage(): string {
-    return this.i18nService.language;
-  }
-
-  // get languages(): string[] {
-  //   return this.i18nService.supportedLanguages;
-  // }
-
+  /**
+   * Unsubscribes from alerts.
+   */
   ngOnDestroy() {
     this.alert$.unsubscribe();
   }

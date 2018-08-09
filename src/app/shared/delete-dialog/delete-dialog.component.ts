@@ -13,8 +13,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class DeleteDialogComponent implements OnInit {
 
   /**
-   * @param dialogRef Component reference to dialog.
-   * @param data Provides a deleteContext.
+   * @param {MatDialogRef} dialogRef Component reference to dialog.
+   * @param {any} data Provides a deleteContext.
    */
   constructor(public dialogRef: MatDialogRef<DeleteDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) { }

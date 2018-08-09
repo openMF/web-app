@@ -1,14 +1,19 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
-import { AuthenticationService } from '../../core';
+/** Angular Imports */
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+/** rxjs Imports */
 import { finalize } from 'rxjs/operators';
 
-const confirmPasswordValidator: ValidatorFn = (resetPasswordForm: FormGroup): ValidationErrors | null => {
-  const password = resetPasswordForm.controls.password;
-  const confirmPassword = resetPasswordForm.controls.repeatPassword;
-  return password && confirmPassword && password.value !== confirmPassword.value ?  { 'passwordsDoNotMatch': true } : null;
-};
+/** Custom Services */
+import { AuthenticationService } from '../../core';
 
+/** Custom Validators */
+import { confirmPasswordValidator } from './confirm-password.validator';
+
+/**
+ * Reset password component.
+ */
 @Component({
   selector: 'mifosx-reset-password',
   templateUrl: './reset-password.component.html',
@@ -16,25 +21,33 @@ const confirmPasswordValidator: ValidatorFn = (resetPasswordForm: FormGroup): Va
 })
 export class ResetPasswordComponent implements OnInit {
 
+  /** Reset password form group. */
   resetPasswordForm: FormGroup;
-  loading = false;
+  /** Password input field type. */
   passwordInputType: string;
+  /** True if loading. */
+  loading = false;
 
+  /**
+   * @param {FormBuilder} formBuilder Form Builder.
+   * @param {AuthenticationService} authenticationService Authentication Service.
+   */
   constructor(private formBuilder: FormBuilder,
               private authenticationService: AuthenticationService) {  }
 
+  /**
+   * Creates reset password form.
+   *
+   * Initializes password input field type.
+   */
   ngOnInit() {
     this.createResetPasswordForm();
     this.passwordInputType = 'password';
   }
 
-  private createResetPasswordForm() {
-    this.resetPasswordForm = this.formBuilder.group({
-      'password': ['', Validators.required],
-      'repeatPassword': ['', Validators.required]
-    }, { validator: confirmPasswordValidator });
-  }
-
+  /**
+   * Resets the password of user.
+   */
   resetPassword() {
     this.loading = true;
     this.resetPasswordForm.disable();
@@ -42,10 +55,20 @@ export class ResetPasswordComponent implements OnInit {
       .pipe(finalize(() => {
         this.resetPasswordForm.reset();
         this.resetPasswordForm.markAsPristine();
-        // Bug: Validation errors won't get removed on reset
+        // Angular Material Bug: Validation errors won't get removed on reset.
         this.resetPasswordForm.enable();
         this.loading = false;
       })).subscribe();
+  }
+
+  /**
+   * Creates reset password form.
+   */
+  private createResetPasswordForm() {
+    this.resetPasswordForm = this.formBuilder.group({
+      'password': ['', Validators.required],
+      'repeatPassword': ['', Validators.required]
+    }, { validator: confirmPasswordValidator });
   }
 
 }

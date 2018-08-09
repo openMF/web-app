@@ -21,7 +21,7 @@ export class FileUploadComponent implements OnInit {
 
   /**
    * Uploads a file.
-   * @param {any} $event The file input change event.
+   * @param {any} event The file input change event.
    */
   onFileSelected($event: any) {
     this.fileName = $event.target.files[0].name;
