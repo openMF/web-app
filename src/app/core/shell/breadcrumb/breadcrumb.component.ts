@@ -1,10 +1,45 @@
+/** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
+/** rxjs Imports */
 import { filter } from 'rxjs/operators';
 
+/** Custom Model */
 import { Breadcrumb } from './breadcrumb.model';
 
+/**
+ * Route data property to generate breadcrumb using a static string.
+ *
+ * Example- breadcrumb: 'Home'
+ */
+const routeDataBreadcrumb = 'breadcrumb';
+/**
+ * Route data property to generate breadcrumb using given route parameter name.
+ *
+ * Example- routeParamBreadcrumb: 'id'
+ */
+const routeParamBreadcrumb = 'routeParamBreadcrumb';
+/**
+ * Route data property to generate breadcrumb using resolved data property name.
+ *
+ * Use array to specify name for a nested object property.
+ *
+ * Example- routeResolveBreadcrumb: ['user', 'username']
+ */
+const routeResolveBreadcrumb = 'routeResolveBreadcrumb';
+/**
+ * Route data property to specify whether generated breadcrumb should have a link.
+ *
+ * True by default. Specify false if a link is not required.
+ *
+ * Example- addBreadcrumbLink: false
+ */
+const routeAddBreadcrumbLink = 'addBreadcrumbLink';
+
+/**
+ * Generate breadcrumbs dynamically via route configuration.
+ */
 @Component({
   selector: 'mifosx-breadcrumb',
   templateUrl: './breadcrumb.component.html',
@@ -12,19 +47,26 @@ import { Breadcrumb } from './breadcrumb.model';
 })
 export class BreadcrumbComponent implements OnInit {
 
+  /** Array of breadcrumbs. */
   breadcrumbs: Breadcrumb[];
 
+  /**
+   * Generates the breadcrumbs.
+   * @param {ActivatedRoute} activatedRoute Activate Route.
+   * @param {Router} router Router for navigation.
+   */
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router) {
     this.generateBreadcrumbs();
   }
 
-  generateBreadcrumbs() {
-    const routeDataBreadcrumb = 'breadcrumb';
-    const routeParamBreadcrumb = 'routeParamBreadcrumb';
-    const routeResolveBreadcrumb = 'routeResolveBreadcrumb';
-    const routeAddBreadcrumbLink = 'addBreadcrumbLink';
+  ngOnInit() {
+  }
 
+  /**
+   * Generates the array of breadcrumbs for the visited route.
+   */
+  generateBreadcrumbs() {
     const onNavigationEnd = this.router.events.pipe(filter(event => event instanceof NavigationEnd));
 
     onNavigationEnd.subscribe(() => {
@@ -84,9 +126,6 @@ export class BreadcrumbComponent implements OnInit {
         });
       }
     });
-  }
-
-  ngOnInit() {
   }
 
 }

@@ -1,8 +1,17 @@
+/** Angular Imports */
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
+/** Custom Model */
 import { Theme } from './theme.model';
+
+/** Custom Services */
 import { ThemeStorageService } from './theme-storage.service';
 
+/**
+ * Theme picker component.
+ *
+ * TODO: Customization of theme for every component and custom background with darker contrast.
+ */
 @Component({
   selector: 'mifosx-theme-picker',
   templateUrl: './theme-picker.component.html',
@@ -11,6 +20,7 @@ import { ThemeStorageService } from './theme-storage.service';
 })
 export class ThemePickerComponent implements OnInit {
 
+  /** Default theme for the application. */
   currentTheme: Theme = {
     href: 'denim-yellowgreen.css',
     primary: '#1074B9',
@@ -18,6 +28,7 @@ export class ThemePickerComponent implements OnInit {
     isDark: false,
     isDefault: true
   };
+  /** Available themes for the application. */
   themes = [
     this.currentTheme,
     {
@@ -38,7 +49,7 @@ export class ThemePickerComponent implements OnInit {
       accent: '#FFC107',
       isDark: false
     },
-    { // TODO: Remove Dark Themes
+    {
       href: 'pink-bluegrey.css',
       primary: '#E91E63',
       accent: '#607D8B',
@@ -52,8 +63,14 @@ export class ThemePickerComponent implements OnInit {
     }
   ];
 
+  /**
+   * @param {ThemeStorageService} themeStorageService Theme Storage Service.
+   */
   constructor(public themeStorageService: ThemeStorageService) {  }
 
+  /**
+   * Initializes the theme for the application.
+   */
   ngOnInit() {
     const theme = this.themeStorageService.getTheme();
     if (theme) {
@@ -61,6 +78,10 @@ export class ThemePickerComponent implements OnInit {
     }
   }
 
+  /**
+   * Installs a new theme for the application.
+   * @param {Theme} theme
+   */
   installTheme(theme: Theme) {
     this.currentTheme = theme;
     this.themeStorageService.installTheme(theme);

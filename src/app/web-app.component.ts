@@ -7,9 +7,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { merge } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
 
-import { environment } from '../environments/environment';
+import { environment } from 'environments/environment';
 import { Logger, I18nService } from './core';
-import { ThemeStorageService } from './core/shell/toolbar/theme-picker/theme-storage.service';
+import { ThemeStorageService } from './shared/theme-picker/theme-storage.service';
 import { AlertService } from './core/alert.service';
 
 const log = new Logger('MifosX');

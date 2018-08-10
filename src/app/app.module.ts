@@ -8,12 +8,11 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
-import { environment } from '../environments/environment';
+import { environment } from 'environments/environment';
 
 import { WebAppComponent } from './web-app.component';
 
 import { CoreModule } from './core/core.module';
-import { SharedModule } from './shared/shared.module';
 import { NavigationModule } from './navigation/navigation.module';
 import { HomeModule } from './home/home.module';
 import { AboutModule } from './about/about.module';
@@ -37,7 +36,6 @@ import { SettingsModule } from './settings/settings.module';
     TranslateModule.forRoot(),
     NgxChartsModule,
     CoreModule,
-    SharedModule,
     HomeModule,
     NavigationModule,
     AboutModule,

@@ -1,37 +1,37 @@
-<mat-toolbar fxLayout="row" color="primary" class="toolbar">
+<mat-toolbar fxLayout="row" color="primary" id="mifosx-toolbar">
 
   <button mat-icon-button *ngIf="!sidenavCollapsed" (click)="toggleSidenav()" matTooltip="Toggle Hide/Open">
-    <mat-icon>menu</mat-icon>
+    <fa-icon icon="bars" size="lg"></fa-icon>
   </button>
 
-  <button mat-icon-button *ngIf="sidenav.opened" (click)="toggleCollapse()" matTooltip="Toggle Collapse" fxHide.lt-md="true">
-    <mat-icon *ngIf="!sidenavCollapsed">chevron_left</mat-icon>
-    <mat-icon *ngIf="sidenavCollapsed">chevron_right</mat-icon>
+  <button mat-icon-button *ngIf="sidenav.opened" (click)="toggleSidenavCollapse()" matTooltip="Toggle Collapse" fxHide.lt-md="true">
+    <fa-icon *ngIf="!sidenavCollapsed" icon="chevron-left"></fa-icon>
+    <fa-icon *ngIf="sidenavCollapsed" icon="chevron-right"></fa-icon>
   </button>
 
   <nav mat-tab-nav-bar backgroundColor="primary" class="ml-1">
 
     <a mat-tab-link class="tab-link" [matMenuTriggerFor]="institutionMenu" #institutionMenuTrigger="matMenuTrigger">
-      <mat-icon class="mr-05">business</mat-icon>
+      <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       Institution
     </a>
 
     <span fxHide.lt-lg="true">
 
       <a mat-tab-link class="tab-link" [routerLink]="['/accounting']">
-          <mat-icon class="mr-05">account_balance</mat-icon>
+        <fa-icon class="mr-05" icon="money-bill-alt" size="lg"></fa-icon>
         Accounting
       </a>
       <a mat-tab-link class="tab-link" [matMenuTriggerFor]="reportsMenu" #reportsMenuTrigger="matMenuTrigger" >
-        <mat-icon class="mr-05">insert_chart_outlined</mat-icon>
+        <fa-icon class="mr-05" icon="chart-bar" size="lg"></fa-icon>
         Reports
       </a>
       <a mat-tab-link class="tab-link" [matMenuTriggerFor]="adminMenu" #adminMenuTrigger="matMenuTrigger">
-          <mat-icon class="mr-05">security</mat-icon>
+        <fa-icon class="mr-05" icon="shield-alt" size="lg"></fa-icon>
         Admin
       </a>
       <a mat-tab-link class="tab-link" [matMenuTriggerFor]="selfServiceMenu" #selfServiceMenuTrigger="matMenuTrigger">
-          <mat-icon class="mr-05">people</mat-icon>
+        <fa-icon class="mr-05" icon="users" size="lg"></fa-icon>
         Self Service
       </a>
 
@@ -41,73 +41,90 @@
 
   <span fxFlex="auto"></span>
 
+  <!--
+    TODO: Search
+    Separate into its own component in shared module for reuse.
+    Implement functionality.
+  -->
   <div *ngIf="searchVisible" class="search-bar" fxFlex="auto" fxHide.lt-sm="true" [@fadeInOut]>
     <mat-form-field class="search">
-      <input matInput type="text" placeholder="Search">
+      <mat-label>Search</mat-label>
+      <input matInput type="text">
     </mat-form-field>
   </div>
 
-  <button mat-icon-button class="ml-1" (click)="toggleVisibility()" fxHide.lt-sm="true">
-    <mat-icon>search</mat-icon>
+  <button mat-icon-button class="ml-1" (click)="toggleSearchVisibility()" fxHide.lt-sm="true">
+    <fa-icon icon="search" size="lg"></fa-icon>
   </button>
 
-  <mat-select placeholder="Language" [(value)]="selectedLanguage" class="ml-1 language" fxHide.lt-md>
-    <mat-option value="English">English</mat-option>
-    <mat-option value="Hindi">Hindi</mat-option>
-  </mat-select>
+  <mifosx-language-selector class="ml-1 language" fxHide.lt-md></mifosx-language-selector>
 
-  <mifosx-theme-picker class="ml-1" fxHide.lt-md></mifosx-theme-picker>
+  <mifosx-theme-picker fxHide.lt-md></mifosx-theme-picker>
 
+  <!--
+    TODO: Notifications
+    Separate into its own component in shared module for reuse.
+    Implement functionality.
+  -->
   <button mat-icon-button class="ml-1" matTooltip="Notifications">
-    <mat-icon>notifications</mat-icon>
+    <fa-icon icon="bell" size="lg"></fa-icon>
   </button>
 
-  <button mat-icon-button class="ml-1 img-button">
+  <button mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu">
     <img src="assets/images/user_placeholder.png">
   </button>
 
 </mat-toolbar>
 
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
-  <span>
-    <button mat-menu-item routerLink="/clients">Clients</button>
-    <button mat-menu-item routerLink="/groups">Groups</button>
-    <button mat-menu-item routerLink="/centers">Centers</button>
-    <span fxHide.lg>
-      <button mat-menu-item>Accounting</button>
-      <button mat-menu-item [matMenuTriggerFor]="reportsMenu">Reports</button>
-      <button mat-menu-item [matMenuTriggerFor]="adminMenu">Admin</button>
-      <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">Self Service</button>
-    </span>
+  <button mat-menu-item routerLink="/clients">Clients</button>
+  <button mat-menu-item routerLink="/groups">Groups</button>
+  <button mat-menu-item routerLink="/centers">Centers</button>
+  <span fxHide.lg>
+    <button mat-menu-item [routerLink]="['/accounting']">Accounting</button>
+    <button mat-menu-item [matMenuTriggerFor]="reportsMenu">Reports</button>
+    <button mat-menu-item [matMenuTriggerFor]="adminMenu">Admin</button>
+    <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">Self Service</button>
   </span>
 </mat-menu>
 
+<!-- Toolbar Menus -->
 <mat-menu #reportsMenu="matMenu" [overlapTrigger]="false">
-  <span (mouseleave)="reportsMenuTrigger.closeMenu()">
-    <button mat-menu-item>All</button>
-    <button mat-menu-item>Clients</button>
-    <button mat-menu-item>Loans</button>
-    <button mat-menu-item>Savings</button>
-    <button mat-menu-item>Funds</button>
-    <button mat-menu-item>Accounting</button>
-    <button mat-menu-item>XBRL</button>
-  </span>
+  <button mat-menu-item>All</button>
+  <button mat-menu-item>Clients</button>
+  <button mat-menu-item>Loans</button>
+  <button mat-menu-item>Savings</button>
+  <button mat-menu-item>Funds</button>
+  <button mat-menu-item>Accounting</button>
+  <button mat-menu-item>XBRL</button>
 </mat-menu>
 
 <mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
-  <span (mouseleave)="adminMenuTrigger.closeMenu()">
-    <button mat-menu-item>Users</button>
-    <button mat-menu-item>Organisation</button>
-    <button mat-menu-item>System</button>
-    <button mat-menu-item>Products</button>
-    <button mat-menu-item>Templates</button>
-  </span>
+  <button mat-menu-item>Users</button>
+  <button mat-menu-item>Organisation</button>
+  <button mat-menu-item>System</button>
+  <button mat-menu-item>Products</button>
+  <button mat-menu-item>Templates</button>
 </mat-menu>
 
 <mat-menu #selfServiceMenu="matMenu" [overlapTrigger]="false">
-  <span (mouseleave)="selfServiceMenuTrigger.closeMenu()">
-    <button mat-menu-item routerLink="/self-service/users">User Management</button>
-    <button mat-menu-item routerLink="/self-service/app-configuration">App Configuration</button>
-    <button mat-menu-item>Task Management</button>
-  </span>
+  <button mat-menu-item [routerLink]="['/self-service/users']">User Management</button>
+  <button mat-menu-item [routerLink]="['/self-service/app-configuration']">App Configuration</button>
+  <button mat-menu-item>Task Management</button>
+</mat-menu>
+
+<!-- Application User Help Menu -->
+<mat-menu #applicationMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item [routerLink]="['/settings']">
+    <mat-icon>
+      <fa-icon icon="cog" size="sm"></fa-icon>
+    </mat-icon>
+    <span>Settings</span>
+  </button>
+  <button mat-menu-item (click)="logout()">
+    <mat-icon>
+        <fa-icon icon="sign-out-alt" size="sm"></fa-icon>
+    </mat-icon>
+    <span>Sign Out</span>
+  </button>
 </mat-menu>

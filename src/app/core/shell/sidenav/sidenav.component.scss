@@ -1,117 +1,140 @@
-img {
-  max-width: 100%;
-}
-
-.navigation-panel {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  padding-top: 64px;
-  background: hsla(0,0%,100%,.95);
-}
-
-.app-brand {
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  justify-content: center;
-  text-align: center;
-  position: fixed;
-  width: 100%;
-  max-width: 15rem;
-  height: 64px;
-  line-height: 64px;
-  top: 0;
-  left: 0;
-  z-index: 9999;
-  color: #444;
-
-  .app-logo {
-    width: auto;
-    height: 42px;
-    margin-right: 8px;
-  }
-
-  .app-logo-text {
-    width: auto;
-    height: auto;
-    font-size: 2rem;
-    font-weight: normal;
-  }
-}
-
-.app-user {
-  text-align: center;
-  width: 100%;
-  padding: 1rem 0 .4rem;
-
-  .app-user-photo {
-    width: 72px;
-    margin: 0 auto 8px;
-    height: 72px;
-    border: 1px solid hsla(210,8%,51%,.13);
-    padding: 4px;
-    border-radius: 50%;
+.sidebar-full,
+.sidebar-compact {
+  .navigation-panel {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding-top: 64px;
+    background: hsla(0, 0%, 100%, 0.95);
   }
 
   img {
+    max-width: 100%;
+  }
+
+  .app-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: fixed;
     width: 100%;
-    height: 100%;
-    border-radius: 50%;
-  }
+    max-width: 15rem;
+    height: 64px;
+    line-height: 64px;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    color: #444;
 
-  .app-user-name {
-    display: block;
-    font-size: .875rem;
-    font-weight: 300;
-    color: rgba(0,0,0,.96);
-    margin-left: -2px;
-  }
-}
-
-.app-sidenav {
-  .icon-menu {
-    padding: 0 24px;
-    opacity: 1;
-
-    .mat-divider {
-      margin: 0 -24px;
+    .app-logo {
+      width: auto;
+      height: 42px;
+      margin-right: 8px;
     }
 
-    .icon-menu-title {
-      padding-left: 0;
-      margin-left: -8px;
+    .app-logo-text {
+      width: auto;
+      height: auto;
+      font-size: 2rem;
+      font-weight: normal;
+    }
+  }
+
+  .app-user {
+    text-align: center;
+    width: 100%;
+    padding: 1rem 0 0.4rem;
+
+    .app-user-photo {
+      width: 72px;
+      margin: 0 auto 8px;
+      height: 72px;
+      border: 1px solid hsla(210, 8%, 51%, 0.13);
+      padding: 4px;
+      border-radius: 50%;
     }
 
-    .icon-menu-item {
-      display: inline-block;
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
 
-      button {
-        min-width: auto;
-        margin: 4px;
+    .app-user-name {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: rgba(0, 0, 0, 0.96);
+      margin-left: -2px;
+    }
+
+    .app-user-controls {
+      .mat-icon-button {
+        .xs-button {
+          height: 20px;
+          width: 20px;
+          line-height: 20px;
+          margin: 5px;
+        }
+      }
+
+      .text-muted {
+        color: rgba(0, 0, 0, 0.54);
       }
     }
   }
 
   .nav-item-sep {
-    padding: 0;
-    margin: 1rem 0;
+    span {
+      padding: 16px 0 0 16px;
+      display: block;
+      font-size: 12px;
+    }
   }
 
-  mat-nav-list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-}
+  .app-sidenav {
+    .icon-menu {
+      padding: 0 24px;
+      opacity: 1;
 
-.nav-item-sep {
-  span {
-    padding: 16px 0 0 16px;
-    display: block;
-    font-size: 12px;
+      .mat-divider {
+        margin: 0 -24px;
+      }
+
+      .icon-menu-title {
+        padding-left: 0;
+        margin-left: -8px;
+      }
+
+      .icon-menu-item {
+        display: inline-block;
+
+        button {
+          min-width: auto;
+          margin: 4px;
+        }
+      }
+    }
+
+    .nav-item-sep {
+      padding: 0;
+      margin: 1rem 0;
+    }
+
+    .mat-nav-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      .mat-list-item {
+        .mat-list-icon {
+          height: 30px;
+          font-size: 22px;
+        }
+      }
+    }
   }
 }
 
@@ -131,6 +154,12 @@ img {
   }
 
   .app-sidenav {
+    .nav-item-sep {
+      span {
+        display: none;
+      }
+    }
+
     .icon-menu {
       padding: 8px 0 0;
       width: 4rem;
@@ -148,12 +177,6 @@ img {
           margin: 0 0 4px 0;
           padding: 0 20px;
         }
-      }
-    }
-
-    .nav-item-sep {
-      span {
-        display: none;
       }
     }
   }

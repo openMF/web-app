@@ -14,7 +14,7 @@
       font-weight: 400;
     }
 
-    .separator:before {
+    .separator::before {
       content: "";
       border: 1.5px solid #000;
       margin: 0 0.6rem;
@@ -30,19 +30,17 @@
         a {
           text-decoration: none;
           color: #0275d8;
+
+          &:hover {
+            text-decoration: underline;
+          }
         }
-        a:hover {
-          text-decoration: underline;
+
+        &::after {
+          content: "/";
+          margin: 0 0.4rem;
         }
       }
-
-      .breadcrumb-link:after {
-        content: "/";
-        margin: 0 0.4rem;
-      }
-
     }
-
   }
-
 }
