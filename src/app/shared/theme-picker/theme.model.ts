@@ -1,3 +1,6 @@
+/**
+ * Theme model.
+ */
 export interface Theme {
   href: string;
   primary: string;

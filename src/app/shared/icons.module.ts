@@ -5,25 +5,61 @@ import { NgModule } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
+  faBars,
+  faBell,
+  faChartBar,
   faCheckCircle,
+  faChevronLeft,
+  faChevronRight,
+  faCog,
   faEye,
   faEyeSlash,
   faFileUpload,
+  faFillDrip,
+  faHome,
+  faLocationArrow,
   faLock,
+  faMoneyBillAlt,
+  faPlus,
   faSearch,
+  faShieldAlt,
+  faSignOutAlt,
+  faSitemap,
+  faSync,
+  faTachometerAlt,
+  faUniversity,
   faUserCircle,
+  faUsers,
   faUserShield
 } from '@fortawesome/free-solid-svg-icons';
 
 /** Add icons to the library for convenient access in other components. */
 library.add(
+  faBars,
+  faBell,
+  faChartBar,
   faCheckCircle,
+  faChevronLeft,
+  faChevronRight,
+  faCog,
   faEye,
   faEyeSlash,
   faFileUpload,
+  faFillDrip,
+  faHome,
+  faLocationArrow,
   faLock,
+  faMoneyBillAlt,
+  faPlus,
   faSearch,
+  faShieldAlt,
+  faSignOutAlt,
+  faSitemap,
+  faSync,
+  faTachometerAlt,
+  faUniversity,
   faUserCircle,
+  faUsers,
   faUserShield
 );
 

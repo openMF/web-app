@@ -1,5 +1,4 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
 
@@ -46,70 +45,32 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouteReusableStrategy } from './route-reusable-strategy';
 import { AuthenticationService } from './authentication/authentication.service';
 import { AuthenticationGuard } from './authentication/authentication.guard';
-import { I18nService } from './i18n.service';
 import { HttpService } from './http/http.service';
 import { HttpCacheService } from './http/http-cache.service';
-import { ProgressBarService } from './progress-bar.service';
-import { ProgressInterceptor } from './progress.interceptor';
+import { ProgressBarService } from './progress-bar/progress-bar.service';
+import { ProgressInterceptor } from './progress-bar/progress.interceptor';
 import { ApiPrefixInterceptor } from './http/api-prefix.interceptor';
 import { ErrorHandlerInterceptor } from './http/error-handler.interceptor';
 import { CacheInterceptor } from './http/cache.interceptor';
 
 import { ShellComponent } from './shell/shell.component';
 import { SidenavComponent } from './shell/sidenav/sidenav.component';
-import { ThemePickerComponent } from './shell/toolbar/theme-picker/theme-picker.component';
 import { ToolbarComponent } from './shell/toolbar/toolbar.component';
 import { ContentComponent } from './shell/content/content.component';
 import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
 import { AuthenticationInterceptor } from './authentication/authentication.interceptor';
+import { SharedModule } from '../shared';
 
 @NgModule({
   imports: [
-    CommonModule,
+    SharedModule,
     HttpClientModule,
     TranslateModule,
-    RouterModule,
-    LayoutModule,
-    FlexLayoutModule,
-    MatCheckboxModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatInputModule,
-    MatAutocompleteModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatFormFieldModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatMenuModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatListModule,
-    MatGridListModule,
-    MatCardModule,
-    MatStepperModule,
-    MatTabsModule,
-    MatExpansionModule,
-    MatButtonToggleModule,
-    MatChipsModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    MatProgressBarModule,
-    MatDialogModule,
-    MatTooltipModule,
-    MatSnackBarModule,
-    MatTableModule,
-    MatTreeModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatDividerModule
+    RouterModule
   ],
   declarations: [
     ShellComponent,
     SidenavComponent,
-    ThemePickerComponent,
     ToolbarComponent,
     ContentComponent,
     BreadcrumbComponent
@@ -150,13 +111,11 @@ import { AuthenticationInterceptor } from './authentication/authentication.inter
     MatTreeModule,
     MatSortModule,
     MatPaginatorModule,
-    MatDividerModule,
-    ThemePickerComponent
+    MatDividerModule
   ],
   providers: [
     AuthenticationService,
     AuthenticationGuard,
-    I18nService,
     HttpCacheService,
     ProgressBarService,
     ProgressInterceptor,

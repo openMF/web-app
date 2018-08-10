@@ -8,6 +8,7 @@ import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { FooterComponent } from './footer/footer.component';
 import { LanguageSelectorComponent } from './language-selector/language-selector.component';
+import { ThemePickerComponent } from './theme-picker/theme-picker.component';
 
 /** Custom Modules */
 import { IconsModule } from './icons.module';
@@ -29,12 +30,14 @@ import { MaterialModule } from './material.module';
     DeleteDialogComponent,
     FileUploadComponent,
     FooterComponent,
-    LanguageSelectorComponent
+    LanguageSelectorComponent,
+    ThemePickerComponent
   ],
   exports: [
     FileUploadComponent,
     FooterComponent,
     LanguageSelectorComponent,
+    ThemePickerComponent,
     CommonModule,
     IconsModule,
     MaterialModule,
