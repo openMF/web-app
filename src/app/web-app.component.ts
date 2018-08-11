@@ -8,9 +8,10 @@ import { merge } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
 
 import { environment } from 'environments/environment';
-import { Logger, I18nService } from './core';
+import { I18nService } from './core/i18n/i18n.service';
+import { Logger } from './core/logger/logger.service';
 import { ThemeStorageService } from './shared/theme-picker/theme-storage.service';
-import { AlertService } from './core/alert.service';
+import { AlertService } from './core/alert/alert.service';
 
 const log = new Logger('MifosX');
 

@@ -1,7 +1,11 @@
+/** Angular Imports */
 import { Route as ngRoute, Routes } from '@angular/router';
 
-import { ShellComponent } from './shell/shell.component';
-import { AuthenticationGuard } from './authentication/authentication.guard';
+/** Custom Components */
+import { ShellComponent } from '../shell/shell.component';
+
+/** Custom Guards */
+import { AuthenticationGuard } from '../authentication/authentication.guard';
 
 /**
  * Provides helper methods to create routes.

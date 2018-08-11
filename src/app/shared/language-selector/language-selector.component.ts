@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 /** Custom Services */
-import { I18nService } from '../../core/i18n.service';
+import { I18nService } from '../../core/i18n/i18n.service';
 
 /**
  * Language selector component.

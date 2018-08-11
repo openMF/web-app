@@ -1,13 +1,17 @@
+/** Angular Imports */
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 
+/** Other Imports */
 import { each } from 'lodash';
 
-import { Logger } from '../logger.service';
+/** Custom Services */
+import { Logger } from '../logger/logger.service';
 
+/** Initialize Logger */
 const log = new Logger('HttpCacheService');
-const cachePersistenceKey = 'httpCache';
 
+/** Http Cache Entry Model */
 export interface HttpCacheEntry {
   lastUpdated: Date;
   data: HttpResponse<any>;
@@ -18,6 +22,9 @@ export interface HttpCacheEntry {
  */
 @Injectable()
 export class HttpCacheService {
+
+  /** Key to cache Http Requests in storage. */
+  private cachePersistenceStorageKey = 'mifosXHttpCache';
 
   private cachedData: { [key: string]: HttpCacheEntry; } = {};
   private storage: Storage | null = null;
@@ -107,12 +114,12 @@ export class HttpCacheService {
 
   private saveCacheData() {
     if (this.storage) {
-      this.storage[cachePersistenceKey] = JSON.stringify(this.cachedData);
+      this.storage[this.cachePersistenceStorageKey] = JSON.stringify(this.cachedData);
     }
   }
 
   private loadCacheData() {
-    const data = this.storage ? this.storage[cachePersistenceKey] : null;
+    const data = this.storage ? this.storage[this.cachePersistenceStorageKey] : null;
     this.cachedData = data ? JSON.parse(data) : {};
   }
 
