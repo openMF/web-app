@@ -5,8 +5,11 @@ import { Router } from '@angular/router';
 /** rxjs Imports */
 import { Subscription } from 'rxjs';
 
-/** Custom Services and Models */
-import { AlertService, Alert } from '../core';
+/** Custom Models */
+import { Alert } from '../core/alert/alert.model';
+
+/** Custom Services */
+import { AlertService } from '../core/alert/alert.service';
 
 /**
  * Login component.

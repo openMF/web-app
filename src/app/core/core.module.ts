@@ -1,66 +1,46 @@
+/** Angular Imports */
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
 
-// To be removed, replace by shared material module
-import { LayoutModule } from '@angular/cdk/layout';
-import { FlexLayoutModule } from '@angular/flex-layout';
-
-import {  MatCheckboxModule,
-          MatButtonModule,
-          MatInputModule,
-          MatAutocompleteModule,
-          MatDatepickerModule,
-          MatFormFieldModule,
-          MatRadioModule,
-          MatSelectModule,
-          MatSliderModule,
-          MatSlideToggleModule,
-          MatMenuModule,
-          MatSidenavModule,
-          MatToolbarModule,
-          MatListModule,
-          MatGridListModule,
-          MatCardModule,
-          MatStepperModule,
-          MatTabsModule,
-          MatExpansionModule,
-          MatButtonToggleModule,
-          MatChipsModule,
-          MatIconModule,
-          MatProgressSpinnerModule,
-          MatProgressBarModule,
-          MatDialogModule,
-          MatTooltipModule,
-          MatSnackBarModule,
-          MatTableModule,
-          MatTreeModule,
-          MatSortModule,
-          MatPaginatorModule,
-          MatDividerModule,
-          MatNativeDateModule} from '@angular/material';
-
+/** Translation Imports */
 import { TranslateModule } from '@ngx-translate/core';
 
-import { RouteReusableStrategy } from './route-reusable-strategy';
+/** Custom Services */
 import { AuthenticationService } from './authentication/authentication.service';
-import { AuthenticationGuard } from './authentication/authentication.guard';
 import { HttpService } from './http/http.service';
 import { HttpCacheService } from './http/http-cache.service';
 import { ProgressBarService } from './progress-bar/progress-bar.service';
+import { I18nService } from './i18n/i18n.service';
+
+/** Custom Guards */
+import { AuthenticationGuard } from './authentication/authentication.guard';
+
+/** Custom Interceptors */
 import { ProgressInterceptor } from './progress-bar/progress.interceptor';
 import { ApiPrefixInterceptor } from './http/api-prefix.interceptor';
 import { ErrorHandlerInterceptor } from './http/error-handler.interceptor';
 import { CacheInterceptor } from './http/cache.interceptor';
+import { AuthenticationInterceptor } from './authentication/authentication.interceptor';
 
+/** Custom Strategies */
+import { RouteReusableStrategy } from './route/route-reusable-strategy';
+
+/** Custom Modules */
+import { SharedModule } from '../shared';
+
+/** Custom Components */
 import { ShellComponent } from './shell/shell.component';
 import { SidenavComponent } from './shell/sidenav/sidenav.component';
 import { ToolbarComponent } from './shell/toolbar/toolbar.component';
-import { ContentComponent } from './shell/content/content.component';
 import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
-import { AuthenticationInterceptor } from './authentication/authentication.interceptor';
-import { SharedModule } from '../shared';
+import { ContentComponent } from './shell/content/content.component';
 
+/**
+ * Core Module
+ *
+ * Main app shell components and singleton services should be here.
+ */
 @NgModule({
   imports: [
     SharedModule,
@@ -72,70 +52,35 @@ import { SharedModule } from '../shared';
     ShellComponent,
     SidenavComponent,
     ToolbarComponent,
-    ContentComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    ContentComponent
   ],
   exports: [
-    LayoutModule,
-    FlexLayoutModule,
-    MatCheckboxModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatInputModule,
-    MatAutocompleteModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatFormFieldModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatMenuModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatListModule,
-    MatGridListModule,
-    MatCardModule,
-    MatStepperModule,
-    MatTabsModule,
-    MatExpansionModule,
-    MatButtonToggleModule,
-    MatChipsModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    MatProgressBarModule,
-    MatDialogModule,
-    MatTooltipModule,
-    MatSnackBarModule,
-    MatTableModule,
-    MatTreeModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatDividerModule
+    SharedModule // TO BE REMOVED: Once all components have replaced the core module import by shared module.
   ],
   providers: [
     AuthenticationService,
     AuthenticationGuard,
-    HttpCacheService,
-    ProgressBarService,
-    ProgressInterceptor,
-    ApiPrefixInterceptor,
-    ErrorHandlerInterceptor,
-    CacheInterceptor,
     AuthenticationInterceptor,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ProgressInterceptor,
-      multi: true
-    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthenticationInterceptor,
       multi: true
     },
+    I18nService,
+    HttpCacheService,
+    ApiPrefixInterceptor,
+    ErrorHandlerInterceptor,
+    CacheInterceptor,
     {
       provide: HttpClient,
       useClass: HttpService
+    },
+    ProgressBarService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ProgressInterceptor,
+      multi: true
     },
     {
       provide: RouteReuseStrategy,

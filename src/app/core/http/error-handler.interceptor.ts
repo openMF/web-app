@@ -1,28 +1,42 @@
+/** Angular Imports */
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 
+/** rxjs Imports */
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { environment } from '../../../environments/environment';
-import { Logger } from '../logger.service';
-import { AlertService } from '../alert.service';
+/** Environment Configuration */
+import { environment } from 'environments/environment';
 
+/** Custom Services */
+import { Logger } from '../logger/logger.service';
+import { AlertService } from '../alert/alert.service';
+
+/** Initialize Logger */
 const log = new Logger('ErrorHandlerInterceptor');
 
 /**
- * Adds a default error handler to all requests.
+ * Http Request interceptor to add a default error handler to requests.
  */
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
 
+  /**
+   * @param {AlertService} alertService Alert Service.
+   */
   constructor(private alertService: AlertService) {  }
 
+  /**
+   * Intercepts a Http request and adds a default error handler.
+   */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(catchError(error => this.handleError(error)));
   }
 
-  // Customize the default error handler here if needed
+  /**
+   * Error handler.
+   */
   private handleError(response: HttpErrorResponse): Observable<HttpEvent<any>> {
     const status = response.status;
     let errorMessage = (response.error.developerMessage || response.message);

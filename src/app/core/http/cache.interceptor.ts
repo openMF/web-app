@@ -1,8 +1,11 @@
+/** Angular Imports */
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
 
+/** rxjs Imports */
 import { Observable, Subscriber } from 'rxjs';
 
+/** Custom Services */
 import { HttpCacheService } from './http-cache.service';
 
 /**

@@ -1,14 +1,19 @@
+/** Angular Imports */
 import { Injectable } from '@angular/core';
 
+/** Translation Imports */
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+
+/** Custom Services */
+import { Logger } from '../logger/logger.service';
+
+/** Other Imports */
 import { includes } from 'lodash';
+import * as enUS from '../../../translations/en-US.json';
+import * as frFR from '../../../translations/fr-FR.json';
 
-import { Logger } from './logger.service';
-import * as enUS from '../../translations/en-US.json';
-import * as frFR from '../../translations/fr-FR.json';
-
+/** Initialize Logger */
 const log = new Logger('I18nService');
-const languageKey = 'language';
 
 /**
  * Pass-through function to mark a string for translation extraction.
@@ -20,10 +25,11 @@ export function extract(s: string) {
   return s;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class I18nService {
+
+  /** Key to store current language of application in local storage. */
+  private languageStorageKey = 'mifosXLanguage';
 
   defaultLanguage: string;
   supportedLanguages: string[];
@@ -46,7 +52,7 @@ export class I18nService {
     this.language = '';
 
     this.translateService.onLangChange
-      .subscribe((event: LangChangeEvent) => { localStorage.setItem(languageKey, event.lang); });
+      .subscribe((event: LangChangeEvent) => { localStorage.setItem(this.languageStorageKey, event.lang); });
   }
 
   /**
@@ -56,7 +62,7 @@ export class I18nService {
    * @param {string} language The IETF language code to set.
    */
   set language(language: string) {
-    language = language || localStorage.getItem(languageKey) || this.translateService.getBrowserCultureLang();
+    language = language || localStorage.getItem(this.languageStorageKey) || this.translateService.getBrowserCultureLang();
     let isSupportedLanguage = includes(this.supportedLanguages, language);
 
     // If no exact match is found, search without the region
