@@ -1,19 +1,24 @@
-<!-- <div class="container-fluid">
-  <div class="text-center mt-5">
-    <app-loader [isLoading]="isLoading"></app-loader>
-    <q [hidden]="isLoading">{{quote}}</q>
-  </div>
-</div> -->
+<div fxLayput="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
 
-<div class="button-row">
-  <button mat-raised-button>Basic</button>
-  <button mat-raised-button color="primary">Primary</button>
-  <button mat-raised-button color="accent">Accent</button>
-  <button mat-raised-button color="warn">Warn</button>
-  <button mat-raised-button disabled>Disabled</button>
-  <a mat-raised-button routerLink=".">Link</a>
+  <button mat-raised-button color="primary" [routerLink]="['/dashboard']">
+    <fa-icon icon="tachometer-alt"></fa-icon>&nbsp;&nbsp;
+    Dashboard
+  </button>
+
 </div>
 
-<br>
-<br>
-<img class="logo" src="assets/images/mifos_lg-logo.jpg"/>
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-header>
+      <mat-card-title class="title">
+        Welcome, {{ username }}!
+      </mat-card-title>
+    </mat-card-header>
+
+    <img mat-card-image src="assets/images/mifos_lg-logo.jpg" alt="Mifos X">
+
+  </mat-card>
+
+</div>

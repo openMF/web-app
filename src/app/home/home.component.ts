@@ -1,9 +1,12 @@
+/** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 
-import { finalize } from 'rxjs/operators';
+/** Custom Services */
+import { AuthenticationService } from '../core/authentication/authentication.service';
 
-import { QuoteService } from './quote.service';
-
+/**
+ * Home component.
+ */
 @Component({
   selector: 'mifosx-home',
   templateUrl: './home.component.html',
@@ -11,16 +14,20 @@ import { QuoteService } from './quote.service';
 })
 export class HomeComponent implements OnInit {
 
-  quote: string;
-  isLoading: boolean;
+  /** Username of authenticated user. */
+  username: string;
 
-  constructor(private quoteService: QuoteService) { }
+  /**
+   * @param {AuthenticationService} authenticationService Authentication Service.
+   */
+  constructor(private authenticationService: AuthenticationService) { }
 
+  /**
+   * Sets the username of the authenticated user.
+   */
   ngOnInit() {
-    this.isLoading = true;
-    // this.quoteService.getRandomQuote({ category: 'dev' })
-    //   .pipe(finalize(() => { this.isLoading = false; }))
-    //   .subscribe((quote: string) => { this.quote = quote; });
+    const credentials = this.authenticationService.getCredentials();
+    this.username = credentials.username;
   }
 
 }

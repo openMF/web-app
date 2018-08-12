@@ -1,31 +1,27 @@
+/** Angular Imports */
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
-import { TranslateModule } from '@ngx-translate/core';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-
-import { CoreModule } from '../core/core.module';
+/** Custom Modules */
 import { SharedModule } from '../shared/shared.module';
 import { HomeRoutingModule } from './home-routing.module';
+
+/** Custom Components */
 import { HomeComponent } from './home.component';
-import { QuoteService } from './quote.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
+/**
+ * Home Component
+ *
+ * Home and dashboard components should be declared here.
+ */
 @NgModule({
   imports: [
-    CommonModule,
-    CoreModule,
-    TranslateModule,
-    NgxChartsModule,
     SharedModule,
     HomeRoutingModule
   ],
   declarations: [
     HomeComponent,
     DashboardComponent
-  ],
-  providers: [
-    QuoteService
   ]
 })
 export class HomeModule { }
