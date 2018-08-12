@@ -6,7 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 
 /** Custom Services */
-import { AuthenticationService } from '../../core';
+import { AuthenticationService } from '../../core/authentication/authentication.service';
 
 /**
  * Two factor authentication component.

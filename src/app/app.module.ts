@@ -22,7 +22,6 @@ import { CoreModule } from './core/core.module';
 import { HomeModule } from './home/home.module';
 import { LoginModule } from './login/login.module';
 import { SettingsModule } from './settings/settings.module';
-import { AboutModule } from './about/about.module'; // TODO: Remove redundant module.
 import { NavigationModule } from './navigation/navigation.module';
 import { ClientsModule} from './clients/clients.module';
 import { GroupsModule } from './groups/groups.module';
@@ -50,7 +49,6 @@ import { AppRoutingModule } from './app-routing.module';
     HomeModule,
     LoginModule,
     SettingsModule,
-    AboutModule,
     NavigationModule,
     ClientsModule,
     GroupsModule,

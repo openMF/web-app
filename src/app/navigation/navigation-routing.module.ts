@@ -1,9 +1,17 @@
+/** Angular Imports */
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { Route, extract } from '../core';
+/** Routing Imports */
+import { Route } from '../core/route/route.service';
+
+/** Translation Imports */
+import { extract } from '../core/i18n/i18n.service';
+
+/** Custom Components */
 import { NavigationComponent } from './navigation.component';
 
+/** Navigation Routes */
 const routes: Routes = [
   Route.withShell([
     {
@@ -14,6 +22,11 @@ const routes: Routes = [
   ])
 ];
 
+/**
+ * Navigation Module
+ *
+ * Configures the navigation (by offices) routes.
+ */
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],

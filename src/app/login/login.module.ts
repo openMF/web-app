@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 
 /** Custom Modules */
-import { SharedModule } from '../shared';
+import { SharedModule } from '../shared/shared.module';
 import { LoginRoutingModule } from './login-routing.module';
 
 /** Custom Components */

@@ -27,7 +27,7 @@ import { AuthenticationInterceptor } from './authentication/authentication.inter
 import { RouteReusableStrategy } from './route/route-reusable-strategy';
 
 /** Custom Modules */
-import { SharedModule } from '../shared';
+import { SharedModule } from '../shared/shared.module';
 
 /** Custom Components */
 import { ShellComponent } from './shell/shell.component';
