@@ -1,20 +1,34 @@
+/** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material';
 
-import { TranslateService } from '@ngx-translate/core';
+/** rxjs Imports */
 import { merge } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
 
+/** Translation Imports */
+import { TranslateService } from '@ngx-translate/core';
+
+/** Environment Configuration */
 import { environment } from 'environments/environment';
-import { I18nService } from './core/i18n/i18n.service';
+
+/** Custom Services */
 import { Logger } from './core/logger/logger.service';
+import { I18nService } from './core/i18n/i18n.service';
 import { ThemeStorageService } from './shared/theme-picker/theme-storage.service';
 import { AlertService } from './core/alert/alert.service';
 
+/** Custom Models */
+import { Alert } from './core/alert/alert.model';
+
+/** Initialize Logger */
 const log = new Logger('MifosX');
 
+/**
+ * Main web app component.
+ */
 @Component({
   selector: 'mifosx-web-app',
   templateUrl: './web-app.component.html',
@@ -22,6 +36,16 @@ const log = new Logger('MifosX');
 })
 export class WebAppComponent implements OnInit {
 
+  /**
+   * @param {Router} router Router for navigation.
+   * @param {ActivatedRoute} activatedRoute Activated Route.
+   * @param {Title} titleService Title Service.
+   * @param {TranslateService} translateService Translate Service.
+   * @param {I18nService} i18nService I18n Service.
+   * @param {ThemeStorageService} themeStorageService Theme Storage Service.
+   * @param {MatSnackBar} snackBar Material Snackbar for notifications.
+   * @param {AlertService} alertService Alert Service.
+   */
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
               private titleService: Title,
@@ -31,20 +55,31 @@ export class WebAppComponent implements OnInit {
               public snackBar: MatSnackBar,
               private alertService: AlertService) { }
 
+  /**
+   * Initial Setup:
+   *
+   * 1) Logger
+   *
+   * 2) Language and Translations
+   *
+   * 3) Page Title
+   *
+   * 4) Theme
+   *
+   * 5) Alerts
+   */
   ngOnInit() {
     // Setup logger
     if (environment.production) {
       Logger.enableProductionMode();
     }
-
     log.debug('init');
 
     // Setup translations
     this.i18nService.init(environment.defaultLanguage, environment.supportedLanguages);
 
-    const onNavigationEnd = this.router.events.pipe(filter(event => event instanceof NavigationEnd));
-
     // Change page title on navigation or language change, based on route data
+    const onNavigationEnd = this.router.events.pipe(filter(event => event instanceof NavigationEnd));
     merge(this.translateService.onLangChange, onNavigationEnd)
       .pipe(
         map(() => {
@@ -64,12 +99,14 @@ export class WebAppComponent implements OnInit {
         }
       });
 
+    // Setup theme
     const theme = this.themeStorageService.getTheme();
     if (theme) {
       this.themeStorageService.installTheme(theme);
     }
 
-    this.alertService.alertEvent.subscribe((alertEvent: any) => {
+    // Setup alerts
+    this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
       this.snackBar.open(`${alertEvent.message}`, 'Close', {
         duration: 2000,
         horizontalPosition: 'right',
