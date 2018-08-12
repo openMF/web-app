@@ -1,5 +1,9 @@
+/** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 
+/**
+ * Settings component.
+ */
 @Component({
   selector: 'mifosx-settings',
   templateUrl: './settings.component.html',
@@ -7,9 +11,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsComponent implements OnInit {
 
-  languages: string[];
-  dateFormats: string[];
-  fonts: string[];
+  /** Placeholder for languages. */
+  languages: any;
+  /** Placeholder for date formats. */
+  dateFormats: any;
+  /** Placeholder for fonts. */
+  fonts: any;
 
   constructor() { }
 

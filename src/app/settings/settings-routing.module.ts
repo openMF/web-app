@@ -1,9 +1,17 @@
+/** Angular Imports */
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { Route, extract } from '../core';
+/** Routing Imports */
+import { Route } from '../core';
+
+/** Translation Imports */
+import { extract } from '../core';
+
+/** Custom Components */
 import { SettingsComponent } from './settings.component';
 
+/** Settings Routes */
 const routes: Routes = [
   Route.withShell([
     {
@@ -14,6 +22,11 @@ const routes: Routes = [
   ])
 ];
 
+/**
+ * Settings Routing Module
+ *
+ * Configures the settings and web app configuration routes.
+ */
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],

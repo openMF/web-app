@@ -1,56 +1,66 @@
+/** Angular Imports */
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
+/** Tanslation Imports */
 import { TranslateModule } from '@ngx-translate/core';
+
+/** Chart Imports */
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
+/** Environment Configuration */
 import { environment } from 'environments/environment';
 
+/** Main Component */
 import { WebAppComponent } from './web-app.component';
 
+/** Custom Modules */
 import { CoreModule } from './core/core.module';
-import { NavigationModule } from './navigation/navigation.module';
 import { HomeModule } from './home/home.module';
-import { AboutModule } from './about/about.module';
 import { LoginModule } from './login/login.module';
+import { SettingsModule } from './settings/settings.module';
+import { AboutModule } from './about/about.module'; // TODO: Remove redundant module.
+import { NavigationModule } from './navigation/navigation.module';
 import { ClientsModule} from './clients/clients.module';
+import { GroupsModule } from './groups/groups.module';
+import { CentersModule } from './centers/centers.module';
 import { AccountingModule } from './accounting/accounting.module';
 import { SelfServiceModule } from './self-service/self-service.module';
-import { CentersModule } from './centers/centers.module';
-import { GroupsModule } from './groups/groups.module';
 
+/** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
-import { SettingsModule } from './settings/settings.module';
 
+/**
+ * App Module
+ *
+ * Core module and all feature modules should be imported here in proper order.
+ */
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    FormsModule,
     HttpClientModule,
     ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
     TranslateModule.forRoot(),
     NgxChartsModule,
     CoreModule,
     HomeModule,
-    NavigationModule,
-    AboutModule,
     LoginModule,
+    SettingsModule,
+    AboutModule,
+    NavigationModule,
     ClientsModule,
+    GroupsModule,
+    CentersModule,
     AccountingModule,
     SelfServiceModule,
-    SettingsModule,
-    CentersModule,
-    GroupsModule,
     AppRoutingModule
   ],
   declarations: [WebAppComponent],
-  providers: [
-  ],
+  providers: [],
   bootstrap: [WebAppComponent]
 })
 export class AppModule { }

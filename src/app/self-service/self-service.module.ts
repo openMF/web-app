@@ -1,6 +1,5 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 
 /** Custom Modules */
 import { SharedModule } from '../shared/shared.module';
@@ -23,7 +22,6 @@ import { TaskManagementComponent } from './task-management/task-management.compo
 @NgModule({
   imports: [
     SharedModule,
-    FormsModule,
     SelfServiceRoutingModule
   ],
   declarations: [

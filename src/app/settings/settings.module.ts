@@ -1,15 +1,20 @@
+/** Angular Imports */
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
-import { CoreModule } from '../core';
-import { SettingsRoutingModule } from './settings-routing.module';
-import { SettingsComponent } from './settings.component';
+/** Custom Modules */
 import { SharedModule } from '../shared/shared.module';
+import { SettingsRoutingModule } from './settings-routing.module';
 
+/** Custom Components */
+import { SettingsComponent } from './settings.component';
+
+/**
+ * Settings Module
+ *
+ * All components related to settings and web app configuration should be declared here.
+ */
 @NgModule({
   imports: [
-    CommonModule,
-    CoreModule,
     SharedModule,
     SettingsRoutingModule
   ],

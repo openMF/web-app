@@ -1,7 +1,7 @@
  /** Angular Imports */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 /** Custom Components */
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
@@ -41,6 +41,7 @@ import { MaterialModule } from './material.module';
     CommonModule,
     IconsModule,
     MaterialModule,
+    FormsModule,
     ReactiveFormsModule
   ],
   entryComponents: [
