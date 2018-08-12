@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 /** Transalation Imports */
-import { extract } from '../core';
+import { extract } from '../core/i18n/i18n.service';
 
 /** Custom Components */
 import { LoginComponent } from './login.component';
