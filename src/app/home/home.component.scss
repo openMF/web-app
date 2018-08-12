@@ -1,15 +1,8 @@
-// .logo {
-//   width: 500px;
-// }
+.container {
+  max-width: 37rem;
 
-// q {
-//   font-style: italic;
-//   font-size: 1.2rem;
-//   quotes: "« " " »";
-// }
-
-.button-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+  .title {
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
 }

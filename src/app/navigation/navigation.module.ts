@@ -1,17 +1,25 @@
+/** Angular Imports */
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
-import { CoreModule } from '../core/core.module';
-import { NavigationComponent } from './navigation.component';
+/** Custom Modules */
+import { SharedModule } from '../shared/shared.module';
 import { NavigationRoutingModule } from './navigation-routing.module';
 
+/** Custom Components */
+import { NavigationComponent } from './navigation.component';
 
+/**
+ * Navigation Module
+ *
+ * Navigation components should be declared here.
+ */
 @NgModule({
   imports: [
-    CoreModule,
-    CommonModule,
+    SharedModule,
     NavigationRoutingModule
   ],
-  declarations: [NavigationComponent]
+  declarations: [
+    NavigationComponent
+  ]
 })
 export class NavigationModule { }

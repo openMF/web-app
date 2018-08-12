@@ -17,7 +17,7 @@ const routes: Routes = [
     {
       path: 'navigation',
       component: NavigationComponent,
-      data: { title: extract('Navigation') }
+      data: { title: extract('Navigation'), breadcrumb: 'Navigation' }
     }
   ])
 ];
