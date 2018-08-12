@@ -1,4 +1,4 @@
-<mat-card class="container">
+<div class="container">
 
   <mat-accordion>
 
@@ -13,29 +13,34 @@
       <div fxLayout="column">
 
         <mat-form-field>
-          <input matInput placeholder="Name of the Organisation">
+          <mat-label>Name of the Organisation</mat-label>
+          <input matInput>
         </mat-form-field>
 
         <mat-form-field>
-          <textarea matInput placeholder="Description"></textarea>
+          <mat-label>Description</mat-label>
+          <textarea matInput></textarea>
         </mat-form-field>
 
         <mat-form-field>
-          <textarea matInput placeholder="Summary"></textarea>
+          <mat-label>Summary</mat-label>
+          <textarea matInput></textarea>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-select placeholder="Default Language">
-            <mat-option *ngFor="let language of languages" [value]="language.value">
-              {{ language.viewValue }}
+          <mat-label>Default Language</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let language of languages" [value]="language">
+              {{ language }}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-select placeholder="Default Date Format">
-            <mat-option *ngFor="let dateFormat of dateFormats" [value]="dateFormat.value">
-              {{ dateFormat.viewValue }}
+          <mat-label>Default Date Format</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let dateFormat of dateFormats" [value]="dateFormat">
+              {{ dateFormat }}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -54,10 +59,17 @@
 
       <div fxLayout="column">
 
-        Favicon <mifosx-file-upload></mifosx-file-upload>
-        Cover Image <mifosx-file-upload></mifosx-file-upload>
-        Logo <mifosx-file-upload></mifosx-file-upload>
-        Logo with Organisation Name <mifosx-file-upload></mifosx-file-upload>
+        <span class="header">Favicon</span>
+        <mifosx-file-upload></mifosx-file-upload>
+
+        <span class="header">Cover Image</span>
+        <mifosx-file-upload></mifosx-file-upload>
+
+        <span class="header">Logo</span>
+        <mifosx-file-upload></mifosx-file-upload>
+
+        <span class="header">Logo with Organisation Name</span>
+        <mifosx-file-upload></mifosx-file-upload>
 
       </div>
 
@@ -73,36 +85,40 @@
 
       <div fxLayout="column">
 
-        Mobile Banking App
+        <span class="header">Mobile Banking App</span>
         <mat-form-field>
-          <mat-select placeholder="Default Theme">
-            <mat-option *ngFor="let theme of mobileAppThemes" [value]="theme.value">
-              {{ theme.viewValue }}
+          <mat-label>Default Theme</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let theme of mobileAppThemes" [value]="theme">
+              {{ theme }}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-select placeholder="Default Font">
-            <mat-option *ngFor="let font of mobileAppFonts" [value]="font.value">
-              {{ font.viewValue }}
+          <mat-label>Default Font</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let font of mobileAppFonts" [value]="font">
+              {{ font }}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
-        Online Banking App
+        <span class="header">Online Banking App</span>
         <mat-form-field>
-          <mat-select placeholder="Default Theme">
-            <mat-option *ngFor="let theme of onlineBankingAppThemes" [value]="theme.value">
-              {{ theme.viewValue }}
+          <mat-label>Default Theme</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let theme of onlineBankingAppThemes" [value]="theme">
+              {{ theme }}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-select placeholder="Default Font">
-            <mat-option *ngFor="let font of onlineBankingAppFonts" [value]="font.value">
-              {{ font.viewValue }}
+          <mat-label>Default Font</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let font of onlineBankingAppFonts" [value]="font">
+              {{ font }}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -122,15 +138,18 @@
       <div fxLayout="column">
 
         <mat-form-field>
-          <input type="url" matInput placeholder="Website">
+          <mat-label>Website</mat-label>
+          <input type="url" matInput>
         </mat-form-field>
 
         <mat-form-field>
-          <input type="email" matInput placeholder="Email">
+          <mat-label>Email</mat-label>
+          <input type="email" matInput>
         </mat-form-field>
 
         <mat-form-field>
-          <input type="tel" matInput placeholder="Contact No">
+          <mat-label>Contact No</mat-label>
+          <input type="tel" matInput>
         </mat-form-field>
 
       </div>
@@ -139,4 +158,4 @@
 
   </mat-accordion>
 
-</mat-card>
+</div>

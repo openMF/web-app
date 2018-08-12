@@ -56,6 +56,7 @@ export class ShellComponent implements OnInit, OnDestroy {
    */
   toggleCollapse($event: boolean) {
     this.sidenavCollapsed = $event;
+    this.cdr.detectChanges();
   }
 
   /**

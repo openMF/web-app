@@ -52,7 +52,7 @@ export class BreadcrumbComponent implements OnInit {
 
   /**
    * Generates the breadcrumbs.
-   * @param {ActivatedRoute} activatedRoute Activate Route.
+   * @param {ActivatedRoute} activatedRoute Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(private activatedRoute: ActivatedRoute,

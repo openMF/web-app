@@ -1,4 +1,4 @@
-/** Angular Imports */
+/** Angular Routes */
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 
@@ -6,16 +6,16 @@ import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { UserService } from '../user.service';
+import { UserService } from './user.service';
 
 /** Custom Model */
-import { User } from '../user.model';
+import { User } from './user.model';
 
 /**
- * View self service user data resolver.
+ * Self service users data resolver.
  */
 @Injectable()
-export class ViewUserResolver implements Resolve<Object> {
+export class UsersResolver implements Resolve<Object> {
 
   /**
    * @param {UserService} userService Self service user service.
@@ -23,11 +23,11 @@ export class ViewUserResolver implements Resolve<Object> {
   constructor(private userService: UserService) {}
 
   /**
-   * Returns the user data.
-   * @returns {Observable<User>}
+   * Returns the users data.
+   * @returns {Observable<User[]>}
    */
-  resolve(): Observable<User> {
-    return this.userService.getUser();
+  resolve(): Observable<User[]> {
+    return this.userService.getUsers();
   }
 
 }

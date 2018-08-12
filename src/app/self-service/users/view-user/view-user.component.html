@@ -1,102 +1,120 @@
-<mat-card class="container m-t-40">
+<div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="2%">
+  <!-- TODO: Update to show only Activate/Inactivate button at a time according to status of user. -->
+  <button mat-raised-button color="accent">
+    <fa-icon icon="lock-open"></fa-icon>&nbsp;&nbsp;
+    Activate
+  </button>
+  <button mat-raised-button color="warn">
+    <fa-icon icon="lock"></fa-icon>&nbsp;&nbsp;
+    Deactivate
+  </button>
+  <button mat-raised-button color="primary" (click)="openDialog()">
+    <fa-icon icon="cog"></fa-icon>&nbsp;&nbsp;
+    Change Password
+  </button>
+  <button mat-raised-button color="primary" [routerLink]="['edit']">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit
+  </button>
+</div>
 
-  <mat-card-header>
-    <mat-icon matTooltip="Status" matTooltipPosition="above">lens</mat-icon>&nbsp;&nbsp;User ID: 123456
-  </mat-card-header>
+<div class="container">
 
-  <mat-card-actions align="right">
-    <button mat-raised-button color="primary" [routerLink]="['/self-service/users/view/123456/edit']"><mat-icon>edit</mat-icon>&nbsp;&nbsp;Edit</button>
-    <button mat-raised-button color="primary" (click)="openDialog()"><mat-icon>settings</mat-icon>&nbsp;&nbsp;Change Password</button>
-    <button mat-raised-button color="primary"><mat-icon>lock</mat-icon>&nbsp;&nbsp;Deactivate</button>
-  </mat-card-actions>
+  <mat-card>
 
-  <mat-card-content>
+    <mat-card-content>
 
-    <mat-grid-list cols="2" rowHeight="40px" style="width: 600px;">
+      <div fxLayout="row wrap" class="content">
 
-      <mat-grid-tile>
-        Username
-      </mat-grid-tile>
+        <div fxFlex="100%" class="header">
+          <fa-icon icon="circle" size="lg" matTooltip="{{ user.status }}" matTooltipPosition="above"></fa-icon>&nbsp;&nbsp;
+          ID: {{ user.id }}
+        </div>
 
-      <mat-grid-tile>
-        abhaychawla
-      </mat-grid-tile>
+        <div fxFlex="50%" class="header">
+          Username
+        </div>
 
-      <mat-grid-tile>
-        First Name
-      </mat-grid-tile>
+        <div fxFlex="50%">
+          {{ user.username }}
+        </div>
 
-      <mat-grid-tile>
-        Abhay
-      </mat-grid-tile>
+        <div fxFlex="50%" class="header">
+          First Name
+        </div>
 
-      <mat-grid-tile>
-        Last Name
-      </mat-grid-tile>
+        <div fxFlex="50%">
+          {{ user.firstName }}
+        </div>
 
-      <mat-grid-tile>
-        Chawla
-      </mat-grid-tile>
+        <div fxFlex="50%" class="header">
+          Last Name
+        </div>
 
-      <mat-grid-tile>
-        Gender
-      </mat-grid-tile>
+        <div fxFlex="50%">
+          {{ user.lastName }}
+        </div>
 
-      <mat-grid-tile>
-        Male
-      </mat-grid-tile>
+        <div fxFlex="50%" class="header">
+          Gender
+        </div>
 
-      <mat-grid-tile>
-        Date of Birth
-      </mat-grid-tile>
+        <div fxFlex="50%">
+          {{ user.gender }}
+        </div>
 
-      <mat-grid-tile>
-        18/06/1997
-      </mat-grid-tile>
+        <div fxFlex="50%" class="header">
+          Date of Birth
+        </div>
 
-      <mat-grid-tile>
-        Email
-      </mat-grid-tile>
+        <div fxFlex="50%">
+          {{ user.dateOfBirth }}
+        </div>
 
-      <mat-grid-tile>
-        abhay.chawla97@gmail.com
-      </mat-grid-tile>
+        <div fxFlex="50%" class="header">
+          Email
+        </div>
 
-      <mat-grid-tile>
-        Mobile
-      </mat-grid-tile>
+        <div fxFlex="50%">
+          {{ user.email }}
+        </div>
 
-      <mat-grid-tile>
-        9871105236
-      </mat-grid-tile>
+        <div fxFlex="50%" class="header">
+          Mobile
+        </div>
 
-      <mat-grid-tile>
-        Office
-      </mat-grid-tile>
+        <div fxFlex="50%">
+          {{ user.mobile }}
+        </div>
 
-      <mat-grid-tile>
-        Head Office
-      </mat-grid-tile>
+        <div fxFlex="50%" class="header">
+          Office
+        </div>
 
+        <div fxFlex="50%">
+          {{ user.office }}
+        </div>
 
-      <mat-grid-tile>
-        Staff
-      </mat-grid-tile>
+        <div fxFlex="50%" class="header">
+          Staff
+        </div>
 
-      <mat-grid-tile>
-        Smith W
-      </mat-grid-tile>
+        <div fxFlex="50%">
+          {{ user.staff }}
+        </div>
 
-      <mat-grid-tile>
-        Activation Date
-      </mat-grid-tile>
+        <div fxFlex="50%" class="header">
+          Activation Date
+        </div>
 
-      <mat-grid-tile>
-        12/03/2018
-      </mat-grid-tile>
+        <div fxFlex="50%">
+          {{ user.activationDate }}
+        </div>
 
-    </mat-grid-list>
+      </div>
 
-  </mat-card-content>
+    </mat-card-content>
 
-</mat-card>
+  </mat-card>
+
+</div>

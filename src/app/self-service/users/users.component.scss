@@ -1,53 +1,12 @@
-// td, th {
-//   text-align: center;
-// }
-// ngb-pagination {
-//   margin: 20px 0px;
-// }
-
-.mat-table {
+table {
   width: 100%;
 }
 
-// .mat-form-field {
-//   width: 100%;
-// }
-
-.mobile-label {
-  display: none;
-}
-
+// TODO: CONFIGURE THESE CLASSES GLOBALLY
 .inactive {
-  color: grey;
+  color: #d3d3d3;
 }
 
 .active {
-  color: green;
+  color: #32cd32;
 }
-
-// @media(max-width: 600px) {
-//   .mobile-label {
-//     width: 80px;
-//     display: inline-block;
-//         font-weight: bold;
-//   }
-
-//   .mat-header-row {
-//     display: none;
-//   }
-
-//   .mat-row {
-//     display: flex;
-//     flex-direction: column;
-//     align-items: start;
-//     padding: 68px 24px;
-//     min-height: 108px;
-//   }
-
-//   .mat-cell {
-//     flex: 1;
-//     display: flex;
-//     align-items: center;
-//     min-height: inherit;
-//   }
-// }
