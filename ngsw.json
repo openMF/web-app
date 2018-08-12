@@ -45,7 +45,7 @@
     "/web-app/assets/images/mifos-logo-flat.png": "998100b024c81bac0fd272134f282e410c96ad8a",
     "/web-app/assets/images/mifos_lg-logo.jpg": "c316949191be5b355cfc3bc803516cca29ed1265",
     "/web-app/assets/images/user_placeholder.png": "688be4adfb344e0f9662a40f59788f39e7b907af",
-    "/web-app/assets/mock/user.mock.json": "f3612ecbbc42f118942e886dbae61d089ac2c91a",
+    "/web-app/assets/mock/user.mock.json": "aa4285d6c1c62088aa48cae021d8ac986d3738cf",
     "/web-app/assets/styles/_colours.scss": "945fe246977e6da1428a1e1edfa5c7ca4748c56e",
     "/web-app/assets/styles/_helper.scss": "0d0de522b13de63f2c5adceb40e38d3a294ac71c",
     "/web-app/assets/styles/_loader.scss": "e5b36b96162920326c5d9daac0e6a5e1f188c0c6",
@@ -53,7 +53,7 @@
     "/web-app/assets/styles/_z-index.scss": "18048038bb66d1375e3a8c11cee30b7460b47191",
     "/web-app/favicon.ico": "31d1d887b9dec1f49614f289d6855f5ffa7c0902",
     "/web-app/index.html": "25193671f57480ed2f18aee9b8c27dc9c0e7d569",
-    "/web-app/main.js": "27cde8f56ad40b0f6a3ff40f7553b10b2cd33765",
+    "/web-app/main.js": "18ef89e24939028a00b6fc509c409ae8af99799c",
     "/web-app/polyfills.js": "50253eaf8f1ca6e5fb4c75c04b9334dbcc554299",
     "/web-app/runtime.js": "078e320cc6fdaf355836c3b1c52b059cdd33fc7e",
     "/web-app/styles.css": "aec46cc747625bd0af149502e2bd8b4b4d34dc7a"
