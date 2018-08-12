@@ -1,23 +1,29 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
+/** Angular Imports */
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { CoreModule } from '../core/core.module';
+/** Custom Modules */
+import { SharedModule } from '../shared/shared.module';
 import { SelfServiceRoutingModule } from './self-service-routing.module';
+
+/** Custom Components */
+import { SelfServiceComponent } from './self-service.component';
+import { UsersComponent } from './users/users.component';
 import { CreateUserComponent } from './users/create-user/create-user.component';
 import { ViewUserComponent } from './users/view-user/view-user.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { AppConfigurationComponent } from './app-configuration/app-configuration.component';
-import { SharedModule } from '../shared/shared.module';
-import { SelfServiceComponent } from './self-service.component';
-import { UsersComponent } from './users/users.component';
+import { TaskManagementComponent } from './task-management/task-management.component';
 
+/**
+ * Self Service Module
+ *
+ * All components related to self service admin portal functions should be declared here.
+ */
 @NgModule({
   imports: [
-    CommonModule,
-    CoreModule,
-    FormsModule,
     SharedModule,
+    FormsModule,
     SelfServiceRoutingModule
   ],
   declarations: [
@@ -26,10 +32,8 @@ import { UsersComponent } from './users/users.component';
     CreateUserComponent,
     ViewUserComponent,
     EditUserComponent,
-    AppConfigurationComponent
-  ],
-  schemas: [
-   CUSTOM_ELEMENTS_SCHEMA
- ],
+    AppConfigurationComponent,
+    TaskManagementComponent
+  ]
 })
 export class SelfServiceModule { }

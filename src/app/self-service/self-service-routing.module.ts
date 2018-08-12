@@ -1,15 +1,27 @@
+/** Angular Imports */
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { Route, extract } from '../core';
+/** Routing Imports */
+import { Route } from '../core';
+
+/** Translation Imports */
+import { extract } from '../core';
+
+/** Custom Components */
+import { SelfServiceComponent } from './self-service.component';
 import { UsersComponent } from './users/users.component';
 import { CreateUserComponent } from './users/create-user/create-user.component';
 import { ViewUserComponent } from './users/view-user/view-user.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { AppConfigurationComponent } from './app-configuration/app-configuration.component';
-import { SelfServiceComponent } from './self-service.component';
+import { TaskManagementComponent } from './task-management/task-management.component';
+
+/** Custom Resolvers */
+import { UsersResolver } from './users/users.resolver';
 import { ViewUserResolver } from './users/view-user/view-user.resolver';
 
+/** Self Service Admin Portal Routes */
 const routes: Routes = [
   Route.withShell([
     {
@@ -23,7 +35,10 @@ const routes: Routes = [
           children: [
             {
               path: '',
-              component: UsersComponent
+              component: UsersComponent,
+              resolve: {
+                users: UsersResolver
+              }
             },
             {
               path: 'create',
@@ -53,16 +68,29 @@ const routes: Routes = [
         {
           path: 'app-configuration',
           component: AppConfigurationComponent,
-          data: { title: extract('App Configuration'), breadcrumb: 'App Configuration' },
+          data: { title: extract('Self Service App Configuration'), breadcrumb: 'App Configuration' }
+        },
+        {
+          path: 'task-management',
+          component: TaskManagementComponent,
+          data: { title: extract('Self Service Task Management'), breadcrumb: 'Task Management' }
         }
       ]
     }
   ])
 ];
 
+/**
+ * Self Service Routing Module
+ *
+ * Configures the self service admin portal routes.
+ */
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [ViewUserResolver]
+  providers: [
+    UsersResolver,
+    ViewUserResolver
+  ]
 })
 export class SelfServiceRoutingModule { }
