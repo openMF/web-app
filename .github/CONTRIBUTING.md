@@ -1,14 +1,14 @@
-
 # Getting Started
-- View the [README](https://github.com/openMF/web-app/blob/master/README.md) or [watch this video](https://youtu.be/OnxxC3K2oro) to get your development environment up and running. 
-- Learn how to [format pull requests](https://github.com/openMF/web-app/blob/master/.github/CONTRIBUTING.md#contributing-guidelines-)
-- Read how to [rebase/merge upstream branches](https://github.com/openMF/web-app/blob/master/.github/CONTRIBUTING.md#configuring-remotes)
-- Understand our [coding conventions](https://github.com/openMF/web-app/blob/master/.github/COMMIT_MESSAGE.md)
-- Sign our [Mifos CLA](http://mifos.org/about-us/financial-legal/mifos-contributor-agreement/)
+
+- View the [README](../README.md) or [watch this video](https://youtu.be/OnxxC3K2oro) to get your development environment up and running. 
+- Learn how to [format pull requests](#submitting-a-pull-request).
+- Read how to [rebase/merge upstream branches](#configuring-remotes).
+- Understand our [commit message conventions](#how-to-commit).
+- Sign our [Mifos CLA](http://mifos.org/about-us/financial-legal/mifos-contributor-agreement/).
 - [Find an issue to work on](https://github.com/orgs/openMF/projects/1) and start smashing!
-- [Ask a question on Gitter](https://gitter.im/openMF/web-app)
-- Follow our [code of conduct](https://github.com/openMF/web-app/blob/master/.github/CODE_OF_CONDUCT.md)
-- Learn more at our [wiki](https://mifosforge.jira.com/wiki/spaces/RES/pages/464322561/Code+4+Good+Week+2018+Wiki)
+- [Ask a question on Gitter](https://gitter.im/openMF/web-app).
+- Follow our [code of conduct](CODE_OF_CONDUCT.md).
+- Learn more at our [wiki](https://mifosforge.jira.com/wiki/spaces/RES/pages/464322561/Code+4+Good+Week+2018+Wiki).
 
 # Contributing Guidelines [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/openMF/web-app/issues)
 
@@ -20,7 +20,7 @@ Do not open issues for general support questions as we want to keep GitHub issue
 
 Each active repository has its own channel to direct questions to. Also join the [official gitter channel](https://gitter.im/openMF/mifos) of Mifos.
 
-Remember that this is an inclusive community, commited to creating a safe, positive environment. See the whole [Code of Conduct](https://github.com/openMF/web-app/tree/master/.github/CODE_OF_CONDUCT.md) and please follow it in all your interactions with the project.
+Remember that this is an inclusive community, commited to creating a safe, positive environment. See the whole [Code of Conduct](CODE_OF_CONDUCT.md) and please follow it in all your interactions with the project.
 
 
 ## Submitting or Requesting an Issue/Enhancement
@@ -58,7 +58,7 @@ git checkout -b branch-name
 ```
 git add file-name
 ```
-  - Follow the style conventions for a [meaningful commit message](https://github.com/openMF/web-app/tree/master/.github/COMMIT_MESSAGE.md).
+  - Follow the style conventions for a [meaningful commit message](COMMIT_MESSAGE.md).
 ```
 git commit
 ```
@@ -120,7 +120,7 @@ git rebase master
 git push origin branch-name
 ```
 ## How to Commit
-- Read [Committ Messaging Conventions](https://github.com/openMF/web-app/blob/master/.github/COMMIT_MESSAGE.md)
+- Read [Committ Messaging Conventions](COMMIT_MESSAGE.md)
 
 ## After your Pull Request is merged
 After your pull request is merged, you can safely delete your branch and pull the changes from the main (upstream) repository.
