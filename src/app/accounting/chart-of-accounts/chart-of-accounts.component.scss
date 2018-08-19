@@ -1,23 +1,27 @@
 table {
   width: 100%;
-}
 
-.gl-account-tree-invisible {
-  display: none;
-}
-
-.gl-account-tree ul,
-.gl-account-tree li {
-  margin-top: 0;
-  margin-bottom: 0;
-  list-style-type: none;
+  .select-row:hover {
+    cursor: pointer;
+  }
 }
 
 .gl-account-tree {
+  ul,
+  li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+  }
+
   li {
     span {
       cursor: pointer;
     }
+  }
+
+  .gl-account-tree-invisible {
+    display: none;
   }
 }
 
@@ -25,25 +29,26 @@ table {
   div {
     margin: 1rem 0;
     word-wrap: break-word;
-  }
 
-  .header {
-    font-weight: 500;
+    &.header {
+      font-weight: 500;
+    }
   }
+}
+
+// TODO: CONFIGURE THESE CLASSES GLOBALLY
+.enabled {
+  color: #32cd32;
 }
 
 .disabled {
-  color: red;
-}
-
-.enabled {
-  color: green;
+  color: #f44366;
 }
 
 .manual-entries-allowed {
-  color: green;
+  color: #32cd32;
 }
 
 .manual-entries-not-allowed {
-  color: red;
+  color: #f44366;
 }

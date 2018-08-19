@@ -1,10 +1,17 @@
+/** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 
+/** Custom Services */
 import { AccountingService } from '../../accounting.service';
+
+/** Custom Components */
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 
+/**
+ * View closure component.
+ */
 @Component({
   selector: 'mifosx-view-closure',
   templateUrl: './view-closure.component.html',
@@ -12,33 +19,38 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
 })
 export class ViewClosureComponent implements OnInit {
 
-  accountingClosureId: number;
-  accountingClosure: any;
+  /** GL Account closure. */
+  glAccountClosure: any;
 
+  /**
+   * Retrieves the gl account closure data from `resolve`.
+   * @param {AccountingService} accountingService Accounting Service.
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {Router} router Router for navigation.
+   * @param {MatDialog} dialog Dialog reference.
+   */
   constructor(private accountingService: AccountingService,
               private route: ActivatedRoute,
               private router: Router,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog) {
+    this.route.data.subscribe((data: { glAccountClosure: any }) => {
+      this.glAccountClosure = data.glAccountClosure;
+    });
+  }
 
   ngOnInit() {
-    this.accountingClosureId = Number(this.route.snapshot.paramMap.get('id'));
-    this.getAccountingClosure();
   }
 
-  getAccountingClosure() {
-    this.accountingService.getAccountingClosure(this.accountingClosureId)
-      .subscribe((accountingClosure: any) => {
-        this.accountingClosure = accountingClosure;
-      });
-  }
-
+  /**
+   * Deletes the gl account closure and redirects to closing entries.
+   */
   deleteAccountingClosure() {
     const deleteAccountingClosureDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `accounting closure ${this.accountingClosureId}` }
+      data: { deleteContext: `accounting closure ${this.glAccountClosure.id}` }
     });
     deleteAccountingClosureDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.accountingService.deleteAccountingClosure(this.accountingClosureId)
+        this.accountingService.deleteAccountingClosure(this.glAccountClosure.id)
           .subscribe(() => {
             this.router.navigate(['/accounting/closing-entries']);
           });

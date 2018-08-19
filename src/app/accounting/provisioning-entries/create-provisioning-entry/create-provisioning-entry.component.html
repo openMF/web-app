@@ -2,16 +2,20 @@
 
   <mat-card>
 
-    <form [formGroup]="provisioningEntriesForm" (ngSubmit)="submit()">
+    <form [formGroup]="provisioningEntryForm" (ngSubmit)="submit()">
 
       <mat-card-content>
 
         <div fxLayout="column">
 
           <mat-form-field fxFlex>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="datePicker" placeholder="Date" required formControlName="date">
+            <mat-label>Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="datePicker" required formControlName="date">
             <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
             <mat-datepicker #datePicker></mat-datepicker>
+            <mat-error *ngIf="provisioningEntryForm.controls.date.hasError('required')">
+              Date is <strong>required</strong>
+            </mat-error>
           </mat-form-field>
 
           <div fxFlex>
@@ -25,8 +29,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['/accounting/provisioning-entries']">Cancel</button>
-        <button mat-raised-button color="primary">Submit</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!provisioningEntryForm.valid">Submit</button>
       </mat-card-actions>
 
     </form>

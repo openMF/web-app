@@ -1,5 +1,9 @@
+/** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 
+/**
+ * Accounting component.
+ */
 @Component({
   selector: 'mifosx-accounting',
   templateUrl: './accounting.component.html',

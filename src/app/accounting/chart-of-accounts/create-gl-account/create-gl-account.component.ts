@@ -1,9 +1,14 @@
+/** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
+/** Custom Services */
 import { AccountingService } from '../../accounting.service';
 
+/**
+ * Create gl account component.
+ */
 @Component({
   selector: 'mifosx-create-gl-account',
   templateUrl: './create-gl-account.component.html',
@@ -11,18 +16,32 @@ import { AccountingService } from '../../accounting.service';
 })
 export class CreateGlAccountComponent implements OnInit {
 
+  /** GL account form. */
   glAccountForm: FormGroup;
+  /** Chart of accounts data. */
   chartOfAccountsData: any;
+  /** Account type data. */
   accountTypeData: any;
-  parentData: any;
+  /** Account usage data. */
   accountUsageData: any;
+  /** Parent data. */
+  parentData: any;
+  /** Tag data. */
   tagData: any;
-
+  /** Account type id. (for creation of sub-ledger account) */
   accountTypeId: number;
+  /** Parent id. (for creation of sub-ledger account) */
   parentId: number;
+  /** Cancel route. (depending on creation of gl account or sub-ledger account) */
+  cancelRoute = '../../';
 
-  cancelRoute = '/accounting/chart-of-accounts';
-
+  /**
+   * Retrieves the chart of accounts data from `resolve`.
+   * @param {FormBuilder} formBuilder Form Builder.
+   * @param {AccountingService} accountingService Accounting Service.
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {Router} router Router for navigation.
+   */
   constructor(private formBuilder: FormBuilder,
               private accountingService: AccountingService,
               private route: ActivatedRoute,
@@ -31,39 +50,44 @@ export class CreateGlAccountComponent implements OnInit {
       this.accountTypeId = Number(params.get('accountType'));
       this.parentId = Number(params.get('parent'));
       if (this.parentId) {
-        this.cancelRoute = `/accounting/chart-of-accounts/gl-accounts/view/${this.parentId}`;
+        this.cancelRoute = `../view/${this.parentId}`;
       }
+    });
+
+    this.route.data.subscribe((data: { chartOfAccountsTemplate: any }) => {
+      this.chartOfAccountsData = data.chartOfAccountsTemplate;
+      this.accountTypeData = data.chartOfAccountsTemplate.accountTypeOptions;
+      this.accountUsageData = data.chartOfAccountsTemplate.usageOptions;
     });
   }
 
+  /**
+   * Creates and sets gl account form.
+   */
   ngOnInit() {
     this.createGlAccountForm();
-    this.getChartOfAccountsTemplate();
     this.setGLAccountForm();
   }
 
+  /**
+   * Creates gl account form.
+   */
   createGlAccountForm() {
     this.glAccountForm = this.formBuilder.group({
       'type': ['', Validators.required],
       'name': ['', Validators.required],
       'usage': ['', Validators.required],
       'glCode': ['', Validators.required],
-      'parentId': [this.parentId],
+      'parentId': [this.parentId || undefined],
       'tagId': [''],
       'manualEntriesAllowed': [true, Validators.required],
       'description': ['']
     });
   }
 
-  getChartOfAccountsTemplate() {
-    this.accountingService.getChartOfAccountsTemplate().subscribe((chartOfAccountsData: any) => {
-      this.chartOfAccountsData = chartOfAccountsData;
-      this.accountTypeData = chartOfAccountsData.accountTypeOptions;
-      this.accountUsageData = chartOfAccountsData.usageOptions;
-      this.glAccountForm.get('type').setValue(this.accountTypeId);
-    });
-  }
-
+  /**
+   * Sets gl account form for selected account type.
+   */
   setGLAccountForm() {
     this.glAccountForm.get('type').valueChanges.subscribe(accountTypeId => {
       switch (accountTypeId) {
@@ -84,11 +108,17 @@ export class CreateGlAccountComponent implements OnInit {
         break;
       }
     });
+
+    this.glAccountForm.get('type').setValue(this.accountTypeId);
   }
 
+  /**
+   * Submits the gl account form and creates gl account,
+   * if successful redirects to view created account.
+   */
   submit() {
     this.accountingService.createGlAccount(this.glAccountForm.value).subscribe((response: any) => {
-      this.router.navigate(['/accounting/chart-of-accounts/gl-accounts/view', response.resourceId]);
+      this.router.navigate(['../view', response.resourceId], { relativeTo: this.route });
     });
   }
 

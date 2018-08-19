@@ -1,10 +1,17 @@
+/** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 
+/** Custom Components */
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
+
+/** Custom Services */
 import { AccountingService } from '../../accounting.service';
 
+/**
+ * View gl account component.
+ */
 @Component({
   selector: 'mifosx-view-gl-account',
   templateUrl: './view-gl-account.component.html',
@@ -12,22 +19,32 @@ import { AccountingService } from '../../accounting.service';
 })
 export class ViewGlAccountComponent implements OnInit {
 
+  /** GL Account. */
   glAccount: any;
 
-  constructor(private route: ActivatedRoute,
-              private accountingService: AccountingService,
+  /**
+   * Retrieves the gl account data from `resolve`.
+   * @param {AccountingService} accountingService Accounting Service.
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {Router} router Router for navigation.
+   * @param {MatDialog} dialog Dialog reference.
+   */
+  constructor(private accountingService: AccountingService,
+              private route: ActivatedRoute,
               private router: Router,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { glAccount: any }) => {
-      this.glAccount = data.glAccount;
+    this.route.data.subscribe((data: { glAccountAndChartOfAccountsTemplate: any }) => {
+      this.glAccount = data.glAccountAndChartOfAccountsTemplate;
     });
   }
 
   ngOnInit() {
   }
 
+  /**
+   * Deletes the gl account and redirects to chart of accounts.
+   */
   deleteGlAccount() {
-    // TODO: (Validation) gl account cannot be deleted if it has transactions logged against it
     const deleteGlAccountDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `gl account ${this.glAccount.id}` }
     });
@@ -41,6 +58,9 @@ export class ViewGlAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Changes state of gl account. (enabled/disabled)
+   */
   changeGlAccountState() {
     this.accountingService.updateGlAccount(this.glAccount.id, { disabled: !this.glAccount.disabled })
       .subscribe((response: any) => {

@@ -9,7 +9,8 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-select placeholder="Financial Activity" required formControlName="financialActivityId">
+            <mat-label>Financial Activity</mat-label>
+            <mat-select required formControlName="financialActivityId">
               <mat-option *ngFor="let financialActivity of financialActivityData" [value]="financialActivity.id">
                 {{ financialActivity.name }}
               </mat-option>
@@ -17,7 +18,8 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-select placeholder="Account" required formControlName="glAccountId">
+            <mat-label>Account</mat-label>
+            <mat-select required formControlName="glAccountId">
               <mat-option *ngFor="let glAccount of glAccountData" [value]="glAccount.id">
                 {{ glAccount.name + ' (' + glAccount.glCode + ')' }}
               </mat-option>
@@ -29,8 +31,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['/accounting/financial-activity-mappings/view', financialActivityAccountId]">Cancel</button>
-        <button mat-raised-button color="primary">Submit</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="financialActivityMappingForm.pristine">Submit</button>
       </mat-card-actions>
 
     </form>

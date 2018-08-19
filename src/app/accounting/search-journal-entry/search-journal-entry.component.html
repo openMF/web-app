@@ -1,15 +1,18 @@
 <div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
   <mat-form-field fxFlex="31%">
-    <input matInput placeholder="Office Name" [formControl]="officeName" [matAutocomplete]="officeNameAutocomplete">
+    <mat-label>Office Name</mat-label>
+    <input matInput [formControl]="officeName" [matAutocomplete]="officeNameAutocomplete">
   </mat-form-field>
 
   <mat-form-field fxFlex="31%">
-    <input matInput placeholder="GL Account Name or Code" [formControl]="glAccount" [matAutocomplete]="glAccountAutocomplete">
+    <mat-label>GL Account Name or Code</mat-label>
+    <input matInput [formControl]="glAccount" [matAutocomplete]="glAccountAutocomplete">
   </mat-form-field>
 
   <mat-form-field fxFlex="31%">
-    <mat-select placeholder="Filter" [formControl]="filter" (selectionChange)="applyFilter($event.value, 'manualEntriesOnly')">
+    <mat-label>Filter</mat-label>
+    <mat-select [formControl]="entryTypeFilter" (selectionChange)="applyFilter($event.value, 'manualEntriesOnly')">
       <mat-option *ngFor="let filter of entryTypeFilterData" [value]="filter.value">
         {{ filter.option }}
       </mat-option>
@@ -17,19 +20,22 @@
   </mat-form-field>
 
   <mat-form-field fxFlex="31%">
-    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDateFromPicker" placeholder="Transaction Date From" [formControl]="transactionDateFrom">
+    <mat-label>Transaction Date From</mat-label>
+    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDateFromPicker" [formControl]="transactionDateFrom">
     <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
     <mat-datepicker #transactionDateFromPicker></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field fxFlex="31%">
-    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDateToPicker" placeholder="Transaction Date To" [formControl]="transactionDateTo">
+    <mat-label>Transaction Date To</mat-label>
+    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDateToPicker" [formControl]="transactionDateTo">
     <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
     <mat-datepicker #transactionDateToPicker></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field fxFlex="31%">
-    <input matInput placeholder="Transaction ID" [formControl]="transactionId">
+    <mat-label>Transaction ID</mat-label>
+    <input matInput [formControl]="transactionId">
   </mat-form-field>
 
 </div>
@@ -104,7 +110,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="viewTransaction(row)" class="select"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['transactions/view', row.transactionId]" class="select-row"></tr>
 
   </table>
 

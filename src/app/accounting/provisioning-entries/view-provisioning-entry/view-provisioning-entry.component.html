@@ -2,7 +2,8 @@
 
   <div class="m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
     <button mat-raised-button color="primary" (click)="createProvisioningJournalEntries()" [disabled]="provisioningEntry.journalEntry">
-      <mat-icon>add</mat-icon>&nbsp;&nbsp;Create Journal Entries
+      <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+      Create Journal Entries
     </button>
   </div>
 
@@ -48,15 +49,18 @@
 <div class="container m-t-20" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
   <mat-form-field fxFlex="31%">
-    <input matInput placeholder="Office Name" [formControl]="officeName" [matAutocomplete]="officeNameAutocomplete">
+    <mat-label>Office Name</mat-label>
+    <input matInput [formControl]="officeName" [matAutocomplete]="officeNameAutocomplete">
   </mat-form-field>
 
   <mat-form-field fxFlex="31%">
-    <input matInput placeholder="Loan Product" [formControl]="loanProduct" [matAutocomplete]="loanProductAutocomplete">
+    <mat-label>Loan Product</mat-label>
+    <input matInput [formControl]="loanProduct" [matAutocomplete]="loanProductAutocomplete">
   </mat-form-field>
 
   <mat-form-field fxFlex="31%">
-    <input matInput placeholder="Provisioning Category" [formControl]="provisioningCategory" [matAutocomplete]="provisioningCategoryAutocomplete">
+    <mat-label>Provisioning Category</mat-label>
+    <input matInput [formControl]="provisioningCategory" [matAutocomplete]="provisioningCategoryAutocomplete">
   </mat-form-field>
 
 </div>
@@ -122,7 +126,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/accounting/provisioning-entries/view', row.id]"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
   </table>
 

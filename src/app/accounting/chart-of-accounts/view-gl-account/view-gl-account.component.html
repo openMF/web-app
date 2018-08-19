@@ -1,18 +1,23 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" *ngIf="glAccount.usage.value === 'HEADER'" [routerLink]="['/accounting/chart-of-accounts/gl-accounts/create']" [queryParams]="{ parent: glAccount.id, accountType: glAccount.type.id }">
-    <mat-icon>add</mat-icon>&nbsp;&nbsp;Subledger Account
+    <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+    Subledger Account
   </button>
-  <button mat-raised-button color="primary" [routerLink]="['/accounting/chart-of-accounts/gl-accounts/view', glAccount.id, 'edit']">
-    <mat-icon>edit</mat-icon>&nbsp;&nbsp;Edit
+  <button mat-raised-button color="primary" [routerLink]="['edit']">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit
   </button>
   <button mat-raised-button color="warn" *ngIf="!glAccount.disabled" (click)="changeGlAccountState()">
-    <mat-icon>lock</mat-icon>&nbsp;&nbsp;Disable
+    <fa-icon icon="lock"></fa-icon>&nbsp;&nbsp;
+    Disable
   </button>
   <button mat-raised-button color="accent" *ngIf="glAccount.disabled" (click)="changeGlAccountState()">
-    <mat-icon>lock_open</mat-icon>&nbsp;&nbsp;Enable
+    <fa-icon icon="lock-open"></fa-icon>&nbsp;&nbsp;
+    Enable
   </button>
   <button mat-raised-button color="warn" (click)="deleteGlAccount()">
-    <mat-icon>delete</mat-icon>&nbsp;&nbsp;Delete
+    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+    Delete
   </button>
 </div>
 
@@ -29,7 +34,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ glAccount.type.value }}
+          {{ glAccount.type?.value }}
         </div>
 
         <div fxFlex="50%" class="header">
@@ -40,19 +45,19 @@
           {{ glAccount.glCode }}
         </div>
 
-        <div fxFlex="50%" class="header">
+        <div fxFlex="50%" class="header" *ngIf="glAccount.parent">
           Parent Account Name
         </div>
 
-        <div fxFlex="50%">
+        <div fxFlex="50%" *ngIf="glAccount.parent">
           {{ glAccount.parent.name }}
         </div>
 
-        <div fxFlex="50%" class="header">
+        <div fxFlex="50%" class="header" *ngIf="glAccount.tagId.id">
           Tag
         </div>
 
-        <div fxFlex="50%">
+        <div fxFlex="50%" *ngIf="glAccount.tagId.id">
           {{ glAccount.tagId.name }}
         </div>
 
@@ -61,7 +66,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ glAccount.usage.value }}
+          {{ glAccount.usage?.value }}
         </div>
 
         <div fxFlex="50%" class="header">
@@ -72,11 +77,11 @@
           {{ glAccount.manualEntriesAllowed }}
         </div>
 
-        <div fxFlex="50%" class="header">
+        <div fxFlex="50%" class="header" *ngIf="glAccount.description">
           Description
         </div>
 
-        <div fxFlex="50%">
+        <div fxFlex="50%" *ngIf="glAccount.description">
           {{ glAccount.description }}
         </div>
 

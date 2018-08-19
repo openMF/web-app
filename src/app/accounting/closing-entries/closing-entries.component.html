@@ -1,12 +1,14 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
-  <button mat-raised-button color="primary" [routerLink]="['/accounting/closing-entries/create']">
-    <mat-icon>add</mat-icon>&nbsp;&nbsp;Create Closure
+  <button mat-raised-button color="primary" [routerLink]="['create']">
+    <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+    Create Closure
   </button>
 </div>
 
-<div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+<div class="container" fxLayout="row">
   <mat-form-field fxFlex>
-    <input matInput placeholder="Office Name" [formControl]="officeName" [matAutocomplete]="officeNameAutocomplete">
+    <mat-label>Office Name</mat-label>
+    <input matInput [formControl]="officeName" [matAutocomplete]="officeNameAutocomplete">
   </mat-form-field>
 </div>
 
@@ -44,7 +46,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/accounting/closing-entries/view', row.id]"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['view', row.id]"></tr>
 
     </table>
 

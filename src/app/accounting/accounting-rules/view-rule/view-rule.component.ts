@@ -1,10 +1,17 @@
+/** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 
+/** Custom Services */
 import { AccountingService } from '../../accounting.service';
+
+/** Custom Components */
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 
+/**
+ * View accounting rule component.
+ */
 @Component({
   selector: 'mifosx-view-rule',
   templateUrl: './view-rule.component.html',
@@ -12,11 +19,19 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
 })
 export class ViewRuleComponent implements OnInit {
 
+  /** Accounting rule. */
   accountingRule: any;
 
-  constructor(private route: ActivatedRoute,
+  /**
+   * Retrieves the accounting rule data from `resolve`.
+   * @param {AccountingService} accountingService Accounting Service.
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {Router} router Router for navigation.
+   * @param {MatDialog} dialog Dialog reference.
+   */
+  constructor(private accountingService: AccountingService,
+              private route: ActivatedRoute,
               private router: Router,
-              private accountingService: AccountingService,
               public dialog: MatDialog) {
     this.route.data.subscribe((data: { accountingRule: any }) => {
       this.accountingRule = data.accountingRule;
@@ -26,6 +41,9 @@ export class ViewRuleComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * Deletes the accounting rule and redirects to accounting rules.
+   */
   deleteAccountingRule() {
     const deleteAccountingRuleDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `accounting rule ${this.accountingRule.id}` }

@@ -1,9 +1,11 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
-  <button mat-raised-button color="primary" [routerLink]="['/accounting/accounting-rules/view', accountingRule?.id, 'edit']">
-    <mat-icon>edit</mat-icon>&nbsp;&nbsp;Edit
+  <button mat-raised-button color="primary" [routerLink]="['edit']">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit
   </button>
   <button mat-raised-button color="warn" (click)="deleteAccountingRule()">
-    <mat-icon>delete</mat-icon>&nbsp;&nbsp;Delete
+    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+    Delete
   </button>
 </div>
 
@@ -25,11 +27,11 @@
             {{ accountingRule.officeName }}
           </div>
 
-          <div fxFlex="50%" class="header">
+          <div fxFlex="50%" class="header" *ngIf="accountingRule.description">
             Description
           </div>
 
-          <div fxFlex="50%">
+          <div fxFlex="50%" *ngIf="accountingRule.description">
             {{ accountingRule.description }}
           </div>
 

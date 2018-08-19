@@ -42,7 +42,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     let errorMessage = (response.error.developerMessage || response.message);
     if (response.error.errors) {
       if (response.error.errors[0]) {
-        errorMessage = response.error.errors[0].developerMessage;
+        errorMessage = response.error.errors[0].defaultUserMessage || response.error.errors[0].developerMessage;
       }
     }
 
@@ -57,9 +57,9 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     } else if (status === 400) {
       this.alertService.alert({ type: 'Bad Request', message: 'Invalid parameters were passed in the request!' });
     } else if (status === 403) {
-      this.alertService.alert({ type: 'Unauthorized Request', message: 'You are not authorized for this request!' });
+      this.alertService.alert({ type: 'Unauthorized Request', message: errorMessage || 'You are not authorized for this request!' });
     } else if (status === 404) {
-      this.alertService.alert({ type: 'Resource does not exist', message: 'Resource does not exist!' });
+      this.alertService.alert({ type: 'Resource does not exist', message: errorMessage || 'Resource does not exist!' });
     }  else if (status === 500) {
       this.alertService.alert({ type: 'Internal Server Error', message: 'Internal Server Error. Please try again later.' });
     } else {

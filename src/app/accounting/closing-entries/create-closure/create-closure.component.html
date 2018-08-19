@@ -9,21 +9,30 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-select placeholder="Office" required formControlName="officeId">
+            <mat-label>Office</mat-label>
+            <mat-select required formControlName="officeId">
               <mat-option *ngFor="let office of officeData" [value]="office.id">
                 {{ office.name }}
               </mat-option>
             </mat-select>
+            <mat-error *ngIf="accountingClosureForm.controls.officeId.hasError('required')">
+              Office is <strong>required</strong>
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closingDatePicker" placeholder="Closing Date" required formControlName="closingDate">
+            <mat-label>Closing Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closingDatePicker" required formControlName="closingDate">
             <mat-datepicker-toggle matSuffix [for]="closingDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closingDatePicker></mat-datepicker>
+            <mat-error *ngIf="accountingClosureForm.controls.closingDate.hasError('required')">
+              Closing Date is <strong>required</strong>
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <textarea matInput placeholder="Comments" formControlName="comments"></textarea>
+            <mat-label>Comments</mat-label>
+            <textarea matInput formControlName="comments"></textarea>
           </mat-form-field>
 
         </div>
@@ -31,8 +40,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['/accounting/closing-entries']">Cancel</button>
-        <button mat-raised-button color="primary">Submit</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!accountingClosureForm.valid">Submit</button>
       </mat-card-actions>
 
     </form>
