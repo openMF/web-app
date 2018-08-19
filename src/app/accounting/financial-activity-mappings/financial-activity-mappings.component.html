@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="end" class="container m-b-20">
-  <button mat-raised-button color="primary" [routerLink]="['/accounting/financial-activity-mappings/create']">
-    <mat-icon>add</mat-icon>&nbsp;&nbsp;Define New Mapping
+  <button mat-raised-button color="primary" [routerLink]="['create']">
+    <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Define New Mapping
   </button>
 </div>
 
@@ -24,7 +24,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/accounting/financial-activity-mappings/view', row.id]"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['view', row.id]" class="select-row"></tr>
 
   </table>
 

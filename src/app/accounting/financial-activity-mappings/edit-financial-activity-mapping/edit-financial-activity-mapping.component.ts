@@ -1,9 +1,14 @@
+/** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
+/** Custom Services */
 import { AccountingService } from '../../accounting.service';
 
+/**
+ * Edit financial activity mapping component.
+ */
 @Component({
   selector: 'mifosx-edit-financial-activity-mapping',
   templateUrl: './edit-financial-activity-mapping.component.html',
@@ -11,24 +16,54 @@ import { AccountingService } from '../../accounting.service';
 })
 export class EditFinancialActivityMappingComponent implements OnInit {
 
+  /** Financial activity mapping form. */
   financialActivityMappingForm: FormGroup;
+  /** GL Account options. */
   glAccountOptions: any;
+  /** GL Account data. */
   glAccountData: any;
-  financialActivityAccountId: any;
+  /** Financial activity data. */
   financialActivityData: any;
+  /** Financial activity account ID. */
+  financialActivityAccountId: string;
+  /** Financial activity ID. */
+  financialActivityId: number;
+  /** GL Account ID. */
+  glAccountId: number;
 
-  constructor(private route: ActivatedRoute,
-              private formBuider: FormBuilder,
+  /**
+   * Retrieves the gl account options, financial activity and financial activity account data from `resolve`.
+   * @param {FormBuilder} formBuilder Form Builder.
+   * @param {AccountingService} accountingService Accounting Service.
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {Router} router Router for navigation.
+   */
+  constructor(private formBuider: FormBuilder,
               private accountingService: AccountingService,
-              private router: Router) { }
-
-  ngOnInit() {
-    this.financialActivityAccountId = this.route.snapshot.paramMap.get('id');
-    this.createFinancialActivityMappingForm();
-    this.setGLAccountData();
-    this.getFinancialActivityAccount();
+              private route: ActivatedRoute,
+              private router: Router) {
+    this.route.data.subscribe((data: { financialActivityAccountAndTemplate: any }) => {
+      this.financialActivityAccountId = data.financialActivityAccountAndTemplate.id;
+      this.financialActivityId = data.financialActivityAccountAndTemplate.financialActivityData.id;
+      this.glAccountId = data.financialActivityAccountAndTemplate.glAccountData.id;
+      this.glAccountOptions = data.financialActivityAccountAndTemplate.glAccountOptions;
+      this.financialActivityData = data.financialActivityAccountAndTemplate.financialActivityOptions;
+    });
   }
 
+  /**
+   * Creates and sets the financial activity mapping form and sets the gl account data.
+   */
+  ngOnInit() {
+    this.createFinancialActivityMappingForm();
+    this.setGLAccountData();
+    this.financialActivityMappingForm.get('financialActivityId').setValue(this.financialActivityId);
+    this.financialActivityMappingForm.get('glAccountId').setValue(this.glAccountId);
+  }
+
+  /**
+   * Creates the financial activity mapping form.
+   */
   createFinancialActivityMappingForm() {
     this.financialActivityMappingForm = this.formBuider.group({
       'financialActivityId': ['', Validators.required],
@@ -36,37 +71,35 @@ export class EditFinancialActivityMappingComponent implements OnInit {
     });
   }
 
-  getFinancialActivityAccount() {
-    this.accountingService.getFinancialActivityAccount(this.financialActivityAccountId, true)
-      .subscribe((financialActivityAccountData: any) => {
-        this.glAccountOptions = financialActivityAccountData.glAccountOptions;
-        this.financialActivityData = financialActivityAccountData.financialActivityOptions;
-        this.financialActivityMappingForm.get('financialActivityId').setValue(financialActivityAccountData.financialActivityData.id);
-        this.financialActivityMappingForm.get('glAccountId').setValue(financialActivityAccountData.glAccountData.id);
+  /**
+   * Sets the gl account data on the basis of selected financial activity.
+   */
+  setGLAccountData() {
+    this.financialActivityMappingForm.get('financialActivityId').valueChanges
+      .subscribe(financialActivityId => {
+        switch (financialActivityId) {
+          case 100:
+          case 101:
+          case 102:
+          case 103: this.glAccountData = this.glAccountOptions.assetAccountOptions;
+          break;
+          case 200:
+          case 201: this.glAccountData = this.glAccountOptions.liabilityAccountOptions;
+          break;
+          case 300: this.glAccountData = this.glAccountOptions.equityAccountOptions;
+          break;
+        }
       });
   }
 
-  setGLAccountData() {
-    this.financialActivityMappingForm.get('financialActivityId').valueChanges.subscribe(financialActivityId => {
-      switch (financialActivityId) {
-        case 100:
-        case 101:
-        case 102:
-        case 103: this.glAccountData = this.glAccountOptions.assetAccountOptions;
-        break;
-        case 200:
-        case 201: this.glAccountData = this.glAccountOptions.liabilityAccountOptions;
-        break;
-        case 300: this.glAccountData = this.glAccountOptions.equityAccountOptions;
-        break;
-      }
-    });
-  }
-
+  /**
+   * Submits the financial activity mapping form and updates financial activity account,
+   * if successful redirects to view updated account.
+   */
   submit() {
     this.accountingService.updateFinancialActivityAccount(this.financialActivityAccountId, this.financialActivityMappingForm.value)
       .subscribe((response: any) => {
-        this.router.navigate(['/accounting/financial-activity-mappings/view', response.resourceId]);
+        this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
     });
   }
 

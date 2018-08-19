@@ -1,84 +1,107 @@
-<mat-card class="container">
+<div class="container">
 
-  <div fxLayout="row" fxLayout.lt-md="column">
+  <mat-card>
 
-    <div fxFlex="50%">
+    <div fxLayout="row" fxLayout.lt-md="column">
 
-      <mat-nav-list>
+      <div fxFlex="50%">
 
-        <mat-list-item [routerLink]="['/accounting/frequent-postings']">
-          <mat-icon matListIcon>repeat</mat-icon>
-          <h4 matLine>Frequent Postings</h4>
-          <p matLine>These are predefined postings</p>
-        </mat-list-item>
+        <mat-nav-list>
 
-        <mat-list-item [routerLink]="['/accounting/journal-entries/create']">
-          <mat-icon matListIcon>add</mat-icon>
-          <h4 matLine>Create Journal Entries</h4>
-          <p matLine>Manual journal entry transactions recorded in a journal</p>
-        </mat-list-item>
+          <mat-list-item [routerLink]="['journal-entries/frequent-postings']">
+            <mat-icon matListIcon>
+              <fa-icon icon="sync" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Frequent Postings</h4>
+            <p matLine>These are predefined postings</p>
+          </mat-list-item>
 
-        <mat-list-item [routerLink]="['/accounting/journal-entries']">
-          <mat-icon matListIcon>search</mat-icon>
-          <h4 matLine>Search Journal Entries</h4>
-          <p matLine>Advanced search option for journal entries</p>
-        </mat-list-item>
+          <mat-list-item [routerLink]="['journal-entries/create']">
+            <mat-icon matListIcon>
+              <fa-icon icon="plus" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Create Journal Entries</h4>
+            <p matLine>Manual journal entry transactions recorded in a journal</p>
+          </mat-list-item>
 
-        <mat-list-item [routerLink]="['/accounting/financial-activity-mappings']">
-          <mat-icon matListIcon>link</mat-icon>
-          <h4 matLine>Accounts Linked to Financial Activities</h4>
-          <p matLine>List of Financial Activities and GL Account Mappings</p>
-        </mat-list-item>
+          <mat-list-item [routerLink]="['journal-entries']">
+            <mat-icon matListIcon>
+              <fa-icon icon="search" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Search Journal Entries</h4>
+            <p matLine>Advanced search option for journal entries</p>
+          </mat-list-item>
 
-        <mat-list-item [routerLink]="['/accounting/migrate-opening-balances']">
-          <mat-icon matListIcon>monetization_on</mat-icon>
-          <h4 matLine>Migrate Opening Balances (Office-wise)</h4>
-          <p matLine>Set or update office-level opening balances for GL accounts</p>
-        </mat-list-item>
+          <mat-list-item [routerLink]="['financial-activity-mappings']">
+            <mat-icon matListIcon>
+              <fa-icon icon="link" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Accounts Linked to Financial Activities</h4>
+            <p matLine>List of Financial Activities and GL Account Mappings</p>
+          </mat-list-item>
 
-      </mat-nav-list>
+          <mat-list-item [routerLink]="['migrate-opening-balances']">
+            <mat-icon matListIcon>
+              <fa-icon icon="hand-holding-usd" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Migrate Opening Balances (Office-wise)</h4>
+            <p matLine>Set or update office-level opening balances for GL accounts</p>
+          </mat-list-item>
+
+        </mat-nav-list>
+
+      </div>
+
+      <div fxFlex="50%">
+
+        <mat-nav-list>
+
+          <mat-list-item [routerLink]="['chart-of-accounts']">
+            <mat-icon matListIcon>
+              <fa-icon icon="sitemap" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Chart of Accounts</h4>
+            <p matLine>List of accounts used by the organisation</p>
+          </mat-list-item>
+
+          <mat-list-item [routerLink]="['closing-entries']">
+            <mat-icon matListIcon>
+              <fa-icon icon="archive" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Closing Entries</h4>
+            <p matLine>Journal entries made at the end of accounting period</p>
+          </mat-list-item>
+
+          <mat-list-item [routerLink]="['accounting-rules']">
+            <mat-icon matListIcon>
+              <fa-icon icon="list" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Accounting Rules</h4>
+            <p matLine>List of all accounting rules</p>
+          </mat-list-item>
+
+          <mat-list-item [routerLink]="['periodic-accruals']">
+            <mat-icon matListIcon>
+              <fa-icon icon="calendar" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Accruals</h4>
+            <p matLine>Accrues income, expenses and liabilities as on the provided date</p>
+          </mat-list-item>
+
+          <mat-list-item [routerLink]="['provisioning-entries']">
+            <mat-icon matListIcon>
+              <fa-icon icon="cogs" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Provisioning Entries</h4>
+            <p matLine>Create provisioning entries</p>
+          </mat-list-item>
+
+        </mat-nav-list>
+
+      </div>
 
     </div>
 
-    <div fxFlex="50%">
+  </mat-card>
 
-      <mat-nav-list>
-
-        <mat-list-item [routerLink]="['/accounting/chart-of-accounts']">
-          <mat-icon matListIcon>device_hub</mat-icon>
-          <h4 matLine>Chart of Accounts</h4>
-          <p matLine>List of accounts used by the organisation</p>
-        </mat-list-item>
-
-        <mat-list-item [routerLink]="['/accounting/closing-entries']">
-          <mat-icon matListIcon>archive</mat-icon>
-          <h4 matLine>Closing Entries</h4>
-          <p matLine>Journal entries made at the end of accounting period</p>
-        </mat-list-item>
-
-        <mat-list-item [routerLink]="['/accounting/accounting-rules']">
-          <mat-icon matListIcon>list</mat-icon>
-          <h4 matLine>Accounting Rules</h4>
-          <p matLine>List of all accounting rules</p>
-        </mat-list-item>
-
-        <mat-list-item [routerLink]="['/accounting/periodic-accruals']">
-          <mat-icon matListIcon>calendar_today</mat-icon>
-          <h4 matLine>Accruals</h4>
-          <p matLine>Accrues income, expenses and liabilities as on the provided date</p>
-        </mat-list-item>
-
-        <mat-list-item [routerLink]="['/accounting/provisioning-entries']">
-          <mat-icon matListIcon>settings_backup_restore</mat-icon>
-          <h4 matLine>Provisioning Entries</h4>
-          <p matLine>Create provisioning entries</p>
-        </mat-list-item>
-
-      </mat-nav-list>
-
-    </div>
-
-  </div>
-
-</mat-card>
-
+</div>

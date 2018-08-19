@@ -1,5 +1,13 @@
 <div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="2%">
   <!-- TODO: Update to show only Activate/Inactivate button at a time according to status of user. -->
+  <button mat-raised-button color="primary" [routerLink]="['edit']">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit
+  </button>
+  <button mat-raised-button color="primary" (click)="openDialog()">
+    <fa-icon icon="cog"></fa-icon>&nbsp;&nbsp;
+    Change Password
+  </button>
   <button mat-raised-button color="accent">
     <fa-icon icon="lock-open"></fa-icon>&nbsp;&nbsp;
     Activate
@@ -7,14 +15,6 @@
   <button mat-raised-button color="warn">
     <fa-icon icon="lock"></fa-icon>&nbsp;&nbsp;
     Deactivate
-  </button>
-  <button mat-raised-button color="primary" (click)="openDialog()">
-    <fa-icon icon="cog"></fa-icon>&nbsp;&nbsp;
-    Change Password
-  </button>
-  <button mat-raised-button color="primary" [routerLink]="['edit']">
-    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
-    Edit
   </button>
 </div>
 

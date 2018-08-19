@@ -1,25 +1,27 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
   <mat-button-toggle-group [formControl]="viewGroup">
     <mat-button-toggle value="listView">
-      <mat-icon>list</mat-icon>
+      <fa-icon icon="list"></fa-icon>
     </mat-button-toggle>
     <mat-button-toggle value="treeView">
-      <mat-icon>device_hub</mat-icon>
+      <fa-icon icon="sitemap"></fa-icon>
     </mat-button-toggle>
   </mat-button-toggle-group>
-  <button mat-raised-button color="primary" [routerLink]="['/accounting/chart-of-accounts/gl-accounts/create']">
-    <mat-icon>add</mat-icon>&nbsp;&nbsp;Add Account
+  <button mat-raised-button color="primary" [routerLink]="['gl-accounts/create']">
+    <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+    Add Account
   </button>
 </div>
 
 
 <!-- List View -->
 
-<div class="container" *ngIf="viewGroup.value === 'listView'">
+<div class="container" [hidden]="viewGroup.value !== 'listView'">
 
   <div fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event.target.value)">
     </mat-form-field>
   </div>
 
@@ -46,7 +48,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Disabled </th>
         <td mat-cell *matCellDef="let glAccount">
           <div [className]="glAccount.disabled === true ? 'disabled' : 'enabled'">
-            <mat-icon matTooltip="{{ glAccount.disabled === true ? 'Disabled' : 'Enabled' }}" matTooltipPosition="right">lens</mat-icon>
+            <fa-icon matTooltip="{{ glAccount.disabled === true ? 'Disabled' : 'Enabled' }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
           </div>
         </td>
       </ng-container>
@@ -54,8 +56,8 @@
       <ng-container matColumnDef="manualEntriesAllowed">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Manual Entries Allowed </th>
         <td mat-cell *matCellDef="let glAccount">
-          <mat-icon *ngIf="glAccount.manualEntriesAllowed" class="manual-entries-allowed" matTooltip="Allowed" matTooltipPosition="right">check_circle</mat-icon>
-          <mat-icon *ngIf="!glAccount.manualEntriesAllowed" class="manual-entries-not-allowed" matTooltip="Not Allowed" matTooltipPosition="right">cancel</mat-icon>
+          <fa-icon *ngIf="glAccount.manualEntriesAllowed" class="manual-entries-allowed" matTooltip="Allowed" matTooltipPosition="right" icon="check-circle" size="lg"></fa-icon>
+          <fa-icon *ngIf="!glAccount.manualEntriesAllowed" class="manual-entries-not-allowed" matTooltip="Not Allowed" matTooltipPosition="right" icon="times-circle" size="lg"></fa-icon>
         </td>
       </ng-container>
 
@@ -65,7 +67,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/accounting/chart-of-accounts/gl-accounts/view', row.id]"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['gl-accounts/view', row.id]" class="select-row"></tr>
 
     </table>
 
@@ -78,7 +80,7 @@
 
 <!-- Tree View -->
 
-<div class="container" *ngIf="viewGroup.value === 'treeView'">
+<div class="container" [hidden]="viewGroup.value !== 'treeView'">
 
   <div class="m-b-20"  fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
     <button mat-raised-button (click)="nestedTreeControl.expandAll()">  <!-- Bug(angular-material): https://github.com/angular/material2/issues/12170 -->
@@ -173,9 +175,7 @@
           <li>
             <div class="mat-tree-node">
               <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
-                <mat-icon class="mat-icon-rtl-mirror">
-                  {{ nestedTreeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
-                </mat-icon>
+                <fa-icon class="mat-icon-rtl-mirror" icon="{{ nestedTreeControl.isExpanded(node) ? 'chevron-down' : 'chevron-right' }}"></fa-icon>
               </button>
               <span (click)="viewGLAccountNode(node)">
                 <span *ngIf="node.glCode">{{ '(' + node.glCode + ')' }}</span>&nbsp;&nbsp;

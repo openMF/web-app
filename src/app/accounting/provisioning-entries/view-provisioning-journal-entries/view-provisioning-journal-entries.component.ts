@@ -1,9 +1,11 @@
+/** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
-import { AccountingService } from '../../accounting.service';
-
+/**
+ * View provisioning journal entries component.
+ */
 @Component({
   selector: 'mifosx-view-provisioning-journal-entries',
   templateUrl: './view-provisioning-journal-entries.component.html',
@@ -11,39 +13,56 @@ import { AccountingService } from '../../accounting.service';
 })
 export class ViewProvisioningJournalEntriesComponent implements OnInit {
 
-  provisioningEntryId: string;
-
+  /** Provisioning journal entry data. */
+  provisioningJournalEntryData: any;
+  /** Columns to be displayed in provisioning journal entries table. */
   displayedColumns: string[] = ['id', 'officeName', 'transactionDate', 'transactionId', 'glAccountType', 'createdByUserName', 'glAccountCode', 'glAccountName', 'debit', 'credit'];
-  dataSource: any;
+  /** Data source for provisioning journal entries table. */
+  dataSource: MatTableDataSource<any>;
 
+  /** Paginator for provisioning journal entries table. */
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  /** Sorter for provisioning journal entries table. */
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private route: ActivatedRoute,
-              private accountingService: AccountingService) { }
+  /**
+   * Retrieves the provisioning journal entries data from `resolve`.
+   * @param {ActivatedRoute} route Activated Route.
+   */
+  constructor(private route: ActivatedRoute) {
+    this.route.data.subscribe((data: { provisioningJournalEntry: any }) => {
+      this.provisioningJournalEntryData = data.provisioningJournalEntry.pageItems;
+    });
+  }
 
+  /**
+   * Sets the provisioning journal entries table.
+   */
   ngOnInit() {
-    this.provisioningEntryId = this.route.snapshot.paramMap.get('id');
-    this.getProvisioningJournalEntry();
+    this.setProvisioningJournalEntry();
   }
 
-  getProvisioningJournalEntry() {
-    this.accountingService.getProvisioningJournalEntries(this.provisioningEntryId)
-      .subscribe((provisioningJournalEntryData: any) => {
-        this.dataSource = new MatTableDataSource(provisioningJournalEntryData.pageItems);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sortingDataAccessor = (transaction: any, property: any) => {
-          switch (property) {
-            case 'glAccountType': return transaction.glAccountType.value;
-            case 'debit': return transaction.amount;
-            case 'credit': return transaction.amount;
-            default: return transaction[property];
-          }
-        };
-        this.dataSource.sort = this.sort;
-      });
+  /**
+   * Initializes the data source, paginator and sorter for provisioning journal entries table.
+   */
+  setProvisioningJournalEntry() {
+    this.dataSource = new MatTableDataSource(this.provisioningJournalEntryData);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sortingDataAccessor = (transaction: any, property: any) => {
+      switch (property) {
+        case 'glAccountType': return transaction.glAccountType.value;
+        case 'debit': return transaction.amount;
+        case 'credit': return transaction.amount;
+        default: return transaction[property];
+      }
+    };
+    this.dataSource.sort = this.sort;
   }
 
+  /**
+   * Filters data in provisioning journal entries table based on passed value.
+   * @param {string} filterValue Value to filter data.
+   */
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }

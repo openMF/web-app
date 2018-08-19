@@ -23,7 +23,12 @@
     "selector-class-pattern": "[a-z-]+",
     "selector-id-pattern": "[a-z-]+",
     "selector-max-id": 1,
-    "selector-no-qualifying-type": true,
+    "selector-no-qualifying-type": [
+      true,
+      {
+        "ignore": ["class"]
+      }
+    ],
     "selector-max-universal": 0,
     "selector-type-no-unknown": [
       true,

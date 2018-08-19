@@ -1,7 +1,10 @@
-<div fxLayout="row" fxLayoutAlign="end" class="container m-b-20">
+<div fxLayout="row" fxLayoutAlign="end" class="container m-b-20" *ngIf="dataSource?.data[0].manualEntry">
   <button mat-raised-button color="primary" (click)="revertTransaction()" [disabled]="dataSource?.data[0].reversed">
-    <span *ngIf="!dataSource?.data[0].reversed"><mat-icon>undo</mat-icon>&nbsp;&nbsp;Revert Transaction</span>
-    <span *ngIf="dataSource?.data[0].reversed">Transaction Reverted</span>
+    <span *ngIf="!dataSource.data[0].reversed">
+      <fa-icon icon="undo"></fa-icon>&nbsp;&nbsp;
+      Revert Transaction
+    </span>
+    <span *ngIf="dataSource.data[0].reversed">Transaction Reverted</span>
   </button>
 </div>
 
@@ -88,7 +91,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="viewJournalEntry(row)" class="select"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="viewJournalEntry(row)" class="select-row"></tr>
 
   </table>
 

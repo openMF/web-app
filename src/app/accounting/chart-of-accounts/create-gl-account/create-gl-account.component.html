@@ -9,31 +9,48 @@
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
           <mat-form-field fxFlex="48%">
-            <mat-select placeholder="Account Type" required formControlName="type">
+            <mat-label>Account Type</mat-label>
+            <mat-select required formControlName="type">
               <mat-option *ngFor="let accountType of accountTypeData" [value]="accountType.id">
                 {{ accountType.value }}
               </mat-option>
             </mat-select>
+            <mat-error *ngIf="glAccountForm.controls.type.hasError('required')">
+              Account Type is <strong>required</strong>
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <input matInput placeholder="Account Name" required formControlName="name">
+            <mat-label>Account Name</mat-label>
+            <input matInput required formControlName="name">
+            <mat-error *ngIf="glAccountForm.controls.name.hasError('required')">
+              Account Name is <strong>required</strong>
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-select placeholder="Account Usage" required formControlName="usage">
+            <mat-label>Account Usage</mat-label>
+            <mat-select required formControlName="usage">
               <mat-option *ngFor="let accountUsage of accountUsageData" [value]="accountUsage.id">
                 {{ accountUsage.value }}
               </mat-option>
             </mat-select>
+            <mat-error *ngIf="glAccountForm.controls.usage.hasError('required')">
+              Account Usage is <strong>required</strong>
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <input matInput placeholder="GL Code" required formControlName="glCode">
+            <mat-label>GL Code</mat-label>
+            <input matInput required formControlName="glCode">
+            <mat-error *ngIf="glAccountForm.controls.glCode.hasError('required')">
+              GL Code is <strong>required</strong>
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-select placeholder="Parent" formControlName="parentId">
+            <mat-label>Parent</mat-label>
+            <mat-select formControlName="parentId">
               <mat-option *ngFor="let parent of parentData" [value]="parent.id">
                 {{ parent.name }}
               </mat-option>
@@ -41,21 +58,23 @@
           </mat-form-field>
 
           <mat-form-field fxFlex="28%">
-            <mat-select placeholder="Tag" formControlName="tagId">
+            <mat-label>Tag</mat-label>
+            <mat-select formControlName="tagId">
               <mat-option *ngFor="let tag of tagData" [value]="tag.id">
                 {{ tag.name }}
               </mat-option>
             </mat-select>
           </mat-form-field>
 
-          <div fxFlex="18%" class="manualEntriesAllowedWrapper">
-            <mat-checkbox labelPosition="before" required formControlName="manualEntriesAllowed" class="manualEntriesAllowed">
+          <div fxFlex="18%" class="manual-entries-allowed-wrapper">
+            <mat-checkbox labelPosition="before" required formControlName="manualEntriesAllowed" class="manual-entries-allowed">
               Manual Entries Allowed
             </mat-checkbox>
           </div>
 
           <mat-form-field fxFlex="98%">
-            <textarea matInput placeholder="Description" formControlName="description"></textarea>
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description"></textarea>
           </mat-form-field>
 
         </div>
@@ -64,7 +83,7 @@
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
         <button type="button" mat-raised-button [routerLink]="[cancelRoute]">Cancel</button>
-        <button mat-raised-button color="primary">Submit</button>
+        <button mat-raised-button color="primary" [disabled]="!glAccountForm.valid">Submit</button>
       </mat-card-actions>
 
     </form>

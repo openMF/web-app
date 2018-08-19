@@ -1,9 +1,11 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" class="container m-b-20">
-  <button mat-raised-button color="primary" [routerLink]="['/accounting/financial-activity-mappings/view', financialActivityAccountId, 'edit']">
-    <mat-icon>edit</mat-icon>&nbsp;&nbsp;Edit
+  <button mat-raised-button color="primary" [routerLink]="['edit']">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit
   </button>
   <button mat-raised-button color="warn" (click)="deleteFinancialActivityAccount()">
-    <mat-icon>delete</mat-icon>&nbsp;&nbsp;Delete
+    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+    Delete
   </button>
 </div>
 
@@ -20,7 +22,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ financialActivityAccountData?.financialActivityData.name }}
+          {{ financialActivityAccount?.financialActivityData.name }}
         </div>
 
         <div fxFlex="50%" class="header">
@@ -28,7 +30,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ financialActivityAccountData?.glAccountData.name }}
+          {{ financialActivityAccount?.glAccountData.name }}
         </div>
 
       </div>

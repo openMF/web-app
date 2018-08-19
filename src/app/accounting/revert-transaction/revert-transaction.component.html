@@ -4,7 +4,8 @@
   <div mat-dialog-content>
     <p>Are you sure you want to revert this transaction?</p>
     <mat-form-field fxFlexFill>
-      <textarea matInput placeholder="Comments" [formControl]="comments"></textarea>
+      <mat-label>Comments</mat-label>
+      <textarea matInput [formControl]="comments"></textarea>
     </mat-form-field>
   </div>
   <mat-dialog-actions align="end">

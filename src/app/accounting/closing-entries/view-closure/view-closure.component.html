@@ -1,13 +1,15 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
-  <button mat-raised-button color="primary" [routerLink]="['/accounting/closing-entries/view', accountingClosure?.id, 'edit']">
-    <mat-icon>edit</mat-icon>&nbsp;&nbsp;Edit
+  <button mat-raised-button color="primary" [routerLink]="['edit']">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit
   </button>
   <button mat-raised-button color="warn" (click)="deleteAccountingClosure()">
-    <mat-icon>delete</mat-icon>&nbsp;&nbsp;Delete
+    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+    Delete
   </button>
 </div>
 
-<div class="container" *ngIf="accountingClosure">
+<div class="container" *ngIf="glAccountClosure">
 
   <mat-card>
 
@@ -20,7 +22,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ accountingClosure.officeName }}
+          {{ glAccountClosure.officeName }}
         </div>
 
         <div fxFlex="50%" class="header">
@@ -28,7 +30,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ accountingClosure.closingDate }}
+          {{ glAccountClosure.closingDate }}
         </div>
 
         <div fxFlex="50%" class="header">
@@ -36,7 +38,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ accountingClosure.createdByUsername }}
+          {{ glAccountClosure.createdByUsername }}
         </div>
 
         <div fxFlex="50%" class="header">
@@ -44,7 +46,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ accountingClosure.lastUpdatedByUsername }}
+          {{ glAccountClosure.lastUpdatedByUsername }}
         </div>
 
         <div fxFlex="50%" class="header">
@@ -52,7 +54,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ accountingClosure.lastUpdatedDate }}
+          {{ glAccountClosure.lastUpdatedDate }}
         </div>
 
         <div fxFlex="50%" class="header">
@@ -60,7 +62,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ accountingClosure.createdDate }}
+          {{ glAccountClosure.createdDate }}
         </div>
 
         <div fxFlex="50%" class="header">
@@ -68,7 +70,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ accountingClosure.comments }}
+          {{ glAccountClosure.comments }}
         </div>
 
       </div>
