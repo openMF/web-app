@@ -1,0 +1,46 @@
+<div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="2%">
+  <button mat-raised-button color="primary" [routerLink]="['edit']">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp; Edit
+  </button>
+</div>
+
+<div class="container">
+  <mat-card>
+    <mat-card-content>
+      <div fxLayout="row wrap" class="content">
+
+        <div fxFlex="50%" class="header">
+          Office
+        </div>
+
+        <div fxFlex="50%">
+          {{ office.name }}
+        </div>
+
+        <div fxFlex="50%" class="header">
+          Parent office
+        </div>
+
+        <div fxFlex="50%">
+          {{ office?.parentName }}
+        </div>
+
+        <div fxFlex="50%" class="header">
+          OpenedOn
+        </div>
+
+        <div fxFlex="50%">
+          {{ office.openingDate | date }}
+        </div>
+
+        <div fxFlex="50%" class="header">
+          External ID
+        </div>
+
+        <div fxFlex="50%">
+          {{ office.externalId }}
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

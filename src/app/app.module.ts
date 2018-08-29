@@ -28,6 +28,7 @@ import { GroupsModule } from './groups/groups.module';
 import { CentersModule } from './centers/centers.module';
 import { AccountingModule } from './accounting/accounting.module';
 import { SelfServiceModule } from './self-service/self-service.module';
+import { OrganisationModule } from './organisation/organisation.module';
 
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
@@ -55,6 +56,7 @@ import { AppRoutingModule } from './app-routing.module';
     CentersModule,
     AccountingModule,
     SelfServiceModule,
+    OrganisationModule,
     AppRoutingModule
   ],
   declarations: [WebAppComponent],

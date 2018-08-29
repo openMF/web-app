@@ -5,11 +5,15 @@ import { NgModule } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
+  faAngleDoubleRight,
   faArchive,
   faBars,
   faBell,
+  faBook,
+  faBuilding,
   faCalendar,
   faChartBar,
+  faCheck,
   faCheckCircle,
   faChevronDown,
   faChevronLeft,
@@ -17,6 +21,7 @@ import {
   faCircle,
   faCog,
   faCogs,
+  faDollarSign,
   faEdit,
   faEye,
   faEyeSlash,
@@ -30,7 +35,9 @@ import {
   faLock,
   faLockOpen,
   faMinusCircle,
+  faMoneyBill,
   faMoneyBillAlt,
+  faPencilAlt,
   faPlay,
   faPlus,
   faPlusCircle,
@@ -45,17 +52,22 @@ import {
   faUndo,
   faUniversity,
   faUserCircle,
+  faUser,
   faUsers,
-  faUserShield
+  faUserShield,
 } from '@fortawesome/free-solid-svg-icons';
 
 /** Add icons to the library for convenient access in other components. */
 library.add(
+  faAngleDoubleRight,
   faArchive,
   faBars,
   faBell,
+  faBook,
+  faBuilding,
   faCalendar,
   faChartBar,
+  faCheck,
   faCheckCircle,
   faChevronDown,
   faChevronLeft,
@@ -63,6 +75,7 @@ library.add(
   faCircle,
   faCog,
   faCogs,
+  faDollarSign,
   faEdit,
   faEye,
   faEyeSlash,
@@ -76,7 +89,9 @@ library.add(
   faLock,
   faLockOpen,
   faMinusCircle,
+  faMoneyBill,
   faMoneyBillAlt,
+  faPencilAlt,
   faPlay,
   faPlus,
   faPlusCircle,
@@ -91,8 +106,9 @@ library.add(
   faUndo,
   faUniversity,
   faUserCircle,
+  faUser,
   faUsers,
-  faUserShield
+  faUserShield,
 );
 
 /**

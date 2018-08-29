@@ -1,0 +1,40 @@
+<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+  <!-- Tree View -->
+  <!-- <button mat-raised-button color="primary" [routerLink]="['/organisation/manage-offices/tree-view']">
+    <mat-icon>add</mat-icon>&nbsp;&nbsp;Tree View
+  </button> -->
+  <button mat-raised-button color="primary" [routerLink]="['/organisation/manage-offices/create']">
+    <mat-icon>add</mat-icon>&nbsp;&nbsp;Create Office
+  </button>
+</div>
+
+<div class="container m-t-40 m-b-40">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Office Name</th>
+        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="external-id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>External ID</th>
+        <td mat-cell *matCellDef="let row"> {{row.externalId}} </td>
+      </ng-container>
+      <ng-container matColumnDef="parent-office">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Parent Office</th>
+        <td mat-cell *matCellDef="let row"> {{row?.parentName}} </td>
+      </ng-container>
+      <ng-container matColumnDef="opened-on">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Opened On</th>
+        <td mat-cell *matCellDef="let row"> {{row.openingDate | date}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="viewOffice(row)" class="select">
+      </tr>
+    </table>
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+
+  </div>
+</div>

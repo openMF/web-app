@@ -1,0 +1,50 @@
+<div class="container">
+  <mat-card>
+
+    <form [formGroup]="officeForm" (ngSubmit)="submit()">
+      <mat-card-content>
+        <div fxLayout="column">
+          <mat-form-field>
+            <mat-label>Office</mat-label>
+            <input matInput required formControlName="name" />
+            <mat-error *ngIf="officeForm.controls.name.hasError('required')">
+              Office name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="100%">
+            <mat-label>Parent Office</mat-label>
+            <mat-select required formControlName="parentId" [(ngModel)]="currentOffice.parentId">
+              <mat-option *ngFor="let office of offices" [value]="office.id">
+                {{ office.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="officeForm.controls.parentId.hasError('required')">
+              Parent Office is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="100%">
+            <mat-label>Opened On</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" formControlName="openingDate" required [matDatepicker]="openedOnDatePicker">
+            <mat-datepicker-toggle matSuffix [for]="openedOnDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #openedOnDatePicker></mat-datepicker>
+            <mat-error *ngIf="officeForm.controls.openingDate.hasError('required')">
+              Opening Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>External ID</mat-label>
+            <input matInput formControlName="externalId" />
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="officeForm.pristine || !officeForm.valid">Submit</button>
+      </mat-card-actions>
+    </form>
+
+  </mat-card>
+
+</div>

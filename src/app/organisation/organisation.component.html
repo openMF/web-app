@@ -1,0 +1,103 @@
+<mat-card class="container">
+  <div fxLayout="row" fxLayout.lt-md="column">
+    <div fxFlex="50%">
+      <mat-nav-list>
+        <mat-list-item [routerLink]="['/organisation/manage-offices']">
+          <mat-icon matListIcon>
+            <fa-icon icon="building"></fa-icon>
+          </mat-icon>
+          <h4 matLine>Manage Offices</h4>
+          <p matLine>Add new office or modify or deactivate office or modify office hierarchy</p>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon matListIcon>
+            <fa-icon icon="calendar"></fa-icon>
+          </mat-icon>
+          <h4 matLine>Manage Holidays</h4>
+          <p matLine>Define holidays for office</p>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon matListIcon>
+            <fa-icon icon="user"></fa-icon>
+          </mat-icon>
+          <h4 matLine>Manage Employees</h4>
+          <p matLine>A employee represents loan officers with no access to systems</p>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon matListIcon>
+            <fa-icon icon="book"></fa-icon>
+          </mat-icon>
+          <h4 matLine>Standing Instructions History</h4>
+          <p matLine>View logged history of standing instructions</p>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon matListIcon>
+            <fa-icon icon="money-bill"></fa-icon>
+          </mat-icon>
+          <h4 matLine>Fund Mapping</h4>
+          <p matLine>Bulk entry screen for mapping fund sources to loans</p>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon matListIcon>
+            <fa-icon icon="lock"></fa-icon>
+          </mat-icon>
+          <h4 matLine>Password Preferences</h4>
+          <p matLine>Define standards for enforcing the usage of stronger passwords</p>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon matListIcon>
+            <fa-icon icon="pencil-alt"></fa-icon>
+          </mat-icon>
+          <h4 matLine>Loan Provisioning Criteria</h4>
+          <p matLine>Define Loan Provisioning Criteria for Organization</p>
+        </mat-list-item>
+      </mat-nav-list>
+    </div>
+    <div fxFlex="50%">
+      <mat-nav-list>
+        <mat-list-item>
+          <mat-icon matListIcon>
+            <fa-icon icon="cogs"></fa-icon>
+          </mat-icon>
+          <h4 matLine>Currency Configuration</h4>
+          <p matLine>Currencies available across organization for different products</p>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon matListIcon>
+            <fa-icon icon="money-bill"></fa-icon>
+          </mat-icon>
+          <h4 matLine>Manage Funds</h4>
+          <p matLine>Funds are associated with loans</p>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon matListIcon>
+            <fa-icon icon="angle-double-right"></fa-icon>
+          </mat-icon>
+          <h4 matLine>Bulk Loan Reassignment</h4>
+          <p matLine>Easy way to reassign all the loan from one LO to another LO</p>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon matListIcon>
+            <fa-icon icon="money-bill"></fa-icon>
+          </mat-icon>
+          <h4 matLine>Teller / Cashier Management</h4>
+          <p matLine>Manage Tellers / Cashiers and Cash Allocation and Settlement</p>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon matListIcon>
+            <fa-icon icon="calendar"></fa-icon>
+          </mat-icon>
+          <h4 matLine>Working Days</h4>
+          <p matLine>Define working days and configure behavior of payments due on holidays</p>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon matListIcon>
+            <fa-icon icon="dollar-sign"></fa-icon>
+          </mat-icon>
+          <h4 matLine>Payment Type</h4>
+          <p matLine>Manage payment types</p>
+        </mat-list-item>
+      </mat-nav-list>
+    </div>
+  </div>
+</mat-card>
