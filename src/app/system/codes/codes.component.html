@@ -1,0 +1,34 @@
+<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+  <button mat-raised-button color="primary" [routerLink]="['create']">
+    <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+    Add Code
+  </button>
+</div>
+
+<div class="container">
+
+  <div fxLayout="row">
+    <mat-form-field fxFlex>
+      <mat-label>Filter</mat-label>
+      <input matInput>
+    </mat-form-field>
+  </div>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="codeName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Code Name </th>
+      </ng-container>
+
+      <ng-container matColumnDef="systemDefined">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> System Defined </th>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+  </div>
+</div>
