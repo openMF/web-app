@@ -9,6 +9,9 @@ import { extract } from '../core/i18n/i18n.service';
 import { SystemComponent } from './system.component';
 import { CodesComponent } from './codes/codes.component';
 
+/** Custom Resolvers */
+import { CodesResolver } from './codes/codes.resolver';
+
 const routes: Routes = [
   Route.withShell([
     {
@@ -22,7 +25,10 @@ const routes: Routes = [
       {
         path: 'codes',
         component: CodesComponent,
-        data: { title: extract('View Codes'), breadcrumb: 'Codes' }
+        data: { title: extract('View Codes'), breadcrumb: 'Codes' },
+        resolve: {
+          codes: CodesResolver
+        }
       }
     ]
     }
@@ -31,6 +37,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [CodesResolver]
 })
 export class SystemRoutingModule { }
