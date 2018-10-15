@@ -1,0 +1,138 @@
+<div class="container m-t-40 m-b-40">
+
+  <aw-wizard class="m-t-10" #wizard [navBarLayout]="'large-empty-symbols'">
+    <aw-wizard-step stepTitle="Standing Instruction" [navigationSymbol]="{ symbol: '1' }">
+
+      <div fxLayoutAlign="center">
+        <mat-card class="example-card">
+          <mat-card-header>
+          </mat-card-header>
+          <mat-card-content>
+            <form class="example-form" (ngSubmit)="onSubmit()" #f="ngForm">
+
+              <mat-form-field class="example-full-width">
+                <input matInput name="name" placeholder="Name" ngModel>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input matInput name="applicant" placeholder="Applicant" ngModel>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <mat-select placeholder="Type" [(ngModel)]="transferType" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+                  <div>
+
+                    <mat-option *ngFor="let item of clientInstruction?.transferTypeOptions" name="option" [value]="item?.id">{{item?.name}}</mat-option>
+                  </div>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <mat-select placeholder="Priority" [(ngModel)]="instructionPriorityId" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+                  <div>
+
+                    <mat-option *ngFor="let item of clientInstruction?.instructionPriorityIdOptions" name="option" [value]="item?.id">{{item?.name}}</mat-option>
+                  </div>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                  <mat-select placeholder="Status" [(ngModel)]="status" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+                    <div>
+
+                      <mat-option *ngFor="let item of statusTypes" name="option" [value]="item?.label">{{item?.label}}</mat-option>
+                    </div>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                  <mat-select placeholder="From Account Type" [(ngModel)]="fromAccountTypeId" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+                    <div>
+
+                      <mat-option *ngFor="let item of clientInstruction?.fromAccountTypeIdOptions" name="option" [value]="item?.id">{{item?.name}}</mat-option>
+                    </div>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                  <mat-select placeholder="From Account" [(ngModel)]="fromAccountId" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+                    <div>
+
+                      <mat-option *ngFor="let item of clientInstruction?.fromAccountIdOptions" name="option" [value]="item?.id">{{item?.name}}</mat-option>
+                    </div>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                  <mat-select placeholder="Destination" [(ngModel)]="destinationId" [ngModelOptions]="{standdalone: true}" ngDefaultControl>
+                    <div>
+
+                      <mat-option *ngFor="let item of clientInstruction?.destinationIdOptions" name="option" [value]="item?.id">{{item?.name}}</mat-option>
+                    </div>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                  <mat-select placeholder="To Office" [(ngModel)="officeId" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+                    <div>
+
+                      <mat-option *ngFor="let item of clientInstruction?.officeIdOptions" name="option" [value]="item?.id">{{item?.name}}</mat-option>
+                    </div>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                  <mat-select placeholder="Beneficiary" [(ngModel)]="beneficiaryId" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+                    <div>
+
+                      <mat-option *ngFor="let item of clientInstruction?.beneficiaryIdOptions" name="option" [value]="item?.id">{{item?.name}}</mat-option>
+                    </div>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                  <mat-select placeholder="To Account Type" [(ngModel)]="toAccountTypeId" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+                    <div>
+
+                      <mat-option *ngFor="let item of clientInstruction?.toAccountTypeIdOptions" name="option" [value]="item?.id">{{item?.name}}</mat-option>
+                    </div>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                  <mat-select placeholder="To Account" [(ngModel)]="toAccountId" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+                    <div>
+
+                      <mat-option *ngFor="let item of clientInstruction?.toAccountIdOptions" name="option" [value]="item?.id">{{item?.name}}</mat-option>
+                    </div>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                  <mat-select placeholder="Standing Instruction Type" [(ngModel)]="standingInstructionTypeId" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+                    <div>
+
+                      <mat-option *ngFor="let item of clientInstruction?.standingInstructionTypeIdOptions" name="option" [value]="item?.id">{{item?.name}}</mat-option>
+                    </div>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width">
+                  <input matInput name="amount" placeholder="Amount" ngModel>
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width">
+                    <input matInput name="validityFrom" placeholder="Validity from">
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width">
+                    <input matInput name="validityTo" placeholder="to">
+                  </mat-form-field>
+
+                  <mat-form-field class="example-full-width">
+                    <mat-select placeholder="Recurrence Frequency" [(ngModel)]="recurrenceFrequencyId" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+                      <div>
+
+                        <mat-option *ngFor="let item of clientInstruction?.recurrenceFrequencyIdOptions" name="option" [value]="item?.id">{{item?.name}}</mat-option>
+                      </div>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width">
+                    <input matInput name="onMonthDay" placeholder="On Month Day">
+                  </mat-form-field>
+
+                  <button mat-raised-button>Create</button>
+
+                </form>
+
+              </mat-card-content>
+            </mat-card>
+
+
+          </div>
