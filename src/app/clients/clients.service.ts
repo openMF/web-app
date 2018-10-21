@@ -338,40 +338,5 @@ export class ClientsService {
           }
         )
       );
-  }
-/*EDITED*/
-getStandingInstructionTemplate(clientId: number) {
-  const headers = new Headers(); // tslint:disable-line
-  this.createAuthorizationHeader(headers);
-  return this.http.get('https://demo.openmf.org/fineract-provider/api/v1/clients/' + clientId +
-      '/createstandinginstruction/template?tenantIdentifier=default', {
-        headers: headers
-      })
-    .pipe(
-      map(
-        (response: Response) => { // tslint:disable-line
-          response = response.json();
-          return response['allowedDocumentTypes'];
-
-        }
-      )
-    );
-}
-  postStandingInstruction(clientId: number, body: any) {
-    const headers = new Headers(); // tslint:disable-line
-    this.createAuthorizationHeader(headers);
-    return this.http.post('https://demo.openmf.org/fineract-provider/api/v1/clients/' + clientId +
-        '/createstandinginstruction/?tenantIdentifier=default', body, {
-          headers: headers
-        })
-      .pipe(
-        map(
-          (response: Response) => { // tslint:disable-line
-            response.json();
-          }
-        )
-      );
-  }
-/*EDITED*/
 
 }

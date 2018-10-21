@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser'; /*EDITED*/
-import { DebugElement } from '@angular/core';
+import { DebugElement } from '@angular/core'; /*EDITED*/
 
 import { CreateStandingInstructionComponent } from './create-standing-instruction.component';
 

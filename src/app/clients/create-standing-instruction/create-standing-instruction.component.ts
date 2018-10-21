@@ -1,108 +1,86 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild  } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core'; /*EDITED*/
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { ClientsService } from 'app/clients/clients.service';
-
 @Component({
   selector: 'mifosx-create-standing-instruction',
   templateUrl: './create-standing-instruction.component.html',
-  styleUrls: ['./create-standing-instruction.component.scss'],
-  encapsulation: ViewEncapsulation.None
-
+  styleUrls: ['./create-standing-instruction.component.scss']
 })
 export class CreateStandingInstructionComponent implements OnInit {
   id: number = undefined;
   paramsSubscription: Subscription;
-  clientInstruction: any = undefined;
-  mymodel: any = undefined;
-  value: any = undefined;
-  transferType: any = undefined;
-  instructionPriorityId: any = undefined;
-  fromAccountTypeId: any = undefined;
-  fromAccountId: any = undefined;
-  destinationId: any = undefined;
-  officeId: any = undefined;
-  beneficiaryId: any = undefined;
-  toAccountTypeId: any = undefined;
-  toAccountId: any = undefined;
-  standingInstructionTypeId: any = undefined;
-  recurrenceFrequencyId: any = undefined;
-  name: any = undefined;
-  account: any = undefined;
-  applicant: any = undefined;
-  validityFrom: any = undefined;
-  validityTo: any = undefined;
-  onMonthDay: any = undefined;
-  amount: any = undefined;
-
-
+  createStandingInstruction: any = undefined;
+  documentTypeId: any = undefined;
   identifier: any = undefined;
-  statusTypes = [{
+  transferId: any = undefined;
+  status: any = undefined;
+
+  transferTypes = [{
     id: 1,
-    label: 'Active'
+    label: 'Account Transfer',
   }, {
     id: 2,
-    label: 'Inactive',
-}];
+    label: 'Loan Repayment',
+  }];
+
+
+  statusTypes = [{
+    id: 1,
+    label: 'Active',
+  }, {
+    id: 2,
+    label: 'Disabled',
+  }];
 
 
 
-  constructor(private route: ActivatedRoute, private clientService: ClientsService) {}
 
-  @ViewChild('f') instructionForm: NgForm;
+  constructor(private route: ActivatedRoute, private clientService: ClientsService) { }
+  @ViewChild('f') identifierForm: NgForm;
+
 
   ngOnInit() {
     this.paramsSubscription = this.route.params
-    .subscribe(
-      (params: Params) => {
-        this.id = params['id'];
-      }
-    );
-  console.log(this.id);
-  this.getStandingInstructionTemplate(this.id);
+      .subscribe(
+        (params: Params) => {
+          this.id = params['id'];
+        }
+      );
+    console.log(this.id);
+    this.getClientIdentifierTemplate(this.id);
   }
 
-  getStandingInstructionTemplate(id: any) {
-    this.clientService.getStandingInstructionTemplate(id)
+  getClientIdentifierTemplate(id: any) {
+    this.clientService.getClientIdentifierTemplate(id)
       .subscribe(
         (res => {
-          this.clientInstruction = res;
+          this.createStandingInstruction = res;
           console.log(res);
         })
       );
   }
 
   onSubmit() {
-    this.account = {};
-    this.account.name = this.name;
-    this.account.applicant = this.applicant;
-    this.account.amount = this.amount;
-    this.account.validityFrom = this.validityFrom;
-    this.account.validityTo = this.validityTo;
-    this.account.onMonthDay = this.onMonthDay;
-    this.account.transferType = this.transferType;
-    this.account.instructionPriorityId = this.instructionPriorityId;
-    this.account.fromAccountTypeId = this.fromAccountTypeId;
-    this.account.fromAccountId = this.fromAccountId;
-    this.account.destinationId = this.destinationId;
-    this.account.officeId = this.officeId;
-    this.account.beneficiaryId = this.beneficiaryId;
-    this.account.toAccountTypeId = this.toAccountTypeId
-    this.account.toAccountId = this.toAccountId;
-    this.account.standingInstructionTypeId = this.standingInstructionTypeId;
-    this.account.recurrenceFrequencyId = this.recurrenceFrequencyId;
+    this.identifier = {};
+    this.identifier.description = this.identifierForm.value.description;
+    this.identifier.documentKey = this.identifierForm.value.uniqueid;
+    this.identifier.documentSpecificTypeId = this.documentTypeId;
+    this.identifier.status = this.status;
+    this.identifier.transferId = this.transferId;
 
-    this.clientService.postStandingInstruction(this.id, this.account)
+
+
+    this.clientService.postClientIdentifier(this.id, this.identifier)
       .subscribe(
         (res => {
           return true;
         })
       );
-
-
-
+    this.identifierForm.reset();
   }
-}
+
+} /*EDITED*/
