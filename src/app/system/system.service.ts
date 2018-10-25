@@ -25,4 +25,12 @@ export class SystemService {
     return this.http.get('/codes');
   }
 
+  /**
+   * @param {any} code Code to be created.
+   * @returns {Observable<any>}
+   */
+  createCode(code: any): Observable<any> {
+    return this.http.post('/codes', code);
+  }
+
 }

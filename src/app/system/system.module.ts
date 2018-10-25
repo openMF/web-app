@@ -8,6 +8,7 @@ import { SystemRoutingModule } from './system-routing.module';
 /** Component Imports */
 import { CodesComponent } from './codes/codes.component';
 import { SystemComponent } from './system.component';
+import { CreateCodeComponent } from './codes/create-code/create-code.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { SystemComponent } from './system.component';
   ],
   declarations: [
     SystemComponent,
-    CodesComponent
+    CodesComponent,
+    CreateCodeComponent
   ]
 })
 export class SystemModule { }
