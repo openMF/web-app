@@ -14,4 +14,7 @@ export class GroupsService {
         return  this.http.get('/groups');
     }
 
+    getGroupByOfficeId(id: number): Observable<any> {
+        return this.http.get('/groups?officeId=' + id);
+    }
 }

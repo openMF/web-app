@@ -14,4 +14,12 @@ export class CentersService {
         return  this.http.get('/centers');
     }
 
+    getStaff(id: number) {
+        return this.http.get('/centers/template?officeId=' + id + '&staffInSelectedOfficeOnly=true');
+    }
+
+    createCenters(centers: any): Observable<any> {   
+        return this.http.post('/centers', centers);
+    }
+
 }

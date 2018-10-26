@@ -1,0 +1,124 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="centerForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input type="text" matInput required formControlName="name" />
+            <mat-error *ngIf="centerForm.controls.name.hasError('required')">
+              The Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Office</mat-label>
+            <mat-select required formControlName="officeId">
+              <mat-option *ngFor="let office of officeData ;let i = index" [value]="office.id" (click)="onclick(i)">
+                {{ office.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="centerForm.controls.officeId.hasError('required')">
+              Office is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Staff</mat-label>
+            <mat-select formControlName="staffId">
+              <mat-option *ngFor="let staff of staffData" [value]="staff.id">
+                {{ staff.displayName }}
+              </mat-option>
+            </mat-select>
+
+          </mat-form-field>
+
+          <table>
+            <tr>
+              <td>
+                <mat-checkbox [formControl]="disableSelect" (click)="disable()">Active</mat-checkbox>
+              </td>
+              <td [hidden]="!disableSelect.value">
+                <mat-form-field class="example-full">
+                  <mat-label>Activation On</mat-label>
+                  <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="activationDateDatePicker"
+                    formControlName="activationDate" required >
+                  <mat-datepicker-toggle matSuffix [for]="activationDateDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #activationDateDatePicker></mat-datepicker>
+                  <mat-error *ngIf="centerForm.controls.activationDate.hasError('required')">
+                    Activation Date is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
+              </td>
+            </tr>
+          </table>
+
+          <mat-form-field>
+            <mat-label>External Id </mat-label>
+            <input matInput type="number" formControlName="externalId">
+          </mat-form-field>
+
+
+          <mat-form-field class="example-full">
+            <mat-label>Submitted On</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker" formControlName="submittedOnDate"
+              >
+            <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #submittedOnDatePicker></mat-datepicker>
+            <mat-error *ngIf="centerForm.controls.submittedOnDate.hasError('required')">
+              Submitted On is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <table>
+            <tr>
+              <td>
+                <mat-form-field class="example-full">
+                  <mat-label>Select and add groups</mat-label>
+                  <mat-select>
+                    <mat-option *ngFor="let groups of groupData" [value]="groups.id" (click)="display(groups)">
+                      {{ groups.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </td>
+              <td [hidden]="value">
+                <mat-list *ngFor="let lst of groupDataDetail ">
+                  <button type="button" mat-mini-fab color="primary" (click)="add(lst)">  <fa-icon icon="plus"></fa-icon></button>
+                  <mat-list-item>Group Details</mat-list-item>
+                  <mat-divider [inset]="true"></mat-divider>
+                  <mat-list-item>Name: &nbsp;&nbsp;&nbsp;{{lst.name}} </mat-list-item>
+                  <mat-divider [inset]="true"></mat-divider>
+                  <mat-list-item>Id: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{lst.id}} </mat-list-item>
+                  <mat-divider [inset]="true"></mat-divider>
+                  <mat-list-item>Office: &nbsp;&nbsp;&nbsp;{{lst.officeName}} </mat-list-item>
+                </mat-list>
+              </td>
+            </tr>
+          </table>
+
+          <div *ngFor="let list of choice" class="class-form">
+            <mat-form-field appearance="outline" class="example-full1">
+              <mat-label> {{list.name}} </mat-label>
+              <input matInput placeholder="Placeholder" disabled="disabled">
+            </mat-form-field>
+            <button type="button" mat-mini-fab color="warn" (click)="delete(list)">  <i class="material-icons">clear</i></button>
+          </div>
+
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!centerForm.valid">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>
