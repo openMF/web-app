@@ -9,6 +9,8 @@ import { SystemRoutingModule } from './system-routing.module';
 import { CodesComponent } from './codes/codes.component';
 import { SystemComponent } from './system.component';
 import { CreateCodeComponent } from './codes/create-code/create-code.component';
+import { CreateroleComponent } from './role/createrole/createrole.component';
+import { RoleComponent } from './role/role.component';
 
 @NgModule({
   imports: [
@@ -18,7 +20,9 @@ import { CreateCodeComponent } from './codes/create-code/create-code.component';
   declarations: [
     SystemComponent,
     CodesComponent,
-    CreateCodeComponent
+    CreateCodeComponent,
+    RoleComponent,
+    CreateroleComponent
   ]
 })
 export class SystemModule { }

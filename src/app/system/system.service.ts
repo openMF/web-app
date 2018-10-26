@@ -33,4 +33,19 @@ export class SystemService {
     return this.http.post('/codes', code);
   }
 
+  /**
+   * @returns {Observable<any>} Fetches roles.
+   */
+  getRoles(): Observable<any> {
+    return this.http.get('/roles');
+  }
+
+  /**
+   * @param {any} code role to be created.
+   * @returns {Observable<any>}
+   */
+  createRole(role: any): Observable<any> {
+    return this.http.post('/roles', role);
+  }
+
 }

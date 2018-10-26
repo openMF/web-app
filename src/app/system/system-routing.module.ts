@@ -12,6 +12,9 @@ import { CreateCodeComponent } from './codes/create-code/create-code.component';
 
 /** Custom Resolvers */
 import { CodesResolver } from './codes/codes.resolver';
+import { RolesesResolver } from './common-resolvers/roles.resolver';
+import { RoleComponent } from './role/role.component';
+import { CreateroleComponent } from './role/createrole/createrole.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -41,6 +44,24 @@ const routes: Routes = [
           }
         ],
 
+      },
+      {
+        path: 'roles',
+        data: { title: extract('View Roles'), breadcrumb: 'Roles' },
+        children: [
+          {
+            path: '',
+            component: RoleComponent,
+            resolve: {
+              roles: RolesesResolver
+            }
+          },
+          {
+            path: 'add',
+            component: CreateroleComponent,
+            data: { title: extract('Add Roles'), breadcrumb: 'Add Roles' }
+          }
+        ],
       }
     ]
     }
@@ -50,6 +71,8 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [CodesResolver]
+  providers: [
+    CodesResolver,
+    RolesesResolver]
 })
 export class SystemRoutingModule { }
