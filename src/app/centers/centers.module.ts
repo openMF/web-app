@@ -9,6 +9,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { CentersComponent } from './centers.component';
 import { CentersRoutingModule } from 'app/centers/centers-routing.module';
 import { CentersService } from './centers.service';
+import { CreatecenterComponent } from './createcenter/createcenter.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,10 @@ import { CentersService } from './centers.service';
     FlexLayoutModule
 
   ],
-  declarations: [CentersComponent],
+  declarations: [
+    CentersComponent,
+    CreatecenterComponent
+  ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]

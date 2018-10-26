@@ -1,4 +1,8 @@
 <div class="container m-t-40 m-b-40">
+    <button mat-raised-button color="primary" class="create" [routerLink]="['create']">
+        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+        Create a Center
+      </button>
 
   <mat-form-field class="filter">
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
