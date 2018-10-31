@@ -1,0 +1,24 @@
+  .full-input input,.full-input select,.full-input textarea {
+    width: 100%
+  }
+
+  .normal input,.normal select,.normal textarea,.full-input input[type=checkbox],.full-input input[type=radio] {
+    width: auto
+  }
+
+
+ textarea {
+    resize: both
+  }
+
+  textarea.vertical {
+    resize: vertical
+  }
+
+  textarea.horizontal {
+    resize: vertical
+  }
+
+  textarea.noresize {
+    resize: none
+  }

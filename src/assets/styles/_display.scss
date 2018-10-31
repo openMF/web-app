@@ -1,0 +1,71 @@
+body, html {
+  width: 100%;
+  height: 100%;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 100%;
+}
+
+.container {
+  max-width: 74rem;
+  width: 90%;
+}
+
+  .mw400 {
+    max-width: 400px
+  }
+
+  .mw500 {
+    max-width: 500px
+  }
+
+  .mw600 {
+    max-width: 600px
+  }
+
+  .block {
+    display: block !important
+  }
+
+  .inline {
+    display: inline !important
+  }
+
+  .in-block {
+    display: inline-block !important;
+    *display: inline !important;
+    zoom:1}
+
+  .d-none,.hide,.hidden {
+    display: none !important
+  }
+
+
+  .t-0 {
+    top: 0
+  }
+
+  .b-0 {
+    bottom: 0
+  }
+
+  .l-0 {
+    left: 0
+  }
+
+  .r-0 {
+    right: 0
+  }
+
+  .tb-0 {
+    top: 0;
+    bottom: 0
+  }
+
+  .lr-0 {
+    left: 0;
+    right: 0
+  }
+
+  .fullwidth {
+    width: 100%
+  }
