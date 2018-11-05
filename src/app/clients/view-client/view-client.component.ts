@@ -26,6 +26,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   allNotes: any = undefined;
   clientIdentifiers: any = undefined;
   clientDocuments: any = undefined;
+  clientFamily: any = undefined;
   docId: any = undefined;
   private LOAN_DATA: any = undefined;
   private SAVINGS_DATA: any = undefined;
@@ -41,6 +42,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   dataSourceShares = new MatTableDataSource([]);
   dataSourceIdentifiers = new MatTableDataSource([]);
   dataSourceDocuments = new MatTableDataSource([]);
+  dataSourceFamily = new MatTableDataSource([]);
 
   @ViewChild('f') noteForm: NgForm;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -64,6 +66,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
     this.getClientNotes(this.id);
     this.getClientIdentifier(this.id);
     this.getClientDocuments(this.id);
+    this.getClientFamily(this.id);
   }
 
   getClientId(id: any) {
@@ -197,6 +200,23 @@ export class ViewClientComponent implements OnInit, OnDestroy {
       .subscribe(
         (res => {
           this.getClientDocuments(this.id);
+          return true;
+        })
+      );
+  }
+  getClientFamily(id: any) {
+    this.clientService.getClientFamily(id)
+      .subscribe(
+        (res => {
+          this.clientFamily = res;
+        })
+      );
+  }
+  deleteClientFamilyMember(id: number, famId: number) {
+    this.clientService.deleteClientFamilyMember(id, famId)
+      .subscribe(
+        (res => {
+          this.getClientFamily(this.id);
           return true;
         })
       );
