@@ -32,6 +32,7 @@ import { SystemModule } from './system/system.module';
 
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 /**
  * App Module
@@ -59,7 +60,7 @@ import { AppRoutingModule } from './app-routing.module';
     SystemModule,
     AppRoutingModule
   ],
-  declarations: [WebAppComponent],
+  declarations: [WebAppComponent, NotFoundComponent],
   providers: [],
   bootstrap: [WebAppComponent]
 })

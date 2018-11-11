@@ -17,8 +17,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Mono:300" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
   </head>
-  <body style="
-  background-color: #013837; display:flex; flex-direction:column; justify-content:center; align-items:center; min-height: 100%;">
+  <body id="bg">
     <!--[if lt IE 10]>
       <p>
         You are using an <strong>outdated</strong> browser.
@@ -47,10 +46,15 @@
       </div>
     </mifosx-web-app>
 
-    <div style="display:flex; flex-direction:column; align-items: center; ">
+    <div id="particles-js" class="center"></div>
+    <div class="center">
       <h1 style="color: white; font-family: 'Raleway', sans-serif; font-size: 120pt;">404</h1>
       <p style="color: white; font-family: 'Raleway', sans-serif; font-size: 12pt;">Something went wrong.</p>
     </div>
-    <!--<img src="cust/clipboard.png" style="position:absolute; bottom:0px; right:0px;"></img>-->
+
+    <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+      particlesJS.load("particles-js", 'particles.json');
+    </script>
   </body>
 </html>

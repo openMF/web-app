@@ -2,14 +2,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+//404 import
+import {NotFoundComponent} from './not-found/not-found.component';
+
 /**
  * Fallback to this route when no prior route is matched.
  */
 const routes: Routes = [
   {
+    path: '404',
+    component: NotFoundComponent
+  },
+  {
     path: '**',
-    redirectTo: '',
-    pathMatch: 'full'
+    redirectTo: '/404'
   }
 ];
 
