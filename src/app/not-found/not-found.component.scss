@@ -3,12 +3,24 @@
   margin: auto;
   left: 0;
   right: 0;
- display:flex;
- flex-direction:column;
- justify-content:center;
- align-items:center;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
 }
 
 #bg {
   background: cornflowerblue;
+}
+
+#title {
+  color: white;
+  font-family: 'Raleway', sans-serif;
+  font-size: 120pt;
+}
+
+#subtitle {
+  color: white;
+  font-family: 'Raleway', sans-serif;
+  font-size: 12pt;
 }

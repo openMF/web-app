@@ -37,24 +37,11 @@
       window.addEventListener('load',function() { window.scrollTo(0, 1); });
     </script>
 
-    <mifosx-web-app>
-      <div class="loader-wrapper">
-        <div class="bottom triangle"></div>
-        <div class="top triangle"></div>
-        <div class="left triangle"></div>
-        <div class="right triangle"></div>
-      </div>
-    </mifosx-web-app>
-
-    <div id="particles-js" class="center"></div>
+    <div id="particles-js"></div>
     <div class="center">
-      <h1 style="color: white; font-family: 'Raleway', sans-serif; font-size: 120pt;">404</h1>
-      <p style="color: white; font-family: 'Raleway', sans-serif; font-size: 12pt;">Something went wrong.</p>
+      <h1 id="title">404</h1>
+      <p id="subtitle">Something went wrong.</p>
     </div>
 
-    <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script>
-      particlesJS.load("particles-js", 'particles.json');
-    </script>
   </body>
 </html>

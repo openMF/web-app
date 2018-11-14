@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-//404 import
+// Not Found Component
 import {NotFoundComponent} from './not-found/not-found.component';
 
 /**
