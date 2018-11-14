@@ -1,41 +1,16 @@
+@import "align";
+@import "background";
+@import "border";
 @import "colours";
+@import "display";
+@import "float";
+@import "form";
 @import "loader";
+@import "margin";
+@import "misc";
+@import "overflow";
+@import "padding";
+@import "position";
+@import "text";
 @import "width-height";
 @import "z-index";
-//Import helper files
-@import "margin";
-@import "padding";
-@import "text";
-@import "input";
-@import "display";
-@import "border";
-@import "background";
-@import "align";
-@import "clear";
-@import "float";
-@import "overflow";
-@import "position";
-
-
-//Miscellaneous scss
-div {
-  box-sizing: border-box;
-}
-
-.color-inherit {
-    color: inherit
-  }
-
-.no-shadow {
-    box-shadow: none !important
-  }
-
-.pointer {
-    cursor: pointer
-  }
-
-.nolist {
-    list-style: none
-  }
-
-  

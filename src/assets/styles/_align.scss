@@ -1,20 +1,24 @@
-body, html {
+html,
+body {
   position: relative;
   overflow: hidden;
 }
 
-  .v-mid,.v-m {
-    vertical-align: middle !important
-  }
+.v-mid,
+.v-m {
+  vertical-align: middle;
+}
 
-  .v-top,.v-t {
-    vertical-align: top !important
-  }
+.v-top,
+.v-t {
+  vertical-align: top;
+}
 
-  .v-bottom,.v-b {
-    vertical-align: bottom !important
-  }
+.v-bottom,
+.v-b {
+  vertical-align: bottom;
+}
 
-  .v-super {
-    vertical-align: super !important
-  }
+.v-super {
+  vertical-align: super;
+}
