@@ -17,6 +17,9 @@ import { environment } from 'environments/environment';
 /** Main Component */
 import { WebAppComponent } from './web-app.component';
 
+/** Not Found Component */
+import { NotFoundComponent } from './not-found/not-found.component';
+
 /** Custom Modules */
 import { CoreModule } from './core/core.module';
 import { HomeModule } from './home/home.module';
@@ -59,7 +62,7 @@ import { AppRoutingModule } from './app-routing.module';
     SystemModule,
     AppRoutingModule
   ],
-  declarations: [WebAppComponent],
+  declarations: [WebAppComponent, NotFoundComponent],
   providers: [],
   bootstrap: [WebAppComponent]
 })
