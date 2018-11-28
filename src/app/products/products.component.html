@@ -1,0 +1,99 @@
+<div class="container">
+
+  <mat-card>
+
+    <div fxLayout="row" fxLayout.lt-md="column">
+
+      <div fxFlex="50%">
+
+        <mat-nav-list>
+
+          <mat-list-item>
+            <mat-icon matListIcon>
+              <fa-icon icon="briefcase" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Loan Products</h4>
+            <p matLine>Add new loan product or modify or inactivate loan product</p>
+          </mat-list-item>
+
+          <mat-list-item>
+            <mat-icon matListIcon>
+              <fa-icon icon="briefcase" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Savings Products</h4>
+            <p matLine>Add new savings product or modify or inactivate savings product</p>
+          </mat-list-item>
+
+          <mat-list-item>
+            <mat-icon matListIcon>
+              <fa-icon icon="briefcase" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Share Products</h4>
+            <p matLine>Add new share product or modify or inactivate share product</p>
+          </mat-list-item>
+
+          <mat-list-item>
+            <mat-icon matListIcon>
+              <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Charges</h4>
+            <p matLine>Define charges/penalties for loan products, savings and deposit products</p>
+          </mat-list-item>
+
+        </mat-nav-list>
+
+      </div>
+
+      <div fxFlex="50%">
+
+        <mat-nav-list>
+
+          <mat-list-item>
+            <mat-icon matListIcon>
+              <fa-icon icon="random" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Products Mix</h4>
+            <p matLine>Defines rules for taking multiple rules</p>
+          </mat-list-item>
+
+          <mat-list-item>
+            <mat-icon matListIcon>
+              <fa-icon icon="briefcase" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Fixed Deposit Products</h4>
+            <p matLine>Add, modify or inactivate a Fixed deposit product</p>
+          </mat-list-item>
+
+          <mat-list-item>
+            <mat-icon matListIcon>
+              <fa-icon icon="briefcase" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Recurring Deposit Products</h4>
+            <p matLine>Add, modify or inactivate a Recurring Deposit product</p>
+          </mat-list-item>
+
+          <mat-list-item [routerLink]="['tax-configurations']">
+            <mat-icon matListIcon>
+              <fa-icon icon="cogs" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Manage Tax Configurations</h4>
+            <p matLine>Define Tax components and Tax groups</p>
+          </mat-list-item>
+
+          <mat-list-item>
+            <mat-icon matListIcon>
+              <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Floating Rates</h4>
+            <p matLine>Define floating rates for loan products</p>
+          </mat-list-item>
+
+        </mat-nav-list>
+
+      </div>
+
+    </div>
+
+  </mat-card>
+
+</div>
