@@ -7,7 +7,7 @@ import { ProductsRoutingModule } from './products-routing.module';
 
 /** Custom Components */
 import { ProductsComponent } from './products.component';
-
+import { ManageTaxConfigurationsComponent } from './manage-tax-configurations/manage-tax-configurations.component';
 
 /**
  * Products Module
@@ -21,6 +21,7 @@ import { ProductsComponent } from './products.component';
   ],
   declarations: [
     ProductsComponent,
+    ManageTaxConfigurationsComponent,
   ],
   entryComponents: [
   ]

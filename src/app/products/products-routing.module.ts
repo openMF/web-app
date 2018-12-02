@@ -10,8 +10,7 @@ import { extract } from '../core/i18n/i18n.service';
 
 /** Custom Components */
 import { ProductsComponent } from './products.component';
-
-/** Custom Resolvers */
+import { ManageTaxConfigurationsComponent } from './manage-tax-configurations/manage-tax-configurations.component';
 
 /** Products Routes */
 const routes: Routes = [
@@ -23,6 +22,11 @@ const routes: Routes = [
         {
           path: '',
           component: ProductsComponent
+        },
+        {
+          path: 'tax-configurations',
+          component: ManageTaxConfigurationsComponent,
+          data: { title:  extract('Manage Tax Configurations'), breadcrumb: 'Manage Tax Configurations' },
         },
       ]
     }
