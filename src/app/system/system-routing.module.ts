@@ -9,6 +9,7 @@ import { extract } from '../core/i18n/i18n.service';
 import { SystemComponent } from './system.component';
 import { CodesComponent } from './codes/codes.component';
 import { CreateCodeComponent } from './codes/create-code/create-code.component';
+import { ExternalServicesComponent } from './external-services/external-services.component';
 
 /** Custom Resolvers */
 import { CodesResolver } from './codes/codes.resolver';
@@ -41,7 +42,12 @@ const routes: Routes = [
           }
         ],
 
-      }
+      },
+      {
+          path: 'external-services',
+          component: ExternalServicesComponent,
+          data: { title:  extract('External Services'), breadcrumb: 'External Services' },
+      },
     ]
     }
   ])
