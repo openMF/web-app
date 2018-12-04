@@ -1,0 +1,230 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="standingInstructionForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name">
+            <mat-error *ngIf="standingInstructionForm.controls.name.hasError('required')">
+              Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Applicant</mat-label>
+            <input matInput formControlName="applicant">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="transferTypeId">
+              <mat-option *ngFor="let transferType of transferTypeData" [value]="transferType.id">
+                {{ transferType.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="standingInstructionForm.controls.transferTypeId.hasError('required')">
+              Transfer type is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Priority</mat-label>
+            <mat-select formControlName="priorityId">
+              <mat-option *ngFor="let priority of priorityData" [value]="priority.id">
+                {{ priority.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="standingInstructionForm.controls.priorityId.hasError('required')">
+              Priority is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="statusId">
+              <mat-option *ngFor="let status of statusData" [value]="status.id">
+                {{ status.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="standingInstructionForm.controls.statusId.hasError('required')">
+              Status is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>From Account Type</mat-label>
+            <mat-select formControlName="fromAccountTypeId">
+              <mat-option *ngFor="let fromAccountType of fromAccountTypeData" [value]="fromAccountTypeId.id">
+                {{ fromAccountType.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="standingInstructionForm.controls.fromAccountTypeId.hasError('required')">
+              From Account Type is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>From Account</mat-label>
+            <mat-select formControlName="fromAccountId">
+              <mat-option *ngFor="let fromAccount of fromAccountData" [value]="fromAccount.id">
+                {{ fromAccount.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="standingInstructionForm.controls.fromAccountId.hasError('required')">
+              From Account is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Destination</mat-label>
+            <mat-select formControlName="destinationId">
+              <mat-option *ngFor="let destination of destinationData" [value]="destination.id">
+                {{ destination.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="standingInstructionForm.controls.destinationId.hasError('required')">
+              Destination is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>To Office</mat-label>
+            <mat-select formControlName="toOfficeId">
+              <mat-option *ngFor="let toOffice of toOfficeData" [value]="toOffice.id">
+                {{ toOffice.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="standingInstructionForm.controls.toOfficeId.hasError('required')">
+              To Office is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Beneficiary</mat-label>
+            <mat-select formControlName="beneficiaryId">
+              <mat-option *ngFor="let beneficiary of beneficiaryData" [value]="beneficiary.id">
+                {{ beneficiary.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="standingInstructionForm.controls.beneficiaryId.hasError('required')">
+              Beneficiary is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>To Account Type</mat-label>
+            <mat-select formControlName="toAccountTypeId">
+              <mat-option *ngFor="let toAccountType of toAccountTypeData" [value]="toAccountType.id">
+                {{ toAccountType.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="standingInstructionForm.controls.toAccountTypeId.hasError('required')">
+              To Account Type is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>To Account</mat-label>
+            <mat-select formControlName="toAccountId">
+              <mat-option *ngFor="let toAccount of toAccountData" [value]="toAccount.id">
+                {{ toAccount.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="standingInstructionForm.controls.toAccountId.hasError('required')">
+              To Account is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Standing Instruction Type</mat-label>
+            <mat-select formControlName="instructionId">
+              <mat-option *ngFor="let instruction of instructionData" [value]="instruction.id">
+                {{ instruction.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="standingInstructionForm.controls.instructionId.hasError('required')">
+              Standing Instruction Type is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Amount</mat-label>
+            <input matInput formControlName="amount">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Validity From</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="validityFromDatePicker" required formControlName="validityFromDate">
+            <mat-datepicker-toggle matSuffix [for]="validityFromDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #validityFromDatePicker></mat-datepicker>
+            <mat-error *ngIf="standingInstructionForm.controls.validityFromDate.hasError('required')">
+              Validity From is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>To</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="validityToDatePicker" required formControlName="validityToDate">
+            <mat-datepicker-toggle matSuffix [for]="validityToDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #validityToDatePicker></mat-datepicker>
+            <mat-error *ngIf="standingInstructionForm.controls.validityToDate.hasError('required')">
+              Validity To is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Recurrence Type</mat-label>
+            <mat-select formControlName="recurrenceTypeId">
+              <mat-option *ngFor="let recurrenceType of recurrenceTypeData" [value]="recurrenceType.id">
+                {{ recurrenceType.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="standingInstructionForm.controls.recurrenceTypeId.hasError('required')">
+              Recurrence Type is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Interval</mat-label>
+            <input matInput formControlName="recurrenceInterval">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Recurrence Frequency</mat-label>
+            <mat-select formControlName="recurrenceFrequencyId">
+              <mat-option *ngFor="let recurrenceFrequency of recurrrenceFrequencyData" [value]="recurrenceFrequency.id">
+                {{ recurrenceFrequency.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>On Month Day</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="recurrenceOnMonthDayPicker" required formControlName="recurrenceOnMonthDay">
+            <mat-datepicker-toggle matSuffix [for]="recurrenceOnMonthDayPicker"></mat-datepicker-toggle>
+            <mat-datepicker #recurrenceOnMonthDayPicker></mat-datepicker>
+            <mat-error *ngIf="standingInstructionForm.controls.recurrenceOnMonthDay.hasError('required')">
+              Recurrence Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!standingInstructionForm.valid">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>

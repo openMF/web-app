@@ -15,6 +15,7 @@ import { CreateAddressComponent } from './create-address/create-address.componen
 import { CreateIdentityComponent } from './create-identity/create-identity.component';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
 import { EditAddressComponent } from './edit-address/edit-address.component';
+import { CreateStandingInstructionComponent } from './create-standing-instruction/create-standing-instruction.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -57,6 +58,11 @@ const routes: Routes = [
       path: 'clients/addclientdocument/:id',
       component: UploadDocumentComponent,
       data: { title: extract('Create Identity') }
+    },
+    {
+      path: 'clients/createstandinginstruction/:id',
+      component: CreateStandingInstructionComponent,
+      data: { title: extract('Create Standing Instruction') }
     },
   ])
 ];

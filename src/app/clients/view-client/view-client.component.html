@@ -375,7 +375,7 @@
             <td mat-cell *matCellDef="let row">
               <i class="fa fa-cloud-download"></i>
               <!-- <i class="p-l-5 fa fa-eye"></i> -->
-              <i class="p-l-5 fa fa-times" (click)="$event.stopPropagation(); deleteClientDocuments(id, row.id)"></i>              
+              <i class="p-l-5 fa fa-times" (click)="$event.stopPropagation(); deleteClientDocuments(id, row.id)"></i>
             </td>
           </ng-container>
 
@@ -394,4 +394,3 @@
 
 </div>
 <p>User with ID {{ id }} loaded.</p>
-
