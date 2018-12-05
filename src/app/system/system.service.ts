@@ -19,6 +19,13 @@ export class SystemService {
   constructor(private http: HttpClient) { }
 
   /**
+   * @returns {Observable<any>} Data tables.
+   */
+  getDataTables(): Observable<any> {
+    return this.http.get('/datatables');
+  }
+
+  /**
    * @returns {Observable<any>} Fetches Codes.
    */
   getCodes(): Observable<any> {
