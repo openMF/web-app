@@ -21,42 +21,42 @@ const routes: Routes = [
     {
       path: 'clients',
       component: ClientsComponent,
-      data: { title: extract('Clients') }
+      data: { title: extract('Clients'), breadcrumb: 'Clients'  }
     },
     {
       path: 'clients/create',
       component: CreateClientComponent,
-      data: { title: extract('Create Client') }
+      data: { title: extract('Create Client'), breadcrumb: 'Create' }
     },
     {
       path: 'clients/view/:id',
       component: ViewClientComponent,
-      data: { title: extract('View Client') }
+      data: { title: extract('View Client'), breadcrumb: 'View' }
     },
     {
       path: 'clients/viewloan',
       component: ViewLoanComponent,
-      data: { title: extract('View Loan') }
+      data: { title: extract('View Loan'), breadcrumb: 'View' }
     },
     {
       path: 'clients/address/:id',
       component: CreateAddressComponent,
-      data: { title: extract('Create Address') }
+      data: { title: extract('Create Address'), breadcrumb: 'Create Address' }
     },
     {
       path: 'clients/editaddress/:id/:addressTypeId/:addressId',
       component: EditAddressComponent,
-      data: { title: extract('Edit Address') }
+      data: { title: extract('Edit Address'), breadcrumb: 'Edit Address' }
     },
     {
       path: 'clients/addclientidentifier/:id',
       component: CreateIdentityComponent,
-      data: { title: extract('Create Identity') }
+      data: { title: extract('Create Identity'), breadcrumb: 'Create Identity' }
     },
     {
       path: 'clients/addclientdocument/:id',
       component: UploadDocumentComponent,
-      data: { title: extract('Create Identity') }
+      data: { title: extract('Upload Identity'), breadcrumb: 'Upload Identity' }
     },
   ])
 ];
