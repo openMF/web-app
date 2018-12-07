@@ -10,9 +10,11 @@ import { SystemComponent } from './system.component';
 import { CodesComponent } from './codes/codes.component';
 import { CreateCodeComponent } from './codes/create-code/create-code.component';
 import { ExternalServicesComponent } from './external-services/external-services.component';
+import { ManageDataTablesComponent } from './manage-data-tables/manage-data-tables.component';
 
 /** Custom Resolvers */
 import { CodesResolver } from './codes/codes.resolver';
+import { ManageDataTablesResolver } from './manage-data-tables/manage-data-tables.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -48,6 +50,14 @@ const routes: Routes = [
           component: ExternalServicesComponent,
           data: { title:  extract('External Services'), breadcrumb: 'External Services' },
       },
+      {
+          path: 'data-tables',
+          component: ManageDataTablesComponent,
+          resolve: {
+                dataTables: ManageDataTablesResolver
+          },
+          data: { title:  extract('Manage Data Tables'), breadcrumb: 'Manage Data Tables' },
+      },
     ]
     }
   ])
@@ -56,6 +66,9 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [CodesResolver]
+  providers: [
+    CodesResolver,
+    ManageDataTablesResolver
+  ]
 })
 export class SystemRoutingModule { }

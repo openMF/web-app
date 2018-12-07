@@ -10,6 +10,7 @@ import { CodesComponent } from './codes/codes.component';
 import { SystemComponent } from './system.component';
 import { CreateCodeComponent } from './codes/create-code/create-code.component';
 import { ExternalServicesComponent } from './external-services/external-services.component';
+import { ManageDataTablesComponent } from './manage-data-tables/manage-data-tables.component';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { ExternalServicesComponent } from './external-services/external-services
     CodesComponent,
     CreateCodeComponent,
     ExternalServicesComponent,
+    ManageDataTablesComponent
   ]
 })
 export class SystemModule { }
