@@ -11,10 +11,12 @@ import { CodesComponent } from './codes/codes.component';
 import { CreateCodeComponent } from './codes/create-code/create-code.component';
 import { ExternalServicesComponent } from './external-services/external-services.component';
 import { ManageDataTablesComponent } from './manage-data-tables/manage-data-tables.component';
+import { ManageHooksComponent } from './manage-hooks/manage-hooks.component';
 
 /** Custom Resolvers */
 import { CodesResolver } from './codes/codes.resolver';
 import { ManageDataTablesResolver } from './manage-data-tables/manage-data-tables.resolver';
+import { ManageHooksResolver } from './manage-hooks/manage-hooks.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -58,6 +60,14 @@ const routes: Routes = [
           },
           data: { title:  extract('Manage Data Tables'), breadcrumb: 'Manage Data Tables' },
       },
+      {
+          path: 'hooks',
+          component: ManageHooksComponent,
+          resolve: {
+                hooks: ManageHooksResolver
+          },
+          data: { title:  extract('Manage Hooks'), breadcrumb: 'Manage Hooks' },
+      },
     ]
     }
   ])
@@ -68,7 +78,8 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     CodesResolver,
-    ManageDataTablesResolver
+    ManageDataTablesResolver,
+    ManageHooksResolver,
   ]
 })
 export class SystemRoutingModule { }

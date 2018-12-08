@@ -26,6 +26,13 @@ export class SystemService {
   }
 
   /**
+   * @returns {Observable<any>} Hooks.
+   */
+  getHooks(): Observable<any> {
+    return this.http.get('/hooks');
+  }
+
+  /**
    * @returns {Observable<any>} Fetches Codes.
    */
   getCodes(): Observable<any> {
