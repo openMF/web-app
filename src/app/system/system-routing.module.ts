@@ -13,12 +13,14 @@ import { ExternalServicesComponent } from './external-services/external-services
 import { ManageDataTablesComponent } from './manage-data-tables/manage-data-tables.component';
 import { ManageHooksComponent } from './manage-hooks/manage-hooks.component';
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
+import { ManageSurveysComponent } from './manage-surveys/manage-surveys.component';
 
 /** Custom Resolvers */
 import { CodesResolver } from './codes/codes.resolver';
 import { ManageDataTablesResolver } from './manage-data-tables/manage-data-tables.resolver';
 import { ManageHooksResolver } from './manage-hooks/manage-hooks.resolver';
 import { RolesAndPermissionsResolver } from './roles-and-permissions/roles-and-permissions.resolver';
+import { ManageSurveysResolver } from './manage-surveys/manage-surveys.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -78,6 +80,14 @@ const routes: Routes = [
           },
           data: { title:  extract('Roles and Permissions'), breadcrumb: 'Roles and Permissions' },
       },
+      {
+        path: 'surveys',
+        component: ManageSurveysComponent,
+        resolve: {
+              surveys: ManageSurveysResolver
+        },
+        data: { title:  extract('Manage Surveys'), breadcrumb: 'Manage Surveys' },
+      }
     ]
     }
   ])
@@ -90,7 +100,8 @@ const routes: Routes = [
     CodesResolver,
     ManageDataTablesResolver,
     ManageHooksResolver,
-    RolesAndPermissionsResolver
+    RolesAndPermissionsResolver,
+    ManageSurveysResolver
   ]
 })
 export class SystemRoutingModule { }

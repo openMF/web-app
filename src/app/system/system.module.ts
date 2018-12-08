@@ -13,6 +13,7 @@ import { ExternalServicesComponent } from './external-services/external-services
 import { ManageDataTablesComponent } from './manage-data-tables/manage-data-tables.component';
 import { ManageHooksComponent } from './manage-hooks/manage-hooks.component';
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
+import { ManageSurveysComponent } from './manage-surveys/manage-surveys.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-
     ExternalServicesComponent,
     ManageDataTablesComponent,
     ManageHooksComponent,
-    RolesAndPermissionsComponent
+    RolesAndPermissionsComponent,
+    ManageSurveysComponent
   ]
 })
 export class SystemModule { }
