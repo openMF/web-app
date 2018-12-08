@@ -11,10 +11,14 @@ import { CodesComponent } from './codes/codes.component';
 import { CreateCodeComponent } from './codes/create-code/create-code.component';
 import { ExternalServicesComponent } from './external-services/external-services.component';
 import { ManageDataTablesComponent } from './manage-data-tables/manage-data-tables.component';
+import { SurveysComponent } from './surveys/surveys.component';
+import { ManageHooksComponent } from './manage-hooks/manage-hooks.component';
 
 /** Custom Resolvers */
 import { CodesResolver } from './codes/codes.resolver';
 import { ManageDataTablesResolver } from './manage-data-tables/manage-data-tables.resolver';
+import { SurveysResolver } from './surveys/surveys.resolver';
+import { ManageHooksResolver } from './manage-hooks/manage-hooks.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -46,6 +50,19 @@ const routes: Routes = [
 
       },
       {
+        path: 'surveys',
+        data: { title: extract('Manage Surveys'), breadcrumb: 'Manage Surveys' },
+        children: [
+          {
+            path: '',
+            component: SurveysComponent,
+            resolve: {
+              surveys: SurveysResolver
+            }
+          },
+        ]
+      },
+      {
           path: 'external-services',
           component: ExternalServicesComponent,
           data: { title:  extract('External Services'), breadcrumb: 'External Services' },
@@ -58,6 +75,14 @@ const routes: Routes = [
           },
           data: { title:  extract('Manage Data Tables'), breadcrumb: 'Manage Data Tables' },
       },
+      {
+          path: 'hooks',
+          component: ManageHooksComponent,
+          resolve: {
+                hooks: ManageHooksResolver
+          },
+          data: { title:  extract('Manage Hooks'), breadcrumb: 'Manage Hooks' },
+      },
     ]
     }
   ])
@@ -68,7 +93,9 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     CodesResolver,
-    ManageDataTablesResolver
+    ManageDataTablesResolver,
+    SurveysResolver,
+    ManageHooksResolver,
   ]
 })
 export class SystemRoutingModule { }

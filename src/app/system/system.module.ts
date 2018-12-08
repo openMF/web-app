@@ -11,6 +11,8 @@ import { SystemComponent } from './system.component';
 import { CreateCodeComponent } from './codes/create-code/create-code.component';
 import { ExternalServicesComponent } from './external-services/external-services.component';
 import { ManageDataTablesComponent } from './manage-data-tables/manage-data-tables.component';
+import { SurveysComponent } from './surveys/surveys.component';
+import { ManageHooksComponent } from './manage-hooks/manage-hooks.component';
 
 @NgModule({
   imports: [
@@ -22,7 +24,9 @@ import { ManageDataTablesComponent } from './manage-data-tables/manage-data-tabl
     CodesComponent,
     CreateCodeComponent,
     ExternalServicesComponent,
-    ManageDataTablesComponent
+    ManageDataTablesComponent,
+    SurveysComponent,
+    ManageHooksComponent
   ]
 })
 export class SystemModule { }

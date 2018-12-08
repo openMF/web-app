@@ -1,0 +1,19 @@
+table {
+  width: 100%;
+}
+
+[hidden] {
+  display: none !important; 
+}
+
+.enabled {
+  color: #32cd32;
+}
+
+.disabled {
+  color: #f44366;
+}
+
+td, th {
+  width: 15%;
+}

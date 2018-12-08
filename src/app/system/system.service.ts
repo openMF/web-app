@@ -26,10 +26,24 @@ export class SystemService {
   }
 
   /**
+   * @returns {Observable<any>} Hooks.
+   */
+  getHooks(): Observable<any> {
+    return this.http.get('/hooks');
+  }
+
+  /**
    * @returns {Observable<any>} Fetches Codes.
    */
   getCodes(): Observable<any> {
     return this.http.get('/codes');
+  }
+
+  /**
+   * @returns {Observable<any>} Fetches Surveys.
+   */
+  getSurveys(): Observable<any> {
+    return this.http.get('/surveys');
   }
 
   /**
