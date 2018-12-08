@@ -33,6 +33,13 @@ export class SystemService {
   }
 
   /**
+   * @returns {Observable<any>} Fetches Roles and Permissions
+   */
+  getRoles(): Observable<any> {
+    return this.http.get('/roles');
+  }
+
+  /**
    * @returns {Observable<any>} Fetches Codes.
    */
   getCodes(): Observable<any> {

@@ -12,11 +12,13 @@ import { CreateCodeComponent } from './codes/create-code/create-code.component';
 import { ExternalServicesComponent } from './external-services/external-services.component';
 import { ManageDataTablesComponent } from './manage-data-tables/manage-data-tables.component';
 import { ManageHooksComponent } from './manage-hooks/manage-hooks.component';
+import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
 
 /** Custom Resolvers */
 import { CodesResolver } from './codes/codes.resolver';
 import { ManageDataTablesResolver } from './manage-data-tables/manage-data-tables.resolver';
 import { ManageHooksResolver } from './manage-hooks/manage-hooks.resolver';
+import { RolesAndPermissionsResolver } from './roles-and-permissions/roles-and-permissions.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -68,6 +70,14 @@ const routes: Routes = [
           },
           data: { title:  extract('Manage Hooks'), breadcrumb: 'Manage Hooks' },
       },
+      {
+          path: 'roles-and-permissions',
+          component: RolesAndPermissionsComponent,
+          resolve: {
+                roles: RolesAndPermissionsResolver
+          },
+          data: { title:  extract('Roles and Permissions'), breadcrumb: 'Roles and Permissions' },
+      },
     ]
     }
   ])
@@ -80,6 +90,7 @@ const routes: Routes = [
     CodesResolver,
     ManageDataTablesResolver,
     ManageHooksResolver,
+    RolesAndPermissionsResolver
   ]
 })
 export class SystemRoutingModule { }
