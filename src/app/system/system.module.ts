@@ -12,6 +12,7 @@ import { CreateCodeComponent } from './codes/create-code/create-code.component';
 import { ExternalServicesComponent } from './external-services/external-services.component';
 import { ManageDataTablesComponent } from './manage-data-tables/manage-data-tables.component';
 import { ManageHooksComponent } from './manage-hooks/manage-hooks.component';
+import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { ManageHooksComponent } from './manage-hooks/manage-hooks.component';
     CreateCodeComponent,
     ExternalServicesComponent,
     ManageDataTablesComponent,
-    ManageHooksComponent
+    ManageHooksComponent,
+    RolesAndPermissionsComponent
   ]
 })
 export class SystemModule { }
