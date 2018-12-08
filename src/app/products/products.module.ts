@@ -8,6 +8,7 @@ import { ProductsRoutingModule } from './products-routing.module';
 /** Custom Components */
 import { ProductsComponent } from './products.component';
 import { ManageTaxConfigurationsComponent } from './manage-tax-configurations/manage-tax-configurations.component';
+import { RecurringDepositProductsComponent } from './recurring-deposit-products/recurring-deposit-products.component';
 
 /**
  * Products Module
@@ -22,6 +23,7 @@ import { ManageTaxConfigurationsComponent } from './manage-tax-configurations/ma
   declarations: [
     ProductsComponent,
     ManageTaxConfigurationsComponent,
+    RecurringDepositProductsComponent
   ],
   entryComponents: [
   ]

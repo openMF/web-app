@@ -11,6 +11,10 @@ import { extract } from '../core/i18n/i18n.service';
 /** Custom Components */
 import { ProductsComponent } from './products.component';
 import { ManageTaxConfigurationsComponent } from './manage-tax-configurations/manage-tax-configurations.component';
+import { RecurringDepositProductsComponent } from './recurring-deposit-products/recurring-deposit-products.component';
+
+/** Custom Resolvers */
+import { RecurringDepositProductsResolver } from './recurring-deposit-products/recurring-deposit-products.resolver';
 
 /** Products Routes */
 const routes: Routes = [
@@ -28,6 +32,14 @@ const routes: Routes = [
           component: ManageTaxConfigurationsComponent,
           data: { title:  extract('Manage Tax Configurations'), breadcrumb: 'Manage Tax Configurations' },
         },
+        {
+          path: 'recurring-deposit-products',
+          component: RecurringDepositProductsComponent,
+          resolve: {
+                recurringDepositProducts: RecurringDepositProductsResolver
+          },
+          data: { title:  extract('Recurring Deposit Products'), breadcrumb: 'Recurring Deposit Products' },
+        },
       ]
     }
   ])
@@ -42,6 +54,7 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   providers: [
+    RecurringDepositProductsResolver,
   ]
 })
 export class ProductsRoutingModule { }

@@ -17,4 +17,13 @@ export class ProductsService {
    * @param {HttpClient} http Http Client to send requests.
    */
   constructor(private http: HttpClient) { }
+
+  /**
+   * @param {any} Fetches recurring deposit products.
+   * @returns {Observable<any>}
+   */
+  getRecurringDepositProducts(): Observable<any> {
+    return this.http.get('/recurringdepositproducts');
+  }
+
 }
