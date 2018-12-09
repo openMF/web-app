@@ -47,6 +47,13 @@ export class SystemService {
   }
 
   /**
+   * @returns {Observable<any>} Fetches Surveys.
+   */
+  getSurveys(): Observable<any> {
+    return this.http.get('/surveys');
+  }
+
+  /**
    * @param {any} code Code to be created.
    * @returns {Observable<any>}
    */

@@ -1,0 +1,16 @@
+table {
+  width: 100%;
+
+  .select-row:hover {
+    cursor: pointer;
+  }
+}
+
+// TODO: CONFIGURE THESE CLASSES GLOBALLY
+.enabled {
+  color: #32cd32;
+}
+
+.disabled {
+  color: #f44366;
+}
