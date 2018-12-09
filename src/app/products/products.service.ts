@@ -26,4 +26,12 @@ export class ProductsService {
     return this.http.get('/recurringdepositproducts');
   }
 
+  /**
+   * @param {any} Fetches charges.
+   * @returns {Observable<any>}
+   */
+  getCharges(): Observable<any> {
+    return this.http.get('/charges');
+  }
+
 }
