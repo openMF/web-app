@@ -13,10 +13,12 @@ import { ProductsComponent } from './products.component';
 import { ManageTaxConfigurationsComponent } from './manage-tax-configurations/manage-tax-configurations.component';
 import { RecurringDepositProductsComponent } from './recurring-deposit-products/recurring-deposit-products.component';
 import { ChargesComponent } from './charges/charges.component';
+import { FixedDepositProductsComponent } from './fixed-deposit-products/fixed-deposit-products.component';
 
 /** Custom Resolvers */
 import { RecurringDepositProductsResolver } from './recurring-deposit-products/recurring-deposit-products.resolver';
 import { ChargesResolver } from './charges/charges.resolver';
+import { FixedDepositProductsResolver } from './fixed-deposit-products/fixed-deposit-products.resolver';
 
 /** Products Routes */
 const routes: Routes = [
@@ -50,6 +52,14 @@ const routes: Routes = [
           },
           data: { title:  extract('Charges'), breadcrumb: 'Charges' },
         },
+        {
+          path: 'fixed-deposit-products',
+          component: FixedDepositProductsComponent,
+          resolve: {
+                fixedDepositProducts: FixedDepositProductsResolver
+          },
+          data: { title:  extract('Fixed Deposit Products'), breadcrumb: 'Fixed Deposit Products' },
+        },
       ]
     }
   ])
@@ -66,6 +76,7 @@ const routes: Routes = [
   providers: [
     RecurringDepositProductsResolver,
     ChargesResolver,
+    FixedDepositProductsResolver
   ]
 })
 export class ProductsRoutingModule { }
