@@ -34,4 +34,12 @@ export class ProductsService {
     return this.http.get('/charges');
   }
 
+  /**
+   * @param {any} Fetches fixed deposit products.
+   * @returns {Observable<any>}
+   */
+  getFixedDepositProducts(): Observable<any> {
+    return this.http.get('/fixeddepositproducts');
+  }
+
 }
