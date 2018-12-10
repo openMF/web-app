@@ -14,6 +14,7 @@ import { ManageDataTablesComponent } from './manage-data-tables/manage-data-tabl
 import { ManageHooksComponent } from './manage-hooks/manage-hooks.component';
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
 import { ManageSurveysComponent } from './manage-surveys/manage-surveys.component';
+import { ManageSchedulerJobsComponent } from './manage-scheduler-jobs/manage-scheduler-jobs.component';
 
 /** Custom Resolvers */
 import { CodesResolver } from './codes/codes.resolver';
@@ -21,6 +22,7 @@ import { ManageDataTablesResolver } from './manage-data-tables/manage-data-table
 import { ManageHooksResolver } from './manage-hooks/manage-hooks.resolver';
 import { RolesAndPermissionsResolver } from './roles-and-permissions/roles-and-permissions.resolver';
 import { ManageSurveysResolver } from './manage-surveys/manage-surveys.resolver';
+import { ManageSchedulerJobsResolver } from './manage-scheduler-jobs/manage-scheduler-jobs.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -87,7 +89,15 @@ const routes: Routes = [
               surveys: ManageSurveysResolver
         },
         data: { title:  extract('Manage Surveys'), breadcrumb: 'Manage Surveys' },
-      }
+      },
+      {
+        path: 'scheduler-jobs',
+        component: ManageSchedulerJobsComponent,
+        resolve: {
+              jobsScheduler: ManageSchedulerJobsResolver
+        },
+        data: { title:  extract('Manage Scheduler Jobs'), breadcrumb: 'Manage Scheduler Jobs' },
+      },
     ]
     }
   ])
@@ -101,7 +111,8 @@ const routes: Routes = [
     ManageDataTablesResolver,
     ManageHooksResolver,
     RolesAndPermissionsResolver,
-    ManageSurveysResolver
+    ManageSurveysResolver,
+    ManageSchedulerJobsResolver,
   ]
 })
 export class SystemRoutingModule { }

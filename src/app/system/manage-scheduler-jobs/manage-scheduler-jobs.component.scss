@@ -1,0 +1,32 @@
+table {
+  width: 100%;
+
+  .select-row:hover {
+    cursor: pointer;
+  }
+}
+
+.success {
+  color: #32cd32;
+}
+
+.fail {
+  color: #f44366;
+}
+
+.currently-running {
+  color: #32cd32;
+}
+
+.not-currently-running {
+  color: #f44366;
+}
+
+.errorlog {
+  color: #ffa726;
+}
+
+.suspend {
+  background: #ffa726;
+  color: #ffffff;
+}

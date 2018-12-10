@@ -14,6 +14,7 @@ import { ManageDataTablesComponent } from './manage-data-tables/manage-data-tabl
 import { ManageHooksComponent } from './manage-hooks/manage-hooks.component';
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
 import { ManageSurveysComponent } from './manage-surveys/manage-surveys.component';
+import { ManageSchedulerJobsComponent } from './manage-scheduler-jobs/manage-scheduler-jobs.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { ManageSurveysComponent } from './manage-surveys/manage-surveys.componen
     ManageDataTablesComponent,
     ManageHooksComponent,
     RolesAndPermissionsComponent,
-    ManageSurveysComponent
+    ManageSurveysComponent,
+    ManageSchedulerJobsComponent
   ]
 })
 export class SystemModule { }

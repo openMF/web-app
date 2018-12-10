@@ -54,6 +54,20 @@ export class SystemService {
   }
 
   /**
+   * @returns {Observable<any>} Fetches Jobs.
+   */
+  getJobs(): Observable<any> {
+    return this.http.get('/jobs');
+  }
+
+  /**
+   * @returns {Observable<any>} Fetches Scheduler.
+   */
+  getScheduler(): Observable<any> {
+    return this.http.get('/scheduler');
+  }
+
+  /**
    * @param {any} code Code to be created.
    * @returns {Observable<any>}
    */
