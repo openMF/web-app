@@ -19,6 +19,10 @@ import { FixedDepositProductsComponent } from './fixed-deposit-products/fixed-de
 import { RecurringDepositProductsResolver } from './recurring-deposit-products/recurring-deposit-products.resolver';
 import { ChargesResolver } from './charges/charges.resolver';
 import { FixedDepositProductsResolver } from './fixed-deposit-products/fixed-deposit-products.resolver';
+import { ProductsMixComponent } from './products-mix/products-mix.component';
+
+/** Custom Resolvers */
+import { ProductsMixResolver } from './products-mix/products-mix.resolver';
 
 /** Products Routes */
 const routes: Routes = [
@@ -60,6 +64,14 @@ const routes: Routes = [
           },
           data: { title:  extract('Fixed Deposit Products'), breadcrumb: 'Fixed Deposit Products' },
         },
+        {
+          path: 'products-mix',
+          component: ProductsMixComponent,
+          resolve: {
+                products: ProductsMixResolver
+          },
+          data: { title:  extract('Products Mix'), breadcrumb: 'Products Mix' },
+        },
       ]
     }
   ])
@@ -76,7 +88,8 @@ const routes: Routes = [
   providers: [
     RecurringDepositProductsResolver,
     ChargesResolver,
-    FixedDepositProductsResolver
+    FixedDepositProductsResolver,
+    ProductsMixResolver,
   ]
 })
 export class ProductsRoutingModule { }

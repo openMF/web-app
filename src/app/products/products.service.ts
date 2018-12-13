@@ -42,4 +42,14 @@ export class ProductsService {
     return this.http.get('/fixeddepositproducts');
   }
 
+  /**
+   * Fetches Product mixes.
+   * @returns {Observable<any>}
+   */
+  getProductMixes(): Observable<any> {
+    let httpParams = new HttpParams();
+    httpParams = httpParams.set('associations', 'productMixes');
+    return this.http.get('/loanproducts', { params: httpParams });
+  }
+
 }
