@@ -14,14 +14,12 @@ import { ManageTaxConfigurationsComponent } from './manage-tax-configurations/ma
 import { RecurringDepositProductsComponent } from './recurring-deposit-products/recurring-deposit-products.component';
 import { ChargesComponent } from './charges/charges.component';
 import { FixedDepositProductsComponent } from './fixed-deposit-products/fixed-deposit-products.component';
+import { ProductsMixComponent } from './products-mix/products-mix.component';
 
 /** Custom Resolvers */
 import { RecurringDepositProductsResolver } from './recurring-deposit-products/recurring-deposit-products.resolver';
 import { ChargesResolver } from './charges/charges.resolver';
 import { FixedDepositProductsResolver } from './fixed-deposit-products/fixed-deposit-products.resolver';
-import { ProductsMixComponent } from './products-mix/products-mix.component';
-
-/** Custom Resolvers */
 import { ProductsMixResolver } from './products-mix/products-mix.resolver';
 
 /** Products Routes */
