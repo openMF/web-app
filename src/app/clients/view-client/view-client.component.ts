@@ -43,7 +43,10 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   dataSourceDocuments = new MatTableDataSource([]);
 
   @ViewChild('f') noteForm: NgForm;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('loanPaginator') loanPaginator: MatPaginator;
+  @ViewChild('savingPaginator') savingPaginator: MatPaginator;
+  @ViewChild('sharePaginator') sharePaginator: MatPaginator;
+
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private route: ActivatedRoute, private clientService: ClientsService,
@@ -97,9 +100,9 @@ export class ViewClientComponent implements OnInit, OnDestroy {
           this.dataSourceLoan = new MatTableDataSource(this.LOAN_DATA);
           this.dataSourceSavings = new MatTableDataSource(this.SAVINGS_DATA);
           this.dataSourceShares = new MatTableDataSource(this.SHARES_DATA);
-          this.dataSourceLoan.paginator = this.paginator;
-          this.dataSourceSavings.paginator = this.paginator;
-          this.dataSourceShares.paginator = this.paginator;
+          this.dataSourceLoan.paginator = this.loanPaginator;
+          this.dataSourceSavings.paginator = this.savingPaginator;
+          this.dataSourceShares.paginator = this.sharePaginator;
           this.dataSourceLoan.sort = this.sort;
           this.dataSourceSavings.sort = this.sort;
           this.dataSourceShares.sort = this.sort;
@@ -145,7 +148,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
           });
 
           this.dataSourceIdentifiers = new MatTableDataSource(this.clientIdentifiers);
-          this.dataSourceIdentifiers.paginator = this.paginator;
+          // this.dataSourceIdentifiers.paginator = this.paginator;
           this.dataSourceIdentifiers.sort = this.sort;
         })
       );
@@ -158,7 +161,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
           this.clientDocuments = res;
           this.docId = res.id;
           this.dataSourceDocuments = new MatTableDataSource(res);
-          this.dataSourceDocuments.paginator = this.paginator;
+          // this.dataSourceDocuments.paginator = this.paginator;
           this.dataSourceDocuments.sort = this.sort;
         })
       );
