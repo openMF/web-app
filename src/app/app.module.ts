@@ -24,6 +24,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { CoreModule } from './core/core.module';
 import { HomeModule } from './home/home.module';
 import { LoginModule } from './login/login.module';
+import { HelpModule } from './help/help.module';
 import { SettingsModule } from './settings/settings.module';
 import { NavigationModule } from './navigation/navigation.module';
 import { ClientsModule} from './clients/clients.module';
@@ -53,6 +54,7 @@ import { AppRoutingModule } from './app-routing.module';
     CoreModule,
     HomeModule,
     LoginModule,
+    HelpModule,
     SettingsModule,
     NavigationModule,
     ClientsModule,

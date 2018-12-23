@@ -1,0 +1,17 @@
+<div class="container">
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="keys">
+      <td mat-cell *matCellDef="let keyboardShortcut"> {{ keyboardShortcut.keys }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <td mat-cell *matCellDef="let keyboardShortcut"> {{ keyboardShortcut.action }} </td>
+    </ng-container>
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+  </table>
+
+</div>

@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 
 /** Custom Services */
 import { AuthenticationService } from '../../authentication/authentication.service';
+import { SearchService } from '../../../shared/search/search.service';
 
 /**
  * Toolbar component.
@@ -43,7 +44,6 @@ export class ToolbarComponent implements OnInit {
   searchVisible = false;
   /** Sets the initial state of sidenav as collapsed. Not collapsed if false. */
   sidenavCollapsed = true;
-
   /** Instance of sidenav. */
   @Input() sidenav: MatSidenav;
   /** Sidenav collapse event. */
@@ -53,13 +53,15 @@ export class ToolbarComponent implements OnInit {
    * @param {BreakpointObserver} breakpointObserver Breakpoint observer to detect screen size.
    * @param {Router} router Router for navigation.
    * @param {AuthenticationService} authenticationService Authentication service.
+   * @param {searchService} searchService Search service to manage search input visibility.
    */
   constructor(private breakpointObserver: BreakpointObserver,
               private router: Router,
-              private authenticationService: AuthenticationService) { }
+              private authenticationService: AuthenticationService,
+              private searchService: SearchService) { }
 
   /**
-   * Subscribes to breakpoint for handset.
+   * Subscribes to breakpoint for handset and search input visibility.
    */
   ngOnInit() {
     this.isHandset$.subscribe(isHandset => {
@@ -67,6 +69,7 @@ export class ToolbarComponent implements OnInit {
         this.toggleSidenavCollapse(false);
       }
     });
+    this.searchService.searchVisibility.subscribe(visibility => this.searchVisible = visibility);
   }
 
   /**
@@ -88,7 +91,7 @@ export class ToolbarComponent implements OnInit {
    * Toggles the visibility of search input with fadeInOut animation.
    */
   toggleSearchVisibility() {
-    this.searchVisible = !this.searchVisible;
+    this.searchService.toggleSearchVisibility();
   }
 
   /**

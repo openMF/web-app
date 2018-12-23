@@ -19,6 +19,9 @@ import { Logger } from './core/logger/logger.service';
 import { I18nService } from './core/i18n/i18n.service';
 import { ThemeStorageService } from './shared/theme-picker/theme-storage.service';
 import { AlertService } from './core/alert/alert.service';
+import { KeyboardShortcutsService } from './help/keyboard-shortcuts/keyboard-shortcuts.service';
+import { AuthenticationService } from './core/authentication/authentication.service';
+import { SearchService } from './shared/search/search.service';
 
 /** Custom Models */
 import { Alert } from './core/alert/alert.model';
@@ -45,6 +48,9 @@ export class WebAppComponent implements OnInit {
    * @param {ThemeStorageService} themeStorageService Theme Storage Service.
    * @param {MatSnackBar} snackBar Material Snackbar for notifications.
    * @param {AlertService} alertService Alert Service.
+   * @param {KeyboardShortcutsService} keyboardShortcuts Keyboard Shortcuts Service.
+   * @param {AuthenticationService} authenticationService Authentication service.
+   * @param {SearchService} searchService Search service to manage search input visibility.
    */
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -53,7 +59,13 @@ export class WebAppComponent implements OnInit {
               private i18nService: I18nService,
               private themeStorageService: ThemeStorageService,
               public snackBar: MatSnackBar,
-              private alertService: AlertService) { }
+              private alertService: AlertService,
+              private keyboardShortcuts: KeyboardShortcutsService,
+              private authenticationService: AuthenticationService,
+              private searchService: SearchService) { }
+
+  /** Keyboard shortcuts listener */
+  keyboardShortcutsListener: any = undefined;
 
   /**
    * Initial Setup:
@@ -67,6 +79,8 @@ export class WebAppComponent implements OnInit {
    * 4) Theme
    *
    * 5) Alerts
+   *
+   * 6) Keyboard Shortcuts
    */
   ngOnInit() {
     // Setup logger
@@ -113,6 +127,108 @@ export class WebAppComponent implements OnInit {
         verticalPosition: 'top'
       });
     });
-  }
 
+    // Keyboard Shortcuts Listener
+    this.keyboardShortcutsListener = this.keyboardShortcuts.listen(
+      {
+        // Open Navigation Page
+        'Alt.Shift.n': (event: KeyboardEvent): void => {
+          this.router.navigate(['navigation']);
+          event.preventDefault();
+        },
+        // Open Checker Inbox & Pending Tasks
+        'Alt.i': (event: KeyboardEvent): void => {
+          // TODO: Update once the route is created
+          event.preventDefault();
+        },
+        // Open Collection Sheet
+        'Control.Shift.o': (event: KeyboardEvent): void => {
+          // TODO: Update once the route is created
+          event.preventDefault();
+        },
+        // Create Client
+        'Control.Shift.c': (event: KeyboardEvent): void => {
+          // TODO: Update once the route is created
+          event.preventDefault();
+        },
+        // Create Group
+        'Control.Shift.g': (event: KeyboardEvent): void => {
+          // TODO: Update once the route is created
+          event.preventDefault();
+        },
+        // Create Center
+        'Alt.q': (event: KeyboardEvent): void => {
+          // TODO: Update once the route is created
+          event.preventDefault();
+        },
+        // Open Frequent Postings
+        'Control.Shift.f': (event: KeyboardEvent): void => {
+          this.router.navigate(['accounting/journal-entries/frequent-postings']);
+          event.preventDefault();
+        },
+        // Open Closure Entries
+        'Control.Shift.e': (event: KeyboardEvent): void => {
+          this.router.navigate(['accounting/closing-entries']);
+          event.preventDefault();
+        },
+        // Open Journal Entries
+        'Control.Shift.j': (event: KeyboardEvent): void => {
+          this.router.navigate(['accounting/journal-entries/create']);
+          event.preventDefault();
+        },
+        // Open Reports
+        'Control.Shift.r': (event: KeyboardEvent): void => {
+          // TODO: Update once the route is created
+          event.preventDefault();
+        },
+        // Open Accounting page
+        'Control.Shift.a': (event: KeyboardEvent): void => {
+          this.router.navigate(['accounting']);
+          event.preventDefault();
+        },
+        // Save/Submit Forms
+        'Control.s': (event: KeyboardEvent): void => {
+          // TODO: Update once the save implementation is done
+          event.preventDefault();
+        },
+        // Run Report
+        'Control.r': (event: KeyboardEvent): void => {
+          // TODO: Update once the run implementation is done
+          event.preventDefault();
+        },
+        // Cancel
+        'Control.Shift.x': (event: KeyboardEvent): void => {
+          // TODO: Update once the cancel implementation is done
+          event.preventDefault();
+        },
+        // Logout
+        'Control.Shift.l': (event: KeyboardEvent): void => {
+          this.authenticationService.logout()
+            .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+          event.preventDefault();
+        },
+        // Help
+        'Control.Shift.h': (event: KeyboardEvent): void => {
+          // TODO: Implement the routing to mifos wiki based on the current page
+          event.preventDefault();
+        },
+        // Pagination: Next
+        'Alt.n': (event: KeyboardEvent): void => {
+          // TODO: Update once the shortcut is implemented in paginator
+          event.preventDefault();
+        },
+        // Pagination: Previous
+        'Alt.p': (event: KeyboardEvent): void => {
+          // TODO: Update once the shortcut is implemented in paginator
+          event.preventDefault();
+        },
+        // Search
+        'Alt.x': (event: KeyboardEvent): void => {
+          this.searchService.toggleSearchVisibility();
+          // TODO: Add focus to the seachbar
+          event.preventDefault();
+        }
+      }
+    );
+  }
 }
