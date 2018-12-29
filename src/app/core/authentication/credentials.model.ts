@@ -10,7 +10,7 @@ export interface Credentials {
   officeName: string;
   staffId?: number;
   staffDisplayName?: string;
-  organisationalRole?: any;
+  organizationalRole?: any;
   permissions: string[];
   roles: any;
   userId: number;
