@@ -118,6 +118,7 @@
 
               </tr>
             </table>
+            <mat-paginator #loanPaginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
           </div>
           <!-- SAVINGS TABLE -->
 
@@ -159,6 +160,7 @@
 
               </tr>
             </table>
+            <mat-paginator #savingsPaginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
 
           </div>
 
@@ -203,6 +205,7 @@
 
               </tr>
             </table>
+            <mat-paginator #sharesPaginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
 
           </div>
         </div>
