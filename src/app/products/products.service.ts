@@ -19,32 +19,28 @@ export class ProductsService {
   constructor(private http: HttpClient) { }
 
   /**
-   * @param {any} Fetches recurring deposit products.
-   * @returns {Observable<any>}
+   * @returns {Observable<any>} Recurring deposit products data
    */
   getRecurringDepositProducts(): Observable<any> {
     return this.http.get('/recurringdepositproducts');
   }
 
   /**
-   * @param {any} Fetches charges.
-   * @returns {Observable<any>}
+   * @returns {Observable<any>} Charges data
    */
   getCharges(): Observable<any> {
     return this.http.get('/charges');
   }
 
   /**
-   * @param {any} Fetches fixed deposit products.
-   * @returns {Observable<any>}
+   * @returns {Observable<any>} Fixed deposit products data
    */
   getFixedDepositProducts(): Observable<any> {
     return this.http.get('/fixeddepositproducts');
   }
 
   /**
-   * Fetches Product mixes.
-   * @returns {Observable<any>}
+   * @returns {Observable<any>} Product mixes data
    */
   getProductMixes(): Observable<any> {
     let httpParams = new HttpParams();
