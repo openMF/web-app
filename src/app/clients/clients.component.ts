@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
 export class ClientsComponent implements OnInit {
   post: any = [];
   private ELEMENT_DATA: any = undefined;
-  displayedColumns =  ['name', 'clientno', 'externalid', 'status', 'office', 'staff'];
+  displayedColumns =  ['name', 'clientno', 'externalid', 'status', 'mobileNo', 'gender', 'office', 'staff'];
   dataSource = new MatTableDataSource();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -35,8 +35,13 @@ export class ClientsComponent implements OnInit {
         res.active = !!res.active;
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
+      this.dataSource.sortingDataAccessor = (data: any, property: any) => {
+        switch (property) {
+          case 'gender': return data.gender.name;
+          default: return data[property];
+        }
+      };
       this.dataSource.sort = this.sort;
-      this.dataSource.sortingDataAccessor = (data, header) => data[header];
       })
     );
   }
