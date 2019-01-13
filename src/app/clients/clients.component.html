@@ -1,98 +1,97 @@
 <div class="container m-t-40 m-b-40">
 
-  <mat-form-field class="filter">
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-  </mat-form-field>
-
-  <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort>
-
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header='displayName'> Name </th>
-        <td mat-cell *matCellDef="let row"> {{row.displayName}} </td>
-      </ng-container>
-
-      <!-- Account no Column -->
-      <ng-container matColumnDef="clientno">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header='accountNo'> Account # </th>
-        <td mat-cell *matCellDef="let row"> {{row.accountNo}} </td>
-      </ng-container>
-
-      <!-- External ID Column -->
-      <ng-container matColumnDef="externalid">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header='externalId'> ExternalID </th>
-        <td mat-cell *matCellDef="let row"> {{row.externalId}} </td>
-      </ng-container>
-
-
-
-      <!-- Status Column -->
-      <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header='active'> Status </th>
-        <td mat-cell *matCellDef="let row"> 
-          <div [className]="row.active === true ? 'active' : 'inactive'">
-            <i class="fa fa-circle fa-2x"> </i>
-          </div>
-       </td> 
-      </ng-container>
-
-      <!-- Mobile Number Column-->
-      <ng-container matColumnDef="mobileNo">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile Number </th>
-        <td mat-cell *matCellDef="let client"> {{ client.mobileNo }} </td>
-      </ng-container>
-      
-      <!--Gender column-->
-      <ng-container matColumnDef="gender">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender </th>
-        <td mat-cell *matCellDef="let client" > {{ client.gender.name }} </td>
-      </ng-container>
-
-      <!-- Color Column -->
-      <ng-container matColumnDef="office">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header='officeName'> OfficeName </th>
-        <td mat-cell *matCellDef="let row"> {{row.officeName}} </td>
-      </ng-container>
-
-
-      <!-- ID Column -->
-      <ng-container matColumnDef="staff">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header='staffName'> StaffName </th>
-        <td mat-cell *matCellDef="let row"> {{row.staffName}} </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['view', row.id]">
-         
-      </tr>
-    </table>
-
-    <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+    <mat-form-field class="filter">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+  
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header='displayName'> Name </th>
+          <td mat-cell *matCellDef="let row"> {{row.displayName}} </td>
+        </ng-container>
+  
+        <!-- Account no Column -->
+        <ng-container matColumnDef="clientno">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header='accountNo'> Account # </th>
+          <td mat-cell *matCellDef="let row"> {{row.accountNo}} </td>
+        </ng-container>
+  
+        <!-- External ID Column -->
+        <ng-container matColumnDef="externalid">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header='externalId'> ExternalID </th>
+          <td mat-cell *matCellDef="let row"> {{row.externalId}} </td>
+        </ng-container>
+  
+  
+  
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header='active'> Status </th>
+          <td mat-cell *matCellDef="let row"> 
+            <div [className]="row.active === true ? 'active' : 'inactive'">
+              <i class="fa fa-circle fa-2x"> </i>
+            </div>
+         </td> 
+        </ng-container>
+  
+        <!-- Mobile Number Column-->
+        <ng-container matColumnDef="mobileNo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile Number </th>
+          <td mat-cell *matCellDef="let client"> {{ client.mobileNo }} </td>
+        </ng-container>
+        
+        <!--Gender column-->
+        <ng-container matColumnDef="gender">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender </th>
+          <td mat-cell *matCellDef="let client" > {{ client.gender.name }} </td>
+        </ng-container>
+  
+        <!-- Color Column -->
+        <ng-container matColumnDef="office">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header='officeName'> OfficeName </th>
+          <td mat-cell *matCellDef="let row"> {{row.officeName}} </td>
+        </ng-container>
+  
+  
+        <!-- ID Column -->
+        <ng-container matColumnDef="staff">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header='staffName'> StaffName </th>
+          <td mat-cell *matCellDef="let row"> {{row.staffName}} </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['view', row.id]">
+           
+        </tr>
+      </table>
+  
+      <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+    </div>
+  
+  
+    <!-- Copyright 2018 Google Inc. All Rights Reserved.
+        Use of this source code is governed by an MIT-style license that
+        can be found in the LICENSE file at http://angular.io/license -->
   </div>
-
-
-  <!-- Copyright 2018 Google Inc. All Rights Reserved.
-      Use of this source code is governed by an MIT-style license that
-      can be found in the LICENSE file at http://angular.io/license -->
-</div>
-
-
-
-<!-- <div class="container">
-  <div class="row">
-    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      <input type="text" #serverName>
-      <button class="btn btn-primary" (click)="onAddServer(serverName.value)">Add Server</button>
-      <br><br>
-      <button class="btn btn-primary" (click)="onSave()">Save</button>
-      <button class="btn btn-primary" (click)="onGet()">Get</button>
-      <hr>
-      <ul class="list-group" *ngFor="let server of post">
-        <li class="list-group-item">{{ server.firstname }} (ID: {{ server.id }})</li>
-      </ul>
+  
+  
+  
+  <!-- <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+        <input type="text" #serverName>
+        <button class="btn btn-primary" (click)="onAddServer(serverName.value)">Add Server</button>
+        <br><br>
+        <button class="btn btn-primary" (click)="onSave()">Save</button>
+        <button class="btn btn-primary" (click)="onGet()">Get</button>
+        <hr>
+        <ul class="list-group" *ngFor="let server of post">
+          <li class="list-group-item">{{ server.firstname }} (ID: {{ server.id }})</li>
+        </ul>
+      </div>
     </div>
   </div>
-</div>
- -->
-
+   -->

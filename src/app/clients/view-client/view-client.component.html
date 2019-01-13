@@ -118,7 +118,6 @@
 
               </tr>
             </table>
-            <mat-paginator #loanPaginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
           </div>
           <!-- SAVINGS TABLE -->
 
@@ -160,7 +159,6 @@
 
               </tr>
             </table>
-            <mat-paginator #savingsPaginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
 
           </div>
 
@@ -205,7 +203,6 @@
 
               </tr>
             </table>
-            <mat-paginator #sharesPaginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
 
           </div>
         </div>
@@ -350,7 +347,7 @@
 
     <mat-tab label="Documents">
       <div class="m-l-10 m-b-30 m-t-30">
-        <button mat-raised-button [routerLink]="['/clients/addclientdocument', id]" routerLinkActive="active">Create Identity</button>
+        <button mat-raised-button [routerLink]="['/clients/addclientdocument', id]" routerLinkActive="active">Create Document</button>
       </div>
       <div class="mat-elevation-z8 m-b-55">
         <table mat-table [dataSource]="dataSourceDocuments" matSort>
@@ -392,9 +389,80 @@
       </div>
     </mat-tab>
 
+    <mat-tab label="Family">
+      <div class="m-l-20 m-t-30">
+        <button mat-raised-button [routerLink]="['/clients/familymembers', id]" routerLinkActive="active">Add family member</button>
+      </div>
+      <div fxLayout="row wrap" fxLayoutGap="40px" class="m-t-30 m-b-30">
+        <div *ngFor="let item of clientFamily">
+          <mat-card class="address-card m-t-20 m-l-20">
+            <mat-card-header>
+              <div mat-card-avatar class=""></div>
+              <mat-card-title>{{item?.firstName}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+
+              <div class="custom-table">
+                <table>
+                    <tr>
+                        <th>middleName</th>
+                        <td>{{item?.middleName}}</td>
+                      </tr>
+                  <tr>
+                    <th>lastName</th>
+                    <td>{{item?.lastName}}</td>
+                  </tr>
+                  <tr>
+                    <th> Qualification </th>
+                    <td>{{item?.qualification}}</td>
+                  </tr>
+                  <tr>
+                    <th> Relationship </th>
+                    <td>{{item?.relationship}}</td>
+                  </tr>
+                  <tr>
+                    <th>Mobile Number</th>
+                    <td>{{item?.mobileNumber}}</td>
+                  </tr>
+                  <tr>
+                    <th> Age </th>
+                    <td>{{item?.age}}</td>
+                  </tr>
+                  <tr>
+                    <th> is Dependent </th>
+                    <td>{{item?.isDependent}}</td>
+                  </tr>
+                  <tr>
+                    <th> Marital status </th>
+                      <td>{{item?.maritalStatus}}</td>
+                  </tr>
+                  <tr>
+                    <th> Gender </th>
+                      <td>{{item?.gender}}</td>
+                  </tr>
+                  <tr>
+                    <th> Profession </th>
+                    <td>{{item?.profession}}</td>
+                  </tr>
+                  <tr>
+                    <th> Date of Birth </th>
+                    <td>{{item?.dateOfBirth}}</td>
+                  </tr>
+
+                </table>
+              </div>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-button (click)="$event.stopPropagation(); deleteClientFamilyMember(id, item?.id)">Delete</button>
+      
+            </mat-card-actions>
+          </mat-card>       
+        </div>
+      </div>
+    </mat-tab>
+
   </mat-tab-group>
 
 
 </div>
 <p>User with ID {{ id }} loaded.</p>
-

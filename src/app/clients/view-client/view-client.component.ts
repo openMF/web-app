@@ -26,6 +26,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   allNotes: any = undefined;
   clientIdentifiers: any = undefined;
   clientDocuments: any = undefined;
+  clientFamily: any = undefined;
   docId: any = undefined;
   private LOAN_DATA: any = undefined;
   private SAVINGS_DATA: any = undefined;
@@ -41,12 +42,10 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   dataSourceShares = new MatTableDataSource([]);
   dataSourceIdentifiers = new MatTableDataSource([]);
   dataSourceDocuments = new MatTableDataSource([]);
+  dataSourceFamily = new MatTableDataSource([]);
 
   @ViewChild('f') noteForm: NgForm;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild('loanPaginator') loanPaginator: MatPaginator;
-  @ViewChild('savingsPaginator') savingsPaginator: MatPaginator;
-  @ViewChild('sharesPaginator') sharesPaginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private route: ActivatedRoute, private clientService: ClientsService,
@@ -67,6 +66,7 @@ export class ViewClientComponent implements OnInit, OnDestroy {
     this.getClientNotes(this.id);
     this.getClientIdentifier(this.id);
     this.getClientDocuments(this.id);
+    this.getClientFamily(this.id);
   }
 
   getClientId(id: any) {
@@ -100,9 +100,9 @@ export class ViewClientComponent implements OnInit, OnDestroy {
           this.dataSourceLoan = new MatTableDataSource(this.LOAN_DATA);
           this.dataSourceSavings = new MatTableDataSource(this.SAVINGS_DATA);
           this.dataSourceShares = new MatTableDataSource(this.SHARES_DATA);
-          this.dataSourceLoan.paginator = this.loanPaginator;
-          this.dataSourceSavings.paginator = this.savingsPaginator;
-          this.dataSourceShares.paginator = this.sharesPaginator;
+          this.dataSourceLoan.paginator = this.paginator;
+          this.dataSourceSavings.paginator = this.paginator;
+          this.dataSourceShares.paginator = this.paginator;
           this.dataSourceLoan.sort = this.sort;
           this.dataSourceSavings.sort = this.sort;
           this.dataSourceShares.sort = this.sort;
@@ -204,12 +204,28 @@ export class ViewClientComponent implements OnInit, OnDestroy {
         })
       );
   }
+  getClientFamily(id: any) {
+    this.clientService.getClientFamily(id)
+      .subscribe(
+        (res => {
+          this.clientFamily = res;
+        })
+      );
+  }
+  deleteClientFamilyMember(id: number, famId: number) {
+    this.clientService.deleteClientFamilyMember(id, famId)
+      .subscribe(
+        (res => {
+          this.getClientFamily(this.id);
+          return true;
+        })
+      );
+  }
 
 /*   openDialog() {
     const dialogRef = this.dialog.open(ViewClientDialogComponent, {
       height: '350px'
     });
-
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
@@ -228,13 +244,11 @@ export class ViewClientComponent implements OnInit, OnDestroy {
   templateUrl: 'view-client-component-dialog.html',
 })
 export class ViewClientDialogComponent implements OnInit, OnDestroy {
-
   paramsSubscription: Subscription;
   id: any = undefined;
   clientDocuments: any = undefined;
   constructor(private route: ActivatedRoute, private clientService: ClientsService,
     private router: Router, public dialog: MatDialog) {}
-
   ngOnInit() {
     this.paramsSubscription = this.route.params
       .subscribe(
@@ -244,7 +258,6 @@ export class ViewClientDialogComponent implements OnInit, OnDestroy {
       );
       this.getClientDocuments(this.id);
     }
-
     getClientDocuments(id: any) {
       this.clientService.getClientDocuments(id)
         .subscribe(
@@ -253,10 +266,8 @@ export class ViewClientDialogComponent implements OnInit, OnDestroy {
           })
         );
     }
-
     ngOnDestroy() {
       this.paramsSubscription.unsubscribe();
     }
-
 }
  */
