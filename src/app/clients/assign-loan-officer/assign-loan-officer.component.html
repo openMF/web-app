@@ -1,0 +1,46 @@
+<div class="container">
+
+  <mat-card>
+
+      <form [formGroup]="assignLoanOfficerForm" (ngSubmit)="submit()">
+
+        <mat-card-content>
+
+          <div fxLayout="column">
+
+            <mat-form-field>
+              <mat-label>To Loan Officer</mat-label>
+              <mat-select required formControlName="loanOfficer">
+                <mat-option *ngFor="let loanOfficer of loanOfficers" [value]="loanOfficer.id">
+                  {{ loanOfficer.displayName }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="assignLoanOfficerForm.controls.loanOfficer.hasError('required')">
+                Loan Officer is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Assignment Date</mat-label>
+              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="assignmentDatePicker" required formControlName="assignmentDate">
+              <mat-datepicker-toggle matSuffix [for]="assignmentDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #assignmentDatePicker></mat-datepicker>
+              <mat-error *ngIf="assignLoanOfficerForm.controls.assignmentDate.hasError('required')">
+                Assignment Date is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+          </div>
+
+        </mat-card-content>
+
+        <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+          <button type="button" mat-raised-button [routerLink]="['../../' + loanId]">Cancel</button>
+          <button mat-raised-button color="primary" [disabled]="!assignLoanOfficerForm.valid">Submit</button>
+        </mat-card-actions>
+
+      </form>
+
+  </mat-card>
+
+</div>

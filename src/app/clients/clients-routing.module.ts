@@ -15,6 +15,10 @@ import { CreateAddressComponent } from './create-address/create-address.componen
 import { CreateIdentityComponent } from './create-identity/create-identity.component';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
 import { EditAddressComponent } from './edit-address/edit-address.component';
+import { AssignLoanOfficerComponent } from './assign-loan-officer/assign-loan-officer.component';
+
+/** Custom Resolvers */
+import { LoanOfficersResolver } from './assign-loan-officer/loan-officers.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -32,11 +36,6 @@ const routes: Routes = [
       path: 'clients/view/:id',
       component: ViewClientComponent,
       data: { title: extract('View Client') }
-    },
-    {
-      path: 'clients/viewloan',
-      component: ViewLoanComponent,
-      data: { title: extract('View Loan') }
     },
     {
       path: 'clients/address/:id',
@@ -58,12 +57,32 @@ const routes: Routes = [
       component: UploadDocumentComponent,
       data: { title: extract('Create Identity') }
     },
+    {
+      path: 'clients/viewloan',
+      data: { title: extract('View Loan'), breadcrumb: 'View Loan', addBreadcrumbLink: false },
+      children: [
+        {
+          path: '',
+          component: ViewLoanComponent,
+        },
+        {
+          path: 'assignloanofficer/:loanId',
+          component: AssignLoanOfficerComponent,
+          data: { title: extract('Assign Loan Officer'), breadcrumb: 'Assign Loan Officer' },
+          resolve: {
+            loanOfficers: LoanOfficersResolver
+          }
+        }
+      ]
+    }
   ])
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: []
+  providers: [
+    LoanOfficersResolver
+  ]
 })
 export class ClientsRoutingModule { }

@@ -1,6 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,8 +17,10 @@ import { CreateAddressComponent } from './create-address/create-address.componen
 import { CreateIdentityComponent } from './create-identity/create-identity.component';
 
 import { ClientsService } from './clients.service';
+import { LoanService } from './assign-loan-officer/loan.service';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
 import { EditAddressComponent } from './edit-address/edit-address.component';
+import { AssignLoanOfficerComponent } from './assign-loan-officer/assign-loan-officer.component';
 
 @NgModule({
   imports: [
@@ -42,8 +43,9 @@ import { EditAddressComponent } from './edit-address/edit-address.component';
     CreateAddressComponent,
     CreateIdentityComponent,
     UploadDocumentComponent,
-    EditAddressComponent
-],
+    EditAddressComponent,
+    AssignLoanOfficerComponent
+  ],
   providers: [
     ClientsService,
     HttpModule  // tslint:disable
