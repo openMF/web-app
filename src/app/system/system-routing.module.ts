@@ -15,6 +15,8 @@ import { ManageHooksComponent } from './manage-hooks/manage-hooks.component';
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
 import { ManageSurveysComponent } from './manage-surveys/manage-surveys.component';
 import { ManageSchedulerJobsComponent } from './manage-scheduler-jobs/manage-scheduler-jobs.component';
+import { GlobalConfigurationsComponent } from './global-configurations/global-configurations.component';
+import { EditConfigurationComponent } from './global-configurations/edit-configuration/edit-configuration.component';
 
 /** Custom Resolvers */
 import { CodesResolver } from './codes/codes.resolver';
@@ -23,6 +25,8 @@ import { ManageHooksResolver } from './manage-hooks/manage-hooks.resolver';
 import { RolesAndPermissionsResolver } from './roles-and-permissions/roles-and-permissions.resolver';
 import { ManageSurveysResolver } from './manage-surveys/manage-surveys.resolver';
 import { ManageSchedulerJobsResolver } from './manage-scheduler-jobs/manage-scheduler-jobs.resolver';
+import { GlobalConfigurationsResolver } from './global-configurations/global-configurations.resolver';
+import { GlobalConfigurationResolver } from './global-configurations/global-configuration.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -98,7 +102,29 @@ const routes: Routes = [
         },
         data: { title:  extract('Manage Scheduler Jobs'), breadcrumb: 'Manage Scheduler Jobs' },
       },
-    ]
+      {
+        path: 'global-configurations',
+        data: { title: extract('Global Configurations'), breadcrumb: 'Global Configurations' },
+        children: [
+          {
+            path: '',
+            component: GlobalConfigurationsComponent,
+            resolve: {
+              configurations: GlobalConfigurationsResolver
+            }
+          },
+          {
+            path: ':id/edit',
+            component: EditConfigurationComponent,
+            data: { title: extract('Edit Configuration'), breadcrumb: 'Edit' },
+            resolve: {
+              configuration: GlobalConfigurationResolver
+            }
+          }
+        ],
+
+        },
+      ]
     }
   ])
 ];
@@ -113,6 +139,8 @@ const routes: Routes = [
     RolesAndPermissionsResolver,
     ManageSurveysResolver,
     ManageSchedulerJobsResolver,
+    GlobalConfigurationsResolver,
+    GlobalConfigurationResolver
   ]
 })
 export class SystemRoutingModule { }
