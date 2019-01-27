@@ -75,4 +75,28 @@ export class SystemService {
     return this.http.post('/codes', code);
   }
 
+  /**
+   * @returns {Observable<any>} Configurations data.
+   */
+  getConfigurations(): Observable<any> {
+    return this.http.get('/configurations');
+  }
+
+  /**
+   * @param {string} configurationId Configuration ID of configuration.
+   * @returns {Observable<any>} Configuration.
+   */
+  getConfiguration(configurationId: string): Observable<any> {
+    return this.http.get(`/configurations/${configurationId}`);
+  }
+
+  /**
+   * @param {string} configurationId Configuration ID of configuration to be updated.
+   * @param {any} configuration Configuration to be updated.
+   * @returns {Observable<any>}
+   */
+  updateConfiguration(configurationId: string, configuration: any): Observable<any> {
+    return this.http.put(`/configurations/${configurationId}`, configuration);
+  }
+
 }

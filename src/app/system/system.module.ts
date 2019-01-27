@@ -15,6 +15,8 @@ import { ManageHooksComponent } from './manage-hooks/manage-hooks.component';
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
 import { ManageSurveysComponent } from './manage-surveys/manage-surveys.component';
 import { ManageSchedulerJobsComponent } from './manage-scheduler-jobs/manage-scheduler-jobs.component';
+import { GlobalConfigurationsComponent } from './global-configurations/global-configurations.component';
+import { EditConfigurationComponent } from './global-configurations/edit-configuration/edit-configuration.component';
 
 @NgModule({
   imports: [
@@ -30,7 +32,9 @@ import { ManageSchedulerJobsComponent } from './manage-scheduler-jobs/manage-sch
     ManageHooksComponent,
     RolesAndPermissionsComponent,
     ManageSurveysComponent,
-    ManageSchedulerJobsComponent
+    ManageSchedulerJobsComponent,
+    GlobalConfigurationsComponent,
+    EditConfigurationComponent
   ]
 })
 export class SystemModule { }
