@@ -26,13 +26,14 @@ import { HomeModule } from './home/home.module';
 import { LoginModule } from './login/login.module';
 import { SettingsModule } from './settings/settings.module';
 import { NavigationModule } from './navigation/navigation.module';
-import { ClientsModule} from './clients/clients.module';
+import { ClientsModule } from './clients/clients.module';
 import { GroupsModule } from './groups/groups.module';
 import { CentersModule } from './centers/centers.module';
 import { AccountingModule } from './accounting/accounting.module';
 import { SelfServiceModule } from './self-service/self-service.module';
 import { SystemModule } from './system/system.module';
 import { ProductsModule } from './products/products.module';
+import { LoansModule } from './loans/loans.module';
 
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
@@ -60,6 +61,7 @@ import { AppRoutingModule } from './app-routing.module';
     CentersModule,
     AccountingModule,
     SelfServiceModule,
+    LoansModule,
     SystemModule,
     ProductsModule,
     AppRoutingModule
