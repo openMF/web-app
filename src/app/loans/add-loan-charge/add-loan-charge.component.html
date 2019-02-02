@@ -1,0 +1,62 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="loanChargeForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+          <mat-form-field>
+            <mat-label>Charge</mat-label>
+            <mat-select required formControlName="chargeId">
+              <mat-option *ngFor="let loanCharge of loanChargeOptions" [value]="loanCharge.id">
+                  {{ loanCharge.name + ' (' + loanCharge.currency.name + ')' }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="loanChargeForm.controls.chargeId.hasError('required')">
+              Charge is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Amount</mat-label>
+            <input type=number required matInput formControlName="amount" />
+            <mat-error *ngIf="loanChargeForm.controls.amount.hasError('required')">
+              Amount is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Charge Calculation</mat-label>
+            <input matInput formControlName="chargeCalculation" />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Charge Time</mat-label>
+            <input matInput formControlName="chargeTime" />
+          </mat-form-field>
+
+          <mat-form-field *ngIf="loanChargeForm.controls['dueDate']">
+            <mat-label>Due On</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dueDatePicker" required formControlName="dueDate">
+            <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #dueDatePicker></mat-datepicker>
+            <mat-error *ngIf="loanChargeForm.controls.dueDate.hasError('required')">
+              Due Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+        <mat-card-actions fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
+          <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+          <button mat-raised-button color="primary" [disabled]="!loanChargeForm.valid">Submit</button>
+        </mat-card-actions>
+
+      </mat-card-content>
+    </form>
+
+  </mat-card>
+  
+</div>
