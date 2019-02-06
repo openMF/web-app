@@ -34,6 +34,7 @@ import { SelfServiceModule } from './self-service/self-service.module';
 import { SystemModule } from './system/system.module';
 import { ProductsModule } from './products/products.module';
 import { LoansModule } from './loans/loans.module';
+import { SharesModule } from './shares/shares.module';
 
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
@@ -62,6 +63,7 @@ import { AppRoutingModule } from './app-routing.module';
     AccountingModule,
     SelfServiceModule,
     LoansModule,
+    SharesModule,
     SystemModule,
     ProductsModule,
     AppRoutingModule

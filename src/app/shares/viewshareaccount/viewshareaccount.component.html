@@ -1,0 +1,162 @@
+<div class="container">
+  <span class="heading">
+    <strong>{{ shareAccountDetails.productName }}(#{{ shareAccountDetails.accountNo }})</strong>
+  </span>
+  <hr/>
+  <div class="pull-right btn-group">
+    <button *ngFor="let button of buttons.singlebuttons"
+      (click)="clickEvent(button.name, shareAccountDetails.id)" mat-raised-button color="primary" class="btn-group" ><i
+        class="{{ button.icon }}"></i> {{ button.name }}</button>
+    <button mat-raised-button color="primary" [matMenuTriggerFor]="more">More <i class="fa fa-angle-down"></i></button>
+    <mat-menu #more="matMenu">
+      <button *ngFor="let button of buttons.options" (click)="clickEvent(button.name, shareAccountDetails.id)" mat-menu-item>{{ button.name }}</button>
+    </mat-menu>
+  </div>
+  <div class="col-sm-12 col-md-12">
+    <div class="row">
+      <div class="col-sm-6 col-md-6">
+        <table mat-table [dataSource]="accountTableDataSource" class="table table-bordered table-striped">
+          <ng-container matColumnDef="details">
+            <td mat-cell *matCellDef="let element"> {{ element.details }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="values">
+            <td mat-cell *matCellDef="let element"> {{ element.value }} </td>
+          </ng-container>
+
+          <tr mat-row *matRowDef="let row; columns: displayedColumns.accountTable;"></tr>
+        </table>
+      </div>
+      <div class="col-sm-6 col-md-6">
+        <table mat-table [dataSource]="approveSharesTableDataSource" class="table table-bordered table-striped">
+          <ng-container matColumnDef="details">
+            <td mat-cell *matCellDef="let element"> {{ element.details }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="values">
+            <td mat-cell *matCellDef="let element"> {{ element.value }} </td>
+          </ng-container>
+
+          <tr mat-row *matRowDef="let row; columns: displayedColumns.approvedSharesTable;"></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div>
+      <mat-tab-group>
+      <mat-tab *ngIf="purchasedSharesTableShow" label="Transactions Overview">
+        <br>
+        <table mat-table [dataSource]="purchasedSharesTableDataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="transactionDate">
+            <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
+            <td mat-cell *matCellDef="let purchasedShare"> {{ purchasedShare.transactionDate }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="transactionType">
+            <th mat-header-cell *matHeaderCellDef> Transaction Type </th>
+            <td mat-cell *matCellDef="let purchasedShare"> {{ purchasedShare.transactionType }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="totalShares">
+            <th mat-header-cell *matHeaderCellDef> Total Shares </th>
+            <td mat-cell *matCellDef="let purchasedShare"> {{ purchasedShare.totalShares }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="purchasedOrRedeemedPrice">
+            <th mat-header-cell *matHeaderCellDef> Purchased/Redeemed Price </th>
+            <td mat-cell *matCellDef="let purchasedShare"> {{ purchasedShare.purchasedOrRedeemedPrice }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="chargeAmount">
+            <th mat-header-cell *matHeaderCellDef> Charge Amount </th>
+            <td mat-cell *matCellDef="let purchasedShare"> {{ purchasedShare.chargeAmount }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="amountRecievedOrReturned">
+            <th mat-header-cell *matHeaderCellDef> Amount Recieved/Returned </th>
+            <td mat-cell *matCellDef="let purchasedShare"> {{ purchasedShare.amountRecievedOrReturned }} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns.purchasedSharesTable"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns.purchasedSharesTable;"></tr>
+        </table>
+      </mat-tab>
+
+      <mat-tab *ngIf="chargeTableShow" label="Charges">
+        <br>
+        <table mat-table [dataSource]="chargeTableDataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let charge"> {{ charge.name }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="feeOrPenalty">
+            <th mat-header-cell *matHeaderCellDef> Fee/Penalty </th>
+            <td mat-cell *matCellDef="let charge"> {{ charge.feeOrPenalty }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="paymentDueAt">
+            <th mat-header-cell *matHeaderCellDef> Payment due at </th>
+            <td mat-cell *matCellDef="let charge"> {{ charge.paymentDueAt }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="calculationType">
+            <th mat-header-cell *matHeaderCellDef> Calculation Type </th>
+            <td mat-cell *matCellDef="let charge"> {{ charge.calculationType }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="due">
+            <th mat-header-cell *matHeaderCellDef> Due </th>
+            <td mat-cell *matCellDef="let charge"> {{ charge.due }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="paid">
+            <th mat-header-cell *matHeaderCellDef> Paid </th>
+            <td mat-cell *matCellDef="let charge"> {{ charge.paid }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="waived">
+            <th mat-header-cell *matHeaderCellDef> Waived </th>
+            <td mat-cell *matCellDef="let charge"> {{ charge.waived }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="outstanding">
+            <th mat-header-cell *matHeaderCellDef> Outstanding </th>
+            <td mat-cell *matCellDef="let charge"> {{ charge.outstanding }} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns.chargeTable"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns.chargeTable;"></tr>
+        </table>
+      </mat-tab>
+
+      <mat-tab *ngIf="showDividends" label="Dividends">
+        <br>
+        <table mat-table [dataSource]="dividendsTableDataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="transactionDate">
+            <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
+            <td mat-cell *matCellDef="let dividend"> {{ dividend.transactionDate }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef> Amount </th>
+            <td mat-cell *matCellDef="let dividend"> {{ dividend.amount }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="transactionRef">
+            <th mat-header-cell *matHeaderCellDef> Transaction Reference </th>
+            <td mat-cell *matCellDef="let dividend"> {{ dividend.transactionRef }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let dividend"> {{ dividend.status }} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns.dividendsTable"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns.dividendsTable;"></tr>
+        </table>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
