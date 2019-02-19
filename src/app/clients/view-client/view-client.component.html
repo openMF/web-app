@@ -10,7 +10,7 @@
               </mat-card-title>
               <mat-card-subtitle> </mat-card-subtitle>
             </mat-card-header>
-            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+            <img mat-card-image [src]="clientImg" alt="Avatar">
             <mat-card-content class="border">
 
               <table>
@@ -378,7 +378,7 @@
             <td mat-cell *matCellDef="let row">
               <i class="fa fa-cloud-download"></i>
               <!-- <i class="p-l-5 fa fa-eye"></i> -->
-              <i class="p-l-5 fa fa-times" (click)="$event.stopPropagation(); deleteClientDocuments(id, row.id)"></i>              
+              <i class="p-l-5 fa fa-times" (click)="$event.stopPropagation(); deleteClientDocuments(id, row.id)"></i>
             </td>
           </ng-container>
 

@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 export class ViewClientComponent implements OnInit, OnDestroy {
   notes: any = undefined;
   id: number = undefined;
+  clientImg: any = '../../../assets/images/user_placeholder.png';
   loanAccounts: any = undefined;
   savingsAccounts: any = undefined;
   shareAccounts: any = undefined;
@@ -75,15 +76,31 @@ export class ViewClientComponent implements OnInit, OnDestroy {
         (res => {
           const groupArray = new Array;
           this.clientInfo = res;
-          this.clientInfo.dateOfBirth = this.clientInfo.dateOfBirth.reverse().join('-');
+          if (this.clientInfo.imagePresent) {
+            this.getClientImage(this.id);
+          }
+          // this.clientInfo.dateOfBirth = this.clientInfo.dateOfBirth.reverse().join('-');
           this.clientInfo.activationDate = this.clientInfo.activationDate.reverse().join('-');
-
           this.clientInfo.groups.forEach(function (item: any) {
             groupArray.push(item.name);
           });
           this.clientInfo.groupNames = groupArray.join('|');
 
         })
+      );
+  }
+
+  /**
+   * Fetches the image of the client if it exists.
+   * @param id Id of the client whose image is to be fetched
+   */
+  getClientImage(id: any) {
+    // TODO: Shift into resolver when code will be refactored.
+    this.clientService.getClientImage(id)
+      .subscribe(
+        (res: any) => {
+          this.clientImg = res;
+        }
       );
   }
 

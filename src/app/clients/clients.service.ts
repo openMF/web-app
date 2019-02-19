@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angular/http';
-/* import { HttpHeaders, HttpClient } from '@angular/common/http';
- */
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable()
 export class ClientsService {
-  constructor(private http: Http) {} // tslint:disable-line
+  constructor(private http: Http,
+              private httpClient: HttpClient,
+              private sanitizer: DomSanitizer) {} // tslint:disable-line
 
   createAuthorizationHeader(headers: Headers) { // tslint:disable-line
     const username = 'mifos';
@@ -49,6 +51,28 @@ export class ClientsService {
             response = response.json();
             return response;
 
+          }
+        )
+      );
+  }
+
+
+  /**
+   * Fetches the client image from the API
+   * @param clientId Id of the client whose image is to be fetched
+   */
+  getClientImage(clientId: any) {
+    const httpParams = new HttpParams().set('maxHeight', '150');
+    return this.httpClient.get(`/clients/${clientId}/images`,
+        {
+          responseType: 'text',
+          params: httpParams
+        }
+      )
+      .pipe(
+        map(
+          (response) => { // tslint:disable-line
+            return this.sanitizer.bypassSecurityTrustUrl(response);
           }
         )
       );
