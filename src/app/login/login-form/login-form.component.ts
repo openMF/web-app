@@ -7,6 +7,7 @@ import { finalize } from 'rxjs/operators';
 
 /** Custom Services */
 import { AuthenticationService } from '../../core/authentication/authentication.service';
+import {Router} from '@angular/router';
 
 /**
  * Login form component.
@@ -28,9 +29,11 @@ export class LoginFormComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {AuthenticationService} authenticationService Authentication Service.
+   * @param route
    */
   constructor(private formBuilder: FormBuilder,
-              private authenticationService: AuthenticationService) {  }
+              private authenticationService: AuthenticationService,
+              private router : Router) {  }
 
   /**
    * Creates login form.
@@ -62,7 +65,7 @@ export class LoginFormComponent implements OnInit {
    * TODO: Decision to be taken on providing this feature.
    */
   forgotPassword() {
-    console.log('Forgot Password feature currently unavailable.');
+    this.router.navigate(['/forgot-password'])
   }
 
   /**
