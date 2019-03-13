@@ -63,7 +63,8 @@ import { AppRoutingModule } from './app-routing.module';
     SelfServiceModule,
     SystemModule,
     ProductsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NavigationModule
   ],
   declarations: [WebAppComponent, NotFoundComponent],
   providers: [],
