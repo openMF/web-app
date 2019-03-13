@@ -10,8 +10,6 @@ import { LoginComponent } from './login.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { TwoFactorAuthenticationComponent } from './two-factor-authentication/two-factor-authentication.component';
-import {ForgotPasswordComponent} from './forgot-password/forgot-password.component';
-import {NavigationModule} from '../navigation/navigation.module';
 
 /**
  * Login Module
@@ -21,16 +19,13 @@ import {NavigationModule} from '../navigation/navigation.module';
 @NgModule({
   imports: [
     SharedModule,
-    LoginRoutingModule,
-    NavigationModule
+    LoginRoutingModule
   ],
   declarations: [
     LoginComponent,
     LoginFormComponent,
     ResetPasswordComponent,
-    TwoFactorAuthenticationComponent,
-    ForgotPasswordComponent,
-  ],
-  entryComponents : []
+    TwoFactorAuthenticationComponent
+  ]
 })
 export class LoginModule { }
