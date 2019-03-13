@@ -18,11 +18,7 @@ import { NavigationComponent } from './navigation.component';
     SharedModule,
     NavigationRoutingModule
   ],
-
   declarations: [
-    NavigationComponent
-  ],
-  exports : [
     NavigationComponent
   ]
 })
