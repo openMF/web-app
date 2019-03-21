@@ -40,6 +40,13 @@ export class ProductsService {
   }
 
   /**
+   * @returns {Observable<any>} Tax Components data
+   */
+  getTaxComponents(): Observable<any> {
+    return this.http.get('/taxes/component');
+  }
+
+  /**
    * @returns {Observable<any>} Product mixes data
    */
   getProductMixes(): Observable<any> {
