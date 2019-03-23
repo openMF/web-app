@@ -17,6 +17,7 @@ import { ManageSurveysComponent } from './manage-surveys/manage-surveys.componen
 import { ManageSchedulerJobsComponent } from './manage-scheduler-jobs/manage-scheduler-jobs.component';
 import { GlobalConfigurationsComponent } from './global-configurations/global-configurations.component';
 import { EditConfigurationComponent } from './global-configurations/edit-configuration/edit-configuration.component';
+import { ManageReportsComponent } from './manage-reports/manage-reports.component';
 
 /** Custom Resolvers */
 import { CodesResolver } from './codes/codes.resolver';
@@ -27,6 +28,7 @@ import { ManageSurveysResolver } from './manage-surveys/manage-surveys.resolver'
 import { ManageSchedulerJobsResolver } from './manage-scheduler-jobs/manage-scheduler-jobs.resolver';
 import { GlobalConfigurationsResolver } from './global-configurations/global-configurations.resolver';
 import { GlobalConfigurationResolver } from './global-configurations/global-configuration.resolver';
+import { ManageReportsResolver } from './manage-reports/manage-reports.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -103,6 +105,14 @@ const routes: Routes = [
         data: { title:  extract('Manage Scheduler Jobs'), breadcrumb: 'Manage Scheduler Jobs' },
       },
       {
+        path: 'reports',
+        component: ManageReportsComponent,
+        resolve: {
+              reports: ManageReportsResolver
+        },
+        data: { title:  extract('Manage Reports'), breadcrumb: 'Manage Reports' },
+      },
+      {
         path: 'global-configurations',
         data: { title: extract('Global Configurations'), breadcrumb: 'Global Configurations' },
         children: [
@@ -140,7 +150,8 @@ const routes: Routes = [
     ManageSurveysResolver,
     ManageSchedulerJobsResolver,
     GlobalConfigurationsResolver,
-    GlobalConfigurationResolver
+    GlobalConfigurationResolver,
+    ManageReportsResolver
   ]
 })
 export class SystemRoutingModule { }

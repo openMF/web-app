@@ -68,6 +68,13 @@ export class SystemService {
   }
 
   /**
+   * @returns {Observable<any>} Fetches Reports.
+   */
+  getReports(): Observable<any> {
+    return this.http.get('/reports');
+  }
+
+  /**
    * @param {any} code Code to be created.
    * @returns {Observable<any>}
    */
