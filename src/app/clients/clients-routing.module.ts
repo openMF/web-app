@@ -16,12 +16,18 @@ import { CreateIdentityComponent } from './create-identity/create-identity.compo
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
 import { EditAddressComponent } from './edit-address/edit-address.component';
 
+/** Custom Resolvers */
+import { ClientsResolver } from './clients.resolver';
+
 const routes: Routes = [
   Route.withShell([
     {
       path: 'clients',
       component: ClientsComponent,
-      data: { title: extract('Clients') }
+      data: { title: extract('Clients') },
+      resolve: {
+        clients : ClientsResolver
+      }
     },
     {
       path: 'clients/create',
@@ -61,9 +67,14 @@ const routes: Routes = [
   ])
 ];
 
+/**
+ * Client Routing Module
+ *
+ * Configures the clients routes.
+ */
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: []
+  providers: [ClientsResolver]
 })
 export class ClientsRoutingModule { }
