@@ -17,6 +17,14 @@ import { ManageSurveysComponent } from './manage-surveys/manage-surveys.componen
 import { ManageSchedulerJobsComponent } from './manage-scheduler-jobs/manage-scheduler-jobs.component';
 import { GlobalConfigurationsComponent } from './global-configurations/global-configurations.component';
 import { EditConfigurationComponent } from './global-configurations/edit-configuration/edit-configuration.component';
+import { AmazonS3Component } from './external-services/amazon-s3/amazon-s3.component';
+import { EmailComponent } from './external-services/email/email.component';
+import { SMSComponent } from './external-services/sms/sms.component';
+import { NotificationComponent } from './external-services/notification/notification.component';
+import { EditAmazonS3Component } from './external-services/amazon-s3/edit-amazon-s3/edit-amazon-s3.component';
+import { EditEmailComponent } from './external-services/email/edit-email/edit-email.component';
+import { EditNotificationComponent } from './external-services/notification/edit-notification/edit-notification.component';
+import { EditSMSComponent } from './external-services/sms/edit-sms/edit-sms.component';
 
 /** Custom Resolvers */
 import { CodesResolver } from './codes/codes.resolver';
@@ -27,6 +35,10 @@ import { ManageSurveysResolver } from './manage-surveys/manage-surveys.resolver'
 import { ManageSchedulerJobsResolver } from './manage-scheduler-jobs/manage-scheduler-jobs.resolver';
 import { GlobalConfigurationsResolver } from './global-configurations/global-configurations.resolver';
 import { GlobalConfigurationResolver } from './global-configurations/global-configuration.resolver';
+import { AmazonS3ConfigurationResolver } from './external-services/amazon-s3/amazon-s3.resolver';
+import { EmailConfigurationResolver } from './external-services/email/email.resolver';
+import { SMSConfigurationResolver } from './external-services/sms/sms.resolver';
+import { NotificationConfigurationResolver } from './external-services/notification/notification.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -59,10 +71,99 @@ const routes: Routes = [
       },
       {
           path: 'external-services',
-          component: ExternalServicesComponent,
-          data: { title:  extract('External Services'), breadcrumb: 'External Services' },
-      },
-      {
+          data: { title: extract('External Services'), breadcrumb: 'External Services' },
+          children: [
+            {
+              path: '',
+              component: ExternalServicesComponent
+            },
+            {
+              path: 'amazon-s3',
+              data: { title: extract('View Amazon S3 Configuration'), breadcrumb: 'Amazon S3' },
+              children: [
+                {
+                  path: '',
+                  component: AmazonS3Component,
+                  resolve: {
+                    amazonS3Configuration: AmazonS3ConfigurationResolver
+                  }
+                },
+                {
+                  path: 'edit',
+                  component: EditAmazonS3Component,
+                  data: {title: extract('Edit Amazon S3 Configuration'), breadcrumb: 'Edit'},
+                  resolve: {
+                    amazonS3Configuration: AmazonS3ConfigurationResolver
+                  }
+                }
+              ]
+            },
+            {
+              path: 'email',
+              data: { title: extract('View Email Configuration'), breadcrumb: 'Email' },
+              children: [
+                {
+                  path: '',
+                  component: EmailComponent,
+                  resolve: {
+                    emailConfiguration: EmailConfigurationResolver
+                  }
+                },
+                {
+                  path: 'edit',
+                  component: EditEmailComponent,
+                  data: { title: extract('Edit Email Configuration'), breadcrumb: 'Edit' },
+                  resolve: {
+                    emailConfiguration: EmailConfigurationResolver
+                  }
+                }
+              ]
+            },
+            {
+              path: 'sms',
+              data: { title: extract('View SMS Configuration'), breadcrumb: 'SMS' },
+              children: [
+                {
+                  path: '',
+                  component: SMSComponent,
+                  resolve: {
+                    smsConfiguration: SMSConfigurationResolver
+                  }
+                },
+                {
+                  path: 'edit',
+                  data: { title: extract('Edit SMS Configuration'), breadcrumb: 'Edit' },
+                  component: EditSMSComponent,
+                  resolve: {
+                    smsConfiguration: SMSConfigurationResolver
+                  }
+                }
+              ]
+            },
+            {
+              path: 'notification',
+              data: { title: extract('View Notification Configuration'), breadcrumb: 'Notification' },
+              children: [
+                {
+                  path: '',
+                  component: NotificationComponent,
+                  resolve: {
+                    notificationConfiguration: NotificationConfigurationResolver
+                  }
+                },
+                {
+                  path: 'edit',
+                  component: EditNotificationComponent,
+                  data: { title: extract('Edit Notification Configuration'), breadcrumb: 'Edit' },
+                  resolve: {
+                    notificationConfiguration: NotificationConfigurationResolver
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
           path: 'data-tables',
           component: ManageDataTablesComponent,
           resolve: {
@@ -140,7 +241,11 @@ const routes: Routes = [
     ManageSurveysResolver,
     ManageSchedulerJobsResolver,
     GlobalConfigurationsResolver,
-    GlobalConfigurationResolver
+    GlobalConfigurationResolver,
+    AmazonS3ConfigurationResolver,
+    EmailConfigurationResolver,
+    SMSConfigurationResolver,
+    NotificationConfigurationResolver
   ]
 })
 export class SystemRoutingModule { }

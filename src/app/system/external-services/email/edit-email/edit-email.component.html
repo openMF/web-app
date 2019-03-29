@@ -1,0 +1,64 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="emailConfigurationForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Username</mat-label>
+            <input matInput required formControlName="username">
+            <mat-error *ngIf="emailConfigurationForm.controls.username.hasError('required')">
+              Username is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput required formControlName="password">
+            <mat-error *ngIf="emailConfigurationForm.controls.password.hasError('required')">
+              Password is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Host</mat-label>
+            <input matInput required formControlName="host">
+            <mat-error *ngIf="emailConfigurationForm.controls.host.hasError('required')">
+              Host is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Port</mat-label>
+            <input matInput required formControlName="port">
+            <mat-error *ngIf="emailConfigurationForm.controls.port.hasError('required')">
+              Port is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Use TLS</mat-label>
+            <input matInput required formControlName="useTLS">
+            <mat-error *ngIf="emailConfigurationForm.controls.useTLS.hasError('required')">
+              Use TLS is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!emailConfigurationForm.valid || emailConfigurationForm.pristine">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>
