@@ -12,7 +12,7 @@ export class CameraComponent implements OnInit {
   constructor() { }
 
   // toggle webcam on/off
-  private webImage: WebcamImage = null;
+  public webImage: WebcamImage = null;
   public showWebcam = true;
   public allowCameraSwitch = true;
   public multipleWebcamsAvailable = false;
