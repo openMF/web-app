@@ -8,6 +8,7 @@ import { HomeRoutingModule } from './home-routing.module';
 /** Custom Components */
 import { HomeComponent } from './home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import {WebcamModule} from 'ngx-webcam';
 
 /**
  * Home Component
@@ -17,7 +18,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 @NgModule({
   imports: [
     SharedModule,
-    HomeRoutingModule
+    HomeRoutingModule,
+    WebcamModule
   ],
   declarations: [
     HomeComponent,

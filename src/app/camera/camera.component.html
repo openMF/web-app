@@ -1,0 +1,23 @@
+<div class="maindiv" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="40px">
+      <div style="background-color:#333;padding:2%;">
+        <webcam [height]="600" [width]="600" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+        [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions" (cameraSwitched)="cameraWasSwitched($event)"
+        (initError)="handleInitError($event)"></webcam>
+        <br/>
+        <div fxLayoutAlign="center" fxLayoutGap="20px">
+            <button mat-raised-button color="primary" (click)="triggerSnapshot();">Take Snapshot</button>&nbsp;
+            <button mat-raised-button color="accent" (click)="showNextWebcam(true);">Switch Camera</button>
+        </div>
+      </div>
+
+    <h4 *ngIf="errors.length > 0">Messages:</h4>
+    <ul *ngFor="let error of errors">
+      <li>{{error | json}}</li>
+    </ul>
+
+    <div class="snapshot" *ngIf="webImage">
+      <img [src]="webImage.imageAsDataUrl" alt="Your Image"/>
+      <br/>
+      <button mat-raised-button color="primary" class="place-it-center">Save Image</button>
+    </div>
+</div>

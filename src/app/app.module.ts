@@ -34,9 +34,11 @@ import { SelfServiceModule } from './self-service/self-service.module';
 import { SystemModule } from './system/system.module';
 import { ProductsModule } from './products/products.module';
 
-
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
+import { CameraComponent } from './camera/camera.component';
+import {WebcamModule} from 'ngx-webcam';
+import {MatButtonModule} from '@angular/material/button';
 
 /**
  * App Module
@@ -63,9 +65,11 @@ import { AppRoutingModule } from './app-routing.module';
     SelfServiceModule,
     SystemModule,
     ProductsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    WebcamModule,
+    MatButtonModule
   ],
-  declarations: [WebAppComponent, NotFoundComponent],
+  declarations: [WebAppComponent, NotFoundComponent, CameraComponent],
   providers: [],
   bootstrap: [WebAppComponent]
 })

@@ -64,10 +64,15 @@ import { ProvisioningEntryEntriesResolver } from './provisioning-entries/view-pr
 import { LoanProductsResolver } from './common-resolvers/loan-products.resolver';
 import { ProvisioningCategoriesResolver } from './common-resolvers/provisioning-categories.resolver';
 import { ProvisioningJournalEntriesResolver } from './provisioning-entries/view-provisioning-journal-entries/provisioning-journal-entries.resolver';
+import { CameraComponent } from 'app/camera/camera.component';
 
 /** Accounting Routes */
 const routes: Routes = [
   Route.withShell([
+    {
+      path: 'camera',
+      component : CameraComponent
+    },
     {
       path: 'accounting',
       data: { title: extract('Accounting'), breadcrumb: 'Accounting' },
