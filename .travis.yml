@@ -8,6 +8,8 @@ node_js:
 before_script:
   - npm i npm@latest -g
   - npm install -g --silent @angular/cli@6.2.3
+  
+build: travis_wait 20 ng build --prod --output-hashing=none --base-href="/web-app/"
 
 script:
   - ng lint
