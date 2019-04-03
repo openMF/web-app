@@ -1,0 +1,106 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="reportForm">
+
+      <mat-card-content>
+
+        <!-- <mat-card> <strong>Active Loans-Summary(Pentaho)</strong></mat-card> -->
+        <div><strong>Active Loans-Summary(Pentaho)</strong></div>
+
+        <div>
+          <mat-form-field fxFlex="48%">
+            <mat-label>office</mat-label>
+            <mat-select formControlName="office">
+              <mat-option *ngFor="let office of officeData" [value]="office">
+                {{ office.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field fxFlex="48%">
+            <mat-label>Currency</mat-label>
+            <mat-select formControlName="currency">
+              <mat-option *ngFor="let currency of currencyData" [value]="currency">
+                {{ currency.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field fxFlex="48%">
+            <mat-label>Loan Purpose</mat-label>
+            <mat-select formControlName="loanPurpose">
+              <mat-option *ngFor="let loanPurpose of loanPurpuseData" [value]="loanPurpose">
+                {{ loanPurpose.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Fund</mat-label>
+            <mat-select formControlName="fund">
+              <mat-option *ngFor="let fund of fundData" [value]="fund">
+                {{ fund.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>PAR Calculation</mat-label>
+            <mat-select formControlName="parCalculation">
+              <mat-option *ngFor="let parCalculation of parCalculationData" [value]="parCalculation">
+                {{ parCalculation.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field fxFlex="48%">
+            <mat-select placeholder="Output Type">
+              <mat-option value="option">Normal format</mat-option>
+              <mat-option value="option">Excel format</mat-option>
+              <mat-option value="option">Excel 2007 format</mat-option>
+              <mat-option value="option">CSV format</mat-option>
+              <mat-option value="option">PDF format</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field fxFlex="48%">
+            <mat-select placeholder="Zero Decimal places">
+              <mat-option value="option">Zero Decimal places</mat-option>
+              <mat-option value="option">4</mat-option>
+              <mat-option value="option">3</mat-option>
+              <mat-option value="option">2</mat-option>
+              <mat-option value="option">1</mat-option>
+              <mat-option value="option">0</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+      </mat-card-content>
+
+      <mat-card fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <button mat-raised-button color="primary" [routerLink]="['/#']">
+        Run Report
+      </button>
+    </mat-card>
+
+    </form>
+
+  </mat-card>
+
+</div>

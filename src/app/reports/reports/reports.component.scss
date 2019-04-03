@@ -1,0 +1,9 @@
+.mat-form-field {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+  }
+  
+  .mat-form-field > * {
+    width: 60%;
+  }
