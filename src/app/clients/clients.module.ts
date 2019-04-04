@@ -20,6 +20,7 @@ import { CreateIdentityComponent } from './create-identity/create-identity.compo
 import { ClientsService } from './clients.service';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
 import { EditAddressComponent } from './edit-address/edit-address.component';
+import { AddFamilyMemberComponent } from './family-members/add-family-members/add-family-members.component';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { EditAddressComponent } from './edit-address/edit-address.component';
     CreateAddressComponent,
     CreateIdentityComponent,
     UploadDocumentComponent,
-    EditAddressComponent
+    EditAddressComponent,
+    AddFamilyMemberComponent
 ],
   providers: [
     ClientsService,

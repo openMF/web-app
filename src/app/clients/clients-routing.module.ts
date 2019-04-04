@@ -15,55 +15,77 @@ import { CreateAddressComponent } from './create-address/create-address.componen
 import { CreateIdentityComponent } from './create-identity/create-identity.component';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
 import { EditAddressComponent } from './edit-address/edit-address.component';
+import { AddFamilyMemberComponent } from './family-members/add-family-members/add-family-members.component';
+import { FamilyMemberResolver } from './resolver/family-member.resolver';
 
 const routes: Routes = [
   Route.withShell([
     {
       path: 'clients',
-      component: ClientsComponent,
-      data: { title: extract('Clients') }
-    },
-    {
-      path: 'clients/create',
-      component: CreateClientComponent,
-      data: { title: extract('Create Client') }
-    },
-    {
-      path: 'clients/view/:id',
-      component: ViewClientComponent,
-      data: { title: extract('View Client') }
-    },
-    {
-      path: 'clients/viewloan',
-      component: ViewLoanComponent,
-      data: { title: extract('View Loan') }
-    },
-    {
-      path: 'clients/address/:id',
-      component: CreateAddressComponent,
-      data: { title: extract('Create Address') }
-    },
-    {
-      path: 'clients/editaddress/:id/:addressTypeId/:addressId',
-      component: EditAddressComponent,
-      data: { title: extract('Edit Address') }
-    },
-    {
-      path: 'clients/addclientidentifier/:id',
-      component: CreateIdentityComponent,
-      data: { title: extract('Create Identity') }
-    },
-    {
-      path: 'clients/addclientdocument/:id',
-      component: UploadDocumentComponent,
-      data: { title: extract('Create Identity') }
-    },
+      data: { title: extract('Clients'), breadcrumb: 'Client' },
+      children: [
+        {
+          path: '',
+          component: ClientsComponent
+        },
+        {
+          path: 'create',
+          component: CreateClientComponent,
+          data: { title: extract('Create Client'), breadcrumb: 'client' }
+        },
+        {
+          path: 'view/:id',
+          data: { title: extract('View Clients'), breadcrumb: 'view' },
+          children: [
+            {
+              path: '',
+              component: ViewClientComponent,
+            },
+            {
+              path: 'family-members/add',
+              component: AddFamilyMemberComponent,
+              resolve: {
+                familyMember: FamilyMemberResolver,
+              },
+              data: { title: extract('Add Client Family Member'), breadcrumb: 'add' }
+            }
+          ]
+        },
+        {
+          path: 'address/:id',
+          component: CreateAddressComponent,
+          data: { title: extract('Create Address'), breadcrumb: 'create' }
+        },
+        {
+          path: 'editaddress/:id/:addressTypeId/:addressId',
+          component: EditAddressComponent,
+          data: { title: extract('Edit Address'), breadcrumb: 'edit' }
+        },
+        {
+          path: 'viewloan',
+          component: ViewLoanComponent,
+          data: { title: extract('View Loan'), breadcrumb: 'loan' }
+        },
+        {
+          path: 'addclientidentifier/:id',
+          component: CreateIdentityComponent,
+          data: { title: extract('Create Identity'), breadcrumb: 'create' }
+        },
+        {
+          path: 'addclientdocument/:id',
+          component: UploadDocumentComponent,
+          data: { title: extract('Create Identity'), breadcrumb: 'create' }
+        }
+      ]
+    }
   ])
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: []
+  providers: [
+    FamilyMemberResolver
+  ]
 })
 export class ClientsRoutingModule { }

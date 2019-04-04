@@ -5,10 +5,12 @@ import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angul
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class ClientsService {
-  constructor(private http: Http) {} // tslint:disable-line
+  constructor(private http: Http,
+    private httpClient: HttpClient) {} // tslint:disable-line
 
   createAuthorizationHeader(headers: Headers) { // tslint:disable-line
     const username = 'mifos';
@@ -340,7 +342,13 @@ export class ClientsService {
       );
   }
 
+  addFamilyMember(familyMember: any, id: number): Observable<any> {
+    return this.httpClient.post(`/clients/${id}/familymembers`, familyMember);
+  }
 
+  getClientFamilyMembersTemplate(id: number): Observable<any> {
+    return this.httpClient.get(`/clients/${id}/familymembers/template`);
+  }
 
 
 }

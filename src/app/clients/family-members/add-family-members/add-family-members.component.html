@@ -1,0 +1,110 @@
+<div class="container">
+
+  <mat-card>
+    <form [formGroup]="familyMemberForm" (ngSubmit)="submit()">
+      <mat-card-content>
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName">
+            <mat-error *ngIf="familyMemberForm.controls.firstName.hasError('required')">
+              Family member first Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Middle Name</mat-label>
+            <input matInput formControlName="middleName">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName">
+            <mat-error *ngIf="familyMemberForm.controls.lastName.hasError('required')">
+              Family member last Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Qualification</mat-label>
+            <input matInput formControlName="qualification">
+            <mat-error *ngIf="familyMemberForm.controls.qualification.hasError('required')">
+              Family member qualification is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Mobile Number</mat-label>
+            <input matInput formControlName="mobileNumber">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Age</mat-label>
+            <input matInput formControlName="age">
+            <mat-error *ngIf="familyMemberForm.controls.age.hasError('required')">
+              Family member age is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-checkbox formControlName="isDependent" fxFlex="48%" class="entries">Is Dependent?</mat-checkbox>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Relationship</mat-label>
+            <mat-select formControlName="relationshipId">
+              <mat-option *ngFor="let relationship of relationshipIdData" [value]="relationship.id">
+                {{relationship.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Marital Status</mat-label>
+            <mat-select formControlName="maritalStatusId">
+              <mat-option *ngFor="let maritalstatus of maritalStatusIdData" [value]="maritalstatus.id">
+                {{maritalstatus.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Gender</mat-label>
+            <mat-select formControlName="genderId">
+              <mat-option *ngFor="let gender of genderIdData" [value]="gender.id">
+                {{gender.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Profession</mat-label>
+            <mat-select formControlName="professionId">
+              <mat-option *ngFor="let profession of professionIdData" [value]="profession.id">
+                {{profession.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Date of Birth</mat-label>
+            <input matInput [matDatepicker]="birthDatePicker" formControlName="dateOfBirth">
+            <mat-datepicker-toggle matSuffix [for]="birthDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #birthDatePicker></mat-datepicker>
+            <mat-error *ngIf="familyMemberForm.controls.dateOfBirth .hasError('required')">
+              Family member age is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!familyMemberForm.valid">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>
