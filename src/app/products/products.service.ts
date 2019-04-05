@@ -48,4 +48,11 @@ export class ProductsService {
     return this.http.get('/loanproducts', { params: httpParams });
   }
 
+  /**
+   * @returns {Observable<any>} Tax Groups data
+   */
+  getTaxGroups(): Observable<any> {
+    return this.http.get('/taxes/group');
+  }
+
 }

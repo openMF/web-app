@@ -12,7 +12,7 @@ import { RecurringDepositProductsComponent } from './recurring-deposit-products/
 import { ChargesComponent } from './charges/charges.component';
 import { FixedDepositProductsComponent } from './fixed-deposit-products/fixed-deposit-products.component';
 import { ProductsMixComponent } from './products-mix/products-mix.component';
-
+import { ManageTaxGroupsComponent } from './manage-tax-groups/manage-tax-groups.component';
 /**
  * Products Module
  *
@@ -29,7 +29,8 @@ import { ProductsMixComponent } from './products-mix/products-mix.component';
     RecurringDepositProductsComponent,
     ChargesComponent,
     FixedDepositProductsComponent,
-    ProductsMixComponent
+    ProductsMixComponent,
+    ManageTaxGroupsComponent
   ],
   entryComponents: [
   ]
