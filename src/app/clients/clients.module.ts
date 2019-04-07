@@ -9,6 +9,8 @@ import { MatTableModule } from '@angular/material/table';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ArchwizardModule } from 'angular-archwizard';
 
+import { SharedModule } from '../shared/shared.module';
+
 import { ClientsRoutingModule } from './clients-routing.module';
 import { ClientsComponent } from './clients.component';
 import { CreateClientComponent} from './create-client/create-client.component';
@@ -20,6 +22,7 @@ import { CreateIdentityComponent } from './create-identity/create-identity.compo
 import { ClientsService } from './clients.service';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
 import { EditAddressComponent } from './edit-address/edit-address.component';
+import { CreateSurveyComponent } from './create-survey/create-survey.component';
 
 @NgModule({
   imports: [
@@ -42,7 +45,8 @@ import { EditAddressComponent } from './edit-address/edit-address.component';
     CreateAddressComponent,
     CreateIdentityComponent,
     UploadDocumentComponent,
-    EditAddressComponent
+    EditAddressComponent,
+    CreateSurveyComponent
 ],
   providers: [
     ClientsService,

@@ -1,0 +1,54 @@
+<div class="content-container" ng-controller="SurveyController">
+        <ul class="breadcrumb">
+            <li><a href="#/clients">{{'label.anchor.clients' | translate}}</a></li>
+            <li><a href="#/viewclient/{{clientId}}">{{'label.anchor.viewclient' | translate}}</a></li>
+            <li class="active">{{'label.anchor.survey' | translate}}</li>
+        </ul>
+    <api-validate></api-validate>
+    
+    <div class="card row well">
+        <legend>{{ 'label.heading.Survey' | translate }}</legend>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.surveyName' | translate}}<span class="required">*</span></label>
+
+                <div class="col-sm-3">
+                    <select id="surveyname" ng-change="surveySelected(survey)" ng-model="survey"
+                            ng-options="survey as survey.name for survey in surveys"
+                            value="{{survey}}" class="form-control">
+                            <option selected="true" value="">{{'label.selectsurvey' | translate}}</option>
+                    </select>
+
+                </div>
+            </div>
+            <br>
+            <hr>
+            <div class="form-horizontal">
+                <ui-tabset ng-show="survey" class="marginbottom0" ui-tabset-name="surveyTabset">
+                    <tab ng-repeat="component in componentGroups" heading="{{ component[0].componentKey ? component[0].componentKey : 'Questions' }}">
+                        
+                        <div ng-repeat="question in component" class="form-group">
+                            <label class="control-label col-sm-3">{{question.text}}</label>
+
+                            <div class="col-sm-9">
+                                <div class="radio" ng-repeat="options in question.responseDatas">
+                                  <label>
+                                    <input type="radio" name="{{question.id}}" ng-model="question.answer" ng-value="options"> {{options.text}}
+                                  </label>
+                                </div>
+                            </div>
+                        </div>
+                    </tab>
+                </ui-tabset>
+
+                <div class="col-md-offset-3" ng-show="!showDeleteClient">
+                    <button id="cancel" type="reset" ng-click="cancel()" class="btn btn-default">{{'label.button.cancel' | translate}}
+                    </button>
+                    <button id="save" type="submit" ng-click="submit()" ng-disabled="isAnyResponse()" class="btn btn-primary">{{'label.button.save' | translate}}</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

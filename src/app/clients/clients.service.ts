@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angular/http';
-/* import { HttpHeaders, HttpClient } from '@angular/common/http';
+/* import { HttpHeaders, HttpClient,HttpParams} from '@angular/common/http';
  */
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
@@ -31,6 +31,23 @@ export class ClientsService {
           (response: Response) => { // tslint:disable-line
             response = response.json();
             return response['pageItems'];
+
+          }
+        )
+      );
+  }
+  getSurveys() {
+    const headers = new Headers(); // tslint:disable-line
+    this.createAuthorizationHeader(headers);
+    return this.http.get(
+        'https://demo.openmf.org/fineract-provider/api/v1/survey?tenantIdentifier=default&pretty=true', {
+          headers: headers
+        })
+      .pipe(
+        map(
+          (response: Response) => { // tslint:disable-line
+            response = response.json();
+            return response;
 
           }
         )
@@ -338,6 +355,9 @@ export class ClientsService {
           }
         )
       );
+  }
+  postCreateSurvey(Survey:any): Observable<any>{
+    return this.http.post('/survey', Survey);
   }
 
 

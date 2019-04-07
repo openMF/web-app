@@ -37,6 +37,8 @@ import { ProductsModule } from './products/products.module';
 
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
+import { ClientsComponent } from './src/app/clients/clients.component';
+import { CreateSurveyComponent } from './src/app/clients/create-survey/create-survey.component';
 
 /**
  * App Module
@@ -65,7 +67,7 @@ import { AppRoutingModule } from './app-routing.module';
     ProductsModule,
     AppRoutingModule
   ],
-  declarations: [WebAppComponent, NotFoundComponent],
+  declarations: [WebAppComponent, NotFoundComponent, ClientsComponent, CreateSurveyComponent],
   providers: [],
   bootstrap: [WebAppComponent]
 })
