@@ -1,71 +1,71 @@
-<div class="container m-t-40 m-b-40">
-
-  <aw-wizard class="m-t-10" #wizard [navBarLayout]="'large-empty-symbols'">
-    <aw-wizard-step stepTitle="Address" [navigationSymbol]="{ symbol: '1' }">
-
-      <div fxLayoutAlign="center">
-        <mat-card class="example-card">
-          <mat-card-header>
-          </mat-card-header>
-          <mat-card-content>
-            <form class="example-form" (ngSubmit)="onSubmit()" #f="ngForm">
-              <mat-form-field class="example-full-width">
-                <mat-select placeholder="Address Type" [(ngModel)]="addressTypeId" [ngModelOptions]="{standalone: true}" ngDefaultControl>
-                  <div>
-
-                    <mat-option *ngFor="let item of clientAddress?.addressTypeIdOptions" name="option" [value]="item?.id">{{item?.name}}</mat-option>
-                  </div>
-                </mat-select>
-              </mat-form-field>
-
-              <mat-form-field class="example-full-width">
-                <input matInput name="street" placeholder="Street" ngModel>
-              </mat-form-field>
-              <mat-form-field class="example-full-width">
-                <input matInput name="addressLine1" placeholder="Address Line 1" ngModel>
-              </mat-form-field>
-
-
-              <mat-form-field class="example-full-width">
-                <input matInput name="addressLine2" placeholder="Address Line 2" ngModel>
-              </mat-form-field>
-              <mat-form-field class="example-full-width">
-                <input matInput name="addressLine3" placeholder="Address Line 3" ngModel>
-              </mat-form-field>
-              <mat-form-field class="example-full-width">
-                <input matInput name="city" placeholder="City" ngModel>
-              </mat-form-field>
-              <mat-form-field class="example-full-width">
-                <mat-select placeholder="State" [(ngModel)]="addressStateId" [ngModelOptions]="{standalone: true}" ngDefaultControl>
-                  <div>
-
-                    <mat-option *ngFor="let item of clientAddress?.stateProvinceIdOptions" name="option" [value]="item?.id">{{item?.name}}</mat-option>
-                  </div>
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field class="example-full-width">
-                <mat-select placeholder="Country" [(ngModel)]="addressCountryId" [ngModelOptions]="{standalone: true}" ngDefaultControl>
-                  <div>
-
-                    <mat-option *ngFor="let item of clientAddress?.countryIdOptions" name="option" [value]="item?.id">{{item?.name}}</mat-option>
-                  </div>
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field class="example-full-width">
-                <input matInput name="postalCode" placeholder="Postal Code" ngModel>
-              </mat-form-field>
-
-              <button mat-raised-button>Create</button>
-
-            </form>
-
-          </mat-card-content>
-        </mat-card>
-
-
-      </div>
-
-
-    </aw-wizard-step>
-  </aw-wizard>
+<div class="container">
+  <mat-card>
+    <form [formGroup]="newAddressForm" (ngSubmit)="submit()">
+      <mat-card-content>
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+          <mat-form-field fxFlex="48%">
+            <mat-label>Address Type</mat-label>
+            <mat-select required formControlName="addressTypeID">
+              <mat-option *ngFor="let item of clientAddress?.addressTypeIdOptions" [value]="item?.id">
+                {{ item?.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="newAddressForm.controls.addressTypeID.hasError('required')">
+              Address type is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field fxFlex="48%">
+            <mat-label>Street</mat-label>
+            <input matInput formControlName="street">
+          </mat-form-field>
+          <mat-error *ngIf="newAddressForm.controls.street.hasError('required')">
+            Street is <strong>required</strong>
+          </mat-error>
+          <mat-form-field fxFlex="48%">
+            <mat-label>Address Line 1</mat-label>
+            <input matInput formControlName="addressLine1">
+          </mat-form-field>
+          <mat-form-field fxFlex="48%">
+            <mat-label>Address Line 2</mat-label>
+            <input matInput formControlName="addressLine2">
+          </mat-form-field>
+          <mat-form-field fxFlex="48%">
+            <mat-label>Address Line 3</mat-label>
+            <input matInput formControlName="addressLine3">
+          </mat-form-field>
+          <mat-form-field fxFlex="48%">
+            <mat-label>City</mat-label>
+            <input matInput formControlName="city">
+          </mat-form-field>
+          <mat-form-field fxFlex="48%">
+            <mat-label>State</mat-label>
+            <mat-select required formControlName="stateProvinceId">
+              <mat-option *ngFor="let item of clientAddress?.stateProvinceIdOptions" [value]="item?.id">
+                {{ item?.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field fxFlex="48%">
+            <mat-label>Country</mat-label>
+            <mat-select required formControlName="countryId">
+              <mat-option *ngFor="let item of clientAddress?.countryIdOptions" [value]="item?.id">
+                {{ item?.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="newAddressForm.controls.countryId.hasError('required')">
+              Country is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field fxFlex="48%">
+            <mat-label>Postal Code</mat-label>
+            <input matInput formControlName="postalCode">
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../../view/'+id]">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!newAddressForm.valid">Submit</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
 </div>

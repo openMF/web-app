@@ -1,9 +1,10 @@
+/** Angular Imports */
 import { Component, OnInit, ViewEncapsulation, ViewChild  } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+/** Client services */
 import { ClientsService } from 'app/clients/clients.service';
 
 @Component({
@@ -14,31 +15,55 @@ import { ClientsService } from 'app/clients/clients.service';
 
 })
 export class CreateAddressComponent implements OnInit {
+  /** Client id */
   id: number = undefined;
+  /** Snapshot user id */
   paramsSubscription: Subscription;
+  /** Client address */
   clientAddress: any = undefined;
-  value: any = undefined;
-  mymodel: any = undefined;
-  addressTypeId: any = undefined;
-  addressStateId: any = undefined;
-  addressCountryId: any = undefined;
+  /** add new address form. */
+  newAddressForm: FormGroup;
+  /**
+   *
+   * @param route active route to snapshot user
+   * @param clientService Client service
+   * @param formBuilder Form builder
+   * @param router for navigation
+   */
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private clientService: ClientsService,
+              private formBuilder: FormBuilder) {}
 
-  address: any = undefined;
-
-  constructor(private route: ActivatedRoute, private clientService: ClientsService) {}
-
-  @ViewChild('f') addressForm: NgForm;
-
-
+  /**
+   * Creates the new address form
+   */
   ngOnInit() {
+    this.createNewAddressForm();
     this.paramsSubscription = this.route.params
       .subscribe(
         (params: Params) => {
           this.id = params['id'];
         }
       );
-    console.log(this.id);
     this.getClientAddressTemplate();
+  }
+
+  /**
+   * Creates the client address entry form.
+   */
+  createNewAddressForm() {
+    this.newAddressForm = this.formBuilder.group({
+      'addressTypeID': ['', Validators.required],
+      'street': [''] ,
+      'addressLine1': [''],
+      'addressLine2': [''],
+      'addressLine3': [''],
+      'city': [''],
+      'stateProvinceId': [''],
+      'countryId': ['', Validators.required],
+      'postalCode': ['']
+    });
   }
 
   getClientAddressTemplate() {
@@ -50,27 +75,18 @@ export class CreateAddressComponent implements OnInit {
         })
       );
   }
-
-  onSubmit() {
-    this.address = {};
-    console.log(this.addressTypeId);
-    this.address.street = this.addressForm.value.street;
-    this.address.addressLine1 = this.addressForm.value.addressLine1;
-    this.address.addressLine2 = this.addressForm.value.addressLine2;
-    this.address.addressLine3 = this.addressForm.value.addressLine3;
-    this.address.city = this.addressForm.value.city;
-    this.address.stateProvinceId = this.addressStateId;
-    this.address.countryId = this.addressCountryId;
-    this.address.postalCode = this.addressForm.value.postalCode;
-
-
-    this.clientService.postClientAddress(this.id, this.address, this.addressTypeId)
+  /**
+   * submit new address form
+   * if succesfull navigate to user page
+   */
+  submit() {
+    const newAddress = this.newAddressForm.value;
+    this.clientService.postClientAddress(this.id, newAddress, this.newAddressForm.get('addressTypeID'))
       .subscribe(
         (res => {
-          return true;
+          this.router.navigate(['../../view/' + this.id]);
         })
       );
-    this.addressForm.reset();
   }
 }
 

@@ -41,7 +41,7 @@ const routes: Routes = [
     {
       path: 'clients/address/:id',
       component: CreateAddressComponent,
-      data: { title: extract('Create Address') }
+      data: { title: extract('Create Address'),  breadcrumb : 'Create New Address' }
     },
     {
       path: 'clients/editaddress/:id/:addressTypeId/:addressId',
