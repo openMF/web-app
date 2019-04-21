@@ -17,6 +17,14 @@ import { ManageSurveysComponent } from './manage-surveys/manage-surveys.componen
 import { ManageSchedulerJobsComponent } from './manage-scheduler-jobs/manage-scheduler-jobs.component';
 import { GlobalConfigurationsComponent } from './global-configurations/global-configurations.component';
 import { EditConfigurationComponent } from './global-configurations/edit-configuration/edit-configuration.component';
+import { AmazonS3Component } from './external-services/amazon-s3/amazon-s3.component';
+import { EmailComponent } from './external-services/email/email.component';
+import { SMSComponent } from './external-services/sms/sms.component';
+import { NotificationComponent } from './external-services/notification/notification.component';
+import { EditAmazonS3Component } from './external-services/amazon-s3/edit-amazon-s3/edit-amazon-s3.component';
+import { EditEmailComponent } from './external-services/email/edit-email/edit-email.component';
+import { EditNotificationComponent } from './external-services/notification/edit-notification/edit-notification.component';
+import { EditSMSComponent } from './external-services/sms/edit-sms/edit-sms.component';
 
 @NgModule({
   imports: [
@@ -34,7 +42,15 @@ import { EditConfigurationComponent } from './global-configurations/edit-configu
     ManageSurveysComponent,
     ManageSchedulerJobsComponent,
     GlobalConfigurationsComponent,
-    EditConfigurationComponent
+    EditConfigurationComponent,
+    AmazonS3Component,
+    EmailComponent,
+    SMSComponent,
+    NotificationComponent,
+    EditAmazonS3Component,
+    EditEmailComponent,
+    EditNotificationComponent,
+    EditSMSComponent
   ]
 })
 export class SystemModule { }

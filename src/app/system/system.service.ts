@@ -99,4 +99,21 @@ export class SystemService {
     return this.http.put(`/configurations/${configurationId}`, configuration);
   }
 
+  /**
+   * @param {string} externalConfigurationName External Configuration Name.
+   * @returns {Observable<any>} External Configuration.
+   */
+  getExternalConfiguration(externalConfigurationName: string): Observable<any> {
+    return this.http.get(`/externalservice/${externalConfigurationName}`);
+  }
+
+  /**
+   * @param {string} externalConfigurationName External Configuration Name.
+   * @param {any} externalConfiguration External Configuration.
+   * @returns {Observable<any>}
+   */
+  updateExternalConfiguration(externalConfigurationName: string, externalConfiguration: any): Observable<any> {
+    return this.http.put(`/externalservice/${externalConfigurationName}`, externalConfiguration);
+  }
+
 }
