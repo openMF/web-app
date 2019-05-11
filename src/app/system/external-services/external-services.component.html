@@ -8,7 +8,7 @@
 
         <mat-nav-list>
 
-          <mat-list-item>
+          <mat-list-item [routerLink]="['amazon-s3']">
             <mat-icon matListIcon>
               <fa-icon icon="cloud" size="sm"></fa-icon>
             </mat-icon>
@@ -16,7 +16,7 @@
             <p matLine>S3 Amazon Service Configuration</p>
           </mat-list-item>
 
-          <mat-list-item>
+          <mat-list-item [routerLink]="['sms']">
             <mat-icon matListIcon>
               <fa-icon icon="comment-alt" size="sm"></fa-icon>
             </mat-icon>
@@ -32,7 +32,7 @@
 
         <mat-nav-list>
 
-          <mat-list-item>
+          <mat-list-item [routerLink]="['email']">
             <mat-icon matListIcon>
               <fa-icon icon="envelope" size="sm"></fa-icon>
             </mat-icon>
@@ -40,7 +40,7 @@
             <p matLine>Email Service Configuration</p>
           </mat-list-item>
 
-          <mat-list-item>
+          <mat-list-item [routerLink]="['notification']">
             <mat-icon matListIcon>
               <fa-icon icon="bell" size="sm"></fa-icon>
             </mat-icon>

@@ -1,0 +1,48 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="notificationConfigurationForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Server Key</mat-label>
+            <input matInput required formControlName="server_key">
+            <mat-error *ngIf="notificationConfigurationForm.controls.server_key.hasError('required')">
+              Server Key is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>GCM End Point</mat-label>
+            <input matInput required formControlName="gcm_end_point">
+            <mat-error *ngIf="notificationConfigurationForm.controls.gcm_end_point.hasError('required')">
+              GCM End Point is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>FCM End Point</mat-label>
+            <input matInput required formControlName="fcm_end_point">
+            <mat-error *ngIf="notificationConfigurationForm.controls.fcm_end_point.hasError('required')">
+              FCM End Point is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!notificationConfigurationForm.valid || notificationConfigurationForm.pristine">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>

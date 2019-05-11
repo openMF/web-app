@@ -13,6 +13,8 @@ import { ChargesComponent } from './charges/charges.component';
 import { FixedDepositProductsComponent } from './fixed-deposit-products/fixed-deposit-products.component';
 import { ProductsMixComponent } from './products-mix/products-mix.component';
 import { ManageTaxGroupsComponent } from './manage-tax-groups/manage-tax-groups.component';
+import { ManageTaxComponentsComponent } from './manage-tax-components/manage-tax-components.component';
+
 /**
  * Products Module
  *
@@ -31,6 +33,7 @@ import { ManageTaxGroupsComponent } from './manage-tax-groups/manage-tax-groups.
     FixedDepositProductsComponent,
     ProductsMixComponent,
     ManageTaxGroupsComponent
+    ManageTaxComponentsComponent
   ],
   entryComponents: [
   ]
