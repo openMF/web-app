@@ -47,6 +47,67 @@ export class SystemService {
   }
 
   /**
+   * @param codeId Code ID.
+   * @returns {Observable<any>} Fetches Code.
+   */
+  getCode(codeId: string): Observable<any> {
+    return this.http.get(`/codes/${codeId}`);
+  }
+
+  /**
+   * @param code Code.
+   * @param codeId Code ID.
+   * @returns {Observable<any>}
+   */
+  updateCode(code: any, codeId: string): Observable<any> {
+    return this.http.put(`/codes/${codeId}`, code);
+  }
+
+  /**
+   * @param codeId Code ID.
+   * @returns {Observable<any>} Code Values.
+   */
+  getCodeValues(codeId: string): Observable<any> {
+    return this.http.get(`/codes/${codeId}/codevalues`);
+  }
+
+  /**
+   * @param codeId Code ID.
+   * @param codeValueId Code value ID.
+   * @returns {Observable<any>}
+   */
+  deleteCodeValue(codeId: string, codeValueId: string): Observable<any> {
+    return this.http.delete(`/codes/${codeId}/codevalues/${codeValueId}`);
+  }
+
+  /**
+   * @param codeId Code ID.
+   * @param codeValueId Code value ID.
+   * @param codeValueChanges Code value changes.
+   * @returns {Observable<any>}
+   */
+  updateCodeValue(codeId: string, codeValueId: string, codeValueChanges: any): Observable<any> {
+    return this.http.put(`/codes/${codeId}/codevalues/${codeValueId}`, codeValueChanges);
+  }
+
+  /**
+   * @param codeId Code ID.
+   * @param codeValueId Code value.
+   * @returns {Observable<any>}
+   */
+  createCodeValue(codeId: string, codeValue: any): Observable<any> {
+    return this.http.post(`/codes/${codeId}/codevalues`, codeValue);
+  }
+
+  /**
+   * @param codeId Code ID.
+   * @returns {Observable<any>}
+   */
+  deleteCode(codeId: string): Observable<any> {
+    return this.http.delete(`/codes/${codeId}`);
+  }
+
+  /**
    * @returns {Observable<any>} Fetches Surveys.
    */
   getSurveys(): Observable<any> {

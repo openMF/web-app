@@ -45,12 +45,12 @@ export class CreateCodeComponent implements OnInit {
 
   /**
    * Submits the code form and creates a code,
-   * if successful redirects to view code.
+   * if successful redirects to view created code.
    */
   submit() {
     this.systemService.createCode(this.codeForm.value)
       .subscribe((response: any) => {
-        this.router.navigate(['/system/codes'], { relativeTo: this.route });
+        this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
     });
   }
 

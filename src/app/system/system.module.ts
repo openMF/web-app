@@ -25,6 +25,8 @@ import { EditAmazonS3Component } from './external-services/amazon-s3/edit-amazon
 import { EditEmailComponent } from './external-services/email/edit-email/edit-email.component';
 import { EditNotificationComponent } from './external-services/notification/edit-notification/edit-notification.component';
 import { EditSMSComponent } from './external-services/sms/edit-sms/edit-sms.component';
+import { ViewCodeComponent } from './codes/view-code/view-code.component';
+import { EditCodeComponent } from './codes/edit-code/edit-code.component';
 
 @NgModule({
   imports: [
@@ -34,7 +36,9 @@ import { EditSMSComponent } from './external-services/sms/edit-sms/edit-sms.comp
   declarations: [
     SystemComponent,
     CodesComponent,
+    ViewCodeComponent,
     CreateCodeComponent,
+    EditCodeComponent,
     ExternalServicesComponent,
     ManageDataTablesComponent,
     ManageHooksComponent,
