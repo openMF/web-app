@@ -30,7 +30,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['view', row.id]" class="select-row"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="[row.id]" class="select-row"></tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>

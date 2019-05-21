@@ -9,6 +9,8 @@ import { extract } from '../core/i18n/i18n.service';
 import { SystemComponent } from './system.component';
 import { CodesComponent } from './codes/codes.component';
 import { CreateCodeComponent } from './codes/create-code/create-code.component';
+import { ViewCodeComponent } from './codes/view-code/view-code.component';
+import { EditCodeComponent } from './codes/edit-code/edit-code.component';
 import { ExternalServicesComponent } from './external-services/external-services.component';
 import { ManageDataTablesComponent } from './manage-data-tables/manage-data-tables.component';
 import { ManageHooksComponent } from './manage-hooks/manage-hooks.component';
@@ -28,6 +30,8 @@ import { EditSMSComponent } from './external-services/sms/edit-sms/edit-sms.comp
 
 /** Custom Resolvers */
 import { CodesResolver } from './codes/codes.resolver';
+import { CodeResolver } from './codes/code.resolver';
+import { CodeValuesResolver } from './codes/view-code/code-values.resolver';
 import { ManageDataTablesResolver } from './manage-data-tables/manage-data-tables.resolver';
 import { ManageHooksResolver } from './manage-hooks/manage-hooks.resolver';
 import { RolesAndPermissionsResolver } from './roles-and-permissions/roles-and-permissions.resolver';
@@ -65,6 +69,28 @@ const routes: Routes = [
             path: 'create',
             component: CreateCodeComponent,
             data: { title: extract('Create Code'), breadcrumb: 'Create' }
+            },
+            {
+              path: ':id',
+              data: { title: extract('View Code'), routeParamBreadcrumb: 'id' },
+              children: [
+                {
+                  path: '',
+                  component: ViewCodeComponent,
+                  resolve: {
+                    code: CodeResolver,
+                    codeValues: CodeValuesResolver
+                  }
+                },
+                {
+                  path: 'edit',
+                  component: EditCodeComponent,
+                  data: { title: extract('Edit Code'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    code: CodeResolver
+                  }
+                }
+              ]
           }
         ],
 
@@ -235,6 +261,8 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     CodesResolver,
+    CodeResolver,
+    CodeValuesResolver,
     ManageDataTablesResolver,
     ManageHooksResolver,
     RolesAndPermissionsResolver,
