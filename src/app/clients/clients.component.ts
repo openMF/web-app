@@ -1,9 +1,6 @@
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import { Response} from '@angular/http';
-import {ClientsService} from './clients.service';
-import {DataSource} from '@angular/cdk/collections';
-import { Observable } from 'rxjs';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'mifosx-clients',
   templateUrl: './clients.component.html',
@@ -13,26 +10,17 @@ import { Observable } from 'rxjs';
 })
 export class ClientsComponent implements OnInit {
   post: any = [];
-  private ELEMENT_DATA: any = undefined;
-  displayedColumns =  ['name', 'clientno', 'externalid', 'status', 'mobileNo', 'gender', 'office', 'staff'];
+
+  displayedColumns = ['name', 'clientno', 'externalid', 'status', 'mobileNo', 'gender', 'office', 'staff'];
   dataSource = new MatTableDataSource();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private clientService: ClientsService) {}
-
-  ngOnInit() {
-       this.getClients();
-  }
-
-  // GET from clients API
-  getClients() {
-    this.clientService.getClients()
-    .subscribe(
-      (res => {
-        console.log(res);
-        res.active = !!res.active;
+  constructor(private route: ActivatedRoute) {
+    this.route.data.subscribe((clientsData: { clientsData: any }) => {
+      const res = clientsData.clientsData.pageItems;
+      res.active = !!res.active;
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sortingDataAccessor = (data: any, property: any) => {
@@ -42,9 +30,11 @@ export class ClientsComponent implements OnInit {
         }
       };
       this.dataSource.sort = this.sort;
-      })
-    );
+    });
   }
+
+
+  ngOnInit() { }
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
