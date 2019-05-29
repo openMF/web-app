@@ -24,10 +24,10 @@ export class ManageSchedulerJobsResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve() {
-    return forkJoin(
+    return forkJoin([
       this.systemService.getJobs(),
       this.systemService.getScheduler()
-    );
+    ]);
   }
 
 }
