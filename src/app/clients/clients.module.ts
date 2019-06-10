@@ -8,6 +8,10 @@ import { SharedModule } from 'app/shared/shared.module';
 
 /** Custom Components */
 import { ClientsComponent } from './clients.component';
+import { ClientsViewComponent } from './clients-view/clients-view.component';
+import { GeneralTabComponent } from './clients-view/general-tab/general-tab.component';
+import {PipesModule} from '../pipes/pipes.module';
+
 
 /**
  * Clients Module
@@ -17,9 +21,13 @@ import { ClientsComponent } from './clients.component';
 @NgModule({
   imports: [
     SharedModule,
-    ClientsRoutingModule
+    ClientsRoutingModule,
+    PipesModule
   ],
-  declarations: [ClientsComponent],
+  declarations: [
+    ClientsComponent,
+    ClientsViewComponent,
+    GeneralTabComponent],
   providers: [DatePipe]
 
 })

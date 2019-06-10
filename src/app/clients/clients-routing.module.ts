@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 /** Routing Imports */
@@ -9,20 +9,50 @@ import { extract } from '../core/i18n/i18n.service';
 
 /** Custom Components */
 import { ClientsComponent } from './clients.component';
+import { ClientsViewComponent } from './clients-view/clients-view.component';
+import { GeneralTabComponent } from './clients-view/general-tab/general-tab.component';
 
 /** Custom Resolvers */
 import { ClientsResolver } from './common-resolvers/clients.resolver';
+import { ClientViewResolver } from './common-resolvers/client-view.resolver';
+import { ClientAccountsResolver } from './common-resolvers/client-accounts.resolver';
+import { ClientChargesResolver } from './common-resolvers/client-charges.resolver';
+import { ClientSummaryResolver } from './common-resolvers/client-summary.resolver';
 
 const routes: Routes = [
-  Route.withShell([
-    {
-      path: 'clients',
-      component: ClientsComponent,
-      data: { title: extract('Clients'), breadcrumb: 'Clients', routeParamBreadcrumb: false },
-      resolve: {
-        clientsData: ClientsResolver
+  Route.withShell([{
+    path: 'clients',
+    data: { title: extract('Clients'), breadcrumb: 'Clients', routeParamBreadcrumb: false },
+    children: [
+      {
+        path: '',
+        component: ClientsComponent,
+        resolve: {
+          clientsData: ClientsResolver
+        }
+      },
+      {
+        path: ':clientId',
+        component: ClientsViewComponent,
+        data: { title: extract('Clients View'), routeParamBreadcrumb: 'clientId' },
+        resolve: {
+          clientViewData: ClientViewResolver
+        },
+        children: [
+          {
+            path: 'general',
+            component: GeneralTabComponent,
+            resolve: {
+              clientAccountsData: ClientAccountsResolver,
+              clientChargesData: ClientChargesResolver,
+              clientSummary: ClientSummaryResolver
+            },
+
+          }
+        ]
       }
-    }
+    ]
+  }
   ])
 ];
 
@@ -30,7 +60,11 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   providers: [
-    ClientsResolver
+    ClientsResolver,
+    ClientViewResolver,
+    ClientAccountsResolver,
+    ClientChargesResolver,
+    ClientSummaryResolver
   ]
 })
 export class ClientsRoutingModule { }

@@ -1,0 +1,363 @@
+<div class="tab-container mat-typography">
+  <h3>Performance History</h3>
+  <div fxLayout="row" fxLayoutGap="32px" class="performance-history-container">
+    <p>
+      No. Of Loan Cycles :{{clientSummary.loanCycle}} <br />
+      No. of Active Loans :{{clientSummary.activeLoans}} <br />
+      Last Loan Amount :{{clientSummary.lastLoanAmount}} <br />
+    </p>
+    <p>
+      No. of Active Savings :{{clientSummary.activeSavings}} <br />
+      Total Savings :{{clientSummary.totalSavings}} <br />
+
+    </p>
+  </div>
+
+  <!-- Upcoming Charges -->
+
+  <h3>Upcoming Charges</h3>
+  <button mat-raised-button class="f-right" color="primary">Charges Overview</button>
+  <table mat-table [dataSource]="upcomingCharges" class="mat-elevation-z1">
+
+    <ng-container matColumnDef="Name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> <i class="fa fa-stop"
+          [ngClass]="(!(element.isWaived || element.isPaid))|statusLookup"></i>
+        {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Due as of">
+      <th mat-header-cell *matHeaderCellDef> Due as of </th>
+      <td mat-cell *matCellDef="let element"> {{element.dueDate|date}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Due">
+      <th mat-header-cell *matHeaderCellDef> Due </th>
+      <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+    </ng-container>
+    <ng-container matColumnDef="Paid">
+      <th mat-header-cell *matHeaderCellDef>Paid </th>
+      <td mat-cell *matCellDef="let element"> {{element.amountPaid}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Waived">
+      <th mat-header-cell *matHeaderCellDef> Waived </th>
+      <td mat-cell *matCellDef="let element"> {{element.amountWaived}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="Outstanding">
+      <th mat-header-cell *matHeaderCellDef> Outstanding </th>
+      <td mat-cell *matCellDef="let element"> {{element.amountOutstanding}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="Actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element">
+        <button class="account-action-button" mat-raised-button color="primary">
+          <i class="fa fa-dollar"></i>
+        </button>
+        <button class="account-action-button" mat-raised-button color="primary">
+          <i class="fa fa-flag"></i>
+        </button>
+      </td>
+
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="upcomingChargesColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: upcomingChargesColumns;"></tr>
+  </table>
+
+
+  <!-- loans overview table -->
+
+  <h3>Loan Accounts</h3>
+  <button mat-raised-button class="f-right" color="primary"
+    (click)="toggleLoanAccountsOverview()">{{showClosedLoanAccounts?'View Active Accounts':'View Closed Accounts'}}</button>
+  <table *ngIf="!showClosedLoanAccounts" mat-table [dataSource]="loanAccounts|accountsFilter:'loan'"
+    class="mat-elevation-z1">
+
+    <ng-container matColumnDef="Account No">
+      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <td mat-cell *matCellDef="let element"> <i class="fa fa-stop"
+          [ngClass]="element.inArrears?'status-active-overdue':(element.status.code|statusLookup)"></i>
+        {{element.accountNo}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Loan Account">
+      <th mat-header-cell *matHeaderCellDef> Loan Account </th>
+      <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Original Loan">
+      <th mat-header-cell *matHeaderCellDef> Original Loan </th>
+      <td mat-cell *matCellDef="let element"> {{element.lastActiveTransactionDate | date}} </td>
+    </ng-container>
+    <ng-container matColumnDef="Loan Balance">
+      <th mat-header-cell *matHeaderCellDef>Loan Balance </th>
+      <td mat-cell *matCellDef="let element"> {{element.loanBalance}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Amount Paid">
+      <th mat-header-cell *matHeaderCellDef> Amount Paid </th>
+      <td mat-cell *matCellDef="let element"> {{element.accountBalance}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="Type">
+      <th mat-header-cell *matHeaderCellDef> Type </th>
+      <td mat-cell *matCellDef="let element">
+        <i class="fa fa-large" [ngClass]="(element.loanType.value=== 'Individual')?'fa-user':'fa-group'"></i>
+      </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="Actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element">
+        <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary">
+          <i class="fa fa-dollar"></i>
+        </button>
+        <button *ngIf="element.status.pendingApproval" class="account-action-button" mat-raised-button color="primary">
+          <i class="fa fa-check"></i>
+        </button>
+        <button *ngIf="!element.status.pendingApproval && !element.status.active && !element.status.overpaid"
+          class="account-action-button" mat-raised-button color="primary">
+          <i class="fa fa-flag"></i>
+        </button>
+        <button *ngIf="!element.status.pendingApproval && !element.status.active && element.status.overpaid"
+          class="account-action-button" mat-raised-button color="primary">
+          <i class="fa fa-exchange"></i>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="openLoansColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: openLoansColumns;"></tr>
+  </table>
+
+  <!-- Closed Loan Accounts -->
+  <table *ngIf="showClosedLoanAccounts" mat-table [dataSource]="loanAccounts|accountsFilter:'loan':'closed'"
+    class="mat-elevation-z1">
+
+    <ng-container matColumnDef="Account No">
+      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <td mat-cell *matCellDef="let element"> <i class="fa fa-stop"
+          [ngClass]="element.inArrears?'status-active-overdue':(element.status.code|statusLookup)"></i>
+        {{element.accountNo}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Loan Account">
+      <th mat-header-cell *matHeaderCellDef> Loan Account </th>
+      <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Original Loan">
+      <th mat-header-cell *matHeaderCellDef> Original Loan </th>
+      <td mat-cell *matCellDef="let element"> {{element.lastActiveTransactionDate | date}} </td>
+    </ng-container>
+    <ng-container matColumnDef="Loan Balance">
+      <th mat-header-cell *matHeaderCellDef>Loan Balance </th>
+      <td mat-cell *matCellDef="let element"> {{element.loanBalance}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Amount Paid">
+      <th mat-header-cell *matHeaderCellDef> Amount Paid </th>
+      <td mat-cell *matCellDef="let element"> {{element.accountBalance}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="Type">
+      <th mat-header-cell *matHeaderCellDef> Type </th>
+      <td mat-cell *matCellDef="let element">
+        <i class="fa fa-large" [ngClass]="(element.loanType.value=== 'Individual')?'fa-user':'fa-group'"></i>
+      </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="Closed Date">
+      <th mat-header-cell *matHeaderCellDef> Closed Date </th>
+      <td mat-cell *matCellDef="let element">{{element.timeline.closedOnDate | date}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="closedLoansColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: closedLoansColumns;"></tr>
+  </table>
+
+
+  <!-- Saving overview Table -->
+
+  <h3>Saving Accounts</h3>
+  <button mat-raised-button class="f-right" color="primary"
+    (click)="toggleSavingAccountsOverview()">{{showClosedSavingAccounts?'View Active Accounts':'View Closed Accounts'}}</button>
+  <table *ngIf="!showClosedSavingAccounts" mat-table [dataSource]="savingAccounts|accountsFilter:'saving'"
+    class="mat-elevation-z1">
+
+    <ng-container matColumnDef="Account No">
+      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
+        {{element.accountNo}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Saving Account">
+      <th mat-header-cell *matHeaderCellDef> Saving Account </th>
+      <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Last Active">
+      <th mat-header-cell *matHeaderCellDef> Last Active </th>
+      <td mat-cell *matCellDef="let element"> {{element.lastActiveTransactionDate | date}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Balance">
+      <th mat-header-cell *matHeaderCellDef> Balance </th>
+      <td mat-cell *matCellDef="let element"> {{element.accountBalance}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element">
+        <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary">
+          <i class="fa fa-arrow-up"></i>
+        </button>
+        <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary">
+          <i class="fa fa-arrow-down"></i>
+        </button>
+        <button *ngIf="element.status.submittedAndPendingApproval" class="account-action-button" mat-raised-button
+          color="primary">
+          <i class="fa fa-check"></i>
+        </button>
+        <button *ngIf="element.status.submittedAndPendingApproval" class="account-action-button" mat-raised-button
+          color="primary">
+          <i class="fa fa-check"></i>
+        </button>
+        <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
+          class="account-action-button" mat-raised-button color="primary">
+          <i class="fa fa-undo"></i>
+        </button>
+        <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
+          class="account-action-button" mat-raised-button color="primary">
+          <i class="fa fa-check-circle"></i>
+        </button>
+      </td>
+
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="openSavingsColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: openSavingsColumns;"></tr>
+  </table>
+
+  <!-- Closed Saving Accounts -->
+
+  <table *ngIf="showClosedSavingAccounts" mat-table [dataSource]="savingAccounts|accountsFilter:'saving':'closed'"
+    class="mat-elevation-z1">
+
+    <ng-container matColumnDef="Account No">
+      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
+        {{element.accountNo}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Saving Account">
+      <th mat-header-cell *matHeaderCellDef> Saving Account </th>
+      <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Closed Date">
+      <th mat-header-cell *matHeaderCellDef> Closed Date </th>
+      <td mat-cell *matCellDef="let element">{{element.timeline.closedOnDate | date}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="closedSavingsColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: closedSavingsColumns;"></tr>
+  </table>
+
+  <!-- Shares overview Table -->
+
+  <h3>Shares Accounts</h3>
+  <button mat-raised-button class="f-right" color="primary"
+    (click)="toggleShareAccountsOverview()">{{showClosedSavingAccounts?'View Active Accounts':'View Closed Accounts'}}</button>
+  <table *ngIf="!showClosedShareAccounts" mat-table [dataSource]="shareAccounts|accountsFilter:'share'"
+    class="mat-elevation-z1">
+
+    <ng-container matColumnDef="Account No">
+      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
+        {{element.accountNo}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Share Account">
+      <th mat-header-cell *matHeaderCellDef> Share Account </th>
+      <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Approved Shares">
+      <th mat-header-cell *matHeaderCellDef> Approved Shares </th>
+      <td mat-cell *matCellDef="let element"> {{element.totalApprovedShares}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Pending For Approval Shares">
+      <th mat-header-cell *matHeaderCellDef> Pending For Approval Shares </th>
+      <td mat-cell *matCellDef="let element"> {{element.totalPendingForApprovalShares}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element">
+        <button *ngIf="element.status.submittedAndPendingApproval" class="account-action-button" mat-raised-button
+          color="primary">
+          <i class="fa fa-check"></i>
+        </button>
+        <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
+          class="account-action-button" mat-raised-button color="primary">
+          <i class="fa fa-undo"></i>
+        </button>
+        <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
+          class="account-action-button" mat-raised-button color="primary">
+          <i class="fa fa-check-circle"></i>
+        </button>
+      </td>
+
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="openSharesColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: openSharesColumns;"></tr>
+  </table>
+  <!-- Closed Share Accounts -->
+  <table *ngIf="showClosedShareAccounts" mat-table [dataSource]="shareAccounts|accountsFilter:'share':'closed'"
+    class="mat-elevation-z1">
+
+    <ng-container matColumnDef="Account No">
+      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
+        {{element.accountNo}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Share Account">
+      <th mat-header-cell *matHeaderCellDef> Share Account </th>
+      <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Approved Shares">
+      <th mat-header-cell *matHeaderCellDef> Approved Shares </th>
+      <td mat-cell *matCellDef="let element"> {{element.totalApprovedShares}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Pending For Approval Shares">
+      <th mat-header-cell *matHeaderCellDef> Pending For Approval Shares </th>
+      <td mat-cell *matCellDef="let element"> {{element.totalPendingForApprovalShares}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Closed Date">
+      <th mat-header-cell *matHeaderCellDef> Closed Date </th>
+      <td mat-cell *matCellDef="let element">{{element.timeline.closedOnDate | date}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="closedSharesColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: closedSharesColumns;"></tr>
+  </table>
+
+</div>
