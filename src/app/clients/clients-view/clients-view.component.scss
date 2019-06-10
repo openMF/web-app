@@ -1,0 +1,29 @@
+.client-card {
+  margin: 0 auto;
+  max-width: 80rem;
+  width: 90%;
+  padding: 0;
+  .header {
+    padding: 1%;
+    .header-title-group {
+      .client-card-title {
+        color: white;
+        width: 90%;
+        p {
+          color: white;
+        }
+      }
+    }
+    .profile-image-container {
+      margin: 1%;
+      .profile-image {
+        object-fit: cover;
+        border-radius: 20px;
+      }
+    }
+    .client-actions {
+      align-self: flex-end;
+      margin: 0 1%;
+    }
+  }
+}

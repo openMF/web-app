@@ -1,6 +1,6 @@
 @import '~@angular/material/theming';
 // Plus imports for other components in your app.
-
+@import '../../app/clients/clients-view/clients-view.component-theme.scss';
 // Custom material palette
 $mat-picton-blue: (
   100: #6ce0ff,
@@ -45,3 +45,4 @@ $mifosx-app-theme: mat-light-theme($mifosx-app-primary, $mifosx-app-accent, $mif
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($mifosx-app-theme);
+@include clients-view-component-theme($mifosx-app-theme);
