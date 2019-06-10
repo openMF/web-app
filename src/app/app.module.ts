@@ -35,6 +35,7 @@ import { SystemModule } from './system/system.module';
 import { ProductsModule } from './products/products.module';
 
 
+
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
 
@@ -63,7 +64,7 @@ import { AppRoutingModule } from './app-routing.module';
     SelfServiceModule,
     SystemModule,
     ProductsModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   declarations: [WebAppComponent, NotFoundComponent],
   providers: [],
