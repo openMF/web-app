@@ -3,7 +3,7 @@ sudo: required
 dist: trusty
 language: node_js
 node_js:
-  - "9.5"
+  - "lts/*"
 
 before_script:
   - npm i npm@latest -g
@@ -20,4 +20,4 @@ deploy:
   github-token: $GITHUB_TOKEN
   keep-history: true
   on:
-    branch: master
+    branch: gsoc-19
