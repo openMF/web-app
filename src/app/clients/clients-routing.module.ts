@@ -12,6 +12,8 @@ import { ClientsComponent } from './clients.component';
 import { ClientsViewComponent } from './clients-view/clients-view.component';
 import { GeneralTabComponent } from './clients-view/general-tab/general-tab.component';
 import { FamilyMembersTabComponent } from './clients-view/family-members-tab/family-members-tab.component';
+import { AddFamilyMemberComponent } from './clients-view/family-members-tab/add-family-member/add-family-member.component';
+import { EditFamilyMemberComponent } from './clients-view/family-members-tab/edit-family-member/edit-family-member.component';
 
 /** Custom Resolvers */
 import { ClientsResolver } from './common-resolvers/clients.resolver';
@@ -61,6 +63,24 @@ const routes: Routes = [
                 resolve: {
                   clientFamilyMembers: ClientFamilyMembersResolver
                 }
+              },
+              {
+                path: 'add',
+                component: AddFamilyMemberComponent,
+                resolve: {
+                  clientTemplate: ClientTemplateResolver
+                }
+              },
+              {
+                path: ':familyMemberId',
+                children: [{
+                  path: 'edit',
+                  component: EditFamilyMemberComponent,
+                  resolve: {
+                    clientTemplate: ClientTemplateResolver,
+                    editFamilyMember: ClientFamilyMemberResolver
+                  }
+                }]
               }
             ]
           }
