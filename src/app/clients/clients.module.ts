@@ -12,7 +12,8 @@ import { ClientsViewComponent } from './clients-view/clients-view.component';
 import { GeneralTabComponent } from './clients-view/general-tab/general-tab.component';
 import {PipesModule} from '../pipes/pipes.module';
 import { FamilyMembersTabComponent } from './clients-view/family-members-tab/family-members-tab.component';
-
+import { AddFamilyMemberComponent } from './clients-view/family-members-tab/add-family-member/add-family-member.component';
+import { EditFamilyMemberComponent } from './clients-view/family-members-tab/edit-family-member/edit-family-member.component';
 
 
 /**
@@ -31,6 +32,8 @@ import { FamilyMembersTabComponent } from './clients-view/family-members-tab/fam
     ClientsViewComponent,
     GeneralTabComponent,
     FamilyMembersTabComponent,
+    AddFamilyMemberComponent,
+    EditFamilyMemberComponent
   ],
   providers: [DatePipe]
 
