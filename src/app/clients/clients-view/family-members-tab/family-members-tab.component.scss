@@ -1,0 +1,21 @@
+.tab-container {
+  padding:1%;
+  margin: 1%;
+
+  .family-member {
+    .family-member-actions{
+      margin-top: 1%;
+      button{
+        margin-right: 1%;
+      }
+    }
+    h3 {
+      margin: 1% auto;
+    }
+
+    p {
+      line-height: 30px;
+      margin-left: 2%;
+    }
+  }
+}
