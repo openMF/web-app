@@ -11,6 +11,8 @@ import { ClientsComponent } from './clients.component';
 import { ClientsViewComponent } from './clients-view/clients-view.component';
 import { GeneralTabComponent } from './clients-view/general-tab/general-tab.component';
 import {PipesModule} from '../pipes/pipes.module';
+import { FamilyMembersTabComponent } from './clients-view/family-members-tab/family-members-tab.component';
+
 
 
 /**
@@ -27,7 +29,9 @@ import {PipesModule} from '../pipes/pipes.module';
   declarations: [
     ClientsComponent,
     ClientsViewComponent,
-    GeneralTabComponent],
+    GeneralTabComponent,
+    FamilyMembersTabComponent,
+  ],
   providers: [DatePipe]
 
 })

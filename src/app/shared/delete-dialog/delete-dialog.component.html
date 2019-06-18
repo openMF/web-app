@@ -3,6 +3,6 @@
   <p>Are you sure you want to delete {{ data.deleteContext }} ?</p>
 </div>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="{ delete: true }">Confirm</button>
+  <button mat-raised-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="{ delete: true }">Confirm</button>
 </mat-dialog-actions>
