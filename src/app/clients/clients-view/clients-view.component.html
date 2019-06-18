@@ -4,7 +4,8 @@
       <!-- change this -->
       <div class="profile-image-container">
         <div>
-          <img mat-card-md-image class="profile-image" [src]="(clientImage)?clientImage:'../../../assets/images/user_placeholder.png'">
+          <img mat-card-md-image class="profile-image"
+            [src]="(clientImage)?clientImage:'assets/images/user_placeholder.png'">
         </div>
       </div>
       <div class="mat-typography client-card-title">
@@ -43,8 +44,11 @@
   </mat-card-header>
   <mat-card-content>
     <nav mat-tab-nav-bar>
-      <a mat-tab-link [routerLink]="['./general']" routerLinkActive active="true">
+      <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive" [active]="general.isActive">
         General
+      </a>
+      <a mat-tab-link [routerLink]="['./family-members']" routerLinkActive #familyMembers="routerLinkActive" [active]="familyMembers.isActive">
+        Family Members
       </a>
     </nav>
     <router-outlet></router-outlet>

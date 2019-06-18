@@ -11,6 +11,7 @@ import { extract } from '../core/i18n/i18n.service';
 import { ClientsComponent } from './clients.component';
 import { ClientsViewComponent } from './clients-view/clients-view.component';
 import { GeneralTabComponent } from './clients-view/general-tab/general-tab.component';
+import { FamilyMembersTabComponent } from './clients-view/family-members-tab/family-members-tab.component';
 
 /** Custom Resolvers */
 import { ClientsResolver } from './common-resolvers/clients.resolver';
@@ -18,6 +19,9 @@ import { ClientViewResolver } from './common-resolvers/client-view.resolver';
 import { ClientAccountsResolver } from './common-resolvers/client-accounts.resolver';
 import { ClientChargesResolver } from './common-resolvers/client-charges.resolver';
 import { ClientSummaryResolver } from './common-resolvers/client-summary.resolver';
+import { ClientFamilyMembersResolver } from './common-resolvers/client-family-members.resolver';
+import { ClientFamilyMemberResolver } from './common-resolvers/client-family-member.resolver';
+import { ClientTemplateResolver } from './common-resolvers/client-template.resolver';
 
 const routes: Routes = [
   Route.withShell([{
@@ -36,7 +40,7 @@ const routes: Routes = [
         component: ClientsViewComponent,
         data: { title: extract('Clients View'), routeParamBreadcrumb: 'clientId' },
         resolve: {
-          clientViewData: ClientViewResolver
+          clientViewData: ClientViewResolver,
         },
         children: [
           {
@@ -46,8 +50,19 @@ const routes: Routes = [
               clientAccountsData: ClientAccountsResolver,
               clientChargesData: ClientChargesResolver,
               clientSummary: ClientSummaryResolver
-            },
-
+            }
+          },
+          {
+            path: 'family-members',
+            children: [
+              {
+                path: '',
+                component: FamilyMembersTabComponent,
+                resolve: {
+                  clientFamilyMembers: ClientFamilyMembersResolver
+                }
+              }
+            ]
           }
         ]
       }
@@ -64,7 +79,10 @@ const routes: Routes = [
     ClientViewResolver,
     ClientAccountsResolver,
     ClientChargesResolver,
-    ClientSummaryResolver
+    ClientSummaryResolver,
+    ClientFamilyMembersResolver,
+    ClientFamilyMemberResolver,
+    ClientTemplateResolver
   ]
 })
 export class ClientsRoutingModule { }

@@ -13,19 +13,18 @@ import { ClientsService } from '../clients.service';
 export class ClientsViewComponent implements OnInit {
   clientViewData: any;
   clientImage: any;
+  clientTemplate: any;
   constructor(private route: ActivatedRoute,
     private clientsService: ClientsService,
     private _sanitizer: DomSanitizer) {
     this.route.data.subscribe((data: { clientViewData: any }) => {
       this.clientViewData = data.clientViewData;
     });
-
   }
 
   ngOnInit() {
-    this.clientsService.getClientProfileImage(this.clientViewData.id).subscribe(base64Image => {
+    this.clientsService.getClientProfileImage(this.clientViewData.id).subscribe((base64Image: any) => {
       this.clientImage = this._sanitizer.bypassSecurityTrustResourceUrl(base64Image);
     });
   }
-
 }

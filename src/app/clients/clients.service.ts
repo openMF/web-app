@@ -20,6 +20,10 @@ export class ClientsService {
     const httpParams = new HttpParams().set('orderBy', 'id');
     return this.http.get('/clients', { params: httpParams });
   }
+
+  getClientTemplate(): Observable<any> {
+    return this.http.get('/clients/template');
+  }
   getClientData(clientId: string) {
     return this.http.get(`/clients/${clientId}`);
   }
@@ -38,5 +42,20 @@ export class ClientsService {
   getClientProfileImage(clientId: string) {
     const httpParams = new HttpParams().set('maxHeight', '150');
     return this.http.get(`/clients/${clientId}/images`, { params: httpParams, responseType: 'text' });
+  }
+  getClientFamilyMembers(clientId: string) {
+    return this.http.get(`/clients/${clientId}/familymembers`);
+  }
+  getClientFamilyMember(clientId: string, familyMemberId: string) {
+    return this.http.get(`/clients/${clientId}/familymembers/${familyMemberId}`);
+  }
+  addFamilyMember(clientId: string, familyMemberData: any) {
+    return this.http.post(`/clients/${clientId}/familymembers`, familyMemberData);
+  }
+  editFamilyMember(clientId: string, familyMemberId: any, familyMemberData: any) {
+    return this.http.put(`/clients/${clientId}/familymembers/${familyMemberId}`, familyMemberData);
+  }
+  deleteFamilyMember(clientId: string, familyMemberId: string) {
+    return this.http.delete(`/clients/${clientId}/familymembers/${familyMemberId}`);
   }
 }
