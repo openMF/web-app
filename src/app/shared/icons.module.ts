@@ -65,7 +65,11 @@ import {
   faUniversity,
   faUserCircle,
   faUsers,
-  faUserShield
+  faUserShield,
+  faDownload,
+  faCloudDownloadAlt,
+  faCloudUploadAlt,
+  faTimes
 } from '@fortawesome/free-solid-svg-icons';
 
 /** Add icons to the library for convenient access in other components. */
@@ -130,7 +134,11 @@ library.add(
   faUniversity,
   faUserCircle,
   faUsers,
-  faUserShield
+  faUserShield,
+  faDownload,
+  faCloudDownloadAlt,
+  faCloudUploadAlt,
+  faTimes
 );
 
 /**

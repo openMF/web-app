@@ -44,11 +44,17 @@
   </mat-card-header>
   <mat-card-content>
     <nav mat-tab-nav-bar>
-      <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive" [active]="general.isActive">
+      <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive"
+        [active]="general.isActive">
         General
       </a>
-      <a mat-tab-link [routerLink]="['./family-members']" routerLinkActive #familyMembers="routerLinkActive" [active]="familyMembers.isActive">
+      <a mat-tab-link [routerLink]="['./family-members']" routerLinkActive #familyMembers="routerLinkActive"
+        [active]="familyMembers.isActive">
         Family Members
+      </a>
+      <a mat-tab-link [routerLink]="['./identities']" routerLinkActive #identities="routerLinkActive"
+        [active]="identities.isActive">
+        Identities
       </a>
     </nav>
     <router-outlet></router-outlet>
