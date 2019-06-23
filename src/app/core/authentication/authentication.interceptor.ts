@@ -11,7 +11,6 @@ import { environment } from '../../../environments/environment';
 /** Http request options headers. */
 const httpOptions = {
   headers: {
-    'Content-Type': 'application/json; charset=utf-8',
     'Fineract-Platform-TenantId': environment.fineractPlatformTenantId
   }
 };

@@ -14,6 +14,8 @@ import {PipesModule} from '../pipes/pipes.module';
 import { FamilyMembersTabComponent } from './clients-view/family-members-tab/family-members-tab.component';
 import { AddFamilyMemberComponent } from './clients-view/family-members-tab/add-family-member/add-family-member.component';
 import { EditFamilyMemberComponent } from './clients-view/family-members-tab/edit-family-member/edit-family-member.component';
+import { IdentitiesTabComponent } from './clients-view/identities-tab/identities-tab.component';
+import { UploadDocumentDialogComponent } from './clients-view/upload-document-dialog/upload-document-dialog.component';
 
 
 /**
@@ -33,7 +35,12 @@ import { EditFamilyMemberComponent } from './clients-view/family-members-tab/edi
     GeneralTabComponent,
     FamilyMembersTabComponent,
     AddFamilyMemberComponent,
-    EditFamilyMemberComponent
+    EditFamilyMemberComponent,
+    IdentitiesTabComponent,
+    UploadDocumentDialogComponent
+  ],
+  entryComponents: [
+    UploadDocumentDialogComponent
   ],
   providers: [DatePipe]
 
