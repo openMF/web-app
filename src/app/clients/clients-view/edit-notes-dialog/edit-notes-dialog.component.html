@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Edit Note</h1>
+<div>
+  <form #formRef="ngForm" [formGroup]="noteForm">
+    <mat-form-field>
+      <textarea formControlName="note" matInput placeholder="Write a note ...."></textarea>
+    </mat-form-field>
+    <mat-dialog-actions align="end">
+      <button mat-raised-button mat-dialog-close>Cancel</button>
+      <button mat-raised-button color="primary" [disabled]="noteForm.pristine"
+        [mat-dialog-close]="{ editForm: noteForm }">Confirm</button>
+    </mat-dialog-actions>
+  </form>
+</div>
