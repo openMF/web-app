@@ -87,4 +87,20 @@ export class ClientsService {
   uploadClientIdentifierDocument(identifierId: string, documentData: any) {
     return this.http.post(`/client_identifiers/${identifierId}/documents`, documentData);
   }
+
+  getClientNotes(clientId: string) {
+    return this.http.get(`/clients/${clientId}/notes`);
+  }
+
+  createClientNote(clientId: string, noteData: any) {
+    return this.http.post(`/clients/${clientId}/notes`, noteData);
+  }
+
+  editClientNote(clientId: string, noteId: string, noteData: any) {
+    return this.http.put(`/clients/${clientId}/notes/${noteId}`, noteData);
+  }
+
+  deleteClientNote(clientId: string, noteId: string) {
+    return this.http.delete(`/clients/${clientId}/notes/${noteId}`);
+  }
 }
