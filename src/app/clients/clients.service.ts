@@ -88,6 +88,18 @@ export class ClientsService {
     return this.http.post(`/client_identifiers/${identifierId}/documents`, documentData);
   }
 
+  getClientDocuments(clientId: string) {
+    return this.http.get(`/clients/${clientId}/documents`);
+  }
+
+  downloadClientDocument(parentEntityId: string, documentId: string) {
+    return this.http.get(`/clients/${parentEntityId}/documents/${documentId}/attachment`, { responseType: 'blob' });
+  }
+
+  deleteClientDocument(parentEntityId: string, documentId: string) {
+    return this.http.delete(`/clients/${parentEntityId}/documents/${documentId}`);
+  }
+
   getClientNotes(clientId: string) {
     return this.http.get(`/clients/${clientId}/notes`);
   }

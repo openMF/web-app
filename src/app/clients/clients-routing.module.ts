@@ -16,6 +16,7 @@ import { AddFamilyMemberComponent } from './clients-view/family-members-tab/add-
 import { EditFamilyMemberComponent } from './clients-view/family-members-tab/edit-family-member/edit-family-member.component';
 import { IdentitiesTabComponent } from './clients-view/identities-tab/identities-tab.component';
 import { NotesTabComponent } from './clients-view/notes-tab/notes-tab.component';
+import { DocumentsTabComponent } from './clients-view/documents-tab/documents-tab.component';
 
 /** Custom Resolvers */
 import { ClientsResolver } from './common-resolvers/clients.resolver';
@@ -28,6 +29,7 @@ import { ClientFamilyMemberResolver } from './common-resolvers/client-family-mem
 import { ClientTemplateResolver } from './common-resolvers/client-template.resolver';
 import { ClientIdentitiesResolver } from './common-resolvers/client-identities.resolver';
 import { ClientNotesResolver } from './common-resolvers/client-notes.resolver';
+import { ClientDocumentsResolver } from './common-resolvers/client-document.resolver';
 
 const routes: Routes = [
   Route.withShell([{
@@ -96,6 +98,13 @@ const routes: Routes = [
             }
           },
           {
+            path: 'documents',
+            component: DocumentsTabComponent,
+            resolve: {
+              clientDocuments: ClientDocumentsResolver
+            }
+          },
+          {
             path: 'notes',
             component: NotesTabComponent,
             resolve: {
@@ -122,7 +131,8 @@ const routes: Routes = [
     ClientFamilyMemberResolver,
     ClientTemplateResolver,
     ClientIdentitiesResolver,
-    ClientNotesResolver
+    ClientNotesResolver,
+    ClientDocumentsResolver
   ]
 })
 export class ClientsRoutingModule { }

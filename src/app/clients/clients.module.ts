@@ -18,6 +18,7 @@ import { IdentitiesTabComponent } from './clients-view/identities-tab/identities
 import { UploadDocumentDialogComponent } from './clients-view/upload-document-dialog/upload-document-dialog.component';
 import { NotesTabComponent } from './clients-view/notes-tab/notes-tab.component';
 import { EditNotesDialogComponent } from './clients-view/edit-notes-dialog/edit-notes-dialog.component';
+import { DocumentsTabComponent } from './clients-view/documents-tab/documents-tab.component';
 
 
 /**
@@ -41,7 +42,8 @@ import { EditNotesDialogComponent } from './clients-view/edit-notes-dialog/edit-
     IdentitiesTabComponent,
     UploadDocumentDialogComponent,
     NotesTabComponent,
-    EditNotesDialogComponent
+    EditNotesDialogComponent,
+    DocumentsTabComponent
   ],
   entryComponents: [
     UploadDocumentDialogComponent,
