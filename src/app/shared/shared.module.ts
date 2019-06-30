@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 /** Custom Components */
+import { FormfieldComponent } from './form-dialog/formfield/formfield.component';
+import { FormDialogComponent } from './form-dialog/form-dialog.component';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { FooterComponent } from './footer/footer.component';
@@ -27,6 +29,8 @@ import { MaterialModule } from './material.module';
     ReactiveFormsModule
   ],
   declarations: [
+    FormfieldComponent,
+    FormDialogComponent,
     DeleteDialogComponent,
     FileUploadComponent,
     FooterComponent,
@@ -45,6 +49,7 @@ import { MaterialModule } from './material.module';
     ReactiveFormsModule
   ],
   entryComponents: [
+    FormDialogComponent,
     DeleteDialogComponent
   ]
 })
