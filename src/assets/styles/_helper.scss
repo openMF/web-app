@@ -1673,6 +1673,10 @@ textarea.noresize {
   color: $status-active;
 }
 
+.status-inactive {
+  color: $status-inactive;
+}
+
 .status-deleted {
   color: $status-deleted;
 }

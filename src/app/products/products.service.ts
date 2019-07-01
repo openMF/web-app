@@ -19,6 +19,13 @@ export class ProductsService {
   constructor(private http: HttpClient) { }
 
   /**
+   * @returns {Observable<any>} Loan products data
+   */
+  getLoanProducts(): Observable<any> {
+    return this.http.get('/loanproducts');
+  }
+
+  /**
    * @returns {Observable<any>} Recurring deposit products data
    */
   getRecurringDepositProducts(): Observable<any> {
