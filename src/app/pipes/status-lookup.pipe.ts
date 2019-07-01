@@ -25,6 +25,8 @@ export class StatusLookupPipe implements PipeTransform {
       'shareAccountStatusType.approved': 'status-approved',
       'shareAccountStatusType.active': 'status-active',
       'shareAccountStatusType.rejected': 'status-rejected',
+      'loanProduct.active': 'status-active',
+      'loanProduct.inActive': 'status-inactive'
     };
     return cssClassNameLookup[status];
   }

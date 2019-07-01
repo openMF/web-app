@@ -10,6 +10,7 @@ import { extract } from '../core/i18n/i18n.service';
 
 /** Custom Components */
 import { ProductsComponent } from './products.component';
+import { LoanProductsComponent } from './loan-products/loan-products.component';
 import { ManageTaxConfigurationsComponent } from './manage-tax-configurations/manage-tax-configurations.component';
 import { RecurringDepositProductsComponent } from './recurring-deposit-products/recurring-deposit-products.component';
 import { ChargesComponent } from './charges/charges.component';
@@ -18,6 +19,7 @@ import { ProductsMixComponent } from './products-mix/products-mix.component';
 import { ManageTaxComponentsComponent } from './manage-tax-components/manage-tax-components.component';
 
 /** Custom Resolvers */
+import { LoanProductsResolver } from './loan-products/loan-products.resolver';
 import { RecurringDepositProductsResolver } from './recurring-deposit-products/recurring-deposit-products.resolver';
 import { ChargesResolver } from './charges/charges.resolver';
 import { FixedDepositProductsResolver } from './fixed-deposit-products/fixed-deposit-products.resolver';
@@ -34,6 +36,19 @@ const routes: Routes = [
         {
           path: '',
           component: ProductsComponent
+        },
+        {
+          path: 'loan-products',
+          data: { title: extract('Loan Products'), breadcrumb: 'Loan Products' },
+          children: [
+            {
+              path: '',
+              component: LoanProductsComponent,
+              resolve: {
+                loanProducts: LoanProductsResolver
+              }
+            }
+          ]
         },
         {
           path: 'tax-configurations',
@@ -99,6 +114,7 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   providers: [
+    LoanProductsResolver,
     RecurringDepositProductsResolver,
     ChargesResolver,
     FixedDepositProductsResolver,
