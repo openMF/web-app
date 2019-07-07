@@ -19,6 +19,9 @@ import { UploadDocumentDialogComponent } from './clients-view/upload-document-di
 import { NotesTabComponent } from './clients-view/notes-tab/notes-tab.component';
 import { EditNotesDialogComponent } from './clients-view/edit-notes-dialog/edit-notes-dialog.component';
 import { DocumentsTabComponent } from './clients-view/documents-tab/documents-tab.component';
+import { DatatableTabComponent } from './clients-view/datatable-tab/datatable-tab.component';
+import { MultiRowComponent } from './clients-view/datatable-tab/multi-row/multi-row.component';
+import { SingleRowComponent } from './clients-view/datatable-tab/single-row/single-row.component';
 
 
 /**
@@ -43,7 +46,10 @@ import { DocumentsTabComponent } from './clients-view/documents-tab/documents-ta
     UploadDocumentDialogComponent,
     NotesTabComponent,
     EditNotesDialogComponent,
-    DocumentsTabComponent
+    DocumentsTabComponent,
+    DatatableTabComponent,
+    MultiRowComponent,
+    SingleRowComponent
   ],
   entryComponents: [
     UploadDocumentDialogComponent,

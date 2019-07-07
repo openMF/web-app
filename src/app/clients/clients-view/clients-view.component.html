@@ -43,7 +43,7 @@
     </mat-card-actions>
   </mat-card-header>
   <mat-card-content>
-    <nav mat-tab-nav-bar>
+    <nav mat-tab-nav-bar class="navigation-tabs">
       <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive"
         [active]="general.isActive">
         General
@@ -60,9 +60,12 @@
         [active]="documents.isActive">
         Documents
       </a>
-      <a mat-tab-link [routerLink]="['./notes']" routerLinkActive #notes="routerLinkActive"
-        [active]="notes.isActive">
+      <a mat-tab-link [routerLink]="['./notes']" routerLinkActive #notes="routerLinkActive" [active]="notes.isActive">
         Notes
+      </a>
+      <a mat-tab-link *ngFor="let clientDatatable of clientDatatables" [routerLink]="['./datatables',clientDatatable.registeredTableName]"
+        routerLinkActive #datatable="routerLinkActive" [active]="datatable.isActive">
+        {{clientDatatable.registeredTableName}}
       </a>
     </nav>
     <router-outlet></router-outlet>
