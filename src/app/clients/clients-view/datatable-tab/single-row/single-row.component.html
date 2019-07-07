@@ -1,0 +1,13 @@
+<div class="tab-container mat-typography">
+  <h3>{{datatableName}}</h3>
+  <div fxLayout="row" fxLayoutAlign="flex-end">
+    <button mat-raised-button color="primary">
+      <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Add
+    </button>
+  </div>
+  <mat-list role="list" *ngIf="dataObject.data[0]">
+    <mat-list-item role="listitem" *ngFor="let columnHeader of dataObject.columnHeaders;let i = index">
+      {{columnHeader.columnName}} : {{dataObject.data[0].row[i]}}
+    </mat-list-item>
+  </mat-list>
+</div>

@@ -28,6 +28,15 @@ export class ClientsService {
     return this.http.get(`/clients/${clientId}`);
   }
 
+  getClientDatatables() {
+    const httpParams = new HttpParams().set('apptable', 'm_client');
+    return this.http.get(`/datatables`, { params: httpParams });
+  }
+  getClientDatatable(clientId: string, datatableName: string) {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.get(`/datatables/${datatableName}/${clientId}`, { params: httpParams });
+  }
+
   getClientAccountData(clientId: string) {
     return this.http.get(`/clients/${clientId}/accounts`);
   }
