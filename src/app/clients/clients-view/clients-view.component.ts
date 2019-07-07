@@ -12,13 +12,18 @@ import { ClientsService } from '../clients.service';
 })
 export class ClientsViewComponent implements OnInit {
   clientViewData: any;
+  clientDatatables: any;
   clientImage: any;
   clientTemplate: any;
   constructor(private route: ActivatedRoute,
     private clientsService: ClientsService,
     private _sanitizer: DomSanitizer) {
-    this.route.data.subscribe((data: { clientViewData: any }) => {
+    this.route.data.subscribe((data: {
+      clientViewData: any,
+      clientDatatables: any
+    }) => {
       this.clientViewData = data.clientViewData;
+      this.clientDatatables = data.clientDatatables;
     });
   }
 

@@ -17,6 +17,7 @@ import { EditFamilyMemberComponent } from './clients-view/family-members-tab/edi
 import { IdentitiesTabComponent } from './clients-view/identities-tab/identities-tab.component';
 import { NotesTabComponent } from './clients-view/notes-tab/notes-tab.component';
 import { DocumentsTabComponent } from './clients-view/documents-tab/documents-tab.component';
+import { DatatableTabComponent } from './clients-view/datatable-tab/datatable-tab.component';
 
 /** Custom Resolvers */
 import { ClientsResolver } from './common-resolvers/clients.resolver';
@@ -30,6 +31,8 @@ import { ClientTemplateResolver } from './common-resolvers/client-template.resol
 import { ClientIdentitiesResolver } from './common-resolvers/client-identities.resolver';
 import { ClientNotesResolver } from './common-resolvers/client-notes.resolver';
 import { ClientDocumentsResolver } from './common-resolvers/client-document.resolver';
+import { ClientDatatablesResolver } from './common-resolvers/client-datatables.resolver';
+import { ClientDatatableResolver } from './common-resolvers/client-datatable.resolver';
 
 const routes: Routes = [
   Route.withShell([{
@@ -49,6 +52,7 @@ const routes: Routes = [
         data: { title: extract('Clients View'), routeParamBreadcrumb: 'clientId' },
         resolve: {
           clientViewData: ClientViewResolver,
+          clientDatatables: ClientDatatablesResolver
         },
         children: [
           {
@@ -110,6 +114,16 @@ const routes: Routes = [
             resolve: {
               clientNotes: ClientNotesResolver
             }
+          },
+          {
+            path: 'datatables',
+            children: [{
+              path: ':datatableName',
+              component: DatatableTabComponent,
+              resolve: {
+                clientDatatable: ClientDatatableResolver
+              }
+            }]
           }
         ]
       }
@@ -132,7 +146,9 @@ const routes: Routes = [
     ClientTemplateResolver,
     ClientIdentitiesResolver,
     ClientNotesResolver,
-    ClientDocumentsResolver
+    ClientDocumentsResolver,
+    ClientDatatablesResolver,
+    ClientDatatableResolver
   ]
 })
 export class ClientsRoutingModule { }
