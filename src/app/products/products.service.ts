@@ -25,6 +25,14 @@ export class ProductsService {
     return this.http.get('/loanproducts');
   }
 
+  createLoanProduct(loanProduct: string): Observable<any> {
+    return this.http.post('/loanproducts', loanProduct);
+  }
+
+  getLoanProductsTemplate(): Observable<any> {
+    return this.http.get('/loanproducts/template');
+  }
+
   /**
    * @returns {Observable<any>} Recurring deposit products data
    */
