@@ -105,6 +105,10 @@ export class ClientsService {
     return this.http.get(`/clients/${parentEntityId}/documents/${documentId}/attachment`, { responseType: 'blob' });
   }
 
+  uploadClientDocument(clientId: string, documentData: any) {
+    return this.http.post(`/clients/${clientId}/documents`, documentData);
+  }
+
   deleteClientDocument(parentEntityId: string, documentId: string) {
     return this.http.delete(`/clients/${parentEntityId}/documents/${documentId}`);
   }

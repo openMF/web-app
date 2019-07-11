@@ -12,10 +12,12 @@ export class UploadDocumentDialogComponent implements OnInit {
   uploadDocumentForm: FormGroup;
   file: any;
   uploadDocumentData: any = [];
-
+  documentIdentifier = false;
   constructor(public dialogRef: MatDialogRef<UploadDocumentDialogComponent>,
     private formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.documentIdentifier = data.documentIdentifier;
+  }
 
   ngOnInit() {
     this.createUploadDocumentForm();
@@ -27,6 +29,7 @@ export class UploadDocumentDialogComponent implements OnInit {
   createUploadDocumentForm() {
     this.uploadDocumentForm = this.formBuilder.group({
       'fileName': ['', Validators.required],
+      'description': [''],
       'file': ['']
     });
   }
