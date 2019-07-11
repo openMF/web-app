@@ -53,7 +53,9 @@ export class IdentitiesTabComponent implements OnInit {
   }
 
   uploadDocument(index: number, identifierId: string) {
-    const uploadDocumentDialogRef = this.dialog.open(UploadDocumentDialogComponent);
+    const uploadDocumentDialogRef = this.dialog.open(UploadDocumentDialogComponent, {
+      data: { documentIdentifier: true }
+    });
     uploadDocumentDialogRef.afterClosed().subscribe((dialogResponse: any) => {
       if (dialogResponse) {
         const formData: FormData = new FormData;
@@ -65,7 +67,7 @@ export class IdentitiesTabComponent implements OnInit {
             parentEntityType: 'client_identifiers',
             parentEntityId: identifierId,
             name: dialogResponse.fileName,
-            fileName: dialogResponse.file.fileName
+            fileName: dialogResponse.file.name
           });
           this.identifiersTable.renderRows();
         });
