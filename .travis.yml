@@ -11,7 +11,7 @@ before_script:
 
 script:
   - ng lint
-  - ng build --prod --output-hashing=none --base-href="/web-app/"
+  - npm run build:prod
 
 deploy:
   provider: pages
