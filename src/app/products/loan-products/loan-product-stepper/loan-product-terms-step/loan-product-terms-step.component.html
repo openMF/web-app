@@ -1,0 +1,386 @@
+<form [formGroup]="loanProductTermsForm">
+
+  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+    <h4 fxFlex="98%" class="mat-h4">Principal</h4>
+
+    <mat-form-field fxFlex="31%">
+      <mat-label>Minimum</mat-label>
+      <input type="number" matInput formControlName="minPrincipal">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="31%">
+      <mat-label>Default</mat-label>
+      <input type="number" matInput formControlName="principal" required>
+      <mat-error>
+        Default Principal is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="31%">
+      <mat-label>Maximum</mat-label>
+      <input type="number" matInput formControlName="maxPrincipal">
+    </mat-form-field>
+
+    <h4 fxFlex="98%" class="mat-h4">Number of repayments</h4>
+
+    <mat-form-field fxFlex="31%">
+      <mat-label>Minimum</mat-label>
+      <input type="number" matInput formControlName="minNumberOfRepayments">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="31%">
+      <mat-label>Default</mat-label>
+      <input type="number" matInput formControlName="numberOfRepayments" required>
+      <mat-error>
+        Default number of repayments is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="31%">
+      <mat-label>Maximum</mat-label>
+      <input type="number" matInput formControlName="maxNumberOfRepayments">
+    </mat-form-field>
+
+    <mat-divider fxFlex="98%"></mat-divider>
+
+    <h3 fxFlex="23%" class="mat-h3">Interest Rates</h3>
+
+    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="isLinkedToFloatingInterestRates">
+      Is Linked to floating interest rates?
+    </mat-checkbox>
+
+    <div *ngIf="!loanProductTermsForm.value.isLinkedToFloatingInterestRates" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+      <h4 fxFlex="98%" class="mat-h4">Nominal interest rate</h4>
+
+      <mat-form-field fxFlex="23%">
+        <mat-label>Minimum</mat-label>
+        <input type="number" matInput formControlName="minInterestRatePerPeriod">
+      </mat-form-field>
+
+      <mat-form-field fxFlex="23%">
+        <mat-label>Default</mat-label>
+        <input type="number" matInput formControlName="interestRatePerPeriod" required>
+        <mat-error>
+          Default nominal interest rate is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="23%">
+        <mat-label>Maximum</mat-label>
+        <input type="number" matInput formControlName="maxInterestRatePerPeriod">
+      </mat-form-field>
+
+      <mat-form-field fxFlex="23%">
+        <mat-label>Frequency</mat-label>
+        <mat-select formControlName="interestRateFrequencyType" required>
+          <mat-option *ngFor="let interestRateFrequencyType of interestRateFrequencyTypeData" [value]="interestRateFrequencyType.id">
+            {{ interestRateFrequencyType.value }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          Nominal interest rate frequency is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+    </div>
+
+    <div *ngIf="loanProductTermsForm.value.isLinkedToFloatingInterestRates" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="start center">
+
+      <h4 fxFlex="98%" class="mat-h4">Floating interest rate</h4>
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>Floating Rate</mat-label>
+        <mat-select formControlName="floatingRatesId" required>
+          <mat-option *ngFor="let floatingRate of floatingRateData" [value]="floatingRate.id">
+            {{ floatingRate.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          Floating rate is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>Differential Rate</mat-label>
+        <input type="number" matInput formControlName="interestRateDifferential" required>
+        <mat-error>
+          Differential rate is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-checkbox fxFlex="31%" labelPosition="before" formControlName="isFloatingInterestRateCalculationAllowed">
+        Is Floating calculation allowed?
+      </mat-checkbox>
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>Minimum</mat-label>
+        <input type="number" matInput formControlName="minDifferentialLendingRate" required>
+        <mat-error>
+          Minimum interest rate is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>Default</mat-label>
+        <input type="number" matInput formControlName="defaultDifferentialLendingRate" required>
+        <mat-error>
+          Default interest rate is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>Maximum</mat-label>
+        <input type="number" matInput formControlName="maxDifferentialLendingRate" required>
+        <mat-error>
+          Maximum interest rate is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+    </div>
+
+    <mat-divider fxFlex="98%"></mat-divider>
+
+    <h3 fxFlex="23%" class="mat-h3">Variations</h3>
+
+    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="useBorrowerCycle">
+      Terms vary based on loan cycle
+    </mat-checkbox>
+
+    <div *ngIf="loanProductTermsForm.value.useBorrowerCycle" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+      <h4 fxFlex="23%" class="mat-h4">Principal by loan cycle</h4>
+
+      <div fxFlex="73%">
+        <button type="button" mat-raised-button color="primary" (click)="addVariationsForBorrowerCycle('Principal', principalVariationsForBorrowerCycle)">
+          <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+          Add
+        </button>
+      </div>
+
+      <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="principalVariationsForBorrowerCycle.value" *ngIf="principalVariationsForBorrowerCycle.value.length">
+
+        <ng-container matColumnDef="valueConditionType">
+          <th mat-header-cell *matHeaderCellDef> Condition </th>
+          <td mat-cell *matCellDef="let variation">
+            {{ variation.valueConditionType | find:valueConditionTypeData:'id':'value' }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="borrowerCycleNumber">
+          <th mat-header-cell *matHeaderCellDef> Loan Cycle </th>
+          <td mat-cell *matCellDef="let variation">
+            {{ variation.borrowerCycleNumber }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="minValue">
+          <th mat-header-cell *matHeaderCellDef> Minimum </th>
+          <td mat-cell *matCellDef="let variation">
+            {{ variation.minValue  }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="defaultValue">
+          <th mat-header-cell *matHeaderCellDef> Default </th>
+          <td mat-cell *matCellDef="let variation">
+            {{ variation.defaultValue }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="maxValue">
+          <th mat-header-cell *matHeaderCellDef> Maximum </th>
+          <td mat-cell *matCellDef="let variation">
+            {{ variation.maxValue }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let variation; let i = index">
+            <button mat-icon-button color="primary" (click)="editVariationsForBorrowerCycle('Principal', principalVariationsForBorrowerCycle, i)">
+              <fa-icon icon="edit"></fa-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteVariationsForBorrowerCycle(principalVariationsForBorrowerCycle, i)">
+              <fa-icon icon="trash"></fa-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+
+      <h4 fxFlex="23%" class="mat-h4">Number of repayments by loan cycle</h4>
+
+      <div fxFlex="73%">
+        <button type="button" mat-raised-button color="primary" (click)="addVariationsForBorrowerCycle('NumberOfRepayments', numberOfRepaymentVariationsForBorrowerCycle)">
+          <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+          Add
+        </button>
+      </div>
+
+      <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="numberOfRepaymentVariationsForBorrowerCycle.value" *ngIf="numberOfRepaymentVariationsForBorrowerCycle.value.length">
+
+        <ng-container matColumnDef="valueConditionType">
+          <th mat-header-cell *matHeaderCellDef> Condition </th>
+          <td mat-cell *matCellDef="let variation">
+            {{ variation.valueConditionType | find:valueConditionTypeData:'id':'value' }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="borrowerCycleNumber">
+          <th mat-header-cell *matHeaderCellDef> Loan Cycle </th>
+          <td mat-cell *matCellDef="let variation">
+            {{ variation.borrowerCycleNumber }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="minValue">
+          <th mat-header-cell *matHeaderCellDef> Minimum </th>
+          <td mat-cell *matCellDef="let variation">
+            {{ variation.minValue }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="defaultValue">
+          <th mat-header-cell *matHeaderCellDef> Default </th>
+          <td mat-cell *matCellDef="let variation">
+            {{ variation.defaultValue }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="maxValue">
+          <th mat-header-cell *matHeaderCellDef> Maximum </th>
+          <td mat-cell *matCellDef="let variation">
+            {{ variation.maxValue }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let variation; let i = index">
+            <button mat-icon-button color="primary" (click)="editVariationsForBorrowerCycle('NumberOfRepayments', numberOfRepaymentVariationsForBorrowerCycle, i)">
+              <fa-icon icon="edit"></fa-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteVariationsForBorrowerCycle(numberOfRepaymentVariationsForBorrowerCycle, i)">
+              <fa-icon icon="trash"></fa-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+
+      <h4 fxFlex="23%" class="mat-h4">Nominal interest rate by loan cycle</h4>
+
+      <div fxFlex="73%">
+        <button type="button" mat-raised-button color="primary" (click)="addVariationsForBorrowerCycle('NominalInterestRate', interestRateVariationsForBorrowerCycle)">
+          <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+          Add
+        </button>
+      </div>
+
+      <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="interestRateVariationsForBorrowerCycle.value" *ngIf="interestRateVariationsForBorrowerCycle.value.length">
+
+        <ng-container matColumnDef="valueConditionType">
+          <th mat-header-cell *matHeaderCellDef> Condition </th>
+          <td mat-cell *matCellDef="let variation">
+            {{ variation.valueConditionType | find:valueConditionTypeData:'id':'value' }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="borrowerCycleNumber">
+          <th mat-header-cell *matHeaderCellDef> Loan Cycle </th>
+          <td mat-cell *matCellDef="let variation">
+            {{ variation.borrowerCycleNumber }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="minValue">
+          <th mat-header-cell *matHeaderCellDef> Minimum </th>
+          <td mat-cell *matCellDef="let variation">
+            {{ variation.minValue }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="defaultValue">
+          <th mat-header-cell *matHeaderCellDef> Default </th>
+          <td mat-cell *matCellDef="let variation">
+            {{ variation.defaultValue }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="maxValue">
+          <th mat-header-cell *matHeaderCellDef> Maximum </th>
+          <td mat-cell *matCellDef="let variation">
+            {{ variation.maxValue }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <button mat-icon-button color="primary" (click)="editVariationsForBorrowerCycle('NominalInterestRate', interestRateVariationsForBorrowerCycle, i)">
+              <fa-icon icon="edit"></fa-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteVariationsForBorrowerCycle(interestRateVariationsForBorrowerCycle, i)">
+              <fa-icon icon="trash"></fa-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+
+    </div>
+
+    <mat-divider fxFlex="98%"></mat-divider>
+
+    <h4 fxFlex="98%" class="mat-h4">Repaid every</h4>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Frequency</mat-label>
+      <input type="number" matInput formControlName="repaymentEvery" required>
+      <mat-error>
+        Repaid every frequency is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="repaymentFrequencyType" required>
+        <mat-option *ngFor="let repaymentFrequencyType of repaymentFrequencyTypeData" [value]="repaymentFrequencyType.id">
+          {{ repaymentFrequencyType.value }}
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        Repaid every type is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Minimum days between disbursal and first repayment date</mat-label>
+      <input type="number" matInput formControlName="minimumDaysBetweenDisbursalAndFirstRepayment">
+    </mat-form-field>
+
+  </div>
+
+  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+    <button mat-raised-button matStepperPrevious>
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+      Previous
+    </button>
+    <button mat-raised-button matStepperNext>
+      Next&nbsp;&nbsp;
+      <fa-icon icon="arrow-right"></fa-icon>
+    </button>
+  </div>
+
+</form>
