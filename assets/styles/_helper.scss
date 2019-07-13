@@ -1704,3 +1704,7 @@ textarea.noresize {
 .status-matured {
   color: $status-matured;
 }
+
+.mat-step-header .mat-step-icon-state-done {
+  background-color: $state-done;
+}
