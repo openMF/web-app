@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
 import { LayoutModule } from '@angular/cdk/layout';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {
   MAT_FORM_FIELD_DEFAULT_OPTIONS,
@@ -86,6 +87,13 @@ import {
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: 'standard' }
+    },
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: {
+        showError: true,
+        displayDefaultIndicatorType: false
+      }
     }
   ]
 })

@@ -11,6 +11,7 @@ import { extract } from '../core/i18n/i18n.service';
 /** Custom Components */
 import { ProductsComponent } from './products.component';
 import { LoanProductsComponent } from './loan-products/loan-products.component';
+import { CreateLoanProductComponent } from './loan-products/create-loan-product/create-loan-product.component';
 import { ManageTaxConfigurationsComponent } from './manage-tax-configurations/manage-tax-configurations.component';
 import { RecurringDepositProductsComponent } from './recurring-deposit-products/recurring-deposit-products.component';
 import { ChargesComponent } from './charges/charges.component';
@@ -20,6 +21,7 @@ import { ManageTaxComponentsComponent } from './manage-tax-components/manage-tax
 
 /** Custom Resolvers */
 import { LoanProductsResolver } from './loan-products/loan-products.resolver';
+import { LoanProductsTemplateResolver } from './loan-products/loan-products-template.resolver';
 import { RecurringDepositProductsResolver } from './recurring-deposit-products/recurring-deposit-products.resolver';
 import { ChargesResolver } from './charges/charges.resolver';
 import { FixedDepositProductsResolver } from './fixed-deposit-products/fixed-deposit-products.resolver';
@@ -46,6 +48,14 @@ const routes: Routes = [
               component: LoanProductsComponent,
               resolve: {
                 loanProducts: LoanProductsResolver
+              }
+            },
+            {
+              path: 'create',
+              component: CreateLoanProductComponent,
+              data: { title: extract('Create Loan Product'), breadcrumb: 'Create' },
+              resolve: {
+                loanProductsTemplate: LoanProductsTemplateResolver
               }
             }
           ]
@@ -115,6 +125,7 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     LoanProductsResolver,
+    LoanProductsTemplateResolver,
     RecurringDepositProductsResolver,
     ChargesResolver,
     FixedDepositProductsResolver,
