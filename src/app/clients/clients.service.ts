@@ -24,6 +24,7 @@ export class ClientsService {
   getClientTemplate(): Observable<any> {
     return this.http.get('/clients/template');
   }
+
   getClientData(clientId: string) {
     return this.http.get(`/clients/${clientId}`);
   }
@@ -32,6 +33,7 @@ export class ClientsService {
     const httpParams = new HttpParams().set('apptable', 'm_client');
     return this.http.get(`/datatables`, { params: httpParams });
   }
+
   getClientDatatable(clientId: string, datatableName: string) {
     const httpParams = new HttpParams().set('genericResultSet', 'true');
     return this.http.get(`/datatables/${datatableName}/${clientId}`, { params: httpParams });
@@ -79,6 +81,14 @@ export class ClientsService {
 
   getClientIdentifiers(clientId: string) {
     return this.http.get(`/clients/${clientId}/identifiers`);
+  }
+
+  getClientIdentifierTemplate(clientId: string) {
+    return this.http.get(`/clients/${clientId}/identifiers/template`);
+  }
+
+  addClientIdentifier(clientId: string, identifierData: any) {
+    return this.http.post(`/clients/${clientId}/identifiers`, identifierData);
   }
 
   deleteClientIdentifier(clientId: string, identifierId: string) {

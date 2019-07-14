@@ -33,6 +33,7 @@ import { ClientNotesResolver } from './common-resolvers/client-notes.resolver';
 import { ClientDocumentsResolver } from './common-resolvers/client-document.resolver';
 import { ClientDatatablesResolver } from './common-resolvers/client-datatables.resolver';
 import { ClientDatatableResolver } from './common-resolvers/client-datatable.resolver';
+import { ClientIdentifierTemplateResolver } from './common-resolvers/client-identifier-template.resolver';
 
 const routes: Routes = [
   Route.withShell([{
@@ -98,7 +99,8 @@ const routes: Routes = [
             path: 'identities',
             component: IdentitiesTabComponent,
             resolve: {
-              clientIdentities: ClientIdentitiesResolver
+              clientIdentities: ClientIdentitiesResolver,
+              clientIdentifierTemplate: ClientIdentifierTemplateResolver
             }
           },
           {
@@ -148,7 +150,8 @@ const routes: Routes = [
     ClientNotesResolver,
     ClientDocumentsResolver,
     ClientDatatablesResolver,
-    ClientDatatableResolver
+    ClientDatatableResolver,
+    ClientIdentifierTemplateResolver
   ]
 })
 export class ClientsRoutingModule { }
