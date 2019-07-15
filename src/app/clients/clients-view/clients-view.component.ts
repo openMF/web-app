@@ -14,16 +14,19 @@ export class ClientsViewComponent implements OnInit {
   clientViewData: any;
   clientDatatables: any;
   clientImage: any;
-  clientTemplate: any;
+  clientTemplateData: any;
+
   constructor(private route: ActivatedRoute,
     private clientsService: ClientsService,
     private _sanitizer: DomSanitizer) {
     this.route.data.subscribe((data: {
       clientViewData: any,
+      clientTemplateData: any,
       clientDatatables: any
     }) => {
       this.clientViewData = data.clientViewData;
       this.clientDatatables = data.clientDatatables;
+      this.clientTemplateData = data.clientTemplateData;
     });
   }
 

@@ -48,6 +48,10 @@
         [active]="general.isActive">
         General
       </a>
+      <a mat-tab-link [routerLink]="['./address']" routerLinkActive #address="routerLinkActive"
+        [active]="address.isActive" *ngIf="clientTemplateData.isAddressEnabled">
+        Address
+      </a>
       <a mat-tab-link [routerLink]="['./family-members']" routerLinkActive #familyMembers="routerLinkActive"
         [active]="familyMembers.isActive">
         Family Members
