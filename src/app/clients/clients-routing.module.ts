@@ -18,11 +18,13 @@ import { IdentitiesTabComponent } from './clients-view/identities-tab/identities
 import { NotesTabComponent } from './clients-view/notes-tab/notes-tab.component';
 import { DocumentsTabComponent } from './clients-view/documents-tab/documents-tab.component';
 import { DatatableTabComponent } from './clients-view/datatable-tab/datatable-tab.component';
+import { AddressTabComponent } from './clients-view/address-tab/address-tab.component';
 
 /** Custom Resolvers */
 import { ClientsResolver } from './common-resolvers/clients.resolver';
 import { ClientViewResolver } from './common-resolvers/client-view.resolver';
 import { ClientAccountsResolver } from './common-resolvers/client-accounts.resolver';
+import { ClientAddressResolver } from './common-resolvers/client-address.resolver';
 import { ClientChargesResolver } from './common-resolvers/client-charges.resolver';
 import { ClientSummaryResolver } from './common-resolvers/client-summary.resolver';
 import { ClientFamilyMembersResolver } from './common-resolvers/client-family-members.resolver';
@@ -34,6 +36,8 @@ import { ClientDocumentsResolver } from './common-resolvers/client-document.reso
 import { ClientDatatablesResolver } from './common-resolvers/client-datatables.resolver';
 import { ClientDatatableResolver } from './common-resolvers/client-datatable.resolver';
 import { ClientIdentifierTemplateResolver } from './common-resolvers/client-identifier-template.resolver';
+import { ClientAddressFieldConfigurationResolver } from './common-resolvers/client-address-fieldconfiguration.resolver';
+import { ClientAddressTemplateResolver } from './common-resolvers/client-address-template.resolver';
 
 const routes: Routes = [
   Route.withShell([{
@@ -53,6 +57,7 @@ const routes: Routes = [
         data: { title: extract('Clients View'), routeParamBreadcrumb: 'clientId' },
         resolve: {
           clientViewData: ClientViewResolver,
+          clientTemplateData: ClientTemplateResolver,
           clientDatatables: ClientDatatablesResolver
         },
         children: [
@@ -63,6 +68,15 @@ const routes: Routes = [
               clientAccountsData: ClientAccountsResolver,
               clientChargesData: ClientChargesResolver,
               clientSummary: ClientSummaryResolver
+            }
+          },
+          {
+            path: 'address',
+            component: AddressTabComponent,
+            resolve: {
+              clientAddressFieldConfig: ClientAddressFieldConfigurationResolver,
+              clientAddressTemplateData: ClientAddressTemplateResolver,
+              clientAddressData: ClientAddressResolver
             }
           },
           {
@@ -141,6 +155,7 @@ const routes: Routes = [
     ClientsResolver,
     ClientViewResolver,
     ClientAccountsResolver,
+    ClientAddressResolver,
     ClientChargesResolver,
     ClientSummaryResolver,
     ClientFamilyMembersResolver,
@@ -151,7 +166,9 @@ const routes: Routes = [
     ClientDocumentsResolver,
     ClientDatatablesResolver,
     ClientDatatableResolver,
-    ClientIdentifierTemplateResolver
+    ClientIdentifierTemplateResolver,
+    ClientAddressFieldConfigurationResolver,
+    ClientAddressTemplateResolver
   ]
 })
 export class ClientsRoutingModule { }
