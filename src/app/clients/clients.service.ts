@@ -39,6 +39,7 @@ export class ClientsService {
     return this.http.get(`/datatables/${datatableName}/${clientId}`, { params: httpParams });
   }
 
+
   getClientAccountData(clientId: string) {
     return this.http.get(`/clients/${clientId}/accounts`);
   }
@@ -137,5 +138,17 @@ export class ClientsService {
 
   deleteClientNote(clientId: string, noteId: string) {
     return this.http.delete(`/clients/${clientId}/notes/${noteId}`);
+  }
+
+  getAddressFieldConfiguration() {
+    return this.http.get(`/fieldconfiguration/ADDRESS`);
+  }
+
+  getClientAddressData(clientId: string) {
+    return this.http.get(`/client/${clientId}/addresses`);
+  }
+
+  getClientAddressTemplate() {
+    return this.http.get(`/client/addresses/template`);
   }
 }
