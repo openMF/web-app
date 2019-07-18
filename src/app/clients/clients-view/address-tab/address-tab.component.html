@@ -1,7 +1,7 @@
 <div class="tab-container mat-typography">
   <h3>Address</h3>
   <div fxLayout="row" fxLayoutAlign="flex-end">
-    <button mat-raised-button color="primary">
+    <button mat-raised-button color="primary" (click)="addAddress()">
       <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Add
     </button>
   </div>
@@ -16,10 +16,11 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
       <mat-divider [inset]="true"></mat-divider>
-      <div class="address-actions" fxLayout="row" fxLayoutAlign="flex-end">
-        <button mat-button color="primary">
+      <div class="address-actions" fxLayout="row" fxLayoutAlign="flex-end center">
+        <button mat-button color="primary" (click)="editAddress(address,i)">
           <fa-icon icon="edit"></fa-icon>
         </button>
+        <mat-slide-toggle [checked]="address.isActive" (change)="toogleAddress(address)"></mat-slide-toggle>
       </div>
       <p>
         <span *ngIf="isFieldEnabled('street')">Street : {{address.street}}<br /></span>
