@@ -151,4 +151,12 @@ export class ClientsService {
   getClientAddressTemplate() {
     return this.http.get(`/client/addresses/template`);
   }
+
+  createClientAddress(clientId: string, addressTypeId: string, addressData: any) {
+    return this.http.post(`/client/${clientId}/addresses?type=${addressTypeId}`, addressData);
+  }
+
+  editClientAddress(clientId: string, addressTypeId: string, addressData: any) {
+    return this.http.put(`/client/${clientId}/addresses?type=${addressTypeId}`, addressData);
+  }
 }
