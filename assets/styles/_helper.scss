@@ -26,6 +26,14 @@ body {
   color: rgba(0, 0, 0, 0.87);
   line-height: 1.5;
   font-family: Roboto, Helvetica Neue, sans-serif;
+
+  table {
+    border: 1px solid rgba($color: #000000, $alpha: 0.12);
+    width: 100%;
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+  }
 }
 
 div {
@@ -1707,4 +1715,12 @@ textarea.noresize {
 
 .mat-step-header .mat-step-icon-state-done {
   background-color: $state-done;
+
+  .status-transfer-progress {
+    color: $status-transfer-progress;
+  }
+
+  .status-transfer-hold {
+    color: $status-transfer-hold;
+  }
 }
