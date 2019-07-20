@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   selector: 'mifosx-app-centers',
   templateUrl: './centers.component.html',
   styleUrls: ['./centers.component.scss'],
-  encapsulation: ViewEncapsulation.None
+
 })
 export class CentersComponent implements OnInit {
   private ELEMENT_DATA: any = undefined;

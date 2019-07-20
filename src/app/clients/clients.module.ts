@@ -5,7 +5,7 @@ import { DatePipe } from '@angular/common';
 /** Custom Modules */
 import { ClientsRoutingModule } from './clients-routing.module';
 import { SharedModule } from 'app/shared/shared.module';
-import {PipesModule} from '../pipes/pipes.module';
+import { PipesModule } from '../pipes/pipes.module';
 
 /** Custom Components */
 import { ClientsComponent } from './clients.component';

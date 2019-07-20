@@ -26,7 +26,16 @@ export class StatusLookupPipe implements PipeTransform {
       'shareAccountStatusType.active': 'status-active',
       'shareAccountStatusType.rejected': 'status-rejected',
       'loanProduct.active': 'status-active',
-      'loanProduct.inActive': 'status-inactive'
+      'loanProduct.inActive': 'status-inactive',
+      'clientStatusType.pending': 'status-pending',
+      'clientStatusType.closed': 'status-closed',
+      'clientStatusType.rejected': 'status-rejected', // write
+      'clientStatusType.withdraw': 'status-withdraw', // write
+      'clientStatusType.active': 'status-active',
+      'clientStatusType.submitted.and.pending.approval': 'status-pending',
+      'clientStatusTYpe.approved': 'status-approved',
+      'clientStatusType.transfer.in.progress': 'status-transfer-progress', // write
+      'clientStatusType.transfer.on.hold': 'status-transfer-hold' // write
     };
     return cssClassNameLookup[status];
   }
