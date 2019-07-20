@@ -21,7 +21,6 @@ import { DatatableTabComponent } from './clients-view/datatable-tab/datatable-ta
 import { AddressTabComponent } from './clients-view/address-tab/address-tab.component';
 
 /** Custom Resolvers */
-import { ClientsResolver } from './common-resolvers/clients.resolver';
 import { ClientViewResolver } from './common-resolvers/client-view.resolver';
 import { ClientAccountsResolver } from './common-resolvers/client-accounts.resolver';
 import { ClientAddressResolver } from './common-resolvers/client-address.resolver';
@@ -47,9 +46,6 @@ const routes: Routes = [
       {
         path: '',
         component: ClientsComponent,
-        resolve: {
-          clientsData: ClientsResolver
-        }
       },
       {
         path: ':clientId',
@@ -152,7 +148,6 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   providers: [
-    ClientsResolver,
     ClientViewResolver,
     ClientAccountsResolver,
     ClientAddressResolver,

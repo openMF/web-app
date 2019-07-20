@@ -72,10 +72,12 @@ import {
   faUsers,
   faUserShield,
   faDownload,
+  faUpload,
   faCloudDownloadAlt,
   faCloudUploadAlt,
   faTimes,
-  faStickyNote
+  faStickyNote,
+  faStop
 } from '@fortawesome/free-solid-svg-icons';
 
 /** Add icons to the library for convenient access in other components. */
@@ -147,10 +149,12 @@ library.add(
   faUsers,
   faUserShield,
   faDownload,
+  faUpload,
   faCloudDownloadAlt,
   faCloudUploadAlt,
   faTimes,
-  faStickyNote
+  faStickyNote,
+  faStop
 );
 
 /**
