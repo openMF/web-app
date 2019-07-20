@@ -1,48 +1,60 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { MatPaginator, MatSort, MatTableDataSource, MatCheckbox } from '@angular/material';
+import { ClientsDataSource } from './clients.datasource';
+
+/** rxjs Imports */
+import { merge } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+/** Custom Services */
+import { ClientsService } from './clients.service';
+
 @Component({
   selector: 'mifosx-clients',
   templateUrl: './clients.component.html',
   styleUrls: ['./clients.component.scss'],
-  encapsulation: ViewEncapsulation.None
-
 })
-export class ClientsComponent implements OnInit {
-  post: any = [];
+export class ClientsComponent implements OnInit, AfterViewInit {
+  @ViewChild('showClosedAccounts') showClosedAccounts: MatCheckbox;
+
 
   displayedColumns = ['name', 'clientno', 'externalid', 'status', 'mobileNo', 'gender', 'office', 'staff'];
-  dataSource = new MatTableDataSource();
+  dataSource: ClientsDataSource;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((clientsData: { clientsData: any }) => {
-      const res = clientsData.clientsData.pageItems;
-      res.active = !!res.active;
-      this.dataSource = new MatTableDataSource(res);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sortingDataAccessor = (data: any, property: any) => {
-        switch (property) {
-          case 'gender': return data.gender.name;
-          default: return data[property];
-        }
-      };
-      this.dataSource.sort = this.sort;
-    });
+  constructor(private clientsService: ClientsService) {
+
   }
 
+  ngOnInit() {
+    this.getClients();
+  }
+  ngAfterViewInit() {
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    merge(this.sort.sortChange, this.paginator.page, this.showClosedAccounts.change)
+      .pipe(
+        tap(() => this.loadClientsPage())
+      )
+      .subscribe();
+  }
 
-  ngOnInit() { }
-
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+  /**
+   * Loads a page of journal entries.
+   */
+  loadClientsPage() {
+    if (!this.sort.direction) {
+      delete this.sort.active;
     }
+    this.dataSource.getClients(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
   }
 
+  /**
+   * Initializes the data source for clients table and loads the first page.
+   */
+  getClients() {
+    this.dataSource = new ClientsDataSource(this.clientsService);
+    this.dataSource.getClients(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
+  }
 }

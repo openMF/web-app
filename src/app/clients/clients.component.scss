@@ -1,26 +1,11 @@
 
-  table {
-  width: 100%;
+.container {
+  .action-button{
+    margin-left: auto;
+  }
+  .search-button{
+    min-width: 30px;
+    margin: 4px;
+    
+  }
 }
-
-.mat-form-field {
-  font-size: 14px;
-  width: 100%;
-}
-
-td, th {
-  width: 15%;
-}
-
-.filter{
-  width: 50%;
-}
-
-.inactive {
-  color: red;
-}
-
-.active {
-  color: green;
-}
-
