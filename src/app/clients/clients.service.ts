@@ -22,7 +22,6 @@ export class ClientsService {
       .set('limit', limit.toString())
       .set('sortOrder', sortOrder)
       .set('orderBy', orderBy);
-
     return this.http.get('/clients', { params: httpParams });
   }
 
@@ -62,7 +61,7 @@ export class ClientsService {
 
   getClientProfileImage(clientId: string) {
     const httpParams = new HttpParams().set('maxHeight', '150');
-    return this.http.get(`/clients/${clientId}/images`, { params: httpParams, responseType: 'text' });
+    return this.http.skipErrorHandler().get(`/clients/${clientId}/images`, { params: httpParams, responseType: 'text' });
   }
 
   getClientFamilyMembers(clientId: string) {

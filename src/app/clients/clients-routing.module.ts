@@ -60,6 +60,7 @@ const routes: Routes = [
           {
             path: 'general',
             component: GeneralTabComponent,
+            data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false },
             resolve: {
               clientAccountsData: ClientAccountsResolver,
               clientChargesData: ClientChargesResolver,
@@ -69,6 +70,7 @@ const routes: Routes = [
           {
             path: 'address',
             component: AddressTabComponent,
+            data: { title: extract('Address'), breadcrumb: 'Address', routeParamBreadcrumb: false },
             resolve: {
               clientAddressFieldConfig: ClientAddressFieldConfigurationResolver,
               clientAddressTemplateData: ClientAddressTemplateResolver,
@@ -77,6 +79,7 @@ const routes: Routes = [
           },
           {
             path: 'family-members',
+            data: { title: extract('Family Members'), breadcrumb: 'Family Members', routeParamBreadcrumb: false },
             children: [
               {
                 path: '',
@@ -88,6 +91,7 @@ const routes: Routes = [
               {
                 path: 'add',
                 component: AddFamilyMemberComponent,
+                data: { title: extract('Add'), breadcrumb: 'Add', routeParamBreadcrumb: false },
                 resolve: {
                   clientTemplate: ClientTemplateResolver
                 }
@@ -97,6 +101,7 @@ const routes: Routes = [
                 children: [{
                   path: 'edit',
                   component: EditFamilyMemberComponent,
+                  data: { title: extract('Family Member View'), routeParamBreadcrumb: 'familyMemberId' },
                   resolve: {
                     clientTemplate: ClientTemplateResolver,
                     editFamilyMember: ClientFamilyMemberResolver
@@ -108,6 +113,7 @@ const routes: Routes = [
           {
             path: 'identities',
             component: IdentitiesTabComponent,
+            data: { title: extract('Identities'), breadcrumb: 'Identities', routeParamBreadcrumb: false },
             resolve: {
               clientIdentities: ClientIdentitiesResolver,
               clientIdentifierTemplate: ClientIdentifierTemplateResolver
@@ -116,6 +122,7 @@ const routes: Routes = [
           {
             path: 'documents',
             component: DocumentsTabComponent,
+            data: { title: extract('Documents'), breadcrumb: 'Documents', routeParamBreadcrumb: false },
             resolve: {
               clientDocuments: ClientDocumentsResolver
             }
@@ -123,6 +130,7 @@ const routes: Routes = [
           {
             path: 'notes',
             component: NotesTabComponent,
+            data: { title: extract('Notes'), breadcrumb: 'Notes', routeParamBreadcrumb: false },
             resolve: {
               clientNotes: ClientNotesResolver
             }
@@ -132,6 +140,7 @@ const routes: Routes = [
             children: [{
               path: ':datatableName',
               component: DatatableTabComponent,
+              data: { title: extract('Data Table View'), routeParamBreadcrumb: 'datatableName' },
               resolve: {
                 clientDatatable: ClientDatatableResolver
               }
