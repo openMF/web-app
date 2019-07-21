@@ -9,7 +9,6 @@
     <p>
       No. of Active Savings :{{clientSummary?.activeSavings}} <br />
       Total Savings :{{clientSummary?.totalSavings}} <br />
-
     </p>
   </div>
 
@@ -17,7 +16,7 @@
 
   <h3>Upcoming Charges</h3>
   <button mat-raised-button class="f-right" color="primary">Charges Overview</button>
-  <table mat-table [dataSource]="upcomingCharges" class="mat-elevation-z1">
+  <table mat-table [dataSource]="upcomingCharges">
 
     <ng-container matColumnDef="Name">
       <th mat-header-cell *matHeaderCellDef> Name </th>
@@ -75,8 +74,7 @@
   <h3>Loan Accounts</h3>
   <button mat-raised-button class="f-right" color="primary"
     (click)="toggleLoanAccountsOverview()">{{showClosedLoanAccounts?'View Active Accounts':'View Closed Accounts'}}</button>
-  <table *ngIf="!showClosedLoanAccounts" mat-table [dataSource]="loanAccounts|accountsFilter:'loan'"
-    class="mat-elevation-z1">
+  <table *ngIf="!showClosedLoanAccounts" mat-table [dataSource]="loanAccounts|accountsFilter:'loan'">
 
     <ng-container matColumnDef="Account No">
       <th mat-header-cell *matHeaderCellDef> Account No. </th>
@@ -139,8 +137,7 @@
   </table>
 
   <!-- Closed Loan Accounts -->
-  <table *ngIf="showClosedLoanAccounts" mat-table [dataSource]="loanAccounts|accountsFilter:'loan':'closed'"
-    class="mat-elevation-z1">
+  <table *ngIf="showClosedLoanAccounts" mat-table [dataSource]="loanAccounts|accountsFilter:'loan':'closed'">
 
     <ng-container matColumnDef="Account No">
       <th mat-header-cell *matHeaderCellDef> Account No. </th>
@@ -193,8 +190,7 @@
   <h3>Saving Accounts</h3>
   <button mat-raised-button class="f-right" color="primary"
     (click)="toggleSavingAccountsOverview()">{{showClosedSavingAccounts?'View Active Accounts':'View Closed Accounts'}}</button>
-  <table *ngIf="!showClosedSavingAccounts" mat-table [dataSource]="savingAccounts|accountsFilter:'saving'"
-    class="mat-elevation-z1">
+  <table *ngIf="!showClosedSavingAccounts" mat-table [dataSource]="savingAccounts|accountsFilter:'saving'">
 
     <ng-container matColumnDef="Account No">
       <th mat-header-cell *matHeaderCellDef> Account No. </th>
@@ -252,8 +248,7 @@
 
   <!-- Closed Saving Accounts -->
 
-  <table *ngIf="showClosedSavingAccounts" mat-table [dataSource]="savingAccounts|accountsFilter:'saving':'closed'"
-    class="mat-elevation-z1">
+  <table *ngIf="showClosedSavingAccounts" mat-table [dataSource]="savingAccounts|accountsFilter:'saving':'closed'">
 
     <ng-container matColumnDef="Account No">
       <th mat-header-cell *matHeaderCellDef> Account No. </th>
@@ -280,8 +275,7 @@
   <h3>Shares Accounts</h3>
   <button mat-raised-button class="f-right" color="primary"
     (click)="toggleShareAccountsOverview()">{{showClosedSavingAccounts?'View Active Accounts':'View Closed Accounts'}}</button>
-  <table *ngIf="!showClosedShareAccounts" mat-table [dataSource]="shareAccounts|accountsFilter:'share'"
-    class="mat-elevation-z1">
+  <table *ngIf="!showClosedShareAccounts" mat-table [dataSource]="shareAccounts|accountsFilter:'share'">
 
     <ng-container matColumnDef="Account No">
       <th mat-header-cell *matHeaderCellDef> Account No. </th>
@@ -327,8 +321,7 @@
     <tr mat-row *matRowDef="let row; columns: openSharesColumns;"></tr>
   </table>
   <!-- Closed Share Accounts -->
-  <table *ngIf="showClosedShareAccounts" mat-table [dataSource]="shareAccounts|accountsFilter:'share':'closed'"
-    class="mat-elevation-z1">
+  <table *ngIf="showClosedShareAccounts" mat-table [dataSource]="shareAccounts|accountsFilter:'share':'closed'">
 
     <ng-container matColumnDef="Account No">
       <th mat-header-cell *matHeaderCellDef> Account No. </th>

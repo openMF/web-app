@@ -5,7 +5,7 @@
       <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Add
     </button>
   </div>
-  <table mat-table *ngIf="dataObject.data[0]" [dataSource]="datatableData" class="mat-elevation-z1">
+  <table mat-table *ngIf="dataObject.data[0]" [dataSource]="datatableData">
 
     <ng-container *ngFor="let datatableColumn of datatableColumns;let i = index" [matColumnDef]="datatableColumn">
       <th mat-header-cell *matHeaderCellDef> {{datatableColumn}} </th>
