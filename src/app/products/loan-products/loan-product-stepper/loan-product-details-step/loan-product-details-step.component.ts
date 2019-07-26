@@ -25,6 +25,16 @@ export class LoanProductDetailsStepComponent implements OnInit {
 
   ngOnInit() {
     this.fundData = this.loanProductsTemplate.fundOptions;
+
+    this.loanProductDetailsForm.patchValue({
+      'name': this.loanProductsTemplate.name,
+      'shortName': this.loanProductsTemplate.shortName,
+      'description': this.loanProductsTemplate.description,
+      'fundId': this.loanProductsTemplate.fundId,
+      'startDate': this.loanProductsTemplate.startDate && new Date(this.loanProductsTemplate.startDate),
+      'closeDate': this.loanProductsTemplate.closeDate && new Date(this.loanProductsTemplate.closeDate),
+      'includeInBorrowerCycle': this.loanProductsTemplate.includeInBorrowerCycle
+    });
   }
 
   createLoanProductDetailsForm() {

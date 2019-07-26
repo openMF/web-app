@@ -38,10 +38,37 @@ export class LoanProductTermsStepComponent implements OnInit {
     this.floatingRateData = this.loanProductsTemplate.floatingRateOptions;
     this.interestRateFrequencyTypeData = this.loanProductsTemplate.interestRateFrequencyTypeOptions;
     this.repaymentFrequencyTypeData = this.loanProductsTemplate.repaymentFrequencyTypeOptions;
+
     this.loanProductTermsForm.patchValue({
-      'interestRateFrequencyType': this.interestRateFrequencyTypeData[0].id,
-      'repaymentFrequencyType': this.repaymentFrequencyTypeData[0].id
+      'minPrincipal': this.loanProductsTemplate.minPrincipal,
+      'principal': this.loanProductsTemplate.principal,
+      'maxPrincipal': this.loanProductsTemplate.maxPrincipal,
+      'minNumberOfRepayments': this.loanProductsTemplate.minNumberOfRepayments,
+      'numberOfRepayments': this.loanProductsTemplate.numberOfRepayments,
+      'maxNumberOfRepayments': this.loanProductsTemplate.maxNumberOfRepayments,
+      'isLinkedToFloatingInterestRates': this.loanProductsTemplate.isLinkedToFloatingInterestRates,
+      'minInterestRatePerPeriod': this.loanProductsTemplate.minInterestRatePerPeriod,
+      'interestRatePerPeriod': this.loanProductsTemplate.interestRatePerPeriod,
+      'maxInterestRatePerPeriod': this.loanProductsTemplate.maxInterestRatePerPeriod,
+      'interestRateFrequencyType': this.loanProductsTemplate.interestRateFrequencyType.id,
+      'floatingRatesId': this.loanProductsTemplate.floatingRateId,
+      'interestRateDifferential': this.loanProductsTemplate.interestRateDifferential,
+      'isFloatingInterestRateCalculationAllowed': this.loanProductsTemplate.isFloatingInterestRateCalculationAllowed,
+      'minDifferentialLendingRate': this.loanProductsTemplate.minDifferentialLendingRate,
+      'defaultDifferentialLendingRate': this.loanProductsTemplate.defaultDifferentialLendingRate,
+      'maxDifferentialLendingRate': this.loanProductsTemplate.maxDifferentialLendingRate,
+      'useBorrowerCycle': this.loanProductsTemplate.useBorrowerCycle,
+      'repaymentEvery': this.loanProductsTemplate.repaymentEvery,
+      'repaymentFrequencyType': this.loanProductsTemplate.repaymentFrequencyType.id,
+      'minimumDaysBetweenDisbursalAndFirstRepayment': this.loanProductsTemplate.minimumDaysBetweenDisbursalAndFirstRepayment
     });
+
+    this.loanProductTermsForm.setControl('principalVariationsForBorrowerCycle',
+      this.formBuilder.array(this.loanProductsTemplate.principalVariationsForBorrowerCycle.map((variation: any) => ({ ...variation, valueConditionType: variation.valueConditionType.id }))));
+    this.loanProductTermsForm.setControl('numberOfRepaymentVariationsForBorrowerCycle',
+      this.formBuilder.array(this.loanProductsTemplate.numberOfRepaymentVariationsForBorrowerCycle.map((variation: any) => ({ ...variation, valueConditionType: variation.valueConditionType.id }))));
+    this.loanProductTermsForm.setControl('interestRateVariationsForBorrowerCycle',
+      this.formBuilder.array(this.loanProductsTemplate.interestRateVariationsForBorrowerCycle.map((variation: any) => ({ ...variation, valueConditionType: variation.valueConditionType.id }))));
   }
 
   createLoanProductTermsForm() {
@@ -82,7 +109,7 @@ export class LoanProductTermsStepComponent implements OnInit {
           this.loanProductTermsForm.addControl('minInterestRatePerPeriod', new FormControl(''));
           this.loanProductTermsForm.addControl('interestRatePerPeriod', new FormControl('', Validators.required));
           this.loanProductTermsForm.addControl('maxInterestRatePerPeriod', new FormControl(''));
-          this.loanProductTermsForm.addControl('interestRateFrequencyType', new FormControl(this.interestRateFrequencyTypeData[0].id, Validators.required));
+          this.loanProductTermsForm.addControl('interestRateFrequencyType', new FormControl(this.interestRateFrequencyTypeData.id, Validators.required));
           this.loanProductTermsForm.removeControl('floatingRatesId');
           this.loanProductTermsForm.removeControl('interestRateDifferential');
           this.loanProductTermsForm.removeControl('isFloatingInterestRateCalculationAllowed');
@@ -118,12 +145,19 @@ export class LoanProductTermsStepComponent implements OnInit {
     return this.loanProductTermsForm.get('interestRateVariationsForBorrowerCycle') as FormArray;
   }
 
+  setLoanProductTermsFormDirty() {
+    if (this.loanProductTermsForm.pristine) {
+      this.loanProductTermsForm.markAsDirty();
+    }
+  }
+
   addVariationsForBorrowerCycle(formType: string, variationsForBorrowerCycleFormArray: FormArray) {
     const data = this.getData(formType);
     const addVariationsForBorrowerCycleDialogRef = this.dialog.open(FormDialogComponent, { data });
     addVariationsForBorrowerCycleDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         variationsForBorrowerCycleFormArray.push(response.data);
+        this.setLoanProductTermsFormDirty();
       }
     });
   }
@@ -134,6 +168,7 @@ export class LoanProductTermsStepComponent implements OnInit {
     addVariationsForBorrowerCycleDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         variationsForBorrowerCycleFormArray.at(index).patchValue(response.data.value);
+        this.setLoanProductTermsFormDirty();
       }
     });
   }
@@ -145,6 +180,7 @@ export class LoanProductTermsStepComponent implements OnInit {
     deleteVariationsForBorrowerCycleDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
         variationsForBorrowerCycleFormArray.removeAt(index);
+        this.setLoanProductTermsFormDirty();
       }
     });
   }

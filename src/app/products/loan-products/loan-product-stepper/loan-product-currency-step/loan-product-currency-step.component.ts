@@ -20,13 +20,19 @@ export class LoanProductCurrencyStepComponent implements OnInit {
 
   ngOnInit() {
     this.currencyData = this.loanProductsTemplate.currencyOptions;
-    this.loanProductCurrencyForm.patchValue({ 'currencyCode': this.currencyData[0].code });
+
+    this.loanProductCurrencyForm.patchValue({
+      'currencyCode': this.loanProductsTemplate.currency.code || this.currencyData[0].code,
+      'digitsAfterDecimal': this.loanProductsTemplate.installmentAmountInMultiplesOf ? this.loanProductsTemplate.currency.decimalPlaces : 2,
+      'inMultiplesOf': this.loanProductsTemplate.currency.inMultiplesOf,
+      'installmentAmountInMultiplesOf': this.loanProductsTemplate.installmentAmountInMultiplesOf
+    });
   }
 
   createLoanProductCurrencyForm() {
     this.loanProductCurrencyForm = this.formBuilder.group({
       'currencyCode': ['', Validators.required],
-      'digitsAfterDecimal': [2, Validators.required],
+      'digitsAfterDecimal': ['', Validators.required],
       'inMultiplesOf': ['', Validators.required],
       'installmentAmountInMultiplesOf': ['', Validators.required]
     });

@@ -11,11 +11,11 @@ import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan
 import { ProductsService } from 'app/products/products.service';
 
 @Component({
-  selector: 'mifosx-create-loan-product',
-  templateUrl: './create-loan-product.component.html',
-  styleUrls: ['./create-loan-product.component.scss']
+  selector: 'mifosx-edit-loan-product',
+  templateUrl: './edit-loan-product.component.html',
+  styleUrls: ['./edit-loan-product.component.scss']
 })
-export class CreateLoanProductComponent implements OnInit {
+export class EditLoanProductComponent implements OnInit {
 
   @ViewChild(LoanProductDetailsStepComponent) loanProductDetailsStep: LoanProductDetailsStepComponent;
   @ViewChild(LoanProductCurrencyStepComponent) loanProductCurrencyStep: LoanProductCurrencyStepComponent;
@@ -24,14 +24,14 @@ export class CreateLoanProductComponent implements OnInit {
   @ViewChild(LoanProductChargesStepComponent) loanProductChargesStep: LoanProductChargesStepComponent;
   @ViewChild(LoanProductAccountingStepComponent) loanProductAccountingStep: LoanProductAccountingStepComponent;
 
-  loanProductsTemplate: any;
+  loanProductAndTemplate: any;
   accountingRuleData = ['None', 'Cash', 'Accrual (periodic)', 'Accrual (upfront)'];
 
   constructor(private route: ActivatedRoute,
               private productsService: ProductsService,
               private router: Router) {
-    this.route.data.subscribe((data: { loanProductsTemplate: any }) => {
-      this.loanProductsTemplate = data.loanProductsTemplate;
+    this.route.data.subscribe((data: { loanProductAndTemplate: any }) => {
+      this.loanProductAndTemplate = data.loanProductAndTemplate;
     });
   }
 
@@ -58,13 +58,21 @@ export class CreateLoanProductComponent implements OnInit {
     return this.loanProductAccountingStep.loanProductAccountingForm;
   }
 
-  get loanProductFormValid() {
+  get loanProductFormValidAndNotPristine() {
     return (
       this.loanProductDetailsForm.valid &&
       this.loanProductCurrencyForm.valid &&
       this.loanProductTermsForm.valid &&
       this.loanProductSettingsForm.valid &&
-      this.loanProductAccountingForm.valid
+      this.loanProductAccountingForm.valid &&
+      (
+        !this.loanProductDetailsForm.pristine ||
+        !this.loanProductCurrencyForm.pristine ||
+        !this.loanProductTermsForm.pristine ||
+        !this.loanProductSettingsForm.pristine ||
+        !this.loanProductChargesStep.pristine ||
+        !this.loanProductAccountingForm.pristine
+      )
     );
   }
 
@@ -90,10 +98,11 @@ export class CreateLoanProductComponent implements OnInit {
     };
     delete loanProduct.allowAttributeConfiguration;
     delete loanProduct.advancedAccountingRules;
-    this.productsService.createLoanProduct(loanProduct)
+    this.productsService.updateLoanProduct(this.loanProductAndTemplate.id, loanProduct)
       .subscribe((response: any) => {
-        this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+        this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
     });
   }
+
 
 }

@@ -13,6 +13,7 @@ import { ProductsComponent } from './products.component';
 import { LoanProductsComponent } from './loan-products/loan-products.component';
 import { CreateLoanProductComponent } from './loan-products/create-loan-product/create-loan-product.component';
 import { ViewLoanProductComponent } from './loan-products/view-loan-product/view-loan-product.component';
+import { EditLoanProductComponent } from './loan-products/edit-loan-product/edit-loan-product.component';
 import { ManageTaxConfigurationsComponent } from './manage-tax-configurations/manage-tax-configurations.component';
 import { RecurringDepositProductsComponent } from './recurring-deposit-products/recurring-deposit-products.component';
 import { ChargesComponent } from './charges/charges.component';
@@ -24,6 +25,7 @@ import { ManageTaxComponentsComponent } from './manage-tax-components/manage-tax
 import { LoanProductsResolver } from './loan-products/loan-products.resolver';
 import { LoanProductsTemplateResolver } from './loan-products/loan-products-template.resolver';
 import { LoanProductResolver } from './loan-products/loan-product.resolver';
+import { LoanProductAndTemplateResolver } from './loan-products/edit-loan-product/loan-product-and-template.resolver';
 import { RecurringDepositProductsResolver } from './recurring-deposit-products/recurring-deposit-products.resolver';
 import { ChargesResolver } from './charges/charges.resolver';
 import { FixedDepositProductsResolver } from './fixed-deposit-products/fixed-deposit-products.resolver';
@@ -62,11 +64,24 @@ const routes: Routes = [
             },
             {
               path: ':id',
-              component: ViewLoanProductComponent,
               data: { title: extract('View Loan Product'), routeParamBreadcrumb: 'id' },
-              resolve: {
-                loanProduct: LoanProductResolver
-              }
+              children: [
+                {
+                  path: '',
+                  component: ViewLoanProductComponent,
+                  resolve: {
+                    loanProduct: LoanProductResolver
+                  },
+                },
+                {
+                  path: 'edit',
+                  component: EditLoanProductComponent,
+                  data: { title: extract('Edit Loan Product'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    loanProductAndTemplate: LoanProductAndTemplateResolver
+                  }
+                }
+              ]
             }
           ]
         },
@@ -137,6 +152,7 @@ const routes: Routes = [
     LoanProductsResolver,
     LoanProductsTemplateResolver,
     LoanProductResolver,
+    LoanProductAndTemplateResolver,
     RecurringDepositProductsResolver,
     ChargesResolver,
     FixedDepositProductsResolver,

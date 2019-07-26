@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
-  <button mat-raised-button color="primary">
+  <button mat-raised-button color="primary" [routerLink]="['edit']">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
     Edit
   </button>
@@ -393,8 +393,8 @@
             <span fxFlex="40%">Frequency for compounding:</span>
             <span fxFlex="60%">
               {{ loanProduct.interestRecalculationData.recalculationCompoundingFrequencyType.value }}
-              <span *ngIf="loanProduct.interestRecalculationData.recalculationCompoundingFrequencyType.id === 4 && loanProduct.interestRecalculationData.recalculationCompoundingFrequencyNthDay">&nbsp;&nbsp;{{ 'on ' + loanProduct.interestRecalculationData.recalculationCompoundingFrequencyNthDay.value }}</span>
-              <span *ngIf="(loanProduct.interestRecalculationData.recalculationCompoundingFrequencyType.id === 4 && !loanProduct.interestRecalculationData.recalculationCompoundingFrequencyOnDay) || loanProduct.interestRecalculationData.recalculationCompoundingFrequencyType.id === 3">&nbsp;&nbsp;{{ loanProduct.interestRecalculationData.recalculationCompoundingFrequencyWeekday.value }}</span>
+              <span *ngIf="loanProduct.interestRecalculationData.recalculationCompoundingFrequencyType.id === 4 && loanProduct.interestRecalculationData.recalculationCompoundingFrequencyNthDay">&nbsp;&nbsp;{{ 'on ' + loanProduct.interestRecalculationData.recalculationCompoundingFrequencyNthDay?.value }}</span>
+              <span *ngIf="(loanProduct.interestRecalculationData.recalculationCompoundingFrequencyType.id === 4 && !loanProduct.interestRecalculationData.recalculationCompoundingFrequencyOnDay) || loanProduct.interestRecalculationData.recalculationCompoundingFrequencyType.id === 3">&nbsp;&nbsp;{{ loanProduct.interestRecalculationData.recalculationCompoundingFrequencyWeekday?.value }}</span>
               <span *ngIf="loanProduct.interestRecalculationData.recalculationCompoundingFrequencyType.id === 4 && loanProduct.interestRecalculationData.recalculationCompoundingFrequencyOnDay">&nbsp;&nbsp;{{ 'on day  ' + loanProduct.interestRecalculationData.recalculationCompoundingFrequencyOnDay }}</span>
             </span>
             <div fxFlexFill *ngIf="loanProduct.interestRecalculationData.recalculationCompoundingFrequencyType.id !== 1" fxLayout="row wrap" fxLayout.lt-md="column">
@@ -410,8 +410,8 @@
             <span fxFlex="40%">Frequency for recalculate Outstanding Principal:</span>
             <span fxFlex="60%">
               {{ loanProduct.interestRecalculationData.recalculationRestFrequencyType.value }}
-              <span *ngIf="loanProduct.interestRecalculationData.recalculationRestFrequencyType.id === 4 && loanProduct.interestRecalculationData.recalculationRestFrequencyNthDay">&nbsp;&nbsp;{{ 'on ' + loanProduct.interestRecalculationData.recalculationRestFrequencyNthDay.value }}</span>
-              <span *ngIf="(loanProduct.interestRecalculationData.recalculationRestFrequencyType.id === 4 && !loanProduct.interestRecalculationData.recalculationRestFrequencyOnDay) || loanProduct.interestRecalculationData.recalculationRestFrequencyType.id === 3">&nbsp;&nbsp;{{ loanProduct.interestRecalculationData.recalculationRestFrequencyWeekday.value }}</span>
+              <span *ngIf="loanProduct.interestRecalculationData.recalculationRestFrequencyType.id === 4 && loanProduct.interestRecalculationData.recalculationRestFrequencyNthDay">&nbsp;&nbsp;{{ 'on ' + loanProduct.interestRecalculationData.recalculationRestFrequencyNthDay?.value }}</span>
+              <span *ngIf="(loanProduct.interestRecalculationData.recalculationRestFrequencyType.id === 4 && !loanProduct.interestRecalculationData.recalculationRestFrequencyOnDay) || loanProduct.interestRecalculationData.recalculationRestFrequencyType.id === 3">&nbsp;&nbsp;{{ loanProduct.interestRecalculationData.recalculationRestFrequencyWeekday?.value }}</span>
               <span *ngIf="loanProduct.interestRecalculationData.recalculationRestFrequencyType.id === 4 && loanProduct.interestRecalculationData.recalculationRestFrequencyOnDay">&nbsp;&nbsp;{{ 'on day  ' + loanProduct.interestRecalculationData.recalculationRestFrequencyOnDay }}</span>
             </span>
           </div>

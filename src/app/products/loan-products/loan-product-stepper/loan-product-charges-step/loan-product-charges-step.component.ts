@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { FormControl } from '@angular/forms';
 
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
@@ -11,14 +12,16 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 export class LoanProductChargesStepComponent implements OnInit {
 
   @Input() loanProductsTemplate: any;
-  @Input() currencyCode: any;
-  @Input() multiDisburseLoan: any;
+  @Input() currencyCode: FormControl;
+  @Input() multiDisburseLoan: FormControl;
 
   chargeData: any;
   overdueChargeData: any;
 
-  chargesDataSource: {}[] = [];
+  chargesDataSource: {}[];
   displayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'action'];
+
+  pristine = true;
 
   constructor(public dialog: MatDialog) {
   }
@@ -26,11 +29,18 @@ export class LoanProductChargesStepComponent implements OnInit {
   ngOnInit() {
     this.chargeData = this.loanProductsTemplate.chargeOptions;
     this.overdueChargeData = this.loanProductsTemplate.penaltyOptions.filter((penalty: any) => penalty.chargeTimeType.code === 'chargeTimeType.overdueInstallment');
+
+    this.chargesDataSource = this.loanProductsTemplate.charges || [];
+    this.pristine = true;
+
+    this.currencyCode.valueChanges.subscribe(() => this.chargesDataSource = []);
+    this.multiDisburseLoan.valueChanges.subscribe(() => this.chargesDataSource = []);
   }
 
   addCharge(charge: any) {
     this.chargesDataSource = this.chargesDataSource.concat([charge.value]);
     charge.value = '';
+    this.pristine = false;
   }
 
   deleteCharge(charge: any) {
@@ -41,11 +51,12 @@ export class LoanProductChargesStepComponent implements OnInit {
       if (response.delete) {
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1);
         this.chargesDataSource = this.chargesDataSource.concat([]);
+        this.pristine = false;
       }
     });
   }
 
-  get charges() {
+  get loanProductCharges() {
     return {
       charges: this.chargesDataSource
     };
