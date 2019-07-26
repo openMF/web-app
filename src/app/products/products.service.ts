@@ -43,6 +43,13 @@ export class ProductsService {
   }
 
   /**
+   * @returns {Observable<any>} Saving products data
+   */
+  getSavingProducts(): Observable<any> {
+    return this.http.get('/savingsproducts');
+  }
+
+  /**
    * @returns {Observable<any>} Recurring deposit products data
    */
   getRecurringDepositProducts(): Observable<any> {
