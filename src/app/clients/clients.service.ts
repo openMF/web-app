@@ -43,6 +43,10 @@ export class ClientsService {
     return this.http.get(`/datatables/${datatableName}/${clientId}`, { params: httpParams });
   }
 
+  addClientDatatableEntry(clientId: string, datatableName: string, data: any) {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.post(`/datatables/${datatableName}/${clientId}`, data, { params: httpParams });
+  }
 
   getClientAccountData(clientId: string) {
     return this.http.get(`/clients/${clientId}/accounts`);
