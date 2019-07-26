@@ -33,8 +33,13 @@ export class ProductsService {
     return this.http.get('/loanproducts/template');
   }
 
-  getLoanProduct(loanProductId: string): Observable<any> {
-    return this.http.get(`/loanproducts/${loanProductId}`);
+  getLoanProduct(loanProductId: string, template: boolean = false): Observable<any> {
+    const httpParams = new HttpParams().set('template', template.toString());
+    return this.http.get(`/loanproducts/${loanProductId}`, { params: httpParams });
+  }
+
+  updateLoanProduct(loanProductId: string, loanProduct: any): Observable<any> {
+    return this.http.put(`/loanproducts/${loanProductId}`, loanProduct);
   }
 
   /**

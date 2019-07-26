@@ -25,6 +25,7 @@ import { FixedDepositProductsComponent } from './fixed-deposit-products/fixed-de
 import { ProductsMixComponent } from './products-mix/products-mix.component';
 import { ManageTaxComponentsComponent } from './manage-tax-components/manage-tax-components.component';
 import { ViewLoanProductComponent } from './loan-products/view-loan-product/view-loan-product.component';
+import { EditLoanProductComponent } from './loan-products/edit-loan-product/edit-loan-product.component';
 
 /**
  * Products Module
@@ -54,7 +55,8 @@ import { ViewLoanProductComponent } from './loan-products/view-loan-product/view
     FixedDepositProductsComponent,
     ProductsMixComponent,
     ManageTaxComponentsComponent,
-    ViewLoanProductComponent
+    ViewLoanProductComponent,
+    EditLoanProductComponent
   ],
   entryComponents: [
   ],

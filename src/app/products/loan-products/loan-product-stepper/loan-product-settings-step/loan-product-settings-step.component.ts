@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'mifosx-loan-product-settings-step',
@@ -28,11 +27,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
   interestRecalculationDayOfWeekTypeData: any;
   interestRecalculationOnDayTypeData: any;
 
-  minDate = new Date(2000, 0, 1);
-  maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 10));
-
-  constructor(private formBuilder: FormBuilder,
-              private datePipe: DatePipe) {
+  constructor(private formBuilder: FormBuilder) {
     this.createLoanProductSettingsForm();
     this.setConditionalControls();
   }
@@ -41,8 +36,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
     this.isLinkedToFloatingInterestRates.valueChanges
       .subscribe((isLinkedToFloatingInterestRates: any) => {
         if (isLinkedToFloatingInterestRates) {
-        this.loanProductSettingsForm.get('isInterestRecalculationEnabled').setValue(true);
-      }
+          this.loanProductSettingsForm.get('isInterestRecalculationEnabled').setValue(true);
+        }
     });
 
     this.amortizationTypeData = this.loanProductsTemplate.amortizationTypeOptions;
@@ -61,13 +56,83 @@ export class LoanProductSettingsStepComponent implements OnInit {
     this.interestRecalculationOnDayTypeData = Array.from({ length: 28 }, (_, index) => index + 1);
 
     this.loanProductSettingsForm.patchValue({
-      'amortizationType': this.amortizationTypeData[0].id,
-      'interestType': this.interestTypeData[0].id,
-      'interestCalculationPeriodType': this.interestCalculationPeriodTypeData[0].id,
-      'transactionProcessingStrategyId': this.transactionProcessingStrategyData[0].id,
-      'daysInYearType': this.daysInYearTypeData[0].id,
-      'daysInMonthType': this.daysInMonthTypeData[0].id,
+      'amortizationType': this.loanProductsTemplate.amortizationType.id,
+      'interestType': this.loanProductsTemplate.interestType.id,
+      'isEqualAmortization': this.loanProductsTemplate.isEqualAmortization,
+      'interestCalculationPeriodType': this.loanProductsTemplate.interestCalculationPeriodType.id,
+      'allowPartialPeriodInterestCalcualtion': this.loanProductsTemplate.allowPartialPeriodInterestCalcualtion,
+      'transactionProcessingStrategyId': this.loanProductsTemplate.transactionProcessingStrategyId || this.transactionProcessingStrategyData[0].id,
+      'graceOnPrincipalPayment': this.loanProductsTemplate.graceOnPrincipalPayment,
+      'graceOnInterestPayment': this.loanProductsTemplate.graceOnInterestPayment,
+      'graceOnInterestCharged': this.loanProductsTemplate.graceOnInterestCharged,
+      'inArrearsTolerance': this.loanProductsTemplate.inArrearsTolerance,
+      'daysInYearType': this.loanProductsTemplate.daysInYearType.id,
+      'daysInMonthType': this.loanProductsTemplate.daysInMonthType.id,
+      'canDefineInstallmentAmount': this.loanProductsTemplate.canDefineInstallmentAmount,
+      'graceOnArrearsAgeing': this.loanProductsTemplate.graceOnArrearsAgeing,
+      'overdueDaysForNPA': this.loanProductsTemplate.overdueDaysForNPA,
+      'accountMovesOutOfNPAOnlyOnArrearsCompletion': this.loanProductsTemplate.accountMovesOutOfNPAOnlyOnArrearsCompletion,
+      'principalThresholdForLastInstallment': this.loanProductsTemplate.principalThresholdForLastInstallment,
+      'allowVariableInstallments': this.loanProductsTemplate.allowVariableInstallments,
+      'minimumGap': this.loanProductsTemplate.minimumGap,
+      'maximumGap': this.loanProductsTemplate.maximumGap,
+      'canUseForTopup': this.loanProductsTemplate.canUseForTopup,
+      'isInterestRecalculationEnabled': this.loanProductsTemplate.isInterestRecalculationEnabled,
+      'holdGuaranteeFunds': this.loanProductsTemplate.holdGuaranteeFunds,
+      'multiDisburseLoan': this.loanProductsTemplate.multiDisburseLoan,
+      'maxTrancheCount': this.loanProductsTemplate.maxTrancheCount,
+      'outstandingLoanBalance': this.loanProductsTemplate.outstandingLoanBalance
     });
+
+    if (this.loanProductsTemplate.isInterestRecalculationEnabled) {
+      this.loanProductSettingsForm.patchValue({
+        'preClosureInterestCalculationStrategy': this.loanProductsTemplate.interestRecalculationData.preClosureInterestCalculationStrategy.id,
+        'rescheduleStrategyMethod': this.loanProductsTemplate.interestRecalculationData.rescheduleStrategyType.id,
+        'interestRecalculationCompoundingMethod': this.loanProductsTemplate.interestRecalculationData.interestRecalculationCompoundingType.id,
+        'recalculationRestFrequencyType': this.loanProductsTemplate.interestRecalculationData.recalculationRestFrequencyType.id,
+        'isArrearsBasedOnOriginalSchedule': this.loanProductsTemplate.interestRecalculationData.isArrearsBasedOnOriginalSchedule,
+        'recalculationCompoundingFrequencyType': this.loanProductsTemplate.interestRecalculationData.interestRecalculationCompoundingType.id && this.loanProductsTemplate.interestRecalculationData.recalculationCompoundingFrequencyType.id,
+        'recalculationCompoundingFrequencyInterval': this.loanProductsTemplate.interestRecalculationData.recalculationCompoundingFrequencyInterval,
+        'recalculationRestFrequencyInterval': this.loanProductsTemplate.interestRecalculationData.recalculationRestFrequencyInterval,
+        'recalculationRestFrequencyNthDayType': this.loanProductsTemplate.interestRecalculationData.recalculationRestFrequencyType.id === 4 && this.loanProductsTemplate.interestRecalculationData.recalculationRestFrequencyOnDay ?
+          -2 : this.loanProductsTemplate.interestRecalculationData.recalculationRestFrequencyNthDay && this.loanProductsTemplate.interestRecalculationData.recalculationRestFrequencyNthDay.id,
+        'recalculationCompoundingFrequencyNthDayType': this.loanProductsTemplate.interestRecalculationData.interestRecalculationCompoundingType.id && this.loanProductsTemplate.interestRecalculationData.recalculationCompoundingFrequencyType.id === 4
+          && this.loanProductsTemplate.interestRecalculationData.recalculationCompoundingFrequencyOnDay ? -2 : this.loanProductsTemplate.interestRecalculationData.recalculationCompoundingFrequencyNthDay
+          && this.loanProductsTemplate.interestRecalculationData.recalculationCompoundingFrequencyNthDay.id,
+        'recalculationCompoundingFrequencyDayOfWeekType': this.loanProductsTemplate.interestRecalculationData.interestRecalculationCompoundingType.id && ((this.loanProductsTemplate.interestRecalculationData.recalculationCompoundingFrequencyType.id
+          === 4 && !this.loanProductsTemplate.interestRecalculationData.recalculationCompoundingFrequencyOnDay) || this.loanProductsTemplate.interestRecalculationData.recalculationCompoundingFrequencyType.id === 3)
+          && this.loanProductsTemplate.interestRecalculationData.recalculationCompoundingFrequencyWeekday && this.loanProductsTemplate.interestRecalculationData.recalculationCompoundingFrequencyWeekday.id,
+        'recalculationRestFrequencyDayOfWeekType': ((this.loanProductsTemplate.interestRecalculationData.recalculationRestFrequencyType.id === 4 && !this.loanProductsTemplate.interestRecalculationData.recalculationRestFrequencyOnDay)
+          || this.loanProductsTemplate.interestRecalculationData.recalculationRestFrequencyType.id === 3) && this.loanProductsTemplate.interestRecalculationData.recalculationRestFrequencyWeekday
+          && this.loanProductsTemplate.interestRecalculationData.recalculationRestFrequencyWeekday.id,
+        'recalculationCompoundingFrequencyOnDayType': this.loanProductsTemplate.interestRecalculationData.recalculationCompoundingFrequencyOnDay,
+        'recalculationRestFrequencyOnDayType': this.loanProductsTemplate.interestRecalculationData.recalculationRestFrequencyOnDay
+      });
+    }
+
+    if (this.loanProductsTemplate.holdGuaranteeFunds) {
+      this.loanProductSettingsForm.patchValue({
+        'mandatoryGuarantee': this.loanProductsTemplate.productGuaranteeData.mandatoryGuarantee,
+        'minimumGuaranteeFromOwnFunds': this.loanProductsTemplate.productGuaranteeData.minimumGuaranteeFromOwnFunds,
+        'minimumGuaranteeFromGuarantor': this.loanProductsTemplate.productGuaranteeData.minimumGuaranteeFromGuarantor
+      });
+    }
+
+    if (this.loanProductsTemplate.allowAttributeOverrides) {
+      this.loanProductSettingsForm.patchValue({
+        'allowAttributeConfiguration': Object.values(this.loanProductsTemplate.allowAttributeOverrides).some((attribute: boolean) => attribute),
+        'allowAttributeOverrides': {
+          'amortizationType': this.loanProductsTemplate.allowAttributeOverrides.amortizationType,
+          'interestType': this.loanProductsTemplate.allowAttributeOverrides.interestType,
+          'transactionProcessingStrategyId': this.loanProductsTemplate.allowAttributeOverrides.transactionProcessingStrategyId,
+          'interestCalculationPeriodType': this.loanProductsTemplate.allowAttributeOverrides.interestCalculationPeriodType,
+          'inArrearsTolerance': this.loanProductsTemplate.allowAttributeOverrides.inArrearsTolerance,
+          'repaymentEvery': this.loanProductsTemplate.allowAttributeOverrides.repaymentEvery,
+          'graceOnPrincipalAndInterestPayment': this.loanProductsTemplate.allowAttributeOverrides.graceOnPrincipalAndInterestPayment,
+          'graceOnArrearsAgeing': this.loanProductsTemplate.allowAttributeOverrides.graceOnArrearsAgeing
+        }
+      });
+    }
   }
 
   createLoanProductSettingsForm() {
@@ -139,34 +204,27 @@ export class LoanProductSettingsStepComponent implements OnInit {
           this.loanProductSettingsForm.addControl('recalculationRestFrequencyType', new FormControl(this.interestRecalculationFrequencyTypeData[0].id, Validators.required));
           this.loanProductSettingsForm.addControl('isArrearsBasedOnOriginalSchedule', new FormControl(''));
 
-          // interestRecalculationCompoundingMethod (initially 0)
           this.loanProductSettingsForm.get('interestRecalculationCompoundingMethod').valueChanges
             .subscribe((interestRecalculationCompoundingMethod: any) => {
               if (interestRecalculationCompoundingMethod !== 0) {
                 this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyType', new FormControl(this.interestRecalculationFrequencyTypeData[0].id, Validators.required));
 
-                // recalculationCompoundingFrequencyType (initially 1)
                 this.loanProductSettingsForm.get('recalculationCompoundingFrequencyType').valueChanges
                   .subscribe((recalculationCompoundingFrequencyType: any) => {
                     if (recalculationCompoundingFrequencyType !== 1) {
                       this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyInterval', new FormControl('', Validators.required));
-                      this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyDate', new FormControl(''));
                     } else {
                       this.loanProductSettingsForm.removeControl('recalculationCompoundingFrequencyInterval');
-                      this.loanProductSettingsForm.removeControl('recalculationCompoundingFrequencyDate');
                     }
 
                     if (recalculationCompoundingFrequencyType === 3) {
                       this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyDayOfWeekType', new FormControl(''));
-                    } else {
-                      this.loanProductSettingsForm.removeControl('recalculationCompoundingFrequencyDayOfWeekType');
-                    }
-
-                    if (recalculationCompoundingFrequencyType === 4) {
+                      this.loanProductSettingsForm.removeControl('recalculationCompoundingFrequencyNthDayType');
+                      this.loanProductSettingsForm.removeControl('recalculationCompoundingFrequencyOnDayType');
+                    } else if (recalculationCompoundingFrequencyType === 4) {
                       this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyNthDayType', new FormControl(''));
                       this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyDayOfWeekType', new FormControl(''));
 
-                      // recalculationCompoundingFrequencyNthDayType
                       this.loanProductSettingsForm.get('recalculationCompoundingFrequencyNthDayType').valueChanges
                         .subscribe((recalculationCompoundingFrequencyNthDayType: any) => {
                           if (recalculationCompoundingFrequencyNthDayType === -2) {
@@ -177,9 +235,10 @@ export class LoanProductSettingsStepComponent implements OnInit {
                             this.loanProductSettingsForm.removeControl('recalculationCompoundingFrequencyOnDayType');
                           }
                         });
-
                     } else {
                       this.loanProductSettingsForm.removeControl('recalculationCompoundingFrequencyNthDayType');
+                      this.loanProductSettingsForm.removeControl('recalculationCompoundingFrequencyDayOfWeekType');
+                      this.loanProductSettingsForm.removeControl('recalculationCompoundingFrequencyOnDayType');
                     }
                   });
 
@@ -188,28 +247,22 @@ export class LoanProductSettingsStepComponent implements OnInit {
               }
             });
 
-          // recalculationRestFrequencyType
           this.loanProductSettingsForm.get('recalculationRestFrequencyType').valueChanges
             .subscribe((recalculationRestFrequencyType: any) => {
               if (recalculationRestFrequencyType !== 1) {
                 this.loanProductSettingsForm.addControl('recalculationRestFrequencyInterval', new FormControl('', Validators.required));
-                this.loanProductSettingsForm.addControl('recalculationRestFrequencyDate', new FormControl(''));
               } else {
                 this.loanProductSettingsForm.removeControl('recalculationRestFrequencyInterval');
-                this.loanProductSettingsForm.removeControl('recalculationRestFrequencyDate');
               }
 
               if (recalculationRestFrequencyType === 3) {
                 this.loanProductSettingsForm.addControl('recalculationRestFrequencyDayOfWeekType', new FormControl(''));
-              } else {
-                this.loanProductSettingsForm.removeControl('recalculationRestFrequencyDayOfWeekType');
-              }
-
-              if (recalculationRestFrequencyType === 4) {
+                this.loanProductSettingsForm.removeControl('recalculationRestFrequencyNthDayType');
+                this.loanProductSettingsForm.removeControl('recalculationRestFrequencyOnDayType');
+              } else if (recalculationRestFrequencyType === 4) {
                 this.loanProductSettingsForm.addControl('recalculationRestFrequencyNthDayType', new FormControl(''));
                 this.loanProductSettingsForm.addControl('recalculationRestFrequencyDayOfWeekType', new FormControl(''));
 
-                // recalculationRestFrequencyNthDayType
                 this.loanProductSettingsForm.get('recalculationRestFrequencyNthDayType').valueChanges
                   .subscribe((recalculationRestFrequencyNthDayType: any) => {
                     if (recalculationRestFrequencyNthDayType === -2) {
@@ -223,6 +276,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
 
               } else {
                 this.loanProductSettingsForm.removeControl('recalculationRestFrequencyNthDayType');
+                this.loanProductSettingsForm.removeControl('recalculationRestFrequencyDayOfWeekType');
+                this.loanProductSettingsForm.removeControl('recalculationRestFrequencyOnDayType');
               }
             });
 
@@ -288,20 +343,6 @@ export class LoanProductSettingsStepComponent implements OnInit {
   }
 
   get loanProductSettings() {
-    const prevCompoundingFrequencyDate: Date = this.loanProductSettingsForm.value.recalculationCompoundingFrequencyDate;
-    const prevRestFrequencyDate: Date = this.loanProductSettingsForm.value.recalculationRestFrequencyDate;
-    // TODO: Update once language and date settings are setup
-    const dateFormat = 'yyyy-MM-dd';
-    if (prevCompoundingFrequencyDate) {
-      this.loanProductSettingsForm.patchValue({
-        recalculationCompoundingFrequencyDate: this.datePipe.transform(prevCompoundingFrequencyDate, dateFormat)
-      });
-    }
-    if (prevRestFrequencyDate) {
-      this.loanProductSettingsForm.patchValue({
-        recalculationRestFrequencyDate: this.datePipe.transform(prevRestFrequencyDate, dateFormat)
-      });
-    }
     return this.loanProductSettingsForm.value;
   }
 

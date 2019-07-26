@@ -115,7 +115,7 @@
     <h4 fxFlex="48%" class="mat-h4">Number of days a loan may be overdue before moving into arrears</h4>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>On arrears aging</mat-label>
+      <mat-label>On arrears ageing</mat-label>
       <input type="number" matInput formControlName="graceOnArrearsAgeing">
     </mat-form-field>
 
@@ -210,9 +210,9 @@
 
       <span fxFlex="48%" fxHide.lt-md></span>
 
-      <div *ngIf="loanProductSettingsForm.value.interestRecalculationCompoundingMethod !== 0 && loanProductSettingsForm.value.recalculationCompoundingFrequencyType !== 1" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+      <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-        <mat-form-field fxFlex="48%">
+        <mat-form-field fxFlex="48%" *ngIf="loanProductSettingsForm.value.interestRecalculationCompoundingMethod !== 0 && loanProductSettingsForm.value.recalculationCompoundingFrequencyType !== 1">
           <mat-label>Frequency Interval for compounding</mat-label>
           <input type="number" matInput formControlName="recalculationCompoundingFrequencyInterval" required>
           <mat-error>
@@ -220,30 +220,12 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex="48%">
-          <mat-label>Compounding Frequency Date</mat-label>
-          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="recalculationCompoundingFrequencyDatePicker" formControlName="recalculationCompoundingFrequencyDate">
-          <mat-datepicker-toggle matSuffix [for]="recalculationCompoundingFrequencyDatePicker"></mat-datepicker-toggle>
-          <mat-datepicker #recalculationCompoundingFrequencyDatePicker></mat-datepicker>
-        </mat-form-field>
-
-      </div>
-
-      <div *ngIf="loanProductSettingsForm.value.recalculationRestFrequencyType !== 1" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
-        <mat-form-field fxFlex="48%">
+        <mat-form-field fxFlex="48%" *ngIf="loanProductSettingsForm.value.recalculationRestFrequencyType !== 1">
           <mat-label>Frequency Interval for recalculation</mat-label>
           <input type="number" matInput formControlName="recalculationRestFrequencyInterval" required>
           <mat-error>
             Frequency Interval for recalculation is <strong>required</strong>
           </mat-error>
-        </mat-form-field>
-
-        <mat-form-field fxFlex="48%">
-          <mat-label>Rest Frequency Date</mat-label>
-          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="recalculationRestFrequencyDatePicker" formControlName="recalculationRestFrequencyDate">
-          <mat-datepicker-toggle matSuffix [for]="recalculationRestFrequencyDatePicker"></mat-datepicker-toggle>
-          <mat-datepicker #recalculationRestFrequencyDatePicker></mat-datepicker>
         </mat-form-field>
 
       </div>
