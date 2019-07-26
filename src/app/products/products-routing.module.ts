@@ -14,6 +14,7 @@ import { LoanProductsComponent } from './loan-products/loan-products.component';
 import { CreateLoanProductComponent } from './loan-products/create-loan-product/create-loan-product.component';
 import { ViewLoanProductComponent } from './loan-products/view-loan-product/view-loan-product.component';
 import { EditLoanProductComponent } from './loan-products/edit-loan-product/edit-loan-product.component';
+import { SavingProductsComponent } from './saving-products/saving-products.component';
 import { ManageTaxConfigurationsComponent } from './manage-tax-configurations/manage-tax-configurations.component';
 import { RecurringDepositProductsComponent } from './recurring-deposit-products/recurring-deposit-products.component';
 import { ChargesComponent } from './charges/charges.component';
@@ -26,6 +27,7 @@ import { LoanProductsResolver } from './loan-products/loan-products.resolver';
 import { LoanProductsTemplateResolver } from './loan-products/loan-products-template.resolver';
 import { LoanProductResolver } from './loan-products/loan-product.resolver';
 import { LoanProductAndTemplateResolver } from './loan-products/edit-loan-product/loan-product-and-template.resolver';
+import { SavingProductsResolver } from './saving-products/saving-products.resolver';
 import { RecurringDepositProductsResolver } from './recurring-deposit-products/recurring-deposit-products.resolver';
 import { ChargesResolver } from './charges/charges.resolver';
 import { FixedDepositProductsResolver } from './fixed-deposit-products/fixed-deposit-products.resolver';
@@ -82,6 +84,19 @@ const routes: Routes = [
                   }
                 }
               ]
+            }
+          ]
+        },
+        {
+          path: 'saving-products',
+          data: { title: extract('Saving Products'), breadcrumb: 'Saving Products' },
+          children: [
+            {
+              path: '',
+              component: SavingProductsComponent,
+              resolve: {
+                savingProducts: SavingProductsResolver
+              }
             }
           ]
         },
@@ -153,6 +168,7 @@ const routes: Routes = [
     LoanProductsTemplateResolver,
     LoanProductResolver,
     LoanProductAndTemplateResolver,
+    SavingProductsResolver,
     RecurringDepositProductsResolver,
     ChargesResolver,
     FixedDepositProductsResolver,
