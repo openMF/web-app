@@ -1,0 +1,103 @@
+<div class="container">
+
+    <mat-horizontal-stepper class="mat-elevation-z8" labelPosition="bottom" #loanProductStepper>
+
+      <ng-template matStepperIcon="number">
+        <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+      </ng-template>
+
+      <ng-template matStepperIcon="edit">
+        <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+      </ng-template>
+
+      <ng-template matStepperIcon="done">
+        <fa-icon icon="check" size="sm"></fa-icon>
+      </ng-template>
+
+      <ng-template matStepperIcon="error">
+        <fa-icon icon="exclamation-triangle" size="lg"></fa-icon>
+      </ng-template>
+
+      <ng-template matStepperIcon="preview">
+        <fa-icon icon="eye" size="sm"></fa-icon>
+      </ng-template>
+
+      <mat-step [stepControl]="loanProductDetailsForm" completed>
+
+        <ng-template matStepLabel>DETAILS</ng-template>
+
+        <mifosx-loan-product-details-step [loanProductsTemplate]="loanProductAndTemplate"></mifosx-loan-product-details-step>
+
+      </mat-step>
+
+      <mat-step [stepControl]="loanProductCurrencyForm" completed>
+
+        <ng-template matStepLabel>CURRENCY</ng-template>
+
+        <mifosx-loan-product-currency-step [loanProductsTemplate]="loanProductAndTemplate"></mifosx-loan-product-currency-step>
+
+      </mat-step>
+
+      <mat-step [stepControl]="loanProductTermsForm" completed>
+
+        <ng-template matStepLabel>TERMS</ng-template>
+
+        <mifosx-loan-product-terms-step [loanProductsTemplate]="loanProductAndTemplate"></mifosx-loan-product-terms-step>
+
+      </mat-step>
+
+      <mat-step [stepControl]="loanProductSettingsForm" completed>
+
+        <ng-template matStepLabel>SETTINGS</ng-template>
+
+        <mifosx-loan-product-settings-step
+          [loanProductsTemplate]="loanProductAndTemplate"
+          [isLinkedToFloatingInterestRates]="loanProductTermsForm.get('isLinkedToFloatingInterestRates')"
+        >
+        </mifosx-loan-product-settings-step>
+
+      </mat-step>
+
+      <mat-step completed>
+
+        <ng-template matStepLabel>CHARGES</ng-template>
+
+        <mifosx-loan-product-charges-step
+          [loanProductsTemplate]="loanProductAndTemplate"
+          [currencyCode]="loanProductCurrencyForm.get('currencyCode')"
+          [multiDisburseLoan]="loanProductSettingsForm.get('multiDisburseLoan')"
+        >
+        </mifosx-loan-product-charges-step>
+
+      </mat-step>
+
+      <mat-step [stepControl]="loanProductAccountingForm" completed>
+
+        <ng-template matStepLabel>ACCOUNTING</ng-template>
+
+        <mifosx-loan-product-accounting-step
+          [loanProductsTemplate]="loanProductAndTemplate"
+          [accountingRuleData]="accountingRuleData"
+          [loanProductFormValid]="loanProductFormValidAndNotPristine"
+        >
+        </mifosx-loan-product-accounting-step>
+
+      </mat-step>
+
+      <mat-step state="preview" *ngIf="loanProductFormValidAndNotPristine" completed>
+
+        <ng-template matStepLabel>PREVIEW</ng-template>
+
+        <mifosx-loan-product-preview-step
+          [loanProductsTemplate]="loanProductAndTemplate"
+          [accountingRuleData]="accountingRuleData"
+          [loanProduct]="loanProduct"
+          (submit)="submit()"
+        >
+        </mifosx-loan-product-preview-step>
+
+      </mat-step>
+
+    </mat-horizontal-stepper>
+
+  </div>

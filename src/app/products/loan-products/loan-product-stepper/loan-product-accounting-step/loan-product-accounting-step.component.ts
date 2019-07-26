@@ -17,6 +17,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
 
   @Input() loanProductsTemplate: any;
   @Input() accountingRuleData: any;
+  @Input() loanProductFormValid: boolean;
 
   loanProductAccountingForm: FormGroup;
 
@@ -47,6 +48,44 @@ export class LoanProductAccountingStepComponent implements OnInit {
     this.expenseAccountData = this.loanProductsTemplate.accountingMappingOptions.expenseAccountOptions || [];
     this.liabilityAccountData = this.loanProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
     this.incomeAndLiabilityAccountData = this.incomeAccountData.concat(this.liabilityAccountData);
+
+    this.loanProductAccountingForm.patchValue({
+      'accountingRule': this.loanProductsTemplate.accountingRule.id
+    });
+
+    switch (this.loanProductsTemplate.accountingRule.id) {
+      case 3:
+      case 4:
+        this.loanProductAccountingForm.patchValue({
+          'receivableInterestAccountId': this.loanProductsTemplate.accountingMappings.receivableInterestAccount.id,
+          'receivableFeeAccountId': this.loanProductsTemplate.accountingMappings.receivableFeeAccount.id,
+          'receivablePenaltyAccountId': this.loanProductsTemplate.accountingMappings.receivablePenaltyAccount.id,
+        });
+        /* falls through */
+      case 2:
+        this.loanProductAccountingForm.patchValue({
+          'fundSourceAccountId': this.loanProductsTemplate.accountingMappings.fundSourceAccount.id,
+          'loanPortfolioAccountId': this.loanProductsTemplate.accountingMappings.loanPortfolioAccount.id,
+          'transfersInSuspenseAccountId': this.loanProductsTemplate.accountingMappings.transfersInSuspenseAccount.id,
+          'interestOnLoanAccountId': this.loanProductsTemplate.accountingMappings.interestOnLoanAccount.id,
+          'incomeFromFeeAccountId': this.loanProductsTemplate.accountingMappings.incomeFromFeeAccount.id,
+          'incomeFromPenaltyAccountId': this.loanProductsTemplate.accountingMappings.incomeFromPenaltyAccount.id,
+          'incomeFromRecoveryAccountId': this.loanProductsTemplate.accountingMappings.incomeFromRecoveryAccount.id,
+          'writeOffAccountId': this.loanProductsTemplate.accountingMappings.writeOffAccount.id,
+          'overpaymentLiabilityAccountId': this.loanProductsTemplate.accountingMappings.overpaymentLiabilityAccount.id,
+          'advancedAccountingRules': (this.loanProductsTemplate.paymentChannelToFundSourceMappings || this.loanProductsTemplate.feeToIncomeAccountMappings || this.loanProductsTemplate.penaltyToIncomeAccountMappings) ? true : false
+        });
+
+        this.loanProductAccountingForm.setControl('paymentChannelToFundSourceMappings',
+          this.formBuilder.array((this.loanProductsTemplate.paymentChannelToFundSourceMappings || []).map((paymentFundSource: any) =>
+          ({ paymentTypeId: paymentFundSource.paymentType.id, fundSourceAccountId: paymentFundSource.fundSourceAccount.id }))));
+        this.loanProductAccountingForm.setControl('feeToIncomeAccountMappings',
+          this.formBuilder.array((this.loanProductsTemplate.feeToIncomeAccountMappings || []).map((feesIncome: any) =>
+          ({ chargeId: feesIncome.charge.id, incomeAccountId: feesIncome.incomeAccount.id }))));
+        this.loanProductAccountingForm.setControl('penaltyToIncomeAccountMappings',
+          this.formBuilder.array((this.loanProductsTemplate.penaltyToIncomeAccountMappings || []).map((penaltyIncome: any) =>
+          ({ chargeId: penaltyIncome.charge.id, incomeAccountId: penaltyIncome.incomeAccount.id }))));
+    }
   }
 
   createLoanProductAccountingForm() {
@@ -74,7 +113,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
             .subscribe((advancedAccountingRules: boolean) => {
               if (advancedAccountingRules) {
                 this.loanProductAccountingForm.addControl('paymentChannelToFundSourceMappings', this.formBuilder.array([]));
-                this.loanProductAccountingForm.addControl('feeToIncomeAccountMappings', this.formBuilder.array([] ));
+                this.loanProductAccountingForm.addControl('feeToIncomeAccountMappings', this.formBuilder.array([]));
                 this.loanProductAccountingForm.addControl('penaltyToIncomeAccountMappings', this.formBuilder.array([]));
               } else {
                 this.loanProductAccountingForm.removeControl('paymentChannelToFundSourceMappings');
@@ -119,12 +158,19 @@ export class LoanProductAccountingStepComponent implements OnInit {
     return this.loanProductAccountingForm.get('penaltyToIncomeAccountMappings') as FormArray;
   }
 
+  setLoanProductAccountingFormDirty() {
+    if (this.loanProductAccountingForm.pristine) {
+      this.loanProductAccountingForm.markAsDirty();
+    }
+  }
+
   add(formType: string, formArray: FormArray) {
-    const data = this.getData(formType);
+    const data = { ...this.getData(formType), pristine: false };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         formArray.push(response.data);
+        this.setLoanProductAccountingFormDirty();
       }
     });
   }
@@ -135,6 +181,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         formArray.at(index).patchValue(response.data.value);
+        this.setLoanProductAccountingFormDirty();
       }
     });
   }
@@ -146,6 +193,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
         formArray.removeAt(index);
+        this.setLoanProductAccountingFormDirty();
       }
     });
   }

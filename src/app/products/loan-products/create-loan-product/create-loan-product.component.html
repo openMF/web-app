@@ -64,8 +64,8 @@
 
       <mifosx-loan-product-charges-step
         [loanProductsTemplate]="loanProductsTemplate"
-        [currencyCode]="loanProductCurrencyForm.value.currencyCode"
-        [multiDisburseLoan]="loanProductSettingsForm.value.multiDisburseLoan"
+        [currencyCode]="loanProductCurrencyForm.get('currencyCode')"
+        [multiDisburseLoan]="loanProductSettingsForm.get('multiDisburseLoan')"
       >
       </mifosx-loan-product-charges-step>
 
@@ -78,6 +78,7 @@
       <mifosx-loan-product-accounting-step
         [loanProductsTemplate]="loanProductsTemplate"
         [accountingRuleData]="accountingRuleData"
+        [loanProductFormValid]="loanProductFormValid"
       >
       </mifosx-loan-product-accounting-step>
 

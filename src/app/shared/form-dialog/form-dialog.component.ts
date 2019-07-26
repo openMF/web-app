@@ -32,12 +32,14 @@ export class FormDialogComponent implements OnInit {
 
   form: FormGroup;
   formfields: FormfieldBase[];
+  pristine: boolean;
 
   constructor(public dialogRef: MatDialogRef<FormDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private formGroupService: FormGroupService) {
-    this.dialogRef.disableClose = !data.disableClose;
+    this.dialogRef.disableClose = data.disableClose !== undefined ? data.disableClose : true;
     this.formfields = data.formfields.sort((formfieldA: FormfieldBase, formfieldB: FormfieldBase) => formfieldA.order - formfieldB.order);
+    this.pristine = data.pristine !== undefined ? data.pristine : true;
     this.layout = { ...this.layout, ...data.layout };
     this.layout.gap = this.layout.columns > 1 ? layoutGap : 0;
     this.layout.flex = (this.layout.flex / this.layout.columns) - this.layout.gap;
@@ -46,6 +48,9 @@ export class FormDialogComponent implements OnInit {
   ngOnInit() {
     this.dialogRef.updateSize(`${this.layout.columnWidth * this.layout.columns}px`);
     this.form = this.formGroupService.createFormGroup(this.formfields);
+    if (!this.pristine) {
+      this.form.markAsDirty();
+    }
   }
 
 }
