@@ -57,6 +57,10 @@ export class ProductsService {
     return this.http.get('/savingsproducts/template');
   }
 
+  getSavingProduct(savingProductId: string): Observable<any> {
+    return this.http.get(`/savingsproducts/${savingProductId}`);
+  }
+
   /**
    * @returns {Observable<any>} Recurring deposit products data
    */
