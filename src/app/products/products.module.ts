@@ -27,6 +27,14 @@ import { ManageTaxComponentsComponent } from './manage-tax-components/manage-tax
 import { ViewLoanProductComponent } from './loan-products/view-loan-product/view-loan-product.component';
 import { EditLoanProductComponent } from './loan-products/edit-loan-product/edit-loan-product.component';
 import { SavingProductsComponent } from './saving-products/saving-products.component';
+import { SavingProductDetailsStepComponent } from './saving-products/saving-product-stepper/saving-product-details-step/saving-product-details-step.component';
+import { SavingProductCurrencyStepComponent } from './saving-products/saving-product-stepper/saving-product-currency-step/saving-product-currency-step.component';
+import { SavingProductTermsStepComponent } from './saving-products/saving-product-stepper/saving-product-terms-step/saving-product-terms-step.component';
+import { SavingProductSettingsStepComponent } from './saving-products/saving-product-stepper/saving-product-settings-step/saving-product-settings-step.component';
+import { SavingProductChargesStepComponent } from './saving-products/saving-product-stepper/saving-product-charges-step/saving-product-charges-step.component';
+import { SavingProductAccountingStepComponent } from './saving-products/saving-product-stepper/saving-product-accounting-step/saving-product-accounting-step.component';
+import { SavingProductPreviewStepComponent } from './saving-products/saving-product-stepper/saving-product-preview-step/saving-product-preview-step.component';
+import { CreateSavingProductComponent } from './saving-products/create-saving-product/create-saving-product.component';
 
 /**
  * Products Module
@@ -58,7 +66,15 @@ import { SavingProductsComponent } from './saving-products/saving-products.compo
     ManageTaxComponentsComponent,
     ViewLoanProductComponent,
     EditLoanProductComponent,
-    SavingProductsComponent
+    SavingProductsComponent,
+    SavingProductDetailsStepComponent,
+    SavingProductCurrencyStepComponent,
+    SavingProductTermsStepComponent,
+    SavingProductSettingsStepComponent,
+    SavingProductChargesStepComponent,
+    SavingProductAccountingStepComponent,
+    SavingProductPreviewStepComponent,
+    CreateSavingProductComponent
   ],
   entryComponents: [
   ],
