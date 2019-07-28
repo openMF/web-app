@@ -49,6 +49,14 @@ export class ProductsService {
     return this.http.get('/savingsproducts');
   }
 
+  createSavingProduct(savingProduct: string): Observable<any> {
+    return this.http.post('/savingsproducts', savingProduct);
+  }
+
+  getSavingProductsTemplate(): Observable<any> {
+    return this.http.get('/savingsproducts/template');
+  }
+
   /**
    * @returns {Observable<any>} Recurring deposit products data
    */
