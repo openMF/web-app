@@ -1,0 +1,135 @@
+<form [formGroup]="savingProductSettingsForm">
+
+  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="start center">
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Minimum Opening Balance</mat-label>
+      <input type="number" matInput formControlName="minRequiredOpeningBalance">
+    </mat-form-field>
+    
+    <span fxFlex="48%" fxHide.lt-md></span>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Lock-in Period</mat-label>
+      <input type="number" matInput formControlName="lockinPeriodFrequency">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-select formControlName="lockinPeriodFrequencyType">
+        <mat-option *ngFor="let lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData" [value]="lockinPeriodFrequencyType.id">
+          {{ lockinPeriodFrequencyType.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="withdrawalFeeForTransfers" class="margin-v">
+      Apply Withdrawal Fee for Transfers
+    </mat-checkbox>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Balance Required for Interest Calculation</mat-label>
+      <input type="number" matInput formControlName="minBalanceForInterestCalculation">
+    </mat-form-field>
+
+    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="enforceMinRequiredBalance" class="margin-v">
+      Enforce Minimum Balance
+    </mat-checkbox>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Minimum Balance</mat-label>
+      <input type="number" matInput formControlName="minRequiredBalance">
+    </mat-form-field>
+
+    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="withHoldTax" class="margin-v">
+      Is Withhold Tax Applicable?
+    </mat-checkbox>
+
+    <mat-form-field fxFlex="48%" *ngIf="savingProductSettingsForm.value.withHoldTax">
+      <mat-label>Tax Group</mat-label>
+      <mat-select formControlName="taxGroupId" required>
+        <mat-option *ngFor="let taxGroup of taxGroupData" [value]="taxGroup.id">
+          {{ taxGroup.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        Tax Group is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-divider fxFlex="98%"></mat-divider>
+
+    <h3 fxFlex="23%" class="mat-h3">Overdraft</h3>
+
+    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="allowOverdraft" class="margin-b">
+      Is Overdraft Allowed?
+    </mat-checkbox>
+
+    <div *ngIf="savingProductSettingsForm.value.allowOverdraft" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>Minimum Overdraft Required for Interest Calculation</mat-label>
+        <input type="number" matInput formControlName="minOverdraftForInterestCalculation">
+      </mat-form-field>
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>Nominal Annual Interest for Overdraft</mat-label>
+        <input type="number" matInput formControlName="nominalAnnualInterestRateOverdraft">
+      </mat-form-field>
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>Maximum Overdraft Amount Limit</mat-label>
+        <input type="number" matInput formControlName="overdraftLimit">
+      </mat-form-field>
+
+    </div>
+
+    <mat-divider fxFlex="98%"></mat-divider>
+
+    <h3 fxFlex="23%" class="mat-h3">Dormancy Tracking</h3>
+
+    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="isDormancyTrackingActive" class="margin-b">
+      Enable Dormancy Tracking
+    </mat-checkbox>
+
+    <div *ngIf="savingProductSettingsForm.value.isDormancyTrackingActive" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>Number of Days to Inactive sub-status</mat-label>
+        <input type="number" matInput formControlName="daysToInactive" required>
+        <mat-error>
+          Number of Days to Inactive sub-status is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>Number of Days to Dormant sub-status</mat-label>
+        <input type="number" matInput formControlName="daysToDormancy" required>
+        <mat-error>
+          Number of Days to Dormant sub-status is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>Number of Days to Escheat</mat-label>
+        <input type="number" matInput formControlName="daysToEscheat" required>
+        <mat-error>
+          Number of Days to Escheat is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+    </div>
+
+  </div>
+
+  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+    <button mat-raised-button matStepperPrevious>
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+      Previous
+    </button>
+    <button mat-raised-button matStepperNext>
+      Next&nbsp;&nbsp;
+      <fa-icon icon="arrow-right"></fa-icon>
+    </button>
+  </div>
+
+</form>
