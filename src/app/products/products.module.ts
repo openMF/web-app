@@ -36,6 +36,7 @@ import { SavingProductAccountingStepComponent } from './saving-products/saving-p
 import { SavingProductPreviewStepComponent } from './saving-products/saving-product-stepper/saving-product-preview-step/saving-product-preview-step.component';
 import { CreateSavingProductComponent } from './saving-products/create-saving-product/create-saving-product.component';
 import { ViewSavingProductComponent } from './saving-products/view-saving-product/view-saving-product.component';
+import { EditSavingProductComponent } from './saving-products/edit-saving-product/edit-saving-product.component';
 
 /**
  * Products Module
@@ -76,7 +77,8 @@ import { ViewSavingProductComponent } from './saving-products/view-saving-produc
     SavingProductAccountingStepComponent,
     SavingProductPreviewStepComponent,
     CreateSavingProductComponent,
-    ViewSavingProductComponent
+    ViewSavingProductComponent,
+    EditSavingProductComponent
   ],
   entryComponents: [
   ],

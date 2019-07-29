@@ -23,6 +23,26 @@ export class SavingProductSettingsStepComponent implements OnInit {
   ngOnInit() {
     this.lockinPeriodFrequencyTypeData = this.savingProductsTemplate.lockinPeriodFrequencyTypeOptions;
     this.taxGroupData = this.savingProductsTemplate.taxGroupOptions;
+
+    this.savingProductSettingsForm.patchValue({
+      'minRequiredOpeningBalance': this.savingProductsTemplate.minRequiredOpeningBalance,
+      'lockinPeriodFrequency': this.savingProductsTemplate.lockinPeriodFrequency,
+      'lockinPeriodFrequencyType': this.savingProductsTemplate.lockinPeriodFrequencyType && this.savingProductsTemplate.lockinPeriodFrequencyType.id,
+      'withdrawalFeeForTransfers': this.savingProductsTemplate.withdrawalFeeForTransfers,
+      'minBalanceForInterestCalculation': this.savingProductsTemplate.minBalanceForInterestCalculation,
+      'enforceMinRequiredBalance': this.savingProductsTemplate.enforceMinRequiredBalance,
+      'minRequiredBalance': this.savingProductsTemplate.minRequiredBalance,
+      'allowOverdraft': this.savingProductsTemplate.allowOverdraft,
+      'minOverdraftForInterestCalculation': this.savingProductsTemplate.minOverdraftForInterestCalculation,
+      'nominalAnnualInterestRateOverdraft': this.savingProductsTemplate.nominalAnnualInterestRateOverdraft,
+      'overdraftLimit': this.savingProductsTemplate.overdraftLimit,
+      'withHoldTax': this.savingProductsTemplate.withHoldTax,
+      'taxGroupId': this.savingProductsTemplate.taxGroup && this.savingProductsTemplate.taxGroup.id,
+      'isDormancyTrackingActive': this.savingProductsTemplate.isDormancyTrackingActive,
+      'daysToInactive': this.savingProductsTemplate.daysToInactive,
+      'daysToDormancy': this.savingProductsTemplate.daysToDormancy,
+      'daysToEscheat': this.savingProductsTemplate.daysToEscheat
+    });
   }
 
   createSavingProductSettingsForm() {

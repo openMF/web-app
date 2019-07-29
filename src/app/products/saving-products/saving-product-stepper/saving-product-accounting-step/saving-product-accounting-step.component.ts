@@ -48,6 +48,36 @@ export class SavingProductAccountingStepComponent implements OnInit {
     this.incomeAccountData = this.savingProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
     this.expenseAccountData = this.savingProductsTemplate.accountingMappingOptions.expenseAccountOptions || [];
     this.liabilityAccountData = this.savingProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
+
+    this.savingProductAccountingForm.patchValue({
+      'accountingRule': this.savingProductsTemplate.accountingRule.id
+    });
+
+    if (this.savingProductsTemplate.accountingRule.id === 2) {
+        this.savingProductAccountingForm.patchValue({
+          'savingsReferenceAccountId': this.savingProductsTemplate.accountingMappings.savingsReferenceAccount.id,
+          'overdraftPortfolioControlId': this.savingProductsTemplate.accountingMappings.overdraftPortfolioControl.id,
+          'savingsControlAccountId': this.savingProductsTemplate.accountingMappings.savingsControlAccount.id,
+          'transfersInSuspenseAccountId': this.savingProductsTemplate.accountingMappings.transfersInSuspenseAccount.id,
+          'interestOnSavingsAccountId': this.savingProductsTemplate.accountingMappings.interestOnSavingsAccount.id,
+          'writeOffAccountId': this.savingProductsTemplate.accountingMappings.writeOffAccount.id,
+          'incomeFromFeeAccountId': this.savingProductsTemplate.accountingMappings.incomeFromFeeAccount.id,
+          'incomeFromPenaltyAccountId': this.savingProductsTemplate.accountingMappings.incomeFromPenaltyAccount.id,
+          'incomeFromInterestId': this.savingProductsTemplate.accountingMappings.incomeFromInterest.id,
+          'escheatLiabilityId': this.savingProductsTemplate.accountingMappings.escheatLiabilityAccount.id,
+          'advancedAccountingRules': (this.savingProductsTemplate.paymentChannelToFundSourceMappings || this.savingProductsTemplate.feeToIncomeAccountMappings || this.savingProductsTemplate.penaltyToIncomeAccountMappings) ? true : false
+        });
+
+        this.savingProductAccountingForm.setControl('paymentChannelToFundSourceMappings',
+          this.formBuilder.array((this.savingProductsTemplate.paymentChannelToFundSourceMappings || []).map((paymentFundSource: any) =>
+          ({ paymentTypeId: paymentFundSource.paymentType.id, fundSourceAccountId: paymentFundSource.fundSourceAccount.id }))));
+        this.savingProductAccountingForm.setControl('feeToIncomeAccountMappings',
+          this.formBuilder.array((this.savingProductsTemplate.feeToIncomeAccountMappings || []).map((feesIncome: any) =>
+          ({ chargeId: feesIncome.charge.id, incomeAccountId: feesIncome.incomeAccount.id }))));
+        this.savingProductAccountingForm.setControl('penaltyToIncomeAccountMappings',
+          this.formBuilder.array((this.savingProductsTemplate.penaltyToIncomeAccountMappings || []).map((penaltyIncome: any) =>
+          ({ chargeId: penaltyIncome.charge.id, incomeAccountId: penaltyIncome.incomeAccount.id }))));
+    }
   }
 
   createsavingProductAccountingForm() {
@@ -124,12 +154,19 @@ export class SavingProductAccountingStepComponent implements OnInit {
     return this.savingProductAccountingForm.get('penaltyToIncomeAccountMappings') as FormArray;
   }
 
+  setSavingProductAccountingFormDirty() {
+    if (this.savingProductAccountingForm.pristine) {
+      this.savingProductAccountingForm.markAsDirty();
+    }
+  }
+
   add(formType: string, formArray: FormArray) {
     const data = { ...this.getData(formType), pristine: false };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         formArray.push(response.data);
+        this.setSavingProductAccountingFormDirty();
       }
     });
   }
@@ -140,6 +177,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         formArray.at(index).patchValue(response.data.value);
+        this.setSavingProductAccountingFormDirty();
       }
     });
   }
@@ -151,6 +189,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
         formArray.removeAt(index);
+        this.setSavingProductAccountingFormDirty();
       }
     });
   }
