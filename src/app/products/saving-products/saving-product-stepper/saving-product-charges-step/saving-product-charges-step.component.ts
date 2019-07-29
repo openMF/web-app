@@ -19,13 +19,16 @@ export class SavingProductChargesStepComponent implements OnInit {
   chargesDataSource: {}[];
   displayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'action'];
 
+  pristine = true;
+
   constructor(public dialog: MatDialog) {
   }
 
   ngOnInit() {
     this.chargeData = this.savingProductsTemplate.chargeOptions;
 
-    this.chargesDataSource = [];
+    this.chargesDataSource = this.savingProductsTemplate.charges || [];
+    this.pristine = true;
 
     this.currencyCode.valueChanges.subscribe(() => this.chargesDataSource = []);
   }
@@ -33,6 +36,7 @@ export class SavingProductChargesStepComponent implements OnInit {
   addCharge(charge: any) {
     this.chargesDataSource = this.chargesDataSource.concat([charge.value]);
     charge.value = '';
+    this.pristine = false;
   }
 
   deleteCharge(charge: any) {
@@ -43,6 +47,7 @@ export class SavingProductChargesStepComponent implements OnInit {
       if (response.delete) {
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1);
         this.chargesDataSource = this.chargesDataSource.concat([]);
+        this.pristine = false;
       }
     });
   }

@@ -28,10 +28,11 @@ export class SavingProductTermsStepComponent implements OnInit {
     this.interestCalculationDaysInYearTypeData = this.savingProductsTemplate.interestCalculationDaysInYearTypeOptions;
 
     this.savingProductTermsForm.patchValue({
-      'interestCompoundingPeriodType': this.interestCompoundingPeriodTypeData[0].id,
-      'interestPostingPeriodType': this.interestPostingPeriodTypeData[0].id,
-      'interestCalculationType': this.interestCalculationTypeData[0].id,
-      'interestCalculationDaysInYearType': this.interestCalculationDaysInYearTypeData[0].id
+      'nominalAnnualInterestRate': this.savingProductsTemplate.nominalAnnualInterestRate,
+      'interestCompoundingPeriodType': this.savingProductsTemplate.interestCompoundingPeriodType.id,
+      'interestPostingPeriodType': this.savingProductsTemplate.interestPostingPeriodType.id,
+      'interestCalculationType': this.savingProductsTemplate.interestCalculationType.id,
+      'interestCalculationDaysInYearType': this.savingProductsTemplate.interestCalculationDaysInYearType.id
     });
   }
 

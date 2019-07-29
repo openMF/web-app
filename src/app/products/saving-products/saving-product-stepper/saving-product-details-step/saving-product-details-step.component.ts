@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -8,6 +8,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class SavingProductDetailsStepComponent implements OnInit {
 
+  @Input() savingProductsTemplate: any;
+
   savingProductDetailsForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {
@@ -15,6 +17,13 @@ export class SavingProductDetailsStepComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.savingProductsTemplate) {
+      this.savingProductDetailsForm.patchValue({
+        'name': this.savingProductsTemplate.name,
+        'shortName': this.savingProductsTemplate.shortName,
+        'description': this.savingProductsTemplate.description
+      });
+    }
   }
 
   createSavingProductDetailsForm() {

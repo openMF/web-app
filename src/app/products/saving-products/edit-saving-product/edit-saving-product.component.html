@@ -1,0 +1,99 @@
+<div class="container">
+
+  <mat-horizontal-stepper class="mat-elevation-z8" labelPosition="bottom" #savingProductStepper>
+
+    <ng-template matStepperIcon="number">
+      <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="edit">
+      <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="done">
+      <fa-icon icon="check" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="error">
+      <fa-icon icon="exclamation-triangle" size="lg"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="preview">
+      <fa-icon icon="eye" size="sm"></fa-icon>
+    </ng-template>
+
+    <mat-step [stepControl]="savingProductDetailsForm" completed>
+
+      <ng-template matStepLabel>DETAILS</ng-template>
+
+      <mifosx-saving-product-details-step [savingProductsTemplate]="savingProductAndTemplate"></mifosx-saving-product-details-step>
+
+    </mat-step>
+
+    <mat-step [stepControl]="savingProductCurrencyForm" completed>
+
+      <ng-template matStepLabel>CURRENCY</ng-template>
+
+      <mifosx-saving-product-currency-step [savingProductsTemplate]="savingProductAndTemplate"></mifosx-saving-product-currency-step>
+
+    </mat-step>
+
+    <mat-step [stepControl]="savingProductTermsForm" completed>
+
+      <ng-template matStepLabel>TERMS</ng-template>
+
+      <mifosx-saving-product-terms-step [savingProductsTemplate]="savingProductAndTemplate"></mifosx-saving-product-terms-step>
+
+    </mat-step>
+
+    <mat-step [stepControl]="savingProductSettingsForm" completed>
+
+      <ng-template matStepLabel>SETTINGS</ng-template>
+
+      <mifosx-saving-product-settings-step [savingProductsTemplate]="savingProductAndTemplate"></mifosx-saving-product-settings-step>
+
+    </mat-step>
+
+    <mat-step completed>
+
+      <ng-template matStepLabel>CHARGES</ng-template>
+
+      <mifosx-saving-product-charges-step
+        [savingProductsTemplate]="savingProductAndTemplate"
+        [currencyCode]="savingProductCurrencyForm.get('currencyCode')"
+      >
+      </mifosx-saving-product-charges-step>
+
+    </mat-step>
+
+    <mat-step [stepControl]="savingProductAccountingForm" completed>
+
+      <ng-template matStepLabel>ACCOUNTING</ng-template>
+
+      <mifosx-saving-product-accounting-step
+        [savingProductsTemplate]="savingProductAndTemplate"
+        [accountingRuleData]="accountingRuleData"
+        [isDormancyTrackingActive]="savingProductSettingsForm.get('isDormancyTrackingActive')"
+        [savingProductFormValid]="savingProductFormValidAndNotPristine"
+      >
+      </mifosx-saving-product-accounting-step>
+
+    </mat-step>
+
+    <mat-step state="preview" *ngIf="savingProductFormValidAndNotPristine" completed>
+
+      <ng-template matStepLabel>PREVIEW</ng-template>
+
+      <mifosx-saving-product-preview-step
+        [savingProductsTemplate]="savingProductAndTemplate"
+        [accountingRuleData]="accountingRuleData"
+        [savingProduct]="savingProduct"
+        (submit)="submit()"
+      >
+      </mifosx-saving-product-preview-step>
+
+    </mat-step>
+
+  </mat-horizontal-stepper>
+
+</div>
