@@ -17,6 +17,7 @@ import { EditLoanProductComponent } from './loan-products/edit-loan-product/edit
 import { SavingProductsComponent } from './saving-products/saving-products.component';
 import { CreateSavingProductComponent } from './saving-products/create-saving-product/create-saving-product.component';
 import { ViewSavingProductComponent } from './saving-products/view-saving-product/view-saving-product.component';
+import { EditSavingProductComponent } from './saving-products/edit-saving-product/edit-saving-product.component';
 import { ManageTaxConfigurationsComponent } from './manage-tax-configurations/manage-tax-configurations.component';
 import { RecurringDepositProductsComponent } from './recurring-deposit-products/recurring-deposit-products.component';
 import { ChargesComponent } from './charges/charges.component';
@@ -32,6 +33,7 @@ import { LoanProductAndTemplateResolver } from './loan-products/edit-loan-produc
 import { SavingProductsResolver } from './saving-products/saving-products.resolver';
 import { SavingProductsTemplateResolver } from './saving-products/saving-products-template.resolver';
 import { SavingProductResolver } from './saving-products/saving-product.resolver';
+import { SavingProductAndTemplateResolver } from './saving-products/edit-saving-product/saving-product-and-template.resolver';
 import { RecurringDepositProductsResolver } from './recurring-deposit-products/recurring-deposit-products.resolver';
 import { ChargesResolver } from './charges/charges.resolver';
 import { FixedDepositProductsResolver } from './fixed-deposit-products/fixed-deposit-products.resolver';
@@ -120,6 +122,14 @@ const routes: Routes = [
                   resolve: {
                     savingProduct: SavingProductResolver
                   }
+                },
+                {
+                  path: 'edit',
+                  component: EditSavingProductComponent,
+                  data: { title: extract('Edit Saving Product'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    savingProductAndTemplate: SavingProductAndTemplateResolver
+                  }
                 }
               ]
             }
@@ -196,6 +206,7 @@ const routes: Routes = [
     SavingProductsResolver,
     SavingProductsTemplateResolver,
     SavingProductResolver,
+    SavingProductAndTemplateResolver,
     RecurringDepositProductsResolver,
     ChargesResolver,
     FixedDepositProductsResolver,

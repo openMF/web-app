@@ -57,8 +57,13 @@ export class ProductsService {
     return this.http.get('/savingsproducts/template');
   }
 
-  getSavingProduct(savingProductId: string): Observable<any> {
-    return this.http.get(`/savingsproducts/${savingProductId}`);
+  getSavingProduct(savingProductId: string, template: boolean = false): Observable<any> {
+    const httpParams = new HttpParams().set('template', template.toString());
+    return this.http.get(`/savingsproducts/${savingProductId}`, { params: httpParams });
+  }
+
+  updateSavingProduct(savingProductId: string, savingProduct: any): Observable<any> {
+    return this.http.put(`/savingsproducts/${savingProductId}`, savingProduct);
   }
 
   /**

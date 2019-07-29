@@ -22,8 +22,9 @@ export class SavingProductCurrencyStepComponent implements OnInit {
     this.currencyData = this.savingProductsTemplate.currencyOptions;
 
     this.savingProductCurrencyForm.patchValue({
-      'currencyCode': this.currencyData[0].code,
-      'digitsAfterDecimal': 2
+      'currencyCode': this.savingProductsTemplate.currency.code || this.currencyData[0].code,
+      'digitsAfterDecimal': this.savingProductsTemplate.currency.code ? this.savingProductsTemplate.currency.decimalPlaces : 2,
+      'inMultiplesOf': this.savingProductsTemplate.currency.inMultiplesOf
     });
   }
 
