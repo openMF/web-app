@@ -5,10 +5,12 @@ import { MatDialog } from '@angular/material';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
+import { CheckboxBase } from 'app/shared/form-dialog/formfield/model/checkbox-base';
 import { DatePipe } from '@angular/common';
 
 /** Custom Components */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
+import { DeleteDialogComponent } from '../../../../shared/delete-dialog/delete-dialog.component';
 
 /** Custom Services */
 import { ClientsService } from '../../../clients.service';
@@ -25,10 +27,11 @@ export class MultiRowComponent implements OnInit, OnChanges {
   datatableColumns: string[] = [];
   datatableData: any;
   clientId: string;
+  showDeleteBotton: boolean;
 
   constructor(private route: ActivatedRoute,
     private datePipe: DatePipe,
-    private clientService: ClientsService,
+    private clientsService: ClientsService,
     private dialog: MatDialog) {
     this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
   }
@@ -43,6 +46,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
       return columnHeader.columnName;
     });
     this.datatableData = this.dataObject.data;
+    this.showDeleteBotton = this.datatableData[0] ? true : false;
   }
 
   add() {
@@ -54,47 +58,54 @@ export class MultiRowComponent implements OnInit, OnChanges {
       return ((column.columnName !== 'id') && (column.columnName !== 'client_id'));
     });
     const formfields: FormfieldBase[] = columns.map((column: any) => {
-      if (column.columnDisplayType === 'INTEGER' || column.columnDisplayType === 'STRING') {
-        return new InputBase({
+      switch (column.columnDisplayType) {
+        case 'INTEGER':
+        case 'STRING':
+        case 'DECIMAL':
+        case 'TEXT': return new InputBase({
           controlName: column.columnName,
           label: column.columnName,
           value: '',
-          type: (column.columnDisplayType === 'INTEGER') ? 'number' : 'text',
+          type: (column.columnDisplayType === 'INTEGER' || column.columnDisplayType === 'DECIMAL') ? 'number' : 'text',
           required: (column.isColumnNullable) ? false : true
         });
-      }
-      if (column.columnDisplayType === 'CODELOOKUP') {
-        return new SelectBase({
+        case 'BOOLEAN': return new CheckboxBase({
+          controlName: column.columnName,
+          label: column.columnName,
+          value: '',
+          type: 'checkbox',
+          required: (column.isColumnNullable) ? false : true
+        });
+        case 'CODELOOKUP': return new SelectBase({
           controlName: column.columnName,
           label: column.columnName,
           value: '',
           options: { label: 'value', value: 'id', data: column.columnValues },
           required: (column.isColumnNullable) ? false : true
         });
+        case 'DATE': {
+          dateTransformColumns.push(column.columnName);
+          dataTableEntryObject.dateFormat = 'yyyy-MM-dd';
+          return new InputBase({
+            controlName: column.columnName,
+            label: column.columnName,
+            value: '',
+            type: 'date',
+            required: (column.isColumnNullable) ? false : true
+          });
+        }
+        case 'DATETIME': {
+          dateTransformColumns.push(column.columnName);
+          dataTableEntryObject.dateFormat = 'yyyy-MM-dd HH:mm';
+          return new InputBase({
+            controlName: column.columnName,
+            label: column.columnName,
+            value: '',
+            type: 'datetime-local',
+            required: (column.isColumnNullable) ? false : true
+          });
+        }
       }
-      if (column.columnDisplayType === 'DATE') {
-        dateTransformColumns.push(column.columnName);
-        dataTableEntryObject.dateFormat = 'yyyy-MM-dd';
-        return new InputBase({
-          controlName: column.columnName,
-          label: column.columnName,
-          value: '',
-          type: 'date',
-          required: (column.isColumnNullable) ? false : true
-        });
-      }
-      if (column.columnDisplayType === 'DATETIME') {
-        dateTransformColumns.push(column.columnName);
-        dataTableEntryObject.dateFormat = 'yyyy-MM-dd HH:mm';
-        return new InputBase({
-          controlName: column.columnName,
-          label: column.columnName,
-          value: '',
-          type: 'datetime-local',
-          required: (column.isColumnNullable) ? false : true
-        });
-      }
-
     });
     const data = {
       title: 'Add ' + this.datatableName,
@@ -108,12 +119,30 @@ export class MultiRowComponent implements OnInit, OnChanges {
           response.data.value[column] = this.datePipe.transform(response.data.value[column], dataTableEntryObject.dateFormat);
         });
         dataTableEntryObject = { ...response.data.value, ...dataTableEntryObject };
-        this.clientService.addClientDatatableEntry(this.clientId, this.datatableName, dataTableEntryObject).subscribe(() => {
-          this.clientService.getClientDatatable(this.clientId, this.datatableName).subscribe((dataObject: any) => {
+        this.clientsService.addClientDatatableEntry(this.clientId, this.datatableName, dataTableEntryObject).subscribe(() => {
+          this.clientsService.getClientDatatable(this.clientId, this.datatableName).subscribe((dataObject: any) => {
             this.datatableData = dataObject.data;
             this.dataTableRef.renderRows();
           });
         });
+      }
+    });
+  }
+
+  delete() {
+    const deleteDataTableDialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { deleteContext: `the contents of ${this.datatableName}` }
+    });
+    deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.delete) {
+        this.clientsService.deleteDatatableContent(this.clientId, this.datatableName)
+          .subscribe(() => {
+            this.clientsService.getClientDatatable(this.clientId, this.datatableName).subscribe((dataObject: any) => {
+              this.datatableData = dataObject.data;
+              this.showDeleteBotton = false;
+              this.dataTableRef.renderRows();
+            });
+          });
       }
     });
   }
