@@ -37,6 +37,7 @@ import { SavingProductPreviewStepComponent } from './saving-products/saving-prod
 import { CreateSavingProductComponent } from './saving-products/create-saving-product/create-saving-product.component';
 import { ViewSavingProductComponent } from './saving-products/view-saving-product/view-saving-product.component';
 import { EditSavingProductComponent } from './saving-products/edit-saving-product/edit-saving-product.component';
+import { ShareProductsComponent } from './share-products/share-products.component';
 
 /**
  * Products Module
@@ -78,7 +79,8 @@ import { EditSavingProductComponent } from './saving-products/edit-saving-produc
     SavingProductPreviewStepComponent,
     CreateSavingProductComponent,
     ViewSavingProductComponent,
-    EditSavingProductComponent
+    EditSavingProductComponent,
+    ShareProductsComponent
   ],
   entryComponents: [
   ],
