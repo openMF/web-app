@@ -18,6 +18,7 @@ import { SavingProductsComponent } from './saving-products/saving-products.compo
 import { CreateSavingProductComponent } from './saving-products/create-saving-product/create-saving-product.component';
 import { ViewSavingProductComponent } from './saving-products/view-saving-product/view-saving-product.component';
 import { EditSavingProductComponent } from './saving-products/edit-saving-product/edit-saving-product.component';
+import { ShareProductsComponent } from './share-products/share-products.component';
 import { ManageTaxConfigurationsComponent } from './manage-tax-configurations/manage-tax-configurations.component';
 import { RecurringDepositProductsComponent } from './recurring-deposit-products/recurring-deposit-products.component';
 import { ChargesComponent } from './charges/charges.component';
@@ -34,6 +35,7 @@ import { SavingProductsResolver } from './saving-products/saving-products.resolv
 import { SavingProductsTemplateResolver } from './saving-products/saving-products-template.resolver';
 import { SavingProductResolver } from './saving-products/saving-product.resolver';
 import { SavingProductAndTemplateResolver } from './saving-products/edit-saving-product/saving-product-and-template.resolver';
+import { ShareProductsResolver } from './share-products/share-products.resolver';
 import { RecurringDepositProductsResolver } from './recurring-deposit-products/recurring-deposit-products.resolver';
 import { ChargesResolver } from './charges/charges.resolver';
 import { FixedDepositProductsResolver } from './fixed-deposit-products/fixed-deposit-products.resolver';
@@ -136,6 +138,19 @@ const routes: Routes = [
           ]
         },
         {
+          path: 'share-products',
+          data: { title: extract('Share Products'), breadcrumb: 'Share Products' },
+          children: [
+            {
+              path: '',
+              component: ShareProductsComponent,
+              resolve: {
+                shareProducts: ShareProductsResolver
+              }
+            }
+          ]
+        },
+        {
           path: 'tax-configurations',
           data: { title:  extract('Manage Tax Configurations'), breadcrumb: 'Manage Tax Configurations' },
           children: [
@@ -207,6 +222,7 @@ const routes: Routes = [
     SavingProductsTemplateResolver,
     SavingProductResolver,
     SavingProductAndTemplateResolver,
+    ShareProductsResolver,
     RecurringDepositProductsResolver,
     ChargesResolver,
     FixedDepositProductsResolver,
