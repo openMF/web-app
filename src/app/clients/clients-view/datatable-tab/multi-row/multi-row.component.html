@@ -4,6 +4,9 @@
     <button mat-raised-button color="primary" (click)="add()">
       <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Add
     </button>
+    <button class="delete-button" mat-raised-button color="warn" (click)="delete()" *ngIf="showDeleteBotton">
+      <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;Delete All
+    </button>
   </div>
   <table #dataTable mat-table [hidden]="!datatableData[0]" [dataSource]="datatableData">
 
@@ -14,6 +17,4 @@
     <tr mat-header-row *matHeaderRowDef="datatableColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: datatableColumns;"></tr>
   </table>
-
-
 </div>

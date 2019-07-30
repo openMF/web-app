@@ -1,8 +1,14 @@
 <div class="tab-container mat-typography">
   <h3>{{datatableName}}</h3>
   <div fxLayout="row" fxLayoutAlign="flex-end">
-    <button mat-raised-button color="primary">
+    <button mat-raised-button color="primary" (click)="add()" *ngIf="!dataObject.data[0]">
       <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Add
+    </button>
+    <button mat-raised-button color="primary" (click)="edit()" *ngIf="dataObject.data[0]">
+      <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;Edit
+    </button>
+    <button class="delete-button" mat-raised-button color="warn" (click)="delete()" *ngIf="dataObject.data[0]">
+      <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;Delete All
     </button>
   </div>
   <mat-list role="list" *ngIf="dataObject.data[0]">

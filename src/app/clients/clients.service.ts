@@ -48,6 +48,16 @@ export class ClientsService {
     return this.http.post(`/datatables/${datatableName}/${clientId}`, data, { params: httpParams });
   }
 
+  editClientDatatableEntry(clientId: string, datatableName: string, data: any) {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.put(`/datatables/${datatableName}/${clientId}`, data, { params: httpParams });
+  }
+
+  deleteDatatableContent(clientId: string, datatableName: string) {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.delete(`/datatables/${datatableName}/${clientId}`, { params: httpParams });
+  }
+
   getClientAccountData(clientId: string) {
     return this.http.get(`/clients/${clientId}/accounts`);
   }
