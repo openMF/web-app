@@ -1,25 +1,35 @@
 <div [formGroup]="form" fxFlexFill>
 
-  <mat-form-field fxFlexFill>
+  <div>
 
-    <mat-label>{{ formfield.label }}</mat-label>
+    <div *ngIf="formfield.controlType==='input'||formfield.controlType==='select'">
+      
+      <mat-form-field fxFlexFill>
 
-    <div [ngSwitch]="formfield.controlType">
+        <mat-label>{{ formfield.label }}</mat-label>
 
-      <input *ngSwitchCase="'input'" [type]="formfield.type" matInput [formControlName]="formfield.controlName" [required]="formfield.required">
+        <input *ngIf="formfield.controlType==='input'" [type]="formfield.type" matInput
+          [formControlName]="formfield.controlName" [required]="formfield.required">
 
-      <mat-select *ngSwitchCase="'select'" [formControlName]="formfield.controlName" [required]="formfield.required">
-        <mat-option *ngFor="let option of formfield.options.data" [value]="option[formfield.options.value]">
-          {{ option[formfield.options.label] }}
-        </mat-option>
-      </mat-select>
+        <mat-select *ngIf="formfield.controlType==='select'" [formControlName]="formfield.controlName"
+          [required]="formfield.required">
+          <mat-option *ngFor="let option of formfield.options.data" [value]="option[formfield.options.value]">
+            {{ option[formfield.options.label] }}
+          </mat-option>
+        </mat-select>
 
+        <mat-error *ngIf="form.controls[formfield.controlName].hasError('required')">
+          {{ formfield.label }} is <strong>required</strong>
+        </mat-error>
+
+      </mat-form-field>
     </div>
 
-    <mat-error *ngIf="form.controls[formfield.controlName].hasError('required')">
-      {{ formfield.label }} is <strong>required</strong>
-    </mat-error>
+    <mat-checkbox *ngIf="formfield.controlType==='checkbox'" labelPosition="before" [checked]="formfield.value"
+      [formControlName]="formfield.controlName" [required]="formfield.required">
+      {{ formfield.label }}
+    </mat-checkbox>
 
-  </mat-form-field>
+  </div>
 
 </div>
