@@ -1,0 +1,39 @@
+<form [formGroup]="shareProductDetailsForm">
+
+  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Product Name</mat-label>
+      <input matInput formControlName="name" required>
+      <mat-error>
+        Product Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Short Name</mat-label>
+      <input matInput formControlName="shortName" maxlength="4" required>
+      <mat-error>
+        Short Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="98%">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+
+  </div>
+
+  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+    <button mat-raised-button matStepperPrevious disabled>
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+      Previous
+    </button>
+    <button mat-raised-button matStepperNext>
+      Next&nbsp;&nbsp;
+      <fa-icon icon="arrow-right"></fa-icon>
+    </button>
+  </div>
+
+</form>

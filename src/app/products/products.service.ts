@@ -73,6 +73,14 @@ export class ProductsService {
     return this.http.get('/products/share');
   }
 
+  createShareProduct(shareProduct: string): Observable<any> {
+    return this.http.post('/products/share', shareProduct);
+  }
+
+  getShareProductsTemplate(): Observable<any> {
+    return this.http.get('/products/share/template');
+  }
+
   /**
    * @returns {Observable<any>} Recurring deposit products data
    */

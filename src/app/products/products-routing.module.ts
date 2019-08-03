@@ -19,6 +19,7 @@ import { CreateSavingProductComponent } from './saving-products/create-saving-pr
 import { ViewSavingProductComponent } from './saving-products/view-saving-product/view-saving-product.component';
 import { EditSavingProductComponent } from './saving-products/edit-saving-product/edit-saving-product.component';
 import { ShareProductsComponent } from './share-products/share-products.component';
+import { CreateShareProductComponent } from './share-products/create-share-product/create-share-product.component';
 import { ManageTaxConfigurationsComponent } from './manage-tax-configurations/manage-tax-configurations.component';
 import { RecurringDepositProductsComponent } from './recurring-deposit-products/recurring-deposit-products.component';
 import { ChargesComponent } from './charges/charges.component';
@@ -36,6 +37,7 @@ import { SavingProductsTemplateResolver } from './saving-products/saving-product
 import { SavingProductResolver } from './saving-products/saving-product.resolver';
 import { SavingProductAndTemplateResolver } from './saving-products/edit-saving-product/saving-product-and-template.resolver';
 import { ShareProductsResolver } from './share-products/share-products.resolver';
+import { ShareProductsTemplateResolver } from './share-products/share-products-template.resolver';
 import { RecurringDepositProductsResolver } from './recurring-deposit-products/recurring-deposit-products.resolver';
 import { ChargesResolver } from './charges/charges.resolver';
 import { FixedDepositProductsResolver } from './fixed-deposit-products/fixed-deposit-products.resolver';
@@ -147,6 +149,14 @@ const routes: Routes = [
               resolve: {
                 shareProducts: ShareProductsResolver
               }
+            },
+            {
+              path: 'create',
+              component: CreateShareProductComponent,
+              data: { title: extract('Create Share Product'), breadcrumb: 'Create' },
+              resolve: {
+                shareProductsTemplate: ShareProductsTemplateResolver
+              }
             }
           ]
         },
@@ -223,6 +233,7 @@ const routes: Routes = [
     SavingProductResolver,
     SavingProductAndTemplateResolver,
     ShareProductsResolver,
+    ShareProductsTemplateResolver,
     RecurringDepositProductsResolver,
     ChargesResolver,
     FixedDepositProductsResolver,
