@@ -81,6 +81,10 @@ export class ProductsService {
     return this.http.get('/products/share/template');
   }
 
+  getShareProduct(shareProductId: string): Observable<any> {
+    return this.http.get(`/products/share/${shareProductId}`);
+  }
+
   /**
    * @returns {Observable<any>} Recurring deposit products data
    */
