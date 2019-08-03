@@ -1,0 +1,50 @@
+<form [formGroup]="shareProductTermsForm">
+
+  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Total Number of Shares</mat-label>
+      <input type="number" matInput formControlName="totalShares" required>
+      <mat-error>
+        Total Number of Shares is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Shares to be Issued</mat-label>
+      <input type="number" matInput formControlName="sharesIssued" required>
+      <mat-error>
+        Shares to be Issued is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Nominal/Unit Price</mat-label>
+      <input type="number" matInput formControlName="unitPrice" required>
+      <mat-error>
+        Nominal Price is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Capital Value</mat-label>
+      <input type="number" matInput formControlName="shareCapital" readonly>
+      <mat-hint>
+        Shares to be Issued * Nominal Price (Auto calculated)
+      </mat-hint>
+    </mat-form-field>
+
+  </div>
+
+  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+    <button mat-raised-button matStepperPrevious>
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+      Previous
+    </button>
+    <button mat-raised-button matStepperNext>
+      Next&nbsp;&nbsp;
+      <fa-icon icon="arrow-right"></fa-icon>
+    </button>
+  </div>
+
+</form>

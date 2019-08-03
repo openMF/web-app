@@ -1,0 +1,106 @@
+<div class="container">
+
+  <mat-horizontal-stepper class="mat-elevation-z8" labelPosition="bottom" #shareProductStepper>
+
+    <ng-template matStepperIcon="number">
+      <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="edit">
+      <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="done">
+      <fa-icon icon="check" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="error">
+      <fa-icon icon="exclamation-triangle" size="lg"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="preview">
+      <fa-icon icon="eye" size="sm"></fa-icon>
+    </ng-template>
+
+    <mat-step [stepControl]="shareProductDetailsForm">
+
+      <ng-template matStepLabel>DETAILS</ng-template>
+
+      <mifosx-share-product-details-step></mifosx-share-product-details-step>
+
+    </mat-step>
+
+    <mat-step [stepControl]="shareProductCurrencyForm">
+
+      <ng-template matStepLabel>CURRENCY</ng-template>
+
+      <mifosx-share-product-currency-step [shareProductsTemplate]="shareProductsTemplate"></mifosx-share-product-currency-step>
+
+    </mat-step>
+
+    <mat-step [stepControl]="shareProductTermsForm">
+
+      <ng-template matStepLabel>TERMS</ng-template>
+
+      <mifosx-share-product-terms-step></mifosx-share-product-terms-step>
+
+    </mat-step>
+
+    <mat-step [stepControl]="shareProductSettingsForm">
+
+      <ng-template matStepLabel>SETTINGS</ng-template>
+
+      <mifosx-share-product-settings-step [shareProductsTemplate]="shareProductsTemplate"></mifosx-share-product-settings-step>
+
+    </mat-step>
+
+    <mat-step>
+
+      <ng-template matStepLabel>MARKET PRICE</ng-template>
+
+      <mifosx-share-product-market-price-step></mifosx-share-product-market-price-step>
+
+    </mat-step>
+
+    <mat-step>
+
+      <ng-template matStepLabel>CHARGES</ng-template>
+
+      <mifosx-share-product-charges-step
+        [shareProductsTemplate]="shareProductsTemplate"
+        [currencyCode]="shareProductCurrencyForm.get('currencyCode')"
+      >
+      </mifosx-share-product-charges-step>
+
+    </mat-step>
+
+    <mat-step [stepControl]="shareProductAccountingForm">
+
+      <ng-template matStepLabel>ACCOUNTING</ng-template>
+
+      <mifosx-share-product-accounting-step
+        [shareProductsTemplate]="shareProductsTemplate"
+        [accountingRuleData]="accountingRuleData"
+        [shareProductFormValid]="shareProductFormValid"
+      >
+      </mifosx-share-product-accounting-step>
+
+    </mat-step>
+
+    <mat-step state="preview" *ngIf="shareProductFormValid" completed>
+
+      <ng-template matStepLabel>PREVIEW</ng-template>
+
+      <mifosx-share-product-preview-step
+        [shareProductsTemplate]="shareProductsTemplate"
+        [accountingRuleData]="accountingRuleData"
+        [shareProduct]="shareProduct"
+        (submit)="submit()"
+      >
+      </mifosx-share-product-preview-step>
+
+    </mat-step>
+
+  </mat-horizontal-stepper>
+
+</div>

@@ -38,6 +38,15 @@ import { CreateSavingProductComponent } from './saving-products/create-saving-pr
 import { ViewSavingProductComponent } from './saving-products/view-saving-product/view-saving-product.component';
 import { EditSavingProductComponent } from './saving-products/edit-saving-product/edit-saving-product.component';
 import { ShareProductsComponent } from './share-products/share-products.component';
+import { ShareProductDetailsStepComponent } from './share-products/share-product-stepper/share-product-details-step/share-product-details-step.component';
+import { ShareProductCurrencyStepComponent } from './share-products/share-product-stepper/share-product-currency-step/share-product-currency-step.component';
+import { ShareProductTermsStepComponent } from './share-products/share-product-stepper/share-product-terms-step/share-product-terms-step.component';
+import { ShareProductSettingsStepComponent } from './share-products/share-product-stepper/share-product-settings-step/share-product-settings-step.component';
+import { ShareProductMarketPriceStepComponent } from './share-products/share-product-stepper/share-product-market-price-step/share-product-market-price-step.component';
+import { ShareProductChargesStepComponent } from './share-products/share-product-stepper/share-product-charges-step/share-product-charges-step.component';
+import { ShareProductAccountingStepComponent } from './share-products/share-product-stepper/share-product-accounting-step/share-product-accounting-step.component';
+import { ShareProductPreviewStepComponent } from './share-products/share-product-stepper/share-product-preview-step/share-product-preview-step.component';
+import { CreateShareProductComponent } from './share-products/create-share-product/create-share-product.component';
 
 /**
  * Products Module
@@ -80,7 +89,16 @@ import { ShareProductsComponent } from './share-products/share-products.componen
     CreateSavingProductComponent,
     ViewSavingProductComponent,
     EditSavingProductComponent,
-    ShareProductsComponent
+    ShareProductsComponent,
+    ShareProductDetailsStepComponent,
+    ShareProductCurrencyStepComponent,
+    ShareProductTermsStepComponent,
+    ShareProductSettingsStepComponent,
+    ShareProductMarketPriceStepComponent,
+    ShareProductChargesStepComponent,
+    ShareProductAccountingStepComponent,
+    ShareProductPreviewStepComponent,
+    CreateShareProductComponent
   ],
   entryComponents: [
   ],

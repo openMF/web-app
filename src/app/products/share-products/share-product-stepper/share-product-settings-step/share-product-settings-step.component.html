@@ -1,0 +1,74 @@
+<form [formGroup]="shareProductSettingsForm">
+
+  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+    <h4 fxFlex="98%" class="mat-h4">Shares per Client</h4>
+
+    <mat-form-field fxFlex="31%">
+      <mat-label>Minimum</mat-label>
+      <input type="number" matInput formControlName="minimumShares">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="31%">
+      <mat-label>Default</mat-label>
+      <input type="number" matInput formControlName="nominalShares" required>
+      <mat-error>
+        Default Shares per Client is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="31%">
+      <mat-label>Maximum</mat-label>
+      <input type="number" matInput formControlName="maximumShares">
+    </mat-form-field>
+
+    <h4 fxFlex="98%" class="mat-h4">Minimum Active Period</h4>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Frequency</mat-label>
+      <input type="number" matInput formControlName="minimumActivePeriodForDividends">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="minimumactiveperiodFrequencyType">
+        <mat-option *ngFor="let minimumActivePeriodFrequencyType of minimumActivePeriodFrequencyTypeData" [value]="minimumActivePeriodFrequencyType.id">
+          {{ minimumActivePeriodFrequencyType.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <h4 fxFlex="98%" class="mat-h4">Lock-in Period</h4>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Frequency</mat-label>
+      <input type="number" matInput formControlName="lockinPeriodFrequency">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="lockinPeriodFrequencyType">
+        <mat-option *ngFor="let lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData" [value]="lockinPeriodFrequencyType.id">
+          {{ lockinPeriodFrequencyType.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-checkbox fxFlex="98%" class="margin-v" labelPosition="before" formControlName="allowDividendCalculationForInactiveClients">
+      Allow dividends for inactive clients
+    </mat-checkbox>
+
+  </div>
+
+  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+    <button mat-raised-button matStepperPrevious>
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+      Previous
+    </button>
+    <button mat-raised-button matStepperNext>
+      Next&nbsp;&nbsp;
+      <fa-icon icon="arrow-right"></fa-icon>
+    </button>
+  </div>
+
+</form>
