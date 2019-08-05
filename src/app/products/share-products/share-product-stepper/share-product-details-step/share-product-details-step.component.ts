@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -8,6 +8,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class ShareProductDetailsStepComponent implements OnInit {
 
+  @Input() shareProductsTemplate: any;
+
   shareProductDetailsForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {
@@ -15,6 +17,13 @@ export class ShareProductDetailsStepComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.shareProductsTemplate) {
+      this.shareProductDetailsForm.patchValue({
+        'name': this.shareProductsTemplate.name,
+        'shortName': this.shareProductsTemplate.shortName,
+        'description': this.shareProductsTemplate.description
+      });
+    }
   }
 
   createShareProductDetailsForm() {

@@ -21,6 +21,7 @@ import { EditSavingProductComponent } from './saving-products/edit-saving-produc
 import { ShareProductsComponent } from './share-products/share-products.component';
 import { CreateShareProductComponent } from './share-products/create-share-product/create-share-product.component';
 import { ViewShareProductComponent } from './share-products/view-share-product/view-share-product.component';
+import { EditShareProductComponent } from './share-products/edit-share-product/edit-share-product.component';
 import { ManageTaxConfigurationsComponent } from './manage-tax-configurations/manage-tax-configurations.component';
 import { RecurringDepositProductsComponent } from './recurring-deposit-products/recurring-deposit-products.component';
 import { ChargesComponent } from './charges/charges.component';
@@ -40,6 +41,7 @@ import { SavingProductAndTemplateResolver } from './saving-products/edit-saving-
 import { ShareProductsResolver } from './share-products/share-products.resolver';
 import { ShareProductsTemplateResolver } from './share-products/share-products-template.resolver';
 import { ShareProductResolver } from './share-products/share-product-resolver';
+import { ShareProductAndTemplateResolver } from './share-products/edit-share-product/share-product-and-template.resolver';
 import { RecurringDepositProductsResolver } from './recurring-deposit-products/recurring-deposit-products.resolver';
 import { ChargesResolver } from './charges/charges.resolver';
 import { FixedDepositProductsResolver } from './fixed-deposit-products/fixed-deposit-products.resolver';
@@ -171,6 +173,14 @@ const routes: Routes = [
                     shareProduct: ShareProductResolver
                   },
                 },
+                {
+                  path: 'edit',
+                  component: EditShareProductComponent,
+                  data: { title: extract('Edit Share Product'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    shareProductAndTemplate: ShareProductAndTemplateResolver
+                  }
+                }
               ]
             }
           ]
@@ -250,6 +260,7 @@ const routes: Routes = [
     ShareProductsResolver,
     ShareProductsTemplateResolver,
     ShareProductResolver,
+    ShareProductAndTemplateResolver,
     RecurringDepositProductsResolver,
     ChargesResolver,
     FixedDepositProductsResolver,
