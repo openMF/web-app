@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { combineLatest } from 'rxjs';
 
@@ -8,6 +8,8 @@ import { combineLatest } from 'rxjs';
   styleUrls: ['./share-product-terms-step.component.scss']
 })
 export class ShareProductTermsStepComponent implements OnInit {
+
+  @Input() shareProductsTemplate: any;
 
   shareProductTermsForm: FormGroup;
 
@@ -22,6 +24,15 @@ export class ShareProductTermsStepComponent implements OnInit {
     ]).subscribe(([sharesIssued, unitPrice]: number[]) => {
       this.shareProductTermsForm.get('shareCapital').setValue(sharesIssued * unitPrice);
     });
+
+    if (this.shareProductsTemplate) {
+      this.shareProductTermsForm.patchValue({
+        'totalShares': this.shareProductsTemplate.totalShares,
+        'sharesIssued': this.shareProductsTemplate.totalSharesIssued,
+        'unitPrice': this.shareProductsTemplate.unitPrice,
+        'shareCapital': this.shareProductsTemplate.shareCapital
+      });
+    }
   }
 
   createShareProductTermsForm() {

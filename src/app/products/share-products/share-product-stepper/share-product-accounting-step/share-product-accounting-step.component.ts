@@ -29,6 +29,21 @@ export class ShareProductAccountingStepComponent implements OnInit {
     this.incomeAccountData = this.shareProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
     this.equityAccountData = this.shareProductsTemplate.accountingMappingOptions.equityAccountOptions || [];
     this.liabilityAccountData = this.shareProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
+
+    if (this.shareProductsTemplate.accountingRule) {
+      this.shareProductAccountingForm.patchValue({
+        'accountingRule': this.shareProductsTemplate.accountingRule.id
+      });
+
+      if (this.shareProductsTemplate.accountingRule.id === 2) {
+        this.shareProductAccountingForm.patchValue({
+          'shareReferenceId': this.shareProductsTemplate.accountingMappings.shareReferenceId.id,
+          'shareSuspenseId': this.shareProductsTemplate.accountingMappings.shareSuspenseId.id,
+          'shareEquityId': this.shareProductsTemplate.accountingMappings.shareEquityId.id,
+          'incomeFromFeeAccountId': this.shareProductsTemplate.accountingMappings.incomeFromFeeAccountId.id
+        });
+      }
+    }
   }
 
   createShareProductAccountingForm() {

@@ -48,6 +48,7 @@ import { ShareProductAccountingStepComponent } from './share-products/share-prod
 import { ShareProductPreviewStepComponent } from './share-products/share-product-stepper/share-product-preview-step/share-product-preview-step.component';
 import { CreateShareProductComponent } from './share-products/create-share-product/create-share-product.component';
 import { ViewShareProductComponent } from './share-products/view-share-product/view-share-product.component';
+import { EditShareProductComponent } from './share-products/edit-share-product/edit-share-product.component';
 
 /**
  * Products Module
@@ -100,7 +101,8 @@ import { ViewShareProductComponent } from './share-products/view-share-product/v
     ShareProductAccountingStepComponent,
     ShareProductPreviewStepComponent,
     CreateShareProductComponent,
-    ViewShareProductComponent
+    ViewShareProductComponent,
+    EditShareProductComponent
   ],
   entryComponents: [
   ],
