@@ -81,8 +81,13 @@ export class ProductsService {
     return this.http.get('/products/share/template');
   }
 
-  getShareProduct(shareProductId: string): Observable<any> {
-    return this.http.get(`/products/share/${shareProductId}`);
+  getShareProduct(shareProductId: string, template: boolean = false): Observable<any> {
+    const httpParams = new HttpParams().set('template', template.toString());
+    return this.http.get(`/products/share/${shareProductId}`, { params: httpParams });
+  }
+
+  updateShareProduct(shareProductId: string, shareProduct: any): Observable<any> {
+    return this.http.put(`/products/share/${shareProductId}`, shareProduct);
   }
 
   /**

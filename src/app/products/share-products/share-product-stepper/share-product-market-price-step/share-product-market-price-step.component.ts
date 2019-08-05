@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material';
@@ -17,6 +17,8 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 })
 export class ShareProductMarketPriceStepComponent implements OnInit {
 
+  @Input() shareProductsTemplate: any;
+
   shareProductMarketPriceForm: FormGroup;
 
   displayedColumns: string[] = ['fromDate', 'shareValue', 'actions'];
@@ -28,6 +30,9 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.shareProductsTemplate) {
+      this.shareProductMarketPriceForm.setControl('marketPricePeriods', this.formBuilder.array((this.shareProductsTemplate.marketPrice)));
+    }
   }
 
   createShareProductMarketPriceForm() {
@@ -40,33 +45,42 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
     return this.shareProductMarketPriceForm.get('marketPricePeriods') as FormArray;
   }
 
+  setShareProductMarketPriceFormDirty() {
+    if (this.shareProductMarketPriceForm.pristine) {
+      this.shareProductMarketPriceForm.markAsDirty();
+    }
+  }
+
   addMarketPricePeriod() {
     const data = this.getData();
-    const addVariationsForBorrowerCycleDialogRef = this.dialog.open(FormDialogComponent, { data });
-    addVariationsForBorrowerCycleDialogRef.afterClosed().subscribe((response: any) => {
+    const addMarketPricePeriodDialogRef = this.dialog.open(FormDialogComponent, { data });
+    addMarketPricePeriodDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         this.marketPricePeriods.push(response.data);
+        this.setShareProductMarketPriceFormDirty();
       }
     });
   }
 
   editMarketPricePeriod(index: number) {
     const data = { ...this.getData(this.marketPricePeriods.at(index).value), layout: { addButtonText: 'Edit' } };
-    const addVariationsForBorrowerCycleDialogRef = this.dialog.open(FormDialogComponent, { data });
-    addVariationsForBorrowerCycleDialogRef.afterClosed().subscribe((response: any) => {
+    const addMarketPricePeriodDialogRef = this.dialog.open(FormDialogComponent, { data });
+    addMarketPricePeriodDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         this.marketPricePeriods.at(index).patchValue(response.data.value);
+        this.setShareProductMarketPriceFormDirty();
       }
     });
   }
 
   deleteMarketPricePeriod(index: number) {
-    const deleteVariationsForBorrowerCycleDialogRef = this.dialog.open(DeleteDialogComponent, {
+    const deleteMarketPricePeriodDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `this` }
     });
-    deleteVariationsForBorrowerCycleDialogRef.afterClosed().subscribe((response: any) => {
+    deleteMarketPricePeriodDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
         this.marketPricePeriods.removeAt(index);
+        this.setShareProductMarketPriceFormDirty();
       }
     });
   }

@@ -21,10 +21,18 @@ export class ShareProductCurrencyStepComponent implements OnInit {
   ngOnInit() {
     this.currencyData = this.shareProductsTemplate.currencyOptions;
 
-    this.shareProductCurrencyForm.patchValue({
-      'currencyCode': this.currencyData[0].code,
-      'digitsAfterDecimal': 2
-    });
+    if (this.shareProductsTemplate.currency) {
+      this.shareProductCurrencyForm.patchValue({
+        'currencyCode': this.shareProductsTemplate.currency.code,
+        'digitsAfterDecimal': this.shareProductsTemplate.currency.decimalPlaces,
+        'inMultiplesOf': this.shareProductsTemplate.currency.inMultiplesOf
+      });
+    } else {
+      this.shareProductCurrencyForm.patchValue({
+        'currencyCode': this.currencyData[0].code,
+        'digitsAfterDecimal': 2
+      });
+    }
   }
 
   createShareProductCurrencyForm() {
