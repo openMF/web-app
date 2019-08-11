@@ -1,0 +1,67 @@
+<h1 mat-dialog-title>{{ title }}</h1>
+
+<div mat-dialog-content [formGroup]="depositProductIncentiveForm" fxLayout="column">
+
+  <mat-form-field>
+    <mat-label>Attribute</mat-label>
+    <mat-select formControlName="attributeName" required>
+      <mat-option *ngFor="let attributeName of attributeNameData" [value]="attributeName.id">
+        {{ attributeName.value }}
+      </mat-option>
+    </mat-select>
+    <mat-error>
+      Attribute is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Condition</mat-label>
+    <mat-select formControlName="conditionType" required>
+      <mat-option *ngFor="let conditionType of conditionTypeData" [value]="conditionType.id">
+        {{ conditionType.value }}
+      </mat-option>
+    </mat-select>
+    <mat-error>
+      Condition is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="depositProductIncentiveForm.value.attributeName">
+    <mat-label>Value</mat-label>
+    <mat-select formControlName="attributeValue" *ngIf="depositProductIncentiveForm.value.attributeName !== 3" required>
+      <mat-option *ngFor="let attributeValue of attributeValueData" [value]="attributeValue.id">
+        {{ attributeValue.name }}
+      </mat-option>
+    </mat-select>
+    <input type="number" matInput formControlName="attributeValue" *ngIf="depositProductIncentiveForm.value.attributeName === 3" required>
+    <mat-error>
+      Value is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Type</mat-label>
+    <mat-select formControlName="incentiveType" required>
+      <mat-option *ngFor="let incentiveType of incentiveTypeData" [value]="incentiveType.id">
+        {{ incentiveType.value }}
+      </mat-option>
+    </mat-select>
+    <mat-error>
+      Type is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Interest</mat-label>
+    <input type="number" matInput formControlName="amount" required>
+    <mat-error>
+      Interest is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+</div>
+
+<mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <button mat-raised-button mat-dialog-close> Cancel </button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="{ data: depositProductIncentiveForm }" [disabled]="!depositProductIncentiveForm.valid || depositProductIncentiveForm.pristine">{{ layout.addButtonText }}</button>
+</mat-dialog-actions>

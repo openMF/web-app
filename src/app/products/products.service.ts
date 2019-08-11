@@ -111,6 +111,14 @@ export class ProductsService {
     return this.http.get('/fixeddepositproducts');
   }
 
+  createFixedDepositProduct(fixedDepositProduct: string): Observable<any> {
+    return this.http.post('/fixeddepositproducts', fixedDepositProduct);
+  }
+
+  getFixedDepositProductsTemplate(): Observable<any> {
+    return this.http.get('/fixeddepositproducts/template');
+  }
+
   /**
    * @returns {Observable<any>} Tax Components data
    */
