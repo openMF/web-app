@@ -1,0 +1,107 @@
+<div class="container">
+
+  <mat-horizontal-stepper class="mat-elevation-z8" labelPosition="bottom" #fixedDepositProductStepper>
+
+    <ng-template matStepperIcon="number">
+      <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="edit">
+      <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="done">
+      <fa-icon icon="check" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="error">
+      <fa-icon icon="exclamation-triangle" size="lg"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="preview">
+      <fa-icon icon="eye" size="sm"></fa-icon>
+    </ng-template>
+
+    <mat-step [stepControl]="fixedDepositProductDetailsForm">
+
+      <ng-template matStepLabel>DETAILS</ng-template>
+
+      <mifosx-fixed-deposit-product-details-step></mifosx-fixed-deposit-product-details-step>
+
+    </mat-step>
+
+    <mat-step [stepControl]="fixedDepositProductCurrencyForm">
+
+      <ng-template matStepLabel>CURRENCY</ng-template>
+
+      <mifosx-fixed-deposit-product-currency-step [fixedDepositProductsTemplate]="fixedDepositProductsTemplate"></mifosx-fixed-deposit-product-currency-step>
+
+    </mat-step>
+
+    <mat-step [stepControl]="fixedDepositProductTermsForm">
+
+      <ng-template matStepLabel>TERMS</ng-template>
+
+      <mifosx-fixed-deposit-product-terms-step [fixedDepositProductsTemplate]="fixedDepositProductsTemplate"></mifosx-fixed-deposit-product-terms-step>
+
+    </mat-step>
+
+    <mat-step [stepControl]="fixedDepositProductSettingsForm">
+
+      <ng-template matStepLabel>SETTINGS</ng-template>
+
+      <mifosx-fixed-deposit-product-settings-step [fixedDepositProductsTemplate]="fixedDepositProductsTemplate"></mifosx-fixed-deposit-product-settings-step>
+
+    </mat-step>
+
+    <mat-step [stepControl]="fixedDepositProductInterestRateChartForm">
+
+      <ng-template matStepLabel>INTEREST RATE CHART</ng-template>
+
+      <mifosx-fixed-deposit-product-interest-rate-chart-step [fixedDepositProductsTemplate]="fixedDepositProductsTemplate"></mifosx-fixed-deposit-product-interest-rate-chart-step>
+
+    </mat-step>
+
+    <mat-step>
+
+      <ng-template matStepLabel>CHARGES</ng-template>
+
+      <mifosx-fixed-deposit-product-charges-step
+        [fixedDepositProductsTemplate]="fixedDepositProductsTemplate"
+        [currencyCode]="fixedDepositProductCurrencyForm.get('currencyCode')"
+      >
+      </mifosx-fixed-deposit-product-charges-step>
+
+    </mat-step>
+
+    <mat-step [stepControl]="fixedDepositProductAccountingForm">
+
+      <ng-template matStepLabel>ACCOUNTING</ng-template>
+
+      <mifosx-fixed-deposit-product-accounting-step
+        [fixedDepositProductsTemplate]="fixedDepositProductsTemplate"
+        [accountingRuleData]="accountingRuleData"
+        [fixedDepositProductFormValid]="fixedDepositProductFormValid"
+      >
+      </mifosx-fixed-deposit-product-accounting-step>
+
+    </mat-step>
+
+    <mat-step state="preview" *ngIf="fixedDepositProductFormValid" completed>
+
+      <ng-template matStepLabel>PREVIEW</ng-template>
+
+      <mifosx-fixed-deposit-product-preview-step
+        [fixedDepositProductsTemplate]="fixedDepositProductsTemplate"
+        [chartSlabsDisplayedColumns]="fixedDepositProductInterestRateChartStep.chartSlabsDisplayedColumns"
+        [accountingRuleData]="accountingRuleData"
+        [fixedDepositProduct]="fixedDepositProduct"
+        (submit)="submit()"
+      >
+      </mifosx-fixed-deposit-product-preview-step>
+
+    </mat-step>
+
+  </mat-horizontal-stepper>
+
+</div>
