@@ -1,0 +1,128 @@
+<form [formGroup]="fixedDepositProductSettingsForm">
+
+  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+    <h4 fxFlex="98%" class="mat-h4">Lock-in Period</h4>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Frequency</mat-label>
+      <input type="number" matInput formControlName="lockinPeriodFrequency">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="lockinPeriodFrequencyType">
+        <mat-option *ngFor="let lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData" [value]="lockinPeriodFrequencyType.id">
+          {{ lockinPeriodFrequencyType.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <h4 fxFlex="98%" class="mat-h4">Minimum Deposit Term</h4>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Frequency</mat-label>
+      <input type="number" matInput formControlName="minDepositTerm" required>
+      <mat-error>
+        Minimum Deposit Term Frequency is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Frequency Type</mat-label>
+      <mat-select formControlName="minDepositTermTypeId" required>
+        <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
+          {{ periodFrequencyType.value }}
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        Minimum Deposit Term Frequency Type is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <h4 fxFlex="98%" class="mat-h4">And thereafter, in Multiples of</h4>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Frequency</mat-label>
+      <input type="number" matInput formControlName="inMultiplesOfDepositTerm">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="inMultiplesOfDepositTermTypeId">
+        <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
+          {{ periodFrequencyType.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <h4 fxFlex="98%" class="mat-h4">Maximum Deposit Term</h4>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Frequency</mat-label>
+      <input type="number" matInput formControlName="maxDepositTerm">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="maxDepositTermTypeId">
+        <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
+          {{ periodFrequencyType.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-divider fxFlex="98%"></mat-divider>
+
+    <h4 fxFlex="23%" class="mat-h4">For Pre-mature closure</h4>
+
+    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="preClosurePenalApplicable" class="margin-v">
+      Apply Penal Interest (less)
+    </mat-checkbox>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Penal Interest (%)</mat-label>
+      <input type="number" matInput formControlName="preClosurePenalInterest">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Period</mat-label>
+      <mat-select formControlName="preClosurePenalInterestOnTypeId">
+        <mat-option *ngFor="let preClosurePenalInterestOnType of preClosurePenalInterestOnTypeData" [value]="preClosurePenalInterestOnType.id">
+          {{ preClosurePenalInterestOnType.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-divider fxFlex="98%"></mat-divider>
+
+    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="withHoldTax" class="margin-v">
+      Is Withhold Tax Applicable?
+    </mat-checkbox>
+
+    <mat-form-field fxFlex="48%" *ngIf="fixedDepositProductSettingsForm.value.withHoldTax">
+      <mat-label>Tax Group</mat-label>
+      <mat-select formControlName="taxGroupId" required>
+        <mat-option *ngFor="let taxGroup of taxGroupData" [value]="taxGroup.id">
+          {{ taxGroup.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        Tax Group is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+  </div>
+
+  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+    <button mat-raised-button matStepperPrevious>
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+      Previous
+    </button>
+    <button mat-raised-button matStepperNext>
+      Next&nbsp;&nbsp;
+      <fa-icon icon="arrow-right"></fa-icon>
+    </button>
+  </div>
+
+</form>

@@ -49,6 +49,16 @@ import { ShareProductPreviewStepComponent } from './share-products/share-product
 import { CreateShareProductComponent } from './share-products/create-share-product/create-share-product.component';
 import { ViewShareProductComponent } from './share-products/view-share-product/view-share-product.component';
 import { EditShareProductComponent } from './share-products/edit-share-product/edit-share-product.component';
+import { CreateFixedDepositProductComponent } from './fixed-deposit-products/create-fixed-deposit-product/create-fixed-deposit-product.component';
+import { FixedDepositProductDetailsStepComponent } from './fixed-deposit-products/fixed-deposit-product-stepper/fixed-deposit-product-details-step/fixed-deposit-product-details-step.component';
+import { FixedDepositProductCurrencyStepComponent } from './fixed-deposit-products/fixed-deposit-product-stepper/fixed-deposit-product-currency-step/fixed-deposit-product-currency-step.component';
+import { FixedDepositProductTermsStepComponent } from './fixed-deposit-products/fixed-deposit-product-stepper/fixed-deposit-product-terms-step/fixed-deposit-product-terms-step.component';
+import { FixedDepositProductSettingsStepComponent } from './fixed-deposit-products/fixed-deposit-product-stepper/fixed-deposit-product-settings-step/fixed-deposit-product-settings-step.component';
+import { FixedDepositProductInterestRateChartStepComponent } from './fixed-deposit-products/fixed-deposit-product-stepper/fixed-deposit-product-interest-rate-chart-step/fixed-deposit-product-interest-rate-chart-step.component';
+import { FixedDepositProductChargesStepComponent } from './fixed-deposit-products/fixed-deposit-product-stepper/fixed-deposit-product-charges-step/fixed-deposit-product-charges-step.component';
+import { FixedDepositProductAccountingStepComponent } from './fixed-deposit-products/fixed-deposit-product-stepper/fixed-deposit-product-accounting-step/fixed-deposit-product-accounting-step.component';
+import { FixedDepositProductPreviewStepComponent } from './fixed-deposit-products/fixed-deposit-product-stepper/fixed-deposit-product-preview-step/fixed-deposit-product-preview-step.component';
+import { DepositProductIncentiveFormDialogComponent } from './deposit-product-incentive-form-dialog/deposit-product-incentive-form-dialog.component';
 
 /**
  * Products Module
@@ -102,9 +112,20 @@ import { EditShareProductComponent } from './share-products/edit-share-product/e
     ShareProductPreviewStepComponent,
     CreateShareProductComponent,
     ViewShareProductComponent,
-    EditShareProductComponent
+    EditShareProductComponent,
+    CreateFixedDepositProductComponent,
+    FixedDepositProductDetailsStepComponent,
+    FixedDepositProductCurrencyStepComponent,
+    FixedDepositProductTermsStepComponent,
+    FixedDepositProductSettingsStepComponent,
+    FixedDepositProductInterestRateChartStepComponent,
+    FixedDepositProductChargesStepComponent,
+    FixedDepositProductAccountingStepComponent,
+    FixedDepositProductPreviewStepComponent,
+    DepositProductIncentiveFormDialogComponent
   ],
   entryComponents: [
+    DepositProductIncentiveFormDialogComponent
   ],
   providers: [DatePipe]
 })
