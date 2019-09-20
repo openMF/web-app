@@ -177,4 +177,51 @@ export class SystemService {
     return this.http.put(`/externalservice/${externalConfigurationName}`, externalConfiguration);
   }
 
+  /**
+   * @returns {Observable<any>} Account number preferences.
+   */
+  getAccountNumberPreferences(): Observable<any> {
+    return this.http.get('/accountnumberformats');
+  }
+
+  /**
+   * @returns {Observable<any>} Fetches Account Number Preferences Template.
+   */
+  getAccountNumberPreferencesTemplate(): Observable<any> {
+    return this.http.get('/accountnumberformats/template');
+  }
+
+  /**
+   * @param {string} accountNumberPreferenceId Account Number Preference ID.
+   * @returns {Observable<any>} Fetches Account Number Preference.
+   */
+  getAccountNumberPreference(accountNumberPreferenceId: string): Observable<any> {
+    return this.http.get(`/accountnumberformats/${accountNumberPreferenceId}`);
+  }
+
+  /**
+   * @param accountNumberPreference Account Number Preference.
+   * @returns {Observable<any>}
+   */
+  createAccountNumberPreference(accountNumberPreference: any): Observable<any> {
+    return this.http.post('/accountnumberformats', accountNumberPreference);
+  }
+
+  /**
+   * @param {string} accountNumberPreferenceId Account Number Preference ID.
+   * @returns {Observable<any>}
+   */
+  deleteAccountNumberPreference(accountNumberPreferenceId: string): Observable<any> {
+    return this.http.delete(`/accountnumberformats/${accountNumberPreferenceId}`);
+  }
+
+  /**
+   * @param {string} accountNumberPreferenceId Account Number Preference ID.
+   * @param {any} accountNumberPreferenceChanges Changes in Account Number Preference.
+   * @returns {Observable<any>}
+   */
+  updateAccountNumberPreference(accountNumberPreferenceId: string, accountNumberPreferenceChanges: any): Observable<any> {
+    return this.http.put(`/accountnumberformats/${accountNumberPreferenceId}`, accountNumberPreferenceChanges);
+  }
+
 }

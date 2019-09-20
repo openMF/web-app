@@ -1,0 +1,45 @@
+<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+
+  <button mat-raised-button color="primary" [routerLink]="['edit']">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit
+  </button>
+
+  <button mat-raised-button color="warn" (click)="delete()">
+    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+    Delete
+  </button>
+
+</div>
+
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" class="content">
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Account Type
+        </div>
+
+        <div fxFlex="50%">
+          {{ accountNumberPreferenceData.accountType.value }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="accountNumberPreferenceData.prefixType">
+          Prefix Type
+        </div>
+
+        <div fxFlex="50%" *ngIf="accountNumberPreferenceData.prefixType">
+          {{ accountNumberPreferenceData.prefixType.value }}
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>
