@@ -1,0 +1,37 @@
+@import '~@angular/material/theming';
+
+
+/** Created style for my-first-font*/
+$typo1: mat-typography-config(
+  $font-family: 'monospace',
+  $headline: mat-typography-level(32px, 48px, 700),
+  $body-1: mat-typography-level(16px, 24px, 500)
+);
+/** Created style for my-second-font*/
+$typo2: mat-typography-config(
+  $font-family: 'Anton',
+  $headline: mat-typography-level(32px, 48px, 700),
+  $body-1: mat-typography-level(16px, 24px, 500)
+);
+
+/** Created style for my-third-font*/
+$typo3: mat-typography-config(
+  $font-family: 'Roboto',
+  $headline: mat-typography-level(32px, 48px, 700),
+  $body-1: mat-typography-level(16px, 24px, 500)
+);
+
+
+
+.my-first-font {
+
+@include mat-core($typo1);
+}
+
+.my-second-font {
+  @include mat-core($typo2);
+}
+
+.my-third-font {
+  @include mat-core($typo3);
+}

@@ -9,10 +9,10 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 import { FooterComponent } from './footer/footer.component';
 import { LanguageSelectorComponent } from './language-selector/language-selector.component';
 import { ThemePickerComponent } from './theme-picker/theme-picker.component';
-
 /** Custom Modules */
 import { IconsModule } from './icons.module';
 import { MaterialModule } from './material.module';
+import { FontPickerComponent } from './font-picker/font-picker.component';
 
 /**
  * Shared Module
@@ -23,6 +23,7 @@ import { MaterialModule } from './material.module';
   imports: [
     CommonModule,
     IconsModule,
+    FormsModule,
     MaterialModule,
     ReactiveFormsModule
   ],
@@ -30,12 +31,14 @@ import { MaterialModule } from './material.module';
     DeleteDialogComponent,
     FileUploadComponent,
     FooterComponent,
+    FontPickerComponent,
     LanguageSelectorComponent,
     ThemePickerComponent
   ],
   exports: [
     FileUploadComponent,
     FooterComponent,
+    FontPickerComponent,
     LanguageSelectorComponent,
     ThemePickerComponent,
     CommonModule,
