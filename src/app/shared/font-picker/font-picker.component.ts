@@ -30,7 +30,6 @@ export class FontPickerComponent implements OnInit {
   }
 
 
-
 }
 
 

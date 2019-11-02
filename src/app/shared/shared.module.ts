@@ -30,8 +30,8 @@ import { FontPickerComponent } from './font-picker/font-picker.component';
   declarations: [
     DeleteDialogComponent,
     FileUploadComponent,
-    FooterComponent,
     FontPickerComponent,
+    FooterComponent,
     LanguageSelectorComponent,
     ThemePickerComponent
   ],
