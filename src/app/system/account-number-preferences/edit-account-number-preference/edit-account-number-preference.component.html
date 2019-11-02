@@ -1,0 +1,46 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="accountNumberPreferenceForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Account Type</mat-label>
+            <mat-select required formControlName="accountType">
+              <mat-option *ngFor="let accountType of accountNumberPreferencesTemplateData.accountTypeOptions" [value]="accountType.id">
+                {{ accountType.value }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="accountNumberPreferenceForm.controls.accountType.hasError('required')">
+              Account Type is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Prefix Field</mat-label>
+            <mat-select formControlName="prefixType">
+              <mat-option *ngFor="let prefixType of prefixTypeData" [value]="prefixType.id">
+                {{ prefixType.value }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary"
+          [disabled]="!accountNumberPreferenceForm.valid || accountNumberPreferenceForm.pristine">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>

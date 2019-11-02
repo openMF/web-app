@@ -27,6 +27,10 @@ import { EditNotificationComponent } from './external-services/notification/edit
 import { EditSMSComponent } from './external-services/sms/edit-sms/edit-sms.component';
 import { ViewCodeComponent } from './codes/view-code/view-code.component';
 import { EditCodeComponent } from './codes/edit-code/edit-code.component';
+import { AccountNumberPreferencesComponent } from './account-number-preferences/account-number-preferences.component';
+import { CreateAccountNumberPreferenceComponent } from './account-number-preferences/create-account-number-preference/create-account-number-preference.component';
+import { ViewAccountNumberPreferenceComponent } from './account-number-preferences/view-account-number-preference/view-account-number-preference.component';
+import { EditAccountNumberPreferenceComponent } from './account-number-preferences/edit-account-number-preference/edit-account-number-preference.component';
 
 @NgModule({
   imports: [
@@ -54,7 +58,11 @@ import { EditCodeComponent } from './codes/edit-code/edit-code.component';
     EditAmazonS3Component,
     EditEmailComponent,
     EditNotificationComponent,
-    EditSMSComponent
+    EditSMSComponent,
+    AccountNumberPreferencesComponent,
+    CreateAccountNumberPreferenceComponent,
+    ViewAccountNumberPreferenceComponent,
+    EditAccountNumberPreferenceComponent
   ]
 })
 export class SystemModule { }

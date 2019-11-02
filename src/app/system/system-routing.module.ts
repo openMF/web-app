@@ -27,6 +27,10 @@ import { EditAmazonS3Component } from './external-services/amazon-s3/edit-amazon
 import { EditEmailComponent } from './external-services/email/edit-email/edit-email.component';
 import { EditNotificationComponent } from './external-services/notification/edit-notification/edit-notification.component';
 import { EditSMSComponent } from './external-services/sms/edit-sms/edit-sms.component';
+import { AccountNumberPreferencesComponent } from './account-number-preferences/account-number-preferences.component';
+import { CreateAccountNumberPreferenceComponent } from './account-number-preferences/create-account-number-preference/create-account-number-preference.component';
+import { ViewAccountNumberPreferenceComponent } from './account-number-preferences/view-account-number-preference/view-account-number-preference.component';
+import { EditAccountNumberPreferenceComponent } from './account-number-preferences/edit-account-number-preference/edit-account-number-preference.component';
 
 /** Custom Resolvers */
 import { CodesResolver } from './codes/codes.resolver';
@@ -43,6 +47,9 @@ import { AmazonS3ConfigurationResolver } from './external-services/amazon-s3/ama
 import { EmailConfigurationResolver } from './external-services/email/email.resolver';
 import { SMSConfigurationResolver } from './external-services/sms/sms.resolver';
 import { NotificationConfigurationResolver } from './external-services/notification/notification.resolver';
+import { AccountNumberPreferencesResolver } from './account-number-preferences/account-number-preferences.resolver';
+import { AccountNumberPreferencesTemplateResolver } from './account-number-preferences/create-account-number-preference/account-number-preferences-template.resolver';
+import { AccountNumberPreferenceResolver } from './account-number-preferences/view-account-number-preference/account-number-preference.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -249,8 +256,50 @@ const routes: Routes = [
             }
           }
         ],
-
         },
+        {
+          path: 'account-number-preferences',
+          data: { title: extract('Account Number Preferences'), breadcrumb: 'Account Number Preferences' },
+          children: [
+            {
+              path: '',
+              component: AccountNumberPreferencesComponent,
+              resolve: {
+                accountNumberPreferences: AccountNumberPreferencesResolver
+              }
+            },
+            {
+              path: 'create',
+              component: CreateAccountNumberPreferenceComponent,
+              data: { title: extract('Create Account Number Preference'), breadcrumb: 'Create' },
+              resolve: {
+                accountNumberPreferencesTemplate: AccountNumberPreferencesTemplateResolver
+              }
+            },
+            {
+              path: ':id',
+              data: { title: extract('View Account Number Preference'), routeParamBreadcrumb: 'id' },
+              children: [
+                {
+                  path: '',
+                  component: ViewAccountNumberPreferenceComponent,
+                  resolve: {
+                    accountNumberPreference: AccountNumberPreferenceResolver
+                  }
+                },
+                {
+                  path: 'edit',
+                  component: EditAccountNumberPreferenceComponent,
+                  data: { title: extract('Edit Account Number Preference'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    accountNumberPreference: AccountNumberPreferenceResolver,
+                    accountNumberPreferencesTemplate: AccountNumberPreferencesTemplateResolver
+                  }
+                }
+              ]
+            }
+          ]
+        }
       ]
     }
   ])
@@ -273,7 +322,10 @@ const routes: Routes = [
     AmazonS3ConfigurationResolver,
     EmailConfigurationResolver,
     SMSConfigurationResolver,
-    NotificationConfigurationResolver
+    NotificationConfigurationResolver,
+    AccountNumberPreferencesResolver,
+    AccountNumberPreferencesTemplateResolver,
+    AccountNumberPreferenceResolver
   ]
 })
 export class SystemRoutingModule { }
