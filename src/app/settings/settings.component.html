@@ -90,15 +90,9 @@
 
         <span class="header">Theme</span>
         <mifosx-theme-picker></mifosx-theme-picker>
-
-        <mat-form-field>
-          <mat-label>Default Font</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let font of fonts" [value]="font">
-              {{ font }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+       
+        <span class="header">Font style</span>
+      <mifosx-font-picker></mifosx-font-picker>
 
       </div>
 
