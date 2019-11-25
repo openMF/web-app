@@ -1,0 +1,69 @@
+<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+
+  <button mat-raised-button color="primary" [routerLink]="['edit']">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit
+  </button>
+
+  <button mat-raised-button color="warn" (click)="delete()" *ngIf="!reportData.coreReport">
+    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+    Delete
+  </button>
+
+</div>
+
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-title>{{ reportData.reportName }}</mat-card-title>
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" class="content">
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Report Type:
+        </div>
+
+        <div fxFlex="50%">
+          {{ reportData.reportType }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Report Subtype:
+        </div>
+
+        <div fxFlex="50%">
+          {{ reportData.reportSubType }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Report Category:
+        </div>
+
+        <div fxFlex="50%">
+          {{ reportData.reportCategory }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Core Report:
+        </div>
+
+        <div fxFlex="50%">
+          {{ reportData.coreReport ? 'Yes' : 'No' }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          User Report:
+        </div>
+
+        <div fxFlex="50%">
+          {{ reportData.useReport ? 'Yes' : 'No' }}
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>

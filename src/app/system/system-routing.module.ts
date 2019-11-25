@@ -31,6 +31,10 @@ import { AccountNumberPreferencesComponent } from './account-number-preferences/
 import { CreateAccountNumberPreferenceComponent } from './account-number-preferences/create-account-number-preference/create-account-number-preference.component';
 import { ViewAccountNumberPreferenceComponent } from './account-number-preferences/view-account-number-preference/view-account-number-preference.component';
 import { EditAccountNumberPreferenceComponent } from './account-number-preferences/edit-account-number-preference/edit-account-number-preference.component';
+import { ManageReportsComponent } from './manage-reports/manage-reports.component';
+import { EditReportComponent } from './manage-reports/edit-report/edit-report.component';
+import { CreateReportComponent } from './manage-reports/create-report/create-report.component';
+import { ViewReportComponent } from './manage-reports/view-report/view-report.component';
 
 /** Custom Resolvers */
 import { CodesResolver } from './codes/codes.resolver';
@@ -50,6 +54,9 @@ import { NotificationConfigurationResolver } from './external-services/notificat
 import { AccountNumberPreferencesResolver } from './account-number-preferences/account-number-preferences.resolver';
 import { AccountNumberPreferencesTemplateResolver } from './account-number-preferences/create-account-number-preference/account-number-preferences-template.resolver';
 import { AccountNumberPreferenceResolver } from './account-number-preferences/view-account-number-preference/account-number-preference.resolver';
+import { ReportsResolver } from './manage-reports/reports.resolver';
+import { ReportResolver } from './manage-reports/report.resolver';
+import { ReportTemplateResolver } from './manage-reports/report-template.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -299,6 +306,49 @@ const routes: Routes = [
               ]
             }
           ]
+        },
+        {
+          path: 'reports',
+          data: { title: extract('Manage Reports'), breadcrumb: 'Manage Reports' },
+          children: [
+            {
+              path: '',
+              component: ManageReportsComponent,
+              resolve: {
+                reports: ReportsResolver
+              }
+            },
+            {
+              path: 'create',
+              component: CreateReportComponent,
+              data: { title: extract('Create Report'), breadcrumb: 'Create' },
+              resolve: {
+                reportTemplate: ReportTemplateResolver
+              }
+            },
+            {
+              path: ':id',
+              data: { title: extract('View Report'), routeParamBreadcrumb: 'id' },
+              children: [
+                {
+                  path: '',
+                  component: ViewReportComponent,
+                  resolve: {
+                    report: ReportResolver
+                  }
+                },
+                {
+                  path: 'edit',
+                  component: EditReportComponent,
+                  data: { title: extract('Edit Report'), routeParamBreadcrumb: false, breadcrumb: 'Edit' },
+                  resolve: {
+                    report: ReportResolver,
+                    reportTemplate: ReportTemplateResolver
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     }
@@ -325,7 +375,10 @@ const routes: Routes = [
     NotificationConfigurationResolver,
     AccountNumberPreferencesResolver,
     AccountNumberPreferencesTemplateResolver,
-    AccountNumberPreferenceResolver
+    AccountNumberPreferenceResolver,
+    ReportsResolver,
+    ReportResolver,
+    ReportTemplateResolver
   ]
 })
 export class SystemRoutingModule { }

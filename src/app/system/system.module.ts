@@ -31,6 +31,13 @@ import { AccountNumberPreferencesComponent } from './account-number-preferences/
 import { CreateAccountNumberPreferenceComponent } from './account-number-preferences/create-account-number-preference/create-account-number-preference.component';
 import { ViewAccountNumberPreferenceComponent } from './account-number-preferences/view-account-number-preference/view-account-number-preference.component';
 import { EditAccountNumberPreferenceComponent } from './account-number-preferences/edit-account-number-preference/edit-account-number-preference.component';
+import { ManageReportsComponent } from './manage-reports/manage-reports.component';
+import { ViewReportComponent } from './manage-reports/view-report/view-report.component';
+import { CreateReportComponent } from './manage-reports/create-report/create-report.component';
+import { EditReportComponent } from './manage-reports/edit-report/edit-report.component';
+
+/** Dialog Component Imports */
+import { ReportParameterDialogComponent } from './manage-reports/report-parameter-dialog/report-parameter-dialog.component';
 
 @NgModule({
   imports: [
@@ -62,7 +69,15 @@ import { EditAccountNumberPreferenceComponent } from './account-number-preferenc
     AccountNumberPreferencesComponent,
     CreateAccountNumberPreferenceComponent,
     ViewAccountNumberPreferenceComponent,
-    EditAccountNumberPreferenceComponent
+    EditAccountNumberPreferenceComponent,
+    ManageReportsComponent,
+    ViewReportComponent,
+    CreateReportComponent,
+    EditReportComponent,
+    ReportParameterDialogComponent
+  ],
+  entryComponents: [
+    ReportParameterDialogComponent
   ]
 })
 export class SystemModule { }
