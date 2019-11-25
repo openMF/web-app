@@ -224,4 +224,51 @@ export class SystemService {
     return this.http.put(`/accountnumberformats/${accountNumberPreferenceId}`, accountNumberPreferenceChanges);
   }
 
+  /**
+   * @returns {Observable<any>} Reports.
+   */
+  getReports(): Observable<any> {
+    return this.http.get('/reports');
+  }
+
+  /**
+   * @param {string} reportId Report ID.
+   * @returns {Observable<any>} Report.
+   */
+  getReport(reportId: string): Observable<any> {
+    return this.http.get(`/reports/${reportId}?template=true`);
+  }
+
+  /**
+   * @returns {Observable<any>} Report Template.
+   */
+  getReportTemplate(): Observable<any> {
+    return this.http.get('/reports/template');
+  }
+
+  /**
+   * @param {any} report Report.
+   * @returns {Observable<any>}
+   */
+  createReport(report: any): Observable<any> {
+    return this.http.post('/reports', report);
+  }
+
+  /**
+   * @param {string} reportId Report ID.
+   * @param {any} report Report.
+   * @returns {Observable<any>}
+   */
+  updateReport(reportId: string, report: any): Observable<any> {
+    return this.http.put(`/reports/${reportId}`, report);
+  }
+
+  /**
+   * @param {string} reportId Report ID.
+   * @returns {Observable<any>}
+   */
+  deleteReport(reportId: string): Observable<any> {
+    return this.http.delete(`/reports/${reportId}`);
+  }
+
 }

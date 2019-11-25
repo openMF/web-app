@@ -1,0 +1,36 @@
+<h1 mat-dialog-title>{{ data.parameterName ? "Edit" : "Add" }} Report Parameter</h1>
+
+<mat-dialog-content>
+
+  <form [formGroup]="reportParameterForm">
+
+    <div fxLayout="column">
+
+      <mat-form-field>
+        <mat-label>Select allowed parameter</mat-label>
+        <mat-select required formControlName="parameterName">
+          <mat-option *ngFor="let allowedParameter of data.allowedParameters" [value]="allowedParameter.id">
+            {{ allowedParameter.parameterName }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="reportParameterForm.controls.parameterName.hasError('required')">
+          Report Parameter is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Parameter name passed to Pentaho</mat-label>
+        <input matInput formControlName="reportParameterName">
+      </mat-form-field>
+
+    </div>
+
+  </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary"
+    [disabled]="!reportParameterForm.valid || reportParameterForm.pristine" (click)="submit()">Submit</button>
+</mat-dialog-actions>
