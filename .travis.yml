@@ -20,4 +20,4 @@ deploy:
   github-token: $GITHUB_TOKEN
   keep-history: true
   on:
-    branch: gsoc-19
+    branch: master

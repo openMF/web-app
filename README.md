@@ -15,7 +15,7 @@ It is a Single-Page App (SPA) written in standard web technologies [HTML5](http:
 
 2. Install [angular-cli](https://github.com/angular/angular-cli) globally.
 ```
-npm install -g @angular/cli@6.2.3
+npm install -g @angular/cli@7.3.9
 ```
 
 3. Clone the project locally into your system.
@@ -42,6 +42,7 @@ The application is using the demo server with basic authentication by default. T
 
 **Important Note:** Please do not make any alterations to these credentials.
 
+If you are running into issues with the demo server, please see available alternatives [here](https://groups.google.com/d/msg/mifosdeveloper/7hi_fpunnqE/uD0yQytwFwAJ).
 
 ### Development server
 

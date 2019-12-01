@@ -3,12 +3,12 @@
 - View the [README](../README.md) or [watch this video](https://youtu.be/OnxxC3K2oro) to get your development environment up and running. 
 - Learn how to [format pull requests](#submitting-a-pull-request).
 - Read how to [rebase/merge upstream branches](#configuring-remotes).
-- Understand our [commit message conventions](#how-to-commit).
+- Understand our [commit message conventions](https://github.com/openMF/web-app/blob/master/.github/COMMIT_MESSAGE.md).
 - Sign our [Mifos CLA](http://mifos.org/about-us/financial-legal/mifos-contributor-agreement/).
-- [Find an issue to work on](https://github.com/orgs/openMF/projects/1) and start smashing!
-- [Ask a question on Gitter](https://gitter.im/openMF/web-app).
 - Follow our [code of conduct](CODE_OF_CONDUCT.md).
-- Learn more at our [wiki](https://mifosforge.jira.com/wiki/spaces/RES/pages/464322561/Code+4+Good+Week+2018+Wiki).
+- [Find an issue to work on](https://github.com/openMF/web-app/issues) and start smashing!
+- [Ask a question on Gitter](https://gitter.im/openMF/web-app).
+- Learn more at our [getting started guide](https://mifosforge.jira.com/wiki/spaces/RES/pages/464322561/New+Contributor+Getting+Started+Guide).
 
 # Contributing Guidelines [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/openMF/web-app/issues)
 
@@ -35,7 +35,7 @@ Remember that this is an inclusive community, commited to creating a safe, posit
 - If you would like to work on an issue, inform in the issue ticket by commenting on it.
 - Please be sure that you are able to reproduce the issue, before working on it. If not, please ask for clarification by commenting or asking the issue creator.
 
-Note: Please do not work on an issue which is already being worked on by another contributor. We don't encourage creating multiple pull requests for the same issue. Also, please allow the assigned person at least 2 days to work on the issue (The time might vary depending on the difficulty). If there is no progress after the deadline, please comment on the issue asking the contributor whether he/she is still working on it. If there is no reply, then feel free to work on the issue.
+**Note:** Please do not work on an issue which is already being worked on by another contributor. We don't encourage creating multiple pull requests for the same issue. Also, please allow the assigned person at least 2 days to work on the issue (The time might vary depending on the difficulty). If there is no progress after the deadline, please comment on the issue asking the contributor whether he/she is still working on it. If there is no reply, then feel free to work on the issue.
 
 
 ## Submitting a Pull Request
@@ -119,8 +119,6 @@ git rebase master
 ```
 git push origin branch-name
 ```
-## How to Commit
-- Read [Committ Messaging Conventions](COMMIT_MESSAGE.md)
 
 ## After your Pull Request is merged
 After your pull request is merged, you can safely delete your branch and pull the changes from the main (upstream) repository.
