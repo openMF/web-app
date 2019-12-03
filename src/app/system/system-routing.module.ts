@@ -15,6 +15,7 @@ import { ExternalServicesComponent } from './external-services/external-services
 import { ManageDataTablesComponent } from './manage-data-tables/manage-data-tables.component';
 import { ManageHooksComponent } from './manage-hooks/manage-hooks.component';
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
+import { AddRoleComponent } from './roles-and-permissions/add-role/add-role.component';
 import { ManageSurveysComponent } from './manage-surveys/manage-surveys.component';
 import { ManageSchedulerJobsComponent } from './manage-scheduler-jobs/manage-scheduler-jobs.component';
 import { GlobalConfigurationsComponent } from './global-configurations/global-configurations.component';
@@ -221,11 +222,21 @@ const routes: Routes = [
       },
       {
           path: 'roles-and-permissions',
-          component: RolesAndPermissionsComponent,
-          resolve: {
-                roles: RolesAndPermissionsResolver
-          },
           data: { title:  extract('Roles and Permissions'), breadcrumb: 'Roles and Permissions' },
+          children: [
+            {
+              path: '',
+              component: RolesAndPermissionsComponent,
+              resolve: {
+                roles: RolesAndPermissionsResolver
+              }
+            },
+            {
+              path: 'add',
+              component: AddRoleComponent,
+              data: { title: extract('Add Role'), breadcrumb: 'Add' }
+            }
+          ]
       },
       {
         path: 'surveys',
