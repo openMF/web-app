@@ -40,6 +40,14 @@ export class SystemService {
   }
 
   /**
+   * @param {any} role Role to be created.
+   * @returns {Observable<any>}
+   */
+  createRole(role: any): Observable<any> {
+    return this.http.post('/roles', role);
+  }
+
+  /**
    * @returns {Observable<any>} Fetches Codes.
    */
   getCodes(): Observable<any> {
