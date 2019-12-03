@@ -33,6 +33,7 @@ import { AccountingModule } from './accounting/accounting.module';
 import { SelfServiceModule } from './self-service/self-service.module';
 import { SystemModule } from './system/system.module';
 import { ProductsModule } from './products/products.module';
+import { OrganizationModule } from './organization/organization.module';
 
 
 
@@ -64,6 +65,7 @@ import { AppRoutingModule } from './app-routing.module';
     SelfServiceModule,
     SystemModule,
     ProductsModule,
+    OrganizationModule,
     AppRoutingModule,
   ],
   declarations: [WebAppComponent, NotFoundComponent],
