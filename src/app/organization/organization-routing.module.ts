@@ -10,6 +10,10 @@ import { extract } from '../core/i18n/i18n.service';
 
 /** Custom Components */
 import { OrganizationComponent } from './organization.component';
+import { LoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/loan-provisioning-criteria.component';
+
+/** Custom Resolvers */
+import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -21,6 +25,14 @@ const routes: Routes = [
         {
           path: '',
           component: OrganizationComponent
+        },
+        {
+          path: 'provisioning-criteria',
+          component: LoanProvisioningCriteriaComponent,
+          data: { title: extract('Provisioning Criteria'), breadcrumb: 'Provisioning Criteria' },
+          resolve: {
+            loanProvisioningCriteria: LoanProvisioningCriteriaResolver
+          }
         }
       ]
     }
@@ -35,6 +47,8 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: []
+  providers: [
+    LoanProvisioningCriteriaResolver
+  ]
 })
 export class OrganizationRoutingModule { }
