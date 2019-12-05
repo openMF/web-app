@@ -8,6 +8,7 @@ import { OrganizationRoutingModule } from './organization-routing.module';
 /** Custom Components */
 import { OrganizationComponent } from './organization.component';
 import { LoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/loan-provisioning-criteria.component';
+import { OfficesComponent } from './offices/offices.component';
 
 /**
  * Organization Module
@@ -21,7 +22,8 @@ import { LoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/
   ],
   declarations: [
     OrganizationComponent,
-    LoanProvisioningCriteriaComponent
+    LoanProvisioningCriteriaComponent,
+    OfficesComponent
   ]
 })
 export class OrganizationModule { }
