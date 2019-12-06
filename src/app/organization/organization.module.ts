@@ -10,6 +10,7 @@ import { OrganizationComponent } from './organization.component';
 import { LoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/loan-provisioning-criteria.component';
 import { OfficesComponent } from './offices/offices.component';
 import { EmployeesComponent } from './employees/employees.component';
+import { CurrenciesComponent } from './currencies/currencies.component';
 
 /**
  * Organization Module
@@ -25,7 +26,8 @@ import { EmployeesComponent } from './employees/employees.component';
     OrganizationComponent,
     LoanProvisioningCriteriaComponent,
     OfficesComponent,
-    EmployeesComponent
+    EmployeesComponent,
+    CurrenciesComponent
   ]
 })
 export class OrganizationModule { }

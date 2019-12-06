@@ -13,11 +13,13 @@ import { OrganizationComponent } from './organization.component';
 import { LoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/loan-provisioning-criteria.component';
 import { OfficesComponent } from './offices/offices.component';
 import { EmployeesComponent } from './employees/employees.component';
+import { CurrenciesComponent } from './currencies/currencies.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
 import { OfficesResolver } from './offices/offices.resolver';
 import { EmployeesResolver } from './employees/employees.resolver';
+import { CurrenciesResolver } from './currencies/currencies.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -53,6 +55,14 @@ const routes: Routes = [
           resolve: {
             employees: EmployeesResolver
           }
+        },
+        {
+          path: 'currencies',
+          component: CurrenciesComponent,
+          data: { title: extract('Currency Configuration'), breadcrumb: 'Currency Configuration' },
+          resolve: {
+            currencies: CurrenciesResolver
+          }
         }
       ]
     }
@@ -70,7 +80,8 @@ const routes: Routes = [
   providers: [
     LoanProvisioningCriteriaResolver,
     OfficesResolver,
-    EmployeesResolver
+    EmployeesResolver,
+    CurrenciesResolver
   ]
 })
 export class OrganizationRoutingModule { }

@@ -39,4 +39,11 @@ export class OrganizationService {
     return this.http.get('/staff');
   }
 
+  /**
+   * @returns {Observable<any>} Currencies data
+   */
+  getCurrencies(): Observable<any> {
+    return this.http.get('/currencies');
+  }
+
 }
