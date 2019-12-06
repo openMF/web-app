@@ -12,10 +12,12 @@ import { extract } from '../core/i18n/i18n.service';
 import { OrganizationComponent } from './organization.component';
 import { LoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/loan-provisioning-criteria.component';
 import { OfficesComponent } from './offices/offices.component';
+import { EmployeesComponent } from './employees/employees.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
 import { OfficesResolver } from './offices/offices.resolver';
+import { EmployeesResolver } from './employees/employees.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -43,6 +45,14 @@ const routes: Routes = [
           resolve: {
             offices: OfficesResolver
           }
+        },
+        {
+          path: 'employees',
+          component: EmployeesComponent,
+          data: { title: extract('Manage Employees'), breadcrumb: 'Manage Employees' },
+          resolve: {
+            employees: EmployeesResolver
+          }
         }
       ]
     }
@@ -59,7 +69,8 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     LoanProvisioningCriteriaResolver,
-    OfficesResolver
+    OfficesResolver,
+    EmployeesResolver
   ]
 })
 export class OrganizationRoutingModule { }
