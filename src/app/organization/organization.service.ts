@@ -25,4 +25,11 @@ export class OrganizationService {
     return this.http.get('/provisioningcriteria');
   }
 
+  /**
+   * @returns {Observable<any>} Offices data
+   */
+  getOffices(): Observable<any> {
+    return this.http.get('/offices');
+  }
+
 }

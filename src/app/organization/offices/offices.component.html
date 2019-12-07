@@ -1,0 +1,62 @@
+<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+
+  <button mat-raised-button color="primary">
+    <fa-icon icon="sitemap"></fa-icon>&nbsp;&nbsp;
+    Tree View
+  </button>
+
+  <button mat-raised-button color="primary">
+    <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+    Create Office
+  </button>
+
+  <button mat-raised-button color="primary">
+    <fa-icon icon="upload"></fa-icon>&nbsp;&nbsp;
+    Import Offices
+  </button>
+
+</div>
+
+<div class="container">
+
+  <div fxLayout="row" fxLayoutGap="20px">
+    <mat-form-field fxFlex>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event.target.value)">
+    </mat-form-field>
+  </div>
+
+  <div class="mat-elevation-z8">
+
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Office Name </th>
+        <td mat-cell *matCellDef="let offices"> {{ offices.name }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="externalId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> External ID </th>
+        <td mat-cell *matCellDef="let offices"> {{ offices.externalId }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="parentName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Parent Office </th>
+        <td mat-cell *matCellDef="let offices"> {{ offices.parentName }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="openingDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Opened On </th>
+        <td mat-cell *matCellDef="let offices"> {{ offices.openingDate | date }} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row"></tr>
+
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+  </div>
+
+</div>
