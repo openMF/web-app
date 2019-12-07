@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 })
 export class CentersComponent implements OnInit {
   private ELEMENT_DATA: any = undefined;
-  displayedColumns =  ['name', 'accountno', 'externalid', 'status', 'office'];
+  displayedColumns =  ['name', 'accountNo', 'externalId', 'active', 'officeName'];
   dataSource = new MatTableDataSource();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
