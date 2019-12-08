@@ -32,4 +32,11 @@ export class OrganizationService {
     return this.http.get('/offices');
   }
 
+  /**
+   * @returns {Observable<any>} Employees data
+   */
+  getEmployees(): Observable<any> {
+    return this.http.get('/staff');
+  }
+
 }
