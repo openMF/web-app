@@ -127,6 +127,13 @@ export class ProductsService {
   }
 
   /**
+   * @returns {Observable<any>} Tax Groups data
+   */
+  getTaxGroups(): Observable<any> {
+    return this.http.get('/taxes/group');
+  }
+
+  /**
    * @returns {Observable<any>} Product mixes data
    */
   getProductMixes(): Observable<any> {
