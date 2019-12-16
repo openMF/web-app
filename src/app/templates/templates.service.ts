@@ -25,4 +25,20 @@ export class TemplatesService {
     return this.http.get('/templates');
   }
 
+  /**
+   * @param templateId Template ID.
+   * @returns {Observable<any>} Fetches Template.
+   */
+  getTemplate(templateId: string): Observable<any> {
+    return this.http.get(`/templates/${templateId}`);
+  }
+
+  /**
+   * @param templateId Template ID.
+   * @returns {Observable<any>}
+   */
+  deleteTemplate(templateId: string): Observable<any> {
+    return this.http.delete(`/templates/${templateId}`);
+  }
+
 }
