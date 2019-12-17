@@ -15,6 +15,7 @@ import { OfficesComponent } from './offices/offices.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { CurrenciesComponent } from './currencies/currencies.component';
 import { SmsCampaignsComponent } from './sms-campaigns/sms-campaigns.component';
+import { AdhocQueryComponent } from './adhoc-query/adhoc-query.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -22,6 +23,7 @@ import { OfficesResolver } from './offices/offices.resolver';
 import { EmployeesResolver } from './employees/employees.resolver';
 import { CurrenciesResolver } from './currencies/currencies.resolver';
 import { SmsCampaignsResolver } from './sms-campaigns/sms-campaigns.resolver';
+import { AdhocQueriesResolver } from './adhoc-query/adhoc-queries.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -73,6 +75,19 @@ const routes: Routes = [
           resolve: {
             smsCampaigns: SmsCampaignsResolver
           }
+        },
+        {
+          path: 'adhoc-query',
+          data: { title: extract('Adhoc Query'), breadcrumb: 'Adhoc Query' },
+          children: [
+            {
+              path: '',
+              component: AdhocQueryComponent,
+              resolve: {
+                adhocQueries: AdhocQueriesResolver
+              }
+            }
+          ]
         }
       ]
     }
@@ -92,7 +107,8 @@ const routes: Routes = [
     OfficesResolver,
     EmployeesResolver,
     CurrenciesResolver,
-    SmsCampaignsResolver
+    SmsCampaignsResolver,
+    AdhocQueriesResolver
   ]
 })
 export class OrganizationRoutingModule { }

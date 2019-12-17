@@ -1,0 +1,15 @@
+table {
+  width: 100%;
+
+  .select-row:hover {
+      cursor: pointer;
+  }
+}
+
+.true {
+  color: #32cd32;
+}
+
+.false {
+  color: #f44366;
+}
