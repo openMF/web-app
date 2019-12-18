@@ -7,6 +7,7 @@ import { TemplatesRoutingModule } from './templates-routing.module';
 
 /** Custom Components */
 import { TemplatesComponent } from './templates.component';
+import { ViewTemplateComponent } from './view-template/view-template.component';
 
 /**
  * Templates Module
@@ -19,7 +20,8 @@ import { TemplatesComponent } from './templates.component';
     TemplatesRoutingModule
   ],
   declarations: [
-    TemplatesComponent
+    TemplatesComponent,
+    ViewTemplateComponent,
   ]
 })
 export class TemplatesModule { }

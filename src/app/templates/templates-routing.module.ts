@@ -10,9 +10,11 @@ import { extract } from '../core/i18n/i18n.service';
 
 /** Custom Components */
 import { TemplatesComponent } from './templates.component';
+import { ViewTemplateComponent } from './view-template/view-template.component';
 
 /** Custom Resolvers */
 import { TemplatesResolver } from './templates.resolver';
+import { TemplateResolver } from './template.resolver';
 
 /** Templates Routes */
 const routes: Routes = [
@@ -27,6 +29,19 @@ const routes: Routes = [
           resolve: {
             templates: TemplatesResolver
           }
+        },
+        {
+          path: ':id',
+          data: { title: extract('View Template'), routeResolveBreadcrumb: ['template', 'name'] },
+          resolve: {
+            template: TemplateResolver
+          },
+          children: [
+            {
+              path: '',
+              component: ViewTemplateComponent,
+            }
+          ]
         }
       ]
     }
@@ -42,7 +57,8 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   providers: [
-    TemplatesResolver
+    TemplatesResolver,
+    TemplateResolver
   ]
 })
 export class TemplatesRoutingModule { }
