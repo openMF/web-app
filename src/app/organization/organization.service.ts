@@ -46,4 +46,11 @@ export class OrganizationService {
     return this.http.get('/currencies');
   }
 
+  /**
+   * @returns {Observable<any>} SMS Campaigns data
+   */
+  getSmsCampaigns(): Observable<any> {
+    return this.http.get('/smscampaigns');
+  }
+
 }
