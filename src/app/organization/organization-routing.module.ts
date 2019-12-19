@@ -14,12 +14,15 @@ import { LoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/
 import { OfficesComponent } from './offices/offices.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { CurrenciesComponent } from './currencies/currencies.component';
+import { SmsCampaignsComponent } from './sms-campaigns/sms-campaigns.component';
+import { WorkingDaysComponent } from './working-days/working-days.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
 import { OfficesResolver } from './offices/offices.resolver';
 import { EmployeesResolver } from './employees/employees.resolver';
 import { CurrenciesResolver } from './currencies/currencies.resolver';
+import { SmsCampaignsResolver } from './sms-campaigns/sms-campaigns.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -63,6 +66,19 @@ const routes: Routes = [
           resolve: {
             currencies: CurrenciesResolver
           }
+        },
+        {
+          path: 'sms-campaigns',
+          component: SmsCampaignsComponent,
+          data: { title: extract('SMS Campaigns'), breadcrumb: 'SMS Campaigns' },
+          resolve: {
+            smsCampaigns: SmsCampaignsResolver
+          }
+        },
+        {
+          path: 'working-days',
+          component: WorkingDaysComponent,
+          data: { title: extract('Working Days'), breadcrumb: 'Working Days' }
         }
       ]
     }
@@ -81,7 +97,8 @@ const routes: Routes = [
     LoanProvisioningCriteriaResolver,
     OfficesResolver,
     EmployeesResolver,
-    CurrenciesResolver
+    CurrenciesResolver,
+    SmsCampaignsResolver
   ]
 })
 export class OrganizationRoutingModule { }

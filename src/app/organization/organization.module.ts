@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 /** Custom Modules */
 import { SharedModule } from '../shared/shared.module';
 import { OrganizationRoutingModule } from './organization-routing.module';
+import { PipesModule } from 'app/pipes/pipes.module';
 
 /** Custom Components */
 import { OrganizationComponent } from './organization.component';
@@ -11,6 +12,8 @@ import { LoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/
 import { OfficesComponent } from './offices/offices.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { CurrenciesComponent } from './currencies/currencies.component';
+import { SmsCampaignsComponent } from './sms-campaigns/sms-campaigns.component';
+import { WorkingDaysComponent } from './working-days/working-days.component';
 
 /**
  * Organization Module
@@ -20,14 +23,17 @@ import { CurrenciesComponent } from './currencies/currencies.component';
 @NgModule({
   imports: [
     SharedModule,
-    OrganizationRoutingModule
+    OrganizationRoutingModule,
+    PipesModule
   ],
   declarations: [
     OrganizationComponent,
     LoanProvisioningCriteriaComponent,
     OfficesComponent,
     EmployeesComponent,
-    CurrenciesComponent
+    CurrenciesComponent,
+    SmsCampaignsComponent,
+    WorkingDaysComponent
   ]
 })
 export class OrganizationModule { }
