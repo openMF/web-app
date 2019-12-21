@@ -14,6 +14,7 @@ import { EmployeesComponent } from './employees/employees.component';
 import { CurrenciesComponent } from './currencies/currencies.component';
 import { SmsCampaignsComponent } from './sms-campaigns/sms-campaigns.component';
 import { AdhocQueryComponent } from './adhoc-query/adhoc-query.component';
+import { WorkingDaysComponent } from './working-days/working-days.component';
 
 /**
  * Organization Module
@@ -33,7 +34,8 @@ import { AdhocQueryComponent } from './adhoc-query/adhoc-query.component';
     EmployeesComponent,
     CurrenciesComponent,
     SmsCampaignsComponent,
-    AdhocQueryComponent
+    AdhocQueryComponent,
+    WorkingDaysComponent
   ]
 })
 export class OrganizationModule { }
