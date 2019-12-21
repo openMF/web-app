@@ -53,4 +53,11 @@ export class OrganizationService {
     return this.http.get('/smscampaigns');
   }
 
+  /**
+   * @returns {Observable<any>} Adhoc Queries data
+   */
+  getAdhocQueries(): Observable<any> {
+    return this.http.get('/adhocquery');
+  }
+
 }
