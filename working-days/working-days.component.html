@@ -1,0 +1,66 @@
+<div class="container">
+  <form>
+    <table style="border:0px">
+        <h4>Working Days</h4><span style="padding: 40px"></span>
+      <div class="container" fxLayout="coloumn" fxFlex="80" fxLayoutAlign="left">
+        <tr>
+          <mat-checkbox color="primary">Monday</mat-checkbox>
+        </tr>
+        <tr>
+          <mat-checkbox color="primary">Tuesday</mat-checkbox>
+        </tr>
+        <tr>
+          <mat-checkbox color="primary">Wednesday</mat-checkbox>
+        </tr>
+        <tr>
+          <mat-checkbox color="primary">Thursday</mat-checkbox>
+        </tr>
+        <tr>
+          <mat-checkbox color="primary">Friday</mat-checkbox>
+        </tr>
+        <tr>
+          <mat-checkbox color="primary">Saturday</mat-checkbox>
+        </tr>
+        <tr>
+          <mat-checkbox color="primary">Sunday</mat-checkbox>
+        </tr>
+      </div>
+    </table>
+  </form>   
+</div>
+
+<div class="container" fxLayoutAlign="left">
+  <form>
+    <table style="border:0px">
+      <tr><td><h4>Payment due on<br>Non Working Days</h4></td>
+        <td><span style="padding: 37px"></span>
+      </td>
+        <td><mat-form-field>
+          <select matNativeControl required>
+            <option value="same-day">Same Day</option>
+            <option value="move-to-next-working-day">Move to Next Working Day</option>
+            <option value="move-to-next-repayment-meeting-day">Move to Next Repayment Meeting Day</option>
+            <option value="move-to-previous-working-day">Move to Previous Working Day</option>
+          </select>
+        </mat-form-field>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+
+<div class="container" fxLayoutALign="left">
+  <form>
+    <table style="border:0px">
+      <tr>
+        <td><h4>Extend the term for Loans<br>following a Daily<br>Repayment Schedule</h4></td>
+        <td><mat-checkbox color="primary"></mat-checkbox></td><span style="padding: 390px"></span>
+      </tr>
+    </table>
+  </form>
+</div>
+
+<div class="container" fxLayoutGap="20px">
+  <button mat-raised-button color="warn" [routerLink]="['../']">Cancel</button>
+  <button mat-raised-button color="primary" [routerLink]="['../']">Submit</button>
+</div>
