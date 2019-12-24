@@ -15,6 +15,7 @@ import { CurrenciesComponent } from './currencies/currencies.component';
 import { SmsCampaignsComponent } from './sms-campaigns/sms-campaigns.component';
 import { AdhocQueryComponent } from './adhoc-query/adhoc-query.component';
 import { TellersComponent } from './tellers/tellers.component';
+import { PaymentTypesComponent } from './payment-types/payment-types.component';
 
 /**
  * Organization Module
@@ -35,7 +36,8 @@ import { TellersComponent } from './tellers/tellers.component';
     CurrenciesComponent,
     SmsCampaignsComponent,
     AdhocQueryComponent,
-    TellersComponent
+    TellersComponent,
+    PaymentTypesComponent
   ]
 })
 export class OrganizationModule { }

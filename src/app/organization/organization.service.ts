@@ -67,4 +67,19 @@ export class OrganizationService {
     return this.http.get('/tellers');
   }
 
+  /**
+   * @returns {Observable<any>} Payment Types data
+   */
+  getPaymentTypes(): Observable<any> {
+    return this.http.get('/paymenttypes');
+  }
+
+  /**
+   * @param {string} paymentTypeId Payment type ID of payment type to be deleted.
+   * @returns {Observable<any>}
+   */
+  deletePaymentType(paymentTypeId: string): Observable<any> {
+    return this.http.delete(`/paymenttypes/${paymentTypeId}`);
+  }
+
 }
