@@ -17,6 +17,7 @@ import { AdhocQueryComponent } from './adhoc-query/adhoc-query.component';
 import { TellersComponent } from './tellers/tellers.component';
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
+import { EntityDataTableChecksComponent } from './entity-data-table-checks/entity-data-table-checks.component';
 
 /**
  * Organization Module
@@ -39,7 +40,8 @@ import { PasswordPreferencesComponent } from './password-preferences/password-pr
     AdhocQueryComponent,
     TellersComponent,
     PaymentTypesComponent,
-    PasswordPreferencesComponent
+    PasswordPreferencesComponent,
+    EntityDataTableChecksComponent
   ]
 })
 export class OrganizationModule { }
