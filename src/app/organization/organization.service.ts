@@ -82,4 +82,34 @@ export class OrganizationService {
     return this.http.delete(`/paymenttypes/${paymentTypeId}`);
   }
 
+  /**
+   * @returns {Observable<any>} Working days data.
+   */
+  getWorkingDays(): Observable<any> {
+    return this.http.get('/workingdays');
+  }
+
+  /**
+   * @param {any} workingDays Working days data.
+   * @returns {Observable<any>}
+   */
+  updateWorkingDays(workingDays: any): Observable<any> {
+    return this.http.put('/workingdays', workingDays);
+  }
+
+  /**
+   * @returns {Observable<any>} Password Preferences Template data
+   */
+  getPasswordPreferencesTemplate(): Observable<any> {
+    return this.http.get('/passwordpreferences/template');
+  }
+
+  /**
+   * @param {any} passwordPreferences Password Preferences data.
+   * @returns {Observable<any>}
+   */
+  updatePasswordPreferences(passwordPreferences: any): Observable<any> {
+    return this.http.put('/passwordpreferences', passwordPreferences);
+  }
+
 }
