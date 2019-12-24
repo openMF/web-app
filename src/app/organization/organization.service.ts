@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -33,6 +33,13 @@ export class OrganizationService {
   }
 
   /**
+   * @returns {Observable<any>} posts Offices data
+   */
+  createOffice(office: any): Observable<any> {
+    return this.http.post('/offices', office);
+  }
+
+  /**
    * @returns {Observable<any>} Employees data
    */
   getEmployees(): Observable<any> {
@@ -58,6 +65,28 @@ export class OrganizationService {
    */
   getAdhocQueries(): Observable<any> {
     return this.http.get('/adhocquery');
+  }
+
+  /**
+   * @returns {Observable<any>} Tellers data
+   */
+  getTellers(): Observable<any> {
+    return this.http.get('/tellers');
+  }
+
+  /**
+   * @returns {Observable<any>} Payment Types data
+   */
+  getPaymentTypes(): Observable<any> {
+    return this.http.get('/paymenttypes');
+  }
+
+  /**
+   * @param {string} paymentTypeId Payment type ID of payment type to be deleted.
+   * @returns {Observable<any>}
+   */
+  deletePaymentType(paymentTypeId: string): Observable<any> {
+    return this.http.delete(`/paymenttypes/${paymentTypeId}`);
   }
 
 }

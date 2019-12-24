@@ -100,7 +100,7 @@
 </mat-menu>
 
 <mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item>Users</button>
+  <button mat-menu-item [routerLink]="['/users']">Users</button>
   <button mat-menu-item [routerLink]="['/organization']">Organization</button>
   <button mat-menu-item [routerLink]="['/system']">System</button>
   <button mat-menu-item [routerLink]="['/products']">Products</button>

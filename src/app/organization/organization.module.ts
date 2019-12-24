@@ -14,6 +14,16 @@ import { EmployeesComponent } from './employees/employees.component';
 import { CurrenciesComponent } from './currencies/currencies.component';
 import { SmsCampaignsComponent } from './sms-campaigns/sms-campaigns.component';
 import { AdhocQueryComponent } from './adhoc-query/adhoc-query.component';
+import { TellersComponent } from './tellers/tellers.component';
+<<<<<<< HEAD
+<<<<<<< HEAD
+import { PaymentTypesComponent } from './payment-types/payment-types.component';
+import { CreateOfficesComponent } from './offices/create-offices/create-offices.component';
+=======
+>>>>>>> 34e1f4d... feat: add tellers component (#520)
+=======
+import { PaymentTypesComponent } from './payment-types/payment-types.component';
+>>>>>>> dc61cba... feat: add payment types component (#521)
 
 /**
  * Organization Module
@@ -33,7 +43,19 @@ import { AdhocQueryComponent } from './adhoc-query/adhoc-query.component';
     EmployeesComponent,
     CurrenciesComponent,
     SmsCampaignsComponent,
-    AdhocQueryComponent
+    AdhocQueryComponent,
+<<<<<<< HEAD
+<<<<<<< HEAD
+    TellersComponent,
+    PaymentTypesComponent,
+    CreateOfficesComponent
+=======
+    TellersComponent
+>>>>>>> 34e1f4d... feat: add tellers component (#520)
+=======
+    TellersComponent,
+    PaymentTypesComponent
+>>>>>>> dc61cba... feat: add payment types component (#521)
   ]
 })
 export class OrganizationModule { }
