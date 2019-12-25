@@ -19,6 +19,7 @@ import { PaymentTypesComponent } from './payment-types/payment-types.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
 import { EntityDataTableChecksComponent } from './entity-data-table-checks/entity-data-table-checks.component';
 import { WorkingDaysComponent } from './working-days/working-days.component';
+import { CreateOfficeComponent } from './offices/create-office/create-office.component';
 
 /**
  * Organization Module
@@ -43,7 +44,8 @@ import { WorkingDaysComponent } from './working-days/working-days.component';
     PaymentTypesComponent,
     PasswordPreferencesComponent,
     EntityDataTableChecksComponent,
-    WorkingDaysComponent
+    WorkingDaysComponent,
+    CreateOfficeComponent
   ]
 })
 export class OrganizationModule { }

@@ -21,6 +21,7 @@ import { PaymentTypesComponent } from './payment-types/payment-types.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
 import { EntityDataTableChecksComponent } from './entity-data-table-checks/entity-data-table-checks.component';
 import { WorkingDaysComponent } from './working-days/working-days.component';
+import { CreateOfficeComponent } from './offices/create-office/create-office.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -56,11 +57,24 @@ const routes: Routes = [
         },
         {
           path: 'offices',
-          component: OfficesComponent,
           data: { title: extract('Manage Offices'), breadcrumb: 'Manage Offices' },
-          resolve: {
-            offices: OfficesResolver
-          }
+          children: [
+            {
+              path: '',
+              component: OfficesComponent,
+              resolve: {
+              offices: OfficesResolver
+              }
+            },
+            {
+              path: 'create',
+              component: CreateOfficeComponent,
+              data: { title: extract('Create Office'), breadcrumb: 'Create Office' },
+              resolve: {
+                offices: OfficesResolver,
+              }
+            }
+          ]
         },
         {
           path: 'employees',

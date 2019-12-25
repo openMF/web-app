@@ -33,6 +33,14 @@ export class OrganizationService {
   }
 
   /**
+   * @param {any} office Office to be created.
+   * @returns {Observable<any>}
+   */
+  createOffice(office: any): Observable<any> {
+    return this.http.post('/offices', office);
+  }
+
+  /**
    * @returns {Observable<any>} Employees data
    */
   getEmployees(): Observable<any> {
