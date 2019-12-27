@@ -1,0 +1,77 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="employeeForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Office</mat-label>
+            <mat-select required formControlName="officeId">
+              <mat-option *ngFor="let office of officeData" [value]="office.id">
+                {{ office.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="employeeForm.controls.officeId.hasError('required')">
+              Office is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>First Name</mat-label>
+            <input matInput required formControlName="firstname">
+            <mat-error *ngIf="employeeForm.controls.firstname.hasError('required')">
+              First Name is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="employeeForm.controls.firstname.hasError('pattern')">
+              First Name <strong>cannot</strong> begin with a special character or number
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Last Name</mat-label>
+            <input matInput required formControlName="lastname">
+            <mat-error *ngIf="employeeForm.controls.lastname.hasError('required')">
+              Last Name is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="employeeForm.controls.lastname.hasError('pattern')">
+              Last Name <strong>cannot</strong> begin with a special character or number
+            </mat-error>
+          </mat-form-field>
+
+          <mat-checkbox labelPosition="before" formControlName="isLoanOfficer" class="loan-officer">
+            Is Loan Officer
+          </mat-checkbox>
+
+          <mat-form-field>
+            <mat-label>Mobile Number for SMS</mat-label>
+            <input matInput formControlName="mobileNo">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Joining Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="joiningDatePicker" required formControlName="joiningDate">
+            <mat-datepicker-toggle matSuffix [for]="joiningDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #joiningDatePicker></mat-datepicker>
+            <mat-error *ngIf="employeeForm.controls.joiningDate.hasError('required')">
+              Joining Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!employeeForm.valid">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>

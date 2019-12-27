@@ -48,6 +48,14 @@ export class OrganizationService {
   }
 
   /**
+   * @param {any} employee Employee to be created.
+   * @returns {Observable<any>}
+   */
+  createEmployee(employee: any): Observable<any> {
+    return this.http.post('/staff', employee);
+  }
+
+  /**
    * @returns {Observable<any>} Currencies data
    */
   getCurrencies(): Observable<any> {
