@@ -20,6 +20,7 @@ import { TellersComponent } from './tellers/tellers.component';
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
 import { EntityDataTableChecksComponent } from './entity-data-table-checks/entity-data-table-checks.component';
+import { CreateTellerComponent } from './tellers/create-teller/create-teller.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -99,11 +100,24 @@ const routes: Routes = [
         },
         {
           path: 'tellers',
-          component: TellersComponent,
           data: { title: extract('Tellers'), breadcrumb: 'Tellers' },
-          resolve: {
-            tellers: TellersResolver
-          }
+          children: [
+            {
+              path: '',
+              component: TellersComponent,
+              resolve: {
+                tellers: TellersResolver
+              }
+            },
+            {
+              path: 'create',
+              component: CreateTellerComponent,
+              data: { title: extract('Create Teller'), breadcrumb: 'Create Teller' },
+              resolve: {
+                offices: OfficesResolver
+              }
+            }
+          ]
         },
         {
           path: 'payment-types',
