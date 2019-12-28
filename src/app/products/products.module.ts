@@ -75,6 +75,7 @@ import { MatFormFieldModule, MatSelectModule, MatOptionModule } from '@angular/m
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ViewTaxGroupComponent } from './manage-tax-groups/view-tax-group/view-tax-group.component';
 import { ShareProductsDividendsComponent } from './share-products/dividends-share-product/dividends.components';
+import { ViewRecurringDepositProductComponent } from './recurring-deposit-products/view-recurring-deposit-product/view-recurring-deposit-product.component';
 
 /**
  * Products Module
@@ -153,7 +154,8 @@ import { ShareProductsDividendsComponent } from './share-products/dividends-shar
     EditChargeComponent,
     ViewTaxGroupComponent,
     ShareProductsDividendsComponent,
-    DepositProductIncentiveFormDialogComponent
+    DepositProductIncentiveFormDialogComponent,
+    ViewRecurringDepositProductComponent
   ],
   entryComponents: [
     DepositProductIncentiveFormDialogComponent,
