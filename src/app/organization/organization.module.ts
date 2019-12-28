@@ -21,6 +21,7 @@ import { EntityDataTableChecksComponent } from './entity-data-table-checks/entit
 import { WorkingDaysComponent } from './working-days/working-days.component';
 import { CreateOfficeComponent } from './offices/create-office/create-office.component';
 import { CreateEmployeeComponent } from './employees/create-employee/create-employee.component';
+import { CreateTellerComponent } from './tellers/create-teller/create-teller.component';
 
 /**
  * Organization Module
@@ -47,7 +48,8 @@ import { CreateEmployeeComponent } from './employees/create-employee/create-empl
     EntityDataTableChecksComponent,
     WorkingDaysComponent,
     CreateOfficeComponent,
-    CreateEmployeeComponent
+    CreateEmployeeComponent,
+    CreateTellerComponent
   ]
 })
 export class OrganizationModule { }

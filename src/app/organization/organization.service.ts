@@ -84,6 +84,14 @@ export class OrganizationService {
   }
 
   /**
+   * @param {any} teller Teller to be created.
+   * @returns {Observable<any>}
+   */
+  createTeller(teller: any): Observable<any> {
+    return this.http.post('/tellers', teller);
+  }
+
+  /**
    * @returns {Observable<any>} Payment Types data
    */
   getPaymentTypes(): Observable<any> {
