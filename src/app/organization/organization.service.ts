@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -95,6 +95,26 @@ export class OrganizationService {
    */
   updatePasswordPreferences(passwordPreferences: any): Observable<any> {
     return this.http.put('/passwordpreferences', passwordPreferences);
+  }
+
+  /**
+   * @param {number} offset Page offset.
+   * @param {number} limit Number of entries within the page.
+   * @returns {Observable<any>} Entity Data Table Checks data.
+   */
+  getEntityDataTableChecks(offset: number = 0, limit: number = -1): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('offset', offset.toString())
+      .set('limit', limit.toString());
+    return this.http.get('/entityDatatableChecks', { params: httpParams });
+  }
+
+  /**
+   * @param {string} entityDataTableCheckId Entity Data Table Check ID of entity data table to be deleted.
+   * @returns {Observable<any>}
+   */
+  deleteEntityDataTableCheck(entityDataTableCheckId: string): Observable<any> {
+    return this.http.delete(`/entityDatatableChecks/${entityDataTableCheckId}`);
   }
 
 }

@@ -19,6 +19,7 @@ import { AdhocQueryComponent } from './adhoc-query/adhoc-query.component';
 import { TellersComponent } from './tellers/tellers.component';
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
+import { EntityDataTableChecksComponent } from './entity-data-table-checks/entity-data-table-checks.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -30,6 +31,7 @@ import { AdhocQueriesResolver } from './adhoc-query/adhoc-queries.resolver';
 import { TellersResolver } from './tellers/tellers.resolver';
 import { PaymentTypesResolver } from './payment-types/payment-types.resolver';
 import { PasswordPreferencesTemplateResolver } from './password-preferences/password-preferences-template.resolver';
+import { EntityDataTableChecksResolver } from './entity-data-table-checks/entity-data-table-checks.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -118,6 +120,14 @@ const routes: Routes = [
           resolve: {
             passwordPreferencesTemplate: PasswordPreferencesTemplateResolver
           }
+        },
+        {
+          path: 'entity-data-table-checks',
+          component: EntityDataTableChecksComponent,
+          data: { title: extract('Entity Data Table Checks'), breadcrumb: 'Entity Data Table Checks' },
+          resolve: {
+            entityDataTableChecks: EntityDataTableChecksResolver
+          }
         }
       ]
     }
@@ -141,7 +151,8 @@ const routes: Routes = [
     AdhocQueriesResolver,
     TellersResolver,
     PaymentTypesResolver,
-    PasswordPreferencesTemplateResolver
+    PasswordPreferencesTemplateResolver,
+    EntityDataTableChecksResolver
   ]
 })
 export class OrganizationRoutingModule { }
