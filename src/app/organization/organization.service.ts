@@ -82,4 +82,19 @@ export class OrganizationService {
     return this.http.delete(`/paymenttypes/${paymentTypeId}`);
   }
 
+  /**
+   * @returns {Observable<any>} Password Preferences Template data
+   */
+  getPasswordPreferencesTemplate(): Observable<any> {
+    return this.http.get('/passwordpreferences/template');
+  }
+
+  /**
+   * @param {any} passwordPreferences Password Preferences data.
+   * @returns {Observable<any>}
+   */
+  updatePasswordPreferences(passwordPreferences: any): Observable<any> {
+    return this.http.put('/passwordpreferences', passwordPreferences);
+  }
+
 }
