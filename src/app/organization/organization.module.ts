@@ -18,6 +18,7 @@ import { TellersComponent } from './tellers/tellers.component';
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
 import { EntityDataTableChecksComponent } from './entity-data-table-checks/entity-data-table-checks.component';
+import { WorkingDaysComponent } from './working-days/working-days.component';
 
 /**
  * Organization Module
@@ -41,7 +42,8 @@ import { EntityDataTableChecksComponent } from './entity-data-table-checks/entit
     TellersComponent,
     PaymentTypesComponent,
     PasswordPreferencesComponent,
-    EntityDataTableChecksComponent
+    EntityDataTableChecksComponent,
+    WorkingDaysComponent
   ]
 })
 export class OrganizationModule { }

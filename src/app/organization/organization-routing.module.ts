@@ -20,6 +20,7 @@ import { TellersComponent } from './tellers/tellers.component';
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
 import { EntityDataTableChecksComponent } from './entity-data-table-checks/entity-data-table-checks.component';
+import { WorkingDaysComponent } from './working-days/working-days.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -32,6 +33,7 @@ import { TellersResolver } from './tellers/tellers.resolver';
 import { PaymentTypesResolver } from './payment-types/payment-types.resolver';
 import { PasswordPreferencesTemplateResolver } from './password-preferences/password-preferences-template.resolver';
 import { EntityDataTableChecksResolver } from './entity-data-table-checks/entity-data-table-checks.resolver';
+import { WorkingDaysResolver } from './working-days/working-days.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -128,6 +130,14 @@ const routes: Routes = [
           resolve: {
             entityDataTableChecks: EntityDataTableChecksResolver
           }
+        },
+        {
+          path: 'working-days',
+          component: WorkingDaysComponent,
+          data: { title: extract('Working Days'), breadcrumb: 'Working Days' },
+          resolve: {
+            workingDays: WorkingDaysResolver
+          }
         }
       ]
     }
@@ -152,7 +162,8 @@ const routes: Routes = [
     TellersResolver,
     PaymentTypesResolver,
     PasswordPreferencesTemplateResolver,
-    EntityDataTableChecksResolver
+    EntityDataTableChecksResolver,
+    WorkingDaysResolver
   ]
 })
 export class OrganizationRoutingModule { }
