@@ -117,4 +117,19 @@ export class OrganizationService {
     return this.http.delete(`/entityDatatableChecks/${entityDataTableCheckId}`);
   }
 
+  /**
+   * @returns {Observable<any>} Working days data.
+   */
+  getWorkingDays(): Observable<any> {
+    return this.http.get('/workingdays');
+  }
+
+  /**
+   * @param {any} workingDays Working days data.
+   * @returns {Observable<any>}
+   */
+  updateWorkingDays(workingDays: any): Observable<any> {
+    return this.http.put('/workingdays', workingDays);
+  }
+
 }
