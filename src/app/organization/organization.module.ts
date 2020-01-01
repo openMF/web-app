@@ -20,6 +20,7 @@ import { PasswordPreferencesComponent } from './password-preferences/password-pr
 import { EntityDataTableChecksComponent } from './entity-data-table-checks/entity-data-table-checks.component';
 import { WorkingDaysComponent } from './working-days/working-days.component';
 import { CreateOfficeComponent } from './offices/create-office/create-office.component';
+import { CreateEmployeeComponent } from './employees/create-employee/create-employee.component';
 
 /**
  * Organization Module
@@ -45,7 +46,8 @@ import { CreateOfficeComponent } from './offices/create-office/create-office.com
     PasswordPreferencesComponent,
     EntityDataTableChecksComponent,
     WorkingDaysComponent,
-    CreateOfficeComponent
+    CreateOfficeComponent,
+    CreateEmployeeComponent
   ]
 })
 export class OrganizationModule { }

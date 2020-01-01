@@ -13,6 +13,7 @@ import { OrganizationComponent } from './organization.component';
 import { LoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/loan-provisioning-criteria.component';
 import { OfficesComponent } from './offices/offices.component';
 import { EmployeesComponent } from './employees/employees.component';
+import { CreateEmployeeComponent } from './employees/create-employee/create-employee.component';
 import { CurrenciesComponent } from './currencies/currencies.component';
 import { SmsCampaignsComponent } from './sms-campaigns/sms-campaigns.component';
 import { AdhocQueryComponent } from './adhoc-query/adhoc-query.component';
@@ -78,11 +79,24 @@ const routes: Routes = [
         },
         {
           path: 'employees',
-          component: EmployeesComponent,
           data: { title: extract('Manage Employees'), breadcrumb: 'Manage Employees' },
-          resolve: {
-            employees: EmployeesResolver
-          }
+          children: [
+            {
+              path: '',
+              component: EmployeesComponent,
+              resolve: {
+                employees: EmployeesResolver
+              }
+            },
+            {
+              path: 'create',
+              component: CreateEmployeeComponent,
+              data: { title: extract('Create Employee'), breadcrumb: 'Create Employee' },
+              resolve: {
+                offices: OfficesResolver
+              }
+            }
+          ]
         },
         {
           path: 'currencies',
