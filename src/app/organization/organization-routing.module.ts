@@ -23,6 +23,7 @@ import { PasswordPreferencesComponent } from './password-preferences/password-pr
 import { EntityDataTableChecksComponent } from './entity-data-table-checks/entity-data-table-checks.component';
 import { WorkingDaysComponent } from './working-days/working-days.component';
 import { CreateOfficeComponent } from './offices/create-office/create-office.component';
+import { BulkImportComponent } from './bulk-import/bulk-import.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -166,6 +167,11 @@ const routes: Routes = [
           resolve: {
             workingDays: WorkingDaysResolver
           }
+        },
+        {
+          path: 'bulk-import',
+          component: BulkImportComponent,
+          data: { title: extract('Bulk Import'), breadcrumb: 'Bulk Import' },
         }
       ]
     }
