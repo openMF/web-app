@@ -22,6 +22,7 @@ import { WorkingDaysComponent } from './working-days/working-days.component';
 import { CreateOfficeComponent } from './offices/create-office/create-office.component';
 import { CreateEmployeeComponent } from './employees/create-employee/create-employee.component';
 import { CreatePaymentTypeComponent } from './payment-types/create-payment-type/create-payment-type.component';
+import { ViewEmployeeComponent } from './employees/view-employee/view-employee.component';
 
 /**
  * Organization Module
@@ -49,7 +50,8 @@ import { CreatePaymentTypeComponent } from './payment-types/create-payment-type/
     WorkingDaysComponent,
     CreateOfficeComponent,
     CreateEmployeeComponent,
-    CreatePaymentTypeComponent
+    CreatePaymentTypeComponent,
+    ViewEmployeeComponent
   ]
 })
 export class OrganizationModule { }

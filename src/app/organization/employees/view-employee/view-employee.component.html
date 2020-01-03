@@ -1,0 +1,78 @@
+<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+  <button mat-raised-button color="primary">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit
+  </button>
+</div>
+
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" class="content">
+
+        <div fxFlex="50%" class="mat-body-strong">
+          First Name
+        </div>
+
+        <div fxFlex="50%">
+          {{ employeeData.firstname }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Last Name
+        </div>
+
+        <div fxFlex="50%">
+          {{ employeeData.lastname }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Office
+        </div>
+
+        <div fxFlex="50%">
+          {{ employeeData.officeName }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Is Loan Officer
+        </div>
+
+        <div fxFlex="50%">
+          {{ employeeData.isLoanOfficer === true ? 'Yes' : 'No' }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="employeeData.mobileNo">
+          Mobile Number for SMS
+        </div>
+
+        <div fxFlex="50%" *ngIf="employeeData.mobileNo">
+          {{ employeeData.mobileNo }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Status
+        </div>
+
+        <div fxFlex="50%">
+          {{ employeeData.isActive === true ? 'Active' : 'Inactive' }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Joining Date
+        </div>
+
+        <div fxFlex="50%">
+          {{ employeeData.joiningDate | date }}
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

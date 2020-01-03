@@ -56,6 +56,14 @@ export class OrganizationService {
   }
 
   /**
+   * @param {string} employeeId Employee ID of employee.
+   * @returns {Observable<any>} Employee.
+   */
+  getEmployee(employeeId: string): Observable<any> {
+    return this.http.get(`/staff/${employeeId}`);
+  }
+
+  /**
    * @returns {Observable<any>} Currencies data
    */
   getCurrencies(): Observable<any> {

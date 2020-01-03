@@ -14,6 +14,7 @@ import { LoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/
 import { OfficesComponent } from './offices/offices.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { CreateEmployeeComponent } from './employees/create-employee/create-employee.component';
+import { ViewEmployeeComponent } from './employees/view-employee/view-employee.component';
 import { CurrenciesComponent } from './currencies/currencies.component';
 import { SmsCampaignsComponent } from './sms-campaigns/sms-campaigns.component';
 import { AdhocQueryComponent } from './adhoc-query/adhoc-query.component';
@@ -29,6 +30,7 @@ import { CreatePaymentTypeComponent } from './payment-types/create-payment-type/
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
 import { OfficesResolver } from './offices/offices.resolver';
 import { EmployeesResolver } from './employees/employees.resolver';
+import { EmployeeResolver } from './employees/employee.resolver';
 import { CurrenciesResolver } from './currencies/currencies.resolver';
 import { SmsCampaignsResolver } from './sms-campaigns/sms-campaigns.resolver';
 import { AdhocQueriesResolver } from './adhoc-query/adhoc-queries.resolver';
@@ -95,6 +97,14 @@ const routes: Routes = [
               data: { title: extract('Create Employee'), breadcrumb: 'Create Employee' },
               resolve: {
                 offices: OfficesResolver
+              }
+            },
+            {
+              path: ':id',
+              component: ViewEmployeeComponent,
+              data: { title: extract('View Employee'), routeResolveBreadcrumb: ['employee', 'displayName'] },
+              resolve: {
+                employee: EmployeeResolver
               }
             }
           ]
@@ -195,6 +205,7 @@ const routes: Routes = [
     LoanProvisioningCriteriaResolver,
     OfficesResolver,
     EmployeesResolver,
+    EmployeeResolver,
     CurrenciesResolver,
     SmsCampaignsResolver,
     AdhocQueriesResolver,
