@@ -91,6 +91,14 @@ export class OrganizationService {
   }
 
   /**
+   * @param {any} paymentType Payment type to be created.
+   * @returns {Observable<any>}
+   */
+  createPaymentType(paymentType: any): Observable<any> {
+    return this.http.post('/paymenttypes', paymentType);
+  }
+
+  /**
    * @param {string} paymentTypeId Payment type ID of payment type to be deleted.
    * @returns {Observable<any>}
    */

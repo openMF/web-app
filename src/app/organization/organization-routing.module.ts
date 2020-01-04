@@ -23,6 +23,7 @@ import { PasswordPreferencesComponent } from './password-preferences/password-pr
 import { EntityDataTableChecksComponent } from './entity-data-table-checks/entity-data-table-checks.component';
 import { WorkingDaysComponent } from './working-days/working-days.component';
 import { CreateOfficeComponent } from './offices/create-office/create-office.component';
+import { CreatePaymentTypeComponent } from './payment-types/create-payment-type/create-payment-type.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -137,11 +138,21 @@ const routes: Routes = [
         },
         {
           path: 'payment-types',
-          component: PaymentTypesComponent,
           data: { title: extract('Payment Types'), breadcrumb: 'Payment Types' },
-          resolve: {
-            paymentTypes: PaymentTypesResolver
-          }
+          children: [
+            {
+              path: '',
+              component: PaymentTypesComponent,
+              resolve: {
+                paymentTypes: PaymentTypesResolver
+              }
+            },
+            {
+              path: 'create',
+              component: CreatePaymentTypeComponent,
+              data: { title: extract('Create Payment Type'), breadcrumb: 'Create Payment Type'}
+            }
+          ]
         },
         {
           path: 'password-preferences',
