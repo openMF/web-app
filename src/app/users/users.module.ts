@@ -7,6 +7,7 @@ import { UsersRoutingModule } from './users-routing.module';
 
 /** Custom Components */
 import { UsersComponent } from './users.component';
+import { CreateUserComponent } from './create-user/create-user.component';
 
 /**
  * Users Module
@@ -19,7 +20,8 @@ import { UsersComponent } from './users.component';
     UsersRoutingModule
   ],
   declarations: [
-    UsersComponent
+    UsersComponent,
+    CreateUserComponent
   ]
 })
 export class UsersModule { }

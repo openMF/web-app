@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -23,6 +23,31 @@ export class UsersService {
    */
   getUsers(): Observable<any> {
     return this.http.get('/users');
+  }
+
+  /**
+   * @returns {Observable<any>} Users template data
+   */
+  getUsersTemplate(): Observable<any> {
+    return this.http.get('/users/template');
+  }
+
+  /**
+   * @param {any} user User to be created.
+   * @returns {Observable<any>}
+   */
+  createUser(user: any): Observable<any> {
+    return this.http.post('/users', user);
+  }
+
+  /**
+   * @param {any} officeId ID of office to retrieve staff from.
+   * @returns {Observable<any>} Staff data.
+   */
+  getStaff(officeId: any): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('officeId', officeId.toString());
+    return this.http.get('/staff', { params: httpParams });
   }
 
 }
