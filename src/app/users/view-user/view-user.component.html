@@ -1,0 +1,80 @@
+<div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="2%">
+  <button mat-raised-button color="primary">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit
+  </button>
+  <button mat-raised-button color="warn" (click)="delete()">
+    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+    Delete
+  </button>
+  <button mat-raised-button color="primary">
+    <fa-icon icon="cog"></fa-icon>&nbsp;&nbsp;
+    Change Password
+  </button>
+</div>
+
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" class="content">
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Login Name
+        </div>
+
+        <div fxFlex="50%">
+          {{ userData.username }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          First Name
+        </div>
+
+        <div fxFlex="50%">
+          {{ userData.firstname }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Last Name
+        </div>
+
+        <div fxFlex="50%">
+          {{ userData.lastname }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Email
+        </div>
+
+        <div fxFlex="50%">
+          {{ userData.email }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Office
+        </div>
+
+        <div fxFlex="50%">
+          {{ userData.officeName }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Roles
+        </div>
+
+        <div fxFlex="50%">
+          <span *ngFor="let role of userData.selectedRoles">
+            {{ role.name }}
+          </span>
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>
