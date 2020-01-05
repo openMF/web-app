@@ -85,6 +85,22 @@ export class OrganizationService {
   }
 
   /**
+   * @param {string} adhocQueryId Adhoc Query ID of adhoc query.
+   * @returns {Observable<any>} Adhoc query.
+   */
+  getAdhocQuery(adhocQueryId: string): Observable<any> {
+    return this.http.get(`/adhocquery/${adhocQueryId}`);
+  }
+
+  /**
+   * @param {string} adhocQueryId Adhoc Query ID of adhoc query to be deleted.
+   * @returns {Observable<any>}
+   */
+  deleteAdhocQuery(adhocQueryId: string): Observable<any> {
+    return this.http.delete(`/adhocquery/${adhocQueryId}`);
+  }
+
+  /**
    * @returns {Observable<any>} Tellers data
    */
   getTellers(): Observable<any> {

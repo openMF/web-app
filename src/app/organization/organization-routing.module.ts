@@ -18,6 +18,7 @@ import { ViewEmployeeComponent } from './employees/view-employee/view-employee.c
 import { CurrenciesComponent } from './currencies/currencies.component';
 import { SmsCampaignsComponent } from './sms-campaigns/sms-campaigns.component';
 import { AdhocQueryComponent } from './adhoc-query/adhoc-query.component';
+import { ViewAdhocQueryComponent } from './adhoc-query/view-adhoc-query/view-adhoc-query.component';
 import { TellersComponent } from './tellers/tellers.component';
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
@@ -34,6 +35,7 @@ import { EmployeeResolver } from './employees/employee.resolver';
 import { CurrenciesResolver } from './currencies/currencies.resolver';
 import { SmsCampaignsResolver } from './sms-campaigns/sms-campaigns.resolver';
 import { AdhocQueriesResolver } from './adhoc-query/adhoc-queries.resolver';
+import { AdhocQueryResolver } from './adhoc-query/adhoc-query.resolver';
 import { TellersResolver } from './tellers/tellers.resolver';
 import { PaymentTypesResolver } from './payment-types/payment-types.resolver';
 import { PasswordPreferencesTemplateResolver } from './password-preferences/password-preferences-template.resolver';
@@ -135,6 +137,14 @@ const routes: Routes = [
               resolve: {
                 adhocQueries: AdhocQueriesResolver
               }
+            },
+            {
+              path: ':id',
+              component: ViewAdhocQueryComponent,
+              data: { title: extract('View Adhoc Query'), routeResolveBreadcrumb: ['adhocQuery', 'name']},
+              resolve: {
+                adhocQuery: AdhocQueryResolver
+              }
             }
           ]
         },
@@ -209,6 +219,7 @@ const routes: Routes = [
     CurrenciesResolver,
     SmsCampaignsResolver,
     AdhocQueriesResolver,
+    AdhocQueryResolver,
     TellersResolver,
     PaymentTypesResolver,
     PasswordPreferencesTemplateResolver,

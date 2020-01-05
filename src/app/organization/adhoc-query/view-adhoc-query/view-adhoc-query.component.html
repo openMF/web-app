@@ -1,0 +1,74 @@
+<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+  <button mat-raised-button color="primary">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit
+  </button>
+  <button mat-raised-button color="warn" (click)="deleteAdhocQuery()">
+    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+    Delete
+  </button>
+</div>
+
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" class="content">
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Name
+        </div>
+
+        <div fxFlex="50%">
+          {{ adhocQueryData.name }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Query
+        </div>
+
+        <div fxFlex="50%">
+          {{ adhocQueryData.query }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Table Affected
+        </div>
+
+        <div fxFlex="50%">
+          {{ adhocQueryData.tableName }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="adhocQueryData.reportRunFrequency">
+          Report Run Frequency
+        </div>
+
+        <div fxFlex="50%" *ngIf="adhocQueryData.reportRunFrequency">
+          {{ adhocQueryData.reportRunFrequency }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Status
+        </div>
+
+        <div fxFlex="50%">
+          {{ adhocQueryData.isActive === true ? 'Active' : 'Inactive' }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Created By
+        </div>
+
+        <div fxFlex="50%">
+          {{ adhocQueryData.createdBy }}
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>
