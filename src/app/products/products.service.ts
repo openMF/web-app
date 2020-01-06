@@ -176,6 +176,14 @@ export class ProductsService {
   }
 
   /**
+   * @param {any} charge Charge to be created.
+   * @returns {Observable<any>}
+   */
+  createCharge(charge: any): Observable<any> {
+    return this.http.post('/charges', charge);
+  }
+
+  /**
    * @returns {Observable<any>} Fixed deposit products data
    */
   getFixedDepositProducts(): Observable<any> {
