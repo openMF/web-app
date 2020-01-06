@@ -1,0 +1,47 @@
+.status-active {
+  color: $status-active;
+}
+
+.status-inactive {
+  color: $status-inactive;
+}
+
+.status-deleted {
+  color: $status-deleted;
+}
+
+.status-pending {
+  color: $status-pending;
+}
+
+.status-approved {
+  color: $status-approved;
+}
+
+.status-overpaid {
+  color: $status-overpaid;
+}
+
+.status-active-overdue {
+  color: $status-active-overdue;
+}
+
+.status-active-overdue {
+  color: $status-active-overdue;
+}
+
+.status-matured {
+  color: $status-matured;
+}
+
+.mat-step-header .mat-step-icon-state-done {
+  background-color: $state-done;
+
+  .status-transfer-progress {
+    color: $status-transfer-progress;
+  }
+
+  .status-transfer-hold {
+    color: $status-transfer-hold;
+  }
+}
