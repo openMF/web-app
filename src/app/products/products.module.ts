@@ -60,6 +60,7 @@ import { FixedDepositProductAccountingStepComponent } from './fixed-deposit-prod
 import { FixedDepositProductPreviewStepComponent } from './fixed-deposit-products/fixed-deposit-product-stepper/fixed-deposit-product-preview-step/fixed-deposit-product-preview-step.component';
 import { DepositProductIncentiveFormDialogComponent } from './deposit-product-incentive-form-dialog/deposit-product-incentive-form-dialog.component';
 import { ManageTaxGroupsComponent } from './manage-tax-groups/manage-tax-groups.component';
+import { CreateChargeComponent } from './charges/create-charge/create-charge.component';
 
 /**
  * Products Module
@@ -124,7 +125,8 @@ import { ManageTaxGroupsComponent } from './manage-tax-groups/manage-tax-groups.
     FixedDepositProductAccountingStepComponent,
     FixedDepositProductPreviewStepComponent,
     DepositProductIncentiveFormDialogComponent,
-    ManageTaxGroupsComponent
+    ManageTaxGroupsComponent,
+    CreateChargeComponent
   ],
   entryComponents: [
     DepositProductIncentiveFormDialogComponent

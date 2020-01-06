@@ -105,6 +105,21 @@ export class ProductsService {
   }
 
   /**
+   * @returns {Observable<any>} Charges template data
+   */
+  getChargesTemplate(): Observable<any> {
+    return this.http.get('/charges/template');
+  }
+
+  /**
+   * @param {any} charge Charge to be created.
+   * @returns {Observable<any>}
+   */
+  createCharge(charge: any): Observable<any> {
+    return this.http.post('/charges', charge);
+  }
+
+  /**
    * @returns {Observable<any>} Fixed deposit products data
    */
   getFixedDepositProducts(): Observable<any> {
