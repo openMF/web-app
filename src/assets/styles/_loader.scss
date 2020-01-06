@@ -1,46 +1,45 @@
 .loader-wrapper {
   height: 100vh;
   width: 100vw;
+}
 
-  .triangle {
-    width: 0;
-    height: 0;
-    border-style: solid;
-    position: absolute;
-    animation: rotate 0.8s infinite 0.2s;
-  }
+.triangle {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  position: absolute;
+  animation: rotate 0.8s infinite 0.2s;
+}
 
-  .bottom {
-    border-width: 0 90px 90px 90px;
-    border-color: transparent transparent #1fb050 transparent;
-    bottom: calc(50% - 100px);
-    left: calc(50% - 90px);
-  }
+.bottom {
+  border-width: 0 90px 90px 90px;
+  border-color: transparent transparent #1fb050 transparent;
+  bottom: calc(50% - 100px);
+  left: calc(50% - 90px);
+}
 
-  .top {
-    border-width: 90px 90px 0 90px;
-    border-color: #b4d575 transparent transparent transparent;
-    top: calc(50% - 100px);
-    left: calc(50% - 90px);
-  }
+.top {
+  border-width: 90px 90px 0 90px;
+  border-color: #b4d575 transparent transparent transparent;
+  top: calc(50% - 100px);
+  left: calc(50% - 90px);
+}
 
-  .left {
-    border-width: 90px 0 90px 90px;
-    border-color: transparent transparent transparent #1074b9;
-    top: calc(50% - 90px);
-    left: calc(50% - 100px);
-  }
+.left {
+  border-width: 90px 0 90px 90px;
+  border-color: transparent transparent transparent #1074b9;
+  top: calc(50% - 90px);
+  left: calc(50% - 100px);
+}
 
-  .right {
-    border-width: 90px 90px 90px 0;
-    border-color: transparent #1daeec transparent transparent;
-    top: calc(50% - 90px);
-    right: calc(50% - 100px);
-  }
+.right {
+  border-width: 90px 90px 90px 0;
+  border-color: transparent #1daeec transparent transparent;
+  top: calc(50% - 90px);
+  right: calc(50% - 100px);
+}
 
-  @keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
