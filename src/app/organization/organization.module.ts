@@ -14,6 +14,7 @@ import { EmployeesComponent } from './employees/employees.component';
 import { CurrenciesComponent } from './currencies/currencies.component';
 import { SmsCampaignsComponent } from './sms-campaigns/sms-campaigns.component';
 import { AdhocQueryComponent } from './adhoc-query/adhoc-query.component';
+import { ViewAdhocQueryComponent } from './adhoc-query/view-adhoc-query/view-adhoc-query.component';
 import { TellersComponent } from './tellers/tellers.component';
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
@@ -43,6 +44,7 @@ import { ViewEmployeeComponent } from './employees/view-employee/view-employee.c
     CurrenciesComponent,
     SmsCampaignsComponent,
     AdhocQueryComponent,
+    ViewAdhocQueryComponent,
     TellersComponent,
     PaymentTypesComponent,
     PasswordPreferencesComponent,
