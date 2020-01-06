@@ -11,10 +11,12 @@ import { extract } from '../core/i18n/i18n.service';
 /** Custom Components */
 import { UsersComponent } from './users.component';
 import { CreateUserComponent } from './create-user/create-user.component';
+import { ViewUserComponent } from './view-user/view-user.component';
 
 /** Custom Resolvers */
 import { UsersResolver } from './users.resolver';
 import { UsersTemplateResolver } from './users-template.resolver';
+import { UserResolver } from './user.resolver';
 
 /** Users Routes */
 const routes: Routes = [
@@ -37,6 +39,19 @@ const routes: Routes = [
           resolve: {
             usersTemplate: UsersTemplateResolver
           }
+        },
+        {
+          path: ':id',
+          data: { title: extract('View User'), routeResolveBreadcrumb: ['user', 'username'] },
+          resolve: {
+            user: UserResolver
+          },
+          children: [
+            {
+              path: '',
+              component: ViewUserComponent
+            }
+          ]
         }
       ]
     }
@@ -53,7 +68,8 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     UsersResolver,
-    UsersTemplateResolver
+    UsersTemplateResolver,
+    UserResolver
   ]
 })
 export class UsersRoutingModule { }

@@ -8,6 +8,7 @@ import { UsersRoutingModule } from './users-routing.module';
 /** Custom Components */
 import { UsersComponent } from './users.component';
 import { CreateUserComponent } from './create-user/create-user.component';
+import { ViewUserComponent } from './view-user/view-user.component';
 
 /**
  * Users Module
@@ -21,7 +22,8 @@ import { CreateUserComponent } from './create-user/create-user.component';
   ],
   declarations: [
     UsersComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    ViewUserComponent
   ]
 })
 export class UsersModule { }

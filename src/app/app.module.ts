@@ -41,6 +41,7 @@ import { UsersModule } from './users/users.module';
 
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
+import { BulkImportComponent } from './bulk-import/bulk-import.component';
 
 /**
  * App Module
@@ -72,7 +73,7 @@ import { AppRoutingModule } from './app-routing.module';
     UsersModule,
     AppRoutingModule,
   ],
-  declarations: [WebAppComponent, NotFoundComponent],
+  declarations: [WebAppComponent, NotFoundComponent, BulkImportComponent],
   providers: [],
   bootstrap: [WebAppComponent]
 })

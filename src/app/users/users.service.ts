@@ -41,6 +41,22 @@ export class UsersService {
   }
 
   /**
+   * @param {string} userId user ID of user.
+   * @returns {Observable<any>} User.
+   */
+  getUser(userId: string): Observable<any> {
+    return this.http.get(`/users/${userId}`);
+  }
+
+  /**
+   * @param {string} userId user ID of user.
+   * @returns {Observable<any>}
+   */
+  deleteUser(userId: string): Observable<any> {
+    return this.http.delete(`/users/${userId}`);
+  }
+
+  /**
    * @param {any} officeId ID of office to retrieve staff from.
    * @returns {Observable<any>} Staff data.
    */
