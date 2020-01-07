@@ -1,0 +1,78 @@
+<div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="2%">
+  <button mat-raised-button color="primary">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit
+  </button>
+</div>
+
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" class="content">
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Name
+        </div>
+
+        <div fxFlex="50%">
+          {{ taxComponentData.name }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Percentage
+        </div>
+
+        <div fxFlex="50%">
+          {{ taxComponentData.percentage }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="taxComponentData.debitAccountType">
+          Debit Account Type
+        </div>
+
+        <div fxFlex="50%" *ngIf="taxComponentData.debitAccountType">
+          {{ taxComponentData.debitAccountType.value }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="taxComponentData.debitAccount">
+          Debit Account
+        </div>
+
+        <div fxFlex="50%" *ngIf="taxComponentData.debitAccount">
+          {{ taxComponentData.debitAccount.name}}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="taxComponentData.creditAccountType">
+          Credit Account Type
+        </div>
+
+        <div fxFlex="50%" *ngIf="taxComponentData.creditAccountType">
+          {{ taxComponentData.creditAccountType.value }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="taxComponentData.creditAccount">
+          Credit Account
+        </div>
+
+        <div fxFlex="50%" *ngIf="taxComponentData.creditAccount">
+          {{ taxComponentData.creditAccount.name }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Start date
+        </div>
+
+        <div fxFlex="50%">
+          {{ taxComponentData.startDate | date }}
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

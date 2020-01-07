@@ -30,6 +30,7 @@ import { CreateFixedDepositProductComponent } from './fixed-deposit-products/cre
 import { ProductsMixComponent } from './products-mix/products-mix.component';
 import { ManageTaxComponentsComponent } from './manage-tax-components/manage-tax-components.component';
 import { ManageTaxGroupsComponent } from './manage-tax-groups/manage-tax-groups.component';
+import { ViewTaxComponentComponent } from './manage-tax-components/view-tax-component/view-tax-component.component';
 
 /** Custom Resolvers */
 import { LoanProductsResolver } from './loan-products/loan-products.resolver';
@@ -51,6 +52,7 @@ import { FixedDepositProductsTemplateResolver } from './fixed-deposit-products/f
 import { ProductsMixResolver } from './products-mix/products-mix.resolver';
 import { ManageTaxComponentsResolver } from './manage-tax-components/manage-tax-components.resolver';
 import { ManageTaxGroupsResolver } from './manage-tax-groups/manage-tax-groups.resolver';
+import { TaxComponentResolver } from './manage-tax-components/tax-component.resolver';
 
 /** Products Routes */
 const routes: Routes = [
@@ -199,11 +201,29 @@ const routes: Routes = [
             },
             {
               path: 'tax-components',
-              component: ManageTaxComponentsComponent,
-              resolve: {
-                taxComponents: ManageTaxComponentsResolver
-              },
               data: { title: extract('Manage Tax Components'), breadcrumb: 'Tax Components'},
+              children: [
+                {
+                  path: '',
+                  component: ManageTaxComponentsComponent,
+                  resolve: {
+                    taxComponents: ManageTaxComponentsResolver
+                  }
+                },
+                {
+                  path: ':id',
+                  data: { title: extract('View Tax Component'), routeParamBreadcrumb: 'id' },
+                  children: [
+                    {
+                      path: '',
+                      component: ViewTaxComponentComponent,
+                      resolve: {
+                        taxComponent: TaxComponentResolver
+                      }
+                    }
+                  ]
+                }
+              ]
             },
             {
               path: 'tax-groups',
@@ -292,7 +312,8 @@ const routes: Routes = [
     FixedDepositProductsTemplateResolver,
     ProductsMixResolver,
     ManageTaxComponentsResolver,
-    ManageTaxGroupsResolver
+    ManageTaxGroupsResolver,
+    TaxComponentResolver
   ]
 })
 export class ProductsRoutingModule { }
