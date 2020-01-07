@@ -42,6 +42,18 @@ export class ViewAdhocQueryComponent implements OnInit {
   }
 
   /**
+   * Retrieves the report run frequency value from id
+   * @returns {string} Report run frequency value.
+   */
+  get reportRunFrequency(): string {
+    for (const reportRunFrequency of this.adhocQueryData.reportRunFrequencies) {
+      if (reportRunFrequency.id === this.adhocQueryData.reportRunFrequency) {
+        return reportRunFrequency.value;
+      }
+    }
+  }
+
+  /**
    * Deletes the adhoc query and redirects to adhoc queries.
    */
   deleteAdhocQuery() {
