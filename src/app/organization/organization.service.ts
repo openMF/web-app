@@ -108,6 +108,22 @@ export class OrganizationService {
   }
 
   /**
+   * @param {string} tellerId Teller ID of teller.
+   * @returns {Observable<any>} Teller.
+   */
+  getTeller(tellerId: string): Observable<any> {
+    return this.http.get(`/tellers/${tellerId}`);
+  }
+
+  /**
+   * @param {string} tellerId Teller ID of teller to be deleted.
+   * @returns {Observable<any>}
+   */
+  deleteTeller(tellerId: string): Observable<any> {
+    return this.http.delete(`/tellers/${tellerId}`);
+  }
+
+  /**
    * @returns {Observable<any>} Payment Types data
    */
   getPaymentTypes(): Observable<any> {
