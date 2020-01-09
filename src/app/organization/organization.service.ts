@@ -131,6 +131,22 @@ export class OrganizationService {
   }
 
   /**
+   * @param {string} paymentTypeId Payment type ID of payment type.
+   * @returns {Observable<any>} Payment type.
+   */
+  getPaymentType(paymentTypeId: string): Observable<any> {
+    return this.http.get(`/paymenttypes/${paymentTypeId}`);
+  }
+
+  /**
+   * @param {string} paymentTypeId Payment type ID of Payment Type to be edited.
+   * @returns {Observable<any>}
+   */
+  updatePaymentType(paymentTypeId: string, paymentType: any): Observable<any> {
+    return this.http.put(`/paymenttypes/${paymentTypeId}`, paymentType);
+  }
+
+  /**
    * @returns {Observable<any>} Password Preferences Template data
    */
   getPasswordPreferencesTemplate(): Observable<any> {
