@@ -24,6 +24,9 @@ import { CreateOfficeComponent } from './offices/create-office/create-office.com
 import { CreateEmployeeComponent } from './employees/create-employee/create-employee.component';
 import { CreatePaymentTypeComponent } from './payment-types/create-payment-type/create-payment-type.component';
 import { ViewEmployeeComponent } from './employees/view-employee/view-employee.component';
+import { ViewSmsCampaignComponent } from './sms-campaigns/view-sms-campaign/view-sms-campaign.component';
+import { CampaignTabComponent } from './sms-campaigns/view-sms-campaign/campaign-tab/campaign-tab.component';
+import { SmsCampaignTabsComponent } from './sms-campaigns/view-sms-campaign/sms-campaign-tabs/sms-campaign-tabs.component';
 
 /**
  * Organization Module
@@ -53,7 +56,10 @@ import { ViewEmployeeComponent } from './employees/view-employee/view-employee.c
     CreateOfficeComponent,
     CreateEmployeeComponent,
     CreatePaymentTypeComponent,
-    ViewEmployeeComponent
+    ViewEmployeeComponent,
+    ViewSmsCampaignComponent,
+    CampaignTabComponent,
+    SmsCampaignTabsComponent
   ]
 })
 export class OrganizationModule { }

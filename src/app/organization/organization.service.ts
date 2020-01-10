@@ -1,3 +1,4 @@
+
 /** Angular Imports */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -75,6 +76,31 @@ export class OrganizationService {
    */
   getSmsCampaigns(): Observable<any> {
     return this.http.get('/smscampaigns');
+  }
+
+  /**
+   * @param {string} smsCampaignId SMS Campaign ID of SMS Campaign.
+   * @returns {Observable<any>} SMS Campaign.
+   */
+  getSmsCampaign(smsCampaignId: string): Observable<any> {
+    return this.http.get(`/smscampaigns/${smsCampaignId}`);
+  }
+
+  /**
+   * @param {number} offset Page offset.
+   * @param {number} limit Number of entries within the page.
+   * @returns {Observable<any>} SMS Data by Status data.
+   */
+  getSmsCampaignbyStatus(fetchSMS: any, offset: number = 0, limit: number = -1): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('status', fetchSMS.status)
+      .set('offset', offset.toString())
+      .set('limit', limit.toString())
+      .set('locale', fetchSMS.locale)
+      .set('dateFormat', fetchSMS.dateFormat)
+      .set('fromDate', fetchSMS.fromDate)
+      .set('toDate', fetchSMS.toDate);
+    return this.http.get(`/sms/${fetchSMS.id}/messageByStatus`, { params: httpParams });
   }
 
   /**

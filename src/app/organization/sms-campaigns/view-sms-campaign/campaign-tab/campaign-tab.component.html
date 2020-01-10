@@ -1,0 +1,94 @@
+<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="30px">
+    <button mat-raised-button color="primary">
+    <i class="fa fa-remove"></i>
+    &nbsp;&nbsp; Close
+  </button>
+</div>
+
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" class="content">
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Campaign Name
+        </div>
+
+        <div fxFlex="50%">
+          {{ smsCampaignData.campaignName }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Report Name
+        </div>
+
+        <div fxFlex="50%">
+          {{ smsCampaignData.reportName }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Status
+        </div>
+
+        <div fxFlex="50%">
+          {{ smsCampaignData.campaignStatus.value }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Trigger Type
+        </div>
+
+        <div fxFlex="50%">
+          {{ smsCampaignData.triggerType.value }}
+        </div>
+
+		    <div fxFlex="50%" class="mat-body-strong">
+          Template Message
+        </div>
+
+        <div fxFlex="50%">
+          {{ smsCampaignData.campaignMessage }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Submitted On
+        </div>
+
+        <div fxFlex="50%">
+          {{ smsCampaignData.smsCampaignTimeLine.submittedOnDate | date }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="smsCampaignData.recurrence">
+          Recurrence
+        </div>
+        
+        <div fxFlex="50%">
+          {{ smsCampaignData.recurrence }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="smsCampaignData.triggerEntityType">
+          Trigger Entity Type
+        </div>
+        
+        <div fxFlex="50%">
+          {{ smsCampaignData.triggerEntityType }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="smsCampaignData.triggerActionType">
+          Trigger Action Type
+        </div>
+        
+        <div fxFlex="50%">
+          {{ smsCampaignData.triggerActionType }}
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

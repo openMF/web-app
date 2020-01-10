@@ -26,6 +26,9 @@ import { EntityDataTableChecksComponent } from './entity-data-table-checks/entit
 import { WorkingDaysComponent } from './working-days/working-days.component';
 import { CreateOfficeComponent } from './offices/create-office/create-office.component';
 import { CreatePaymentTypeComponent } from './payment-types/create-payment-type/create-payment-type.component';
+import { ViewSmsCampaignComponent } from './sms-campaigns/view-sms-campaign/view-sms-campaign.component';
+import { CampaignTabComponent } from './sms-campaigns/view-sms-campaign/campaign-tab/campaign-tab.component';
+import { SmsCampaignTabsComponent } from './sms-campaigns/view-sms-campaign/sms-campaign-tabs/sms-campaign-tabs.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -41,6 +44,8 @@ import { PaymentTypesResolver } from './payment-types/payment-types.resolver';
 import { PasswordPreferencesTemplateResolver } from './password-preferences/password-preferences-template.resolver';
 import { EntityDataTableChecksResolver } from './entity-data-table-checks/entity-data-table-checks.resolver';
 import { WorkingDaysResolver } from './working-days/working-days.resolver';
+import { SmsCampaignResolver } from './sms-campaigns/common-resolvers/sms-campaign.resolver';
+import { CampaignResolver } from './sms-campaigns/common-resolvers/campaign.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -121,11 +126,42 @@ const routes: Routes = [
         },
         {
           path: 'sms-campaigns',
-          component: SmsCampaignsComponent,
           data: { title: extract('SMS Campaigns'), breadcrumb: 'SMS Campaigns' },
-          resolve: {
-            smsCampaigns: SmsCampaignsResolver
-          }
+          children: [
+            {
+              path: '',
+              component: SmsCampaignsComponent,
+              resolve: {
+                smsCampaigns: SmsCampaignsResolver
+              }
+            },
+            {
+              path: ':id',
+              component: ViewSmsCampaignComponent,
+              data: { title: extract('View SMS Campaign'), routeResolveBreadcrumb: ['smsCampaign', 'campaignName'] },
+              resolve: {
+                smsCampaign: SmsCampaignResolver
+              },
+              children : [
+                {
+                  path: 'campaign',
+                  component: CampaignTabComponent,
+                  data: { title: extract('Campaign'), routeParamBreadcrumb: false },
+                  resolve: {
+                  smsCampaign: CampaignResolver
+                  }
+                },
+                {
+                  path: ':tabname',
+                  component: SmsCampaignTabsComponent,
+                  data: { title: extract('Campaign'), routeParamBreadcrumb: false },
+                  resolve: {
+                  smsCampaign: CampaignResolver
+                  }
+                },
+              ]
+            }
+          ]
         },
         {
           path: 'adhoc-query',
@@ -224,7 +260,9 @@ const routes: Routes = [
     PaymentTypesResolver,
     PasswordPreferencesTemplateResolver,
     EntityDataTableChecksResolver,
-    WorkingDaysResolver
+    WorkingDaysResolver,
+    SmsCampaignResolver,
+    CampaignResolver
   ]
 })
 export class OrganizationRoutingModule { }

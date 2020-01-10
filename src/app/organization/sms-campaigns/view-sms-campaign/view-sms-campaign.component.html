@@ -1,0 +1,39 @@
+<div class="container">
+
+  <mat-card>
+    
+    <mat-card-content>
+      
+      <nav mat-tab-nav-bar class="navigation-tabs">
+        <a mat-tab-link [routerLink]="['./campaign']" routerLinkActive #campaign="routerLinkActive"
+          [active]="campaign.isActive">
+          Campaign
+        </a>
+        <a mat-tab-link [routerLink]="['./pendingsms']" routerLinkActive #pendingsms="routerLinkActive"
+          [active]="pendingsms.isActive">
+          Pending SMS
+        </a>
+        <a mat-tab-link [routerLink]="['./waitingfordeliveryreport']" routerLinkActive #waitingfordeliveryreport="routerLinkActive"
+          [active]="waitingfordeliveryreport.isActive">
+          Waiting For Delivery Report
+        </a>
+        <a mat-tab-link [routerLink]="['./sentsms']" routerLinkActive #sentsms="routerLinkActive"
+          [active]="sentsms.isActive">
+          Sent SMS
+        </a>
+        <a mat-tab-link [routerLink]="['./deliveredsms']" routerLinkActive #deliveredsms="routerLinkActive"
+          [active]="deliveredsms.isActive">
+          Delivered SMS
+        </a>
+        <a mat-tab-link [routerLink]="['./failedsms']" routerLinkActive #failedsms="routerLinkActive"
+          [active]="failedsms.isActive">
+          Failed SMS
+        </a>
+      </nav>
+      <router-outlet></router-outlet>
+   
+   </mat-card-content>
+   
+  </mat-card>
+
+</div>
