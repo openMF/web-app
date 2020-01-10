@@ -2,7 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule } from '../core/core.module';
+import { SharedModule } from '../shared/shared.module';
 import { MatTableModule } from '@angular/material/table';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -12,7 +12,7 @@ import { CentersService } from './centers.service';
 
 @NgModule({
   imports: [
-    CoreModule,
+    SharedModule,
     CommonModule,
     CentersRoutingModule,
     FormsModule,

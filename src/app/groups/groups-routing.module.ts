@@ -13,7 +13,7 @@ const routes: Routes = [
   Route.withShell([
 
     {
-      path: 'groups',
+      path: '',
       component: GroupsComponent,
       data: { title: extract('Groups'), breadcrumb: 'Groups' }
     }

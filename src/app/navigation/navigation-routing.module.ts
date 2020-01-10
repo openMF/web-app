@@ -15,7 +15,7 @@ import { NavigationComponent } from './navigation.component';
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'navigation',
+      path: '',
       component: NavigationComponent,
       data: { title: extract('Navigation'), breadcrumb: 'Navigation' }
     }

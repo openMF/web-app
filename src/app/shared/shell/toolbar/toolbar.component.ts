@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 /** Custom Services */
-import { AuthenticationService } from '../../authentication/authentication.service';
+import { AuthenticationService } from '../../../core/authentication/authentication.service';
 
 /**
  * Toolbar component.

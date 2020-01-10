@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 /** Custom Services */
-import { AuthenticationService } from '../../authentication/authentication.service';
+import { AuthenticationService } from '../../../core/authentication/authentication.service';
 
 /**
  * Sidenav component.

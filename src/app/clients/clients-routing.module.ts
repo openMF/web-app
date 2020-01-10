@@ -40,7 +40,7 @@ import { ClientAddressTemplateResolver } from './common-resolvers/client-address
 
 const routes: Routes = [
   Route.withShell([{
-    path: 'clients',
+    path: '',
     data: { title: extract('Clients'), breadcrumb: 'Clients', routeParamBreadcrumb: false },
     children: [
       {

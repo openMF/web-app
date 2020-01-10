@@ -56,7 +56,7 @@ import { ManageTaxGroupsResolver } from './manage-tax-groups/manage-tax-groups.r
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'products',
+      path: '',
       data: { title: extract('Products'), breadcrumb: 'Products' },
       children: [
         {

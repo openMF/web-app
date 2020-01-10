@@ -2,7 +2,7 @@
 import { Route as ngRoute, Routes } from '@angular/router';
 
 /** Custom Components */
-import { ShellComponent } from '../shell/shell.component';
+import { ShellComponent } from '../../shared/shell/shell.component';
 
 /** Custom Guards */
 import { AuthenticationGuard } from '../authentication/authentication.guard';

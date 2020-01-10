@@ -11,7 +11,7 @@ import { LoginComponent } from './login.component';
 /** Login Routes */
 const routes: Routes = [
   {
-    path: 'login',
+    path: '',
     component: LoginComponent,
     data: { title: extract('Login') }
   }

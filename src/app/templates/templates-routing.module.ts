@@ -20,7 +20,7 @@ import { TemplateResolver } from './template.resolver';
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'templates',
+      path: '',
       data: { title: extract('Templates'), breadcrumb: 'Templates' },
       children: [
         {

@@ -62,7 +62,7 @@ import { ReportTemplateResolver } from './manage-reports/report-template.resolve
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'system',
+      path: '',
       data: { title: extract('System'), breadcrumb: 'System' },
       children: [
       {

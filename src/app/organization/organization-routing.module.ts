@@ -46,7 +46,7 @@ import { WorkingDaysResolver } from './working-days/working-days.resolver';
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'organization',
+      path: '',
       data: { title: extract('Organization'), breadcrumb: 'Organization' },
       children: [
         {

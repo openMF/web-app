@@ -69,7 +69,7 @@ import { ProvisioningJournalEntriesResolver } from './provisioning-entries/view-
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'accounting',
+      path: '',
       data: { title: extract('Accounting'), breadcrumb: 'Accounting' },
       children: [
         {

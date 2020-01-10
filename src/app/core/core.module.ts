@@ -29,13 +29,6 @@ import { RouteReusableStrategy } from './route/route-reusable-strategy';
 /** Custom Modules */
 import { SharedModule } from '../shared/shared.module';
 
-/** Custom Components */
-import { ShellComponent } from './shell/shell.component';
-import { SidenavComponent } from './shell/sidenav/sidenav.component';
-import { ToolbarComponent } from './shell/toolbar/toolbar.component';
-import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
-import { ContentComponent } from './shell/content/content.component';
-
 /**
  * Core Module
  *
@@ -47,16 +40,6 @@ import { ContentComponent } from './shell/content/content.component';
     HttpClientModule,
     TranslateModule,
     RouterModule
-  ],
-  declarations: [
-    ShellComponent,
-    SidenavComponent,
-    ToolbarComponent,
-    BreadcrumbComponent,
-    ContentComponent
-  ],
-  exports: [
-    SharedModule // TO BE REMOVED: Once all components have replaced the core module import by shared module.
   ],
   providers: [
     AuthenticationService,

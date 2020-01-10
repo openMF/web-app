@@ -10,6 +10,62 @@ import {NotFoundComponent} from './not-found/not-found.component';
  */
 const routes: Routes = [
   {
+    path: '',
+    loadChildren: './home/home.module#HomeModule'
+  },
+  {
+    path: 'login',
+    loadChildren: './login/login.module#LoginModule'
+  },
+  {
+    path: 'settings',
+    loadChildren: './settings/settings.module#SettingsModule'
+  },
+  {
+    path: 'navigation',
+    loadChildren: './navigation/navigation.module#NavigationModule'
+  },
+  {
+    path: 'clients',
+    loadChildren: './clients/clients.module#ClientsModule'
+  },
+  {
+    path: 'groups',
+    loadChildren: './groups/groups.module#GroupsModule'
+  },
+  {
+    path: 'centers',
+    loadChildren: './centers/centers.module#CentersModule'
+  },
+  {
+    path: 'accounting',
+    loadChildren: './accounting/accounting.module#AccountingModule'
+  },
+  {
+    path: 'self-service',
+    loadChildren: './self-service/self-service.module#SelfServiceModule'
+  },
+  {
+    path: 'system',
+    loadChildren: './system/system.module#SystemModule'
+  },
+  {
+    path: 'products',
+    loadChildren: './products/products.module#ProductsModule'
+  },
+  {
+    path: 'organization',
+    loadChildren: './organization/organization.module#OrganizationModule'
+  },
+  {
+    path: 'templates',
+    loadChildren: './templates/templates.module#TemplatesModule'
+  },
+  {
+    path: 'users',
+    loadChildren: './users/users.module#UsersModule'
+  },
+  {
     path: '**',
     component: NotFoundComponent
   }

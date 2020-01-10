@@ -2,6 +2,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 /** Custom Components */
 import { FormfieldComponent } from './form-dialog/formfield/formfield.component';
@@ -16,6 +17,13 @@ import { ThemePickerComponent } from './theme-picker/theme-picker.component';
 import { IconsModule } from './icons.module';
 import { MaterialModule } from './material.module';
 
+/** Custom Components */
+import { ShellComponent } from './shell/shell.component';
+import { SidenavComponent } from './shell/sidenav/sidenav.component';
+import { ToolbarComponent } from './shell/toolbar/toolbar.component';
+import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
+import { ContentComponent } from './shell/content/content.component';
+
 /**
  * Shared Module
  *
@@ -24,6 +32,7 @@ import { MaterialModule } from './material.module';
 @NgModule({
   imports: [
     CommonModule,
+    RouterModule,
     IconsModule,
     MaterialModule,
     ReactiveFormsModule
@@ -36,6 +45,11 @@ import { MaterialModule } from './material.module';
     FooterComponent,
     LanguageSelectorComponent,
     ThemePickerComponent,
+    ShellComponent,
+    SidenavComponent,
+    ToolbarComponent,
+    BreadcrumbComponent,
+    ContentComponent
   ],
   exports: [
     FileUploadComponent,

@@ -7,7 +7,7 @@ import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 /** Custom Services */
-import { ProgressBarService } from '../progress-bar/progress-bar.service';
+import { ProgressBarService } from '../../core/progress-bar/progress-bar.service';
 
 /**
  * Shell component.

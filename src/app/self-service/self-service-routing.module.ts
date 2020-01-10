@@ -25,10 +25,13 @@ import { ViewUserResolver } from './users/view-user/view-user.resolver';
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'self-service',
-      component: SelfServiceComponent,
+      path: '',
       data: { title: extract('Self Service'), breadcrumb: 'Self Service', addBreadcrumbLink: false },
       children: [
+        {
+          path: '',
+          component: SelfServiceComponent
+        },
         {
           path: 'users',
           data: { title: extract('Self Service Users'), breadcrumb: 'Users' },
