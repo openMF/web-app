@@ -197,6 +197,10 @@ const routes: Routes = [
           resolve: {
             workingDays: WorkingDaysResolver
           }
+        },
+        {
+          path: 'bulk-import',
+          loadChildren: '../bulk-import/bulk-import.module#BulkImportModule'
         }
       ]
     }
