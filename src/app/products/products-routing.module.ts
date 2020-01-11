@@ -25,6 +25,7 @@ import { EditShareProductComponent } from './share-products/edit-share-product/e
 import { ManageTaxConfigurationsComponent } from './manage-tax-configurations/manage-tax-configurations.component';
 import { RecurringDepositProductsComponent } from './recurring-deposit-products/recurring-deposit-products.component';
 import { ChargesComponent } from './charges/charges.component';
+import { ViewChargeComponent } from './charges/view-charge/view-charge.component';
 import { FixedDepositProductsComponent } from './fixed-deposit-products/fixed-deposit-products.component';
 import { CreateFixedDepositProductComponent } from './fixed-deposit-products/create-fixed-deposit-product/create-fixed-deposit-product.component';
 import { ProductsMixComponent } from './products-mix/products-mix.component';
@@ -46,6 +47,7 @@ import { ShareProductResolver } from './share-products/share-product-resolver';
 import { ShareProductAndTemplateResolver } from './share-products/edit-share-product/share-product-and-template.resolver';
 import { RecurringDepositProductsResolver } from './recurring-deposit-products/recurring-deposit-products.resolver';
 import { ChargesResolver } from './charges/charges.resolver';
+import { ChargeResolver } from './charges/charge.resolver';
 import { FixedDepositProductsResolver } from './fixed-deposit-products/fixed-deposit-products.resolver';
 import { FixedDepositProductsTemplateResolver } from './fixed-deposit-products/fixed-deposit-products-template.resolver';
 import { ProductsMixResolver } from './products-mix/products-mix.resolver';
@@ -225,11 +227,24 @@ const routes: Routes = [
         },
         {
           path: 'charges',
-          component: ChargesComponent,
-          resolve: {
-                charges: ChargesResolver
-          },
           data: { title:  extract('Charges'), breadcrumb: 'Charges' },
+          children: [
+            {
+              path: '',
+              component: ChargesComponent,
+              resolve: {
+                charges: ChargesResolver
+              }
+            },
+            {
+              path: ':id',
+              data: { title: extract('View Charge'), routeResolveBreadcrumb: ['charge', 'name'] },
+              component: ViewChargeComponent,
+              resolve: {
+                charge: ChargeResolver
+              }
+            }
+          ]
         },
         {
           path: 'fixed-deposit-products',
@@ -288,6 +303,7 @@ const routes: Routes = [
     ShareProductAndTemplateResolver,
     RecurringDepositProductsResolver,
     ChargesResolver,
+    ChargeResolver,
     FixedDepositProductsResolver,
     FixedDepositProductsTemplateResolver,
     ProductsMixResolver,

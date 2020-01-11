@@ -105,6 +105,22 @@ export class ProductsService {
   }
 
   /**
+   * @param {string} chargeId Charge ID of charge.
+   * @returns {Observable<any>} Charge.
+   */
+  getCharge(chargeId: string): Observable<any> {
+    return this.http.get(`/charges/${chargeId}`);
+  }
+
+  /**
+   * @param {string} chargeId  Charge ID of Charge to be deleted.
+   * @returns {Observable<any>}
+   */
+  deleteCharge(chargeId: string): Observable<any> {
+    return this.http.delete(`/charges/${chargeId}`);
+  }
+
+  /**
    * @returns {Observable<any>} Fixed deposit products data
    */
   getFixedDepositProducts(): Observable<any> {

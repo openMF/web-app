@@ -21,6 +21,7 @@ import { CreateLoanProductComponent } from './loan-products/create-loan-product/
 import { ManageTaxConfigurationsComponent } from './manage-tax-configurations/manage-tax-configurations.component';
 import { RecurringDepositProductsComponent } from './recurring-deposit-products/recurring-deposit-products.component';
 import { ChargesComponent } from './charges/charges.component';
+import { ViewChargeComponent } from './charges/view-charge/view-charge.component';
 import { FixedDepositProductsComponent } from './fixed-deposit-products/fixed-deposit-products.component';
 import { ProductsMixComponent } from './products-mix/products-mix.component';
 import { ManageTaxComponentsComponent } from './manage-tax-components/manage-tax-components.component';
@@ -86,6 +87,7 @@ import { ManageTaxGroupsComponent } from './manage-tax-groups/manage-tax-groups.
     ManageTaxConfigurationsComponent,
     RecurringDepositProductsComponent,
     ChargesComponent,
+    ViewChargeComponent,
     FixedDepositProductsComponent,
     ProductsMixComponent,
     ManageTaxComponentsComponent,
