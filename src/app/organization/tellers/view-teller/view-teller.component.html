@@ -1,0 +1,66 @@
+<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+  <button mat-raised-button color="primary">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit
+  </button>
+  <button mat-raised-button color="warn" (click)="deleteTeller()">
+    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+    Delete
+  </button>
+</div>
+
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" class="content">
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Office
+        </div>
+
+        <div fxFlex="50%">
+          {{ tellerData.officeName }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="tellerData.description">
+          Description
+        </div>
+
+        <div fxFlex="50%" *ngIf="tellerData.description">
+          {{ tellerData.description }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Start Date
+        </div>
+
+        <div fxFlex="50%">
+          {{ tellerData.startDate | date }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="tellerData.endDate">
+          End Date
+        </div>
+
+        <div fxFlex="50%" *ngIf="tellerData.endDate">
+          {{ tellerData.endDate | date }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Status
+        </div>
+
+        <div fxFlex="50%">
+          {{ tellerData.status | titlecase }}
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>
