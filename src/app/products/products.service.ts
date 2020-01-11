@@ -143,6 +143,14 @@ export class ProductsService {
   }
 
   /**
+   * @param {string} taxComponentId tax Component ID of tax Component.
+   * @returns {Observable<any>} Tax Component.
+   */
+  getTaxComponent(taxComponentId: string): Observable<any> {
+    return this.http.get(`/taxes/component/${taxComponentId}`);
+  }
+
+  /**
    * @returns {Observable<any>} Tax Groups data
    */
   getTaxGroups(): Observable<any> {
