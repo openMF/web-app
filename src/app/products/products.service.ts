@@ -105,6 +105,22 @@ export class ProductsService {
   }
 
   /**
+   * @param {string} chargeId Charge ID of charge.
+   * @returns {Observable<any>} Charge.
+   */
+  getCharge(chargeId: string): Observable<any> {
+    return this.http.get(`/charges/${chargeId}`);
+  }
+
+  /**
+   * @param {string} chargeId  Charge ID of Charge to be deleted.
+   * @returns {Observable<any>}
+   */
+  deleteCharge(chargeId: string): Observable<any> {
+    return this.http.delete(`/charges/${chargeId}`);
+  }
+
+  /**
    * @returns {Observable<any>} Fixed deposit products data
    */
   getFixedDepositProducts(): Observable<any> {
@@ -127,12 +143,32 @@ export class ProductsService {
   }
 
   /**
+   * @param {string} taxComponentId tax Component ID of tax Component.
+   * @returns {Observable<any>} Tax Component.
+   */
+  getTaxComponent(taxComponentId: string): Observable<any> {
+    return this.http.get(`/taxes/component/${taxComponentId}`);
+  }
+
+  /**
    * @returns {Observable<any>} Tax Groups data
    */
   getTaxGroups(): Observable<any> {
     return this.http.get('/taxes/group');
   }
-
+  /**
+   * @returns {Observable<any>} Tax Groups Template
+   */
+  getTaxGroupTemplate(): Observable<any> {
+    return this.http.get('/taxes/group/template');
+  }
+  /**
+   * @param {any} taxgroup taxgroup to be created.
+   * @returns {Observable<any>}
+   */
+  createTaxGroup(taxGroup: any): Observable<any> {
+    return this.http.post('/taxes/group', taxGroup);
+  }
   /**
    * @returns {Observable<any>} Product mixes data
    */

@@ -108,6 +108,22 @@ export class OrganizationService {
   }
 
   /**
+   * @param {string} tellerId Teller ID of teller.
+   * @returns {Observable<any>} Teller.
+   */
+  getTeller(tellerId: string): Observable<any> {
+    return this.http.get(`/tellers/${tellerId}`);
+  }
+
+  /**
+   * @param {string} tellerId Teller ID of teller to be deleted.
+   * @returns {Observable<any>}
+   */
+  deleteTeller(tellerId: string): Observable<any> {
+    return this.http.delete(`/tellers/${tellerId}`);
+  }
+
+  /**
    * @returns {Observable<any>} Payment Types data
    */
   getPaymentTypes(): Observable<any> {
@@ -128,6 +144,22 @@ export class OrganizationService {
    */
   deletePaymentType(paymentTypeId: string): Observable<any> {
     return this.http.delete(`/paymenttypes/${paymentTypeId}`);
+  }
+
+  /**
+   * @param {string} paymentTypeId Payment type ID of payment type.
+   * @returns {Observable<any>} Payment type.
+   */
+  getPaymentType(paymentTypeId: string): Observable<any> {
+    return this.http.get(`/paymenttypes/${paymentTypeId}`);
+  }
+
+  /**
+   * @param {string} paymentTypeId Payment type ID of Payment Type to be edited.
+   * @returns {Observable<any>}
+   */
+  updatePaymentType(paymentTypeId: string, paymentType: any): Observable<any> {
+    return this.http.put(`/paymenttypes/${paymentTypeId}`, paymentType);
   }
 
   /**

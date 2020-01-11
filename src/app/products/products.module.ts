@@ -21,6 +21,7 @@ import { CreateLoanProductComponent } from './loan-products/create-loan-product/
 import { ManageTaxConfigurationsComponent } from './manage-tax-configurations/manage-tax-configurations.component';
 import { RecurringDepositProductsComponent } from './recurring-deposit-products/recurring-deposit-products.component';
 import { ChargesComponent } from './charges/charges.component';
+import { ViewChargeComponent } from './charges/view-charge/view-charge.component';
 import { FixedDepositProductsComponent } from './fixed-deposit-products/fixed-deposit-products.component';
 import { ProductsMixComponent } from './products-mix/products-mix.component';
 import { ManageTaxComponentsComponent } from './manage-tax-components/manage-tax-components.component';
@@ -60,6 +61,8 @@ import { FixedDepositProductAccountingStepComponent } from './fixed-deposit-prod
 import { FixedDepositProductPreviewStepComponent } from './fixed-deposit-products/fixed-deposit-product-stepper/fixed-deposit-product-preview-step/fixed-deposit-product-preview-step.component';
 import { DepositProductIncentiveFormDialogComponent } from './deposit-product-incentive-form-dialog/deposit-product-incentive-form-dialog.component';
 import { ManageTaxGroupsComponent } from './manage-tax-groups/manage-tax-groups.component';
+import { ViewTaxComponentComponent } from './manage-tax-components/view-tax-component/view-tax-component.component';
+import { CreateTaxGroupComponent } from './manage-tax-groups/create-tax-group/create-tax-group.component';
 
 /**
  * Products Module
@@ -86,6 +89,7 @@ import { ManageTaxGroupsComponent } from './manage-tax-groups/manage-tax-groups.
     ManageTaxConfigurationsComponent,
     RecurringDepositProductsComponent,
     ChargesComponent,
+    ViewChargeComponent,
     FixedDepositProductsComponent,
     ProductsMixComponent,
     ManageTaxComponentsComponent,
@@ -124,7 +128,9 @@ import { ManageTaxGroupsComponent } from './manage-tax-groups/manage-tax-groups.
     FixedDepositProductAccountingStepComponent,
     FixedDepositProductPreviewStepComponent,
     DepositProductIncentiveFormDialogComponent,
-    ManageTaxGroupsComponent
+    ManageTaxGroupsComponent,
+    ViewTaxComponentComponent,
+    CreateTaxGroupComponent
   ],
   entryComponents: [
     DepositProductIncentiveFormDialogComponent

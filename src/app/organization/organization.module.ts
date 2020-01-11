@@ -16,7 +16,9 @@ import { SmsCampaignsComponent } from './sms-campaigns/sms-campaigns.component';
 import { AdhocQueryComponent } from './adhoc-query/adhoc-query.component';
 import { ViewAdhocQueryComponent } from './adhoc-query/view-adhoc-query/view-adhoc-query.component';
 import { TellersComponent } from './tellers/tellers.component';
+import { ViewTellerComponent } from './tellers/view-teller/view-teller.component';
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
+import { EditPaymentTypeComponent } from './payment-types/edit-payment-type/edit-payment-type.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
 import { EntityDataTableChecksComponent } from './entity-data-table-checks/entity-data-table-checks.component';
 import { WorkingDaysComponent } from './working-days/working-days.component';
@@ -46,7 +48,9 @@ import { ViewEmployeeComponent } from './employees/view-employee/view-employee.c
     AdhocQueryComponent,
     ViewAdhocQueryComponent,
     TellersComponent,
+    ViewTellerComponent,
     PaymentTypesComponent,
+    EditPaymentTypeComponent,
     PasswordPreferencesComponent,
     EntityDataTableChecksComponent,
     WorkingDaysComponent,

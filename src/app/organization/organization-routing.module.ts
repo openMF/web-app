@@ -20,7 +20,9 @@ import { SmsCampaignsComponent } from './sms-campaigns/sms-campaigns.component';
 import { AdhocQueryComponent } from './adhoc-query/adhoc-query.component';
 import { ViewAdhocQueryComponent } from './adhoc-query/view-adhoc-query/view-adhoc-query.component';
 import { TellersComponent } from './tellers/tellers.component';
+import { ViewTellerComponent } from './tellers/view-teller/view-teller.component';
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
+import { EditPaymentTypeComponent } from './payment-types/edit-payment-type/edit-payment-type.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
 import { EntityDataTableChecksComponent } from './entity-data-table-checks/entity-data-table-checks.component';
 import { WorkingDaysComponent } from './working-days/working-days.component';
@@ -37,7 +39,9 @@ import { SmsCampaignsResolver } from './sms-campaigns/sms-campaigns.resolver';
 import { AdhocQueriesResolver } from './adhoc-query/adhoc-queries.resolver';
 import { AdhocQueryResolver } from './adhoc-query/adhoc-query.resolver';
 import { TellersResolver } from './tellers/tellers.resolver';
+import { TellerResolver } from './tellers/teller.resolver';
 import { PaymentTypesResolver } from './payment-types/payment-types.resolver';
+import { PaymentTypeResolver } from './payment-types/payment-type.resolver';
 import { PasswordPreferencesTemplateResolver } from './password-preferences/password-preferences-template.resolver';
 import { EntityDataTableChecksResolver } from './entity-data-table-checks/entity-data-table-checks.resolver';
 import { WorkingDaysResolver } from './working-days/working-days.resolver';
@@ -150,11 +154,24 @@ const routes: Routes = [
         },
         {
           path: 'tellers',
-          component: TellersComponent,
           data: { title: extract('Tellers'), breadcrumb: 'Tellers' },
-          resolve: {
-            tellers: TellersResolver
-          }
+          children: [
+            {
+              path: '',
+              component: TellersComponent,
+              resolve: {
+                tellers: TellersResolver
+              }
+            },
+            {
+              path: ':id',
+              component: ViewTellerComponent,
+              data: { title: extract('View Teller'), routeResolveBreadcrumb: ['teller', 'name'] },
+              resolve: {
+                teller: TellerResolver
+              }
+            }
+          ]
         },
         {
           path: 'payment-types',
@@ -171,6 +188,20 @@ const routes: Routes = [
               path: 'create',
               component: CreatePaymentTypeComponent,
               data: { title: extract('Create Payment Type'), breadcrumb: 'Create Payment Type'}
+            },
+            {
+              path: ':id',
+              data: { routeParamBreadcrumb: 'id', addBreadcrumbLink: false },
+              children: [
+                {
+                  path: 'edit',
+                  component: EditPaymentTypeComponent,
+                  data: { title: extract('Edit Payment Type'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    paymentType: PaymentTypeResolver
+                  }
+                }
+              ]
             }
           ]
         },
@@ -221,7 +252,9 @@ const routes: Routes = [
     AdhocQueriesResolver,
     AdhocQueryResolver,
     TellersResolver,
+    TellerResolver,
     PaymentTypesResolver,
+    PaymentTypeResolver,
     PasswordPreferencesTemplateResolver,
     EntityDataTableChecksResolver,
     WorkingDaysResolver

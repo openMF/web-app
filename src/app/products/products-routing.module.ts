@@ -25,11 +25,13 @@ import { EditShareProductComponent } from './share-products/edit-share-product/e
 import { ManageTaxConfigurationsComponent } from './manage-tax-configurations/manage-tax-configurations.component';
 import { RecurringDepositProductsComponent } from './recurring-deposit-products/recurring-deposit-products.component';
 import { ChargesComponent } from './charges/charges.component';
+import { ViewChargeComponent } from './charges/view-charge/view-charge.component';
 import { FixedDepositProductsComponent } from './fixed-deposit-products/fixed-deposit-products.component';
 import { CreateFixedDepositProductComponent } from './fixed-deposit-products/create-fixed-deposit-product/create-fixed-deposit-product.component';
 import { ProductsMixComponent } from './products-mix/products-mix.component';
 import { ManageTaxComponentsComponent } from './manage-tax-components/manage-tax-components.component';
 import { ManageTaxGroupsComponent } from './manage-tax-groups/manage-tax-groups.component';
+import { ViewTaxComponentComponent } from './manage-tax-components/view-tax-component/view-tax-component.component';
 
 /** Custom Resolvers */
 import { LoanProductsResolver } from './loan-products/loan-products.resolver';
@@ -46,11 +48,15 @@ import { ShareProductResolver } from './share-products/share-product-resolver';
 import { ShareProductAndTemplateResolver } from './share-products/edit-share-product/share-product-and-template.resolver';
 import { RecurringDepositProductsResolver } from './recurring-deposit-products/recurring-deposit-products.resolver';
 import { ChargesResolver } from './charges/charges.resolver';
+import { ChargeResolver } from './charges/charge.resolver';
 import { FixedDepositProductsResolver } from './fixed-deposit-products/fixed-deposit-products.resolver';
 import { FixedDepositProductsTemplateResolver } from './fixed-deposit-products/fixed-deposit-products-template.resolver';
 import { ProductsMixResolver } from './products-mix/products-mix.resolver';
 import { ManageTaxComponentsResolver } from './manage-tax-components/manage-tax-components.resolver';
 import { ManageTaxGroupsResolver } from './manage-tax-groups/manage-tax-groups.resolver';
+import { TaxComponentResolver } from './manage-tax-components/tax-component.resolver';
+import { CreateTaxGroupComponent } from './manage-tax-groups/create-tax-group/create-tax-group.component';
+import { TaxGroupResolver } from './manage-tax-groups/tax-group.resolver';
 
 /** Products Routes */
 const routes: Routes = [
@@ -199,19 +205,50 @@ const routes: Routes = [
             },
             {
               path: 'tax-components',
-              component: ManageTaxComponentsComponent,
-              resolve: {
-                taxComponents: ManageTaxComponentsResolver
-              },
               data: { title: extract('Manage Tax Components'), breadcrumb: 'Tax Components'},
+              children: [
+                {
+                  path: '',
+                  component: ManageTaxComponentsComponent,
+                  resolve: {
+                    taxComponents: ManageTaxComponentsResolver
+                  }
+                },
+                {
+                  path: ':id',
+                  data: { title: extract('View Tax Component'), routeParamBreadcrumb: 'id' },
+                  children: [
+                    {
+                      path: '',
+                      component: ViewTaxComponentComponent,
+                      resolve: {
+                        taxComponent: TaxComponentResolver
+                      }
+                    }
+                  ]
+                }
+              ]
             },
             {
               path: 'tax-groups',
-              component: ManageTaxGroupsComponent,
-              resolve: {
-                taxGroups: ManageTaxGroupsResolver
-              },
               data: { title: extract('Manage Tax Groups'), breadcrumb: 'Tax Groups'},
+              children: [
+                {
+                  path: '',
+                  component: ManageTaxGroupsComponent,
+                  resolve: {
+                      taxGroups: ManageTaxGroupsResolver
+                  }
+                },
+                {
+                  path: 'create',
+                  component: CreateTaxGroupComponent,
+                  data: { title: extract('Create Tax Group'), breadcrumb: 'Create Tax Group'},
+                  resolve: {
+                    taxComponents: TaxGroupResolver
+                  }
+                }
+              ]
             },
           ]
         },
@@ -225,11 +262,24 @@ const routes: Routes = [
         },
         {
           path: 'charges',
-          component: ChargesComponent,
-          resolve: {
-                charges: ChargesResolver
-          },
           data: { title:  extract('Charges'), breadcrumb: 'Charges' },
+          children: [
+            {
+              path: '',
+              component: ChargesComponent,
+              resolve: {
+                charges: ChargesResolver
+              }
+            },
+            {
+              path: ':id',
+              data: { title: extract('View Charge'), routeResolveBreadcrumb: ['charge', 'name'] },
+              component: ViewChargeComponent,
+              resolve: {
+                charge: ChargeResolver
+              }
+            }
+          ]
         },
         {
           path: 'fixed-deposit-products',
@@ -288,11 +338,14 @@ const routes: Routes = [
     ShareProductAndTemplateResolver,
     RecurringDepositProductsResolver,
     ChargesResolver,
+    ChargeResolver,
     FixedDepositProductsResolver,
     FixedDepositProductsTemplateResolver,
     ProductsMixResolver,
     ManageTaxComponentsResolver,
-    ManageTaxGroupsResolver
+    ManageTaxGroupsResolver,
+    TaxComponentResolver,
+    TaxGroupResolver
   ]
 })
 export class ProductsRoutingModule { }
