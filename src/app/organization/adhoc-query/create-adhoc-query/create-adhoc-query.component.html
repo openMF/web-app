@@ -1,0 +1,88 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="adhocQueryForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput required formControlName="name">
+            <mat-error *ngIf="adhocQueryForm.controls.name.hasError('required')">
+              Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>SQL Query</mat-label>
+            <textarea matInput required formControlName="query"></textarea>
+            <mat-error *ngIf="adhocQueryForm.controls.query.hasError('required')">
+              SQL Query is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Insert into table</mat-label>
+            <input matInput required formControlName="tableName">
+            <mat-error *ngIf="adhocQueryForm.controls.tableName.hasError('required')">
+              Insert into table is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Table Fields</mat-label>
+            <textarea matInput required formControlName="tableFields"></textarea>
+            <mat-error *ngIf="adhocQueryForm.controls.tableFields.hasError('required')">
+              Table Fields are <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email">
+            <mat-error *ngIf="adhocQueryForm.controls.email.hasError('email')">
+              Email is <strong>invalid</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Report Run Frequency</mat-label>
+            <mat-select formControlName="reportRunFrequency">
+              <mat-option *ngFor="let reportRunFrequency of reportRunFrequencyData" [value]="reportRunFrequency.id">
+                {{ reportRunFrequency.value }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="adhocQueryForm.controls.reportRunFrequency.value === 5">
+            <mat-label>Custom Report Run Frequency (Days)</mat-label>
+            <input type="number" matInput required formControlName="reportRunEvery">
+            <mat-error *ngIf="adhocQueryForm.controls.reportRunEvery.hasError('required')">
+              Custom Report Run Frequency is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="adhocQueryForm.controls.reportRunEvery.hasError('min')">
+              Custom Report Run Frequency <strong>must be larger than 0</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-checkbox labelPosition="before" formControlName="isActive">
+            Active
+          </mat-checkbox>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!adhocQueryForm.valid">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>

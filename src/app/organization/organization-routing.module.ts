@@ -28,6 +28,7 @@ import { EntityDataTableChecksComponent } from './entity-data-table-checks/entit
 import { WorkingDaysComponent } from './working-days/working-days.component';
 import { CreateOfficeComponent } from './offices/create-office/create-office.component';
 import { CreatePaymentTypeComponent } from './payment-types/create-payment-type/create-payment-type.component';
+import { CreateAdhocQueryComponent } from './adhoc-query/create-adhoc-query/create-adhoc-query.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -45,6 +46,7 @@ import { PaymentTypeResolver } from './payment-types/payment-type.resolver';
 import { PasswordPreferencesTemplateResolver } from './password-preferences/password-preferences-template.resolver';
 import { EntityDataTableChecksResolver } from './entity-data-table-checks/entity-data-table-checks.resolver';
 import { WorkingDaysResolver } from './working-days/working-days.resolver';
+import { AdhocQueryTemplateResolver } from './adhoc-query/adhoc-query-template.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -140,6 +142,14 @@ const routes: Routes = [
               component: AdhocQueryComponent,
               resolve: {
                 adhocQueries: AdhocQueriesResolver
+              }
+            },
+            {
+              path: 'create',
+              component: CreateAdhocQueryComponent,
+              data: { title: extract('Create Adhoc Query'), breadcrumb: 'Create' },
+              resolve: {
+                adhocQueryTemplate: AdhocQueryTemplateResolver
               }
             },
             {
@@ -257,7 +267,8 @@ const routes: Routes = [
     PaymentTypeResolver,
     PasswordPreferencesTemplateResolver,
     EntityDataTableChecksResolver,
-    WorkingDaysResolver
+    WorkingDaysResolver,
+    AdhocQueryTemplateResolver
   ]
 })
 export class OrganizationRoutingModule { }
