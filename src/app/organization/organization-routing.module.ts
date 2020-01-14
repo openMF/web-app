@@ -22,6 +22,7 @@ import { ViewAdhocQueryComponent } from './adhoc-query/view-adhoc-query/view-adh
 import { TellersComponent } from './tellers/tellers.component';
 import { ViewTellerComponent } from './tellers/view-teller/view-teller.component';
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
+import { EditPaymentTypeComponent } from './payment-types/edit-payment-type/edit-payment-type.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
 import { EntityDataTableChecksComponent } from './entity-data-table-checks/entity-data-table-checks.component';
 import { WorkingDaysComponent } from './working-days/working-days.component';
@@ -40,6 +41,7 @@ import { AdhocQueryResolver } from './adhoc-query/adhoc-query.resolver';
 import { TellersResolver } from './tellers/tellers.resolver';
 import { TellerResolver } from './tellers/teller.resolver';
 import { PaymentTypesResolver } from './payment-types/payment-types.resolver';
+import { PaymentTypeResolver } from './payment-types/payment-type.resolver';
 import { PasswordPreferencesTemplateResolver } from './password-preferences/password-preferences-template.resolver';
 import { EntityDataTableChecksResolver } from './entity-data-table-checks/entity-data-table-checks.resolver';
 import { WorkingDaysResolver } from './working-days/working-days.resolver';
@@ -186,6 +188,20 @@ const routes: Routes = [
               path: 'create',
               component: CreatePaymentTypeComponent,
               data: { title: extract('Create Payment Type'), breadcrumb: 'Create Payment Type'}
+            },
+            {
+              path: ':id',
+              data: { routeParamBreadcrumb: 'id', addBreadcrumbLink: false },
+              children: [
+                {
+                  path: 'edit',
+                  component: EditPaymentTypeComponent,
+                  data: { title: extract('Edit Payment Type'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    paymentType: PaymentTypeResolver
+                  }
+                }
+              ]
             }
           ]
         },
@@ -238,6 +254,7 @@ const routes: Routes = [
     TellersResolver,
     TellerResolver,
     PaymentTypesResolver,
+    PaymentTypeResolver,
     PasswordPreferencesTemplateResolver,
     EntityDataTableChecksResolver,
     WorkingDaysResolver

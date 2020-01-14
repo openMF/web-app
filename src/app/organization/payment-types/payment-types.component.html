@@ -48,7 +48,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let paymentType">
-          <button mat-button color="primary">
+          <button mat-button [routerLink]="[paymentType.id, 'edit']" color="primary">
             <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;Edit
           </button>
           <button mat-button (click)="deletePaymentType(paymentType.id)" color="warn">
