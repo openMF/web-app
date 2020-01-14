@@ -1,0 +1,49 @@
+table {
+  width: 100%;
+}
+
+.mat-elevation-z1 {
+  margin: 1em 0 1.5em 0;
+}
+
+h2, h3, h4 {
+  margin: 0;
+  font-weight: 500;
+}
+
+span {
+  margin: 0.5em 0;
+}
+
+.mat-card .mat-divider-horizontal.mat-divider-inset {
+  margin: 0 0 0.5em 0;
+}
+
+.margin-t {
+  margin-top: 1em;
+}
+
+table {
+  width: 100%;
+
+  tr.incentives-row {
+    height: 0;
+
+    > td {
+      padding: 0;
+    }
+
+    .incentives {
+      overflow: hidden;
+    }
+
+    .mat-card {
+      border-radius: 0;
+
+      > h4 {
+        font-weight: 500;
+        margin: 0.5em 0 0;
+      }
+    }
+  }
+}

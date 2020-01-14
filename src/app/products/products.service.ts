@@ -191,6 +191,14 @@ export class ProductsService {
   }
 
   /**
+   * @param {string} fixedDepositProductId fixed deposit product ID of fixed deposit product.
+   * @returns {Observable<any>} Fixed deposit product.
+   */
+  getFixedDepositProduct(fixedDepositProductId: string): Observable<any> {
+    return this.http.get(`/fixeddepositproducts/${fixedDepositProductId}`);
+  }
+
+  /**
    * @returns {Observable<any>} Tax Components data
    */
   getTaxComponents(): Observable<any> {

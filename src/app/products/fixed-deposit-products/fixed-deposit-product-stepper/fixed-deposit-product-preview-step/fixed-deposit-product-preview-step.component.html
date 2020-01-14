@@ -86,7 +86,7 @@
   </div>
 
   <div fxFlexFill *ngIf="fixedDepositProduct.maxDepositTerm">
-    <span fxFlex="40%">Minimum Deposit Term:</span>
+    <span fxFlex="40%">Maximum Deposit Term:</span>
     <span fxFlex="60%">{{ fixedDepositProduct.maxDepositTerm + ' ' + (fixedDepositProduct.maxDepositTermTypeId | find:fixedDepositProductsTemplate.periodFrequencyTypeOptions:'id':'value') }}</span>
   </div>
   <!-- For Pre-mature closure -->
