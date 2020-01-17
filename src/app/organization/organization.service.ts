@@ -180,4 +180,22 @@ export class OrganizationService {
     return this.http.put('/workingdays', workingDays);
   }
 
+  /**
+   * @returns {Observable<any>} Funds data
+   */
+  getFunds(): Observable<any> {
+    return this.http.get('/funds');
+  }
+
+  /**
+   * @param {any} fund Fund to be created.
+   * @returns {Observable<any>}
+   */
+  createFund(fund: any): Observable<any> {
+    return this.http.post('/funds', fund);
+  }
+
+  editFund(fundId: string, fundData: any) {
+    return this.http.put(`/funds/${fundId}`, fundData);
+  }
 }

@@ -26,6 +26,7 @@ import { EntityDataTableChecksComponent } from './entity-data-table-checks/entit
 import { WorkingDaysComponent } from './working-days/working-days.component';
 import { CreateOfficeComponent } from './offices/create-office/create-office.component';
 import { CreatePaymentTypeComponent } from './payment-types/create-payment-type/create-payment-type.component';
+import { ManageFundsComponent } from './manage-funds/manage-funds.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -41,6 +42,7 @@ import { PaymentTypesResolver } from './payment-types/payment-types.resolver';
 import { PasswordPreferencesTemplateResolver } from './password-preferences/password-preferences-template.resolver';
 import { EntityDataTableChecksResolver } from './entity-data-table-checks/entity-data-table-checks.resolver';
 import { WorkingDaysResolver } from './working-days/working-days.resolver';
+import { ManageFundsResolver } from './manage-funds/manage-funds.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -197,6 +199,14 @@ const routes: Routes = [
           resolve: {
             workingDays: WorkingDaysResolver
           }
+        },
+        {
+          path: 'manage-funds',
+          component: ManageFundsComponent,
+          data: { title: extract('Manage Funds Days'), breadcrumb: 'Manage Funds' },
+          resolve: {
+            funds: ManageFundsResolver
+          }
         }
       ]
     }
@@ -224,7 +234,8 @@ const routes: Routes = [
     PaymentTypesResolver,
     PasswordPreferencesTemplateResolver,
     EntityDataTableChecksResolver,
-    WorkingDaysResolver
+    WorkingDaysResolver,
+    ManageFundsResolver
   ]
 })
 export class OrganizationRoutingModule { }

@@ -24,6 +24,8 @@ import { CreateOfficeComponent } from './offices/create-office/create-office.com
 import { CreateEmployeeComponent } from './employees/create-employee/create-employee.component';
 import { CreatePaymentTypeComponent } from './payment-types/create-payment-type/create-payment-type.component';
 import { ViewEmployeeComponent } from './employees/view-employee/view-employee.component';
+import { ManageFundsComponent } from './manage-funds/manage-funds.component';
+import { EditFundsDialogComponent } from './edit-funds-dialog/edit-funds-dialog.component';
 
 /**
  * Organization Module
@@ -53,7 +55,12 @@ import { ViewEmployeeComponent } from './employees/view-employee/view-employee.c
     CreateOfficeComponent,
     CreateEmployeeComponent,
     CreatePaymentTypeComponent,
-    ViewEmployeeComponent
+    ViewEmployeeComponent,
+    ManageFundsComponent,
+    EditFundsDialogComponent
+  ],
+  entryComponents: [
+    EditFundsDialogComponent
   ]
 })
 export class OrganizationModule { }
