@@ -166,4 +166,32 @@ export class ProductsService {
     return this.http.get('/loanproducts', { params: httpParams });
   }
 
+  /**
+   * @returns {Observable<any>} Products mix Template data
+   */
+  getProductsMixTemplate(): Observable<any> {
+    let httpParams = new HttpParams();
+    httpParams = httpParams.set('isProductMixTemplate', 'true');
+    return this.http.get('/loanproducts/template', { params: httpParams });
+  }
+
+  /**
+   * @param {string} productMixId product mix ID of product mix.
+   * @returns {Observable<any>} Product mix Template data
+   */
+  getProductMixTemplate(productMixId: string): Observable<any> {
+    let httpParams = new HttpParams();
+    httpParams = httpParams.set('template', 'true');
+    return this.http.get(`/loanproducts/${productMixId}/productmix`, { params: httpParams });
+  }
+
+  /**
+   * @param {string} productMixId product mix ID of product mix.
+   * @param {any} productMix Product mix to be created.
+   * @returns {Observable<any>}
+   */
+  createProductMix(productMix: any, productMixId: string): Observable<any> {
+    return this.http.post(`/loanproducts/${productMixId}/productmix`, productMix);
+  }
+
 }

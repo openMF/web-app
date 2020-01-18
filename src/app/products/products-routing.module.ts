@@ -32,6 +32,7 @@ import { ProductsMixComponent } from './products-mix/products-mix.component';
 import { ManageTaxComponentsComponent } from './manage-tax-components/manage-tax-components.component';
 import { ManageTaxGroupsComponent } from './manage-tax-groups/manage-tax-groups.component';
 import { ViewTaxComponentComponent } from './manage-tax-components/view-tax-component/view-tax-component.component';
+import { CreateProductMixComponent } from './products-mix/create-product-mix/create-product-mix.component';
 
 /** Custom Resolvers */
 import { LoanProductsResolver } from './loan-products/loan-products.resolver';
@@ -55,6 +56,7 @@ import { ProductsMixResolver } from './products-mix/products-mix.resolver';
 import { ManageTaxComponentsResolver } from './manage-tax-components/manage-tax-components.resolver';
 import { ManageTaxGroupsResolver } from './manage-tax-groups/manage-tax-groups.resolver';
 import { TaxComponentResolver } from './manage-tax-components/tax-component.resolver';
+import { ProductsMixTemplateResolver } from './products-mix/products-mix-template.resolver';
 
 /** Products Routes */
 const routes: Routes = [
@@ -289,12 +291,25 @@ const routes: Routes = [
         },
         {
           path: 'products-mix',
-          component: ProductsMixComponent,
-          resolve: {
-                products: ProductsMixResolver
-          },
           data: { title:  extract('Products Mix'), breadcrumb: 'Products Mix' },
-        },
+          children: [
+            {
+              path: '',
+              component: ProductsMixComponent,
+              resolve: {
+                products: ProductsMixResolver
+              }
+            },
+            {
+              path: 'create',
+              component: CreateProductMixComponent,
+              data: { title: extract('Create Product Mix'), breadcrumb: 'Create' },
+              resolve: {
+                productsMixTemplate: ProductsMixTemplateResolver
+              }
+            }
+          ]
+        }
       ]
     }
   ])
@@ -329,7 +344,8 @@ const routes: Routes = [
     ProductsMixResolver,
     ManageTaxComponentsResolver,
     ManageTaxGroupsResolver,
-    TaxComponentResolver
+    TaxComponentResolver,
+    ProductsMixTemplateResolver
   ]
 })
 export class ProductsRoutingModule { }
