@@ -1,0 +1,40 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="productMixForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Product</mat-label>
+            <input matInput formControlName="productId">
+          </mat-form-field>
+
+          <mat-form-field *ngIf="productData">
+            <mat-label>Restricted products</mat-label>
+            <mat-select required formControlName="restrictedProducts" multiple>
+              <mat-option *ngFor="let product of productData" [value]="product.id">
+                {{ product.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="productMixForm.controls.restrictedProducts.hasError('required')">
+              At least one restricted product <strong>must be selected</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!productMixForm.valid">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>

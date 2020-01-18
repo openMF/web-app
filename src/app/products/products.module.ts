@@ -92,6 +92,8 @@ import { ViewDividendComponent } from './share-products/view-dividend/view-divid
 import { ViewFixedDepositProductComponent } from './fixed-deposit-products/view-fixed-deposit-product/view-fixed-deposit-product.component';
 import { CreateTaxGroupComponent } from './manage-tax-groups/create-tax-group/create-tax-group.component';
 import { EditTaxGroupComponent } from './manage-tax-groups/edit-tax-group/edit-tax-group.component';
+import { CreateProductMixComponent } from './products-mix/create-product-mix/create-product-mix.component';
+import { EditProductMixComponent } from './products-mix/edit-product-mix/edit-product-mix.component';
 
 /**
  * Products Module
@@ -187,7 +189,9 @@ import { EditTaxGroupComponent } from './manage-tax-groups/edit-tax-group/edit-t
     ViewDividendComponent,
     ViewFixedDepositProductComponent,
     CreateTaxGroupComponent,
-    EditTaxGroupComponent
+    EditTaxGroupComponent,
+    CreateProductMixComponent,
+    EditProductMixComponent
   ],
   entryComponents: [
     DepositProductIncentiveFormDialogComponent,

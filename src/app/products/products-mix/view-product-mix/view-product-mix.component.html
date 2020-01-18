@@ -1,9 +1,9 @@
 <div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="20px">
-  <button mat-raised-button color="primary">
+  <button mat-raised-button color="primary" [routerLink]="['edit']">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
     Edit
   </button>
-  <button mat-raised-button color="warn">
+  <button mat-raised-button color="warn" (click)="delete()">
     <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
     Delete
   </button>
