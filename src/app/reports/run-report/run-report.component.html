@@ -1,0 +1,113 @@
+<div class="container input">
+
+  <mat-card *ngIf="!isCollapsed">
+
+    <form [formGroup]="ReportForm" (ngSubmit)="run()">
+      
+      <mat-card-content>
+        
+        <div fxLayout="column" *ngFor="let param of paramData">
+
+          <div [ngSwitch]="param.displayType">
+
+            <div *ngIf="ReportForm.contains(param.name)">
+              <mat-form-field fxFlex="100%" *ngSwitchCase="'text'">
+                <mat-label>{{param.label}}</mat-label>
+                <input matInput required [formControlName]="param.name">
+                <mat-error *ngIf="ReportForm.controls[param.name].hasError('required')">
+                  {{param.label}} is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div *ngIf="ReportForm.contains(param.name)">
+              <mat-form-field fxFlex="100%" *ngSwitchCase="'date'">
+                <mat-label>{{param.label}}</mat-label>
+                <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="runReportDatePicker" required [formControlName]="param.name">
+                <mat-datepicker-toggle matSuffix [for]="runReportDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #runReportDatePicker></mat-datepicker>
+                <mat-error *ngIf="ReportForm.controls[param.name].hasError('required')">
+                  {{param.label}} is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div *ngIf="ReportForm.contains(param.name) ">
+              <mat-form-field fxFlex="100%" *ngSwitchCase="'select'" >
+                <mat-label>{{param.label}}</mat-label>
+                <mat-select required [formControlName]="param.name">
+                  <mat-option *ngFor="let option of param.selectOptions" [value]="option" >
+                  {{option.name}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="ReportForm.controls[param.name].hasError('required')">
+                  {{param.label}} is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div>
+          <mat-form-field fxFlex="100%">
+            <mat-label>Decimal Places</mat-label>
+            <mat-select [formControl]="decimalChoice">
+              <mat-option value="0">0</mat-option>
+              <mat-option value="1">1</mat-option>
+              <mat-option value="2">2</mat-option>
+              <mat-option value="3">3</mat-option>
+              <mat-option value="4">4</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div *ngIf="report.type === 'Pentaho' && ReportForm.contains('outputType')">
+          <mat-form-field fxFlex="100%">
+            <mat-label>Output Type</mat-label>
+            <mat-select formControlName="outputType" value="HTML">
+              <mat-option value="HTML">Normal format</mat-option>
+              <mat-option value="XLS">Excel format</mat-option>
+              <mat-option value="XLSX">Excel 2007 format</mat-option>
+              <mat-option value="CSV">CSV format</mat-option>
+              <mat-option value="PDF">PDF format</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['/reports']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!ReportForm.valid">
+          <fa-icon icon="cogs"></fa-icon>
+          &nbsp; Run Report
+        </button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+  
+</div>
+
+<div class="container output" *ngIf="isCollapsed">
+
+  <mat-card>
+
+    <div class="m-b-20">
+      <button mat-raised-button color="primary" (click)="isCollapsed = false">
+        Parameters
+      </button>
+    </div>
+
+    <div>
+      <mifosx-table-and-sms *ngIf="!hideTable"[dataObject]="dataObject"></mifosx-table-and-sms>
+      <mifosx-chart *ngIf="!hideChart" [dataObject]="dataObject"></mifosx-chart>
+      <mifosx-pentaho *ngIf="!hidePentaho" [dataObject]="dataObject"></mifosx-pentaho>
+    </div>
+
+  </mat-card>
+
+</div>

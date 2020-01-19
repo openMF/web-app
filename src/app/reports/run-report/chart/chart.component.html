@@ -1,0 +1,10 @@
+<div class="m-b-20" fxLayoutAlign="end">
+  <mat-button-toggle-group  aria-label="Select Chart Type">
+    <mat-button-toggle value="Bar" (click) = "setBarChart(inputData)">Bar Chart</mat-button-toggle>
+    <mat-button-toggle value="Pie" (click) = "setPieChart(inputData)">Pie Chart</mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+
+<div [ngStyle]="{'display': (hideOutput) ? 'none' : 'block'}">
+  <canvas id="output"></canvas>
+</div>
