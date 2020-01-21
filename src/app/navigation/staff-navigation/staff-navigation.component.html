@@ -1,0 +1,58 @@
+<mat-card-header fxLayout="row" fxLayoutGap="5%" class="header">
+  <fa-icon class="main-icon" icon="user" size="3x"></fa-icon>
+  <mat-card-title-group>
+    <div class="mat-typography">
+      <mat-card-title>
+        <h2>
+          {{ employeeData.displayName }} 
+          <span [className]="employeeData.isActive === true ? 'true' : 'false'">
+            <fa-icon matTooltip="{{ employeeData.isActive === true ? 'Active' : 'Inactive' }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
+          </span>        
+        </h2>
+      </mat-card-title>
+      <mat-card-subtitle>
+        <p>
+          Associated Office: {{ employeeData.officeName }}
+        </p>
+      </mat-card-subtitle>
+    </div>
+  </mat-card-title-group> 
+</mat-card-header>
+
+<mat-card-content>
+  <div fxLayout="row wrap" class="content">
+
+    <div fxFlex="50%" class="mat-body-strong">
+      Joined On
+    </div>
+
+    <div fxFlex="50%">
+      {{ employeeData.joiningDate | date }}
+    </div>
+
+    <div fxFlex="50%" class="mat-body-strong">
+      Loan Officer
+    </div>
+
+    <div fxFlex="50%">
+      {{ employeeData.isLoanOfficer ? 'Yes' : 'No' }}
+    </div>
+
+    <div fxFlex="50%" class="mat-body-strong" *ngIf="employeeData.mobileNo">
+      Mobile Number
+    </div>
+
+    <div fxFlex="50%" *ngIf="employeeData.mobileNo">
+      {{ employeeData.mobileNo }}
+    </div>
+
+    <div fxFlex="50%" class="mat-body-strong">
+      Number of Centers
+    </div>
+
+    <div fxFlex="50%">
+      {{ centerData ? centerData.length : '' }}
+    </div>
+
+  </div>
+</mat-card-content>

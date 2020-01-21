@@ -1,0 +1,44 @@
+<div fxLayout="row" fxLayoutAlign="space-between center">
+  <mat-form-field fxFlex="50%">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event.target.value)">
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="toggleClosed()">
+    {{ showClosed ? 'View Active' : 'View Closed' }}
+  </button>  
+</div>
+
+<table mat-table [dataSource]="dataSource" matSort>
+
+  <ng-container matColumnDef="accountNo">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Account Number </th>
+    <td mat-cell *matCellDef="let shareAccount">{{ shareAccount.accountNo }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="productName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Share Account </th>
+    <td mat-cell *matCellDef="let shareAccount">{{ shareAccount.productName }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="totalApprovedShares">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Approved Shares </th>
+    <td mat-cell *matCellDef="let savingsAccount">{{ savingsAccount.totalApprovedShares }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Status">
+    <th mat-header-cell *matHeaderCellDef> Status </th>
+    <td mat-cell *matCellDef="let shareAccount">
+      <span [className]="shareAccount.status.code | statusLookup">
+        <fa-icon matTooltip="{{ shareAccount.status.value }}" matTooltipPosition="right" icon="circle" size="md"></fa-icon>
+      </span>  
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>
+
+<mat-paginator [pageSizeOptions]="[10, 25]" showFirstLastButtons></mat-paginator>
+
+

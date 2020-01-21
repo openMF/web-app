@@ -1,0 +1,115 @@
+<mat-card-header fxLayout="row" fxLayoutGap="5%">
+  <fa-icon class="main-icon" icon="user" size="3x"></fa-icon>
+  <mat-card-title-group>
+    <div class="mat-typography">
+      <mat-card-title>
+        <h2>
+          {{ clientData.displayName }} 
+          <span [className]="clientData.status.code | statusLookup">
+            <fa-icon matTooltip="{{ clientData.status.value }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
+          </span>
+        </h2>
+      </mat-card-title>
+      <mat-card-subtitle>
+        <p>
+          Account No: {{ clientData.accountNo }} {{ clientData.externalId ? '| External ID: ' + clientData.externalId : '' }}
+        </p>
+      </mat-card-subtitle>
+    </div>
+  </mat-card-title-group>      
+</mat-card-header>
+
+<mat-card-content>
+
+  <mat-tab-group>
+
+    <mat-tab label="Details">
+      <div fxLayout="row wrap" class="content">
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.firstName">
+          First Name
+        </div>
+
+        <div fxFlex="50%" *ngIf="clientData.firstName">
+          {{ clientData.firstName }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.middleName">
+          Middle Name
+        </div>
+
+        <div fxFlex="50%" *ngIf="clientData.middleName">
+          {{ clientData.middleName }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.lastName">
+          Last Name
+        </div>
+
+        <div fxFlex="50%" *ngIf="clientData.lastName">
+          {{ clientData.lastName }}
+        </div>
+        
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.dateOfBirth">
+          Date of Birth
+        </div>
+
+        <div fxFlex="50%" *ngIf="clientData.dateOfBirth">
+          {{ clientData.dateOfBirth | date }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.mobileNo">
+          Mobile Number
+        </div>
+
+        <div fxFlex="50%" *ngIf="clientData.mobileNo">
+          {{ clientData.mobileNo }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Activation Date
+        </div>
+
+        <div fxFlex="50%">
+          {{ clientData.activationDate | date }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.officeName">
+          Associated Office
+        </div>
+
+        <div fxFlex="50%" *ngIf="clientData.officeName">
+          {{ clientData.officeName }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.staffName">
+          Associated Staff
+        </div>
+
+        <div fxFlex="50%" *ngIf="clientData.staffName">
+          {{ clientData.staffName }}
+        </div>
+
+      </div>
+
+    </mat-tab>
+
+    <mat-tab label="Loan Accounts" *ngIf="clientAccountsData && clientAccountsData.loanAccounts">
+      <mifosx-loan-account-table [loanAccountData]="clientAccountsData.loanAccounts"></mifosx-loan-account-table>
+    </mat-tab>
+
+    <mat-tab label="Savings Accounts" *ngIf="clientAccountsData && clientAccountsData.savingsAccounts">
+      <mifosx-savings-account-table [savingsAccountData]="clientAccountsData.savingsAccounts"></mifosx-savings-account-table>
+    </mat-tab>
+
+    <mat-tab label="Share Accounts" *ngIf="clientAccountsData && clientAccountsData.shareAccounts">
+      <mifosx-share-account-table [shareAccountData]="clientAccountsData.shareAccounts"></mifosx-share-account-table>
+    </mat-tab>
+
+    <mat-tab label="Group Members" *ngIf="clientData.groups && clientData.groups.length !== 0">
+      <mifosx-member-groups [memberGroupData]="clientData.groups"></mifosx-member-groups>
+    </mat-tab>
+
+  </mat-tab-group>
+
+</mat-card-content>
