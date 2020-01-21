@@ -164,7 +164,8 @@ const routes: Routes = [
               path: '',
               component: OfficesComponent,
               resolve: {
-              offices: OfficesResolver
+              offices: OfficesResolver,
+              officeDataTables: OfficeDatatablesResolver
               }
             },
             {
