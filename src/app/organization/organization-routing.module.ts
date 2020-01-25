@@ -31,6 +31,7 @@ import { CreatePaymentTypeComponent } from './payment-types/create-payment-type/
 import { CreateAdhocQueryComponent } from './adhoc-query/create-adhoc-query/create-adhoc-query.component';
 import { HolidaysComponent } from './holidays/holidays.component';
 import { EditEmployeeComponent } from './employees/edit-employee/edit-employee.component';
+import { CreateTellerComponent } from './tellers/create-teller/create-teller.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -203,6 +204,14 @@ const routes: Routes = [
               component: TellersComponent,
               resolve: {
                 tellers: TellersResolver
+              }
+            },
+            {
+              path: 'create',
+              component: CreateTellerComponent,
+              data: { title: extract('Create Teller'), breadcrumb: 'Create' },
+              resolve: {
+                offices: OfficesResolver
               }
             },
             {
