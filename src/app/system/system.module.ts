@@ -11,6 +11,9 @@ import { SystemComponent } from './system.component';
 import { CreateCodeComponent } from './codes/create-code/create-code.component';
 import { ExternalServicesComponent } from './external-services/external-services.component';
 import { ManageDataTablesComponent } from './manage-data-tables/manage-data-tables.component';
+import { CreateDataTableComponent } from './manage-data-tables/create-data-table/create-data-table.component';
+import { ViewDataTableComponent } from './manage-data-tables/view-data-table/view-data-table.component';
+import { EditDataTableComponent } from './manage-data-tables/edit-data-table/edit-data-table.component';
 import { ManageHooksComponent } from './manage-hooks/manage-hooks.component';
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
 import { AddRoleComponent } from './roles-and-permissions/add-role/add-role.component';
@@ -36,9 +39,16 @@ import { ManageReportsComponent } from './manage-reports/manage-reports.componen
 import { ViewReportComponent } from './manage-reports/view-report/view-report.component';
 import { CreateReportComponent } from './manage-reports/create-report/create-report.component';
 import { EditReportComponent } from './manage-reports/edit-report/edit-report.component';
+import { AuditTrailsComponent } from './audit-trails/audit-trails.component';
+import { ViewAuditComponent } from './audit-trails/view-audit/view-audit.component';
+import { EditHookComponent } from './manage-hooks/edit-hook/edit-hook.component';
+import { ViewHookComponent } from './manage-hooks/view-hook/view-hook.component';
+import { CreateHookComponent } from './manage-hooks/create-hook/create-hook.component';
+import { ColumnDialogComponent } from './manage-data-tables/column-dialog/column-dialog.component';
 
 /** Dialog Component Imports */
 import { ReportParameterDialogComponent } from './manage-reports/report-parameter-dialog/report-parameter-dialog.component';
+import { AddEventDialogComponent } from './manage-hooks/add-event-dialog/add-event-dialog.component';
 
 @NgModule({
   imports: [
@@ -53,6 +63,9 @@ import { ReportParameterDialogComponent } from './manage-reports/report-paramete
     EditCodeComponent,
     ExternalServicesComponent,
     ManageDataTablesComponent,
+    CreateDataTableComponent,
+    ViewDataTableComponent,
+    EditDataTableComponent,
     ManageHooksComponent,
     RolesAndPermissionsComponent,
     ManageSurveysComponent,
@@ -76,10 +89,19 @@ import { ReportParameterDialogComponent } from './manage-reports/report-paramete
     CreateReportComponent,
     EditReportComponent,
     ReportParameterDialogComponent,
-    AddRoleComponent
+    AddRoleComponent,
+    EditHookComponent,
+    ViewHookComponent,
+    CreateHookComponent,
+    AddEventDialogComponent,
+    ColumnDialogComponent,
+    AuditTrailsComponent,
+    ViewAuditComponent
   ],
   entryComponents: [
-    ReportParameterDialogComponent
+    ReportParameterDialogComponent,
+    AddEventDialogComponent,
+    ColumnDialogComponent
   ]
 })
 export class SystemModule { }

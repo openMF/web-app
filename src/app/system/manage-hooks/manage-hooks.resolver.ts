@@ -20,7 +20,7 @@ export class ManageHooksResolver implements Resolve<Object> {
   constructor(private systemService: SystemService) {}
 
   /**
-   * Returns the manage hooks data.
+   * Returns the hooks data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {

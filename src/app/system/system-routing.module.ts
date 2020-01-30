@@ -13,7 +13,13 @@ import { ViewCodeComponent } from './codes/view-code/view-code.component';
 import { EditCodeComponent } from './codes/edit-code/edit-code.component';
 import { ExternalServicesComponent } from './external-services/external-services.component';
 import { ManageDataTablesComponent } from './manage-data-tables/manage-data-tables.component';
+import { CreateDataTableComponent } from './manage-data-tables/create-data-table/create-data-table.component';
+import { ViewDataTableComponent } from './manage-data-tables/view-data-table/view-data-table.component';
+import { EditDataTableComponent } from './manage-data-tables/edit-data-table/edit-data-table.component';
 import { ManageHooksComponent } from './manage-hooks/manage-hooks.component';
+import { ViewHookComponent } from './manage-hooks/view-hook/view-hook.component';
+import { CreateHookComponent } from './manage-hooks/create-hook/create-hook.component';
+import { EditHookComponent } from './manage-hooks/edit-hook/edit-hook.component';
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
 import { AddRoleComponent } from './roles-and-permissions/add-role/add-role.component';
 import { ManageSurveysComponent } from './manage-surveys/manage-surveys.component';
@@ -36,13 +42,18 @@ import { ManageReportsComponent } from './manage-reports/manage-reports.componen
 import { EditReportComponent } from './manage-reports/edit-report/edit-report.component';
 import { CreateReportComponent } from './manage-reports/create-report/create-report.component';
 import { ViewReportComponent } from './manage-reports/view-report/view-report.component';
+import { AuditTrailsComponent } from './audit-trails/audit-trails.component';
+import { ViewAuditComponent } from './audit-trails/view-audit/view-audit.component';
 
 /** Custom Resolvers */
 import { CodesResolver } from './codes/codes.resolver';
 import { CodeResolver } from './codes/code.resolver';
 import { CodeValuesResolver } from './codes/view-code/code-values.resolver';
 import { ManageDataTablesResolver } from './manage-data-tables/manage-data-tables.resolver';
+import { DataTableResolver } from './manage-data-tables/data-table.resolver';
 import { ManageHooksResolver } from './manage-hooks/manage-hooks.resolver';
+import { HookResolver } from './manage-hooks/view-hook/hook.resolver';
+import { HooksTemplateResolver } from './manage-hooks/hooks-template.resolver';
 import { RolesAndPermissionsResolver } from './roles-and-permissions/roles-and-permissions.resolver';
 import { ManageSurveysResolver } from './manage-surveys/manage-surveys.resolver';
 import { ManageSchedulerJobsResolver } from './manage-scheduler-jobs/manage-scheduler-jobs.resolver';
@@ -55,6 +66,8 @@ import { NotificationConfigurationResolver } from './external-services/notificat
 import { AccountNumberPreferencesResolver } from './account-number-preferences/account-number-preferences.resolver';
 import { AccountNumberPreferencesTemplateResolver } from './account-number-preferences/create-account-number-preference/account-number-preferences-template.resolver';
 import { AccountNumberPreferenceResolver } from './account-number-preferences/view-account-number-preference/account-number-preference.resolver';
+import { AuditTrailSearchTemplateResolver } from './audit-trails/audit-trail-search-template.resolver';
+import { AuditTrailResolver } from './audit-trails/view-audit/audit-trail.resolver';
 import { ReportsResolver } from './manage-reports/reports.resolver';
 import { ReportResolver } from './manage-reports/report.resolver';
 import { ReportTemplateResolver } from './manage-reports/report-template.resolver';
@@ -206,19 +219,89 @@ const routes: Routes = [
         },
         {
           path: 'data-tables',
-          component: ManageDataTablesComponent,
-          resolve: {
-                dataTables: ManageDataTablesResolver
-          },
           data: { title:  extract('Manage Data Tables'), breadcrumb: 'Manage Data Tables' },
+          children: [
+            {
+              path: '',
+              component: ManageDataTablesComponent,
+              resolve: {
+                dataTables: ManageDataTablesResolver
+              },
+            },
+            {
+              path: 'create',
+              component: CreateDataTableComponent,
+              data: { title: extract('Create Data Table'), breadcrumb: 'Create'},
+              resolve: {
+                columnCodes: CodesResolver
+              }
+            },
+            {
+              path: ':datatableName',
+              data: { title: extract('View Data Table'), routeParamBreadcrumb: 'datatableName'},
+              children: [
+                {
+                  path: '',
+                  component: ViewDataTableComponent,
+                  resolve: {
+                    dataTable: DataTableResolver
+                  }
+                },
+                {
+                  path: 'edit',
+                  component: EditDataTableComponent,
+                  data: { title: extract('Edit Data table'), breadcrumb: 'Edit', routeParamBreadcrumb: false},
+                  resolve: {
+                    dataTable: DataTableResolver,
+                    columnCodes: CodesResolver
+                  }
+                }
+              ]
+            }
+          ],
       },
       {
           path: 'hooks',
-          component: ManageHooksComponent,
-          resolve: {
-                hooks: ManageHooksResolver
-          },
           data: { title:  extract('Manage Hooks'), breadcrumb: 'Manage Hooks' },
+          children: [
+            {
+              path: '',
+              component: ManageHooksComponent,
+              resolve: {
+                hooks: ManageHooksResolver
+              }
+            },
+            {
+              path: 'create',
+              component: CreateHookComponent,
+              data: { title: extract('Create Hook'), breadcrumb: 'Create' },
+              resolve: {
+                hooksTemplate: HooksTemplateResolver
+              }
+            },
+            {
+              path: ':id',
+              data: { title: extract('View Hook'), routeParamBreadcrumb: 'id' },
+              children: [
+                {
+                  path: '',
+                  component: ViewHookComponent,
+                  resolve: {
+                    hook: HookResolver
+                  }
+                },
+                {
+                  path: 'edit',
+                  component: EditHookComponent,
+                  data: { title: extract('Edit Hook'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    hooksTemplate: HooksTemplateResolver,
+                    hook: HookResolver
+                  }
+                }
+              ]
+            }
+          ]
       },
       {
           path: 'roles-and-permissions',
@@ -360,6 +443,27 @@ const routes: Routes = [
               ]
             }
           ]
+        },
+        {
+          path: 'audit-trails',
+          data: { title: extract('Audit Trails'), breadcrumb: 'Audit Trails' },
+          children: [
+            {
+              path: '',
+              component: AuditTrailsComponent,
+              resolve: {
+                auditTrailSearchTemplate: AuditTrailSearchTemplateResolver
+              }
+            },
+            {
+             path: ':id',
+             component: ViewAuditComponent,
+             data: { title: extract('View Audit'), routeParamBreadcrumb: 'id' },
+             resolve: {
+               auditTrail: AuditTrailResolver
+             }
+            }
+          ]
         }
       ]
     }
@@ -374,7 +478,10 @@ const routes: Routes = [
     CodeResolver,
     CodeValuesResolver,
     ManageDataTablesResolver,
+    DataTableResolver,
     ManageHooksResolver,
+    HookResolver,
+    HooksTemplateResolver,
     RolesAndPermissionsResolver,
     ManageSurveysResolver,
     ManageSchedulerJobsResolver,
@@ -389,7 +496,9 @@ const routes: Routes = [
     AccountNumberPreferenceResolver,
     ReportsResolver,
     ReportResolver,
-    ReportTemplateResolver
+    ReportTemplateResolver,
+    AuditTrailSearchTemplateResolver,
+    AuditTrailResolver
   ]
 })
 export class SystemRoutingModule { }

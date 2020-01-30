@@ -3,11 +3,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
-/** rxjs Imports */
-import { of } from 'rxjs';
-
 /**
- * Manage Hooks component.
+ * Manage Hooks Component.
  */
 @Component({
   selector: 'mifosx-manage-hooks',

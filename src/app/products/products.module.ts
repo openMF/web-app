@@ -62,6 +62,11 @@ import { FixedDepositProductPreviewStepComponent } from './fixed-deposit-product
 import { DepositProductIncentiveFormDialogComponent } from './deposit-product-incentive-form-dialog/deposit-product-incentive-form-dialog.component';
 import { ManageTaxGroupsComponent } from './manage-tax-groups/manage-tax-groups.component';
 import { ViewTaxComponentComponent } from './manage-tax-components/view-tax-component/view-tax-component.component';
+import { FloatingRatesComponent } from './floating-rates/floating-rates.component';
+import { CreateFloatingRateComponent } from './floating-rates/create-floating-rate/create-floating-rate.component';
+import { ViewFloatingRateComponent } from './floating-rates/view-floating-rate/view-floating-rate.component';
+import { EditFloatingRateComponent } from './floating-rates/edit-floating-rate/edit-floating-rate.component';
+import { FloatingRatePeriodDialogComponent } from './floating-rates/floating-rate-period-dialog/floating-rate-period-dialog.component';
 
 /**
  * Products Module
@@ -90,7 +95,13 @@ import { ViewTaxComponentComponent } from './manage-tax-components/view-tax-comp
     ChargesComponent,
     ViewChargeComponent,
     FixedDepositProductsComponent,
+    ManageTaxComponentsComponent,
     ProductsMixComponent,
+    FloatingRatesComponent,
+    CreateFloatingRateComponent,
+    ViewFloatingRateComponent,
+    EditFloatingRateComponent,
+    FloatingRatePeriodDialogComponent,
     ManageTaxComponentsComponent,
     ViewLoanProductComponent,
     EditLoanProductComponent,
@@ -131,7 +142,7 @@ import { ViewTaxComponentComponent } from './manage-tax-components/view-tax-comp
     ViewTaxComponentComponent
   ],
   entryComponents: [
-    DepositProductIncentiveFormDialogComponent
+    FloatingRatePeriodDialogComponent
   ],
   providers: [DatePipe]
 })

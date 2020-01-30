@@ -33,6 +33,46 @@ export class SystemService {
   }
 
   /**
+   * @param {string} hookId Hook ID of Hook.
+   * @returns {Observable<any>}
+   */
+  getHook(hookId: string): Observable<any> {
+    return this.http.get(`/hooks/${hookId}`);
+  }
+
+  /**
+   * @returns {Observable<any>} Hooks Template.
+   */
+  getHooksTemplate(): Observable<any> {
+    return this.http.get('/hooks/template');
+  }
+
+  /**
+   * @param {any} hook Hook to be created.
+   * @returns {Observable<any>}
+   */
+  createHook(hook: any): Observable<any> {
+    return this.http.post('/hooks', hook);
+  }
+
+  /**
+   * @param {string} hookId Hook ID of Hook to be updated.
+   * @param {any} hook Hook to be updated.
+   * @returns {Observable<any>}
+   */
+  updateHook(hookId: string, hook: any): Observable<any> {
+    return this.http.put(`/hooks/${hookId}`, hook);
+  }
+
+  /**
+   * @param {string} hookId Hook ID of Hook to be deleted.
+   * @returns {Observable<any>}
+   */
+  deleteHook(hookId: string): Observable<any> {
+    return this.http.delete(`/hooks/${hookId}`);
+  }
+
+  /**
    * @returns {Observable<any>} Fetches Roles and Permissions
    */
   getRoles(): Observable<any> {
@@ -142,6 +182,39 @@ export class SystemService {
    */
   createCode(code: any): Observable<any> {
     return this.http.post('/codes', code);
+  }
+
+  /**
+   * @param {any} dataTable Data Table to be created.
+   * @return {Observable<any>}
+   */
+  createDataTable(dataTable: any): Observable<any> {
+    return this.http.post('/datatables', dataTable);
+  }
+
+  /**
+   * @param dataTableName Data Table Name.
+   * @return {Observable<any>}
+   */
+  getDataTable(dataTableName: string): Observable<any> {
+    return this.http.get(`/datatables/${dataTableName}`);
+  }
+
+  /**
+   * @param dataTableName Data Table Name.
+   * @return {Observable<any>}
+   */
+  deleteDataTable(dataTableName: string): Observable<any> {
+    return this.http.delete(`/datatables/${dataTableName}`);
+  }
+
+  /**
+   * @param dataTable Data Table.
+   * @param dataTableName Data Table Name.
+   * @return {Observable<any>}
+   */
+  updateDataTable(dataTable: any, dataTableName: string): Observable<any> {
+    return this.http.put(`/datatables/${dataTableName}`, dataTable);
   }
 
   /**
@@ -277,6 +350,45 @@ export class SystemService {
    */
   deleteReport(reportId: string): Observable<any> {
     return this.http.delete(`/reports/${reportId}`);
+  }
+
+  /**
+   * @param {any} filterBy Properties by which entries should be filtered.
+   * @param {string} orderBy Property by which entries should be sorted.
+   * @param {string} sortOrder Sort order: ascending or descending.
+   * @param {number} offset Page offset.
+   * @param {number} limit Number of entries within the page.
+   * @returns {Observable<any>} Audit Trails.
+   */
+  getAuditTrails(filterBy: any, orderBy: string, sortOrder: string, offset: number, limit: number): Observable<any> {
+    let httpParams = new HttpParams()
+      .set('offset', offset.toString())
+      .set('limit', limit.toString())
+      .set('sortOrder', sortOrder)
+      .set('orderBy', orderBy)
+      .set('paged', 'true');
+    // filterBy: actionName, entityName, resourceId, makerId, makerDateTimeFrom, makerDateTimeTo, checkerId, checkerDateTimeFrom, checkerDateTimeTo, processingResult
+    filterBy.forEach(function (filter: any) {
+      if (filter.value !== '') {
+        httpParams = httpParams.set(filter.type, filter.value);
+      }
+    });
+    return this.http.get('/audits', { params: httpParams });
+  }
+
+  /**
+   * @param {string} auditTrailId Audit Trail ID.
+   * @returns {Observable<any>}
+   */
+  getAuditTrail(auditTrailId: string): Observable<any> {
+    return this.http.get(`/audits/${auditTrailId}`);
+  }
+
+  /**
+   * @returns {Observable<any>} Audit Trail Search Template.
+   */
+  getAuditTrailSearchTemplate(): Observable<any> {
+    return this.http.get('/audits/searchtemplate');
   }
 
 }

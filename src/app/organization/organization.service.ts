@@ -212,4 +212,14 @@ export class OrganizationService {
     return this.http.put('/workingdays', workingDays);
   }
 
+  /*
+   * @param {string} officeId Office ID of Holidays.
+   * @returns {Observable<any>} Holidays data.
+   */
+  getHolidays(officeId: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('officeId', officeId.toString());
+    return this.http.get('/holidays', { params: httpParams });
+  }
+
 }

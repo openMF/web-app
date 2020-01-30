@@ -1,0 +1,109 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="dataTableForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+          <mat-form-field fxFlex="40%">
+            <mat-label>Data Table Name</mat-label>
+            <input matInput required formControlName="datatableName">
+            <mat-error *ngIf="dataTableForm.controls.datatableName.hasError('required')">
+              Data Table Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="40%">
+            <mat-label>Application Table Name</mat-label>
+            <mat-select required formControlName="apptableName">
+              <mat-option *ngFor="let appTable of appTableData" [value]="appTable.value">
+                {{ appTable.displayValue }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="dataTableForm.controls.apptableName.hasError('required')">
+              Application Table Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <div fxFlex="14%" class="multi-row-wrapper">
+            <mat-checkbox labelPosition="before" formControlName="multiRow" class="multi-row">Multi Row</mat-checkbox>
+          </div>
+
+        </div>
+        <br>
+
+        <div fxLayout="row wrap" fxLayoutGap="60%" fxLayout.lt-md="column">
+
+          <p fxFlex="20%" class="mat-title">Columns</p>
+
+          <button mat-raised-button fxFlex="20%" type="button" color="primary" (click)="addColumn()">
+            <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+            Add Column
+          </button>
+
+        </div>
+
+        <br>
+
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let column"> {{ column.name }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+            <td mat-cell *matCellDef="let column"> {{ column.type }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="mandatory">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Mandatory </th>
+            <td mat-cell *matCellDef="let column"> {{ column.mandatory }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="length">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Length </th>
+            <td mat-cell *matCellDef="let column"> {{ column.length }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="code">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Code </th>
+            <td mat-cell *matCellDef="let column"> {{ column.code }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+            <td mat-cell *matCellDef="let column" fxLayoutGap="15%">
+              <button type="button" color="primary" mat-icon-button (click)="editColumn(column)">
+                <fa-icon icon="edit" size="lg"></fa-icon>
+              </button>
+              <button type="button" color="warn" mat-icon-button (click)="deleteColumn(column)">
+                <fa-icon icon="trash" size="lg"></fa-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary"
+          [disabled]="!dataTableForm.valid || columnData.length === 0">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>

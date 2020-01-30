@@ -26,6 +26,7 @@ import { CreateOfficeComponent } from './offices/create-office/create-office.com
 import { CreateEmployeeComponent } from './employees/create-employee/create-employee.component';
 import { CreatePaymentTypeComponent } from './payment-types/create-payment-type/create-payment-type.component';
 import { ViewEmployeeComponent } from './employees/view-employee/view-employee.component';
+import { HolidaysComponent } from './holidays/holidays.component';
 
 /**
  * Organization Module
@@ -57,7 +58,8 @@ import { ViewEmployeeComponent } from './employees/view-employee/view-employee.c
     CreateOfficeComponent,
     CreateEmployeeComponent,
     CreatePaymentTypeComponent,
-    ViewEmployeeComponent
+    ViewEmployeeComponent,
+    HolidaysComponent
   ]
 })
 export class OrganizationModule { }
