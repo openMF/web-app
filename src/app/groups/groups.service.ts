@@ -42,4 +42,13 @@ export class GroupsService {
     return this.http.get('/groups', { params: httpParams });
   }
 
+    /**
+     * @param {number} officeId Office Id of office to get groups for.
+     * @returns {Observable<any>}
+     */
+    getGroupsByOfficeId(officeId: number): Observable<any> {
+        const httpParams = new HttpParams().set('officeId', officeId.toString());
+        return this.http.get('/groups', { params: httpParams } );
+    }
+
 }

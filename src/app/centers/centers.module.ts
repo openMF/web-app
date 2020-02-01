@@ -1,6 +1,5 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
-import { DatePipe } from '@angular/common';
 
 /** Custom Modules */
 import { CentersRoutingModule } from './centers-routing.module';
@@ -9,6 +8,7 @@ import { PipesModule } from '../pipes/pipes.module';
 
 /** Custom Components */
 import { CentersComponent } from './centers.component';
+import { CreateCenterComponent } from './create-center/create-center.component';
 
 /**
  * Centers Module
@@ -22,8 +22,8 @@ import { CentersComponent } from './centers.component';
     PipesModule
   ],
   declarations: [
-    CentersComponent
-  ],
-  providers: [DatePipe]
+    CentersComponent,
+    CreateCenterComponent
+  ]
 })
 export class CentersModule { }
