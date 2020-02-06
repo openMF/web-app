@@ -55,6 +55,8 @@ import { ProductsMixResolver } from './products-mix/products-mix.resolver';
 import { ManageTaxComponentsResolver } from './manage-tax-components/manage-tax-components.resolver';
 import { ManageTaxGroupsResolver } from './manage-tax-groups/manage-tax-groups.resolver';
 import { TaxComponentResolver } from './manage-tax-components/tax-component.resolver';
+import { CreateTaxGroupComponent } from './manage-tax-groups/create-tax-group/create-tax-group.component';
+import { TaxGroupResolver } from './manage-tax-groups/tax-group.resolver';
 
 /** Products Routes */
 const routes: Routes = [
@@ -229,11 +231,24 @@ const routes: Routes = [
             },
             {
               path: 'tax-groups',
-              component: ManageTaxGroupsComponent,
-              resolve: {
-                taxGroups: ManageTaxGroupsResolver
-              },
               data: { title: extract('Manage Tax Groups'), breadcrumb: 'Tax Groups'},
+              children: [
+                {
+                  path: '',
+                  component: ManageTaxGroupsComponent,
+                  resolve: {
+                      taxGroups: ManageTaxGroupsResolver
+                  }
+                },
+                {
+                  path: 'create',
+                  component: CreateTaxGroupComponent,
+                  data: { title: extract('Create Tax Group'), breadcrumb: 'Create Tax Group'},
+                  resolve: {
+                    taxComponents: TaxGroupResolver
+                  }
+                }
+              ]
             },
           ]
         },
@@ -329,7 +344,8 @@ const routes: Routes = [
     ProductsMixResolver,
     ManageTaxComponentsResolver,
     ManageTaxGroupsResolver,
-    TaxComponentResolver
+    TaxComponentResolver,
+    TaxGroupResolver
   ]
 })
 export class ProductsRoutingModule { }

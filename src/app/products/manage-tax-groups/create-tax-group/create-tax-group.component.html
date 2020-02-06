@@ -1,0 +1,62 @@
+<div class="container">
+  <mat-card class="mat-h2">
+    <form [formGroup]="TaxGroupForm">
+      <h1>Create Tax Group</h1> <hr>
+
+      <mat-card-content>
+
+        <mat-label>Name* </mat-label>
+          <mat-form-field appearance="outline">
+            <input matInput required formControlName='name'>
+            <mat-error *ngIf="TaxGroupForm.controls.name.hasError('required')">
+              Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+        <h1>Tax Components</h1> <br>
+
+        <div fxLayout="row wrap" fxLayoutGap="30%" fxLayout.lt-md="column">
+            <h2>Tax Component</h2>
+            <h2>Start Date</h2>
+            <button mat-button (click)='addTaxComponent()' class="addbutton">
+            <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Add
+          </button>
+        </div>
+
+        <div formArrayName="taxComponents"
+            *ngFor="let componentdetail of taxComponents.controls;
+            let componentIndex = index;">
+
+          <div fxLayout="row wrap" fxLayoutGap="10%" fxLayout.lt-md="column"
+                [formGroupName]="componentIndex">
+
+            <mat-form-field appearance="outline">
+              <mat-select name="Tax Component" formControlName='taxComponentId'
+                          placeholder="Tax Component">
+                <mat-option *ngFor="let taxComponent of taxComponentData"
+                            [value]="taxComponent.id">
+                  {{ taxComponent.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="startDatePicker" formControlName="startDate">
+              <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #startDatePicker></mat-datepicker>
+            </mat-form-field>
+
+          </div>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button (click)="cancelTaxGroupForm()">Cancel</button>
+        <button  type="submit" mat-raised-button color="primary" [disabled]="!TaxGroupForm.valid" (click)="submit()">Submit</button>
+      </mat-card-actions>
+
+    </form>
+  </mat-card>
+</div>

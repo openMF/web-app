@@ -15,6 +15,7 @@ import { ThemePickerComponent } from './theme-picker/theme-picker.component';
 /** Custom Modules */
 import { IconsModule } from './icons.module';
 import { MaterialModule } from './material.module';
+import { CancelDialogComponent } from './cancel-dialog/cancel-dialog.component';
 
 /**
  * Shared Module
@@ -32,6 +33,7 @@ import { MaterialModule } from './material.module';
     FormfieldComponent,
     FormDialogComponent,
     DeleteDialogComponent,
+    CancelDialogComponent,
     FileUploadComponent,
     FooterComponent,
     LanguageSelectorComponent,
@@ -50,7 +52,8 @@ import { MaterialModule } from './material.module';
   ],
   entryComponents: [
     FormDialogComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    CancelDialogComponent
   ]
 })
 export class SharedModule { }

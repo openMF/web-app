@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Cancel</h1>
+<div mat-dialog-content>
+  <p>Are you sure you want to leave this page and lose all inputted data?</p>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>No</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="{ cancel: true }">Yes</button>
+</mat-dialog-actions>

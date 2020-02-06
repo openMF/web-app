@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
 import { LayoutModule } from '@angular/cdk/layout';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {
@@ -47,6 +48,7 @@ import {
  */
 @NgModule({
   exports: [
+    DragDropModule,
     FlexLayoutModule,
     LayoutModule,
     MatAutocompleteModule,

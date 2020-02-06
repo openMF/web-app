@@ -156,7 +156,19 @@ export class ProductsService {
   getTaxGroups(): Observable<any> {
     return this.http.get('/taxes/group');
   }
-
+  /**
+   * @returns {Observable<any>} Tax Groups Template
+   */
+  getTaxGroupTemplate(): Observable<any> {
+    return this.http.get('/taxes/group/template');
+  }
+  /**
+   * @param {any} taxgroup taxgroup to be created.
+   * @returns {Observable<any>}
+   */
+  createTaxGroup(taxGroup: any): Observable<any> {
+    return this.http.post('/taxes/group', taxGroup);
+  }
   /**
    * @returns {Observable<any>} Product mixes data
    */
