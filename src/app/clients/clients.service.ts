@@ -16,6 +16,18 @@ export class ClientsService {
    */
   constructor(private http: HttpClient) { }
 
+  getFilteredClients(orderBy: string, sortOrder: string, orphansOnly: boolean, displayName: string, officeId: any): Observable<any> {
+    let httpParams = new HttpParams()
+      .set('displayName', displayName)
+      .set('orphansOnly', orphansOnly.toString())
+      .set('sortOrder', sortOrder)
+      .set('orderBy', orderBy);
+    if (officeId) {
+      httpParams = httpParams.set('officeId', officeId);
+    }
+    return this.http.get('/clients', { params: httpParams });
+  }
+
   getClients(orderBy: string, sortOrder: string, offset: number, limit: number): Observable<any> {
     const httpParams = new HttpParams()
       .set('offset', offset.toString())

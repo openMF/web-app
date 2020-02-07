@@ -113,4 +113,23 @@ export class GroupsService {
       return this.http.delete(`/groups/${groupId}/notes/${noteId}`);
     }
 
+    /**
+     * @param {number} officeId Office Id of office to get staff for.
+     * @returns {Observable<any>}
+     */
+    getStaff(id: number) {
+        const httpParams = new HttpParams()
+            .set('officeId', id.toString())
+            .set('staffInSelectedOfficeOnly', 'true');
+        return this.http.get('/groups/template', { params: httpParams });
+    }
+
+    /**
+     * @param {any} group Group to be created.
+     * @returns {Observable<any>}
+     */
+    createGroup(group: any): Observable<any> {
+        return this.http.post('/groups', group);
+    }
+
 }
