@@ -29,6 +29,7 @@ import { ViewEmployeeComponent } from './employees/view-employee/view-employee.c
 import { EditOfficeComponent } from './offices/edit-office/edit-office.component';
 import { CreateAdhocQueryComponent } from './adhoc-query/create-adhoc-query/create-adhoc-query.component';
 import { HolidaysComponent } from './holidays/holidays.component';
+import { EditEmployeeComponent } from './employees/edit-employee/edit-employee.component';
 
 /**
  * Organization Module
@@ -64,6 +65,7 @@ import { HolidaysComponent } from './holidays/holidays.component';
     CreateAdhocQueryComponent,
     HolidaysComponent,
     EditOfficeComponent,
+    EditEmployeeComponent
   ]
 })
 export class OrganizationModule { }

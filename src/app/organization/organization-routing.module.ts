@@ -30,12 +30,14 @@ import { CreateOfficeComponent } from './offices/create-office/create-office.com
 import { CreatePaymentTypeComponent } from './payment-types/create-payment-type/create-payment-type.component';
 import { CreateAdhocQueryComponent } from './adhoc-query/create-adhoc-query/create-adhoc-query.component';
 import { HolidaysComponent } from './holidays/holidays.component';
+import { EditEmployeeComponent } from './employees/edit-employee/edit-employee.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
 import { OfficesResolver } from './offices/offices.resolver';
 import { EmployeesResolver } from './employees/employees.resolver';
 import { EmployeeResolver } from './employees/employee.resolver';
+import { EditEmployeeResolver } from './employees/edit-employee.resolver';
 import { CurrenciesResolver } from './currencies/currencies.resolver';
 import { SmsCampaignsResolver } from './sms-campaigns/sms-campaigns.resolver';
 import { AdhocQueriesResolver } from './adhoc-query/adhoc-queries.resolver';
@@ -126,11 +128,24 @@ const routes: Routes = [
             },
             {
               path: ':id',
-              component: ViewEmployeeComponent,
-              data: { title: extract('View Employee'), routeResolveBreadcrumb: ['employee', 'displayName'] },
-              resolve: {
-                employee: EmployeeResolver
-              }
+              data: { title: extract('View Employee'), routeParamBreadcrumb: 'id' },
+              children: [
+                {
+                  path: '',
+                  component: ViewEmployeeComponent,
+                  resolve: {
+                    employee: EmployeeResolver,
+                  }
+                },
+                {
+                  path: 'edit',
+                  component: EditEmployeeComponent,
+                  data: { title: extract('Edit Employee'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    employee: EditEmployeeResolver
+                  }
+                }
+              ]
             }
           ]
         },
@@ -286,6 +301,7 @@ const routes: Routes = [
     OfficesResolver,
     EmployeesResolver,
     EmployeeResolver,
+    EditEmployeeResolver,
     CurrenciesResolver,
     SmsCampaignsResolver,
     AdhocQueriesResolver,

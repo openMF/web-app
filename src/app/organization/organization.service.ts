@@ -76,10 +76,12 @@ export class OrganizationService {
 
   /**
    * @param {string} employeeId Employee ID of employee.
+   * @param {boolean} template
    * @returns {Observable<any>} Employee.
    */
-  getEmployee(employeeId: string): Observable<any> {
-    return this.http.get(`/staff/${employeeId}`);
+  getEmployee(employeeId: string, template: boolean = true): Observable<any> {
+    const httpParams = new HttpParams().set('template', template.toString());
+    return this.http.get(`/staff/${employeeId}`, { params: httpParams });
   }
 
   /**
@@ -246,7 +248,7 @@ export class OrganizationService {
     return this.http.put('/workingdays', workingDays);
   }
 
-    /*
+  /**
    * @param {string} officeId Office ID of Holidays.
    * @returns {Observable<any>} Holidays data.
    */
@@ -254,6 +256,14 @@ export class OrganizationService {
     const httpParams = new HttpParams()
       .set('officeId', officeId.toString());
     return this.http.get('/holidays', { params: httpParams });
+  }
+
+  /**
+   * @param {any} employeeId Employee ID of Employee to be edited.
+   * @returns {Observable<any>}
+   */
+  updateEmployee(employeeId: string, employee: any): Observable<any> {
+    return this.http.put(`/staff/${employeeId}`, employee);
   }
 
 }
