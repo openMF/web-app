@@ -40,7 +40,10 @@ The application is using the demo server with basic authentication by default. T
     Username - mifos
     Password - password
 
-**Important Note:** Please do not make any alterations to these credentials.
+**Important Note:**
+
+ - Please do not make any alterations to these credentials.
+ - Make sure that npm version is greater than 5.0.0.
 
 If you are running into issues with the demo server, please see available alternatives [here](https://groups.google.com/d/msg/mifosdeveloper/7hi_fpunnqE/uD0yQytwFwAJ).
 
