@@ -166,4 +166,12 @@ export class ProductsService {
     return this.http.get('/loanproducts', { params: httpParams });
   }
 
+  createTaxComponent(taxComponent: string): Observable<any> {
+    return this.http.post('/taxes/component', taxComponent);
+  }
+
+  getTaxComponentTemplates(): Observable<any> {
+    return this.http.get('/taxes/component/template');
+  }
+
 }

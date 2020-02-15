@@ -1,0 +1,75 @@
+<div class="container">
+
+    <mat-card>
+  
+      <form [formGroup]="taxComponentForm" (ngSubmit)="submit()">
+  
+        <mat-card-content>
+  
+          <div fxLayout="column" fxFlexFill fxLayoutGap="2%" fxLayout.lt-md="column" >
+  
+            <mat-form-field>
+              <mat-label>Name</mat-label>
+              <input required matInput formControlName="name">
+              <mat-error *ngIf="taxComponentForm.controls.name.hasError('required')">
+                Name is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field >
+              <mat-label>Percentage</mat-label>
+              <input required matInput type="number" formControlName="percentage" >
+              <mat-error *ngIf="taxComponentForm.controls.percentage.hasError('required')">
+                Percentage is <strong>required</strong>
+              </mat-error>
+              <mat-error *ngIf="taxComponentForm.controls.percentage.hasError('min')">
+                Percentage must be between <strong>0</strong> and <strong>100</strong>.
+              </mat-error>
+              <mat-error *ngIf="taxComponentForm.controls.percentage.hasError('max')">
+                Percentage must be between <strong>0</strong> and <strong>100</strong>.
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field>
+              <mat-label>Credit Account Type</mat-label>
+              <mat-select formControlName="accountType">
+                <mat-option *ngFor="let accountType of accountTypeData" [value]="accountType.id">
+                  {{ accountType.value }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Credit Account</mat-label>
+                <mat-select formControlName="accountName">
+                  <mat-option *ngFor="let account of accountData" [value]="account.id">
+                    {{ account.name }}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Start Date</mat-label>
+              <input matInput [min]="minDate" [max]="maxDate" formControlName="startDate" [matDatepicker]="openedOnDatePicker">
+              <mat-datepicker-toggle matSuffix [for]="openedOnDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #openedOnDatePicker></mat-datepicker>
+              <mat-error *ngIf="taxComponentForm.controls.startDate.hasError('required')">
+                Start Date is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+             
+          </div>
+          
+        </mat-card-content>
+  
+        <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+          <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+          <button mat-raised-button color="primary" [disabled]="!taxComponentForm.valid">Submit</button>
+        </mat-card-actions>
+  
+      </form>
+  
+    </mat-card>
+  
+  </div>
+  

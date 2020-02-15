@@ -32,6 +32,7 @@ import { ProductsMixComponent } from './products-mix/products-mix.component';
 import { ManageTaxComponentsComponent } from './manage-tax-components/manage-tax-components.component';
 import { ManageTaxGroupsComponent } from './manage-tax-groups/manage-tax-groups.component';
 import { ViewTaxComponentComponent } from './manage-tax-components/view-tax-component/view-tax-component.component';
+import { CreateTaxComponentComponent } from './manage-tax-components/create-tax-component/create-tax-component.component';
 
 /** Custom Resolvers */
 import { LoanProductsResolver } from './loan-products/loan-products.resolver';
@@ -55,6 +56,7 @@ import { ProductsMixResolver } from './products-mix/products-mix.resolver';
 import { ManageTaxComponentsResolver } from './manage-tax-components/manage-tax-components.resolver';
 import { ManageTaxGroupsResolver } from './manage-tax-groups/manage-tax-groups.resolver';
 import { TaxComponentResolver } from './manage-tax-components/tax-component.resolver';
+import { CreateTaxComponentResolver } from './manage-tax-components/create-tax-component/create-tax-component.resolver';
 
 /** Products Routes */
 const routes: Routes = [
@@ -205,11 +207,20 @@ const routes: Routes = [
               path: 'tax-components',
               data: { title: extract('Manage Tax Components'), breadcrumb: 'Tax Components'},
               children: [
+
                 {
                   path: '',
                   component: ManageTaxComponentsComponent,
                   resolve: {
                     taxComponents: ManageTaxComponentsResolver
+                  }
+                },
+                {
+                  path: 'create',
+                  component: CreateTaxComponentComponent,
+                  data: { title: extract('Create Tax Component'), breadcrumb: 'Create' },
+                  resolve: {
+                    taxComponentTemplate: CreateTaxComponentResolver
                   }
                 },
                 {
@@ -329,7 +340,8 @@ const routes: Routes = [
     ProductsMixResolver,
     ManageTaxComponentsResolver,
     ManageTaxGroupsResolver,
-    TaxComponentResolver
+    TaxComponentResolver,
+    CreateTaxComponentResolver
   ]
 })
 export class ProductsRoutingModule { }
