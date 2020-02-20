@@ -1,0 +1,104 @@
+<div class="container">
+    <mat-card>
+        <form [formGroup]="form" name="editchargeform" novalidate class="form-horizontal ng-pristine ng-valid ng-valid-required ng-valid-req" rc-submit="submit()" >
+            <fieldset>
+                <legend class="ng-binding">Edit Charge</legend>
+                <div class="form-group">
+                    <label class="control-label col-sm-2 ng-binding">Charges applies to<span class="required">*</span></label>
+                    <div class="col-sm-3">
+                        <select id="chargeAppliesTo" class="form-control" disabled="disabled"><option label="Loan" value="1" [selected]="chargeData.chargeAppliesTo.value==='Loan'">Loan</option><option label="Savings" value="2" [selected]="chargeData.chargeAppliesTo.value==='Savings'">Savings</option><option label="Client" value="3" [selected]="chargeData.chargeAppliesTo.value==='Client'">Client</option><option label="Shares" value="4" [selected]="chargeData.chargeAppliesTo.value==='Shares'">Shares</option></select>
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label class="control-label col-sm-2 ng-binding" for="name">Name<span class="required">*</span></label>
+                    <div class="col-sm-3">
+                        <input name="name" autofocus="true" type="text" id="name" class="form-control" formControlName="name" required [ngClass]="{'is-valid':form.controls.name.valid ,'is-invalid':form.controls.name.invalid}">
+                        <div class="invalid-feedback" *ngIf="form.controls.name.invalid">
+                            Required Name
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2 ng-binding">Currency<span class="required">*</span></label>
+                    <div class="col-sm-3">
+                        <select id="currencyCode" class="form-control" required (change)="onChangeCurrency($event.target.value)"><option *ngFor="let currencyOptions of chargeData.currencyOptions" label="{{currencyOptions.name}}" value="{{currencyOptions.code}}" [selected]="selectedCurrency===currencyOptions.code">{{currencyOptions.name}}</option></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2 ng-binding">Charge time type<span class="required">*</span></label>
+                    <div class="col-sm-3" *ngIf="chargeData.chargeAppliesTo.id===3">
+                        <select id="chargeTimeType" class="form-control" required (change)="onChangeTime($event.target.value)"><option *ngFor="let chargeTimeOptions of chargeData.clientChargeTimeTypeOptions" label="{{chargeTimeOptions.value}}" value="{{chargeTimeOptions.id}}" [selected]="selectedTime===chargeTimeOptions.id">{{chargeTimeOptions.value}}</option></select>
+                    </div>
+                    <div class="col-sm-3" *ngIf="chargeData.chargeAppliesTo.id===2">
+                        <select id="chargeTimeType" class="form-control" required (change)="onChangeTime($event.target.value)"><option *ngFor="let chargeTimeOptions of chargeData.savingsChargeTimeTypeOptions" label="{{chargeTimeOptions.value}}" value="{{chargeTimeOptions.id}}" [selected]="selectedTime===chargeTimeOptions.id">{{chargeTimeOptions.value}}</option></select>
+                    </div>
+                    <div class="col-sm-3" *ngIf="chargeData.chargeAppliesTo.id===1">
+                        <select id="chargeTimeType" class="form-control" required (change)="onChangeTime($event.target.value)"><option *ngFor="let chargeTimeOptions of chargeData.loanChargeTimeTypeOptions" label="{{chargeTimeOptions.value}}" value="{{chargeTimeOptions.id}}" [selected]="selectedTime===chargeTimeOptions.id">{{chargeTimeOptions.value}}</option></select>
+                    </div>
+                    <div class="col-sm-3" *ngIf="chargeData.chargeAppliesTo.id===4">
+                        <select id="chargeTimeType" class="form-control" required (change)="onChangeTime($event.target.value)"><option *ngFor="let chargeTimeOptions of chargeData.shareChargeTimeTypeOptions" label="{{chargeTimeOptions.value}}" value="{{chargeTimeOptions.id}}" [selected]="selectedTime===chargeTimeOptions.id">{{chargeTimeOptions.value}}</option></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2 ng-binding">Charge calculation<span class="required">*</span></label>
+                    <div class="col-sm-3" *ngIf="chargeData.chargeAppliesTo.id===1">
+                        <select id="chargeCalculationType" class="form-control" required (change)="onChangeCalculation($event.target.value)"><option *ngFor="let chargeCalculations of chargeData.loanChargeCalculationTypeOptions" label="{{chargeCalculations.value}}" value="{{chargeCalculations.id}}" [selected]="selectedCalculation===chargeCalculations.id">{{chargeCalculations.value}}</option></select>
+                    </div>
+                    <div class="col-sm-3" *ngIf="chargeData.chargeAppliesTo.id===2">
+                        <select id="chargeCalculationType" class="form-control" required (change)="onChangeCalculation($event.target.value)"><option *ngFor="let chargeCalculations of chargeData.savingsChargeCalculationTypeOptions" label="{{chargeCalculations.value}}" value="{{chargeCalculations.id}}" [selected]="selectedCalculation===chargeCalculations.id">{{chargeCalculations.value}}</option></select>
+                    </div>
+                    <div class="col-sm-3" *ngIf="chargeData.chargeAppliesTo.id===3">
+                        <select id="chargeCalculationType" class="form-control" required (change)="onChangeCalculation($event.target.value)"><option *ngFor="let chargeCalculations of chargeData.clientChargeCalculationTypeOptions" label="{{chargeCalculations.value}}" value="{{chargeCalculations.id}}" [selected]="selectedCalculation===chargeCalculations.id">{{chargeCalculations.value}}</option></select>
+                    </div>
+                    <div class="col-sm-3" *ngIf="chargeData.chargeAppliesTo.id===4">
+                        <select id="chargeCalculationType" class="form-control" required (change)="onChangeCalculation($event.target.value)"><option *ngFor="let chargeCalculations of chargeData.shareChargeCalculationTypeOptions" label="{{chargeCalculations.value}}" value="{{chargeCalculations.id}}" [selected]="selectedCalculation===chargeCalculations.id">{{chargeCalculations.value}}</option></select>
+                    </div>
+                </div>
+        
+                <div class="form-group">
+                    <label class="control-label col-sm-2 ng-binding" for="amount">Amount<span class="required">*</span></label>
+                    <div class="col-sm-3">
+                        <input name="amount" type="text" id="amount" class="form-control" number-format="" required formControlName="amount" [ngClass]="{'is-valid':form.controls.amount.valid ,'is-invalid':form.controls.amount.invalid}">
+                        <div class="invalid-feedback" *ngIf="form.controls.amount.invalid">
+                            Required Amount
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2 ng-binding" for="active">Active</label>
+                    <div class="col-sm-3">
+                        <label class="checkbox">
+                            <input id="active" type="checkbox" [checked]="chargeData.active===true" class="ng-pristine ng-untouched ng-valid ng-empty" formControlName="isActive">
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group" ng-show="showPenalty">
+                    <label class="control-label col-sm-2 ng-binding" for="ispenalty">Is penalty?</label>
+                    <div class="col-sm-3">
+                        <label class="checkbox">
+                            <input id="ispenalty" type="checkbox" [checked]="chargeData.penalty===true" class="ng-pristine ng-untouched ng-valid ng-empty" formControlName="isPenalty">
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group" ng-show="showGLAccount">
+                    <label class="control-label col-sm-2 ng-binding">Income from charge</label>
+                    <div class="col-sm-3">
+                        <select id="incomeOrLiabilityAccountId" (change)="onChangeIncome($event.target.value)" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty"><option *ngFor="let income of chargeData.incomeOrLiabilityAccountOptions.incomeAccountOptions" label="{{income.name}}" value="{{income.id}}" [selected]="selectedIncome===income.id">{{income.name}}</option></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2 ng-binding">Tax Group</label>
+                    <div class="col-sm-3">
+                      <select id="taxGroupId" disabled (change)="onChangeTax($event.target.value)" class="form-control ng-pristine ng-untouched ng-valid ng-empty"><option label="Select Option" value="?" selected>Select Option</option><option label="Tax Group" value="number:1">Tax Group</option><option label="IDB" value="number:2">IDB</option><option label="608" value="number:3">608</option><option label="WithholdTAX" value="number:4">WithholdTAX</option><option label="WITHDRAWINGG" value="number:5">WITHDRAWINGG</option><option label="zzzzzzz" value="number:6">zzzzzzz</option><option label="tax group 2" value="number:7">tax group 2</option><option label="ddd" value="number:8">ddd</option><option label="Gov WHT" value="number:9">Gov WHT</option><option label="client test 1111 group" value="number:10">client test 1111 group</option><option label="testing" value="number:11">testing</option><option label="VB" value="number:12">VB</option><option label="ranjith" value="number:13">ranjith</option><option label="VAGT" value="number:14">VAGT</option><option label="GST Tax 5%" value="number:15">GST Tax 5%</option><option label="loyal" value="number:16">loyal</option><option label="错误信息" value="number:17">错误信息</option><option label="qq" value="number:18">qq</option><option label="TestTaxGroup" value="number:19">TestTaxGroup</option><option label="111" value="number:20">111</option><option label="m" value="number:21">m</option><option label="EMP Test Group" value="number:22">EMP Test Group</option><option label="cc" value="number:23">cc</option><option label="Test" value="number:24">Test</option><option label="Interest Accrual" value="number:25">Interest Accrual</option><option label="K_tax group" value="number:26">K_tax group</option><option label="VAT (standard rate)" value="number:27">VAT (standard rate)</option><option label="GST55" value="number:28">GST55</option><option label="IcomeTax Group" value="number:29">IcomeTax Group</option><option label="BSA" value="number:30">BSA</option><option label="tax ded" value="number:31">tax ded</option><option label="d" value="number:32">d</option><option label="IVA" value="number:33">IVA</option><option label="GST" value="number:34">GST</option><option label="GST-S" value="number:35">GST-S</option><option label="dis2653" value="number:36">dis2653</option><option label="PrakashGroup" value="number:37">PrakashGroup</option><option label="demogst" value="number:38">demogst</option><option label="my_new_tax_group" value="number:39">my_new_tax_group</option><option label="Some VAT Grp" value="number:40">Some VAT Grp</option><option label="ABC" value="number:41">ABC</option><option label="new group" value="number:42">new group</option><option label="new_tax_group" value="number:43">new_tax_group</option><option label="new_tax_group_testing" value="number:44">new_tax_group_testing</option><option label="new_group_testing_again" value="number:45">new_group_testing_again</option><option label="new_tax_group_create" value="number:46">new_tax_group_create</option><option label="testing_date_picker" value="number:47">testing_date_picker</option><option label="testing_date_picker_again" value="number:48">testing_date_picker_again</option><option label="testing_one_last_time_datepicker" value="number:49">testing_one_last_time_datepicker</option><option label="testing_final_tax_group_creation" value="number:50">testing_final_tax_group_creation</option><option label="testing_final_tax_group_creation" value="number:51">testing_final_tax_group_creation</option><option label="tax_group_created_finally" value="number:52">tax_group_created_finally</option><option label="testing_tax_group_creation" value="number:53">testing_tax_group_creation</option><option label="grouptest_test_test" value="number:54">grouptest_test_test</option><option label="tax_group_name_testing" value="number:55">tax_group_name_testing</option></select>
+                    </div>
+                </div>
+                <div class="col-md-offset-3">
+                    <a id="cancel" href="#/viewcharge/{{chargeData.id}}" mat-stroked-button>Cancel</a>
+                    <button id="save" type="submit" (click)="submit()" mat-stroked-button style="background-color: #4f99ed;margin-left:5px;" [disabled]="!form.valid">Submit</button>
+                </div>
+            </fieldset>
+        </form>
+    </mat-card>
+</div>
+

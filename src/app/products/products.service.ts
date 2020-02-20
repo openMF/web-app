@@ -112,6 +112,20 @@ export class ProductsService {
     return this.http.get(`/charges/${chargeId}`);
   }
 
+  getSelectedCharge(selectedCharge: string, template: boolean = false): Observable<any> {
+    const httpParams = new HttpParams().set('template', template.toString());
+    return this.http.get(`/charges/${selectedCharge}`, { params: httpParams });
+  }
+
+
+  getChargesTemplate(): Observable<any> {
+    return this.http.get('/charges/template');
+  }
+
+  updateCharge(chargeId:string, chargeDetails: any): Observable<any> {
+    return this.http.put(`/charges/${chargeId}`, chargeDetails);
+  }
+
   /**
    * @param {string} chargeId  Charge ID of Charge to be deleted.
    * @returns {Observable<any>}
@@ -119,6 +133,7 @@ export class ProductsService {
   deleteCharge(chargeId: string): Observable<any> {
     return this.http.delete(`/charges/${chargeId}`);
   }
+
 
   /**
    * @returns {Observable<any>} Fixed deposit products data
