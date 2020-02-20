@@ -62,6 +62,10 @@ import { FixedDepositProductPreviewStepComponent } from './fixed-deposit-product
 import { DepositProductIncentiveFormDialogComponent } from './deposit-product-incentive-form-dialog/deposit-product-incentive-form-dialog.component';
 import { ManageTaxGroupsComponent } from './manage-tax-groups/manage-tax-groups.component';
 import { ViewTaxComponentComponent } from './manage-tax-components/view-tax-component/view-tax-component.component';
+import { EditChargeComponent } from './charges/edit-charge/edit-charge.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { MatSelectChange, MatSelectModule, MatOptionModule, MatFormFieldModule } from '@angular/material';
 
 /**
  * Products Module
@@ -72,7 +76,12 @@ import { ViewTaxComponentComponent } from './manage-tax-components/view-tax-comp
   imports: [
     SharedModule,
     ProductsRoutingModule,
-    PipesModule
+    PipesModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatFormFieldModule
   ],
   declarations: [
     ProductsComponent,
@@ -128,7 +137,8 @@ import { ViewTaxComponentComponent } from './manage-tax-components/view-tax-comp
     FixedDepositProductPreviewStepComponent,
     DepositProductIncentiveFormDialogComponent,
     ManageTaxGroupsComponent,
-    ViewTaxComponentComponent
+    ViewTaxComponentComponent,
+    EditChargeComponent
   ],
   entryComponents: [
     DepositProductIncentiveFormDialogComponent

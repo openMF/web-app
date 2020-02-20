@@ -100,7 +100,7 @@ export class EditLoanProductComponent implements OnInit {
     delete loanProduct.advancedAccountingRules;
     this.productsService.updateLoanProduct(this.loanProductAndTemplate.id, loanProduct)
       .subscribe((response: any) => {
-        this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
+         this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
     });
   }
 

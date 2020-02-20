@@ -36,6 +36,7 @@ export class EditSavingProductComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.savingProductAndTemplate)
   }
 
   get savingProductDetailsForm() {

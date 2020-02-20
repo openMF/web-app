@@ -3,11 +3,8 @@
   <mat-card>
 
     <form [formGroup]="userForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
           <mat-form-field fxFlex="48%">
             <mat-label>Username</mat-label>
             <input matInput required formControlName="username">
