@@ -86,33 +86,63 @@ div.chosen-container.chosen-container-single {
 .chosen-container .chosen-results li.highlighted {
   background: #5bc0de !important; }
 
-.btn-default {
+.btn .btn-default {
   color: #333;
   background-color: #fff;
   border-color: #ccc; 
+  border-radius: 0;
 }
+
 .btn-default:focus, .btn-default.focus {
   color: #333;
-  background-color: #e6e6e6;
+  background-color: #fff;
   border-color: #8c8c8c; 
+  border-radius: 0;
 }
+
 .btn-default:hover {
   color: #333;
   background-color: #e6e6e6;
-  border-color: #adadad; }
+  border-color: #adadad; 
+  border-radius: 0;
+}
+
 .btn-default:active, .btn-default.active, .open > .btn-default.dropdown-toggle {
-      color: #333;
-      background-color: #e6e6e6;
-      border-color: #adadad; }
-      .btn-default:active:hover, .btn-default:active:focus, .btn-default:active.focus, .btn-default.active:hover, .btn-default.active:focus, .btn-default.active.focus, .open > .btn-default.dropdown-toggle:hover, .open > .btn-default.dropdown-toggle:focus, .open > .btn-default.dropdown-toggle.focus {
-        color: #333;
-        background-color: #d4d4d4;
-        border-color: #8c8c8c; }
-    .btn-default:active, .btn-default.active, .open > .btn-default.dropdown-toggle {
-      background-image: none; }
-    .btn-default.disabled:hover, .btn-default.disabled:focus, .btn-default.disabled.focus, .btn-default[disabled]:hover, .btn-default[disabled]:focus, .btn-default[disabled].focus, fieldset[disabled] .btn-default:hover, fieldset[disabled] .btn-default:focus, fieldset[disabled] .btn-default.focus {
-      background-color: #fff;
-      border-color: #ccc; }
-    .btn-default .badge {
-      color: #fff;
-      background-color: #333; }
+  color: #333;
+  background-color: #fff;
+  border-color: #adadad; 
+  border-radius: 0;
+}
+.btn-default:active:hover, .btn-default:active:focus, .btn-default:active.focus, .btn-default.active:hover, .btn-default.active:focus, .btn-default.active.focus, .open > .btn-default.dropdown-toggle:hover, .open > .btn-default.dropdown-toggle:focus, .open > .btn-default.dropdown-toggle.focus {
+  color: #333;
+  background-color: #fff;
+  border-color: #8c8c8c; 
+  border-radius: 0;
+}
+.btn-default:active, .btn-default.active, .open > .btn-default.dropdown-toggle {
+  background-image: none;
+ }
+.btn-default.disabled:hover, .btn-default.disabled:focus, .btn-default.disabled.focus, .btn-default[disabled]:hover, .btn-default[disabled]:focus, .btn-default[disabled].focus, fieldset[disabled] .btn-default:hover, fieldset[disabled] .btn-default:focus, fieldset[disabled] .btn-default.focus {
+  background-color: #fff;
+  border-color: #ccc; 
+  border-radius: 0;
+}
+.btn-default{
+  color: #333;
+  background-color: #fff;
+  border-color: #8c8c8c;
+  border-radius: 0;
+}
+
+#cancel{
+  text-decoration: none;
+}
+
+.mat-stroked-button{
+  border-radius: 0;
+  color: #333;
+}
+
+.card .well{
+  background-color: white;
+}
