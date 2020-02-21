@@ -63,6 +63,7 @@ import { DepositProductIncentiveFormDialogComponent } from './deposit-product-in
 import { ManageTaxGroupsComponent } from './manage-tax-groups/manage-tax-groups.component';
 import { ViewTaxComponentComponent } from './manage-tax-components/view-tax-component/view-tax-component.component';
 import { EditChargeComponent } from './charges/edit-charge/edit-charge.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /**
  * Products Module
@@ -73,7 +74,9 @@ import { EditChargeComponent } from './charges/edit-charge/edit-charge.component
   imports: [
     SharedModule,
     ProductsRoutingModule,
-    PipesModule
+    PipesModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     ProductsComponent,
