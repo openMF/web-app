@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
+import { Resolve, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -17,8 +17,13 @@ export class ChargesTemplateResolver implements Resolve<Object> {
    * Returns the share products template data.
    * @returns {Observable<any>}
    */
-  resolve(): Observable<any> {
-    return this.productsService.getChargesTemplate();
+  // resolve(): Observable<any> {
+  //   return this.productsService.getChargesTemplate();
+  // }
+
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const savingProductId = route.paramMap.get('id');
+    return this.productsService.getSelectedCharge(savingProductId, true);
   }
 
 }

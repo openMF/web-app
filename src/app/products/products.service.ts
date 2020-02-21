@@ -112,6 +112,12 @@ export class ProductsService {
     return this.http.get(`/charges/${chargeId}`);
   }
 
+  getSelectedCharge(selectedCharge: string, template: boolean = false): Observable<any> {
+    const httpParams = new HttpParams().set('template', template.toString());
+    return this.http.get(`/charges/${selectedCharge}`, { params: httpParams });
+  }
+
+
   getChargesTemplate(): Observable<any> {
     return this.http.get('/charges/template');
   }
