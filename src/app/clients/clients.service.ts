@@ -227,4 +227,20 @@ export class ClientsService {
   getSurveys(clientId: string) {
     return this.http.get(`/surveys/scorecards/clients/${clientId}`);
   }
+
+  /**
+   * returns the list of survey types and questions
+   */
+  getAllSurveysType() {
+    return this.http.get('/surveys');
+  }
+
+  /**
+   * returns the response from the post request for that survey
+   * @param surveyId
+   * @param surveyData Survey Data submitted by client
+   */
+  createNewSurvey(surveyId: Number, surveyData: any) {
+    return this.http.post(`/surveys/scorecards/${surveyId}`, surveyData);
+  }
 }
