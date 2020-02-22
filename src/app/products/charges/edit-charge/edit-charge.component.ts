@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductsService } from 'app/products/products.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { distinctUntilChanged } from 'rxjs/operators';
-import { id } from '@swimlane/ngx-charts/release/utils';
+
 
 @Component({
   selector: 'mifosx-edit-charge',
