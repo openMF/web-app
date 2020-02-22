@@ -3,6 +3,7 @@ import { ProductsService } from 'app/products/products.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { id } from '@swimlane/ngx-charts/release/utils';
 
 @Component({
   selector: 'mifosx-edit-charge',
@@ -59,6 +60,7 @@ export class EditChargeComponent implements OnInit {
    */
   createUserForm(){
     this.form = this.formBuilder.group({
+      'id': [this.chargeData.id,Validators.required],
       'name': [this.chargeData.name, Validators.required],
       'amount': [this.chargeData.amount,Validators.required],
       'isActive':[this.chargeData.active],
@@ -72,19 +74,12 @@ export class EditChargeComponent implements OnInit {
    */
 
    submit(){
-    
+     let id=this.form.get('id').value;
      let name=this.form.get('name').value;
      let amount=this.form.get('amount').value;
      let isActive=this.form.get('isActive').value;
      let isPenalty=this.form.get('isPenalty').value;
-     let chargeTimeObj:any=this.chargeData.chargeTimeTypeOptions.filter((x:any)=>x.id===this.selectedTime)[0];
-     let currencyObj=this.chargeData.currencyOptions.filter((x:any)=>x.code===this.selectedCurrency)[0];
-     let calculationObj=this.chargeData.chargeCalculationTypeOptions.filter((x:any)=>x.id===this.selectedCalculation)[0];
-     let chargeIncomeObj=this.chargeData.incomeOrLiabilityAccountOptions.incomeAccountOptions.filter((x:any)=>x.id===this.selectedIncome)[0];
-     let taxGroupObj=this.chargeData.taxGroup;
-     let chargePaymentObj=this.chargeData.chargePaymentMode;
-     let chargesApplyObj=this.chargeData.chargeAppliesTo;
-     let formObj={'name':name,active:isActive,penalty:isPenalty,'amount':amount,currency:{},locale:'en'};
+     let formObj={'name':name,active:isActive,penalty:isPenalty,'amount':amount,currencyCode:this.selectedCurrency,chargeAppliesTo:this.chargeData.chargeAppliesTo.id,chargeTimeType:this.selectedTime,chargeCalculationType:this.selectedCalculation,incomeAccountId:this.selectedIncome,chargePaymentMode:this.chargeData.chargePaymentMode.id,locale:'en'};
      console.log(formObj)
      this.productsService.updateCharge(this.chargeData.id.toString(),formObj)
      .subscribe((response: any) => {

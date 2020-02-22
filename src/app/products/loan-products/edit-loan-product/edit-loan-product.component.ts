@@ -89,10 +89,11 @@ export class EditLoanProductComponent implements OnInit {
 
   submit() {
     // TODO: Update once language and date settings are setup
+    console.log({...this.loanProduct})
     const dateFormat = 'yyyy-MM-dd';
     const loanProduct = {
       ...this.loanProduct,
-      charges: {a:1,b:2},
+      charges: this.loanProduct.charges.map((charge: any) => ({ id: charge.id })),
       dateFormat,
       locale: 'en'
     };
