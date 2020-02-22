@@ -165,6 +165,14 @@ export class ProductsService {
     return this.http.post('/taxes/component', taxComponent);
   }
 
+  /*
+   * @param {string} taxComponentId tax Component ID of tax Component to be edited.
+   * @returns {Observable<any>}
+   */
+  updateTaxComponent(taxComponentId: string, taxComponent: any): Observable<any> {
+    return this.http.put(`/taxes/component/${taxComponentId}`, taxComponent);
+  }
+
   /**
    * @returns {Observable<any>} Tax Groups data
    */

@@ -37,6 +37,7 @@ import { ManageTaxComponentsComponent } from './manage-tax-components/manage-tax
 import { ManageTaxGroupsComponent } from './manage-tax-groups/manage-tax-groups.component';
 import { ViewTaxComponentComponent } from './manage-tax-components/view-tax-component/view-tax-component.component';
 import { CreateTaxComponentComponent } from './manage-tax-components/create-tax-component/create-tax-component.component';
+import { EditTaxComponentComponent } from './manage-tax-components/edit-tax-component/edit-tax-component.component';
 
 /** Custom Resolvers */
 import { LoanProductsResolver } from './loan-products/loan-products.resolver';
@@ -238,7 +239,15 @@ const routes: Routes = [
                       resolve: {
                         taxComponent: TaxComponentResolver
                       }
-                    }
+                    },
+                    {
+                      path: 'edit',
+                      data: { title: extract('Edit Tax Component'), breadcrumb: 'Edit', routeParamBreadcrumb: false  },
+                      component: EditTaxComponentComponent,
+                      resolve: {
+                        taxComponent: TaxComponentResolver
+                      }
+                    },
                   ]
                 }
               ]
@@ -387,7 +396,8 @@ const routes: Routes = [
     TaxComponentResolver,
     FloatingRateResolver,
     FloatingRatesResolver,
-    TaxComponentTemplateResolver
+    TaxComponentTemplateResolver,
+    EditTaxComponentComponent
   ]
 })
 export class ProductsRoutingModule { }

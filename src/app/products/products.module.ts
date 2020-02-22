@@ -68,6 +68,7 @@ import { ViewFloatingRateComponent } from './floating-rates/view-floating-rate/v
 import { EditFloatingRateComponent } from './floating-rates/edit-floating-rate/edit-floating-rate.component';
 import { FloatingRatePeriodDialogComponent } from './floating-rates/floating-rate-period-dialog/floating-rate-period-dialog.component';
 import { CreateTaxComponentComponent } from './manage-tax-components/create-tax-component/create-tax-component.component';
+import { EditTaxComponentComponent } from './manage-tax-components/edit-tax-component/edit-tax-component.component';
 
 /**
  * Products Module
@@ -141,7 +142,8 @@ import { CreateTaxComponentComponent } from './manage-tax-components/create-tax-
     DepositProductIncentiveFormDialogComponent,
     ManageTaxGroupsComponent,
     ViewTaxComponentComponent,
-    CreateTaxComponentComponent
+    CreateTaxComponentComponent,
+    EditTaxComponentComponent
   ],
   entryComponents: [
     FloatingRatePeriodDialogComponent
