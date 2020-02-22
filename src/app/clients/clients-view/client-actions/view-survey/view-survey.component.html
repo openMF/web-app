@@ -1,0 +1,71 @@
+<div class="container">
+
+  <mat-card>
+
+    <div class="container">
+
+      <mat-card-content>
+
+        <div class="headingContent">
+          <div fxLayout="column" fxFlex="50%">
+            <div className="headingName">
+              <h3>List of All Surveys</h3>
+            </div>
+          </div>
+          <div fxLayout="column" fxFlex="50%">
+            <div fxLayout="row" fxLayoutAlign="flex-end">
+              <button mat-raised-button color="primary">
+                <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+                Take Survey
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div fxLayout="row">
+          <mat-form-field fxFlex>
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event.target.value)">
+          </mat-form-field>
+        </div>
+
+        <div>
+
+          <table mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="surveyName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header='surveyName'> Survey </th>
+              <td mat-cell *matCellDef="let surveydata"> {{ surveydata.surveyName }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="createdBy">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header='createdby'> Created By </th>
+              <td mat-cell *matCellDef="let surveydata"> {{ surveydata.createdby }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+              <td mat-cell *matCellDef="let surveydata"> {{ surveydata.date | date }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="score">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Score </th>
+              <td mat-cell *matCellDef="let surveydata"> {{ surveydata.score }} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row"></tr>
+
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+        </div>
+
+      </mat-card-content>
+
+    </div>
+
+  </mat-card>
+
+</div>

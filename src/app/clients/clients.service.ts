@@ -223,4 +223,11 @@ export class ClientsService {
     return this.http.get(`/clients/template`, { params: httpParams });
   }
 
+  /**
+   * returns the list of survey data of the particular Client
+   * @param clientId
+   */
+  getSurveys(clientId: string) {
+    return this.http.get(`/surveys/scorecards/clients/${clientId}`);
+  }
 }

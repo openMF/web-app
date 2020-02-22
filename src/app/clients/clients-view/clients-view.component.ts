@@ -52,6 +52,7 @@ export class ClientsViewComponent implements OnInit {
     switch (name) {
       case 'Assign Staff':
       case 'Close':
+      case 'Survey':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
        case 'Unassign Staff':
