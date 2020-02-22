@@ -122,6 +122,11 @@ export class ProductsService {
     return this.http.get('/charges/template');
   }
 
+  updateCharge(chargeId:string, chargeDetails: any): Observable<any> {
+    console.log(chargeId);
+    return this.http.put(`/charges/${chargeId}`, chargeDetails);
+  }
+
   /**
    * @param {string} chargeId  Charge ID of Charge to be deleted.
    * @returns {Observable<any>}

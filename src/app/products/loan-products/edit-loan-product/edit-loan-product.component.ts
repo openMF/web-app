@@ -92,15 +92,16 @@ export class EditLoanProductComponent implements OnInit {
     const dateFormat = 'yyyy-MM-dd';
     const loanProduct = {
       ...this.loanProduct,
-      charges: this.loanProduct.charges.map((charge: any) => ({ id: charge.id })),
+      charges: {a:1,b:2},
       dateFormat,
       locale: 'en'
     };
+    console.log(loanProduct);
     delete loanProduct.allowAttributeConfiguration;
     delete loanProduct.advancedAccountingRules;
     this.productsService.updateLoanProduct(this.loanProductAndTemplate.id, loanProduct)
       .subscribe((response: any) => {
-        this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
+        // this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
     });
   }
 

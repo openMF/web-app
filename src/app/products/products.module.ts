@@ -64,6 +64,7 @@ import { ManageTaxGroupsComponent } from './manage-tax-groups/manage-tax-groups.
 import { ViewTaxComponentComponent } from './manage-tax-components/view-tax-component/view-tax-component.component';
 import { EditChargeComponent } from './charges/edit-charge/edit-charge.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectChange, MatSelectModule, MatOptionModule, MatFormFieldModule } from '@angular/material';
 
 /**
  * Products Module
@@ -76,7 +77,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ProductsRoutingModule,
     PipesModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatFormFieldModule
   ],
   declarations: [
     ProductsComponent,
