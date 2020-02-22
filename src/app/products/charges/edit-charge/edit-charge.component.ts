@@ -51,7 +51,6 @@ export class EditChargeComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.chargeData)
     this.createUserForm();
   }
 
@@ -74,13 +73,11 @@ export class EditChargeComponent implements OnInit {
    */
 
    submit(){
-     let id=this.form.get('id').value;
      let name=this.form.get('name').value;
      let amount=this.form.get('amount').value;
      let isActive=this.form.get('isActive').value;
      let isPenalty=this.form.get('isPenalty').value;
      let formObj={'name':name,active:isActive,penalty:isPenalty,'amount':amount,currencyCode:this.selectedCurrency,chargeAppliesTo:this.chargeData.chargeAppliesTo.id,chargeTimeType:this.selectedTime,chargeCalculationType:this.selectedCalculation,incomeAccountId:this.selectedIncome,chargePaymentMode:this.chargeData.chargePaymentMode.id,locale:'en'};
-     console.log(formObj)
      this.productsService.updateCharge(this.chargeData.id.toString(),formObj)
      .subscribe((response: any) => {
        this.router.navigate(['/home'], { relativeTo: this.route });
