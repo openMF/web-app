@@ -1,0 +1,140 @@
+<div class="container">
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="form">
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+          <mat-form-field fxFlex="96%">
+            <mat-label>Charges applies to</mat-label>
+            <select matNativeControl name="charges" disabled>
+              <option [value]="chargeData.chargeAppliesTo.id" selected>
+                {{chargeData.chargeAppliesTo.value}}
+              </option>
+            </select>
+          </mat-form-field>
+        </div>
+        <mat-divider></mat-divider>
+
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" style="margin-top:10px;">
+          <mat-form-field fxFlex="48%">
+            <mat-label>Name</mat-label>
+            <input matInput required autofocus formControlName="name">
+            <mat-error *ngIf="form.controls.name.hasError('required')">
+              Name <strong>is required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Currency</mat-label>
+            <select matNativeControl name="currency" required>
+              <option *ngFor="let currency of chargeData.currencyOptions" [value]="chargeData.currency.code" [selected]="chargeData.currency.code===currency.code">
+                {{currency.name}}
+              </option>
+            </select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Charge time type</mat-label>
+            <select matNativeControl name="chargeTime" required *ngIf="chargeData.chargeAppliesTo.id===1" (change)="onChangeTime($event.target.value)">
+              <option *ngFor="let chargeTime of chargeData.loanChargeTimeTypeOptions" [value]="chargeTime.value" [selected]="chargeData.chargeTimeType.id===chargeTime.id">
+                {{chargeTime.value}}
+              </option>
+            </select>
+
+            <select matNativeControl name="chargeTime" required *ngIf="chargeData.chargeAppliesTo.id===2" (change)="onChangeTime($event.target.value)">
+              <option *ngFor="let chargeTime of chargeData.savingsChargeTimeTypeOptions" [value]="chargeTime.value" [selected]="chargeData.chargeTimeType.id===chargeTime.id">
+                {{chargeTime.value}}
+              </option>
+            </select>
+            <select matNativeControl name="chargeTime" required *ngIf="chargeData.chargeAppliesTo.id===3" (change)="onChangeTime($event.target.value)">
+              <option *ngFor="let chargeTime of chargeData.clientChargeTimeTypeOptions" [value]="chargeTime.value" [selected]="chargeData.chargeTimeType.id===chargeTime.id">
+                {{chargeTime.value}}
+              </option>
+            </select>
+
+            <select matNativeControl name="chargeTime" required *ngIf="chargeData.chargeAppliesTo.id===4" (change)="onChangeTime($event.target.value)">
+              <option *ngFor="let chargeTime of chargeData.shareChargeTimeTypeOptions" [value]="chargeTime.value" [selected]="chargeData.chargeTimeType.id===chargeTime.id">
+                {{chargeTime.value}}
+              </option>
+            </select>
+
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Charge calculation</mat-label>
+            <select matNativeControl name="chargeCalc" required *ngIf="chargeData.chargeAppliesTo.id===1" (change)="onChangeCalculation($event.target.value)">
+              <option *ngFor="let chargeCalc of chargeData.loanChargeCalculationTypeOptions" [value]="chargeCalc.value" [selected]="chargeData.chargeTimeType.id===chargeCalc.id">
+                {{chargeCalc.value}}
+              </option>
+            </select>
+
+            <select matNativeControl name="chargeCalc" required *ngIf="chargeData.chargeAppliesTo.id===2">
+              <option *ngFor="let chargeCalc of chargeData.savingsChargeCalculationTypeOptions" [value]="chargeCalc.value" [selected]="chargeData.chargeTimeType.id===chargeCalc.id">
+                {{chargeCalc.value}}
+              </option>
+            </select>
+            <select matNativeControl name="chargeCalc" required *ngIf="chargeData.chargeAppliesTo.id===3">
+              <option *ngFor="let chargeCalc of chargeData.clientChargeCalculationTypeOptions" [value]="chargeCalc.value" [selected]="chargeData.chargeTimeType.id===chargeCalc.id">
+                {{chargeCalc.value}}
+              </option>
+            </select>
+
+            <select matNativeControl name="chargeCalc" required *ngIf="chargeData.chargeAppliesTo.id===4">
+              <option *ngFor="let chargeCalc of chargeData.shareChargeCalculationTypeOptions" [value]="chargeCalc.value" [selected]="chargeData.chargeTimeType.id===chargeCalc.id">
+                {{chargeCalc.value}}
+              </option>
+            </select>
+
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Amount</mat-label>
+            <input matInput required autofocus type="text" formControlName="amount">
+            <mat-error *ngIf="form.controls.amount.hasError('required')">
+              Amount <strong>is required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Income from charge</mat-label>
+            <select matNativeControl name="incomeCharge" (change)="onChangeIncome($event.target.value)">
+              <option *ngFor="let income of chargeData.incomeOrLiabilityAccountOptions.incomeAccountOptions" [value]="income.id" [selected]="income.id===chargeData.incomeOrLiabilityAccountOptions.incomeAccountOptions">
+                {{income.name}}
+              </option>
+            </select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Tax Group</mat-label>
+            <select matNativeControl disabled name="incomeCharge" (change)="onChangeTax($event.target.value)" *ngIf="!chargeData.taxGroup">
+              <option value="?" selected>
+                Select Option
+              </option>
+            </select>
+            <select matNativeControl disabled name="incomeCharge" (change)="onChangeTax($event.target.value)" *ngIf="chargeData.taxGroup">
+              <option *ngFor="let tax of chargeData.taxGroupOptions" [value]="tax.id" [selected]="tax.id===chargeData.taxGroupOptions.id">
+                {{tax.name}}
+              </option>
+            </select>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" style="margin-top:10px;">
+          <div fxFlex="48%" class="password-never-expires-wrapper">
+            <mat-checkbox labelPosition="before" formControlName="isActive">
+              Active
+            </mat-checkbox>
+          </div>
+
+          <div fxFlex="48%" class="send-password-to-email-wrapper">
+            <mat-checkbox labelPosition="before" formControlName="isPenalty">
+              Penalty
+            </mat-checkbox>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+      <button mat-raised-button color="primary" [disabled]="!form.valid" (click)="submit()">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
