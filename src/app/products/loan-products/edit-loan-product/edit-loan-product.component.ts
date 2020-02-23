@@ -89,7 +89,6 @@ export class EditLoanProductComponent implements OnInit {
 
   submit() {
     // TODO: Update once language and date settings are setup
-    console.log({...this.loanProduct})
     const dateFormat = 'yyyy-MM-dd';
     const loanProduct = {
       ...this.loanProduct,
@@ -97,7 +96,6 @@ export class EditLoanProductComponent implements OnInit {
       dateFormat,
       locale: 'en'
     };
-    console.log(loanProduct);
     delete loanProduct.allowAttributeConfiguration;
     delete loanProduct.advancedAccountingRules;
     this.productsService.updateLoanProduct(this.loanProductAndTemplate.id, loanProduct)

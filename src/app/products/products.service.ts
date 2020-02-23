@@ -123,7 +123,6 @@ export class ProductsService {
   }
 
   updateCharge(chargeId:string, chargeDetails: any): Observable<any> {
-    console.log(chargeId);
     return this.http.put(`/charges/${chargeId}`, chargeDetails);
   }
 

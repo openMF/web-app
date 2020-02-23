@@ -22,19 +22,37 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2 ng-binding">Currency<span class="required">*</span></label>
                     <div class="col-sm-3">
-                        <select id="currencyCode" class="form-control" required (change)="onChangeCurrency($event.target.value)"><option *ngFor="let currencyOptions of chargeData.currencyOptions" label="{{currencyOptions.name}}" value="{{currencyOptions.code}" [selected]="selectedCurrency===currencyOptions.code">{{currencyOptions.name}}</option></select>
+                        <select id="currencyCode" class="form-control" required (change)="onChangeCurrency($event.target.value)"><option *ngFor="let currencyOptions of chargeData.currencyOptions" label="{{currencyOptions.name}}" value="{{currencyOptions.code}}" [selected]="selectedCurrency===currencyOptions.code">{{currencyOptions.name}}</option></select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2 ng-binding">Charge time type<span class="required">*</span></label>
-                    <div class="col-sm-3">
-                        <select id="chargeTimeType" class="form-control" required (change)="onChangeTime($event.target.value)"><option *ngFor="let chargeTimeOptions of chargeData.chargeTimeTypeOptions" label="{{chargeTimeOptions.value}}" value="{{chargeTimeOptions.id}" [selected]="selectedTime===chargeTimeOptions.id">{{chargeTimeOptions.value}}</option></select>
+                    <div class="col-sm-3" *ngIf="chargeData.chargeAppliesTo.id===3">
+                        <select id="chargeTimeType" class="form-control" required (change)="onChangeTime($event.target.value)"><option *ngFor="let chargeTimeOptions of chargeData.clientChargeTimeTypeOptions" label="{{chargeTimeOptions.value}}" value="{{chargeTimeOptions.id}}" [selected]="selectedTime===chargeTimeOptions.id">{{chargeTimeOptions.value}}</option></select>
+                    </div>
+                    <div class="col-sm-3" *ngIf="chargeData.chargeAppliesTo.id===2">
+                        <select id="chargeTimeType" class="form-control" required (change)="onChangeTime($event.target.value)"><option *ngFor="let chargeTimeOptions of chargeData.savingsChargeTimeTypeOptions" label="{{chargeTimeOptions.value}}" value="{{chargeTimeOptions.id}}" [selected]="selectedTime===chargeTimeOptions.id">{{chargeTimeOptions.value}}</option></select>
+                    </div>
+                    <div class="col-sm-3" *ngIf="chargeData.chargeAppliesTo.id===1">
+                        <select id="chargeTimeType" class="form-control" required (change)="onChangeTime($event.target.value)"><option *ngFor="let chargeTimeOptions of chargeData.loanChargeTimeTypeOptions" label="{{chargeTimeOptions.value}}" value="{{chargeTimeOptions.id}}" [selected]="selectedTime===chargeTimeOptions.id">{{chargeTimeOptions.value}}</option></select>
+                    </div>
+                    <div class="col-sm-3" *ngIf="chargeData.chargeAppliesTo.id===4">
+                        <select id="chargeTimeType" class="form-control" required (change)="onChangeTime($event.target.value)"><option *ngFor="let chargeTimeOptions of chargeData.shareChargeTimeTypeOptions" label="{{chargeTimeOptions.value}}" value="{{chargeTimeOptions.id}}" [selected]="selectedTime===chargeTimeOptions.id">{{chargeTimeOptions.value}}</option></select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2 ng-binding">Charge calculation<span class="required">*</span></label>
-                    <div class="col-sm-3">
-                        <select id="chargeCalculationType" class="form-control" required (change)="onChangeCalculation($event.target.value)"><option *ngFor="let chargeCalculations of chargeData.chargeCalculationTypeOptions" label="{{chargeCalculations.value}}" value="{{chargeCalculations.id}}" [selected]="selectedCalculation===chargeCalculations.id">{{chargeCalculations.value}}</option></select>
+                    <div class="col-sm-3" *ngIf="chargeData.chargeAppliesTo.id===1">
+                        <select id="chargeCalculationType" class="form-control" required (change)="onChangeCalculation($event.target.value)"><option *ngFor="let chargeCalculations of chargeData.loanChargeCalculationTypeOptions" label="{{chargeCalculations.value}}" value="{{chargeCalculations.id}}" [selected]="selectedCalculation===chargeCalculations.id">{{chargeCalculations.value}}</option></select>
+                    </div>
+                    <div class="col-sm-3" *ngIf="chargeData.chargeAppliesTo.id===2">
+                        <select id="chargeCalculationType" class="form-control" required (change)="onChangeCalculation($event.target.value)"><option *ngFor="let chargeCalculations of chargeData.savingsChargeCalculationTypeOptions" label="{{chargeCalculations.value}}" value="{{chargeCalculations.id}}" [selected]="selectedCalculation===chargeCalculations.id">{{chargeCalculations.value}}</option></select>
+                    </div>
+                    <div class="col-sm-3" *ngIf="chargeData.chargeAppliesTo.id===3">
+                        <select id="chargeCalculationType" class="form-control" required (change)="onChangeCalculation($event.target.value)"><option *ngFor="let chargeCalculations of chargeData.clientChargeCalculationTypeOptions" label="{{chargeCalculations.value}}" value="{{chargeCalculations.id}}" [selected]="selectedCalculation===chargeCalculations.id">{{chargeCalculations.value}}</option></select>
+                    </div>
+                    <div class="col-sm-3" *ngIf="chargeData.chargeAppliesTo.id===4">
+                        <select id="chargeCalculationType" class="form-control" required (change)="onChangeCalculation($event.target.value)"><option *ngFor="let chargeCalculations of chargeData.shareChargeCalculationTypeOptions" label="{{chargeCalculations.value}}" value="{{chargeCalculations.id}}" [selected]="selectedCalculation===chargeCalculations.id">{{chargeCalculations.value}}</option></select>
                     </div>
                 </div>
         
