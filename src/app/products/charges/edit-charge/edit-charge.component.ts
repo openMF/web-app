@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { id } from '@swimlane/ngx-charts/release/utils';
+import { AlertService } from 'app/core/alert/alert.service';
+import { Alert } from 'app/core/alert/alert.model';
 
 @Component({
   selector: 'mifosx-edit-charge',
@@ -51,6 +53,7 @@ export class EditChargeComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.chargeData)
     this.createUserForm();
   }
 
@@ -74,7 +77,7 @@ export class EditChargeComponent implements OnInit {
 
    submit(){
      let name=this.form.get('name').value;
-     let amount=this.form.get('amount').value;
+     let amount=parseFloat(this.form.get('amount').value);
      let isActive=this.form.get('isActive').value;
      let isPenalty=this.form.get('isPenalty').value;
      let formObj={'name':name,active:isActive,penalty:isPenalty,'amount':amount,currencyCode:this.selectedCurrency,chargeAppliesTo:this.chargeData.chargeAppliesTo.id,chargeTimeType:this.selectedTime,chargeCalculationType:this.selectedCalculation,incomeAccountId:this.selectedIncome,chargePaymentMode:this.chargeData.chargePaymentMode.id,locale:'en'};
@@ -99,7 +102,7 @@ export class EditChargeComponent implements OnInit {
     */
 
    onChangeTime(time:any){
-     this.selectedTime=time;
+     this.selectedTime=parseInt(time);
    }
 
 
@@ -108,7 +111,7 @@ export class EditChargeComponent implements OnInit {
     */
 
    onChangeCalculation(calculation:any){
-     this.selectedCalculation=calculation;
+     this.selectedCalculation=parseInt(calculation);
    }
 
 
@@ -117,7 +120,7 @@ export class EditChargeComponent implements OnInit {
     */
 
    onChangeIncome(income:any){
-     this.selectedIncome=income;
+     this.selectedIncome=parseInt(income);
    }
 
 }
