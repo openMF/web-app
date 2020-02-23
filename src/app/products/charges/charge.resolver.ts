@@ -25,7 +25,7 @@ export class ChargeResolver implements Resolve<Object> {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const chargeId = route.paramMap.get('id');
-    return this.productsService.getCharge(chargeId);
+    return this.productsService.getSelectedCharge(chargeId);
   }
 
 }

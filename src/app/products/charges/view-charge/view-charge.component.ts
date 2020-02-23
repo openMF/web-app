@@ -34,7 +34,9 @@ export class ViewChargeComponent implements OnInit {
               private router: Router,
               private dialog: MatDialog) {
     this.route.data.subscribe((data: { charge: any }) => {
+      console.log(data);
       this.chargeData = data.charge;
+      console.log(this.chargeData);
     });
   }
 

@@ -55,6 +55,8 @@ import { ProductsMixResolver } from './products-mix/products-mix.resolver';
 import { ManageTaxComponentsResolver } from './manage-tax-components/manage-tax-components.resolver';
 import { ManageTaxGroupsResolver } from './manage-tax-groups/manage-tax-groups.resolver';
 import { TaxComponentResolver } from './manage-tax-components/tax-component.resolver';
+import { ChargesTemplateResolver } from './charges/charges-template.resolver';
+import { EditChargeComponent } from './charges/edit-charge/edit-charge.component';
 
 /** Products Routes */
 const routes: Routes = [
@@ -258,11 +260,24 @@ const routes: Routes = [
             },
             {
               path: ':id',
-              data: { title: extract('View Charge'), routeResolveBreadcrumb: ['charge', 'name'] },
-              component: ViewChargeComponent,
-              resolve: {
-                charge: ChargeResolver
-              }
+              data: { title: extract('View Charge'), routeResolveBreadcrumb: 'id' },
+              children: [
+                {
+                  path: '',
+                  component: ViewChargeComponent,
+                  resolve: {
+                    charge: ChargeResolver
+                  }
+                },
+                {
+                  path: 'edit',
+                  data: { title: extract('Edit Charge'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  component: EditChargeComponent,
+                  resolve: {
+                    chargesTemplate: ChargesTemplateResolver
+                  }
+                }
+              ]
             }
           ]
         },
@@ -329,7 +344,8 @@ const routes: Routes = [
     ProductsMixResolver,
     ManageTaxComponentsResolver,
     ManageTaxGroupsResolver,
-    TaxComponentResolver
+    TaxComponentResolver,
+    ChargesTemplateResolver
   ]
 })
 export class ProductsRoutingModule { }
