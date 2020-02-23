@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../../products.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { distinctUntilChanged } from 'rxjs/operators';
-import { id } from '@swimlane/ngx-charts/release/utils';
 import { AlertService } from 'app/core/alert/alert.service';
 import { Alert } from 'app/core/alert/alert.model';
+
 
 @Component({
   selector: 'mifosx-edit-charge',
