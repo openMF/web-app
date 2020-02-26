@@ -28,6 +28,9 @@ import { EntityDataTableChecksComponent } from './entity-data-table-checks/entit
 import { WorkingDaysComponent } from './working-days/working-days.component';
 import { CreateOfficeComponent } from './offices/create-office/create-office.component';
 import { CreatePaymentTypeComponent } from './payment-types/create-payment-type/create-payment-type.component';
+import { ViewOfficesComponent } from './offices/view-offices/view-offices.component';
+import { GeneralTabComponent } from './offices/view-offices/general-tab/general-tab.component';
+import { NotariosTabComponent } from './offices/view-offices/notarios-tab/notarios-tab.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -45,6 +48,9 @@ import { PaymentTypeResolver } from './payment-types/payment-type.resolver';
 import { PasswordPreferencesTemplateResolver } from './password-preferences/password-preferences-template.resolver';
 import { EntityDataTableChecksResolver } from './entity-data-table-checks/entity-data-table-checks.resolver';
 import { WorkingDaysResolver } from './working-days/working-days.resolver';
+import { OfficeResolver } from './offices/office.resolver';
+import { DataTableResolver } from './offices/dataTable.resolver';
+import { TableDetailsResolver } from './offices/tableDetails.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -83,6 +89,40 @@ const routes: Routes = [
               resolve: {
                 offices: OfficesResolver,
               }
+            },
+            {
+              path: ':id',
+              data: { title: extract('View Office'), breadcrumb: false },
+              children : [
+                {
+                  path: '',
+                  component: ViewOfficesComponent,
+                  data: { title: extract('View Office'), routeResolveBreadcrumb: ['office', 'name'] },
+                  resolve: {
+                  office: OfficeResolver
+                  },
+                  children : [
+                      {
+                      path: 'general',
+                      component: GeneralTabComponent,
+                      data: { title: extract('General'), routeParamBreadcrumb: false },
+                      resolve: {
+                      office: OfficeResolver
+                      }
+                    },
+                    {
+                      path: 'notarios',
+                      component: NotariosTabComponent,
+                      data: { title: extract('Notarios'), breadcrumb: 'Notarios' },
+                      resolve: {
+                      dataTable: DataTableResolver,
+                      office: OfficeResolver,
+                      tableDetails: TableDetailsResolver
+                      }
+                    }
+                  ]
+                },
+              ]
             }
           ]
         },
@@ -257,7 +297,10 @@ const routes: Routes = [
     PaymentTypeResolver,
     PasswordPreferencesTemplateResolver,
     EntityDataTableChecksResolver,
-    WorkingDaysResolver
+    WorkingDaysResolver,
+    OfficeResolver,
+    DataTableResolver,
+    TableDetailsResolver
   ]
 })
 export class OrganizationRoutingModule { }

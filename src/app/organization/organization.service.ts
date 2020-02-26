@@ -41,6 +41,30 @@ export class OrganizationService {
   }
 
   /**
+   * @param {string} officeId Office ID of Office.
+   * @returns {Observable<any>} Office.
+   */
+  getOffice(officeId: string): Observable<any> {
+    return this.http.get(`/offices/${officeId}`);
+  }
+
+  /**
+   * @returns {Observable<any>} Data Tables.
+   */
+  getAllDataTables(): Observable<any> {
+    const httpParams = new HttpParams().set('apptable', 'm_office');
+    return this.http.get('/datatables', { params: httpParams });
+  }
+
+  /**
+   * @returns {Observable<any>} Table Detai.
+   */
+  getTableDetails(datatable: any, apptableId: any): Observable<any> {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.get(`/datatables/${datatable}/${apptableId}`, { params: httpParams });
+  }
+
+  /**
    * @returns {Observable<any>} Employees data
    */
   getEmployees(): Observable<any> {

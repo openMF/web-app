@@ -1,0 +1,63 @@
+<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+
+  <button mat-raised-button color="primary">
+    <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+    Add
+  </button>
+
+  <div *ngIf="tableDetailsData.data.length">
+
+	  <button mat-raised-button color="warn">
+        <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+        Delete
+  	  </button>
+
+  </div>
+
+</div>
+
+<div *ngIf="tableDetailsData.data.length">
+
+	<div class="container">
+
+	  <div class="mat-elevation-z8">
+
+	    <table mat-table [dataSource]="dataSource" matSort>
+
+	      <ng-container matColumnDef="id">
+	        <th mat-header-cell *matHeaderCellDef mat-sort-header> id </th>
+	        <td mat-cell *matCellDef="let row"> {{ row.id }} </td>
+	      </ng-container>
+
+	      <ng-container matColumnDef="office_id">
+	        <th mat-header-cell *matHeaderCellDef mat-sort-header> office_id </th>
+	        <td mat-cell *matCellDef="let row"> {{ row.office_id }} </td>
+	      </ng-container>
+
+	      <ng-container matColumnDef="NUMERO">
+	        <th mat-header-cell *matHeaderCellDef mat-sort-header> NUMERO </th>
+	        <td mat-cell *matCellDef="let row"> {{ row.NUMERO }} </td>
+	      </ng-container>
+
+	      <ng-container matColumnDef="NOMBRE">
+	        <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
+	        <td mat-cell *matCellDef="let row"> {{ row.NOMBRE }} </td>
+	      </ng-container>
+
+	      <ng-container matColumnDef="DOMICILIO">
+	        <th mat-header-cell *matHeaderCellDef mat-sort-header> DOMICILIO </th>
+	        <td mat-cell *matCellDef="let row"> {{ row.DOMICILIO }} </td>
+	      </ng-container>
+
+	      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+	      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row"></tr>
+
+	    </table>
+
+    	<mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+		</div>
+
+	</div>
+
+</div>

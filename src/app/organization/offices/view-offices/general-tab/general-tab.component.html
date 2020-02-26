@@ -1,0 +1,56 @@
+<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="30px">
+    <button mat-raised-button color="primary">
+    <i class="fa fa-edit"></i>
+    &nbsp;&nbsp; Edit
+  </button>
+</div>
+
+ <h1>{{ officeData.name }}</h1>
+
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" class="content">
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Parent Office
+        </div>
+
+        <div fxFlex="50%">
+          {{ officeData.parentName }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Opened On
+        </div>
+
+        <div fxFlex="50%">
+          {{ officeData.openingDate | date }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Name Decorated
+        </div>
+
+        <div fxFlex="50%">
+          {{ officeData.nameDecorated }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          External Id
+        </div>
+
+        <div fxFlex="50%">
+          {{ officeData.externalId }}
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

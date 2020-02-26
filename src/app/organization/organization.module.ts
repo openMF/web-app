@@ -26,6 +26,9 @@ import { CreateOfficeComponent } from './offices/create-office/create-office.com
 import { CreateEmployeeComponent } from './employees/create-employee/create-employee.component';
 import { CreatePaymentTypeComponent } from './payment-types/create-payment-type/create-payment-type.component';
 import { ViewEmployeeComponent } from './employees/view-employee/view-employee.component';
+import { ViewOfficesComponent } from './offices/view-offices/view-offices.component';
+import { GeneralTabComponent } from './offices/view-offices/general-tab/general-tab.component';
+import { NotariosTabComponent } from './offices/view-offices/notarios-tab/notarios-tab.component';
 
 /**
  * Organization Module
@@ -57,7 +60,10 @@ import { ViewEmployeeComponent } from './employees/view-employee/view-employee.c
     CreateOfficeComponent,
     CreateEmployeeComponent,
     CreatePaymentTypeComponent,
-    ViewEmployeeComponent
+    ViewEmployeeComponent,
+    ViewOfficesComponent,
+    GeneralTabComponent,
+    NotariosTabComponent
   ]
 })
 export class OrganizationModule { }
