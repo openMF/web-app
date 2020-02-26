@@ -11,10 +11,15 @@ import { extract } from '../core/i18n/i18n.service';
 /** Custom Components */
 import { ReportsComponent } from './reports.component';
 import { RunReportComponent } from './run-report/run-report.component';
+import { XBRLComponent } from './xbrl/xbrl.component';
+import { XBRLReportComponent } from './xbrl-report/xbrl-report.component';
 
 /** Custom Resolvers */
-import { ReportsResolver } from './reports.resolver';
-import { RunReportResolver } from './run-report/run-report.resolver';
+import { ReportsResolver } from './common-resolvers/reports.resolver';
+import { RunReportResolver } from './common-resolvers/run-report.resolver';
+import { MixTaxonomyResolver } from './common-resolvers/mixtaxonomy.resolver';
+import { MixMappingsResolver } from './common-resolvers/mixmappings.resolver';
+import { GlAccountsResolver } from '../accounting/common-resolvers/gl-accounts.resolver';
 
 /** Reports Routes */
 const routes: Routes = [
@@ -59,6 +64,26 @@ const routes: Routes = [
           ]
         }
       ]
+    },
+    {
+      path: 'xbrl',
+      data: { title: extract('XBRL'), breadcrumb: 'XBRL' },
+      children: [
+        {
+          path: '',
+          component: XBRLComponent,
+          resolve: {
+            mixtaxonomy: MixTaxonomyResolver,
+            mixmapping: MixMappingsResolver,
+            glAccounts: GlAccountsResolver
+          }
+        },
+        {
+          path: 'report',
+          data: { title: extract('XBRL Report'), breadcrumb: 'Run Report' },
+          component: XBRLReportComponent
+        }
+      ]
     }
   ])
 ];
@@ -73,7 +98,10 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     ReportsResolver,
-    RunReportResolver
+    RunReportResolver,
+    MixTaxonomyResolver,
+    MixMappingsResolver,
+    GlAccountsResolver
   ]
 })
 export class ReportsRoutingModule { }
