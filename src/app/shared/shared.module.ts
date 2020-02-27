@@ -12,6 +12,8 @@ import { FooterComponent } from './footer/footer.component';
 import { LanguageSelectorComponent } from './language-selector/language-selector.component';
 import { ThemePickerComponent } from './theme-picker/theme-picker.component';
 import { ChangePasswordDialogComponent } from './change-password-dialog/change-password-dialog.component';
+import { EnableDialogComponent } from './enable-dialog/enable-dialog.component';
+import { DisableDialogComponent } from './disable-dialog/disable-dialog.component';
 
 /** Custom Modules */
 import { IconsModule } from './icons.module';
@@ -37,7 +39,9 @@ import { MaterialModule } from './material.module';
     FooterComponent,
     LanguageSelectorComponent,
     ThemePickerComponent,
-    ChangePasswordDialogComponent
+    ChangePasswordDialogComponent,
+    EnableDialogComponent,
+    DisableDialogComponent
   ],
   exports: [
     FileUploadComponent,
@@ -53,7 +57,9 @@ import { MaterialModule } from './material.module';
   entryComponents: [
     FormDialogComponent,
     DeleteDialogComponent,
-    ChangePasswordDialogComponent
+    ChangePasswordDialogComponent,
+    EnableDialogComponent,
+    DisableDialogComponent
   ]
 })
 export class SharedModule { }

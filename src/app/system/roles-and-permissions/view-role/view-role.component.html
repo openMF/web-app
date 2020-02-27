@@ -1,0 +1,99 @@
+<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+  <button mat-raised-button color="primary" (click)="editRoles(); backupCheckValues();" [disabled]="rolePermissionService.name === 'Super user'">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit Role
+  </button>
+
+  <button *ngIf="!isRoleEnable(rolePermissionService.disabled)" mat-raised-button color="danger" (click)="disableRolesConfirmation()" [disabled]="rolePermissionService.name === 'Super user'">
+    <fa-icon icon="lock"></fa-icon>&nbsp;&nbsp;
+    Disable Role
+  </button>
+
+  <button *ngIf="isRoleEnable(rolePermissionService.disabled)" mat-raised-button color="primary" (click)="enableRolesConfirmation()" [disabled]="rolePermissionService.name === 'Super user'">
+    <fa-icon icon="lock-open"></fa-icon>&nbsp;&nbsp;
+    Enable Role
+  </button>
+
+  <button mat-raised-button color="warn" (click)="deleteRole()" [disabled]="rolePermissionService.name === 'Super user'">
+    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+    Delete Role
+  </button>
+
+</div>
+
+<div class="container">
+
+  <mat-card>
+
+    <div fxFlexFill>
+      <span fxFlex="30%">Name:</span>
+      <span fxFlex="70%">{{ rolePermissionService.name }}</span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="30%">Description:</span>
+      <span fxFlex="70%">{{ rolePermissionService.description }}</span>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <ng-container>
+
+      <div fxLayout="row" class="permissionSelected">
+        <div fxFlex="75">
+          <h3>
+            Permissions: <strong>{{ formatName(previousGrouping) }}</strong>
+          </h3>
+        </div>
+
+        <div fxFlex= "25" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="5px" *ngIf="!isDisabled" class="selectDeselect">
+          <button mat-raised-button color="primary" (click)="selectAll()">Select All</button>
+          <button mat-raised-button color="default" (click)="deselectAll()">Deselect All</button>
+        </div>
+
+      </div>
+
+      <div fxLayout="row">
+
+        <div fxFlex="30" fxLayout="column">
+          <mat-list>
+            <mat-list-item [ngClass]="selectedItem == grouping ? 'active' : 'inactive'" *ngFor="let grouping of groupings" (click)="showPermissions(grouping)">
+              <span class="groupingName">
+                {{ formatName(grouping) }}
+              </span>
+            </mat-list-item>
+          </mat-list>
+
+        </div>
+
+        <div fxFlex="70" fxLayout="column" class="listPermission">
+
+          <form [formGroup]="formGroup" (submit)="submit()">
+
+            <div *ngFor="let permission of permissions.permissions" class="displayPermissions">
+                <div formArrayName="roster">
+                  <div [formGroupName]="permission.id">
+                    <mat-checkbox name="cp" id="{{ permission.code }}" formControlName="selected"
+                   >
+                    {{ permissionName(permission.code) }}
+                  </mat-checkbox>
+                  </div>
+                </div>
+              </div>
+
+            </form>
+        </div>
+
+      </div>
+    </ng-container>
+
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px" *ngIf="!isDisabled">
+      <mat-card-actions>
+        <button type="button" mat-raised-button (click)="cancel(); restoreCheckboxes();">Cancel</button>
+        <button mat-raised-button color="primary" (click)="submit()">Submit</button>
+      </mat-card-actions>
+    </div>
+
+  </mat-card>
+
+</div>

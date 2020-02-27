@@ -45,6 +45,8 @@ import { EditHookComponent } from './manage-hooks/edit-hook/edit-hook.component'
 import { ViewHookComponent } from './manage-hooks/view-hook/view-hook.component';
 import { CreateHookComponent } from './manage-hooks/create-hook/create-hook.component';
 import { ColumnDialogComponent } from './manage-data-tables/column-dialog/column-dialog.component';
+import { ViewRoleComponent } from './roles-and-permissions/view-role/view-role.component';
+import { EditRoleComponent } from './roles-and-permissions/edit-role/edit-role.component';
 
 /** Dialog Component Imports */
 import { ReportParameterDialogComponent } from './manage-reports/report-parameter-dialog/report-parameter-dialog.component';
@@ -100,7 +102,9 @@ import { EditSchedulerJobComponent } from './manage-scheduler-jobs/edit-schedule
     AuditTrailsComponent,
     ViewAuditComponent,
     ViewSchedulerJobComponent,
-    EditSchedulerJobComponent
+    EditSchedulerJobComponent,
+    ViewRoleComponent,
+    EditRoleComponent
   ],
   entryComponents: [
     ReportParameterDialogComponent,
