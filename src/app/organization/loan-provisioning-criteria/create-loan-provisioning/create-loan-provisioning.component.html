@@ -1,0 +1,291 @@
+<div class="container">
+  <mat-card>
+    <mat-card-content>
+      <mat-vertical-stepper [linear]="isLinear" #stepper>
+        <mat-step [stepControl]="provisionCriteriaForm">
+          <form [formGroup]="provisionCriteriaForm">
+            <ng-template matStepLabel>Enter Provisioning Criteria</ng-template>
+            <mat-form-field>
+              <mat-label>Provisioning Criteria</mat-label>
+              <input required matInput formControlName="provisioning_criteria" autofocus>
+              <mat-error *ngIf="provisionCriteriaForm.controls.provisioning_criteria.hasError('required')">
+                Provisioning Criteria is <strong>required</strong>
+              </mat-error>
+            </mat-form-field> 
+            <div>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="provisionProductForm">
+          <form [formGroup]="provisionProductForm">
+            <ng-template matStepLabel>Select Products</ng-template>
+            <mat-form-field>
+              <mat-label>Select Products</mat-label>
+              <mat-select formControlName="products" multiple>
+                <mat-option *ngFor="let loanProducts of loanProducts.loanProducts" [value]="loanProducts.id">
+                  {{loanProducts.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="provisionProductForm.controls.products.hasError('required')">
+                Product is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+
+        <mat-step [stepControl]="provisionStandardForm">
+          <form [formGroup]="provisionStandardForm">
+            <ng-template matStepLabel>Fill STANDARD category details</ng-template>
+            <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+              <mat-form-field fxFlex="48%">
+                <mat-label>Min Age</mat-label>
+                <input required matInput formControlName="standard_min_age">
+                <mat-error *ngIf="provisionStandardForm.controls.standard_min_age.hasError('required')">
+                  Min Age is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>  
+              <mat-form-field fxFlex="48%">
+                <mat-label>Max Age</mat-label>
+                <input required matInput formControlName="standard_max_age">
+                <mat-error *ngIf="provisionStandardForm.controls.standard_max_age.hasError('required')">
+                  Max Age is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+              <mat-form-field fxFlex="96%">
+                <mat-label>Percentage</mat-label>
+                <input required matInput formControlName="standard_percentage">
+                <mat-error *ngIf="provisionStandardForm.controls.standard_percentage.hasError('required')">
+                  Percentage is <strong>required</strong>
+                </mat-error>
+              </mat-form-field> 
+            </div>
+            <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+              <mat-form-field fxFlex="48%">
+                <mat-label>Select liability account</mat-label>
+                <mat-select formControlName="standard_liability_account" required>
+                 <mat-option *ngFor="let glAccounts of loanProducts.glAccounts | loanProvisioningAccountFiltering: 'accountType.liability'" [value]="glAccounts.id">
+                   {{glAccounts.name}}
+                 </mat-option>
+                </mat-select>
+                <mat-error *ngIf="provisionStandardForm.controls.standard_liability_account.hasError('required')">
+                  Liability is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field fxFlex="48%">
+                <mat-label>Select expense account</mat-label>
+                <mat-select formControlName="standard_expense_account" required>
+                  <mat-option *ngFor="let glAccounts of loanProducts.glAccounts | loanProvisioningAccountFiltering: 'accountType.expense'" [value]="glAccounts.id">
+                    {{glAccounts.name}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="provisionStandardForm.controls.standard_expense_account.hasError('required')">
+                  Expense is <strong>required</strong>
+                </mat-error>
+              </mat-form-field> 
+            </div>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+
+        <mat-step [stepControl]="provisionSubStandardForm">
+          <form [formGroup]="provisionSubStandardForm">
+            <ng-template matStepLabel>Fill SUB-STANDARD category details</ng-template>
+            <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+              <mat-form-field fxFlex="48%">
+                <mat-label>Min Age</mat-label>
+                <input required matInput formControlName="sub_standard_min_age">
+                <mat-error *ngIf="provisionSubStandardForm.controls.sub_standard_min_age.hasError('required')">
+                  Min Age is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>  
+              <mat-form-field fxFlex="48%">
+                <mat-label>Max Age</mat-label>
+                <input required matInput formControlName="sub_standard_max_age">
+                <mat-error *ngIf="provisionSubStandardForm.controls.sub_standard_max_age.hasError('required')">
+                  Max Age is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+              <mat-form-field fxFlex="96%">
+                <mat-label>Percentage</mat-label>
+                <input required matInput formControlName="sub_standard_percentage">
+                <mat-error *ngIf="provisionSubStandardForm.controls.sub_standard_percentage.hasError('required')">
+                  Percentage is <strong>required</strong>
+                </mat-error>
+              </mat-form-field> 
+            </div>
+            <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+              <mat-form-field fxFlex="48%">
+                <mat-label>Select liability account</mat-label>
+                <mat-select formControlName="sub_standard_liability_account" required>
+                 <mat-option *ngFor="let glAccounts of loanProducts.glAccounts | loanProvisioningAccountFiltering: 'accountType.liability'" [value]="glAccounts.id">
+                   {{glAccounts.name}}
+                 </mat-option>
+                </mat-select>
+                <mat-error *ngIf="provisionSubStandardForm.controls.sub_standard_liability_account.hasError('required')">
+                  Liability is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field fxFlex="48%">
+                <mat-label>Select expense account</mat-label>
+                <mat-select formControlName="sub_standard_expense_account" required>
+                  <mat-option *ngFor="let glAccounts of loanProducts.glAccounts | loanProvisioningAccountFiltering: 'accountType.expense'" [value]="glAccounts.id">
+                    {{glAccounts.name}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="provisionSubStandardForm.controls.sub_standard_expense_account.hasError('required')">
+                  Expense is <strong>required</strong>
+                </mat-error>
+              </mat-form-field> 
+            </div>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+
+        <mat-step [stepControl]="provisionDoubtfulForm">
+          <form [formGroup]="provisionDoubtfulForm">
+            <ng-template matStepLabel>Fill DOUBTFUL category details</ng-template>
+            <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+              <mat-form-field fxFlex="48%">
+                <mat-label>Min Age</mat-label>
+                <input required matInput formControlName="doubtful_min_age">
+                <mat-error *ngIf="provisionDoubtfulForm.controls.doubtful_min_age.hasError('required')">
+                  Min Age is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>  
+              <mat-form-field fxFlex="48%">
+                <mat-label>Max Age</mat-label>
+                <input required matInput formControlName="doubtful_max_age">
+                <mat-error *ngIf="provisionDoubtfulForm.controls.doubtful_max_age.hasError('required')">
+                  Max Age is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+              <mat-form-field fxFlex="96%">
+                <mat-label>Percentage</mat-label>
+                <input required matInput formControlName="doubtful_percentage">
+                <mat-error *ngIf="provisionDoubtfulForm.controls.doubtful_percentage.hasError('required')">
+                  Percentage is <strong>required</strong>
+                </mat-error>
+              </mat-form-field> 
+            </div>
+            <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+              <mat-form-field fxFlex="48%">
+                <mat-label>Select liability account</mat-label>
+                <mat-select formControlName="doubtful_liability_account" required>
+                 <mat-option *ngFor="let glAccounts of loanProducts.glAccounts | loanProvisioningAccountFiltering: 'accountType.liability'" [value]="glAccounts.id">
+                   {{glAccounts.name}}
+                 </mat-option>
+                </mat-select>
+                <mat-error *ngIf="provisionDoubtfulForm.controls.doubtful_liability_account.hasError('required')">
+                  Liability is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field fxFlex="48%">
+                <mat-label>Select expense account</mat-label>
+                <mat-select formControlName="doubtful_expense_account" required>
+                  <mat-option *ngFor="let glAccounts of loanProducts.glAccounts | loanProvisioningAccountFiltering: 'accountType.expense'" [value]="glAccounts.id">
+                    {{glAccounts.name}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="provisionDoubtfulForm.controls.doubtful_expense_account.hasError('required')">
+                  Expense is <strong>required</strong>
+                </mat-error>
+              </mat-form-field> 
+            </div>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+
+        <mat-step [stepControl]="provisionLossForm">
+          <form [formGroup]="provisionLossForm">
+            <ng-template matStepLabel>Fill LOSS category details</ng-template>
+            <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+              <mat-form-field fxFlex="48%">
+                <mat-label>Min Age</mat-label>
+                <input required matInput formControlName="loss_min_age">
+                <mat-error *ngIf="provisionLossForm.controls.loss_min_age.hasError('required')">
+                  Min Age is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>  
+              <mat-form-field fxFlex="48%">
+                <mat-label>Max Age</mat-label>
+                <input required matInput formControlName="loss_max_age">
+                <mat-error *ngIf="provisionLossForm.controls.loss_max_age.hasError('required')">
+                  Max Age is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+              <mat-form-field fxFlex="96%">
+                <mat-label>Percentage</mat-label>
+                <input required matInput formControlName="loss_percentage">
+                <mat-error *ngIf="provisionLossForm.controls.loss_percentage.hasError('required')">
+                  Percentage is <strong>required</strong>
+                </mat-error>
+              </mat-form-field> 
+            </div>
+            <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+              <mat-form-field fxFlex="48%">
+                <mat-label>Select liability account</mat-label>
+                <mat-select formControlName="loss_liability_account" required>
+                 <mat-option *ngFor="let glAccounts of loanProducts.glAccounts | loanProvisioningAccountFiltering: 'accountType.liability'" [value]="glAccounts.id">
+                   {{glAccounts.name}}
+                 </mat-option>
+                </mat-select>
+                <mat-error *ngIf="provisionLossForm.controls.loss_liability_account.hasError('required')">
+                  Liability is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field fxFlex="48%">
+                <mat-label>Select expense account</mat-label>
+                <mat-select formControlName="loss_expense_account" required>
+                  <mat-option *ngFor="let glAccounts of loanProducts.glAccounts | loanProvisioningAccountFiltering: 'accountType.expense'" [value]="glAccounts.id">
+                    {{glAccounts.name}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="provisionLossForm.controls.loss_expense_account.hasError('required')">
+                  Expense is <strong>required</strong>
+                </mat-error>
+              </mat-form-field> 
+            </div>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>   
+          </form>
+        </mat-step>
+
+        <mat-step>
+          <ng-template matStepLabel>Done</ng-template>
+          <p>You are now done.</p>
+          <div>
+            <button mat-button color="basic" matStepperPrevious>Back</button>
+            <button mat-button color="primary" [disabled]="!provisionCriteriaForm.valid || !provisionProductForm.valid || !provisionStandardForm.valid || !provisionSubStandardForm.valid || !provisionDoubtfulForm.valid || !provisionLossForm.valid" (click)="submit()">Submit</button>
+          </div>
+        </mat-step>
+      </mat-vertical-stepper>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+
+

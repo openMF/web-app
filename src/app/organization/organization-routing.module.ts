@@ -45,6 +45,9 @@ import { PaymentTypeResolver } from './payment-types/payment-type.resolver';
 import { PasswordPreferencesTemplateResolver } from './password-preferences/password-preferences-template.resolver';
 import { EntityDataTableChecksResolver } from './entity-data-table-checks/entity-data-table-checks.resolver';
 import { WorkingDaysResolver } from './working-days/working-days.resolver';
+import { CreateLoanProvisioningComponent } from './loan-provisioning-criteria/create-loan-provisioning/create-loan-provisioning.component';
+import { LoanProvisioningCriteriasResolver } from './loan-provisioning-criteria/loan-provisioning-criterias.resolver';
+import { LoanProvisioningCriteriaTemplateResolver } from './loan-provisioning-criteria/loan-provisioning-criteria-template.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -59,12 +62,26 @@ const routes: Routes = [
         },
         {
           path: 'provisioning-criteria',
-          component: LoanProvisioningCriteriaComponent,
           data: { title: extract('Provisioning Criteria'), breadcrumb: 'Provisioning Criteria' },
-          resolve: {
-            loanProvisioningCriteria: LoanProvisioningCriteriaResolver
-          }
+          children: [
+            {
+              path: '',
+              component: LoanProvisioningCriteriaComponent,
+              resolve: {
+                loanProvisioningCriteria: LoanProvisioningCriteriasResolver
+              }
+            },
+            {
+              path: 'create',
+              component: CreateLoanProvisioningComponent,
+              data: { title: extract('Create Provisioning Criteria'), breadcrumb: 'Create Provisioning Criteria' },
+              resolve: {
+                loanProvisioningCriteriaTemplate: LoanProvisioningCriteriaTemplateResolver,
+              }
+            }
+          ]
         },
+
         {
           path: 'offices',
           data: { title: extract('Manage Offices'), breadcrumb: 'Manage Offices' },
@@ -257,7 +274,9 @@ const routes: Routes = [
     PaymentTypeResolver,
     PasswordPreferencesTemplateResolver,
     EntityDataTableChecksResolver,
-    WorkingDaysResolver
+    WorkingDaysResolver,
+    LoanProvisioningCriteriasResolver,
+    LoanProvisioningCriteriaTemplateResolver
   ]
 })
 export class OrganizationRoutingModule { }

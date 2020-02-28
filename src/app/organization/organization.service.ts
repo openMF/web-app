@@ -21,9 +21,32 @@ export class OrganizationService {
   /**
    * @returns {Observable<any>} Loan Provisioning Criteria data
    */
-  getProvisioningCriteria(): Observable<any> {
+  getProvisioningCriterias(): Observable<any> {
     return this.http.get('/provisioningcriteria');
   }
+
+  getProvisioningCriteriasTemplate(): Observable<any> {
+    return this.http.get('/provisioningcriteria/template');
+  }
+
+  /**
+   * @param {string} provisioningId Provisioning ID of Loan Provisioning Criteria.
+   * @returns {Observable<any>} Provisioning Criteria.
+   */
+
+  getProvisioningCriteria(provisioningId: string, template: boolean = false): Observable<any> {
+    const httpParams = new HttpParams().set('template', template.toString());
+    return this.http.get(`/provisioningcriteria/${provisioningId}`, { params: httpParams });
+  }
+
+  /**
+   * @param {any} Criteria Provisioning Criteria to be created.
+   * @returns {Observable<any>}
+   */
+  createProvisioningCriteria(criteriaData: any): Observable<any> {
+    return this.http.post('/provisioningcriteria', criteriaData);
+  }
+
 
   /**
    * @returns {Observable<any>} Offices data
