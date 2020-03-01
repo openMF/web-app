@@ -49,7 +49,7 @@
   <div *ngIf="searchVisible" class="search-bar" fxFlex="auto" fxHide.lt-sm="true" [@fadeInOut]>
     <mat-form-field class="search">
       <mat-label>Search</mat-label>
-      <input matInput type="text">
+      <input matInput type="text" (focusout)="toggleSearchVisibility()">
     </mat-form-field>
   </div>
 
