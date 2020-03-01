@@ -7,6 +7,7 @@ import { Route } from '../core/route/route.service';
 /** Translation Imports */
 import { extract } from '../core/i18n/i18n.service';
 
+/** Custom Components */
 import { CentersComponent } from './centers.component';
 
 const routes: Routes = [

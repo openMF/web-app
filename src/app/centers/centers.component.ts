@@ -1,8 +1,12 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import { CentersService } from 'app/centers/centers.service';
 import {DataSource} from '@angular/cdk/collections';
+
+/** rxjs Imports */
 import { Observable } from 'rxjs';
+
+/** Custom Services */
+import { CentersService } from 'app/centers/centers.service';
 
 @Component({
   selector: 'mifosx-app-centers',
@@ -17,6 +21,7 @@ export class CentersComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+
   constructor(private centerService: CentersService) { }
 
   ngOnInit() {
@@ -24,7 +29,6 @@ export class CentersComponent implements OnInit {
       .subscribe(
         (res => {
          console.log(res);
-        // console.log(res.active);
          res.active = !!res.active;
          this.dataSource = new MatTableDataSource(res);
          this.dataSource.paginator = this.paginator;
@@ -32,7 +36,6 @@ export class CentersComponent implements OnInit {
         })
       );
   }
-
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
