@@ -1,0 +1,41 @@
+<h1 mat-dialog-title>Floating Rate Period</h1>
+
+<mat-dialog-content>
+
+  <form [formGroup]="floatingRatePeriodForm">
+
+    <div fxLayout="column">
+
+      <mat-form-field>
+        <mat-label>From Date</mat-label>
+        <input required matInput formControlName="fromDate" [min]="minDate" [matDatepicker]="fromDatePicker">
+        <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #fromDatePicker></mat-datepicker>
+        <mat-error *ngIf="floatingRatePeriodForm.controls.fromDate.hasError('required')">
+          From Date is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Interest Rate</mat-label>
+        <input matInput type="number" required formControlName="interestRate">
+        <mat-error *ngIf="floatingRatePeriodForm.controls.interestRate.hasError('required')">
+          Interest Rate is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-checkbox class="is-differential" formControlName="isDifferentialToBaseLendingRate" labelPosition="before">
+        Is Differential?
+      </mat-checkbox>
+
+    </div>
+
+  </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary"
+    [disabled]="!floatingRatePeriodForm.valid || floatingRatePeriodForm.pristine" (click)="submit()">Submit</button>
+</mat-dialog-actions>
