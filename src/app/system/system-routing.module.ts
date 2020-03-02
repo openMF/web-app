@@ -14,6 +14,9 @@ import { EditCodeComponent } from './codes/edit-code/edit-code.component';
 import { ExternalServicesComponent } from './external-services/external-services.component';
 import { ManageDataTablesComponent } from './manage-data-tables/manage-data-tables.component';
 import { ManageHooksComponent } from './manage-hooks/manage-hooks.component';
+import { ViewHookComponent } from './manage-hooks/view-hook/view-hook.component';
+import { CreateHookComponent } from './manage-hooks/create-hook/create-hook.component';
+import { EditHookComponent } from './manage-hooks/edit-hook/edit-hook.component';
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
 import { AddRoleComponent } from './roles-and-permissions/add-role/add-role.component';
 import { ManageSurveysComponent } from './manage-surveys/manage-surveys.component';
@@ -43,6 +46,8 @@ import { CodeResolver } from './codes/code.resolver';
 import { CodeValuesResolver } from './codes/view-code/code-values.resolver';
 import { ManageDataTablesResolver } from './manage-data-tables/manage-data-tables.resolver';
 import { ManageHooksResolver } from './manage-hooks/manage-hooks.resolver';
+import { HookResolver } from './manage-hooks/view-hook/hook.resolver';
+import { HooksTemplateResolver } from './manage-hooks/hooks-template.resolver';
 import { RolesAndPermissionsResolver } from './roles-and-permissions/roles-and-permissions.resolver';
 import { ManageSurveysResolver } from './manage-surveys/manage-surveys.resolver';
 import { ManageSchedulerJobsResolver } from './manage-scheduler-jobs/manage-scheduler-jobs.resolver';
@@ -214,11 +219,46 @@ const routes: Routes = [
       },
       {
           path: 'hooks',
-          component: ManageHooksComponent,
-          resolve: {
-                hooks: ManageHooksResolver
-          },
           data: { title:  extract('Manage Hooks'), breadcrumb: 'Manage Hooks' },
+          children: [
+            {
+              path: '',
+              component: ManageHooksComponent,
+              resolve: {
+                hooks: ManageHooksResolver
+              }
+            },
+            {
+              path: 'create',
+              component: CreateHookComponent,
+              data: { title: extract('Create Hook'), breadcrumb: 'Create' },
+              resolve: {
+                hooksTemplate: HooksTemplateResolver
+              }
+            },
+            {
+              path: ':id',
+              data: { title: extract('View Hook'), routeParamBreadcrumb: 'id' },
+              children: [
+                {
+                  path: '',
+                  component: ViewHookComponent,
+                  resolve: {
+                    hook: HookResolver
+                  }
+                },
+                {
+                  path: 'edit',
+                  component: EditHookComponent,
+                  data: { title: extract('Edit Hook'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    hooksTemplate: HooksTemplateResolver,
+                    hook: HookResolver
+                  }
+                }
+              ]
+            }
+          ]
       },
       {
           path: 'roles-and-permissions',
@@ -375,6 +415,8 @@ const routes: Routes = [
     CodeValuesResolver,
     ManageDataTablesResolver,
     ManageHooksResolver,
+    HookResolver,
+    HooksTemplateResolver,
     RolesAndPermissionsResolver,
     ManageSurveysResolver,
     ManageSchedulerJobsResolver,
