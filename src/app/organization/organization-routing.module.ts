@@ -45,6 +45,11 @@ import { PaymentTypeResolver } from './payment-types/payment-type.resolver';
 import { PasswordPreferencesTemplateResolver } from './password-preferences/password-preferences-template.resolver';
 import { EntityDataTableChecksResolver } from './entity-data-table-checks/entity-data-table-checks.resolver';
 import { WorkingDaysResolver } from './working-days/working-days.resolver';
+import { EditLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/edit-loan-provisioning-criteria/edit-loan-provisioning-criteria.component';
+import { LoanProvisioningCriteriaEditResolver } from './loan-provisioning-criteria/edit-loan-provisioning-criteria/edit-loan-provisioning-criteria.resolver';
+import { ViewLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/view-loan-provisioning-criteria/view-loan-provisioning-criteria.component';
+import { LoanProvisioningCriteriasResolver } from './loan-provisioning-criteria/loan-provisioning-criterias.resolver';
+
 
 /** Organization Routes */
 const routes: Routes = [
@@ -59,11 +64,37 @@ const routes: Routes = [
         },
         {
           path: 'provisioning-criteria',
-          component: LoanProvisioningCriteriaComponent,
           data: { title: extract('Provisioning Criteria'), breadcrumb: 'Provisioning Criteria' },
-          resolve: {
-            loanProvisioningCriteria: LoanProvisioningCriteriaResolver
-          }
+          children: [
+            {
+              path: '',
+              component: LoanProvisioningCriteriaComponent,
+              resolve: {
+                loanProvisioningCriterias: LoanProvisioningCriteriasResolver
+              }
+            },
+            {
+              path: ':id',
+              data: { title: extract('View Provisioning Criteria'), routeParamBreadcrumb: 'id' },
+              children: [
+                {
+                  path: '',
+                  component: ViewLoanProvisioningCriteriaComponent,
+                  resolve: {
+                    loanProvisioningCriteria: LoanProvisioningCriteriaResolver
+                  }
+                },
+                {
+                  path: 'edit',
+                  component: EditLoanProvisioningCriteriaComponent,
+                  data: { title: extract('Edit Charge'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    selectedLoanProvisioning: LoanProvisioningCriteriaEditResolver
+                  }
+                }
+              ]
+            }
+          ],
         },
         {
           path: 'offices',
@@ -257,7 +288,9 @@ const routes: Routes = [
     PaymentTypeResolver,
     PasswordPreferencesTemplateResolver,
     EntityDataTableChecksResolver,
-    WorkingDaysResolver
+    WorkingDaysResolver,
+    LoanProvisioningCriteriaEditResolver,
+    LoanProvisioningCriteriasResolver,
   ]
 })
 export class OrganizationRoutingModule { }

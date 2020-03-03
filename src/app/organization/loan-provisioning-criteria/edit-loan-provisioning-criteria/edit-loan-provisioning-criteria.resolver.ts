@@ -6,13 +6,13 @@ import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { OrganizationService } from 'app/organization/organization.service';
 
 /**
- * Loan Provisioning Criteria data resolver.
+ * Payment Type data resolver.
  */
 @Injectable()
-export class LoanProvisioningCriteriaResolver implements Resolve<Object> {
+export class LoanProvisioningCriteriaEditResolver implements Resolve<Object> {
 
   /**
    * @param {OrganizationService} organizationService Organization service.
@@ -20,12 +20,12 @@ export class LoanProvisioningCriteriaResolver implements Resolve<Object> {
   constructor(private organizationService: OrganizationService) {}
 
   /**
-   * Returns the loan provisioning criteria data.
+   * Returns the payment type data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const provisioningId = route.paramMap.get('id');
-    return this.organizationService.getProvisioningCriteria(provisioningId);
+    return this.organizationService.getSelectedProvisioningCriteria(provisioningId, true);
   }
 
 }
