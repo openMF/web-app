@@ -10,11 +10,13 @@ import { AddLoanChargeComponent } from './add-loan-charge/add-loan-charge.compon
 import { LoansViewComponent } from './loans-view/loans-view.component';
 import { GeneralTabComponent } from './loans-view/general-tab/general-tab.component';
 import { AccountDetailsComponent } from './loans-view/account-details/account-details.component';
+import { NotesTabComponent } from './loans-view/notes-tab/notes-tab.component';
 
 /** Custom Resolvers */
 import { LoanChargeTemplateResolver } from './common-resolvers/loan-charge-template.resolver';
 import { LoanDetailsResolver } from './common-resolvers/loan-details.resolver';
 import { LoanDetailsGeneralResolver } from './common-resolvers/loan-details-general.resolver';
+import { LoanNotesResolver } from './common-resolvers/loan-notes-resolver';
 
 const routes: Routes = [
   {
@@ -46,6 +48,14 @@ const routes: Routes = [
           }
         },
         {
+          path: 'notes',
+          component: NotesTabComponent,
+          data: { title: extract('Notes'), breadcrumb: 'Notes', routeParamBreadcrumb: false },
+          resolve: {
+            loanNotes: LoanNotesResolver
+          }
+        },
+        {
           path: 'add-loan-charge',
           component: AddLoanChargeComponent,
           data: { title: extract('Add Loan Charge'), breadcrumb: 'Add Loan Charge', routeParamBreadcrumb: false },
@@ -64,7 +74,8 @@ const routes: Routes = [
   providers: [
     LoanChargeTemplateResolver,
     LoanDetailsGeneralResolver,
-    LoanDetailsResolver
+    LoanDetailsResolver,
+    LoanNotesResolver
   ]
 })
 
