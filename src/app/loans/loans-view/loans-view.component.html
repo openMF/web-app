@@ -1,0 +1,61 @@
+<mat-card class="loan-card">
+    <mat-card-header fxLayout="column" class="header">
+
+		<mat-card-title-group class="header-title-group">
+			<div class="mat-typography loan-card-title">
+				<mat-card-title>
+					<div fxLayout="row" fxLayout.lt-md="column">
+						<div fxFlex="50%">
+							<h3>
+								<i class="fa fa-stop" matTooltip="{{ loanDetailsData.status.value }}" [ngClass]="loanDetailsData.inArrears?'status-active-overdue':(loanDetailsData.status.code|statusLookup)"></i>
+								Loan Product: {{loanDetailsData.loanProductName}}(#{{loanDetailsData.accountNo}})
+								<br/>
+								<span *ngIf="loanDetailsData.clientName" > Client Name: {{loanDetailsData.clientName}} </span> <br/>
+								<span *ngIf="loanDetailsData.group" > Group Name: {{loanDetailsData.group.name}} </span>
+							</h3>
+						</div>
+
+						<div *ngIf="loanDetailsData.summary" class="loansOverview mat-typography" fxFlex="50%">
+							<h3> Loan Account OverView </h3>
+							<span>Current Balance: {{loanDetailsData.currency.displaySymbol}} {{loanDetailsData.summary.totalOutstanding | number}}</span><br>
+								<span>Arrears By: {{loanDetailsData.summary.totalOverdue | number}}
+								<span *ngIf="!(loanDetailsData.summary.totalOverdue>=0)">Not Provided</span>
+							</span><br>
+						</div>
+					</div>
+				</mat-card-title>
+			</div>
+		</mat-card-title-group>
+
+		<mat-card-actions class="loan-actions">
+
+				<ng-container *ngFor="let item of buttons.singlebuttons" class="loan-span">
+						<button mat-raised-button *mifosxHasPermission="item.taskPermissionName">
+						<i class="{{item.icon}}"></i> {{item.name}} </button>
+				</ng-container>
+
+				<ng-container *ngIf="!(buttons.options === undefined)" class="loan-span">
+						<button mat-raised-button [matMenuTriggerFor]="More">More</button>
+						<mat-menu #More="matMenu">
+								<span *ngFor="let item of buttons.options">
+									<button mat-menu-item *mifosxHasPermission="item.taskPermissionName">{{item.name}}</button>
+								</span>
+						</mat-menu>
+				</ng-container>
+
+		</mat-card-actions>
+
+	</mat-card-header>
+
+    <mat-card-content>
+        <nav mat-tab-nav-bar class="navigation-tabs">
+          	<a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive" [active]="general.isActive">
+				General
+			</a>
+			<a mat-tab-link [routerLink]="['./accountdetail']" routerLinkActive #accountdetail="routerLinkActive" [active]="accountdetail.isActive">
+				Account Details
+			</a>
+        </nav>
+        <router-outlet></router-outlet>
+    </mat-card-content>
+</mat-card>

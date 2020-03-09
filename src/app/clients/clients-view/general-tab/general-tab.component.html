@@ -133,7 +133,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="openLoansColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: openLoansColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: openLoansColumns;" [routerLink]="['/loans', row.id, 'general']" class="select-row"></tr>
   </table>
 
   <!-- Closed Loan Accounts -->
