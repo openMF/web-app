@@ -1,0 +1,119 @@
+<div>
+  <!-- Due collections table -->
+  <div class="mat-elevation-z8">
+
+    <h5 class="table-title">Due Collections</h5>
+
+    <mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="LoanAccount">
+        <mat-header-cell *matHeaderCellDef> Loan Account# </mat-header-cell>
+        <mat-cell *matCellDef="let individualCollectionSheet">
+          {{ individualCollectionSheet.LoanAccount }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="ProductName">
+        <mat-header-cell *matHeaderCellDef> Product Name </mat-header-cell>
+        <mat-cell *matCellDef="let individualCollectionSheet">
+          {{ individualCollectionSheet.ProductName }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="ClientName">
+        <mat-header-cell *matHeaderCellDef> Client Name </mat-header-cell>
+        <mat-cell *matCellDef="let individualCollectionSheet">
+          {{ individualCollectionSheet.ClientName }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="TotalDue">
+        <mat-header-cell *matHeaderCellDef> Total Due </mat-header-cell>
+        <mat-cell *matCellDef="let individualCollectionSheet">
+          {{ individualCollectionSheet.TotalDue }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Charges">
+        <mat-header-cell *matHeaderCellDef> Charges </mat-header-cell>
+        <mat-cell *matCellDef="let individualCollectionSheet">
+          {{ individualCollectionSheet.Charges }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Actions">
+        <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+        <mat-cell *matCellDef="let individualCollectionSheet">
+          <button mat-raised-button color="primary">
+            Add Payment Detail
+          </button>
+          {{ individualCollectionSheet.Actions }}
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="dueCollectionsTableColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: dueCollectionsTableColumns"></mat-row>
+    </mat-table>
+    <!-- End due collections table -->
+  </div>
+</div>
+
+<div class="due-savings-table">
+  <!-- Due savings collection table -->
+
+  <div class="mat-elevation-z8">
+
+    <h5 class="table-title">Due Savings Collections</h5>
+
+    <mat-table [dataSource]="savingsDataSource" matSort>
+      <ng-container matColumnDef="SavingsAccount">
+        <mat-header-cell *matHeaderCellDef> Savings Account# </mat-header-cell>
+        <mat-cell *matCellDef="let individualCollectionSavingsSheet">
+          {{ individualCollectionSavingsSheet.SavingsAccount }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="ProductName">
+        <mat-header-cell *matHeaderCellDef> Product Name </mat-header-cell>
+        <mat-cell *matCellDef="let individualCollectionSavingsSheet">
+          {{ individualCollectionSavingsSheet.ProductName }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="ClientName">
+        <mat-header-cell *matHeaderCellDef> Client Name </mat-header-cell>
+        <mat-cell *matCellDef="let individualCollectionSavingsSheet">
+          {{ individualCollectionSavingsSheet.ClientName }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="TotalDue">
+        <mat-header-cell *matHeaderCellDef> Total Due </mat-header-cell>
+        <mat-cell *matCellDef="let individualCollectionSavingsSheet">
+          {{ individualCollectionSavingsSheet.TotalDue }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Actions">
+        <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+        <mat-cell *matCellDef="let individualCollectionSavingsSheet">
+          {{ individualCollectionSavingsSheet.Actions }}
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="savingsCollectionsTableColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: savingsCollectionsTableColumns"></mat-row>
+    </mat-table>
+    <!-- Due savings collections table -->
+  </div>
+
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px" class="btn-row">
+    
+    <button mat-raised-button color="success" [routerLink]="['individual-collection-sheet']">
+      Cancel
+    </button>
+
+    <button mat-raised-button color="primary" (click) ="submitTableData()">
+      Submit
+    </button>
+  </div>
+</div>

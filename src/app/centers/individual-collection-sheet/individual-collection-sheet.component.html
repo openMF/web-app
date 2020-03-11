@@ -1,0 +1,68 @@
+<div class="container">
+
+  <mat-card>
+    <h5 class="title">Collection Sheet</h5>
+
+    <form [formGroup]="collectionSheetForm" (ngSubmit)="submit()">
+      
+      <mat-card-content>
+        <div fxLayout="column">
+          <!-- Branch office -->
+          <mat-form-field appearance="outline">
+            <mat-label>Branch Office</mat-label>
+            <mat-select placeholder="Branch office" required formControlName="branchOffice">
+              <mat-option value="branch office1">branch office 1</mat-option>
+              <mat-option value="branch office2">branch office 2</mat-option>
+              <mat-option value="branch office3">branch office 3</mat-option>
+              <mat-option value="branch office4">branch office 4</mat-option>
+            </mat-select>
+
+            <mat-error *ngIf="collectionSheetForm.controls.branchOffice.hasError('required')">
+              Office is
+              <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <!--Repayment date -->
+
+          <mat-form-field appearance="outline">
+            <mat-label>Repayment Date</mat-label>
+            <input
+              placeholder="Repayment date"
+              matInput
+              required
+              formControlName="repaymentDate"
+              [matDatepicker]="picker"
+            />
+
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+
+            <mat-error *ngIf="collectionSheetForm.controls.repaymentDate.hasError('required')">
+              Repayment Date is
+              <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Staff -->
+          <mat-form-field appearance="outline">
+            <mat-label>Staff</mat-label>
+            <mat-select placeholder="Staff" formControlName="staff">
+              <mat-option value="staff">staff 1</mat-option>
+              <mat-option value="staff">staff 1</mat-option>
+              <mat-option value="staff">staff 1</mat-option>
+              <mat-option value="staff">staff 1</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <!--End of form fields-->
+        </div>
+      </mat-card-content>
+      <!-- Generate collection sheet button -->
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="5px">
+        <button mat-raised-button color="primary" [routerLink]="['collection-sheet']">
+          Collection Sheet
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>

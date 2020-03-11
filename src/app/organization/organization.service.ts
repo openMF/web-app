@@ -211,5 +211,4 @@ export class OrganizationService {
   updateWorkingDays(workingDays: any): Observable<any> {
     return this.http.put('/workingdays', workingDays);
   }
-
 }
