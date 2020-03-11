@@ -212,4 +212,12 @@ export class OrganizationService {
     return this.http.put('/workingdays', workingDays);
   }
 
+   /**
+    * @param {any} checks Entity data table checks data.
+    * @returns {Observable<any>}
+    */
+  createEntityDataTableChecks(checks: any): Observable<any> {
+    return this.http.post('/entityDatatableChecks', checks);
+  }
+
 }

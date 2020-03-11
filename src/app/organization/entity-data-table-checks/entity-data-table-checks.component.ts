@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatDialogConfig  } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -8,7 +8,7 @@ import { OrganizationService } from '../organization.service';
 
 /** Custom Components */
 import { DeleteDialogComponent } from '../../shared/delete-dialog/delete-dialog.component';
-
+import {CreateEntityDataTableCheckComponent} from '../create-entity-data-table-check/create-entity-data-table-check.component';
 /**
  * Entity Data Table Checks component.
  */
@@ -125,6 +125,17 @@ export class EntityDataTableChecksComponent implements OnInit {
           });
       }
     });
+  }
+
+   /**
+    * Opens the create entity data table check dialog
+    */
+  openCreateEntityDataTableCheckDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '50%';
+    this.dialog.open(CreateEntityDataTableCheckComponent, dialogConfig);
   }
 
 }

@@ -1,0 +1,238 @@
+<div>
+
+  <h1 mat-dialog-title align="center">
+    Create Entity-Data Table Check
+  </h1>
+
+  <mat-divider></mat-divider>
+
+  <mat-dialog-content [formGroup]="form" (ngSubmit)="submit()">
+    <!-- Entity field-->
+    <mat-form-field appearance="outline">
+      <mat-label>Entity</mat-label>
+      <mat-select required placeholder="Entity" formControlName="entity">
+        <mat-option value="Client">Client</mat-option>
+        <mat-option value="Group">Group</mat-option>
+        <mat-option value="Loan">Loan</mat-option>
+        <mat-option value="Savings Account">Savings Account</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.controls.entity.hasError('required')">
+        Entity is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      *ngIf="
+        form.get('entity').value != 'Client' &&
+        form.get('entity').value != 'Loan' &&
+        form.get('entity').value != 'Group' &&
+        form.get('entity').value != 'Savings Account'
+      "
+    >
+      <mat-select required placeholder="Status" formControlName="status"> </mat-select>
+    </mat-form-field>
+
+    <!-- Status field displayed depending on what is on entity field  -->
+    <mat-form-field
+      appearance="outline"
+      *ngIf="form.get('entity').value == 'Client' || form.get('entity').value == 'Group'"
+    >
+      <mat-label>Status</mat-label>
+      <mat-select required placeholder="Status" formControlName="status">
+        <mat-option value="CREATE">CREATE</mat-option>
+        <mat-option value="ACTIVATE">ACTIVATE</mat-option>
+        <mat-option value="CLOSE">CLOSE</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.controls.status.hasError('required')">
+        Status is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" *ngIf="form.get('entity').value == 'Savings Account'">
+      <mat-label>Status</mat-label>
+      <mat-select required placeholder="Status" formControlName="status">
+        <mat-option value="CREATE">CREATE</mat-option>
+        <mat-option value="APPROVE">APPROVE</mat-option>
+        <mat-option value="ACTIVATE">ACTIVATE</mat-option>
+        <mat-option value="WITHDRAWN">WITHDRAWN</mat-option>
+        <mat-option value="REJECTED">REJECTED</mat-option>
+        <mat-option value="CLOSE">CLOSE</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.controls.status.hasError('required')">
+        Status is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" *ngIf="form.get('entity').value == 'Loan'">
+      <mat-label>Status</mat-label>
+      <mat-select required placeholder="Status" formControlName="status">
+        <mat-option value="CREATE">CREATE</mat-option>
+        <mat-option value="APPROVE">APPROVE</mat-option>
+        <mat-option value="ACTIVATE">ACTIVATE</mat-option>
+        <mat-option value="WITHDRAWN">WITHDRAWN</mat-option>
+        <mat-option value="REJECTED">REJECTED</mat-option>
+        <mat-option value="WRITE_OFF">WRITE_OFF</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.controls.status.hasError('required')">
+        Status is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <!-- Data table field displayed with options depending on above fields -->
+
+    <mat-form-field
+      appearance="outline"
+      *ngIf="
+        form.get('entity').value != 'Client' &&
+        form.get('entity').value != 'Group' &&
+        form.get('entity').value != 'Loan' &&
+        form.get('entity').value != 'Savings Account'
+      "
+    >
+      <mat-label>Data Table</mat-label>
+      <mat-select required placeholder="Data Table" formControlName="dataTable"> </mat-select>
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      *ngIf="form.get('entity').value == 'Client' && form.get('status').value != 'CREATE'"
+    >
+      <mat-label>Data Table</mat-label>
+      <mat-select required placeholder="Data Table" formControlName="dataTable"> </mat-select>
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      *ngIf="form.get('entity').value == 'Group' && form.get('status').value != 'ACTIVATE'"
+    >
+      <mat-label>Data Table</mat-label>
+      <mat-select required placeholder="Data Table" formControlName="dataTable"> </mat-select>
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      *ngIf="
+        form.get('entity').value == 'Loan' &&
+        form.get('status').value != 'CREATE' &&
+        form.get('status').value != 'APPROVE'
+      "
+    >
+      <mat-label>Data Table</mat-label>
+      <mat-select required placeholder="Data Table" formControlName="dataTable"> </mat-select>
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      *ngIf="form.get('entity').value == 'Savings Account' && form.get('status').value != 'ACTIVATE'"
+    >
+      <mat-label>Data Table</mat-label>
+      <mat-select required placeholder="Data Table" formControlName="dataTable"> </mat-select>
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      *ngIf="form.get('entity').value == 'Client' && form.get('status').value == 'CREATE'"
+    >
+      <mat-label>Data Table</mat-label>
+      <mat-select required placeholder="Data Table" formControlName="dataTable">
+        <mat-option value="BEGINNER">A1</mat-option>
+        <mat-option value="INTERMEDIATE">A1_test</mat-option>
+        <mat-option value="ADVANCED">Aaaaa</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.controls.dataTable.hasError('required')">
+        Data Table is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      *ngIf="form.get('entity').value == 'Group' && form.get('status').value == 'ACTIVATE'"
+    >
+      <mat-label>Data Table</mat-label>
+      <mat-select required placeholder="Group Details" formControlName="dataTable">
+        <mat-option value="Group Details">Group Details</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.controls.dataTable.hasError('required')">
+        Data Table is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      *ngIf="form.get('entity').value == 'Loan' && form.get('status').value == 'CREATE'"
+    >
+      <mat-label>Data Table</mat-label>
+      <mat-select required placeholder="Data Table" formControlName="dataTable">
+        <mat-option value="CREATE">CREATE</mat-option>
+        <mat-option value="APPROVE">APPROVE</mat-option>
+        <mat-option value=" DISBURSE">DISBURSE</mat-option>
+        <mat-option value="WITHDRAWN">WITHDRAWN</mat-option>
+        <mat-option value="REJECTED">REJECTED</mat-option>
+        <mat-option value="WRITE_OFF">WRITE_OFF</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.controls.dataTable.hasError('required')">
+        Data Table is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      *ngIf="form.get('entity').value == 'Loan' && form.get('status').value == 'APPROVE'"
+    >
+      <mat-label>Data Table</mat-label>
+      <mat-select required placeholder="LoanDetails" formControlName="dataTable">
+        <mat-option value="LoanDetails">LoanDetails</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.controls.dataTable.hasError('required')">
+        Data Table is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      *ngIf="form.get('entity').value == 'Savings Account' && form.get('status').value == 'ACTIVATE'"
+    >
+      <mat-label>Data Table</mat-label>
+      <mat-select required placeholder="SavingDetails" formControlName="dataTable">
+        <mat-option value="SavingDetails">SavingDetails</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.controls.dataTable.hasError('required')">
+        Data Table is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Product field displayed only loan and savings -->
+    <mat-form-field
+      appearance="outline"
+      *ngIf="form.get('entity').value == 'Loan' && form.get('status').value == 'APPROVE'"
+    >
+      <mat-label>Product</mat-label>
+      <mat-select placeholder="Product" formControlName="product">
+        <mat-option value="income-generating-loan">Income Generating Loan</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      *ngIf="form.get('entity').value == 'Savings Account' && form.get('status').value == 'ACTIVATE'"
+    >
+      <mat-label>Product</mat-label>
+      <mat-select placeholder="Product" formControlName="product">
+        <mat-option value="Savings">Savings</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- End of product field -->
+  </mat-dialog-content>
+
+  <mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+
+    <button class="mat-raised-button" (click)="cancel()">
+      Cancel
+    </button>
+    <button class="mat-raised-button mat-primary" [disabled]="!form.valid">
+      Create
+    </button>
+    
+  </mat-dialog-actions>
+
+</div>

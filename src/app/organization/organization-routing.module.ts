@@ -28,6 +28,7 @@ import { EntityDataTableChecksComponent } from './entity-data-table-checks/entit
 import { WorkingDaysComponent } from './working-days/working-days.component';
 import { CreateOfficeComponent } from './offices/create-office/create-office.component';
 import { CreatePaymentTypeComponent } from './payment-types/create-payment-type/create-payment-type.component';
+import {CreateEntityDataTableCheckComponent} from './create-entity-data-table-check/create-entity-data-table-check.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -45,6 +46,7 @@ import { PaymentTypeResolver } from './payment-types/payment-type.resolver';
 import { PasswordPreferencesTemplateResolver } from './password-preferences/password-preferences-template.resolver';
 import { EntityDataTableChecksResolver } from './entity-data-table-checks/entity-data-table-checks.resolver';
 import { WorkingDaysResolver } from './working-days/working-days.resolver';
+import { CreateEntityDataTableCheckResolver } from './create-entity-data-table-check/create-entity-data-table-check.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -228,6 +230,14 @@ const routes: Routes = [
           resolve: {
             workingDays: WorkingDaysResolver
           }
+        },
+        {
+          path: 'create-entity-data-table-check',
+          component: CreateEntityDataTableCheckComponent,
+          data: { title: extract('Create Entity Data Table Check'), breadcrumb: 'Create Entity Data Table Check' },
+          resolve: {
+            createEntityDataTableCheck: CreateEntityDataTableCheckResolver
+          }
         }
       ]
     }
@@ -257,7 +267,8 @@ const routes: Routes = [
     PaymentTypeResolver,
     PasswordPreferencesTemplateResolver,
     EntityDataTableChecksResolver,
-    WorkingDaysResolver
+    WorkingDaysResolver,
+    CreateEntityDataTableCheckResolver
   ]
 })
 export class OrganizationRoutingModule { }
