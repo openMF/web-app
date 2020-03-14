@@ -1,3 +1,9 @@
 #language-selector {
   max-width: 4rem;
 }
+
+::ng-deep .mat-select-arrow {
+  color: rgb(10, 73, 99);
+  position: relative!important;
+  top: 8px!important;
+}
