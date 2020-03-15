@@ -11,6 +11,9 @@ import { SystemComponent } from './system.component';
 import { CreateCodeComponent } from './codes/create-code/create-code.component';
 import { ExternalServicesComponent } from './external-services/external-services.component';
 import { ManageDataTablesComponent } from './manage-data-tables/manage-data-tables.component';
+import { CreateDataTableComponent } from './manage-data-tables/create-data-table/create-data-table.component';
+import { ViewDataTableComponent } from './manage-data-tables/view-data-table/view-data-table.component';
+import { EditDataTableComponent } from './manage-data-tables/edit-data-table/edit-data-table.component';
 import { ManageHooksComponent } from './manage-hooks/manage-hooks.component';
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
 import { AddRoleComponent } from './roles-and-permissions/add-role/add-role.component';
@@ -39,6 +42,7 @@ import { EditReportComponent } from './manage-reports/edit-report/edit-report.co
 import { EditHookComponent } from './manage-hooks/edit-hook/edit-hook.component';
 import { ViewHookComponent } from './manage-hooks/view-hook/view-hook.component';
 import { CreateHookComponent } from './manage-hooks/create-hook/create-hook.component';
+import { ColumnDialogComponent } from './manage-data-tables/column-dialog/column-dialog.component';
 
 /** Dialog Component Imports */
 import { ReportParameterDialogComponent } from './manage-reports/report-parameter-dialog/report-parameter-dialog.component';
@@ -57,6 +61,9 @@ import { AddEventDialogComponent } from './manage-hooks/add-event-dialog/add-eve
     EditCodeComponent,
     ExternalServicesComponent,
     ManageDataTablesComponent,
+    CreateDataTableComponent,
+    ViewDataTableComponent,
+    EditDataTableComponent,
     ManageHooksComponent,
     RolesAndPermissionsComponent,
     ManageSurveysComponent,
@@ -84,11 +91,13 @@ import { AddEventDialogComponent } from './manage-hooks/add-event-dialog/add-eve
     EditHookComponent,
     ViewHookComponent,
     CreateHookComponent,
-    AddEventDialogComponent
+    AddEventDialogComponent,
+    ColumnDialogComponent
   ],
   entryComponents: [
     ReportParameterDialogComponent,
-    AddEventDialogComponent
+    AddEventDialogComponent,
+    ColumnDialogComponent
   ]
 })
 export class SystemModule { }

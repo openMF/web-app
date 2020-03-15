@@ -185,6 +185,39 @@ export class SystemService {
   }
 
   /**
+   * @param {any} dataTable Data Table to be created.
+   * @return {Observable<any>}
+   */
+  createDataTable(dataTable: any): Observable<any> {
+    return this.http.post('/datatables', dataTable);
+  }
+
+  /**
+   * @param dataTableName Data Table Name.
+   * @return {Observable<any>}
+   */
+  getDataTable(dataTableName: string): Observable<any> {
+    return this.http.get(`/datatables/${dataTableName}`);
+  }
+
+  /**
+   * @param dataTableName Data Table Name.
+   * @return {Observable<any>}
+   */
+  deleteDataTable(dataTableName: string): Observable<any> {
+    return this.http.delete(`/datatables/${dataTableName}`);
+  }
+
+  /**
+   * @param dataTable Data Table.
+   * @param dataTableName Data Table Name.
+   * @return {Observable<any>}
+   */
+  updateDataTable(dataTable: any, dataTableName: string): Observable<any> {
+    return this.http.put(`/datatables/${dataTableName}`, dataTable);
+  }
+
+  /**
    * @returns {Observable<any>} Configurations data.
    */
   getConfigurations(): Observable<any> {
