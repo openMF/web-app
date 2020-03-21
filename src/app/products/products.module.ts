@@ -62,6 +62,7 @@ import { FixedDepositProductPreviewStepComponent } from './fixed-deposit-product
 import { DepositProductIncentiveFormDialogComponent } from './deposit-product-incentive-form-dialog/deposit-product-incentive-form-dialog.component';
 import { ManageTaxGroupsComponent } from './manage-tax-groups/manage-tax-groups.component';
 import { ViewTaxComponentComponent } from './manage-tax-components/view-tax-component/view-tax-component.component';
+import { FloatingRatesComponent } from './floating-rates/floating-rates.component';
 
 /**
  * Products Module
@@ -128,7 +129,8 @@ import { ViewTaxComponentComponent } from './manage-tax-components/view-tax-comp
     FixedDepositProductPreviewStepComponent,
     DepositProductIncentiveFormDialogComponent,
     ManageTaxGroupsComponent,
-    ViewTaxComponentComponent
+    ViewTaxComponentComponent,
+    FloatingRatesComponent
   ],
   entryComponents: [
     DepositProductIncentiveFormDialogComponent

@@ -166,4 +166,11 @@ export class ProductsService {
     return this.http.get('/loanproducts', { params: httpParams });
   }
 
+  /**
+   * @returns {Observable<any>} Product mixes data
+   */
+  getFloatingRates(): Observable<any> {
+    return this.http.get('/floatingrates');
+  }
+
 }

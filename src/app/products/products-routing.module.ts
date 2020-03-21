@@ -55,6 +55,8 @@ import { ProductsMixResolver } from './products-mix/products-mix.resolver';
 import { ManageTaxComponentsResolver } from './manage-tax-components/manage-tax-components.resolver';
 import { ManageTaxGroupsResolver } from './manage-tax-groups/manage-tax-groups.resolver';
 import { TaxComponentResolver } from './manage-tax-components/tax-component.resolver';
+import { FloatingRatesComponent } from './floating-rates/floating-rates.component';
+import { FloatingRatesResolver } from './floating-rates/floating-rates.resolver';
 
 /** Products Routes */
 const routes: Routes = [
@@ -288,6 +290,19 @@ const routes: Routes = [
           ]
         },
         {
+          path: 'floatingrates',
+          data: { title:  extract('Floating Rates'), breadcrumb: 'Floating Rates' },
+          children: [
+            {
+              path: '',
+              component: FloatingRatesComponent,
+              resolve: {
+                floatingRates: FloatingRatesResolver
+              }
+            },
+          ]
+        },
+        {
           path: 'products-mix',
           component: ProductsMixComponent,
           resolve: {
@@ -329,7 +344,8 @@ const routes: Routes = [
     ProductsMixResolver,
     ManageTaxComponentsResolver,
     ManageTaxGroupsResolver,
-    TaxComponentResolver
+    TaxComponentResolver,
+    FloatingRatesResolver
   ]
 })
 export class ProductsRoutingModule { }
