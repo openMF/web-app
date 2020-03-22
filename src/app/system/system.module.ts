@@ -36,9 +36,13 @@ import { ManageReportsComponent } from './manage-reports/manage-reports.componen
 import { ViewReportComponent } from './manage-reports/view-report/view-report.component';
 import { CreateReportComponent } from './manage-reports/create-report/create-report.component';
 import { EditReportComponent } from './manage-reports/edit-report/edit-report.component';
+import { EditHookComponent } from './manage-hooks/edit-hook/edit-hook.component';
+import { ViewHookComponent } from './manage-hooks/view-hook/view-hook.component';
+import { CreateHookComponent } from './manage-hooks/create-hook/create-hook.component';
 
 /** Dialog Component Imports */
 import { ReportParameterDialogComponent } from './manage-reports/report-parameter-dialog/report-parameter-dialog.component';
+import { AddEventDialogComponent } from './manage-hooks/add-event-dialog/add-event-dialog.component';
 
 @NgModule({
   imports: [
@@ -76,10 +80,15 @@ import { ReportParameterDialogComponent } from './manage-reports/report-paramete
     CreateReportComponent,
     EditReportComponent,
     ReportParameterDialogComponent,
-    AddRoleComponent
+    AddRoleComponent,
+    EditHookComponent,
+    ViewHookComponent,
+    CreateHookComponent,
+    AddEventDialogComponent
   ],
   entryComponents: [
-    ReportParameterDialogComponent
+    ReportParameterDialogComponent,
+    AddEventDialogComponent
   ]
 })
 export class SystemModule { }

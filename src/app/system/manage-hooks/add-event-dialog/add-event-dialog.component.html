@@ -1,0 +1,55 @@
+<h1 mat-dialog-title>Add Event</h1>
+
+<mat-dialog-content>
+
+  <form [formGroup]="eventForm">
+
+    <div fxLayout="column">
+
+      <mat-form-field>
+        <mat-label>Select Grouping</mat-label>
+        <mat-select required formControlName="grouping">
+          <mat-option *ngFor="let grouping of data.groupings" [value]="grouping.name">
+            {{ grouping.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="eventForm.controls.grouping.hasError('required')">
+          Grouping is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Select Entity</mat-label>
+        <mat-select required formControlName="entity">
+          <mat-option *ngFor="let entity of entityData" [value]="entity.name">
+            {{ entity.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="eventForm.controls.entity.hasError('required')">
+          Entity is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Select Action</mat-label>
+        <mat-select required formControlName="action">
+          <mat-option *ngFor="let action of actionData" [value]="action">
+            {{ action }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="eventForm.controls.action.hasError('required')">
+          Action is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+    </div>
+
+  </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary"
+    [disabled]="!eventForm.valid || eventForm.pristine" (click)="submit()">Submit</button>
+</mat-dialog-actions>

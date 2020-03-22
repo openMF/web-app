@@ -9,10 +9,10 @@ import { Observable } from 'rxjs';
 import { SystemService } from '../system.service';
 
 /**
- * Manage hooks data resolver.
+ * Hooks template data resolver.
  */
 @Injectable()
-export class ManageHooksResolver implements Resolve<Object> {
+export class HooksTemplateResolver implements Resolve<Object> {
 
   /**
    * @param {SystemService} systemService System service.
@@ -20,11 +20,11 @@ export class ManageHooksResolver implements Resolve<Object> {
   constructor(private systemService: SystemService) {}
 
   /**
-   * Returns the hooks data.
+   * Returns the hooks template data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.systemService.getHooks();
+    return this.systemService.getHooksTemplate();
   }
 
 }

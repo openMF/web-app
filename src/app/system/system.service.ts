@@ -33,6 +33,46 @@ export class SystemService {
   }
 
   /**
+   * @param {string} hookId Hook ID of Hook.
+   * @returns {Observable<any>}
+   */
+  getHook(hookId: string): Observable<any> {
+    return this.http.get(`/hooks/${hookId}`);
+  }
+
+  /**
+   * @returns {Observable<any>} Hooks Template.
+   */
+  getHooksTemplate(): Observable<any> {
+    return this.http.get('/hooks/template');
+  }
+
+  /**
+   * @param {any} hook Hook to be created.
+   * @returns {Observable<any>}
+   */
+  createHook(hook: any): Observable<any> {
+    return this.http.post('/hooks', hook);
+  }
+
+  /**
+   * @param {string} hookId Hook ID of Hook to be updated.
+   * @param {any} hook Hook to be updated.
+   * @returns {Observable<any>}
+   */
+  updateHook(hookId: string, hook: any): Observable<any> {
+    return this.http.put(`/hooks/${hookId}`, hook);
+  }
+
+  /**
+   * @param {string} hookId Hook ID of Hook to be deleted.
+   * @returns {Observable<any>}
+   */
+  deleteHook(hookId: string): Observable<any> {
+    return this.http.delete(`/hooks/${hookId}`);
+  }
+
+  /**
    * @returns {Observable<any>} Fetches Roles and Permissions
    */
   getRoles(): Observable<any> {
