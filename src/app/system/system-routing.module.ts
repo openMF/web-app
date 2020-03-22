@@ -13,6 +13,9 @@ import { ViewCodeComponent } from './codes/view-code/view-code.component';
 import { EditCodeComponent } from './codes/edit-code/edit-code.component';
 import { ExternalServicesComponent } from './external-services/external-services.component';
 import { ManageDataTablesComponent } from './manage-data-tables/manage-data-tables.component';
+import { CreateDataTableComponent } from './manage-data-tables/create-data-table/create-data-table.component';
+import { ViewDataTableComponent } from './manage-data-tables/view-data-table/view-data-table.component';
+import { EditDataTableComponent } from './manage-data-tables/edit-data-table/edit-data-table.component';
 import { ManageHooksComponent } from './manage-hooks/manage-hooks.component';
 import { ViewHookComponent } from './manage-hooks/view-hook/view-hook.component';
 import { CreateHookComponent } from './manage-hooks/create-hook/create-hook.component';
@@ -45,6 +48,7 @@ import { CodesResolver } from './codes/codes.resolver';
 import { CodeResolver } from './codes/code.resolver';
 import { CodeValuesResolver } from './codes/view-code/code-values.resolver';
 import { ManageDataTablesResolver } from './manage-data-tables/manage-data-tables.resolver';
+import { DataTableResolver } from './manage-data-tables/data-table.resolver';
 import { ManageHooksResolver } from './manage-hooks/manage-hooks.resolver';
 import { HookResolver } from './manage-hooks/view-hook/hook.resolver';
 import { HooksTemplateResolver } from './manage-hooks/hooks-template.resolver';
@@ -211,11 +215,46 @@ const routes: Routes = [
         },
         {
           path: 'data-tables',
-          component: ManageDataTablesComponent,
-          resolve: {
-                dataTables: ManageDataTablesResolver
-          },
           data: { title:  extract('Manage Data Tables'), breadcrumb: 'Manage Data Tables' },
+          children: [
+            {
+              path: '',
+              component: ManageDataTablesComponent,
+              resolve: {
+                dataTables: ManageDataTablesResolver
+              },
+            },
+            {
+              path: 'create',
+              component: CreateDataTableComponent,
+              data: { title: extract('Create Data Table'), breadcrumb: 'Create'},
+              resolve: {
+                columnCodes: CodesResolver
+              }
+            },
+            {
+              path: ':datatableName',
+              data: { title: extract('View Data Table'), routeParamBreadcrumb: 'datatableName'},
+              children: [
+                {
+                  path: '',
+                  component: ViewDataTableComponent,
+                  resolve: {
+                    dataTable: DataTableResolver
+                  }
+                },
+                {
+                  path: 'edit',
+                  component: EditDataTableComponent,
+                  data: { title: extract('Edit Data table'), breadcrumb: 'Edit', routeParamBreadcrumb: false},
+                  resolve: {
+                    dataTable: DataTableResolver,
+                    columnCodes: CodesResolver
+                  }
+                }
+              ]
+            }
+          ],
       },
       {
           path: 'hooks',
@@ -414,6 +453,7 @@ const routes: Routes = [
     CodeResolver,
     CodeValuesResolver,
     ManageDataTablesResolver,
+    DataTableResolver,
     ManageHooksResolver,
     HookResolver,
     HooksTemplateResolver,

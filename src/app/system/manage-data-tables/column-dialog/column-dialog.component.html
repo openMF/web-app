@@ -1,0 +1,54 @@
+<h1 mat-dialog-title>{{ data.columnName ? "Edit" : "Add" }} Column</h1>
+
+<mat-dialog-content>
+
+  <form [formGroup]="columnForm">
+
+    <div fxLayout="column">
+
+      <mat-form-field>
+        <mat-label>Column Name</mat-label>
+        <input matInput required formControlName="name">
+        <mat-error *ngIf="columnForm.controls.name.hasError('required')">
+          Column Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Column Type</mat-label>
+        <mat-select required formControlName="type">
+          <mat-option *ngFor="let columnType of columnTypeData" [value]="columnType.value">
+            {{ columnType.displayValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div>
+        <mat-checkbox labelPosition="before" formControlName="mandatory">Mandatory</mat-checkbox>
+      </div>
+
+      <mat-form-field>
+        <mat-label>Column Length</mat-label>
+        <input matInput required type="number" formControlName="length">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Column Code</mat-label>
+        <mat-select required formControlName="code">
+          <mat-option *ngFor="let columnCode of data.columnCodes" [value]="columnCode.name">
+            {{ columnCode.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+
+  </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary" [disabled]="!columnForm.valid || columnForm.pristine"
+    (click)="submit()">Submit</button>
+</mat-dialog-actions>
