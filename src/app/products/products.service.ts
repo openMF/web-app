@@ -166,4 +166,36 @@ export class ProductsService {
     return this.http.get('/loanproducts', { params: httpParams });
   }
 
+  /**
+   * @returns {Observable<any>} Floating Rates data.
+   */
+  getFloatingRates(): Observable<any> {
+    return this.http.get('/floatingrates');
+  }
+
+  /**
+   * @param {any} floatingRate Floating Rate.
+   * @returns {Observable<any>}
+   */
+  createFloatingRate(floatingRate: any): Observable<any> {
+    return this.http.post('/floatingrates', floatingRate);
+  }
+
+  /**
+   * @param {string} floatingRateId Floating Rate ID.
+   * @returns {Observable<any>}
+   */
+  getFloatingRate(floatingRateId: string): Observable<any> {
+    return this.http.get(`/floatingrates/${floatingRateId}`);
+  }
+
+  /**
+   * @param {string} floatingRateId Floating Rate ID.
+   * @param {any} floatingRate Changes in Floating Rate.
+   * @returns {Observable<any>}
+   */
+  updateFloatingRate(floatingRateId: string, floatingRate: any): Observable<any> {
+    return this.http.put(`/floatingrates/${floatingRateId}`, floatingRate);
+  }
+
 }

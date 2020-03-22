@@ -29,6 +29,10 @@ import { ViewChargeComponent } from './charges/view-charge/view-charge.component
 import { FixedDepositProductsComponent } from './fixed-deposit-products/fixed-deposit-products.component';
 import { CreateFixedDepositProductComponent } from './fixed-deposit-products/create-fixed-deposit-product/create-fixed-deposit-product.component';
 import { ProductsMixComponent } from './products-mix/products-mix.component';
+import { FloatingRatesComponent } from './floating-rates/floating-rates.component';
+import { CreateFloatingRateComponent } from './floating-rates/create-floating-rate/create-floating-rate.component';
+import { ViewFloatingRateComponent } from './floating-rates/view-floating-rate/view-floating-rate.component';
+import { EditFloatingRateComponent } from './floating-rates/edit-floating-rate/edit-floating-rate.component';
 import { ManageTaxComponentsComponent } from './manage-tax-components/manage-tax-components.component';
 import { ManageTaxGroupsComponent } from './manage-tax-groups/manage-tax-groups.component';
 import { ViewTaxComponentComponent } from './manage-tax-components/view-tax-component/view-tax-component.component';
@@ -52,6 +56,8 @@ import { ChargeResolver } from './charges/charge.resolver';
 import { FixedDepositProductsResolver } from './fixed-deposit-products/fixed-deposit-products.resolver';
 import { FixedDepositProductsTemplateResolver } from './fixed-deposit-products/fixed-deposit-products-template.resolver';
 import { ProductsMixResolver } from './products-mix/products-mix.resolver';
+import { FloatingRatesResolver } from './floating-rates/floating-rates.resolver';
+import { FloatingRateResolver } from './floating-rates/floating-rate.resolver';
 import { ManageTaxComponentsResolver } from './manage-tax-components/manage-tax-components.resolver';
 import { ManageTaxGroupsResolver } from './manage-tax-groups/manage-tax-groups.resolver';
 import { TaxComponentResolver } from './manage-tax-components/tax-component.resolver';
@@ -295,6 +301,45 @@ const routes: Routes = [
           },
           data: { title:  extract('Products Mix'), breadcrumb: 'Products Mix' },
         },
+        {
+          path: 'floating-rates',
+          data: { title: extract('Floating Rates'), breadcrumb: 'Floating Rates' },
+          children: [
+            {
+              path: '',
+              component: FloatingRatesComponent,
+              resolve: {
+                floatingrates: FloatingRatesResolver
+              }
+            },
+            {
+              path: 'create',
+              component: CreateFloatingRateComponent,
+              data: { title: extract('Create Floating Rate'), breadcrumb: 'Create' }
+            },
+            {
+              path: ':id',
+              data: { title: extract('View Floating Rate'), routeParamBreadcrumb: 'id' },
+              children: [
+                {
+                  path: '',
+                  component: ViewFloatingRateComponent,
+                  resolve: {
+                    floatingRate: FloatingRateResolver
+                  }
+                },
+                {
+                  path: 'edit',
+                  component: EditFloatingRateComponent,
+                  data: { title: extract('Edit Floating Rate'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    floatingRate: FloatingRateResolver
+                  }
+                }
+              ]
+            }
+          ]
+        }
       ]
     }
   ])
@@ -329,7 +374,9 @@ const routes: Routes = [
     ProductsMixResolver,
     ManageTaxComponentsResolver,
     ManageTaxGroupsResolver,
-    TaxComponentResolver
+    TaxComponentResolver,
+    FloatingRateResolver,
+    FloatingRatesResolver
   ]
 })
 export class ProductsRoutingModule { }
