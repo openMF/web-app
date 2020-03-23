@@ -42,6 +42,8 @@ import { ManageReportsComponent } from './manage-reports/manage-reports.componen
 import { EditReportComponent } from './manage-reports/edit-report/edit-report.component';
 import { CreateReportComponent } from './manage-reports/create-report/create-report.component';
 import { ViewReportComponent } from './manage-reports/view-report/view-report.component';
+import { AuditTrailsComponent } from './audit-trails/audit-trails.component';
+import { ViewAuditComponent } from './audit-trails/view-audit/view-audit.component';
 
 /** Custom Resolvers */
 import { CodesResolver } from './codes/codes.resolver';
@@ -64,6 +66,8 @@ import { NotificationConfigurationResolver } from './external-services/notificat
 import { AccountNumberPreferencesResolver } from './account-number-preferences/account-number-preferences.resolver';
 import { AccountNumberPreferencesTemplateResolver } from './account-number-preferences/create-account-number-preference/account-number-preferences-template.resolver';
 import { AccountNumberPreferenceResolver } from './account-number-preferences/view-account-number-preference/account-number-preference.resolver';
+import { AuditTrailSearchTemplateResolver } from './audit-trails/audit-trail-search-template.resolver';
+import { AuditTrailResolver } from './audit-trails/view-audit/audit-trail.resolver';
 import { ReportsResolver } from './manage-reports/reports.resolver';
 import { ReportResolver } from './manage-reports/report.resolver';
 import { ReportTemplateResolver } from './manage-reports/report-template.resolver';
@@ -439,6 +443,27 @@ const routes: Routes = [
               ]
             }
           ]
+        },
+        {
+          path: 'audit-trails',
+          data: { title: extract('Audit Trails'), breadcrumb: 'Audit Trails' },
+          children: [
+            {
+              path: '',
+              component: AuditTrailsComponent,
+              resolve: {
+                auditTrailSearchTemplate: AuditTrailSearchTemplateResolver
+              }
+            },
+            {
+             path: ':id',
+             component: ViewAuditComponent,
+             data: { title: extract('View Audit'), routeParamBreadcrumb: 'id' },
+             resolve: {
+               auditTrail: AuditTrailResolver
+             }
+            }
+          ]
         }
       ]
     }
@@ -471,7 +496,9 @@ const routes: Routes = [
     AccountNumberPreferenceResolver,
     ReportsResolver,
     ReportResolver,
-    ReportTemplateResolver
+    ReportTemplateResolver,
+    AuditTrailSearchTemplateResolver,
+    AuditTrailResolver
   ]
 })
 export class SystemRoutingModule { }

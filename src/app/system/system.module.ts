@@ -39,6 +39,8 @@ import { ManageReportsComponent } from './manage-reports/manage-reports.componen
 import { ViewReportComponent } from './manage-reports/view-report/view-report.component';
 import { CreateReportComponent } from './manage-reports/create-report/create-report.component';
 import { EditReportComponent } from './manage-reports/edit-report/edit-report.component';
+import { AuditTrailsComponent } from './audit-trails/audit-trails.component';
+import { ViewAuditComponent } from './audit-trails/view-audit/view-audit.component';
 import { EditHookComponent } from './manage-hooks/edit-hook/edit-hook.component';
 import { ViewHookComponent } from './manage-hooks/view-hook/view-hook.component';
 import { CreateHookComponent } from './manage-hooks/create-hook/create-hook.component';
@@ -92,7 +94,9 @@ import { AddEventDialogComponent } from './manage-hooks/add-event-dialog/add-eve
     ViewHookComponent,
     CreateHookComponent,
     AddEventDialogComponent,
-    ColumnDialogComponent
+    ColumnDialogComponent,
+    AuditTrailsComponent,
+    ViewAuditComponent
   ],
   entryComponents: [
     ReportParameterDialogComponent,
