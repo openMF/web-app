@@ -1,5 +1,6 @@
+/** Angular Imports. */
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource, MatCheckbox } from '@angular/material';
+import { MatPaginator, MatSort, MatCheckbox } from '@angular/material';
 import { ClientsDataSource } from './clients.datasource';
 
 /** rxjs Imports */
@@ -20,6 +21,8 @@ export class ClientsComponent implements OnInit, AfterViewInit {
 
   displayedColumns = ['name', 'clientno', 'externalid', 'status', 'mobileNo', 'gender', 'office', 'staff'];
   dataSource: ClientsDataSource;
+  /** Get the required filter value. */
+  searchValue = '';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -47,7 +50,12 @@ export class ClientsComponent implements OnInit, AfterViewInit {
     if (!this.sort.direction) {
       delete this.sort.active;
     }
+
+    if (this.searchValue !== '') {
+    this.applyFilter(this.searchValue);
+    } else {
     this.dataSource.getClients(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
+    }
   }
 
   /**
@@ -57,4 +65,14 @@ export class ClientsComponent implements OnInit, AfterViewInit {
     this.dataSource = new ClientsDataSource(this.clientsService);
     this.dataSource.getClients(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
   }
+
+  /**
+   * Filter Client Data
+   * @param {string} filterValue Value to filter data.
+   */
+  applyFilter(filterValue: string= '') {
+    this.searchValue = filterValue;
+    this.dataSource.filterClients(filterValue.trim().toLowerCase(), this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
+  }
+
 }

@@ -2,7 +2,7 @@
   <div fxLayout="row" fxLayoutAlign="start center">
     <div class="search-box">
       <mat-form-field>
-        <input matInput  placeholder="Search">
+        <input matInput placeholder="Search by client name" (keyup)="applyFilter($event.target.value)">
       </mat-form-field>
       <mat-checkbox #showClosedAccounts labelPosition="after">Show Closed Accounts
       </mat-checkbox>
