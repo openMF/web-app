@@ -75,6 +75,7 @@
     "karma-cli": "2.0.0",
     "karma-coverage-istanbul-reporter": "2.0.5",
     "karma-jasmine": "2.0.1",
+    "karma-jasmine-html-reporter": "^1.5.3",
     "karma-junit-reporter": "1.2.0",
     "protractor": "5.4.2",
     "stylelint": "10.0.1",

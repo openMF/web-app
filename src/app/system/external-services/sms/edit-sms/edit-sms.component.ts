@@ -17,7 +17,7 @@ import { SystemService } from 'app/system/system.service';
 export class EditSMSComponent implements OnInit {
 
   /** SMS Configuration data */
-  smsConfigurationData: any;
+  smsConfigurationData: any[];
   /** SMS Configuration Form */
   smsConfigurationForm: FormGroup;
 
@@ -41,6 +41,7 @@ export class EditSMSComponent implements OnInit {
    * Creates SMS configuration form.
    */
   ngOnInit() {
+    this.smsConfigurationData = [' ', ' ', ' ', ' '];
     this.setSMSConfigurationForm();
   }
 
