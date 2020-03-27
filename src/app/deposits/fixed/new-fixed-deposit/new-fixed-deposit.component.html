@@ -1,0 +1,429 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="fixedDepositApplicationForm" (ngSubmit)="submit()">
+
+      <!-- Details Section -->
+      <mat-card-subtitle> Details </mat-card-subtitle>
+
+      <mat-card-content>
+
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Product</mat-label>
+            <mat-select required formControlName="productId">
+              <mat-option *ngFor="let product of products" [value]="product.id">
+                {{ product.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="fixedDepositApplicationForm.controls.productId.hasError('required')">
+              Product is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%" *ngIf="productTemplateData">
+            <mat-label>Submitted on</mat-label>
+            <input matInput [matDatepicker]="picker" required formControlName="submittedOnDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="fixedDepositApplicationForm.controls.submittedOnDate?.hasError('required')">
+              Submitted on is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%" *ngIf="productTemplateData">
+            <mat-label>Field Officer</mat-label>
+            <mat-select formControlName="fieldOfficerId">
+              <mat-option *ngFor="let fieldOfficer of productTemplateData.fieldOfficerOptions"
+                [value]="fieldOfficer.id">
+                {{ fieldOfficer.displayName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+      <!-- Terms Section -->
+      <div *ngIf="productTemplateData">
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <mat-card-subtitle> Terms </mat-card-subtitle>
+
+        <mat-card-content>
+
+          <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+            <div fxFlex="48%">
+              <p>Currency: {{productTemplateData.currency.name}}({{productTemplateData.currency.displaySymbol}})</p>
+            </div>
+
+            <div fxFlex="48%">
+              <p>Decimal Places: {{productTemplateData.currency.decimalPlaces}}</p>
+            </div>
+
+            <mat-form-field fxFlex="48%">
+              <mat-label>Interest compounding period</mat-label>
+              <mat-select formControlName="interestCompoundingPeriodType">
+                <mat-option *ngFor="let type of productTemplateData.interestCompoundingPeriodTypeOptions"
+                  [value]="type.id">
+                  {{ type.value }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="48%">
+              <mat-label>Interest posting period</mat-label>
+              <mat-select formControlName="interestPostingPeriodType">
+                <mat-option *ngFor="let type of productTemplateData.interestPostingPeriodTypeOptions" [value]="type.id">
+                  {{ type.value }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="48%">
+              <mat-label>Interest calculated using</mat-label>
+              <mat-select formControlName="interestCalculationType">
+                <mat-option *ngFor="let type of productTemplateData.interestCalculationTypeOptions" [value]="type.id">
+                  {{ type.value }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="48%">
+              <mat-label>Days in Year</mat-label>
+              <mat-select formControlName="interestCalculationDaysInYearType">
+                <mat-option *ngFor="let type of productTemplateData.interestCalculationDaysInYearTypeOptions"
+                  [value]="type.id">
+                  {{ type.value }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="48%">
+              <mat-label>Deposit Amount</mat-label>
+              <input matInput type="number" required formControlName="depositAmount">
+              <mat-error *ngIf="fixedDepositApplicationForm.controls.depositAmount?.hasError('required')">
+                Deposit Amount is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <div fxFlex="48%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+              <mat-form-field fxFlex="48%">
+                <mat-label>Deposit period</mat-label>
+                <input type="number" matInput required formControlName="depositPeriod">
+                <mat-error *ngIf="fixedDepositApplicationForm.controls.depositPeriod?.hasError('required')">
+                  Deposit period is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="48%">
+                <mat-label>Frequency</mat-label>
+                <mat-select required formControlName="depositPeriodFrequencyId">
+                  <mat-option *ngFor="let type of productTemplateData.periodFrequencyTypeOptions" [value]="type.id">
+                    {{ type.value }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="fixedDepositApplicationForm.controls.depositPeriodFrequencyId?.hasError('required')">
+                  Frequency is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+
+            </div>
+
+            <div fxFlex="48%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+              <mat-form-field fxFlex="48%">
+                <mat-label>Lock-in period</mat-label>
+                <input type="number" matInput formControlName="lockinPeriodFrequency">
+              </mat-form-field>
+
+              <mat-form-field fxFlex="48%">
+                <mat-label>Frequency</mat-label>
+                <mat-select formControlName="lockinPeriodFrequencyType">
+                  <mat-option *ngFor="let type of productTemplateData.lockinPeriodFrequencyTypeOptions"
+                    [value]="type.id">
+                    {{ type.value }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+            </div>
+
+          </div>
+
+        </mat-card-content>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <!-- Settings Section -->
+        <mat-card-subtitle> Settings </mat-card-subtitle>
+
+        <mat-card-content>
+
+          <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+            <div fxFlex="48%">
+              <p>Minimum Deposit Term:
+                <span *ngIf="productTemplateData.minDepositTerm">{{productTemplateData.minDepositTerm}}-</span>
+                <span
+                  *ngIf="productTemplateData.minDepositTermType">{{productTemplateData.minDepositTermType.value}}</span>
+              </p>
+            </div>
+
+            <div fxFlex="48%">
+              <p>And thereafter, In Multiples of:
+                <span *ngIf="productTemplateData.inMultiplesOfDepositTerm">
+                  {{productTemplateData.inMultiplesOfDepositTerm}}-</span>
+                <span *ngIf="productTemplateData.inMultiplesOfDepositTermType">
+                  {{productTemplateData.inMultiplesOfDepositTermType.value}}</span>
+              </p>
+            </div>
+
+            <div fxFlex="48%">
+              <p>Maximum Deposit Term:
+                <span *ngIf="productTemplateData.maxDepositTerm">{{productTemplateData.maxDepositTerm}}-</span>
+                <span
+                  *ngIf="productTemplateData.maxDepositTermType">{{productTemplateData.maxDepositTermType.value}}</span>
+              </p>
+            </div>
+
+          </div>
+
+          <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+            <div fxFlex="48%" *ngIf="productTemplateData.preClosurePenalApplicable">
+              <p>For Pre-mature Closure: </p>
+            </div>
+
+            <div fxFlex="48%" *ngIf="productTemplateData.preClosurePenalApplicable">
+              <p>Apply penal interest (less): {{productTemplateData.preClosurePenalInterest}} - On
+                <span *ngIf="productTemplateData.preClosurePenalInterestOnType">
+                  {{productTemplateData.preClosurePenalInterestOnType.value}}</span>
+              </p>
+            </div>
+
+          </div>
+
+          <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+            <mat-checkbox fxFlex="98%" formControlName="transferInterestToSavings"
+              [checked]="productTemplateData.transferInterestToSavings">
+              <p>Trasfer Interest to Linked Savings Account</p>
+            </mat-checkbox>
+
+            <mat-form-field fxFlex="48%">
+              <mat-label>Link savings </mat-label>
+              <mat-select formControlName="linkAccountId"
+                [disabled]="!fixedDepositApplicationForm.controls.transferInterestToSavings.value"
+                [required]="fixedDepositApplicationForm.controls.transferInterestToSavings.value">
+                <mat-option *ngFor="let savingsAccount of savingsAccounts" [value]="savingsAccount.id">
+                  {{ savingsAccount.savingsProductName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+
+          <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+            <div fxFlex="48%" *ngIf="productTemplateData.taxGroup">
+              <mat-checkbox fxFlex="48%" formControlName="withHoldTax" [checked]="productTemplateData.withHoldTax">
+                <p>Is Withhold tax applicable</p>
+              </mat-checkbox>
+            </div>
+
+            <p fxFlex="48%" *ngIf="fixedDepositApplicationForm.controls.withHoldTax.value">Tax Group :
+              {{productTemplateData.taxGroup.name}}
+            </p>
+
+          </div>
+
+        </mat-card-content>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <!-- Interest Rate Chart Section  -->
+        <mat-card-subtitle> Interest Rate Chart </mat-card-subtitle>
+
+        <mat-card-content>
+
+          <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+            <div fxFlex="48%">
+              <p>Valid From Date *: {{productTemplateData.accountChart.fromDate | date}}</p>
+            </div>
+
+            <div fxFlex="48%">
+              <p>End Date: <span
+                  *ngIf="productTemplateData.accountChart.endDate">{{productTemplateData.accountChart.endDate | date}}</span>
+              </p>
+            </div>
+
+            <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="interestRateChartDataSource">
+
+              <!-- Amount Range Column -->
+              <ng-container matColumnDef="amountRange">
+                <th mat-header-cell *matHeaderCellDef> Amount Range </th>
+                <td mat-cell *matCellDef="let chartSlab"> {{chartSlab.amountRangeFrom}} - {{chartSlab.amountRangeTo}}
+                </td>
+              </ng-container>
+
+              <!-- Period Type Column -->
+              <ng-container matColumnDef="periodType">
+                <th mat-header-cell *matHeaderCellDef> Period Type </th>
+                <td mat-cell *matCellDef="let chartSlab"> {{chartSlab.periodType.value}} </td>
+              </ng-container>
+
+              <!-- Period From/To Column -->
+              <ng-container matColumnDef="periodFromTo">
+                <th mat-header-cell *matHeaderCellDef> Period From / To </th>
+                <td mat-cell *matCellDef="let chartSlab"> {{chartSlab.fromPeriod}}-{{chartSlab.toPeriod}} </td>
+              </ng-container>
+
+              <!-- Interest Column -->
+              <ng-container matColumnDef="interest">
+                <th mat-header-cell *matHeaderCellDef> Interest </th>
+                <td mat-cell *matCellDef="let chartSlab"> {{chartSlab.annualInterestRate}} </td>
+              </ng-container>
+
+              <!-- Description Column -->
+              <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef> Description </th>
+                <td mat-cell *matCellDef="let chartSlab"> {{chartSlab.description}} </td>
+              </ng-container>
+
+              <!-- Incentives Column -->
+              <ng-container matColumnDef="incentives">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let i = index">
+                  <button mat-button type="button" (click)="showIncentives(i)" color="primary">
+                    <fa-icon icon="eye"></fa-icon>&nbsp;&nbsp;Incentives
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="interestRateChartDisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: interestRateChartDisplayedColumns;">
+              </tr>
+
+            </table>
+
+          </div>
+
+        </mat-card-content>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <!-- Charges Section -->
+        <mat-card-subtitle> Charges </mat-card-subtitle>
+
+        <mat-card-content>
+
+          <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+            <mat-form-field fxFlex="48%">
+              <mat-label>Add Charges</mat-label>
+              <mat-select formControlName="chargeId">
+                <mat-option *ngFor="let charge of productTemplateData.chargeOptions" [value]="charge.id">
+                  {{ charge.name }},{{charge.currency.displaySymbol}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <table #chargesTable *ngIf="productTemplateData.charges" fxFlex="98%" class="mat-elevation-z1" mat-table
+              [dataSource]="productTemplateData.charges">
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let charge"> {{charge.name}},{{charge.currency.displaySymbol}}
+                </td>
+              </ng-container>
+
+              <!-- Type Column -->
+              <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef> Type </th>
+                <td mat-cell *matCellDef="let charge"> {{charge.chargeCalculationType.value}} </td>
+              </ng-container>
+
+              <!-- Amount Column -->
+              <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef> Amount </th>
+                <td mat-cell *matCellDef="let charge">
+                  {{ charge.amount }}
+                </td>
+              </ng-container>
+
+              <!-- Collected on Column -->
+              <ng-container matColumnDef="collectedon">
+                <th mat-header-cell *matHeaderCellDef> Collected On </th>
+                <td mat-cell *matCellDef="let charge"> {{charge.chargeTimeType.value}} </td>
+              </ng-container>
+
+              <!-- Date Column -->
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef> Date </th>
+                <td mat-cell *matCellDef="let charge">
+                  <span *ngIf="charge.chargeTimeType.value=='Annual Fee' || charge.chargeTimeType.value=='Monthly Fee'">
+                    {{ charge.feeOnMonthDay | date }}
+                  </span>
+                  <span
+                    *ngIf="charge.chargeTimeType.value=='Specified due date' || charge.chargeTimeType.code=='chargeTimeType.weeklyFee'">
+                    {{ charge.dueDate | date }}
+                  </span>
+                </td>
+              </ng-container>
+
+              <!-- Repayments Column -->
+              <ng-container matColumnDef="repaymentsevery">
+                <th mat-header-cell *matHeaderCellDef> Repayments Every </th>
+                <td mat-cell *matCellDef="let charge">
+                  <span
+                    *ngIf="charge.chargeTimeType.value=='Monthly Fee' || charge.chargeTimeType.code=='chargeTimeType.weeklyFee'">
+                    {{ charge.feeInterval }}
+                  </span>
+                </td>
+              </ng-container>
+
+              <!-- Actions Column -->
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                <td mat-cell *matCellDef="let i = index">
+                  <button type="button" mat-button (click)="editCharge(i)" color="primary">
+                    <fa-icon icon="edit"></fa-icon>
+                  </button>
+                  <button type="button" mat-button (click)="deleteCharge(i)" color="warn">
+                    <fa-icon icon="trash"></fa-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="chargesTableDisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: chargesTableDisplayedColumns;">
+              </tr>
+
+            </table>
+
+          </div>
+
+        </mat-card-content>
+
+      </div>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button (click)="cancel()">Cancel</button>
+        <button *ngIf="productTemplateData" mat-raised-button [disabled]="!fixedDepositApplicationForm.valid"
+          color="primary">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>

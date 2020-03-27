@@ -1,0 +1,58 @@
+<h2 mat-dialog-title>Edit Charge</h2>
+
+<div mat-dialog-content [formGroup]="editChargeDataForm">
+
+  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+    <p fxFlex="96%">Name : {{ charge.name }},{{ charge.currency.displaySymbol }}</p>
+
+    <p fxFlex="96%">Type : {{ charge.chargeCalculationType.value }}</p>
+
+    <mat-form-field fxFlex="96%">
+      <mat-label>Amount</mat-label>
+      <input type="number" matInput formControlName="amount" [value]="charge.amount" />
+    </mat-form-field>
+
+    <p fxFlex="96%">Collected On : {{ charge.chargeTimeType.value }}</p>
+
+    <div fxFlex="96%">
+      <mat-form-field *ngIf="charge.chargeTimeType.value == 'Annual Fee'">
+        <mat-label>Date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="date" [value]="charge.feeOnMonthDay" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field *ngIf="
+          charge.chargeTimeType.value == 'Specified due date' ||
+          charge.chargeTimeType.code == 'chargeTimeType.weeklyFee'
+        ">
+        <mat-label>Date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="date" [value]="charge.dueDate" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field *ngIf="charge.chargeTimeType.value == 'Monthly Fee'">
+        <mat-label>Date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="date" [value]="charge.feeOnMonthDay" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field fxFlex="96%"
+      *ngIf="charge.chargeTimeType.value == 'Monthly Fee' || charge.chargeTimeType.code == 'chargeTimeType.weeklyFee'">
+      <mat-label>Repayments Every</mat-label>
+      <input type="number" matInput formControlName="repayments" [value]="charge.feeInterval" />
+    </mat-form-field>
+
+  </div>
+
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button color="primary" [mat-dialog-close]="{ data: editChargeDataForm }"
+    [disabled]="editChargeDataForm.pristine">
+    Edit
+  </button>
+</div>
