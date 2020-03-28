@@ -61,6 +61,12 @@
       </div>
 
       <mat-nav-list>
+        <mat-list-item [routerLink]="['/home']">
+          <mat-icon matListIcon>
+            <fa-icon icon="home" size="sm"></fa-icon>
+          </mat-icon>
+          <a matLine>Home</a>
+        </mat-list-item>
         <mat-list-item [routerLink]="['/dashboard']">
           <mat-icon matListIcon>
             <fa-icon icon="tachometer-alt" size="sm"></fa-icon>
