@@ -39,6 +39,28 @@ export class OrganizationService {
   createOffice(office: any): Observable<any> {
     return this.http.post('/offices', office);
   }
+  /**
+     * @returns {Observable<any>} holidays data
+     */
+  getHolidays(): Observable<any> {
+    return this.http.get('/holidays');
+  }
+
+  /**
+   * @param {any} holiday holiday to be created.
+   * @returns {Observable<any>}
+   */
+  createHoliday(holiday: any): Observable<any> {
+    return this.http.post('/holidays', holiday);
+  }
+
+  /**
+     * @param {string} holidayId Holiday ID of holiday.
+     * @returns {Observable<any>} Holiday.
+     */
+  getHoliday(holidayId: string): Observable<any> {
+    return this.http.get(`/holidays/${holidayId}`);
+  }
 
   /**
    * @returns {Observable<any>} Employees data

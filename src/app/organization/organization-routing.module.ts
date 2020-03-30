@@ -10,6 +10,8 @@ import { extract } from '../core/i18n/i18n.service';
 
 /** Custom Components */
 import { OrganizationComponent } from './organization.component';
+import { HolidaysComponent } from './holidays/holidays.component';
+import { CreateHolidayComponent } from './holidays/create-holiday/create-holiday.component';
 import { LoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/loan-provisioning-criteria.component';
 import { OfficesComponent } from './offices/offices.component';
 import { EmployeesComponent } from './employees/employees.component';
@@ -32,6 +34,8 @@ import { CreatePaymentTypeComponent } from './payment-types/create-payment-type/
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
 import { OfficesResolver } from './offices/offices.resolver';
+import { HolidaysResolver } from './holidays/holidays.resolver';
+import { HolidayResolver } from './holidays/holiday.resolver';
 import { EmployeesResolver } from './employees/employees.resolver';
 import { EmployeeResolver } from './employees/employee.resolver';
 import { CurrenciesResolver } from './currencies/currencies.resolver';
@@ -73,7 +77,7 @@ const routes: Routes = [
               path: '',
               component: OfficesComponent,
               resolve: {
-              offices: OfficesResolver
+                offices: OfficesResolver
               }
             },
             {
@@ -94,7 +98,7 @@ const routes: Routes = [
               path: '',
               component: EmployeesComponent,
               resolve: {
-                employees: EmployeesResolver
+              employees: EmployeesResolver
               }
             },
             {
@@ -113,6 +117,27 @@ const routes: Routes = [
                 employee: EmployeeResolver
               }
             }
+          ]
+        },
+        {
+          path: 'holidays',
+          data: { title: extract('Manage Holidays'), breadcrumb: 'Manage Holidays' },
+          children: [
+            {
+              path: '',
+              component: HolidaysComponent,
+              resolve: {
+                holidays: HolidaysResolver
+              }
+            },
+            {
+              path: 'create',
+              component: CreateHolidayComponent,
+              data: { title: extract('Create Holiday'), breadcrumb: 'Create Holiday' },
+              resolve: {
+                offices: OfficesResolver
+              }
+            },
           ]
         },
         {
@@ -245,6 +270,7 @@ const routes: Routes = [
   providers: [
     LoanProvisioningCriteriaResolver,
     OfficesResolver,
+    HolidaysResolver,
     EmployeesResolver,
     EmployeeResolver,
     CurrenciesResolver,

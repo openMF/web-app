@@ -1,0 +1,78 @@
+<div class="container">
+
+    <mat-card>
+
+        <form [formGroup]="holidayForm" (ngSubmit)="submit()">
+
+            <mat-card-content>
+
+                <div fxLayout="column">
+                    <mat-form-field>
+                        <mat-label>Name</mat-label>
+                        <input matInput required formControlName="name">
+                        <mat-error *ngIf="holidayForm.controls.name.hasError('required')">
+                            Name is <strong>required</strong>
+                        </mat-error>
+                        <mat-error *ngIf="holidayForm.controls.name.hasError('pattern')">
+                            Name <strong>cannot</strong> begin with a special character or number
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>From date</mat-label>
+                        <input matInput [min]="minDate" [max]="maxDate" formControlName="openingDate" required [matDatepicker]="openedOnDatePicker">
+                        <mat-datepicker-toggle matSuffix [for]="openedOnDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #openedOnDatePicker></mat-datepicker>
+                        <mat-error *ngIf="holidayForm.controls.openingDate.hasError('required')">
+                            From Date is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>To date</mat-label>
+                        <input matInput [min]="minDate" [max]="maxDate" formControlName="openingDate" required [matDatepicker]="openedOnDatePicker">
+                        <mat-datepicker-toggle matSuffix [for]="openedOnDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #openedOnDatePicker></mat-datepicker>
+                        <mat-error *ngIf="holidayForm.controls.openingDate.hasError('required')">
+                            To Date is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Repayment Scheduling Type</mat-label>
+                        <input matInput [min]="minDate" [max]="maxDate" formControlName="openingDate" required [matDatepicker]="openedOnDatePicker">
+                        <mat-datepicker-toggle matSuffix [for]="openedOnDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #openedOnDatePicker></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Repayment Scheduled to</mat-label>
+                        <input matInput [min]="minDate" [max]="maxDate" formControlName="openingDate" required [matDatepicker]="openedOnDatePicker">
+                        <mat-datepicker-toggle matSuffix [for]="openedOnDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #openedOnDatePicker></mat-datepicker>
+                        <mat-error *ngIf="holidayForm.controls.openingDate.hasError('required')">
+                            Repayment Scheduled to <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Description</mat-label>
+                        <input matInput required formControlName="name">
+                        <mat-error *ngIf="holidayForm.controls.name.hasError('required')">
+                            Description is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+            </mat-card-content>
+
+            <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+                <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+                <button mat-raised-button color="primary" [disabled]="!holidayForm.valid">Submit</button>
+            </mat-card-actions>
+
+        </form>
+
+    </mat-card>
+
+ </div>
