@@ -110,7 +110,7 @@ export class AuthenticationService {
             return of(true);
           })
         );
-    }
+    } 
   }
 
   /**
