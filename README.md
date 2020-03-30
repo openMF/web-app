@@ -29,8 +29,22 @@ git clone https://github.com/openMF/web-app.git
 ```
 npm install
 ```
+6. To prevent any CORS error
+```
+For Windows:
 
-6. To preview the app, run the following command and navigate to `http://localhost:4200/`.
+Open the start menu
+Type windows+R or open "Run"
+Execute the following command:
+  chrome.exe --user-data-dir="C://Chrome dev session" --disable-web-security
+
+For Mac:
+
+Go to Terminal
+Execute the following command:
+  open /Applications/Google\ Chrome.app --args --user-data-dir="/var/tmp/Chrome dev session" --disable-web-security
+```
+7. To preview the app, run the following command and navigate to `http://localhost:4200/`.
 ```
 ng serve
 ```
