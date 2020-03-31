@@ -177,4 +177,7 @@ export class ClientsService {
   editClientAddress(clientId: string, addressTypeId: string, addressData: any) {
     return this.http.put(`/client/${clientId}/addresses?type=${addressTypeId}`, addressData);
   }
+  getClientShareAccount(accountId: string) {
+    return this.http.get(`/accounts/share/${accountId}`);
+  }
 }

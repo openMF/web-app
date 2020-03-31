@@ -37,6 +37,8 @@ import { ClientDatatableResolver } from './common-resolvers/client-datatable.res
 import { ClientIdentifierTemplateResolver } from './common-resolvers/client-identifier-template.resolver';
 import { ClientAddressFieldConfigurationResolver } from './common-resolvers/client-address-fieldconfiguration.resolver';
 import { ClientAddressTemplateResolver } from './common-resolvers/client-address-template.resolver';
+import { ViewShareAccountComponent } from './clients-view/view-share-account/view-share-account.component';
+import { ClientViewShareAccountResolver } from './common-resolvers/client-view-share-account.resolver';
 
 const routes: Routes = [
   Route.withShell([{
@@ -67,6 +69,14 @@ const routes: Routes = [
               clientSummary: ClientSummaryResolver
             }
           },
+          {
+            path: 'view-share-account/:accountId',
+            data: { title: extract('Share Account View'), routeParamBreadcrumb: 'accountId' },
+            component: ViewShareAccountComponent,
+            resolve: {
+              shareAccountsData: ClientViewShareAccountResolver,
+            }
+      },
           {
             path: 'address',
             component: AddressTabComponent,
@@ -172,7 +182,8 @@ const routes: Routes = [
     ClientDatatableResolver,
     ClientIdentifierTemplateResolver,
     ClientAddressFieldConfigurationResolver,
-    ClientAddressTemplateResolver
+    ClientAddressTemplateResolver,
+    ClientViewShareAccountResolver
   ]
 })
 export class ClientsRoutingModule { }

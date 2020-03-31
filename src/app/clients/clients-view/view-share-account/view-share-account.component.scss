@@ -1,0 +1,24 @@
+.share-account-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .front-icons {
+        margin-right: 0.5rem;
+    }
+    .rear-icons {
+        margin-left: 0.25rem;
+    }
+    h4 {
+        flex: 2;
+    }
+    button {
+        margin-right: 1rem;
+    }
+}
+.share-account-tables {
+    display: flex;
+    justify-content: space-between;
+    #right-table {
+        margin-left: 1rem;
+    }
+}
