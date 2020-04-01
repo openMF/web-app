@@ -24,7 +24,6 @@ export class EditClosureComponent implements OnInit {
   officeData: any;
 
   /**
-   * Retrieves the gl account closure data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
@@ -33,16 +32,16 @@ export class EditClosureComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private accountingService: AccountingService,
               private route: ActivatedRoute,
-              private router: Router) {
-    this.route.data.subscribe((data: { glAccountClosure: any }) => {
-      this.glAccountClosure = data.glAccountClosure;
-    });
-  }
+              private router: Router) {}
 
   /**
+   * Retrieves the gl account closure data from `resolve`.
    * Creates and sets accounting closure form.
    */
   ngOnInit() {
+    this.route.data.subscribe((data: { glAccountClosure: any }) => {
+      this.glAccountClosure = data.glAccountClosure;
+    });
     this.createAccountingClosureForm();
     this.setAccountingClosure();
   }

@@ -33,7 +33,6 @@ export class EditRuleComponent implements OnInit {
   creditTagData: any;
 
   /**
-   * Retrieves the offices, gl accounts, debit tags, credit tags and accounting rule data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
@@ -42,23 +41,23 @@ export class EditRuleComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private accountingService: AccountingService,
               private route: ActivatedRoute,
-              private router: Router) {
-    this.route.data.subscribe((data: {
-        accountingRulesTemplate: any,
-        accountingRule: any
-      }) => {
-        this.officeData = data.accountingRulesTemplate.allowedOffices;
-        this.glAccountData = data.accountingRulesTemplate.allowedAccounts;
-        this.debitTagData = data.accountingRulesTemplate.allowedDebitTagOptions;
-        this.creditTagData = data.accountingRulesTemplate.allowedCreditTagOptions;
-        this.accountingRule = data.accountingRule;
-      });
-  }
+              private router: Router) {}
 
   /**
+   * Retrieves the offices, gl accounts, debit tags, credit tags and accounting rule data from `resolve`.
    * Creates and sets accounting rule form.
    */
   ngOnInit() {
+    this.route.data.subscribe((data: {
+      accountingRulesTemplate: any,
+      accountingRule: any
+    }) => {
+      this.officeData = data.accountingRulesTemplate.allowedOffices;
+      this.glAccountData = data.accountingRulesTemplate.allowedAccounts;
+      this.debitTagData = data.accountingRulesTemplate.allowedDebitTagOptions;
+      this.creditTagData = data.accountingRulesTemplate.allowedCreditTagOptions;
+      this.accountingRule = data.accountingRule;
+    });
     this.createAccountingRuleForm();
     this.setAccountingRulesForm();
   }

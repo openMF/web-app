@@ -26,7 +26,6 @@ export class CreateFinancialActivityMappingComponent implements OnInit {
   financialActivityData: any;
 
   /**
-   * Retrieves the gl account options and financial activity data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
@@ -35,17 +34,17 @@ export class CreateFinancialActivityMappingComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private accountingService: AccountingService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router) {}
+
+  /**
+   * Retrieves the gl account options and financial activity data from `resolve`.
+   * Creates the financial activity mapping form and sets the gl account data.
+   */
+  ngOnInit() {
     this.route.data.subscribe((data: { financialActivityAccountsTemplate: any }) => {
       this.glAccountOptions = data.financialActivityAccountsTemplate.glAccountOptions;
       this.financialActivityData = data.financialActivityAccountsTemplate.financialActivityOptions;
     });
-  }
-
-  /**
-   * Creates the financial activity mapping form and sets the gl account data.
-   */
-  ngOnInit() {
     this.createFinancialActivityMappingForm();
     this.setGlAccountData();
   }

@@ -29,23 +29,22 @@ export class ProvisioningEntriesComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   /**
-   * Retrieves the provisioning entries data from `resolve`.
    * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(private accountingService: AccountingService,
               private route: ActivatedRoute,
-              private router: Router) {
-    this.route.data.subscribe((data: { provisioningEntries: any }) => {
-      this.provisioningEntryData = data.provisioningEntries.pageItems;
-    });
-  }
+              private router: Router) {}
 
   /**
+   * Retrieves the provisioning entries data from `resolve`.
    * Sets the provisioning entries table.
    */
   ngOnInit() {
+    this.route.data.subscribe((data: { provisioningEntries: any }) => {
+      this.provisioningEntryData = data.provisioningEntries.pageItems;
+    });
     this.setProvisioningEntries();
   }
 

@@ -32,7 +32,6 @@ export class CreateJournalEntryComponent implements OnInit {
   glAccountData: any;
 
   /**
-   * Retrieves the offices, currencies, payment types and gl accounts data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
@@ -41,24 +40,24 @@ export class CreateJournalEntryComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private accountingService: AccountingService,
               private route: ActivatedRoute,
-              private router: Router) {
-    this.route.data.subscribe((data: {
-        offices: any,
-        currencies: any,
-        paymentTypes: any,
-        glAccounts: any
-      }) => {
-        this.officeData = data.offices;
-        this.currencyData = data.currencies.selectedCurrencyOptions;
-        this.paymentTypeData = data.paymentTypes;
-        this.glAccountData = data.glAccounts;
-      });
-  }
+              private router: Router) {}
 
   /**
+   * Retrieves the offices, currencies, payment types and gl accounts data from `resolve`.
    * Creates the journal entry form.
    */
   ngOnInit() {
+    this.route.data.subscribe((data: {
+      offices: any,
+      currencies: any,
+      paymentTypes: any,
+      glAccounts: any
+    }) => {
+      this.officeData = data.offices;
+      this.currencyData = data.currencies.selectedCurrencyOptions;
+      this.paymentTypeData = data.paymentTypes;
+      this.glAccountData = data.glAccounts;
+    });
     this.createJournalEntryForm();
   }
 

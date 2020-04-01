@@ -36,10 +36,15 @@ export class ClosingEntriesComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   /**
-   * Retrieves the offices and gl account closures data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute) {}
+
+  /**
+   * Retrieves the offices and gl account closures data from `resolve`.
+   * Sets the filter and closing entries table.
+   */
+  ngOnInit() {
     this.route.data.subscribe((data: {
       offices: any,
       glAccountClosures: any
@@ -47,12 +52,6 @@ export class ClosingEntriesComponent implements OnInit {
       this.officeData = data.offices;
       this.glAccountClosureData = data.glAccountClosures;
     });
-  }
-
-  /**
-   * Sets the filter and closing entries table.
-   */
-  ngOnInit() {
     this.applyFilter();
     this.setFilteredOffices();
     this.setAccountingClosures();

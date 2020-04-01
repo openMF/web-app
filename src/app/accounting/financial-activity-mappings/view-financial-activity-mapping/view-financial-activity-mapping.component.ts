@@ -25,7 +25,6 @@ export class ViewFinancialActivityMappingComponent implements OnInit {
   financialActivityAccount: any;
 
   /**
-   * Retrieves the financial activity account data from `resolve`.
    * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
@@ -34,14 +33,16 @@ export class ViewFinancialActivityMappingComponent implements OnInit {
   constructor(private accountingService: AccountingService,
               private route: ActivatedRoute,
               private router: Router,
-              public dialog: MatDialog) {
+              public dialog: MatDialog) {}
+
+  /**
+   * Retrieves the financial activity account data from `resolve`.
+   */
+  ngOnInit() {
     this.route.data.subscribe((data: { financialActivityAccount: any }) => {
       this.financialActivityAccount = data.financialActivityAccount;
       this.financialActivityAccountId = data.financialActivityAccount.id;
     });
-  }
-
-  ngOnInit() {
   }
 
   /**

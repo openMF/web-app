@@ -30,7 +30,6 @@ export class EditGlAccountComponent implements OnInit {
   tagData: any;
 
   /**
-   * Retrieves the chart of accounts data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
@@ -39,16 +38,16 @@ export class EditGlAccountComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private accountingService: AccountingService,
               private route: ActivatedRoute,
-              private router: Router) {
-    this.route.data.subscribe((data: { glAccountAndChartOfAccountsTemplate: any }) => {
-      this.glAccount = data.glAccountAndChartOfAccountsTemplate;
-    });
-  }
+              private router: Router) {}
 
   /**
+   * Retrieves the chart of accounts data from `resolve`.
    * Creates and sets gl account form.
    */
   ngOnInit() {
+    this.route.data.subscribe((data: { glAccountAndChartOfAccountsTemplate: any }) => {
+      this.glAccount = data.glAccountAndChartOfAccountsTemplate;
+    });
     this.createGlAccountForm();
     this.setGLAccountForm();
   }

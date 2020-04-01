@@ -26,19 +26,18 @@ export class FinancialActivityMappingsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   /**
-   * Retrieves the financial activity accounts data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { financialActivityAccounts: any }) => {
-      this.financialActivityAccountData = data.financialActivityAccounts;
-    });
-  }
+  constructor(private route: ActivatedRoute) {}
 
   /**
+   * Retrieves the financial activity accounts data from `resolve`.
    * Sets the financial activity mappings table.
    */
   ngOnInit() {
+    this.route.data.subscribe(( data: { financialActivityAccounts: any }) => {
+      this.financialActivityAccountData = data.financialActivityAccounts;
+    });
     this.setFinancialActivityAccounts();
   }
 

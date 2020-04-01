@@ -40,7 +40,6 @@ export class FrequentPostingsComponent implements OnInit {
   allowMultipleDebitEntries: boolean;
 
   /**
-   * Retrieves the offices, accounting rules, currencies and payment types data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
@@ -49,24 +48,24 @@ export class FrequentPostingsComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private accountingService: AccountingService,
               private route: ActivatedRoute,
-              private router: Router) {
-    this.route.data.subscribe((data: {
-        offices: any,
-        accountingRules: any,
-        currencies: any,
-        paymentTypes: any
-      }) => {
-        this.officeData = data.offices;
-        this.accountingRuleData = data.accountingRules;
-        this.currencyData = data.currencies.selectedCurrencyOptions;
-        this.paymentTypeData = data.paymentTypes;
-      });
-  }
+              private router: Router) {}
 
   /**
+   * Retrieves the offices, accounting rules, currencies and payment types data from `resolve`.
    * Creates the frequent postings form and sets the affected gl entry form array.
    */
   ngOnInit() {
+    this.route.data.subscribe((data: {
+      offices: any,
+      accountingRules: any,
+      currencies: any,
+      paymentTypes: any
+    }) => {
+      this.officeData = data.offices;
+      this.accountingRuleData = data.accountingRules;
+      this.currencyData = data.currencies.selectedCurrencyOptions;
+      this.paymentTypeData = data.paymentTypes;
+    });
     this.createFrequentPostingsForm();
     this.setAffectedGLEntryForm();
   }

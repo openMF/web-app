@@ -37,7 +37,6 @@ export class MigrateOpeningBalancesComponent implements OnInit {
   creditsSum = 0;
 
   /**
-   * Retrieves the offices and currencies from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
@@ -46,20 +45,20 @@ export class MigrateOpeningBalancesComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private accountingService: AccountingService,
               private route: ActivatedRoute,
-              private router: Router) {
-    this.route.data.subscribe((data: {
-        offices: any,
-        currencies: any
-      }) => {
-        this.officeData = data.offices;
-        this.currencyData = data.currencies.selectedCurrencyOptions;
-      });
-  }
+              private router: Router) {}
 
   /**
+   * Retrieves the offices and currencies from `resolve`.
    * Creates the opening balances form. (initially retrieves gl accounts on the basis of specified office)
    */
   ngOnInit() {
+    this.route.data.subscribe((data: {
+      offices: any,
+      currencies: any
+    }) => {
+      this.officeData = data.offices;
+      this.currencyData = data.currencies.selectedCurrencyOptions;
+    });
     this.createOpeningBalancesForm();
   }
 

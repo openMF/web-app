@@ -26,7 +26,6 @@ export class CreateClosureComponent implements OnInit {
   officeData: any;
 
   /**
-   * Retrieves the offices data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
@@ -35,16 +34,16 @@ export class CreateClosureComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private accountingService: AccountingService,
               private route: ActivatedRoute,
-              private router: Router) {
-    this.route.data.subscribe((data: { offices: any }) => {
-      this.officeData = data.offices;
-    });
-  }
+              private router: Router) {}
 
   /**
+   * Retrieves the offices data from `resolve`.
    * Creates the accounting closure form.
    */
   ngOnInit() {
+    this.route.data.subscribe((data: { offices: any }) => {
+      this.officeData = data.offices;
+    });
     this.createAccountingClosureForm();
   }
 

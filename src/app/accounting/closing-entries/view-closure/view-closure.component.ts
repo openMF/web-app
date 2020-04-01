@@ -23,7 +23,6 @@ export class ViewClosureComponent implements OnInit {
   glAccountClosure: any;
 
   /**
-   * Retrieves the gl account closure data from `resolve`.
    * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
@@ -32,13 +31,15 @@ export class ViewClosureComponent implements OnInit {
   constructor(private accountingService: AccountingService,
               private route: ActivatedRoute,
               private router: Router,
-              public dialog: MatDialog) {
+              public dialog: MatDialog) {}
+
+  /**
+   * Retrieves the gl account closure data from `resolve`.
+   */
+  ngOnInit() {
     this.route.data.subscribe((data: { glAccountClosure: any }) => {
       this.glAccountClosure = data.glAccountClosure;
     });
-  }
-
-  ngOnInit() {
   }
 
   /**

@@ -109,12 +109,17 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
 
   /**
-   * Retrieves the offices and gl accounts data from `resolve`.
    * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private accountingService: AccountingService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute) {}
+
+  /**
+   * Retrieves the offices and gl accounts data from `resolve`.
+   * Sets filtered offices and gl accounts for autocomplete and journal entries table.
+   */
+  ngOnInit() {
     this.route.data.subscribe((data: {
         offices: any,
         glAccounts: any
@@ -122,12 +127,6 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
         this.officeData = data.offices;
         this.glAccountData = data.glAccounts;
       });
-  }
-
-  /**
-   * Sets filtered offices and gl accounts for autocomplete and journal entries table.
-   */
-  ngOnInit() {
     this.setFilteredOffices();
     this.setFilteredGlAccounts();
     this.getJournalEntries();

@@ -26,19 +26,18 @@ export class ViewProvisioningJournalEntriesComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   /**
-   * Retrieves the provisioning journal entries data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { provisioningJournalEntry: any }) => {
-      this.provisioningJournalEntryData = data.provisioningJournalEntry.pageItems;
-    });
-  }
+  constructor(private route: ActivatedRoute) {}
 
   /**
+   * Retrieves the provisioning journal entries data from `resolve`.
    * Sets the provisioning journal entries table.
    */
   ngOnInit() {
+    this.route.data.subscribe((data: { provisioningJournalEntry: any }) => {
+      this.provisioningJournalEntryData = data.provisioningJournalEntry.pageItems;
+    });
     this.setProvisioningJournalEntry();
   }
 

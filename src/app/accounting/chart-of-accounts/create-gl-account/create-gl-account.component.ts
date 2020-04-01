@@ -36,7 +36,6 @@ export class CreateGlAccountComponent implements OnInit {
   cancelRoute = '../../';
 
   /**
-   * Retrieves the chart of accounts data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
@@ -45,7 +44,13 @@ export class CreateGlAccountComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private accountingService: AccountingService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router) {}
+
+  /**
+   * Retrieves the chart of accounts data from `resolve`.
+   * Creates and sets gl account form.
+   */
+  ngOnInit() {
     this.route.queryParamMap.subscribe(params => {
       this.accountTypeId = Number(params.get('accountType'));
       this.parentId = Number(params.get('parent'));
@@ -59,12 +64,6 @@ export class CreateGlAccountComponent implements OnInit {
       this.accountTypeData = data.chartOfAccountsTemplate.accountTypeOptions;
       this.accountUsageData = data.chartOfAccountsTemplate.usageOptions;
     });
-  }
-
-  /**
-   * Creates and sets gl account form.
-   */
-  ngOnInit() {
     this.createGlAccountForm();
     this.setGLAccountForm();
   }

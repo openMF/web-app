@@ -61,36 +61,35 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
 
   /**
-   * Retrieves the provisioning entry, provisioning entry entries, offices,
-   * loan products, provisioning categories data from `resolve`.
    * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(private accountingService: AccountingService,
               private route: ActivatedRoute,
-              private router: Router) {
-    this.route.data.subscribe((data: {
-        provisioningEntry: any,
-        provisioningEntryEntries: any,
-        offices: any,
-        loanProducts: any,
-        provisiningCategories: any
-      }) => {
-        this.provisioningEntryId = data.provisioningEntry.id;
-        this.provisioningEntry = data.provisioningEntry;
-        this.provisioningEntryEntries = data.provisioningEntryEntries;
-        this.officeData = data.offices;
-        this.loanProductData = data.loanProducts;
-        this.provisioningCategoryData = data.provisiningCategories;
-      });
-  }
+              private router: Router) {}
 
   /**
+   * Retrieves the provisioning entry, provisioning entry entries, offices,
+   * loan products, provisioning categories data from `resolve`.
    * Sets filtered offices, loan products and provisioning categories for autocomplete
    * and provisioning entry entries table.
    */
   ngOnInit() {
+    this.route.data.subscribe((data: {
+      provisioningEntry: any,
+      provisioningEntryEntries: any,
+      offices: any,
+      loanProducts: any,
+      provisiningCategories: any
+    }) => {
+      this.provisioningEntryId = data.provisioningEntry.id;
+      this.provisioningEntry = data.provisioningEntry;
+      this.provisioningEntryEntries = data.provisioningEntryEntries;
+      this.officeData = data.offices;
+      this.loanProductData = data.loanProducts;
+      this.provisioningCategoryData = data.provisiningCategories;
+    });
     this.setProvisioningEntryEntries();
     this.setFilteredOffices();
     this.setFilteredLoanProducts();

@@ -23,7 +23,6 @@ export class ViewRuleComponent implements OnInit {
   accountingRule: any;
 
   /**
-   * Retrieves the accounting rule data from `resolve`.
    * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
@@ -32,13 +31,15 @@ export class ViewRuleComponent implements OnInit {
   constructor(private accountingService: AccountingService,
               private route: ActivatedRoute,
               private router: Router,
-              public dialog: MatDialog) {
+              public dialog: MatDialog) {}
+
+  /**
+   * Retrieves the accounting rule data from `resolve`.
+   */
+  ngOnInit() {
     this.route.data.subscribe((data: { accountingRule: any }) => {
       this.accountingRule = data.accountingRule;
     });
-  }
-
-  ngOnInit() {
   }
 
   /**

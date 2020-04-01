@@ -26,19 +26,18 @@ export class AccountingRulesComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   /**
-   * Retrieves the accounting rules data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { accountingRules: any }) => {
-      this.accountingRuleData = data.accountingRules;
-    });
-  }
+  constructor(private route: ActivatedRoute) {}
 
   /**
+   * Retrieves the accounting rules data from `resolve`.
    * Sets the accounting rules table.
    */
   ngOnInit() {
+    this.route.data.subscribe((data: { accountingRules: any }) => {
+      this.accountingRuleData = data.accountingRules;
+    });
     this.setAccountingRules();
   }
 
