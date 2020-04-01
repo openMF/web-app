@@ -1,0 +1,341 @@
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-header>
+      <mat-card-title>Edit Saving Application</mat-card-title>
+    </mat-card-header>
+
+    <mat-divider [inset]="true"></mat-divider>
+
+    <form
+      [formGroup]="savingsApplicationForm"
+      (ngSubmit)="submit()"
+      fxLayout="column"
+    >
+      <mat-card-content>
+
+        <div
+          class="input-row"
+          fxLayout="row"
+          fxLayout.lt-md="column"
+          fxLayoutGap="200px"
+          fxLayoutGap.lt-md="0px"
+        >
+
+          <mat-form-field appearance="outline" class="first-form-field">
+            <mat-label>Product</mat-label>
+            <mat-select
+              required
+              formControlName="product"
+              savingsApplicationForm
+            >
+              <mat-option value="product1">product 1</mat-option>
+              <mat-option value="product2">product 2</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="
+                savingsApplicationForm.controls.product.hasError('required')
+              "
+            >
+              Product is
+              <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="first-form-field">
+            <mat-label>Submitted on</mat-label>
+            <input
+              matInput
+              required
+              formControlName="submittedOn"
+              [matDatepicker]="picker"
+            />
+
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+
+            <mat-error
+              *ngIf="
+                savingsApplicationForm.controls.submittedOn.hasError('required')
+              "
+            >
+              Submission Date is
+              <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div
+          class="input-row"
+          fxLayout="row"
+          fxLayout.lt-md="column"
+          fxLayoutGap="200px"
+          fxLayoutGap.lt-md="0px"
+        >
+          <mat-form-field appearance="outline">
+            <mat-label>Field officer</mat-label>
+            <mat-select formControlName="fieldOfficer" savingsApplicationForm>
+              <mat-option value="product1">product 1</mat-option>
+              <mat-option value="product2">product 2</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>External id</mat-label>
+            <input placeholder matInput formControlName="externalId" />
+          </mat-form-field>
+        </div>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <h4 id="terms">Terms</h4>
+
+        <div
+          class="input-row"
+          fxLayout="row"
+          fxLayout.lt-md="column"
+          fxLayoutGap="200px"
+          fxLayoutGap.lt-md="0px"
+        >
+          <mat-form-field appearance="outline">
+            <mat-label>Currency</mat-label>
+            <mat-select formControlName="currency" savingsApplicationForm>
+              <mat-option value="product1">product 1</mat-option>
+              <mat-option value="product2">product 2</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Decimal places</mat-label>
+            <input matInput formControlName="decimalPlaces" />
+          </mat-form-field>
+        </div>
+
+        <div
+          class="input-row"
+          fxLayout="row"
+          fxLayout.lt-md="column"
+          fxLayoutGap="200px"
+          fxLayoutGap.lt-md="0px"
+        >
+          <mat-form-field appearance="outline">
+            <mat-label>Nominal annual interest</mat-label>
+            <input required matInput formControlName="nominalAnnualInterest" />
+            <mat-error
+              *ngIf="
+                savingsApplicationForm.controls.nominalAnnualInterest.hasError(
+                  'required'
+                )
+              "
+            >
+              Nominal annual interest
+              <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Interest compounding period</mat-label>
+            <mat-select
+              required
+              formControlName="currency"
+              savingsApplicationForm
+            >
+              <mat-option value="Weekly">Weekly</mat-option>
+              <mat-option value="Monthly">Monthly</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="
+                savingsApplicationForm.controls.interestCompoundingPeriod.hasError(
+                  'required'
+                )
+              "
+            >
+              Interest compounding period is
+              <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div
+          class="input-row"
+          fxLayout="row"
+          fxLayout.lt-md="column"
+          fxLayoutGap="200px"
+          fxLayoutGap.lt-md="0px"
+        >
+          <mat-form-field appearance="outline">
+            <mat-label>Currency in multiples of</mat-label>
+            <input matInput formControlName="currencyInMultiplesOf" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Interest posting period</mat-label>
+            <mat-select
+              required
+              formControlName="interestPostingPeriod"
+              savingsApplicationForm
+            >
+              <mat-option value="Weekly">Weekly</mat-option>
+              <mat-option value="Monthly">Monthly</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="
+                savingsApplicationForm.controls.interestPostingPeriod.hasError(
+                  'required'
+                )
+              "
+            >
+              Interest posting period is
+              <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div
+          class="input-row"
+          fxLayout="row"
+          fxLayout.lt-md="column"
+          fxLayoutGap="200px"
+          fxLayoutGap.lt-md="0px"
+        >
+          <mat-form-field appearance="outline">
+            <mat-label>Interest calculated using</mat-label>
+            <mat-select
+              required
+              formControlName="interestCalculatedUsing"
+              savingsApplicationForm
+            >
+              <mat-option value="Weekly">Weekly</mat-option>
+              <mat-option value="Monthly">Monthly</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="
+                savingsApplicationForm.controls.interestCalculatedUsing.hasError(
+                  'required'
+                )
+              "
+            >
+              Interst calculated using is
+              <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Days in year</mat-label>
+            <mat-select
+              required
+              formControlName="daysInYear"
+              savingsApplicationForm
+            >
+              <mat-option value="12days">12days</mat-option>
+              <mat-option value="Monthly">Monthly</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="
+                savingsApplicationForm.controls.daysInYear.hasError('required')
+              "
+            >
+              Days in year is
+              <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div
+          class="input-row"
+          fxLayout="row"
+          fxLayout.lt-md="column"
+          fxLayoutGap="200px"
+          fxLayoutGap.lt-md="0px"
+        >
+          <mat-form-field appearance="outline">
+            <mat-label>Minimum opening balance</mat-label>
+            <input matInput formControlName="mimimumOpeningBalance" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Lock in period</mat-label>
+            <mat-select formControlName="lockinPeriod" savingsApplicationForm>
+              <mat-option value="12days">12days</mat-option>
+              <mat-option value="Monthly">Monthly</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div
+          class="input-row"
+          fxLayout="row"
+          fxLayout.lt-md="column"
+          fxLayoutGap="200px"
+          fxLayoutGap.lt-md="0px"
+        >
+          <mat-checkbox formControlName="applyWithdrawalFeeForTransfers"
+            >Apply withdrawal fee for transfers</mat-checkbox
+          >
+        </div>
+
+        <div
+          class="input-row"
+          fxLayout="row"
+          fxLayout.lt-md="column"
+          fxLayoutGap="200px"
+          fxLayoutGap.lt-md="0px"
+        >
+          <mat-checkbox formControlName="isOverdraftAllowed"
+            >Is overdraft allowed</mat-checkbox
+          >
+        </div>
+        
+        <div
+          class="input-row"
+          fxLayout="row"
+          fxLayout.lt-md="column"
+          fxLayoutGap="200px"
+          fxLayoutGap.lt-md="0px"
+        >
+          <mat-checkbox formControlName="enforceMinimumBalance"
+            >Enforce minimum balance</mat-checkbox
+          >
+          <mat-form-field appearance="outline">
+            <mat-label>Minimum balance</mat-label>
+            <input matInput formControlName="minimumBalance" />
+          </mat-form-field>
+        </div>
+
+        <mat-divider [inset]="true"></mat-divider>
+        <div
+          class="input-row"
+          fxLayout="row"
+          fxLayout.lt-md="column"
+          fxLayoutGap="200px"
+          fxLayoutGap.lt-md="0px"
+        >
+          <mat-form-field appearance="outline" class="first-form-field">
+            <mat-label>Select charge</mat-label>
+            <mat-select formControlName="charges" savingsApplicationForm>
+              <mat-option value="1">1</mat-option>
+              <mat-option value="2">2</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+
+      <mat-dialog-actions
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayoutAlign="center"
+        fxLayoutGap="5px"
+      >
+        <button class="mat-raised-button" [routerLink]="['savings']">
+          Cancel
+        </button>
+        <button
+          class="mat-raised-button mat-primary"
+          [disabled]="!savingsApplicationForm.valid"
+        >
+          Submit
+        </button>
+      </mat-dialog-actions>
+    </form>
+  </mat-card>
+</div>
+

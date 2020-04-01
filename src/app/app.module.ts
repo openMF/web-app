@@ -36,6 +36,7 @@ import { ProductsModule } from './products/products.module';
 import { OrganizationModule } from './organization/organization.module';
 import { TemplatesModule } from './templates/templates.module';
 import { UsersModule } from './users/users.module';
+import {SavingsModule} from './savings/savings.module';
 
 
 
@@ -70,6 +71,7 @@ import { AppRoutingModule } from './app-routing.module';
     OrganizationModule,
     TemplatesModule,
     UsersModule,
+    SavingsModule,
     AppRoutingModule,
   ],
   declarations: [WebAppComponent, NotFoundComponent],
