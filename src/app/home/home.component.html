@@ -17,6 +17,27 @@
       </mat-card-title>
     </mat-card-header>
 
+    <form [formGroup]="activityForm">
+
+      <mat-card-content>
+
+        <div fxLayout="row" fxLayoutGap="20px">
+          <mat-form-field fxFlex>
+            <mat-label> Search Activities </mat-label>
+            <input matInput formControlName="searchText">
+          </mat-form-field>
+        </div>
+  
+        <div class="search-result" style="display:none" id="search_dropdown">
+            <mat-list role="list" id="list">
+              <mat-list-item role="listitem" *ngFor="let activity of allActivities | searchActivity:activityForm.get('searchText').value" [routerLink]="[activity.path]"> {{activity.activity}} </mat-list-item>
+            </mat-list> 
+        </div>
+  
+      </mat-card-content>
+
+    </form>
+    
     <img mat-card-image src="assets/images/mifos_lg-logo.jpg" alt="Mifos X">
 
   </mat-card>

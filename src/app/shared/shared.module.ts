@@ -15,6 +15,7 @@ import { ThemePickerComponent } from './theme-picker/theme-picker.component';
 /** Custom Modules */
 import { IconsModule } from './icons.module';
 import { MaterialModule } from './material.module';
+import { PipesModule } from 'app/pipes/pipes.module';
 
 /**
  * Shared Module
@@ -46,11 +47,12 @@ import { MaterialModule } from './material.module';
     IconsModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PipesModule
   ],
   entryComponents: [
     FormDialogComponent,
     DeleteDialogComponent
-  ]
+  ],
 })
 export class SharedModule { }

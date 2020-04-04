@@ -6,3 +6,30 @@
     font-weight: 500;
   }
 }
+
+.search-result {
+  position: absolute;
+  max-width: auto;
+  width: 100%;
+  height: auto;
+  background:white;
+  top: 105px;
+  left: 0;
+  transition: 0.2s all;
+  box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
+  border-radius:3px;
+  display: block
+}
+
+.mat-list-base {
+  padding-top: 0px;
+}
+
+a{
+  text-decoration: none;
+  color: black
+}
+
+mat-list-item:hover{
+  cursor: pointer;
+}
