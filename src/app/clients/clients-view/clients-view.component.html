@@ -34,7 +34,11 @@
       <button mat-raised-button>Edit</button>
       <button mat-raised-button>+ New Loan</button>
       <button mat-raised-button>+ New Savings</button>
-      <button mat-raised-button>+ Deposit</button>
+      <button mat-raised-button [matMenuTriggerFor]="Deposit">+ Deposit</button>
+      <mat-menu #Deposit="matMenu">
+        <button [routerLink]="['/deposit-account/fixed/create/',clientViewData.id]" mat-menu-item>New Fixed Deposit</button>
+        <button [routerLink]="['/deposit-account/recurring/create/',clientViewData.id]" mat-menu-item>New Recurring Deposit</button>
+      </mat-menu>
       <button mat-raised-button [matMenuTriggerFor]="More">More</button>
       <mat-menu #More="matMenu">
         <button mat-menu-item>Item 1</button>
