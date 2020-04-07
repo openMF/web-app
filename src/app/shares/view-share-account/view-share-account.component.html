@@ -1,0 +1,235 @@
+<div class="container">
+
+  <span class="heading">
+	<strong> <i class="fa fa-stop" [ngClass]="shareAccountData.status.code | statusLookup"></i>
+		{{shareAccountData.productName}}(#{{ shareAccountData.accountNo }})
+	</strong>
+  </span>
+
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="m-b-20">
+
+    <button *ngFor="let button of buttons.singlebuttons" mat-raised-button color="primary" ><i
+        class="{{ button.icon }}"></i> {{ button.name }}</button>
+    <button mat-raised-button color="primary" *ngIf="buttons.options" [matMenuTriggerFor]="more">More <i class="fa fa-angle-down"></i></button>
+    <mat-menu #more="matMenu">
+      <button *ngFor="let button of buttons.options" mat-menu-item>{{ button.name }}</button>
+    </mat-menu>
+    
+  </div>
+
+  <div fxLayout="row" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+    <div fxFlex="48%">
+
+      <mat-card>
+
+        <mat-card-content>
+
+          <div fxLayout="row wrap" class="content">
+
+            <div fxFlex="50%" class="header">
+              Activated On
+            </div>
+
+            <div fxFlex="50%" *ngIf="shareAccountData.timeline.activatedDate">
+              {{ shareAccountData.timeline.activatedDate | date }}
+            </div>
+
+            <div fxFlex="50%" *ngIf="!shareAccountData.timeline.activatedDate">
+              Not Activated
+            </div>
+
+            <div fxFlex="50%" class="header">
+              Currency
+            </div>
+
+            <div fxFlex="50%">
+              {{ shareAccountData.currency.name }}
+            </div>
+
+            <div fxFlex="50%" class="header">
+              External Id
+            </div>
+
+            <div fxFlex="50%">
+              {{ shareAccountData.externalId }}
+            </div>
+
+            <div fxFlex="50%" class="header">
+              Linked Savings Account (Dividend Posting)
+            </div>
+
+            <div fxFlex="50%">
+              {{ shareAccountData.savingsAccountNumber }}
+            </div>
+
+          </div>
+
+        </mat-card-content>
+
+      </mat-card>
+
+    </div>
+
+    <div fxFlex>
+
+      <mat-card>
+
+        <mat-card-content>
+
+          <div fxLayout="row wrap" class="content">
+
+            <div fxFlex="50%" class="header">
+              Approved Shares
+            </div>
+
+            <div fxFlex="50%">
+              {{ shareAccountData.summary.totalApprovedShares }}
+            </div>
+
+            <div fxFlex="50%" class="header">
+              Pending for Approval Shares
+            </div>
+
+            <div fxFlex="50%">
+              {{ shareAccountData.summary.totalPendingForApprovalShares }}
+            </div>
+
+          </div>
+
+        </mat-card-content>
+
+      </mat-card>
+
+    </div>
+
+  </div>
+
+ <mat-tab-group class="m-t-20">
+
+      <mat-tab label="Transactions Overview" *ngIf="this.purchasedSharesTableDataSource.length">
+
+        <table mat-table [dataSource]="purchasedSharesTableDataSource" class="mat-elevation-z1">
+
+	      <ng-container matColumnDef="transactionDate">
+	        <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
+	        <td mat-cell *matCellDef="let element"> {{element.transactionDate | date}} </td>
+	      </ng-container>
+
+	      <ng-container matColumnDef="transactionType">
+	        <th mat-header-cell *matHeaderCellDef> Transaction Type </th>
+	        <td mat-cell *matCellDef="let element"> {{element.transactionType}} </td>
+	      </ng-container>
+
+	      <ng-container matColumnDef="totalShares">
+	        <th mat-header-cell *matHeaderCellDef> Total Shares </th>
+	        <td mat-cell *matCellDef="let element"> {{element.totalShares}} </td>
+	      </ng-container>
+
+	      <ng-container matColumnDef="purchasedOrRedeemedPrice">
+	        <th mat-header-cell *matHeaderCellDef> Purchased/Redeemed Price </th>
+	        <td mat-cell *matCellDef="let element"> {{element.purchasedOrRedeemedPrice}} </td>
+	      </ng-container>
+
+	      <ng-container matColumnDef="chargeAmount">
+	        <th mat-header-cell *matHeaderCellDef> Charge Amount </th>
+	        <td mat-cell *matCellDef="let element"> {{element.chargeAmount}} </td>
+	      </ng-container>
+
+	      <ng-container matColumnDef="amountRecievedOrReturned">
+	        <th mat-header-cell *matHeaderCellDef> Amount Received/Returned </th>
+	        <td mat-cell *matCellDef="let element"> {{element.amountRecievedOrReturned}} </td>
+	      </ng-container>
+
+	   	  <tr mat-header-row *matHeaderRowDef="purchasedSharesTableColumns"></tr>
+	      <tr mat-row *matRowDef="let row; columns: purchasedSharesTableColumns;"></tr>
+
+  		</table>
+
+      </mat-tab>
+
+      <mat-tab label="Charges" *ngIf="this.chargeTableDataSource.length">
+
+      	<table mat-table [dataSource]="chargeTableDataSource" class="mat-elevation-z1">
+
+	      <ng-container matColumnDef="name">
+	        <th mat-header-cell *matHeaderCellDef> Name </th>
+	        <td mat-cell *matCellDef="let element"> {{element.name }} </td>
+	      </ng-container>
+
+	      <ng-container matColumnDef="feeOrPenalty">
+	        <th mat-header-cell *matHeaderCellDef> Fee/Penalty </th>
+	        <td mat-cell *matCellDef="let element"> {{element.feeOrPenalty}} </td>
+	      </ng-container>
+
+	      <ng-container matColumnDef="paymentDueAt">
+	        <th mat-header-cell *matHeaderCellDef> Payment due at </th>
+	        <td mat-cell *matCellDef="let element"> {{element.paymentDueAt}} </td>
+	      </ng-container>
+
+	      <ng-container matColumnDef="calculationType">
+	        <th mat-header-cell *matHeaderCellDef> Calculation Type </th>
+	        <td mat-cell *matCellDef="let element"> {{element.calculationType}} </td>
+	      </ng-container>
+
+	      <ng-container matColumnDef="due">
+	        <th mat-header-cell *matHeaderCellDef> Due </th>
+	        <td mat-cell *matCellDef="let element"> {{element.due}} </td>
+	      </ng-container>
+
+	      <ng-container matColumnDef="paid">
+	        <th mat-header-cell *matHeaderCellDef> Paid </th>
+	        <td mat-cell *matCellDef="let element"> {{element.paid}} </td>
+	      </ng-container>
+
+	      <ng-container matColumnDef="waived">
+	        <th mat-header-cell *matHeaderCellDef> Waived </th>
+	        <td mat-cell *matCellDef="let element"> {{element.waived}} </td>
+	      </ng-container>
+
+	      <ng-container matColumnDef="outstanding">
+	        <th mat-header-cell *matHeaderCellDef> Outstanding </th>
+	        <td mat-cell *matCellDef="let element"> {{element.outstanding}} </td>
+	      </ng-container>
+
+	   	  <tr mat-header-row *matHeaderRowDef="chargesTableColumns"></tr>
+	      <tr mat-row *matRowDef="let row; columns: chargesTableColumns;"></tr>
+
+  		</table>
+       
+      </mat-tab>
+
+      <mat-tab label="Dividends" *ngIf="this.dividendsTableDataSource.length">
+
+      	<table mat-table [dataSource]="dividendsTableDataSource" class="mat-elevation-z1">
+
+	      <ng-container matColumnDef="transactionDate">
+	        <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
+	        <td mat-cell *matCellDef="let element"> {{element.transactionDate | date}} </td>
+	      </ng-container>
+
+	      <ng-container matColumnDef="amount">
+	        <th mat-header-cell *matHeaderCellDef> Amount </th>
+	        <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+	      </ng-container>
+
+	      <ng-container matColumnDef="transactionRef">
+	        <th mat-header-cell *matHeaderCellDef> Transaction Reference </th>
+	        <td mat-cell *matCellDef="let element"> {{element.transactionRef}} </td>
+	      </ng-container>
+
+	      <ng-container matColumnDef="status">
+	        <th mat-header-cell *matHeaderCellDef> Status </th>
+	        <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+	      </ng-container>
+
+	   	  <tr mat-header-row *matHeaderRowDef="dividendsTableColumns"></tr>
+	      <tr mat-row *matRowDef="let row; columns: dividendsTableColumns;"></tr>
+
+  		</table>
+        
+      </mat-tab>
+
+  </mat-tab-group>
+  
+</div>

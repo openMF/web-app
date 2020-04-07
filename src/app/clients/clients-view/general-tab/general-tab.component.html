@@ -318,7 +318,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="openSharesColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: openSharesColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: openSharesColumns;" [routerLink]="['/shares', row.id]"></tr>
   </table>
   <!-- Closed Share Accounts -->
   <table *ngIf="showClosedShareAccounts" mat-table [dataSource]="shareAccounts|accountsFilter:'share':'closed'">
@@ -350,7 +350,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="closedSharesColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: closedSharesColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: closedSharesColumns;" [routerLink]="['/shares', row.id]"></tr>
   </table>
 
 </div>

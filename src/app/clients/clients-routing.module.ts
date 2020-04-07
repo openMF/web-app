@@ -39,7 +39,12 @@ import { ClientAddressFieldConfigurationResolver } from './common-resolvers/clie
 import { ClientAddressTemplateResolver } from './common-resolvers/client-address-template.resolver';
 
 const routes: Routes = [
-  Route.withShell([{
+  Route.withShell([
+  {
+    path: 'shares',
+    loadChildren: '../shares/shares.module#SharesModule'
+  },
+  {
     path: 'clients',
     data: { title: extract('Clients'), breadcrumb: 'Clients', routeParamBreadcrumb: false },
     children: [
