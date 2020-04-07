@@ -8,7 +8,7 @@
 
         <mat-nav-list>
 
-          <mat-list-item [routerLink]="['journal-entries/frequent-postings']">
+          <mat-list-item *mifosxHasPermission="'CREATE_JOURNALENTRY'" [routerLink]="['journal-entries/frequent-postings']">
             <mat-icon matListIcon>
               <fa-icon icon="sync" size="sm"></fa-icon>
             </mat-icon>
@@ -16,7 +16,7 @@
             <p matLine>These are predefined postings</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['journal-entries/create']">
+          <mat-list-item *mifosxHasPermission="'CREATE_JOURNALENTRY'" [routerLink]="['journal-entries/create']">
             <mat-icon matListIcon>
               <fa-icon icon="plus" size="sm"></fa-icon>
             </mat-icon>
@@ -24,7 +24,7 @@
             <p matLine>Manual journal entry transactions recorded in a journal</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['journal-entries']">
+          <mat-list-item *mifosxHasPermission="'READ_JOURNALENTRY'" [routerLink]="['journal-entries']">
             <mat-icon matListIcon>
               <fa-icon icon="search" size="sm"></fa-icon>
             </mat-icon>
@@ -32,7 +32,7 @@
             <p matLine>Advanced search option for journal entries</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['financial-activity-mappings']">
+          <mat-list-item *mifosxHasPermission="'READ_FINANCIALACTIVITYACCOUNT'" [routerLink]="['financial-activity-mappings']">
             <mat-icon matListIcon>
               <fa-icon icon="link" size="sm"></fa-icon>
             </mat-icon>
@@ -40,7 +40,7 @@
             <p matLine>List of Financial Activities and GL Account Mappings</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['migrate-opening-balances']">
+          <mat-list-item *mifosxHasPermission="'READ_JOURNALENTRY'" [routerLink]="['migrate-opening-balances']">
             <mat-icon matListIcon>
               <fa-icon icon="hand-holding-usd" size="sm"></fa-icon>
             </mat-icon>
@@ -56,7 +56,7 @@
 
         <mat-nav-list>
 
-          <mat-list-item [routerLink]="['chart-of-accounts']">
+          <mat-list-item *mifosxHasPermission="'READ_GLACCOUNT'" [routerLink]="['chart-of-accounts']">
             <mat-icon matListIcon>
               <fa-icon icon="sitemap" size="sm"></fa-icon>
             </mat-icon>
@@ -64,7 +64,7 @@
             <p matLine>List of accounts used by the organization</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['closing-entries']">
+          <mat-list-item *mifosxHasPermission="'READ_GLCLOSURE'" [routerLink]="['closing-entries']">
             <mat-icon matListIcon>
               <fa-icon icon="archive" size="sm"></fa-icon>
             </mat-icon>
@@ -72,7 +72,7 @@
             <p matLine>Journal entries made at the end of accounting period</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['accounting-rules']">
+          <mat-list-item *mifosxHasPermission="'READ_ACCOUNTINGRULE'" [routerLink]="['accounting-rules']">
             <mat-icon matListIcon>
               <fa-icon icon="list" size="sm"></fa-icon>
             </mat-icon>
@@ -80,7 +80,7 @@
             <p matLine>List of all accounting rules</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['periodic-accruals']">
+          <mat-list-item *mifosxHasPermission="'EXECUTE_PERIODICACCRUALACCOUNTING'" [routerLink]="['periodic-accruals']">
             <mat-icon matListIcon>
               <fa-icon icon="calendar" size="sm"></fa-icon>
             </mat-icon>
@@ -88,7 +88,7 @@
             <p matLine>Accrues income, expenses and liabilities as on the provided date</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['provisioning-entries']">
+          <mat-list-item *mifosxHasPermission="'VIEW_PROVISIONING_ENTRIES'" [routerLink]="['provisioning-entries']">
             <mat-icon matListIcon>
               <fa-icon icon="cogs" size="sm"></fa-icon>
             </mat-icon>
