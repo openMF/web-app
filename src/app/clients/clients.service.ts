@@ -177,4 +177,10 @@ export class ClientsService {
   editClientAddress(clientId: string, addressTypeId: string, addressData: any) {
     return this.http.put(`/client/${clientId}/addresses?type=${addressTypeId}`, addressData);
   }
+  getLoanTransactionTemplate(loanId: string, command:string) {
+    return this.http.get(`/loans/${loanId}/transactions/template?command=${command}`);
+  }
+  makeRepayment(loanId: string, loanTransactionData: any) {
+    return this.http.post(`/loans/${loanId}/transactions?command=repayment`, loanTransactionData);
+  }
 }

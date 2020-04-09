@@ -1,0 +1,71 @@
+<form [formGroup]="makeRepaymentForm" (ngSubmit)="submit()">
+  <mat-card class="repayment-form-container">
+    <mat-card-title>Loan Repayments</mat-card-title>
+    <mat-card-content class="main-section-container">
+      <!-- main-section start -->
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Transaction date</mat-label>
+        <input matInput [matDatepicker]="transactionDatepicker" [min]="minDate" [max]="maxDate" formControlName="transactionDate" required>
+        <mat-datepicker-toggle matSuffix [for]="transactionDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #transactionDatepicker ></mat-datepicker>
+        <mat-error *ngIf="makeRepaymentForm.controls.transactionDate.hasError('required')">
+          Transaction Date is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Transaction amount</mat-label>
+        <input type="number" matInput formControlName="transactionAmount" required>
+        <mat-error *ngIf="makeRepaymentForm.controls.transactionAmount.hasError('required')">
+          Transaction Amount is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Payment type</mat-label>
+        <mat-select formControlName = "paymentTypeId">
+          <mat-option *ngFor="let type of loanAccountData.paymentTypeOptions" [value]="type.id">
+            {{type.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="payment-details-section">
+        <label>Show Payment Details</label>
+        <button type="button"  mat-raised-button color="primary" (click) = "isExpanded = !isExpanded">
+          <i [ngClass] = "{'fa-plus':!isExpanded,'fa-minus': isExpanded}" class="fa"></i>
+        </button>
+      </div>
+      <!-- expanded-section start -->
+      <div class="expanded-section" *ngIf = "isExpanded">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Account#</mat-label>
+          <input type="number" matInput  formControlName="accountNumber">
+        </mat-form-field>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Cheque#</mat-label>
+          <input type="number" matInput  formControlName="checkNumber">
+        </mat-form-field>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Routing code</mat-label>
+          <input type="number" matInput  formControlName="routingCode">
+        </mat-form-field>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Receipt#</mat-label>
+          <input type="number" matInput  formControlName="receiptNumber">
+        </mat-form-field>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Bank#</mat-label>
+          <input type="number" matInput  formControlName="bankNumber">
+        </mat-form-field>
+      </div>
+      <!-- expanded-section end -->
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Note</mat-label>
+        <textarea  formControlName = "note" matInput></textarea>
+      </mat-form-field>
+      <!-- main-section end -->
+    </mat-card-content>
+    <mat-card-footer class="footer-container">
+      <button type="button" id="cancel-btn" mat-raised-button [routerLink]="['../']">Cancel</button>
+      <button type="submit" mat-raised-button color="primary" [disabled]="makeRepaymentForm.pristine||!makeRepaymentForm.valid">Submit</button>
+    </mat-card-footer>
+  </mat-card>
+</form>

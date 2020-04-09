@@ -23,6 +23,9 @@ import { DatatableTabComponent } from './clients-view/datatable-tab/datatable-ta
 import { MultiRowComponent } from './clients-view/datatable-tab/multi-row/multi-row.component';
 import { SingleRowComponent } from './clients-view/datatable-tab/single-row/single-row.component';
 import { AddressTabComponent } from './clients-view/address-tab/address-tab.component';
+import { ClientsAccountsComponent } from './clients-accounts/clients-accounts.component';
+import { LoanRepaymentsComponent } from './clients-accounts/view-loan-account/loan-repayments/loan-repayments.component';
+import { ViewLoanAccountComponent } from './clients-accounts/view-loan-account/view-loan-account.component';
 
 
 /**
@@ -51,7 +54,10 @@ import { AddressTabComponent } from './clients-view/address-tab/address-tab.comp
     DatatableTabComponent,
     MultiRowComponent,
     SingleRowComponent,
-    AddressTabComponent
+    AddressTabComponent,
+    ClientsAccountsComponent,
+    ViewLoanAccountComponent,
+    LoanRepaymentsComponent,
   ],
   entryComponents: [
     UploadDocumentDialogComponent,
