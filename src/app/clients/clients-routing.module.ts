@@ -153,7 +153,7 @@ const routes: Routes = [
       }
     ]
   }, {
-    path:'clients/accounts',
+    path: 'clients/accounts',
     children: [
       {
         path: 'view-loan-account/:loanId',

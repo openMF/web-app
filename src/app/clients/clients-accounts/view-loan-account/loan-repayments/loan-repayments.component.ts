@@ -19,7 +19,7 @@ export class LoanRepaymentsComponent implements OnInit {
   /** Loan Transaction Template Data. */
   loanAccountData: any;
   /** Boolean indicates if Payment Detail section is expanded or not. */
-  isExpanded: boolean = false;
+  isExpanded = false;
 
   constructor(private route: ActivatedRoute,
     private datePipe: DatePipe,
@@ -37,11 +37,11 @@ export class LoanRepaymentsComponent implements OnInit {
   }
   createMakeRepaymentForm(loanAccountData: any) {
     this.makeRepaymentForm = this.formBuilder.group({
-      'transactionDate': [this.datePipe.transform(loanAccountData.date,'yyyy-MM-dd'), Validators.required],
+      'transactionDate': [this.datePipe.transform(loanAccountData.date, 'yyyy-MM-dd'), Validators.required],
       'transactionAmount': [loanAccountData.amount, Validators.required],
       'paymentTypeId': [loanAccountData.paymentTypeOptions[0].id],
       'accountNumber': [''],
-      //TODO: Replace check with cheque once spelling is fixed at Server End of API
+      /** TODO: Replace check with cheque once spelling is fixed at Server End of API */
       'checkNumber': [''],
       'routingCode': [''],
       'receiptNumber': [''],
