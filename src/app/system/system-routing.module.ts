@@ -24,6 +24,7 @@ import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-
 import { AddRoleComponent } from './roles-and-permissions/add-role/add-role.component';
 import { ManageSurveysComponent } from './manage-surveys/manage-surveys.component';
 import { ManageSchedulerJobsComponent } from './manage-scheduler-jobs/manage-scheduler-jobs.component';
+import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-tasks/configure-maker-checker-tasks.component';
 import { GlobalConfigurationsComponent } from './global-configurations/global-configurations.component';
 import { EditConfigurationComponent } from './global-configurations/edit-configuration/edit-configuration.component';
 import { AmazonS3Component } from './external-services/amazon-s3/amazon-s3.component';
@@ -59,6 +60,7 @@ import { ManageSurveysResolver } from './manage-surveys/manage-surveys.resolver'
 import { ManageSchedulerJobsResolver } from './manage-scheduler-jobs/manage-scheduler-jobs.resolver';
 import { GlobalConfigurationsResolver } from './global-configurations/global-configurations.resolver';
 import { GlobalConfigurationResolver } from './global-configurations/global-configuration.resolver';
+import { MakerCheckerTasksResolver } from './configure-maker-checker-tasks/maker-checker-tasks.resolver';
 import { AmazonS3ConfigurationResolver } from './external-services/amazon-s3/amazon-s3.resolver';
 import { EmailConfigurationResolver } from './external-services/email/email.resolver';
 import { SMSConfigurationResolver } from './external-services/sms/sms.resolver';
@@ -121,7 +123,6 @@ const routes: Routes = [
               ]
           }
         ],
-
       },
       {
           path: 'external-services',
@@ -322,6 +323,14 @@ const routes: Routes = [
           ]
       },
       {
+        path: 'configure-mc-tasks',
+        data: { title: extract('Configure Maker Checker Tasks'), breadcrumb: 'Configure Maker Checker Tasks' },
+        component: ConfigureMakerCheckerTasksComponent,
+        resolve: {
+              permissions: MakerCheckerTasksResolver
+          }
+        },
+      {
         path: 'surveys',
         component: ManageSurveysComponent,
         resolve: {
@@ -483,6 +492,7 @@ const routes: Routes = [
     HookResolver,
     HooksTemplateResolver,
     RolesAndPermissionsResolver,
+    MakerCheckerTasksResolver,
     ManageSurveysResolver,
     ManageSchedulerJobsResolver,
     GlobalConfigurationsResolver,

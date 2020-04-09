@@ -1,0 +1,50 @@
+<div class="container">
+
+  <div fxLayout="row">
+    <mat-form-field fxFlex>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event.target.value)">
+    </mat-form-field>
+  </div>
+
+  <div class="mat-elevation-z8">
+
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <td mat-cell *matCellDef="let permission"> {{ permission.code.split('_').join(' ') }}&nbsp;&nbsp;
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="enabled">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <td mat-cell *matCellDef="let permission">
+          <div [className]="permission.selected ? 'enabled' : 'disabled'">
+            <fa-icon icon="circle" size="lg" matTooltip="{{ permission.selected ? 'Enabled' : 'Disabled' }}" matTooltipPosition="right"></fa-icon>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let permission">
+          <button mat-button *ngIf="!permission.selected" color="accent" (click)="toggleStatus(permission)">
+            <fa-icon icon="lock-open"></fa-icon>&nbsp;&nbsp;Enable
+          </button>
+          <button mat-button *ngIf="permission.selected" color="warn" (click)="toggleStatus(permission)">
+            <fa-icon icon="lock"></fa-icon>&nbsp;&nbsp;Disable
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+  </div>
+
+</div>

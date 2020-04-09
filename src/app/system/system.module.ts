@@ -15,6 +15,7 @@ import { CreateDataTableComponent } from './manage-data-tables/create-data-table
 import { ViewDataTableComponent } from './manage-data-tables/view-data-table/view-data-table.component';
 import { EditDataTableComponent } from './manage-data-tables/edit-data-table/edit-data-table.component';
 import { ManageHooksComponent } from './manage-hooks/manage-hooks.component';
+import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-tasks/configure-maker-checker-tasks.component';
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
 import { AddRoleComponent } from './roles-and-permissions/add-role/add-role.component';
 import { ManageSurveysComponent } from './manage-surveys/manage-surveys.component';
@@ -67,6 +68,7 @@ import { AddEventDialogComponent } from './manage-hooks/add-event-dialog/add-eve
     ViewDataTableComponent,
     EditDataTableComponent,
     ManageHooksComponent,
+    ConfigureMakerCheckerTasksComponent,
     RolesAndPermissionsComponent,
     ManageSurveysComponent,
     ManageSchedulerJobsComponent,

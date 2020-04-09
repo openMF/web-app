@@ -73,6 +73,24 @@ export class SystemService {
   }
 
   /**
+   * @returns {Observable<any>}
+   */
+  getMakerCheckerPermissions(): Observable<any> {
+    return this.http.get('/permissions?makerCheckerable=true');
+  }
+
+  /**
+   * @param permissionCode Permission to toggle
+   * @param status New value of selected
+   * @returns {Observable<any>}
+   */
+  updateMakerCheckerPermission(permissionCode: string, status: boolean): Observable<any> {
+    const permission = {};
+    permission[permissionCode] = status;
+    return this.http.put('/permissions', { permissions: permission });
+  }
+
+  /**
    * @returns {Observable<any>} Fetches Roles and Permissions
    */
   getRoles(): Observable<any> {
