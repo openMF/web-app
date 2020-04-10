@@ -28,5 +28,20 @@ export class LoansService {
   createLoanCharge(loanId: string, resourceType: string, loanCharge: any): Observable<any> {
     return this.http.post(`/loans/${loanId}/${resourceType}`, loanCharge);
   }
-
+    /**
+     * @param {string} loanId loanId of the loan.
+     * @param {string} command type of transaction template.
+     * @returns {Observable<any>}
+     */
+  getLoanTransactionTemplate(loanId: string, command: string): Observable<any> {
+    return this.http.get(`/loans/${loanId}/transactions/template?command=${command}`);
+  }
+    /**
+     * @param {string} loanId loanId of the loan.
+     * @param {any} loanTransactionData transaction data for the repayment
+     * @returns {Observable<any>}
+     */
+  makeRepayment(loanId: string, loanTransactionData: any): Observable<any> {
+    return this.http.post(`/loans/${loanId}/transactions?command=repayment`, loanTransactionData);
+  }
 }

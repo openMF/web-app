@@ -37,9 +37,6 @@ import { ClientDatatableResolver } from './common-resolvers/client-datatable.res
 import { ClientIdentifierTemplateResolver } from './common-resolvers/client-identifier-template.resolver';
 import { ClientAddressFieldConfigurationResolver } from './common-resolvers/client-address-fieldconfiguration.resolver';
 import { ClientAddressTemplateResolver } from './common-resolvers/client-address-template.resolver';
-import { ViewLoanAccountComponent } from './clients-accounts/view-loan-account/view-loan-account.component';
-import { LoanRepaymentsComponent } from './clients-accounts/view-loan-account/loan-repayments/loan-repayments.component';
-import { LoanTransactionTemplateResolver } from './common-resolvers/loan-transaction-template.resolver';
 
 const routes: Routes = [
   Route.withShell([{
@@ -150,32 +147,13 @@ const routes: Routes = [
             }]
           }
         ]
-      }
-    ]
-  }, {
-    path: 'clients/accounts',
-    children: [
+      },
       {
-        path: 'view-loan-account/:loanId',
-        data: { title: extract('Loan Account View'), breadcrumb: 'ViewLoanAccount'},
-        children: [
-          {
-            path: '',
-            component: ViewLoanAccountComponent,
-          },
-          {
-            path: 'repayment',
-            data: { title: extract('Repayment'), breadcrumb: 'Repayment', routeParamBreadcrumb: false },
-            component: LoanRepaymentsComponent,
-            resolve: {
-              loanTransactionTemplate: LoanTransactionTemplateResolver,
-            }
-          }
-        ]
+        path: 'loans',
+        loadChildren: 'app/loans/loans.module#LoansModule'
       }
     ]
-  }
-  ])
+  }])
 ];
 
 @NgModule({
@@ -197,8 +175,7 @@ const routes: Routes = [
     ClientDatatableResolver,
     ClientIdentifierTemplateResolver,
     ClientAddressFieldConfigurationResolver,
-    ClientAddressTemplateResolver,
-    LoanTransactionTemplateResolver
+    ClientAddressTemplateResolver
   ]
 })
 export class ClientsRoutingModule { }

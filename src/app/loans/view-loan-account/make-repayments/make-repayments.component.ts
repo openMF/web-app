@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import { ClientsService } from 'app/clients/clients.service';
+import { LoansService } from '../../loans.service';
 
 @Component({
-  selector: 'mifosx-loan-repayments',
-  templateUrl: './loan-repayments.component.html',
-  styleUrls: ['./loan-repayments.component.scss']
+  selector: 'mifosx-make-repayments',
+  templateUrl: './make-repayments.component.html',
+  styleUrls: ['./make-repayments.component.scss']
 })
-export class LoanRepaymentsComponent implements OnInit {
+export class MakeRepaymentsComponent implements OnInit {
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Due Date allowed. */
@@ -24,7 +24,7 @@ export class LoanRepaymentsComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private datePipe: DatePipe,
     private formBuilder: FormBuilder,
-    private clientsService: ClientsService,
+    private loansService: LoansService,
     private router: Router
     ) { }
 
@@ -64,7 +64,7 @@ export class LoanRepaymentsComponent implements OnInit {
     makeRepaymentData.locale = locale;
     makeRepaymentData.dateFormat = dateFormat;
     /** POST repayment data  and redirect to previous page on success */
-    this.clientsService.makeRepayment(loanId, makeRepaymentData).subscribe(res => {
+    this.loansService.makeRepayment(loanId, makeRepaymentData).subscribe(res => {
     this.router.navigate(['../'], { relativeTo: this.route });
   });
   }

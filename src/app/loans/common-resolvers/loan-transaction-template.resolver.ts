@@ -1,12 +1,12 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, ActivatedRoute, RouterEvent } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
+import { LoansService } from '../loans.service';
 
 /**
  *  Loan Transaction Template resolver.
@@ -15,18 +15,18 @@ import { ClientsService } from '../clients.service';
 export class LoanTransactionTemplateResolver implements Resolve<Object> {
 
     /**
-     * @param {ClientsService} ClientsService Clients service.
+     * @param {LoansService} LoansService loans service.
      */
-    constructor(private clientsService: ClientsService) { }
+    constructor(private loansService: LoansService) { }
 
     /**
-     * Returns the Loan Repayment data.
+     * Returns the Loan Transaction Template.
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const loanId = route.paramMap.get('loanId');
+        const loanId = route.parent.paramMap.get('loanId');
         const command = route.routeConfig.path;
-        return this.clientsService.getLoanTransactionTemplate(loanId, command);
+        return this.loansService.getLoanTransactionTemplate(loanId, command);
     }
 
 }

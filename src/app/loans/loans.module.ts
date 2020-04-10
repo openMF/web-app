@@ -8,6 +8,9 @@ import { SharedModule } from 'app/shared/shared.module';
 
 /** Custom Components */
 import { AddLoanChargeComponent } from './add-loan-charge/add-loan-charge.component';
+import { MakeRepaymentsComponent } from './view-loan-account/make-repayments/make-repayments.component';
+import { ViewLoanAccountComponent } from './view-loan-account/view-loan-account.component';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 
 /**
  * Loans Module
@@ -19,8 +22,8 @@ import { AddLoanChargeComponent } from './add-loan-charge/add-loan-charge.compon
     SharedModule,
     LoansRoutingModule
   ],
-  declarations: [AddLoanChargeComponent],
-  providers: [DatePipe]
+  declarations: [AddLoanChargeComponent, MakeRepaymentsComponent, ViewLoanAccountComponent],
+  providers: [DatePipe],
 
 })
 export class LoansModule { }

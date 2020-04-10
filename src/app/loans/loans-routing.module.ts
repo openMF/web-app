@@ -10,6 +10,9 @@ import { AddLoanChargeComponent } from './add-loan-charge/add-loan-charge.compon
 
 /** Custom Resolvers */
 import { LoanChargeTemplateResolver } from './common-resolvers/loan-charge-template.resolver';
+import { LoanTransactionTemplateResolver } from './common-resolvers/loan-transaction-template.resolver';
+import { ViewLoanAccountComponent } from './view-loan-account/view-loan-account.component';
+import { MakeRepaymentsComponent } from './view-loan-account/make-repayments/make-repayments.component';
 
 const routes: Routes = [
   {
@@ -27,7 +30,25 @@ const routes: Routes = [
           resolve: {
             loanChargeTemplate: LoanChargeTemplateResolver
           }
-        }
+        },
+        {
+          path: 'view-loan-account',
+          data: { title: extract('View Loan Account'), breadcrumb: 'View Loan Account', routeParamBreadcrumb: false },
+          children: [
+            {
+              path: '',
+              component: ViewLoanAccountComponent,
+            },
+            {
+              path: 'repayment',
+              data: { title: extract('Make Repayment'), breadcrumb: 'Make Repayment', routeParamBreadcrumb: false },
+              component: MakeRepaymentsComponent,
+              resolve: {
+                loanTransactionTemplate: LoanTransactionTemplateResolver,
+              }
+            }
+          ]
+        },
       ]
     }]
   }
@@ -36,6 +57,6 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   declarations: [],
-  providers: [LoanChargeTemplateResolver]
+  providers: [LoanChargeTemplateResolver, LoanTransactionTemplateResolver]
 })
 export class LoansRoutingModule { }

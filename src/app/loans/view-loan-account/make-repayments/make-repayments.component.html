@@ -3,7 +3,7 @@
     <mat-card-title>Loan Repayments</mat-card-title>
     <mat-card-content class="main-section-container">
       <!-- main-section start -->
-      <mat-form-field class="full-width" appearance="outline">
+      <mat-form-field class="full-width" >
         <mat-label>Transaction date</mat-label>
         <input matInput [matDatepicker]="transactionDatepicker" [min]="minDate" [max]="maxDate" formControlName="transactionDate" required>
         <mat-datepicker-toggle matSuffix [for]="transactionDatepicker"></mat-datepicker-toggle>
@@ -12,14 +12,14 @@
           Transaction Date is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <mat-form-field class="full-width" appearance="outline">
+      <mat-form-field class="full-width" >
         <mat-label>Transaction amount</mat-label>
         <input type="number" matInput formControlName="transactionAmount" required>
         <mat-error *ngIf="makeRepaymentForm.controls.transactionAmount.hasError('required')">
           Transaction Amount is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <mat-form-field class="full-width" appearance="outline">
+      <mat-form-field class="full-width" >
         <mat-label>Payment type</mat-label>
         <mat-select formControlName = "paymentTypeId">
           <mat-option *ngFor="let type of loanAccountData.paymentTypeOptions" [value]="type.id">
@@ -35,29 +35,29 @@
       </div>
       <!-- expanded-section start -->
       <div class="expanded-section" *ngIf = "isExpanded">
-        <mat-form-field class="full-width" appearance="outline">
+        <mat-form-field class="full-width" >
           <mat-label>Account#</mat-label>
           <input type="number" matInput  formControlName="accountNumber">
         </mat-form-field>
-        <mat-form-field class="full-width" appearance="outline">
+        <mat-form-field class="full-width" >
           <mat-label>Cheque#</mat-label>
           <input type="number" matInput  formControlName="checkNumber">
         </mat-form-field>
-        <mat-form-field class="full-width" appearance="outline">
+        <mat-form-field class="full-width" >
           <mat-label>Routing code</mat-label>
           <input type="number" matInput  formControlName="routingCode">
         </mat-form-field>
-        <mat-form-field class="full-width" appearance="outline">
+        <mat-form-field class="full-width" >
           <mat-label>Receipt#</mat-label>
           <input type="number" matInput  formControlName="receiptNumber">
         </mat-form-field>
-        <mat-form-field class="full-width" appearance="outline">
+        <mat-form-field class="full-width" >
           <mat-label>Bank#</mat-label>
           <input type="number" matInput  formControlName="bankNumber">
         </mat-form-field>
       </div>
       <!-- expanded-section end -->
-      <mat-form-field class="full-width" appearance="outline">
+      <mat-form-field class="full-width" >
         <mat-label>Note</mat-label>
         <textarea  formControlName = "note" matInput></textarea>
       </mat-form-field>

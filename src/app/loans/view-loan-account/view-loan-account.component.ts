@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./view-loan-account.component.scss']
 })
 export class ViewLoanAccountComponent implements OnInit {
-  loanId: string;
 
   constructor() { }
 
