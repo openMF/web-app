@@ -9,6 +9,7 @@ import { SharedModule } from 'app/shared/shared.module';
 /** Custom Components */
 import { SavingAccountActionsComponent } from './saving-account-actions/saving-account-actions.component';
 import { SavingsAccountTransactionsComponent } from './saving-account-actions/savings-account-transactions/savings-account-transactions.component';
+import { AddSavingsChargeComponent } from './add-savings-charge/add-savings-charge.component';
 
 /**
  * Savings Module
@@ -22,8 +23,9 @@ import { SavingsAccountTransactionsComponent } from './saving-account-actions/sa
   ],
   declarations: [
     SavingAccountActionsComponent,
-    SavingsAccountTransactionsComponent
+    SavingsAccountTransactionsComponent,
+    AddSavingsChargeComponent
   ],
   providers: [DatePipe]
 })
-export class SavingsModule { }
+export class SavingsModule {}

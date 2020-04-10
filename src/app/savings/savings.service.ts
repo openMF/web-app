@@ -12,8 +12,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SavingsService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
   /**
    * @param {string} savingAccountId is saving account's Id.
    * @returns {Observable<any>}
@@ -30,5 +29,30 @@ export class SavingsService {
    */
   makeTransaction(action: string, savingAccountId: string, transactionData: any): Observable<any> {
     return this.http.post(`/savingsaccounts/${savingAccountId}/transactions?command=${action}`, transactionData);
+  }
+
+  /**
+   * @param {string} savingAccountId saving account id.
+   * @returns {Observable<any>}
+   */
+  getSavingsChargeTemplateResource(savingAccountId: string): Observable<any> {
+    return this.http.get(`/savingsaccounts/${savingAccountId}/charges/template`);
+  }
+
+  /**
+   * @param {any} savingsCharge to apply on a savings Account.
+   * @returns {Observable<any>}
+   */
+  createSavingsCharge(savingAccountId: string, resourceType: string, savingsCharge: any): Observable<any> {
+    return this.http.post(`/savingsaccounts/${savingAccountId}/${resourceType}`, savingsCharge);
+  }
+
+  /**
+   * @param {string} chargeId Charge ID of charge.
+   * @returns {Observable<any>} Charge.
+   */
+  getChargeTemplate(chargeId: string): Observable<any> {
+    const params = { template: 'true' };
+    return this.http.get(`/charges/${chargeId}`, { params: params });
   }
 }
