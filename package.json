@@ -38,6 +38,8 @@
     "@angular/platform-browser-dynamic": "7.2.15",
     "@angular/router": "7.2.15",
     "@angular/service-worker": "7.2.15",
+    "@ckeditor/ckeditor5-angular": "^1.2.3",
+    "@ckeditor/ckeditor5-build-classic": "^18.0.0",
     "@fortawesome/angular-fontawesome": "0.3.0",
     "@fortawesome/fontawesome-svg-core": "1.2.18",
     "@fortawesome/free-solid-svg-icons": "5.8.2",
@@ -53,7 +55,7 @@
     "zone.js": "0.8.29"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "0.13.9",
+    "@angular-devkit/build-angular": "^0.13.10",
     "@angular/cli": "7.3.9",
     "@angular/compiler-cli": "7.2.15",
     "@angular/language-service": "7.2.15",

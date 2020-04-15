@@ -15,6 +15,8 @@ import { ViewTemplateComponent } from './view-template/view-template.component';
 /** Custom Resolvers */
 import { TemplatesResolver } from './templates.resolver';
 import { TemplateResolver } from './template.resolver';
+import { EditTemplateComponent } from './edit-template/edit-template.component';
+import { EditTemplateResolver } from './edit-template/edit-template.resolver';
 
 /** Templates Routes */
 const routes: Routes = [
@@ -32,14 +34,22 @@ const routes: Routes = [
         },
         {
           path: ':id',
-          data: { title: extract('View Template'), routeResolveBreadcrumb: ['template', 'name'] },
-          resolve: {
-            template: TemplateResolver
-          },
           children: [
             {
               path: '',
               component: ViewTemplateComponent,
+              data: { title: extract('View Template'), routeResolveBreadcrumb: ['template', 'name'] },
+              resolve: {
+                template: TemplateResolver
+              },
+            },
+            {
+              path: 'edit',
+              component: EditTemplateComponent,
+              data: { title: extract('Edit Template'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+              resolve: {
+                selectedTemplate: EditTemplateResolver
+              }
             }
           ]
         }
@@ -58,7 +68,8 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     TemplatesResolver,
-    TemplateResolver
+    TemplateResolver,
+    EditTemplateResolver
   ]
 })
 export class TemplatesRoutingModule { }

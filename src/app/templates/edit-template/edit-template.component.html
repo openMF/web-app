@@ -1,0 +1,114 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="templateForm">
+
+      <mat-card-content>
+
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Entity</mat-label>
+            <select matNativeControl required (change)="onChangeEntity($event.target.value)">
+              <option *ngFor="let entity of templateData.entities" [value]="entity.id" [selected]="templateData.template.entity===entity.name">
+                {{entity.name}}
+              </option>
+            </select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Type</mat-label>
+            <select matNativeControl required (change)="onChangeType($event.target.value)">
+              <option *ngFor="let type of templateData.types" [value]="type.id" [selected]="templateData.template.type===type.name">
+                {{type.name}}
+              </option>
+            </select>
+          </mat-form-field>
+
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Template Name</mat-label>
+            <input matInput required type="text" formControlName="templateName">
+          </mat-form-field>
+
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+          <button mat-raised-button color="primary" *ngIf="!isDisplayedMapKeys" (click)="displayMapKeys()">Advance Options</button>
+          <button mat-raised-button color="primary" *ngIf="isDisplayedMapKeys" (click)="hideMapKeys()">Advance Options</button>
+
+        </div>
+
+        <div id="mappersLoaded">
+
+          <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" *ngFor="let mappers of templateData.template.mappers; let i=index;">
+
+            <mat-form-field fxFlex="43%">
+              <mat-label>Map Key</mat-label>
+              <input matInput required type="text" [value]="mappers.mapperkey" id="keyLoaded{{i}}">
+            </mat-form-field>
+  
+            <mat-form-field fxFlex="43%">
+              <mat-label>Map Value</mat-label>
+              <input matInput required type="text" [value]="mappers.mappervalue" id="valLoaded{{i}}">
+            </mat-form-field>
+  
+            <button mat-raised-button color="primary" (click)="addNewKey()" *ngIf="i===0" fxFlex="10%" style="height: 40px;">
+              <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+              Add New
+            </button>
+
+            <button mat-raised-button color="primary" (click)="removeLoaded(mappers.mapperkey)" *ngIf="i>0" fxFlex="10%" style="height: 40px;">
+              <i class="fa fa-minus"></i>&nbsp;&nbsp;
+              Remove
+            </button>
+  
+          </div>
+
+        </div>
+
+        <div id="mappersAdded">
+
+          <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" *ngFor="let i of [].constructor(mapKeyCount);let index=index">
+
+            <mat-form-field fxFlex="43%">
+              <mat-label>Map Key</mat-label>
+              <input matInput required type="text" id="key{{index}}">
+            </mat-form-field>
+  
+            <mat-form-field fxFlex="43%">
+              <mat-label>Map Value</mat-label>
+              <input matInput required type="text" id="val{{index}}">
+            </mat-form-field>
+  
+            <button mat-raised-button color="primary" (click)="removeKey()" fxFlex="10%" style="height: 40px;">
+              <i class="fa fa-minus"></i>&nbsp;&nbsp;
+              Remove
+            </button>
+  
+          </div>
+
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" style="margin-top: 10px;">
+
+          <ckeditor #textEditor [editor]="Editor" [data]="templateData.template.text"></ckeditor>
+
+        </div>
+      
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button mat-raised-button color="primary" (click)="editTemplate()">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>
