@@ -105,12 +105,12 @@ export class CreateUserComponent implements OnInit {
 
   /**
    * Submits the user form and creates user,
-   * if successful redirects to users.
+   * if successful redirects to view created user.
    */
   submit() {
     const user = this.userForm.value;
     this.usersService.createUser(user).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
     });
   }
 
