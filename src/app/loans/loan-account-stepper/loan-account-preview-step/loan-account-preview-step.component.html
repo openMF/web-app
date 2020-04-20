@@ -1,0 +1,137 @@
+<div fxLayout="row wrap" fxLayout.lt-md="column">
+
+  <h3 class="mat-h3" fxFlexFill>Details</h3>
+
+  <mat-divider fxFlexFill></mat-divider>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Product:</span>
+    <span fxFlex="60%">{{ loanAccount.productName }}</span>
+  </div>
+
+  <div fxFlexFill *ngIf="loanAccountInfo">
+    <span fxFlex="40%">Loan officer: :</span>
+    <span fxFlex="60%">{{ loanAccount.loanOfficerName }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Loan purpose:</span>
+    <span fxFlex="60%">{{ loanAccount.loanPurposeName }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Fund:</span>
+    <span fxFlex="60%">{{ loanAccount.fundName }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Submitted on:</span>
+    <span fxFlex="60%">{{ loanAccount.submittedOnDate }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Disbursement on:</span>
+    <span fxFlex="60%">{{ loanAccount.expectedDisbursementDate }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">External id</span>
+    <span fxFlex="60%">{{ loanAccount.externalId }}</span>
+  </div>
+
+  <h3 class="mat-h3" fxFlexFill>Terms</h3>
+
+  <mat-divider fxFlexFill></mat-divider>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Principal:</span>
+    <span fxFlex="60%">{{ loanAccount.principal }} {{loanaccountinfo.currency.DisplaySymbol}}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Loan term:</span>
+    <span fxFlex="60%">{{ loanAccount.loanTermFrequency }} {{loanAccount.loanTermFrequencyValue}}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Number of repayments</span>
+    <span fxFlex="60%">{{ loanAccount.numberOfRepayments }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Repaid every</span>
+    <span fxFlex="60%">{{loanAccount.repaymentEvery}} {{loanAccount.repaymentFrequencyValue}}
+      {{loanAccount.repaymentFrequencyNthDayValue}}
+      {{loanAccount.repaymentFrequencyDayOfWeekValue}}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">First repayment on</span>
+    <span fxFlex="60%">{{ loanAccount.externalId }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Interest charged from</span>
+    <span fxFlex="60%">{{ loanAccount.loanPurposeName }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Nominal interest rate</span>
+    <span
+      fxFlex="60%">{{loanAccount.interestRatePerPeriod}}&nbsp;&nbsp;{{loanaccountinfo.interestRateFrequencyType.value}}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Interest method </span>
+    <span fxFlex="60%">{{loanAccount.interestValue}}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Is Equal Amortization</span>
+    <span fxFlex="60%">{{loanAccount.isEqualAmortization}}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Amortization</span>
+    <span fxFlex="60%">{{ loanAccount.amortizationValue }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Interest calculation period </span>
+    <span fxFlex="60%">{{ loanAccount.interestCalculationPeriodValue }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Calculate interest for exact days in partial period</span>
+    <span fxFlex="60%">{{ loanAccount.allowPartialPeriodInterestCalcualtion }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Arrears tolerance </span>
+    <span fxFlex="60%">{{loanAccount.inArrearsTolerance}}&nbsp;{{loanaccountinfo.currency.displaySymbol}}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Interest free period </span>
+    <span fxFlex="60%">{{ loanAccount.graceOnInterestCharged }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Repayment strategy </span>
+    <span fxFlex="60%">{{ loanAccount.transactionProcessingStrategyValue }}</span>
+  </div>
+
+</div>
+
+<div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <button mat-raised-button matStepperPrevious>
+    <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+    Previous
+  </button>
+  <button mat-raised-button [routerLink]="['../']">
+    Cancel
+  </button>
+  <button mat-raised-button color="primary" (click)="submit.emit()">
+    Submit
+  </button>
+</div>

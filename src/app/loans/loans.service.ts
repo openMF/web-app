@@ -29,4 +29,23 @@ export class LoansService {
     return this.http.post(`/loans/${loanId}/${resourceType}`, loanCharge);
   }
 
+  /**
+   * @param {string} params Params object having Client ID and Product ID.
+   * @returns {Observable<any>} Fixed Deposit Account Template Data.
+   */
+  getLoanAccountsTemplateResource(params: any): Observable<any> {
+    return this.http.get('/loans/template/', { params: params });
+  }
+
+  getLoanAccountsData(loanId: string, resourceType: string, resourceId: string, params: any): Observable<any> {
+    return this.http.get(`/loans/${loanId}/${resourceType}/${resourceId}`, { params: params });
+  }
+
+  createLoanAccount(loanAccount: string): Observable<any> {
+    return this.http.post('/loans', loanAccount);
+  }
+
+  updateLoanAccount(loanId: string, loanAccount: any): Observable<any> {
+    return this.http.put(`/loans/${loanId}`, loanAccount);
+  }
 }

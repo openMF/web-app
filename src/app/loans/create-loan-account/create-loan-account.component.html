@@ -1,0 +1,64 @@
+<div class="container">
+
+  <mat-horizontal-stepper class="mat-elevation-z8" labelPosition="bottom" #loanAccountStepper>
+
+    <ng-template matStepperIcon="number">
+      <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="edit">
+      <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="done">
+      <fa-icon icon="check" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="error">
+      <fa-icon icon="exclamation-triangle" size="lg"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="preview">
+      <fa-icon icon="eye" size="sm"></fa-icon>
+    </ng-template>
+
+    <mat-step [stepControl]="loanAccountDetailsForm">
+
+      <ng-template matStepLabel>DETAILS</ng-template>
+
+      <mifosx-loan-account-details-step [loanAccountsTemplate]="loanAccountsTemplate">
+      </mifosx-loan-account-details-step>
+
+    </mat-step>
+
+    <mat-step [stepControl]="loanAccountTermsForm">
+
+      <ng-template matStepLabel>TERMS</ng-template>
+
+      <mifosx-loan-account-terms-step [loanAccountInfo]="loanAccountInfo">
+      </mifosx-loan-account-terms-step>
+
+    </mat-step>
+
+    <mat-step>
+
+      <ng-template matStepLabel>CHARGES</ng-template>
+
+      <mifosx-loan-account-charges-step [loanAccountInfo]="loanAccountInfo">
+      </mifosx-loan-account-charges-step>
+
+    </mat-step>
+
+    <mat-step state="preview" *ngIf="loanAccountFormValid" completed>
+
+      <ng-template matStepLabel>PREVIEW</ng-template>
+
+      <mifosx-loan-account-preview-step [loanAccountInfo]="loanAccountInfo" [loanAccount]="loanAccount"
+        (submit)="submit()">
+      </mifosx-loan-account-preview-step>
+
+    </mat-step>
+
+  </mat-horizontal-stepper>
+
+</div>
