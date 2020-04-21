@@ -29,6 +29,7 @@ import { WorkingDaysComponent } from './working-days/working-days.component';
 import { CreateOfficeComponent } from './offices/create-office/create-office.component';
 import { CreatePaymentTypeComponent } from './payment-types/create-payment-type/create-payment-type.component';
 import { CreateAdhocQueryComponent } from './adhoc-query/create-adhoc-query/create-adhoc-query.component';
+import { HolidaysComponent } from './holidays/holidays.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -242,6 +243,14 @@ const routes: Routes = [
         {
           path: 'bulk-import',
           loadChildren: '../bulk-import/bulk-import.module#BulkImportModule'
+        },
+        {
+          path: 'holidays',
+          component: HolidaysComponent,
+          data: { title: extract('Manage Holidays'), breadcrumb: 'Manage Holidays' },
+          resolve: {
+            offices: OfficesResolver
+          }
         }
       ]
     }

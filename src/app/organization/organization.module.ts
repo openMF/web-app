@@ -27,6 +27,7 @@ import { CreateEmployeeComponent } from './employees/create-employee/create-empl
 import { CreatePaymentTypeComponent } from './payment-types/create-payment-type/create-payment-type.component';
 import { ViewEmployeeComponent } from './employees/view-employee/view-employee.component';
 import { CreateAdhocQueryComponent } from './adhoc-query/create-adhoc-query/create-adhoc-query.component';
+import { HolidaysComponent } from './holidays/holidays.component';
 
 /**
  * Organization Module
@@ -59,7 +60,8 @@ import { CreateAdhocQueryComponent } from './adhoc-query/create-adhoc-query/crea
     CreateEmployeeComponent,
     CreatePaymentTypeComponent,
     ViewEmployeeComponent,
-    CreateAdhocQueryComponent
+    CreateAdhocQueryComponent,
+    HolidaysComponent
   ]
 })
 export class OrganizationModule { }
