@@ -93,6 +93,21 @@ export class OrganizationService {
   }
 
   /**
+   * @returns {Observable<any>} Adhoc query Template data
+   */
+  getAdhocQueryTemplate(): Observable<any> {
+    return this.http.get(`/adhocquery/template`);
+  }
+
+  /**
+   * @param {any} adhocQuery Adhoc Query to be created.
+   * @returns {Observable<any>}
+   */
+  createAdhocQuery(adhocQuery: any): Observable<any> {
+    return this.http.post('/adhocquery', adhocQuery);
+  }
+
+  /**
    * @param {string} adhocQueryId Adhoc Query ID of adhoc query to be deleted.
    * @returns {Observable<any>}
    */
