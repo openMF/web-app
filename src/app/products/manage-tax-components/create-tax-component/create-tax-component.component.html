@@ -1,0 +1,96 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="taxComponentForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput required formControlName="name">
+            <mat-error *ngIf="taxComponentForm.controls.name.hasError('required')">
+              Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Percentage</mat-label>
+            <input type="number" matInput required formControlName="percentage">
+            <mat-error *ngIf="taxComponentForm.controls.percentage.hasError('required')">
+              Percentage is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="taxComponentForm.controls.percentage.hasError('pattern') ||
+            taxComponentForm.controls.percentage.hasError('max')">
+              Percentage <strong>should</strong> be larger than 0 and at most 100
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Debit Account Type</mat-label>
+            <mat-select formControlName="debitAccountType">
+              <mat-option *ngFor="let debitAccountType of debitAccountTypeData" [value]="debitAccountType.id">
+                {{ debitAccountType.value }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="taxComponentForm.controls.debitAccountType.value">
+            <mat-label>Debit Account</mat-label>
+            <mat-select required formControlName="debitAcountId">
+              <mat-option *ngFor="let debitAccount of debitAccountData" [value]="debitAccount.id">
+                {{ debitAccount.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="taxComponentForm.controls.debitAcountId.hasError('required')">
+              Debit account is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Credit Account Type</mat-label>
+            <mat-select formControlName="creditAccountType">
+              <mat-option *ngFor="let creditAccountType of creditAccountTypeData" [value]="creditAccountType.id">
+                {{ creditAccountType.value }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="taxComponentForm.controls.creditAccountType.value">
+            <mat-label>Credit Account</mat-label>
+            <mat-select required formControlName="creditAcountId">
+              <mat-option *ngFor="let creditAccount of creditAccountData" [value]="creditAccount.id">
+                {{ creditAccount.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="taxComponentForm.controls.creditAcountId.hasError('required')">
+              Credit account is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Start date</mat-label>
+          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="startDatePicker" required formControlName="startDate">
+          <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #startDatePicker></mat-datepicker>
+          <mat-error *ngIf="taxComponentForm.controls.startDate.hasError('required')">
+            Start date is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!taxComponentForm.valid">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>

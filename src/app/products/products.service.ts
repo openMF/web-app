@@ -151,6 +151,21 @@ export class ProductsService {
   }
 
   /**
+   * @returns {Observable<any>} Tax Components Template data.
+   */
+  getTaxComponentTemplate(): Observable<any> {
+    return this.http.get('/taxes/component/template');
+  }
+
+  /**
+   * @param {any} taxComponent Tax Component to be created.
+   * @returns {Observable<any>}
+   */
+  createTaxComponent(taxComponent: any): Observable<any> {
+    return this.http.post('/taxes/component', taxComponent);
+  }
+
+  /**
    * @returns {Observable<any>} Tax Groups data
    */
   getTaxGroups(): Observable<any> {

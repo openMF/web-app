@@ -36,6 +36,7 @@ import { EditFloatingRateComponent } from './floating-rates/edit-floating-rate/e
 import { ManageTaxComponentsComponent } from './manage-tax-components/manage-tax-components.component';
 import { ManageTaxGroupsComponent } from './manage-tax-groups/manage-tax-groups.component';
 import { ViewTaxComponentComponent } from './manage-tax-components/view-tax-component/view-tax-component.component';
+import { CreateTaxComponentComponent } from './manage-tax-components/create-tax-component/create-tax-component.component';
 
 /** Custom Resolvers */
 import { LoanProductsResolver } from './loan-products/loan-products.resolver';
@@ -61,6 +62,7 @@ import { FloatingRateResolver } from './floating-rates/floating-rate.resolver';
 import { ManageTaxComponentsResolver } from './manage-tax-components/manage-tax-components.resolver';
 import { ManageTaxGroupsResolver } from './manage-tax-groups/manage-tax-groups.resolver';
 import { TaxComponentResolver } from './manage-tax-components/tax-component.resolver';
+import { TaxComponentTemplateResolver } from './manage-tax-components/tax-component-template.resolver';
 
 /** Products Routes */
 const routes: Routes = [
@@ -216,6 +218,14 @@ const routes: Routes = [
                   component: ManageTaxComponentsComponent,
                   resolve: {
                     taxComponents: ManageTaxComponentsResolver
+                  }
+                },
+                {
+                  path: 'create',
+                  component: CreateTaxComponentComponent,
+                  data: { title: extract('Create Tax Component'), breadcrumb: 'Create' },
+                  resolve: {
+                    taxComponentTemplate: TaxComponentTemplateResolver
                   }
                 },
                 {
@@ -376,7 +386,8 @@ const routes: Routes = [
     ManageTaxGroupsResolver,
     TaxComponentResolver,
     FloatingRateResolver,
-    FloatingRatesResolver
+    FloatingRatesResolver,
+    TaxComponentTemplateResolver
   ]
 })
 export class ProductsRoutingModule { }
