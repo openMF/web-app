@@ -36,6 +36,7 @@ import { ProductsModule } from './products/products.module';
 import { OrganizationModule } from './organization/organization.module';
 import { TemplatesModule } from './templates/templates.module';
 import { UsersModule } from './users/users.module';
+import { ReportsModule } from './reports/reports.module';
 
 
 
@@ -61,6 +62,7 @@ import { AppRoutingModule } from './app-routing.module';
     SettingsModule,
     NavigationModule,
     ClientsModule,
+    ReportsModule,
     GroupsModule,
     CentersModule,
     AccountingModule,
