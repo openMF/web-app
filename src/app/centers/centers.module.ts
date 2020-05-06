@@ -1,28 +1,29 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HttpModule } from '@angular/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule } from '../core/core.module';
-import { MatTableModule } from '@angular/material/table';
-import { FlexLayoutModule } from '@angular/flex-layout';
+/** Angular Imports */
+import { NgModule } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
+/** Custom Modules */
+import { CentersRoutingModule } from './centers-routing.module';
+import { SharedModule } from 'app/shared/shared.module';
+import { PipesModule } from '../pipes/pipes.module';
+
+/** Custom Components */
 import { CentersComponent } from './centers.component';
-import { CentersRoutingModule } from 'app/centers/centers-routing.module';
-import { CentersService } from './centers.service';
 
+/**
+ * Centers Module
+ *
+ * All components related to Centers should be declared here.
+ */
 @NgModule({
   imports: [
-    CoreModule,
-    CommonModule,
+    SharedModule,
     CentersRoutingModule,
-    FormsModule,
-    MatTableModule,
-    FlexLayoutModule
-
+    PipesModule
   ],
-  declarations: [CentersComponent],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ]
+  declarations: [
+    CentersComponent
+  ],
+  providers: [DatePipe]
 })
 export class CentersModule { }
