@@ -1,0 +1,47 @@
+body {
+  table {
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+  }
+}
+
+.bg-black {
+  background-color: #000;
+}
+
+.bg-light-grey {
+  background-color: #e5e5e5;
+}
+
+.bg-medium-grey {
+  background-color: #ccc;
+}
+
+.bg-grey {
+  background-color: #999;
+}
+
+.bg-dark-grey {
+  background-color: #222;
+}
+
+.bg-white,
+.bg-fff {
+  background-color: white;
+}
+
+.bg-none,
+.no-bg {
+  background: none;
+  background-image: none;
+  background-color: transparent;
+}
+
+.bg-facebook {
+  background-color: #47639e;
+}
+
+.bg-twitter {
+  background-color: #02a8f3;
+}

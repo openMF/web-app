@@ -1,0 +1,24 @@
+html,
+body {
+  -webkit-tap-highlight-color: transparent;
+}
+
+div {
+  box-sizing: border-box;
+}
+
+.color-inherit {
+  color: inherit;
+}
+
+.no-shadow {
+  box-shadow: none;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.nolist {
+  list-style: none;
+}

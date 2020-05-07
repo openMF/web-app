@@ -1,4 +1,49 @@
-.fit              { max-width: 100%; }
-.half-width       { width: 50% }
-.full-width       { width: 100%; }
-.full-height      { height: 100%; }
+.fit { 
+  max-width: 100%;
+}
+
+.half-width { 
+  width: 50%; 
+}
+
+.full-width { 
+  width: 100%; 
+}
+
+.full-height { 
+  height: 100%; 
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+}
+
+body {
+  table {
+    width: 100%;
+  }
+}
+
+.container {
+  max-width: 74rem;
+  width: 90%;
+}
+
+.mw400 {
+  max-width: 400px;
+}
+
+.mw500 {
+  max-width: 500px;
+}
+
+.mw600 {
+  max-width: 600px;
+}
+
+.fullwidth {
+  width: 100%;
+}
