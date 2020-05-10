@@ -8,8 +8,8 @@ ngX-Rocket is an Angular 5+ enterprise project-generator based on the Angular-CL
 
 ngx-Rocket is Used for creating a Enterprise Angular Apps
 
-## Creating a new project
-# Prerequisites
+# Creating a new project
+## Prerequisites
 
 Before you can use the ngX -Rocket CLI, you need to have Node.js 6.9.0 and npm 3.0.0 or higher installed on your system. You can download the latest version of Node.js for your operating system on Node’ official site.
 
