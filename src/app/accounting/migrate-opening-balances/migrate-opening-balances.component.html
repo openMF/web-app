@@ -21,7 +21,7 @@
             </mat-error>
           </mat-form-field>
 
-          <button mat-button type="button" color="primary" fxFlex="4%" (click)="retrieveOpeningBalances()">Retrieve</button>
+          <button mat-button type="button" color="primary" fxFlex="8%" (click)="retrieveOpeningBalances()">Retrieve</button>
 
         </div>
 
@@ -80,15 +80,15 @@
 
             <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroupName]="i">
 
-              <div fxFlex="8%">
+              <div fxFlex="8%" class="p-t-30">
                 {{ (openingBalancesData.glAccounts[i].glAccountType.value !== openingBalancesData.glAccounts[i-1]?.glAccountType.value) ? openingBalancesData.glAccounts[i].glAccountType.value : '' }}
               </div>
 
-              <div fxFlex="18%">
+              <div fxFlex="18%" class="p-t-30">
                 {{ openingBalancesData.glAccounts[i].glAccountCode }}
               </div>
 
-              <div fxFlex="18%">
+              <div fxFlex="18%" class="p-t-30">
                 {{ openingBalancesData.glAccounts[i].glAccountName }}
               </div>
 
