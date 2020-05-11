@@ -1,0 +1,67 @@
+<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+
+  <button mat-raised-button color="primary">
+    <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+    Create Holiday
+  </button>
+
+</div>
+
+<div class="container">
+
+  <div fxLayout="row" fxLayoutGap="20px">
+
+    <mat-form-field fxFlex>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event.target.value)">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label> Select Office </mat-label>
+      <mat-select [formControl]="officeSelector">
+        <mat-option *ngFor="let office of officeData" [value]="office.id">
+          {{ office.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+
+  <div class="mat-elevation-z8" [hidden]="!officeSelector.value">
+
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Holiday Name </th>
+        <td mat-cell *matCellDef="let holidays"> {{ holidays.name }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="fromDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </th>
+        <td mat-cell *matCellDef="let holidays"> {{ holidays.fromDate | date }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="toDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> End Date </th>
+        <td mat-cell *matCellDef="let holidays"> {{ holidays.toDate | date }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="repaymentsRescheduledTo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Repayments Scheduled To </th>
+        <td mat-cell *matCellDef="let holidays"> {{ holidays.reschedulingType === 1 ? 'Next Repayment Date' : holidays.repaymentsRescheduledTo | date }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <td mat-cell *matCellDef="let holidays"> {{ holidays.status.value }} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row"></tr>
+
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+  </div>
+
+</div>
