@@ -1,9 +1,11 @@
 /** Angular Imports */
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, TemplateRef, ElementRef, ViewChild,
+         AfterViewInit, } from '@angular/core';
 import { MatSidenav } from '@angular/material';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { style, animate, transition, trigger } from '@angular/animations';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -11,6 +13,11 @@ import { map } from 'rxjs/operators';
 
 /** Custom Services */
 import { AuthenticationService } from '../../authentication/authentication.service';
+import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
+import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
+
+/** Custom Components */
+import { ConfigurationWizardComponent } from '../../../configuration-wizard/configuration-wizard.component';
 
 /**
  * Toolbar component.
@@ -31,7 +38,13 @@ import { AuthenticationService } from '../../authentication/authentication.servi
     ])
   ]
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent implements OnInit, AfterViewInit {
+
+  @ViewChild('institution') institution: ElementRef<any>;
+  @ViewChild('templateInstitution') templateInstitution: TemplateRef<any>;
+  @ViewChild('appMenu') appMenu: ElementRef<any>;
+  @ViewChild('templateAppMenu') templateAppMenu: TemplateRef<any>;
+
 
   /** Subscription to breakpoint observer for handset. */
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -56,7 +69,10 @@ export class ToolbarComponent implements OnInit {
    */
   constructor(private breakpointObserver: BreakpointObserver,
               private router: Router,
-              private authenticationService: AuthenticationService) { }
+              private authenticationService: AuthenticationService,
+              private popoverService: PopoverService,
+              private configurationWizardService: ConfigurationWizardService,
+              public dialog: MatDialog) { }
 
   /**
    * Subscribes to breakpoint for handset.
@@ -97,6 +113,70 @@ export class ToolbarComponent implements OnInit {
   logout() {
     this.authenticationService.logout()
       .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+  }
+
+  showPopover(template: TemplateRef<any>, target: ElementRef<any> | HTMLElement): void {
+    setTimeout(() => this.popoverService.open(template, target, 'bottom', true, {}), 200);
+  }
+
+  nextStep() {
+    this.configurationWizardService.showToolbar = false;
+    this.configurationWizardService.showToolbarAdmin = false;
+    this.configurationWizardService.showSideNav = true;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate(['/home']);
+  }
+
+  openDialog() {
+    const configWizardRef = this.dialog.open(ConfigurationWizardComponent, {});
+    configWizardRef.afterClosed().subscribe((response: { show: number }) => {
+      if (response.show === 1) {
+        this.configurationWizardService.showToolbar = true;
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate(['/home']);
+      }
+      if (response.show === 2) {
+        this.configurationWizardService.showCreateOffice = true;
+        this.router.navigate(['/organization']);
+      }
+      if (response.show === 3) {
+        this.configurationWizardService.showDatatables = true;
+        this.router.navigate(['/system']);
+      }
+      if (response.show === 4) {
+        this.configurationWizardService.showChartofAccounts = true;
+        this.router.navigate(['/accounting']);
+      }
+      if (response.show === 5) {
+        this.configurationWizardService.showCharges = true;
+        this.router.navigate(['/products']);
+      }
+      if (response.show === 6) {
+        this.configurationWizardService.showManageFunds = true;
+        this.router.navigate(['/organization']);
+      }
+    });
+  }
+
+  ngAfterViewInit() {
+    if (this.configurationWizardService.showToolbar === true) {
+      setTimeout(() => {
+        this.showPopover(this.templateInstitution, this.institution.nativeElement);
+      });
+    }
+
+    if (this.configurationWizardService.showSideNav === true || this.configurationWizardService.showSideNavChartofAccounts === true) {
+        this.toggleSidenavCollapse();
+    }
+
+    if (this.configurationWizardService.showToolbarAdmin === true) {
+      setTimeout(() => {
+        this.showPopover(this.templateAppMenu, this.appMenu.nativeElement);
+      });
+    }
+
   }
 
 }

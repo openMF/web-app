@@ -1,10 +1,16 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material';
 
 /** Custom Services */
 import { AccountingService } from '../../accounting.service';
+import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
+import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
+
+/** Custom Dialog Component */
+import { ContinueSetupDialogComponent } from '../../../configuration-wizard/continue-setup-dialog/continue-setup-dialog.component';
 
 /**
  * Create gl account component.
@@ -14,7 +20,7 @@ import { AccountingService } from '../../accounting.service';
   templateUrl: './create-gl-account.component.html',
   styleUrls: ['./create-gl-account.component.scss']
 })
-export class CreateGlAccountComponent implements OnInit {
+export class CreateGlAccountComponent implements OnInit, AfterViewInit {
 
   /** GL account form. */
   glAccountForm: FormGroup;
@@ -35,6 +41,9 @@ export class CreateGlAccountComponent implements OnInit {
   /** Cancel route. (depending on creation of gl account or sub-ledger account) */
   cancelRoute = '../../';
 
+  @ViewChild('accountFormRef') accountFormRef: ElementRef<any>;
+  @ViewChild('templateAccountFormRef') templateAccountFormRef: TemplateRef<any>;
+
   /**
    * Retrieves the chart of accounts data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -45,7 +54,10 @@ export class CreateGlAccountComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private accountingService: AccountingService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private configurationWizardService: ConfigurationWizardService,
+              private popoverService: PopoverService,
+              public dialog: MatDialog) {
     this.route.queryParamMap.subscribe(params => {
       this.accountTypeId = Number(params.get('accountType'));
       this.parentId = Number(params.get('parent'));
@@ -118,8 +130,59 @@ export class CreateGlAccountComponent implements OnInit {
    */
   submit() {
     this.accountingService.createGlAccount(this.glAccountForm.value).subscribe((response: any) => {
-      this.router.navigate(['../view', response.resourceId], { relativeTo: this.route });
+      if (this.configurationWizardService.showChartofAccounts === true) {
+        this.configurationWizardService.showChartofAccounts = false;
+        this.openDialog();
+      } else {
+        this.router.navigate(['../view', response.resourceId], { relativeTo: this.route });
+      }
     });
   }
 
+  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+    setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
+  }
+
+  ngAfterViewInit() {
+    if (this.configurationWizardService.showChartofAccountsForm === true) {
+      setTimeout(() => {
+        this.showPopover(this.templateAccountFormRef, this.accountFormRef.nativeElement, 'bottom', true);
+      });
+    }
+  }
+
+  nextStep() {
+    this.configurationWizardService.showChartofAccountsForm = false;
+    this.configurationWizardService.showAccountsLinked = true;
+    this.router.navigate(['/accounting']);
+  }
+
+  previousStep() {
+    this.configurationWizardService.showChartofAccountsForm = false;
+    this.configurationWizardService.showChartofAccountsList = true;
+    this.router.navigate(['/accounting/chart-of-accounts']);
+  }
+
+  openDialog() {
+  const continueSetupDialogRef = this.dialog.open(ContinueSetupDialogComponent, {
+    data: {
+      stepName: 'GL account'
+    },
+  });
+    continueSetupDialogRef.afterClosed().subscribe((response: { step: number }) => {
+      if (response.step === 1) {
+          this.configurationWizardService.showChartofAccountsForm = false;
+          this.router.navigate(['../'], { relativeTo: this.route });
+        } else if (response.step === 2) {
+          this.configurationWizardService.showChartofAccountsForm = true;
+          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+          this.router.onSameUrlNavigation = 'reload';
+          this.router.navigate(['/accounting/chart-of-accounts/gl-accounts/create']);
+        } else if (response.step === 3) {
+          this.configurationWizardService.showChartofAccountsForm = false;
+          this.configurationWizardService.showAccountsLinked = true;
+          this.router.navigate(['/accounting']);
+        }
+    });
+  }
 }

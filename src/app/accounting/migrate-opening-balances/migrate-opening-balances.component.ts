@@ -1,10 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { AccountingService } from '../accounting.service';
+import { PopoverService } from '../../configuration-wizard/popover/popover.service';
+import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
 
 /** Custom Validators */
 import { onlyOneOfTheFieldsIsRequiredValidator } from './only-one-of-the-fields-is-required.validator';
@@ -17,7 +19,7 @@ import { onlyOneOfTheFieldsIsRequiredValidator } from './only-one-of-the-fields-
   templateUrl: './migrate-opening-balances.component.html',
   styleUrls: ['./migrate-opening-balances.component.scss']
 })
-export class MigrateOpeningBalancesComponent implements OnInit {
+export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
 
   /** Minimum opening balances date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -36,6 +38,9 @@ export class MigrateOpeningBalancesComponent implements OnInit {
   /** Sum total of credits. */
   creditsSum = 0;
 
+  @ViewChild('searchFormRef') searchFormRef: ElementRef<any>;
+  @ViewChild('templateSearchFormRef') templateSearchFormRef: TemplateRef<any>;
+
   /**
    * Retrieves the offices and currencies from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -46,7 +51,9 @@ export class MigrateOpeningBalancesComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private accountingService: AccountingService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private configurationWizardService: ConfigurationWizardService,
+              private popoverService: PopoverService) {
     this.route.data.subscribe((data: {
         offices: any,
         currencies: any
@@ -163,5 +170,28 @@ export class MigrateOpeningBalancesComponent implements OnInit {
       this.router.navigate(['/accounting/journal-entries/transactions/view', response.transactionId]);
     });
   }
+
+  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+    setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
+  }
+
+  ngAfterViewInit() {
+    if (this.configurationWizardService.showMigrateOpeningBalances === true) {
+      setTimeout(() => {
+        this.showPopover(this.templateSearchFormRef, this.searchFormRef.nativeElement, 'bottom', true);
+      });
+    }
+  }
+
+  nextStep() {
+    this.configurationWizardService.showMigrateOpeningBalances = false;
+    this.configurationWizardService.showClosingEntries = true;
+    this.router.navigate(['/accounting']);
+  }
+
+  previousStep() {
+    this.router.navigate(['/accounting']);
+  }
+
 
 }

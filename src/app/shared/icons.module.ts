@@ -92,7 +92,8 @@ import {
   faPen,
   faFlag,
   faArrowUp,
-  faArrowDown
+  faArrowDown,
+  faInfo
 } from '@fortawesome/free-solid-svg-icons';
 
 /** Add icons to the library for convenient access in other components. */
@@ -184,7 +185,7 @@ library.add(
   faPen,
   faFlag,
   faArrowUp,
-  faArrowDown
+  faInfo
 );
 
 /**

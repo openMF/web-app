@@ -1,11 +1,17 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material';
 
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
+import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
+import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
+
+/** Custom Dialog Component */
+import { ContinueSetupDialogComponent } from '../../../configuration-wizard/continue-setup-dialog/continue-setup-dialog.component';
 
 /**
  * Create employee component.
@@ -15,7 +21,7 @@ import { OrganizationService } from '../../organization.service';
   templateUrl: './create-employee.component.html',
   styleUrls: ['./create-employee.component.scss']
 })
-export class CreateEmployeeComponent implements OnInit {
+export class CreateEmployeeComponent implements OnInit, AfterViewInit {
 
   /** Minimum joining date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -25,6 +31,9 @@ export class CreateEmployeeComponent implements OnInit {
   employeeForm: FormGroup;
   /** Office data. */
   officeData: any;
+
+  @ViewChild('createEmployeeFormRef') createEmployeeFormRef: ElementRef<any>;
+  @ViewChild('templateCreateEmployeeForm') templateCreateEmployeeForm: TemplateRef<any>;
 
   /**
    * Retrieves the offices data from `resolve`.
@@ -38,7 +47,10 @@ export class CreateEmployeeComponent implements OnInit {
               private organizationService: OrganizationService,
               private route: ActivatedRoute,
               private router: Router,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private configurationWizardService: ConfigurationWizardService,
+              private popoverService: PopoverService,
+              public dialog: MatDialog) {
     this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
@@ -80,7 +92,59 @@ export class CreateEmployeeComponent implements OnInit {
     employee.locale = 'en';
     employee.dateFormat = dateFormat;
     this.organizationService.createEmployee(employee).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      if (this.configurationWizardService.showEmployeeForm === true) {
+        this.configurationWizardService.showEmployeeForm = false;
+        this.openDialog();
+      } else {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      }
+    });
+  }
+
+  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+    setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
+  }
+
+  ngAfterViewInit() {
+    if (this.configurationWizardService.showEmployeeForm === true) {
+      setTimeout(() => {
+          this.showPopover(this.templateCreateEmployeeForm, this.createEmployeeFormRef.nativeElement, 'right', true);
+      });
+    }
+  }
+
+  nextStep() {
+    this.configurationWizardService.showEmployeeForm = false;
+    this.configurationWizardService.showDefineWorkingDays = true;
+    this.router.navigate(['/organization']);
+  }
+
+  previousStep() {
+    this.configurationWizardService.showEmployeeForm = false;
+    this.configurationWizardService.showEmployeeTable = true;
+    this.router.navigate(['/organization/employees']);
+  }
+
+  openDialog() {
+    const continueSetupDialogRef = this.dialog.open(ContinueSetupDialogComponent, {
+      data: {
+        stepName: 'employee'
+      },
+    });
+    continueSetupDialogRef.afterClosed().subscribe((response: { step: number }) => {
+      if (response.step === 1) {
+        this.configurationWizardService.showEmployeeForm = false;
+        this.router.navigate(['../'], { relativeTo: this.route });
+      } else if (response.step === 2) {
+        this.configurationWizardService.showEmployeeForm = true;
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate(['/organization/employees/create']);
+      } else if (response.step === 3) {
+        this.configurationWizardService.showEmployeeForm = false;
+        this.configurationWizardService.showDefineWorkingDays = true;
+        this.router.navigate(['/organization']);
+      }
     });
   }
 

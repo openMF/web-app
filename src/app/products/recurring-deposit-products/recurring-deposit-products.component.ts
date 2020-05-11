@@ -1,10 +1,18 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
 
 /** rxjs Imports */
 import { of } from 'rxjs';
+
+/** Custom Services */
+import { PopoverService } from '../../configuration-wizard/popover/popover.service';
+import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
+
+/** Custom Dialog Component */
+import { NextStepDialogComponent } from '../../configuration-wizard/next-step-dialog/next-step-dialog.component';
 
 /**
  * Recurring Deposit Products component.
@@ -14,7 +22,7 @@ import { of } from 'rxjs';
   templateUrl: './recurring-deposit-products.component.html',
   styleUrls: ['./recurring-deposit-products.component.scss']
 })
-export class RecurringDepositProductsComponent implements OnInit {
+export class RecurringDepositProductsComponent implements OnInit, AfterViewInit {
 
   /** Data table data. */
   recurringDepositProductData: any;
@@ -28,11 +36,20 @@ export class RecurringDepositProductsComponent implements OnInit {
   /** Sorter for recurring deposit products table. */
   @ViewChild(MatSort) sort: MatSort;
 
+  @ViewChild('buttonCreateRecurringProduct') buttonCreateRecurringProduct: ElementRef<any>;
+  @ViewChild('templateButtonCreateRecurringProduct') templateButtonCreateRecurringProduct: TemplateRef<any>;
+  @ViewChild('recurringProductsTable') recurringProductsTable: ElementRef<any>;
+  @ViewChild('templateRecurringProductsTable') templateRecurringProductsTable: TemplateRef<any>;
+
   /**
    * Retrieves the recurring deposit products data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private dialog: MatDialog,
+              private configurationWizardService: ConfigurationWizardService,
+              private popoverService: PopoverService) {
     this.route.data.subscribe(( data: { recurringDepositProducts: any }) => {
       this.recurringDepositProductData = data.recurringDepositProducts;
     });
@@ -62,4 +79,56 @@ export class RecurringDepositProductsComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  ngAfterViewInit() {
+    if (this.configurationWizardService.showRecurringDepositProductsPage === true) {
+      setTimeout(() => {
+        this.showPopover(this.templateButtonCreateRecurringProduct, this.buttonCreateRecurringProduct.nativeElement, 'bottom', true);
+      });
+    }
+
+    if (this.configurationWizardService.showRecurringDepositProductsList === true) {
+      setTimeout(() => {
+        this.showPopover(this.templateRecurringProductsTable, this.recurringProductsTable.nativeElement, 'top', true);
+      });
+    }
+  }
+
+  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+    setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
+  }
+
+  nextStep() {
+    this.configurationWizardService.showRecurringDepositProductsPage = false;
+    this.configurationWizardService.showRecurringDepositProductsList = false;
+    this.openNextStepDialog();
+  }
+
+  previousStep() {
+    this.configurationWizardService.showRecurringDepositProductsPage = false;
+    this.configurationWizardService.showRecurringDepositProductsList = false;
+    this.configurationWizardService.showRecurringDepositProducts = true;
+    this.router.navigate(['/products']);
+  }
+
+  openNextStepDialog() {
+    const nextStepDialogRef = this.dialog.open( NextStepDialogComponent, {
+      data: {
+        nextStepName: 'Setup Funds and Manage Reports',
+        previousStepName: 'Products',
+        stepPercentage: 94
+      },
+    });
+    nextStepDialogRef.afterClosed().subscribe((response: { nextStep: boolean }) => {
+    if (response.nextStep) {
+      this.configurationWizardService.showRecurringDepositProductsPage = false;
+      this.configurationWizardService.showRecurringDepositProductsList = false;
+      this.configurationWizardService.showManageFunds = true;
+      this.router.navigate(['/organization']);
+      } else {
+      this.configurationWizardService.showRecurringDepositProductsPage = false;
+      this.configurationWizardService.showRecurringDepositProductsList = false;
+      this.router.navigate(['/home']);
+      }
+    });
+  }
 }

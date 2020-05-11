@@ -1,10 +1,14 @@
 /** Angular Imports */
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** rxjs Imports */
 import { of } from 'rxjs';
+
+/** Custom Services */
+import { PopoverService } from '../../configuration-wizard/popover/popover.service';
+import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
 
 /**
  * Charges component.
@@ -14,7 +18,7 @@ import { of } from 'rxjs';
   templateUrl: './charges.component.html',
   styleUrls: ['./charges.component.scss']
 })
-export class ChargesComponent implements OnInit {
+export class ChargesComponent implements OnInit, AfterViewInit {
 
   /** Charge data. */
   chargeData: any;
@@ -28,11 +32,19 @@ export class ChargesComponent implements OnInit {
   /** Sorter for charges table. */
   @ViewChild(MatSort) sort: MatSort;
 
+  @ViewChild('buttonCreateCharge') buttonCreateCharge: ElementRef<any>;
+  @ViewChild('templateButtonCreateCharge') templateButtonCreateCharge: TemplateRef<any>;
+  @ViewChild('chargesTable') chargesTable: ElementRef<any>;
+  @ViewChild('templateChargesTable') templateChargesTable: TemplateRef<any>;
+
   /**
    * Retrieves the charges data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private configurationWizardService: ConfigurationWizardService,
+              private popoverService: PopoverService) {
     this.route.data.subscribe(( data: { charges: any }) => {
       this.chargeData = data.charges;
     });
@@ -68,4 +80,35 @@ export class ChargesComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  ngAfterViewInit() {
+    if (this.configurationWizardService.showChargesPage === true) {
+      setTimeout(() => {
+        this.showPopover(this.templateButtonCreateCharge, this.buttonCreateCharge.nativeElement, 'bottom', true);
+      });
+    }
+
+    if (this.configurationWizardService.showChargesList === true) {
+      setTimeout(() => {
+        this.showPopover(this.templateChargesTable, this.chargesTable.nativeElement, 'top', true);
+      });
+    }
+  }
+
+  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+    setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
+  }
+
+  nextStep() {
+    this.configurationWizardService.showChargesPage = false;
+    this.configurationWizardService.showChargesList = false;
+    this.configurationWizardService.showLoanProducts = true;
+    this.router.navigate(['/products']);
+  }
+
+  previousStep() {
+    this.configurationWizardService.showChargesPage = false;
+    this.configurationWizardService.showChargesList = false;
+    this.configurationWizardService.showCharges = true;
+    this.router.navigate(['/products']);
+  }
 }

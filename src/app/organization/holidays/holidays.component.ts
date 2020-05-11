@@ -1,7 +1,7 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 
 /** rxjs Imports */
@@ -9,6 +9,8 @@ import { of } from 'rxjs';
 
 /** Custom Services */
 import { OrganizationService } from '../organization.service';
+import { PopoverService } from '../../configuration-wizard/popover/popover.service';
+import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
 
 /**
  * Holidays component.
@@ -18,7 +20,7 @@ import { OrganizationService } from '../organization.service';
   templateUrl: './holidays.component.html',
   styleUrls: ['./holidays.component.scss']
 })
-export class HolidaysComponent implements OnInit {
+export class HolidaysComponent implements OnInit, AfterViewInit {
 
   /** Office selector. */
   officeSelector = new FormControl();
@@ -36,6 +38,11 @@ export class HolidaysComponent implements OnInit {
   /** Sorter for holidays table. */
   @ViewChild(MatSort) sort: MatSort;
 
+  @ViewChild('buttonCreateHoliday') buttonCreateHoliday: ElementRef<any>;
+  @ViewChild('templateButtonCreateHoliday') templateButtonCreateHoliday: TemplateRef<any>;
+  @ViewChild('filterRef') filterRef: ElementRef<any>;
+  @ViewChild('templateFilterRef') templateFilterRef: TemplateRef<any>;
+
   /**
    * Retrieves the offices data from `resolve`.
    * @param {OrganizationService} organizationService Organization Service.
@@ -43,7 +50,10 @@ export class HolidaysComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    */
   constructor(private organizationService: OrganizationService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router: Router,
+              private configurationWizardService: ConfigurationWizardService,
+              private popoverService: PopoverService) {
     this.route.data.subscribe(( data: { offices: any }) => {
       this.officeData = data.offices;
     });
@@ -86,4 +96,35 @@ export class HolidaysComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+    setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
+  }
+
+  ngAfterViewInit() {
+    if (this.configurationWizardService.showHolidayPage === true) {
+      setTimeout(() => {
+          this.showPopover(this.templateButtonCreateHoliday, this.buttonCreateHoliday.nativeElement, 'bottom', true);
+      });
+    }
+
+    if (this.configurationWizardService.showHolidayFilter === true) {
+      setTimeout(() => {
+          this.showPopover(this.templateFilterRef, this.filterRef.nativeElement, 'bottom', true);
+      });
+    }
+  }
+
+  nextStep() {
+    this.configurationWizardService.showHolidayPage = false;
+    this.configurationWizardService.showHolidayFilter = false;
+    this.configurationWizardService.showCreateEmployee = true;
+    this.router.navigate(['/organization']);
+  }
+
+  previousStep() {
+    this.configurationWizardService.showHolidayPage = false;
+    this.configurationWizardService.showHolidayFilter = false;
+    this.configurationWizardService.showCreateHoliday = true;
+    this.router.navigate(['/organization']);
+  }
 }

@@ -1,16 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { constructor } from 'lodash';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 import { SystemService } from '../system.service';
+
+/** Custom Services */
+import { PopoverService } from '../../configuration-wizard/popover/popover.service';
+import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
 
 @Component({
   selector: 'mifosx-configure-maker-checker-tasks',
   templateUrl: './configure-maker-checker-tasks.component.html',
   styleUrls: ['./configure-maker-checker-tasks.component.scss']
 })
-export class ConfigureMakerCheckerTasksComponent implements OnInit {
+export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewInit {
 
   permissionsData: any;
   groupings: string[] = [];
@@ -31,9 +35,17 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit {
     permissions: { code: string }[]
   }[];
 
+  @ViewChild('buttonEdit') buttonEdit: ElementRef<any>;
+  @ViewChild('templateButtonEdit') templateButtonEdit: TemplateRef<any>;
+  @ViewChild('mcTable') mcTable: ElementRef<any>;
+  @ViewChild('templateMcTable') templateMcTable: TemplateRef<any>;
+
   constructor(private route: ActivatedRoute,
     private systemService: SystemService,
-    private formBuilder: FormBuilder, ) {
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService ) {
     this.route.data.subscribe((data: { permissions: any }) => {
       this.permissionsData = data.permissions;
     });
@@ -161,4 +173,34 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit {
     });
   }
 
+  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+    setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
+  }
+
+  ngAfterViewInit() {
+    if (this.configurationWizardService.showMakerCheckerTablePage === true) {
+      setTimeout(() => {
+          this.showPopover(this.templateButtonEdit, this.buttonEdit.nativeElement, 'bottom', true);
+      });
+    }
+    if (this.configurationWizardService.showMakerCheckerTableList === true) {
+      setTimeout(() => {
+          this.showPopover(this.templateMcTable, this.mcTable.nativeElement, 'top', true);
+      });
+    }
+  }
+
+  nextStep() {
+    this.configurationWizardService.showMakerCheckerTablePage = false;
+    this.configurationWizardService.showMakerCheckerTableList = false;
+    this.configurationWizardService.showConfigurations = true;
+    this.router.navigate(['/system']);
+  }
+
+  previousStep() {
+    this.configurationWizardService.showMakerCheckerTablePage = false;
+    this.configurationWizardService.showMakerCheckerTableList = false;
+    this.configurationWizardService.showMakerCheckerTable = true;
+    this.router.navigate(['/system']);
+  }
 }

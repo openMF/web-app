@@ -1,20 +1,22 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
-  <button mat-raised-button color="primary" [routerLink]="['create']">
-    <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
-    Create Data Table
-  </button>
+  <div #createDatatableRef class="in-block">
+    <button mat-raised-button color="primary" [routerLink]="['create']">
+      <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+      Create Data Table
+    </button>
+  </div>
 </div>
 
 <div class="container">
 
-  <div fxLayout="row" fxLayoutGap="20px">
+  <div #filter fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
       <mat-label>Filter</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)">
     </mat-form-field>
   </div>
 
-  <div class="mat-elevation-z8">
+  <div #datatablesList class="mat-elevation-z8">
 
     <table mat-table [dataSource]="dataSource" matSort>
 
@@ -38,3 +40,28 @@
   </div>
 
 </div>
+
+<ng-template #templateCreateDatatableRef let-popover="popover">
+  <h2>Create Data Table</h2>
+  <p class="mw300">This will launch a page that will allow you to create a new data table.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep();">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter,'bottom', true);">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateFilter let-popover="popover">
+  <h4>Search bar to filter datatables.</h4>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateCreateDatatableRef,createDatatableRef,'bottom', true);">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateDatatablesList,datatablesList,'top', true);">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateDatatablesList let-popover="popover">
+  <h4>List of all currently available data tables.</h4>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter,'bottom', true);">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep();">Next</button>
+  </div>
+</ng-template>

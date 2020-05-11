@@ -1,10 +1,14 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** rxjs Imports */
 import { of } from 'rxjs';
+
+/* Custom Services */
+import { PopoverService } from '../../configuration-wizard/popover/popover.service';
+import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
 
 /**
  * Fixed Deposit Products component.
@@ -14,7 +18,7 @@ import { of } from 'rxjs';
   templateUrl: './fixed-deposit-products.component.html',
   styleUrls: ['./fixed-deposit-products.component.scss']
 })
-export class FixedDepositProductsComponent implements OnInit {
+export class FixedDepositProductsComponent implements OnInit, AfterViewInit {
 
   /** Fixed deposit products data. */
   fixedDepositProductData: any;
@@ -28,11 +32,19 @@ export class FixedDepositProductsComponent implements OnInit {
   /** Sorter for fixed deposit products table. */
   @ViewChild(MatSort) sort: MatSort;
 
+  @ViewChild('buttonCreateFixedProduct') buttonCreateFixedProduct: ElementRef<any>;
+  @ViewChild('templateButtonCreateFixedProduct') templateButtonCreateFixedProduct: TemplateRef<any>;
+  @ViewChild('fixedProductsTable') fixedProductsTable: ElementRef<any>;
+  @ViewChild('templateFixedProductsTable') templateFixedProductsTable: TemplateRef<any>;
+
   /**
    * Retrieves the fixed deposit products data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private configurationWizardService: ConfigurationWizardService,
+              private popoverService: PopoverService) {
     this.route.data.subscribe(( data: { fixedDepositProducts: any }) => {
       this.fixedDepositProductData = data.fixedDepositProducts;
     });
@@ -60,6 +72,38 @@ export class FixedDepositProductsComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.fixedDepositProductData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  ngAfterViewInit() {
+    if (this.configurationWizardService.showFixedDepositProductsPage === true) {
+      setTimeout(() => {
+        this.showPopover(this.templateButtonCreateFixedProduct, this.buttonCreateFixedProduct.nativeElement, 'bottom', true);
+      });
+    }
+
+    if (this.configurationWizardService.showFixedDepositProductsList === true) {
+      setTimeout(() => {
+        this.showPopover(this.templateFixedProductsTable, this.fixedProductsTable.nativeElement, 'top', true);
+      });
+    }
+  }
+
+  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+    setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
+  }
+
+  nextStep() {
+    this.configurationWizardService.showFixedDepositProductsPage = false;
+    this.configurationWizardService.showFixedDepositProductsList = false;
+    this.configurationWizardService.showRecurringDepositProducts = true;
+    this.router.navigate(['/products']);
+  }
+
+  previousStep() {
+    this.configurationWizardService.showFixedDepositProductsPage = false;
+    this.configurationWizardService.showFixedDepositProductsList = false;
+    this.configurationWizardService.showFixedDepositProducts = true;
+    this.router.navigate(['/products']);
   }
 
 }

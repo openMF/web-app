@@ -1,11 +1,13 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 
 /** Custom Services */
 import { SystemService } from '../../system.service';
+import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
+import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
 
 /** Data Imports */
 import { appTableData } from '../app-table-data';
@@ -13,6 +15,9 @@ import { appTableData } from '../app-table-data';
 /** Custom Components */
 import { ColumnDialogComponent } from '../column-dialog/column-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+
+/** Custom Dialog Component */
+import { ContinueSetupDialogComponent } from '../../../configuration-wizard/continue-setup-dialog/continue-setup-dialog.component';
 
 /**
  * Create Data Table Component.
@@ -22,7 +27,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   templateUrl: './create-data-table.component.html',
   styleUrls: ['./create-data-table.component.scss']
 })
-export class CreateDataTableComponent implements OnInit {
+export class CreateDataTableComponent implements OnInit, AfterViewInit {
 
   /** Data Table Form */
   dataTableForm: FormGroup;
@@ -57,6 +62,9 @@ export class CreateDataTableComponent implements OnInit {
   /** Sorter for columns table. */
   @ViewChild(MatSort) sort: MatSort;
 
+  @ViewChild('dataTableFormRef') dataTableFormRef: ElementRef<any>;
+  @ViewChild('templateDataTableFormRef') templateDataTableFormRef: TemplateRef<any>;
+
   /**
    * Retrieves the column codes data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -69,7 +77,9 @@ export class CreateDataTableComponent implements OnInit {
               private systemService: SystemService,
               private route: ActivatedRoute,
               private router: Router,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private configurationWizardService: ConfigurationWizardService,
+              private popoverService: PopoverService) {
     this.route.data.subscribe((data: { columnCodes: any }) => {
       this.dataForDialog.columnCodes = data.columnCodes;
     });
@@ -180,9 +190,62 @@ export class CreateDataTableComponent implements OnInit {
    */
   submit() {
     this.dataTableForm.value.columns = this.columnData;
-    this.systemService.createDataTable(this.dataTableForm.value)
-      .subscribe((response: any) => {
+    this.systemService.createDataTable(this.dataTableForm.value).subscribe((response: any) => {
+      if (this.configurationWizardService.showDatatablesForm === true) {
+          this.configurationWizardService.showDatatablesForm = false;
+          this.openDialog();
+      } else {
         this.router.navigate(['../', response.resourceIdentifier], { relativeTo: this.route });
+      }
+    });
+  }
+
+  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+    setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
+  }
+
+  ngAfterViewInit() {
+    if (this.configurationWizardService.showDatatablesForm === true) {
+      setTimeout(() => {
+          this.showPopover(this.templateDataTableFormRef, this.dataTableFormRef.nativeElement, 'bottom', true);
       });
+    }
+  }
+
+  nextStep() {
+    this.configurationWizardService.showDatatablesForm = false;
+    this.configurationWizardService.showSystemCodes = true;
+    this.router.navigate(['/system']);
+  }
+
+  previousStep() {
+    this.configurationWizardService.showDatatablesForm = false;
+    this.configurationWizardService.showDatatablesList = true;
+    this.router.navigate(['/system/data-tables']);
+  }
+
+  openDialog() {
+    const continueSetupDialogRef = this.dialog.open(ContinueSetupDialogComponent, {
+      data: {
+        stepName: 'data table'
+      },
+    });
+    continueSetupDialogRef.afterClosed().subscribe((response: { step: number }) => {
+      if (response.step === 1) {
+          this.configurationWizardService.showDatatablesForm = false;
+          this.router.navigate(['../'], { relativeTo: this.route });
+        } else if (response.step === 2) {
+          this.configurationWizardService.showDatatablesForm = true;
+          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+          this.router.onSameUrlNavigation = 'reload';
+          this.router.navigate(['/organization/data-tables/create']);
+        } else if (response.step === 3) {
+          this.configurationWizardService.showDatatablesForm = false;
+          this.configurationWizardService.showSystemCodes = true;
+          this.router.navigate(['/system']);
+        }
+    });
   }
 }
+
+

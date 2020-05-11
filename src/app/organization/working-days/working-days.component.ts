@@ -1,10 +1,16 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material';
 
 /** Custom Services */
 import { OrganizationService } from '../organization.service';
+import { PopoverService } from '../../configuration-wizard/popover/popover.service';
+import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
+
+/** Custom Dialog Components */
+import { NextStepDialogComponent } from '../../configuration-wizard/next-step-dialog/next-step-dialog.component';
 
 /** Recurrence default value. */
 const recurrenceDefaultValue = 'FREQ=WEEKLY;INTERVAL=1;BYDAY=';
@@ -17,7 +23,7 @@ const recurrenceDefaultValue = 'FREQ=WEEKLY;INTERVAL=1;BYDAY=';
   templateUrl: './working-days.component.html',
   styleUrls: ['./working-days.component.scss']
 })
-export class WorkingDaysComponent implements OnInit {
+export class WorkingDaysComponent implements OnInit, AfterViewInit {
 
   /** Working days form. */
   workingDaysForm: FormGroup;
@@ -36,6 +42,9 @@ export class WorkingDaysComponent implements OnInit {
   /**  Repayment schedule type data. */
   repaymentRescheduleTypeData: any;
 
+  @ViewChild('workingDaysFormRef') workingDaysFormRef: ElementRef<any>;
+  @ViewChild('templateWorkingDaysFormRef') templateWorkingDaysFormRef: TemplateRef<any>;
+
   /**
    * Retrieves the working days data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -46,7 +55,10 @@ export class WorkingDaysComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private organizationService: OrganizationService,
-              private router: Router) {
+              private router: Router,
+              private dialog: MatDialog,
+              private configurationWizardService: ConfigurationWizardService,
+              private popoverService: PopoverService) {
     this.route.data.subscribe((data: { workingDays: any }) => {
       this.workingDaysData = data.workingDays;
     });
@@ -112,8 +124,52 @@ export class WorkingDaysComponent implements OnInit {
     }
     workingDays.recurrence = recurrence;
     this.organizationService.updateWorkingDays(workingDays).subscribe(response => {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      if (this.configurationWizardService.showDefineWorkingDays === true) {
+        this.openNextStepDialog();
+      } else {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      }
     });
   }
 
+  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+    setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
+  }
+
+  ngAfterViewInit() {
+    if (this.configurationWizardService.showDefineWorkingDays === true) {
+      setTimeout(() => {
+          this.showPopover(this.templateWorkingDaysFormRef, this.workingDaysFormRef.nativeElement, 'right', true);
+      });
+    }
+  }
+
+  nextStep() {
+    this.configurationWizardService.showDefineWorkingDays = false;
+    this.openNextStepDialog();
+  }
+
+  previousStep() {
+    this.router.navigate(['/organization']);
+  }
+
+  openNextStepDialog() {
+    const nextStepDialogRef = this.dialog.open( NextStepDialogComponent, {
+      data: {
+        nextStepName: 'Setup System',
+        previousStepName: 'Organization',
+        stepPercentage: 30
+      },
+    });
+    nextStepDialogRef.afterClosed().subscribe((response: { nextStep: boolean }) => {
+    if (response.nextStep) {
+      this.configurationWizardService.showDefineWorkingDays = false;
+      this.configurationWizardService.showDatatables = true;
+      this.router.navigate(['/system']);
+      } else {
+      this.configurationWizardService.showDefineWorkingDays = false;
+      this.router.navigate(['/home']);
+      }
+    });
+  }
 }
