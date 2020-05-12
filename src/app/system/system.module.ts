@@ -49,6 +49,7 @@ import { ColumnDialogComponent } from './manage-data-tables/column-dialog/column
 /** Dialog Component Imports */
 import { ReportParameterDialogComponent } from './manage-reports/report-parameter-dialog/report-parameter-dialog.component';
 import { AddEventDialogComponent } from './manage-hooks/add-event-dialog/add-event-dialog.component';
+import { ViewSchedulerJobComponent } from './manage-scheduler-jobs/view-scheduler-job/view-scheduler-job.component';
 
 @NgModule({
   imports: [
@@ -96,7 +97,8 @@ import { AddEventDialogComponent } from './manage-hooks/add-event-dialog/add-eve
     AddEventDialogComponent,
     ColumnDialogComponent,
     AuditTrailsComponent,
-    ViewAuditComponent
+    ViewAuditComponent,
+    ViewSchedulerJobComponent
   ],
   entryComponents: [
     ReportParameterDialogComponent,

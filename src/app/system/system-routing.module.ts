@@ -71,6 +71,8 @@ import { AuditTrailResolver } from './audit-trails/view-audit/audit-trail.resolv
 import { ReportsResolver } from './manage-reports/reports.resolver';
 import { ReportResolver } from './manage-reports/report.resolver';
 import { ReportTemplateResolver } from './manage-reports/report-template.resolver';
+import { ViewSchedulerJobComponent } from './manage-scheduler-jobs/view-scheduler-job/view-scheduler-job.component';
+import { ViewSchedulerJobResolver } from './manage-scheduler-jobs/view-scheduler-job/view-scheduler-job.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -331,11 +333,24 @@ const routes: Routes = [
       },
       {
         path: 'scheduler-jobs',
-        component: ManageSchedulerJobsComponent,
-        resolve: {
-              jobsScheduler: ManageSchedulerJobsResolver
-        },
         data: { title:  extract('Manage Scheduler Jobs'), breadcrumb: 'Manage Scheduler Jobs' },
+        children: [
+          {
+            path: '',
+            component: ManageSchedulerJobsComponent,
+            resolve: {
+              jobsScheduler: ManageSchedulerJobsResolver
+            },
+          },
+          {
+            path: ':id',
+            data: { title: extract('View Scheduler Job'), routeParamBreadcrumb: 'id' },
+            component: ViewSchedulerJobComponent,
+            resolve: {
+              selectedJob: ViewSchedulerJobResolver
+            }
+          }
+        ],
       },
       {
         path: 'global-configurations',
@@ -498,7 +513,8 @@ const routes: Routes = [
     ReportResolver,
     ReportTemplateResolver,
     AuditTrailSearchTemplateResolver,
-    AuditTrailResolver
+    AuditTrailResolver,
+    ViewSchedulerJobResolver
   ]
 })
 export class SystemRoutingModule { }

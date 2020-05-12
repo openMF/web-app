@@ -177,6 +177,14 @@ export class SystemService {
   }
 
   /**
+   * @param jobId  Selected Job Id
+   * @returns {Observable<any>}
+   */
+  getSelectedJob(jobId: string) {
+    return this.http.get(`/jobs/${jobId}`);
+  }
+
+  /**
    * @param {any} code Code to be created.
    * @returns {Observable<any>}
    */
