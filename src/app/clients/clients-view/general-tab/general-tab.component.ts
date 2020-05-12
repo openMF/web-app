@@ -3,14 +3,18 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
+/** Custom Services. */
+import { ClientsService } from 'app/clients/clients.service';
 
-
+/**
+ * General Tab component.
+ */
 @Component({
   selector: 'mifosx-general-tab',
   templateUrl: './general-tab.component.html',
   styleUrls: ['./general-tab.component.scss']
 })
-export class GeneralTabComponent implements OnInit {
+export class GeneralTabComponent {
   openLoansColumns: string[] = ['Account No', 'Loan Account', 'Original Loan', 'Loan Balance', 'Amount Paid', 'Type', 'Actions'];
   closedLoansColumns: string[] = ['Account No', 'Loan Account', 'Original Loan', 'Loan Balance', 'Amount Paid', 'Type', 'Closed Date'];
   openSavingsColumns: string[] = ['Account No', 'Saving Account', 'Last Active', 'Balance', 'Actions'];
@@ -30,8 +34,7 @@ export class GeneralTabComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
-    private datePipe: DatePipe,
+    private clientService: ClientsService
   ) {
     this.route.data.subscribe((data: { clientAccountsData: any, clientChargesData: any, clientSummary: any }) => {
       this.clientAccountData = data.clientAccountsData;
@@ -43,9 +46,6 @@ export class GeneralTabComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
-
   toggleLoanAccountsOverview() {
     this.showClosedLoanAccounts = !this.showClosedLoanAccounts;
   }
@@ -55,6 +55,28 @@ export class GeneralTabComponent implements OnInit {
   }
   toggleShareAccountsOverview() {
     this.showClosedShareAccounts = !this.showClosedShareAccounts;
+  }
+
+  /**
+   * Waive Charge.
+   * @param chargeId Selected Charge Id.
+   * @param clientId Selected Client Id.
+   */
+  waiveCharge(chargeId: string, clientId: string) {
+    const charge = { clientId: clientId.toString(), resourceType: chargeId};
+    this.clientService.waiveClientCharge(charge).subscribe(() => {
+      this.getChargeData(clientId);
+    });
+  }
+
+  /**
+   * Get Charge Data.
+   * @param clientId Selected Client Id.
+   */
+  getChargeData(clientId: string) {
+    this.clientService.getClientChargesData(clientId).subscribe((data: any) => {
+      this.upcomingCharges = data.pageItems;
+    });
   }
 
 }

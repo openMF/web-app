@@ -67,6 +67,14 @@ export class ClientsService {
     return this.http.get(`/clients/${clientId}/charges`, { params: httpParams });
   }
 
+  /**
+   * @param chargeData Charge Data to be waived.
+   */
+  waiveClientCharge(chargeData: any) {
+    const httpParams = new HttpParams().set('command', 'waive');
+    return this.http.post(`/clients/${chargeData.clientId}/charges/${chargeData.resourceType}`, chargeData, { params: httpParams });
+  }
+
   getClientSummary(clientId: string) {
     const httpParams = new HttpParams().set('R_clientId', clientId)
       .set('genericResultSet', 'false');

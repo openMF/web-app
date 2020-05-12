@@ -54,10 +54,10 @@
     <ng-container matColumnDef="Actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let element">
-        <button class="account-action-button" mat-raised-button color="primary">
+        <button class="account-action-button" mat-raised-button color="primary" [routerLink]="['../','paycharge',element.id]">
           <i class="fa fa-dollar"></i>
         </button>
-        <button class="account-action-button" mat-raised-button color="primary">
+        <button class="account-action-button" mat-raised-button color="primary" (click)="waiveCharge(element.id,element.clientId)">
           <i class="fa fa-flag"></i>
         </button>
       </td>
