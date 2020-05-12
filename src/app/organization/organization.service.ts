@@ -33,11 +33,30 @@ export class OrganizationService {
   }
 
   /**
+   * @param {string} officeId Office ID of Office.
+   * @param {boolean} template
+   * @returns {Observable<any>} Office.
+   */
+  getOffice(officeId: string, template: boolean = false): Observable<any> {
+    const httpParams = new HttpParams().set('template', template.toString());
+    return this.http.get(`/offices/${officeId}`, { params: httpParams });
+  }
+
+  /**
    * @param {any} office Office to be created.
    * @returns {Observable<any>}
    */
   createOffice(office: any): Observable<any> {
     return this.http.post('/offices', office);
+  }
+
+  /**
+   * @param {any} office Office to be updated.
+   * @param {string} officeId Office Id
+   * @returns {Observable<any>}
+   */
+  updateOffice(officeId: string, office: any): Observable<any> {
+    return this.http.put(`/offices/${officeId}`, office);
   }
 
   /**

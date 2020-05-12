@@ -26,6 +26,7 @@ import { CreateOfficeComponent } from './offices/create-office/create-office.com
 import { CreateEmployeeComponent } from './employees/create-employee/create-employee.component';
 import { CreatePaymentTypeComponent } from './payment-types/create-payment-type/create-payment-type.component';
 import { ViewEmployeeComponent } from './employees/view-employee/view-employee.component';
+import { EditOfficeComponent } from './offices/edit-office/edit-office.component';
 import { CreateAdhocQueryComponent } from './adhoc-query/create-adhoc-query/create-adhoc-query.component';
 import { HolidaysComponent } from './holidays/holidays.component';
 
@@ -61,7 +62,8 @@ import { HolidaysComponent } from './holidays/holidays.component';
     CreatePaymentTypeComponent,
     ViewEmployeeComponent,
     CreateAdhocQueryComponent,
-    HolidaysComponent
+    HolidaysComponent,
+    EditOfficeComponent,
   ]
 })
 export class OrganizationModule { }

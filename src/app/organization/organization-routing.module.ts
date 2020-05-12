@@ -47,6 +47,8 @@ import { PaymentTypeResolver } from './payment-types/payment-type.resolver';
 import { PasswordPreferencesTemplateResolver } from './password-preferences/password-preferences-template.resolver';
 import { EntityDataTableChecksResolver } from './entity-data-table-checks/entity-data-table-checks.resolver';
 import { WorkingDaysResolver } from './working-days/working-days.resolver';
+import { EditOfficeResolver } from './offices/edit-office/edit-office.resolver';
+import { EditOfficeComponent } from './offices/edit-office/edit-office.component';
 import { AdhocQueryTemplateResolver } from './adhoc-query/adhoc-query-template.resolver';
 
 /** Organization Routes */
@@ -86,6 +88,20 @@ const routes: Routes = [
               resolve: {
                 offices: OfficesResolver,
               }
+            },
+            {
+              path: ':id',
+              data: { title: extract('View Office'), routeParamBreadcrumb: 'id' },
+              children: [
+                {
+                  path: 'edit',
+                  component: EditOfficeComponent,
+                  data: { title: extract('Edit Office'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    officeTemplate: EditOfficeResolver
+                  }
+                }
+              ]
             }
           ]
         },
@@ -281,6 +297,7 @@ const routes: Routes = [
     PasswordPreferencesTemplateResolver,
     EntityDataTableChecksResolver,
     WorkingDaysResolver,
+    EditOfficeResolver,
     AdhocQueryTemplateResolver
   ]
 })
