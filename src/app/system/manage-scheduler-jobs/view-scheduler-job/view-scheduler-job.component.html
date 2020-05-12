@@ -1,0 +1,57 @@
+<div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="2%">
+  <button mat-raised-button color="primary" [routerLink]="['edit']">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit
+  </button>
+  <button mat-raised-button color="primary" [routerLink]="['viewhistory']">
+    View History
+  </button>
+</div>
+
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" class="content">
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Job Name
+        </div>
+          
+        <div fxFlex="50%">
+          {{ jobData.displayName }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Cron Expression
+        </div>
+
+        <div fxFlex="50%">
+          {{ jobData.cronExpression }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Is Active Job?
+        </div>
+
+        <div fxFlex="50%">
+          {{ jobData.active }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Follow
+        </div>
+
+        <div fxFlex="50%">
+          <a href="http://www.cronmaker.com/">	Click Here To Generate Cron Expression </a>
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>
