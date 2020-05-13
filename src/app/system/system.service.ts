@@ -177,11 +177,20 @@ export class SystemService {
   }
 
   /**
-   * @param jobId  Selected Job Id
+   * @param jobId Job Id to be edited
+   * @returns {Observable<any>} Fetches Scheduler Job.
+   */
+  getSelectedJob(jobId: string): Observable<any> {
+    return this.http.get(`/jobs/${jobId}`);
+  }
+
+  /**
+   * @param {string} jobId Job ID of Job to be updated.
+   * @param {any} Job Job to be updated.
    * @returns {Observable<any>}
    */
-  getSelectedJob(jobId: string) {
-    return this.http.get(`/jobs/${jobId}`);
+  updateScheduler(jobId: string, job: any): Observable<any> {
+    return this.http.put(`/jobs/${jobId}`, job);
   }
 
   /**
