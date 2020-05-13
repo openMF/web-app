@@ -1,0 +1,44 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="jobForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Job Name</mat-label>
+            <input matInput required formControlName="displayName">
+            <mat-error *ngIf="jobForm.controls.displayName.hasError('required')">
+              Job Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Cron Expression</mat-label>
+            <input matInput required formControlName="cronExpression">
+            <mat-error *ngIf="jobForm.controls.cronExpression.hasError('required')">
+              Cron Expression is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-checkbox labelPosition="before" formControlName="active">
+            Is job active?
+          </mat-checkbox>
+  
+        </div>
+
+        <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+          <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+          <button mat-raised-button color="primary" [disabled]="!jobForm.valid">Submit</button>
+        </mat-card-actions>
+  
+      </mat-card-content>
+
+    </form>
+
+  </mat-card>
+
+</div>
