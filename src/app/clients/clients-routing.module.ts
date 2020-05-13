@@ -43,6 +43,8 @@ import { ChargesOverviewComponent } from './clients-view/charges-overview/charge
 import { ClientChargeOverviewResolver } from './clients-view/charges-overview/charge-overview.resolver';
 import { ClientActionsResolver } from './common-resolvers/client-actions.resolver';
 import { TakeSurveyResolver } from './common-resolvers/take-survey.resolver';
+import { ViewChargeComponent } from './clients-view/view-charge/view-charge.component';
+import { ClientChargeViewResolver } from './common-resolvers/client-charge-view.resolver';
 
 const routes: Routes = [
   Route.withShell([{
@@ -243,7 +245,8 @@ const routes: Routes = [
     ClientAddressTemplateResolver,
     ClientChargeOverviewResolver,
     ClientActionsResolver,
-    TakeSurveyResolver
+    TakeSurveyResolver,
+    ClientChargeViewResolver
   ]
 })
 export class ClientsRoutingModule { }

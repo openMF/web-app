@@ -90,6 +90,14 @@ export class ClientsService {
     return this.http.get(`/clients/${clientId}/charges`, { params: httpParams });
   }
 
+  getSelectedChargeData(clientId: string, chargeId: string) {
+    const httpParams = new HttpParams().set('associations', 'all');
+    return this.http.get(`/clients/${clientId}/charges/${chargeId}`, { params: httpParams });
+  }
+
+  /**
+   * @param chargeData Charge Data to be waived.
+   */
   waiveClientCharge(chargeData: any) {
     const httpParams = new HttpParams().set('command', 'waive');
     return this.http.post(`/clients/${chargeData.clientId}/charges/${chargeData.resourceType}`, chargeData, { params: httpParams });
@@ -97,6 +105,21 @@ export class ClientsService {
 
   getAllClientCharges(clientId: string) {
     return this.http.get(`/clients/${clientId}/charges`);
+  }
+
+  /**
+   * @param transactionData Transaction Data to be undone.
+   */
+  undoTransaction(transactionData: any) {
+    return this.http.post(`/clients/${transactionData.clientId}/transactions/${transactionData.transactionId}?command=undo`, transactionData);
+  }
+
+  /**
+   * @param clientId Client Id of the relevant charge.
+   * @param chargeId Charge Id to be deleted.
+   */
+  deleteCharge(clientId: string, chargeId: string) {
+    return this.http.delete(`/clients/${clientId}/charges/${chargeId}?associations=all`);
   }
 
   getClientSummary(clientId: string) {

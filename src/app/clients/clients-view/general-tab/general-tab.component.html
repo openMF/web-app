@@ -78,7 +78,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="upcomingChargesColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: upcomingChargesColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: upcomingChargesColumns;" [routerLink]="[routeToCharges,row.id]"></tr>
   </table>
 
 
