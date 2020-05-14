@@ -42,4 +42,23 @@ export class CentersService {
     return this.http.get('/centers', { params: httpParams });
   }
 
+    /**
+     * @param {any} center Center to be created.
+     * @returns {Observable<any>}
+     */
+    createCenter(center: any): Observable<any> {
+        return this.http.post('/centers', center);
+    }
+
+    /**
+     * @param {number} officeId Office Id of office to get staff for.
+     * @returns {Observable<any>}
+     */
+    getStaff(officeId: number): Observable<any> {
+        const httpParams = new HttpParams()
+            .set('officeId', officeId.toString())
+            .set('staffInSelectedOfficeOnly', 'true');
+        return this.http.get('/centers/template', { params: httpParams });
+    }
+
 }
