@@ -63,7 +63,8 @@ export class OrganizationService {
    * @returns {Observable<any>} Employees data
    */
   getEmployees(): Observable<any> {
-    return this.http.get('/staff');
+    const httpParams = new HttpParams().set('status', 'all');
+    return this.http.get('/staff', { params: httpParams });
   }
 
   /**
