@@ -31,6 +31,7 @@ import { CreateAdhocQueryComponent } from './adhoc-query/create-adhoc-query/crea
 import { HolidaysComponent } from './holidays/holidays.component';
 import { EditEmployeeComponent } from './employees/edit-employee/edit-employee.component';
 import { CreateTellerComponent } from './tellers/create-teller/create-teller.component';
+import { EditTellerComponent } from './tellers/edit-teller/edit-teller.component';
 
 /**
  * Organization Module
@@ -67,7 +68,8 @@ import { CreateTellerComponent } from './tellers/create-teller/create-teller.com
     HolidaysComponent,
     EditOfficeComponent,
     EditEmployeeComponent,
-    CreateTellerComponent
+    CreateTellerComponent,
+    EditTellerComponent
   ]
 })
 export class OrganizationModule { }

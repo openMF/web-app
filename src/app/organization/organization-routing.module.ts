@@ -32,6 +32,7 @@ import { CreateAdhocQueryComponent } from './adhoc-query/create-adhoc-query/crea
 import { HolidaysComponent } from './holidays/holidays.component';
 import { EditEmployeeComponent } from './employees/edit-employee/edit-employee.component';
 import { CreateTellerComponent } from './tellers/create-teller/create-teller.component';
+import { EditTellerComponent } from './tellers/edit-teller/edit-teller.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -216,11 +217,25 @@ const routes: Routes = [
             },
             {
               path: ':id',
-              component: ViewTellerComponent,
-              data: { title: extract('View Teller'), routeResolveBreadcrumb: ['teller', 'name'] },
-              resolve: {
-                teller: TellerResolver
-              }
+              data: { title: extract('View Teller'), routeParamBreadcrumb: 'id' },
+              children: [
+                {
+                  path: '',
+                  component: ViewTellerComponent,
+                  resolve: {
+                    teller: TellerResolver
+                  },
+                },
+                {
+                  path: 'edit',
+                  component: EditTellerComponent,
+                  data: { title: extract('Edit Teller'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    teller: TellerResolver,
+                    offices: OfficesResolver
+                  }
+                }
+              ]
             }
           ]
         },

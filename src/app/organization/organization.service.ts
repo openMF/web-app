@@ -274,4 +274,12 @@ export class OrganizationService {
     return this.http.put(`/staff/${employeeId}`, employee);
   }
 
+  /**
+   * @param {string} tellerId Teller ID of Teller to be edited.
+   * @returns {Observable<any>}
+   */
+  updateTeller(tellerId: string, teller: any): Observable<any> {
+    return this.http.put(`/tellers/${tellerId}`, teller);
+  }
+
 }
