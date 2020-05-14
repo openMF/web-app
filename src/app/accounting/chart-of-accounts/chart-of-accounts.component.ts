@@ -67,6 +67,7 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
     this.glAccountTreeService.treeDataChange.subscribe((glAccountTreeData: GLAccountNode[]) => {
       this.nestedTreeDataSource.data = glAccountTreeData;
       this.nestedTreeControl.expand(this.nestedTreeDataSource.data[0]);
+      this.nestedTreeControl.dataNodes = glAccountTreeData;
     });
   }
 
