@@ -54,4 +54,17 @@ export class UserService {
     return this.http.disableApiPrefix().get('/assets/mock/user.mock.json');
   }
 
+  /**
+   * Change User Password.
+   * @param userId User Id of users
+   * @param password New Password of the user
+   * @returns {Observable<any>}
+   *
+   * TODO: update endpoint once API available
+   */
+  changePassword(userId: string, passwordObj: any) {
+
+    return this.http.put(`/self/user/${userId}`, passwordObj);
+  }
+
 }

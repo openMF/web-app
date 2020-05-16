@@ -77,7 +77,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['view/1600']"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['view',row.id]"></tr>
       <!-- TODO: Update route once API is setup. -->
 
     </table>
