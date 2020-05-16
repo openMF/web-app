@@ -8,9 +8,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 /** Tanslation Imports */
 import { TranslateModule } from '@ngx-translate/core';
 
-/** Chart Imports */
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-
 /** Environment Configuration */
 import { environment } from 'environments/environment';
 
@@ -55,7 +52,6 @@ import { AppRoutingModule } from './app-routing.module';
     HttpClientModule,
     ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
     TranslateModule.forRoot(),
-    NgxChartsModule,
     CoreModule,
     HomeModule,
     LoginModule,
