@@ -49,6 +49,16 @@ export class UsersService {
   }
 
   /**
+   * Change User Password
+   * @param userId User Id of users
+   * @param password New Password of the user
+   * @returns {Observable<any>}
+   */
+  changePassword(userId: string, passwordObj: any) {
+    return this.http.put(`/users/${userId}`, passwordObj);
+  }
+
+  /**
    * @param {string} userId user ID of user.
    * @returns {Observable<any>}
    */
