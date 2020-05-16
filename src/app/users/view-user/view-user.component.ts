@@ -8,6 +8,7 @@ import { UsersService } from '../users.service';
 
 /** Custom Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { ChangePasswordDialogComponent } from 'app/shared/change-password-dialog/change-password-dialog.component';
 
 /**
  * View user component.
@@ -54,6 +55,27 @@ export class ViewUserComponent implements OnInit {
           .subscribe(() => {
             this.router.navigate(['/users']);
           });
+      }
+    });
+  }
+
+  /**
+   * Change Password of the Users.
+   */
+  changeUserPassword() {
+    const changeUserPasswordDialogRef = this.dialog.open(ChangePasswordDialogComponent, {
+      width: '400px',
+      height: '300px'
+    });
+    changeUserPasswordDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.password && response.repeatPassword) {
+        const password = response.password;
+        const repeatPassword = response.repeatPassword;
+        const firstname = this.userData.firstname;
+        const data = {password: password, repeatPassword: repeatPassword, firstname: firstname};
+        this.usersService.changePassword(this.userData.id, data).subscribe(() => {
+          this.router.navigate(['/users']);
+        });
       }
     });
   }
