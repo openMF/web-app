@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
+import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -23,8 +23,9 @@ export class LoanProvisioningCriteriaResolver implements Resolve<Object> {
    * Returns the loan provisioning criteria data.
    * @returns {Observable<any>}
    */
-  resolve(): Observable<any> {
-    return this.organizationService.getProvisioningCriteria();
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const provisioningId = route.paramMap.get('id');
+    return this.organizationService.getProvisioningCriteria(provisioningId);
   }
 
 }
