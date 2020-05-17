@@ -64,6 +64,8 @@ import { ManageTaxComponentsResolver } from './manage-tax-components/manage-tax-
 import { ManageTaxGroupsResolver } from './manage-tax-groups/manage-tax-groups.resolver';
 import { TaxComponentResolver } from './manage-tax-components/tax-component.resolver';
 import { TaxComponentTemplateResolver } from './manage-tax-components/tax-component-template.resolver';
+import { EditChargeComponent } from './charges/edit-charge/edit-charge.component';
+import { ChargesTemplateResolver } from './charges/charges-template.resolver';
 
 /** Products Routes */
 const routes: Routes = [
@@ -271,27 +273,6 @@ const routes: Routes = [
           data: { title:  extract('Recurring Deposit Products'), breadcrumb: 'Recurring Deposit Products' },
         },
         {
-          path: 'charges',
-          data: { title:  extract('Charges'), breadcrumb: 'Charges' },
-          children: [
-            {
-              path: '',
-              component: ChargesComponent,
-              resolve: {
-                charges: ChargesResolver
-              }
-            },
-            {
-              path: ':id',
-              data: { title: extract('View Charge'), routeResolveBreadcrumb: ['charge', 'name'] },
-              component: ViewChargeComponent,
-              resolve: {
-                charge: ChargeResolver
-              }
-            }
-          ]
-        },
-        {
           path: 'fixed-deposit-products',
           data: { title:  extract('Fixed Deposit Products'), breadcrumb: 'Fixed Deposit Products' },
           children: [
@@ -358,6 +339,42 @@ const routes: Routes = [
               ]
             }
           ]
+        },
+
+        {
+          path: 'charges',
+          data: { title: extract('Charges'), breadcrumb: 'Charges' },
+          children: [
+            {
+              path: '',
+              component: ChargesComponent,
+              resolve: {
+                charges: ChargesResolver
+              }
+            },
+
+            {
+              path: ':id',
+              data: { title: extract('View Charges'), routeParamBreadcrumb: 'id' },
+              children: [
+                {
+                  path: '',
+                  component: ViewChargeComponent,
+                  resolve: {
+                    charge: ChargeResolver
+                  }
+                },
+                {
+                  path: 'edit',
+                  component: EditChargeComponent,
+                  data: { title: extract('Edit Charge'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    chargesTemplate: ChargesTemplateResolver
+                  }
+                },
+              ]
+            },
+          ]
         }
       ]
     }
@@ -388,6 +405,7 @@ const routes: Routes = [
     RecurringDepositProductsResolver,
     ChargesResolver,
     ChargeResolver,
+    ChargesTemplateResolver,
     FixedDepositProductsResolver,
     FixedDepositProductsTemplateResolver,
     ProductsMixResolver,

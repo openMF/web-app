@@ -98,18 +98,31 @@ export class ProductsService {
   }
 
   /**
-   * @returns {Observable<any>} Charges data
+   * @returns {Observable<any>} Charges data.
    */
   getCharges(): Observable<any> {
     return this.http.get('/charges');
+  }
+
+  getChargesTemplate(): Observable<any> {
+    return this.http.get('/charges/template');
   }
 
   /**
    * @param {string} chargeId Charge ID of charge.
    * @returns {Observable<any>} Charge.
    */
-  getCharge(chargeId: string): Observable<any> {
-    return this.http.get(`/charges/${chargeId}`);
+  getCharge(selectedCharge: string, template: boolean = false): Observable<any> {
+    const httpParams = new HttpParams().set('template', template.toString());
+    return this.http.get(`/charges/${selectedCharge}`, { params: httpParams });
+  }
+
+  /**
+   * @param chargeId Charge Id to be updated.
+   * @param charges  Charge Data to be updated.
+   */
+  updateCharge(chargeId: string, charges: any): Observable<any> {
+    return this.http.put(`/charges/${chargeId}`, charges);
   }
 
   /**
