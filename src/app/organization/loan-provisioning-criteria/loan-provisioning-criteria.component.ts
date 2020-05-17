@@ -33,8 +33,8 @@ export class LoanProvisioningCriteriaComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { loanProvisioningCriteria: any }) => {
-      this.loanProvisioningCriteriaData = data.loanProvisioningCriteria;
+    this.route.data.subscribe(( data: { loanProvisioningCriterias: any }) => {
+      this.loanProvisioningCriteriaData = data.loanProvisioningCriterias;
     });
   }
 

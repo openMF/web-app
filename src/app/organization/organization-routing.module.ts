@@ -54,6 +54,8 @@ import { WorkingDaysResolver } from './working-days/working-days.resolver';
 import { EditOfficeResolver } from './offices/edit-office/edit-office.resolver';
 import { EditOfficeComponent } from './offices/edit-office/edit-office.component';
 import { AdhocQueryTemplateResolver } from './adhoc-query/adhoc-query-template.resolver';
+import { ViewLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/view-loan-provisioning-criteria/view-loan-provisioning-criteria.component';
+import { LoanProvisioningCriteriasResolver } from './loan-provisioning-criteria/loan-provisioning-criterias.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -68,11 +70,30 @@ const routes: Routes = [
         },
         {
           path: 'provisioning-criteria',
-          component: LoanProvisioningCriteriaComponent,
           data: { title: extract('Provisioning Criteria'), breadcrumb: 'Provisioning Criteria' },
-          resolve: {
-            loanProvisioningCriteria: LoanProvisioningCriteriaResolver
-          }
+          children: [
+            {
+              path: '',
+              component: LoanProvisioningCriteriaComponent,
+              resolve: {
+                loanProvisioningCriterias: LoanProvisioningCriteriasResolver
+              }
+            },
+
+            {
+              path: ':id',
+              data: { title: extract('View Provisioning Criteria'), routeParamBreadcrumb: 'id' },
+              children: [
+                {
+                  path: '',
+                  component: ViewLoanProvisioningCriteriaComponent,
+                  resolve: {
+                    loanProvisioningCriteria: LoanProvisioningCriteriaResolver
+                  }
+                },
+              ]
+            }
+          ],
         },
         {
           path: 'offices',
@@ -338,7 +359,8 @@ const routes: Routes = [
     EntityDataTableChecksResolver,
     WorkingDaysResolver,
     EditOfficeResolver,
-    AdhocQueryTemplateResolver
+    AdhocQueryTemplateResolver,
+    LoanProvisioningCriteriasResolver,
   ]
 })
 export class OrganizationRoutingModule { }

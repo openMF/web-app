@@ -32,6 +32,7 @@ import { HolidaysComponent } from './holidays/holidays.component';
 import { EditEmployeeComponent } from './employees/edit-employee/edit-employee.component';
 import { CreateTellerComponent } from './tellers/create-teller/create-teller.component';
 import { EditTellerComponent } from './tellers/edit-teller/edit-teller.component';
+import { ViewLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/view-loan-provisioning-criteria/view-loan-provisioning-criteria.component';
 
 /**
  * Organization Module
@@ -69,7 +70,8 @@ import { EditTellerComponent } from './tellers/edit-teller/edit-teller.component
     EditOfficeComponent,
     EditEmployeeComponent,
     CreateTellerComponent,
-    EditTellerComponent
+    EditTellerComponent,
+    ViewLoanProvisioningCriteriaComponent,
   ]
 })
 export class OrganizationModule { }
