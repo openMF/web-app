@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { DatePipe, CommonModule } from '@angular/common';
 
 /** Custom Modules */
 import { SharedModule } from '../shared/shared.module';
@@ -69,6 +69,9 @@ import { EditFloatingRateComponent } from './floating-rates/edit-floating-rate/e
 import { FloatingRatePeriodDialogComponent } from './floating-rates/floating-rate-period-dialog/floating-rate-period-dialog.component';
 import { CreateTaxComponentComponent } from './manage-tax-components/create-tax-component/create-tax-component.component';
 import { EditTaxComponentComponent } from './manage-tax-components/edit-tax-component/edit-tax-component.component';
+import { EditChargeComponent } from './charges/edit-charge/edit-charge.component';
+import { MatFormFieldModule, MatSelectModule, MatOptionModule } from '@angular/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /**
  * Products Module
@@ -143,7 +146,8 @@ import { EditTaxComponentComponent } from './manage-tax-components/edit-tax-comp
     ManageTaxGroupsComponent,
     ViewTaxComponentComponent,
     CreateTaxComponentComponent,
-    EditTaxComponentComponent
+    EditTaxComponentComponent,
+    EditChargeComponent
   ],
   entryComponents: [
     FloatingRatePeriodDialogComponent

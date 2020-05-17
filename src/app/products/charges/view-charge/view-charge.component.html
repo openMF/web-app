@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
-  <button mat-raised-button color="primary">
+  <button mat-raised-button color="primary" [routerLink]="['edit']">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
     Edit
   </button>
@@ -81,19 +81,19 @@
           {{ chargeData.active === true ? 'Yes' : 'No' }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.chargeTimeType.id == 9">
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeFrequency">
           Fee Frequency
         </div>
 
-        <div fxFlex="50%" *ngIf="chargeData.chargeTimeType.id == 9">
+        <div fxFlex="50%" *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeFrequency && chargeData.feeFrequency">
           {{ chargeData.feeFrequency.value }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.chargeTimeType.id == 9">
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeInterval">
           Frequency Interval
         </div>
 
-        <div fxFlex="50%" *ngIf="chargeData.chargeTimeType.id == 9">
+        <div fxFlex="50%" *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeInterval">
           {{ chargeData.feeInterval }}
         </div>
 
