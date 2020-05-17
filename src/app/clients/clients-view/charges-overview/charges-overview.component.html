@@ -1,0 +1,48 @@
+<div class="tab-container mat-typography">
+
+  <div style="margin-top: 5px;">
+
+    <h2> Charges Overview</h2>
+
+    <table mat-table [dataSource]="dataSource">
+  
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let chargeOverviewData"><i class="fa fa-stop"
+          [ngClass]="(!(chargeOverviewData.isWaived || chargeOverviewData.isPaid))|statusLookup"></i>
+          {{chargeOverviewData.name}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="dueAsOf">
+        <th mat-header-cell *matHeaderCellDef> Due as of </th>
+        <td mat-cell *matCellDef="let chargeOverviewData"> {{chargeOverviewData.dueDate|date}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="due">
+        <th mat-header-cell *matHeaderCellDef> Due </th>
+        <td mat-cell *matCellDef="let chargeOverviewData"> {{chargeOverviewData.amount}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="paid">
+        <th mat-header-cell *matHeaderCellDef> Paid </th>
+        <td mat-cell *matCellDef="let chargeOverviewData"> {{chargeOverviewData.amountPaid}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="waived">
+        <th mat-header-cell *matHeaderCellDef> Waived </th>
+        <td mat-cell *matCellDef="let chargeOverviewData"> {{chargeOverviewData.amountWaived}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="outstanding">
+        <th mat-header-cell *matHeaderCellDef> Outstanding </th>
+        <td mat-cell *matCellDef="let chargeOverviewData"> {{chargeOverviewData.amountOutstanding}} </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+    </table>
+  
+    <mat-paginator [pageSizeOptions]="[10, 20, 25]" showFirstLastButtons></mat-paginator>
+
+</div>

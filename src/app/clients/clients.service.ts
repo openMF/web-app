@@ -75,6 +75,14 @@ export class ClientsService {
     return this.http.post(`/clients/${chargeData.clientId}/charges/${chargeData.resourceType}`, chargeData, { params: httpParams });
   }
 
+  /**
+   * Get All Client Cgarges.
+   * @param clientId Client Id of the user.
+   */
+  getAllClientCharges(clientId: string) {
+    return this.http.get(`/clients/${clientId}/charges`);
+  }
+
   getClientSummary(clientId: string) {
     const httpParams = new HttpParams().set('R_clientId', clientId)
       .set('genericResultSet', 'false');

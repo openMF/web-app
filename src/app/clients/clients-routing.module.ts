@@ -37,6 +37,8 @@ import { ClientDatatableResolver } from './common-resolvers/client-datatable.res
 import { ClientIdentifierTemplateResolver } from './common-resolvers/client-identifier-template.resolver';
 import { ClientAddressFieldConfigurationResolver } from './common-resolvers/client-address-fieldconfiguration.resolver';
 import { ClientAddressTemplateResolver } from './common-resolvers/client-address-template.resolver';
+import { ChargesOverviewComponent } from './clients-view/charges-overview/charges-overview.component';
+import { ClientChargeOverviewResolver } from './clients-view/charges-overview/charge-overview.resolver';
 
 const routes: Routes = [
   Route.withShell([{
@@ -145,11 +147,19 @@ const routes: Routes = [
                 clientDatatable: ClientDatatableResolver
               }
             }]
+          },
+          {
+            path: 'chargeoverview',
+            data: { title: extract('Charges Overview'), breadcrumb: 'Charges Overview', routeParamBreadcrumb: 'chargeId' },
+            component: ChargesOverviewComponent,
+            resolve: {
+              clientChargesData: ClientChargeOverviewResolver,
+            }
           }
         ]
-      }
+      },
     ]
-  }
+  },
   ])
 ];
 
@@ -172,7 +182,8 @@ const routes: Routes = [
     ClientDatatableResolver,
     ClientIdentifierTemplateResolver,
     ClientAddressFieldConfigurationResolver,
-    ClientAddressTemplateResolver
+    ClientAddressTemplateResolver,
+    ClientChargeOverviewResolver
   ]
 })
 export class ClientsRoutingModule { }
