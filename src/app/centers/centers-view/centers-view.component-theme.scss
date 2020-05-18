@@ -1,0 +1,13 @@
+@import "~@angular/material/theming";
+
+@mixin centers-view-component-theme($theme) {
+  $primary: map-get($theme, primary);
+
+  mifosx-centers-view {
+    .center-card {
+      .header {
+        background-color: mat-color($primary, 500);
+      }
+    }
+  }
+}
