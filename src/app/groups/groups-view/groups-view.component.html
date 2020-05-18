@@ -1,0 +1,109 @@
+<mat-card class="group-card">
+
+  <mat-card-header fxLayout="column" class="header">
+
+    <mat-card-title-group class="header-title-group">
+
+      <div class="profile-image-container">
+        <div>
+          <img mat-card-md-image class="profile-image"
+            src="../../../assets/images/group_placeholder.png">
+        </div>
+      </div>
+
+      <div class="mat-typography group-card-title">
+        <mat-card-title>
+          <h3>
+            <i class="fa fa-stop" [ngClass]="groupViewData.status.code|statusLookup" [matTooltip]="groupViewData.status.value"></i>
+            Group Name : {{groupViewData.name}}
+          </h3>
+        </mat-card-title>
+        <mat-card-subtitle>
+          <p>
+            Group #: {{groupViewData.id}} | Center Name: {{groupViewData.centerName}} | Staff: {{groupViewData.staffName}}<br/>
+            Office Name: {{groupViewData.officeName}}<br/>
+            Activation Date : {{(groupViewData.activationDate)?(groupViewData.activationDate|date) :'Not Activated'}}<br/>
+            <span *ngIf="!groupViewData.active">
+             Closure Date: {{groupViewData.timeline.closedOnDate | date}}
+            </span>
+          </p>
+        </mat-card-subtitle>
+      </div>
+
+      <div class="group-meeting" fxLayoutAlign="start start">
+        <div *ngIf="groupViewData.collectionMeetingCalendar; else unassigned">
+          <p>
+             Next Meeting on: {{groupViewData.collectionMeetingCalendar?.recentEligibleMeetingDate | date}}   
+             <i class="fa fa-calendar"></i><br/>
+             Meeting Frequency: {{groupViewData.collectionMeetingCalendar?.frequency.value | lowercase}}
+          </p>
+        </div>
+        <ng-template #unassigned>
+          <div>
+            <p>
+              Next Meeting on: Unassigned   
+              <i class="fa fa-calendar"></i><br/>
+              Meeting Frequency: N/A
+          </p>
+        </div>
+        </ng-template>
+      </div>
+
+    </mat-card-title-group>
+
+    <mat-card-actions class="group-actions" *ngIf="!(groupViewData.status.value==='Closed')">
+
+        <span *ngIf="!(groupViewData.status.value==='Active')">
+          <button mat-raised-button  *mifosxHasPermission="'UPDATE_GROUP'">
+            <i class="fa fa-check-sign"></i>Activate</button>
+        </span>
+        <button mat-raised-button *mifosxHasPermission="'UPDATE_GROUP'">
+          <i class="fa fa-edit"></i>Edit</button>
+        <button mat-raised-button *mifosxHasPermission="'CREATE_CLIENT'">
+          <i class="fa fa-plus"></i>Add Clients</button>
+        <button mat-raised-button *mifosxHasPermission="'ASSOCIATECLIENTS_GROUP'">
+          <i class="fa fa-exchange"></i>Transfer Clients</button>
+        <button mat-raised-button *mifosxHasPermission="'TRANSFERCLIENTS_GROUP'">
+          <i class="fa fa-user"></i>Manage Clients</button>
+
+        <button mat-raised-button *ngIf="groupViewData.active" [matMenuTriggerFor]="LoanApplications">
+          <i class="fa fa-file"></i>Loan Applications</button>
+        <mat-menu #LoanApplications="matMenu">
+          <span *ngIf="groupViewData.clientMembers">
+            <button mat-menu-item *mifosxHasPermission="'CREATE_LOAN'">Bulk JLG Loan Application</button></span>
+          <button mat-menu-item *mifosxHasPermission="'CREATE_SAVINGSACCOUNT'">Group Saving Application</button>
+          <button mat-menu-item *mifosxHasPermission="'CREATE_LOAN'">Group Loan Application</button>
+        </mat-menu>
+
+        <button mat-raised-button [matMenuTriggerFor]="More">More</button>
+        <mat-menu #More="matMenu">
+          <span *ngIf="groupViewData.collectionMeetingCalendar">
+            <button mat-menu-item *mifosxHasPermission="'SAVEORUPDATEATTENDANCE_MEETING'">Attendance</button></span>
+          <span *ngIf="!groupViewData.staffId">
+            <button mat-menu-item *mifosxHasPermission="'ASSIGNSTAFF_GROUP'">Assign Staff</button></span>
+          <span *ngIf="groupViewData.staffId">
+            <button mat-menu-item *mifosxHasPermission="'UNASSIGNSTAFF_GROUP'">Unassign Staff</button></span>
+          <span *ngIf="!(groupViewData.centerId || groupViewData.collectionMeetingCalendar) && groupViewData.status.value==='Active'">
+            <button mat-menu-item *mifosxHasPermission="'CREATE_MEETING'">Attatch Meeting</button></span>
+          <button mat-menu-item *mifosxHasPermission="'CLOSE_GROUP'">Close</button>
+          <button mat-menu-item *mifosxHasPermission="'DELETE_GROUP'">Delete</button>
+        </mat-menu>
+
+    </mat-card-actions>
+
+  </mat-card-header>
+
+  <mat-card-content>
+
+    <nav mat-tab-nav-bar class="navigation-tabs">
+      <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive"
+      [active]="general.isActive">
+        General
+      </a>
+    </nav>
+
+    <router-outlet></router-outlet>
+
+  </mat-card-content>
+
+</mat-card>
