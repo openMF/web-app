@@ -88,4 +88,42 @@ export class CentersService {
     getSavingsAccountDetails(centerId: string): Observable<any> {
       return this.http.get(`/centers/${centerId}/accounts`);
     }
+
+    /**
+     * @param centerId Center Id
+     * @returns The notes for particular center
+     */
+    getCenterNotes(centerId: string): Observable<any> {
+      return this.http.get(`/groups/${centerId}/notes`);
+    }
+
+    /**
+     * Adds a note to the particular Center Id
+     * @param centerId Center ID
+     * @param noteData Note Data to be added
+     * @returns {Observable<any>}
+     */
+    createCenterNote(centerId: string, noteData: any): Observable<any> {
+      return this.http.post(`/groups/${centerId}/notes`, noteData);
+    }
+
+    /**
+     * Edits the Center Note
+     * @param centerId Center ID
+     * @param noteId Note ID
+     * @param noteData Note Data
+     */
+    editCenterNote(centerId: string, noteId: string, noteData: any) {
+      return this.http.put(`/groups/${centerId}/notes/${noteId}`, noteData);
+    }
+
+    /**
+     * Deletes the particular Note
+     * @param centerId Center ID
+     * @param noteId Note ID
+     */
+    deleteCenterNote(centerId: string, noteId: string) {
+      return this.http.delete(`/groups/${centerId}/notes/${noteId}`);
+    }
+
 }
