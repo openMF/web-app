@@ -100,6 +100,10 @@
       [active]="general.isActive">
         General
       </a>
+      <a mat-tab-link [routerLink]="['./notes']" routerLinkActive #notes="routerLinkActive"
+      [active]="notes.isActive">
+        Notes
+      </a>
     </nav>
 
     <router-outlet></router-outlet>

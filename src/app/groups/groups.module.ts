@@ -12,6 +12,7 @@ import { DirectivesModule } from '../directives/directives.module';
 import { GroupsComponent } from './groups.component';
 import { GroupsViewComponent } from './groups-view/groups-view.component';
 import { GeneralTabComponent } from './groups-view/general-tab/general-tab.component';
+import { NotesTabComponent } from './groups-view/notes-tab/notes-tab.component';
 
 /**
  * Groups Module
@@ -28,7 +29,8 @@ import { GeneralTabComponent } from './groups-view/general-tab/general-tab.compo
   declarations: [
     GroupsComponent,
     GroupsViewComponent,
-    GeneralTabComponent
+    GeneralTabComponent,
+    NotesTabComponent
   ],
   providers: [DatePipe]
 })
