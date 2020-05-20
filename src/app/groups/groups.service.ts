@@ -89,4 +89,38 @@ export class GroupsService {
       return this.http.get(`/groups/${groupId}/accounts`);
     }
 
+    /**
+     * @param groupId Group Id of group to get data for.
+     * @returns {Observable<any>} Group Notes data.
+     */
+    getGroupNotes(groupId: string): Observable<any> {
+      return this.http.get(`/groups/${groupId}/notes`);
+    }
+
+    /**
+     * @param groupId Group Id of group to create note for.
+     * @param noteData Note Data.
+     * @returns {Observable<any>}
+     */
+    createGroupNote(groupId: string, noteData: any): Observable<any> {
+      return this.http.post(`/groups/${groupId}/notes`, noteData);
+    }
+
+    /**
+     * @param groupId Group Id of group to edit note for.
+     * @param noteId Note Id
+     * @param noteData Note Data
+     */
+    editGroupNote(groupId: string, noteId: string, noteData: any) {
+      return this.http.put(`/groups/${groupId}/notes/${noteId}`, noteData);
+    }
+
+    /**
+     * @param groupId Group Id of group to delete note for.
+     * @param noteId Note Id
+     */
+    deleteGroupNote(groupId: string, noteId: string) {
+      return this.http.delete(`/groups/${groupId}/notes/${noteId}`);
+    }
+
 }
