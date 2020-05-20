@@ -7,15 +7,20 @@ import { Route } from '../core/route/route.service';
 /** Translation Imports */
 import { extract } from '../core/i18n/i18n.service';
 
+/** Custom Components */
 import { CentersComponent } from './centers.component';
 import { CreateCenterComponent } from './create-center/create-center.component';
-import { OfficesResolver } from 'app/accounting/common-resolvers/offices.resolver';
 import { CentersViewComponent } from './centers-view/centers-view.component';
 import { GeneralTabComponent } from './centers-view/general-tab/general-tab.component';
+import { NotesTabComponent } from './centers-view/notes-tab/notes-tab.component';
+
+/** Custom Resolvers */
+import { OfficesResolver } from 'app/accounting/common-resolvers/offices.resolver';
 import { CenterViewResolver } from './common-resolvers/center-view.resolver';
 import { SavingsAccountResolver } from './common-resolvers/savings-account.resolver';
 import { CenterResourceResolver } from './common-resolvers/center-resource.resolver';
 import { CenterSummaryResolver } from './common-resolvers/center-summary.resolver';
+import { CenterNotesResolver } from './common-resolvers/center-notes.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -53,6 +58,14 @@ const routes: Routes = [
                 centerViewData: CenterResourceResolver,
                 savingsAccountData: SavingsAccountResolver
               }
+            },
+            {
+              path: 'notes',
+              component: NotesTabComponent,
+              data: { title: extract('Notes'), breadcrumb: 'Notes', routeParamBreadcrumb: false },
+              resolve: {
+                centerNotes: CenterNotesResolver
+              }
             }
           ]
         }
@@ -69,7 +82,8 @@ const routes: Routes = [
     CenterViewResolver,
     SavingsAccountResolver,
     CenterResourceResolver,
-    CenterSummaryResolver
+    CenterSummaryResolver,
+    CenterNotesResolver
   ]
 })
 export class CentersRoutingModule { }

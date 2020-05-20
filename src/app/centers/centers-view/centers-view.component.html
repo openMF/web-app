@@ -87,6 +87,10 @@
         [active]="general.isActive">
         General
       </a>
+      <a mat-tab-link *mifosxHasPermission="'READ_GROUPNOTE'" [routerLink]="['./notes']" routerLinkActive #notes="routerLinkActive"
+        [active]="notes.isActive">
+        Notes
+      </a>
     </nav>
     <router-outlet></router-outlet>
   </mat-card-content>

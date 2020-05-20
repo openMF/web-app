@@ -12,6 +12,7 @@ import { CentersComponent } from './centers.component';
 import { CreateCenterComponent } from './create-center/create-center.component';
 import { CentersViewComponent } from './centers-view/centers-view.component';
 import { GeneralTabComponent } from './centers-view/general-tab/general-tab.component';
+import { NotesTabComponent } from './centers-view/notes-tab/notes-tab.component';
 
 /**
  * Centers Module
@@ -29,7 +30,8 @@ import { GeneralTabComponent } from './centers-view/general-tab/general-tab.comp
     CentersComponent,
     CreateCenterComponent,
     CentersViewComponent,
-    GeneralTabComponent
+    GeneralTabComponent,
+    NotesTabComponent
   ]
 })
 export class CentersModule { }
