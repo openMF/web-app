@@ -13,12 +13,12 @@ import { GroupsComponent } from './groups.component';
 import { GroupsViewComponent } from './groups-view/groups-view.component';
 import { GeneralTabComponent } from './groups-view/general-tab/general-tab.component';
 import { NotesTabComponent } from './groups-view/notes-tab/notes-tab.component';
+import { CommitteeTabComponent } from './groups-view/committee-tab/committee-tab.component';
 
 /** Custom Resolvers */
 import { GroupViewResolver } from './common-resolvers/group-view.resolver';
 import { GroupAccountsResolver } from './common-resolvers/group-account.resolver';
 import { GroupSummaryResolver } from './common-resolvers/group-summary.resolver';
-import { GroupClientMembersResolver } from './common-resolvers/group-client-members.resolver';
 import { GroupNotesResolver } from './common-resolvers/group-notes.resolver';
 
 /** Groups Routes */
@@ -47,7 +47,6 @@ const routes: Routes = [
               data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false },
               resolve: {
                 groupAccountsData: GroupAccountsResolver,
-                groupClientMembers: GroupClientMembersResolver,
                 groupSummary: GroupSummaryResolver
               }
             },
@@ -58,6 +57,11 @@ const routes: Routes = [
               resolve: {
                 groupNotes: GroupNotesResolver
               }
+            },
+            {
+              path: 'committee',
+              component: CommitteeTabComponent,
+              data: { title: extract('Committee'), breadcrumb: 'Committee', routeParamBreadcrumb: false }
             }
           ]
         }
@@ -77,7 +81,6 @@ const routes: Routes = [
   providers: [GroupViewResolver,
               GroupAccountsResolver,
               GroupSummaryResolver,
-              GroupClientMembersResolver,
               GroupNotesResolver]
 })
 export class GroupsRoutingModule { }

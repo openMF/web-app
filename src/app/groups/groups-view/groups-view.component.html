@@ -100,9 +100,13 @@
       [active]="general.isActive">
         General
       </a>
-      <a mat-tab-link [routerLink]="['./notes']" routerLinkActive #notes="routerLinkActive"
+      <a mat-tab-link [routerLink]="['./notes']" *mifosxHasPermission="'READ_GROUPNOTE'" routerLinkActive #notes="routerLinkActive"
       [active]="notes.isActive">
         Notes
+      </a>
+      <a mat-tab-link [routerLink]="['./committee']" routerLinkActive #committee="routerLinkActive"
+      [active]="committee.isActive">
+        Committee
       </a>
     </nav>
 
