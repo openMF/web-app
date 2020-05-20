@@ -61,4 +61,31 @@ export class CentersService {
         return this.http.get('/centers/template', { params: httpParams });
     }
 
+    /**
+     * @param centerId CenterID
+     * @returns {Observable<any>} Group Data for Center
+     */
+    getCenterData(centerId: string): Observable<any> {
+      const httpParams = new HttpParams()
+          .set('associations', 'groupMembers,collectionMeetingCalendar');
+      return this.http.get(`/centers/${centerId}`, { params: httpParams } );
+    }
+
+    /**
+     * @param centerId Center ID
+     * @returns {Observable<any>} Returns the entire details of the Center ID
+     */
+    getCenterSummary(centerId: string): Observable<any> {
+      const httpParams = new HttpParams().set('R_groupId', centerId)
+        .set('genericResultSet', 'false');
+      return this.http.get(`/runreports/GroupSummaryCounts`, { params: httpParams });
+    }
+
+    /**
+     * @param centerId Center ID
+     * @returns {Observable<any>} Returns the saving account for that center
+     */
+    getSavingsAccountDetails(centerId: string): Observable<any> {
+      return this.http.get(`/centers/${centerId}/accounts`);
+    }
 }

@@ -39,6 +39,7 @@ export class StatusLookupPipe implements PipeTransform {
       'smsCampaignStatus.active': 'status-active',
       'smsCampaignStatus.pending': 'status-pending',
       'smsCampaignStatus.closed': 'status-closed',
+      'groupingStatusType.active': 'status-active'
     };
     return cssClassNameLookup[status];
   }

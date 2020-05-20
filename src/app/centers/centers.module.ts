@@ -5,10 +5,13 @@ import { NgModule } from '@angular/core';
 import { CentersRoutingModule } from './centers-routing.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { PipesModule } from '../pipes/pipes.module';
+import { DirectivesModule } from '../directives/directives.module';
 
 /** Custom Components */
 import { CentersComponent } from './centers.component';
 import { CreateCenterComponent } from './create-center/create-center.component';
+import { CentersViewComponent } from './centers-view/centers-view.component';
+import { GeneralTabComponent } from './centers-view/general-tab/general-tab.component';
 
 /**
  * Centers Module
@@ -19,11 +22,14 @@ import { CreateCenterComponent } from './create-center/create-center.component';
   imports: [
     SharedModule,
     CentersRoutingModule,
-    PipesModule
+    PipesModule,
+    DirectivesModule
   ],
   declarations: [
     CentersComponent,
-    CreateCenterComponent
+    CreateCenterComponent,
+    CentersViewComponent,
+    GeneralTabComponent
   ]
 })
 export class CentersModule { }

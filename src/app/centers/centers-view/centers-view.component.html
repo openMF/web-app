@@ -1,0 +1,93 @@
+<mat-card class="center-card">
+  <mat-card-header fxLayout="column" class="header">
+    <mat-card-title-group class="header-title-group">
+      <div class="profile-image-container">
+        <div>
+          <img mat-card-md-image class="profile-image"
+            src='../../../assets/images/center_placeholder.png'>
+        </div>
+      </div>
+      <div class="mat-typography center-card-title">
+        <mat-card-title>
+          <h3>
+            <i class="fa fa-stop" matTooltip= "{{ centerViewData.status.value }}"
+          [ngClass]="centerViewData.status.code |statusLookup"></i>
+          Center Name : {{centerViewData.name}}
+          </h3>
+        </mat-card-title>
+        <mat-card-subtitle>
+          <div fxLayout="row" fxLayout.lt-md="column">
+            <div fxFlex="50%">
+              <p>
+                Account #:{{centerViewData.accountNo}} <br />
+                Office: {{centerViewData.officeName}} <br />
+                <span *ngIf="centerViewData.externalId">
+                  External Id: {{centerViewData.externalId}} <br/>
+                </span>
+                <span *ngIf="centerViewData.staffName">
+                  Staff: {{centerViewData.staffName}} <br/>
+                </span>
+                Activation Date :
+                {{(centerViewData.activationDate)?(centerViewData.activationDate|date) :'Not Activated'}}<br />
+              </p>
+            </div>
+            <div fxFlex="50%">
+              <p class="meetingDetails">
+                Next Meeting On: 
+                <span *ngIf="meetingData"> 
+                  {{centerViewData.collectionMeetingCalendar.nextTenRecurringDates[0]|date}} 
+                  <span *ngIf="centerViewData.collectionMeetingCalendar">
+                    <a href="#" *mifosxHasPermission="'UPDATE_MEETING'"> <i class="fa fa-edit" style="color:#ffffff; padding: 5px;"></i> </a>
+                  </span> <br/>
+                  <span *ngIf="centerViewData.collectionMeetingCalendar.humanReadable"> Meeting Frequency: {{centerViewData.collectionMeetingCalendar.humanReadable}} </span>
+                </span>
+                <span *ngIf="!(meetingData)"> Unassigned </span><br/>
+                <span *ngIf="centerViewData.status.value === 'Closed'"> Closed Date: {{centerViewData.timeline.closedOnDate|date}}</span>
+              </p>
+            </div>
+          </div>
+        </mat-card-subtitle>
+      </div>
+    </mat-card-title-group>
+    <mat-card-actions class="center-actions" *ngIf="!(centerViewData.status.value==='Closed')">
+      <span *ngIf="!(centerViewData.status.value=='Active')">
+        <button mat-raised-button *mifosxHasPermission="'ACTIVATE_CENTER'" ><i class="fa fa-check-sign"></i> Activate </button>
+      </span>
+      <button mat-raised-button *mifosxHasPermission="'UPDATE_CENTER'"><i class="fa fa-edit"></i> Edit </button>
+      <button mat-raised-button *mifosxHasPermission="'CREATE_GROUP'"><i class="fa fa-plus"></i> Add Group </button>
+      <button mat-raised-button *mifosxHasPermission="'ASSOCIATEGROUPS_CENTER'"> <i class="fa fa-edit"></i> Manage Groups </button>
+      <span  *ngIf="centerViewData.active">
+      <button mat-raised-button *mifosxHasPermission="'CREATE_SAVINGSACCOUNT'"> <i class="fa fa-file"></i> Centers Saving Application</button>
+      </span>
+      <button mat-raised-button [matMenuTriggerFor]="More"> More </button>
+      <mat-menu #More="matMenu">
+        <span *ngIf="centerViewData.collectionMeetingCalendar">
+          <button mat-menu-item *mifosxHasPermission="'SAVEORUPDATEATTENDANCE_MEETING'"> Attendance </button>
+        </span>
+        <span *ngIf="!(centerViewData.staffId)">
+          <button mat-menu-item *mifosxHasPermission="'ASSIGNSTAFF_GROUP'" > Assign Staff </button>
+        </span>
+        <span *ngIf="centerViewData.staffId">
+          <button mat-menu-item *mifosxHasPermission="'UNASSIGNSTAFF_GROUP'" > Unassign Staff </button>
+        </span>
+        <span *ngIf="centerViewData.status.value==='Active'">
+          <button mat-menu-item *mifosxHasPermission="'DELETE_CENTER'" > Delete </button>
+        </span>
+        <button mat-menu-item *mifosxHasPermission="'CLOSE_CENTER'" > Close </button>
+        <span *ngIf="centerViewData.status.value==='Active' && !(centerViewData.collectionMeetingCalendar)">
+          <button mat-menu-item *mifosxHasPermission="'CREATE_MEETING'"> Attach Meeting </button>
+        </span>
+        <button mat-menu-item *mifosxHasPermission="'READ_Staff Assignment History'" > Staff Assignment History </button>
+      </mat-menu>
+    </mat-card-actions>
+  </mat-card-header>
+  <mat-card-content>
+    <nav mat-tab-nav-bar class="navigation-tabs">
+      <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive"
+        [active]="general.isActive">
+        General
+      </a>
+    </nav>
+    <router-outlet></router-outlet>
+  </mat-card-content>
+</mat-card>
