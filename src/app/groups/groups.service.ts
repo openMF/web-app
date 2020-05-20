@@ -4,6 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 /**
  * Groups service.
@@ -49,6 +50,43 @@ export class GroupsService {
     getGroupsByOfficeId(officeId: number): Observable<any> {
         const httpParams = new HttpParams().set('officeId', officeId.toString());
         return this.http.get('/groups', { params: httpParams } );
+    }
+
+    /**
+     * @param groupId Group Id of group to get data for.
+     * @returns {Observable<any>} Group data.
+     */
+    getGroupData(groupId: string): Observable<any> {
+      const httpParams = new HttpParams().set('associations', 'all');
+      return this.http.get(`/groups/${groupId}`, { params: httpParams });
+    }
+
+    /**
+     * @param groupId Group Id of group to get data for.
+     * @returns {Observable<any>} Group Summary data.
+     */
+    getGroupSummary(groupId: string): Observable<any> {
+      const httpParams = new HttpParams().set('R_groupId', groupId)
+        .set('genericResultSet', 'false');
+      return this.http.get(`/runreports/GroupSummaryCounts`, { params: httpParams });
+    }
+
+    /**
+     * @param groupId Group Id of group to get data for.
+     * @returns {Observable<any>} Group Client Members data.
+     */
+    getGroupClientMembers(groupId: string): Observable<any> {
+      const httpParams = new HttpParams().set('associations', 'clientMembers');
+      return this.http.get(`/groups/${groupId}`, { params: httpParams })
+              .pipe(map((group: any) => group.clientMembers));
+    }
+
+    /**
+     * @param groupId Group Id of group to get data for.
+     * @returns {Observable<any>} Group Accounts data.
+     */
+    getGroupAccountsData(groupId: string): Observable<any> {
+      return this.http.get(`/groups/${groupId}/accounts`);
     }
 
 }

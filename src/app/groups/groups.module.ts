@@ -6,9 +6,12 @@ import { DatePipe } from '@angular/common';
 import { GroupsRoutingModule } from './groups-routing.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { PipesModule } from '../pipes/pipes.module';
+import { DirectivesModule } from '../directives/directives.module';
 
 /** Custom Components */
 import { GroupsComponent } from './groups.component';
+import { GroupsViewComponent } from './groups-view/groups-view.component';
+import { GeneralTabComponent } from './groups-view/general-tab/general-tab.component';
 
 /**
  * Groups Module
@@ -18,11 +21,14 @@ import { GroupsComponent } from './groups.component';
 @NgModule({
   imports: [
     SharedModule,
-    GroupsRoutingModule,
-    PipesModule
+    PipesModule,
+    DirectivesModule,
+    GroupsRoutingModule
   ],
   declarations: [
-    GroupsComponent
+    GroupsComponent,
+    GroupsViewComponent,
+    GeneralTabComponent
   ],
   providers: [DatePipe]
 })
