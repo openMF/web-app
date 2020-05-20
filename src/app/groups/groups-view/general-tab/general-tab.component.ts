@@ -47,7 +47,9 @@ export class GeneralTabComponent {
       this.savingAccounts = data.groupAccountsData.savingsAccounts;
       this.loanAccounts = data.groupAccountsData.loanAccounts;
       this.groupSummary = data.groupSummary[0];
-      this.groupClientMembers = data.groupClientMembers;
+    });
+    this.route.parent.data.subscribe((data: { groupViewData: any }) => {
+      this.groupClientMembers = data.groupViewData.clientMembers;
     });
   }
 

@@ -73,16 +73,6 @@ export class GroupsService {
 
     /**
      * @param groupId Group Id of group to get data for.
-     * @returns {Observable<any>} Group Client Members data.
-     */
-    getGroupClientMembers(groupId: string): Observable<any> {
-      const httpParams = new HttpParams().set('associations', 'clientMembers');
-      return this.http.get(`/groups/${groupId}`, { params: httpParams })
-              .pipe(map((group: any) => group.clientMembers));
-    }
-
-    /**
-     * @param groupId Group Id of group to get data for.
      * @returns {Observable<any>} Group Accounts data.
      */
     getGroupAccountsData(groupId: string): Observable<any> {

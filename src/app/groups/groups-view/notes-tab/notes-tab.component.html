@@ -9,7 +9,7 @@
       <textarea formControlName="note" matInput placeholder="Write a note ...."></textarea>
     </mat-form-field>
 
-    <button mat-raised-button fxFlex color="primary" [disabled]="!noteForm.valid">
+    <button mat-raised-button fxFlex color="primary" *mifosxHasPermission="'CREATE_GROUPNOTE'" [disabled]="!noteForm.valid">
       <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp; Add
     </button>
 
