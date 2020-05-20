@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1589788989154,
+  "timestamp": 1589969884624,
   "index": "/web-app/index.html",
   "assetGroups": [
     {
@@ -26,6 +26,7 @@
         "/web-app/assets/images/MifosX_logo.png",
         "/web-app/assets/images/MifosX_logoSmall.png",
         "/web-app/assets/images/cover_image.jpg",
+        "/web-app/assets/images/group_placeholder.png",
         "/web-app/assets/images/mifos-logo-flat.png",
         "/web-app/assets/images/mifos_lg-logo.jpg",
         "/web-app/assets/images/user_placeholder.png",
@@ -55,10 +56,11 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/web-app/10.js": "2f97dc8ec530c18e38db31486e0eb6a2255048a8",
+    "/web-app/10.js": "44984346a86201710d1aeaaa4d0c38c4bc1bcc96",
     "/web-app/assets/images/MifosX_logo.png": "fc66de5965e6054007a0e0c9e68f24f1ee250c21",
     "/web-app/assets/images/MifosX_logoSmall.png": "ebd340185b4888fdbe26b364303d2c072412b46e",
     "/web-app/assets/images/cover_image.jpg": "51773ede81be7a39c6c7a742b4f59ff0e916af48",
+    "/web-app/assets/images/group_placeholder.png": "7d6a1438614f689418612fe9ad0b68dba8e9e459",
     "/web-app/assets/images/mifos-logo-flat.png": "998100b024c81bac0fd272134f282e410c96ad8a",
     "/web-app/assets/images/mifos_lg-logo.jpg": "c316949191be5b355cfc3bc803516cca29ed1265",
     "/web-app/assets/images/user_placeholder.png": "688be4adfb344e0f9662a40f59788f39e7b907af",
@@ -84,10 +86,10 @@
     "/web-app/assets/styles/_z-index.scss": "9a37d216cb5d806887da931429725a28b3d731b8",
     "/web-app/favicon.ico": "31d1d887b9dec1f49614f289d6855f5ffa7c0902",
     "/web-app/index.html": "567db66977e46f127d7c88f5d799b79d9df88336",
-    "/web-app/main.js": "8c2a0f3298ab2b18b3549f948c500ca2bbfcc73c",
+    "/web-app/main.js": "6a9cf24a047a8abc310473ee020b31eaf5ae3e44",
     "/web-app/polyfills.js": "6946e10a03311677a01490b8e91741668e64e17e",
     "/web-app/runtime.js": "97ba88c14e7b1bae888f4fe14231317bca864217",
-    "/web-app/styles.css": "47c3331c7f73219afbb55a3143cbce430dc94568"
+    "/web-app/styles.css": "d51cbdde5b52b05754042d2ff10a9eec85593833"
   },
   "navigationUrls": [
     {
