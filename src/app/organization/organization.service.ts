@@ -57,6 +57,37 @@ export class OrganizationService {
   }
 
   /**
+   * Get Office Template.
+   * @param {string} officeId Office Id of the office selected.
+   * @returns {Observable<any>} Office Template.
+   */
+  getOfficeTemplate(officeId: string): Observable<any> {
+    const httpParams = new HttpParams().set('officeId', officeId.toString());
+    return this.http.get(`/loans/loanreassignment/template`, { params: httpParams });
+  }
+
+  /**
+   * Get Officer Template.
+   * @param officerId Officer Id.
+   * @param officeId Office Id.
+   */
+  getOfficerTemplate(officerId: string, officeId: string): Observable<any> {
+    const httpParams = new HttpParams()
+                       .set('fromLoanOfficerId', officerId.toString())
+                       .set('officeId', officerId.toString());
+    return this.http.get('/loans/loanreassignment/template', { params: httpParams });
+  }
+
+  /**
+   * Bulk Loan Reassignment.
+   * @param loanData Load Data to be created.
+   * @returns {Observable<any>}
+   */
+  createLoanReassignment(loanData: any): Observable<any> {
+    return this.http.post('/loans/loanreassignment', loanData);
+  }
+
+  /**
    * @param {string} officeId Office ID of Office.
    * @param {boolean} template
    * @returns {Observable<any>} Office.

@@ -92,6 +92,7 @@ import { AdhocQueryAndTemplateResolver } from './adhoc-query/common-resolvers/ad
 import { BulkImportResolver } from './bulk-import/bulk-import.resolver';
 import { SmsCampaignTemplateResolver } from './sms-campaigns/common-resolvers/sms-campaign-template.resolver';
 import { EntityDataTableChecksTemplateResolver } from './entity-data-table-checks/enitity-data-table-checks-template.resolver';
+import { BulkLoanReassignmnetComponent } from './bulk-loan-reassignmnet/bulk-loan-reassignmnet.component';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -492,6 +493,14 @@ const routes: Routes = [
           }
         },
         {
+          path: 'bulkloan',
+          component: BulkLoanReassignmnetComponent,
+          data: { title: extract('Bulk Loan Reassignment'), breadcrumb: 'Bulk Loan Reasssignment' },
+          resolve: {
+            offices: OfficesResolver
+          }
+        },
+        {
           path: 'entity-data-table-checks',
           data: { title: extract('Entity Data Table Checks'), breadcrumb: 'Entity Data Table Checks' },
           children: [
@@ -631,7 +640,8 @@ const routes: Routes = [
     HolidayTemplateResolver,
     BulkImportResolver,
     HolidayResolver,
-    EntityDataTableChecksTemplateResolver
+    EntityDataTableChecksTemplateResolver,
+    LoanProvisioningCriteriasResolver
   ]
 })
 export class OrganizationRoutingModule { }
