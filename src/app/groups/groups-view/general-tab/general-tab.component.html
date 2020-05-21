@@ -2,7 +2,7 @@
 
   <h3>Group Details</h3>
 
-  <div fxLayout="row" fxLayoutGap="32px" class="group-details-container">
+  <div fxLayout="row" fxLayoutGap="32px" class="group-details-container m-b-30">
     <p>
       Active Client Loans: {{groupSummary?.activeClientLoans}}<br/>
       Active Client Borrowers: {{groupSummary?.activeClientBorrowers}}<br/>
@@ -24,7 +24,7 @@
     <h3>Client Members</h3>
 
     <table mat-table [dataSource]="groupClientMembers"
-      class="mat-elevation-z1">
+      class="mat-elevation-z1 m-b-30">
 
       <ng-container matColumnDef="Name">
         <th mat-header-cell *matHeaderCellDef> Name </th>
@@ -68,7 +68,7 @@
       <div class="m-b-10">
         <h3>Loan Accounts</h3>
       </div>
-      <div *ngIf="(loanAccounts|accountsFilter:'loan':'closed').length" class="action-button m-b-10" fxLayoutGap="25px">
+      <div *ngIf="(loanAccounts|accountsFilter:'loan':'closed').length" class="action-button m-b-10">
         <button mat-raised-button class="f-right" color="primary"
       (click)="toggleLoanAccountsOverview()">{{showClosedLoanAccounts?'View Active Accounts':'View Closed Accounts'}}</button>
       </div>
@@ -76,7 +76,7 @@
 
     <!-- Open Loan Accounts Table -->
     <table *ngIf="!showClosedLoanAccounts" mat-table [dataSource]="loanAccounts|accountsFilter:'loan'"
-      class="mat-elevation-z1">
+      class="mat-elevation-z1 m-b-30">
 
       <ng-container matColumnDef="Account No">
         <th mat-header-cell *matHeaderCellDef> Account No. </th>
@@ -142,7 +142,7 @@
 
     <!-- Closed Loan Accounts Table-->
     <table *ngIf="showClosedLoanAccounts" mat-table [dataSource]="loanAccounts|accountsFilter:'loan':'closed'"
-      class="mat-elevation-z1">
+      class="mat-elevation-z1 m-b-30">
 
       <ng-container matColumnDef="Account No">
         <th mat-header-cell *matHeaderCellDef> Account No. </th>
@@ -199,7 +199,7 @@
       <div class="m-b-10">
         <h3>Saving Accounts</h3>
       </div>
-      <div class="action-button m-b-10" fxLayoutGap="25px">
+      <div class="action-button m-b-10">
         <button *ngIf="(savingAccounts|accountsFilter:'saving':'closed').length" mat-raised-button class="f-right" color="primary"
         (click)="toggleSavingAccountsOverview()">{{showClosedSavingAccounts?'View Active Accounts':'View Closed Accounts'}}</button>
       </div>
@@ -207,7 +207,7 @@
 
     <!-- Open Savings Accounts Table -->
     <table *ngIf="!showClosedSavingAccounts" mat-table [dataSource]="savingAccounts|accountsFilter:'saving'"
-      class="mat-elevation-z1">
+      class="mat-elevation-z1 m-b-30">
 
       <ng-container matColumnDef="Account No">
         <th mat-header-cell *matHeaderCellDef> Account No. </th>
@@ -261,7 +261,7 @@
 
     <!-- Closed Saving Accounts Table -->
     <table *ngIf="showClosedSavingAccounts" mat-table [dataSource]="savingAccounts|accountsFilter:'saving':'closed'"
-      class="mat-elevation-z1">
+      class="mat-elevation-z1 m-b-30">
 
       <ng-container matColumnDef="Account No">
         <th mat-header-cell *matHeaderCellDef> Account No. </th>
