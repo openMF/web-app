@@ -177,6 +177,16 @@ export class OrganizationService {
   }
 
   /**
+   * Get Cashier data.
+   * @param {string} tellerId Teller ID of teller.
+   * @param {string} cashierId Cashier ID of cashier
+   * @returns {Observable<any>} Cashier data.
+   */
+  getCashier(tellerId: string, cashierId: string): Observable<any> {
+    return this.http.get(`/tellers/${tellerId}/cashiers/${cashierId}`);
+  }
+
+  /**
    * @param {string} tellerId Teller ID of teller to be deleted.
    * @returns {Observable<any>}
    */

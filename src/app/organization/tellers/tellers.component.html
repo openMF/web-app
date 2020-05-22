@@ -47,7 +47,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let teller" (click)="$event.stopPropagation()">
-          <button mat-button color="primary">
+          <button mat-button color="primary" [routerLink]="[teller.id,'cashiers']">
             <fa-icon icon="eye"></fa-icon>&nbsp;&nbsp;View Cashiers
           </button>
         </td>
