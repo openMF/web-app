@@ -1,0 +1,71 @@
+<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+  <button mat-raised-button color="primary">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit
+  </button>
+</div>
+
+
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" class="content">
+
+        <div fxFlex="50%" class="header">
+          Name
+        </div>
+
+        <div fxFlex="50%">
+          {{ cashierData.staffName}}
+        </div>
+
+        <div fxFlex="50%" class="header">
+          Teller
+        </div>
+
+        <div fxFlex="50%">
+          {{ cashierData.tellerName }}
+        </div>
+
+        <div fxFlex="50%" class="header" *ngIf="cashierData.description !== ''">
+          Description
+        </div>
+
+        <div fxFlex="50%" *ngIf="cashierData.description !== ''">
+          {{ cashierData.description }}
+        </div>
+
+        <div fxFlex="50%" class="header">
+          Start Date
+        </div>
+
+        <div fxFlex="50%">
+          {{ cashierData.startDate | date }}
+        </div>
+
+        <div fxFlex="50%" class="header">
+          End Date
+        </div>
+
+        <div fxFlex="50%">
+          {{ cashierData.endDate | date }}
+        </div>
+
+        <div fxFlex="50%" class="header">
+          Full Day?
+        </div>
+
+        <div fxFlex="50%">
+          {{ cashierData.isFullDay }}
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

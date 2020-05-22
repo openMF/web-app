@@ -33,6 +33,7 @@ import { HolidaysComponent } from './holidays/holidays.component';
 import { EditEmployeeComponent } from './employees/edit-employee/edit-employee.component';
 import { CreateTellerComponent } from './tellers/create-teller/create-teller.component';
 import { EditTellerComponent } from './tellers/edit-teller/edit-teller.component';
+import { ViewCashierComponent } from './tellers/view-cashier/view-cashier.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -56,6 +57,7 @@ import { EditOfficeComponent } from './offices/edit-office/edit-office.component
 import { AdhocQueryTemplateResolver } from './adhoc-query/adhoc-query-template.resolver';
 import { ViewLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/view-loan-provisioning-criteria/view-loan-provisioning-criteria.component';
 import { LoanProvisioningCriteriasResolver } from './loan-provisioning-criteria/loan-provisioning-criterias.resolver';
+import { CashierResolver } from './tellers/cashier.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -255,6 +257,20 @@ const routes: Routes = [
                     teller: TellerResolver,
                     offices: OfficesResolver
                   }
+                },
+                {
+                  path: 'cashiers',
+                  data: { title: extract('View Cashiers'), breadcrumb: 'View Cashiers', routeParamBreadcrumb: false },
+                  children: [
+                    {
+                      path: ':id',
+                      component: ViewCashierComponent,
+                      data: { title: extract('View Cashier'), breadcrumb: 'View Cashier', routeParamBreadcrumb: 'id' },
+                      resolve: {
+                        cashier: CashierResolver
+                      }
+                    }
+                  ]
                 }
               ]
             }
@@ -361,6 +377,7 @@ const routes: Routes = [
     EditOfficeResolver,
     AdhocQueryTemplateResolver,
     LoanProvisioningCriteriasResolver,
+    CashierResolver
   ]
 })
 export class OrganizationRoutingModule { }
