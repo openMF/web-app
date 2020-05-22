@@ -1,0 +1,131 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="groupForm">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput required formControlName="name">
+            <mat-error *ngIf="groupForm.controls.name.hasError('required')">
+              Group Name is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="groupForm.controls.name.hasError('pattern')">
+              Group Name <strong>cannot</strong> begin with a special character or number
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Office</mat-label>
+            <mat-select required formControlName="officeId">
+              <mat-option *ngFor="let office of officeData" [value]="office.id">
+              {{ office.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="groupForm.controls.officeId.hasError('required')">
+              Office is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Staff</mat-label>
+            <mat-select formControlName="staffId">
+              <mat-option *ngFor="let staff of staffData" [value]="staff.id">
+              {{ staff.displayName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-checkbox labelPosition="before" formControlName="active">
+            Active
+          </mat-checkbox>
+
+          <mat-form-field *ngIf="this.groupForm.controls.active.value">
+            <mat-label>Activation Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="activationDatePicker" required formControlName="activationDate">
+            <mat-datepicker-toggle matSuffix [for]="activationDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #activationDatePicker></mat-datepicker>
+            <mat-error *ngIf="groupForm.controls.activationDate.hasError('required')">
+              Activation Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>External id</mat-label>
+            <input matInput formControlName="externalId">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Submitted on</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker" required formControlName="submittedOnDate">
+            <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #submittedOnDatePicker></mat-datepicker>
+            <mat-error *ngIf="groupForm.controls.submittedOnDate.hasError('required')">
+              Submission Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Add Clients</mat-label>
+            <input matInput [formControl]="clientChoice" [matAutocomplete]="clientsAutocomplete">
+          </mat-form-field>
+  
+        </div>
+
+        <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">
+          <mat-option *ngFor="let client of clientsData" [value]="client">
+            {{ client.displayName }}
+          </mat-option>
+        </mat-autocomplete>
+
+        <div fxLayout="row">
+
+          <div class="mat-table" *ngIf="clientChoice.value">
+            <div class="mat-header-row">
+              <div class="mat-header-cell">Client Details</div>
+              <button mat-icon-button (click)="addClient()">
+                <fa-icon icon="plus"></fa-icon>
+              </button>
+            </div>
+            <div class="mat-row">
+              <div class="mat-cell">Name</div>
+              <div class="mat-cell">{{clientChoice.value.displayName}}</div>
+            </div>
+            <div class="mat-row">
+              <div class="mat-cell">Id</div>
+              <div class="mat-cell">{{clientChoice.value.id}}</div>
+            </div>
+            <div class="mat-row">
+              <div class="mat-cell">Office</div>
+              <div class="mat-cell">{{clientChoice.value.officeName}}</div>
+            </div>
+          </div>
+
+          <mat-nav-list *ngIf="clientMembers.length">
+            <h3 matSubheader>Selected Clients</h3>
+            <div mat-list-item *ngFor="let client of clientMembers index as i">
+              <button mat-icon-button (click)="removeClient(i)">
+                <fa-icon icon="trash"></fa-icon>
+              </button>
+              <span matLine>{{client.displayName}}</span>
+            </div>
+          </mat-nav-list>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!groupForm.valid" (click)="submit()">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>
