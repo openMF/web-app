@@ -14,6 +14,9 @@ export class CentersViewComponent implements OnInit {
 
   /** Stores Center View Data */
   centerViewData: any;
+  /** Center datatable */
+  centerDatatables: any;
+  /** Meeting data */
   meetingData: boolean;
 
   /**
@@ -23,8 +26,10 @@ export class CentersViewComponent implements OnInit {
   constructor(private route: ActivatedRoute) {
       this.route.data.subscribe((data: {
         centerViewData: any,
+        centerDatatables: any
       }) => {
         this.centerViewData = data.centerViewData;
+        this.centerDatatables = data.centerDatatables;
       });
     }
 

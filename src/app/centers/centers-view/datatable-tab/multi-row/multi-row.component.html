@@ -1,0 +1,34 @@
+<div class="tab-container mat-typography">
+
+  <div fxLayout="row" fxLayoutAlign="start">
+    <div class="m-b-10">
+      <h3>{{datatableName}}</h3>
+    </div>
+    <div class="action-button m-b-5" fxLayoutGap="10px">
+      <span *mifosxHasPermission="'CREATE_' + datatableName">
+        <button mat-raised-button color="primary" (click)="add()">
+          <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Add
+        </button>
+      </span>
+      <span *mifosxHasPermission="'DELETE_' + datatableName">
+        <button class="delete-button" mat-raised-button color="warn" (click)="delete()" *ngIf="showDeleteBotton">
+          <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;Delete All
+        </button>
+      </span>
+    </div>
+  </div>
+
+
+  <table #dataTable mat-table [hidden]="!datatableData[0]" [dataSource]="datatableData" class="mat-elevation-z1 m-b-25">
+
+    <ng-container *ngFor="let datatableColumn of datatableColumns;let i = index" [matColumnDef]="datatableColumn">
+      <th mat-header-cell *matHeaderCellDef> {{datatableColumn}} </th>
+      <td mat-cell *matCellDef="let data"> {{data.row[i]}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="datatableColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: datatableColumns;"></tr>
+
+  </table>
+
+</div>

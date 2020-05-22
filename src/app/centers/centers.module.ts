@@ -13,6 +13,9 @@ import { CreateCenterComponent } from './create-center/create-center.component';
 import { CentersViewComponent } from './centers-view/centers-view.component';
 import { GeneralTabComponent } from './centers-view/general-tab/general-tab.component';
 import { NotesTabComponent } from './centers-view/notes-tab/notes-tab.component';
+import { DatatableTabComponent } from './centers-view/datatable-tab/datatable-tab.component';
+import { MultiRowComponent } from './centers-view/datatable-tab/multi-row/multi-row.component';
+import { SingleRowComponent } from './centers-view/datatable-tab/single-row/single-row.component';
 
 /**
  * Centers Module
@@ -31,7 +34,10 @@ import { NotesTabComponent } from './centers-view/notes-tab/notes-tab.component'
     CreateCenterComponent,
     CentersViewComponent,
     GeneralTabComponent,
-    NotesTabComponent
+    NotesTabComponent,
+    DatatableTabComponent,
+    MultiRowComponent,
+    SingleRowComponent
   ]
 })
 export class CentersModule { }
