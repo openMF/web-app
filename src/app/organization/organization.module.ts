@@ -34,6 +34,7 @@ import { CreateTellerComponent } from './tellers/create-teller/create-teller.com
 import { EditTellerComponent } from './tellers/edit-teller/edit-teller.component';
 import { ViewLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/view-loan-provisioning-criteria/view-loan-provisioning-criteria.component';
 import { ViewCashierComponent } from './tellers/view-cashier/view-cashier.component';
+import { ViewHolidaysComponent } from './holidays/view-holidays/view-holidays.component';
 
 /**
  * Organization Module
@@ -74,6 +75,7 @@ import { ViewCashierComponent } from './tellers/view-cashier/view-cashier.compon
     EditTellerComponent,
     ViewLoanProvisioningCriteriaComponent,
     ViewCashierComponent,
+    ViewHolidaysComponent
   ]
 })
 export class OrganizationModule { }

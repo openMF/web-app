@@ -302,6 +302,24 @@ export class OrganizationService {
   }
 
   /**
+   * Get Holiday data.
+   * @param holidayId Holiday Id of holidays.
+   * @returns {Observable<any>} Holiday data.
+   */
+  getHoliday(holidayId: string): Observable<any> {
+    return this.http.get(`/holidays/${holidayId}`);
+  }
+
+  /**
+   * Delete Holiday.
+   * @param holidayId Holiday Id to be deleted.
+   * @returns {Observable<any>} Resource Id.
+   */
+  deleteHoliday(holidayId: string) {
+    return this.http.delete(`/holidays/${holidayId}`);
+  }
+
+  /**
    * @param {any} employeeId Employee ID of Employee to be edited.
    * @returns {Observable<any>}
    */

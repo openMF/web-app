@@ -1,0 +1,66 @@
+<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+  <button mat-raised-button color="accent" *ngIf="holidayData.status.value !== 'Active'">
+    <fa-icon icon="lock-open"></fa-icon>&nbsp;&nbsp;
+    Activate
+  </button>
+  <button mat-raised-button color="primary" [routerLink]="['edit']">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit
+  </button>
+  <button mat-raised-button color="warn" (click)="deleteHoliday()">
+    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+    Delete
+  </button>
+</div>
+
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" class="content">
+
+        <div fxFlex="50%" class="header">
+          Name
+        </div>
+
+        <div fxFlex="50%">
+          {{ holidayData.name }}
+        </div>
+
+        <div fxFlex="50%" class="header">
+          From Date
+        </div>
+
+        <div fxFlex="50%">
+          {{ holidayData.fromDate | date }}
+        </div>
+
+        <div fxFlex="50%" class="header">
+          To Date
+        </div>
+
+        <div fxFlex="50%">
+          {{ holidayData.toDate | date }}
+        </div>
+
+        <div fxFlex="50%" class="header">
+          Repayments Scheduled To
+        </div>
+
+        <div fxFlex="50%" *ngIf="holidayData.repaymentsRescheduledTo !== undefined && holidayData.repaymentsRescheduledTo !== null">
+          {{ holidayData.repaymentsRescheduledTo | date }}
+        </div>
+
+        <div fxFlex="50%" *ngIf="holidayData.repaymentsRescheduledTo === undefined || holidayData.repaymentsRescheduledTo === null">
+          Next Repayment Date
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>
