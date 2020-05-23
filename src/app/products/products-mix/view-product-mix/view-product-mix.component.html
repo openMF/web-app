@@ -1,0 +1,47 @@
+<div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="20px">
+  <button mat-raised-button color="primary">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit
+  </button>
+  <button mat-raised-button color="warn">
+    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+    Delete
+  </button>
+</div>
+
+<div class="container">
+  
+    <div class="mat-elevation-z8 inline-table">
+  
+      <table mat-table [dataSource]="allowedProductsDatasource" matSort>
+        
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'"> Allowed Products </th>
+          <td mat-cell *matCellDef="let product" [ngClass]="'customWidthClass'"> {{ product.name }} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="allowedProductsDisplayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: allowedProductsDisplayedColumns;"></tr>
+      </table>
+
+      <mat-paginator #allowed [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+  
+    </div>
+
+    <div class="mat-elevation-z8 inline-table">
+        
+      <table mat-table [dataSource]="restrictedProductsDatasource" matSort>
+        
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Restricted Products </th>
+          <td mat-cell *matCellDef="let product"> {{ product.name }} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="restrictedProductsDisplayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: restrictedProductsDisplayedColumns;"></tr>
+      </table>
+  
+      <mat-paginator #restricted [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+    </div>
+  
+  </div>

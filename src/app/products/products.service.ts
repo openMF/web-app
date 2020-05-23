@@ -234,4 +234,11 @@ export class ProductsService {
     return this.http.put(`/floatingrates/${floatingRateId}`, floatingRate);
   }
 
+  /**
+   * @param {string} productId Id of the product.
+   * @returns {Observable<any>} Product.
+   */
+  getProductMix(productId: string): Observable<any> {
+    return this.http.get(`/loanproducts/${productId}/productmix`);
+  }
 }

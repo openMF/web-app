@@ -33,6 +33,7 @@ import { FloatingRatesComponent } from './floating-rates/floating-rates.componen
 import { CreateFloatingRateComponent } from './floating-rates/create-floating-rate/create-floating-rate.component';
 import { ViewFloatingRateComponent } from './floating-rates/view-floating-rate/view-floating-rate.component';
 import { EditFloatingRateComponent } from './floating-rates/edit-floating-rate/edit-floating-rate.component';
+import { ViewProductMixComponent } from './products-mix/view-product-mix/view-product-mix.component';
 import { ManageTaxComponentsComponent } from './manage-tax-components/manage-tax-components.component';
 import { ManageTaxGroupsComponent } from './manage-tax-groups/manage-tax-groups.component';
 import { ViewTaxComponentComponent } from './manage-tax-components/view-tax-component/view-tax-component.component';
@@ -60,6 +61,7 @@ import { FixedDepositProductsTemplateResolver } from './fixed-deposit-products/f
 import { ProductsMixResolver } from './products-mix/products-mix.resolver';
 import { FloatingRatesResolver } from './floating-rates/floating-rates.resolver';
 import { FloatingRateResolver } from './floating-rates/floating-rate.resolver';
+import { ViewProductMixResolver } from './products-mix/view-product-mix/view-product-mix.resolver';
 import { ManageTaxComponentsResolver } from './manage-tax-components/manage-tax-components.resolver';
 import { ManageTaxGroupsResolver } from './manage-tax-groups/manage-tax-groups.resolver';
 import { TaxComponentResolver } from './manage-tax-components/tax-component.resolver';
@@ -295,11 +297,24 @@ const routes: Routes = [
         },
         {
           path: 'products-mix',
-          component: ProductsMixComponent,
-          resolve: {
-                products: ProductsMixResolver
-          },
           data: { title:  extract('Products Mix'), breadcrumb: 'Products Mix' },
+          children: [
+            {
+              path: '',
+              component: ProductsMixComponent,
+              resolve: {
+                    products: ProductsMixResolver
+              }
+            },
+            {
+              path: ':id',
+              component: ViewProductMixComponent,
+              data: { title: extract('View Product Mix'), routeParamBreadcrumb: 'id'},
+              resolve: {
+                productMix: ViewProductMixResolver
+              },
+            }
+          ]
         },
         {
           path: 'floating-rates',
@@ -409,6 +424,7 @@ const routes: Routes = [
     FixedDepositProductsResolver,
     FixedDepositProductsTemplateResolver,
     ProductsMixResolver,
+    ViewProductMixResolver,
     ManageTaxComponentsResolver,
     ManageTaxGroupsResolver,
     TaxComponentResolver,
