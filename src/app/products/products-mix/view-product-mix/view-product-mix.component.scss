@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+
+  .inline-table {
+    display: inline-block;
+    width: 45%;
+  }
+}
