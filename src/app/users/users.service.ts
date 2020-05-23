@@ -42,6 +42,15 @@ export class UsersService {
 
   /**
    * @param {string} userId user ID of user.
+   * @param {any} user user to be updated.
+   * @returns {Observable<any>} User.
+   */
+  editUser(userId: string, user: any): Observable<any> {
+    return this.http.put(`/users/${userId}`, user);
+  }
+
+  /**
+   * @param {string} userId user ID of user.
    * @returns {Observable<any>} User.
    */
   getUser(userId: string): Observable<any> {
@@ -72,7 +81,8 @@ export class UsersService {
    */
   getStaff(officeId: any): Observable<any> {
     const httpParams = new HttpParams()
-      .set('officeId', officeId.toString());
+      .set('officeId', officeId.toString())
+      .set('status', 'all');
     return this.http.get('/staff', { params: httpParams });
   }
 

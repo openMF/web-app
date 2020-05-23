@@ -1,0 +1,104 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="editUserForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+        
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Username</mat-label>
+            <input matInput required formControlName="username"/>
+            <mat-error *ngIf="editUserForm.controls.username.hasError('required')">
+              Username is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Email</mat-label>
+            <input matInput required formControlName="email">
+            <mat-error *ngIf="editUserForm.controls.email.hasError('email')">
+              Email is <strong>invalid</strong>
+            </mat-error>
+            <mat-error *ngIf="editUserForm.controls.email.hasError('required')">
+              Email is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>First name</mat-label>
+            <input matInput required formControlName="firstname"/>
+            <mat-error *ngIf="editUserForm.controls.firstname.hasError('pattern')">
+              First Name <strong>cannot begin with a special character or number</strong>
+            </mat-error>
+            <mat-error *ngIf="editUserForm.controls.firstname.hasError('required')">
+              First Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Last name</mat-label>
+            <input matInput required formControlName="lastname"/>
+            <mat-error *ngIf="editUserForm.controls.lastname.hasError('pattern')">
+              Last Name <strong>cannot begin with a special character or number</strong>
+            </mat-error>
+            <mat-error *ngIf="editUserForm.controls.lastname.hasError('required')">
+              Last Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <div class="password-never-expires-wrapper" fxFlex="48%">
+            <mat-checkbox labelPosition="before" formControlName="passwordNeverExpires" >
+              Override password expiry policy
+            </mat-checkbox>
+          </div>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Office</mat-label>
+            <mat-select required formControlName="officeId" (selectionChange)="officeChanged($event.value)">
+              <mat-option *ngFor="let office of officesData" [value]="office.id">
+                {{ office.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="editUserForm.controls.officeId.hasError('required')">
+              Office is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Staff</mat-label>
+            <mat-select formControlName="staffId">
+              <mat-option *ngFor="let staff of staffData" [value]="staff.id">
+                {{ staff.displayName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Roles</mat-label>
+            <mat-select required formControlName="roles" multiple>
+              <mat-option *ngFor="let role of rolesData" [value]="role.id">
+                {{ role.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="editUserForm.controls.roles.hasError('required')">
+              At least one role <strong>must be selected</strong>
+            </mat-error>
+          </mat-form-field>
+        
+        </div>
+      
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!editUserForm.valid">Submit</button>
+      </mat-card-actions>
+    
+    </form>
+  
+  </mat-card>
+
+</div>
