@@ -126,4 +126,54 @@ export class CentersService {
       return this.http.delete(`/groups/${centerId}/notes/${noteId}`);
     }
 
+    /**
+     * Get Center Datatables
+     */
+    getcenterDatatables() {
+      const httpParams = new HttpParams().set('apptable', 'm_center');
+    return this.http.get(`/datatables`, { params: httpParams });
+    }
+
+    /**
+     * Get Center Datatable
+     * @param centerId Center ID
+     * @param datatableName Datatable Name
+     */
+    getCenterDatatable(centerId: string, datatableName: string) {
+      const httpParams = new HttpParams().set('genericResultSet', 'true');
+      return this.http.get(`/datatables/${datatableName}/${centerId}`, { params: httpParams });
+    }
+
+    /**
+     * @param centerId Center Id of center to get add datatable entry for.
+     * @param datatableName Data Table name.
+     * @param data Data.
+     * @returns {Observable<any>}
+     */
+    addCenterDatatableEntry(centerId: string, datatableName: string, data: any): Observable<any> {
+      const httpParams = new HttpParams().set('genericResultSet', 'true');
+      return this.http.post(`/datatables/${datatableName}/${centerId}`, data, { params: httpParams });
+    }
+
+    /**
+     * @param centerId Center Id of center to get add datatable entry for.
+     * @param datatableName Data Table name.
+     * @param data Data.
+     * @returns {Observable<any>}
+     */
+    editCenterDatatableEntry(centerId: string, datatableName: string, data: any): Observable<any> {
+      const httpParams = new HttpParams().set('genericResultSet', 'true');
+      return this.http.put(`/datatables/${datatableName}/${centerId}`, data, { params: httpParams });
+    }
+
+    /**
+     * @param centerId Center Id of center to get add datatable entry for.
+     * @param datatableName Data Table name.
+     * @returns {Observable<any>}
+     */
+    deleteDatatableContent(centerId: string, datatableName: string): Observable<any> {
+      const httpParams = new HttpParams().set('genericResultSet', 'true');
+      return this.http.delete(`/datatables/${datatableName}/${centerId}`, { params: httpParams });
+    }
+
 }

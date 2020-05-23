@@ -91,6 +91,12 @@
         [active]="notes.isActive">
         Notes
       </a>
+      <span *ngFor="let centerDatatable of centerDatatables">
+        <a mat-tab-link *mifosxHasPermission="'READ_' + centerDatatable.registeredTableName" [routerLink]="['./datatables',centerDatatable.registeredTableName]"
+          routerLinkActive #datatable="routerLinkActive" [active]="datatable.isActive">
+          {{centerDatatable.registeredTableName}}
+        </a>
+      </span>
     </nav>
     <router-outlet></router-outlet>
   </mat-card-content>
