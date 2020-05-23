@@ -36,12 +36,11 @@ export class HasPermissionDirective {
     if (typeof permission !== 'string') {
       throw new Error('hasPermission value must be a string');
     }
+    /** Clear the template beforehand to prevent overlap OnChanges. */
+    this.viewContainer.clear();
+    /** Shows Template if user has permission */
     if (this.hasPermission(permission)) {
-      /** Shows Template */
       this.viewContainer.createEmbeddedView(this.templateRef);
-    } else {
-      /** Hides Template */
-      this.viewContainer.clear();
     }
   }
 
