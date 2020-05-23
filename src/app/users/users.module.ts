@@ -9,6 +9,7 @@ import { UsersRoutingModule } from './users-routing.module';
 import { UsersComponent } from './users.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { ViewUserComponent } from './view-user/view-user.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 /**
  * Users Module
@@ -23,7 +24,8 @@ import { ViewUserComponent } from './view-user/view-user.component';
   declarations: [
     UsersComponent,
     CreateUserComponent,
-    ViewUserComponent
+    ViewUserComponent,
+    EditUserComponent
   ]
 })
 export class UsersModule { }
