@@ -100,28 +100,80 @@ export class GroupsService {
      * @param groupId Group Id of group to edit note for.
      * @param noteId Note Id
      * @param noteData Note Data
+     * @returns {Observable<any>}
      */
-    editGroupNote(groupId: string, noteId: string, noteData: any) {
+    editGroupNote(groupId: string, noteId: string, noteData: any): Observable<any> {
       return this.http.put(`/groups/${groupId}/notes/${noteId}`, noteData);
     }
 
     /**
      * @param groupId Group Id of group to delete note for.
      * @param noteId Note Id
+     * @returns {Observable<any>}
      */
-    deleteGroupNote(groupId: string, noteId: string) {
+    deleteGroupNote(groupId: string, noteId: string): Observable<any> {
       return this.http.delete(`/groups/${groupId}/notes/${noteId}`);
+    }
+
+    /**
+     * @returns {Observable<any>}
+     */
+    getGroupDatatables(): Observable<any> {
+      const httpParams = new HttpParams().set('apptable', 'm_group');
+      return this.http.get(`/datatables`, { params: httpParams });
+    }
+
+    /**
+     * @param groupId Group Id of group to get datatable for.
+     * @param datatableName Data table name.
+     * @returns {Observable<any>}
+     */
+    getGroupDatatable(groupId: string, datatableName: string): Observable<any> {
+      const httpParams = new HttpParams().set('genericResultSet', 'true');
+      return this.http.get(`/datatables/${datatableName}/${groupId}`, { params: httpParams });
+    }
+
+    /**
+     * @param groupId Group Id of group to get add datatable entry for.
+     * @param datatableName Data Table name.
+     * @param data Data.
+     * @returns {Observable<any>}
+     */
+    addGroupDatatableEntry(groupId: string, datatableName: string, data: any): Observable<any> {
+      const httpParams = new HttpParams().set('genericResultSet', 'true');
+      return this.http.post(`/datatables/${datatableName}/${groupId}`, data, { params: httpParams });
+    }
+
+    /**
+     * @param groupId Group Id of group to get add datatable entry for.
+     * @param datatableName Data Table name.
+     * @param data Data.
+     * @returns {Observable<any>}
+     */
+    editGroupDatatableEntry(groupId: string, datatableName: string, data: any): Observable<any> {
+      const httpParams = new HttpParams().set('genericResultSet', 'true');
+      return this.http.put(`/datatables/${datatableName}/${groupId}`, data, { params: httpParams });
+    }
+
+    /**
+     * @param groupId Group Id of group to get add datatable entry for.
+     * @param datatableName Data Table name.
+     * @returns {Observable<any>}
+     */
+    deleteDatatableContent(groupId: string, datatableName: string): Observable<any> {
+      const httpParams = new HttpParams().set('genericResultSet', 'true');
+      return this.http.delete(`/datatables/${datatableName}/${groupId}`, { params: httpParams });
     }
 
     /**
      * @param {number} officeId Office Id of office to get staff for.
      * @returns {Observable<any>}
      */
-    getStaff(id: number) {
-        const httpParams = new HttpParams()
-            .set('officeId', id.toString())
-            .set('staffInSelectedOfficeOnly', 'true');
-        return this.http.get('/groups/template', { params: httpParams });
+    getStaff(id: number): Observable<any> {
+      const httpParams = new HttpParams()
+          .set('officeId', id.toString())
+          .set('staffInSelectedOfficeOnly', 'true');
+      return this.http.get('/groups/template', { params: httpParams });
     }
 
     /**
@@ -131,5 +183,6 @@ export class GroupsService {
     createGroup(group: any): Observable<any> {
         return this.http.post('/groups', group);
     }
+
 
 }

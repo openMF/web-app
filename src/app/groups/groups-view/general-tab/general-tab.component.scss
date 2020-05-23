@@ -7,12 +7,9 @@
   .group-details-container {
     border: 1px solid;
     padding: 1%;
-    margin-bottom: 30px;
   }
-  .table-header {
-    .action-button{
-      margin-left: auto;
-    }
+  .action-button{
+    margin-left: auto;
   }
   table {
     width: 100%;
@@ -25,7 +22,6 @@
     tr.select-row:hover {
       cursor: pointer;
     }
-    margin-bottom: 30px;
   }
   i:hover {
     cursor: pointer;

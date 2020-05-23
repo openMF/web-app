@@ -14,14 +14,17 @@ export class GroupsViewComponent {
 
   /** Group view data */
   groupViewData: any;
+  /** Group datatables data */
+  groupDatatables: any;
 
   /**
    * Fetches group data from `resolve`
    * @param {ActivatedRoute} route Activated Route
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { groupViewData: any }) => {
+    this.route.data.subscribe((data: { groupViewData: any, groupDatatables: any }) => {
       this.groupViewData = data.groupViewData;
+      this.groupDatatables = data.groupDatatables;
     });
   }
 
