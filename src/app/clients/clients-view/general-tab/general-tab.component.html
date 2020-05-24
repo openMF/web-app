@@ -15,7 +15,7 @@
   <!-- Upcoming Charges -->
 
   <h3>Upcoming Charges</h3>
-  <button mat-raised-button class="f-right" color="primary">Charges Overview</button>
+  <button mat-raised-button class="f-right" color="primary" [routerLink]="['../', 'chargeoverview']">Charges Overview</button>
   <table mat-table [dataSource]="upcomingCharges">
 
     <ng-container matColumnDef="Name">

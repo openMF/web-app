@@ -23,6 +23,7 @@ import { DatatableTabComponent } from './clients-view/datatable-tab/datatable-ta
 import { MultiRowComponent } from './clients-view/datatable-tab/multi-row/multi-row.component';
 import { SingleRowComponent } from './clients-view/datatable-tab/single-row/single-row.component';
 import { AddressTabComponent } from './clients-view/address-tab/address-tab.component';
+import { ChargesOverviewComponent } from './clients-view/charges-overview/charges-overview.component';
 
 
 /**
@@ -51,7 +52,8 @@ import { AddressTabComponent } from './clients-view/address-tab/address-tab.comp
     DatatableTabComponent,
     MultiRowComponent,
     SingleRowComponent,
-    AddressTabComponent
+    AddressTabComponent,
+    ChargesOverviewComponent
   ],
   entryComponents: [
     UploadDocumentDialogComponent,
