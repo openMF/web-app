@@ -311,6 +311,25 @@ export class OrganizationService {
     return this.http.post(`/tellers/${tellerId}/cashiers/${cashierId}/allocate`, cashData, {params: httpParams});
   }
 
+  /** Get Cashier Template.
+   * @param tellerId Teller ID.
+   * @returns {Observable<any>} Cashier template.
+   */
+  getCashierTemplate(tellerId: string): Observable<any> {
+    return this.http.get(`/tellers/${tellerId}/cashiers/template`);
+  }
+
+  /**
+   * Update Cashier.
+   * @param tellerId Teller Id.
+   * @param cashierId Cashier Id.
+   * @param cashierData Cashier data to be updated.
+   * @returns {Observable<any>}
+   */
+  updateCashier(tellerId: string, cashierId: string, cashierData: any): Observable<any> {
+    return this.http.put(`/tellers/${tellerId}/cashiers/${cashierId}`, cashierData);
+  }
+
   /**
    * @param {string} tellerId Teller ID of teller to be deleted.
    * @returns {Observable<any>}
