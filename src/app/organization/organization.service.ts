@@ -496,6 +496,21 @@ export class OrganizationService {
   }
 
   /**
+   * Get Entity Data Table Checks Template.
+   */
+  getEntityDataTableChecksTemplate(): Observable<any> {
+    return this.http.get('/entityDatatableChecks/template');
+  }
+
+  /**
+   * Create Entity Data Table Checks.
+   * @param entityData Data to be passed.
+   */
+  createEntityDataTableChecks(entityData: any): Observable<any> {
+    return this.http.post('/entityDatatableChecks', entityData);
+  }
+
+  /**
    * @param {string} entityDataTableCheckId Entity Data Table Check ID of entity data table to be deleted.
    * @returns {Observable<any>}
    */

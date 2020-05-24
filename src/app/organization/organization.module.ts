@@ -62,6 +62,7 @@ import { BusinessRuleParametersComponent } from './sms-campaigns/sms-campaign-st
 import { EditCampaignComponent } from './sms-campaigns/edit-campaign/edit-campaign.component';
 import { EditSmsCampaignStepComponent } from './sms-campaigns/sms-campaign-stepper/edit-sms-campaign-step/edit-sms-campaign-step.component';
 import { EditBusinessRuleParametersComponent } from './sms-campaigns/sms-campaign-stepper/edit-sms-campaign-step/edit-business-rule-parameters/edit-business-rule-parameters.component';
+import { CreateEnityDataTableChecksComponent } from './entity-data-table-checks/create-enity-data-table-checks/create-enity-data-table-checks.component';
 
 /**
  * Organization Module
@@ -129,7 +130,8 @@ import { EditBusinessRuleParametersComponent } from './sms-campaigns/sms-campaig
     BusinessRuleParametersComponent,
     EditCampaignComponent,
     EditSmsCampaignStepComponent,
-    EditBusinessRuleParametersComponent
+    EditBusinessRuleParametersComponent,
+    CreateEnityDataTableChecksComponent,
   ]
 })
 export class OrganizationModule { }

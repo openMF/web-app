@@ -55,6 +55,7 @@ import { ViewBulkImportComponent } from './bulk-import/view-bulk-import/view-bul
 import { ViewLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/view-loan-provisioning-criteria/view-loan-provisioning-criteria.component';
 import { CreateCampaignComponent } from './sms-campaigns/create-campaign/create-campaign.component';
 import { EditCampaignComponent } from './sms-campaigns/edit-campaign/edit-campaign.component';
+import { CreateEnityDataTableChecksComponent } from './entity-data-table-checks/create-enity-data-table-checks/create-enity-data-table-checks.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -90,6 +91,7 @@ import { HolidayTemplateResolver } from './holidays/holiday-template.resolver';
 import { AdhocQueryAndTemplateResolver } from './adhoc-query/common-resolvers/adhoc-query-and-template.resolver';
 import { BulkImportResolver } from './bulk-import/bulk-import.resolver';
 import { SmsCampaignTemplateResolver } from './sms-campaigns/common-resolvers/sms-campaign-template.resolver';
+import { EntityDataTableChecksTemplateResolver } from './entity-data-table-checks/enitity-data-table-checks-template.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -491,11 +493,24 @@ const routes: Routes = [
         },
         {
           path: 'entity-data-table-checks',
-          component: EntityDataTableChecksComponent,
           data: { title: extract('Entity Data Table Checks'), breadcrumb: 'Entity Data Table Checks' },
-          resolve: {
-            entityDataTableChecks: EntityDataTableChecksResolver
-          }
+          children: [
+            {
+              path: '',
+              component: EntityDataTableChecksComponent,
+              resolve: {
+                entityDataTableChecks: EntityDataTableChecksResolver
+              },
+            },
+            {
+              path: 'create',
+              component: CreateEnityDataTableChecksComponent,
+              data: { title: extract('Create Entity Data Table Checks'), breadcrumb: 'Create' },
+              resolve: {
+                dataTableEntity: EntityDataTableChecksTemplateResolver
+              }
+            }
+          ]
         },
         {
           path: 'working-days',
@@ -614,7 +629,9 @@ const routes: Routes = [
     EditCashierResolver,
     HolidayResolver,
     HolidayTemplateResolver,
-    BulkImportResolver
+    BulkImportResolver,
+    HolidayResolver,
+    EntityDataTableChecksTemplateResolver
   ]
 })
 export class OrganizationRoutingModule { }
