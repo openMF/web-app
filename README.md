@@ -35,14 +35,12 @@ npm install
 ng serve
 ```
 
-The application is using the demo server with basic authentication by default. The credentials for the same are:
+The application is using the development server with basic authentication by default. The credentials for the same are:
  
     Username - mifos
     Password - password
 
 **Important Note:** Please do not make any alterations to these credentials.
-
-If you are running into issues with the demo server, please see available alternatives [here](https://groups.google.com/d/msg/mifosdeveloper/7hi_fpunnqE/uD0yQytwFwAJ).
 
 ### Development server
 
