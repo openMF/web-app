@@ -40,6 +40,7 @@ import { ViewTaxComponentComponent } from './manage-tax-components/view-tax-comp
 import { CreateTaxComponentComponent } from './manage-tax-components/create-tax-component/create-tax-component.component';
 import { EditTaxComponentComponent } from './manage-tax-components/edit-tax-component/edit-tax-component.component';
 import { ViewTaxGroupComponent } from './manage-tax-groups/view-tax-group/view-tax-group.component';
+import { ShareProductsDividendsComponent } from './share-products/dividends-share-product/dividends.components';
 
 /** Custom Resolvers */
 import { LoanProductsResolver } from './loan-products/loan-products.resolver';
@@ -70,6 +71,7 @@ import { TaxComponentTemplateResolver } from './manage-tax-components/tax-compon
 import { EditChargeComponent } from './charges/edit-charge/edit-charge.component';
 import { ChargesTemplateResolver } from './charges/charges-template.resolver';
 import { TaxGroupResolver } from './manage-tax-groups/tax-group.resolver';
+import { DividendsResolver } from './share-products/dividends-share-product/dividends.resolver';
 
 /** Products Routes */
 const routes: Routes = [
@@ -202,6 +204,14 @@ const routes: Routes = [
                   data: { title: extract('Edit Share Product'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     shareProductAndTemplate: ShareProductAndTemplateResolver
+                  }
+                },
+                {
+                  path: 'dividends',
+                  data: { title: extract('Share Products Dividends'), breadcrumb: 'Dividends', routeParamBreadcrumb: false},
+                  component: ShareProductsDividendsComponent,
+                  resolve: {
+                    dividends: DividendsResolver
                   }
                 }
               ]
@@ -452,7 +462,8 @@ const routes: Routes = [
     FloatingRatesResolver,
     TaxComponentTemplateResolver,
     EditTaxComponentComponent,
-    TaxGroupResolver
+    TaxGroupResolver,
+    DividendsResolver
   ]
 })
 export class ProductsRoutingModule { }
