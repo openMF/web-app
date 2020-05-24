@@ -1,0 +1,47 @@
+<mat-card-header fxLayout="row" fxLayoutGap="5%" class="header">
+  <fa-icon class="main-icon" icon="building" size="3x"></fa-icon>
+  <mat-card-title-group>
+    <div class="mat-typography">
+      <mat-card-title>
+        <h2>
+          {{ officeData.name }} 
+        </h2>
+      </mat-card-title>
+      <mat-card-subtitle>
+        <p>
+          {{ officeData.externalId ? 'External ID: ' + officeData.externalId : '' }}
+        </p>
+      </mat-card-subtitle>
+    </div>
+  </mat-card-title-group>      
+</mat-card-header>
+
+<mat-card-content>
+  <div fxLayout="row wrap" class="content">
+
+    <div fxFlex="50%" class="mat-body-strong">
+      Opened On
+    </div>
+
+    <div fxFlex="50%">
+      {{ officeData.openingDate | date }}
+    </div>
+
+    <div fxFlex="50%" class="mat-body-strong" *ngIf="officeData.parentName">
+      Parent officeData
+    </div>
+
+    <div fxFlex="50%" *ngIf="officeData.parentName">
+      {{ officeData.parentName }}
+    </div>
+
+    <div fxFlex="50%" class="mat-body-strong">
+      Number of Staff
+    </div>
+
+    <div fxFlex="50%">
+      {{ employeeData ? employeeData.length : '' }}
+    </div>
+
+  </div>
+</mat-card-content>

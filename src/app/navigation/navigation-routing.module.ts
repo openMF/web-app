@@ -11,13 +11,19 @@ import { extract } from '../core/i18n/i18n.service';
 /** Custom Components */
 import { NavigationComponent } from './navigation.component';
 
+/** Custom Resolvers */
+import { OfficesResolver } from './offices.resolver';
+
 /** Navigation Routes */
 const routes: Routes = [
   Route.withShell([
     {
       path: 'navigation',
       component: NavigationComponent,
-      data: { title: extract('Navigation'), breadcrumb: 'Navigation' }
+      data: { title: extract('Navigation'), breadcrumb: 'Navigation' },
+      resolve: {
+        offices: OfficesResolver
+      }
     }
   ])
 ];
@@ -30,6 +36,8 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: []
+  providers: [
+    OfficesResolver
+  ]
 })
 export class NavigationRoutingModule { }

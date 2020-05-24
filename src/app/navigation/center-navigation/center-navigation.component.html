@@ -1,0 +1,121 @@
+<mat-card-header fxLayout="row" fxLayoutGap="5%" class="header">
+  <fa-icon class="main-icon" icon="building" size="3x"></fa-icon>
+  <mat-card-title-group>
+    <div class="mat-typography">
+      <mat-card-title>
+        <h2>
+          {{ centerData.name }} 
+          <span [className]="centerData.status.code | statusLookup">
+            <fa-icon matTooltip="{{ centerData.status.value }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
+          </span>
+        </h2>
+      </mat-card-title>
+      <mat-card-subtitle>
+        <p>
+          Account No: {{ centerData.accountNo }} | {{ centerData.externalId ? '| External ID: ' + centerData.externalId : '' }}
+        </p>
+      </mat-card-subtitle>
+    </div>
+  </mat-card-title-group>
+</mat-card-header>
+
+<mat-card-content>
+
+  <mat-tab-group>
+    <mat-tab label="Details">
+      <div fxLayout="row wrap" class="content">
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Activation Date
+        </div>
+
+        <div fxFlex="50%">
+          {{ centerData.activationDate | date }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Associated Officer
+        </div>
+
+        <div fxFlex="50%">
+          {{ centerData.staffName }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="centerSummaryData">
+          Number of Active Clients
+        </div>
+
+        <div fxFlex="50%" *ngIf="centerSummaryData">
+          {{ centerSummaryData.activeClients }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="centerSummaryData">
+          Number of Active Client Loans
+        </div>
+
+        <div fxFlex="50%" *ngIf="centerSummaryData">
+          {{ centerSummaryData.activeClientLoans }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="centerSummaryData">
+          Number of Active Client Borrowers
+        </div>
+
+        <div fxFlex="50%" *ngIf="centerSummaryData">
+          {{ centerSummaryData.activeClientBorrowers }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="centerSummaryData">
+          Number of Active Overdue Group Loans
+        </div>
+
+        <div fxFlex="50%" *ngIf="centerSummaryData">
+          {{ centerSummaryData.overdueGroupLoans }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="centerSummaryData">
+          Number of Active Overdue Client Loans
+        </div>
+
+        <div fxFlex="50%" *ngIf="centerSummaryData">
+          {{ centerSummaryData.overdueClientLoans }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="centerData.collectionMeetingCalendar && centerData.collectionMeetingCalendar.nextTenRecurringDates[0]">
+          Next Meeting Date
+        </div>
+
+        <div fxFlex="50%" *ngIf="centerData.collectionMeetingCalendar && centerData.collectionMeetingCalendar.nextTenRecurringDates[0]">
+          {{ centerSummaryData.collectionMeetingCalendar.nextTenRecurringDates[0] | date }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="centerData.collectionMeetingCalendar && centerData.collectionMeetingCalendar.humanReadable">
+          Meeting Frequency
+        </div>
+
+        <div fxFlex="50%" *ngIf="centerData.collectionMeetingCalendar && centerData.collectionMeetingCalendar.humanReadable">
+          {{ centerSummaryData.collectionMeetingCalendar.humanReadable }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Number of Groups
+        </div>
+
+        <div fxFlex="50%">
+          {{ groupData ? groupData.length : '' }}
+        </div>
+
+      </div>    
+    </mat-tab>
+
+    <mat-tab label="Loan Accounts" *ngIf="centerAccountsData && centerAccountsData.loanAccounts">
+      <mifosx-loan-account-table [loanAccountData]="centerAccountsData.loanAccounts"></mifosx-loan-account-table>
+    </mat-tab>
+
+    <mat-tab label="Savings Accounts" *ngIf="centerAccountsData && centerAccountsData.savingsAccounts">
+      <mifosx-savings-account-table [savingsAccountData]="centerAccountsData.savingsAccounts"></mifosx-savings-account-table>
+    </mat-tab>
+    
+  </mat-tab-group>
+
+</mat-card-content>

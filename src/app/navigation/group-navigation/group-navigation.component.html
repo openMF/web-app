@@ -1,0 +1,87 @@
+<mat-card-header fxLayout="row" fxLayoutGap="5%">
+  <fa-icon class="main-icon" icon="users" size="3x"></fa-icon>
+  <mat-card-title-group>
+    <div class="mat-typography">
+      <mat-card-title>
+        <h2>
+          {{ groupData.name }} 
+          <span [className]="groupData.status.code | statusLookup">
+            <fa-icon matTooltip="{{ groupData.status.value }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
+          </span>
+        </h2>
+      </mat-card-title>
+      <mat-card-subtitle>
+        <p>
+          Account No: {{ groupData.accountNo }} {{ groupData.externalId ? '| External ID: ' + groupData.externalId : '' }}
+        </p>
+      </mat-card-subtitle>
+    </div>
+  </mat-card-title-group>      
+</mat-card-header>
+
+<mat-card-content>
+    <mat-tab-group>
+      <mat-tab label="Details">
+        <div fxLayout="row wrap" class="content">
+
+          <div fxFlex="50%" class="mat-body-strong">
+            Activation Date
+          </div>
+  
+          <div fxFlex="50%">
+            {{ groupData.activationDate | date }}
+          </div>
+
+          <div fxFlex="50%" class="mat-body-strong">
+            Associated Officer
+          </div>
+  
+          <div fxFlex="50%">
+            {{ groupData.staffName }}
+          </div>
+
+          <div fxFlex="50%" class="mat-body-strong" *ngIf="groupData.centerName">
+            Associated Center
+          </div>
+  
+          <div fxFlex="50%" *ngIf="groupData.centerName">
+            {{ groupData.centerName }}
+          </div>
+
+          <div fxFlex="50%" class="mat-body-strong" *ngIf="groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.nextTenRecurringDates[0]">
+            Next Meeting Date
+          </div>
+  
+          <div fxFlex="50%" *ngIf="groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.nextTenRecurringDates[0]">
+            {{ groupData.collectionMeetingCalendar.nextTenRecurringDates[0] | date }}
+          </div>
+
+          <div fxFlex="50%" class="mat-body-strong" *ngIf="groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.humanReadable">
+            Meeting Frequency
+          </div>
+  
+          <div fxFlex="50%" *ngIf="groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.humanReadable">
+            {{ groupData.collectionMeetingCalendar.humanReadable }}
+          </div>
+
+          <div fxFlex="50%" class="mat-body-strong">
+            Number of Clients
+          </div>
+  
+          <div fxFlex="50%">
+            {{ clientData ? clientData.length : '' }}
+          </div>
+
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Loan Accounts" *ngIf="groupAccountsData && groupAccountsData.loanAccounts">
+        <mifosx-loan-account-table [loanAccountData]="groupAccountsData.loanAccounts"></mifosx-loan-account-table>
+      </mat-tab>
+
+      <mat-tab label="Savings Accounts" *ngIf="groupAccountsData && groupAccountsData.savingsAccounts">
+        <mifosx-savings-account-table [savingsAccountData]="groupAccountsData.savingsAccounts"></mifosx-savings-account-table>
+      </mat-tab>
+
+    </mat-tab-group>
+</mat-card-content>
