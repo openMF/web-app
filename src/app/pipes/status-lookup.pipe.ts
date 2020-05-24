@@ -42,8 +42,7 @@ export class StatusLookupPipe implements PipeTransform {
       'groupingStatusType.approved': 'status-approved',
       'smsCampaignStatus.active': 'status-active',
       'smsCampaignStatus.pending': 'status-pending',
-      'smsCampaignStatus.closed': 'status-closed',
-      'groupingStatusType.active': 'status-active'
+      'smsCampaignStatus.closed': 'status-closed'
     };
     return cssClassNameLookup[status];
   }
