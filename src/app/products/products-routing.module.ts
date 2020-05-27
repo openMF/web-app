@@ -39,6 +39,7 @@ import { ManageTaxGroupsComponent } from './manage-tax-groups/manage-tax-groups.
 import { ViewTaxComponentComponent } from './manage-tax-components/view-tax-component/view-tax-component.component';
 import { CreateTaxComponentComponent } from './manage-tax-components/create-tax-component/create-tax-component.component';
 import { EditTaxComponentComponent } from './manage-tax-components/edit-tax-component/edit-tax-component.component';
+import { ViewTaxGroupComponent } from './manage-tax-groups/view-tax-group/view-tax-group.component';
 
 /** Custom Resolvers */
 import { LoanProductsResolver } from './loan-products/loan-products.resolver';
@@ -68,6 +69,7 @@ import { TaxComponentResolver } from './manage-tax-components/tax-component.reso
 import { TaxComponentTemplateResolver } from './manage-tax-components/tax-component-template.resolver';
 import { EditChargeComponent } from './charges/edit-charge/edit-charge.component';
 import { ChargesTemplateResolver } from './charges/charges-template.resolver';
+import { TaxGroupResolver } from './manage-tax-groups/tax-group.resolver';
 
 /** Products Routes */
 const routes: Routes = [
@@ -258,11 +260,29 @@ const routes: Routes = [
             },
             {
               path: 'tax-groups',
-              component: ManageTaxGroupsComponent,
-              resolve: {
-                taxGroups: ManageTaxGroupsResolver
-              },
               data: { title: extract('Manage Tax Groups'), breadcrumb: 'Tax Groups'},
+              children: [
+                {
+                  path: '',
+                  component: ManageTaxGroupsComponent,
+                  resolve: {
+                  taxGroups: ManageTaxGroupsResolver
+                  }
+                },
+                {
+                  path: ':id',
+                  data: { title: extract('View Tax Group'), routeParamBreadcrumb: 'id' },
+                  children: [
+                    {
+                      path: '',
+                      component: ViewTaxGroupComponent,
+                      resolve: {
+                        taxGroup: TaxGroupResolver
+                      }
+                    }
+                  ]
+                }
+              ]
             },
           ]
         },
@@ -431,7 +451,8 @@ const routes: Routes = [
     FloatingRateResolver,
     FloatingRatesResolver,
     TaxComponentTemplateResolver,
-    EditTaxComponentComponent
+    EditTaxComponentComponent,
+    TaxGroupResolver
   ]
 })
 export class ProductsRoutingModule { }

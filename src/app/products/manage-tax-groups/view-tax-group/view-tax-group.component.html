@@ -1,0 +1,58 @@
+<div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="2%">
+  <button mat-raised-button color="primary">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit
+  </button>
+</div>
+
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" class="content">
+
+        <div fxFlex="33%" class="mat-body-strong">
+          Name
+        </div>
+
+        <div fxFlex="67%">
+          {{ taxGroupData.name }}
+        </div>
+
+        <div fxFlex="34%" class="mat-body-strong">
+          Tax-Component Name
+        </div>
+
+        <div fxFlex="33%" class="mat-body-strong">
+          Start Date
+        </div>
+
+        <div fxFlex="33%" class="mat-body-strong">
+          End Date
+        </div>
+
+      </div>
+
+      <div fxLayout="row wrap" class="content"  *ngFor="let taxcomponent of taxGroupData.taxAssociations">
+
+          <div fxFlex="34%">
+            {{ taxcomponent.taxComponent.name }}
+          </div>
+
+          <div fxFlex="33%">
+            {{ taxcomponent.startDate | date }}
+          </div>
+
+          <div fxFlex="33%" *ngIf="taxcomponent.endDate !== undefined || taxcomponent.endDate !== null">
+            {{ taxcomponent.endDate | date }}
+          </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>
