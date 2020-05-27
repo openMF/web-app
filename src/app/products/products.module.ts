@@ -73,6 +73,7 @@ import { EditTaxComponentComponent } from './manage-tax-components/edit-tax-comp
 import { EditChargeComponent } from './charges/edit-charge/edit-charge.component';
 import { MatFormFieldModule, MatSelectModule, MatOptionModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ViewTaxGroupComponent } from './manage-tax-groups/view-tax-group/view-tax-group.component';
 
 /**
  * Products Module
@@ -149,7 +150,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ViewTaxComponentComponent,
     CreateTaxComponentComponent,
     EditTaxComponentComponent,
-    EditChargeComponent
+    EditChargeComponent,
+    ViewTaxGroupComponent
   ],
   entryComponents: [
     FloatingRatePeriodDialogComponent
