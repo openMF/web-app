@@ -69,9 +69,8 @@ export class HolidaysComponent implements OnInit {
    */
   onChangeOffice() {
     this.officeSelector.valueChanges.subscribe((officeId = this.officeSelector.value) => {
-      this.holidaysData = [];
       this.organizationService.getHolidays(officeId).subscribe((holidays: any) => {
-        this.holidaysData = holidays;
+        this.holidaysData = holidays.filter((holiday: any) => holiday.status.value !== 'Deleted');
         this.setHolidays();
       });
     });
