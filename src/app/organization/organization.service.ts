@@ -478,6 +478,24 @@ export class OrganizationService {
   }
 
   /**
+   * Get Holiday template.
+   * @returns {Observable<any>} Holiday data.
+   */
+  getHolidayTemplate(): Observable<any> {
+    return this.http.get('/holidays/template');
+  }
+
+  /**
+   * Update Holiday.
+   * @param holidayId Holiday Id to be updated.
+   * @param holidayData Holiday data to be updated.
+   * @returns {Observable<any>}
+   */
+  updateHoliday(holidayId: any, holidayData: any): Observable<any> {
+    return this.http.put(`/holidays/${holidayId}`, holidayData);
+  }
+
+  /**
    * Delete Holiday.
    * @param holidayId Holiday Id to be deleted.
    * @returns {Observable<any>} Resource Id.

@@ -47,6 +47,7 @@ import { AllocateCashComponent } from './tellers/cashiers/allocate-cash/allocate
 import { SettleCashComponent } from './tellers/cashiers/settle-cash/settle-cash.component';
 import { EditCashierComponent } from './tellers/cashiers/edit-cashier/edit-cashier.component';
 import { CreateCashierComponent } from './tellers/cashiers/create-cashier/create-cashier.component';
+import { EditHolidayComponent } from './holidays/edit-holiday/edit-holiday.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -80,6 +81,7 @@ import { SmsCampaignResolver } from './sms-campaigns/common-resolvers/sms-campai
 import { ManageFundsResolver } from './manage-funds/manage-funds.resolver';
 import { CashierTransactionTemplateResolver } from './tellers/teller-transaction-template.resolver';
 import { EditCashierResolver } from './tellers/common-resolvers/edit-cashier.resolver';
+import { HolidayTemplateResolver } from './holidays/holiday-template.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -494,6 +496,15 @@ const routes: Routes = [
                   resolve: {
                     holidays: HolidayResolver
                   }
+                },
+                {
+                  path: 'edit',
+                  component: EditHolidayComponent,
+                  data: { title: extract('Edit Holidays'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    holiday: HolidayResolver,
+                    holidayTemplate: HolidayTemplateResolver
+                  }
                 }
               ]
             }
@@ -541,7 +552,9 @@ const routes: Routes = [
     OfficeDatatablesResolver,
     ManageFundsResolver,
     CashierTransactionTemplateResolver,
-    EditCashierResolver
+    EditCashierResolver,
+    HolidayResolver,
+    HolidayTemplateResolver
   ]
 })
 export class OrganizationRoutingModule { }
