@@ -1,0 +1,10 @@
+.card {
+  padding: 2%;
+  .recent-activities, .frequent-activities {
+    width: 20rem;
+    padding: 0;
+    .list {
+      padding-top: 0px;
+    }
+  }
+}
