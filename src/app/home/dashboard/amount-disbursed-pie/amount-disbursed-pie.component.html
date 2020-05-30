@@ -1,0 +1,30 @@
+<mat-card class="card">
+
+  <mat-card-header class="header">
+    <h3 fxFlex="100%">
+      <fa-icon icon="money-bill"></fa-icon>
+      &nbsp;&nbsp; Amount Disbursed
+      <div>
+        <mat-form-field id="office" fxFlex="94%">
+          <mat-label>Office</mat-label>
+          <mat-select [formControl]="officeId">
+            <mat-option *ngFor="let office of officeData" [value]="office.id">
+              {{ office.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </h3>
+  </mat-card-header>
+
+  <mat-card-content>
+    <!-- Structural directives like *ngIf break the canvas -->
+    <div [ngStyle]="{'display': (hideOutput) ? 'none' : 'block'}">
+      <canvas id="disbursement-pie" width="800" height="600"></canvas>
+    </div>
+    <div *ngIf="showFallback" class="fallback" fxLayoutAlign="center center">
+      <p>No Data</p>
+    </div>      
+  </mat-card-content>
+
+</mat-card>

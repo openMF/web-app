@@ -99,6 +99,19 @@ export class WebAppComponent implements OnInit {
         }
       });
 
+    // Stores top 100 user activites as local storage object.
+    let activities: string[] = [];
+    if (localStorage.getItem('mifosXLocation')) {
+      const activitiesArray: string[] = JSON.parse(localStorage.getItem('mifosXLocation'));
+      const length = activitiesArray.length;
+      activities = length > 100 ? activitiesArray.slice(length - 100) : activitiesArray;
+    }
+    // Store route URLs array in local storage on navigation end.
+    onNavigationEnd.subscribe(() => {
+      activities.push(this.router.url);
+      localStorage.setItem('mifosXLocation', JSON.stringify(activities));
+    });
+
     // Setup theme
     const theme = this.themeStorageService.getTheme();
     if (theme) {

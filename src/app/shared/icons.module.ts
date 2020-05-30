@@ -83,7 +83,12 @@ import {
   faTimes,
   faStickyNote,
   faStop,
-  faBan
+  faBan,
+  faBolt,
+  faLaptop,
+  faDonate,
+  faMoneyBill,
+  faChartLine
 } from '@fortawesome/free-solid-svg-icons';
 
 /** Add icons to the library for convenient access in other components. */
@@ -166,7 +171,12 @@ library.add(
   faTimes,
   faStickyNote,
   faStop,
-  faBan
+  faBan,
+  faBolt,
+  faLaptop,
+  faDonate,
+  faMoneyBill,
+  faChartLine
 );
 
 /**
