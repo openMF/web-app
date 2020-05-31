@@ -477,6 +477,16 @@ export class SystemService {
   }
 
   /**
+   * Creates a new mapping
+   * @param {any} mapType Map id to be created.
+   * @param {any} mapData Map data to be added
+   * @returns {Observable<any>} resolved data
+   */
+  createMapping(mapType: any, mapData: any): Observable<any> {
+    return this.http.post(`/entitytoentitymapping/${mapType}`, mapData);
+  }
+
+  /**
    * @returns {Observable<any>} Offices data
    */
   getOffices(): Observable<any> {

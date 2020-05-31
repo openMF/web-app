@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 /** Module Imports */
 import { SharedModule } from '../shared/shared.module';
 import { SystemRoutingModule } from './system-routing.module';
+import { PipesModule } from '../pipes/pipes.module';
 
 /** Component Imports */
 import { CodesComponent } from './codes/codes.component';
@@ -58,7 +59,8 @@ import { EditSchedulerJobComponent } from './manage-scheduler-jobs/edit-schedule
 @NgModule({
   imports: [
     SystemRoutingModule,
-    SharedModule
+    SharedModule,
+    PipesModule
   ],
   declarations: [
     SystemComponent,
