@@ -17,6 +17,8 @@ import { LoanChargeTemplateResolver } from './common-resolvers/loan-charge-templ
 import { LoanDetailsResolver } from './common-resolvers/loan-details.resolver';
 import { LoanDetailsGeneralResolver } from './common-resolvers/loan-details-general.resolver';
 import { LoanNotesResolver } from './common-resolvers/loan-notes-resolver';
+import { ChargesTabComponent } from './loans-view/charges-tab/charges-tab.component';
+import { LoanDetailsChargesResolver } from './common-resolvers/loan-details-charges.resolver';
 
 const routes: Routes = [
   {
@@ -48,6 +50,14 @@ const routes: Routes = [
           }
         },
         {
+          path: 'charges',
+          component: ChargesTabComponent,
+          data: { title: extract('Charges'), breadcrumb: 'Charges', routeParamBreadcrumb: false },
+          resolve: {
+            loanDetailsAssociationData: LoanDetailsChargesResolver
+          }
+        },
+        {
           path: 'notes',
           component: NotesTabComponent,
           data: { title: extract('Notes'), breadcrumb: 'Notes', routeParamBreadcrumb: false },
@@ -75,7 +85,8 @@ const routes: Routes = [
     LoanChargeTemplateResolver,
     LoanDetailsGeneralResolver,
     LoanDetailsResolver,
-    LoanNotesResolver
+    LoanNotesResolver,
+    LoanDetailsChargesResolver
   ]
 })
 

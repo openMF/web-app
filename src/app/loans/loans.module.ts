@@ -14,6 +14,7 @@ import { LoansViewComponent } from './loans-view/loans-view.component';
 import { GeneralTabComponent } from './loans-view/general-tab/general-tab.component';
 import { AccountDetailsComponent } from './loans-view/account-details/account-details.component';
 import { NotesTabComponent } from './loans-view/notes-tab/notes-tab.component';
+import { ChargesTabComponent } from './loans-view/charges-tab/charges-tab.component';
 
 /**
  * Loans Module
@@ -28,6 +29,7 @@ import { NotesTabComponent } from './loans-view/notes-tab/notes-tab.component';
     GeneralTabComponent,
     AccountDetailsComponent,
     NotesTabComponent,
+    ChargesTabComponent,
   ],
   providers: [DatePipe],
 })

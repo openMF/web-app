@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -29,8 +29,23 @@ export class LoansService {
     return this.http.post(`/loans/${loanId}/${resourceType}`, loanCharge);
   }
 
+  /**
+   * Get Loan Account Details
+   * @param loanId Loan Id
+   */
   getLoanAccountDetails(loanId: string) {
     return this.http.get(`/loans/${loanId}`);
+  }
+
+  /**
+   * Get Loans details with httpParams
+   * @param loanId Loan ID
+   */
+  getLoanAccountAssociationDetails(loanId: string) {
+    const httpParams = new HttpParams()
+      .set('associations', 'all')
+      .set('exclude', 'guarantors,futureSchedule');
+    return this.http.get(`/loans/${loanId}`, {params: httpParams});
   }
 
   /**

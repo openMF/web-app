@@ -58,6 +58,11 @@
 	  <a mat-tab-link [routerLink]="['./accountdetail']" routerLinkActive #accountdetail="routerLinkActive" [active]="accountdetail.isActive">
 		Account Details
 	  </a>
+	  <ng-container *ngIf="loanDetailsData.charges">
+		<a mat-tab-link [routerLink]="['./charges']" routerLinkActive #charges="routerLinkActive" [active]="charges.isActive">
+		  Charges
+		</a>
+      </ng-container>
 	  <a mat-tab-link *mifosxHasPermission="'READ_LOANNOTE'" [routerLink]="['./notes']" routerLinkActive #notes="routerLinkActive" [active]="notes.isActive">
 		Notes
 	  </a>
