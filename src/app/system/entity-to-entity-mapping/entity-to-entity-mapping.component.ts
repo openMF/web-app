@@ -2,6 +2,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
@@ -29,8 +30,12 @@ export class EntityToEntityMappingComponent implements OnInit {
   hasClickedFilters = false;
   /** Selected Entity Id */
   retrieveById = 0;
+  /** relative Id */
+  relId: number;
   /** Stores filtered data */
   filterPreference: any;
+  /** Checks where add form is to be displayed */
+  addScreenFilter = false;
 
   /**
    * stores the data for clicked mapType
@@ -45,6 +50,8 @@ export class EntityToEntityMappingComponent implements OnInit {
   entityMappingsListData: MatTableDataSource<any>;
   /** Filter Preference Form */
   filterPreferenceForm: FormGroup;
+  /** Add entity Form */
+  addMappingForm: FormGroup;
   /** List of Entity to Entity Mapping */
   displayedColumns: string[] = ['entitymapping'];
   /** Columns for details of a chosen mapping */
@@ -61,7 +68,8 @@ export class EntityToEntityMappingComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private systemService: SystemService) {
+    private systemService: SystemService,
+    private datePipe: DatePipe) {
     this.route.data.subscribe((data: { entityMappings: any }) => {
       this.entityMappings = data.entityMappings;
     });
@@ -168,19 +176,84 @@ export class EntityToEntityMappingComponent implements OnInit {
   showFilteredData() {
     this.filterPreference = this.filterPreferenceForm.value;
     if (this.filterPreference.mappingFirstParamId === '') {
-      this.filterPreference.mappingFirstParamId = undefined;
+      this.filterPreference.mappingFirstParamId = 0;
     }
     if (this.filterPreference.mappingSecondParamId === '') {
-      this.filterPreference.mappingSecondParamId = undefined;
+      this.filterPreference.mappingSecondParamId = 0;
     }
     this.hasClickedFilters = true;
+    this.addScreenFilter = false;
+
     this.selectedFromId = this.filterPreference.mappingFirstParamId;
     this.selectedToId = this.filterPreference.mappingSecondParamId;
     this.systemService.getEntitytoEntityData(this.retrieveById, this.selectedFromId, this.selectedToId).subscribe((response: any) => {
       this.entityMappingsListData = new MatTableDataSource(response);
-      this.entityMappingsListData.paginator = this.paginator;
-      this.entityMappingsListData.sort = this.sort;
+      // this.entityMappingsListData.paginator = this.paginator;
+      // this.entityMappingsListData.sort = this.sort;
     });
+  }
+
+  /**
+   * Creates the add mapping form
+   */
+  createAddMappingForm() {
+    this.addMappingForm = this.formBuilder.group({
+      'fromId': ['', Validators.required],
+      'toId': ['', Validators.required],
+      'startDate': [''],
+      'endDate': ['']
+    });
+  }
+
+  /**
+   * Shows the add entity screen
+   * @param selectedType selected Map Type
+   */
+  showAddScreen(selectedType: number) {
+    this.createAddMappingForm();
+    this.relId = selectedType;
+    this.hasClickedFilters = false;
+    this.addScreenFilter = true;
+    this.fetchRelatedData(this.relId);
+  }
+
+
+  /**
+   * Submits the new mapping
+   * @param id Map type id
+   */
+  submitNew(id: number) {
+
+    if (this.addMappingForm.value.fromId === '') {
+      this.addMappingForm.value.fromId = undefined;
+    }
+    if (this.addMappingForm.value.toId === '') {
+      this.addMappingForm.value.toId = undefined;
+    }
+    this.relId = id;
+    const dateFormat = 'dd MMMM yyyy';
+
+    const startDate: Date = this.addMappingForm.value.startDate;
+    const endDate: Date = this.addMappingForm.value.endDate;
+
+    this.addMappingForm.patchValue({
+      startDate: this.datePipe.transform(startDate, dateFormat),
+      endDate: this.datePipe.transform(endDate, dateFormat)
+    });
+    const newMappingData = this.addMappingForm.value;
+    newMappingData.dateFormat = dateFormat;
+    newMappingData.locale = 'en';
+    this.systemService.createMapping(this.relId, newMappingData).subscribe((response: any) => {
+      this.showFilteredData();
+    });
+  }
+
+  /**
+   * Cancels the add entity operation
+   */
+  cancelOperation() {
+    this.hasClickedFilters = true;
+    this.addScreenFilter = false;
   }
 
 }
