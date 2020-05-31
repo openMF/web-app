@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class LoansService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   /**
    * @param {string} loanId loanId of the loan.
    * @returns {Observable<any>}
@@ -27,6 +27,10 @@ export class LoansService {
    */
   createLoanCharge(loanId: string, resourceType: string, loanCharge: any): Observable<any> {
     return this.http.post(`/loans/${loanId}/${resourceType}`, loanCharge);
+  }
+
+  getLoanAccountDetails(loanId: string) {
+    return this.http.get(`/loans/${loanId}`);
   }
 
 }

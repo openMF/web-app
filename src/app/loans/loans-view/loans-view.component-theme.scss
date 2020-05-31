@@ -1,0 +1,13 @@
+@import "~@angular/material/theming";
+
+@mixin loans-view-component-theme($theme) {
+  $primary: map-get($theme, primary);
+
+  mifosx-loans-view {
+    .loan-card {
+      .header {
+        background-color: mat-color($primary, 500);
+      }
+    }
+  }
+}

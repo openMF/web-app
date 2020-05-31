@@ -7,9 +7,14 @@ import { extract } from '../core/i18n/i18n.service';
 
 /** Custom Components */
 import { AddLoanChargeComponent } from './add-loan-charge/add-loan-charge.component';
+import { LoansViewComponent } from './loans-view/loans-view.component';
+import { GeneralTabComponent } from './loans-view/general-tab/general-tab.component';
+import { AccountDetailsComponent } from './loans-view/account-details/account-details.component';
 
 /** Custom Resolvers */
 import { LoanChargeTemplateResolver } from './common-resolvers/loan-charge-template.resolver';
+import { LoanDetailsResolver } from './common-resolvers/loan-details.resolver';
+import { LoanDetailsGeneralResolver } from './common-resolvers/loan-details-general.resolver';
 
 const routes: Routes = [
   {
@@ -18,8 +23,28 @@ const routes: Routes = [
     children: [{
       path: ':loanId',
       data: { title: extract('Loan View'), routeParamBreadcrumb: 'loanId' },
+      component: LoansViewComponent,
+      resolve: {
+        loanDetailsData: LoanDetailsResolver
+      },
       // Component For Loan View Comes Here
       children: [
+        {
+          path: 'general',
+          component: GeneralTabComponent,
+          data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false },
+          resolve: {
+            loanDetailsData: LoanDetailsGeneralResolver
+          }
+        },
+        {
+          path: 'accountdetail',
+          component: AccountDetailsComponent,
+          data: { title: extract('Account Detail'), breadcrumb: 'Account Detail', routeParamBreadcrumb: false },
+          resolve: {
+            loanDetailsData: LoanDetailsGeneralResolver
+          }
+        },
         {
           path: 'add-loan-charge',
           component: AddLoanChargeComponent,
@@ -36,6 +61,11 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   declarations: [],
-  providers: [LoanChargeTemplateResolver]
+  providers: [
+    LoanChargeTemplateResolver,
+    LoanDetailsGeneralResolver,
+    LoanDetailsResolver
+  ]
 })
+
 export class LoansRoutingModule { }

@@ -160,6 +160,11 @@ const routes: Routes = [
       },
     ]
   },
+  {
+    path: 'loans',
+    data: { title: extract('Loans'), breadcrumb: 'loans' },
+    loadChildren: '../loans/loans.module#LoansModule'
+  }
   ])
 ];
 
