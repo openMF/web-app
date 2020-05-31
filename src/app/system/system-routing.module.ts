@@ -44,6 +44,8 @@ import { CreateReportComponent } from './manage-reports/create-report/create-rep
 import { ViewReportComponent } from './manage-reports/view-report/view-report.component';
 import { AuditTrailsComponent } from './audit-trails/audit-trails.component';
 import { ViewAuditComponent } from './audit-trails/view-audit/view-audit.component';
+import { ViewRoleComponent } from './roles-and-permissions/view-role/view-role.component';
+import { EditRoleComponent } from './roles-and-permissions/edit-role/edit-role.component';
 
 /** Custom Resolvers */
 import { CodesResolver } from './codes/codes.resolver';
@@ -75,6 +77,7 @@ import { ViewSchedulerJobComponent } from './manage-scheduler-jobs/view-schedule
 import { ViewSchedulerJobResolver } from './manage-scheduler-jobs/view-scheduler-job/view-scheduler-job.resolver';
 import { EditSchedulerJobComponent } from './manage-scheduler-jobs/edit-scheduler-job/edit-scheduler-job.component';
 import { ManageSchedulerJobResolver } from './manage-scheduler-jobs/manage-scheduler-job.resolver';
+import { ViewRoleResolver } from './roles-and-permissions/view-role/view-role.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -322,8 +325,30 @@ const routes: Routes = [
               path: 'add',
               component: AddRoleComponent,
               data: { title: extract('Add Role'), breadcrumb: 'Add' }
-            }
-          ]
+            },
+            {
+              path: ':id',
+              data: { title: extract('View Role'), routeParamBreadcrumb: 'id' },
+              runGuardsAndResolvers: 'always',
+              children: [
+                {
+                  path: '',
+                  component: ViewRoleComponent,
+                  resolve: {
+                    roledetails: ViewRoleResolver,
+                  }
+                },
+              {
+                path: 'edit',
+                component: EditRoleComponent,
+                data: { title: extract('Edit Role'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                resolve: {
+                  role: ViewRoleResolver,
+                }
+              }
+            ]
+          }
+        ]
       },
       {
         path: 'surveys',
@@ -530,7 +555,8 @@ const routes: Routes = [
     AuditTrailSearchTemplateResolver,
     AuditTrailResolver,
     ViewSchedulerJobResolver,
-    ManageSchedulerJobResolver
+    ManageSchedulerJobResolver,
+    ViewRoleResolver
   ]
 })
 export class SystemRoutingModule { }

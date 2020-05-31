@@ -1,0 +1,40 @@
+.displayPermissions {
+  padding-top: 15px;
+}
+
+span {
+  font-size: 1rem;
+}
+
+mat-list-item {
+  cursor: pointer;
+}
+
+.mat-list-base .mat-list-item .mat-list-item-content {
+  cursor: pointer;
+}
+
+.active {
+  background-color: #f2f2f2;
+}
+
+.groupingName {
+  padding: 0px 10px;
+}
+
+.listPermission {
+  padding-left: 20px;
+}
+
+.permissionSelected {
+  margin-top: 10px;
+  height: 40px;
+}
+
+.inactive {
+  transition: all .2s ease-in-out;
+}
+
+.inactive:hover {
+  transform: scale(1.1);
+}

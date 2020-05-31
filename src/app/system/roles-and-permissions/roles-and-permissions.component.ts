@@ -19,7 +19,7 @@ export class RolesAndPermissionsComponent implements OnInit {
   /** Role data. */
   roleData: any;
   /** Columns to be displayed in roles and permissions table. */
-  displayedColumns: string[] = ['name', 'description', 'disabled'];
+  displayedColumns: string[] = ['name', 'description', 'disabled', 'actions'];
   /** Data source for roles and permissions table. */
   dataSource: MatTableDataSource<any>;
 
@@ -51,6 +51,14 @@ export class RolesAndPermissionsComponent implements OnInit {
    */
   ngOnInit() {
     this.setRoles();
+  }
+
+  /**
+   * Stops the propagation to view roles and permissions
+   * @param event Mouse Event
+   */
+  routeEdit(event: MouseEvent) {
+    event.stopPropagation();
   }
 
   /**
