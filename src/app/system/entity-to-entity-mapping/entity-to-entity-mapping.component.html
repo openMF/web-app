@@ -104,7 +104,8 @@
               <ng-container matColumnDef="edit">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell *matCellDef="let listdata">
-                  <button type="button" color="primary" mat-icon-button matTooltip="Edit" matTooltipPosition="above">
+                  <button type="button" color="primary" mat-icon-button matTooltip="Edit" matTooltipPosition="above"
+                    (click)="showEditScreen(listdata.mapId, selectedMappingType)">
                     <fa-icon icon="edit" size="lg"></fa-icon>
                   </button>
                 </td>
@@ -113,7 +114,8 @@
               <ng-container matColumnDef="delete">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell *matCellDef="let listdata">
-                  <button type="button" color="warn" mat-icon-button matTooltip="Delete" matTooltipPosition="above">
+                  <button type="button" color="warn" mat-icon-button matTooltip="Delete" matTooltipPosition="above"
+                  (click)="delete(listdata.mapId)">
                     <fa-icon icon="trash" size="lg"></fa-icon>
                   </button>
                 </td>
@@ -181,6 +183,66 @@
               <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
                 <button mat-raised-button color="danger" (click)=cancelOperation()> Cancel </button>
                 <button mat-raised-button color="primary" [disabled]="!addMappingForm.valid">Submit</button>
+              </mat-card-actions>
+            </form>
+          </ng-container>
+        </ng-container>
+
+        <!---------------------- EDIT MAPPING PAGE -------------------------->
+        <ng-container *ngIf="editScreenFilter">
+          <ng-container *ngIf="relId > 0">
+            <mat-card-title> Edit entity mapping </mat-card-title>
+            <form [formGroup]="editMappingForm" (ngSubmit)="submitEdit(mapIdToEdit)">
+
+              <mat-card-content>
+                <div fxLayout="column" fxLayoutAlign="space-evenly center">
+
+                  <mat-form-field>
+                    <mat-label>{{firstMappingEntity}}</mat-label>
+                    <mat-select required formControlName="fromId">
+
+                      <mat-option *ngFor="let firstEntity of firstEntityData" [value]="firstEntity.id">
+                        {{ firstEntity.name }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="editMappingForm.controls.fromId.hasError('required')">
+                      {{firstMappingEntity}} is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <mat-label>{{secondMappingEntity}}</mat-label>
+                    <mat-select required formControlName="toId">
+
+                      <mat-option *ngFor="let secondEntity of secondEntityData" [value]="secondEntity.id">
+                        {{ secondEntity.name }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="editMappingForm.controls.toId.hasError('required')">
+                      {{secondMappingEntity}} is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+
+
+                  <mat-form-field>
+                    <mat-label>Start Date</mat-label>
+                    <input matInput [matDatepicker]="startDatePicker" formControlName="startDate">
+                    <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startDatePicker></mat-datepicker>
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <mat-label>End Date</mat-label>
+                    <input matInput [matDatepicker]="endDatePicker" formControlName="endDate">
+                    <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endDatePicker></mat-datepicker>
+                  </mat-form-field>
+
+                </div>
+              </mat-card-content>
+              <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+                <button mat-raised-button color="danger" (click)=cancelOperation()> Cancel </button>
+                <button mat-raised-button color="primary" [disabled]="!editMappingForm.valid">Submit</button>
               </mat-card-actions>
             </form>
           </ng-container>

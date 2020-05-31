@@ -1,12 +1,15 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+/** Custom Components */
+import { DeleteDialogComponent } from '../../shared/delete-dialog/delete-dialog.component';
 
 /**
  * Entity to Entity Mapping Component
@@ -36,7 +39,12 @@ export class EntityToEntityMappingComponent implements OnInit {
   filterPreference: any;
   /** Checks where add form is to be displayed */
   addScreenFilter = false;
-
+  /** Checks where edit form is to be displayed */
+  editScreenFilter = false;
+  /** details of particular map id */
+  entityMap: any;
+  /** Map Id to ID */
+  mapIdToEdit: any;
   /**
    * stores the data for clicked mapType
    */
@@ -44,14 +52,18 @@ export class EntityToEntityMappingComponent implements OnInit {
   secondEntityData: string[] = [];
   firstMappingEntity: string;
   secondMappingEntity: string;
+
   /** Data source for entity table. */
   datasource: MatTableDataSource<any>;
   /** Data source for entity to entity list data. */
   entityMappingsListData: MatTableDataSource<any>;
+
   /** Filter Preference Form */
   filterPreferenceForm: FormGroup;
   /** Add entity Form */
   addMappingForm: FormGroup;
+  /** Edit entity Form */
+  editMappingForm: FormGroup;
   /** List of Entity to Entity Mapping */
   displayedColumns: string[] = ['entitymapping'];
   /** Columns for details of a chosen mapping */
@@ -62,6 +74,7 @@ export class EntityToEntityMappingComponent implements OnInit {
   /** Sorter for entity table. */
   @ViewChild(MatSort) sort: MatSort;
 
+
   /**
    * Retrieves the codes data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
@@ -69,7 +82,8 @@ export class EntityToEntityMappingComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private systemService: SystemService,
-    private datePipe: DatePipe) {
+    private datePipe: DatePipe,
+    private dialog: MatDialog) {
     this.route.data.subscribe((data: { entityMappings: any }) => {
       this.entityMappings = data.entityMappings;
     });
@@ -183,6 +197,7 @@ export class EntityToEntityMappingComponent implements OnInit {
     }
     this.hasClickedFilters = true;
     this.addScreenFilter = false;
+    this.editScreenFilter = false;
 
     this.selectedFromId = this.filterPreference.mappingFirstParamId;
     this.selectedToId = this.filterPreference.mappingSecondParamId;
@@ -206,6 +221,21 @@ export class EntityToEntityMappingComponent implements OnInit {
   }
 
   /**
+   * Edits the mapping data
+   */
+  createEditMappingForm(data: any) {
+    const dateFormat = 'dd MMMM yyyy';
+    const startDate = new Date(data[0].startDate);
+    const endDate = new Date(data[0].endDate);
+    this.editMappingForm = this.formBuilder.group({
+      'fromId': [data[0].fromId, Validators.required],
+      'toId': [data[0].toId, Validators.required],
+      'startDate': [startDate, Validators.required],
+      'endDate': [endDate, Validators.required]
+    });
+  }
+
+  /**
    * Shows the add entity screen
    * @param selectedType selected Map Type
    */
@@ -214,7 +244,26 @@ export class EntityToEntityMappingComponent implements OnInit {
     this.relId = selectedType;
     this.hasClickedFilters = false;
     this.addScreenFilter = true;
+    this.editScreenFilter = false;
     this.fetchRelatedData(this.relId);
+  }
+
+  /**
+   * Shows the edit entity screen
+   * @param selectedMap selected Map Number
+   * @param selectedType selected Map Type
+   */
+  showEditScreen(selectedMap: number, selectedType: number) {
+    this.relId = selectedType;
+    this.mapIdToEdit = selectedMap;
+    this.fetchRelatedData(this.relId);
+    this.systemService.getMapIdData(selectedMap).subscribe((response: any) => {
+      this.entityMap = response;
+      this.createEditMappingForm(this.entityMap);
+      this.hasClickedFilters = false;
+      this.addScreenFilter = false;
+      this.editScreenFilter = true;
+    });
   }
 
 
@@ -249,11 +298,53 @@ export class EntityToEntityMappingComponent implements OnInit {
   }
 
   /**
+   * Submits the edited data
+   * @param id Map Id
+   */
+  submitEdit(id: number) {
+    this.relId = id;
+    const dateFormat = 'dd MMMM yyyy';
+
+    const startDate: Date = this.editMappingForm.value.startDate;
+    const endDate: Date = this.editMappingForm.value.endDate;
+
+    this.editMappingForm.patchValue({
+      startDate: this.datePipe.transform(startDate, dateFormat),
+      endDate: this.datePipe.transform(endDate, dateFormat)
+    });
+    const newMappingData = this.editMappingForm.value;
+    newMappingData.dateFormat = dateFormat;
+    newMappingData.locale = 'en';
+    this.systemService.editMapping(this.relId, newMappingData).subscribe((response: any) => {
+      this.showFilteredData();
+    });
+  }
+
+  /**
+   * Deletes the selected Map Id
+   * @param id Map Id
+   */
+  delete(id: number) {
+    const deleteNoteDialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { deleteContext: `Mapping id: ${id}` }
+    });
+    deleteNoteDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.delete) {
+        this.systemService.deleteMapping(id)
+          .subscribe(() => {
+            this.showFilteredData();
+          });
+      }
+    });
+  }
+
+  /**
    * Cancels the add entity operation
    */
   cancelOperation() {
     this.hasClickedFilters = true;
     this.addScreenFilter = false;
+    this.editScreenFilter = false;
   }
 
 }
