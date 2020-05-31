@@ -90,6 +90,10 @@ export class ProductsService {
     return this.http.put(`/products/share/${shareProductId}`, shareProduct);
   }
 
+  getDividends(shareProductId: string): Observable<any> {
+    return this.http.get(`/shareproduct/${shareProductId}/dividend`);
+  }
+
   /**
    * @returns {Observable<any>} Recurring deposit products data
    */
