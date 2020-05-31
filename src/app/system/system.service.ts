@@ -459,4 +459,50 @@ export class SystemService {
     return this.http.get('/audits/searchtemplate');
   }
 
+  /**
+   * @returns {Observable<any>} Fetches Mapping Data.
+   */
+  getEntityMappings(): Observable<any> {
+    return this.http.get('/entitytoentitymapping');
+  }
+
+  /**
+   * @param mappingId Mapping Id.
+   * @param fromId From Entity ID.
+   * @param toId  To Entity ID.
+   * @returns {Observable<any>} fetches the list of mappings for particular mapping type
+   */
+  getEntitytoEntityData(mappingId: number, fromId: number, toId: number): Observable<any> {
+    return this.http.get(`/entitytoentitymapping/${mappingId}/${fromId}/${toId}`);
+  }
+
+  /**
+   * @returns {Observable<any>} Offices data
+   */
+  getOffices(): Observable<any> {
+    return this.http.get('/offices');
+  }
+
+  /**
+   * @returns {Observable<any>} Loan products data.
+   */
+  getLoanProducts(): Observable<any> {
+    return this.http.get('/loanproducts');
+  }
+
+  /**
+   * @returns {Observable<any>} Saving products data
+   */
+  getSavingProducts(): Observable<any> {
+    return this.http.get('/savingsproducts');
+  }
+
+  /**
+   * @returns {Observable<any>} Charges data
+   */
+  getCharges(): Observable<any> {
+    return this.http.get('/charges');
+  }
+
+
 }
