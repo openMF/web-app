@@ -1,0 +1,35 @@
+<div class="container">
+
+  <div fxLayoutAlign="flex-end" class="action-button m-b-20">
+    <span *mifosxHasPermission="'UPDATE_OFFICE'">
+      <button mat-raised-button color="primary" [routerLink]="['edit']">
+        <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;Edit Office
+      </button>
+    </span>
+  </div>
+
+  <mat-card class="office-card">
+
+    <mat-card-content>
+
+      <nav mat-tab-nav-bar class="navigation-tabs">
+        <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive"
+        [active]="general.isActive">
+          General
+        </a>
+        <span *ngFor="let officeDatatable of officeDatatables">
+          <a mat-tab-link *mifosxHasPermission="'READ_' + officeDatatable.registeredTableName"
+            [routerLink]="['./datatables',officeDatatable.registeredTableName]"
+            routerLinkActive #datatable="routerLinkActive" [active]="datatable.isActive">
+            {{officeDatatable.registeredTableName}}
+          </a>
+        </span>
+      </nav>
+
+      <router-outlet></router-outlet>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

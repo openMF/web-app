@@ -83,6 +83,56 @@ export class OrganizationService {
     return this.http.put(`/offices/${officeId}`, office);
   }
 
+ /**
+  * @returns {Observable<any>}
+  */
+  getOfficeDatatables(): Observable<any> {
+    const httpParams = new HttpParams().set('apptable', 'm_office');
+    return this.http.get(`/datatables`, { params: httpParams });
+  }
+
+  /**
+   * @param officeId Office Id of office to get datatable for.
+   * @param datatableName Data table name.
+   * @returns {Observable<any>}
+   */
+  getOfficeDatatable(officeId: string, datatableName: string): Observable<any> {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.get(`/datatables/${datatableName}/${officeId}`, { params: httpParams });
+  }
+
+  /**
+   * @param officeId Office Id of office to get add datatable entry for.
+   * @param datatableName Data Table name.
+   * @param data Data.
+   * @returns {Observable<any>}
+   */
+  addOfficeDatatableEntry(officeId: string, datatableName: string, data: any): Observable<any> {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.post(`/datatables/${datatableName}/${officeId}`, data, { params: httpParams });
+  }
+
+  /**
+   * @param officeId Office Id of office to get add datatable entry for.
+   * @param datatableName Data Table name.
+   * @param data Data.
+   * @returns {Observable<any>}
+   */
+  editOfficeDatatableEntry(officeId: string, datatableName: string, data: any): Observable<any> {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.put(`/datatables/${datatableName}/${officeId}`, data, { params: httpParams });
+  }
+
+  /**
+   * @param officeId Office Id of office to get add datatable entry for.
+   * @param datatableName Data Table name.
+   * @returns {Observable<any>}
+   */
+  deleteDatatableContent(officeId: string, datatableName: string): Observable<any> {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.delete(`/datatables/${datatableName}/${officeId}`, { params: httpParams });
+  }
+
   /**
    * @returns {Observable<any>} Employees data
    */

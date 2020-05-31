@@ -35,10 +35,13 @@ import { CreateTellerComponent } from './tellers/create-teller/create-teller.com
 import { EditTellerComponent } from './tellers/edit-teller/edit-teller.component';
 import { ViewCashierComponent } from './tellers/view-cashier/view-cashier.component';
 import { ViewHolidaysComponent } from './holidays/view-holidays/view-holidays.component';
+import { ViewOfficeComponent } from './offices/view-office/view-office.component';
+import { GeneralTabComponent } from './offices/view-office/general-tab/general-tab.component';
+import { DatatableTabsComponent } from './offices/view-office/datatable-tabs/datatable-tabs.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
-import { OfficesResolver } from './offices/offices.resolver';
+import { OfficesResolver } from './offices/common-resolvers/offices.resolver';
 import { EmployeesResolver } from './employees/employees.resolver';
 import { EmployeeResolver } from './employees/employee.resolver';
 import { EditEmployeeResolver } from './employees/edit-employee.resolver';
@@ -53,13 +56,16 @@ import { PaymentTypeResolver } from './payment-types/payment-type.resolver';
 import { PasswordPreferencesTemplateResolver } from './password-preferences/password-preferences-template.resolver';
 import { EntityDataTableChecksResolver } from './entity-data-table-checks/entity-data-table-checks.resolver';
 import { WorkingDaysResolver } from './working-days/working-days.resolver';
-import { EditOfficeResolver } from './offices/edit-office/edit-office.resolver';
+import { EditOfficeResolver } from './offices/common-resolvers/edit-office.resolver';
 import { EditOfficeComponent } from './offices/edit-office/edit-office.component';
 import { AdhocQueryTemplateResolver } from './adhoc-query/adhoc-query-template.resolver';
 import { ViewLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/view-loan-provisioning-criteria/view-loan-provisioning-criteria.component';
 import { LoanProvisioningCriteriasResolver } from './loan-provisioning-criteria/loan-provisioning-criterias.resolver';
 import { CashierResolver } from './tellers/cashier.resolver';
 import { HolidayResolver } from './holidays/holiday.resolver';
+import { OfficeResolver } from './offices/common-resolvers/office.resolver';
+import { OfficeDatatableResolver } from './offices/common-resolvers/office-datatable.resolver';
+import { OfficeDatatablesResolver } from './offices/common-resolvers/office-datatables.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -120,6 +126,35 @@ const routes: Routes = [
             },
             {
               path: ':id',
+              data: { title: extract('View Office'), routeResolveBreadcrumb: ['office', 'name'] },
+              component: ViewOfficeComponent,
+              resolve: {
+                 officeDatatables: OfficeDatatablesResolver,
+                 office: OfficeResolver
+              },
+              children: [
+                {
+                  path: 'general',
+                  component: GeneralTabComponent,
+                  data: { title: extract('General') },
+                },
+                {
+                  path: 'datatables',
+                  children: [
+                    {
+                      path: ':datatableName',
+                      component: DatatableTabsComponent,
+                      data: { title: extract('View Data Table') },
+                      resolve: {
+                        officeDatatable: OfficeDatatableResolver
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              path: ':id',
               data: { title: extract('View Office'), routeParamBreadcrumb: 'id' },
               children: [
                 {
@@ -132,6 +167,7 @@ const routes: Routes = [
                 }
               ]
             }
+
           ]
         },
         {
@@ -398,7 +434,10 @@ const routes: Routes = [
     AdhocQueryTemplateResolver,
     LoanProvisioningCriteriasResolver,
     CashierResolver,
-    HolidayResolver
+    HolidayResolver,
+    OfficeResolver,
+    OfficeDatatableResolver,
+    OfficeDatatablesResolver
   ]
 })
 export class OrganizationRoutingModule { }

@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { OrganizationRoutingModule } from './organization-routing.module';
 import { PipesModule } from 'app/pipes/pipes.module';
+import { DirectivesModule } from 'app/directives/directives.module';
 
 /** Custom Components */
 import { OrganizationComponent } from './organization.component';
@@ -35,6 +36,11 @@ import { EditTellerComponent } from './tellers/edit-teller/edit-teller.component
 import { ViewLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/view-loan-provisioning-criteria/view-loan-provisioning-criteria.component';
 import { ViewCashierComponent } from './tellers/view-cashier/view-cashier.component';
 import { ViewHolidaysComponent } from './holidays/view-holidays/view-holidays.component';
+import { ViewOfficeComponent } from './offices/view-office/view-office.component';
+import { GeneralTabComponent } from './offices/view-office/general-tab/general-tab.component';
+import { DatatableTabsComponent } from './offices/view-office/datatable-tabs/datatable-tabs.component';
+import { SingleRowComponent } from './offices/view-office/datatable-tabs/single-row/single-row.component';
+import { MultiRowComponent } from './offices/view-office/datatable-tabs/multi-row/multi-row.component';
 
 /**
  * Organization Module
@@ -44,8 +50,9 @@ import { ViewHolidaysComponent } from './holidays/view-holidays/view-holidays.co
 @NgModule({
   imports: [
     SharedModule,
-    OrganizationRoutingModule,
-    PipesModule
+    PipesModule,
+    DirectivesModule,
+    OrganizationRoutingModule
   ],
   declarations: [
     OrganizationComponent,
@@ -75,7 +82,12 @@ import { ViewHolidaysComponent } from './holidays/view-holidays/view-holidays.co
     EditTellerComponent,
     ViewLoanProvisioningCriteriaComponent,
     ViewCashierComponent,
-    ViewHolidaysComponent
+    ViewHolidaysComponent,
+    ViewOfficeComponent,
+    GeneralTabComponent,
+    DatatableTabsComponent,
+    SingleRowComponent,
+    MultiRowComponent
   ]
 })
 export class OrganizationModule { }

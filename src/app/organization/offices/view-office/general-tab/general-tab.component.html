@@ -1,0 +1,23 @@
+<div class="tab-container mat-typography">
+
+  <mat-list>
+
+    <mat-list-item>
+      Parent Office : {{ officeData.parentName ? officeData.parentName : 'N/A' }}
+    </mat-list-item>
+
+    <mat-list-item>
+      Opened On : {{ officeData.openingDate ? (officeData.openingDate | date) : 'Unassigned' }}
+    </mat-list-item>
+
+    <mat-list-item>
+      Name Decorated : {{ officeData.nameDecorated ? officeData.nameDecorated : 'Unassigned' }}
+    </mat-list-item>
+
+    <mat-list-item>
+      External Id : {{ officeData.externalId ? officeData.externalId : 'Unassigned' }}
+    </mat-list-item>
+    
+  </mat-list>
+
+</div>
