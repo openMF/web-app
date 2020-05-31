@@ -477,6 +477,15 @@ export class SystemService {
   }
 
   /**
+   * Get particular Map Data
+   * @param mapId Mapping Id
+   */
+  getMapIdData(mapId: number): Observable<any> {
+    return this.http.get(`/entitytoentitymapping/${mapId}`);
+  }
+
+
+  /**
    * Creates a new mapping
    * @param {any} mapType Map id to be created.
    * @param {any} mapData Map data to be added
@@ -484,6 +493,24 @@ export class SystemService {
    */
   createMapping(mapType: any, mapData: any): Observable<any> {
     return this.http.post(`/entitytoentitymapping/${mapType}`, mapData);
+  }
+
+  /**
+   * Edit a mapping
+   * @param {any} mapType Map id to be edited.
+   * @param {any} mapData Map data to be added
+   * @returns {Observable<any>} resolved data
+   */
+  editMapping(mapId: any, mapData: any): Observable<any> {
+    return this.http.put(`/entitytoentitymapping/${mapId}`, mapData);
+  }
+
+  /**
+   * Delete the Map Id
+   * @param mapId Map Id
+   */
+  deleteMapping(mapId: any): Observable<any> {
+    return this.http.delete(`/entitytoentitymapping/${mapId}`);
   }
 
   /**
