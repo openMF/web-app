@@ -20,6 +20,7 @@ import { LoanNotesResolver } from './common-resolvers/loan-notes-resolver';
 import { ChargesTabComponent } from './loans-view/charges-tab/charges-tab.component';
 import { LoanDetailsChargesResolver } from './common-resolvers/loan-details-charges.resolver';
 import { OverdueChargesTabComponent } from './loans-view/overdue-charges-tab/overdue-charges-tab.component';
+import { OriginalScheduleTabComponent } from './loans-view/original-schedule-tab/original-schedule-tab.component';
 
 const routes: Routes = [
   {
@@ -48,6 +49,14 @@ const routes: Routes = [
           data: { title: extract('Account Detail'), breadcrumb: 'Account Detail', routeParamBreadcrumb: false },
           resolve: {
             loanDetailsData: LoanDetailsGeneralResolver
+          }
+        },
+        {
+          path: 'original-schedule',
+          component: OriginalScheduleTabComponent,
+          data: { title: extract('Original Schedule'), breadcrumb: 'Original Schedule', routeParamBreadcrumb: false },
+          resolve: {
+            loanDetailsAssociationData: LoanDetailsChargesResolver
           }
         },
         {

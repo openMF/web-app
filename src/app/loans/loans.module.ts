@@ -16,6 +16,7 @@ import { AccountDetailsComponent } from './loans-view/account-details/account-de
 import { NotesTabComponent } from './loans-view/notes-tab/notes-tab.component';
 import { ChargesTabComponent } from './loans-view/charges-tab/charges-tab.component';
 import { OverdueChargesTabComponent } from './loans-view/overdue-charges-tab/overdue-charges-tab.component';
+import { OriginalScheduleTabComponent } from './loans-view/original-schedule-tab/original-schedule-tab.component';
 
 /**
  * Loans Module
@@ -32,6 +33,7 @@ import { OverdueChargesTabComponent } from './loans-view/overdue-charges-tab/ove
     NotesTabComponent,
     ChargesTabComponent,
     OverdueChargesTabComponent,
+    OriginalScheduleTabComponent,
   ],
   providers: [DatePipe],
 })
