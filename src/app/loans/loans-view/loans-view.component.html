@@ -62,7 +62,10 @@
 		<a mat-tab-link [routerLink]="['./original-schedule']" routerLinkActive #originalSchedule="routerLinkActive" [active]="originalSchedule.isActive">
 		  Original Schedule
 		</a>
-      </ng-container>
+	  </ng-container>
+	  <a mat-tab-link [routerLink]="['./repayment-schedule']" routerLinkActive #repaymentSchedule="routerLinkActive" [active]="repaymentSchedule.isActive">
+		Repayment Schedule
+	  </a>
 	  <ng-container *ngIf="loanDetailsData.overdueCharges.length > 0">
 		<a mat-tab-link [routerLink]="['./overdue-charges']" routerLinkActive #overduecharges="routerLinkActive" [active]="overduecharges.isActive">
 			Overdue Charges

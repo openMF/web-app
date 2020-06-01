@@ -1,0 +1,138 @@
+<div class="container">
+
+  <table mat-table [dataSource]="repaymentScheduleDetails.periods">
+
+    <ng-container matColumnDef="number">
+      <th mat-header-cell *matHeaderCellDef> # </th>
+      <td mat-cell *matCellDef="let ele"> {{ ele.period }} </td>
+      <td mat-footer-cell *matFooterCellDef> &nbsp; </td>
+    </ng-container>
+
+    <ng-container matColumnDef="days">
+      <th mat-header-cell *matHeaderCellDef> Days </th>
+      <td mat-cell *matCellDef="let ele"> {{ ele.daysInPeriod }} </td>
+      <td mat-footer-cell *matFooterCellDef> <b> Total</b> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef> Date </th>
+      <td mat-cell *matCellDef="let ele"> {{ ele.dueDate | date}} </td>
+      <td mat-footer-cell *matFooterCellDef>  </td>
+    </ng-container>
+
+    <ng-container matColumnDef="paiddate">
+      <th mat-header-cell *matHeaderCellDef> Paid Date </th>
+      <td mat-cell *matCellDef="let ele"> {{ ele.obligationsMetOnDate | date}} </td>
+      <td mat-footer-cell *matFooterCellDef>  </td>
+    </ng-container>
+
+    <ng-container matColumnDef="check">
+      <th mat-header-cell *matHeaderCellDef> &nbsp; </th>
+      <td mat-cell *matCellDef="let ele">
+        <span *ngIf="ele.obligationsMetOnDate"> <i class='fa fa-check'></i> </span> 
+      </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="principalDue">
+      <th mat-header-cell *matHeaderCellDef> Principal Due </th>
+      <td mat-cell class="check" *matCellDef="let ele"> {{ ele.principalDue | number }} </td>
+      <td mat-footer-cell class="check" *matFooterCellDef> <b> {{ repaymentScheduleDetails.totalPrincipalExpected | number }}</b>  </td>
+    </ng-container>
+
+    <ng-container matColumnDef="balanceOfLoan">
+      <th mat-header-cell *matHeaderCellDef> Balance Of Loan </th>
+      <td mat-cell *matCellDef="let ele"> {{ ele.principalLoanBalanceOutstanding | number }} </td>
+      <td mat-footer-cell *matFooterCellDef> &nbsp; </td>
+    </ng-container>
+
+    <ng-container matColumnDef="interest">
+      <th mat-header-cell *matHeaderCellDef> Interest </th>
+      <td mat-cell *matCellDef="let ele"> {{ ele.interestOriginalDue | number}} </td>
+      <td mat-footer-cell *matFooterCellDef> <b> {{ repaymentScheduleDetails.totalInterestCharged | number }} </b> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fees">
+      <th mat-header-cell *matHeaderCellDef> Fees </th>
+      <td mat-cell *matCellDef="let ele"> {{ ele.feeChargesDue | number}} </td>
+      <td mat-footer-cell *matFooterCellDef> <b> {{ repaymentScheduleDetails.totalFeeChargesCharged | number }} </b> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="penalties">
+      <th mat-header-cell *matHeaderCellDef> Penalties </th>
+      <td mat-cell *matCellDef="let ele"> {{ ele.penaltyChargesDue | number}} </td>
+      <td mat-footer-cell *matFooterCellDef> <b> {{ repaymentScheduleDetails.totalPenaltyChargesCharged | number }} </b> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="due">
+      <th mat-header-cell *matHeaderCellDef> Due </th>
+      <td mat-cell *matCellDef="let ele"> {{ ele.totalDueForPeriod | number}} </td>
+      <td mat-footer-cell *matFooterCellDef> <b> {{ repaymentScheduleDetails.totalRepaymentExpected | number }} </b> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="paid">
+      <th mat-header-cell *matHeaderCellDef> Paid </th>
+      <td mat-cell *matCellDef="let ele"> {{ ele.totalPaidForPeriod | number}} </td>
+      <td mat-footer-cell *matFooterCellDef> <b> {{ repaymentScheduleDetails.totalRepayment | number }} </b> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="inadvance">
+      <th mat-header-cell *matHeaderCellDef> In advance </th>
+      <td mat-cell *matCellDef="let ele"> {{ ele.totalPaidInAdvanceForPeriod | number}} </td>
+      <td mat-footer-cell *matFooterCellDef> <b> {{ repaymentScheduleDetails.totalPaidInAdvance | number }} </b> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="late">
+      <th mat-header-cell *matHeaderCellDef> Late </th>
+      <td mat-cell *matCellDef="let ele"> {{ ele.totalPaidLateForPeriod | number}} </td>
+      <td mat-footer-cell *matFooterCellDef> <b> {{ repaymentScheduleDetails.totalPaidLate | number }} </b> </td>
+    </ng-container>
+
+    <ng-container *ngIf="isWaived">
+      <ng-container matColumnDef="waived">
+        <th mat-header-cell *matHeaderCellDef> Waived </th>
+        <td mat-cell *matCellDef="let ele"> {{ ele.totalWaivedForPeriod | number}} </td>
+        <td mat-footer-cell *matFooterCellDef> <b> {{ repaymentScheduleDetails.totalWaived | number }} </b> </td>
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="!isWaived">
+      <ng-container matColumnDef="waived">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let ele"> </td>
+        <td mat-footer-cell *matFooterCellDef> <b> </b> </td>
+      </ng-container>
+    </ng-container>
+
+    <ng-container matColumnDef="outstanding">
+      <th mat-header-cell *matHeaderCellDef> Outstanding </th>
+      <td mat-cell *matCellDef="let ele"> {{ ele.totalOutstandingForPeriod | number}} </td>
+      <td mat-footer-cell *matFooterCellDef> <b> {{ repaymentScheduleDetails.totalOutstanding | number }} </b> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="header">
+      <th mat-header-cell *matHeaderCellDef [attr.colspan]="5"> </th>
+    </ng-container>
+
+    <ng-container matColumnDef="header-amount">
+      <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> Loan Amount and Balance </th>
+    </ng-container>
+
+    <ng-container matColumnDef="header-total-cost">
+      <th mat-header-cell *matHeaderCellDef [attr.colspan]="3"> Total Cost of Loan </th>
+    </ng-container>
+
+    <ng-container matColumnDef="header-installment-totals">
+      <th mat-header-cell *matHeaderCellDef [attr.colspan]="6"> Installment Totals </th>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['header', 'header-amount', 'header-total-cost', 'header-installment-totals']"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+
+  </table>
+
+</div>
+
+<!-- <p>It works</p> -->
