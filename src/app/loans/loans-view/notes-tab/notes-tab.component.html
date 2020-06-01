@@ -1,0 +1,32 @@
+<div class="tab-container mat-typography">
+  <h3>Notes</h3>
+  <div>
+    <form #formRef="ngForm" [formGroup]="noteForm" fxLayout="row" fxLayoutAlign="start baseline" fxLayoutGap="20px"
+      (ngSubmit)="submit()">
+      <mat-form-field fxFlex="calc(90%-20px)">
+        <textarea formControlName="note" matInput placeholder="Write a note ...."></textarea>
+      </mat-form-field>
+      <button mat-raised-button fxFlex color="primary" [disabled]="!noteForm.valid">
+        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp; Add
+      </button>
+    </form>
+  </div>
+  <mat-list>
+    <mat-list-item *ngFor="let loanNote of loanNotes; let i=index;">
+      <fa-icon icon="sticky-note" matListIcon></fa-icon>
+      <h3 matLine>{{loanNote.note}} </h3>
+      <p matLine>
+        <span>Created by: {{loanNote.createdByUsername}}</span><br />
+        <span>Date: {{loanNote.createdOn | date}}</span>
+      </p>
+      <div fxLayout="row" fxLayoutAlign="flex-start">
+        <button mat-button color="primary" (click)="editNote(loanNote.id,loanNote.note,i)">
+          <fa-icon icon="edit"></fa-icon>
+        </button>
+        <button mat-button color="warn" (click)="deleteNote(loanNote.id,i)">
+          <fa-icon icon="trash"></fa-icon>
+        </button>
+      </div>
+    </mat-list-item>
+  </mat-list>
+</div>
