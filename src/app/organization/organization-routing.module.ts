@@ -38,6 +38,7 @@ import { ViewHolidaysComponent } from './holidays/view-holidays/view-holidays.co
 import { ViewOfficeComponent } from './offices/view-office/view-office.component';
 import { GeneralTabComponent } from './offices/view-office/general-tab/general-tab.component';
 import { DatatableTabsComponent } from './offices/view-office/datatable-tabs/datatable-tabs.component';
+import { ViewCampaignComponent } from './sms-campaigns/view-campaign/view-campaign.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -46,7 +47,7 @@ import { EmployeesResolver } from './employees/employees.resolver';
 import { EmployeeResolver } from './employees/employee.resolver';
 import { EditEmployeeResolver } from './employees/edit-employee.resolver';
 import { CurrenciesResolver } from './currencies/currencies.resolver';
-import { SmsCampaignsResolver } from './sms-campaigns/sms-campaigns.resolver';
+import { SmsCampaignsResolver } from './sms-campaigns/common-resolvers/sms-campaigns.resolver';
 import { AdhocQueriesResolver } from './adhoc-query/adhoc-queries.resolver';
 import { AdhocQueryResolver } from './adhoc-query/adhoc-query.resolver';
 import { TellersResolver } from './tellers/tellers.resolver';
@@ -66,6 +67,7 @@ import { HolidayResolver } from './holidays/holiday.resolver';
 import { OfficeResolver } from './offices/common-resolvers/office.resolver';
 import { OfficeDatatableResolver } from './offices/common-resolvers/office-datatable.resolver';
 import { OfficeDatatablesResolver } from './offices/common-resolvers/office-datatables.resolver';
+import { SmsCampaignResolver } from './sms-campaigns/common-resolvers/sms-campaign.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -222,11 +224,24 @@ const routes: Routes = [
         },
         {
           path: 'sms-campaigns',
-          component: SmsCampaignsComponent,
           data: { title: extract('SMS Campaigns'), breadcrumb: 'SMS Campaigns' },
-          resolve: {
-            smsCampaigns: SmsCampaignsResolver
-          }
+          children: [
+            {
+              path: '',
+              component: SmsCampaignsComponent,
+              resolve: {
+                smsCampaigns: SmsCampaignsResolver
+              }
+            },
+            {
+              path: ':id',
+              component: ViewCampaignComponent,
+              data: { title: extract('View SMS Campaign'), routeResolveBreadcrumb: ['smsCampaign', 'campaignName'] },
+              resolve: {
+                smsCampaign: SmsCampaignResolver
+              }
+            }
+          ]
         },
         {
           path: 'adhoc-query',
@@ -421,6 +436,7 @@ const routes: Routes = [
     EditEmployeeResolver,
     CurrenciesResolver,
     SmsCampaignsResolver,
+    SmsCampaignResolver,
     AdhocQueriesResolver,
     AdhocQueryResolver,
     TellersResolver,

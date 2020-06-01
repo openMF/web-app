@@ -174,6 +174,28 @@ export class OrganizationService {
   }
 
   /**
+   * @param {string} smsCampaignId SMS Campaign ID of SMS Campaign.
+   * @returns {Observable<any>} SMS Campaign.
+   */
+  getSmsCampaign(smsCampaignId: string): Observable<any> {
+    return this.http.get(`/smscampaigns/${smsCampaignId}`);
+  }
+
+  /**
+   * @param {any} SMS
+   * @returns {Observable<any>} Messages Data
+   */
+  getMessagebyStatus(SMS: any): Observable<any> {
+    let httpParams = new HttpParams()
+      .set('status', SMS.status.toString())
+      .set('locale', SMS.locale)
+      .set('dateFormat', SMS.dateFormat);
+    httpParams = SMS.fromDate ? httpParams.set('fromDate', SMS.fromDate) : httpParams;
+    httpParams = SMS.toDate ? httpParams.set('toDate', SMS.toDate) : httpParams;
+    return this.http.get(`/sms/${SMS.id}/messageByStatus`, { params: httpParams });
+  }
+
+  /**
    * @returns {Observable<any>} Adhoc Queries data
    */
   getAdhocQueries(): Observable<any> {
