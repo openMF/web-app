@@ -19,6 +19,7 @@ import { LoanDetailsGeneralResolver } from './common-resolvers/loan-details-gene
 import { LoanNotesResolver } from './common-resolvers/loan-notes-resolver';
 import { ChargesTabComponent } from './loans-view/charges-tab/charges-tab.component';
 import { LoanDetailsChargesResolver } from './common-resolvers/loan-details-charges.resolver';
+import { OverdueChargesTabComponent } from './loans-view/overdue-charges-tab/overdue-charges-tab.component';
 
 const routes: Routes = [
   {
@@ -50,6 +51,14 @@ const routes: Routes = [
           }
         },
         {
+          path: 'overdue-charges',
+          component: OverdueChargesTabComponent,
+          data: { title: extract('Overdue Charges'), breadcrumb: 'Overdue Charges', routeParamBreadcrumb: false },
+          resolve: {
+            loanDetailsData: LoanDetailsGeneralResolver
+          }
+        },
+        {
           path: 'charges',
           component: ChargesTabComponent,
           data: { title: extract('Charges'), breadcrumb: 'Charges', routeParamBreadcrumb: false },
@@ -63,7 +72,7 @@ const routes: Routes = [
           data: { title: extract('Notes'), breadcrumb: 'Notes', routeParamBreadcrumb: false },
           resolve: {
             loanNotes: LoanNotesResolver
-          }
+          },
         },
         {
           path: 'add-loan-charge',
@@ -72,7 +81,7 @@ const routes: Routes = [
           resolve: {
             loanChargeTemplate: LoanChargeTemplateResolver
           }
-        }
+        },
       ]
     }]
   }

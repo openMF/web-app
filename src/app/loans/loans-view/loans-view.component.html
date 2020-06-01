@@ -58,6 +58,11 @@
 	  <a mat-tab-link [routerLink]="['./accountdetail']" routerLinkActive #accountdetail="routerLinkActive" [active]="accountdetail.isActive">
 		Account Details
 	  </a>
+	  <ng-container *ngIf="loanDetailsData.overdueCharges.length > 0">
+		<a mat-tab-link [routerLink]="['./overdue-charges']" routerLinkActive #overduecharges="routerLinkActive" [active]="overduecharges.isActive">
+			Overdue Charges
+		</a>
+	  </ng-container>
 	  <ng-container *ngIf="loanDetailsData.charges">
 		<a mat-tab-link [routerLink]="['./charges']" routerLinkActive #charges="routerLinkActive" [active]="charges.isActive">
 		  Charges

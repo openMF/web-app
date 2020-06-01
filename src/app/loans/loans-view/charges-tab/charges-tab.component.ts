@@ -16,18 +16,18 @@ export class ChargesTabComponent implements OnInit {
   chargesData: any;
   /** Status */
   status: any;
-  /** Columns to be displayed in codes table. */
+  /** Columns to be displayed in charges table. */
   displayedColumns: string[] = ['name', 'feepenalty', 'paymentdueat', 'dueasof', 'calculationtype', 'due', 'paid', 'waived', 'outstanding', 'actions'];
-  /** Data source for codes table. */
+  /** Data source for charges table. */
   dataSource: MatTableDataSource<any>;
 
-  /** Paginator for codes table. */
+  /** Paginator for charges table. */
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  /** Sorter for codes table. */
+  /** Sorter for charges table. */
   @ViewChild(MatSort) sort: MatSort;
 
   /**
-   * Retrieves the codes data from `resolve`.
+   * Retrieves the loans data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
