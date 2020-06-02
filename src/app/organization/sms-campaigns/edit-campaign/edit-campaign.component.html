@@ -1,0 +1,65 @@
+<div class="container">
+
+  <mat-horizontal-stepper class="mat-elevation-z8" labelPosition="bottom" #smsCampaignStepper>
+
+    <ng-template matStepperIcon="number">
+      <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="edit">
+      <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="done">
+      <fa-icon icon="check" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="error">
+      <fa-icon icon="exclamation-triangle" size="lg"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="preview">
+      <fa-icon icon="eye" size="sm"></fa-icon>
+    </ng-template>
+
+    <mat-step completed>
+
+      <ng-template matStepLabel>CAMPAIGN</ng-template>
+
+      <mifosx-edit-sms-campaign-step 
+        [smsCampaign]="smsCampaign"
+        [smsCampaignTemplate]="smsCampaignTemplate"
+        (templateParameters)="setParameters($event)"
+      >
+      </mifosx-edit-sms-campaign-step>
+
+    </mat-step>
+
+    <mat-step>
+
+      <ng-template matStepLabel>MESSAGE</ng-template>
+
+      <mifosx-campaign-message-step 
+        [templateParameters]="templateParameters"
+        [editCampaignMessage]="smsCampaign.campaignMessage"
+      >
+      </mifosx-campaign-message-step>
+
+    </mat-step>
+
+    <mat-step state="preview" completed>
+
+      <ng-template matStepLabel>PREVIEW</ng-template>
+
+      <mifosx-campaign-preview-step
+        [campaign]="smsCampaign"
+        [editedCampaignMessage]="campaignMessage"
+        [smsCampaignTemplate]="smsCampaignTemplate" (submit)="submit()"
+      >
+      </mifosx-campaign-preview-step>
+
+    </mat-step>
+
+  </mat-horizontal-stepper>
+
+</div>

@@ -1,0 +1,67 @@
+<form [formGroup]="smsCampaignDetailsForm">
+
+  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="start center">
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Campaign Name</mat-label>
+      <input matInput formControlName="campaignName" required>
+      <mat-error>
+        Campaign Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%" *ngIf="!smsCampaignDetailsForm.controls.isNotification.value">
+      <mat-label>SMS Provider</mat-label>
+      <mat-select formControlName="providerId">
+        <mat-option *ngFor="let provider of smsProviders" [value]="provider.id">
+          {{ provider.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Trigger Type</mat-label>
+      <mat-select formControlName="triggerType" required>
+        <mat-option *ngFor="let triggerType of triggerTypes" [value]="triggerType.id">
+          {{ triggerType.value }}
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        Trigger Type is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-checkbox labelPosition="before" formControlName="isNotification" fxFlex="48%">
+      is Notification?
+    </mat-checkbox>
+
+    <mat-form-field fxFlex="48%" *ngIf="smsCampaignDetailsForm.controls.recurrenceStartDate">
+      <mat-label>Schedule Date</mat-label>
+      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="recurrenceStartDatePicker"
+        formControlName="recurrenceStartDate" required>
+      <mat-datepicker-toggle matSuffix [for]="recurrenceStartDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #recurrenceStartDatePicker></mat-datepicker>
+      <mat-error>
+        Schedule Date is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Business Rule</mat-label>
+      <mat-select formControlName="runReportId" required>
+        <mat-option *ngFor="let rule of businessRules" [value]="rule.reportId">
+          {{ rule.reportName }}
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        Business Rule is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+  </div>
+
+  <mifosx-edit-business-rule-parameters [paramData]="paramData" [smsCampaign]="smsCampaign"
+    (templateParameters)="passParameters($event)">
+  </mifosx-edit-business-rule-parameters>
+
+</form>

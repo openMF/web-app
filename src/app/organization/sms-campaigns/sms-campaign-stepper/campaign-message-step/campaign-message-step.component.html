@@ -1,0 +1,28 @@
+<div fxLayout="column">
+
+  <mat-form-field fxFlex="98%">
+    <mat-label>Campaign Message</mat-label>
+    <textarea matInput [formControl]="message"></textarea>
+  </mat-form-field>
+
+  <h3 fxFlex="98%" class="mat-h3">Template Parameters</h3>
+
+  <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="center">
+    <button mat-stroked-button color="primary" class="parameter"
+      *ngFor="let label of parameterLabels" (click)="addText(label)">
+      {{ label }}
+    </button>
+  </div>
+
+  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+    <button mat-raised-button matStepperPrevious>
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+      Previous
+    </button>
+    <button mat-raised-button matStepperNext [disabled]="!smsCampaignFormValid">
+      Next&nbsp;&nbsp;
+      <fa-icon icon="arrow-right"></fa-icon>
+    </button>
+  </div>
+
+</div>

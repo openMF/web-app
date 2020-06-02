@@ -185,8 +185,31 @@ export class OrganizationService {
    * @param {string} smsCampaignId SMS Campaign ID of SMS Campaign.
    * @returns {Observable<any>} SMS Campaign.
    */
-  getSmsCampaign(smsCampaignId: string): Observable<any> {
-    return this.http.get(`/smscampaigns/${smsCampaignId}`);
+  getSmsCampaign(campaignId: string): Observable<any> {
+    return this.http.get(`/smscampaigns/${campaignId}`);
+  }
+
+  /**
+   * @param {any} campaign Campaign to be created.
+   * @returns {Observable<any>}
+   */
+  createSmsCampaign(campaign: any): Observable<any> {
+    return this.http.post('/smscampaigns', campaign);
+  }
+
+  /**
+   * @param {any} campaign Campaign to be updated.
+   * @returns {Observable<any>}
+   */
+  updateSmsCampaign(campaign: any, campaignId: string): Observable<any> {
+    return this.http.put(`/smscampaigns/${campaignId}`, campaign);
+  }
+
+  /**
+   * @returns {Observable<any>} SMS Campaign template
+   */
+  getSmsCampaignTemplate(): Observable<any> {
+    return this.http.get('/smscampaigns/template');
   }
 
   /**
