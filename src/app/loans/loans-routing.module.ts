@@ -22,6 +22,7 @@ import { LoanDetailsChargesResolver } from './common-resolvers/loan-details-char
 import { OverdueChargesTabComponent } from './loans-view/overdue-charges-tab/overdue-charges-tab.component';
 import { OriginalScheduleTabComponent } from './loans-view/original-schedule-tab/original-schedule-tab.component';
 import { RepaymentScheduleTabComponent } from './loans-view/repayment-schedule-tab/repayment-schedule-tab.component';
+import { TransactiosTabComponent } from './loans-view/transactios-tab/transactios-tab.component';
 
 const routes: Routes = [
   {
@@ -64,6 +65,14 @@ const routes: Routes = [
           path: 'repayment-schedule',
           component: RepaymentScheduleTabComponent,
           data: { title: extract('Repayment Schedule'), breadcrumb: 'Repayment Schedule', routeParamBreadcrumb: false },
+          resolve: {
+            loanDetailsAssociationData: LoanDetailsChargesResolver
+          }
+        },
+        {
+          path: 'transactions',
+          component: TransactiosTabComponent,
+          data: { title: extract('Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
           resolve: {
             loanDetailsAssociationData: LoanDetailsChargesResolver
           }
