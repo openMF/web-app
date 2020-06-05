@@ -18,9 +18,12 @@ import { ChargesTabComponent } from './loans-view/charges-tab/charges-tab.compon
 import { OverdueChargesTabComponent } from './loans-view/overdue-charges-tab/overdue-charges-tab.component';
 import { OriginalScheduleTabComponent } from './loans-view/original-schedule-tab/original-schedule-tab.component';
 import { RepaymentScheduleTabComponent } from './loans-view/repayment-schedule-tab/repayment-schedule-tab.component';
-import { TransactiosTabComponent } from './loans-view/transactios-tab/transactios-tab.component';
 import { LoanAccountActionsComponent } from './loans-view/loan-account-actions/loan-account-actions.component';
 import { LoansAccountCloseComponent } from './loans-view/loan-account-actions/loans-account-close/loans-account-close.component';
+import { TransactionsTabComponent } from './loans-view/transactions-tab/transactions-tab.component';
+import { DatatableTabComponent } from './loans-view/datatable-tab/datatable-tab.component';
+import { MultiRowComponent } from './loans-view/datatable-tab/multi-row/multi-row.component';
+import { SingleRowComponent } from './loans-view/datatable-tab/single-row/single-row.component';
 
 /**
  * Loans Module
@@ -39,9 +42,12 @@ import { LoansAccountCloseComponent } from './loans-view/loan-account-actions/lo
     OverdueChargesTabComponent,
     OriginalScheduleTabComponent,
     RepaymentScheduleTabComponent,
-    TransactiosTabComponent,
     LoanAccountActionsComponent,
     LoansAccountCloseComponent,
+    TransactionsTabComponent,
+    DatatableTabComponent,
+    MultiRowComponent,
+    SingleRowComponent,
   ],
   providers: [DatePipe],
 })

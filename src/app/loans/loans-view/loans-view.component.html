@@ -80,10 +80,16 @@
 		<a mat-tab-link [routerLink]="['./charges']" routerLinkActive #charges="routerLinkActive" [active]="charges.isActive">
 		  Charges
 		</a>
-      </ng-container>
+	  </ng-container>
 	  <a mat-tab-link *mifosxHasPermission="'READ_LOANNOTE'" [routerLink]="['./notes']" routerLinkActive #notes="routerLinkActive" [active]="notes.isActive">
 		Notes
 	  </a>
+	  <ng-container *ngFor="let loanDatatable of loanDatatables">
+        <a mat-tab-link *mifosxHasPermission="'READ_' + loanDatatable.registeredTableName" [routerLink]="['./datatables',loanDatatable.registeredTableName]"
+          routerLinkActive #datatable="routerLinkActive" [active]="datatable.isActive">
+          {{loanDatatable.registeredTableName}}
+        </a>
+      </ng-container>
     </nav>
     <router-outlet></router-outlet>
   </mat-card-content>

@@ -31,6 +31,7 @@ export class GeneralTabComponent {
   showClosedLoanAccounts = false;
   showClosedSavingAccounts = false;
   showClosedShareAccounts = false;
+  clientid: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -43,6 +44,7 @@ export class GeneralTabComponent {
       this.shareAccounts = data.clientAccountsData.shareAccounts;
       this.upcomingCharges = data.clientChargesData.pageItems;
       this.clientSummary = data.clientSummary[0];
+      this.clientid = this.route.parent.snapshot.params['clientId'];
     });
   }
 

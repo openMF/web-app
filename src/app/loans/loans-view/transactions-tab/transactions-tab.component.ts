@@ -3,11 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import {FormControl} from '@angular/forms';
 
 @Component({
-  selector: 'mifosx-transactios-tab',
-  templateUrl: './transactios-tab.component.html',
-  styleUrls: ['./transactios-tab.component.scss']
+  selector: 'mifosx-transactions-tab',
+  templateUrl: './transactions-tab.component.html',
+  styleUrls: ['./transactions-tab.component.scss']
 })
-export class TransactiosTabComponent implements OnInit {
+export class TransactionsTabComponent implements OnInit {
 
   /** Loan Details Data */
   transactions: any;
