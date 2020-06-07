@@ -50,6 +50,11 @@ const routes: Routes = [
         component: ClientsComponent,
       },
       {
+        path: ':clientId/savingsaccounts',
+        data: { routeParamBreadcrumb: 'clientId'},
+        loadChildren: '../savings/savings.module#SavingsModule'
+      },
+      {
         path: ':clientId',
         component: ClientsViewComponent,
         data: { title: extract('Clients View'), routeParamBreadcrumb: 'clientId' },
