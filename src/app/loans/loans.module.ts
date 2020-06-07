@@ -48,6 +48,7 @@ import { DisburseLoanAccountComponent } from './loans-view/loan-account-actions/
 import { DisburseComponent } from './loans-view/loan-account-actions/disburse/disburse.component';
 import { RejectLoanComponent } from './loans-view/loan-account-actions/reject-loan/reject-loan.component';
 import { WithdrawnByClientComponent } from './loans-view/loan-account-actions/withdrawn-by-client/withdrawn-by-client.component';
+import { UndoDisbursalComponent } from './loans-view/loan-account-actions/undo-disbursal/undo-disbursal.component';
 
 /** Dialog Components */
 import { LoansAccountViewGuarantorDetailsDialogComponent } from './custom-dialog/loans-account-view-guarantor-details-dialog/loans-account-view-guarantor-details-dialog.component';
@@ -105,7 +106,8 @@ import { AddCollateralComponent } from './loans-view/loan-account-actions/add-co
     RejectLoanComponent,
     DisburseComponent,
     WithdrawnByClientComponent,
-    AddCollateralComponent
+    AddCollateralComponent,
+    UndoDisbursalComponent,
   ],
   entryComponents: [
     LoansAccountAddCollateralDialogComponent,
