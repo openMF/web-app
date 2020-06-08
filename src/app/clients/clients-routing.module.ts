@@ -50,11 +50,6 @@ const routes: Routes = [
         component: ClientsComponent,
       },
       {
-        path: ':clientId/savingsaccounts',
-        data: { routeParamBreadcrumb: 'clientId'},
-        loadChildren: '../savings/savings.module#SavingsModule'
-      },
-      {
         path: ':clientId',
         component: ClientsViewComponent,
         data: { title: extract('Clients View'), routeParamBreadcrumb: 'clientId' },
@@ -177,7 +172,11 @@ const routes: Routes = [
             path: 'loans',
             data: { title: extract('Loans'), breadcrumb: 'loans', routeParamBreadcrumb: false },
             loadChildren: '../loans/loans.module#LoansModule'
-          }
+          },
+          {
+            path: 'savingsaccounts',
+            loadChildren: '../savings/savings.module#SavingsModule'
+          },
         ]
       }
     ]

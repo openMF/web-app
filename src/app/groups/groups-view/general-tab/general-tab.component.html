@@ -255,7 +255,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="openSavingsColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: openSavingsColumns;"></tr>
+      <tr mat-row *matRowDef="let row; columns: openSavingsColumns;" [routerLink]="['../', 'savingsaccounts', row.id, 'transactions']"></tr>
 
     </table>
 

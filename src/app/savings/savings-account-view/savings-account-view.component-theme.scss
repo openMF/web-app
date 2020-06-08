@@ -1,0 +1,16 @@
+@import "~@angular/material/theming";
+
+@mixin savings-account-view-component-theme($theme) {
+  $primary: map-get($theme, primary);
+  mifosx-savings-account-view {
+    .savings-account-card {
+      .header {
+        background-color: mat-color($primary, 500);
+      }
+      .table-headers {
+        background-color: mat-color($primary, 500);
+        color: mat-contrast($primary, 500);
+      }
+    }
+  } 
+}
