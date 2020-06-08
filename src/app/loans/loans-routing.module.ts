@@ -23,6 +23,7 @@ import { OverdueChargesTabComponent } from './loans-view/overdue-charges-tab/ove
 import { OriginalScheduleTabComponent } from './loans-view/original-schedule-tab/original-schedule-tab.component';
 import { RepaymentScheduleTabComponent } from './loans-view/repayment-schedule-tab/repayment-schedule-tab.component';
 import { TransactiosTabComponent } from './loans-view/transactios-tab/transactios-tab.component';
+import { LoanAccountActionsComponent } from './loans-view/loan-account-actions/loan-account-actions.component';
 
 const routes: Routes = [
   {
@@ -108,6 +109,11 @@ const routes: Routes = [
           resolve: {
             loanChargeTemplate: LoanChargeTemplateResolver
           }
+        },
+        {
+          path: ':action',
+          component: LoanAccountActionsComponent,
+          data: { title: extract('Loan Account Actions'), routeParamBreadcrumb: 'action' },
         },
       ]
     }]

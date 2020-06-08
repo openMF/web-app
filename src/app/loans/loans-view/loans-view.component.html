@@ -33,7 +33,7 @@
 	<mat-card-actions class="loan-actions">
 
 	  <ng-container *ngFor="let item of buttons.singlebuttons" class="loan-span">
-		<button mat-raised-button *mifosxHasPermission="item.taskPermissionName">
+		<button mat-raised-button *mifosxHasPermission="item.taskPermissionName" (click)="loanAction(item.name)">
 		  <i class="{{item.icon}}"></i> {{item.name}} </button>
 	  </ng-container>
 
@@ -41,7 +41,7 @@
 		<button mat-raised-button [matMenuTriggerFor]="More">More</button>
 		  <mat-menu #More="matMenu">
 			<span *ngFor="let item of buttons.options">
-			  <button mat-menu-item *mifosxHasPermission="item.taskPermissionName">{{item.name}}</button>
+			  <button mat-menu-item *mifosxHasPermission="item.taskPermissionName" (click)="loanAction(item.name)">{{item.name}}</button>
 			</span>
 		  </mat-menu>
 	  </ng-container>
