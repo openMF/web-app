@@ -21,6 +21,11 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}/charges/template`);
   }
 
+  getLoanChargeTemplate(loanId: string, command: string): Observable<any> {
+    const httpParams = new HttpParams().set('command', command);
+    return this.http.get(`/loans/${loanId}/transactions/template`, { params: httpParams });
+  }
+
   /**
    * @param {any} loanCharge to apply on a Loan Account.
    * @returns {Observable<any>}
@@ -83,6 +88,11 @@ export class LoansService {
    */
   deleteLoanNote(loanId: string, noteId: string) {
     return this.http.delete(`/loans/${loanId}/notes/${noteId}`);
+  }
+
+  closeAccount(loanId: string, closeData: any) {
+    const httpParams = new HttpParams().set('command', 'close');
+    return this.http.post(`/loans/${loanId}/transactions`, closeData, {params: httpParams});
   }
 
 }

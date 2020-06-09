@@ -19,6 +19,8 @@ import { OverdueChargesTabComponent } from './loans-view/overdue-charges-tab/ove
 import { OriginalScheduleTabComponent } from './loans-view/original-schedule-tab/original-schedule-tab.component';
 import { RepaymentScheduleTabComponent } from './loans-view/repayment-schedule-tab/repayment-schedule-tab.component';
 import { TransactiosTabComponent } from './loans-view/transactios-tab/transactios-tab.component';
+import { LoanAccountActionsComponent } from './loans-view/loan-account-actions/loan-account-actions.component';
+import { LoansAccountCloseComponent } from './loans-view/loan-account-actions/loans-account-close/loans-account-close.component';
 
 /**
  * Loans Module
@@ -38,6 +40,8 @@ import { TransactiosTabComponent } from './loans-view/transactios-tab/transactio
     OriginalScheduleTabComponent,
     RepaymentScheduleTabComponent,
     TransactiosTabComponent,
+    LoanAccountActionsComponent,
+    LoansAccountCloseComponent,
   ],
   providers: [DatePipe],
 })

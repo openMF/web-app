@@ -47,7 +47,6 @@ export class TransactiosTabComponent implements OnInit {
   }
 
   removeItem(arr: any, item: any) {
-    console.log('item: ', item);
     return arr.filter((f: any) => f !== item);
    }
 

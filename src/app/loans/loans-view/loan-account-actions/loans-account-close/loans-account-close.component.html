@@ -1,0 +1,35 @@
+<div class="container">
+
+  <form [formGroup]="closeLoanForm" (ngSubmit)="submit()">
+
+    <mat-card-content>
+
+      <div fxLayout="column">
+
+        <mat-form-field>
+          <mat-label>Closed On</mat-label>
+          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closedDatePicker" required formControlName="transactionDate">
+          <mat-datepicker-toggle matSuffix [for]="closedDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #closedDatePicker></mat-datepicker>
+          <mat-error *ngIf="closeLoanForm.controls.transactionDate.hasError('required')">
+            Closed Date <strong>is required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Note</mat-label>
+          <textarea matInput formControlName="note"></textarea>
+        </mat-form-field>
+
+      </div>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../general']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!closeLoanForm.valid">Submit</button>
+      </mat-card-actions>
+
+    </mat-card-content>
+
+  </form>
+
+</div>

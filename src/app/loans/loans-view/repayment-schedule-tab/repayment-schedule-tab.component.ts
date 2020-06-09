@@ -22,8 +22,6 @@ export class RepaymentScheduleTabComponent implements OnInit {
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe(( data: { loanDetailsAssociationData: any }) => {
       this.repaymentScheduleDetails = data.loanDetailsAssociationData.repaymentSchedule;
-      console.log(this.repaymentScheduleDetails);
-
     });
   }
 

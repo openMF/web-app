@@ -35,8 +35,6 @@ export class NotesTabComponent implements OnInit {
     this.loanId = this.route.parent.snapshot.params['loanId'];
     this.route.data.subscribe((data: { loanNotes: any }) => {
       this.loanNotes = data.loanNotes;
-      console.log('notes: ', this.loanNotes);
-
     });
   }
 

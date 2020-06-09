@@ -161,7 +161,7 @@ export const ButtonConfig = {
     ],
   },
 
-  'Closed (written off)': {
+  ClosedWrittenOff: {
     singlebuttons: [
       {
         name: 'Recovery Payment',
