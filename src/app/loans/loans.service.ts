@@ -145,5 +145,15 @@ export class LoansService {
     return this.http.delete(`/datatables/${datatableName}/${loanId}`, { params: httpParams });
   }
 
+  /*
+   * Undo Loan Approval.
+   * @param {string} loanId Loan Id.
+   * @param {any} data Data.
+   * @returns {Observable<any>}
+   */
+  undoLoanApproval(loanId: string, data: any): Observable<any> {
+    const httpParams = new HttpParams().set('command', 'undoapproval');
+    return this.http.post(`/loans/${loanId}`, data, {params: httpParams});
+  }
 
 }

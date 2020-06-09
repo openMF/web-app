@@ -24,6 +24,7 @@ import { TransactionsTabComponent } from './loans-view/transactions-tab/transact
 import { DatatableTabComponent } from './loans-view/datatable-tab/datatable-tab.component';
 import { MultiRowComponent } from './loans-view/datatable-tab/multi-row/multi-row.component';
 import { SingleRowComponent } from './loans-view/datatable-tab/single-row/single-row.component';
+import { UndoApprovalComponent } from './loans-view/loan-account-actions/undo-approval/undo-approval.component';
 
 /**
  * Loans Module
@@ -48,6 +49,7 @@ import { SingleRowComponent } from './loans-view/datatable-tab/single-row/single
     DatatableTabComponent,
     MultiRowComponent,
     SingleRowComponent,
+    UndoApprovalComponent,
   ],
   providers: [DatePipe],
 })
