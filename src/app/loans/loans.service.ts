@@ -95,4 +95,55 @@ export class LoansService {
     return this.http.post(`/loans/${loanId}/transactions`, closeData, {params: httpParams});
   }
 
+  /**
+   * Get Loan Datatables
+   */
+  getLoanDataTables() {
+    const httpParams = new HttpParams().set('apptable', 'm_loan');
+    return this.http.get(`/datatables`, { params: httpParams });
+  }
+
+  /**
+   * Get Loan Datatable
+   * @param loanId Loan ID
+   * @param datatableName Datatable Name
+   */
+  getLoanDatatable(loanId: string, datatableName: string) {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.get(`/datatables/${datatableName}/${loanId}`, { params: httpParams });
+  }
+
+  /**
+   * @param loanId Loan Id of loan to get add datatable entry for.
+   * @param datatableName Data Table name.
+   * @param data Data.
+   * @returns {Observable<any>}
+   */
+  addLoanDatatableEntry(loanId: string, datatableName: string, data: any): Observable<any> {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.post(`/datatables/${datatableName}/${loanId}`, data, { params: httpParams });
+  }
+
+  /**
+   * @param loanId Loan Id of loan to get add datatable entry for.
+   * @param datatableName Data Table name.
+   * @param data Data.
+   * @returns {Observable<any>}
+   */
+  editLoanDatatableEntry(loanId: string, datatableName: string, data: any): Observable<any> {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.put(`/datatables/${datatableName}/${loanId}`, data, { params: httpParams });
+  }
+
+  /**
+   * @param loanId Loan Id of loan to get add datatable entry for.
+   * @param datatableName Data Table name.
+   * @returns {Observable<any>}
+   */
+  deleteDatatableContent(loanId: string, datatableName: string): Observable<any> {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.delete(`/datatables/${datatableName}/${loanId}`, { params: httpParams });
+  }
+
+
 }

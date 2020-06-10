@@ -13,6 +13,7 @@ import { ButtonConfig } from './button-config';
 export class LoansViewComponent implements OnInit {
 
   loanDetailsData: any;
+  loanDatatables: any;
   recalculateInterest: any;
   status: string;
   buttons: {
@@ -29,9 +30,10 @@ export class LoansViewComponent implements OnInit {
   loanId: number;
 
   constructor(private route: ActivatedRoute,
-              private router: Router) {
-    this.route.data.subscribe((data: { loanDetailsData: any, }) => {
+    private router: Router) {
+    this.route.data.subscribe((data: { loanDetailsData: any, loanDatatables: any}) => {
       this.loanDetailsData = data.loanDetailsData;
+      this.loanDatatables = data.loanDatatables;
     });
     this.loanId = this.route.snapshot.params['loanId'];
   }
