@@ -1,0 +1,43 @@
+<div class="container">
+
+  <form [formGroup]="loanInterestForm" (ngSubmit)="submit()">
+
+    <mat-card-content>
+
+      <div fxLayout="column">
+
+        <mat-form-field>
+          <mat-label>Interest waived on</mat-label>
+          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="interestDatePicker" required formControlName="transactionDate">
+          <mat-datepicker-toggle matSuffix [for]="interestDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #interestDatePicker></mat-datepicker>
+          <mat-error *ngIf="loanInterestForm.controls.transactionDate.hasError('required')">
+            Interest Date is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+    
+        <mat-form-field>
+          <mat-label>Transaction amount</mat-label>
+          <input matInput required formControlName="transactionAmount">
+          <mat-error *ngIf="loanInterestForm.controls.transactionAmount.hasError('required')">
+            Transaction Amount is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+    
+        <mat-form-field>
+          <mat-label>Note</mat-label>
+          <textarea matInput formControlName="note"></textarea>
+        </mat-form-field>
+
+      </div>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!loanInterestForm.valid" *mifosxHasPermission="'WAIVEINTERESTPORTION_LOAN'">Submit</button>
+      </mat-card-actions>
+
+    </mat-card-content>
+
+  </form>
+
+</div>
