@@ -32,6 +32,8 @@ export class LoanActionButtonResolver implements Resolve<Object> {
         //     return this.loansService.getLoanActionTemplate(loanId, 'repayment');
         } else if (loanActionButton === 'waive-interest') {
             return this.loansService.getLoanActionTemplate(loanId, 'waiveinterest');
+        } else if (loanActionButton === 'write-off') {
+            return this.loansService.getLoanActionTemplate(loanId, 'writeoff');
         } else {
             return this.loansService.getLoanActionTemplate(loanId, 'prepayLoan');
         }
