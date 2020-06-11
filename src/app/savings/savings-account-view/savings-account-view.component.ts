@@ -1,6 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
+/** Custom Buttons Configuration */
 import { SavingsButtonsConfiguration } from './savings-buttons.config';
 
 /**
@@ -15,6 +17,8 @@ export class SavingsAccountViewComponent implements OnInit {
 
   /** Savings Account Data */
   savingsAccountData: any;
+  /** Savings Data Tables */
+  savingsDatatables: any;
   /** Button Configurations */
   buttonConfig: SavingsButtonsConfiguration;
 
@@ -23,8 +27,9 @@ export class SavingsAccountViewComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { savingsAccountData: any }) => {
+    this.route.data.subscribe((data: { savingsAccountData: any, savingsDatatables: any }) => {
       this.savingsAccountData = data.savingsAccountData;
+      this.savingsDatatables = data.savingsDatatables;
     });
   }
 
