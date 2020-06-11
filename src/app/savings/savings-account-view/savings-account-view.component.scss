@@ -1,4 +1,4 @@
-.group-card {
+.savings-account-card {
   margin: 0 auto;
   max-width: 80rem;
   width: 90%;
@@ -6,7 +6,7 @@
   .header {
     padding: 1%;
     .header-title-group {
-      .group-card-title {
+      .account-card-title {
         color: white;
         width: 90%;
         p {
@@ -21,19 +21,7 @@
         border-radius: 20px;
       }
     }
-    .group-meeting {
-      align-self: flex-end;
-      width: 300px;
-      height: 140px;
-      div, ng-template > div {
-        background-color: #0a6aac;
-        p {
-          color: white;
-          padding: 0 10px;
-        }
-      }
-    }
-    .group-actions {
+    .account-actions {
       align-self: flex-end;
       margin: 0 1%;
       i {
@@ -43,9 +31,23 @@
     }
   }
   .navigation-tabs {
+    background-color: #f2f2f2;
     overflow: auto;
   }
-  i:hover {
+  .content {
+    .savings-account-tables {
+      padding: 1%;
+      margin: 1%;
+      .table-headers {
+        margin: 0;
+        padding: 6px;
+      }
+      td {
+        padding: 3px;
+      }
+    } 
+  }
+  i, img:hover {
     cursor: pointer;
   }
 }

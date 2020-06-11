@@ -47,48 +47,57 @@ const routes: Routes = [
         },
         {
           path: ':groupId',
-          component: GroupsViewComponent,
           data: { title: extract('View Group'), routeParamBreadcrumb: 'groupId' },
-          resolve: {
-            groupViewData: GroupViewResolver,
-            groupDatatables: GroupDatatablesResolver
-          },
           children: [
             {
-              path: 'general',
-              component: GeneralTabComponent,
-              data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false },
+              path: '',
+              component: GroupsViewComponent,
               resolve: {
-                groupAccountsData: GroupAccountsResolver,
-                groupSummary: GroupSummaryResolver
-              }
-            },
-            {
-              path: 'notes',
-              component: NotesTabComponent,
-              data: { title: extract('Notes'), breadcrumb: 'Notes', routeParamBreadcrumb: false },
-              resolve: {
-                groupNotes: GroupNotesResolver
-              }
-            },
-            {
-              path: 'committee',
-              component: CommitteeTabComponent,
-              data: { title: extract('Committee'), breadcrumb: 'Committee', routeParamBreadcrumb: false }
-            },
-            {
-              path: 'datatables',
+                groupViewData: GroupViewResolver,
+                groupDatatables: GroupDatatablesResolver
+              },
               children: [
                 {
-                  path: ':datatableName',
-                  component: DatatableTabsComponent,
-                  data: { title: extract('View Data Table'), routeParamBreadcrumb: 'datatableName' },
+                  path: 'general',
+                  component: GeneralTabComponent,
+                  data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false },
                   resolve: {
-                    groupDatatable: GroupDatatableResolver
+                    groupAccountsData: GroupAccountsResolver,
+                    groupSummary: GroupSummaryResolver
                   }
+                },
+                {
+                  path: 'notes',
+                  component: NotesTabComponent,
+                  data: { title: extract('Notes'), breadcrumb: 'Notes', routeParamBreadcrumb: false },
+                  resolve: {
+                    groupNotes: GroupNotesResolver
+                  }
+                },
+                {
+                  path: 'committee',
+                  component: CommitteeTabComponent,
+                  data: { title: extract('Committee'), breadcrumb: 'Committee', routeParamBreadcrumb: false }
+                },
+                {
+                  path: 'datatables',
+                  children: [
+                    {
+                      path: ':datatableName',
+                      component: DatatableTabsComponent,
+                      data: { title: extract('View Data Table'), routeParamBreadcrumb: 'datatableName' },
+                      resolve: {
+                        groupDatatable: GroupDatatableResolver
+                      }
+                    }
+                  ]
                 }
               ]
-            }
+            },
+            {
+              path: 'savingsaccounts',
+              loadChildren: '../savings/savings.module#SavingsModule'
+            },
           ]
         }
       ]

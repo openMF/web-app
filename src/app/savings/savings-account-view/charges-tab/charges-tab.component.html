@@ -1,0 +1,106 @@
+<div class="tab-container mat-typography">
+
+  <div fxLayout="row" fxLayoutAlign="start">
+    <div class="m-b-10">
+      <h3>All Charges</h3>
+    </div>
+    <div class="action-button m-b-20" *ngIf="this.chargesData">
+      <button mat-raised-button color="primary" (click)="toggleCharges()">
+        {{showInactiveCharges?'View Active Charges':'View Inactive Charges'}}</button>
+    </div>
+  </div>
+
+  <div class="mat-elevation-z1 m-b-25">
+
+    <table mat-table #chargesTable [dataSource]="dataSource" >
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let charge"> {{ charge.name }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="feeOrPenalty">
+        <th mat-header-cell *matHeaderCellDef> Fee/Penalty </th>
+        <td mat-cell *matCellDef="let charge"> {{ charge.penalty === true ? 'Penalty' : 'Fee' }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="paymentDueAt">
+        <th mat-header-cell *matHeaderCellDef> Payment Due At </th>
+        <td mat-cell *matCellDef="let charge"> {{ charge.chargeTimeType.value }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dueAsOf">
+        <th mat-header-cell *matHeaderCellDef> Due As Of </th>
+        <td mat-cell *matCellDef="let charge"> {{ charge.dueDate | date }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="repeatsOn">
+        <th mat-header-cell *matHeaderCellDef> Repeats On (M/d) </th>
+        <td mat-cell *matCellDef="let charge"> {{ charge.feeOnMonthDay ? charge.feeOnMonthDay.join('/') : '' }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="calculationType">
+        <th mat-header-cell *matHeaderCellDef> Calculation Type </th>
+        <td mat-cell *matCellDef="let charge"> {{charge.chargeCalculationType.value}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="due">
+        <th mat-header-cell *matHeaderCellDef> Due </th>
+        <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amount}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="paid">
+        <th mat-header-cell *matHeaderCellDef> Paid </th>
+        <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amountPaid}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="waived">
+        <th mat-header-cell *matHeaderCellDef> Waived </th>
+        <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amountWaived}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="outstanding">
+        <th mat-header-cell *matHeaderCellDef> Outstanding </th>
+        <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amountOutstanding}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let charge">
+          <span *ngIf="savingsAccountData.status.value === 'Submitted and pending approval'">
+            <button class="account-action-button" mat-raised-button color="primary" matTooltip="Edit Charge"
+              *mifosxHasPermission="'UPDATE_SAVINGSACCOUNTCHARGE'">
+              <i class="fa fa-pencil"></i>
+            </button>
+            <button class="account-action-button" mat-raised-button color="warn" matTooltip="Delete Charge"
+              *mifosxHasPermission="'DELETE_SAVINGSACCOUNTCHARGE'">
+              <i class="fa fa-trash"></i>
+            </button>
+          </span>
+          <span *ngIf="savingsAccountData.status.value === 'Active' && charge.amountOutstanding !== 0">
+            <button class="account-action-button" mat-raised-button color="primary" matTooltip="Pay Charge"
+              *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'">
+              <i class="fa fa-dollar"></i>
+            </button>
+            <button class="account-action-button" mat-raised-button color="primary" matTooltip="Waive Charge"
+              *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'">
+              <i class="fa fa-flag"></i>
+            </button>
+            <ng-container *ngIf="isRecurringCharge(charge)">
+              <button class="account-action-button" mat-raised-button color="primary" matTooltip="Inactivate Charge"
+                *mifosxHasPermission="'INACTIVATE_SAVINGSACCOUNTCHARGE'">
+                <i class="fa fa-ban"></i>
+              </button>
+            </ng-container>
+          </span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+  </div>
+
+</div>
