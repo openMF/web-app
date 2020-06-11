@@ -12,11 +12,14 @@ import { SavingAccountActionsComponent } from './saving-account-actions/saving-a
 import { AddSavingsChargeComponent } from './add-savings-charge/add-savings-charge.component';
 import { ChargesTabComponent } from './savings-account-view/charges-tab/charges-tab.component';
 import { StandingInstructionsTabComponent } from './savings-account-view/standing-instructions-tab/standing-instructions-tab.component';
+import { DatatableTabsComponent } from './savings-account-view/datatable-tabs/datatable-tabs.component';
 
 /** Custom Resolvers */
 import { SavingAccountTransactionTemplateResolver } from './common-resolvers/saving-transaction-template.resolver';
 import { SavingsChargeTemplateResolver } from './common-resolvers/savings-charge-template.resolver';
 import { SavingsAccountViewResolver } from './common-resolvers/savings-account-view.resolver';
+import { SavingsDatatableResolver } from './common-resolvers/savings-datatable.resolver';
+import { SavingsDatatablesResolver } from './common-resolvers/savings-datatables.resolver';
 
 const routes: Routes = [
   {
@@ -28,7 +31,8 @@ const routes: Routes = [
         data: { title: extract('Saving Account View'), routeParamBreadcrumb: 'savingAccountId' },
         component: SavingsAccountViewComponent,
         resolve: {
-          savingsAccountData: SavingsAccountViewResolver
+          savingsAccountData: SavingsAccountViewResolver,
+          savingsDatatables: SavingsDatatablesResolver
         },
         children: [
           {
@@ -45,6 +49,19 @@ const routes: Routes = [
             path: 'standing-instructions',
             component: StandingInstructionsTabComponent,
             data: { title: extract('Savings Account SIH'), breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false }
+          },
+          {
+            path: 'datatables',
+            children: [
+              {
+                path: ':datatableName',
+                component: DatatableTabsComponent,
+                data: { title: extract('View Data Table'), routeParamBreadcrumb: 'datatableName' },
+                resolve: {
+                  savingsDatatable: SavingsDatatableResolver
+                }
+              }
+            ]
           },
           {
             path: 'add-savings-charge',
@@ -73,6 +90,8 @@ const routes: Routes = [
   declarations: [],
   providers: [SavingAccountTransactionTemplateResolver,
               SavingsChargeTemplateResolver,
-              SavingsAccountViewResolver]
+              SavingsAccountViewResolver,
+              SavingsDatatablesResolver,
+              SavingsDatatableResolver]
 })
 export class SavingsRoutingModule {}

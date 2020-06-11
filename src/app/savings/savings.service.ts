@@ -59,8 +59,8 @@ export class SavingsService {
   }
 
   /**
-   * @param groupId Group Id of group to get data for.
-   * @returns {Observable<any>} Group data.
+   * @param accountId Savings Account Id of account to get data for.
+   * @returns {Observable<any>} Savings data.
    */
   getSavingsAccountData(accountId: string): Observable<any> {
     const httpParams = new HttpParams().set('associations', 'all');
@@ -86,6 +86,56 @@ export class SavingsService {
       .set('locale', locale)
       .set('dateFormat', dateFormat);
     return this.http.get(`/standinginstructions`, { params: httpParams });
+  }
+
+  /**
+   * @returns {Observable<any>}
+   */
+  getSavingsDatatables(): Observable<any> {
+    const httpParams = new HttpParams().set('apptable', 'm_savings_account');
+    return this.http.get(`/datatables`, { params: httpParams });
+  }
+
+  /**
+   * @param accountId account Id of savings account to get datatable for.
+   * @param datatableName Data table name.
+   * @returns {Observable<any>}
+   */
+  getSavingsDatatable(accountId: string, datatableName: string): Observable<any> {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.get(`/datatables/${datatableName}/${accountId}`, { params: httpParams });
+  }
+
+  /**
+   * @param accountId account Id of savings account to get add datatable entry for.
+   * @param datatableName Data Table name.
+   * @param data Data.
+   * @returns {Observable<any>}
+   */
+  addSavingsDatatableEntry(accountId: string, datatableName: string, data: any): Observable<any> {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.post(`/datatables/${datatableName}/${accountId}`, data, { params: httpParams });
+  }
+
+  /**
+   * @param accountId account Id of savings account to get add datatable entry for.
+   * @param datatableName Data Table name.
+   * @param data Data.
+   * @returns {Observable<any>}
+   */
+  editSavingsDatatableEntry(accountId: string, datatableName: string, data: any): Observable<any> {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.put(`/datatables/${datatableName}/${accountId}`, data, { params: httpParams });
+  }
+
+  /**
+   * @param accountId account Id of savings account to get add datatable entry for.
+   * @param datatableName Data Table name.
+   * @returns {Observable<any>}
+   */
+  deleteDatatableContent(accountId: string, datatableName: string): Observable<any> {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.delete(`/datatables/${datatableName}/${accountId}`, { params: httpParams });
   }
 
 }
