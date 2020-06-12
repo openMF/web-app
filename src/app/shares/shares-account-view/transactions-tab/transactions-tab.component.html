@@ -1,0 +1,48 @@
+<div class="tab-container mat-typography">
+
+  <div class="m-b-10">
+    <h3>All Transactions</h3>
+  </div>
+
+  <div class="mat-elevation-z1 m-b-25">
+
+    <table mat-table [dataSource]="dataSource">
+
+      <ng-container matColumnDef="transactionDate">
+        <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
+        <td mat-cell *matCellDef="let transaction"> {{transaction.purchasedDate | date}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="transactionType">
+        <th mat-header-cell *matHeaderCellDef> Transaction Type </th>
+        <td mat-cell *matCellDef="let transaction"> {{transaction.type.value}} {{transaction.type.value !== "Charge Payment" ? ('(' + transaction.status.value + ')') : ''}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="totalShares">
+        <th mat-header-cell *matHeaderCellDef> Total Shares </th>
+        <td mat-cell *matCellDef="let transaction"> {{transaction.numberOfShares}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="purchasedOrRedeemedPrice">
+        <th mat-header-cell *matHeaderCellDef> Purhcased/Redeemed Price </th>
+        <td mat-cell *matCellDef="let transaction">{{shareAccountData.currency.displaySymbol}}&nbsp;{{transaction.purchasedPrice}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="chargeAmount">
+        <th mat-header-cell *matHeaderCellDef> Charge Amount </th>
+        <td mat-cell *matCellDef="let transaction">{{shareAccountData.currency.displaySymbol}}&nbsp;{{transaction.type.value === "Charge Payment" ? transaction.amount : transaction.chargeAmount}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="amountRecievedOrReturned">
+        <th mat-header-cell *matHeaderCellDef> Amount Recieved/Returned </th>
+        <td mat-cell *matCellDef="let transaction">{{shareAccountData.currency.displaySymbol}}&nbsp;{{transaction.amount}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+  </div>
+
+</div>

@@ -6,6 +6,7 @@
 @import '../../app/home/dashboard/dashboard.component-theme.scss';
 @import '../../app/loans/loans-view/loans-view.component-theme.scss';
 @import '../../app/savings/savings-account-view/savings-account-view.component-theme.scss';
+@import '../../app/shares/shares-account-view/shares-account-view.component-theme.scss';
 
 // Custom material palette
 $mat-picton-blue: (
@@ -57,3 +58,4 @@ $mifosx-app-theme: mat-light-theme($mifosx-app-primary, $mifosx-app-accent, $mif
 @include dashboard-component-theme($mifosx-app-theme);
 @include loans-view-component-theme($mifosx-app-theme);
 @include savings-account-view-component-theme($mifosx-app-theme);
+@include shares-account-view-component-theme($mifosx-app-theme);

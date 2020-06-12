@@ -1,0 +1,53 @@
+.shares-account-card {
+  margin: 0 auto;
+  max-width: 80rem;
+  width: 90%;
+  padding: 0;
+  .header {
+    padding: 1%;
+    .header-title-group {
+      .account-card-title {
+        color: white;
+        width: 90%;
+        p {
+          color: white;
+        }
+      }
+    }
+    .profile-image-container {
+      margin: 1%;
+      .profile-image {
+        object-fit: cover;
+        border-radius: 20px;
+      }
+    }
+    .account-actions {
+      align-self: flex-end;
+      margin: 0 1%;
+      i {
+        margin-bottom: 2px;
+        margin-right: 4px;
+      }
+    }
+  }
+  .navigation-tabs {
+    background-color: #f2f2f2;
+    overflow: auto;
+  }
+  .content {
+    .shares-account-tables {
+      padding: 1%;
+      margin: 1%;
+      .table-headers {
+        margin: 0;
+        padding: 6px;
+      }
+      td {
+        padding: 3px;
+      }
+    } 
+  }
+  i, img:hover {
+    cursor: pointer;
+  }
+}

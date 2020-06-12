@@ -1,0 +1,58 @@
+<div class="tab-container mat-typography">
+
+  <div class="m-b-10">
+    <h3>All Charges</h3>
+  </div>
+
+  <div class="mat-elevation-z1 m-b-25">
+
+    <table mat-table [dataSource]="dataSource">
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let charge"> {{ charge.name }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="feeOrPenalty">
+        <th mat-header-cell *matHeaderCellDef> Fee/Penalty </th>
+        <td mat-cell *matCellDef="let charge"> {{ charge.penalty === true ? 'Penalty' : 'Fee' }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="paymentDueAt">
+        <th mat-header-cell *matHeaderCellDef> Payment Due At </th>
+        <td mat-cell *matCellDef="let charge"> {{ charge.chargeTimeType.value }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="calculationType">
+        <th mat-header-cell *matHeaderCellDef> Calculation Type </th>
+        <td mat-cell *matCellDef="let charge"> {{charge.chargeCalculationType.value}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="due">
+        <th mat-header-cell *matHeaderCellDef> Due </th>
+        <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amount}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="paid">
+        <th mat-header-cell *matHeaderCellDef> Paid </th>
+        <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amountPaid}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="waived">
+        <th mat-header-cell *matHeaderCellDef> Waived </th>
+        <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amountWaived}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="outstanding">
+        <th mat-header-cell *matHeaderCellDef> Outstanding </th>
+        <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amountOutstanding}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+  </div>
+
+</div>
