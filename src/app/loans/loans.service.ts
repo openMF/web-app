@@ -167,4 +167,18 @@ export class LoansService {
     return this.http.post(`/loans/${loanId}`, data, {params: httpParams});
   }
 
+  getForeclosureData(loanId: any, foreclosuredata: any) {
+    const httpParams = new HttpParams().set('command', foreclosuredata.command)
+                                       .set('dateFormat', foreclosuredata.dateFormat)
+                                       .set('locale', foreclosuredata.locale)
+                                       .set('transactionDate', foreclosuredata.transactionDate);
+    return this.http.get(`/loans/${loanId}/transactions/template`, {params: httpParams});
+
+  }
+
+  loanForclosureData(loanId: any, data: any) {
+    const httpParams = new HttpParams().set('command', 'foreclosure');
+    return this.http.post(`/loans/${loanId}/transactions`, data, {params: httpParams});
+  }
+
 }
