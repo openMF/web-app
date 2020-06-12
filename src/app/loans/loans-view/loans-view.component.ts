@@ -111,7 +111,7 @@ export class LoansViewComponent implements OnInit {
   }
 
   loanAction(button: string) {
-    button = button.replace(' ', '-').toLowerCase();
+    button = button.replace(/\s/g, '-').toLowerCase();
     this.router.navigate([button], { relativeTo: this.route });
   }
 
