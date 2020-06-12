@@ -177,6 +177,10 @@ const routes: Routes = [
             path: 'savingsaccounts',
             loadChildren: '../savings/savings.module#SavingsModule'
           },
+          {
+            path: 'sharesaccounts',
+            loadChildren: '../shares/shares.module#SharesModule'
+          },
         ]
       }
     ]

@@ -1,0 +1,119 @@
+<mat-card class="shares-account-card">
+
+  <mat-card-header fxLayout="column" class="header">
+
+    <mat-card-title-group class="header-title-group">
+
+      <div class="profile-image-container">
+        <div>
+          <img mat-card-md-image class="profile-image"
+            matTooltip="Shares Account"
+            src="assets/images/shares_account_placeholder.png">
+        </div>
+      </div>
+
+      <div class="mat-typography account-card-title">
+        <mat-card-title>
+          <h3>
+            <i class="fa fa-stop" [ngClass]="sharesAccountData.status.code | statusLookup" [matTooltip]="sharesAccountData.status.value"></i>
+              Account Name : {{sharesAccountData.productName}}
+          </h3>
+        </mat-card-title>
+        <mat-card-subtitle>
+          <p>
+            Account #: {{sharesAccountData.accountNo}} | Client Name: {{sharesAccountData.clientName}}<br/>
+            Current Market Price: {{sharesAccountData.currency.displaySymbol}}&nbsp;{{sharesAccountData.currentMarketPrice}}<br/>
+            Lockin Period: {{sharesAccountData.lockinPeriod ? sharesAccountData.lockinPeriod : 'N/A'}} 
+            {{sharesAccountData.lockinPeriod ? sharesAccountData.lockPeriodTypeEnum.value : ''}} 
+          </p>
+        </mat-card-subtitle>
+      </div>
+
+    </mat-card-title-group>
+
+    <mat-card-actions class="account-actions">
+
+      <ng-container *ngFor="let button of buttonConfig.singleButtons">
+        <button mat-raised-button *mifosxHasPermission="button.taskPermissionName">
+          <i class="{{button.icon}}"></i> {{button.name}}</button>
+      </ng-container>
+  
+      <ng-container *ngIf="buttonConfig.options">
+        <button mat-raised-button [matMenuTriggerFor]="More">More</button>
+        <mat-menu #More="matMenu">
+        <span *ngFor="let button of buttonConfig.options">
+          <button mat-menu-item *mifosxHasPermission="button.taskPermissionName">{{button.name}}</button>
+        </span>
+        </mat-menu>
+      </ng-container>
+  
+    </mat-card-actions>
+
+  </mat-card-header>
+
+  <mat-card-content class="content">
+
+    <div class="shares-account-tables" fxLayout="row" fxLayoutGap="2%">
+
+      <div fxFlex="49%">
+        <h4 class="table-headers">Shares Details</h4>
+        <table>
+          <tbody>
+            <tr>
+              <td>Activated On</td>
+              <td>{{sharesAccountData.timeline.activatedOnDate ? (sharesAccountData.timeline.activatedOnDate | date) : 'Not Activated'}}</td>
+            </tr>
+            <tr>
+              <td>Currency</td>
+              <td>{{sharesAccountData.currency.name}} [{{sharesAccountData.currency.code}}]</td>
+            </tr>
+            <tr>
+              <td>External Id</td>
+              <td>{{sharesAccountData.externalId ? sharesAccountData.externalId : 'Not Provided'}}</td>
+            </tr>
+            <tr>
+              <td>Linked Savings Account(Dividend Posting)</td>
+              <td>{{sharesAccountData.savingsAccountNumber ? sharesAccountData.savingsAccountNumber : 'Unassigned'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div fxFlex="49%">
+        <h4 class="table-headers">Account Summary</h4>
+        <table>
+          <tbody>
+            <tr>
+              <td>Approved Shares</td>
+              <td>{{sharesAccountData.summary.totalApprovedShares}}</td>
+            </tr>
+            <tr>
+              <td>Pending for Approval Shares</td>
+              <td>{{sharesAccountData.summary.totalPendingForApprovalShares}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <nav mat-tab-nav-bar class="navigation-tabs">
+      <a mat-tab-link [routerLink]="['./transactions']" routerLinkActive #transactions="routerLinkActive"
+      [active]="transactions.isActive" *mifosxHasPermission="'READ_SHAREACCOUNTPURCHASE'">
+        Transactions
+      </a>
+      <a mat-tab-link [routerLink]="['./charges']" routerLinkActive #charges="routerLinkActive"
+      [active]="charges.isActive" *mifosxHasPermission="'READ_SHAREACCOUNTCHARGE'">
+        Charges
+      </a>
+      <a mat-tab-link [routerLink]="['./dividends']" routerLinkActive #dividends="routerLinkActive"
+      [active]="dividends.isActive" *mifosxHasPermission="'READ_SHAREACCOUNTDIVIDENDS'">
+        Dividends
+      </a>
+    </nav>
+
+    <router-outlet></router-outlet>
+
+  </mat-card-content>
+
+</mat-card>
