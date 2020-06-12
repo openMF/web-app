@@ -1,0 +1,75 @@
+<div class="container">
+
+  <form [formGroup]="foreclosureForm" (ngSubmit)="submit()">
+
+    <mat-card-content>
+
+      <div fxLayout="column">
+
+        <mat-form-field>
+          <mat-label>Transaction Date</mat-label>
+          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionsDatePicker" required formControlName="transactionDate">
+          <mat-datepicker-toggle matSuffix [for]="transactionsDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #transactionsDatePicker></mat-datepicker>
+          <mat-error *ngIf="foreclosureForm.controls.transactionDate.hasError('required')">
+            Transaction Date <strong>is required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Principal</mat-label>
+          <input matInput required formControlName="outstandingPrincipalPortion">
+          <mat-error *ngIf="foreclosureForm.controls.outstandingPrincipalPortion.hasError('required')">
+            Loan Officer is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        
+        <mat-form-field>
+          <mat-label>Interest</mat-label>
+          <input matInput required formControlName="outstandingInterestPortion">
+          <mat-error *ngIf="foreclosureForm.controls.outstandingInterestPortion.hasError('required')">
+            Loan Officer is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Fee Amount</mat-label>
+          <input matInput required formControlName="outstandingFeeChargesPortion">
+          <mat-error *ngIf="foreclosureForm.controls.outstandingFeeChargesPortion.hasError('required')">
+            Loan Officer is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Penalty Amount</mat-label>
+          <input matInput required formControlName="outstandingPenaltyChargesPortion">
+          <mat-error *ngIf="foreclosureForm.controls.outstandingPenaltyChargesPortion.hasError('required')">
+            Loan Officer is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Transaction Amount</mat-label>
+          <input matInput required formControlName="transactionAmount">
+          <mat-error *ngIf="foreclosureForm.controls.transactionAmount.hasError('required')">
+            Loan Officer is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Note</mat-label>
+          <textarea matInput formControlName="note"></textarea>
+        </mat-form-field>
+
+      </div>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../general']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!foreclosureForm.valid" *mifosxHasPermission="'FORECLOSURE_LOAN'">Foreclosure</button>
+      </mat-card-actions>
+
+    </mat-card-content>
+
+  </form>
+
+</div>

@@ -15,10 +15,12 @@ export class LoanAccountActionsComponent {
   /** flag object to store possible actions and render appropriate UI to the user */
   actions: { close: boolean,
             undo_approval: boolean,
-            assign_loan_officer: boolean } = {
+            assign_loan_officer: boolean,
+            foreclosure: boolean } = {
               close: false,
               undo_approval: false,
-              assign_loan_officer: false };
+              assign_loan_officer: false,
+              foreclosure: false };
   actionButtonData: any;
   actionName: any;
 

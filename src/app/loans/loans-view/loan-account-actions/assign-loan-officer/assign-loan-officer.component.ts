@@ -56,10 +56,10 @@ export class AssignLoanOfficerComponent implements OnInit {
   }
 
   submit() {
-    const assignmentDatee = this.assignOfficerForm.value.assignmentDate;
+    const assignmentDate = this.assignOfficerForm.value.assignmentDate;
     const dateFormat = 'yyyy-MM-dd';
     this.assignOfficerForm.patchValue({
-      assignmentDate: this.datePipe.transform(assignmentDatee, dateFormat)
+      assignmentDate: this.datePipe.transform(assignmentDate, dateFormat)
     });
     const assignForm = this.assignOfficerForm.value;
     assignForm.locale = 'en';
