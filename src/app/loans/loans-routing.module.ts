@@ -27,6 +27,7 @@ import { LoanDetailsChargesResolver } from './common-resolvers/loan-details-char
 import { LoanAccountActionsComponent } from './loans-view/loan-account-actions/loan-account-actions.component';
 import { LoanDatatablesResolver } from './common-resolvers/loan-datatables.resolver';
 import { LoanDatatableResolver } from './common-resolvers/loan-datatable.resolver';
+import { LoanActionButtonResolver } from './common-resolvers/loan-action-button-resolver';
 
 const routes: Routes = [
   {
@@ -129,6 +130,9 @@ const routes: Routes = [
           path: ':action',
           component: LoanAccountActionsComponent,
           data: { title: extract('Loan Account Actions'), routeParamBreadcrumb: 'action' },
+          resolve: {
+            actionButtonData: LoanActionButtonResolver
+          }
         },
       ]
     }]
@@ -145,7 +149,8 @@ const routes: Routes = [
     LoanNotesResolver,
     LoanDetailsChargesResolver,
     LoanDatatablesResolver,
-    LoanDatatableResolver
+    LoanDatatableResolver,
+    LoanActionButtonResolver
   ]
 })
 

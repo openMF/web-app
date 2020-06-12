@@ -13,7 +13,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class LoanAccountActionsComponent {
 
   /** flag object to store possible actions and render appropriate UI to the user */
-  actions: { close: boolean, undo_approval: boolean } = { close: false, undo_approval: false };
+  actions: { close: boolean,
+            undo_approval: boolean,
+            assign_loan_officer: boolean } = {
+              close: false,
+              undo_approval: false,
+              assign_loan_officer: false };
+  actionButtonData: any;
+  actionName: any;
 
   /**
    * @param router Router.
@@ -21,11 +28,16 @@ export class LoanAccountActionsComponent {
    */
   constructor(private router: Router,
     private route: ActivatedRoute) {
+      this.route.data.subscribe(( data: { actionButtonData: any }) => {
+        this.actionButtonData = data.actionButtonData;
+      });
+
     this.route.params.subscribe(params => {
-      if (params['action'].indexOf('-') > 0) {
-        this.actions[params['action'].replace('-', '_')] = true;
+      this.actionName = params['action'];
+      if (this.actionName === 'change-loan-officer') {
+        this.actionName = 'assign-loan-officer';
       }
-      this.actions[params['action']] = true;
+      this.actions[this.actionName.replace(/-/g, '_')] = true;
     });
   }
 

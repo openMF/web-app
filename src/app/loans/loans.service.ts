@@ -27,6 +27,18 @@ export class LoansService {
   }
 
   /**
+   * Returns the loan template data with specific condition
+   * @param loanId Loan Id
+   */
+  getLoanTemplate(loanId: string): Observable<any> {
+    const httpParams = new HttpParams()
+                      .set('fields', 'id,loanOfficerId,loanOfficerOptions')
+                      .set('staffInSelectedOfficeOnly', 'true')
+                      .set('template', 'true');
+    return this.http.get(`/loans/${loanId}`, { params: httpParams });
+  }
+
+  /**
    * @param {any} loanCharge to apply on a Loan Account.
    * @returns {Observable<any>}
    */
@@ -146,13 +158,12 @@ export class LoansService {
   }
 
   /*
-   * Undo Loan Approval.
    * @param {string} loanId Loan Id.
    * @param {any} data Data.
    * @returns {Observable<any>}
    */
-  undoLoanApproval(loanId: string, data: any): Observable<any> {
-    const httpParams = new HttpParams().set('command', 'undoapproval');
+  loanActionButtons(loanId: string, data: any, command: any): Observable<any> {
+    const httpParams = new HttpParams().set('command', command);
     return this.http.post(`/loans/${loanId}`, data, {params: httpParams});
   }
 
