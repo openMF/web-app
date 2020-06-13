@@ -65,7 +65,7 @@ export class LoansAccountCloseComponent implements OnInit {
     const closeForm = this.closeLoanForm.value;
     closeForm.locale = 'en';
     closeForm.dateFormat = dateFormat;
-    this.loanService.closeAccount(this.loanId, closeForm)
+    this.loanService.submitLoanActionButton(this.loanId, closeForm, 'close')
       .subscribe((response: any) => {
         this.router.navigate(['../general'], { relativeTo: this.route });
     });
