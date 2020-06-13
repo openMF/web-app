@@ -76,6 +76,11 @@
 			Overdue Charges
 		</a>
 	  </ng-container>
+	  <ng-container *ngIf="loanDetailsData.isLoanProductLinkedToFloatingRate">
+		<a mat-tab-link [routerLink]="['./floating-interest-rates']" routerLinkActive #floatingInterestRates="routerLinkActive" [active]="floatingInterestRates.isActive">
+			Floating Interest Rates
+		</a>
+	  </ng-container>
 	  <ng-container *ngIf="loanDetailsData.charges">
 		<a mat-tab-link [routerLink]="['./charges']" routerLinkActive #charges="routerLinkActive" [active]="charges.isActive">
 		  Charges

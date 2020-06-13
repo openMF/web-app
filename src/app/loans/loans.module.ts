@@ -30,6 +30,7 @@ import { ForeclosureComponent } from './loans-view/loan-account-actions/foreclos
 import { PrepayLoanComponent } from './loans-view/loan-account-actions/prepay-loan/prepay-loan.component';
 import { MakeRepaymentComponent } from './loans-view/loan-account-actions/make-repayment/make-repayment.component';
 import { WaiveInterestComponent } from './loans-view/loan-account-actions/waive-interest/waive-interest.component';
+import { FloatingInterestRatesComponent } from './loans-view/floating-interest-rates/floating-interest-rates.component';
 
 /**
  * Loans Module
@@ -60,6 +61,7 @@ import { WaiveInterestComponent } from './loans-view/loan-account-actions/waive-
     PrepayLoanComponent,
     MakeRepaymentComponent,
     WaiveInterestComponent,
+    FloatingInterestRatesComponent,
   ],
   providers: [DatePipe],
 })
