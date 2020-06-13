@@ -1,16 +1,15 @@
-/** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoansService } from 'app/loans/loans.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'mifosx-loans-account-close',
-  templateUrl: './loans-account-close.component.html',
-  styleUrls: ['./loans-account-close.component.scss']
+  selector: 'mifosx-close-as-rescheduled',
+  templateUrl: './close-as-rescheduled.component.html',
+  styleUrls: ['./close-as-rescheduled.component.scss']
 })
-export class LoansAccountCloseComponent implements OnInit {
+export class CloseAsRescheduledComponent implements OnInit {
 
   @Input() dataObject: any;
 
@@ -67,10 +66,9 @@ export class LoansAccountCloseComponent implements OnInit {
     const closeForm = this.closeLoanForm.value;
     closeForm.locale = 'en';
     closeForm.dateFormat = dateFormat;
-    this.loanService.submitLoanActionButton(this.loanId, closeForm, 'close')
+    this.loanService.submitLoanActionButton(this.loanId, closeForm, 'close-rescheduled')
       .subscribe((response: any) => {
         this.router.navigate(['../general'], { relativeTo: this.route });
     });
   }
-
 }
