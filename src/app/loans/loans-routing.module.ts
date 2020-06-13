@@ -29,6 +29,7 @@ import { LoanDatatablesResolver } from './common-resolvers/loan-datatables.resol
 import { LoanDatatableResolver } from './common-resolvers/loan-datatable.resolver';
 import { LoanActionButtonResolver } from './common-resolvers/loan-action-button.resolver';
 import { FloatingInterestRatesComponent } from './loans-view/floating-interest-rates/floating-interest-rates.component';
+import { LoanTrancheDetailsComponent } from './loans-view/loan-tranche-details/loan-tranche-details.component';
 
 const routes: Routes = [
   {
@@ -80,6 +81,14 @@ const routes: Routes = [
           path: 'transactions',
           component: TransactionsTabComponent,
           data: { title: extract('Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+          resolve: {
+            loanDetailsAssociationData: LoanDetailsChargesResolver
+          }
+        },
+        {
+          path: 'loan-tranche-details',
+          component: LoanTrancheDetailsComponent,
+          data: { title: extract('Loan Tranche Details'), breadcrumb: 'Loan Tranche Details', routeParamBreadcrumb: false },
           resolve: {
             loanDetailsAssociationData: LoanDetailsChargesResolver
           }

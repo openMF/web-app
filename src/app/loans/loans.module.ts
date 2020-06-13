@@ -32,6 +32,7 @@ import { MakeRepaymentComponent } from './loans-view/loan-account-actions/make-r
 import { WaiveInterestComponent } from './loans-view/loan-account-actions/waive-interest/waive-interest.component';
 import { FloatingInterestRatesComponent } from './loans-view/floating-interest-rates/floating-interest-rates.component';
 import { WriteOffPageComponent } from './loans-view/loan-account-actions/write-off-page/write-off-page.component';
+import { LoanTrancheDetailsComponent } from './loans-view/loan-tranche-details/loan-tranche-details.component';
 
 /**
  * Loans Module
@@ -64,6 +65,7 @@ import { WriteOffPageComponent } from './loans-view/loan-account-actions/write-o
     WaiveInterestComponent,
     FloatingInterestRatesComponent,
     WriteOffPageComponent,
+    LoanTrancheDetailsComponent,
   ],
   providers: [DatePipe],
 })
