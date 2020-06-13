@@ -21,7 +21,7 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}/charges/template`);
   }
 
-  getLoanChargeTemplate(loanId: string, command: string): Observable<any> {
+  getLoanActionTemplate(loanId: string, command: string): Observable<any> {
     const httpParams = new HttpParams().set('command', command);
     return this.http.get(`/loans/${loanId}/transactions/template`, { params: httpParams });
   }
@@ -102,9 +102,16 @@ export class LoansService {
     return this.http.delete(`/loans/${loanId}/notes/${noteId}`);
   }
 
-  closeAccount(loanId: string, closeData: any) {
-    const httpParams = new HttpParams().set('command', 'close');
-    return this.http.post(`/loans/${loanId}/transactions`, closeData, {params: httpParams});
+  /**
+   * Used For: Close Action, Prepay Loan Action
+   * Returns the response of the action
+   * @param loanId Loan Id
+   * @param data Data
+   * @param command Command
+   */
+  submitLoanActionButton(loanId: string, data: any, command: any) {
+    const httpParams = new HttpParams().set('command', command);
+    return this.http.post(`/loans/${loanId}/transactions`, data, {params: httpParams});
   }
 
   /**

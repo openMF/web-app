@@ -27,6 +27,8 @@ import { SingleRowComponent } from './loans-view/datatable-tab/single-row/single
 import { UndoApprovalComponent } from './loans-view/loan-account-actions/undo-approval/undo-approval.component';
 import { AssignLoanOfficerComponent } from './loans-view/loan-account-actions/assign-loan-officer/assign-loan-officer.component';
 import { ForeclosureComponent } from './loans-view/loan-account-actions/foreclosure/foreclosure.component';
+import { PrepayLoanComponent } from './loans-view/loan-account-actions/prepay-loan/prepay-loan.component';
+import { MakeRepaymentComponent } from './loans-view/loan-account-actions/make-repayment/make-repayment.component';
 
 /**
  * Loans Module
@@ -54,6 +56,8 @@ import { ForeclosureComponent } from './loans-view/loan-account-actions/foreclos
     UndoApprovalComponent,
     AssignLoanOfficerComponent,
     ForeclosureComponent,
+    PrepayLoanComponent,
+    MakeRepaymentComponent,
   ],
   providers: [DatePipe],
 })

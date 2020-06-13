@@ -4,5 +4,7 @@
     <mifosx-undo-approval *ngIf="actions.undo_approval"></mifosx-undo-approval>
     <mifosx-assign-loan-officer *ngIf="actions.assign_loan_officer" [dataObject]="actionButtonData" ></mifosx-assign-loan-officer>
     <mifosx-foreclosure *ngIf="actions.foreclosure"></mifosx-foreclosure>
+    <mifosx-prepay-loan [dataObject]="actionButtonData" *ngIf="actions.prepay_loan"></mifosx-prepay-loan>
+    <mifosx-make-repayment [dataObject]="actionButtonData" *ngIf="actions.make_repayment"></mifosx-make-repayment>
   </mat-card>
 </div>

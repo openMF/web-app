@@ -44,11 +44,11 @@ export class ForeclosureComponent implements OnInit {
   createforeclosureForm() {
     this.foreclosureForm = this.formBuilder.group({
       'transactionDate': [new Date(), Validators.required],
-      'outstandingPrincipalPortion': [{value: '', disabled: true}, Validators.required],
-      'outstandingInterestPortion': [{value: '', disabled: true}, Validators.required],
-      'outstandingFeeChargesPortion': [{value: '', disabled: true}, Validators.required],
-      'outstandingPenaltyChargesPortion': [{value: '', disabled: true}, Validators.required],
-      'transactionAmount': [{value: '', disabled: true}, Validators.required],
+      'outstandingPrincipalPortion': [{value: '', disabled: true}],
+      'outstandingInterestPortion': [{value: '', disabled: true}],
+      'outstandingFeeChargesPortion': [{value: '', disabled: true}],
+      'outstandingPenaltyChargesPortion': [{value: '', disabled: true}],
+      'transactionAmount': [{value: '', disabled: true}],
       'interestAccruedAfterDeath': '',
       'note': ''
     });
