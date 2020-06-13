@@ -1,0 +1,19 @@
+<div class="container">
+
+  <table mat-table [dataSource]="interestRateData">
+
+    <ng-container matColumnDef="fromDate">
+      <th mat-header-cell *matHeaderCellDef> From Date </th>
+      <td mat-cell *matCellDef="let ele"> {{ ele.fromDate | date}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="interestRate">
+      <th mat-header-cell *matHeaderCellDef> Interest Rate </th>
+      <td mat-cell *matCellDef="let ele"> {{ ele.effectiveInterestRate }} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+</div>

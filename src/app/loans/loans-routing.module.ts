@@ -28,6 +28,7 @@ import { LoanDetailsChargesResolver } from './common-resolvers/loan-details-char
 import { LoanDatatablesResolver } from './common-resolvers/loan-datatables.resolver';
 import { LoanDatatableResolver } from './common-resolvers/loan-datatable.resolver';
 import { LoanActionButtonResolver } from './common-resolvers/loan-action-button.resolver';
+import { FloatingInterestRatesComponent } from './loans-view/floating-interest-rates/floating-interest-rates.component';
 
 const routes: Routes = [
   {
@@ -89,6 +90,14 @@ const routes: Routes = [
           data: { title: extract('Overdue Charges'), breadcrumb: 'Overdue Charges', routeParamBreadcrumb: false },
           resolve: {
             loanDetailsData: LoanDetailsGeneralResolver
+          }
+        },
+        {
+          path: 'floating-interest-rates',
+          component: FloatingInterestRatesComponent,
+          data: { title: extract('Floating Interest Rates'), breadcrumb: 'Floating Interest Rates', routeParamBreadcrumb: false },
+          resolve: {
+            loanDetailsAssociationData: LoanDetailsChargesResolver
           }
         },
         {
