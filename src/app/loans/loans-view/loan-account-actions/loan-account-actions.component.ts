@@ -15,6 +15,7 @@ export class LoanAccountActionsComponent {
   /** flag object to store possible actions and render appropriate UI to the user */
   actions: { close: boolean,
             undo_approval: boolean,
+            write_off: boolean,
             assign_loan_officer: boolean,
             foreclosure: boolean,
             prepay_loan: boolean,
@@ -22,6 +23,7 @@ export class LoanAccountActionsComponent {
             waive_interest: boolean } = {
               close: false,
               undo_approval: false,
+              write_off: false,
               assign_loan_officer: false,
               foreclosure: false,
               prepay_loan: false,
