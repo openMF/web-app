@@ -37,7 +37,7 @@
       <button mat-raised-button>+ Deposit</button>
       <button mat-raised-button [matMenuTriggerFor]="More">More</button>
       <mat-menu #More="matMenu">
-        <button mat-menu-item>Item 1</button>
+        <button mat-menu-item [routerLink]="['sharesaccounts', 'create-shares-account']">New Share Account</button>
         <button mat-menu-item>Item 2</button>
       </mat-menu>
     </mat-card-actions>

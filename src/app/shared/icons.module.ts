@@ -88,7 +88,8 @@ import {
   faLaptop,
   faDonate,
   faMoneyBill,
-  faChartLine
+  faChartLine,
+  faPen
 } from '@fortawesome/free-solid-svg-icons';
 
 /** Add icons to the library for convenient access in other components. */
@@ -176,7 +177,8 @@ library.add(
   faLaptop,
   faDonate,
   faMoneyBill,
-  faChartLine
+  faChartLine,
+  faPen
 );
 
 /**
