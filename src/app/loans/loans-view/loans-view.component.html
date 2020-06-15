@@ -70,6 +70,11 @@
 		<a mat-tab-link [routerLink]="['./transactions']" routerLinkActive #transactions="routerLinkActive" [active]="transactions.isActive">
 		  Transactions
 		</a>
+	  </ng-container>
+	  <ng-container *ngIf="loanDetailsData.multiDisburseLoan">
+		<a mat-tab-link [routerLink]="['./loan-tranche-details']" routerLinkActive #loanTrancheDetails="routerLinkActive" [active]="loanTrancheDetails.isActive">
+		  Loan Tranche Details
+		</a>
       </ng-container>
 	  <ng-container *ngIf="loanDetailsData.overdueCharges.length > 0">
 		<a mat-tab-link [routerLink]="['./overdue-charges']" routerLinkActive #overduecharges="routerLinkActive" [active]="overduecharges.isActive">

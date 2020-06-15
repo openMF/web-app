@@ -18,6 +18,11 @@ export class WriteOffPageComponent implements OnInit {
 
   @Input() dataObject: any;
 
+  /** Minimum Date allowed. */
+  minDate = new Date(2000, 0, 1);
+  /** Maximum Date allowed. */
+  maxDate = new Date();
+
   /** Write Off form. */
   writeOffForm: FormGroup;
 

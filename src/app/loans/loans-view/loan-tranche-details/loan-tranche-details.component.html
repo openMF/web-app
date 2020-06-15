@@ -1,0 +1,80 @@
+<div class="container">
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Maximum allowed outstanding balance:</span>
+    <span fxFlex="60%">{{ loanDetails.maxOutstandingLoanBalance | number }}</span>
+  </div>
+
+  <h3> Loan Tranche Details</h3>
+
+  <div fxLayout="row" fxLayoutAlign="flex-end">
+      <button mat-raised-button color="primary" *ngIf="showAddDeleteTrancheButtons('adddisbursedetails')">
+        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Add
+      </button>
+      <span class="delete-button">
+        <button mat-raised-button color="warn" (click)="delete()" *ngIf="showAddDeleteTrancheButtons('deletedisbursedetails')">
+          <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;Delete
+        </button>
+      </span>
+  </div>
+
+  <table mat-table [dataSource]="loanDetails.disbursementDetails" *ngIf="loanDetails.disbursementDetails.length>0">
+
+    <ng-container matColumnDef="expected disbursement on">
+      <th mat-header-cell *matHeaderCellDef> Expected Disbursement On </th>
+      <td mat-cell *matCellDef="let ele"> {{ ele.expectedDisbursementDate | date}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="disbursed on">
+      <th mat-header-cell *matHeaderCellDef> Disbursed On </th>
+      <td mat-cell *matCellDef="let ele">
+        <span *ngIf="ele.actualDisbursementDate">
+          {{ ele.actualDisbursementDate | date }}
+        </span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="principal">
+      <th mat-header-cell *matHeaderCellDef> Principal </th>
+      <td mat-cell *matCellDef="let ele"> {{ ele.principal }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let ele">
+        <span *ngIf="ele.actualDisbursementDate">
+          <i class="fa fa-check "></i>
+        </span>
+        <button mat-raised-button color="primary" *ngIf="showEdit(ele)">
+          <i class="fa fa-pencil"></i>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="expectedDisbursementColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: expectedDisbursementColumns;"></tr>
+  </table>
+
+  <div *ngIf="loanDetails.emiAmountVariations.length > 0">
+
+    <h3>Installment Amount Variations: </h3>
+
+    <table mat-table [dataSource]="loanDetails.emiAmountVariations">
+
+      <ng-container matColumnDef="emi amount variation from">
+        <th mat-header-cell *matHeaderCellDef> Applicable From Date </th>
+        <td mat-cell *matCellDef="let ele"> {{ ele.termVariationApplicableFrom | date}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="fixed emi amount">
+        <th mat-header-cell *matHeaderCellDef> Installment Amount </th>
+        <td mat-cell *matCellDef="let ele"> {{ ele.termValue }} </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="emivariationColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: emivariationColumns;"></tr>
+    </table>
+  </div>
+  
+
+</div>
