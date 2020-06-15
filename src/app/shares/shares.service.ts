@@ -23,4 +23,22 @@ export class SharesService {
     return this.http.get(`/accounts/share/${accountId}`);
   }
 
+  /**
+   * @param clientId Client Id assosciated with shares account.
+   * @returns {Observable<any>} Shares account template.
+   */
+  getSharesAccountTemplate(clientId: string, productId?: string): Observable<any> {
+    let httpParams = new HttpParams().set('clientId', clientId);
+    httpParams = productId ? httpParams.set('productId', productId) : httpParams;
+    return this.http.get('/accounts/share/template', { params: httpParams });
+  }
+
+  /**
+   * @param {any} sharesAccount Shares Account
+   * @returns {Observable<any>}
+   */
+  createSharesAccount(sharesAccount: any): Observable<any> {
+    return this.http.post('/accounts/share', sharesAccount);
+  }
+
 }

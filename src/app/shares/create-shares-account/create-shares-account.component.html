@@ -1,0 +1,75 @@
+<div class="container">
+
+  <mat-horizontal-stepper class="mat-elevation-z8" labelPosition="bottom" #shareProductStepper>
+
+    <ng-template matStepperIcon="number">
+      <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="edit">
+      <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="done">
+      <fa-icon icon="check" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="error">
+      <fa-icon icon="exclamation-triangle" size="lg"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="preview">
+      <fa-icon icon="eye" size="sm"></fa-icon>
+    </ng-template>
+
+    <mat-step [stepControl]="sharesAccountDetailsForm">
+
+      <ng-template matStepLabel>DETAILS</ng-template>
+
+      <mifosx-shares-account-details-step
+        [sharesAccountTemplate]="sharesAccountTemplate" 
+        (sharesAccountProductTemplate)="setTemplate($event)"
+      >
+      </mifosx-shares-account-details-step>
+
+    </mat-step>
+
+    <mat-step [stepControl]="sharesAccountTermsForm">
+
+      <ng-template matStepLabel>TERMS</ng-template>
+
+      <mifosx-shares-account-terms-step [sharesAccountProductTemplate]="sharesAccountProductTemplate"></mifosx-shares-account-terms-step>
+
+    </mat-step>
+
+    <mat-step>
+
+      <ng-template matStepLabel>CHARGES</ng-template>
+
+      <mifosx-shares-account-charges-step
+        [sharesAccountProductTemplate]="sharesAccountProductTemplate"
+        [sharesAccountTemplate]="sharesAccountTemplate" 
+        [currencyCode]="sharesAccountTermsForm.get('currencyCode')"
+      >
+      </mifosx-shares-account-charges-step>
+
+    </mat-step>
+
+    <mat-step *ngIf="sharesAccountFormValid" completed>
+
+      <ng-template matStepLabel>PREVIEW</ng-template>
+
+      <mifosx-shares-account-preview-step
+        [sharesAccountProductTemplate]="sharesAccountProductTemplate"
+        [sharesAccountTemplate]="sharesAccountTemplate"
+        [sharesAccountTermsForm]="sharesAccountTermsForm"
+        [sharesAccount]="sharesAccount"
+        (submit)="submit()"
+      >
+      </mifosx-shares-account-preview-step>
+
+    </mat-step>
+
+  </mat-horizontal-stepper>
+
+</div>

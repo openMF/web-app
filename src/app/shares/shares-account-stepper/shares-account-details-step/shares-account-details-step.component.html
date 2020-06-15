@@ -1,0 +1,46 @@
+<form [formGroup]="sharesAccountDetailsForm">
+
+  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Product Name</mat-label>
+      <mat-select formControlName="productId" required>
+        <mat-option *ngFor="let product of productData" [value]="product.id">
+          {{ product.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        Product Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Submitted On</mat-label>
+      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker" 
+        formControlName="submittedDate" required>
+      <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #submittedOnDatePicker></mat-datepicker>
+      <mat-error>
+        Submission Date is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>External ID</mat-label>
+      <input matInput formControlName="externalId">
+    </mat-form-field>
+
+  </div>
+
+  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+    <button mat-raised-button matStepperPrevious disabled>
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+      Previous
+    </button>
+    <button mat-raised-button matStepperNext>
+      Next&nbsp;&nbsp;
+      <fa-icon icon="arrow-right"></fa-icon>
+    </button>
+  </div>
+
+</form>
