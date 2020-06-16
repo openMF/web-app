@@ -9,10 +9,10 @@ import { Observable } from 'rxjs';
 import { SharesService } from '../shares.service';
 
 /**
- * Shares Account data resolver.
+ * Shares Account data and template resolver.
  */
 @Injectable()
-export class SharesAccountViewResolver implements Resolve<Object> {
+export class SharesAccountAndTemplateResolver implements Resolve<Object> {
 
   /**
    * @param {SharesService} SharesService Shares service.
@@ -20,13 +20,13 @@ export class SharesAccountViewResolver implements Resolve<Object> {
   constructor(private sharesService: SharesService) { }
 
   /**
-   * Returns the Shares Account data.
+   * Returns the Shares Account data and template.
    * @param {ActivatedRouteSnapshot} route Route Snapshot
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const shareAccountId = route.paramMap.get('shareAccountId');
-    return this.sharesService.getSharesAccountData(shareAccountId, false);
+    return this.sharesService.getSharesAccountData(shareAccountId, true);
   }
 
 }

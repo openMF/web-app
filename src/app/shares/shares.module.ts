@@ -16,6 +16,7 @@ import { SharesAccountDetailsStepComponent } from './shares-account-stepper/shar
 import { SharesAccountTermsStepComponent } from './shares-account-stepper/shares-account-terms-step/shares-account-terms-step.component';
 import { SharesAccountChargesStepComponent } from './shares-account-stepper/shares-account-charges-step/shares-account-charges-step.component';
 import { SharesAccountPreviewStepComponent } from './shares-account-stepper/shares-account-preview-step/shares-account-preview-step.component';
+import { EditSharesAccountComponent } from './edit-shares-account/edit-shares-account.component';
 
 /**
  * Shares Module
@@ -38,7 +39,8 @@ import { SharesAccountPreviewStepComponent } from './shares-account-stepper/shar
     SharesAccountDetailsStepComponent,
     SharesAccountTermsStepComponent,
     SharesAccountChargesStepComponent,
-    SharesAccountPreviewStepComponent
+    SharesAccountPreviewStepComponent,
+    EditSharesAccountComponent
   ],
   providers: [DatePipe]
 })

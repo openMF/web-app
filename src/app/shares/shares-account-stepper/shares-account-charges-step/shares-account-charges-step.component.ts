@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { FormControl } from '@angular/forms';
 
@@ -19,7 +19,7 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
   templateUrl: './shares-account-charges-step.component.html',
   styleUrls: ['./shares-account-charges-step.component.scss']
 })
-export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
+export class SharesAccountChargesStepComponent implements OnInit {
 
   /** Shares Account Product Template */
   @Input() sharesAccountProductTemplate: any;
@@ -32,6 +32,10 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
   chargeData: any;
   /** Charges Data Source */
   chargesDataSource: {}[];
+  /** Component is pristine if there has been no changes by user interaction */
+  pristine = true;
+  /** For Edit Shares Account Form */
+  isChargesPatched = false;
   /** Display columns for charges table */
   displayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'action'];
 
@@ -41,16 +45,20 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
   constructor(public dialog: MatDialog) {}
 
   ngOnInit() {
+    this.chargesDataSource = [];
     this.chargeData = this.sharesAccountTemplate.chargeOptions.map((charge: any) => {
       charge.chargeId = charge.id;
       delete charge.id;
       return charge;
     });
-    this.currencyCode.valueChanges.subscribe(() => this.chargesDataSource = []);
-  }
-
-  ngOnChanges() {
-    this.chargesDataSource = this.sharesAccountProductTemplate ? (this.sharesAccountProductTemplate.charges || []) : [];
+    this.currencyCode.valueChanges.subscribe(() => {
+      if (!this.isChargesPatched && this.sharesAccountTemplate.charges) {
+        this.chargesDataSource = this.sharesAccountTemplate.charges;
+        this.isChargesPatched = true;
+      } else {
+        this.chargesDataSource = [];
+      }
+    });
   }
 
   /**
@@ -60,6 +68,7 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
   addCharge(charge: any) {
     this.chargesDataSource = this.chargesDataSource.concat([charge.value]);
     charge.value = '';
+    this.pristine = false;
   }
 
   /**
@@ -89,6 +98,7 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
         this.chargesDataSource = this.chargesDataSource.concat([]);
       }
     });
+    this.pristine = false;
   }
 
   /**
@@ -105,6 +115,7 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
         this.chargesDataSource = this.chargesDataSource.concat([]);
       }
     });
+    this.pristine = false;
   }
 
   /**
