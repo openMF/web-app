@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Buttons Configuration */
 import { SharesButtonsConfiguration } from './shares-buttons.config';
@@ -24,7 +24,8 @@ export class SharesAccountViewComponent implements OnInit {
    * Fetches shares account data from `resolve`
    * @param {ActivatedRoute} route Activated Route
    */
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              private router: Router) {
     this.route.data.subscribe((data: { sharesAccountData: any }) => {
       this.sharesAccountData = data.sharesAccountData;
     });
@@ -63,6 +64,14 @@ export class SharesAccountViewComponent implements OnInit {
         this.buttonConfig.removeButton('Approve Additional Shares');
         this.buttonConfig.removeButton('Reject Additional Shares');
       }
+    }
+  }
+
+  doAction(name: string) {
+    switch (name) {
+      case 'Modify Application':
+      this.router.navigate(['edit-shares-account'], { relativeTo: this.route });
+      break;
     }
   }
 

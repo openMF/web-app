@@ -41,8 +41,17 @@ export class SharesAccountDetailsStepComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.productData = this.sharesAccountTemplate.productOptions;
     this.buildDependencies();
+    if (this.sharesAccountTemplate) {
+      this.productData = this.sharesAccountTemplate.productOptions;
+      if (this.sharesAccountTemplate.productId) {
+        this.sharesAccountDetailsForm.patchValue({
+          'productId': this.sharesAccountTemplate.productId,
+          'submittedDate': this.sharesAccountTemplate.timeline.submittedOnDate && new Date(this.sharesAccountTemplate.timeline.submittedOnDate),
+          'externalId': this.sharesAccountTemplate.externalId
+        });
+      }
+    }
   }
 
   /**

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 /**
@@ -10,10 +10,12 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   templateUrl: './shares-account-terms-step.component.html',
   styleUrls: ['./shares-account-terms-step.component.scss']
 })
-export class SharesAccountTermsStepComponent implements OnChanges {
+export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
 
   /** Shares Account and Product Template */
   @Input() sharesAccountProductTemplate: any;
+  /** [Optional] Shares Account Template */
+  @Input() sharesAccountTemplate: any;
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -27,6 +29,8 @@ export class SharesAccountTermsStepComponent implements OnChanges {
   lockinPeriodFrequencyTypeData: any;
   /** Savings Accounts Data */
   savingsAccountsData: any;
+  /** For Edit Shares Account Form */
+  isSavingsPatched = false;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
@@ -41,11 +45,30 @@ export class SharesAccountTermsStepComponent implements OnChanges {
         'currencyCode': this.sharesAccountProductTemplate.currency.code,
         'decimal': this.sharesAccountProductTemplate.currency.decimalPlaces,
         'currencyMultiple': this.sharesAccountProductTemplate.currency.inMultiplesOf,
-        'unitPrice': this.sharesAccountProductTemplate.currentMarketPrice
+        'unitPrice': this.sharesAccountProductTemplate.currentMarketPrice,
+        'savingsAccountId': ''
       });
-      this.minimumActivePeriodFrequencyTypeData = this.sharesAccountProductTemplate.minimumActivePeriodFrequencyTypeOptions;
-      this.lockinPeriodFrequencyTypeData = this.sharesAccountProductTemplate.lockinPeriodFrequencyTypeOptions;
-      this.savingsAccountsData = this.sharesAccountProductTemplate.clientSavingsAccounts;
+      this.setOptions();
+      if (this.sharesAccountTemplate) {
+        if (!this.isSavingsPatched && this.sharesAccountTemplate.savingsAccountId) {
+          this.sharesAccountTermsForm.get('savingsAccountId').patchValue(this.sharesAccountTemplate.savingsAccountId);
+          this.isSavingsPatched = true;
+        }
+      }
+    }
+  }
+
+  ngOnInit() {
+    if (this.sharesAccountTemplate) {
+      this.sharesAccountTermsForm.patchValue({
+        'requestedShares': this.sharesAccountTemplate.summary.totalPendingForApprovalShares,
+        'minimumActivePeriod': this.sharesAccountTemplate.minimumActivePeriod,
+        'minimumActivePeriodFrequencyType': this.sharesAccountTemplate.minimumActivePeriodTypeEnum.id,
+        'lockinPeriodFrequency': this.sharesAccountTemplate.lockinPeriod,
+        'lockinPeriodFrequencyType': this.sharesAccountTemplate.lockPeriodTypeEnum.id,
+        'applicationDate': this.sharesAccountTemplate.purchasedShares[0].purchasedDate && new Date(this.sharesAccountTemplate.purchasedShares[0].purchasedDate),
+        'allowDividendCalculationForInactiveClients': this.sharesAccountTemplate.allowDividendCalculationForInactiveClients
+      });
     }
   }
 
@@ -65,8 +88,17 @@ export class SharesAccountTermsStepComponent implements OnChanges {
       'lockinPeriodFrequency': [''],
       'lockinPeriodFrequencyType': [''],
       'applicationDate': ['', Validators.required],
-      'allowDividendCalculationForInactiveClients': [false],
+      'allowDividendCalculationForInactiveClients': [false]
     });
+  }
+
+  /**
+   * Sets all select dropdown options.
+   */
+  setOptions() {
+    this.minimumActivePeriodFrequencyTypeData = this.sharesAccountProductTemplate.minimumActivePeriodFrequencyTypeOptions;
+    this.lockinPeriodFrequencyTypeData = this.sharesAccountProductTemplate.lockinPeriodFrequencyTypeOptions;
+    this.savingsAccountsData = this.sharesAccountProductTemplate.clientSavingsAccounts;
   }
 
   /**

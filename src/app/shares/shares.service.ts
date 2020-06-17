@@ -19,8 +19,9 @@ export class SharesService {
    * @param accountId Shares Account Id of account to get data for.
    * @returns {Observable<any>} Shares data.
    */
-  getSharesAccountData(accountId: string): Observable<any> {
-    return this.http.get(`/accounts/share/${accountId}`);
+  getSharesAccountData(accountId: string, template: boolean): Observable<any> {
+    const httpParams = new HttpParams().set('template', template.toString());
+    return this.http.get(`/accounts/share/${accountId}`, { params: httpParams });
   }
 
   /**
@@ -39,6 +40,14 @@ export class SharesService {
    */
   createSharesAccount(sharesAccount: any): Observable<any> {
     return this.http.post('/accounts/share', sharesAccount);
+  }
+
+  /**
+   * @param {any} sharesAccount Shares Account
+   * @returns {Observable<any>}
+   */
+  updateSharesAccount(accountId: string, sharesAccount: any): Observable<any> {
+    return this.http.put(`/accounts/share/${accountId}`, sharesAccount);
   }
 
 }
