@@ -13,6 +13,7 @@ import { AddSavingsChargeComponent } from './add-savings-charge/add-savings-char
 import { ChargesTabComponent } from './savings-account-view/charges-tab/charges-tab.component';
 import { StandingInstructionsTabComponent } from './savings-account-view/standing-instructions-tab/standing-instructions-tab.component';
 import { DatatableTabsComponent } from './savings-account-view/datatable-tabs/datatable-tabs.component';
+import { CreateSavingsAccountComponent } from './create-savings-account/create-savings-account.component';
 
 /** Custom Resolvers */
 import { SavingAccountTransactionTemplateResolver } from './common-resolvers/saving-transaction-template.resolver';
@@ -20,12 +21,21 @@ import { SavingsChargeTemplateResolver } from './common-resolvers/savings-charge
 import { SavingsAccountViewResolver } from './common-resolvers/savings-account-view.resolver';
 import { SavingsDatatableResolver } from './common-resolvers/savings-datatable.resolver';
 import { SavingsDatatablesResolver } from './common-resolvers/savings-datatables.resolver';
+import { SavingsAccountTemplateResolver } from './common-resolvers/savings-account-template.resolver';
 
 const routes: Routes = [
   {
     path: '',
     data: { title: extract('All Savings'), breadcrumb: 'Savings', routeParamBreadcrumb: false },
     children: [
+      {
+        path: 'create-savings-account',
+        data: { title: extract('Create Savings Account'), breadcrumb: 'Create Savings Account' },
+        component: CreateSavingsAccountComponent,
+        resolve: {
+          savingsAccountTemplate: SavingsAccountTemplateResolver
+        }
+      },
       {
         path: ':savingAccountId',
         data: { title: extract('Saving Account View'), routeParamBreadcrumb: 'savingAccountId' },
@@ -92,6 +102,7 @@ const routes: Routes = [
               SavingsChargeTemplateResolver,
               SavingsAccountViewResolver,
               SavingsDatatablesResolver,
-              SavingsDatatableResolver]
+              SavingsDatatableResolver,
+              SavingsAccountTemplateResolver]
 })
 export class SavingsRoutingModule {}

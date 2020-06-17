@@ -138,4 +138,22 @@ export class SavingsService {
     return this.http.delete(`/datatables/${datatableName}/${accountId}`, { params: httpParams });
   }
 
+  /**
+   * @param clientId Client Id assosciated with savings account.
+   * @returns {Observable<any>} Savings account template.
+   */
+  getSavingsAccountTemplate(clientId: string, productId?: string): Observable<any> {
+    let httpParams = new HttpParams().set('clientId', clientId);
+    httpParams = productId ? httpParams.set('productId', productId) : httpParams;
+    return this.http.get('/savingsaccounts/template', { params: httpParams });
+  }
+
+  /**
+   * @param {any} savingsAccount Savings Account
+   * @returns {Observable<any>}
+   */
+  createSavingsAccount(savingsAccount: any): Observable<any> {
+    return this.http.post('/savingsaccounts', savingsAccount);
+  }
+
 }

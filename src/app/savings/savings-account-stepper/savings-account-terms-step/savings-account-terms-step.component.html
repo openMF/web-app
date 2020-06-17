@@ -1,0 +1,157 @@
+<form [formGroup]="savingsAccountTermsForm">
+
+  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="start center">
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Currency</mat-label>
+      <input matInput formControlName="currencyCode">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Decimal Places</mat-label>
+      <input type="number" matInput formControlName="decimal">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Nominal Annual Interest Rate</mat-label>
+      <input type="number" matInput formControlName="nominalAnnualInterestRate" required>
+      <mat-error>
+        Nominal Annual Interest is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Interest Compounding Period</mat-label>
+      <mat-select formControlName="interestCompoundingPeriodType" required>
+        <mat-option *ngFor="let interestCompoundingPeriodType of interestCompoundingPeriodTypeData" [value]="interestCompoundingPeriodType.id">
+          {{ interestCompoundingPeriodType.value }}
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        Interest Compounding Period is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Currency in multiples of</mat-label>
+      <input type="number" matInput formControlName="currencyMultiple" >
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Interest Posting Period</mat-label>
+      <mat-select formControlName="interestPostingPeriodType" required>
+        <mat-option *ngFor="let interestPostingPeriodType of interestPostingPeriodTypeData" [value]="interestPostingPeriodType.id">
+          {{ interestPostingPeriodType.value }}
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        Interest Posting Period is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Interest Calculated using</mat-label>
+      <mat-select formControlName="interestCalculationType" required>
+        <mat-option *ngFor="let interestCalculationType of interestCalculationTypeData" [value]="interestCalculationType.id">
+          {{ interestCalculationType.value }}
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        Interest Calculated using is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Days in Year</mat-label>
+      <mat-select formControlName="interestCalculationDaysInYearType" required>
+        <mat-option *ngFor="let interestCalculationDaysInYearType of interestCalculationDaysInYearTypeData" [value]="interestCalculationDaysInYearType.id">
+          {{ interestCalculationDaysInYearType.value }}
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        Days in Year is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Minimum Opening Balance</mat-label>
+      <input type="number" matInput formControlName="minRequiredOpeningBalance">
+    </mat-form-field>
+
+    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="withdrawalFeeForTransfers" class="margin-v">
+      Apply Withdrawal Fee for Transfers
+    </mat-checkbox>
+
+    <h4 fxFlex="98%" class="mat-h4">Lock-in Period</h4>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Frequency</mat-label>
+      <input type="number" matInput formControlName="lockinPeriodFrequency">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="lockinPeriodFrequencyType">
+        <mat-option *ngFor="let lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData" [value]="lockinPeriodFrequencyType.id">
+          {{ lockinPeriodFrequencyType.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-divider fxFlex="98%"></mat-divider>
+
+    <h3 fxFlex="23%" class="mat-h3">Overdraft</h3>
+
+    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="allowOverdraft" class="margin-b">
+      Is Overdraft Allowed?
+    </mat-checkbox>
+
+    <div *ngIf="savingsAccountTermsForm.value.allowOverdraft" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>Minimum Overdraft Required for Interest Calculation</mat-label>
+        <input type="number" matInput formControlName="minOverdraftForInterestCalculation">
+      </mat-form-field>
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>Nominal Annual Interest for Overdraft</mat-label>
+        <input type="number" matInput formControlName="nominalAnnualInterestRateOverdraft">
+      </mat-form-field>
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>Maximum Overdraft Amount Limit</mat-label>
+        <input type="number" matInput formControlName="overdraftLimit">
+      </mat-form-field>
+
+    </div>
+
+    <mat-divider fxFlex="98%"></mat-divider>
+
+    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="enforceMinRequiredBalance" class="margin-v">
+      Enforce Minimum Balance
+    </mat-checkbox>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Minimum Balance</mat-label>
+      <input type="number" matInput formControlName="minRequiredBalance">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%" *ngIf="savingsAccountTermsForm.controls.minBalanceForInterestCalculation.value">
+      <mat-label>Balance Required for Interest Calculation</mat-label>
+      <input type="number" matInput formControlName="minBalanceForInterestCalculation">
+    </mat-form-field>
+
+  </div>
+
+  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+    <button mat-raised-button matStepperPrevious disabled>
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+      Previous
+    </button>
+    <button mat-raised-button matStepperNext>
+      Next&nbsp;&nbsp;
+      <fa-icon icon="arrow-right"></fa-icon>
+    </button>
+  </div>
+
+</form>
