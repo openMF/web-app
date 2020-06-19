@@ -1,0 +1,77 @@
+<div class="container">
+
+  <mat-horizontal-stepper class="mat-elevation-z8" labelPosition="bottom" #savingProductStepper>
+
+    <ng-template matStepperIcon="number">
+      <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="edit">
+      <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="done">
+      <fa-icon icon="check" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="error">
+      <fa-icon icon="exclamation-triangle" size="lg"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="preview">
+      <fa-icon icon="eye" size="sm"></fa-icon>
+    </ng-template>
+
+    <mat-step [stepControl]="savingsAccountDetailsForm">
+
+      <ng-template matStepLabel>DETAILS</ng-template>
+
+      <mifosx-savings-account-details-step
+        [savingsAccountTemplate]="savingsAccountTemplate" 
+        (savingsAccountProductTemplate)="setTemplate($event)"
+      >
+      </mifosx-savings-account-details-step>
+
+    </mat-step>
+
+    <mat-step [stepControl]="savingsAccountTermsForm">
+
+      <ng-template matStepLabel>TERMS</ng-template>
+
+      <mifosx-savings-account-terms-step 
+        [savingsAccountProductTemplate]="savingsAccountProductTemplate"
+      ></mifosx-savings-account-terms-step>
+
+    </mat-step>
+
+    <mat-step>
+
+      <ng-template matStepLabel>CHARGES</ng-template>
+
+      <mifosx-savings-account-charges-step
+        [savingsAccountProductTemplate]="savingsAccountProductTemplate"
+        [savingsAccountTemplate]="savingsAccountTemplate"
+        [currencyCode]="savingsAccountTermsForm.get('currencyCode')"
+      >
+      </mifosx-savings-account-charges-step>
+
+    </mat-step>
+
+    <mat-step *ngIf="savingsAccountFormValid" completed>
+
+      <ng-template matStepLabel>PREVIEW</ng-template>
+
+      <mifosx-savings-account-preview-step
+        [savingsAccountProductTemplate]="savingsAccountProductTemplate"
+        [savingsAccountTemplate]="savingsAccountTemplate"
+        [savingsAccountTermsForm]="savingsAccountTermsForm"
+        [savingsAccount]="savingsAccount"
+        (submit)="submit()"
+      >
+      </mifosx-savings-account-preview-step>
+
+    </mat-step>
+
+  </mat-horizontal-stepper>
+
+</div>

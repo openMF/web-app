@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { FormControl } from '@angular/forms';
 
@@ -19,7 +19,7 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
   templateUrl: './shares-account-charges-step.component.html',
   styleUrls: ['./shares-account-charges-step.component.scss']
 })
-export class SharesAccountChargesStepComponent implements OnInit {
+export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
 
   /** Shares Account Product Template */
   @Input() sharesAccountProductTemplate: any;
@@ -29,9 +29,9 @@ export class SharesAccountChargesStepComponent implements OnInit {
   @Input() currencyCode: FormControl;
 
   /** Charge Data */
-  chargeData: any;
+  chargeData: any = [];
   /** Charges Data Source */
-  chargesDataSource: {}[];
+  chargesDataSource: {}[] = [];
   /** Component is pristine if there has been no changes by user interaction */
   pristine = true;
   /** For Edit Shares Account Form */
@@ -45,12 +45,6 @@ export class SharesAccountChargesStepComponent implements OnInit {
   constructor(public dialog: MatDialog) {}
 
   ngOnInit() {
-    this.chargesDataSource = [];
-    this.chargeData = this.sharesAccountTemplate.chargeOptions.map((charge: any) => {
-      charge.chargeId = charge.id;
-      delete charge.id;
-      return charge;
-    });
     this.currencyCode.valueChanges.subscribe(() => {
       if (!this.isChargesPatched && this.sharesAccountTemplate.charges) {
         this.chargesDataSource = this.sharesAccountTemplate.charges;
@@ -59,6 +53,12 @@ export class SharesAccountChargesStepComponent implements OnInit {
         this.chargesDataSource = [];
       }
     });
+  }
+
+  ngOnChanges() {
+    if (this.sharesAccountProductTemplate) {
+      this.chargeData = this.sharesAccountProductTemplate.charges;
+    }
   }
 
   /**
@@ -80,7 +80,7 @@ export class SharesAccountChargesStepComponent implements OnInit {
       new InputBase({
         controlName: 'amount',
         label: 'Amount',
-        value: charge.amount,
+        value: charge.amount || charge.amountOrPercentage,
         type: 'text',
         required: true,
       }),

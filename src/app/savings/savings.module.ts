@@ -19,6 +19,11 @@ import { StandingInstructionsTabComponent } from './savings-account-view/standin
 import { DatatableTabsComponent } from './savings-account-view/datatable-tabs/datatable-tabs.component';
 import { MultiRowComponent } from './savings-account-view/datatable-tabs/multi-row/multi-row.component';
 import { SingleRowComponent } from './savings-account-view/datatable-tabs/single-row/single-row.component';
+import { CreateSavingsAccountComponent } from './create-savings-account/create-savings-account.component';
+import { SavingsAccountDetailsStepComponent } from './savings-account-stepper/savings-account-details-step/savings-account-details-step.component';
+import { SavingsAccountChargesStepComponent } from './savings-account-stepper/savings-account-charges-step/savings-account-charges-step.component';
+import { SavingsAccountTermsStepComponent } from './savings-account-stepper/savings-account-terms-step/savings-account-terms-step.component';
+import { SavingsAccountPreviewStepComponent } from './savings-account-stepper/savings-account-preview-step/savings-account-preview-step.component';
 
 /**
  * Savings Module
@@ -42,7 +47,12 @@ import { SingleRowComponent } from './savings-account-view/datatable-tabs/single
     StandingInstructionsTabComponent,
     DatatableTabsComponent,
     MultiRowComponent,
-    SingleRowComponent
+    SingleRowComponent,
+    CreateSavingsAccountComponent,
+    SavingsAccountDetailsStepComponent,
+    SavingsAccountChargesStepComponent,
+    SavingsAccountTermsStepComponent,
+    SavingsAccountPreviewStepComponent
   ],
   providers: [DatePipe]
 })
