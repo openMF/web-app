@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 /**
@@ -10,10 +10,12 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
   templateUrl: './savings-account-terms-step.component.html',
   styleUrls: ['./savings-account-terms-step.component.scss']
 })
-export class SavingsAccountTermsStepComponent implements OnChanges {
+export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
 
   /** Savings Account and Product Template */
   @Input() savingsAccountProductTemplate: any;
+  /** Savings Account Template */
+  @Input() savingsAccountTemplate: any;
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -49,6 +51,25 @@ export class SavingsAccountTermsStepComponent implements OnChanges {
         'minBalanceForInterestCalculation': this.savingsAccountProductTemplate.minBalanceForInterestCalculation
       });
       this.setOptions();
+    }
+  }
+
+  ngOnInit() {
+    if (this.savingsAccountTemplate) {
+      this.savingsAccountTermsForm.patchValue({
+        'nominalAnnualInterestRate': this.savingsAccountTemplate.nominalAnnualInterestRate,
+        'interestCompoundingPeriodType': this.savingsAccountTemplate.interestCompoundingPeriodType.id,
+        'interestPostingPeriodType': this.savingsAccountTemplate.interestPostingPeriodType.id,
+        'interestCalculationType': this.savingsAccountTemplate.interestCalculationType.id,
+        'interestCalculationDaysInYearType': this.savingsAccountTemplate.interestCalculationDaysInYearType.id,
+        'minRequiredOpeningBalance': this.savingsAccountTemplate.minRequiredOpeningBalance,
+        'withdrawalFeeForTransfers': this.savingsAccountTemplate.withdrawalFeeForTransfers,
+        'lockinPeriodFrequency': this.savingsAccountTemplate.lockinPeriodFrequency,
+        'lockinPeriodFrequencyType': this.savingsAccountTemplate.lockinPeriodFrequencyType && this.savingsAccountTemplate.lockinPeriodFrequencyType.id,
+        'allowOverdraft': this.savingsAccountTemplate.allowOverdraft,
+        'enforceMinRequiredBalance': this.savingsAccountTemplate.enforceMinRequiredBalance,
+        'minRequiredBalance': this.savingsAccountTemplate.minRequiredBalance,
+      });
     }
   }
 

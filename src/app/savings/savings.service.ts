@@ -63,7 +63,18 @@ export class SavingsService {
    * @returns {Observable<any>} Savings data.
    */
   getSavingsAccountData(accountId: string): Observable<any> {
-    const httpParams = new HttpParams().set('associations', 'all');
+    const httpParams = new HttpParams().set('associations', 'all' );
+    return this.http.get(`/savingsaccounts/${accountId}`, { params: httpParams });
+  }
+
+  /**
+   * @param accountId Savings Account Id of account to get data for.
+   * @returns {Observable<any>} Savings account and template.
+   */
+  getSavingsAccountAndTemplate(accountId: string, template: boolean): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('template', template.toString())
+      .set('associations', 'charges' );
     return this.http.get(`/savingsaccounts/${accountId}`, { params: httpParams });
   }
 
@@ -154,6 +165,14 @@ export class SavingsService {
    */
   createSavingsAccount(savingsAccount: any): Observable<any> {
     return this.http.post('/savingsaccounts', savingsAccount);
+  }
+
+  /**
+   * @param {any} savingsAccount Savings Account
+   * @returns {Observable<any>}
+   */
+  updateSavingsAccount(accountId: string, savingsAccount: any): Observable<any> {
+    return this.http.put(`/savingsaccounts/${accountId}`, savingsAccount);
   }
 
 }

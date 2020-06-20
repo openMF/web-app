@@ -4,14 +4,12 @@ export class SavingsButtonsConfiguration {
   optionArray: {
     name: string,
     taskPermissionName: string,
-    action?: Function
   }[];
 
   buttonsArray: {
     name: string,
     icon: string,
     taskPermissionName: string,
-    action?: Function
   }[];
 
   constructor(status: string) {
