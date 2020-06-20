@@ -39,6 +39,11 @@
   </div>
 
   <div fxFlexFill>
+    <span fxFlex="40%">Currency in multiples of</span>
+    <span fxFlex="60%">{{ savingsAccountTermsForm.get('currencyMultiple').value }}</span>
+  </div>
+
+  <div fxFlexFill>
     <span fxFlex="40%">Nominal Annual Interest Rate:</span>
     <span fxFlex="60%">{{ savingsAccount.nominalAnnualInterestRate }}</span>
   </div>
@@ -46,11 +51,6 @@
   <div fxFlexFill>
     <span fxFlex="40%">Interest Compounding Period:</span>
     <span fxFlex="60%">{{ savingsAccount.interestCompoundingPeriodType | find:savingsAccountProductTemplate.interestCompoundingPeriodTypeOptions:'id':'value' }}</span>
-  </div>
-
-  <div fxFlexFill>
-    <span fxFlex="40%">Currency in multiples of</span>
-    <span fxFlex="60%">{{ savingsAccountTermsForm.get('currencyMultiple').value }}</span>
   </div>
 
   <div fxFlexFill>
@@ -146,10 +146,10 @@
         <th mat-header-cell *matHeaderCellDef> Date </th>
         <td mat-cell *matCellDef="let charge">
           <span *ngIf="charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee'">
-            {{charge.dueDate || 'Unassigned'}}
+            {{(charge.dueDate | date) || 'Unassigned'}}
           </span>
           <span *ngIf="charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'">
-            {{charge.feeOnMonthDay || 'Unassigned'}}
+            {{(charge.feeOnMonthDay | date) || 'Unassigned'}}
           </span>
           <span 
             *ngIf="!(charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'

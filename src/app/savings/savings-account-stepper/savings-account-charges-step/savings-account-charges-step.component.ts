@@ -50,7 +50,7 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
    ngOnInit() {
     this.currencyCode.valueChanges.subscribe(() => {
       if (!this.isChargesPatched && this.savingsAccountTemplate.charges) {
-        this.chargesDataSource = this.savingsAccountTemplate.charges || [];
+        this.chargesDataSource = this.savingsAccountTemplate.charges.map((charge: any) => ({...charge, id: charge.chargeId})) || [];
         this.isChargesPatched = true;
       } else {
         this.chargesDataSource = [];
@@ -84,7 +84,7 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
         controlName: 'amount',
         label: 'Amount',
         value: charge.amount,
-        type: 'text',
+        type: 'number',
         required: false
       }),
     ];

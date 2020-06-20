@@ -63,9 +63,9 @@ export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
       this.sharesAccountTermsForm.patchValue({
         'requestedShares': this.sharesAccountTemplate.summary.totalPendingForApprovalShares,
         'minimumActivePeriod': this.sharesAccountTemplate.minimumActivePeriod,
-        'minimumActivePeriodFrequencyType': this.sharesAccountTemplate.minimumActivePeriodTypeEnum.id,
+        'minimumActivePeriodFrequencyType': this.sharesAccountTemplate.minimumActivePeriod && this.sharesAccountTemplate.minimumActivePeriodTypeEnum.id,
         'lockinPeriodFrequency': this.sharesAccountTemplate.lockinPeriod,
-        'lockinPeriodFrequencyType': this.sharesAccountTemplate.lockPeriodTypeEnum.id,
+        'lockinPeriodFrequencyType': this.sharesAccountTemplate.lockinPeriod && this.sharesAccountTemplate.lockPeriodTypeEnum.id,
         'applicationDate': this.sharesAccountTemplate.purchasedShares[0].purchasedDate && new Date(this.sharesAccountTemplate.purchasedShares[0].purchasedDate),
         'allowDividendCalculationForInactiveClients': this.sharesAccountTemplate.allowDividendCalculationForInactiveClients
       });

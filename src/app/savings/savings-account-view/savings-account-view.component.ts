@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Buttons Configuration */
 import { SavingsButtonsConfiguration } from './savings-buttons.config';
@@ -26,7 +26,8 @@ export class SavingsAccountViewComponent implements OnInit {
    * Fetches savings account data from `resolve`
    * @param {ActivatedRoute} route Activated Route
    */
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              private router: Router) {
     this.route.data.subscribe((data: { savingsAccountData: any, savingsDatatables: any }) => {
       this.savingsAccountData = data.savingsAccountData;
       this.savingsDatatables = data.savingsDatatables;
@@ -65,7 +66,7 @@ export class SavingsAccountViewComponent implements OnInit {
       charges.forEach((charge: any) => {
         if (charge.name === 'Annual fee - INR') {
           this.buttonConfig.addOption({
-            name: 'Apply Anuual Fees',
+            name: 'Apply Annual Fees',
             taskPermissionName: 'APPLYANNUALFEE_SAVINGSACCOUNT'
           });
         }
@@ -83,6 +84,14 @@ export class SavingsAccountViewComponent implements OnInit {
           taskPermissionName: 'UPDATEWITHHOLDTAX_SAVINGSACCOUNT'
         });
       }
+    }
+  }
+
+  doAction(name: string) {
+    switch (name) {
+      case 'Modify Application':
+      this.router.navigate(['edit-savings-account'], { relativeTo: this.route });
+      break;
     }
   }
 

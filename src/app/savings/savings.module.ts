@@ -24,6 +24,7 @@ import { SavingsAccountDetailsStepComponent } from './savings-account-stepper/sa
 import { SavingsAccountChargesStepComponent } from './savings-account-stepper/savings-account-charges-step/savings-account-charges-step.component';
 import { SavingsAccountTermsStepComponent } from './savings-account-stepper/savings-account-terms-step/savings-account-terms-step.component';
 import { SavingsAccountPreviewStepComponent } from './savings-account-stepper/savings-account-preview-step/savings-account-preview-step.component';
+import { EditSavingsAccountComponent } from './edit-savings-account/edit-savings-account.component';
 
 /**
  * Savings Module
@@ -52,7 +53,8 @@ import { SavingsAccountPreviewStepComponent } from './savings-account-stepper/sa
     SavingsAccountDetailsStepComponent,
     SavingsAccountChargesStepComponent,
     SavingsAccountTermsStepComponent,
-    SavingsAccountPreviewStepComponent
+    SavingsAccountPreviewStepComponent,
+    EditSavingsAccountComponent
   ],
   providers: [DatePipe]
 })

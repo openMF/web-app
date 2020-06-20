@@ -35,7 +35,7 @@
     <mat-card-actions class="account-actions">
 
       <ng-container *ngFor="let button of buttonConfig.singleButtons">
-        <button mat-raised-button *mifosxHasPermission="button.taskPermissionName">
+        <button mat-raised-button *mifosxHasPermission="button.taskPermissionName" (click)="doAction(button.name)">
           <i class="{{button.icon}}"></i> {{button.name}}</button>
       </ng-container>
   

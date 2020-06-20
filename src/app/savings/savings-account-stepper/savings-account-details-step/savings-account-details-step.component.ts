@@ -26,6 +26,8 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
   productData: any;
   /** Field Officer Data */
   fieldOfficerData: any;
+  /** For edit savings form */
+  isFieldOfficerPatched = false;
   /** Savings Account Details Form */
   savingsAccountDetailsForm: FormGroup;
 
@@ -46,6 +48,13 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
     this.buildDependencies();
     if (this.savingsAccountTemplate) {
       this.productData = this.savingsAccountTemplate.productOptions;
+      if (this.savingsAccountTemplate.savingsProductId) {
+        this.savingsAccountDetailsForm.patchValue({
+          'productId': this.savingsAccountTemplate.savingsProductId,
+          'submittedOnDate': this.savingsAccountTemplate.timeline.submittedOnDate && new Date(this.savingsAccountTemplate.timeline.submittedOnDate),
+          'externalId': this.savingsAccountTemplate.externalId
+        });
+      }
     }
   }
 
@@ -69,8 +78,13 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
     this.savingsAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
       this.savingsService.getSavingsAccountTemplate(clientId, productId).subscribe((response: any) => {
         this.savingsAccountProductTemplate.emit(response);
-        this.savingsAccountDetailsForm.get('fieldOfficerId').patchValue('');
         this.fieldOfficerData = response.fieldOfficerOptions;
+        if (!this.isFieldOfficerPatched && this.savingsAccountTemplate.fieldOfficerId) {
+          this.savingsAccountDetailsForm.get('fieldOfficerId').patchValue(this.savingsAccountTemplate.fieldOfficerId);
+          this.isFieldOfficerPatched = true;
+        } else {
+          this.savingsAccountDetailsForm.get('fieldOfficerId').patchValue('');
+        }
       });
     });
   }

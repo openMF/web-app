@@ -81,8 +81,8 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
         controlName: 'amount',
         label: 'Amount',
         value: charge.amount || charge.amountOrPercentage,
-        type: 'text',
-        required: true,
+        type: 'number',
+        required: false,
       }),
     ];
     const data = {
