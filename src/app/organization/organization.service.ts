@@ -167,6 +167,14 @@ export class OrganizationService {
   }
 
   /**
+   * @param {any[]} currencies
+   * @returns {Observable<any>} Currencies data
+   */
+  updateCurrencies(currencies: any[]): Observable<any> {
+    return this.http.put('/currencies', {currencies});
+  }
+
+  /**
    * @returns {Observable<any>} SMS Campaigns data
    */
   getSmsCampaigns(): Observable<any> {

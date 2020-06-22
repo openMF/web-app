@@ -43,6 +43,7 @@ import { SingleRowComponent } from './offices/view-office/datatable-tabs/single-
 import { MultiRowComponent } from './offices/view-office/datatable-tabs/multi-row/multi-row.component';
 import { ViewCampaignComponent } from './sms-campaigns/view-campaign/view-campaign.component';
 import { ManageFundsComponent } from './manage-funds/manage-funds.component';
+import { ManageCurrenciesComponent } from './currencies/manage-currencies/manage-currencies.component';
 
 /**
  * Organization Module
@@ -91,7 +92,8 @@ import { ManageFundsComponent } from './manage-funds/manage-funds.component';
     SingleRowComponent,
     MultiRowComponent,
     ViewCampaignComponent,
-    ManageFundsComponent
+    ManageFundsComponent,
+    ManageCurrenciesComponent
   ]
 })
 export class OrganizationModule { }
