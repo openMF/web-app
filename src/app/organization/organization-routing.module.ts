@@ -40,6 +40,7 @@ import { GeneralTabComponent } from './offices/view-office/general-tab/general-t
 import { DatatableTabsComponent } from './offices/view-office/datatable-tabs/datatable-tabs.component';
 import { ViewCampaignComponent } from './sms-campaigns/view-campaign/view-campaign.component';
 import { ManageFundsComponent } from './manage-funds/manage-funds.component';
+import { ManageCurrenciesComponent } from './currencies/manage-currencies/manage-currencies.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -218,11 +219,21 @@ const routes: Routes = [
         },
         {
           path: 'currencies',
-          component: CurrenciesComponent,
           data: { title: extract('Currency Configuration'), breadcrumb: 'Currency Configuration' },
           resolve: {
             currencies: CurrenciesResolver
-          }
+          },
+          children: [
+            {
+              path: '',
+              component: CurrenciesComponent,
+            },
+            {
+              path: 'manage',
+              data: { title: extract('Manage Currencies'), breadcrumb: 'Manage Currencies' },
+              component: ManageCurrenciesComponent
+            }
+          ]
         },
         {
           path: 'sms-campaigns',
