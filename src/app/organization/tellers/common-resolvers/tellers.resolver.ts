@@ -6,7 +6,7 @@ import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { OrganizationService } from '../../organization.service';
 
 /**
  * Tellers data resolver.

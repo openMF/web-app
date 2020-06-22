@@ -257,7 +257,14 @@ export class OrganizationService {
   }
 
   /**
-   * Get Cashier data.
+   * @param {string} tellerId Teller ID of teller.
+   * @returns {Observable<any>} Cashier data.
+   */
+  getCashiers(tellerId: string): Observable<any> {
+    return this.http.get(`/tellers/${tellerId}/cashiers`);
+  }
+
+  /**
    * @param {string} tellerId Teller ID of teller.
    * @param {string} cashierId Cashier ID of cashier
    * @returns {Observable<any>} Cashier data.

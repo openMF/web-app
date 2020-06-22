@@ -41,6 +41,7 @@ import { DatatableTabsComponent } from './offices/view-office/datatable-tabs/dat
 import { ViewCampaignComponent } from './sms-campaigns/view-campaign/view-campaign.component';
 import { ManageFundsComponent } from './manage-funds/manage-funds.component';
 import { ManageCurrenciesComponent } from './currencies/manage-currencies/manage-currencies.component';
+import { CashiersComponent } from './tellers/cashiers/cashiers.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -52,8 +53,8 @@ import { CurrenciesResolver } from './currencies/currencies.resolver';
 import { SmsCampaignsResolver } from './sms-campaigns/common-resolvers/sms-campaigns.resolver';
 import { AdhocQueriesResolver } from './adhoc-query/adhoc-queries.resolver';
 import { AdhocQueryResolver } from './adhoc-query/adhoc-query.resolver';
-import { TellersResolver } from './tellers/tellers.resolver';
-import { TellerResolver } from './tellers/teller.resolver';
+import { TellersResolver } from './tellers/common-resolvers/tellers.resolver';
+import { TellerResolver } from './tellers/common-resolvers/teller.resolver';
 import { PaymentTypesResolver } from './payment-types/payment-types.resolver';
 import { PaymentTypeResolver } from './payment-types/payment-type.resolver';
 import { PasswordPreferencesTemplateResolver } from './password-preferences/password-preferences-template.resolver';
@@ -64,7 +65,8 @@ import { EditOfficeComponent } from './offices/edit-office/edit-office.component
 import { AdhocQueryTemplateResolver } from './adhoc-query/adhoc-query-template.resolver';
 import { ViewLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/view-loan-provisioning-criteria/view-loan-provisioning-criteria.component';
 import { LoanProvisioningCriteriasResolver } from './loan-provisioning-criteria/loan-provisioning-criterias.resolver';
-import { CashierResolver } from './tellers/cashier.resolver';
+import { CashierResolver } from './tellers/common-resolvers/cashier.resolver';
+import { CashiersResolver } from './tellers/common-resolvers/cashiers.resolver';
 import { HolidayResolver } from './holidays/holiday.resolver';
 import { OfficeResolver } from './offices/common-resolvers/office.resolver';
 import { OfficeDatatableResolver } from './offices/common-resolvers/office-datatable.resolver';
@@ -329,6 +331,13 @@ const routes: Routes = [
                   data: { title: extract('View Cashiers'), breadcrumb: 'View Cashiers', routeParamBreadcrumb: false },
                   children: [
                     {
+                      path: '',
+                      component: CashiersComponent,
+                      resolve: {
+                        cashiersData: CashiersResolver
+                      }
+                    },
+                    {
                       path: ':id',
                       component: ViewCashierComponent,
                       data: { title: extract('View Cashier'), breadcrumb: 'View Cashier', routeParamBreadcrumb: 'id' },
@@ -471,6 +480,7 @@ const routes: Routes = [
     AdhocQueryTemplateResolver,
     LoanProvisioningCriteriasResolver,
     CashierResolver,
+    CashiersResolver,
     HolidayResolver,
     OfficeResolver,
     OfficeDatatableResolver,
