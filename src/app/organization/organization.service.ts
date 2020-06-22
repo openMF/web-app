@@ -407,4 +407,28 @@ export class OrganizationService {
     return this.http.put(`/tellers/${tellerId}`, teller);
   }
 
+  /**
+   * @returns {Observable<any>} Funds data
+   */
+  getFunds(): Observable<any> {
+    return this.http.get('/funds');
+  }
+
+  /**
+   * @param {any} fund Fund to be created.
+   * @returns {Observable<any>}
+   */
+  createFund(fund: any): Observable<any> {
+    return this.http.post('/funds', fund);
+  }
+
+  /**
+   * @param {string} fundId Fund Id
+   * @param {any} fundData Fund Data
+   * @returns {Observable<any>}
+   */
+  editFund(fundId: string, fundData: any): Observable<any> {
+    return this.http.put(`/funds/${fundId}`, fundData);
+  }
+
 }

@@ -39,6 +39,7 @@ import { ViewOfficeComponent } from './offices/view-office/view-office.component
 import { GeneralTabComponent } from './offices/view-office/general-tab/general-tab.component';
 import { DatatableTabsComponent } from './offices/view-office/datatable-tabs/datatable-tabs.component';
 import { ViewCampaignComponent } from './sms-campaigns/view-campaign/view-campaign.component';
+import { ManageFundsComponent } from './manage-funds/manage-funds.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -68,6 +69,7 @@ import { OfficeResolver } from './offices/common-resolvers/office.resolver';
 import { OfficeDatatableResolver } from './offices/common-resolvers/office-datatable.resolver';
 import { OfficeDatatablesResolver } from './offices/common-resolvers/office-datatables.resolver';
 import { SmsCampaignResolver } from './sms-campaigns/common-resolvers/sms-campaign.resolver';
+import { ManageFundsResolver } from './manage-funds/manage-funds.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -386,6 +388,14 @@ const routes: Routes = [
           }
         },
         {
+          path: 'manage-funds',
+          component: ManageFundsComponent,
+          data: { title: extract('Manage Funds Days'), breadcrumb: 'Manage Funds' },
+          resolve: {
+            funds: ManageFundsResolver
+          }
+        },
+        {
           path: 'bulk-import',
           loadChildren: '../bulk-import/bulk-import.module#BulkImportModule'
         },
@@ -453,7 +463,8 @@ const routes: Routes = [
     HolidayResolver,
     OfficeResolver,
     OfficeDatatableResolver,
-    OfficeDatatablesResolver
+    OfficeDatatablesResolver,
+    ManageFundsResolver
   ]
 })
 export class OrganizationRoutingModule { }

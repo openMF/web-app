@@ -1,0 +1,43 @@
+<div class="container">
+
+  <mat-card>
+
+    <div>
+
+      <form #formRef="ngForm" [formGroup]="fundForm" fxLayout="row" fxLayoutAlign="start baseline" fxLayoutGap="20px"
+        (ngSubmit)="addFund()">
+
+        <mat-form-field fxFlex="calc(90%-20px)">
+          <textarea formControlName="name" matInput placeholder="New Fund"></textarea>
+            <mat-error *ngIf="fundForm.controls.name.hasError('required')">
+                <strong>Required field</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button fxFlex color="primary" [disabled]="!fundForm.valid">
+          <fa-icon icon="plus"></fa-icon>
+        </button>
+
+      </form>
+
+    </div>
+
+    <mat-grid-list cols="2" rowHeight="50px">
+
+      <mat-grid-tile *ngFor="let fund of fundsData; index as i">
+
+        <input matInput [value]="fund.name">
+
+        <div fxLayout="row" fxLayoutAlign="flex-start">
+          <button mat-button color="primary" (click)="editFund(fund.id,fund.name,i)">
+            <fa-icon icon="edit"></fa-icon>
+          </button>
+        </div>
+
+      </mat-grid-tile>
+
+    </mat-grid-list>
+
+  </mat-card>
+
+</div>
