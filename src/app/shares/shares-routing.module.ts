@@ -12,6 +12,7 @@ import { ChargesTabComponent } from './shares-account-view/charges-tab/charges-t
 import { DividendsTabComponent } from './shares-account-view/dividends-tab/dividends-tab.component';
 import { CreateSharesAccountComponent } from './create-shares-account/create-shares-account.component';
 import { EditSharesAccountComponent } from './edit-shares-account/edit-shares-account.component';
+import { SharesAccountActionsComponent } from './shares-account-actions/shares-account-actions.component';
 
 /** Custom Resolvers */
 import { SharesAccountViewResolver } from './common-resolvers/share-account-view.resolver';
@@ -66,6 +67,17 @@ const routes: Routes = [
             resolve: {
               sharesAccountAndTemplate: SharesAccountAndTemplateResolver
             }
+          },
+          {
+            path: 'actions',
+            data: { title: extract('Shares Account Actions'), breadcrumb: 'Actions', routeParamBreadcrumb: false },
+            children: [
+              {
+                path: ':name',
+                data: { routeParamBreadcrumb: 'name' },
+                component: SharesAccountActionsComponent
+              }
+            ]
           }
         ]
       },

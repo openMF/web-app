@@ -67,11 +67,18 @@ export class SharesAccountViewComponent implements OnInit {
     }
   }
 
+  /**
+   * Performs button action
+   * @param {string} name Action name
+   */
   doAction(name: string) {
     switch (name) {
       case 'Modify Application':
-      this.router.navigate(['edit-shares-account'], { relativeTo: this.route });
-      break;
+        this.router.navigate(['edit-shares-account'], { relativeTo: this.route });
+        break;
+      case 'Approve':
+        this.router.navigate(['actions/Approve'], { relativeTo: this.route });
+        break;
     }
   }
 

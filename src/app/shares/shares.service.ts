@@ -50,4 +50,15 @@ export class SharesService {
     return this.http.put(`/accounts/share/${accountId}`, sharesAccount);
   }
 
+  /**
+   * @param {string} accountId Shares Account Id
+   * @param {string} command Command
+   * @param {any} data Data
+   * @returns {Observable<any>} Shares data.
+   */
+  executeSharesAccountCommand(accountId: string, command: string, data: any): Observable<any> {
+    const httpParams = new HttpParams().set('command', command);
+    return this.http.post(`/accounts/share/${accountId}`, data, { params: httpParams });
+  }
+
 }
