@@ -69,15 +69,9 @@ const routes: Routes = [
             }
           },
           {
-            path: 'actions',
-            data: { title: extract('Shares Account Actions'), breadcrumb: 'Actions', routeParamBreadcrumb: false },
-            children: [
-              {
-                path: ':name',
-                data: { routeParamBreadcrumb: 'name' },
-                component: SharesAccountActionsComponent
-              }
-            ]
+            path: 'actions/:name',
+            data: { title: extract('Shares Account Actions'), breadcrumb: 'Actions', routeParamBreadcrumb: 'name' },
+            component: SharesAccountActionsComponent
           }
         ]
       },

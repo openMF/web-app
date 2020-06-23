@@ -82,23 +82,16 @@ export class SharesAccountViewComponent implements OnInit {
    */
   doAction(name: string) {
     switch (name) {
+      case 'Approve':
+      case 'Reject':
+      case 'Close':
+      case 'Activate':
+      case 'Undo Approval':
+      case 'Apply Additional Shares':
+        this.router.navigate([`actions/${name}`], { relativeTo: this.route });
+        break;
       case 'Modify Application':
         this.router.navigate(['edit-shares-account'], { relativeTo: this.route });
-        break;
-      case 'Approve':
-        this.router.navigate(['actions/Approve'], { relativeTo: this.route });
-        break;
-      case 'Reject':
-        this.router.navigate(['actions/Reject'], { relativeTo: this.route });
-        break;
-      case 'Close':
-        this.router.navigate(['actions/Close'], { relativeTo: this.route });
-        break;
-      case 'Activate':
-        this.router.navigate(['actions/Activate'], { relativeTo: this.route });
-        break;
-      case 'Undo Approval':
-        this.router.navigate(['actions/Undo Approval'], { relativeTo: this.route });
         break;
       case 'Delete':
         this.deleteSharesAccount();
