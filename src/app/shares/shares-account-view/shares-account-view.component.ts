@@ -79,6 +79,9 @@ export class SharesAccountViewComponent implements OnInit {
       case 'Approve':
         this.router.navigate(['actions/Approve'], { relativeTo: this.route });
         break;
+      case 'Reject':
+        this.router.navigate(['actions/Reject'], { relativeTo: this.route });
+        break;
     }
   }
 

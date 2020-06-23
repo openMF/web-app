@@ -19,6 +19,7 @@ import { SharesAccountPreviewStepComponent } from './shares-account-stepper/shar
 import { EditSharesAccountComponent } from './edit-shares-account/edit-shares-account.component';
 import { SharesAccountActionsComponent } from './shares-account-actions/shares-account-actions.component';
 import { ApproveSharesAccountComponent } from './shares-account-actions/approve-shares-account/approve-shares-account.component';
+import { RejectSharesAccountComponent } from './shares-account-actions/reject-shares-account/reject-shares-account.component';
 
 /**
  * Shares Module
@@ -44,7 +45,8 @@ import { ApproveSharesAccountComponent } from './shares-account-actions/approve-
     SharesAccountPreviewStepComponent,
     EditSharesAccountComponent,
     SharesAccountActionsComponent,
-    ApproveSharesAccountComponent
+    ApproveSharesAccountComponent,
+    RejectSharesAccountComponent
   ],
   providers: [DatePipe]
 })

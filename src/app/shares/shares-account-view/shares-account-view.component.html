@@ -41,8 +41,8 @@
       <ng-container *ngIf="buttonConfig.options">
         <button mat-raised-button [matMenuTriggerFor]="More">More</button>
         <mat-menu #More="matMenu">
-        <span *ngFor="let button of buttonConfig.options">
-          <button mat-menu-item *mifosxHasPermission="button.taskPermissionName">{{button.name}}</button>
+        <span *ngFor="let option of buttonConfig.options">
+          <button mat-menu-item *mifosxHasPermission="option.taskPermissionName" (click)="doAction(option.name)">{{option.name}}</button>
         </span>
         </mat-menu>
       </ng-container>
