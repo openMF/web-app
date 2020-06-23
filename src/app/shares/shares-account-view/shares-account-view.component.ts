@@ -1,6 +1,13 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+
+/** Custom Dialogs */
+import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+
+/** Custom Services */
+import { SharesService } from '../shares.service';
 
 /** Custom Buttons Configuration */
 import { SharesButtonsConfiguration } from './shares-buttons.config';
@@ -25,7 +32,9 @@ export class SharesAccountViewComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    */
   constructor(private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private sharesService: SharesService,
+              public dialog: MatDialog) {
     this.route.data.subscribe((data: { sharesAccountData: any }) => {
       this.sharesAccountData = data.sharesAccountData;
     });
@@ -82,7 +91,26 @@ export class SharesAccountViewComponent implements OnInit {
       case 'Reject':
         this.router.navigate(['actions/Reject'], { relativeTo: this.route });
         break;
+      case 'Delete':
+        this.deleteSharesAccount();
+        break;
     }
+  }
+
+  /**
+   * Deletes Shares Account.
+   */
+  private deleteSharesAccount() {
+    const deleteCurrencyDialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { deleteContext: `shares account with id: ${this.sharesAccountData.id}` }
+    });
+    deleteCurrencyDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.delete) {
+        this.sharesService.deleteSharesAccount(this.sharesAccountData.id).subscribe(() => {
+          this.router.navigate(['../../'], { relativeTo: this.route });
+        });
+      }
+    });
   }
 
 }
