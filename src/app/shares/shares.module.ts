@@ -22,6 +22,7 @@ import { ApproveSharesAccountComponent } from './shares-account-actions/approve-
 import { RejectSharesAccountComponent } from './shares-account-actions/reject-shares-account/reject-shares-account.component';
 import { CloseSharesAccountComponent } from './shares-account-actions/close-shares-account/close-shares-account.component';
 import { ActivateSharesAccountComponent } from './shares-account-actions/activate-shares-account/activate-shares-account.component';
+import { UndoApprovalSharesAccountComponent } from './shares-account-actions/undo-approval-shares-account/undo-approval-shares-account.component';
 
 /**
  * Shares Module
@@ -50,7 +51,8 @@ import { ActivateSharesAccountComponent } from './shares-account-actions/activat
     ApproveSharesAccountComponent,
     RejectSharesAccountComponent,
     CloseSharesAccountComponent,
-    ActivateSharesAccountComponent
+    ActivateSharesAccountComponent,
+    UndoApprovalSharesAccountComponent
   ],
   providers: [DatePipe]
 })

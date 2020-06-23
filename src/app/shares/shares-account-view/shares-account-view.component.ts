@@ -97,6 +97,9 @@ export class SharesAccountViewComponent implements OnInit {
       case 'Activate':
         this.router.navigate(['actions/Activate'], { relativeTo: this.route });
         break;
+      case 'Undo Approval':
+        this.router.navigate(['actions/Undo Approval'], { relativeTo: this.route });
+        break;
       case 'Delete':
         this.deleteSharesAccount();
         break;

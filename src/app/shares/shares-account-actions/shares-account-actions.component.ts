@@ -14,15 +14,17 @@ export class SharesAccountActionsComponent {
 
   /** Flag object to store possible actions and render appropriate UI to the user */
   actions: {
-    Approve: boolean
-    Reject: boolean
-    Close: boolean
-    Activate: boolean
+    'Approve': boolean
+    'Reject': boolean
+    'Close': boolean
+    'Activate': boolean
+    'Undo Approval': boolean
   } = {
-    Approve: false,
-    Reject: false,
-    Close: false,
-    Activate: false
+    'Approve': false,
+    'Reject': false,
+    'Close': false,
+    'Activate': false,
+    'Undo Approval': false
   };
 
   constructor(private route: ActivatedRoute) {
