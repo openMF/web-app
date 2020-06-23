@@ -1,0 +1,30 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="activateSharesAccountForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+          <mat-form-field fxFlex>
+            <mat-label>Activated On Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="activatedDatePicker" required formControlName="activatedDate">
+            <mat-datepicker-toggle matSuffix [for]="activatedDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #activatedDatePicker></mat-datepicker>
+            <mat-error *ngIf="activateSharesAccountForm.controls.activatedDate.hasError('required')">
+              Activated On Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+        <button mat-raised-button color="accent" [disabled]="!activateSharesAccountForm.valid">Confirm</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>
