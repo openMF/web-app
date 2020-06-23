@@ -12,6 +12,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SharesAccountActionsComponent {
 
+  /** Shares Account Data */
+  sharesAccountData: any;
   /** Flag object to store possible actions and render appropriate UI to the user */
   actions: {
     'Approve': boolean
@@ -19,14 +21,19 @@ export class SharesAccountActionsComponent {
     'Close': boolean
     'Activate': boolean
     'Undo Approval': boolean
+    'Apply Additional Shares': boolean
   } = {
     'Approve': false,
     'Reject': false,
     'Close': false,
     'Activate': false,
-    'Undo Approval': false
+    'Undo Approval': false,
+    'Apply Additional Shares': false
   };
 
+  /**
+   * @param {ActivatedRoute} route Activated Route
+   */
   constructor(private route: ActivatedRoute) {
     const name = this.route.snapshot.params['name'];
     this.actions[name] = true;

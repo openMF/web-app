@@ -26,12 +26,19 @@ export class ApproveSharesAccountComponent implements OnInit {
   /** Shares Account Id */
   accountId: any;
 
+  /**
+   * @param {FormBuilder} formBuilder Form Builder
+   * @param {SharesService} sharesService Shares Service
+   * @param {DatePipe} datePipe Date Pipe
+   * @param {ActivatedRoute} route Activated Route
+   * @param {Router} router Router
+   */
   constructor(private formBuilder: FormBuilder,
               private sharesService: SharesService,
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
-    this.accountId = this.route.parent.parent.snapshot.params['shareAccountId'];
+    this.accountId = this.route.parent.snapshot.params['shareAccountId'];
   }
 
   /**
