@@ -17,10 +17,12 @@ export class SharesAccountActionsComponent {
     Approve: boolean
     Reject: boolean
     Close: boolean
+    Activate: boolean
   } = {
     Approve: false,
     Reject: false,
-    Close: false
+    Close: false,
+    Activate: false
   };
 
   constructor(private route: ActivatedRoute) {
