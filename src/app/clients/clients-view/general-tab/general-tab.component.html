@@ -306,7 +306,7 @@
           <i class="fa fa-check"></i>
         </button>
         <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
-          class="account-action-button" mat-raised-button color="primary">
+          class="account-action-button" mat-raised-button color="primary" [routerLink]="['../','sharesaccounts', element.id, 'actions', 'Undo Approval']">
           <i class="fa fa-undo"></i>
         </button>
         <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"

@@ -1,0 +1,28 @@
+<div class="container">
+
+  <mat-card>
+
+    <form (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div>
+
+          <p class="mat-typography confirm-text">
+            Are you sure you want to undo aprroval of shares account with ID: {{accountId}} ?
+          </p>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+        <button mat-raised-button color="warn">Confirm</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>
