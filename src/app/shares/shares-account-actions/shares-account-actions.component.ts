@@ -13,7 +13,13 @@ import { ActivatedRoute } from '@angular/router';
 export class SharesAccountActionsComponent {
 
   /** Flag object to store possible actions and render appropriate UI to the user */
-  actions: { Approve: boolean } = { Approve: false };
+  actions: {
+    Approve: boolean
+    Reject: boolean
+  } = {
+    Approve: false ,
+    Reject: false
+  };
 
   constructor(private route: ActivatedRoute) {
     const name = this.route.snapshot.params['name'];
