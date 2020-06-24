@@ -8,21 +8,21 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SharesService } from 'app/shares/shares.service';
 
 /**
- * Apply Shares Component
+ * Redeem Shares Component
  */
 @Component({
-  selector: 'mifosx-apply-shares',
-  templateUrl: './apply-shares.component.html',
-  styleUrls: ['./apply-shares.component.scss']
+  selector: 'mifosx-redeem-shares',
+  templateUrl: './redeem-shares.component.html',
+  styleUrls: ['./redeem-shares.component.scss']
 })
-export class ApplySharesComponent implements OnInit {
+export class RedeemSharesComponent implements OnInit {
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
   maxDate = new Date();
-  /** Apply Share Account form. */
-  applySharesForm: FormGroup;
+  /** Redeem Share Account form. */
+  redeemSharesForm: FormGroup;
   /** Shares Account Id */
   accountId: any;
 
@@ -47,17 +47,17 @@ export class ApplySharesComponent implements OnInit {
    * in clients view upon using a common resolver.
    */
   ngOnInit() {
-    this.createApplySharesAccountForm();
+    this.createRedeemSharesAccountForm();
     this.sharesService.getSharesAccountData(this.accountId, false).subscribe((response: any) => {
-      this.applySharesForm.get('unitPrice').patchValue(response.currentMarketPrice || '');
+      this.redeemSharesForm.get('unitPrice').patchValue(response.currentMarketPrice || '');
     });
   }
 
   /**
    * Creates the apply shares form.
    */
-  createApplySharesAccountForm() {
-    this.applySharesForm = this.formBuilder.group({
+  createRedeemSharesAccountForm() {
+    this.redeemSharesForm = this.formBuilder.group({
       'requestedDate': ['', Validators.required],
       'requestedShares': ['', Validators.required],
       'unitPrice': [{value: '', disabled: true}]
@@ -72,17 +72,17 @@ export class ApplySharesComponent implements OnInit {
     // TODO: Update once language and date settings are setup
     const locale = 'en';
     const dateFormat = 'dd MMMM yyyy';
-    const prevRequestedDate: Date = this.applySharesForm.value.requestedDate;
-    this.applySharesForm.patchValue({
+    const prevRequestedDate: Date = this.redeemSharesForm.value.requestedDate;
+    this.redeemSharesForm.patchValue({
       requestedDate: this.datePipe.transform(prevRequestedDate, dateFormat),
     });
     const data = {
-      ...this.applySharesForm.value,
-      unitPrice: this.applySharesForm.get('unitPrice').value,
+      ...this.redeemSharesForm.value,
+      unitPrice: this.redeemSharesForm.get('unitPrice').value,
       dateFormat,
       locale
     };
-    this.sharesService.executeSharesAccountCommand(this.accountId, 'applyadditionalshares', data).subscribe(() => {
+    this.sharesService.executeSharesAccountCommand(this.accountId, 'redeemshares', data).subscribe(() => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
