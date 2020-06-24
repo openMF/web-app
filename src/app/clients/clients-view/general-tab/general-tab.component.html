@@ -223,11 +223,7 @@
           <i class="fa fa-arrow-down"></i>
         </button>
         <button *ngIf="element.status.submittedAndPendingApproval" class="account-action-button" mat-raised-button
-          color="primary">
-          <i class="fa fa-check"></i>
-        </button>
-        <button *ngIf="element.status.submittedAndPendingApproval" class="account-action-button" mat-raised-button
-          color="primary">
+          color="primary" [routerLink]="['../','savingsaccounts', element.id, 'actions', 'Approve']">
           <i class="fa fa-check"></i>
         </button>
         <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"

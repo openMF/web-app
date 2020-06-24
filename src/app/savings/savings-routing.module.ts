@@ -89,20 +89,9 @@ const routes: Routes = [
             }
           },
           {
-            path: 'add-savings-charge',
-            component: AddSavingsChargeComponent,
-            data: { title: extract('Add Savings Charge'), breadcrumb: 'Add Savings Charge', routeParamBreadcrumb: false },
-            resolve: {
-              savingsChargeTemplate: SavingsChargeTemplateResolver
-            }
-          },
-          {
-            path: ':action',
-            component: SavingAccountActionsComponent,
-            data: { title: extract('Saving Account Actions'), routeParamBreadcrumb: 'action' },
-            resolve: {
-              savingAccountTransactionTemplate: SavingAccountTransactionTemplateResolver
-            }
+            path: 'actions/:name',
+            data: { title: extract('Savings Account Actions'), routeParamBreadcrumb: 'name' },
+            component: SavingAccountActionsComponent
           }
         ]
       }
