@@ -89,6 +89,7 @@ export class SharesAccountViewComponent implements OnInit {
       case 'Undo Approval':
       case 'Apply Additional Shares':
       case 'Redeem Shares':
+      case 'Approve Additional Shares':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
       case 'Modify Application':
@@ -104,10 +105,10 @@ export class SharesAccountViewComponent implements OnInit {
    * Deletes Shares Account.
    */
   private deleteSharesAccount() {
-    const deleteCurrencyDialogRef = this.dialog.open(DeleteDialogComponent, {
+    const deleteSharesAccountDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `shares account with id: ${this.sharesAccountData.id}` }
     });
-    deleteCurrencyDialogRef.afterClosed().subscribe((response: any) => {
+    deleteSharesAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
         this.sharesService.deleteSharesAccount(this.sharesAccountData.id).subscribe(() => {
           this.router.navigate(['../../'], { relativeTo: this.route });
