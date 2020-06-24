@@ -2,6 +2,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+/** Custom Services */
+import { SharesService } from '../shares.service';
+
 /**
  * Shares Account Actions Component
  */
@@ -36,9 +39,14 @@ export class SharesAccountActionsComponent {
   /**
    * @param {ActivatedRoute} route Activated Route
    */
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              private sharesService: SharesService) {
     const name = this.route.snapshot.params['name'];
-    this.actions[name] = true;
+    const accountId = this.route.parent.snapshot.params['shareAccountId'];
+    this.sharesService.getSharesAccountData(accountId, false).subscribe((response: any) => {
+      this.sharesAccountData = response;
+      this.actions[name] = true;
+    });
   }
 
 }

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,6 +16,9 @@ import { SharesService } from 'app/shares/shares.service';
   styleUrls: ['./apply-shares.component.scss']
 })
 export class ApplySharesComponent implements OnInit {
+
+  /** Shares account data. */
+  @Input() sharesAccountData: any;
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -48,9 +51,7 @@ export class ApplySharesComponent implements OnInit {
    */
   ngOnInit() {
     this.createApplySharesAccountForm();
-    this.sharesService.getSharesAccountData(this.accountId, false).subscribe((response: any) => {
-      this.applySharesForm.get('unitPrice').patchValue(response.currentMarketPrice || '');
-    });
+    this.applySharesForm.get('unitPrice').patchValue(this.sharesAccountData.currentMarketPrice || '');
   }
 
   /**
