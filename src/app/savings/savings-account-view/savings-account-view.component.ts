@@ -89,9 +89,12 @@ export class SavingsAccountViewComponent implements OnInit {
 
   doAction(name: string) {
     switch (name) {
+      case 'Approve':
+        this.router.navigate([`actions/${name}`], { relativeTo: this.route });
+        break;
       case 'Modify Application':
-      this.router.navigate(['edit-savings-account'], { relativeTo: this.route });
-      break;
+        this.router.navigate(['edit-savings-account'], { relativeTo: this.route });
+        break;
     }
   }
 
