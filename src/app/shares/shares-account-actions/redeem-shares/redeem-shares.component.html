@@ -1,0 +1,47 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="redeemSharesForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Request Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="requestedDatePicker" required formControlName="requestedDate">
+            <mat-datepicker-toggle matSuffix [for]="requestedDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #requestedDatePicker></mat-datepicker>
+            <mat-error *ngIf="redeemSharesForm.controls.requestedDate.hasError('required')">
+              Request Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Total No. of Shares</mat-label>
+            <input matInput required formControlName="requestedShares">
+            <mat-error *ngIf="redeemSharesForm.controls.requestedShares.hasError('required')">
+              Requested Shares is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Today's Price</mat-label>
+            <input matInput required formControlName="unitPrice">
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+        <button mat-raised-button color="warn" [disabled]="!redeemSharesForm.valid">Confirm</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>

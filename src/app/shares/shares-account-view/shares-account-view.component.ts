@@ -88,6 +88,7 @@ export class SharesAccountViewComponent implements OnInit {
       case 'Activate':
       case 'Undo Approval':
       case 'Apply Additional Shares':
+      case 'Redeem Shares':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
       case 'Modify Application':
