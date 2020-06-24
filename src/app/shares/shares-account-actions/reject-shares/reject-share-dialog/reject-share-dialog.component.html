@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Reject Share</h1>
+<div mat-dialog-content>
+  <p>Are you sure you want to reject share with id: {{ data.shareId }} ?</p>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="{ reject: true }">Confirm</button>
+</mat-dialog-actions>

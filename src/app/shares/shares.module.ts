@@ -27,6 +27,8 @@ import { ApplySharesComponent } from './shares-account-actions/apply-shares/appl
 import { RedeemSharesComponent } from './shares-account-actions/redeem-shares/redeem-shares.component';
 import { ApproveSharesComponent } from './shares-account-actions/approve-shares/approve-shares.component';
 import { ApproveShareDialogComponent } from './shares-account-actions/approve-shares/approve-share-dialog/approve-share-dialog.component';
+import { RejectSharesComponent } from './shares-account-actions/reject-shares/reject-shares.component';
+import { RejectShareDialogComponent } from './shares-account-actions/reject-shares/reject-share-dialog/reject-share-dialog.component';
 
 /**
  * Shares Module
@@ -60,11 +62,14 @@ import { ApproveShareDialogComponent } from './shares-account-actions/approve-sh
     ApplySharesComponent,
     RedeemSharesComponent,
     ApproveSharesComponent,
-    ApproveShareDialogComponent
+    ApproveShareDialogComponent,
+    RejectSharesComponent,
+    RejectShareDialogComponent
   ],
   providers: [DatePipe],
   entryComponents: [
-    ApproveShareDialogComponent
+    ApproveShareDialogComponent,
+    RejectShareDialogComponent
   ]
 })
 export class SharesModule { }

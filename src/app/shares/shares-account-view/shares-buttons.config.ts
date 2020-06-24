@@ -41,7 +41,7 @@ export class SharesButtonsConfiguration {
           },
           {
             name: 'Reject Additional Shares',
-            icon: 'fa fa-arrow-right',
+            icon: 'fa fa-arrow-left',
             taskPermissionName: 'REJECTADDITIONAL_SHAREACCOUNT'
           },
           {

@@ -26,6 +26,8 @@ export class SharesAccountActionsComponent {
     'Undo Approval': boolean
     'Apply Additional Shares': boolean
     'Redeem Shares': boolean
+    'Approve Additional Shares': boolean
+    'Reject Additional Shares': boolean
   } = {
     'Approve': false,
     'Reject': false,
@@ -33,7 +35,9 @@ export class SharesAccountActionsComponent {
     'Activate': false,
     'Undo Approval': false,
     'Apply Additional Shares': false,
-    'Redeem Shares': false
+    'Redeem Shares': false,
+    'Approve Additional Shares': false,
+    'Reject Additional Shares': false
   };
 
   /**
