@@ -1,9 +1,14 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+
+/** Custom Dialogs */
+import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 /** Custom Buttons Configuration */
 import { SavingsButtonsConfiguration } from './savings-buttons.config';
+import { SavingsService } from '../savings.service';
 
 /**
  * Savings Account View Component
@@ -25,9 +30,13 @@ export class SavingsAccountViewComponent implements OnInit {
   /**
    * Fetches savings account data from `resolve`
    * @param {ActivatedRoute} route Activated Route
+   * @param {Router} router Router
+   * @param {SavingsService} savingsService Savings Service
    */
   constructor(private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private savingsService: SavingsService,
+              public dialog: MatDialog) {
     this.route.data.subscribe((data: { savingsAccountData: any, savingsDatatables: any }) => {
       this.savingsAccountData = data.savingsAccountData;
       this.savingsDatatables = data.savingsDatatables;
@@ -96,7 +105,26 @@ export class SavingsAccountViewComponent implements OnInit {
       case 'Modify Application':
         this.router.navigate(['edit-savings-account'], { relativeTo: this.route });
         break;
+      case 'Delete':
+        this.deleteSavingsAccount();
+        break;
     }
+  }
+
+  /**
+   * Deletes Savings Account.
+   */
+  private deleteSavingsAccount() {
+    const deleteSavingsAccountDialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { deleteContext: `savings account with id: ${this.savingsAccountData.id}` }
+    });
+    deleteSavingsAccountDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.delete) {
+        this.savingsService.deleteSavingsAccount(this.savingsAccountData.id).subscribe(() => {
+          this.router.navigate(['../../'], { relativeTo: this.route });
+        });
+      }
+    });
   }
 
 }
