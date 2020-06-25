@@ -33,6 +33,7 @@ import { WaiveInterestComponent } from './loans-view/loan-account-actions/waive-
 import { FloatingInterestRatesComponent } from './loans-view/floating-interest-rates/floating-interest-rates.component';
 import { WriteOffPageComponent } from './loans-view/loan-account-actions/write-off-page/write-off-page.component';
 import { LoanTrancheDetailsComponent } from './loans-view/loan-tranche-details/loan-tranche-details.component';
+import { CloseAsRescheduledComponent } from './loans-view/loan-account-actions/close-as-rescheduled/close-as-rescheduled.component';
 
 /**
  * Loans Module
@@ -66,6 +67,7 @@ import { LoanTrancheDetailsComponent } from './loans-view/loan-tranche-details/l
     FloatingInterestRatesComponent,
     WriteOffPageComponent,
     LoanTrancheDetailsComponent,
+    CloseAsRescheduledComponent,
   ],
   providers: [DatePipe],
 })
