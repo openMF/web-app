@@ -176,6 +176,14 @@ export class SavingsService {
   }
 
   /**
+   * @param {string} accountId savings account Id
+   * @returns {Observable<any>}
+   */
+  deleteSavingsAccount(accountId: string): Observable<any> {
+    return this.http.delete(`/savingsaccounts/${accountId}`);
+  }
+
+  /**
    * @param {string} accountId Savings Account Id
    * @param {string} command Command
    * @param {any} data Data
