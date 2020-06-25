@@ -17,8 +17,10 @@ export class SavingAccountActionsComponent {
   /** Flag object to store possible actions and render appropriate UI to the user */
   actions: {
     'Approve': boolean
+    'Reject': boolean
   } = {
-    'Approve': false
+    'Approve': false,
+    'Reject': false
   };
 
   /**
