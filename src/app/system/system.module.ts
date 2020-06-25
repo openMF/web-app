@@ -55,6 +55,7 @@ import { ReportParameterDialogComponent } from './manage-reports/report-paramete
 import { AddEventDialogComponent } from './manage-hooks/add-event-dialog/add-event-dialog.component';
 import { ViewSchedulerJobComponent } from './manage-scheduler-jobs/view-scheduler-job/view-scheduler-job.component';
 import { EditSchedulerJobComponent } from './manage-scheduler-jobs/edit-scheduler-job/edit-scheduler-job.component';
+import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-tasks/configure-maker-checker-tasks.component';
 
 @NgModule({
   imports: [
@@ -108,7 +109,8 @@ import { EditSchedulerJobComponent } from './manage-scheduler-jobs/edit-schedule
     EditSchedulerJobComponent,
     ViewRoleComponent,
     EditRoleComponent,
-    EntityToEntityMappingComponent
+    EntityToEntityMappingComponent,
+    ConfigureMakerCheckerTasksComponent
   ],
   entryComponents: [
     ReportParameterDialogComponent,

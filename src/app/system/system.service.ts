@@ -541,5 +541,25 @@ export class SystemService {
     return this.http.get('/charges');
   }
 
+  /**
+   * @returns {Observable<any>}
+   */
+  getMakerCheckerPermissions(): Observable<any> {
+    const httpParams = new HttpParams()
+                      .set('makerCheckerable', 'true');
+    return this.http.get('/permissions', {params: httpParams});
+  }
+
+  /**
+   * @param data Maker Checker data
+   * @returns {Observable<any>}
+   */
+  updateMakerCheckerPermission(data: any): Observable<any> {
+    const httpParams = new HttpParams()
+                      .set('makerCheckerable', 'true');
+                      console.log('data: ', data);
+    return this.http.put('/permissions', data, { params: httpParams });
+  }
+
 
 }

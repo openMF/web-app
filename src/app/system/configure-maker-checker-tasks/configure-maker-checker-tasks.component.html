@@ -1,0 +1,54 @@
+<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+  <button mat-raised-button color="primary" (click)="editTask(); backupCheckValues();">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit
+  </button>
+</div>
+
+<div class="container">
+
+  <mat-card>
+
+    <ng-container>
+
+      <div fxLayout="row">
+
+        <div fxFlex="30" fxLayout="column">
+          <mat-list>
+            <mat-list-item [ngClass]="selectedItem == grouping ? 'active' : 'inactive'" *ngFor="let grouping of groupings" (click)="showPermissions(grouping)">
+              <span class="groupingName">
+                {{ formatName(grouping) }}
+              </span>
+            </mat-list-item>
+          </mat-list>
+        </div>
+
+        <div fxFlex="70" fxLayout="column" class="listPermission">
+          <form [formGroup]="formGroup" (submit)="submit()">
+
+            <div *ngFor="let permission of permissions.permissions" class="displayPermissions">
+                <div formArrayName="roster">
+                  <div [formGroupName]="permission.id">
+                    <mat-checkbox name="cp" id="{{ permission.code }}" formControlName="selected">
+                    {{ permissionName(permission.code) }}
+                  </mat-checkbox>
+                  </div>
+                </div>
+              </div>
+
+            </form>
+        </div>
+
+      </div>
+    </ng-container>
+
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px" *ngIf="!isDisabled">
+      <mat-card-actions>
+        <button type="button" mat-raised-button (click)="cancel(); restoreCheckboxes();">Cancel</button>
+        <button mat-raised-button color="primary" (click)="submit()">Submit</button>
+      </mat-card-actions>
+    </div>
+
+  </mat-card>
+
+</div>

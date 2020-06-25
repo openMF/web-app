@@ -80,6 +80,8 @@ import { EditSchedulerJobComponent } from './manage-scheduler-jobs/edit-schedule
 import { ManageSchedulerJobResolver } from './manage-scheduler-jobs/manage-scheduler-job.resolver';
 import { ViewRoleResolver } from './roles-and-permissions/view-role/view-role.resolver';
 import { EntityToEntityMappingResolver } from './entity-to-entity-mapping/entity-to-entity-mapping.resolver';
+import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-tasks/configure-maker-checker-tasks.component';
+import { MakerCheckerTasksResolver } from './configure-maker-checker-tasks/configure-maker-checker-tasks.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -361,6 +363,14 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'configure-mc-tasks',
+        data: { title: extract('Configure Maker Checker Tasks'), breadcrumb: 'Configure Maker Checker Tasks' },
+        component: ConfigureMakerCheckerTasksComponent,
+        resolve: {
+              permissions: MakerCheckerTasksResolver
+          }
+        },
+      {
         path: 'surveys',
         component: ManageSurveysComponent,
         resolve: {
@@ -567,7 +577,8 @@ const routes: Routes = [
     ViewSchedulerJobResolver,
     ManageSchedulerJobResolver,
     ViewRoleResolver,
-    EntityToEntityMappingResolver
+    EntityToEntityMappingResolver,
+    MakerCheckerTasksResolver
   ]
 })
 export class SystemRoutingModule { }
