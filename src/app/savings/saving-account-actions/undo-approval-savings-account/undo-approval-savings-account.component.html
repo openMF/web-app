@@ -1,0 +1,25 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="undoApprovalSavingsAccountForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <mat-form-field fxFlex>
+          <mat-label>Note</mat-label>
+          <textarea matInput formControlName="note"></textarea>
+        </mat-form-field>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+        <button mat-raised-button color="warn" [disabled]="!undoApprovalSavingsAccountForm.valid">Confirm</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>
