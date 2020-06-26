@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material';
 
 /** Custom Dialogs */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { CalculateInterestDialogComponent } from './custom-dialogs/calculate-interest-dialog/calculate-interest-dialog.component';
 
 /** Custom Buttons Configuration */
 import { SavingsButtonsConfiguration } from './savings-buttons.config';
@@ -114,6 +115,9 @@ export class SavingsAccountViewComponent implements OnInit {
       case 'Delete':
         this.deleteSavingsAccount();
         break;
+      case 'Calculate Interest':
+        this.calculateInterest();
+        break;
     }
   }
 
@@ -131,6 +135,31 @@ export class SavingsAccountViewComponent implements OnInit {
         });
       }
     });
+  }
+
+  /**
+   * Calculates savings account's interest
+   */
+  private calculateInterest() {
+    const calculateInterestAccountDialogRef = this.dialog.open(CalculateInterestDialogComponent);
+    calculateInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.confirm) {
+        this.savingsService.executeSavingsAccountCommand(this.savingsAccountData.id, 'calculateInterest', {}).subscribe(() => {
+          this.reload();
+        });
+      }
+    });
+  }
+
+  /**
+   * Refetches data fot the component
+   * TODO: Replace by a custom reload component instead of hard-coded back-routing.
+   */
+  private reload() {
+    const clientId = this.savingsAccountData.clientId;
+    const url: string = this.router.url;
+    this.router.navigateByUrl(`/clients/${clientId}/savingsaccounts`, {skipLocationChange: true})
+      .then(() => this.router.navigate([url]));
   }
 
 }
