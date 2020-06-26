@@ -23,13 +23,17 @@ export class SavingAccountActionsComponent {
     'Activate': boolean
     'Undo Approval': boolean
     'Post Interest As On': boolean
+    'Assign Staff': boolean
+    'Unassign Staff': boolean
   } = {
     'Approve': false,
     'Reject': false,
     'Withdraw': false,
     'Activate': false,
     'Undo Approval': false,
-    'Post Interest As On': false
+    'Post Interest As On': false,
+    'Assign Staff': false,
+    'Unassign Staff': false
   };
 
   /**
