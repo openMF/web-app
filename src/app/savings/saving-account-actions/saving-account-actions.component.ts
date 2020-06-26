@@ -19,10 +19,12 @@ export class SavingAccountActionsComponent {
     'Approve': boolean
     'Reject': boolean
     'Withdraw': boolean
+    'Activate': boolean
   } = {
     'Approve': false,
     'Reject': false,
-    'Withdraw': false
+    'Withdraw': false,
+    'Activate': false
   };
 
   /**
