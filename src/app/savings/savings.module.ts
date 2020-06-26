@@ -32,6 +32,7 @@ import { ActivateSavingsAccountComponent } from './saving-account-actions/activa
 import { UndoApprovalSavingsAccountComponent } from './saving-account-actions/undo-approval-savings-account/undo-approval-savings-account.component';
 import { PostInterestAsOnSavingsAccountComponent } from './saving-account-actions/post-interest-as-on-savings-account/post-interest-as-on-savings-account.component';
 import { SavingsAccountAssignStaffComponent } from './saving-account-actions/savings-account-assign-staff/savings-account-assign-staff.component';
+import { SavingsAccountUnassignStaffComponent } from './saving-account-actions/savings-account-unassign-staff/savings-account-unassign-staff.component';
 
 /**
  * Savings Module
@@ -68,7 +69,8 @@ import { SavingsAccountAssignStaffComponent } from './saving-account-actions/sav
     ActivateSavingsAccountComponent,
     UndoApprovalSavingsAccountComponent,
     PostInterestAsOnSavingsAccountComponent,
-    SavingsAccountAssignStaffComponent
+    SavingsAccountAssignStaffComponent,
+    SavingsAccountUnassignStaffComponent
   ],
   providers: [DatePipe]
 })
