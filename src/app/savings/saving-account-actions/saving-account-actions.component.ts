@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { SavingsService } from '../savings.service';
 
 /**
  * Savings account actions component.
@@ -12,8 +13,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class SavingAccountActionsComponent {
 
-  /** Shares Account Data */
-  sharesAccountData: any;
+  /** Savings Account Data */
+  savingsAccountData: any;
   /** Flag object to store possible actions and render appropriate UI to the user */
   actions: {
     'Approve': boolean
@@ -33,10 +34,16 @@ export class SavingAccountActionsComponent {
 
   /**
    * @param {ActivatedRoute} route Activated Route
+   * @param {SavingsService} savingsService Savings Service
    */
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              private savingsService: SavingsService) {
     const name = this.route.snapshot.params['name'];
-    this.actions[name] = true;
+    const accountId = this.route.parent.snapshot.params['savingAccountId'];
+    this.savingsService.getSavingsAccountAndTemplate(accountId, true).subscribe((response: any) => {
+      this.savingsAccountData = response;
+      this.actions[name] = true;
+    });
   }
 
 }
