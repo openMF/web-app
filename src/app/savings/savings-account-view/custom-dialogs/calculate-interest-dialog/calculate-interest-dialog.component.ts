@@ -14,7 +14,6 @@ export class CalculateInterestDialogComponent {
 
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
-   * @param {any} data savings account id.
    */
   constructor(public dialogRef: MatDialogRef<CalculateInterestDialogComponent>) { }
 

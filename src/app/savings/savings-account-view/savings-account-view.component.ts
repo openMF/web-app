@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 /** Custom Dialogs */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { CalculateInterestDialogComponent } from './custom-dialogs/calculate-interest-dialog/calculate-interest-dialog.component';
+import { PostInterestDialogComponent } from './custom-dialogs/post-interest-dialog/post-interest-dialog.component';
 
 /** Custom Buttons Configuration */
 import { SavingsButtonsConfiguration } from './savings-buttons.config';
@@ -97,6 +98,10 @@ export class SavingsAccountViewComponent implements OnInit {
     }
   }
 
+  /**
+   * Performs action button/option action.
+   * @param {string} name action name.
+   */
   doAction(name: string) {
     switch (name) {
       case 'Approve':
@@ -117,6 +122,9 @@ export class SavingsAccountViewComponent implements OnInit {
         break;
       case 'Calculate Interest':
         this.calculateInterest();
+        break;
+      case 'Post Interest':
+        this.postInterest();
         break;
     }
   }
@@ -145,6 +153,20 @@ export class SavingsAccountViewComponent implements OnInit {
     calculateInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         this.savingsService.executeSavingsAccountCommand(this.savingsAccountData.id, 'calculateInterest', {}).subscribe(() => {
+          this.reload();
+        });
+      }
+    });
+  }
+
+  /**
+   * Posts savings account's interest
+   */
+  private postInterest() {
+    const postInterestAccountDialogRef = this.dialog.open(PostInterestDialogComponent);
+    postInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.confirm) {
+        this.savingsService.executeSavingsAccountCommand(this.savingsAccountData.id, 'postInterest', {}).subscribe(() => {
           this.reload();
         });
       }
