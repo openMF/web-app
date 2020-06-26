@@ -231,7 +231,8 @@
           <i class="fa fa-undo"></i>
         </button>
         <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
-          class="account-action-button" mat-raised-button color="primary">
+          class="account-action-button" mat-raised-button color="primary"
+          [routerLink]="['../','savingsaccounts', element.id, 'actions', 'Activate']">
           <i class="fa fa-check-circle"></i>
         </button>
       </td>

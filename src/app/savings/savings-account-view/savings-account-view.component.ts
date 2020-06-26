@@ -101,6 +101,7 @@ export class SavingsAccountViewComponent implements OnInit {
       case 'Approve':
       case 'Reject':
       case 'Withdraw':
+      case 'Activate':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
       case 'Modify Application':
