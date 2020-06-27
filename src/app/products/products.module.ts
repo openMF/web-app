@@ -1,11 +1,14 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
 import { DatePipe, CommonModule } from '@angular/common';
+import { MatFormFieldModule, MatSelectModule, MatOptionModule } from '@angular/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Modules */
 import { SharedModule } from '../shared/shared.module';
 import { ProductsRoutingModule } from './products-routing.module';
 import { PipesModule } from 'app/pipes/pipes.module';
+import { DirectivesModule } from '../directives/directives.module';
 
 /** Custom Components */
 import { ProductsComponent } from './products.component';
@@ -71,11 +74,18 @@ import { FloatingRatePeriodDialogComponent } from './floating-rates/floating-rat
 import { CreateTaxComponentComponent } from './manage-tax-components/create-tax-component/create-tax-component.component';
 import { EditTaxComponentComponent } from './manage-tax-components/edit-tax-component/edit-tax-component.component';
 import { EditChargeComponent } from './charges/edit-charge/edit-charge.component';
-import { MatFormFieldModule, MatSelectModule, MatOptionModule } from '@angular/material';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ViewTaxGroupComponent } from './manage-tax-groups/view-tax-group/view-tax-group.component';
 import { ShareProductsDividendsComponent } from './share-products/dividends-share-product/dividends.components';
 import { ViewRecurringDepositProductComponent } from './recurring-deposit-products/view-recurring-deposit-product/view-recurring-deposit-product.component';
+import { CreateRecurringDepositProductComponent } from './recurring-deposit-products/create-recurring-deposit-product/create-recurring-deposit-product.component';
+import { RecurringDepositProductAccountingStepComponent } from './recurring-deposit-products/recurring-deposit-product-stepper/recurring-deposit-product-accounting-step/recurring-deposit-product-accounting-step.component';
+import { RecurringDepositProductChargesStepComponent } from './recurring-deposit-products/recurring-deposit-product-stepper/recurring-deposit-product-charges-step/recurring-deposit-product-charges-step.component';
+import { RecurringDepositProductCurrencyStepComponent } from './recurring-deposit-products/recurring-deposit-product-stepper/recurring-deposit-product-currency-step/recurring-deposit-product-currency-step.component';
+import { RecurringDepositProductDetailsStepComponent } from './recurring-deposit-products/recurring-deposit-product-stepper/recurring-deposit-product-details-step/recurring-deposit-product-details-step.component';
+import { RecurringDepositProductInterestRateChartStepComponent } from './recurring-deposit-products/recurring-deposit-product-stepper/recurring-deposit-product-interest-rate-chart-step/recurring-deposit-product-interest-rate-chart-step.component';
+import { RecurringDepositProductPreviewStepComponent } from './recurring-deposit-products/recurring-deposit-product-stepper/recurring-deposit-product-preview-step/recurring-deposit-product-preview-step.component';
+import { RecurringDepositProductSettingsStepComponent } from './recurring-deposit-products/recurring-deposit-product-stepper/recurring-deposit-product-settings-step/recurring-deposit-product-settings-step.component';
+import { RecurringDepositProductTermsStepComponent } from './recurring-deposit-products/recurring-deposit-product-stepper/recurring-deposit-product-terms-step/recurring-deposit-product-terms-step.component';
 
 /**
  * Products Module
@@ -86,7 +96,8 @@ import { ViewRecurringDepositProductComponent } from './recurring-deposit-produc
   imports: [
     SharedModule,
     ProductsRoutingModule,
-    PipesModule
+    PipesModule,
+    DirectivesModule
   ],
   declarations: [
     ProductsComponent,
@@ -155,7 +166,16 @@ import { ViewRecurringDepositProductComponent } from './recurring-deposit-produc
     ViewTaxGroupComponent,
     ShareProductsDividendsComponent,
     DepositProductIncentiveFormDialogComponent,
-    ViewRecurringDepositProductComponent
+    ViewRecurringDepositProductComponent,
+    CreateRecurringDepositProductComponent,
+    RecurringDepositProductAccountingStepComponent,
+    RecurringDepositProductChargesStepComponent,
+    RecurringDepositProductCurrencyStepComponent,
+    RecurringDepositProductDetailsStepComponent,
+    RecurringDepositProductInterestRateChartStepComponent,
+    RecurringDepositProductPreviewStepComponent,
+    RecurringDepositProductSettingsStepComponent,
+    RecurringDepositProductTermsStepComponent
   ],
   entryComponents: [
     DepositProductIncentiveFormDialogComponent,

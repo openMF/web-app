@@ -276,4 +276,9 @@ export class ProductsService {
     const httpParams = new HttpParams().set('productId', productId);
     return this.http.get(`/interestratecharts`, {params: httpParams});
   }
+
+  createRecurringDepositProduct(recurringDepositProduct: string): Observable<any> {
+    return this.http.post('/recurringdepositproducts', recurringDepositProduct);
+  }
+
 }

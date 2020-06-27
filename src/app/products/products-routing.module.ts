@@ -42,6 +42,7 @@ import { CreateTaxComponentComponent } from './manage-tax-components/create-tax-
 import { EditTaxComponentComponent } from './manage-tax-components/edit-tax-component/edit-tax-component.component';
 import { ViewTaxGroupComponent } from './manage-tax-groups/view-tax-group/view-tax-group.component';
 import { ShareProductsDividendsComponent } from './share-products/dividends-share-product/dividends.components';
+import { CreateRecurringDepositProductComponent } from './recurring-deposit-products/create-recurring-deposit-product/create-recurring-deposit-product.component';
 
 /** Custom Resolvers */
 import { LoanProductsResolver } from './loan-products/loan-products.resolver';
@@ -301,7 +302,7 @@ const routes: Routes = [
         },
         {
           path: 'recurring-deposit-products',
-          data: { title: extract('Recurring Deposit Products'), breadcrumb: 'Recurring Deposit Products' },
+          data: { title:  extract('Recurring Deposit Products'), breadcrumb: 'Recurring Deposit Products' },
           children: [
             {
               path: '',
@@ -324,6 +325,14 @@ const routes: Routes = [
                 }
               ]
             },
+            {
+              path: 'create',
+              component: CreateRecurringDepositProductComponent,
+              data: { title: extract('Create Recurring Deposit Product'), breadcrumb: 'Create' },
+              resolve: {
+                recurringDepositProductsTemplate: RecurringDepositProductsTemplateResolver
+              }
+            }
           ]
         },
         {

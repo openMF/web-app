@@ -1,0 +1,46 @@
+<form [formGroup]="recurringDepositProductCurrencyForm">
+
+  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Currency</mat-label>
+      <mat-select formControlName="currencyCode" required>
+        <mat-option *ngFor="let currency of currencyData" [value]="currency.code">
+          {{ currency.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        Currency is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Decimal Places</mat-label>
+      <input type="number" matInput formControlName="digitsAfterDecimal" required>
+      <mat-error>
+        Decimal Places is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Currency in multiples of</mat-label>
+      <input type="number" matInput formControlName="inMultiplesOf" required>
+      <mat-error>
+        Currency in multiples of is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+  </div>
+
+  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+    <button mat-raised-button matStepperPrevious>
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+      Previous
+    </button>
+    <button mat-raised-button matStepperNext>
+      Next&nbsp;&nbsp;
+      <fa-icon icon="arrow-right"></fa-icon>
+    </button>
+  </div>
+
+</form>

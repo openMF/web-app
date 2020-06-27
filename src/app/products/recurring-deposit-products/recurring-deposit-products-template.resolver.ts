@@ -11,7 +11,7 @@ import { ProductsService } from '../products.service';
 @Injectable()
 export class RecurringDepositProductsTemplateResolver implements Resolve<Object> {
 
-  constructor(private productsService: ProductsService) {}
+  constructor(private productsService: ProductsService) { }
 
   /**
    * Returns the recurring deposit products template data.
