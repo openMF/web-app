@@ -79,16 +79,16 @@
           </span>
           <span *ngIf="savingsAccountData.status.value === 'Active' && charge.amountOutstanding !== 0">
             <button class="account-action-button" mat-raised-button color="primary" matTooltip="Pay Charge"
-              *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'">
+              *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'" (click)="payCharge(charge.id)">
               <i class="fa fa-dollar"></i>
             </button>
             <button class="account-action-button" mat-raised-button color="primary" matTooltip="Waive Charge"
-              *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'">
+              *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'" (click)="waiveCharge(charge.id)">
               <i class="fa fa-flag"></i>
             </button>
             <ng-container *ngIf="isRecurringCharge(charge)">
               <button class="account-action-button" mat-raised-button color="primary" matTooltip="Inactivate Charge"
-                *mifosxHasPermission="'INACTIVATE_SAVINGSACCOUNTCHARGE'">
+                *mifosxHasPermission="'INACTIVATE_SAVINGSACCOUNTCHARGE'" (click)="inactivateCharge(charge.id)">
                 <i class="fa fa-ban"></i>
               </button>
             </ng-container>
@@ -97,7 +97,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row" [routerLink]="[row.id]"></tr>
 
     </table>
 
