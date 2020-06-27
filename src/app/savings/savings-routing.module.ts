@@ -15,6 +15,7 @@ import { StandingInstructionsTabComponent } from './savings-account-view/standin
 import { DatatableTabsComponent } from './savings-account-view/datatable-tabs/datatable-tabs.component';
 import { CreateSavingsAccountComponent } from './create-savings-account/create-savings-account.component';
 import { EditSavingsAccountComponent } from './edit-savings-account/edit-savings-account.component';
+import { ViewTransactionComponent } from './savings-account-view/view-transaction/view-transaction.component';
 
 /** Custom Resolvers */
 import { SavingAccountTransactionTemplateResolver } from './common-resolvers/saving-transaction-template.resolver';
@@ -24,6 +25,7 @@ import { SavingsDatatableResolver } from './common-resolvers/savings-datatable.r
 import { SavingsDatatablesResolver } from './common-resolvers/savings-datatables.resolver';
 import { SavingsAccountTemplateResolver } from './common-resolvers/savings-account-template.resolver';
 import { SavingsAccountAndTemplateResolver } from './common-resolvers/savings-account-and-template.resolver';
+import { SavingsAccountTransactionResolver } from './common-resolvers/savings-account-transaction.resolver';
 
 const routes: Routes = [
   {
@@ -89,6 +91,24 @@ const routes: Routes = [
             }
           },
           {
+            path: 'transactions',
+            data: { title: extract('Savings Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+            children: [
+              {
+                path: '',
+                redirectTo: '../transactions', pathMatch: 'prefix'
+              },
+              {
+                path: ':id',
+                data: { routeParamBreadcrumb: 'id' },
+                component: ViewTransactionComponent,
+                resolve: {
+                  savingsAccountTransaction: SavingsAccountTransactionResolver
+                }
+              }
+            ]
+          },
+          {
             path: 'actions/:name',
             data: { title: extract('Savings Account Actions'), routeParamBreadcrumb: 'name' },
             component: SavingAccountActionsComponent
@@ -108,6 +128,7 @@ const routes: Routes = [
               SavingsDatatablesResolver,
               SavingsDatatableResolver,
               SavingsAccountTemplateResolver,
-              SavingsAccountAndTemplateResolver]
+              SavingsAccountAndTemplateResolver,
+              SavingsAccountTransactionResolver]
 })
 export class SavingsRoutingModule {}

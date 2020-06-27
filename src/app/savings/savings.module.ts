@@ -35,6 +35,8 @@ import { SavingsAccountAssignStaffComponent } from './saving-account-actions/sav
 import { SavingsAccountUnassignStaffComponent } from './saving-account-actions/savings-account-unassign-staff/savings-account-unassign-staff.component';
 import { CalculateInterestDialogComponent } from './savings-account-view/custom-dialogs/calculate-interest-dialog/calculate-interest-dialog.component';
 import { PostInterestDialogComponent } from './savings-account-view/custom-dialogs/post-interest-dialog/post-interest-dialog.component';
+import { ViewTransactionComponent } from './savings-account-view/view-transaction/view-transaction.component';
+import { UndoTransactionDialogComponent } from './savings-account-view/custom-dialogs/undo-transaction-dialog/undo-transaction-dialog.component';
 
 /**
  * Savings Module
@@ -74,11 +76,14 @@ import { PostInterestDialogComponent } from './savings-account-view/custom-dialo
     SavingsAccountAssignStaffComponent,
     SavingsAccountUnassignStaffComponent,
     CalculateInterestDialogComponent,
-    PostInterestDialogComponent
+    PostInterestDialogComponent,
+    ViewTransactionComponent,
+    UndoTransactionDialogComponent
   ],
   entryComponents: [
     CalculateInterestDialogComponent,
-    PostInterestDialogComponent
+    PostInterestDialogComponent,
+    UndoTransactionDialogComponent
   ],
   providers: [DatePipe]
 })

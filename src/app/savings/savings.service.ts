@@ -196,12 +196,23 @@ export class SavingsService {
 
   /**
    * @param {string} accountId Savings Account Id
+   * @param {string} transactionId Transaction Id
+   */
+  getSavingsAccountTransaction(accountId: string, transactionId: string) {
+    return this.http.get(`/savingsaccounts/${accountId}/transactions/${transactionId}`);
+  }
+
+  /**
+   * @param {string} accountId Savings Account Id
    * @param {string} command Command
    * @param {any} data Data
    * @returns {Observable<any>} Savings data.
    */
-  executeSavingsAccountTransactionsCommand(accountId: string, command: string, data: any): Observable<any> {
+  executeSavingsAccountTransactionsCommand(accountId: string, command: string, data: any, transactionId?: any): Observable<any> {
     const httpParams = new HttpParams().set('command', command);
+    if (transactionId) {
+      return this.http.post(`/savingsaccounts/${accountId}/transactions/${transactionId}`, data, { params: httpParams });
+    }
     return this.http.post(`/savingsaccounts/${accountId}/transactions`, data, { params: httpParams });
   }
 
