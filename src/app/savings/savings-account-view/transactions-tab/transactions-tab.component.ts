@@ -28,7 +28,7 @@ export class TransactionsTabComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute) {
     this.route.parent.data.subscribe((data: { savingsAccountData: any }) => {
-      this.transactionsData = data.savingsAccountData.transactions;
+      this.transactionsData = data.savingsAccountData.transactions.filter((transaction: any) => !transaction.reversed);
       this.status = data.savingsAccountData.status.value;
     });
   }
