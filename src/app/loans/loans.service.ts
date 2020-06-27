@@ -188,4 +188,14 @@ export class LoansService {
     return this.http.post(`/loans/${loanId}/transactions`, data, {params: httpParams});
   }
 
+  rescheduleLoanTemplate() {
+    return this.http.get('/rescheduleloans/template');
+  }
+
+  submitRescheduleData(data: any) {
+    // https://staging.mifos.io/fineract-provider/api/v1/rescheduleloans?command=reschedule
+    const httpParams = new HttpParams().set('command', 'reschedule');
+    return this.http.post('/rescheduleloans', data, {params: httpParams});
+  }
+
 }

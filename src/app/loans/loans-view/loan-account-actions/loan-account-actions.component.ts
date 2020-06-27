@@ -21,7 +21,8 @@ export class LoanAccountActionsComponent {
             prepay_loan: boolean,
             make_repayment: boolean,
             waive_interest: boolean,
-            close_as_rescheduled: boolean } = {
+            close_as_rescheduled: boolean,
+            reschedule: boolean } = {
               close: false,
               undo_approval: false,
               write_off: false,
@@ -30,7 +31,9 @@ export class LoanAccountActionsComponent {
               prepay_loan: false,
               make_repayment: false,
               waive_interest: false,
-              close_as_rescheduled: false };
+              close_as_rescheduled: false,
+              reschedule: false };
+
   actionButtonData: any;
   actionName: any;
 
