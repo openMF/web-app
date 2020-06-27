@@ -71,6 +71,12 @@
 		  Transactions
 		</a>
 	  </ng-container>
+	  <ng-container *ngIf="loanDetailsData.collateral">
+		<a mat-tab-link [routerLink]="['./loan-collateral']" routerLinkActive #loanCollateralDetails="routerLinkActive"
+	  	  [active]="loanCollateralDetails.isActive">
+	      Loan Collateral Details
+		</a>
+	  </ng-container>
 	  <ng-container *ngIf="loanDetailsData.multiDisburseLoan">
 		<a mat-tab-link [routerLink]="['./loan-tranche-details']" routerLinkActive #loanTrancheDetails="routerLinkActive" [active]="loanTrancheDetails.isActive">
 		  Loan Tranche Details
