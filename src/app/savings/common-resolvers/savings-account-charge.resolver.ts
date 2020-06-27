@@ -9,10 +9,10 @@ import { Observable } from 'rxjs';
 import { SavingsService } from '../savings.service';
 
 /**
- * Savings Account data resolver.
+ * Savings Account Charge data resolver.
  */
 @Injectable()
-export class SavingsAccountViewResolver implements Resolve<Object> {
+export class SavingsAccountChargeResolver implements Resolve<Object> {
 
   /**
    * @param {SavingsService} SavingsService Savings service.
@@ -20,13 +20,14 @@ export class SavingsAccountViewResolver implements Resolve<Object> {
   constructor(private savingsService: SavingsService) { }
 
   /**
-   * Returns the Savings Account data.
+   * Returns the Savings Account Charge data.
    * @param {ActivatedRouteSnapshot} route Route Snapshot
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const savingAccountId = route.paramMap.get('savingAccountId') || route.parent.parent.paramMap.get('savingAccountId');
-    return this.savingsService.getSavingsAccountData(savingAccountId);
+    const savingAccountId = route.parent.paramMap.get('savingAccountId');
+    const chargeId = route.paramMap.get('id');
+    return this.savingsService.getSavingsAccountCharge(savingAccountId, chargeId);
   }
 
 }

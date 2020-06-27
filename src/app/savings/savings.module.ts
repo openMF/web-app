@@ -37,6 +37,10 @@ import { CalculateInterestDialogComponent } from './savings-account-view/custom-
 import { PostInterestDialogComponent } from './savings-account-view/custom-dialogs/post-interest-dialog/post-interest-dialog.component';
 import { ViewTransactionComponent } from './savings-account-view/view-transaction/view-transaction.component';
 import { UndoTransactionDialogComponent } from './savings-account-view/custom-dialogs/undo-transaction-dialog/undo-transaction-dialog.component';
+import { ViewChargeComponent } from './savings-account-view/view-charge/view-charge.component';
+import { WaiveChargeDialogComponent } from './savings-account-view/custom-dialogs/waive-charge-dialog/waive-charge-dialog.component';
+import { InactivateChargeDialogComponent } from './savings-account-view/custom-dialogs/inactivate-charge-dialog/inactivate-charge-dialog.component';
+
 
 /**
  * Savings Module
@@ -78,12 +82,18 @@ import { UndoTransactionDialogComponent } from './savings-account-view/custom-di
     CalculateInterestDialogComponent,
     PostInterestDialogComponent,
     ViewTransactionComponent,
-    UndoTransactionDialogComponent
+    UndoTransactionDialogComponent,
+    ViewChargeComponent,
+    WaiveChargeDialogComponent,
+    InactivateChargeDialogComponent
   ],
   entryComponents: [
     CalculateInterestDialogComponent,
     PostInterestDialogComponent,
-    UndoTransactionDialogComponent
+    UndoTransactionDialogComponent,
+    WaiveChargeDialogComponent,
+    InactivateChargeDialogComponent
+
   ],
   providers: [DatePipe]
 })

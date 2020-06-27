@@ -1,7 +1,7 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog, MatTableDataSource, MatTable } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
@@ -18,43 +18,22 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 
 /**
- * Charges Tab Component
+ * View Charge Component.
  */
 @Component({
-  selector: 'mifosx-charges-tab',
-  templateUrl: './charges-tab.component.html',
-  styleUrls: ['./charges-tab.component.scss']
+  selector: 'mifosx-view-charge',
+  templateUrl: './view-charge.component.html',
+  styleUrls: ['./view-charge.component.scss']
 })
-export class ChargesTabComponent implements OnInit {
+export class ViewChargeComponent {
 
+  /** Charge data. */
+  chargeData: any;
   /** Savings Account Data */
   savingsAccountData: any;
-  /** Charges Data */
-  chargesData: any[];
-  /** Data source for charges table. */
-  dataSource: MatTableDataSource<any>;
-  /** Toggles Charges Table */
-  showInactiveCharges = false;
-  /** Columns to be displayed in charges table. */
-  displayedColumns: string[] = [
-    'name',
-    'feeOrPenalty',
-    'paymentDueAt',
-    'dueAsOf',
-    'repeatsOn',
-    'calculationType',
-    'due',
-    'paid',
-    'waived',
-    'outstanding',
-    'actions'
-  ];
-
-  /** Charges Table Reference */
-  @ViewChild('chargesTable') chargesTableRef: MatTable<Element>;
 
   /**
-   * Retrieves the Savings account data from `resolve`.
+   * Retrieves the Charge data from `resolve`.
    * @param {SavingsService} savingsService Savings Service
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
@@ -66,38 +45,16 @@ export class ChargesTabComponent implements OnInit {
               private datePipe: DatePipe,
               private router: Router,
               public dialog: MatDialog) {
-    this.route.parent.data.subscribe((data: { savingsAccountData: any }) => {
+    this.route.data.subscribe((data: { savingsAccountCharge: any, savingsAccountData: any }) => {
+      this.chargeData = data.savingsAccountCharge;
       this.savingsAccountData = data.savingsAccountData;
-      this.chargesData = this.savingsAccountData.charges;
     });
   }
 
-  ngOnInit() {
-    const activeCharges = this.chargesData ? this.chargesData.filter(charge => charge.isActive) : [];
-    this.dataSource = new MatTableDataSource(activeCharges);
-  }
-
-  /**
-   * Toggles datasource for active/inactive charges.
-   */
-  toggleCharges() {
-    this.showInactiveCharges = !this.showInactiveCharges;
-    if (!this.showInactiveCharges) {
-      const activeCharges = this.chargesData.filter(charge => charge.isActive);
-      this.dataSource.data = activeCharges;
-    } else {
-      const inActiveCharges = this.chargesData.filter(charge => !charge.isActive);
-      this.dataSource.data = inActiveCharges;
-    }
-    this.chargesTableRef.renderRows();
-  }
-
-
   /**
    * Pays the charge.
-   * @param {any} chargeId Charge Id
    */
-  payCharge(chargeId: any) {
+  payCharge() {
     const formfields: FormfieldBase[] = [
       new InputBase({
         controlName: 'amount',
@@ -115,7 +72,7 @@ export class ChargesTabComponent implements OnInit {
       })
     ];
     const data = {
-      title: `Pay Charge ${chargeId}`,
+      title: 'Pay Charge',
       layout: { addButtonText: 'Confirm' },
       formfields: formfields
     };
@@ -130,7 +87,7 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.savingsService.executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'paycharge', dataObject, chargeId)
+        this.savingsService.executeSavingsAccountChargesCommand(this.chargeData.accountId, 'paycharge', dataObject, this.chargeData.id)
           .subscribe(() => {
             this.router.navigate(['../'], { relativeTo: this.route });
           });
@@ -140,13 +97,12 @@ export class ChargesTabComponent implements OnInit {
 
   /**
    * Waive's the charge
-   * @param {any} chargeId Charge Id
    */
-  waiveCharge(chargeId: any) {
-    const waiveChargeDialogRef = this.dialog.open(WaiveChargeDialogComponent, { data: { id: chargeId } });
+  waiveCharge() {
+    const waiveChargeDialogRef = this.dialog.open(WaiveChargeDialogComponent, { data: { id: this.chargeData.id } });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService.executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'waive', {}, chargeId)
+        this.savingsService.executeSavingsAccountChargesCommand(this.chargeData.accountId, 'waive', {}, this.chargeData.id)
           .subscribe(() => {
             this.router.navigate(['../'], { relativeTo: this.route });
           });
@@ -156,13 +112,12 @@ export class ChargesTabComponent implements OnInit {
 
   /**
    * Inactivate's the charge
-   * @param {any} chargeId Charge Id
    */
-  inactivateCharge(chargeId: any) {
-    const inactivateChargeDialogRef = this.dialog.open(InactivateChargeDialogComponent, { data: { id: chargeId } });
+  inactivateCharge() {
+    const inactivateChargeDialogRef = this.dialog.open(InactivateChargeDialogComponent, { data: { id: this.chargeData.id } });
     inactivateChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService.executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'inactivate', {}, chargeId)
+        this.savingsService.executeSavingsAccountChargesCommand(this.chargeData.accountId, 'inactivate', {}, this.chargeData.id)
           .subscribe(() => {
             this.router.navigate(['../'], { relativeTo: this.route });
           });
@@ -171,11 +126,11 @@ export class ChargesTabComponent implements OnInit {
   }
 
   /**
-   * Checks if charge is recurring.
-   * @param {any} charge Charge
+   * Checks if charge is recurring
    */
-  isRecurringCharge(charge: any) {
-    return charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee' || charge.chargeTimeType.value === 'Weekly Fee';
+  isRecurringCharge() {
+    const chargeTimeType = this.chargeData.chargeTimeType.value;
+    return chargeTimeType === 'Monthly Fee' || chargeTimeType === 'Annual Fee' || chargeTimeType === 'Weekly Fee';
   }
 
 }
