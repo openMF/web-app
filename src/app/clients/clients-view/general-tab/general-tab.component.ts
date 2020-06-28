@@ -81,4 +81,14 @@ export class GeneralTabComponent {
     });
   }
 
+
+  /**
+   * Stops the propagation to view pages.
+   * @param $event Mouse Event
+   */
+  routeEdit($event: MouseEvent) {
+    $event.stopPropagation();
+  }
+
+
 }

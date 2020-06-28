@@ -5,17 +5,17 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
-import { SavingsService } from '../savings.service';
+import { SavingsService } from '../../savings.service';
 
 /**
  * Add Savings Charge component.
  */
 @Component({
-  selector: 'mifosx-add-savings-charge',
-  templateUrl: './add-savings-charge.component.html',
-  styleUrls: ['./add-savings-charge.component.scss']
+  selector: 'mifosx-add-charge-savings-account',
+  templateUrl: './add-charge-savings-account.component.html',
+  styleUrls: ['./add-charge-savings-account.component.scss']
 })
-export class AddSavingsChargeComponent implements OnInit {
+export class AddChargeSavingsAccountComponent implements OnInit {
 
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -31,11 +31,12 @@ export class AddSavingsChargeComponent implements OnInit {
   chargeDetails: any;
 
   /**
-   * Retrieves the savings charge template data from `resolve`.
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {AccountingService} accountingService Accounting Service.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
+   * Retrieves charge template data from `resolve`
+   * @param {FormBuilder} formBuilder Form Builder
+   * @param {ActivatedRoute} route Activated Route
+   * @param {Router} router Router
+   * @param {DatePipe} datePipe Date Pipe
+   * @param {SavingsService} savingsService Savings Service
    */
   constructor(
     private formBuilder: FormBuilder,
@@ -44,10 +45,10 @@ export class AddSavingsChargeComponent implements OnInit {
     private datePipe: DatePipe,
     private savingsService: SavingsService
   ) {
-    this.route.data.subscribe((data: { savingsChargeTemplate: any }) => {
-      this.savingsChargeOptions = data.savingsChargeTemplate.chargeOptions;
+    this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
+      this.savingsChargeOptions = data.savingsAccountActionData.chargeOptions;
     });
-    this.savingAccountId = this.route.snapshot.params['savingAccountId'];
+    this.savingAccountId = this.route.parent.snapshot.params['savingAccountId'];
   }
 
   /**
@@ -131,8 +132,9 @@ export class AddSavingsChargeComponent implements OnInit {
         }
       }
     }
-    this.savingsService.createSavingsCharge(this.savingAccountId, 'charges', savingsCharge).subscribe(res => {
-      // this.router.navigate(['../'], { relativeTo: this.route });
+    this.savingsService.createSavingsCharge(this.savingAccountId, 'charges', savingsCharge).subscribe( () => {
+      this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
+
 }

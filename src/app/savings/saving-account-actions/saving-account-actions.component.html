@@ -1,8 +1,10 @@
 <mifosx-approve-savings-account *ngIf="actions['Approve']"></mifosx-approve-savings-account>
 <mifosx-reject-savings-account *ngIf="actions['Reject']"></mifosx-reject-savings-account>
-<mifosx-withdraw-savings-account *ngIf="actions['Withdraw']"></mifosx-withdraw-savings-account>
 <mifosx-activate-savings-account *ngIf="actions['Activate']"></mifosx-activate-savings-account>
 <mifosx-undo-approval-savings-account *ngIf="actions['Undo Approval']"></mifosx-undo-approval-savings-account>
 <mifosx-post-interest-as-on-savings-account *ngIf="actions['Post Interest As On']"></mifosx-post-interest-as-on-savings-account>
-<mifosx-savings-account-assign-staff [savingsAccountData]="savingsAccountData" *ngIf="actions['Assign Staff']"></mifosx-savings-account-assign-staff>
+<mifosx-savings-account-assign-staff *ngIf="actions['Assign Staff']"></mifosx-savings-account-assign-staff>
 <mifosx-savings-account-unassign-staff *ngIf="actions['Unassign Staff']"></mifosx-savings-account-unassign-staff>
+<mifosx-withdraw-by-client-savings-account *ngIf="actions['Withdraw By Client']"></mifosx-withdraw-by-client-savings-account>
+<mifosx-add-charge-savings-account *ngIf="actions['Add Charge']"></mifosx-add-charge-savings-account>
+<mifosx-savings-transactions *ngIf="actions['Withdrawal'] || actions['Deposit']"></mifosx-savings-transactions>

@@ -17,9 +17,6 @@ import { SavingsService } from 'app/savings/savings.service';
 })
 export class SavingsAccountAssignStaffComponent implements OnInit {
 
-  /** Savings Account Data */
-  @Input() savingsAccountData: any;
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -30,6 +27,8 @@ export class SavingsAccountAssignStaffComponent implements OnInit {
   accountId: any;
   /** Field Officer Data */
   fieldOfficerData: any;
+  /** Savings Account Data */
+  savingsAccountData: any;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
@@ -44,6 +43,9 @@ export class SavingsAccountAssignStaffComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router) {
     this.accountId = this.route.parent.snapshot.params['savingAccountId'];
+    this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
+      this.savingsAccountData = data.savingsAccountActionData;
+    });
   }
 
   /**

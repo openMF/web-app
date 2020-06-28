@@ -53,20 +53,18 @@ export class SavingsAccountTransactionsComponent implements OnInit {
               private router: Router,
               private datePipe: DatePipe,
               private savingsService: SavingsService) {
-    this.route.data.subscribe((data: { savingAccountTransactionTemplate: any }) => {
-      this.paymentTypeOptions = data.savingAccountTransactionTemplate.paymentTypeOptions;
+    this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
+      this.paymentTypeOptions = data.savingsAccountActionData.paymentTypeOptions;
     });
+    this.transactionCommand = this.route.snapshot.params['name'].toLowerCase();
+    this.transactionType[this.transactionCommand] = true;
+    this.savingAccountId = this.route.parent.snapshot.params['savingAccountId'];
   }
 
   /**
    * Creates the Saving account transaction form when component loads.
    */
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      this.transactionType[params.type] = true;
-      this.transactionCommand = params.type;
-    });
-    this.savingAccountId = this.route.snapshot.params['savingAccountId'];
     this.createSavingAccountTransactionForm();
   }
 
@@ -115,8 +113,8 @@ export class SavingsAccountTransactionsComponent implements OnInit {
     const transactionData = this.savingAccountTransactionForm.value;
     transactionData.locale = 'en';
     transactionData.dateFormat = dateFormat;
-    this.savingsService.makeTransaction(this.transactionCommand, this.savingAccountId, transactionData).subscribe(res => {
-      this.router.navigate(['../'], { relativeTo: this.route });
+    this.savingsService.executeSavingsAccountTransactionsCommand(this.savingAccountId, this.transactionCommand, transactionData).subscribe(res => {
+      this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
 }

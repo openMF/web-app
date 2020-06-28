@@ -79,16 +79,16 @@
           </span>
           <span *ngIf="savingsAccountData.status.value === 'Active' && charge.amountOutstanding !== 0">
             <button class="account-action-button" mat-raised-button color="primary" matTooltip="Pay Charge"
-              *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'" (click)="payCharge(charge.id)">
+              *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'" (click)="routeEdit($event); payCharge(charge.id)">
               <i class="fa fa-dollar"></i>
             </button>
             <button class="account-action-button" mat-raised-button color="primary" matTooltip="Waive Charge"
-              *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'" (click)="waiveCharge(charge.id)">
+              *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'" (click)="routeEdit($event); waiveCharge(charge.id)">
               <i class="fa fa-flag"></i>
             </button>
             <ng-container *ngIf="isRecurringCharge(charge)">
               <button class="account-action-button" mat-raised-button color="primary" matTooltip="Inactivate Charge"
-                *mifosxHasPermission="'INACTIVATE_SAVINGSACCOUNTCHARGE'" (click)="inactivateCharge(charge.id)">
+                *mifosxHasPermission="'INACTIVATE_SAVINGSACCOUNTCHARGE'" (click)="routeEdit($event); inactivateCharge(charge.id)">
                 <i class="fa fa-ban"></i>
               </button>
             </ng-container>

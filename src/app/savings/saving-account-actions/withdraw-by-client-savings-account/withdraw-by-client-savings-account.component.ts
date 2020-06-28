@@ -8,14 +8,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SavingsService } from 'app/savings/savings.service';
 
 /**
- * Withdraw Savings Account Component
+ * Withdraw By Client Savings Account Component
  */
 @Component({
-  selector: 'mifosx-withdraw-savings-account',
-  templateUrl: './withdraw-savings-account.component.html',
-  styleUrls: ['./withdraw-savings-account.component.scss']
+  selector: 'mifosx-withdraw-by-client-savings-account',
+  templateUrl: './withdraw-by-client-savings-account.component.html',
+  styleUrls: ['./withdraw-by-client-savings-account.component.scss']
 })
-export class WithdrawSavingsAccountComponent implements OnInit {
+export class WithdrawByClientSavingsAccountComponent implements OnInit {
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -59,7 +59,7 @@ export class WithdrawSavingsAccountComponent implements OnInit {
   }
 
   /**
-   * Submits the form and withdraws the saving account,
+   * Submits the form and withdraws the saving account by client,
    * if successful redirects to the saving account.
    */
   submit() {

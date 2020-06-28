@@ -132,7 +132,7 @@ export class ChargesTabComponent implements OnInit {
         };
         this.savingsService.executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'paycharge', dataObject, chargeId)
           .subscribe(() => {
-            this.router.navigate(['../'], { relativeTo: this.route });
+            this.reload();
           });
       }
     });
@@ -148,7 +148,7 @@ export class ChargesTabComponent implements OnInit {
       if (response.confirm) {
         this.savingsService.executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'waive', {}, chargeId)
           .subscribe(() => {
-            this.router.navigate(['../'], { relativeTo: this.route });
+            this.reload();
           });
       }
     });
@@ -164,7 +164,7 @@ export class ChargesTabComponent implements OnInit {
       if (response.confirm) {
         this.savingsService.executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'inactivate', {}, chargeId)
           .subscribe(() => {
-            this.router.navigate(['../'], { relativeTo: this.route });
+            this.reload();
           });
       }
     });
@@ -176,6 +176,25 @@ export class ChargesTabComponent implements OnInit {
    */
   isRecurringCharge(charge: any) {
     return charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee' || charge.chargeTimeType.value === 'Weekly Fee';
+  }
+
+  /**
+   * Stops the propagation to view charge page.
+   * @param $event Mouse Event
+   */
+  routeEdit($event: MouseEvent) {
+    $event.stopPropagation();
+  }
+
+  /**
+   * Refetches data fot the component
+   * TODO: Replace by a custom reload component instead of hard-coded back-routing.
+   */
+  private reload() {
+    const clientId = this.savingsAccountData.clientId;
+    const url: string = this.router.url;
+    this.router.navigateByUrl(`/clients/${clientId}/savingsaccounts`, {skipLocationChange: true})
+      .then(() => this.router.navigate([url]));
   }
 
 }

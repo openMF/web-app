@@ -24,16 +24,6 @@ export class SavingsService {
   }
 
   /**
-   * @param {string} action transaction type.
-   * @param {string} savingAccountId saving account id.
-   * @param {any} transactionData transaction details for saving account.
-   * @returns {Observable<any>}
-   */
-  makeTransaction(action: string, savingAccountId: string, transactionData: any): Observable<any> {
-    return this.http.post(`/savingsaccounts/${savingAccountId}/transactions?command=${action}`, transactionData);
-  }
-
-  /**
    * @param {string} savingAccountId saving account id.
    * @returns {Observable<any>}
    */

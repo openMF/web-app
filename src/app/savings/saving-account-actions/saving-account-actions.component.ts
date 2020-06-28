@@ -1,7 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SavingsService } from '../savings.service';
 
 /**
  * Savings account actions component.
@@ -13,41 +12,39 @@ import { SavingsService } from '../savings.service';
 })
 export class SavingAccountActionsComponent {
 
-  /** Savings Account Data */
-  savingsAccountData: any;
   /** Flag object to store possible actions and render appropriate UI to the user */
   actions: {
     'Approve': boolean
     'Reject': boolean
-    'Withdraw': boolean
+    'Withdrawal': boolean
+    'Deposit': boolean
     'Activate': boolean
     'Undo Approval': boolean
     'Post Interest As On': boolean
-    'Assign Staff': boolean
+    'Assign Staff': boolean // savings account and template
+    'Add Charge': boolean
     'Unassign Staff': boolean
+    'Withdraw By Client': boolean
   } = {
     'Approve': false,
     'Reject': false,
-    'Withdraw': false,
+    'Withdrawal': false,
+    'Deposit': false,
     'Activate': false,
     'Undo Approval': false,
     'Post Interest As On': false,
     'Assign Staff': false,
-    'Unassign Staff': false
+    'Add Charge': false,
+    'Unassign Staff': false,
+    'Withdraw By Client': false
   };
 
   /**
    * @param {ActivatedRoute} route Activated Route
-   * @param {SavingsService} savingsService Savings Service
    */
-  constructor(private route: ActivatedRoute,
-              private savingsService: SavingsService) {
+  constructor(private route: ActivatedRoute) {
     const name = this.route.snapshot.params['name'];
-    const accountId = this.route.parent.snapshot.params['savingAccountId'];
-    this.savingsService.getSavingsAccountAndTemplate(accountId, true).subscribe((response: any) => {
-      this.savingsAccountData = response;
-      this.actions[name] = true;
-    });
+    this.actions[name] = true;
   }
 
 }
