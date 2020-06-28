@@ -40,7 +40,7 @@
         <div fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column">
           <mat-label fxFlexAlign="center">Show Payment Details</mat-label>
           <button type="button" mat-mini-fab color="primary" (click)="addPaymentDetails()">
-            <fa-icon icon="plus-circle" size="lg"></fa-icon>
+            <fa-icon [icon]="!addPaymentDetailsFlag ? 'plus-circle' : 'minus-circle'" size="lg"></fa-icon>
           </button>
         </div>
 

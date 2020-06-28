@@ -1,0 +1,98 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="closeSavingsAccountForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Closed On Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closedOnDatePicker" required formControlName="closedOnDate">
+            <mat-datepicker-toggle matSuffix [for]="closedOnDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #closedOnDatePicker></mat-datepicker>
+            <mat-error *ngIf="closeSavingsAccountForm.controls.closedOnDate.hasError('required')">
+              Closed On Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-checkbox class="m-b-25 m-t-15" formControlName="withdrawBalance">
+            Withdraw Balance
+          </mat-checkbox>
+
+          <mat-checkbox  formControlName="postInterestValidationOnClosure">
+            Is Interest Posting required on closure date?
+          </mat-checkbox>
+
+          <div *ngIf="closeSavingsAccountForm.controls['withdrawBalance'].value" fxLayout="column">
+
+            <mat-form-field class="m-t-20" *ngIf="closeSavingsAccountForm.controls['amount']">
+              <mat-label>Transaction Amount</mat-label>
+              <input type=number required matInput formControlName="amount"/>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="closeSavingsAccountForm.controls['paymentTypeId']">
+              <mat-label>Payment Type</mat-label>
+              <mat-select formControlName="paymentTypeId">
+                <mat-option *ngFor="let paymentType of paymentTypeOptions"
+                  [value]="paymentType.id">
+                  {{ paymentType.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <div fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column" class="m-t-10">
+              <mat-label fxFlexAlign="center">Show Payment Details</mat-label>
+              <button type="button" mat-mini-fab color="primary" (click)="addPaymentDetails()">
+                <fa-icon [icon]="!addPaymentDetailsFlag ? 'plus-circle' : 'minus-circle'" size="lg"></fa-icon>
+              </button>
+            </div>
+    
+            <mat-form-field *ngIf="closeSavingsAccountForm.controls['accountNumber']">
+              <mat-label>Account Number</mat-label>
+              <input type="number" formControlName="accountNumber" matInput />
+            </mat-form-field>
+    
+            <mat-form-field *ngIf="closeSavingsAccountForm.controls['checkNumber']">
+              <mat-label>Cheque</mat-label>
+              <input type="number" formControlName="checkNumber" matInput />
+            </mat-form-field>
+    
+            <mat-form-field *ngIf="closeSavingsAccountForm.controls['routingCode']">
+              <mat-label>Routing Code</mat-label>
+              <input formControlName="routingCode" matInput />
+            </mat-form-field>
+    
+            <mat-form-field *ngIf="closeSavingsAccountForm.controls['receiptNumber']">
+              <mat-label>Receipt Number</mat-label>
+              <input formControlName="receiptNumber" matInput />
+            </mat-form-field>
+    
+            <mat-form-field *ngIf="closeSavingsAccountForm.controls['bankNumber']">
+              <mat-label>Bank</mat-label>
+              <input formControlName="bankNumber" matInput />
+            </mat-form-field>
+
+          </div>
+
+          <mat-form-field>
+            <mat-label>Note</mat-label>
+            <textarea matInput formControlName="note"></textarea>
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+        <button mat-raised-button color="warn" [disabled]="!closeSavingsAccountForm.valid">Confirm</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>
