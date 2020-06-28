@@ -216,24 +216,26 @@
     <ng-container matColumnDef="Actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let element">
-        <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary">
+        <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary"
+          (click)="routeEdit($event)" [routerLink]="['../','savingsaccounts', element.id, 'actions', 'Deposit']">
           <i class="fa fa-arrow-up"></i>
         </button>
-        <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary">
+        <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary"
+          (click)="routeEdit($event)" [routerLink]="['../','savingsaccounts', element.id, 'actions', 'Withdrawal']">
           <i class="fa fa-arrow-down"></i>
         </button>
         <button *ngIf="element.status.submittedAndPendingApproval" class="account-action-button" mat-raised-button
-          color="primary" [routerLink]="['../','savingsaccounts', element.id, 'actions', 'Approve']">
+          color="primary" (click)="routeEdit($event)" [routerLink]="['../','savingsaccounts', element.id, 'actions', 'Approve']">
           <i class="fa fa-check"></i>
         </button>
         <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
           class="account-action-button" mat-raised-button color="primary"
-          [routerLink]="['../','savingsaccounts', element.id, 'actions', 'Undo Approval']">
+          (click)="routeEdit($event)" [routerLink]="['../','savingsaccounts', element.id, 'actions', 'Undo Approval']">
           <i class="fa fa-undo"></i>
         </button>
         <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
           class="account-action-button" mat-raised-button color="primary"
-          [routerLink]="['../','savingsaccounts', element.id, 'actions', 'Activate']">
+          (click)="routeEdit($event)" [routerLink]="['../','savingsaccounts', element.id, 'actions', 'Activate']">
           <i class="fa fa-check-circle"></i>
         </button>
       </td>
@@ -300,15 +302,15 @@
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let element">
         <button *ngIf="element.status.submittedAndPendingApproval" class="account-action-button" mat-raised-button
-          color="primary" [routerLink]="['../','sharesaccounts', element.id, 'actions', 'Approve']">
+          color="primary" (click)="routeEdit($event)" [routerLink]="['../','sharesaccounts', element.id, 'actions', 'Approve']">
           <i class="fa fa-check"></i>
         </button>
         <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
-          class="account-action-button" mat-raised-button color="primary" [routerLink]="['../','sharesaccounts', element.id, 'actions', 'Undo Approval']">
+          class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)" [routerLink]="['../','sharesaccounts', element.id, 'actions', 'Undo Approval']">
           <i class="fa fa-undo"></i>
         </button>
         <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
-          class="account-action-button" mat-raised-button color="primary" [routerLink]="['../','sharesaccounts', element.id, 'actions', 'Activate']">
+          class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)" [routerLink]="['../','sharesaccounts', element.id, 'actions', 'Activate']">
           <i class="fa fa-check-circle"></i>
         </button>
       </td>

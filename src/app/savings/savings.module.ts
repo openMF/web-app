@@ -11,7 +11,6 @@ import { DirectivesModule } from '../directives/directives.module';
 /** Custom Components */
 import { SavingAccountActionsComponent } from './saving-account-actions/saving-account-actions.component';
 import { SavingsAccountTransactionsComponent } from './saving-account-actions/savings-account-transactions/savings-account-transactions.component';
-import { AddSavingsChargeComponent } from './add-savings-charge/add-savings-charge.component';
 import { TransactionsTabComponent } from './savings-account-view/transactions-tab/transactions-tab.component';
 import { SavingsAccountViewComponent } from './savings-account-view/savings-account-view.component';
 import { ChargesTabComponent } from './savings-account-view/charges-tab/charges-tab.component';
@@ -27,7 +26,6 @@ import { SavingsAccountPreviewStepComponent } from './savings-account-stepper/sa
 import { EditSavingsAccountComponent } from './edit-savings-account/edit-savings-account.component';
 import { ApproveSavingsAccountComponent } from './saving-account-actions/approve-savings-account/approve-savings-account.component';
 import { RejectSavingsAccountComponent } from './saving-account-actions/reject-savings-account/reject-savings-account.component';
-import { WithdrawSavingsAccountComponent } from './saving-account-actions/withdraw-savings-account/withdraw-savings-account.component';
 import { ActivateSavingsAccountComponent } from './saving-account-actions/activate-savings-account/activate-savings-account.component';
 import { UndoApprovalSavingsAccountComponent } from './saving-account-actions/undo-approval-savings-account/undo-approval-savings-account.component';
 import { PostInterestAsOnSavingsAccountComponent } from './saving-account-actions/post-interest-as-on-savings-account/post-interest-as-on-savings-account.component';
@@ -40,6 +38,8 @@ import { UndoTransactionDialogComponent } from './savings-account-view/custom-di
 import { ViewChargeComponent } from './savings-account-view/view-charge/view-charge.component';
 import { WaiveChargeDialogComponent } from './savings-account-view/custom-dialogs/waive-charge-dialog/waive-charge-dialog.component';
 import { InactivateChargeDialogComponent } from './savings-account-view/custom-dialogs/inactivate-charge-dialog/inactivate-charge-dialog.component';
+import { WithdrawByClientSavingsAccountComponent } from './saving-account-actions/withdraw-by-client-savings-account/withdraw-by-client-savings-account.component';
+import { AddChargeSavingsAccountComponent } from './saving-account-actions/add-charge-savings-account/add-charge-savings-account.component';
 
 
 /**
@@ -57,7 +57,6 @@ import { InactivateChargeDialogComponent } from './savings-account-view/custom-d
   declarations: [
     SavingAccountActionsComponent,
     SavingsAccountTransactionsComponent,
-    AddSavingsChargeComponent,
     TransactionsTabComponent,
     SavingsAccountViewComponent,
     ChargesTabComponent,
@@ -73,7 +72,6 @@ import { InactivateChargeDialogComponent } from './savings-account-view/custom-d
     EditSavingsAccountComponent,
     ApproveSavingsAccountComponent,
     RejectSavingsAccountComponent,
-    WithdrawSavingsAccountComponent,
     ActivateSavingsAccountComponent,
     UndoApprovalSavingsAccountComponent,
     PostInterestAsOnSavingsAccountComponent,
@@ -85,7 +83,9 @@ import { InactivateChargeDialogComponent } from './savings-account-view/custom-d
     UndoTransactionDialogComponent,
     ViewChargeComponent,
     WaiveChargeDialogComponent,
-    InactivateChargeDialogComponent
+    InactivateChargeDialogComponent,
+    WithdrawByClientSavingsAccountComponent,
+    AddChargeSavingsAccountComponent
   ],
   entryComponents: [
     CalculateInterestDialogComponent,

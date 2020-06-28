@@ -1,7 +1,7 @@
 
 
-<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
-  <span *ngIf="savingsAccountData.status.value === 'Active' && chargeData.amountOutstanding !== 0">
+<div *ngIf="savingsAccountData.status.value === 'Active' && chargeData.amountOutstanding !== 0"
+  fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
     <button mat-raised-button color="accent" *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'" (click)="payCharge()">
       <fa-icon icon="dollar-sign"></fa-icon>&nbsp;&nbsp;
       Pay Charge
@@ -16,7 +16,6 @@
         Inactivate Charge
       </button>
     </span>
-  </span>
 </div>
 
 <div class="container">

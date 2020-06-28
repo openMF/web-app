@@ -9,7 +9,6 @@ import { extract } from '../core/i18n/i18n.service';
 import { SavingsAccountViewComponent } from './savings-account-view/savings-account-view.component';
 import { TransactionsTabComponent } from './savings-account-view/transactions-tab/transactions-tab.component';
 import { SavingAccountActionsComponent } from './saving-account-actions/saving-account-actions.component';
-import { AddSavingsChargeComponent } from './add-savings-charge/add-savings-charge.component';
 import { ChargesTabComponent } from './savings-account-view/charges-tab/charges-tab.component';
 import { StandingInstructionsTabComponent } from './savings-account-view/standing-instructions-tab/standing-instructions-tab.component';
 import { DatatableTabsComponent } from './savings-account-view/datatable-tabs/datatable-tabs.component';
@@ -19,15 +18,14 @@ import { ViewTransactionComponent } from './savings-account-view/view-transactio
 import { ViewChargeComponent } from './savings-account-view/view-charge/view-charge.component';
 
 /** Custom Resolvers */
-import { SavingAccountTransactionTemplateResolver } from './common-resolvers/saving-transaction-template.resolver';
-import { SavingsChargeTemplateResolver } from './common-resolvers/savings-charge-template.resolver';
 import { SavingsAccountViewResolver } from './common-resolvers/savings-account-view.resolver';
 import { SavingsDatatableResolver } from './common-resolvers/savings-datatable.resolver';
 import { SavingsDatatablesResolver } from './common-resolvers/savings-datatables.resolver';
 import { SavingsAccountTemplateResolver } from './common-resolvers/savings-account-template.resolver';
 import { SavingsAccountAndTemplateResolver } from './common-resolvers/savings-account-and-template.resolver';
 import { SavingsAccountTransactionResolver } from './common-resolvers/savings-account-transaction.resolver';
-import { SavingsAccountChargeResolver} from './common-resolvers/savings-account-charge.resolver';
+import { SavingsAccountChargeResolver } from './common-resolvers/savings-account-charge.resolver';
+import { SavingsAccountActionsResolver } from './common-resolvers/savings-account-actions.resolver';
 
 const routes: Routes = [
   {
@@ -45,6 +43,9 @@ const routes: Routes = [
       {
         path: ':savingAccountId',
         data: { title: extract('Saving Account View'), routeParamBreadcrumb: 'savingAccountId' },
+        resolve: {
+          savingsAccountData: SavingsAccountViewResolver
+        },
         children: [
           {
             path: '',
@@ -123,7 +124,6 @@ const routes: Routes = [
                 data: { routeParamBreadcrumb: 'id' },
                 component: ViewChargeComponent,
                 resolve: {
-                  savingsAccountData: SavingsAccountViewResolver,
                   savingsAccountCharge: SavingsAccountChargeResolver
                 }
               }
@@ -132,7 +132,10 @@ const routes: Routes = [
           {
             path: 'actions/:name',
             data: { title: extract('Savings Account Actions'), routeParamBreadcrumb: 'name' },
-            component: SavingAccountActionsComponent
+            component: SavingAccountActionsComponent,
+            resolve: {
+              savingsAccountActionData: SavingsAccountActionsResolver
+            }
           }
         ]
       }
@@ -143,14 +146,13 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   declarations: [],
-  providers: [SavingAccountTransactionTemplateResolver,
-              SavingsChargeTemplateResolver,
-              SavingsAccountViewResolver,
+  providers: [SavingsAccountViewResolver,
               SavingsDatatablesResolver,
               SavingsDatatableResolver,
               SavingsAccountTemplateResolver,
               SavingsAccountAndTemplateResolver,
               SavingsAccountTransactionResolver,
-              SavingsAccountChargeResolver]
+              SavingsAccountChargeResolver,
+              SavingsAccountActionsResolver]
 })
 export class SavingsRoutingModule {}
