@@ -34,6 +34,7 @@ export class SavingsAccountActionsResolver implements Resolve<Object> {
         return this.savingsService.getSavingsChargeTemplateResource(savingAccountId);
       case 'Withdrawal':
       case 'Deposit':
+      case 'Close':
         return this.savingsService.getSavingsTransactionTemplateResource(savingAccountId);
       default:
         return undefined;

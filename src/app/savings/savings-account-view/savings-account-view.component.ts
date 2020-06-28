@@ -108,6 +108,7 @@ export class SavingsAccountViewComponent implements OnInit {
       case 'Reject':
       case 'Deposit':
       case 'Activate':
+      case 'Close':
       case 'Undo Approval':
       case 'Post Interest As On':
       case 'Assign Staff':

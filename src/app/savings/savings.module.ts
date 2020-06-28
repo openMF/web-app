@@ -40,6 +40,7 @@ import { WaiveChargeDialogComponent } from './savings-account-view/custom-dialog
 import { InactivateChargeDialogComponent } from './savings-account-view/custom-dialogs/inactivate-charge-dialog/inactivate-charge-dialog.component';
 import { WithdrawByClientSavingsAccountComponent } from './saving-account-actions/withdraw-by-client-savings-account/withdraw-by-client-savings-account.component';
 import { AddChargeSavingsAccountComponent } from './saving-account-actions/add-charge-savings-account/add-charge-savings-account.component';
+import { CloseSavingsAccountComponent } from './saving-account-actions/close-savings-account/close-savings-account.component';
 
 
 /**
@@ -85,7 +86,8 @@ import { AddChargeSavingsAccountComponent } from './saving-account-actions/add-c
     WaiveChargeDialogComponent,
     InactivateChargeDialogComponent,
     WithdrawByClientSavingsAccountComponent,
-    AddChargeSavingsAccountComponent
+    AddChargeSavingsAccountComponent,
+    CloseSavingsAccountComponent
   ],
   entryComponents: [
     CalculateInterestDialogComponent,
