@@ -41,6 +41,7 @@ import { InactivateChargeDialogComponent } from './savings-account-view/custom-d
 import { WithdrawByClientSavingsAccountComponent } from './saving-account-actions/withdraw-by-client-savings-account/withdraw-by-client-savings-account.component';
 import { AddChargeSavingsAccountComponent } from './saving-account-actions/add-charge-savings-account/add-charge-savings-account.component';
 import { CloseSavingsAccountComponent } from './saving-account-actions/close-savings-account/close-savings-account.component';
+import { ToggleWithholdTaxDialogComponent } from './savings-account-view/custom-dialogs/toggle-withhold-tax-dialog/toggle-withhold-tax-dialog.component';
 
 
 /**
@@ -87,14 +88,16 @@ import { CloseSavingsAccountComponent } from './saving-account-actions/close-sav
     InactivateChargeDialogComponent,
     WithdrawByClientSavingsAccountComponent,
     AddChargeSavingsAccountComponent,
-    CloseSavingsAccountComponent
+    CloseSavingsAccountComponent,
+    ToggleWithholdTaxDialogComponent
   ],
   entryComponents: [
     CalculateInterestDialogComponent,
     PostInterestDialogComponent,
     UndoTransactionDialogComponent,
     WaiveChargeDialogComponent,
-    InactivateChargeDialogComponent
+    InactivateChargeDialogComponent,
+    ToggleWithholdTaxDialogComponent
 
   ],
   providers: [DatePipe]

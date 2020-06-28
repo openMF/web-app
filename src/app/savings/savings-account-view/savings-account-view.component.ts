@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { CalculateInterestDialogComponent } from './custom-dialogs/calculate-interest-dialog/calculate-interest-dialog.component';
 import { PostInterestDialogComponent } from './custom-dialogs/post-interest-dialog/post-interest-dialog.component';
+import { ToggleWithholdTaxDialogComponent } from './custom-dialogs/toggle-withhold-tax-dialog/toggle-withhold-tax-dialog.component';
 
 /** Custom Buttons Configuration */
 import { SavingsButtonsConfiguration } from './savings-buttons.config';
@@ -98,6 +99,18 @@ export class SavingsAccountViewComponent implements OnInit {
     }
   }
 
+
+  /**
+   * Refetches data fot the component
+   * TODO: Replace by a custom reload component instead of hard-coded back-routing.
+   */
+  reload() {
+    const clientId = this.savingsAccountData.clientId;
+    const url: string = this.router.url;
+    this.router.navigateByUrl(`/clients/${clientId}/savingsaccounts`, {skipLocationChange: true})
+      .then(() => this.router.navigate([url]));
+  }
+
   /**
    * Performs action button/option action.
    * @param {string} name action name.
@@ -131,6 +144,12 @@ export class SavingsAccountViewComponent implements OnInit {
         break;
       case 'Post Interest':
         this.postInterest();
+        break;
+      case 'Enable Withhold Tax':
+        this.enableWithHoldTax();
+        break;
+      case 'Disable Withhold Tax':
+        this.disableWithHoldTax();
         break;
     }
   }
@@ -180,14 +199,37 @@ export class SavingsAccountViewComponent implements OnInit {
   }
 
   /**
-   * Refetches data fot the component
-   * TODO: Replace by a custom reload component instead of hard-coded back-routing.
+   * Enables withhold tax for savings account.
    */
-  private reload() {
-    const clientId = this.savingsAccountData.clientId;
-    const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients/${clientId}/savingsaccounts`, {skipLocationChange: true})
-      .then(() => this.router.navigate([url]));
+  private enableWithHoldTax() {
+    const deleteSavingsAccountDialogRef = this.dialog.open(ToggleWithholdTaxDialogComponent, {
+      data: { isEnable: true }
+    });
+    deleteSavingsAccountDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.confirm) {
+        this.savingsService.executeSavingsAccountUpdateCommand(this.savingsAccountData.id, 'updateWithHoldTax', { withHoldTax: true})
+          .subscribe(() => {
+            this.reload();
+          });
+      }
+    });
+  }
+
+  /**
+   * Disables withhold tac for savings account
+   */
+  private disableWithHoldTax() {
+    const disableWithHoldTaxDialogRef = this.dialog.open(ToggleWithholdTaxDialogComponent, {
+      data: { isEnable: false }
+    });
+    disableWithHoldTaxDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.confirm) {
+        this.savingsService.executeSavingsAccountUpdateCommand(this.savingsAccountData.id, 'updateWithHoldTax', { withHoldTax: false})
+          .subscribe(() => {
+            this.reload();
+          });
+      }
+    });
   }
 
 }

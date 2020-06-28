@@ -186,6 +186,17 @@ export class SavingsService {
 
   /**
    * @param {string} accountId Savings Account Id
+   * @param {string} command Command
+   * @param {any} data Data
+   * @returns {Observable<any>} Savings data.
+   */
+  executeSavingsAccountUpdateCommand(accountId: string, command: string, data: any): Observable<any> {
+    const httpParams = new HttpParams().set('command', command);
+    return this.http.put(`/savingsaccounts/${accountId}`, data, { params: httpParams });
+  }
+
+  /**
+   * @param {string} accountId Savings Account Id
    * @param {string} transactionId Transaction Id
    */
   getSavingsAccountTransaction(accountId: string, transactionId: string) {
