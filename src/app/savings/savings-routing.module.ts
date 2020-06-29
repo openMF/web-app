@@ -16,6 +16,7 @@ import { CreateSavingsAccountComponent } from './create-savings-account/create-s
 import { EditSavingsAccountComponent } from './edit-savings-account/edit-savings-account.component';
 import { ViewTransactionComponent } from './savings-account-view/view-transaction/view-transaction.component';
 import { ViewChargeComponent } from './savings-account-view/view-charge/view-charge.component';
+import { ExportTransactionsComponent } from './savings-account-view/transactions-tab/export-transactions/export-transactions.component';
 
 /** Custom Resolvers */
 import { SavingsAccountViewResolver } from './common-resolvers/savings-account-view.resolver';
@@ -26,6 +27,7 @@ import { SavingsAccountAndTemplateResolver } from './common-resolvers/savings-ac
 import { SavingsAccountTransactionResolver } from './common-resolvers/savings-account-transaction.resolver';
 import { SavingsAccountChargeResolver } from './common-resolvers/savings-account-charge.resolver';
 import { SavingsAccountActionsResolver } from './common-resolvers/savings-account-actions.resolver';
+
 
 const routes: Routes = [
   {
@@ -56,8 +58,18 @@ const routes: Routes = [
             children: [
               {
                 path: 'transactions',
-                component: TransactionsTabComponent,
-                data: { title: extract('Savings Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false }
+                data: { title: extract('Savings Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+                children: [
+                  {
+                    path: '',
+                    component: TransactionsTabComponent
+
+                  },
+                  {
+                    path: 'export',
+                    component: ExportTransactionsComponent
+                  }
+                ]
               },
               {
                 path: 'charges',
