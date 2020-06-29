@@ -47,7 +47,7 @@
       <ng-container matColumnDef="viewReciept">
         <th mat-header-cell *matHeaderCellDef> View Reciept </th>
         <td mat-cell *matCellDef="let transaction"> 
-          <button class="account-action-button" mat-raised-button color="primary">
+          <button class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)" [routerLink]="[transaction.id, 'reciept']">
             <i class="fa fa-file" matTooltip="View Reciept"></i>
           </button>
         </td>

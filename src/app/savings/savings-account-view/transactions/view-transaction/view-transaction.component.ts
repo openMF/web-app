@@ -8,7 +8,7 @@ import { DatePipe } from '@angular/common';
 import { SavingsService } from 'app/savings/savings.service';
 
 /** Custom Dialogs */
-import { UndoTransactionDialogComponent } from '../custom-dialogs/undo-transaction-dialog/undo-transaction-dialog.component';
+import { UndoTransactionDialogComponent } from '../../custom-dialogs/undo-transaction-dialog/undo-transaction-dialog.component';
 
 /**
  * View Transaction Component.
