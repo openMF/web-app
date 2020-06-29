@@ -6,7 +6,7 @@
     </div>
     <div class="action-button m-b-20" fxLayout="row" fxLayoutGap="20px" *ngIf="checkStatus()">
       <button mat-raised-button color="primary">View Journal Entries</button>
-      <button mat-raised-button color="primary">Export</button>
+      <button mat-raised-button color="primary" [routerLink]="['export']">Export</button>
     </div>
   </div>
 

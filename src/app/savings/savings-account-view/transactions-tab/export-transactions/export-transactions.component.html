@@ -1,0 +1,35 @@
+<form class="m-t-20" fxLayout="column" [formGroup]="transactionsReportForm" (ngSubmit)="generate()">
+
+  <div fxLayout="row" fxLayoutGap="3%" fxLayoutAlign="center">
+
+    <mat-form-field fxFlex="30%">
+      <mat-label>From Date</mat-label>
+      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fromDatePicker" required formControlName="fromDate">
+      <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #fromDatePicker></mat-datepicker>
+      <mat-error>
+        From date is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="30%">
+      <mat-label>To Date</mat-label>
+      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="toDatePicker" required formControlName="toDate">
+      <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #toDatePicker></mat-datepicker>
+      <mat-error>
+        To date is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+  </div>
+
+  <div class="generate-button" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5%">
+    <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+    <button mat-raised-button color="primary" [disabled]="!transactionsReportForm.valid">
+    <fa-icon icon="cogs"></fa-icon>&nbsp;&nbsp;Generate Report &nbsp;</button>
+  </div>
+
+</form>
+
+<iframe *ngIf="!hideOutput" [src]="pentahoUrl" frameborder="0" width=100% height="750px;"></iframe>
