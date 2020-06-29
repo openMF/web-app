@@ -33,7 +33,7 @@ import { SavingsAccountAssignStaffComponent } from './saving-account-actions/sav
 import { SavingsAccountUnassignStaffComponent } from './saving-account-actions/savings-account-unassign-staff/savings-account-unassign-staff.component';
 import { CalculateInterestDialogComponent } from './savings-account-view/custom-dialogs/calculate-interest-dialog/calculate-interest-dialog.component';
 import { PostInterestDialogComponent } from './savings-account-view/custom-dialogs/post-interest-dialog/post-interest-dialog.component';
-import { ViewTransactionComponent } from './savings-account-view/view-transaction/view-transaction.component';
+import { ViewTransactionComponent } from './savings-account-view/transactions/view-transaction/view-transaction.component';
 import { UndoTransactionDialogComponent } from './savings-account-view/custom-dialogs/undo-transaction-dialog/undo-transaction-dialog.component';
 import { ViewChargeComponent } from './savings-account-view/view-charge/view-charge.component';
 import { WaiveChargeDialogComponent } from './savings-account-view/custom-dialogs/waive-charge-dialog/waive-charge-dialog.component';
@@ -42,6 +42,7 @@ import { WithdrawByClientSavingsAccountComponent } from './saving-account-action
 import { AddChargeSavingsAccountComponent } from './saving-account-actions/add-charge-savings-account/add-charge-savings-account.component';
 import { CloseSavingsAccountComponent } from './saving-account-actions/close-savings-account/close-savings-account.component';
 import { ToggleWithholdTaxDialogComponent } from './savings-account-view/custom-dialogs/toggle-withhold-tax-dialog/toggle-withhold-tax-dialog.component';
+import { ViewRecieptComponent } from './savings-account-view/transactions/view-reciept/view-reciept.component';
 
 
 /**
@@ -89,7 +90,8 @@ import { ToggleWithholdTaxDialogComponent } from './savings-account-view/custom-
     WithdrawByClientSavingsAccountComponent,
     AddChargeSavingsAccountComponent,
     CloseSavingsAccountComponent,
-    ToggleWithholdTaxDialogComponent
+    ToggleWithholdTaxDialogComponent,
+    ViewRecieptComponent
   ],
   entryComponents: [
     CalculateInterestDialogComponent,
@@ -98,7 +100,6 @@ import { ToggleWithholdTaxDialogComponent } from './savings-account-view/custom-
     WaiveChargeDialogComponent,
     InactivateChargeDialogComponent,
     ToggleWithholdTaxDialogComponent
-
   ],
   providers: [DatePipe]
 })

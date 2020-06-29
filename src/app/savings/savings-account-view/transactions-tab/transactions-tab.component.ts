@@ -57,4 +57,12 @@ export class TransactionsTabComponent implements OnInit {
     return false;
   }
 
+  /**
+   * Stops the propagation to view pages.
+   * @param $event Mouse Event
+   */
+  routeEdit($event: MouseEvent) {
+    $event.stopPropagation();
+  }
+
 }
