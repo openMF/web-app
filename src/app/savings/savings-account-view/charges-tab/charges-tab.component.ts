@@ -11,6 +11,7 @@ import { SavingsService } from 'app/savings/savings.service';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { WaiveChargeDialogComponent } from '../custom-dialogs/waive-charge-dialog/waive-charge-dialog.component';
 import { InactivateChargeDialogComponent } from '../custom-dialogs/inactivate-charge-dialog/inactivate-charge-dialog.component';
+import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 /** Custom Models */
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
@@ -163,6 +164,61 @@ export class ChargesTabComponent implements OnInit {
     inactivateChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         this.savingsService.executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'inactivate', {}, chargeId)
+          .subscribe(() => {
+            this.reload();
+          });
+      }
+    });
+  }
+
+  /**
+   * Edits the charge
+   * @param {any} charge Charge
+   */
+  editCharge(charge: any) {
+    const formfields: FormfieldBase[] = [
+      new InputBase({
+        controlName: 'amount',
+        label: 'Amount',
+        value: charge.amount || charge.amountOrPercentage,
+        type: 'number',
+        required: true
+      })
+    ];
+    const data = {
+      title: `Edit Charge ${charge.id}`,
+      layout: { addButtonText: 'Confirm' },
+      formfields: formfields
+    };
+    const editChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
+    editChargeDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.data) {
+        const locale = 'en';
+        const dateFormat = 'dd MMMM yyyy';
+        const dataObject = {
+          ...response.data.value,
+          dateFormat,
+          locale
+        };
+        this.savingsService.editSavingsAccountCharge(this.savingsAccountData.id, dataObject, charge.id)
+          .subscribe(() => {
+            this.reload();
+          });
+      }
+    });
+  }
+
+  /**
+   * Deletes the charge
+   * @param {any} chargeId Charge Id
+   */
+  deleteCharge(chargeId: any) {
+    const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { deleteContext: `charge id:${chargeId}` }
+    });
+    deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.delete) {
+        this.savingsService.deleteSavingsAccountCharge(this.savingsAccountData.id, chargeId)
           .subscribe(() => {
             this.reload();
           });

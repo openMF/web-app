@@ -69,11 +69,11 @@
         <td mat-cell *matCellDef="let charge">
           <span *ngIf="savingsAccountData.status.value === 'Submitted and pending approval'">
             <button class="account-action-button" mat-raised-button color="primary" matTooltip="Edit Charge"
-              *mifosxHasPermission="'UPDATE_SAVINGSACCOUNTCHARGE'">
+              *mifosxHasPermission="'UPDATE_SAVINGSACCOUNTCHARGE'" (click)="routeEdit($event); editCharge(charge)">
               <i class="fa fa-pencil"></i>
             </button>
             <button class="account-action-button" mat-raised-button color="warn" matTooltip="Delete Charge"
-              *mifosxHasPermission="'DELETE_SAVINGSACCOUNTCHARGE'">
+              *mifosxHasPermission="'DELETE_SAVINGSACCOUNTCHARGE'" (click)="routeEdit($event); deleteCharge(charge.id)">
               <i class="fa fa-trash"></i>
             </button>
           </span>

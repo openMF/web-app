@@ -11,6 +11,7 @@ import { SavingsService } from 'app/savings/savings.service';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { WaiveChargeDialogComponent } from '../custom-dialogs/waive-charge-dialog/waive-charge-dialog.component';
 import { InactivateChargeDialogComponent } from '../custom-dialogs/inactivate-charge-dialog/inactivate-charge-dialog.component';
+import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 /** Custom Models */
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
@@ -91,7 +92,7 @@ export class ViewChargeComponent {
         };
         this.savingsService.executeSavingsAccountChargesCommand(this.chargeData.accountId, 'paycharge', dataObject, this.chargeData.id)
           .subscribe(() => {
-            this.router.navigate(['../'], { relativeTo: this.route });
+            this.reload();
           });
       }
     });
@@ -106,7 +107,7 @@ export class ViewChargeComponent {
       if (response.confirm) {
         this.savingsService.executeSavingsAccountChargesCommand(this.chargeData.accountId, 'waive', {}, this.chargeData.id)
           .subscribe(() => {
-            this.router.navigate(['../'], { relativeTo: this.route });
+            this.reload();
           });
       }
     });
@@ -121,7 +122,60 @@ export class ViewChargeComponent {
       if (response.confirm) {
         this.savingsService.executeSavingsAccountChargesCommand(this.chargeData.accountId, 'inactivate', {}, this.chargeData.id)
           .subscribe(() => {
-            this.router.navigate(['../'], { relativeTo: this.route });
+            this.reload();
+          });
+      }
+    });
+  }
+
+  /**
+   * Edits the charge
+   */
+  editCharge() {
+    const formfields: FormfieldBase[] = [
+      new InputBase({
+        controlName: 'amount',
+        label: 'Amount',
+        value: this.chargeData.amount || this.chargeData.amountOrPercentage,
+        type: 'number',
+        required: true
+      })
+    ];
+    const data = {
+      title: 'Edit Charge',
+      layout: { addButtonText: 'Confirm' },
+      formfields: formfields
+    };
+    const editChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
+    editChargeDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.data) {
+        const locale = 'en';
+        const dateFormat = 'dd MMMM yyyy';
+        const dataObject = {
+          ...response.data.value,
+          dateFormat,
+          locale
+        };
+        this.savingsService.editSavingsAccountCharge(this.chargeData.accountId, dataObject, this.chargeData.id)
+          .subscribe(() => {
+            this.reload();
+          });
+      }
+    });
+  }
+
+  /**
+   * Deletes the charge
+   */
+  deleteCharge() {
+    const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { deleteContext: `charge id:${this.chargeData.id}` }
+    });
+    deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.delete) {
+        this.savingsService.deleteSavingsAccountCharge(this.chargeData.accountId, this.chargeData.id)
+          .subscribe(() => {
+            this.reload();
           });
       }
     });
@@ -133,6 +187,17 @@ export class ViewChargeComponent {
   isRecurringCharge() {
     const chargeTimeType = this.chargeData.chargeTimeType.value;
     return chargeTimeType === 'Monthly Fee' || chargeTimeType === 'Annual Fee' || chargeTimeType === 'Weekly Fee';
+  }
+
+  /**
+   * Refetches data fot the component
+   * TODO: Replace by a custom reload component instead of hard-coded back-routing.
+   */
+  private reload() {
+    const clientId = this.savingsAccountData.clientId;
+    const url: string = this.router.url.replace(`/${this.chargeData.id}`, '');
+    this.router.navigateByUrl(`/clients/${clientId}/savingsaccounts`, {skipLocationChange: true})
+      .then(() => this.router.navigate([url]));
   }
 
 }
