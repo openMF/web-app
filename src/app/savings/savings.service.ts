@@ -206,6 +206,16 @@ export class SavingsService {
 
   /**
    * @param {string} accountId Savings Account Id
+   * @param {string} transactionId Transaction Id
+   * @returns {Observable<any>}
+   */
+  getSavingsAccountTransactionTemplate(accountId: string, transactionId: string): Observable<any> {
+    const httpParams = new HttpParams().set('template', 'true');
+    return this.http.get(`/savingsaccounts/${accountId}/transactions/${transactionId}`, { params: httpParams });
+  }
+
+  /**
+   * @param {string} accountId Savings Account Id
    * @param {string} command Command
    * @param {any} data Data
    * @param {string} transactionId Transaction Id
