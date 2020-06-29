@@ -18,6 +18,7 @@ import { ViewTransactionComponent } from './savings-account-view/transactions/vi
 import { ViewChargeComponent } from './savings-account-view/view-charge/view-charge.component';
 import { ViewRecieptComponent } from './savings-account-view/transactions/view-reciept/view-reciept.component';
 import { ExportTransactionsComponent } from './savings-account-view/transactions-tab/export-transactions/export-transactions.component';
+import { EditTransactionComponent } from './savings-account-view/transactions/edit-transaction/edit-transaction.component';
 
 /** Custom Resolvers */
 import { SavingsAccountViewResolver } from './common-resolvers/savings-account-view.resolver';
@@ -29,6 +30,7 @@ import { SavingsAccountTransactionResolver } from './common-resolvers/savings-ac
 import { SavingsAccountChargeResolver } from './common-resolvers/savings-account-charge.resolver';
 import { SavingsAccountActionsResolver } from './common-resolvers/savings-account-actions.resolver';
 import { SavingsTransactionRecieptResolver } from './common-resolvers/savings-transaction-reciept.resolver';
+import { SavingsAccountTransactionTemplateResolver } from './common-resolvers/savings-account-transaction-template.resolver';
 
 
 const routes: Routes = [
@@ -126,6 +128,14 @@ const routes: Routes = [
                     }
                   },
                   {
+                    path: 'edit',
+                    component: EditTransactionComponent,
+                    data: { breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                    resolve: {
+                      savingsAccountTransactionTemplate: SavingsAccountTransactionTemplateResolver
+                    }
+                  },
+                  {
                     path: 'reciept',
                     component: ViewRecieptComponent,
                     data: { breadcrumb: 'Reciept', routeParamBreadcrumb: false },
@@ -180,6 +190,7 @@ const routes: Routes = [
               SavingsAccountTransactionResolver,
               SavingsAccountChargeResolver,
               SavingsAccountActionsResolver,
-              SavingsTransactionRecieptResolver]
+              SavingsTransactionRecieptResolver,
+              SavingsAccountTransactionTemplateResolver]
 })
 export class SavingsRoutingModule {}
