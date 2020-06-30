@@ -22,10 +22,11 @@ export class SavingAccountActionsComponent {
     'Close': boolean
     'Undo Approval': boolean
     'Post Interest As On': boolean
-    'Assign Staff': boolean // savings account and template
+    'Assign Staff': boolean
     'Add Charge': boolean
     'Unassign Staff': boolean
     'Withdraw By Client': boolean
+    'Apply Annual Fees': boolean
   } = {
     'Approve': false,
     'Reject': false,
@@ -38,7 +39,8 @@ export class SavingAccountActionsComponent {
     'Assign Staff': false,
     'Add Charge': false,
     'Unassign Staff': false,
-    'Withdraw By Client': false
+    'Withdraw By Client': false,
+    'Apply Annual Fees': false
   };
 
   /**

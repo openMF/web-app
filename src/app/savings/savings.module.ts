@@ -45,6 +45,7 @@ import { ToggleWithholdTaxDialogComponent } from './savings-account-view/custom-
 import { ViewRecieptComponent } from './savings-account-view/transactions/view-reciept/view-reciept.component';
 import { ExportTransactionsComponent } from './savings-account-view/transactions-tab/export-transactions/export-transactions.component';
 import { EditTransactionComponent } from './savings-account-view/transactions/edit-transaction/edit-transaction.component';
+import { ApplyAnnualFeesSavingsAccountComponent } from './saving-account-actions/apply-annual-fees-savings-account/apply-annual-fees-savings-account.component';
 
 
 /**
@@ -95,7 +96,8 @@ import { EditTransactionComponent } from './savings-account-view/transactions/ed
     ToggleWithholdTaxDialogComponent,
     ViewRecieptComponent,
     ExportTransactionsComponent,
-    EditTransactionComponent
+    EditTransactionComponent,
+    ApplyAnnualFeesSavingsAccountComponent
   ],
   entryComponents: [
     CalculateInterestDialogComponent,

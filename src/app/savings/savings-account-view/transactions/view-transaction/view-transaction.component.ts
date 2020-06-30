@@ -12,6 +12,7 @@ import { UndoTransactionDialogComponent } from '../../custom-dialogs/undo-transa
 
 /**
  * View Transaction Component.
+ * TODO: Add support for account transfers.
  */
 @Component({
   selector: 'mifosx-view-transaction',
