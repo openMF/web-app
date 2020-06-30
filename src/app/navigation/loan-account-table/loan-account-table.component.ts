@@ -29,7 +29,7 @@ export class LoanAccountTableComponent implements OnInit {
   /** Loan Account Setter */
   @Input() set loanAccountData(data: any) {
     this.accountData = data;
-    const filteredAccountData = this.accountsFilterPipe.transform(data, 'loan', this.showClosed ? 'closed' : 'open');
+    const filteredAccountData = this.accountsFilterPipe.transform(data, 'loan', this.showClosed ? 'closed' : 'open', 'isLoan');
     this.dataSource = new MatTableDataSource(filteredAccountData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -56,7 +56,7 @@ export class LoanAccountTableComponent implements OnInit {
    */
   toggleClosed() {
     this.showClosed = !this.showClosed;
-    const filteredAccountData = this.accountsFilterPipe.transform(this.accountData, 'loan', this.showClosed ? 'closed' : 'open');
+    const filteredAccountData = this.accountsFilterPipe.transform(this.accountData, 'loan', this.showClosed ? 'closed' : 'open', 'isLoan');
     this.dataSource = new MatTableDataSource(filteredAccountData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
