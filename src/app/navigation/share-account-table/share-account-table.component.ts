@@ -29,7 +29,7 @@ export class ShareAccountTableComponent implements OnInit {
   /** Share Account Setter */
   @Input() set shareAccountData(data: any) {
     this.accountData = data;
-    const filteredAccountData = this.accountsFilterPipe.transform(data, 'share', this.showClosed ? 'closed' : 'open');
+    const filteredAccountData = this.accountsFilterPipe.transform(data, 'share', this.showClosed ? 'closed' : 'open', 'isShare');
     this.dataSource = new MatTableDataSource(filteredAccountData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -56,7 +56,7 @@ export class ShareAccountTableComponent implements OnInit {
    */
   toggleClosed() {
     this.showClosed = !this.showClosed;
-    const filteredAccountData = this.accountsFilterPipe.transform(this.accountData, 'share', this.showClosed ? 'closed' : 'open');
+    const filteredAccountData = this.accountsFilterPipe.transform(this.accountData, 'share', this.showClosed ? 'closed' : 'open', 'isShare');
     this.dataSource = new MatTableDataSource(filteredAccountData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

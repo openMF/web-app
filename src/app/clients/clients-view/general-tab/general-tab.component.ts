@@ -31,6 +31,9 @@ export class GeneralTabComponent {
   showClosedLoanAccounts = false;
   showClosedSavingAccounts = false;
   showClosedShareAccounts = false;
+  showClosedRecurringAccounts = false;
+  showClosedFixedAccounts = false;
+
   clientid: any;
 
   constructor(
@@ -57,6 +60,14 @@ export class GeneralTabComponent {
   }
   toggleShareAccountsOverview() {
     this.showClosedShareAccounts = !this.showClosedShareAccounts;
+  }
+
+  toggleRecurringAccountsOverview() {
+    this.showClosedRecurringAccounts = !this.showClosedRecurringAccounts;
+  }
+
+  toggleFixedAccountsOverview() {
+    this.showClosedFixedAccounts = !this.showClosedFixedAccounts;
   }
 
   /**

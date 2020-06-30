@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class AccountsFilterPipe implements PipeTransform {
 
-  transform(accounts: any, type: any, status: any): any {
+  transform(accounts: any, type: any, status: any, checkSavings: any): any {
     if (accounts) {
       if (type === 'loan') {
         if (status === 'closed') {
@@ -27,6 +27,19 @@ export class AccountsFilterPipe implements PipeTransform {
         }
       }
       if (type === 'saving') {
+        if (checkSavings === 'isFixed') {
+          accounts = accounts.filter((account: any) => {
+            return (account.depositType.value === 'Fixed Deposit');
+          });
+        } else if (checkSavings === 'isRecurring') {
+          accounts = accounts.filter((account: any) => {
+            return (account.depositType.value === 'Recurring Deposit');
+          });
+        } else if (checkSavings === 'isSavings') {
+          accounts = accounts.filter((account: any) => {
+            return (account.depositType.value === 'Savings');
+          });
+        }
         if (status === 'closed') {
           accounts = accounts.filter((account: any) => {
             return (account.status.code === 'savingsAccountStatusType.withdrawn.by.applicant' ||
