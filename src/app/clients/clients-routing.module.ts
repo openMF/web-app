@@ -174,6 +174,10 @@ const routes: Routes = [
             loadChildren: '../loans/loans.module#LoansModule'
           },
           {
+            path: 'fixed-deposits-accounts',
+            loadChildren: '../deposits/fixed-deposits/fixed-deposits.module#FixedDepositsModule'
+          },
+          {
             path: 'savingsaccounts',
             loadChildren: '../savings/savings.module#SavingsModule'
           },
