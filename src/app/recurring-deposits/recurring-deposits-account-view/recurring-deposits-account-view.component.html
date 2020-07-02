@@ -1,0 +1,202 @@
+<mat-card class="recurringDeposits-account-card">
+
+  <mat-card-header fxLayout="column" class="header">
+
+    <mat-card-title-group class="header-title-group">
+
+      <div class="profile-image-container">
+        <div>
+          <img mat-card-md-image class="profile-image" matTooltip="Recurring Deposits Account"
+            [src]="'assets/images/recurring-deposits_account_placeholder.png'">
+        </div>
+      </div>
+
+      <div class="mat-typography account-card-title">
+        <mat-card-title>
+          <h3>
+            <i class="fa fa-stop" [ngClass]="recurringDepositsAccountData.status.code | statusLookup"
+              [matTooltip]="recurringDepositsAccountData.status.value"></i>
+            Account Name : {{recurringDepositsAccountData.depositProductName}}
+          </h3>
+        </mat-card-title>
+        <mat-card-subtitle>
+          <p>
+            Account #: {{recurringDepositsAccountData.accountNo}} | Client Name:
+            {{recurringDepositsAccountData.clientName}}<br />
+            <span
+              *ngIf="!recurringDepositsAccountData.status.rejected && !recurringDepositsAccountData.status.submittedAndPendingApproval">
+              Current Balance:
+              {{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;{{recurringDepositsAccountData.summary.accountBalance}}<br />
+              Available Balance:
+              {{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;{{recurringDepositsAccountData.summary.availableBalance}}<br />
+            </span>
+          </p>
+        </mat-card-subtitle>
+      </div>
+
+    </mat-card-title-group>
+
+    <mat-card-actions class="account-actions">
+
+      <ng-container *ngFor="let button of buttonConfig.singleButtons">
+        <button mat-raised-button >
+          <i class="{{button.icon}}"></i> {{button.name}}</button>
+      </ng-container>
+  
+      <ng-container *ngIf="buttonConfig.options.length > 0">
+        <button mat-raised-button [matMenuTriggerFor]="More">More</button>
+        <mat-menu #More="matMenu">
+        <span *ngFor="let option of buttonConfig.options">
+          <button mat-menu-item >{{option.name}}</button>
+        </span>
+        </mat-menu>
+      </ng-container>
+
+    </mat-card-actions>
+
+  </mat-card-header>
+
+  <mat-card-content class="content">
+
+    <div class="recurringDeposits-account-tables" fxLayout="row" fxLayoutGap="2%">
+
+      <div fxFlex="49%"
+        *ngIf="!recurringDepositsAccountData.status.rejected && !recurringDepositsAccountData.status.submittedAndPendingApproval">
+        <h4 class="table-headers">Savings Details</h4>
+        <table>
+          <tbody>
+            <tr>
+              <td>Field Officer</td>
+              <td>{{recurringDepositsAccountData.fieldOfficerName}}<span
+                  *ngIf="!recurringDepositsAccountData.fieldOfficerName">Unassigned</span></td>
+            </tr>
+            <tr>
+              <td>Activation date</td>
+              <td>{{recurringDepositsAccountData.timeline.activatedOnDate | date}}</td>
+            </tr>
+            <tr>
+              <td>Maturity Date</td>
+              <td><span>{{recurringDepositsAccountData.maturityDate | date}}</span></td>
+            </tr>
+            <tr
+              *ngIf="recurringDepositsAccountData.timeline.closedOnDate || recurringDepositsAccountData.summary.totalWitddrawals">
+              <td *ngIf="recurringDepositsAccountData.timeline.closedOnDate">
+                Closed on Date</td>
+              <td><span>{{recurringDepositsAccountData.timeline.closedOnDate | date}}</span></td>
+            </tr>
+            <tr>
+              <td>Period</td>
+              <td>
+                <span>{{recurringDepositsAccountData.depositPeriod}}&nbsp;{{recurringDepositsAccountData.depositPeriodFrequency.value}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Deposit Frequency</td>
+              <td><span>{{recurringDepositsAccountData.recurringFrequency}}
+                  &nbsp;{{recurringDepositsAccountData.recurringFrequencyType.value}}
+                </span></td>
+            </tr>
+            <tr *ngIf="recurringDepositsAccountData.minBalanceForInterestCalculation">
+              <td> Balance Required For Interest Calculation</td>
+              <td><span>{{recurringDepositsAccountData.minBalanceForInterestCalculation}}</span></td>
+            </tr>
+            <tr *ngIf="recurringDepositsAccountData.witdHoldTax">
+              <td> Witdhold Tax Group </td>
+              <td><span>{{recurringDepositsAccountData.taxGroup.name}}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div fxFlex="49%"
+        *ngIf="!recurringDepositsAccountData.status.rejected && !recurringDepositsAccountData.status.submittedAndPendingApproval">
+        <h4 class="table-headers">Performance History</h4>
+        <table>
+          <tbody>
+            <tr>
+              <td>Principal Amount</td>
+              <td>
+                <span>{{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;{{recurringDepositsAccountData.depositAmount}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Maturity Amount</td>
+              <td>
+                <span>{{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;{{recurringDepositsAccountData.maturityAmount | number}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Recurring Deposit Amount</td>
+              <td>
+                <span>{{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;{{recurringDepositsAccountData.mandatoryRecommendedDepositAmount | number}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Deposits till Date</td>
+              <td><span
+                  *ngIf="recurringDepositsAccountData.summary.totalDeposits">{{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;{{recurringDepositsAccountData.summary.totalDeposits | number}}</span>
+                <span
+                  *ngIf="!recurringDepositsAccountData.summary.totalDeposits">{{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;0</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Withdrwals till Date</td>
+              <td><span
+                  *ngIf="recurringDepositsAccountData.summary.totalWithdrawals">{{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;{{recurringDepositsAccountData.summary.totalWithdrawals | number}}</span>
+                <span
+                  *ngIf="!recurringDepositsAccountData.summary.totalWithdrawals">{{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;0</span>
+              </td>
+            </tr>
+
+            <tr *ngIf="recurringDepositsAccountData.summary.totalInterestEarned >= 0">
+              <td >Interest Earned</td>
+              <td><span>{{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;{{recurringDepositsAccountData.summary.totalInterestEarned| number}}</span>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="recurringDeposits-account-tables" fxLayout="row" fxLayoutGap="2%">
+      <div fxFlex="49%"
+        *ngIf="!recurringDepositsAccountData.status.rejected && !recurringDepositsAccountData.status.submittedAndPendingApproval">
+        <h4 class="table-headers">Interest Details</h4>
+        <table>
+          <tbody>
+            <tr>
+              <td >Interest Rate</td>
+              <td><span>{{recurringDepositsAccountData.nominalAnnualInterestRate}}%</span></td>
+            </tr>
+            <tr>
+              <td>Interest compounding period</td>
+              <td><span>{{recurringDepositsAccountData.interestCompoundingPeriodType.value}}</span></td>
+            </tr>
+            <tr>
+              <td>Interest compounding period</td>
+              <td><span>{{recurringDepositsAccountData.interestPostingPeriodType.value}}</span></td>
+            </tr>
+            <tr>
+              <td>Interest calculated using</td>
+              <td><span>{{recurringDepositsAccountData.interestCalculationType.value}}</span></td>
+            </tr>
+            <tr>
+              <td># Days in Year</td>
+              <td><span>{{recurringDepositsAccountData.interestCalculationDaysInYearType.value}}</span></td>
+            </tr>
+            <tr *ngIf="recurringDepositsAccountData.preClosurePenalApplicable">
+              <td>Pre-closure penal Interest (less)</td>
+              <td><span>{{recurringDepositsAccountData.preClosurePenalInterest}} % on
+                  {{recurringDepositsAccountData.preClosurePenalInterestOnType.value}}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <router-outlet></router-outlet>
+
+  </mat-card-content>
+
+</mat-card>

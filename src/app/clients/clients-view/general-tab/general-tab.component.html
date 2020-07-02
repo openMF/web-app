@@ -469,7 +469,7 @@
 
     <tr mat-header-row *matHeaderRowDef="openSavingsColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: openSavingsColumns;"
-      [routerLink]="['../', 'savingsaccounts', row.id, 'transactions']"></tr>
+      [routerLink]="['../', 'recurringdeposits', row.id]"></tr>
   </table>
 
   <!-- Closed Recurring Deposit Accounts -->
@@ -494,8 +494,10 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="closedSavingsColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: closedSavingsColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: closedSavingsColumns;" 
+    [routerLink]="['../', 'recurringdeposits', row.id]"></tr>
   </table>
+
   <!-- Shares overview Table -->
   <div class="headingContent">
     <div fxLayout="column" fxFlex="50%">
