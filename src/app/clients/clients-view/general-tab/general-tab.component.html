@@ -374,7 +374,7 @@
 
     <tr mat-header-row *matHeaderRowDef="openSavingsColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: openSavingsColumns;"
-      [routerLink]="['../', 'savingsaccounts', row.id, 'transactions']"></tr>
+      [routerLink]="['../', 'fixed-deposits-accounts', row.id, 'interest-rate-chart']"></tr>
   </table>
 
   <!-- Closed Fixed Deposit Accounts -->
@@ -399,7 +399,8 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="closedSavingsColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: closedSavingsColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: closedSavingsColumns;"
+      [routerLink]="['../', 'fixed-deposits-account', row.id]"></tr>
   </table>
 
   <!-- Recurring Deposit Table -->
