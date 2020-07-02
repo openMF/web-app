@@ -24,7 +24,7 @@ export class SavingsDatatableResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const accountId = route.parent.parent.paramMap.get('savingAccountId');
+    const accountId = route.parent.parent.paramMap.get('savingAccountId') || route.parent.parent.paramMap.get('fixedDepositAccountId');
     const datatableName = route.paramMap.get('datatableName');
     return this.savingsService.getSavingsDatatable(accountId, datatableName);
   }

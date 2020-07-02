@@ -15,6 +15,8 @@ export class FixedDepositAccountViewComponent implements OnInit {
 
   /** Fixed Deposits Account Data */
   fixedDepositsAccountData: any;
+  /** Savings Data Tables */
+  savingsDatatables: any;
   /** Button Configurations */
   buttonConfig: FixedDepositsButtonsConfiguration;
 
@@ -23,8 +25,9 @@ export class FixedDepositAccountViewComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { fixedDepositsAccountData: any }) => {
+    this.route.data.subscribe((data: { fixedDepositsAccountData: any, savingsDatatables: any  }) => {
       this.fixedDepositsAccountData = data.fixedDepositsAccountData;
+      this.savingsDatatables = data.savingsDatatables;
     });
   }
 
