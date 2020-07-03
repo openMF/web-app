@@ -5,6 +5,8 @@ import { MatDialog } from '@angular/material';
 
 /** Custom Dialogs */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { CalculateInterestDialogComponent } from './custom-dialogs/calculate-interest-dialog/calculate-interest-dialog.component';
+import { PostInterestDialogComponent } from './custom-dialogs/post-interest-dialog/post-interest-dialog.component';
 
 /** Custom Button Config. */
 import { FixedDepositsButtonsConfiguration } from './fixed-deposits-buttons.config';
@@ -67,6 +69,17 @@ export class FixedDepositAccountViewComponent implements OnInit {
   }
 
   /**
+   * Refetches data fot the component
+   * TODO: Replace by a custom reload component instead of hard-coded back-routing.
+   */
+  reload() {
+    const clientId = this.fixedDepositsAccountData.clientId;
+    const url: string = this.router.url;
+    this.router.navigateByUrl(`/clients/${clientId}/fixed-deposits-accounts`, {skipLocationChange: true})
+      .then(() => this.router.navigate([url]));
+  }
+
+  /**
    * Performs action button/option action.
    * @param {string} name action name.
    */
@@ -74,7 +87,6 @@ export class FixedDepositAccountViewComponent implements OnInit {
     switch (name) {
       case 'Approve':
       case 'Reject':
-      case 'Deposit':
       case 'Activate':
       case 'Close':
       case 'Undo Approval':
@@ -83,9 +95,6 @@ export class FixedDepositAccountViewComponent implements OnInit {
       case 'Withdraw By Client':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
-      case 'Withdraw':
-        this.router.navigate([`actions/Withdrawal`], { relativeTo: this.route });
-        break;
       case 'Modify Application':
         this.router.navigate(['edit-savings-account'], { relativeTo: this.route });
         break;
@@ -93,10 +102,10 @@ export class FixedDepositAccountViewComponent implements OnInit {
         this.deleteFixedDepositsAccount();
         break;
       case 'Calculate Interest':
-
+        this.calculateInterest();
         break;
       case 'Post Interest':
-
+        this.postInterest();
         break;
       case 'Enable Withhold Tax':
 
@@ -118,6 +127,34 @@ export class FixedDepositAccountViewComponent implements OnInit {
       if (response.delete) {
         this.fixedDepositsService.deleteFixedDepositsAccount(this.fixedDepositsAccountData.id).subscribe(() => {
           this.router.navigate(['../../'], { relativeTo: this.route });
+        });
+      }
+    });
+  }
+
+  /**
+   * Calculates savings account's interest
+   */
+  private calculateInterest() {
+    const calculateInterestAccountDialogRef = this.dialog.open(CalculateInterestDialogComponent);
+    calculateInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.confirm) {
+        this.fixedDepositsService.executeFixedDepositsAccountCommand(this.fixedDepositsAccountData.id, 'calculateInterest', {}).subscribe(() => {
+          this.reload();
+        });
+      }
+    });
+  }
+
+  /**
+   * Posts savings account's interest
+   */
+  private postInterest() {
+    const postInterestAccountDialogRef = this.dialog.open(PostInterestDialogComponent);
+    postInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.confirm) {
+        this.fixedDepositsService.executeFixedDepositsAccountCommand(this.fixedDepositsAccountData.id, 'postInterest', {}).subscribe(() => {
+          this.reload();
         });
       }
     });
