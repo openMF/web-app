@@ -22,6 +22,7 @@ import { ApproveFixedDepositsAccountComponent } from './fixed-deposits-account-a
 import { RejectFixedDepositsAccountComponent } from './fixed-deposits-account-actions/reject-fixed-deposits-account/reject-fixed-deposits-account.component';
 import { PostInterestDialogComponent } from './fixed-deposit-account-view/custom-dialogs/post-interest-dialog/post-interest-dialog.component';
 import { CalculateInterestDialogComponent } from './fixed-deposit-account-view/custom-dialogs/calculate-interest-dialog/calculate-interest-dialog.component';
+import { ToggleWithholdTaxDialogComponent } from './fixed-deposit-account-view/custom-dialogs/toggle-withhold-tax-dialog/toggle-withhold-tax-dialog.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { CalculateInterestDialogComponent } from './fixed-deposit-account-view/c
     ApproveFixedDepositsAccountComponent,
     RejectFixedDepositsAccountComponent,
     PostInterestDialogComponent,
-    CalculateInterestDialogComponent
+    CalculateInterestDialogComponent,
+    ToggleWithholdTaxDialogComponent
   ],
   imports: [
     SharedModule,
@@ -47,7 +49,8 @@ import { CalculateInterestDialogComponent } from './fixed-deposit-account-view/c
   ],
   entryComponents: [
     PostInterestDialogComponent,
-    CalculateInterestDialogComponent
+    CalculateInterestDialogComponent,
+    ToggleWithholdTaxDialogComponent
   ],
   providers: [DatePipe]
 })
