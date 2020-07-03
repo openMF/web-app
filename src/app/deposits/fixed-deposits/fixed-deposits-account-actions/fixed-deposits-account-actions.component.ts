@@ -19,7 +19,6 @@ export class FixedDepositsAccountActionsComponent {
     'Activate': boolean
     'Close': boolean
     'Undo Approval': boolean
-    'Post Interest As On': boolean
     'Add Charge': boolean
     'Withdraw By Client': boolean
   } = {
@@ -28,7 +27,6 @@ export class FixedDepositsAccountActionsComponent {
     'Activate': false,
     'Close': false,
     'Undo Approval': false,
-    'Post Interest As On': false,
     'Add Charge': false,
     'Withdraw By Client': false
   };
