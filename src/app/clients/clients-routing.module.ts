@@ -183,7 +183,7 @@ const routes: Routes = [
           },
           {
             path: 'recurringdeposits',
-            loadChildren: '../recurring-deposits/recurring-deposits.module#RecurringDepositsModule'
+            loadChildren: '../deposits/recurring-deposits/recurring-deposits.module#RecurringDepositsModule'
           },
           {
             path: 'sharesaccounts',

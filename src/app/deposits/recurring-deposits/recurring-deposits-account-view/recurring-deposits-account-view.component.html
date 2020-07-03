@@ -158,6 +158,7 @@
         </table>
       </div>
     </div>
+
     <div class="recurringDeposits-account-tables" fxLayout="row" fxLayoutGap="2%">
       <div fxFlex="49%"
         *ngIf="!recurringDepositsAccountData.status.rejected && !recurringDepositsAccountData.status.submittedAndPendingApproval">
@@ -194,6 +195,13 @@
       </div>
 
     </div>
+
+    <nav mat-tab-nav-bar class="navigation-tabs">
+        <a mat-tab-link [routerLink]="['./interest-rate-chart']" routerLinkActive #IRC="routerLinkActive"
+          [active]="IRC.isActive">
+          Interest Rate Chart
+        </a>
+    </nav>
 
     <router-outlet></router-outlet>
 

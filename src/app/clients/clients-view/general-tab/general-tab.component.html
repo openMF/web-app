@@ -469,7 +469,7 @@
 
     <tr mat-header-row *matHeaderRowDef="openSavingsColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: openSavingsColumns;"
-      [routerLink]="['../', 'recurringdeposits', row.id]"></tr>
+      [routerLink]="['../', 'recurringdeposits', row.id, 'interest-rate-chart']" class="select-row"></tr>
   </table>
 
   <!-- Closed Recurring Deposit Accounts -->
@@ -495,7 +495,7 @@
 
     <tr mat-header-row *matHeaderRowDef="closedSavingsColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: closedSavingsColumns;" 
-    [routerLink]="['../', 'recurringdeposits', row.id]"></tr>
+    [routerLink]="['../', 'recurringdeposits', row.id, 'interest-rate-chart']" class="select-row"></tr>
   </table>
 
   <!-- Shares overview Table -->
