@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 
+/** Custom Dialogs */
+import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+
 /** Custom Button Config. */
 import { FixedDepositsButtonsConfiguration } from './fixed-deposits-buttons.config';
 
@@ -76,9 +79,7 @@ export class FixedDepositAccountViewComponent implements OnInit {
       case 'Close':
       case 'Undo Approval':
       case 'Post Interest As On':
-      case 'Assign Staff':
       case 'Add Charge':
-      case 'Unassign Staff':
       case 'Withdraw By Client':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
@@ -89,7 +90,7 @@ export class FixedDepositAccountViewComponent implements OnInit {
         this.router.navigate(['edit-savings-account'], { relativeTo: this.route });
         break;
       case 'Delete':
-
+        this.deleteFixedDepositsAccount();
         break;
       case 'Calculate Interest':
 
@@ -106,5 +107,20 @@ export class FixedDepositAccountViewComponent implements OnInit {
     }
   }
 
+  /**
+   * Deletes Fixed Deposits Account.
+   */
+  private deleteFixedDepositsAccount() {
+    const deleteFixedDepositsAccountDialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { deleteContext: `fixed deposit account with id: ${this.fixedDepositsAccountData.id}` }
+    });
+    deleteFixedDepositsAccountDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.delete) {
+        this.fixedDepositsService.deleteFixedDepositsAccount(this.fixedDepositsAccountData.id).subscribe(() => {
+          this.router.navigate(['../../'], { relativeTo: this.route });
+        });
+      }
+    });
+  }
 
 }
