@@ -19,6 +19,7 @@ import { MultiRowComponent } from './fixed-deposit-account-view/datatable-tabs/m
 import { SingleRowComponent } from './fixed-deposit-account-view/datatable-tabs/single-row/single-row.component';
 import { FixedDepositsAccountActionsComponent } from './fixed-deposits-account-actions/fixed-deposits-account-actions.component';
 import { ApproveFixedDepositsAccountComponent } from './fixed-deposits-account-actions/approve-fixed-deposits-account/approve-fixed-deposits-account.component';
+import { RejectFixedDepositsAccountComponent } from './fixed-deposits-account-actions/reject-fixed-deposits-account/reject-fixed-deposits-account.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ApproveFixedDepositsAccountComponent } from './fixed-deposits-account-a
     MultiRowComponent,
     SingleRowComponent,
     FixedDepositsAccountActionsComponent,
-    ApproveFixedDepositsAccountComponent
+    ApproveFixedDepositsAccountComponent,
+    RejectFixedDepositsAccountComponent
   ],
   imports: [
     SharedModule,
