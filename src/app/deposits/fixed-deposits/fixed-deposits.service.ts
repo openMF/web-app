@@ -25,6 +25,14 @@ export class FixedDepositsService {
   }
 
   /**
+   * @param {string} accountId fixed deposits account Id
+   * @returns {Observable<any>}
+   */
+  deleteFixedDepositsAccount(accountId: string): Observable<any> {
+    return this.http.delete(`/fixeddepositaccounts/${accountId}`);
+  }
+
+  /**
    * @param {string} accountId Savings Account Id
    * @param {string} command Command
    * @param {any} data Data
