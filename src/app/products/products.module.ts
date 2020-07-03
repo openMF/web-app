@@ -146,16 +146,17 @@ import { ShareProductsDividendsComponent } from './share-products/dividends-shar
     FixedDepositProductChargesStepComponent,
     FixedDepositProductAccountingStepComponent,
     FixedDepositProductPreviewStepComponent,
-    DepositProductIncentiveFormDialogComponent,
     ManageTaxGroupsComponent,
     ViewTaxComponentComponent,
     CreateTaxComponentComponent,
     EditTaxComponentComponent,
     EditChargeComponent,
     ViewTaxGroupComponent,
-    ShareProductsDividendsComponent
+    ShareProductsDividendsComponent,
+    DepositProductIncentiveFormDialogComponent
   ],
   entryComponents: [
+    DepositProductIncentiveFormDialogComponent,
     FloatingRatePeriodDialogComponent
   ],
   providers: [DatePipe]
