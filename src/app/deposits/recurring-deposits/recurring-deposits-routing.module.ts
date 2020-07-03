@@ -14,6 +14,7 @@ import { TransactionsTabComponent } from './recurring-deposits-account-view/tran
 import { RecurringDepositsAccountViewResolver } from './common-resolvers/recurring-deposits-account-view.resolver';
 import { RecurringDepositsAccountDataResolver } from './common-resolvers/recurring-deposits-account-data.resolver';
 import { StandingInstructionsTabComponent } from './recurring-deposits-account-view/standing-instructions-tab/standing-instructions-tab.component';
+import { ChargesTabComponent } from './recurring-deposits-account-view/charges-tab/charges-tab.component';
 
 const routes: Routes = [
   {
@@ -31,7 +32,7 @@ const routes: Routes = [
           {
             path: 'interest-rate-chart',
             component: InterestRateChartTabComponent,
-            data: { title: extract('Interest Rate Chart'), breadcrumb: 'Interest Rate Chart', routeParamBreadcrumb: false },
+            data: { title: extract('Recurring Deposit Account Interest Rate Chart'), breadcrumb: 'Interest Rate Chart', routeParamBreadcrumb: false },
             resolve: {
               recurringDepositsAccountData: RecurringDepositsAccountDataResolver
             }
@@ -39,10 +40,15 @@ const routes: Routes = [
           {
             path: 'transactions',
             component: TransactionsTabComponent,
-            data: { title: extract('Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+            data: { title: extract('Recurring Deposit Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
             resolve: {
               recurringDepositsAccountData: RecurringDepositsAccountDataResolver
             }
+          },
+          {
+            path: 'charges',
+            component: ChargesTabComponent,
+            data: { title: extract('Recurring Deposit Account Charges'), breadcrumb: 'Charges', routeParamBreadcrumb: false }
           },
           {
             path: 'standing-instructions',
