@@ -7,12 +7,14 @@ import { MatDialog } from '@angular/material';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { CalculateInterestDialogComponent } from './custom-dialogs/calculate-interest-dialog/calculate-interest-dialog.component';
 import { PostInterestDialogComponent } from './custom-dialogs/post-interest-dialog/post-interest-dialog.component';
+import { ToggleWithholdTaxDialogComponent } from './custom-dialogs/toggle-withhold-tax-dialog/toggle-withhold-tax-dialog.component';
 
 /** Custom Button Config. */
 import { FixedDepositsButtonsConfiguration } from './fixed-deposits-buttons.config';
 
 /** Custom Services */
 import { FixedDepositsService } from '../fixed-deposits.service';
+import { SavingsService } from 'app/savings/savings.service';
 
 /**
  * Fixed Deposits Account View Component
@@ -38,6 +40,7 @@ export class FixedDepositAccountViewComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private fixedDepositsService: FixedDepositsService,
+              private savingsService: SavingsService,
               public dialog: MatDialog) {
     this.route.data.subscribe((data: { fixedDepositsAccountData: any, savingsDatatables: any  }) => {
       this.fixedDepositsAccountData = data.fixedDepositsAccountData;
@@ -108,10 +111,10 @@ export class FixedDepositAccountViewComponent implements OnInit {
         this.postInterest();
         break;
       case 'Enable Withhold Tax':
-
+        this.enableWithHoldTax();
         break;
       case 'Disable Withhold Tax':
-
+        this.disableWithHoldTax();
         break;
     }
   }
@@ -156,6 +159,43 @@ export class FixedDepositAccountViewComponent implements OnInit {
         this.fixedDepositsService.executeFixedDepositsAccountCommand(this.fixedDepositsAccountData.id, 'postInterest', {}).subscribe(() => {
           this.reload();
         });
+      }
+    });
+  }
+
+
+  /**
+   * Enables withhold tax for fixed deposits account.
+   * Fixed deposits endpoint is not supported so using Savings endpoint.
+   */
+  private enableWithHoldTax() {
+    const deleteSavingsAccountDialogRef = this.dialog.open(ToggleWithholdTaxDialogComponent, {
+      data: { isEnable: true }
+    });
+    deleteSavingsAccountDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.confirm) {
+        this.savingsService.executeSavingsAccountUpdateCommand(this.fixedDepositsAccountData.id, 'updateWithHoldTax', { withHoldTax: true})
+          .subscribe(() => {
+            this.reload();
+          });
+      }
+    });
+  }
+
+  /**
+   * Disables withhold tax for fixed deposits account
+   * Fixed deposits endpoint is not supported so using Savings endpoint.
+   */
+  private disableWithHoldTax() {
+    const disableWithHoldTaxDialogRef = this.dialog.open(ToggleWithholdTaxDialogComponent, {
+      data: { isEnable: false }
+    });
+    disableWithHoldTaxDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.confirm) {
+        this.savingsService.executeSavingsAccountUpdateCommand(this.fixedDepositsAccountData.id, 'updateWithHoldTax', { withHoldTax: false})
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
