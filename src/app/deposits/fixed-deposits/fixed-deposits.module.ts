@@ -17,6 +17,8 @@ import { InterestRateChartTabComponent } from './fixed-deposit-account-view/inte
 import { DatatableTabsComponent } from './fixed-deposit-account-view/datatable-tabs/datatable-tabs.component';
 import { MultiRowComponent } from './fixed-deposit-account-view/datatable-tabs/multi-row/multi-row.component';
 import { SingleRowComponent } from './fixed-deposit-account-view/datatable-tabs/single-row/single-row.component';
+import { FixedDepositsAccountActionsComponent } from './fixed-deposits-account-actions/fixed-deposits-account-actions.component';
+import { ApproveFixedDepositsAccountComponent } from './fixed-deposits-account-actions/approve-fixed-deposits-account/approve-fixed-deposits-account.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { SingleRowComponent } from './fixed-deposit-account-view/datatable-tabs/
     InterestRateChartTabComponent,
     DatatableTabsComponent,
     MultiRowComponent,
-    SingleRowComponent
+    SingleRowComponent,
+    FixedDepositsAccountActionsComponent,
+    ApproveFixedDepositsAccountComponent
   ],
   imports: [
     SharedModule,

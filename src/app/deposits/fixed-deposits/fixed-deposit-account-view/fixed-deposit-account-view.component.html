@@ -35,15 +35,15 @@
     <mat-card-actions class="account-actions">
 
       <ng-container *ngFor="let button of buttonConfig.singleButtons">
-        <button mat-raised-button>
+        <button mat-raised-button (click)="doAction(button.name)">
           <i class="{{button.icon}}"></i> {{button.name}}</button>
       </ng-container>
   
-      <ng-container *ngIf="buttonConfig.options">
+      <ng-container *ngIf="buttonConfig.options.length">
         <button mat-raised-button [matMenuTriggerFor]="More">More</button>
         <mat-menu #More="matMenu">
         <span *ngFor="let option of buttonConfig.options">
-          <button mat-menu-item >{{option.name}}</button>
+          <button mat-menu-item (click)="doAction(option.name)">{{option.name}}</button>
         </span>
         </mat-menu>
       </ng-container>
