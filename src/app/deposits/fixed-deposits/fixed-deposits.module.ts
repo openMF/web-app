@@ -23,6 +23,7 @@ import { RejectFixedDepositsAccountComponent } from './fixed-deposits-account-ac
 import { PostInterestDialogComponent } from './fixed-deposit-account-view/custom-dialogs/post-interest-dialog/post-interest-dialog.component';
 import { CalculateInterestDialogComponent } from './fixed-deposit-account-view/custom-dialogs/calculate-interest-dialog/calculate-interest-dialog.component';
 import { ToggleWithholdTaxDialogComponent } from './fixed-deposit-account-view/custom-dialogs/toggle-withhold-tax-dialog/toggle-withhold-tax-dialog.component';
+import { ActivateFixedDepositsAccountComponent } from './fixed-deposits-account-actions/activate-fixed-deposits-account/activate-fixed-deposits-account.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { ToggleWithholdTaxDialogComponent } from './fixed-deposit-account-view/c
     RejectFixedDepositsAccountComponent,
     PostInterestDialogComponent,
     CalculateInterestDialogComponent,
-    ToggleWithholdTaxDialogComponent
+    ToggleWithholdTaxDialogComponent,
+    ActivateFixedDepositsAccountComponent
   ],
   imports: [
     SharedModule,
