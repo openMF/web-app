@@ -12,6 +12,7 @@ import { TransactionsTabComponent } from './fixed-deposit-account-view/transacti
 import { ChargesTabComponent } from './fixed-deposit-account-view/charges-tab/charges-tab.component';
 import { StandingInstructionsTabComponent } from './fixed-deposit-account-view/standing-instructions-tab/standing-instructions-tab.component';
 import { DatatableTabsComponent } from './fixed-deposit-account-view/datatable-tabs/datatable-tabs.component';
+import { FixedDepositsAccountActionsComponent } from './fixed-deposits-account-actions/fixed-deposits-account-actions.component';
 
 /** Custom Resolvers */
 import { FixedDepositsAccountViewResolver } from '../fixed-deposits/common-resolvers/fixed-deposit-account-view.resolver';
@@ -71,6 +72,11 @@ const routes: Routes = [
                 ]
               }
             ]
+          },
+          {
+            path: 'actions/:name',
+            data: { title: extract('Fixed Deposits Account Actions'), routeParamBreadcrumb: 'name' },
+            component: FixedDepositsAccountActionsComponent
           }
         ]
       }

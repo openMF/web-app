@@ -1,7 +1,13 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+
+/** Custom Button Config. */
 import { FixedDepositsButtonsConfiguration } from './fixed-deposits-buttons.config';
+
+/** Custom Services */
+import { FixedDepositsService } from '../fixed-deposits.service';
 
 /**
  * Fixed Deposits Account View Component
@@ -24,7 +30,10 @@ export class FixedDepositAccountViewComponent implements OnInit {
    * Fetches fixed deposits account data from `resolve`
    * @param {ActivatedRoute} route Activated Route
    */
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private fixedDepositsService: FixedDepositsService,
+              public dialog: MatDialog) {
     this.route.data.subscribe((data: { fixedDepositsAccountData: any, savingsDatatables: any  }) => {
       this.fixedDepositsAccountData = data.fixedDepositsAccountData;
       this.savingsDatatables = data.savingsDatatables;
@@ -53,5 +62,49 @@ export class FixedDepositAccountViewComponent implements OnInit {
       }
     }
   }
+
+  /**
+   * Performs action button/option action.
+   * @param {string} name action name.
+   */
+  doAction(name: string) {
+    switch (name) {
+      case 'Approve':
+      case 'Reject':
+      case 'Deposit':
+      case 'Activate':
+      case 'Close':
+      case 'Undo Approval':
+      case 'Post Interest As On':
+      case 'Assign Staff':
+      case 'Add Charge':
+      case 'Unassign Staff':
+      case 'Withdraw By Client':
+        this.router.navigate([`actions/${name}`], { relativeTo: this.route });
+        break;
+      case 'Withdraw':
+        this.router.navigate([`actions/Withdrawal`], { relativeTo: this.route });
+        break;
+      case 'Modify Application':
+        this.router.navigate(['edit-savings-account'], { relativeTo: this.route });
+        break;
+      case 'Delete':
+
+        break;
+      case 'Calculate Interest':
+
+        break;
+      case 'Post Interest':
+
+        break;
+      case 'Enable Withhold Tax':
+
+        break;
+      case 'Disable Withhold Tax':
+
+        break;
+    }
+  }
+
 
 }
