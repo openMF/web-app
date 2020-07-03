@@ -182,6 +182,10 @@ const routes: Routes = [
             loadChildren: '../savings/savings.module#SavingsModule'
           },
           {
+            path: 'recurringdeposits',
+            loadChildren: '../recurring-deposits/recurring-deposits.module#RecurringDepositsModule'
+          },
+          {
             path: 'sharesaccounts',
             loadChildren: '../shares/shares.module#SharesModule'
           },

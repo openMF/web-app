@@ -1,0 +1,16 @@
+@import "~@angular/material/theming";
+
+@mixin recurring-deposits-account-view-component-theme($theme) {
+  $primary: map-get($theme, primary);
+  mifosx-recurring-deposits-account-view {
+    .recurringDeposits-account-card {
+      .header {
+        background-color: mat-color($primary, 500);
+      }
+      .table-headers {
+        background-color: mat-color($primary, 500);
+        color: mat-contrast($primary, 500);
+      }
+    }
+  }
+}
