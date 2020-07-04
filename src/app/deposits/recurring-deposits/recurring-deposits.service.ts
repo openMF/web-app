@@ -15,18 +15,31 @@ export class RecurringDepositsService {
 
   constructor(private http: HttpClient) {}
 
-  /**
-   * @param {string} recurringDepositAccountId is recurringDeposit account's Id.
-   * @returns {Observable<any>}
-   */
-  // getRecurringDepositsTransactionTemplateResource(recurringDepositAccountId: string): Observable<any> {
-  //   return this.http.get(`/recurringDepositsaccounts/${recurringDepositAccountId}/transactions/template`);
-  // }
-
   getRecurringDepositsAccountData(recurringDepositAccountId: any) {
     const httpParams = new HttpParams()
       .set('associations', 'all');
     return this.http.get(`/recurringdepositaccounts/${recurringDepositAccountId}`, { params: httpParams });
+  }
+
+  /**
+   * @param clientId Client Id
+   * @param clientName Client Name
+   * @param fromAccountId Account Id
+   * @param locale Locale
+   * @param dateFormat Date Format
+   * @returns {Observable<any>} Standing Instructions
+   */
+  getStandingInstructions(
+    clientId: string, clientName: string, fromAccountId: string,
+    locale: string, dateFormat: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('clientId', clientId)
+      .set('clientName', clientName)
+      .set('fromAccountId', fromAccountId)
+      .set('fromAccountType', '2')
+      .set('locale', locale)
+      .set('dateFormat', dateFormat);
+    return this.http.get(`/standinginstructions`, { params: httpParams });
   }
 
 }

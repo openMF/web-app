@@ -12,6 +12,7 @@ import { DirectivesModule } from '../../directives/directives.module';
 import { RecurringDepositsAccountViewComponent } from './recurring-deposits-account-view/recurring-deposits-account-view.component';
 import { InterestRateChartTabComponent } from './recurring-deposits-account-view/interest-rate-chart-tab/interest-rate-chart-tab.component';
 import { TransactionsTabComponent } from './recurring-deposits-account-view/transactions-tab/transactions-tab.component';
+import { StandingInstructionsTabComponent } from './recurring-deposits-account-view/standing-instructions-tab/standing-instructions-tab.component';
 
 /**
  * RecurringDeposits Module
@@ -28,7 +29,8 @@ import { TransactionsTabComponent } from './recurring-deposits-account-view/tran
   declarations: [
     RecurringDepositsAccountViewComponent,
     InterestRateChartTabComponent,
-    TransactionsTabComponent
+    TransactionsTabComponent,
+    StandingInstructionsTabComponent
   ],
   providers: [DatePipe]
 })

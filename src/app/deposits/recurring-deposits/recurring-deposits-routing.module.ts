@@ -13,6 +13,7 @@ import { TransactionsTabComponent } from './recurring-deposits-account-view/tran
 /** Custom Resolvers */
 import { RecurringDepositsAccountViewResolver } from './common-resolvers/recurring-deposits-account-view.resolver';
 import { RecurringDepositsAccountDataResolver } from './common-resolvers/recurring-deposits-account-data.resolver';
+import { StandingInstructionsTabComponent } from './recurring-deposits-account-view/standing-instructions-tab/standing-instructions-tab.component';
 
 const routes: Routes = [
   {
@@ -42,7 +43,15 @@ const routes: Routes = [
             resolve: {
               recurringDepositsAccountData: RecurringDepositsAccountDataResolver
             }
-          }
+          },
+          {
+            path: 'standing-instructions',
+            component: StandingInstructionsTabComponent,
+            data: { title: extract('Recurring Deposit Account Standing Instructions'), breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false },
+            resolve: {
+              recurringDepositsAccountData: RecurringDepositsAccountDataResolver
+            }
+          },
         ]
       }
     ]

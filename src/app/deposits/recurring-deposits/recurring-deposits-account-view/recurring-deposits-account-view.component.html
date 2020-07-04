@@ -207,6 +207,12 @@
             Transactions
           </a>
         </ng-container>
+        <ng-container *ngIf="recurringDepositsAccountData.clientId">
+          <a mat-tab-link [routerLink]="['./standing-instructions']" routerLinkActive #standingInstructions="routerLinkActive"
+            [active]="standingInstructions.isActive">
+            Standing Instructions
+          </a>
+        </ng-container>
     </nav>
 
     <router-outlet></router-outlet>
