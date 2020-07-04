@@ -26,6 +26,8 @@ import { ToggleWithholdTaxDialogComponent } from './fixed-deposit-account-view/c
 import { ActivateFixedDepositsAccountComponent } from './fixed-deposits-account-actions/activate-fixed-deposits-account/activate-fixed-deposits-account.component';
 import { UndoApprovalFixedDepositsAccountComponent } from './fixed-deposits-account-actions/undo-approval-fixed-deposits-account/undo-approval-fixed-deposits-account.component';
 import { WithdrawByClientFixedDepositsAccountComponent } from './fixed-deposits-account-actions/withdraw-by-client-fixed-deposits-account/withdraw-by-client-fixed-deposits-account.component';
+import { ViewTransactionComponent } from './fixed-deposit-account-view/transactions/view-transaction/view-transaction.component';
+import { UndoTransactionDialogComponent } from './fixed-deposit-account-view/custom-dialogs/undo-transaction-dialog/undo-transaction-dialog.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { WithdrawByClientFixedDepositsAccountComponent } from './fixed-deposits-
     ToggleWithholdTaxDialogComponent,
     ActivateFixedDepositsAccountComponent,
     UndoApprovalFixedDepositsAccountComponent,
-    WithdrawByClientFixedDepositsAccountComponent
+    WithdrawByClientFixedDepositsAccountComponent,
+    ViewTransactionComponent,
+    UndoTransactionDialogComponent
   ],
   imports: [
     SharedModule,
@@ -56,7 +60,8 @@ import { WithdrawByClientFixedDepositsAccountComponent } from './fixed-deposits-
   entryComponents: [
     PostInterestDialogComponent,
     CalculateInterestDialogComponent,
-    ToggleWithholdTaxDialogComponent
+    ToggleWithholdTaxDialogComponent,
+    UndoTransactionDialogComponent
   ],
   providers: [DatePipe]
 })
