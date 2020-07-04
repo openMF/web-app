@@ -13,11 +13,13 @@ import { ChargesTabComponent } from './fixed-deposit-account-view/charges-tab/ch
 import { StandingInstructionsTabComponent } from './fixed-deposit-account-view/standing-instructions-tab/standing-instructions-tab.component';
 import { DatatableTabsComponent } from './fixed-deposit-account-view/datatable-tabs/datatable-tabs.component';
 import { FixedDepositsAccountActionsComponent } from './fixed-deposits-account-actions/fixed-deposits-account-actions.component';
+import { ViewTransactionComponent } from './fixed-deposit-account-view/transactions/view-transaction/view-transaction.component';
 
 /** Custom Resolvers */
 import { FixedDepositsAccountViewResolver } from '../fixed-deposits/common-resolvers/fixed-deposit-account-view.resolver';
 import { SavingsDatatableResolver } from 'app/savings/common-resolvers/savings-datatable.resolver';
 import { SavingsDatatablesResolver } from 'app/savings/common-resolvers/savings-datatables.resolver';
+import { FixedDepositsAccountTransactionResolver } from '../fixed-deposits/common-resolvers/fixed-deposit-account-transaction.resolver';
 
 const routes: Routes = [
   {
@@ -74,6 +76,29 @@ const routes: Routes = [
             ]
           },
           {
+            path: 'transactions',
+            data: { title: extract('Fixed Deposits Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+            children: [
+              {
+                path: '',
+                redirectTo: '../transactions', pathMatch: 'prefix'
+              },
+              {
+                path: ':id',
+                data: { routeParamBreadcrumb: 'id' },
+                children: [
+                  {
+                    path: '',
+                    component: ViewTransactionComponent,
+                    resolve: {
+                      fixedDepositsAccountTransaction: FixedDepositsAccountTransactionResolver
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
             path: 'actions/:name',
             data: { title: extract('Fixed Deposits Account Actions'), routeParamBreadcrumb: 'name' },
             component: FixedDepositsAccountActionsComponent
@@ -90,7 +115,8 @@ const routes: Routes = [
   providers: [
     FixedDepositsAccountViewResolver,
     SavingsDatatableResolver,
-    SavingsDatatablesResolver
+    SavingsDatatablesResolver,
+    FixedDepositsAccountTransactionResolver
   ]
 })
 export class FixedDepositsRoutingModule { }

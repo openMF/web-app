@@ -44,6 +44,27 @@ export class FixedDepositsService {
   }
 
   /**
+   * @param {string} accountId Savings Account Id
+   * @param {string} transactionId Transaction Id
+   * @returns {Observable<any>}
+   */
+  getFixedDepositsAccountTransaction(accountId: string, transactionId: string): Observable<any> {
+    return this.http.get(`/fixeddepositaccounts/${accountId}/transactions/${transactionId}`);
+  }
+
+  /**
+   * @param {string} accountId Savings Account Id
+   * @param {string} command Command
+   * @param {any} data Data
+   * @param {string} transactionId Transaction Id
+   * @returns {Observable<any>}
+   */
+  executeFixedDepositsAccountTransactionsCommand(accountId: string, command: string, data: any, transactionId?: any): Observable<any> {
+    const httpParams = new HttpParams().set('command', command);
+    return this.http.post(`/fixeddepositaccounts/${accountId}/transactions/${transactionId}`, data, { params: httpParams });
+  }
+
+  /**
    * @param clientId Client Id
    * @param clientName Client Name
    * @param fromAccountId Account Id
