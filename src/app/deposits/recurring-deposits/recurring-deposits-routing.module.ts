@@ -15,6 +15,9 @@ import { RecurringDepositsAccountViewResolver } from './common-resolvers/recurri
 import { RecurringDepositsAccountDataResolver } from './common-resolvers/recurring-deposits-account-data.resolver';
 import { StandingInstructionsTabComponent } from './recurring-deposits-account-view/standing-instructions-tab/standing-instructions-tab.component';
 import { ChargesTabComponent } from './recurring-deposits-account-view/charges-tab/charges-tab.component';
+import { DatatableTabsComponent } from './recurring-deposits-account-view/datatable-tabs/datatable-tabs.component';
+import { SavingsDatatableResolver } from 'app/savings/common-resolvers/savings-datatable.resolver';
+import { SavingsDatatablesResolver } from 'app/savings/common-resolvers/savings-datatables.resolver';
 
 const routes: Routes = [
   {
@@ -26,7 +29,8 @@ const routes: Routes = [
         data: { title: extract('RecurringDeposit Account View'), routeParamBreadcrumb: 'recurringDepositAccountId' },
         component: RecurringDepositsAccountViewComponent,
         resolve: {
-          recurringDepositsAccountData: RecurringDepositsAccountViewResolver
+          recurringDepositsAccountData: RecurringDepositsAccountViewResolver,
+          savingsDatatables: SavingsDatatablesResolver
         },
         children: [
           {
@@ -58,6 +62,19 @@ const routes: Routes = [
               recurringDepositsAccountData: RecurringDepositsAccountDataResolver
             }
           },
+          {
+            path: 'datatables',
+            children: [
+              {
+                path: ':datatableName',
+                component: DatatableTabsComponent,
+                data: { title: extract('View Data Table'), routeParamBreadcrumb: 'datatableName' },
+                resolve: {
+                  savingsDatatable: SavingsDatatableResolver
+                }
+              }
+            ]
+          }
         ]
       }
     ]
@@ -69,7 +86,9 @@ const routes: Routes = [
   declarations: [],
   providers: [
     RecurringDepositsAccountViewResolver,
-    RecurringDepositsAccountDataResolver
+    RecurringDepositsAccountDataResolver,
+    SavingsDatatableResolver,
+    SavingsDatatablesResolver
   ]
 })
 export class RecurringDepositsRoutingModule {}

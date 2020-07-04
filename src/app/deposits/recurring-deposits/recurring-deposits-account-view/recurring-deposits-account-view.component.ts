@@ -24,7 +24,8 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
   recurringDepositsAccountData: any;
   buttonConfig: RecurringDepositsButtonsConfiguration;
   charges: any;
-
+  /** Savings Data Tables */
+  savingsDatatables: any;
   /**
    * Fetches recurringDeposits account data from `resolve`
    * @param {ActivatedRoute} route Activated Route
@@ -36,9 +37,10 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
               private datePipe: DatePipe,
               private recurringDepositsService: RecurringDepositsService,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { recurringDepositsAccountData: any }) => {
+    this.route.data.subscribe((data: { recurringDepositsAccountData: any, savingsDatatables: any }) => {
       this.recurringDepositsAccountData = data.recurringDepositsAccountData;
       this.charges = this.recurringDepositsAccountData.charges;
+      this.savingsDatatables = data.savingsDatatables;
     });
   }
 
