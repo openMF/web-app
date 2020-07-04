@@ -29,6 +29,7 @@ import { WithdrawByClientFixedDepositsAccountComponent } from './fixed-deposits-
 import { ViewTransactionComponent } from './fixed-deposit-account-view/view-transaction/view-transaction.component';
 import { WaiveChargeDialogComponent } from './fixed-deposit-account-view/custom-dialogs/waive-charge-dialog/waive-charge-dialog.component';
 import { InactivateChargeDialogComponent } from './fixed-deposit-account-view/custom-dialogs/inactivate-charge-dialog/inactivate-charge-dialog.component';
+import { AddChargeFixedDepositsAccountComponent } from './fixed-deposits-account-actions/add-charge-fixed-deposits-account/add-charge-fixed-deposits-account.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { InactivateChargeDialogComponent } from './fixed-deposit-account-view/cu
     WithdrawByClientFixedDepositsAccountComponent,
     ViewTransactionComponent,
     WaiveChargeDialogComponent,
-    InactivateChargeDialogComponent
+    InactivateChargeDialogComponent,
+    AddChargeFixedDepositsAccountComponent
   ],
   imports: [
     SharedModule,

@@ -35,10 +35,10 @@ export class ActivateFixedDepositsAccountComponent implements OnInit {
    * @param {Router} router Router
    */
   constructor(private formBuilder: FormBuilder,
-    private savingsService: SavingsService,
-    private datePipe: DatePipe,
-    private route: ActivatedRoute,
-    private router: Router) {
+              private savingsService: SavingsService,
+              private datePipe: DatePipe,
+              private route: ActivatedRoute,
+              private router: Router) {
     this.accountId = this.route.parent.snapshot.params['fixedDepositAccountId'];
   }
 

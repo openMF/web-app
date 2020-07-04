@@ -33,7 +33,7 @@ export class FixedDepositsService {
   }
 
   /**
-   * @param {string} accountId Savings Account Id
+   * @param {string} accountId Account Id
    * @param {string} command Command
    * @param {any} data Data
    * @returns {Observable<any>}
