@@ -13,7 +13,7 @@ import { ChargesTabComponent } from './fixed-deposit-account-view/charges-tab/ch
 import { StandingInstructionsTabComponent } from './fixed-deposit-account-view/standing-instructions-tab/standing-instructions-tab.component';
 import { DatatableTabsComponent } from './fixed-deposit-account-view/datatable-tabs/datatable-tabs.component';
 import { FixedDepositsAccountActionsComponent } from './fixed-deposits-account-actions/fixed-deposits-account-actions.component';
-import { ViewTransactionComponent } from './fixed-deposit-account-view/transactions/view-transaction/view-transaction.component';
+import { ViewTransactionComponent } from './fixed-deposit-account-view/view-transaction/view-transaction.component';
 
 /** Custom Resolvers */
 import { FixedDepositsAccountViewResolver } from '../fixed-deposits/common-resolvers/fixed-deposit-account-view.resolver';

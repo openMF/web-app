@@ -26,8 +26,9 @@ import { ToggleWithholdTaxDialogComponent } from './fixed-deposit-account-view/c
 import { ActivateFixedDepositsAccountComponent } from './fixed-deposits-account-actions/activate-fixed-deposits-account/activate-fixed-deposits-account.component';
 import { UndoApprovalFixedDepositsAccountComponent } from './fixed-deposits-account-actions/undo-approval-fixed-deposits-account/undo-approval-fixed-deposits-account.component';
 import { WithdrawByClientFixedDepositsAccountComponent } from './fixed-deposits-account-actions/withdraw-by-client-fixed-deposits-account/withdraw-by-client-fixed-deposits-account.component';
-import { ViewTransactionComponent } from './fixed-deposit-account-view/transactions/view-transaction/view-transaction.component';
-import { UndoTransactionDialogComponent } from './fixed-deposit-account-view/custom-dialogs/undo-transaction-dialog/undo-transaction-dialog.component';
+import { ViewTransactionComponent } from './fixed-deposit-account-view/view-transaction/view-transaction.component';
+import { WaiveChargeDialogComponent } from './fixed-deposit-account-view/custom-dialogs/waive-charge-dialog/waive-charge-dialog.component';
+import { InactivateChargeDialogComponent } from './fixed-deposit-account-view/custom-dialogs/inactivate-charge-dialog/inactivate-charge-dialog.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { UndoTransactionDialogComponent } from './fixed-deposit-account-view/cus
     UndoApprovalFixedDepositsAccountComponent,
     WithdrawByClientFixedDepositsAccountComponent,
     ViewTransactionComponent,
-    UndoTransactionDialogComponent
+    WaiveChargeDialogComponent,
+    InactivateChargeDialogComponent
   ],
   imports: [
     SharedModule,
@@ -61,7 +63,8 @@ import { UndoTransactionDialogComponent } from './fixed-deposit-account-view/cus
     PostInterestDialogComponent,
     CalculateInterestDialogComponent,
     ToggleWithholdTaxDialogComponent,
-    UndoTransactionDialogComponent
+    WaiveChargeDialogComponent,
+    InactivateChargeDialogComponent
   ],
   providers: [DatePipe]
 })
