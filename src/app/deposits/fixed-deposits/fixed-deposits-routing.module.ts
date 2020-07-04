@@ -20,6 +20,7 @@ import { FixedDepositsAccountViewResolver } from '../fixed-deposits/common-resol
 import { SavingsDatatableResolver } from 'app/savings/common-resolvers/savings-datatable.resolver';
 import { SavingsDatatablesResolver } from 'app/savings/common-resolvers/savings-datatables.resolver';
 import { FixedDepositsAccountTransactionResolver } from '../fixed-deposits/common-resolvers/fixed-deposit-account-transaction.resolver';
+import { FixedDepositsAccountActionsResolver } from '../fixed-deposits/common-resolvers/fixed-deposit-account-actions.resolver';
 
 const routes: Routes = [
   {
@@ -29,15 +30,13 @@ const routes: Routes = [
       {
         path: ':fixedDepositAccountId',
         data: { title: extract('Fixed Deposit Account View'), routeParamBreadcrumb: 'fixedDepositAccountId' },
-        resolve: {
-          savingsDatatables: SavingsDatatablesResolver
-        },
         children: [
           {
             path: '',
             component: FixedDepositAccountViewComponent,
             resolve: {
-              fixedDepositsAccountData: FixedDepositsAccountViewResolver
+              fixedDepositsAccountData: FixedDepositsAccountViewResolver,
+              savingsDatatables: SavingsDatatablesResolver
             },
             children: [
               {
@@ -101,7 +100,10 @@ const routes: Routes = [
           {
             path: 'actions/:name',
             data: { title: extract('Fixed Deposits Account Actions'), routeParamBreadcrumb: 'name' },
-            component: FixedDepositsAccountActionsComponent
+            component: FixedDepositsAccountActionsComponent,
+            resolve: {
+              fixedDepositsAccountActionData: FixedDepositsAccountActionsResolver
+            }
           }
         ]
       }
@@ -116,7 +118,8 @@ const routes: Routes = [
     FixedDepositsAccountViewResolver,
     SavingsDatatableResolver,
     SavingsDatatablesResolver,
-    FixedDepositsAccountTransactionResolver
+    FixedDepositsAccountTransactionResolver,
+    FixedDepositsAccountActionsResolver
   ]
 })
 export class FixedDepositsRoutingModule { }

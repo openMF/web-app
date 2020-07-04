@@ -20,6 +20,7 @@ export class FixedDepositsAccountActionsComponent {
     'Close': boolean
     'Undo Approval': boolean
     'Add Charge': boolean
+    'Premature Close': boolean
     'Withdraw By Client': boolean
   } = {
     'Approve': false,
@@ -28,6 +29,7 @@ export class FixedDepositsAccountActionsComponent {
     'Close': false,
     'Undo Approval': false,
     'Add Charge': false,
+    'Premature Close': false,
     'Withdraw By Client': false
   };
 
