@@ -13,6 +13,7 @@ import { RecurringDepositsAccountViewComponent } from './recurring-deposits-acco
 import { InterestRateChartTabComponent } from './recurring-deposits-account-view/interest-rate-chart-tab/interest-rate-chart-tab.component';
 import { TransactionsTabComponent } from './recurring-deposits-account-view/transactions-tab/transactions-tab.component';
 import { StandingInstructionsTabComponent } from './recurring-deposits-account-view/standing-instructions-tab/standing-instructions-tab.component';
+import { ChargesTabComponent } from './recurring-deposits-account-view/charges-tab/charges-tab.component';
 
 /**
  * RecurringDeposits Module
@@ -30,7 +31,8 @@ import { StandingInstructionsTabComponent } from './recurring-deposits-account-v
     RecurringDepositsAccountViewComponent,
     InterestRateChartTabComponent,
     TransactionsTabComponent,
-    StandingInstructionsTabComponent
+    StandingInstructionsTabComponent,
+    ChargesTabComponent
   ],
   providers: [DatePipe]
 })
