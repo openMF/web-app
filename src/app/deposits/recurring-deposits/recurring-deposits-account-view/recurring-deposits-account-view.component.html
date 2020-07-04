@@ -216,6 +216,13 @@
             Standing Instructions
           </a>
         </ng-container>
+        <ng-container *ngFor="let savingsDatatable of savingsDatatables">
+          <a mat-tab-link *mifosxHasPermission="'READ_' + savingsDatatable.registeredTableName"
+            [routerLink]="['./datatables',savingsDatatable.registeredTableName]" routerLinkActive #datatable="routerLinkActive"
+            [active]="datatable.isActive">
+            {{savingsDatatable.registeredTableName}}
+          </a>
+        </ng-container>
     </nav>
 
     <router-outlet></router-outlet>
