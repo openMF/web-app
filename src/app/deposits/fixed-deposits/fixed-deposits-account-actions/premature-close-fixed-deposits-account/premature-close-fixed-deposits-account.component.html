@@ -1,0 +1,73 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="prematureCloseAccountForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Premature Close Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closedOnDatePicker" required formControlName="closedOnDate">
+            <mat-datepicker-toggle matSuffix [for]="closedOnDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #closedOnDatePicker></mat-datepicker>
+            <mat-error *ngIf="prematureCloseAccountForm.controls.closedOnDate.hasError('required')">
+              Premature Close Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="prematureCloseAccountForm.controls.maturityAmount">
+            <mat-label>Maturity Amount</mat-label>
+            <input type=number matInput formControlName="maturityAmount"/>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="prematureCloseAccountForm.contains('onAccountClosureId')">
+            <mat-label>Action</mat-label>
+            <mat-select required formControlName="onAccountClosureId">
+              <mat-option *ngFor="let closureOption of onAccountClosureOptions" [value]="closureOption.id">
+                {{ closureOption.value }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="prematureCloseAccountForm.controls.onAccountClosureId.hasError('required')">
+              Account action is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="prematureCloseAccountForm.contains('toSavingsAccountId')">
+            <mat-label>Transfer to Savings</mat-label>
+            <mat-select required formControlName="toSavingsAccountId">
+              <mat-option *ngFor="let account of savingsAccountsData" [value]="account.id">
+                {{ account.accountNo }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="prematureCloseAccountForm.controls.toSavingsAccountId.hasError('required')">
+              Transfer to savings account is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="prematureCloseAccountForm.contains('transferDescription')">
+            <mat-label>Transfer Description</mat-label>
+            <input matInput formControlName="transferDescription"/>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="prematureCloseAccountForm.contains('note')">
+            <mat-label>Note</mat-label>
+            <textarea matInput formControlName="note"></textarea>
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+        <button mat-raised-button color="warn" [disabled]="!prematureCloseAccountForm.valid">Confirm</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>
