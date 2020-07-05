@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
+import { FixedDepositsService } from '../fixed-deposits.service';
 
 /**
  * Fixed Deposits Account Actions data resolver.
@@ -16,8 +17,10 @@ export class FixedDepositsAccountActionsResolver implements Resolve<Object> {
 
   /**
    * @param {SavingsService} SavingsService Savings service.
+   * @param {FixedDepositsService} fixedDepositsService Fixed Deposits Service.
    */
-  constructor(private savingsService: SavingsService) { }
+  constructor(private savingsService: SavingsService,
+              private fixedDepositsService: FixedDepositsService) { }
 
   /**
    * Returns the Fixed deposits account actions data.
@@ -30,6 +33,8 @@ export class FixedDepositsAccountActionsResolver implements Resolve<Object> {
     switch (actionName) {
       case 'Add Charge':
         return this.savingsService.getSavingsChargeTemplateResource(fixedDepositAccountId);
+      case 'Close':
+        return this.fixedDepositsService.getFixedDepositsAccountClosureTemplate(fixedDepositAccountId);
       default:
         return undefined;
     }

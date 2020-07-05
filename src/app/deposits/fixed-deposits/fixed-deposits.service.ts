@@ -16,7 +16,7 @@ export class FixedDepositsService {
   constructor(private http: HttpClient) {}
 
   /**
-   * @param accountId Account Id of group to get data for.
+   * @param accountId Account Id.
    * @returns {Observable<any>} Fixed Deposits data.
    */
   getFixedDepositsAccountData(accountId: string): Observable<any> {
@@ -44,7 +44,7 @@ export class FixedDepositsService {
   }
 
   /**
-   * @param {string} accountId Savings Account Id
+   * @param {string} accountId Fixed Deposits Account Id
    * @param {string} transactionId Transaction Id
    * @returns {Observable<any>}
    */
@@ -53,7 +53,7 @@ export class FixedDepositsService {
   }
 
   /**
-   * @param {string} accountId Savings Account Id
+   * @param {string} accountId Fixed Deposits Account Id
    * @param {string} command Command
    * @param {any} data Data
    * @param {string} transactionId Transaction Id
@@ -62,6 +62,15 @@ export class FixedDepositsService {
   executeFixedDepositsAccountTransactionsCommand(accountId: string, command: string, data: any, transactionId?: any): Observable<any> {
     const httpParams = new HttpParams().set('command', command);
     return this.http.post(`/fixeddepositaccounts/${accountId}/transactions/${transactionId}`, data, { params: httpParams });
+  }
+
+  /**
+   * @param {string} accountId Fixed Deposits Account Id
+   * @returns {Observable<any>}
+   */
+  getFixedDepositsAccountClosureTemplate(accountId: string): Observable<any> {
+    const httpParams = new HttpParams().set('command', 'close');
+    return this.http.get(`/fixeddepositaccounts/${accountId}/template`, { params: httpParams });
   }
 
   /**
