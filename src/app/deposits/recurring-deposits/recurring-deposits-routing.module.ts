@@ -18,12 +18,22 @@ import { ChargesTabComponent } from './recurring-deposits-account-view/charges-t
 import { DatatableTabsComponent } from './recurring-deposits-account-view/datatable-tabs/datatable-tabs.component';
 import { SavingsDatatableResolver } from 'app/savings/common-resolvers/savings-datatable.resolver';
 import { SavingsDatatablesResolver } from 'app/savings/common-resolvers/savings-datatables.resolver';
+import { CreateRecurringDepositsAccountComponent } from './create-recurring-deposits-account/create-recurring-deposits-account.component';
+import { RecurringDepositsAccountTemplateResolver } from './common-resolvers/recurring-deposits-account-template.resolver';
 
 const routes: Routes = [
   {
     path: '',
     data: { title: extract('All RecurringDeposits'), breadcrumb: 'RecurringDeposits', routeParamBreadcrumb: false },
     children: [
+      {
+        path: 'create-recurring-deposits-account',
+        data: { title: extract('Create Recurring Deposits Account'), breadcrumb: 'Create Recurring Deposits Account' },
+        component: CreateRecurringDepositsAccountComponent,
+        resolve: {
+          recurringDepositsAccountTemplate: RecurringDepositsAccountTemplateResolver
+        }
+      },
       {
         path: ':recurringDepositAccountId',
         data: { title: extract('RecurringDeposit Account View'), routeParamBreadcrumb: 'recurringDepositAccountId' },
@@ -88,7 +98,8 @@ const routes: Routes = [
     RecurringDepositsAccountViewResolver,
     RecurringDepositsAccountDataResolver,
     SavingsDatatableResolver,
-    SavingsDatatablesResolver
+    SavingsDatatablesResolver,
+    RecurringDepositsAccountTemplateResolver
   ]
 })
 export class RecurringDepositsRoutingModule {}

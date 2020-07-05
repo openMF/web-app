@@ -13,9 +13,13 @@ import { Observable } from 'rxjs';
 })
 export class RecurringDepositsService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  getRecurringDepositsAccountData(recurringDepositAccountId: any) {
+  /**
+   * @params recurringDepositAccountId
+   * Returns the details of a particular Recurring Deposit Account
+   */
+  getRecurringDepositsAccountData(recurringDepositAccountId: any): Observable<any> {
     const httpParams = new HttpParams()
       .set('associations', 'all');
     return this.http.get(`/recurringdepositaccounts/${recurringDepositAccountId}`, { params: httpParams });
@@ -42,4 +46,22 @@ export class RecurringDepositsService {
     return this.http.get(`/standinginstructions`, { params: httpParams });
   }
 
+  /**
+   * Returns Recurring Deposit Account Template Data
+   * @param clientId Client ID
+   * @param productId Product ID
+   */
+  getRecurringDepositsAccountTemplate(clientId: any, productId?: any): Observable<any> {
+    let httpParams = new HttpParams().set('clientId', clientId);
+    httpParams = productId ? httpParams.set('productId', productId) : httpParams;
+    return this.http.get(`/recurringdepositaccounts/template`, { params: httpParams });
+  }
+
+  /**
+   * Post Request to create a recurring deposit account
+   * @param recurringAccountData Recurring Deposit Account Data
+   */
+  createRecurringDepositAccount(recurringAccountData: any): Observable<any> {
+    return this.http.post(`/recurringdepositaccounts`, recurringAccountData);
+  }
 }
