@@ -1,0 +1,149 @@
+<div fxLayout="column" fxLayoutGap="2%">
+
+  <div fxFlexFill *ngIf="fixedDepositsAccountProductTemplate?.accountChart.name">
+    <span fxFlex="40%">Name:</span>
+    <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate.accountChart.name }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Valid from Date:</span>
+    <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate?.accountChart.fromDate | date }}</span>
+  </div>
+
+  <div fxFlexFill *ngIf="fixedDepositsAccountProductTemplate?.accountChart.endDate">
+    <span fxFlex="40%">End Date:</span>
+    <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate?.accountChart.endDate | date }}</span>
+  </div>
+
+  <div fxFlexFill *ngIf="fixedDepositsAccountProductTemplate?.accountChart.description">
+    <span fxFlex="40%">Description:</span>
+    <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate?.accountChart.description }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Primary Grouping by Amount:</span>
+    <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate?.accountChart.isPrimaryGroupingByAmount ? 'Yes' : 'No' }}</span>
+  </div>
+
+  <table class="mat-elevation-z1" mat-table [dataSource]="interestRateChartData" #chartsTable multiTemplateDataRows>
+
+    <ng-container matColumnDef="period">
+      <th mat-header-cell *matHeaderCellDef> Period </th>
+      <td mat-cell *matCellDef="let chartSlab">
+        {{chartSlab.fromPeriod}}-{{chartSlab.toPeriod}}&nbsp;{{chartSlab.periodType.value}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="amountRange">
+      <th mat-header-cell *matHeaderCellDef> Amount Range </th>
+      <td mat-cell *matCellDef="let chartSlab">{{chartSlab.amountRangeFrom}}-{{chartSlab.amountRangeTo}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="interest">
+      <th mat-header-cell *matHeaderCellDef> Interest </th>
+      <td mat-cell *matCellDef="let chartSlab"> {{ chartSlab.annualInterestRate }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Description </th>
+      <td mat-cell *matCellDef="let chartSlab"> {{ chartSlab.description }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let chartSlab; let chartSlabIndex = dataIndex">
+        <button mat-button color="primary" (click)="expandChartSlabIndex = expandChartSlabIndex === chartSlabIndex ? null : chartSlabIndex">
+          <span *ngIf="expandChartSlabIndex !== chartSlabIndex">
+            <fa-icon icon="eye"></fa-icon>&nbsp;&nbsp;
+            View Incentives
+          </span>
+          <span *ngIf="expandChartSlabIndex === chartSlabIndex">
+            <fa-icon icon="eye-slash"></fa-icon>&nbsp;&nbsp;
+            Hide Incentives
+          </span>
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="incentives">
+      <td mat-cell *matCellDef="let chartSlab; let chartSlabIndex = dataIndex" [attr.colspan]="chartSlabsDisplayedColumns.length">
+
+        <div fxLayout="row wrap" fxFlexFill class="incentives" [@expandChartSlab]="chartSlabIndex === expandChartSlabIndex ? 'expanded' : 'collapsed'">
+
+          <mat-card fxLayout="row wrap" fxFlexFill>
+
+            <h4 class="m-b-10" fxFlex="13%">
+              Incentives
+            </h4>
+
+            <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="chartSlab.incentives" *ngIf="chartSlab.incentives.length">
+
+              <ng-container matColumnDef="entityType">
+                <th mat-header-cell *matHeaderCellDef> Entity Type </th>
+                <td mat-cell *matCellDef="let incentive">
+                  {{ incentive.entityType.value }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="attributeName">
+                <th mat-header-cell *matHeaderCellDef> Attribute Name </th>
+                <td mat-cell *matCellDef="let incentive">
+                  {{ incentive.attributeName.value }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="conditionType">
+                <th mat-header-cell *matHeaderCellDef> Condition Type </th>
+                <td mat-cell *matCellDef="let incentive">
+                  {{ incentive.conditionType.value | titlecase }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="attributeValue">
+                <th mat-header-cell *matHeaderCellDef> Attribute Value </th>
+                <td mat-cell *matCellDef="let incentive" [ngSwitch]="incentive.attributeName">
+                  {{ incentive.attributeValueDesc }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="incentiveType">
+                <th mat-header-cell *matHeaderCellDef> Incentive Type </th>
+                <td mat-cell *matCellDef="let incentive">
+                  {{ incentive.incentiveType.value }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef> Interest </th>
+                <td mat-cell *matCellDef="let incentive">
+                  {{ incentive.amount }}
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="incentivesDisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: incentivesDisplayedColumns;"></tr>
+
+            </table>
+
+          </mat-card>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="chartSlabsDisplayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: chartSlabsDisplayedColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: chartSlabsIncentivesDisplayedColumns;" class="incentives-row"></tr>
+
+  </table>
+
+</div>
+
+<div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <button mat-raised-button matStepperPrevious>
+    <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+    Previous
+  </button>
+  <button mat-raised-button matStepperNext>
+    Next&nbsp;&nbsp;
+    <fa-icon icon="arrow-right"></fa-icon>
+  </button>
+</div>

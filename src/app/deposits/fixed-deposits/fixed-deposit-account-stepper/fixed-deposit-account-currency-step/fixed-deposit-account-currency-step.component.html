@@ -1,0 +1,33 @@
+<form [formGroup]="fixedDepositAccountCurrencyForm">
+
+  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Currency</mat-label>
+      <input type="text" matInput formControlName="currencyCode">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Decimal Places</mat-label>
+      <input type="number" matInput formControlName="decimalPlaces">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Currency Multiple</mat-label>
+      <input type="number" matInput formControlName="currencyMultiple">
+    </mat-form-field>
+
+  </div>
+
+  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+    <button mat-raised-button matStepperPrevious>
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+      Previous
+    </button>
+    <button mat-raised-button matStepperNext>
+      Next&nbsp;&nbsp;
+      <fa-icon icon="arrow-right"></fa-icon>
+    </button>
+  </div>
+
+</form>

@@ -14,19 +14,29 @@ import { StandingInstructionsTabComponent } from './fixed-deposit-account-view/s
 import { DatatableTabsComponent } from './fixed-deposit-account-view/datatable-tabs/datatable-tabs.component';
 import { FixedDepositsAccountActionsComponent } from './fixed-deposits-account-actions/fixed-deposits-account-actions.component';
 import { ViewTransactionComponent } from './fixed-deposit-account-view/view-transaction/view-transaction.component';
+import { CreateFixedDepositAccountComponent } from './create-fixed-deposit-account/create-fixed-deposit-account.component';
 
 /** Custom Resolvers */
-import { FixedDepositsAccountViewResolver } from '../fixed-deposits/common-resolvers/fixed-deposit-account-view.resolver';
+import { FixedDepositsAccountViewResolver } from './common-resolvers/fixed-deposit-account-view.resolver';
 import { SavingsDatatableResolver } from 'app/savings/common-resolvers/savings-datatable.resolver';
 import { SavingsDatatablesResolver } from 'app/savings/common-resolvers/savings-datatables.resolver';
-import { FixedDepositsAccountTransactionResolver } from '../fixed-deposits/common-resolvers/fixed-deposit-account-transaction.resolver';
-import { FixedDepositsAccountActionsResolver } from '../fixed-deposits/common-resolvers/fixed-deposit-account-actions.resolver';
+import { FixedDepositsAccountTransactionResolver } from './common-resolvers/fixed-deposit-account-transaction.resolver';
+import { FixedDepositsAccountActionsResolver } from './common-resolvers/fixed-deposit-account-actions.resolver';
+import { FixedDepositsAccountTemplateResolver } from './common-resolvers/fixed-deposit-account-template.resolver';
 
 const routes: Routes = [
   {
     path: '',
     data: { title: extract('All Fixed Deposits'), breadcrumb: 'Fixed Deposits', routeParamBreadcrumb: false },
     children: [
+      {
+        path: 'create-fixed-deposit-account',
+        data: { title: extract('Create Fixed Deposit Account'), breadcrumb: 'Create Fixed Deposit Account' },
+        component: CreateFixedDepositAccountComponent,
+        resolve: {
+          fixedDepositsAccountTemplate: FixedDepositsAccountTemplateResolver
+        }
+      },
       {
         path: ':fixedDepositAccountId',
         data: { title: extract('Fixed Deposit Account View'), routeParamBreadcrumb: 'fixedDepositAccountId' },
@@ -119,7 +129,8 @@ const routes: Routes = [
     SavingsDatatableResolver,
     SavingsDatatablesResolver,
     FixedDepositsAccountTransactionResolver,
-    FixedDepositsAccountActionsResolver
+    FixedDepositsAccountActionsResolver,
+    FixedDepositsAccountTemplateResolver
   ]
 })
 export class FixedDepositsRoutingModule { }

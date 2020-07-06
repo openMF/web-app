@@ -1,0 +1,23 @@
+.margin-t {
+  margin-top: 2em;
+}
+
+table {
+  width: 100%;
+
+  tr.incentives-row {
+    height: 0;
+
+    > td {
+      padding: 0;
+    }
+
+    .incentives {
+      overflow: hidden;
+    }
+
+    .mat-card {
+      border-radius: 0;
+    }
+  }
+}
