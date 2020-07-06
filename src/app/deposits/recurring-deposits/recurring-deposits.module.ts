@@ -17,6 +17,14 @@ import { ChargesTabComponent } from './recurring-deposits-account-view/charges-t
 import { DatatableTabsComponent } from './recurring-deposits-account-view/datatable-tabs/datatable-tabs.component';
 import { MultiRowComponent } from './recurring-deposits-account-view/datatable-tabs/multi-row/multi-row.component';
 import { SingleRowComponent } from './recurring-deposits-account-view/datatable-tabs/single-row/single-row.component';
+import { CreateRecurringDepositsAccountComponent } from './create-recurring-deposits-account/create-recurring-deposits-account.component';
+import { RecurringDepositsAccountDetailsStepComponent } from './recurring-deposits-account-stepper/recurring-deposits-account-details-step/recurring-deposits-account-details-step.component';
+import { RecurringDepositsAccountTermsStepComponent } from './recurring-deposits-account-stepper/recurring-deposits-account-terms-step/recurring-deposits-account-terms-step.component';
+import { RecurringDepositsAccountCurrencyStepComponent } from './recurring-deposits-account-stepper/recurring-deposits-account-currency-step/recurring-deposits-account-currency-step.component';
+import { RecurringDepositsAccountSettingsStepComponent } from './recurring-deposits-account-stepper/recurring-deposits-account-settings-step/recurring-deposits-account-settings-step.component';
+import { RecurringDepositsAccountInterestRateChartStepComponent } from './recurring-deposits-account-stepper/recurring-deposits-account-interest-rate-chart-step/recurring-deposits-account-interest-rate-chart-step.component';
+import { RecurringDepositsAccountChargesStepComponent } from './recurring-deposits-account-stepper/recurring-deposits-account-charges-step/recurring-deposits-account-charges-step.component';
+import { RecurringDepositsAccountPreviewStepComponent } from './recurring-deposits-account-stepper/recurring-deposits-account-preview-step/recurring-deposits-account-preview-step.component';
 
 /**
  * RecurringDeposits Module
@@ -38,7 +46,15 @@ import { SingleRowComponent } from './recurring-deposits-account-view/datatable-
     ChargesTabComponent,
     DatatableTabsComponent,
     MultiRowComponent,
-    SingleRowComponent
+    SingleRowComponent,
+    CreateRecurringDepositsAccountComponent,
+    RecurringDepositsAccountDetailsStepComponent,
+    RecurringDepositsAccountTermsStepComponent,
+    RecurringDepositsAccountCurrencyStepComponent,
+    RecurringDepositsAccountSettingsStepComponent,
+    RecurringDepositsAccountInterestRateChartStepComponent,
+    RecurringDepositsAccountChargesStepComponent,
+    RecurringDepositsAccountPreviewStepComponent
   ],
   providers: [DatePipe]
 })

@@ -1,0 +1,106 @@
+<div class="container">
+
+  <mat-horizontal-stepper class="mat-elevation-z8" labelPosition="bottom" #recurringDepositAccountStepper>
+    <ng-template matStepperIcon="number">
+      <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="edit">
+      <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="done">
+      <fa-icon icon="check" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="error">
+      <fa-icon icon="exclamation-triangle" size="lg"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="preview">
+      <fa-icon icon="eye" size="sm"></fa-icon>
+    </ng-template>
+
+    <mat-step [stepControl]="recurringDepositAccountDetailsForm">
+
+      <ng-template matStepLabel>DETAILS</ng-template>
+
+      <mifosx-recurring-deposits-account-details-step
+        [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
+        (recurringDepositsAccountProductTemplate)="setTemplate($event)">
+      </mifosx-recurring-deposits-account-details-step>
+
+    </mat-step>
+
+    <mat-step [stepControl]="recurringDepositAccountCurrencyForm">
+
+      <ng-template matStepLabel>CURRENCY</ng-template>
+
+      <mifosx-recurring-deposits-account-currency-step
+        [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
+        [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate">
+      </mifosx-recurring-deposits-account-currency-step>
+
+    </mat-step>
+
+    <mat-step [stepControl]="recurringDepositAccountTermsForm">
+
+      <ng-template matStepLabel>TERMS</ng-template>
+
+      <mifosx-recurring-deposits-account-terms-step
+        [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
+        [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate">
+      </mifosx-recurring-deposits-account-terms-step>
+
+    </mat-step>
+
+    <mat-step [stepControl]="recurringDepositAccountSettingsForm">
+
+      <ng-template matStepLabel>SETTINGS</ng-template>
+
+      <mifosx-recurring-deposits-account-settings-step
+        [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
+        [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate">
+      </mifosx-recurring-deposits-account-settings-step>
+
+    </mat-step>
+
+    <mat-step>
+
+      <ng-template matStepLabel>INTEREST RATE CHART</ng-template>
+
+      <mifosx-recurring-deposits-account-interest-rate-chart-step
+        [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
+        [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate">
+      </mifosx-recurring-deposits-account-interest-rate-chart-step>
+
+    </mat-step>
+
+    <mat-step>
+
+      <ng-template matStepLabel>CHARGES</ng-template>
+
+      <mifosx-recurring-deposits-account-charges-step
+        [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
+        [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate"
+        [recurringDepositAccountFormValid]="recurringDepositAccountFormValid"
+        [currencyCode]="recurringDepositAccountCurrencyForm.get('currencyCode')">
+      </mifosx-recurring-deposits-account-charges-step>
+
+    </mat-step>
+
+    <mat-step state="preview" *ngIf="recurringDepositAccountFormValid" completed>
+
+      <ng-template matStepLabel>PREVIEW</ng-template>
+
+      <mifosx-recurring-deposits-account-preview-step
+        [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
+        [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate"
+        [recurringDepositAccountData]="recurringDepositAccountData" (submit)="submit()">
+      </mifosx-recurring-deposits-account-preview-step>
+
+    </mat-step>
+
+  </mat-horizontal-stepper>
+
+</div>
