@@ -1,0 +1,145 @@
+/** Angular Imports */
+import { Component, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
+
+/** Custom Services */
+import { FixedDepositsService } from '../fixed-deposits.service';
+
+/** Custom Components */
+import { FixedDepositAccountDetailsStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-details-step/fixed-deposit-account-details-step.component';
+import { FixedDepositAccountCurrencyStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-currency-step/fixed-deposit-account-currency-step.component';
+import { FixedDepositAccountTermsStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-terms-step/fixed-deposit-account-terms-step.component';
+import { FixedDepositAccountSettingsStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-settings-step/fixed-deposit-account-settings-step.component';
+import { FixedDepositAccountChargesStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-charges-step/fixed-deposit-account-charges-step.component';
+
+/**
+ * Create Fixed Deposit Account Component
+ */
+@Component({
+  selector: 'mifosx-create-fixed-deposit-account',
+  templateUrl: './create-fixed-deposit-account.component.html',
+  styleUrls: ['./create-fixed-deposit-account.component.scss']
+})
+export class CreateFixedDepositAccountComponent {
+
+  /** Fixed Deposits Account Details Step */
+  @ViewChild(FixedDepositAccountDetailsStepComponent) fixedDepositsAccountDetailsStep: FixedDepositAccountDetailsStepComponent;
+  /** Fixed Deposits Account Currency Step */
+  @ViewChild(FixedDepositAccountCurrencyStepComponent) fixedDepositAccountCurrencyStep: FixedDepositAccountCurrencyStepComponent;
+  /** Fixed Deposits Account Terms Step */
+  @ViewChild(FixedDepositAccountTermsStepComponent) fixedDepositAccountTermsStep: FixedDepositAccountTermsStepComponent;
+  /** Fixed Deposits Account Settings Step */
+  @ViewChild(FixedDepositAccountSettingsStepComponent) fixedDepositAccountSettingsStep: FixedDepositAccountSettingsStepComponent;
+  /** Fixed Deposits Account Charges Step */
+  @ViewChild(FixedDepositAccountChargesStepComponent) fixedDepositAccountChargesStep: FixedDepositAccountChargesStepComponent;
+
+  /** Fixed Deposits Account Template */
+  fixedDepositsAccountTemplate: any;
+  /** Fixed Deposit Account Product Template */
+  fixedDepositsAccountProductTemplate: any;
+
+  /**
+   * Fetches FD account template from `resolve`
+   * @param {ActivatedRoute} route Activated Route
+   * @param {Router} router Router
+   * @param {DatePipe} datePipe Date Pipe
+   * @param {FixedDepositsService} fixedDepositsService Fixed Deposits Service
+   */
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private datePipe: DatePipe,
+              private fixedDepositsService: FixedDepositsService) {
+    this.route.data.subscribe((data: { fixedDepositsAccountTemplate: any }) => {
+      this.fixedDepositsAccountTemplate = data.fixedDepositsAccountTemplate;
+    });
+  }
+
+  /**
+   * Sets fixed deposits account product template.
+   * @param {any} $event API response
+   */
+  setTemplate($event: any) {
+    this.fixedDepositsAccountProductTemplate = $event;
+  }
+
+  /**
+   * Retrieves Fixed Deposit Account Details Form Data
+   */
+  get fixedDepositAccountDetailsForm() {
+    return this.fixedDepositsAccountDetailsStep.fixedDepositAccountDetailsForm;
+  }
+
+  /**
+   * Retrieves Fixed Deposit Account Currency Form Data
+   */
+  get fixedDepositAccountCurrencyForm() {
+    return this.fixedDepositAccountCurrencyStep.fixedDepositAccountCurrencyForm;
+  }
+
+  /**
+   * Retrieves Fixed Deposit Account Terms Form Data
+   */
+  get fixedDepositAccountTermsForm() {
+    return this.fixedDepositAccountTermsStep.fixedDepositAccountTermsForm;
+  }
+
+  /**
+   * Retrieves Fixed Deposit Account Settings Form Data
+   */
+  get fixedDepositAccountSettingsForm() {
+    return this.fixedDepositAccountSettingsStep.fixedDepositAccountSettingsForm;
+  }
+
+  /**
+   * Checks stepper validity.
+   */
+  get fixedDepositAccountFormValid() {
+    return (
+      this.fixedDepositAccountDetailsForm.valid &&
+      this.fixedDepositAccountTermsForm.valid &&
+      this.fixedDepositAccountSettingsForm.valid
+    );
+  }
+
+  /**
+   * Creates the fixed deposit account object.
+   */
+  get fixedDepositAccount() {
+    return {
+      ...this.fixedDepositsAccountDetailsStep.fixedDepositAccountDetails,
+      ...this.fixedDepositAccountTermsStep.fixedDepositAccountTerms,
+      ...this.fixedDepositAccountSettingsStep.fixedDepositAccountSettings,
+      ...this.fixedDepositAccountChargesStep.fixedDepositAccountCharges,
+    };
+  }
+
+  /**
+   * Submits the fixed deposit form and creates a new fixed deposit account
+   */
+  submit() {
+    const locale = 'en';
+    const dateFormat = 'dd MMMM yyyy';
+    const monthDayFormat = 'dd MMMM';
+    const fixedDepositAccount = {
+      ...this.fixedDepositAccount,
+      clientId: this.fixedDepositsAccountTemplate.clientId,
+      charges: this.fixedDepositAccount.charges.map((charge: any) => ({
+        chargeId: charge.id,
+        amount: charge.amount,
+        dueDate: charge.dueDate,
+        feeOnMonthDay: charge.feeOnMonthDay && this.datePipe.transform([2000].concat(charge.feeOnMonthDay), monthDayFormat),
+        feeInterval: charge.feeInterval
+      })),
+      submittedOnDate: this.datePipe.transform(this.fixedDepositAccount.submittedOnDate, dateFormat),
+      charts: [{chartSlabs: this.fixedDepositsAccountProductTemplate.accountChart.chartSlabs}],
+      dateFormat,
+      monthDayFormat,
+      locale
+    };
+    this.fixedDepositsService.createFixedDepositAccount(fixedDepositAccount).subscribe((response: any) => {
+      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+    });
+  }
+
+}

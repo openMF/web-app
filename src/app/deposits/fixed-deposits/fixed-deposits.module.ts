@@ -32,6 +32,14 @@ import { InactivateChargeDialogComponent } from './fixed-deposit-account-view/cu
 import { AddChargeFixedDepositsAccountComponent } from './fixed-deposits-account-actions/add-charge-fixed-deposits-account/add-charge-fixed-deposits-account.component';
 import { PrematureCloseFixedDepositsAccountComponent } from './fixed-deposits-account-actions/premature-close-fixed-deposits-account/premature-close-fixed-deposits-account.component';
 import { CloseFixedDepositsAccountComponent } from './fixed-deposits-account-actions/close-fixed-deposits-account/close-fixed-deposits-account.component';
+import { CreateFixedDepositAccountComponent } from './create-fixed-deposit-account/create-fixed-deposit-account.component';
+import { FixedDepositAccountDetailsStepComponent } from './fixed-deposit-account-stepper/fixed-deposit-account-details-step/fixed-deposit-account-details-step.component';
+import { FixedDepositAccountTermsStepComponent } from './fixed-deposit-account-stepper/fixed-deposit-account-terms-step/fixed-deposit-account-terms-step.component';
+import { FixedDepositAccountChargesStepComponent } from './fixed-deposit-account-stepper/fixed-deposit-account-charges-step/fixed-deposit-account-charges-step.component';
+import { FixedDepositAccountSettingsStepComponent } from './fixed-deposit-account-stepper/fixed-deposit-account-settings-step/fixed-deposit-account-settings-step.component';
+import { FixedDepositAccountInterestRateChartStepComponent } from './fixed-deposit-account-stepper/fixed-deposit-account-interest-rate-chart-step/fixed-deposit-account-interest-rate-chart-step.component';
+import { FixedDepositAccountPreviewStepComponent } from './fixed-deposit-account-stepper/fixed-deposit-account-preview-step/fixed-deposit-account-preview-step.component';
+import { FixedDepositAccountCurrencyStepComponent } from './fixed-deposit-account-stepper/fixed-deposit-account-currency-step/fixed-deposit-account-currency-step.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +65,15 @@ import { CloseFixedDepositsAccountComponent } from './fixed-deposits-account-act
     InactivateChargeDialogComponent,
     AddChargeFixedDepositsAccountComponent,
     PrematureCloseFixedDepositsAccountComponent,
-    CloseFixedDepositsAccountComponent
+    CloseFixedDepositsAccountComponent,
+    CreateFixedDepositAccountComponent,
+    FixedDepositAccountDetailsStepComponent,
+    FixedDepositAccountTermsStepComponent,
+    FixedDepositAccountChargesStepComponent,
+    FixedDepositAccountSettingsStepComponent,
+    FixedDepositAccountInterestRateChartStepComponent,
+    FixedDepositAccountPreviewStepComponent,
+    FixedDepositAccountCurrencyStepComponent
   ],
   imports: [
     SharedModule,
