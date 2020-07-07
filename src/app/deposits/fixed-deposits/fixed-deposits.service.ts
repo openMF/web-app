@@ -83,12 +83,28 @@ export class FixedDepositsService {
     return this.http.get('/fixeddepositaccounts/template', { params: httpParams });
   }
 
+
+  getFixedDepositsAccountAndTemplate(accountId: any) {
+    const httpParams = new HttpParams().set('associations', 'charges,+linkedAccount')
+      .set('template', 'true');
+    return this.http.get(`/fixeddepositaccounts/${accountId}`, { params: httpParams });
+  }
+
   /**
    * @param fixedDepositAccount Fixed Deposit Account
    * @returns {Observable<any>}
    */
   createFixedDepositAccount(fixedDepositAccount: any): Observable<any> {
     return this.http.post(`/fixeddepositaccounts`, fixedDepositAccount);
+  }
+
+  /**
+   * @param {any} accountId Account Id
+   * @param {any} fixedDepositAccount Fixed Deposit Account
+   * @returns {Observable<any>}
+   */
+  updateFixedDepositAccount(accountId: any, fixedDepositAccount: any): Observable<any> {
+    return this.http.put(`/fixeddepositaccounts/${accountId}`, fixedDepositAccount);
   }
 
   /**

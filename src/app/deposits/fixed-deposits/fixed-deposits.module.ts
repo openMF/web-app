@@ -40,6 +40,7 @@ import { FixedDepositAccountSettingsStepComponent } from './fixed-deposit-accoun
 import { FixedDepositAccountInterestRateChartStepComponent } from './fixed-deposit-account-stepper/fixed-deposit-account-interest-rate-chart-step/fixed-deposit-account-interest-rate-chart-step.component';
 import { FixedDepositAccountPreviewStepComponent } from './fixed-deposit-account-stepper/fixed-deposit-account-preview-step/fixed-deposit-account-preview-step.component';
 import { FixedDepositAccountCurrencyStepComponent } from './fixed-deposit-account-stepper/fixed-deposit-account-currency-step/fixed-deposit-account-currency-step.component';
+import { EditFixedDepositAccountComponent } from './edit-fixed-deposit-account/edit-fixed-deposit-account.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { FixedDepositAccountCurrencyStepComponent } from './fixed-deposit-accoun
     FixedDepositAccountSettingsStepComponent,
     FixedDepositAccountInterestRateChartStepComponent,
     FixedDepositAccountPreviewStepComponent,
-    FixedDepositAccountCurrencyStepComponent
+    FixedDepositAccountCurrencyStepComponent,
+    EditFixedDepositAccountComponent
   ],
   imports: [
     SharedModule,

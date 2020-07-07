@@ -54,7 +54,7 @@
       <th mat-header-cell *matHeaderCellDef> Date </th>
       <td mat-cell *matCellDef="let charge">
         <span *ngIf="charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee'">
-          {{(charge.dueDate | date) || 'Unassigned'}}
+          {{(charge.dueDate | date) || 'Unassigned*'}}
         </span>
         <span *ngIf="charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'">
           {{charge.feeOnMonthDay ? ([2000].concat(charge.feeOnMonthDay) | date: 'dd MMMM') : 'Unassigned'}}

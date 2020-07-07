@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 
@@ -20,7 +20,7 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
   templateUrl: './fixed-deposit-account-charges-step.component.html',
   styleUrls: ['./fixed-deposit-account-charges-step.component.scss']
 })
-export class FixedDepositAccountChargesStepComponent implements OnInit {
+export class FixedDepositAccountChargesStepComponent implements OnInit, OnChanges {
 
   /** Fixed deposits account template */
   @Input() fixedDepositsAccountTemplate: any;
@@ -34,9 +34,11 @@ export class FixedDepositAccountChargesStepComponent implements OnInit {
   /** Charges Data */
   chargeData: any;
   /** Charges Data Source */
-  chargesDataSource: {}[];
+  chargesDataSource: {}[] = [];
   /** Charges table columns */
   displayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'date', 'repaymentsEvery', 'action'];
+  /** For Edit Fixed Deposits Account Form */
+  isChargesPatched = false;
   /** Component is pristine if there has been no changes by user interaction */
   pristine = true;
 
@@ -48,10 +50,21 @@ export class FixedDepositAccountChargesStepComponent implements OnInit {
               private datePipe: DatePipe) { }
 
   ngOnInit() {
-    this.chargeData = this.fixedDepositsAccountTemplate.chargeOptions;
-    this.chargesDataSource = [];
-    this.currencyCode.valueChanges.subscribe(() => this.chargesDataSource = []);
+    this.currencyCode.valueChanges.subscribe(() => {
+      if (!this.isChargesPatched && this.fixedDepositsAccountTemplate.charges) {
+        this.chargesDataSource = this.fixedDepositsAccountTemplate.charges.map((charge: any) => ({...charge, id: charge.chargeId})) || [];
+        this.isChargesPatched = true;
+      } else {
+        this.chargesDataSource = [];
+      }
+    });
   }
+
+  ngOnChanges() {
+    if (this.fixedDepositsAccountProductTemplate) {
+      this.chargeData = this.fixedDepositsAccountProductTemplate.chargeOptions;
+    }
+   }
 
   /**
    * Add a charge
@@ -59,6 +72,7 @@ export class FixedDepositAccountChargesStepComponent implements OnInit {
   addCharge(charge: any) {
     this.chargesDataSource = this.chargesDataSource.concat([charge.value]);
     charge.value = '';
+    this.pristine = false;
   }
 
   /**
@@ -169,6 +183,7 @@ export class FixedDepositAccountChargesStepComponent implements OnInit {
   deleteCharge(charge: any) {
     this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1);
     this.chargesDataSource = this.chargesDataSource.concat([]);
+    this.pristine = false;
   }
 
   /**

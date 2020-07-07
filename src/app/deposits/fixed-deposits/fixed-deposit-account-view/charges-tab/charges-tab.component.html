@@ -35,8 +35,8 @@
       </ng-container>
 
       <ng-container matColumnDef="repeatsOn">
-        <th mat-header-cell *matHeaderCellDef> Repeats On (M/d) </th>
-        <td mat-cell *matCellDef="let charge"> {{ charge.feeOnMonthDay ? charge.feeOnMonthDay.join('/') : '' }} </td>
+        <th mat-header-cell *matHeaderCellDef> Repeats On </th>
+        <td mat-cell *matCellDef="let charge"> {{charge.feeOnMonthDay ? ([2000].concat(charge.feeOnMonthDay) | date: 'dd MMMM') : 'Unassigned'}} </td>
       </ng-container>
 
       <ng-container matColumnDef="calculationType">

@@ -15,6 +15,7 @@ import { DatatableTabsComponent } from './fixed-deposit-account-view/datatable-t
 import { FixedDepositsAccountActionsComponent } from './fixed-deposits-account-actions/fixed-deposits-account-actions.component';
 import { ViewTransactionComponent } from './fixed-deposit-account-view/view-transaction/view-transaction.component';
 import { CreateFixedDepositAccountComponent } from './create-fixed-deposit-account/create-fixed-deposit-account.component';
+import { EditFixedDepositAccountComponent } from './edit-fixed-deposit-account/edit-fixed-deposit-account.component';
 
 /** Custom Resolvers */
 import { FixedDepositsAccountViewResolver } from './common-resolvers/fixed-deposit-account-view.resolver';
@@ -23,6 +24,7 @@ import { SavingsDatatablesResolver } from 'app/savings/common-resolvers/savings-
 import { FixedDepositsAccountTransactionResolver } from './common-resolvers/fixed-deposit-account-transaction.resolver';
 import { FixedDepositsAccountActionsResolver } from './common-resolvers/fixed-deposit-account-actions.resolver';
 import { FixedDepositsAccountTemplateResolver } from './common-resolvers/fixed-deposit-account-template.resolver';
+import { FixedDepositsAccountAndTemplateResolver } from './common-resolvers/fixed-deposit-account-and-template.resolver';
 
 const routes: Routes = [
   {
@@ -85,6 +87,14 @@ const routes: Routes = [
             ]
           },
           {
+            path: 'edit-fixed-deposit-account',
+            data: { title: extract('Edit Fixed Deposit Account'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+            component: EditFixedDepositAccountComponent,
+            resolve: {
+              fixedDepositsAccountAndTemplate: FixedDepositsAccountAndTemplateResolver
+            }
+          },
+          {
             path: 'transactions',
             data: { title: extract('Fixed Deposits Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
             children: [
@@ -130,7 +140,8 @@ const routes: Routes = [
     SavingsDatatablesResolver,
     FixedDepositsAccountTransactionResolver,
     FixedDepositsAccountActionsResolver,
-    FixedDepositsAccountTemplateResolver
+    FixedDepositsAccountTemplateResolver,
+    FixedDepositsAccountAndTemplateResolver
   ]
 })
 export class FixedDepositsRoutingModule { }
