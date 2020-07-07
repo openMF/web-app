@@ -1,26 +1,37 @@
-/** Angular Imports */
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+// ** Angular Imports */
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 /**
- * Interest Rate Chart Tab Component.
+ * Interest Rate Chart Tab
  */
 @Component({
   selector: 'mifosx-interest-rate-chart-tab',
   templateUrl: './interest-rate-chart-tab.component.html',
-  styleUrls: ['./interest-rate-chart-tab.component.scss']
+  styleUrls: ['./interest-rate-chart-tab.component.scss'],
+  animations: [
+    trigger('expandChartSlab', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
+    ])
+  ]
 })
-export class InterestRateChartTabComponent implements OnInit {
+export class InterestRateChartTabComponent {
 
   /** Fixed Deposits Account Status */
   status: any;
   /** Interest Rate Chart Data */
-  interestRateChartData: any;
+  interestRateChartData: any = [];
   /** Columns to be displayed in interest rate chart table. */
-  displayedColumns: string[] = ['period', 'amountRange', 'interest', 'description', 'incentives'];
-  /** Data source for interest rate chart table. */
-  dataSource: MatTableDataSource<any>;
+  chartSlabsDisplayedColumns: any[] = ['period', 'amountRange', 'interest', 'description', 'actions'];
+  /** Columns to be displayed in incentives sub-table. */
+  incentivesDisplayedColumns: string[] = ['entityType', 'attributeName', 'conditionType', 'attributeValue', 'incentiveType', 'amount'];
+  /** Additional Column to display in incentives table  */
+  chartSlabsIncentivesDisplayedColumns: string[] = ['incentives'];
+  /** Expand Chart Slab Index used in the view */
+  expandChartSlabIndex: number;
 
   /**
    * Retrieves fixed deposits account data from `resolve`.
@@ -30,10 +41,6 @@ export class InterestRateChartTabComponent implements OnInit {
     this.route.parent.data.subscribe((data: { fixedDepositsAccountData: any }) => {
       this.interestRateChartData = data.fixedDepositsAccountData.accountChart.chartSlabs;
     });
-  }
-
-  ngOnInit() {
-    this.dataSource = new MatTableDataSource(this.interestRateChartData);
   }
 
 }
