@@ -48,7 +48,7 @@ export class SingleRowComponent implements OnInit {
     private datePipe: DatePipe,
     private dialog: MatDialog,
     private savingsService: SavingsService) {
-    this.accountId = this.route.parent.parent.snapshot.paramMap.get('fixedDepositAccountId');
+    this.accountId = this.route.parent.parent.snapshot.paramMap.get('recurringDepositAccountId');
   }
 
   /**

@@ -81,6 +81,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
       case 'Approve':
       case 'Reject':
       case 'Undo Approval':
+      case 'Add Charge':
       case 'Withdraw By Client':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
