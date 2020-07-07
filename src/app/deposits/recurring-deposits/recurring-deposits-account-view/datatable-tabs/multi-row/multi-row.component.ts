@@ -57,7 +57,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
     private datePipe: DatePipe,
     private savingsService: SavingsService,
     private dialog: MatDialog) {
-    this.accountId = this.route.parent.parent.snapshot.paramMap.get('fixedDepositAccountId');
+    this.accountId = this.route.parent.parent.snapshot.paramMap.get('recurringDepositAccountId');
   }
 
   /**

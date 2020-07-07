@@ -13,7 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ChargesTabComponent implements OnInit {
 
-  /** Fixed Deposits Account Data */
+  /** Recurring Deposits Account Data */
   recurringDepositsAccountData: any;
   /** Charges Data */
   chargesData: any[];
@@ -40,7 +40,7 @@ export class ChargesTabComponent implements OnInit {
   @ViewChild('chargesTable') chargesTableRef: MatTable<Element>;
 
   /**
-   * Retrieves Fixed Deposits Account Data from `resolve`.
+   * Retrieves Recurring Deposits Account Data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
