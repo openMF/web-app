@@ -30,6 +30,7 @@ import { ActivateRecurringDepositsAccountComponent } from './recurring-deposits-
 import { UndoApprovalRecurringDepositsAccountComponent } from './recurring-deposits-account-actions/undo-approval-recurring-deposits-account/undo-approval-recurring-deposits-account.component';
 import { ApproveRecurringDepositsAccountComponent } from './recurring-deposits-account-actions/approve-recurring-deposits-account/approve-recurring-deposits-account.component';
 import { RejectRecurringDepositsAccountComponent } from './recurring-deposits-account-actions/reject-recurring-deposits-account/reject-recurring-deposits-account.component';
+import { WithdrawByClientRecurringDepositsAccountComponent } from './recurring-deposits-account-actions/withdraw-by-client-recurring-deposits-account/withdraw-by-client-recurring-deposits-account.component';
 
 /**
  * RecurringDeposits Module
@@ -64,7 +65,8 @@ import { RejectRecurringDepositsAccountComponent } from './recurring-deposits-ac
     ActivateRecurringDepositsAccountComponent,
     UndoApprovalRecurringDepositsAccountComponent,
     ApproveRecurringDepositsAccountComponent,
-    RejectRecurringDepositsAccountComponent
+    RejectRecurringDepositsAccountComponent,
+    WithdrawByClientRecurringDepositsAccountComponent
   ],
   providers: [DatePipe]
 })
