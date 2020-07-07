@@ -71,4 +71,16 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
     }
   }
 
+  /**
+   * Performs action button/option action.
+   * @param {string} name action name.
+   */
+  doAction(name: string) {
+    switch (name) {
+      case 'Activate':
+        this.router.navigate([`actions/${name}`], { relativeTo: this.route });
+        break;
+    }
+  }
+
 }

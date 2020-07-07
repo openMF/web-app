@@ -64,4 +64,15 @@ export class RecurringDepositsService {
   createRecurringDepositAccount(recurringAccountData: any): Observable<any> {
     return this.http.post(`/recurringdepositaccounts`, recurringAccountData);
   }
+
+  /**
+   * @param {string} accountId Savings Account Id
+   * @param {string} command Command
+   * @param {any} data Data
+   * @returns {Observable<any>}
+   */
+  executeRecurringDepositsAccountCommand(accountId: string, command: string, data: any): Observable<any> {
+    const httpParams = new HttpParams().set('command', command);
+    return this.http.post(`/recurringdepositaccounts/${accountId}`, data, { params: httpParams });
+  }
 }
