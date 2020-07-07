@@ -438,7 +438,8 @@
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let element">
         <ng-container *ngIf="element.status.submittedAndPendingApproval">
-          <button class="account-action-button" mat-raised-button *mifosxHasPermission="'APPROVE_SAVINGSACCOUNT'" color="primary">
+          <button class="account-action-button" mat-raised-button *mifosxHasPermission="'APPROVE_SAVINGSACCOUNT'" 
+          [routerLink]="['../','recurringdeposits', element.id, 'actions', 'Approve']" color="primary">
             <i class="fa fa-check"></i>
           </button>
         </ng-container>
@@ -446,12 +447,12 @@
           <button
             class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)"
             *mifosxHasPermission="'APPROVALUNDO_SAVINGSACCOUNT'"
-            [routerLink]="['../','recurring-deposits-accounts', element.id, 'actions', 'Undo Approval']">
+            [routerLink]="['../','recurringdeposits', element.id, 'actions', 'Undo Approval']">
             <i class="fa fa-undo"></i>
           </button>
           <button class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)"
             *mifosxHasPermission="'ACTIVATE_SAVINGSACCOUNT'"
-            [routerLink]="['../','recurring-deposits-accounts', element.id, 'actions', 'Activate']">
+            [routerLink]="['../','recurringdeposits', element.id, 'actions', 'Activate']">
             <i class="fa fa-check-circle"></i>
           </button>
         </ng-container>
