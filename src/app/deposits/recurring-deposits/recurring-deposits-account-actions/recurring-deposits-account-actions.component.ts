@@ -13,10 +13,12 @@ export class RecurringDepositsAccountActionsComponent {
     'Activate': boolean
     'Undo Approval': boolean
     'Approve': boolean
+    'Reject': boolean
   } = {
       'Activate': false,
       'Undo Approval': false,
-      'Approve': false
+      'Approve': false,
+      'Reject': false
     };
 
   /**
