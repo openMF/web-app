@@ -33,6 +33,10 @@ import { RejectRecurringDepositsAccountComponent } from './recurring-deposits-ac
 import { WithdrawByClientRecurringDepositsAccountComponent } from './recurring-deposits-account-actions/withdraw-by-client-recurring-deposits-account/withdraw-by-client-recurring-deposits-account.component';
 import { AddChargeRecurringDepositsAccountComponent } from './recurring-deposits-account-actions/add-charge-recurring-deposits-account/add-charge-recurring-deposits-account.component';
 
+/* Dialog Components */
+import { RecurringDepositConfirmationDialogComponent } from './recurring-deposits-account-view/custom-dialogs/recurring-deposit-confirmation-dialog/recurring-deposit-confirmation-dialog.component';
+
+
 /**
  * RecurringDeposits Module
  *
@@ -68,7 +72,11 @@ import { AddChargeRecurringDepositsAccountComponent } from './recurring-deposits
     ApproveRecurringDepositsAccountComponent,
     RejectRecurringDepositsAccountComponent,
     WithdrawByClientRecurringDepositsAccountComponent,
-    AddChargeRecurringDepositsAccountComponent
+    AddChargeRecurringDepositsAccountComponent,
+    RecurringDepositConfirmationDialogComponent
+  ],
+  entryComponents: [
+    RecurringDepositConfirmationDialogComponent
   ],
   providers: [DatePipe]
 })
