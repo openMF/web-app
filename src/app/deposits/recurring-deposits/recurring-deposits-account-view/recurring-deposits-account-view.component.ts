@@ -78,6 +78,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
   doAction(name: string) {
     switch (name) {
       case 'Activate':
+      case 'Undo Approval':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
     }
