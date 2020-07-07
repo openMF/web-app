@@ -47,7 +47,19 @@ export class FixedDepositAccountTermsStepComponent implements OnInit, OnChanges 
     }
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if (this.fixedDepositsAccountTemplate) {
+      this.fixedDepositAccountTermsForm.patchValue({
+        'interestCompoundingPeriodType': this.fixedDepositsAccountTemplate.interestCompoundingPeriodType.id,
+        'interestPostingPeriodType': this.fixedDepositsAccountTemplate.interestPostingPeriodType.id,
+        'interestCalculationType': this.fixedDepositsAccountTemplate.interestCalculationType.id,
+        'interestCalculationDaysInYearType': this.fixedDepositsAccountTemplate.interestCalculationDaysInYearType.id,
+        'depositAmount': this.fixedDepositsAccountTemplate.depositAmount,
+        'depositPeriod': this.fixedDepositsAccountTemplate.depositPeriod,
+        'depositPeriodFrequencyId': this.fixedDepositsAccountTemplate.depositPeriodFrequency.id,
+      });
+    }
+  }
 
   /**
    * Creates fixed deposits account terms form.

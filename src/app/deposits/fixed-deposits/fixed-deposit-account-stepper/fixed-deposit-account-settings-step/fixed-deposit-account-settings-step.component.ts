@@ -63,6 +63,7 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
             this.fixedDepositAccountSettingsForm.removeControl('taxGroupId');
           }
         });
+        this.fixedDepositAccountSettingsForm.get('withHoldTax').patchValue(this.fixedDepositsAccountTemplate.withHoldTax);
       } else {
         this.fixedDepositAccountSettingsForm.removeControl('withHoldTax');
       }
@@ -70,7 +71,15 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
     }
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if (this.fixedDepositsAccountTemplate) {
+      this.fixedDepositAccountSettingsForm.patchValue({
+        'lockinPeriodFrequency': this.fixedDepositsAccountTemplate.lockinPeriodFrequency,
+        'lockinPeriodFrequencyType': this.fixedDepositsAccountTemplate.lockinPeriodFrequencyType && this.fixedDepositsAccountTemplate.lockinPeriodFrequencyType.id,
+        'transferInterestToSavings': this.fixedDepositsAccountTemplate.transferInterestToSavings
+      });
+    }
+  }
 
   /**
    * Creates fixed deposits account terms form.
@@ -99,6 +108,7 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
     this.fixedDepositAccountSettingsForm.get('transferInterestToSavings').valueChanges.subscribe((value: boolean) => {
       if (value) {
         this.fixedDepositAccountSettingsForm.addControl('linkAccountId', new FormControl('', Validators.required));
+        this.fixedDepositAccountSettingsForm.get('linkAccountId').patchValue(this.fixedDepositsAccountTemplate.linkedAccount && this.fixedDepositsAccountTemplate.linkedAccount.id);
       } else {
         this.fixedDepositAccountSettingsForm.removeControl('linkAccountId');
       }

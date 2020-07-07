@@ -19,19 +19,9 @@
     <span fxFlex="60%">{{ (fixedDepositAccountData.fieldOfficerId | find:fixedDepositsAccountProductTemplate.fieldOfficerOptions:'id':'displayName') || 'Unassigned' }}</span>
   </div>
 
-  <h3 class="mat-h3" fxFlexFill>Terms</h3>
+  <h3 class="mat-h3" fxFlexFill>Currency</h3>
 
   <mat-divider fxFlexFill></mat-divider>
-
-  <div fxFlexFill>
-    <span fxFlex="40%">Fixed Deposit Amount:</span>
-    <span fxFlex="60%">{{ fixedDepositAccountData.depositAmount }}</span>
-  </div>
-
-  <div fxFlexFill>
-    <span fxFlex="40%">Deposit Period:</span>
-    <span fxFlex="60%">{{ fixedDepositAccountData.depositPeriod + ' ' + (fixedDepositAccountData.depositPeriodFrequencyId | find:fixedDepositsAccountProductTemplate.periodFrequencyTypeOptions:'id':'value') }}</span>
-  </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">Currency</span>
@@ -46,6 +36,20 @@
   <div fxFlexFill>
     <span fxFlex="40%">Decimal Places</span>
     <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate.currency.decimalPlaces }}</span>
+  </div>
+
+  <h3 class="mat-h3" fxFlexFill>Terms</h3>
+
+  <mat-divider fxFlexFill></mat-divider>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Fixed Deposit Amount:</span>
+    <span fxFlex="60%">{{ fixedDepositAccountData.depositAmount }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Deposit Period:</span>
+    <span fxFlex="60%">{{ fixedDepositAccountData.depositPeriod + ' ' + (fixedDepositAccountData.depositPeriodFrequencyId | find:fixedDepositsAccountProductTemplate.periodFrequencyTypeOptions:'id':'value') }}</span>
   </div>
 
   <div fxFlexFill>

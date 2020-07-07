@@ -1,7 +1,7 @@
 <div class="container">
 
   <mat-horizontal-stepper class="mat-elevation-z8" labelPosition="bottom" #fixedDepositAccountStepper>
-    
+
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
     </ng-template>
@@ -27,7 +27,7 @@
       <ng-template matStepLabel>DETAILS</ng-template>
 
       <mifosx-fixed-deposit-account-details-step
-        [fixedDepositsAccountTemplate]="fixedDepositsAccountTemplate"
+        [fixedDepositsAccountTemplate]="fixedDepositsAccountAndTemplate"
         (fixedDepositsAccountProductTemplate)="setTemplate($event)">
       </mifosx-fixed-deposit-account-details-step>
 
@@ -38,7 +38,7 @@
       <ng-template matStepLabel>CURRENCY</ng-template>
 
       <mifosx-fixed-deposit-account-currency-step
-        [fixedDepositsAccountTemplate]="fixedDepositsAccountTemplate"
+        [fixedDepositsAccountTemplate]="fixedDepositsAccountAndTemplate"
         [fixedDepositsAccountProductTemplate]="fixedDepositsAccountProductTemplate">
       </mifosx-fixed-deposit-account-currency-step>
 
@@ -49,7 +49,7 @@
       <ng-template matStepLabel>TERMS</ng-template>
 
       <mifosx-fixed-deposit-account-terms-step
-        [fixedDepositsAccountTemplate]="fixedDepositsAccountTemplate"
+        [fixedDepositsAccountTemplate]="fixedDepositsAccountAndTemplate"
         [fixedDepositsAccountProductTemplate]="fixedDepositsAccountProductTemplate">
       </mifosx-fixed-deposit-account-terms-step>
 
@@ -60,7 +60,7 @@
       <ng-template matStepLabel>SETTINGS</ng-template>
 
       <mifosx-fixed-deposit-account-settings-step
-        [fixedDepositsAccountTemplate]="fixedDepositsAccountTemplate"
+        [fixedDepositsAccountTemplate]="fixedDepositsAccountAndTemplate"
         [fixedDepositsAccountProductTemplate]="fixedDepositsAccountProductTemplate">
       </mifosx-fixed-deposit-account-settings-step>
 
@@ -71,7 +71,7 @@
       <ng-template matStepLabel>INTEREST RATE CHART</ng-template>
 
       <mifosx-fixed-deposit-account-interest-rate-chart-step
-        [fixedDepositsAccountTemplate]="fixedDepositsAccountTemplate"
+        [fixedDepositsAccountTemplate]="fixedDepositsAccountAndTemplate"
         [fixedDepositsAccountProductTemplate]="fixedDepositsAccountProductTemplate">
       </mifosx-fixed-deposit-account-interest-rate-chart-step>
 
@@ -82,20 +82,20 @@
       <ng-template matStepLabel>CHARGES</ng-template>
 
       <mifosx-fixed-deposit-account-charges-step
-        [fixedDepositsAccountTemplate]="fixedDepositsAccountTemplate"
+        [fixedDepositsAccountTemplate]="fixedDepositsAccountAndTemplate"
         [fixedDepositsAccountProductTemplate]="fixedDepositsAccountProductTemplate"
-        [fixedDepositAccountFormValid]="fixedDepositAccountFormValid"
+        [fixedDepositAccountFormValid]="fixedDepositAccountFormValidAndNotPristine"
         [currencyCode]="fixedDepositAccountCurrencyForm.get('currencyCode')">
       </mifosx-fixed-deposit-account-charges-step>
 
     </mat-step>
 
-    <mat-step state="preview" *ngIf="fixedDepositAccountFormValid" completed>
+    <mat-step state="preview" *ngIf="fixedDepositAccountFormValidAndNotPristine" completed>
 
       <ng-template matStepLabel>PREVIEW</ng-template>
 
       <mifosx-fixed-deposit-account-preview-step
-        [fixedDepositsAccountTemplate]="fixedDepositsAccountTemplate"
+        [fixedDepositsAccountTemplate]="fixedDepositsAccountAndTemplate"
         [fixedDepositsAccountProductTemplate]="fixedDepositsAccountProductTemplate"
         [fixedDepositAccountData]="fixedDepositAccount" (submit)="submit()">
       </mifosx-fixed-deposit-account-preview-step>

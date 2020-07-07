@@ -14,14 +14,14 @@ import { FixedDepositAccountSettingsStepComponent } from '../fixed-deposit-accou
 import { FixedDepositAccountChargesStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-charges-step/fixed-deposit-account-charges-step.component';
 
 /**
- * Create Fixed Deposit Account Component
+ * Edit Fixed Deposit Account Component
  */
 @Component({
-  selector: 'mifosx-create-fixed-deposit-account',
-  templateUrl: './create-fixed-deposit-account.component.html',
-  styleUrls: ['./create-fixed-deposit-account.component.scss']
+  selector: 'mifosx-edit-fixed-deposit-account',
+  templateUrl: './edit-fixed-deposit-account.component.html',
+  styleUrls: ['./edit-fixed-deposit-account.component.scss']
 })
-export class CreateFixedDepositAccountComponent {
+export class EditFixedDepositAccountComponent {
 
   /** Fixed Deposits Account Details Step */
   @ViewChild(FixedDepositAccountDetailsStepComponent) fixedDepositsAccountDetailsStep: FixedDepositAccountDetailsStepComponent;
@@ -35,7 +35,7 @@ export class CreateFixedDepositAccountComponent {
   @ViewChild(FixedDepositAccountChargesStepComponent) fixedDepositAccountChargesStep: FixedDepositAccountChargesStepComponent;
 
   /** Fixed Deposits Account Template */
-  fixedDepositsAccountTemplate: any;
+  fixedDepositsAccountAndTemplate: any;
   /** Fixed Deposit Account Product Template */
   fixedDepositsAccountProductTemplate: any;
 
@@ -50,8 +50,8 @@ export class CreateFixedDepositAccountComponent {
               private router: Router,
               private datePipe: DatePipe,
               private fixedDepositsService: FixedDepositsService) {
-    this.route.data.subscribe((data: { fixedDepositsAccountTemplate: any }) => {
-      this.fixedDepositsAccountTemplate = data.fixedDepositsAccountTemplate;
+    this.route.data.subscribe((data: { fixedDepositsAccountAndTemplate: any }) => {
+      this.fixedDepositsAccountAndTemplate = data.fixedDepositsAccountAndTemplate;
     });
   }
 
@@ -92,13 +92,19 @@ export class CreateFixedDepositAccountComponent {
   }
 
   /**
-   * Checks stepper validity.
+   * Checks if stepper is valid and not pristine.
    */
-  get fixedDepositAccountFormValid() {
+  get fixedDepositAccountFormValidAndNotPristine() {
     return (
       this.fixedDepositAccountDetailsForm.valid &&
       this.fixedDepositAccountTermsForm.valid &&
-      this.fixedDepositAccountSettingsForm.valid
+      this.fixedDepositAccountSettingsForm.valid &&
+      (
+        !this.fixedDepositAccountDetailsForm.pristine ||
+        !this.fixedDepositAccountTermsForm.pristine ||
+        !this.fixedDepositAccountSettingsForm.pristine ||
+        !this.fixedDepositAccountChargesStep.pristine
+      )
     );
   }
 
@@ -123,7 +129,7 @@ export class CreateFixedDepositAccountComponent {
     const monthDayFormat = 'dd MMMM';
     const fixedDepositAccount = {
       ...this.fixedDepositAccount,
-      clientId: this.fixedDepositsAccountTemplate.clientId,
+      clientId: this.fixedDepositsAccountAndTemplate.clientId,
       charges: this.fixedDepositAccount.charges.map((charge: any) => ({
         chargeId: charge.id,
         amount: charge.amount,
@@ -137,8 +143,8 @@ export class CreateFixedDepositAccountComponent {
       monthDayFormat,
       locale
     };
-    this.fixedDepositsService.createFixedDepositAccount(fixedDepositAccount).subscribe((response: any) => {
-      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+    this.fixedDepositsService.updateFixedDepositAccount(this.fixedDepositsAccountAndTemplate.id, fixedDepositAccount).subscribe((response: any) => {
+      this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
 

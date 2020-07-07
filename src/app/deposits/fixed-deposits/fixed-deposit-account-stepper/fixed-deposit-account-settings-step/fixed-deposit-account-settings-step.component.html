@@ -124,7 +124,7 @@
         Is Withhold Tax Applicable?
       </mat-checkbox>
   
-      <mat-form-field fxFlex="48%" *ngIf="fixedDepositAccountSettingsForm.value.withHoldTax" class="p-b-25">
+      <mat-form-field fxFlex="48%" *ngIf="fixedDepositAccountSettingsForm.controls.taxGroupId" class="p-b-25">
         <mat-label>Tax Group</mat-label>
         <input matInput formControlName="taxGroupId">
       </mat-form-field>

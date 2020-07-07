@@ -36,6 +36,10 @@ export class FixedDepositAccountViewComponent implements OnInit {
   /**
    * Fetches fixed deposits account data from `resolve`
    * @param {ActivatedRoute} route Activated Route
+   * @param {Router} router Router
+   * @param {FixedDepositsService} fixedDepositsService Fixed Deposits Service
+   * @param {SavingsService} savingsService Savings Service
+   * @param {MatDialog} dialog Mat Dialog
    */
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -99,7 +103,7 @@ export class FixedDepositAccountViewComponent implements OnInit {
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
       case 'Modify Application':
-        this.router.navigate(['edit-savings-account'], { relativeTo: this.route });
+        this.router.navigate(['edit-fixed-deposit-account'], { relativeTo: this.route });
         break;
       case 'Delete':
         this.deleteFixedDepositsAccount();
