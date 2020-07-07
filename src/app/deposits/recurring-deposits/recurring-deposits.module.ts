@@ -25,6 +25,8 @@ import { RecurringDepositsAccountSettingsStepComponent } from './recurring-depos
 import { RecurringDepositsAccountInterestRateChartStepComponent } from './recurring-deposits-account-stepper/recurring-deposits-account-interest-rate-chart-step/recurring-deposits-account-interest-rate-chart-step.component';
 import { RecurringDepositsAccountChargesStepComponent } from './recurring-deposits-account-stepper/recurring-deposits-account-charges-step/recurring-deposits-account-charges-step.component';
 import { RecurringDepositsAccountPreviewStepComponent } from './recurring-deposits-account-stepper/recurring-deposits-account-preview-step/recurring-deposits-account-preview-step.component';
+import { RecurringDepositsAccountActionsComponent } from './recurring-deposits-account-actions/recurring-deposits-account-actions.component';
+import { ActivateRecurringDepositsAccountComponent } from './recurring-deposits-account-actions/activate-recurring-deposits-account/activate-recurring-deposits-account.component';
 
 /**
  * RecurringDeposits Module
@@ -54,7 +56,9 @@ import { RecurringDepositsAccountPreviewStepComponent } from './recurring-deposi
     RecurringDepositsAccountSettingsStepComponent,
     RecurringDepositsAccountInterestRateChartStepComponent,
     RecurringDepositsAccountChargesStepComponent,
-    RecurringDepositsAccountPreviewStepComponent
+    RecurringDepositsAccountPreviewStepComponent,
+    RecurringDepositsAccountActionsComponent,
+    ActivateRecurringDepositsAccountComponent
   ],
   providers: [DatePipe]
 })
