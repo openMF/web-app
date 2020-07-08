@@ -23,6 +23,7 @@ import { UnassignRoleDialogComponent } from './groups-view/custom-dialogs/unassi
 import { GroupActionsComponent } from './groups-view/group-actions/group-actions.component';
 import { GroupAssignStaffComponent } from './groups-view/group-actions/group-assign-staff/group-assign-staff.component';
 import { UnassignStaffDialogComponent } from './groups-view/custom-dialogs/unassign-staff-dialog/unassign-staff-dialog.component';
+import { CloseGroupComponent } from './groups-view/group-actions/close-group/close-group.component';
 
 /**
  * Groups Module
@@ -50,7 +51,8 @@ import { UnassignStaffDialogComponent } from './groups-view/custom-dialogs/unass
     UnassignRoleDialogComponent,
     GroupActionsComponent,
     GroupAssignStaffComponent,
-    UnassignStaffDialogComponent
+    UnassignStaffDialogComponent,
+    CloseGroupComponent
   ],
   entryComponents: [
     UnassignRoleDialogComponent,

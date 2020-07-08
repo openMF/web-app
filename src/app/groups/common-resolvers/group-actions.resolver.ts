@@ -30,6 +30,8 @@ export class GroupActionsResolver implements Resolve<Object> {
     switch (actionName) {
       case 'Assign Staff':
         return this.groupsService.getGroupData(groupId, 'true');
+      case 'Close':
+        return this.groupsService.getGroupCommandTemplate('close');
       default:
         return undefined;
     }
