@@ -146,22 +146,22 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    * if successful redirects to groups.
    */
   submit() {
-      const submittedOnDate: Date = this.groupForm.value.submittedOnDate;
-      const activationDate: Date = this.groupForm.value.activationDate;
-      // TODO: Update once language and date settings are setup
-      const dateFormat = 'dd MMMM yyyy';
-      this.groupForm.patchValue({
-        submittedOnDate: this.datePipe.transform(submittedOnDate, dateFormat),
-        activationDate: this.datePipe.transform(activationDate, dateFormat)
-      });
-      const group = this.groupForm.value;
-      group.locale = 'en';
-      group.dateFormat = dateFormat;
-      group.clientMembers = [];
-      this.clientMembers.forEach((client: any) => group.clientMembers.push(client.id));
-      this.groupService.createGroup(group).subscribe((response: any) => {
-        this.router.navigate(['../groups']);
-      });
+    const submittedOnDate: Date = this.groupForm.value.submittedOnDate;
+    const activationDate: Date = this.groupForm.value.activationDate;
+    // TODO: Update once language and date settings are setup
+    const dateFormat = 'dd MMMM yyyy';
+    this.groupForm.patchValue({
+      submittedOnDate: this.datePipe.transform(submittedOnDate, dateFormat),
+      activationDate: this.datePipe.transform(activationDate, dateFormat)
+    });
+    const group = this.groupForm.value;
+    group.locale = 'en';
+    group.dateFormat = dateFormat;
+    group.clientMembers = [];
+    this.clientMembers.forEach((client: any) => group.clientMembers.push(client.id));
+    this.groupService.createGroup(group).subscribe((response: any) => {
+      this.router.navigate(['../groups']);
+    });
   }
 
 }

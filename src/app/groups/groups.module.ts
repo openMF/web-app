@@ -25,6 +25,7 @@ import { GroupAssignStaffComponent } from './groups-view/group-actions/group-ass
 import { UnassignStaffDialogComponent } from './groups-view/custom-dialogs/unassign-staff-dialog/unassign-staff-dialog.component';
 import { CloseGroupComponent } from './groups-view/group-actions/close-group/close-group.component';
 import { ActivateGroupComponent } from './groups-view/group-actions/activate-group/activate-group.component';
+import { EditGroupComponent } from './edit-group/edit-group.component';
 
 /**
  * Groups Module
@@ -54,7 +55,8 @@ import { ActivateGroupComponent } from './groups-view/group-actions/activate-gro
     GroupAssignStaffComponent,
     UnassignStaffDialogComponent,
     CloseGroupComponent,
-    ActivateGroupComponent
+    ActivateGroupComponent,
+    EditGroupComponent
   ],
   entryComponents: [
     UnassignRoleDialogComponent,

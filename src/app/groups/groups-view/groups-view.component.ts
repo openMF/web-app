@@ -50,6 +50,9 @@ export class GroupsViewComponent {
       case 'Activate':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
+      case 'Edit':
+        this.router.navigate(['edit'], { relativeTo: this.route });
+        break;
       case 'Unassign Staff':
         this.unassignStaff();
         break;

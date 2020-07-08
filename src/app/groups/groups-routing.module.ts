@@ -18,6 +18,7 @@ import { CreateGroupComponent } from './create-group/create-group.component';
 import { DatatableTabsComponent } from './groups-view/datatable-tabs/datatable-tabs.component';
 import { AddRoleComponent } from './groups-view/add-role/add-role.component';
 import { GroupActionsComponent } from './groups-view/group-actions/group-actions.component';
+import { EditGroupComponent } from './edit-group/edit-group.component';
 
 /** Custom Resolvers */
 import { GroupViewResolver } from './common-resolvers/group-view.resolver';
@@ -44,7 +45,7 @@ const routes: Routes = [
         {
           path: 'create',
           component: CreateGroupComponent,
-          data: { title: extract('Create Group'), breadcrumb: 'Create' },
+          data: { title: extract('Create Group'), breadcrumb: 'Create', routeParamBreadcrumb: false },
           resolve: {
             offices: OfficesResolver
           }
@@ -97,6 +98,15 @@ const routes: Routes = [
                   ]
                 }
               ]
+            },
+            {
+              path: 'edit',
+              component: EditGroupComponent,
+              data: { title: extract('Edit Group'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+              resolve: {
+                groupAndTemplateData: GroupDataAndTemplateResolver,
+                groupViewData: GroupViewResolver
+              }
             },
             {
               path: 'committee',
