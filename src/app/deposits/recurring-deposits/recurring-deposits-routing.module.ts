@@ -14,6 +14,8 @@ import { ChargesTabComponent } from './recurring-deposits-account-view/charges-t
 import { DatatableTabsComponent } from './recurring-deposits-account-view/datatable-tabs/datatable-tabs.component';
 import { CreateRecurringDepositsAccountComponent } from './create-recurring-deposits-account/create-recurring-deposits-account.component';
 import { RecurringDepositsAccountActionsComponent } from './recurring-deposits-account-actions/recurring-deposits-account-actions.component';
+import { ViewTransactionComponent } from './recurring-deposits-account-view/transactions-tab/view-transaction/view-transaction.component';
+import { EditTransactionComponent } from './recurring-deposits-account-view/transactions-tab/edit-transaction/edit-transaction.component';
 
 /** Custom Resolvers */
 import { RecurringDepositsAccountViewResolver } from './common-resolvers/recurring-deposits-account-view.resolver';
@@ -24,6 +26,8 @@ import { RecurringDepositsAccountTemplateResolver } from './common-resolvers/rec
 import { RecurringDepositsAccountActionsResolver } from './common-resolvers/recurring-deposit-account-actions.resolver';
 import { EditRecurringDepositAccountComponent } from './edit-recurring-deposit-account/edit-recurring-deposit-account.component';
 import { RecurringDepositsAccountAndTemplateResolver } from './common-resolvers/recurring-deposit-account-and-template.resolver';
+import { RecurringDepositsAccountTransactionResolver } from './common-resolvers/recurring-deposit-account-transaction.resolver';
+import { RecurringDepositsAccountTransactionTemplateResolver } from './common-resolvers/recurring-deposit-account-transaction-template.resolver';
 
 const routes: Routes = [
   {
@@ -103,6 +107,36 @@ const routes: Routes = [
             }
           },
           {
+            path: 'transactions',
+            data: { title: extract('Recurring Deposits Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+            children: [
+              {
+                path: '',
+                redirectTo: '../transactions', pathMatch: 'prefix'
+              },
+              {
+                path: ':id',
+                data: { routeParamBreadcrumb: 'id' },
+                children: [
+                  {
+                    path: '',
+                    component: ViewTransactionComponent,
+                    resolve: {
+                      recurringDepositsAccountTransaction: RecurringDepositsAccountTransactionResolver
+                    }
+                  },
+                  {
+                    path: 'edit',
+                    component: EditTransactionComponent,
+                    resolve: {
+                      recurringDepositsAccountTransactionTemplate: RecurringDepositsAccountTransactionTemplateResolver
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
             path: 'actions/:name',
             data: { title: extract('Recurring Deposits Account Actions'), routeParamBreadcrumb: 'name' },
             component: RecurringDepositsAccountActionsComponent,
@@ -126,7 +160,9 @@ const routes: Routes = [
     SavingsDatatablesResolver,
     RecurringDepositsAccountTemplateResolver,
     RecurringDepositsAccountActionsResolver,
-    RecurringDepositsAccountAndTemplateResolver
+    RecurringDepositsAccountAndTemplateResolver,
+    RecurringDepositsAccountTransactionResolver,
+    RecurringDepositsAccountTransactionTemplateResolver
   ]
 })
 export class RecurringDepositsRoutingModule {}
