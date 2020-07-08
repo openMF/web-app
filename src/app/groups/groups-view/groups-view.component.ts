@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material';
 
 /** Custom Dialogs */
 import { UnassignStaffDialogComponent } from './custom-dialogs/unassign-staff-dialog/unassign-staff-dialog.component';
+import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 /** Custom Services */
 import { GroupsService } from '../groups.service';
@@ -52,6 +53,9 @@ export class GroupsViewComponent {
       case 'Unassign Staff':
         this.unassignStaff();
         break;
+      case 'Delete':
+        this.deleteGroup();
+        break;
     }
   }
 
@@ -76,6 +80,22 @@ export class GroupsViewComponent {
           .subscribe(() => {
             this.reload();
           });
+      }
+    });
+  }
+
+  /**
+   * Deletes the group
+   */
+  private deleteGroup() {
+    const deleteGroupDialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { deleteContext: `group with id: ${this.groupViewData.id}` }
+    });
+    deleteGroupDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.delete) {
+        this.groupsService.deleteGroup(this.groupViewData.id).subscribe(() => {
+          this.router.navigate(['/groups'], { relativeTo: this.route });
+        });
       }
     });
   }

@@ -86,7 +86,7 @@
           <span *ngIf="!(groupViewData.centerId || groupViewData.collectionMeetingCalendar) && groupViewData.status.value==='Active'">
             <button mat-menu-item *mifosxHasPermission="'CREATE_MEETING'">Attatch Meeting</button></span>
           <button mat-menu-item *mifosxHasPermission="'CLOSE_GROUP'" (click)="doAction('Close')">Close</button>
-          <button mat-menu-item *mifosxHasPermission="'DELETE_GROUP'">Delete</button>
+          <button mat-menu-item *mifosxHasPermission="'DELETE_GROUP'" (click)="doAction('Delete')">Delete</button>
         </mat-menu>
 
     </mat-card-actions>
