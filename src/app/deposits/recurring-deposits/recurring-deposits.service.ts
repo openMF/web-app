@@ -103,4 +103,13 @@ export class RecurringDepositsService {
     return this.http.put(`/recurringdepositaccounts/${accountId}`, recurringDepositAccountData);
   }
 
+  /**
+   * Returns the template for the recurring deposits action
+   * @param accountId Account Id
+   * @param command Command
+   */
+  getRecurringDepositAccountActionResource(accountId: any, command: string): Observable<any> {
+    const httpParams = new HttpParams().set('command', command);
+    return this.http.get(`/recurringdepositaccounts/${accountId}/template`, { params: httpParams });
+  }
 }

@@ -37,6 +37,7 @@ import { AddChargeRecurringDepositsAccountComponent } from './recurring-deposits
 import { RecurringDepositConfirmationDialogComponent } from './recurring-deposits-account-view/custom-dialogs/recurring-deposit-confirmation-dialog/recurring-deposit-confirmation-dialog.component';
 import { EditRecurringDepositAccountComponent } from './edit-recurring-deposit-account/edit-recurring-deposit-account.component';
 import { PrematureCloseRecurringDepositAccountComponent } from './recurring-deposits-account-actions/premature-close-recurring-deposit-account/premature-close-recurring-deposit-account.component';
+import { CloseRecurringDepositsAccountComponent } from './recurring-deposits-account-actions/close-recurring-deposits-account/close-recurring-deposits-account.component';
 
 
 /**
@@ -77,7 +78,8 @@ import { PrematureCloseRecurringDepositAccountComponent } from './recurring-depo
     AddChargeRecurringDepositsAccountComponent,
     RecurringDepositConfirmationDialogComponent,
     EditRecurringDepositAccountComponent,
-    PrematureCloseRecurringDepositAccountComponent
+    PrematureCloseRecurringDepositAccountComponent,
+    CloseRecurringDepositsAccountComponent
   ],
   entryComponents: [
     RecurringDepositConfirmationDialogComponent

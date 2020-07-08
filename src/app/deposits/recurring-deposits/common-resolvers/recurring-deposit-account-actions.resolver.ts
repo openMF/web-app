@@ -33,6 +33,10 @@ export class RecurringDepositsAccountActionsResolver implements Resolve<Object> 
     switch (actionName) {
       case 'Add Charge':
         return this.savingsService.getSavingsChargeTemplateResource(recurringDepositAccountId);
+        break;
+      case 'Close':
+        return this.recurringDepositsService.getRecurringDepositAccountActionResource(recurringDepositAccountId, 'close');
+        break;
       default:
         return undefined;
     }
