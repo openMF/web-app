@@ -146,6 +146,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
       case 'Add Charge':
       case 'Withdraw By Client':
       case 'Premature Close':
+      case 'Close':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
       case 'Modify Application':
