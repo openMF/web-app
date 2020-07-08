@@ -2,43 +2,28 @@
 
   <mat-card>
 
-    <form [formGroup]="closeRecurringDepositForm" (ngSubmit)="submit()">
+    <form [formGroup]="depositRecurringDepositForm" (ngSubmit)="submit()">
 
       <mat-card-content>
 
         <div fxLayout="column">
 
-          <h3 class="mat-h3" fxFlexFill>{{title}}</h3>
-
           <mat-form-field>
-            <mat-label>Closed On</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closedOnDatePicker" required
-              formControlName="closedOnDate">
-            <mat-datepicker-toggle matSuffix [for]="closedOnDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #closedOnDatePicker></mat-datepicker>
-            <mat-error *ngIf="closeRecurringDepositForm.controls.closedOnDate.hasError('required')">
-              Closed On <strong>is required</strong>
+            <mat-label>Transaction Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDatePicker" required
+              formControlName="transactionDate">
+            <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #transactionDatePicker></mat-datepicker>
+            <mat-error *ngIf="depositRecurringDepositForm.controls.transactionDate.hasError('required')">
+              Transaction Date <strong>is required</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Maturity Amount</mat-label>
-            <input matInput required formControlName="maturityAmount">
-            <mat-error *ngIf="closeRecurringDepositForm.controls.maturityAmount.hasError('required')">
-              Maturity Amount <strong>is required</strong>
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Action</mat-label>
-            <mat-select formControlName="onAccountClosureId" required>
-              <mat-option *ngFor="let onAccountClosureOption of onAccountClosureOptions"
-                [value]="onAccountClosureOption.id">
-                {{ onAccountClosureOption.value }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="closeRecurringDepositForm.controls.onAccountClosureId.hasError('required')">
-              Action <strong>is required</strong>
+            <mat-label>Transaction Amount</mat-label>
+            <input matInput required formControlName="transactionAmount">
+            <mat-error *ngIf="depositRecurringDepositForm.controls.transactionAmount.hasError('required')">
+              Transaction Amount <strong>is required</strong>
             </mat-error>
           </mat-form-field>
 
@@ -49,7 +34,7 @@
                 {{ paymentType.name }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="closeRecurringDepositForm.controls.paymentTypeId.hasError('required')">
+            <mat-error *ngIf="depositRecurringDepositForm.controls.paymentTypeId.hasError('required')">
               Payment Type <strong>is required</strong>
             </mat-error>
           </mat-form-field>
@@ -104,7 +89,7 @@
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
         <button type="button" mat-raised-button [routerLink]="['../general']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!closeRecurringDepositForm.valid">Submit</button>
+        <button mat-raised-button color="primary" [disabled]="!depositRecurringDepositForm.valid">Submit</button>
       </mat-card-actions>
 
     </form>
