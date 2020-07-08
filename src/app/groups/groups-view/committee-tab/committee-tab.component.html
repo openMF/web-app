@@ -6,15 +6,14 @@
     </div>
     <div class="action-button m-b-10" fxLayoutGap="25px" *ngIf="groupStatus !== 'Closed'">
       <button mat-raised-button class="f-right" color="primary"
-      *mifosxHasPermission="'ASSIGNROLE_GROUP'">
+      *mifosxHasPermission="'ASSIGNROLE_GROUP'" [routerLink]="['add-role']">
         <i class="fa fa-plus"></i>&nbsp; Add</button>
     </div>
   </div>
 
   <div *ngIf="groupRolesData">
     
-    <table mat-table [dataSource]="groupRolesData"
-      class="mat-elevation-z1 m-b-25">
+    <table #rolesTable mat-table [dataSource]="groupRolesData" class="mat-elevation-z1 m-b-25">
 
       <ng-container matColumnDef="Name">
         <th mat-header-cell *matHeaderCellDef> Name </th>
@@ -35,8 +34,8 @@
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let element">
           <span *ngIf="groupStatus !== 'Closed'">
-            <button class="account-action-button" mat-raised-button color="primary"
-            *mifosxHasPermission="'UNASSIGNROLE_GROUP'">
+            <button class="account-action-button" mat-raised-button color="warn"
+            *mifosxHasPermission="'UNASSIGNROLE_GROUP'" (click)="unassignRole(element.clientId, element.id)">
             <i class="fa fa-ban" matTooltip="Unassign"></i>
             </button>
           </span>

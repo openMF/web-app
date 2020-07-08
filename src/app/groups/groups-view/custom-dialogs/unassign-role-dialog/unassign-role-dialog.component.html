@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Unassign Role</h1>
+<div mat-dialog-content>
+  <p>Are you sure you want to unassign role for client member with id: {{ data.id }} ?</p>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="{ confirm: true }">Confirm</button>
+</mat-dialog-actions>

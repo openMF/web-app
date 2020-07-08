@@ -16,6 +16,7 @@ import { NotesTabComponent } from './groups-view/notes-tab/notes-tab.component';
 import { CommitteeTabComponent } from './groups-view/committee-tab/committee-tab.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { DatatableTabsComponent } from './groups-view/datatable-tabs/datatable-tabs.component';
+import { AddRoleComponent } from './groups-view/add-role/add-role.component';
 
 /** Custom Resolvers */
 import { GroupViewResolver } from './common-resolvers/group-view.resolver';
@@ -25,6 +26,7 @@ import { GroupNotesResolver } from './common-resolvers/group-notes.resolver';
 import { OfficesResolver } from 'app/accounting/common-resolvers/offices.resolver';
 import { GroupDatatablesResolver } from './common-resolvers/group-datatables.resolver';
 import { GroupDatatableResolver } from './common-resolvers/group-datatable.resolver';
+import { GroupDataAndTemplateResolver } from './common-resolvers/group-data-and-template.resolver';
 
 /** Groups Routes */
 const routes: Routes = [
@@ -95,6 +97,23 @@ const routes: Routes = [
               ]
             },
             {
+              path: 'committee',
+              children: [
+                {
+                  path: '',
+                  redirectTo: '../committee', pathMatch: 'prefix'
+                },
+                {
+                  path: 'add-role',
+                  data: { title: extract('Add Role'), breadcrumb: 'Add Role', routeParamBreadcrumb: false },
+                  component: AddRoleComponent,
+                  resolve: {
+                    groupAndTemplateData: GroupDataAndTemplateResolver
+                  }
+                },
+              ]
+            },
+            {
               path: 'savingsaccounts',
               loadChildren: '../savings/savings.module#SavingsModule'
             },
@@ -118,6 +137,7 @@ const routes: Routes = [
               GroupSummaryResolver,
               GroupNotesResolver,
               GroupDatatablesResolver,
-              GroupDatatableResolver]
+              GroupDatatableResolver,
+              GroupDataAndTemplateResolver]
 })
 export class GroupsRoutingModule { }
