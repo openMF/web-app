@@ -1,0 +1,69 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="editGroupForm">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput required formControlName="name">
+            <mat-error *ngIf="editGroupForm.controls.name.hasError('required')">
+              Group Name is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="editGroupForm.controls.name.hasError('pattern')">
+              Group Name <strong>cannot</strong> begin with a special character or number
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Staff</mat-label>
+            <mat-select formControlName="staffId">
+              <mat-option *ngFor="let staff of staffData" [value]="staff.id">
+              {{ staff.displayName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="this.editGroupForm.contains('activationDate')">
+            <mat-label>Activation Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="activationDatePicker" required formControlName="activationDate">
+            <mat-datepicker-toggle matSuffix [for]="activationDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #activationDatePicker></mat-datepicker>
+            <mat-error *ngIf="editGroupForm.controls.activationDate.hasError('required')">
+              Activation Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>External id</mat-label>
+            <input matInput formControlName="externalId">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Submitted on</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker" required formControlName="submittedOnDate">
+            <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #submittedOnDatePicker></mat-datepicker>
+            <mat-error *ngIf="editGroupForm.controls.submittedOnDate.hasError('required')">
+              Submission Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!editGroupForm.valid" (click)="submit()">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>

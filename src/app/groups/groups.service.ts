@@ -224,4 +224,13 @@ export class GroupsService {
       return this.http.post('/groups', group);
   }
 
+  /**
+   * @param {any} group Group to be created.
+   * @param {any} groupId Group Id
+   * @returns {Observable<any>}
+   */
+  updateGroup(group: any, groupId: any): Observable<any> {
+    return this.http.put(`/groups/${groupId}`, group);
+  }
+
 }
