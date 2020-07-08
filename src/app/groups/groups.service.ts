@@ -53,6 +53,14 @@ export class GroupsService {
   }
 
   /**
+   * @param {string} groupId shares account Id
+   * @returns {Observable<any>}
+   */
+  deleteGroup(groupId: string): Observable<any> {
+    return this.http.delete(`/groups/${groupId}`);
+  }
+
+  /**
    * @param groupId Group Id of group to get data for.
    * @returns {Observable<any>} Group data.
    */
