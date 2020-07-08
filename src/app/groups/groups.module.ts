@@ -20,6 +20,9 @@ import { SingleRowComponent } from './groups-view/datatable-tabs/single-row/sing
 import { MultiRowComponent } from './groups-view/datatable-tabs/multi-row/multi-row.component';
 import { AddRoleComponent } from './groups-view/add-role/add-role.component';
 import { UnassignRoleDialogComponent } from './groups-view/custom-dialogs/unassign-role-dialog/unassign-role-dialog.component';
+import { GroupActionsComponent } from './groups-view/group-actions/group-actions.component';
+import { GroupAssignStaffComponent } from './groups-view/group-actions/group-assign-staff/group-assign-staff.component';
+import { UnassignStaffDialogComponent } from './groups-view/custom-dialogs/unassign-staff-dialog/unassign-staff-dialog.component';
 
 /**
  * Groups Module
@@ -44,10 +47,14 @@ import { UnassignRoleDialogComponent } from './groups-view/custom-dialogs/unassi
     SingleRowComponent,
     MultiRowComponent,
     AddRoleComponent,
-    UnassignRoleDialogComponent
+    UnassignRoleDialogComponent,
+    GroupActionsComponent,
+    GroupAssignStaffComponent,
+    UnassignStaffDialogComponent
   ],
   entryComponents: [
-    UnassignRoleDialogComponent
+    UnassignRoleDialogComponent,
+    UnassignStaffDialogComponent
   ],
   providers: [DatePipe]
 })

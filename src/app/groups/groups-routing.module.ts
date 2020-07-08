@@ -17,6 +17,7 @@ import { CommitteeTabComponent } from './groups-view/committee-tab/committee-tab
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { DatatableTabsComponent } from './groups-view/datatable-tabs/datatable-tabs.component';
 import { AddRoleComponent } from './groups-view/add-role/add-role.component';
+import { GroupActionsComponent } from './groups-view/group-actions/group-actions.component';
 
 /** Custom Resolvers */
 import { GroupViewResolver } from './common-resolvers/group-view.resolver';
@@ -27,6 +28,7 @@ import { OfficesResolver } from 'app/accounting/common-resolvers/offices.resolve
 import { GroupDatatablesResolver } from './common-resolvers/group-datatables.resolver';
 import { GroupDatatableResolver } from './common-resolvers/group-datatable.resolver';
 import { GroupDataAndTemplateResolver } from './common-resolvers/group-data-and-template.resolver';
+import { GroupActionsResolver } from './common-resolvers/group-actions.resolver';
 
 /** Groups Routes */
 const routes: Routes = [
@@ -114,6 +116,14 @@ const routes: Routes = [
               ]
             },
             {
+              path: 'actions/:name',
+              data: { title: extract('Group Actions'), routeParamBreadcrumb: 'name' },
+              component: GroupActionsComponent,
+              resolve: {
+                groupActionData: GroupActionsResolver
+              }
+            },
+            {
               path: 'savingsaccounts',
               loadChildren: '../savings/savings.module#SavingsModule'
             },
@@ -138,6 +148,7 @@ const routes: Routes = [
               GroupNotesResolver,
               GroupDatatablesResolver,
               GroupDatatableResolver,
-              GroupDataAndTemplateResolver]
+              GroupDataAndTemplateResolver,
+              GroupActionsResolver]
 })
 export class GroupsRoutingModule { }
