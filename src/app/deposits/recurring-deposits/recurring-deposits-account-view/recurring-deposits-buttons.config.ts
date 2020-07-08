@@ -129,7 +129,7 @@ export class RecurringDepositsButtonsConfiguration {
     }
   }
 
-  addOption(option: {name: string, taskPermissionName?: string}) {
+  addOption(option: {name: string, icon?: string, taskPermissionName?: string}) {
     this.optionArray.push(option);
   }
 

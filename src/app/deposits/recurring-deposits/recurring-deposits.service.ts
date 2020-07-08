@@ -75,4 +75,12 @@ export class RecurringDepositsService {
     const httpParams = new HttpParams().set('command', command);
     return this.http.post(`/recurringdepositaccounts/${accountId}`, data, { params: httpParams });
   }
+
+  /**
+   * @param {string} accountId recurring deposits account Id
+   * @returns {Observable<any>}
+   */
+  deleteRecurringDepositsAccount(accountId: string): Observable<any> {
+    return this.http.delete(`/recurringdepositaccounts/${accountId}`);
+  }
 }
