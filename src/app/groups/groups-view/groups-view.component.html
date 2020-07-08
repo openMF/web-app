@@ -54,7 +54,7 @@
     <mat-card-actions class="group-actions" *ngIf="!(groupViewData.status.value==='Closed')">
 
         <span *ngIf="!(groupViewData.status.value==='Active')">
-          <button mat-raised-button  *mifosxHasPermission="'UPDATE_GROUP'">
+          <button mat-raised-button  *mifosxHasPermission="'UPDATE_GROUP'" (click)="doAction('Activate')">
             <i class="fa fa-check-sign"></i>Activate</button>
         </span>
         <button mat-raised-button *mifosxHasPermission="'UPDATE_GROUP'">
