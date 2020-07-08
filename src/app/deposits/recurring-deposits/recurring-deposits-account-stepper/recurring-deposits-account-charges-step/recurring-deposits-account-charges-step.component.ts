@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 
@@ -21,7 +21,7 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
   templateUrl: './recurring-deposits-account-charges-step.component.html',
   styleUrls: ['./recurring-deposits-account-charges-step.component.scss']
 })
-export class RecurringDepositsAccountChargesStepComponent implements OnInit {
+export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnChanges {
 
   @Input() recurringDepositsAccountTemplate: any;
   @Input() recurringDepositsAccountProductTemplate: any;
@@ -31,21 +31,35 @@ export class RecurringDepositsAccountChargesStepComponent implements OnInit {
   /** Charges Data */
   chargeData: any;
   /** Charges Data Source */
-  chargesDataSource: {}[];
+  chargesDataSource: {}[] = [];
   /** Charges table columns */
   displayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'date', 'repaymentsEvery', 'action'];
   /** Component is pristine if there has been no changes by user interaction */
   pristine = true;
+  /** For Edit Recurring Deposits Account Form */
+  isChargesPatched = false;
 
   constructor(public dialog: MatDialog,
     private datePipe: DatePipe) {
   }
 
   ngOnInit() {
-    this.chargeData = this.recurringDepositsAccountTemplate.chargeOptions;
-    this.chargesDataSource = [];
-    this.currencyCode.valueChanges.subscribe(() => this.chargesDataSource = []);
+    this.currencyCode.valueChanges.subscribe(() => {
+      if (!this.isChargesPatched && this.recurringDepositsAccountTemplate.charges) {
+        this.chargesDataSource = this.recurringDepositsAccountTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
+        this.isChargesPatched = true;
+      } else {
+        this.chargesDataSource = [];
+      }
+    });
   }
+
+  ngOnChanges() {
+    if (this.recurringDepositsAccountProductTemplate) {
+      this.chargeData = this.recurringDepositsAccountProductTemplate.chargeOptions;
+    }
+  }
+
 
   /**
    * Add a charge
@@ -53,6 +67,7 @@ export class RecurringDepositsAccountChargesStepComponent implements OnInit {
   addCharge(charge: any) {
     this.chargesDataSource = this.chargesDataSource.concat([charge.value]);
     charge.value = '';
+    this.pristine = false;
   }
 
   /**
@@ -168,6 +183,7 @@ export class RecurringDepositsAccountChargesStepComponent implements OnInit {
       if (response.delete) {
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1);
         this.chargesDataSource = this.chargesDataSource.concat([]);
+        this.pristine = false;
       }
     });
   }

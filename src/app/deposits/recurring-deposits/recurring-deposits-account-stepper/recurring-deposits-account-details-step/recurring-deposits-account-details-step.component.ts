@@ -27,6 +27,8 @@ export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
   productData: any;
   /** Field Officer Data */
   fieldOfficerData: any;
+  /** For edit recurring deposits form */
+  isFieldOfficerPatched = false;
   /** Recurring Deposits Account Details Form */
   recurringDepositAccountDetailsForm: FormGroup;
 
@@ -77,7 +79,12 @@ export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
       this.recurringDepositsService.getRecurringDepositsAccountTemplate(clientId, productId).subscribe((response: any) => {
         this.recurringDepositsAccountProductTemplate.emit(response);
         this.fieldOfficerData = response.fieldOfficerOptions;
-        this.recurringDepositAccountDetailsForm.get('fieldOfficerId').patchValue('');
+        if (!this.isFieldOfficerPatched && this.recurringDepositsAccountTemplate.fieldOfficerId) {
+          this.recurringDepositAccountDetailsForm.get('fieldOfficerId').patchValue(this.recurringDepositsAccountTemplate.fieldOfficerId);
+          this.isFieldOfficerPatched = true;
+        } else {
+          this.recurringDepositAccountDetailsForm.get('fieldOfficerId').patchValue('');
+        }
       });
     });
   }

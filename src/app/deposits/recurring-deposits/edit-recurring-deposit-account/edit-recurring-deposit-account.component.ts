@@ -14,14 +14,14 @@ import { RecurringDepositsAccountSettingsStepComponent } from '../recurring-depo
 import { RecurringDepositsAccountChargesStepComponent } from '../recurring-deposits-account-stepper/recurring-deposits-account-charges-step/recurring-deposits-account-charges-step.component';
 
 /**
- * Create new recurring deposit account
+ * Edit new recurring deposit account
  */
 @Component({
-  selector: 'mifosx-create-recurring-deposits-account',
-  templateUrl: './create-recurring-deposits-account.component.html',
-  styleUrls: ['./create-recurring-deposits-account.component.scss']
+  selector: 'mifosx-edit-recurring-deposit-account',
+  templateUrl: './edit-recurring-deposit-account.component.html',
+  styleUrls: ['./edit-recurring-deposit-account.component.scss']
 })
-export class CreateRecurringDepositsAccountComponent implements OnInit {
+export class EditRecurringDepositAccountComponent implements OnInit {
 
   /** Imports all the step component */
   @ViewChild(RecurringDepositsAccountDetailsStepComponent) recurringDepositsAccountDetailsStep: RecurringDepositsAccountDetailsStepComponent;
@@ -30,8 +30,8 @@ export class CreateRecurringDepositsAccountComponent implements OnInit {
   @ViewChild(RecurringDepositsAccountSettingsStepComponent) recurringDepositAccountSettingsStep: RecurringDepositsAccountSettingsStepComponent;
   @ViewChild(RecurringDepositsAccountChargesStepComponent) recurringDepositAccountChargesStep: RecurringDepositsAccountChargesStepComponent;
 
-  /** Recurring Deposits Account Template */
-  recurringDepositsAccountTemplate: any;
+  /** Recurring Deposits Account And Template */
+  recurringDepositsAccountAndTemplate: any;
   /** Recurring Deposit Account Product Template */
   recurringDepositsAccountProductTemplate: any;
 
@@ -40,8 +40,8 @@ export class CreateRecurringDepositsAccountComponent implements OnInit {
     private datePipe: DatePipe,
     private recurringDepositsService: RecurringDepositsService
   ) {
-    this.route.data.subscribe((data: { recurringDepositsAccountTemplate: any }) => {
-      this.recurringDepositsAccountTemplate = data.recurringDepositsAccountTemplate;
+    this.route.data.subscribe((data: { recurringDepositsAccountAndTemplate: any }) => {
+      this.recurringDepositsAccountAndTemplate = data.recurringDepositsAccountAndTemplate;
     });
   }
 
@@ -76,12 +76,18 @@ export class CreateRecurringDepositsAccountComponent implements OnInit {
     return this.recurringDepositAccountSettingsStep.recurringDepositAccountSettingsForm;
   }
 
-  /** Checks wheter all the forms in different steps are valid or not */
-  get recurringDepositAccountFormValid() {
+  // Checks if stepper is valid and not pristine.
+  get recurringDepositAccountFormValidAndNotPristine() {
     return (
       this.recurringDepositAccountDetailsForm.valid &&
       this.recurringDepositAccountTermsForm.valid &&
-      this.recurringDepositAccountSettingsForm.valid
+      this.recurringDepositAccountSettingsForm.valid &&
+      (
+        !this.recurringDepositAccountDetailsForm.pristine ||
+        !this.recurringDepositAccountTermsForm.pristine ||
+        !this.recurringDepositAccountSettingsForm.pristine ||
+        !this.recurringDepositAccountChargesStep.pristine
+      )
     );
   }
 
@@ -116,7 +122,7 @@ export class CreateRecurringDepositsAccountComponent implements OnInit {
     const monthDayFormat = 'dd MMMM';
     const recurringDepositAccount = {
       ...this.recurringDepositAccount,
-      clientId: this.recurringDepositsAccountTemplate.clientId,
+      clientId: this.recurringDepositsAccountAndTemplate.clientId,
       charges: this.recurringDepositAccount.charges.map((charge: any) => ({
         chargeId: charge.id,
         amount: charge.amount,
@@ -132,8 +138,9 @@ export class CreateRecurringDepositsAccountComponent implements OnInit {
       locale
     };
 
-    this.recurringDepositsService.createRecurringDepositAccount(recurringDepositAccount).subscribe((response: any) => {
-      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+    this.recurringDepositsService.updateRecurringDepositAccount(this.recurringDepositsAccountAndTemplate.id, recurringDepositAccount).subscribe((response: any) => {
+      this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
+
 }
