@@ -73,6 +73,15 @@ export class GroupsService {
   }
 
   /**
+   * @param {any} command Command
+   * @returns {Observable<any>}
+   */
+  getGroupCommandTemplate(command: string): Observable<any> {
+    const httpParams = new HttpParams().set('command', command);
+    return this.http.get(`/groups/template`, { params: httpParams });
+  }
+
+  /**
    * @param {string} groupId Group Id
    * @param {string} command Command
    * @param {any} roleId Role Id

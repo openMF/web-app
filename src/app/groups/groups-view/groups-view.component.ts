@@ -45,6 +45,7 @@ export class GroupsViewComponent {
   doAction(name: string) {
     switch (name) {
       case 'Assign Staff':
+      case 'Close':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
       case 'Unassign Staff':
