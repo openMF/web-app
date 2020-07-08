@@ -20,7 +20,7 @@
         </mat-card-title>
         <mat-card-subtitle>
           <p>
-            Group #: {{groupViewData.id}} | Center Name: {{groupViewData.centerName}} | Staff: {{groupViewData.staffName}}<br/>
+            Group #: {{groupViewData.id}} | Center Name: {{groupViewData.centerName}} | Staff: {{groupViewData.staffName || 'Unassigned'}}<br/>
             Office Name: {{groupViewData.officeName}}<br/>
             Activation Date : {{(groupViewData.activationDate)?(groupViewData.activationDate|date) :'Not Activated'}}<br/>
             <span *ngIf="!groupViewData.active">
@@ -80,9 +80,9 @@
           <span *ngIf="groupViewData.collectionMeetingCalendar">
             <button mat-menu-item *mifosxHasPermission="'SAVEORUPDATEATTENDANCE_MEETING'">Attendance</button></span>
           <span *ngIf="!groupViewData.staffId">
-            <button mat-menu-item *mifosxHasPermission="'ASSIGNSTAFF_GROUP'">Assign Staff</button></span>
+            <button mat-menu-item *mifosxHasPermission="'ASSIGNSTAFF_GROUP'" (click)="doAction('Assign Staff')">Assign Staff</button></span>
           <span *ngIf="groupViewData.staffId">
-            <button mat-menu-item *mifosxHasPermission="'UNASSIGNSTAFF_GROUP'">Unassign Staff</button></span>
+            <button mat-menu-item *mifosxHasPermission="'UNASSIGNSTAFF_GROUP'"(click)="doAction('Unassign Staff')">Unassign Staff</button></span>
           <span *ngIf="!(groupViewData.centerId || groupViewData.collectionMeetingCalendar) && groupViewData.status.value==='Active'">
             <button mat-menu-item *mifosxHasPermission="'CREATE_MEETING'">Attatch Meeting</button></span>
           <button mat-menu-item *mifosxHasPermission="'CLOSE_GROUP'">Close</button>
