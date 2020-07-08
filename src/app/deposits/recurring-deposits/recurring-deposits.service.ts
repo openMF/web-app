@@ -96,7 +96,7 @@ export class RecurringDepositsService {
 
   /**
    * @param {any} accountId Account Id
-   * @param {any} fixedDepositAccountData Recurring Deposit Account Data
+   * @param {any} recurringDepositAccountData Recurring Deposit Account Data
    * @returns {Observable<any>}
    */
   updateRecurringDepositAccount(accountId: any, recurringDepositAccountData: any): Observable<any> {
