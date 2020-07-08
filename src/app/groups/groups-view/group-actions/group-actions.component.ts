@@ -16,9 +16,11 @@ export class GroupActionsComponent {
   actions: {
     'Assign Staff': boolean
     'Close': boolean
+    'Activate': boolean
   } = {
     'Assign Staff': false,
-    'Close': false
+    'Close': false,
+    'Activate': false
   };
 
   /**
