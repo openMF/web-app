@@ -83,4 +83,24 @@ export class RecurringDepositsService {
   deleteRecurringDepositsAccount(accountId: string): Observable<any> {
     return this.http.delete(`/recurringdepositaccounts/${accountId}`);
   }
+
+  /**
+   * Get Recurring Deposits Account and Template Data
+   * @param accountId Account ID
+   */
+  getRecurringDepositsAccountAndTemplate(accountId: any) {
+    const httpParams = new HttpParams().set('associations', 'charges')
+      .set('template', 'true');
+    return this.http.get(`/recurringdepositaccounts/${accountId}`, { params: httpParams });
+  }
+
+  /**
+   * @param {any} accountId Account Id
+   * @param {any} fixedDepositAccountData Recurring Deposit Account Data
+   * @returns {Observable<any>}
+   */
+  updateRecurringDepositAccount(accountId: any, recurringDepositAccountData: any): Observable<any> {
+    return this.http.put(`/recurringdepositaccounts/${accountId}`, recurringDepositAccountData);
+  }
+
 }

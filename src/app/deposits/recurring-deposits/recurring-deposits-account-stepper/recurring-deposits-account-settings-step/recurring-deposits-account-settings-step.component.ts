@@ -28,6 +28,10 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
   lockinPeriodFrequencyTypeData: any;
   /** Period Frequency Type Data */
   periodFrequencyTypeData: any;
+  /** Preclosure Penal Interest Type on Data */
+  preClosurePenalInterestOnTypeData: any;
+  /** Tax Group */
+  taxGroup: any;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
@@ -52,7 +56,26 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
         'inMultiplesOfDepositTermTypeId': this.recurringDepositsAccountProductTemplate.inMultiplesOfDepositTermType ? this.recurringDepositsAccountProductTemplate.inMultiplesOfDepositTermType.id : '',
         'maxDepositTerm': this.recurringDepositsAccountProductTemplate.maxDepositTerm,
         'maxDepositTermTypeId': this.recurringDepositsAccountProductTemplate.maxDepositTermType ? this.recurringDepositsAccountProductTemplate.maxDepositTermType.id : '',
+        'preClosurePenalApplicable': this.recurringDepositsAccountProductTemplate.preClosurePenalApplicable,
+        'preClosurePenalInterest': this.recurringDepositsAccountProductTemplate.preClosurePenalInterest,
+        'preClosurePenalInterestOnTypeId': this.recurringDepositsAccountProductTemplate.preClosurePenalInterestOnType ? this.recurringDepositsAccountProductTemplate.preClosurePenalInterestOnType.id : '',
+        'minBalanceForInterestCalculation': this.recurringDepositsAccountProductTemplate.minBalanceForInterestCalculation,
       });
+      if (this.recurringDepositsAccountProductTemplate.withHoldTax) {
+        this.recurringDepositAccountSettingsForm.addControl('withHoldTax', new FormControl(false));
+        this.recurringDepositAccountSettingsForm.get('withHoldTax').valueChanges.subscribe((value: boolean) => {
+          if (value) {
+            this.recurringDepositAccountSettingsForm.addControl('taxGroupId', new FormControl({ value: '', disabled: true }));
+            this.recurringDepositAccountSettingsForm.get('taxGroupId').patchValue(this.recurringDepositsAccountProductTemplate.taxGroup && this.recurringDepositsAccountProductTemplate.taxGroup.name);
+          } else {
+            this.recurringDepositAccountSettingsForm.removeControl('taxGroupId');
+          }
+        });
+        this.recurringDepositAccountSettingsForm.get('withHoldTax').patchValue(this.recurringDepositsAccountTemplate.withHoldTax);
+      } else {
+        this.recurringDepositAccountSettingsForm.removeControl('withHoldTax');
+      }
+      this.taxGroup = this.recurringDepositsAccountProductTemplate.taxGroup;
       this.setOptions();
     }
   }
@@ -62,6 +85,7 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
       this.recurringDepositAccountSettingsForm.patchValue({
         'lockinPeriodFrequency': this.recurringDepositsAccountTemplate.lockinPeriodFrequency,
         'lockinPeriodFrequencyType': this.recurringDepositsAccountTemplate.lockinPeriodFrequencyType && this.recurringDepositsAccountTemplate.lockinPeriodFrequencyType.id,
+        'mandatoryRecommendedDepositAmount': this.recurringDepositsAccountProductTemplate.mandatoryRecommendedDepositAmount,
       });
     }
   }
@@ -88,7 +112,11 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
       'inMultiplesOfDepositTerm': [{ value: '', disabled: true }],
       'inMultiplesOfDepositTermTypeId': [{ value: '', disabled: true }],
       'maxDepositTerm': [{ value: '', disabled: true }],
-      'maxDepositTermTypeId': [{ value: '', disabled: true }]
+      'maxDepositTermTypeId': [{ value: '', disabled: true }],
+      'preClosurePenalApplicable': [{ value: '', disabled: true }],
+      'preClosurePenalInterest': [{ value: '', disabled: true }],
+      'preClosurePenalInterestOnTypeId': [{ value: '', disabled: true }],
+      'minBalanceForInterestCalculation': [{ value: '', disabled: true }]
     });
   }
 
@@ -98,6 +126,7 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
   setOptions() {
     this.lockinPeriodFrequencyTypeData = this.recurringDepositsAccountProductTemplate.lockinPeriodFrequencyTypeOptions;
     this.periodFrequencyTypeData = this.recurringDepositsAccountProductTemplate.periodFrequencyTypeOptions;
+    this.preClosurePenalInterestOnTypeData = this.recurringDepositsAccountProductTemplate.preClosurePenalInterestOnTypeOptions;
   }
 
   /**

@@ -35,6 +35,7 @@ import { AddChargeRecurringDepositsAccountComponent } from './recurring-deposits
 
 /* Dialog Components */
 import { RecurringDepositConfirmationDialogComponent } from './recurring-deposits-account-view/custom-dialogs/recurring-deposit-confirmation-dialog/recurring-deposit-confirmation-dialog.component';
+import { EditRecurringDepositAccountComponent } from './edit-recurring-deposit-account/edit-recurring-deposit-account.component';
 
 
 /**
@@ -73,7 +74,8 @@ import { RecurringDepositConfirmationDialogComponent } from './recurring-deposit
     RejectRecurringDepositsAccountComponent,
     WithdrawByClientRecurringDepositsAccountComponent,
     AddChargeRecurringDepositsAccountComponent,
-    RecurringDepositConfirmationDialogComponent
+    RecurringDepositConfirmationDialogComponent,
+    EditRecurringDepositAccountComponent
   ],
   entryComponents: [
     RecurringDepositConfirmationDialogComponent

@@ -147,6 +147,9 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
       case 'Withdraw By Client':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
+      case 'Modify Application':
+        this.router.navigate(['edit-recurring-deposit-account'], { relativeTo: this.route });
+        break;
       case 'Delete':
         this.deleteRecurringDepositsAccount();
         break;
