@@ -32,6 +32,8 @@ export class GroupActionsResolver implements Resolve<Object> {
         return this.groupsService.getGroupData(groupId, 'true');
       case 'Close':
         return this.groupsService.getGroupCommandTemplate('close');
+      case 'Attach Meeting':
+        return this.groupsService.getGroupCalendarTemplate(groupId);
       default:
         return undefined;
     }

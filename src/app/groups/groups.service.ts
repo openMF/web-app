@@ -233,4 +233,20 @@ export class GroupsService {
     return this.http.put(`/groups/${groupId}`, group);
   }
 
+  /**
+   * @param {any} groupId Group Id
+   * @returns {Observable<any>}
+   */
+  getGroupCalendarTemplate(groupId: any): Observable<any> {
+    return this.http.get(`/groups/${groupId}/calendars/template`);
+  }
+
+  /**
+   * @param {any} groupId Group Id
+   * @returns {Observable<any>}
+   */
+  createGroupMeeting(groupId: any, data: any): Observable<any> {
+    return this.http.post(`/groups/${groupId}/calendars`, data);
+  }
+
 }
