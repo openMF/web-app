@@ -29,6 +29,7 @@ export class GroupActionsResolver implements Resolve<Object> {
     const groupId = route.paramMap.get('groupId') || route.parent.parent.paramMap.get('groupId');
     switch (actionName) {
       case 'Attendance':
+      case 'Manage Members':
         return this.groupsService.getGroupData(groupId);
       case 'Assign Staff':
         return this.groupsService.getGroupData(groupId, 'true');

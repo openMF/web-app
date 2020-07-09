@@ -19,12 +19,14 @@ export class GroupActionsComponent {
     'Activate': boolean
     'Attach Meeting': boolean
     'Attendance': boolean
+    'Manage Members': boolean
   } = {
     'Assign Staff': false,
     'Close': false,
     'Activate': false,
     'Attach Meeting': false,
-    'Attendance': false
+    'Attendance': false,
+    'Manage Members': false
   };
 
   /**
