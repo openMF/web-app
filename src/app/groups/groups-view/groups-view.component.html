@@ -84,7 +84,7 @@
           <span *ngIf="groupViewData.staffId">
             <button mat-menu-item *mifosxHasPermission="'UNASSIGNSTAFF_GROUP'" (click)="doAction('Unassign Staff')">Unassign Staff</button></span>
           <span *ngIf="!(groupViewData.centerId || groupViewData.collectionMeetingCalendar) && groupViewData.status.value==='Active'">
-            <button mat-menu-item *mifosxHasPermission="'CREATE_MEETING'">Attatch Meeting</button></span>
+            <button mat-menu-item *mifosxHasPermission="'CREATE_MEETING'" (click)="doAction('Attach Meeting')">Attatch Meeting</button></span>
           <button mat-menu-item *mifosxHasPermission="'CLOSE_GROUP'" (click)="doAction('Close')">Close</button>
           <button mat-menu-item *mifosxHasPermission="'DELETE_GROUP'" (click)="doAction('Delete')">Delete</button>
         </mat-menu>
