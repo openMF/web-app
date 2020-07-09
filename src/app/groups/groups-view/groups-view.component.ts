@@ -49,6 +49,7 @@ export class GroupsViewComponent {
       case 'Close':
       case 'Activate':
       case 'Attach Meeting':
+      case 'Attendance':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
       case 'Edit':

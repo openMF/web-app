@@ -1,0 +1,49 @@
+<div class="container">
+
+  <mat-card fxLayout="column" fxLayoutGap="3%">
+
+    <mat-form-field fxFlex>
+      <mat-label>Meeting Date</mat-label>
+      <mat-select [formControl]="meetingDate">
+        <mat-option *ngFor="let date of meetingDates" [value]="date">
+          {{ date | date }}
+        </mat-option>
+      </mat-select>
+      <mat-hint>Next Meeting on: {{ this.groupData.collectionMeetingCalendar.nextTenRecurringDates[0] | date }}</mat-hint>
+    </mat-form-field>
+
+    <table class="mat-elevation-z1" mat-table [dataSource]="dataSource">
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let member"> {{ member.clientId | find:membersData:'id':'displayName' }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="attendance">
+        <th mat-header-cell *matHeaderCellDef> Attendance </th>
+        <td mat-cell *matCellDef="let member" [ngSwitch]="member.attendanceType">
+          <span *ngSwitchCase="1">Present</span>
+          <span *ngSwitchCase="2">Absent</span>
+          <span *ngSwitchCase="3">Approved</span>
+          <span *ngSwitchCase="4">Leave</span>
+          <span *ngSwitchCase="5">Late</span>
+          <button mat-icon-button color="primary"
+            (click)="editAttendance(member)">
+            <fa-icon icon="pen"></fa-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+      <button mat-raised-button color="primary" (click)="submit()">Confirm</button>
+    </mat-card-actions>
+
+  </mat-card>
+
+</div>

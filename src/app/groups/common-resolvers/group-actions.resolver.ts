@@ -28,6 +28,8 @@ export class GroupActionsResolver implements Resolve<Object> {
     const actionName = route.paramMap.get('name');
     const groupId = route.paramMap.get('groupId') || route.parent.parent.paramMap.get('groupId');
     switch (actionName) {
+      case 'Attendance':
+        return this.groupsService.getGroupData(groupId);
       case 'Assign Staff':
         return this.groupsService.getGroupData(groupId, 'true');
       case 'Close':
