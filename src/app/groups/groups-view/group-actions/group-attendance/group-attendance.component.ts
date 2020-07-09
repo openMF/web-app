@@ -37,7 +37,7 @@ export class GroupAttendanceComponent implements OnInit {
   meetingDate = new FormControl();
   /** Meeting Dates Data */
   meetingDates: any[];
-  /** Data source for currencies table. */
+  /** Data source for client members table. */
   dataSource: {}[];
 
   /**

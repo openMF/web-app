@@ -1,0 +1,55 @@
+<div class="container" fxLayout="row" fxLayoutGap="3%">
+
+  <mat-card fxFlex class="client-card" fxLayout="column" fxLayoutGap="2%">
+
+    <mat-form-field fxFlex="30%">
+      <mat-label>Add Clients</mat-label>
+      <input matInput [formControl]="clientChoice" [matAutocomplete]="clientsAutocomplete">
+    </mat-form-field>
+
+    <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">
+      <mat-option *ngFor="let client of clientsData" [value]="client">
+        {{ client.displayName }}
+      </mat-option>
+    </mat-autocomplete>
+
+    <div class="mat-table">
+      <div class="mat-header-row">
+        <div class="mat-header-cell">Client Details</div>
+        <button mat-icon-button (click)="addClient()">
+          <fa-icon icon="plus"></fa-icon>
+        </button>
+      </div>
+      <div class="mat-row">
+        <div class="mat-cell">Name</div>
+        <div class="mat-cell">{{clientChoice.value.displayName}}</div>
+      </div>
+      <div class="mat-row">
+        <div class="mat-cell">Id</div>
+        <div class="mat-cell">{{clientChoice.value.id}}</div>
+      </div>
+      <div class="mat-row">
+        <div class="mat-cell">Office</div>
+        <div class="mat-cell">{{clientChoice.value.officeName}}</div>
+      </div>
+    </div>
+
+  </mat-card>
+
+  <mat-card fxFlex="40%">
+
+    <h3 matSubheader>Client Members</h3>
+
+    <mat-nav-list  *ngIf="clientMembers?.length">
+      <div mat-list-item *ngFor="let client of clientMembers index as i">
+        <span matLine class="p-t-10">{{client.displayName}}</span>
+        <div fxFlex></div>
+        <button mat-icon-button color="warn" (click)="removeClient(i, client)">
+          <fa-icon icon="trash"></fa-icon>
+        </button>
+      </div>
+    </mat-nav-list>
+
+  </mat-card>
+
+</div>

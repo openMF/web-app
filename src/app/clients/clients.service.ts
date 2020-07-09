@@ -16,7 +16,7 @@ export class ClientsService {
    */
   constructor(private http: HttpClient) { }
 
-  getFilteredClients(orderBy: string, sortOrder: string, orphansOnly: boolean, displayName: string, officeId: any): Observable<any> {
+  getFilteredClients(orderBy: string, sortOrder: string, orphansOnly: boolean, displayName: string, officeId?: any): Observable<any> {
     let httpParams = new HttpParams()
       .set('displayName', displayName)
       .set('orphansOnly', orphansOnly.toString())

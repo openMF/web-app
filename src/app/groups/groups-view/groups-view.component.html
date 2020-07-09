@@ -63,8 +63,8 @@
           <i class="fa fa-plus"></i>Add Clients</button>
         <button mat-raised-button *mifosxHasPermission="'ASSOCIATECLIENTS_GROUP'">
           <i class="fa fa-exchange"></i>Transfer Clients</button>
-        <button mat-raised-button *mifosxHasPermission="'TRANSFERCLIENTS_GROUP'">
-          <i class="fa fa-user"></i>Manage Clients</button>
+        <button mat-raised-button *mifosxHasPermission="'TRANSFERCLIENTS_GROUP'" (click)="doAction('Manage Members')">
+          <i class="fa fa-user"></i>Manage Members</button>
 
         <button mat-raised-button *ngIf="groupViewData.active" [matMenuTriggerFor]="LoanApplications">
           <i class="fa fa-file"></i>Loan Applications</button>
