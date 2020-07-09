@@ -106,8 +106,9 @@ export class GroupsService {
    * @returns {Observable<any>}
    */
   unAssignRoleCommand(groupId: string, roleId: any): Observable<any> {
-    const httpParams = new HttpParams().set('command', 'unassignRole')
-      .set('roleId', roleId);
+    const httpParams = new HttpParams()
+        .set('command', 'unassignRole')
+        .set('roleId', roleId);
     return this.http.post(`/groups/${groupId}`, {}, { params: httpParams });
   }
 
@@ -247,6 +248,26 @@ export class GroupsService {
    */
   createGroupMeeting(groupId: any, data: any): Observable<any> {
     return this.http.post(`/groups/${groupId}/calendars`, data);
+  }
+
+  /**
+   * @param {any} groupId Group Id
+   * @param {any} calendarId Calendar Id
+   * @returns {Observable<any>}
+   */
+  getMeetingsTemplate(groupId: any, calendarId: any): Observable<any> {
+    const httpParams = new HttpParams().set('calenderId', calendarId);
+    return this.http.get(`/groups/${groupId}/meetings/template`, { params: httpParams });
+  }
+
+  /**
+   * @param {any} groupId Group Id
+   * @param {any} calendarId Calendar Id
+   * @returns {Observable<any>}
+   */
+  assignGroupAttendance(groupId: any, calendarId: any, data: any): Observable<any> {
+    const httpParams = new HttpParams().set('calenderId', calendarId);
+    return this.http.post(`/groups/${groupId}/meetings`, data, { params: httpParams });
   }
 
 }

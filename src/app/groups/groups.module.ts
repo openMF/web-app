@@ -27,6 +27,7 @@ import { CloseGroupComponent } from './groups-view/group-actions/close-group/clo
 import { ActivateGroupComponent } from './groups-view/group-actions/activate-group/activate-group.component';
 import { EditGroupComponent } from './edit-group/edit-group.component';
 import { AttachGroupMeetingComponent } from './groups-view/group-actions/attach-group-meeting/attach-group-meeting.component';
+import { GroupAttendanceComponent } from './groups-view/group-actions/group-attendance/group-attendance.component';
 
 /**
  * Groups Module
@@ -58,7 +59,8 @@ import { AttachGroupMeetingComponent } from './groups-view/group-actions/attach-
     CloseGroupComponent,
     ActivateGroupComponent,
     EditGroupComponent,
-    AttachGroupMeetingComponent
+    AttachGroupMeetingComponent,
+    GroupAttendanceComponent
   ],
   entryComponents: [
     UnassignRoleDialogComponent,
