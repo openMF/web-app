@@ -36,6 +36,12 @@ import { LoanTrancheDetailsComponent } from './loans-view/loan-tranche-details/l
 import { CloseAsRescheduledComponent } from './loans-view/loan-account-actions/close-as-rescheduled/close-as-rescheduled.component';
 import { LoanRescheduleComponent } from './loans-view/loan-account-actions/loan-reschedule/loan-reschedule.component';
 import { LoanCollateralTabComponent } from './loans-view/loan-collateral-tab/loan-collateral-tab.component';
+import { CreateLoansAccountComponent } from './create-loans-account/create-loans-account.component';
+import { LoansAccountDetailsStepComponent } from './loans-account-stepper/loans-account-details-step/loans-account-details-step.component';
+import { LoansAccountTermsStepComponent } from './loans-account-stepper/loans-account-terms-step/loans-account-terms-step.component';
+import { LoansAccountChargesStepComponent } from './loans-account-stepper/loans-account-charges-step/loans-account-charges-step.component';
+import { LoansAccountPreviewStepComponent } from './loans-account-stepper/loans-account-preview-step/loans-account-preview-step.component';
+import { LoansAccountAddCollateralDialogComponent } from './loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
 
 /**
  * Loans Module
@@ -72,6 +78,15 @@ import { LoanCollateralTabComponent } from './loans-view/loan-collateral-tab/loa
     CloseAsRescheduledComponent,
     LoanRescheduleComponent,
     LoanCollateralTabComponent,
+    CreateLoansAccountComponent,
+    LoansAccountDetailsStepComponent,
+    LoansAccountTermsStepComponent,
+    LoansAccountChargesStepComponent,
+    LoansAccountPreviewStepComponent,
+    LoansAccountAddCollateralDialogComponent,
+  ],
+  entryComponents: [
+    LoansAccountAddCollateralDialogComponent
   ],
   providers: [DatePipe],
 })

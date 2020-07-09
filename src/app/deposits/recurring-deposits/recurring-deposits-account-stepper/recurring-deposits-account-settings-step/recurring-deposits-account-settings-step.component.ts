@@ -85,7 +85,7 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
       this.recurringDepositAccountSettingsForm.patchValue({
         'lockinPeriodFrequency': this.recurringDepositsAccountTemplate.lockinPeriodFrequency,
         'lockinPeriodFrequencyType': this.recurringDepositsAccountTemplate.lockinPeriodFrequencyType && this.recurringDepositsAccountTemplate.lockinPeriodFrequencyType.id,
-        'mandatoryRecommendedDepositAmount': this.recurringDepositsAccountProductTemplate.mandatoryRecommendedDepositAmount,
+        'mandatoryRecommendedDepositAmount': this.recurringDepositsAccountTemplate.mandatoryRecommendedDepositAmount,
       });
     }
   }

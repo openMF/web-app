@@ -1,0 +1,39 @@
+<h1 mat-dialog-title>Add Loan Collateral</h1>
+
+<div mat-dialog-content [formGroup]="addCollateralForm" fxLayout="column">
+
+  <mat-form-field>
+    <mat-label>Collateral Type</mat-label>
+    <mat-select formControlName="type" required>
+      <mat-option *ngFor="let collateralType of collateralTypeData" [value]="collateralType.id">
+        {{ collateralType.name }}
+      </mat-option>
+    </mat-select>
+    <mat-error>
+      Collateral Type is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Value</mat-label>
+    <input type="number" matInput formControlName="value" required>
+    <mat-error>
+      Value is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <input type="text" matInput formControlName="description" required>
+    <mat-error>
+      Description is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+</div>
+
+<mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <button mat-raised-button mat-dialog-close> Cancel </button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="{ data: addCollateralForm }"
+    [disabled]="!addCollateralForm.valid || addCollateralForm.pristine">{{ layout.addButtonText }}</button>
+</mat-dialog-actions>

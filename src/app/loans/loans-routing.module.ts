@@ -18,6 +18,10 @@ import { OverdueChargesTabComponent } from './loans-view/overdue-charges-tab/ove
 import { ChargesTabComponent } from './loans-view/charges-tab/charges-tab.component';
 import { DatatableTabComponent } from './loans-view/datatable-tab/datatable-tab.component';
 import { LoanAccountActionsComponent } from './loans-view/loan-account-actions/loan-account-actions.component';
+import { FloatingInterestRatesComponent } from './loans-view/floating-interest-rates/floating-interest-rates.component';
+import { LoanTrancheDetailsComponent } from './loans-view/loan-tranche-details/loan-tranche-details.component';
+import { LoanCollateralTabComponent } from './loans-view/loan-collateral-tab/loan-collateral-tab.component';
+import { CreateLoansAccountComponent } from './create-loans-account/create-loans-account.component';
 
 /** Custom Resolvers */
 import { LoanChargeTemplateResolver } from './common-resolvers/loan-charge-template.resolver';
@@ -28,15 +32,22 @@ import { LoanDetailsChargesResolver } from './common-resolvers/loan-details-char
 import { LoanDatatablesResolver } from './common-resolvers/loan-datatables.resolver';
 import { LoanDatatableResolver } from './common-resolvers/loan-datatable.resolver';
 import { LoanActionButtonResolver } from './common-resolvers/loan-action-button.resolver';
-import { FloatingInterestRatesComponent } from './loans-view/floating-interest-rates/floating-interest-rates.component';
-import { LoanTrancheDetailsComponent } from './loans-view/loan-tranche-details/loan-tranche-details.component';
-import { LoanCollateralTabComponent } from './loans-view/loan-collateral-tab/loan-collateral-tab.component';
+import { LoansAccountTemplateResolver } from './common-resolvers/loans-account-template.resolver';
 
 const routes: Routes = [
   {
     path: '',
     // Component to View All existing Loans Comes Here
-    children: [{
+    children: [
+      {
+        path: 'create-loans-account',
+        data: { title: extract('Create Loans Account'), breadcrumb: 'Create Loans Account' },
+        component: CreateLoansAccountComponent,
+        resolve: {
+          loansAccountTemplate: LoansAccountTemplateResolver
+        }
+      },
+      {
       path: ':loanId',
       data: { title: extract('Loan View'), routeParamBreadcrumb: 'loanId' },
       component: LoansViewComponent,
@@ -177,7 +188,8 @@ const routes: Routes = [
     LoanDetailsChargesResolver,
     LoanDatatablesResolver,
     LoanDatatableResolver,
-    LoanActionButtonResolver
+    LoanActionButtonResolver,
+    LoansAccountTemplateResolver
   ]
 })
 

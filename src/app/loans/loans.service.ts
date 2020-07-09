@@ -164,7 +164,7 @@ export class LoansService {
     return this.http.delete(`/datatables/${datatableName}/${loanId}`, { params: httpParams });
   }
 
-  /*
+  /**
    * @param {string} loanId Loan Id.
    * @param {any} data Data.
    * @returns {Observable<any>}
@@ -174,7 +174,11 @@ export class LoansService {
     return this.http.post(`/loans/${loanId}`, data, {params: httpParams});
   }
 
-  getForeclosureData(loanId: any, foreclosuredata: any) {
+  /**
+   * @param {string|number} loanId Loan Id.
+   * @param {any} foreclosuredata ForeClosure Data
+   */
+  getForeclosureData(loanId: string|number, foreclosuredata: any) {
     const httpParams = new HttpParams().set('command', foreclosuredata.command)
                                        .set('dateFormat', foreclosuredata.dateFormat)
                                        .set('locale', foreclosuredata.locale)
@@ -183,19 +187,62 @@ export class LoansService {
 
   }
 
+  /**
+   * @param {string|number} loanId Loan Id
+   * @param {any} data Data
+   */
   loanForclosureData(loanId: any, data: any) {
     const httpParams = new HttpParams().set('command', 'foreclosure');
     return this.http.post(`/loans/${loanId}/transactions`, data, {params: httpParams});
   }
 
+  /**
+   * Returns the Reschedule Loans Template
+   */
   rescheduleLoanTemplate() {
     return this.http.get('/rescheduleloans/template');
   }
 
+  /**
+   * Submits Reschedule Data
+   * @param {any} data Data
+   */
   submitRescheduleData(data: any) {
-    // https://staging.mifos.io/fineract-provider/api/v1/rescheduleloans?command=reschedule
     const httpParams = new HttpParams().set('command', 'reschedule');
     return this.http.post('/rescheduleloans', data, {params: httpParams});
+  }
+
+  /**
+   * Gets Loan Account Template
+   * @param {any} clientId Client ID
+   * @param {any} productId Product ID
+   */
+  getLoansAccountTemplateResource(clientId: any, productId?: any): Observable<any> {
+    let httpParams = new HttpParams().set('activeOnly', 'true')
+                                      .set('clientId', clientId)
+                                      .set('staffInSelectedOfficeOnly', 'true')
+                                      .set('templateType', 'individual');
+    httpParams = productId ? httpParams.set('productId', productId) : httpParams;
+    return this.http.get('/loans/template', { params: httpParams });
+  }
+
+  /**
+   * Get Loans Collateral Template
+   * @param {any} productId Product ID
+   */
+  getLoansCollateralTemplateResource(productId: any): Observable<any> {
+    const httpParams = new HttpParams().set('fields', 'id, loanCollateralOptions')
+                                  .set('productId', productId)
+                                  .set('templateType', 'collateral');
+    return this.http.get('/loans/template', { params: httpParams });
+  }
+
+  /**
+   * Creates Loans Account
+   * @param {any} loanAccount Loan Account
+   */
+  createLoansAccount(loanAccount: any): Observable<any> {
+    return this.http.post('/loans', loanAccount);
   }
 
 }
