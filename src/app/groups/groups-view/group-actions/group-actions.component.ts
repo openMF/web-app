@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /**
  * Group actions component.
@@ -21,6 +21,7 @@ export class GroupActionsComponent {
     'Attendance': boolean
     'Manage Members': boolean
     'Edit Meeting': boolean
+    'Edit Meeting Schedule': boolean
   } = {
     'Assign Staff': false,
     'Close': false,
@@ -28,13 +29,16 @@ export class GroupActionsComponent {
     'Attach Meeting': false,
     'Attendance': false,
     'Manage Members': false,
-    'Edit Meeting': false
+    'Edit Meeting': false,
+    'Edit Meeting Schedule': false
   };
 
   /**
    * @param {ActivatedRoute} route Activated Route
    */
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              private router: Router) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     const name = this.route.snapshot.params['name'];
     this.actions[name] = true;
   }
