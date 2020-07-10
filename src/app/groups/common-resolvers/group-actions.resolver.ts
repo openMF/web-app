@@ -30,6 +30,7 @@ export class GroupActionsResolver implements Resolve<Object> {
     switch (actionName) {
       case 'Attendance':
       case 'Manage Members':
+      case 'Transfer Clients':
         return this.groupsService.getGroupData(groupId);
       case 'Assign Staff':
         return this.groupsService.getGroupData(groupId, 'true');

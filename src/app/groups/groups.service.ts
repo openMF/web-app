@@ -20,6 +20,23 @@ export class GroupsService {
   constructor(private http: HttpClient) { }
 
   /**
+   * @param {string} orderBy Property by which entries should be sorted.
+   * @param {string} sortOrder Sort order: ascending or descending.
+   * @param {string} name Filter value for groups names.
+   * @returns {Observable<any>} Groups.
+   */
+  getFilteredGroups(orderBy: string, sortOrder: string, name: string, officeId?: any): Observable<any> {
+    let httpParams = new HttpParams()
+      .set('name', name)
+      .set('sortOrder', sortOrder)
+      .set('orderBy', orderBy);
+    if (officeId) {
+      httpParams = httpParams.set('officeId', officeId);
+    }
+    return this.http.get('/groups', { params: httpParams });
+  }
+
+  /**
    * @param {any} filterBy Properties by which entries should be filtered.
    * @param {string} orderBy Property by which entries should be sorted.
    * @param {string} sortOrder Sort order: ascending or descending.
@@ -27,7 +44,7 @@ export class GroupsService {
    * @param {number} limit Number of entries within the page.
    * @returns {Observable<any>} Groups.
    */
-  getGroups(filterBy: any, orderBy: string, sortOrder: string, offset: number, limit: number): Observable<any> {
+  getGroups(filterBy: any, orderBy: string, sortOrder: string, offset?: number, limit?: number): Observable<any> {
     let httpParams = new HttpParams()
       .set('offset', offset.toString())
       .set('limit', limit.toString())

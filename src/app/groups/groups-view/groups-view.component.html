@@ -61,7 +61,7 @@
           <i class="fa fa-edit"></i>Edit</button>
         <button mat-raised-button *mifosxHasPermission="'CREATE_CLIENT'">
           <i class="fa fa-plus"></i>Add Clients</button>
-        <button mat-raised-button *mifosxHasPermission="'ASSOCIATECLIENTS_GROUP'">
+        <button mat-raised-button *mifosxHasPermission="'ASSOCIATECLIENTS_GROUP'" (click)="doAction('Transfer Clients')">
           <i class="fa fa-exchange"></i>Transfer Clients</button>
         <button mat-raised-button *mifosxHasPermission="'TRANSFERCLIENTS_GROUP'" (click)="doAction('Manage Members')">
           <i class="fa fa-user"></i>Manage Members</button>
