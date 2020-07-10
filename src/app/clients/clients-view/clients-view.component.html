@@ -32,7 +32,7 @@
     </mat-card-title-group>
     <mat-card-actions class="client-actions">
       <button mat-raised-button>Edit</button>
-      <button mat-raised-button>+ New Loan</button>
+      <button mat-raised-button [routerLink]="['loans', 'create-loans-account']">+ New Loan</button>
       <button mat-raised-button [routerLink]="['savingsaccounts', 'create-savings-account']">+ New Savings</button>
       <button mat-raised-button>+ Deposit</button>
       <button mat-raised-button [matMenuTriggerFor]="More">More</button>

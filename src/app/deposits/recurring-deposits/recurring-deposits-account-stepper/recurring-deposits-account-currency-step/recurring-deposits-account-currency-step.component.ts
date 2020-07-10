@@ -29,11 +29,7 @@ export class RecurringDepositsAccountCurrencyStepComponent implements OnInit, On
   }
 
   ngOnChanges() {
-    console.log('out here');
-
     if (this.recurringDepositsAccountProductTemplate) {
-      console.log('here');
-
       this.recurringDepositAccountCurrencyForm.patchValue({
         'currencyCode': this.recurringDepositsAccountProductTemplate.currency.code,
         'decimalPlaces': this.recurringDepositsAccountProductTemplate.currency.decimalPlaces

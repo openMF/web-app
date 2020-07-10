@@ -32,9 +32,6 @@ import { ApproveRecurringDepositsAccountComponent } from './recurring-deposits-a
 import { RejectRecurringDepositsAccountComponent } from './recurring-deposits-account-actions/reject-recurring-deposits-account/reject-recurring-deposits-account.component';
 import { WithdrawByClientRecurringDepositsAccountComponent } from './recurring-deposits-account-actions/withdraw-by-client-recurring-deposits-account/withdraw-by-client-recurring-deposits-account.component';
 import { AddChargeRecurringDepositsAccountComponent } from './recurring-deposits-account-actions/add-charge-recurring-deposits-account/add-charge-recurring-deposits-account.component';
-
-/* Dialog Components */
-import { RecurringDepositConfirmationDialogComponent } from './recurring-deposits-account-view/custom-dialogs/recurring-deposit-confirmation-dialog/recurring-deposit-confirmation-dialog.component';
 import { EditRecurringDepositAccountComponent } from './edit-recurring-deposit-account/edit-recurring-deposit-account.component';
 import { PrematureCloseRecurringDepositAccountComponent } from './recurring-deposits-account-actions/premature-close-recurring-deposit-account/premature-close-recurring-deposit-account.component';
 import { CloseRecurringDepositsAccountComponent } from './recurring-deposits-account-actions/close-recurring-deposits-account/close-recurring-deposits-account.component';
@@ -42,6 +39,8 @@ import { DepositRecurringDepositsAccountComponent } from './recurring-deposits-a
 import { ViewTransactionComponent } from './recurring-deposits-account-view/transactions-tab/view-transaction/view-transaction.component';
 import { EditTransactionComponent } from './recurring-deposits-account-view/transactions-tab/edit-transaction/edit-transaction.component';
 
+/* Dialog Components */
+import { RecurringDepositConfirmationDialogComponent } from './recurring-deposits-account-view/custom-dialogs/recurring-deposit-confirmation-dialog/recurring-deposit-confirmation-dialog.component';
 
 /**
  * RecurringDeposits Module

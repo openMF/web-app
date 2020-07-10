@@ -32,7 +32,7 @@ import { RecurringDepositsAccountTransactionTemplateResolver } from './common-re
 const routes: Routes = [
   {
     path: '',
-    data: { title: extract('All RecurringDeposits'), breadcrumb: 'RecurringDeposits', routeParamBreadcrumb: false },
+    data: { title: extract('All Recurring Deposits'), breadcrumb: 'Recurring Deposits', routeParamBreadcrumb: false },
     children: [
       {
         path: 'create-recurring-deposits-account',
