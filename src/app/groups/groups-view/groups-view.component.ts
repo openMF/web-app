@@ -76,7 +76,7 @@ export class GroupsViewComponent {
     if (this.groupViewData.collectionMeetingCalendar) {
       const entityType = this.groupViewData.collectionMeetingCalendar.entityType.value;
       if (entityType === 'GROUPS' && this.groupViewData.hierarchy === '.' + this.groupViewData.id + '.' ) {
-          return true;
+        return true;
       }
     }
     return false;

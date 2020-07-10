@@ -23,7 +23,7 @@ export class EditGroupMeetingComponent implements OnInit {
   maxDate = new Date();
   /** Group Meeting form. */
   groupEditMeetingForm: FormGroup;
-  /** Calnedar Template Data */
+  /** Calendar Template Data */
   calendarTemplate: any;
   /** Group Id */
   groupId: any;
@@ -87,6 +87,7 @@ export class EditGroupMeetingComponent implements OnInit {
         case 2: // Weekly
           this.repetitionIntervals = ['1', '2', '3'];
           this.groupEditMeetingForm.addControl('repeatsOnDay', new FormControl('', Validators.required));
+          this.groupEditMeetingForm.get('repeatsOnDay').patchValue(this.calendarTemplate.repeatsOnDay.id);
         break;
         case 3: // Monthly
           this.repetitionIntervals = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
@@ -99,8 +100,16 @@ export class EditGroupMeetingComponent implements OnInit {
     this.groupEditMeetingForm.patchValue({
       'startDate': this.calendarTemplate.startDate && new Date(this.calendarTemplate.startDate),
       'frequency': this.calendarTemplate.frequency.id,
-      'interval': this.calendarTemplate.interval
+      'interval': `${this.calendarTemplate.interval}`
     });
+  }
+
+  /**
+   * Navigate to edit meeting schedule form.
+   */
+  editSchedule() {
+    const queryParams: any = { calendarId: this.calendarId };
+    this.router.navigate([`../Edit Meeting Schedule`], { relativeTo: this.route, queryParams: queryParams });
   }
 
   /**

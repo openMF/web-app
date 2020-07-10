@@ -30,6 +30,7 @@ import { AttachGroupMeetingComponent } from './groups-view/group-actions/attach-
 import { GroupAttendanceComponent } from './groups-view/group-actions/group-attendance/group-attendance.component';
 import { ManageGroupMembersComponent } from './groups-view/group-actions/manage-group-members/manage-group-members.component';
 import { EditGroupMeetingComponent } from './groups-view/group-actions/edit-group-meeting/edit-group-meeting.component';
+import { EditGroupMeetingScheduleComponent } from './groups-view/group-actions/edit-group-meeting-schedule/edit-group-meeting-schedule.component';
 
 /**
  * Groups Module
@@ -64,7 +65,8 @@ import { EditGroupMeetingComponent } from './groups-view/group-actions/edit-grou
     AttachGroupMeetingComponent,
     GroupAttendanceComponent,
     ManageGroupMembersComponent,
-    EditGroupMeetingComponent
+    EditGroupMeetingComponent,
+    EditGroupMeetingScheduleComponent
   ],
   entryComponents: [
     UnassignRoleDialogComponent,
