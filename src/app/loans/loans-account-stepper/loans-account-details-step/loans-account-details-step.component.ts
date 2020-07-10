@@ -5,7 +5,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 /** Custom Services */
 import { LoansService } from '../../loans.service';
 import { DatePipe } from '@angular/common';
-import { ReportsRoutingModule } from 'app/reports/reports-routing.module';
 
 /**
  * Loans Account Details Step

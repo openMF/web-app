@@ -22,7 +22,8 @@ export class LoanAccountActionsComponent {
             make_repayment: boolean,
             waive_interest: boolean,
             close_as_rescheduled: boolean,
-            reschedule: boolean } = {
+            reschedule: boolean,
+            recovery_payment: boolean } = {
               close: false,
               undo_approval: false,
               write_off: false,
@@ -32,7 +33,8 @@ export class LoanAccountActionsComponent {
               make_repayment: false,
               waive_interest: false,
               close_as_rescheduled: false,
-              reschedule: false };
+              reschedule: false,
+              recovery_payment: false };
 
   actionButtonData: any;
   actionName: any;

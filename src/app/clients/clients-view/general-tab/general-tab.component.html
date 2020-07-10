@@ -156,7 +156,7 @@
 
     <tr mat-header-row *matHeaderRowDef="openLoansColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: openLoansColumns;"
-      [routerLink]="['/clients', clientid, 'loans', row.id, 'general']" class="select-row"></tr>
+      [routerLink]="['../', 'loans', row.id, 'general']" class="select-row"></tr>
   </table>
 
   <!-- Closed Loan Accounts -->
@@ -204,7 +204,8 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="closedLoansColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: closedLoansColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: closedLoansColumns;"
+    [routerLink]="['../', 'loans', row.id, 'general']" class="select-row"></tr>
   </table>
 
 

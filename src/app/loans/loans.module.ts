@@ -42,6 +42,7 @@ import { LoansAccountTermsStepComponent } from './loans-account-stepper/loans-ac
 import { LoansAccountChargesStepComponent } from './loans-account-stepper/loans-account-charges-step/loans-account-charges-step.component';
 import { LoansAccountPreviewStepComponent } from './loans-account-stepper/loans-account-preview-step/loans-account-preview-step.component';
 import { LoansAccountAddCollateralDialogComponent } from './loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
+import { RecoveryRepaymentComponent } from './loans-view/loan-account-actions/recovery-repayment/recovery-repayment.component';
 
 /**
  * Loans Module
@@ -84,6 +85,7 @@ import { LoansAccountAddCollateralDialogComponent } from './loans-account-add-co
     LoansAccountChargesStepComponent,
     LoansAccountPreviewStepComponent,
     LoansAccountAddCollateralDialogComponent,
+    RecoveryRepaymentComponent,
   ],
   entryComponents: [
     LoansAccountAddCollateralDialogComponent

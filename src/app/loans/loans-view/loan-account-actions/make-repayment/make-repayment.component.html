@@ -35,7 +35,7 @@
 
         <div fxFlexFill>
           <span fxFlex="25%">Show Payment Details</span>
-          <span fxFlex="75%" class="expandCollapsebutton" (click)="toggleDisplay()">
+          <span fxFlex="75%" class="expandCollapsebutton" (click)="addPaymentDetails()">
             <button mat-raised-button color="primary" *ngIf="showPaymentDetails">
               <i class="fa fa-minus"></i>
             </button>
@@ -53,7 +53,7 @@
   
           <mat-form-field>
             <mat-label>Cheque #</mat-label>
-            <input matInput formControlName="chequeNumber">
+            <input matInput formControlName="checkNumber">
           </mat-form-field>
   
           <mat-form-field>
