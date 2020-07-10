@@ -37,6 +37,9 @@ export class GroupActionsResolver implements Resolve<Object> {
         return this.groupsService.getGroupCommandTemplate('close');
       case 'Attach Meeting':
         return this.groupsService.getGroupCalendarTemplate(groupId);
+      case 'Edit Meeting':
+        const calendarId = route.queryParamMap.get('calendarId');
+        return this.groupsService.getGroupCalendarAndTemplate(groupId, calendarId);
       default:
         return undefined;
     }

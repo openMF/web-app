@@ -33,8 +33,8 @@
       <div class="group-meeting" fxLayoutAlign="start start">
         <div *ngIf="groupViewData.collectionMeetingCalendar; else unassigned">
           <p>
-             Next Meeting on: {{groupViewData.collectionMeetingCalendar?.recentEligibleMeetingDate | date}}   
-             <i class="fa fa-calendar"></i><br/>
+             Next Meeting on: {{groupViewData.collectionMeetingCalendar?.nextTenRecurringDates[0] | date}}   
+             <i class="fa fa-edit" *ngIf="editMeeting" (click)="doAction('Edit Meeting')"></i><br/>
              Meeting Frequency: {{groupViewData.collectionMeetingCalendar?.frequency.value | lowercase}}
           </p>
         </div>

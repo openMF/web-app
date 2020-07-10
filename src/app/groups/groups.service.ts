@@ -222,7 +222,7 @@ export class GroupsService {
    * @returns {Observable<any>}
    */
   createGroup(group: any): Observable<any> {
-      return this.http.post('/groups', group);
+    return this.http.post('/groups', group);
   }
 
   /**
@@ -246,8 +246,25 @@ export class GroupsService {
    * @param {any} groupId Group Id
    * @returns {Observable<any>}
    */
+  getGroupCalendarAndTemplate(groupId: any, calendarId: any): Observable<any> {
+    const httpParams = new HttpParams().set('template', 'true');
+    return this.http.get(`/groups/${groupId}/calendars/${calendarId}`, { params: httpParams });
+  }
+
+  /**
+   * @param {any} groupId Group Id
+   * @returns {Observable<any>}
+   */
   createGroupMeeting(groupId: any, data: any): Observable<any> {
     return this.http.post(`/groups/${groupId}/calendars`, data);
+  }
+
+  /**
+   * @param {any} groupId Group Id
+   * @returns {Observable<any>}
+   */
+  updateGroupMeeting(groupId: any, data: any, calendarId: any): Observable<any> {
+    return this.http.put(`/groups/${groupId}/calendars/${calendarId}`, data);
   }
 
   /**

@@ -53,6 +53,10 @@ export class GroupsViewComponent {
       case 'Manage Members':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
+      case 'Edit Meeting':
+        const queryParams: any = { calendarId: this.groupViewData.collectionMeetingCalendar.id };
+        this.router.navigate([`actions/${name}`], { relativeTo: this.route, queryParams: queryParams });
+        break;
       case 'Edit':
         this.router.navigate(['edit'], { relativeTo: this.route });
         break;
@@ -63,6 +67,19 @@ export class GroupsViewComponent {
         this.deleteGroup();
         break;
     }
+  }
+
+  /**
+   * Checks if meeting is editable.
+   */
+  get editMeeting() {
+    if (this.groupViewData.collectionMeetingCalendar) {
+      const entityType = this.groupViewData.collectionMeetingCalendar.entityType.value;
+      if (entityType === 'GROUPS' && this.groupViewData.hierarchy === '.' + this.groupViewData.id + '.' ) {
+          return true;
+      }
+    }
+    return false;
   }
 
   /**
