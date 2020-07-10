@@ -22,6 +22,7 @@ export class GroupActionsComponent {
     'Manage Members': boolean
     'Edit Meeting': boolean
     'Edit Meeting Schedule': boolean
+    'Transfer Clients': boolean
   } = {
     'Assign Staff': false,
     'Close': false,
@@ -30,7 +31,8 @@ export class GroupActionsComponent {
     'Attendance': false,
     'Manage Members': false,
     'Edit Meeting': false,
-    'Edit Meeting Schedule': false
+    'Edit Meeting Schedule': false,
+    'Transfer Clients': false
   };
 
   /**
