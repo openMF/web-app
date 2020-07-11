@@ -274,6 +274,17 @@ export class OrganizationService {
   }
 
   /**
+   * @param {string} tellerId Teller Id
+   * @param {string} cashierId Cashier Id
+   * @param {string} currencyCode Currency Code
+   * @returns {Observable<any>}
+   */
+  getCashierSummaryAndTransactions(tellerId: string, cashierId: string, currencyCode: string): Observable<any> {
+    const httpParams = new HttpParams().set('currencyCode', currencyCode);
+    return this.http.get(`/tellers/${tellerId}/cashiers/${cashierId}/summaryandtransactions`, { params: httpParams });
+  }
+
+  /**
    * @param {string} tellerId Teller ID of teller to be deleted.
    * @returns {Observable<any>}
    */

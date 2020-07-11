@@ -42,6 +42,7 @@ import { ViewCampaignComponent } from './sms-campaigns/view-campaign/view-campai
 import { ManageFundsComponent } from './manage-funds/manage-funds.component';
 import { ManageCurrenciesComponent } from './currencies/manage-currencies/manage-currencies.component';
 import { CashiersComponent } from './tellers/cashiers/cashiers.component';
+import { TransactionsComponent } from './tellers/transactions/transactions.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -339,11 +340,24 @@ const routes: Routes = [
                     },
                     {
                       path: ':id',
-                      component: ViewCashierComponent,
-                      data: { title: extract('View Cashier'), breadcrumb: 'View Cashier', routeParamBreadcrumb: 'id' },
-                      resolve: {
-                        cashier: CashierResolver
-                      }
+                      data: { title: extract('View Cashier'),  routeParamBreadcrumb: 'id' },
+                      children: [
+                        {
+                          path: '',
+                          component: ViewCashierComponent,
+                          resolve: {
+                            cashier: CashierResolver
+                          }
+                        },
+                        {
+                          path: 'transactions',
+                          data: { title: extract('Cashier Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+                          component: TransactionsComponent,
+                          resolve: {
+                            currencies: CurrenciesResolver
+                          }
+                        }
+                      ]
                     }
                   ]
                 }

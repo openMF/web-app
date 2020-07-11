@@ -44,7 +44,8 @@
           <button class="cashier-action-button" mat-raised-button color="warn" matTooltip="Settle Cash">
             <i class="fa fa-arrow-down"></i>
           </button>
-          <button class="cashier-action-button" mat-raised-button color="primary" matTooltip="View Transactions">
+          <button class="cashier-action-button" mat-raised-button color="primary" matTooltip="View Transactions"
+            (click)="routeEdit($event)" [routerLink]="[cashier.id, 'transactions']">
             <i class="fa fa-eye"></i>
           </button>   
         </td>

@@ -45,6 +45,7 @@ import { ViewCampaignComponent } from './sms-campaigns/view-campaign/view-campai
 import { ManageFundsComponent } from './manage-funds/manage-funds.component';
 import { ManageCurrenciesComponent } from './currencies/manage-currencies/manage-currencies.component';
 import { CashiersComponent } from './tellers/cashiers/cashiers.component';
+import { TransactionsComponent } from './tellers/transactions/transactions.component';
 
 /**
  * Organization Module
@@ -95,7 +96,8 @@ import { CashiersComponent } from './tellers/cashiers/cashiers.component';
     ViewCampaignComponent,
     ManageFundsComponent,
     ManageCurrenciesComponent,
-    CashiersComponent
+    CashiersComponent,
+    TransactionsComponent
   ]
 })
 export class OrganizationModule { }
