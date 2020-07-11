@@ -1,6 +1,6 @@
 <div class="container">
 
-  <form [formGroup]="prepayLoanForm" (ngSubmit)="submit()">
+  <form [formGroup]="recoveryRepaymentLoanForm" (ngSubmit)="submit()">
 
     <mat-card-content>
 
@@ -8,10 +8,11 @@
 
         <mat-form-field>
           <mat-label>Transaction Date</mat-label>
-          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDatePicker" required formControlName="transactionDate">
+          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDatePicker" required
+            formControlName="transactionDate">
           <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #transactionDatePicker></mat-datepicker>
-          <mat-error *ngIf="prepayLoanForm.controls.transactionDate.hasError('required')">
+          <mat-error *ngIf="recoveryRepaymentLoanForm.controls.transactionDate.hasError('required')">
             Transaction Date <strong>is required</strong>
           </mat-error>
         </mat-form-field>
@@ -19,21 +20,8 @@
         <mat-form-field>
           <mat-label>Transaction Amount</mat-label>
           <input matInput required formControlName="transactionAmount">
-          <mat-error *ngIf="prepayLoanForm.controls.transactionAmount.hasError('required')">
+          <mat-error *ngIf="recoveryRepaymentLoanForm.controls.transactionAmount.hasError('required')">
             Transaction Amount <strong>is required</strong>
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Principal</mat-label>
-          <input matInput formControlName="principal">
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Interest Amount</mat-label>
-          <input matInput required formControlName="interestAmount">
-          <mat-error *ngIf="prepayLoanForm.controls.interestAmount.hasError('required')">
-            Interest Amount <strong>is required</strong>
           </mat-error>
         </mat-form-field>
 
@@ -63,22 +51,22 @@
             <mat-label> Account #</mat-label>
             <input matInput formControlName="accountNumber">
           </mat-form-field>
-  
+
           <mat-form-field>
             <mat-label>Cheque #</mat-label>
             <input matInput formControlName="checkNumber">
           </mat-form-field>
-  
+
           <mat-form-field>
             <mat-label>Routing Code</mat-label>
             <input matInput formControlName="routingCode">
           </mat-form-field>
-  
+
           <mat-form-field>
             <mat-label>Reciept #</mat-label>
             <input matInput formControlName="receiptNumber">
           </mat-form-field>
-  
+
           <mat-form-field>
             <mat-label>Bank #</mat-label>
             <input matInput formControlName="bankNumber">
@@ -94,7 +82,8 @@
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
         <button type="button" mat-raised-button [routerLink]="['../general']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!prepayLoanForm.valid" *mifosxHasPermission="'REPAYMENT_LOAN'">Submit</button>
+        <button mat-raised-button color="primary" [disabled]="!recoveryRepaymentLoanForm.valid"
+          *mifosxHasPermission="'REPAYMENT_LOAN'">Submit</button>
       </mat-card-actions>
 
     </mat-card-content>

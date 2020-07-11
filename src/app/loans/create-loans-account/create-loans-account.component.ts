@@ -98,7 +98,7 @@ export class CreateLoansAccountComponent implements OnInit {
     const locale = 'en';
     const dateFormat = 'dd MMMM yyyy';
     const loanType = 'individual';
-    let loansAccountData = {
+    const loansAccountData = {
       ...this.loansAccount,
       clientId: this.loansAccountTemplate.clientId,
       charges: this.loansAccount.charges.map((charge: any) => ({
@@ -136,7 +136,7 @@ export class CreateLoansAccountComponent implements OnInit {
     if (loansAccountData.interestCalculationPeriodType === 0) {
       loansAccountData.allowPartialPeriodInterestCalcualtion = false;
     }
-    if (!(loansAccountData.isFloatingInterestRate === false)){
+    if (!(loansAccountData.isFloatingInterestRate === false)) {
       delete loansAccountData.isFloatingInterestRate;
     }
 
