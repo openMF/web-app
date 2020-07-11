@@ -1,0 +1,100 @@
+<div class="container">
+  <form [formGroup]="newGuarantorForm" (ngSubmit)="submit()">
+
+    <mat-card-content>
+
+      <div fxLayout="column">
+
+          <mat-checkbox labelPosition="before" formControlName="existingClient">
+            Existing Client
+          </mat-checkbox>
+
+        <ng-container *ngIf="!showClientDetailsForm">
+
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput required formControlName="name" required>
+            <mat-error *ngIf="newGuarantorForm.controls.name.hasError('required')">
+              Name <strong>is required</strong>
+            </mat-error>
+          </mat-form-field>
+
+        </ng-container>
+
+        <mat-form-field>
+          <mat-label>Relationship</mat-label>
+          <mat-select formControlName="clientRelationshipTypeId">
+            <mat-option *ngFor="let relationType of relationTypes" [value]="relationType.id">
+              {{ relationType.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <ng-container *ngIf="showClientDetailsForm">
+          <mat-form-field>
+            <mat-label>First Name</mat-label>
+            <input matInput required formControlName="firstname" required>
+            <mat-error *ngIf="newGuarantorForm.controls.firstname.hasError('required')">
+              First Name <strong>is required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Last Name</mat-label>
+            <input matInput required formControlName="lastname" required>
+            <mat-error *ngIf="newGuarantorForm.controls.lastname.hasError('required')">
+              Last Name <strong>is required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Date Of Birth</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dobDatePicker" formControlName="dob">
+            <mat-datepicker-toggle matSuffix [for]="dobDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #dobDatePicker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Address Line 1</mat-label>
+            <input matInput formControlName="addressLine1">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Address Line 2</mat-label>
+            <input matInput formControlName="addressLine2">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>City</mat-label>
+            <input matInput formControlName="city">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Zip</mat-label>
+            <input matInput formControlName="zip">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Mobile</mat-label>
+            <input type="number" matInput formControlName="mobileNumber">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Residence Phone #</mat-label>
+            <input type="number" matInput formControlName="housePhoneNumber">
+          </mat-form-field>
+
+        </ng-container>
+
+      </div>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../general']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!newGuarantorForm.valid"
+          *mifosxHasPermission="'CREATE_GUARANTOR'">Submit</button>
+      </mat-card-actions>
+
+    </mat-card-content>
+
+  </form>
+</div>

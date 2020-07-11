@@ -1,9 +1,17 @@
+/** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+
+/** Custom Services */
 import { LoansService } from '../loans.service';
 
-// Custom Imports
+/** Custom Buttons Configuration */
 import { ButtonConfig } from './button-config';
+
+/** Dialog Components */
+import { LoansConfirmationDialogBoxComponent } from '../custom-dialog/loans-confirmation-dialog-box/loans-confirmation-dialog-box.component';
+import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'mifosx-loans-view',
@@ -28,14 +36,18 @@ export class LoansViewComponent implements OnInit {
     }[]
   };
   loanId: number;
+  clientId: any;
 
   constructor(private route: ActivatedRoute,
-    private router: Router) {
+              private router: Router,
+              public loansService: LoansService,
+              public dialog: MatDialog) {
     this.route.data.subscribe((data: { loanDetailsData: any, loanDatatables: any}) => {
       this.loanDetailsData = data.loanDetailsData;
       this.loanDatatables = data.loanDatatables;
     });
     this.loanId = this.route.snapshot.params['loanId'];
+    this.clientId = this.loanDetailsData.clientId;
   }
 
   ngOnInit() {
@@ -111,10 +123,62 @@ export class LoansViewComponent implements OnInit {
   }
 
   loanAction(button: string) {
-    button = button.replace(/\s/g, '-').toLowerCase();
-    button = button.replace(/\(/g, '');
-    button = button.replace(/\)/g, '');
-    this.router.navigate([button], { relativeTo: this.route });
+    console.log('button: ', button);
+
+    switch (button) {
+      case 'Recover From Guarantor':
+        this.recoverFromGuarantor();
+        break;
+      case 'Delete':
+        this.deleteLoanAccount();
+        break;
+      default:
+        button = button.replace(/\s/g, '-').toLowerCase();
+        button = button.replace(/\(/g, '');
+        button = button.replace(/\)/g, '');
+        this.router.navigate([button], { relativeTo: this.route });
+        break;
+    }
+  }
+
+  /**
+   * Recover from guarantor action
+   */
+  private recoverFromGuarantor() {
+    const recoverFromGuarantorDialogRef = this.dialog.open(LoansConfirmationDialogBoxComponent, {
+      data: { heading: 'Recover from Guarantor', dialogContext: 'Are you sure you want recover from Guarantor ?' }
+    });
+    recoverFromGuarantorDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.confirm) {
+        this.loansService.loanActionButtons(this.loanId, 'recoverGuarantees').subscribe(() => {
+          this.reload();
+        });
+      }
+    });
+  }
+
+  private deleteLoanAccount() {
+    const deleteGuarantorDialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { deleteContext: `with loan id: ${this.loanId}` }
+    });
+    deleteGuarantorDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.delete) {
+        this.loansService.deleteLoanAccount(this.loanId).subscribe(() => {
+          this.router.navigate(['../../'], { relativeTo: this.route });
+        });
+      }
+    });
+  }
+
+  /**
+   * Refetches data for the component
+   * TODO: Replace by a custom reload component instead of hard-coded back-routing.
+   */
+  private reload() {
+    const clientId = this.clientId;
+    const url: string = this.router.url;
+    this.router.navigateByUrl(`/clients/${clientId}/loans`, { skipLocationChange: true })
+      .then(() => this.router.navigate([url]));
   }
 
 }

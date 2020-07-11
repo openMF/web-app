@@ -1,0 +1,44 @@
+<h1 mat-dialog-title>Guarantor Detail</h1>
+
+<div mat-dialog-content fxLayout="column">
+
+  <div fxLayout="row wrap" fxLayout.lt-md="column">
+
+    <div fxFlexFill>
+      <span fxFlex="50%">First Name:</span>
+      <span fxFlex="50%">{{ data.guarantorData.firstname }}</span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%">Last Name:</span>
+      <span fxFlex="50%">{{ data.guarantorData.lastname }}</span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%">Relationship:</span>
+      <span fxFlex="50%">{{ data.guarantorData.clientRelationshipType.name }}</span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%">Guarantor Type:</span>
+      <span fxFlex="50%">{{ data.guarantorData.guarantorType.value }}</span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%">Status:</span>
+      <span fxFlex="50%">
+        <span *ngIf="data.guarantorData.status">
+          Active
+        </span>
+        <span *ngIf="!data.guarantorData.status">
+          Deleted
+        </span></span>
+    </div>
+
+  </div>
+
+</div>
+
+<mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <button mat-raised-button mat-dialog-close> Cancel </button>
+</mat-dialog-actions>

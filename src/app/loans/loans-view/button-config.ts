@@ -74,7 +74,7 @@ export const ButtonConfig = {
         taskPermissionName: 'CREATE_LOANCHARGE',
       },
       {
-        name: 'List Guarantor',
+        name: 'View Guarantors',
         taskPermissionName: 'READ_GUARANTOR',
       },
       {
@@ -137,7 +137,7 @@ export const ButtonConfig = {
         taskPermissionName: 'READ_LOAN',
       },
       {
-        name: 'List Guarantor',
+        name: 'View Guarantors',
         taskPermissionName: 'READ_GUARANTOR',
       },
       {
@@ -145,7 +145,7 @@ export const ButtonConfig = {
         taskPermissionName: 'CREATE_GUARANTOR',
       },
       {
-        name: 'Recover Guarantee',
+        name: 'Recover From Guarantor',
         taskPermissionName: 'RECOVERGUARANTEES_LOAN',
       },
     ],
