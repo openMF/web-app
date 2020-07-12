@@ -22,6 +22,7 @@ import { FloatingInterestRatesComponent } from './loans-view/floating-interest-r
 import { LoanTrancheDetailsComponent } from './loans-view/loan-tranche-details/loan-tranche-details.component';
 import { LoanCollateralTabComponent } from './loans-view/loan-collateral-tab/loan-collateral-tab.component';
 import { CreateLoansAccountComponent } from './create-loans-account/create-loans-account.component';
+import { RejectLoanComponent } from './loans-view/loan-account-actions/reject-loan/reject-loan.component';
 
 /** Custom Resolvers */
 import { LoanChargeTemplateResolver } from './common-resolvers/loan-charge-template.resolver';
