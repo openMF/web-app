@@ -24,7 +24,7 @@ export class EditCashierResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const tellerId = route.parent.paramMap.get('id');
+    const tellerId = route.parent.parent.paramMap.get('id');
     return this.organizationService.getCashierTemplate(tellerId);
   }
 

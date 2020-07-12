@@ -1,9 +1,9 @@
 <div fxLayout="row" fxLayoutGap="1%" fxLayoutAlign="end" class="container m-b-20">
-  <button mat-raised-button color="accent">
+  <button mat-raised-button color="accent" [routerLink]="['../allocate']">
       <fa-icon icon="arrow-up"></fa-icon>&nbsp;&nbsp;
       Allocate Cash
   </button>
-  <button mat-raised-button color="warn">
+  <button mat-raised-button color="warn" [routerLink]="['../settle']">
       <fa-icon icon="arrow-down"></fa-icon>&nbsp;&nbsp;
       Settle Cash
   </button>
