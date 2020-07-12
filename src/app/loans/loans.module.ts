@@ -53,6 +53,7 @@ import { WithdrawnByClientComponent } from './loans-view/loan-account-actions/wi
 import { LoansAccountViewGuarantorDetailsDialogComponent } from './custom-dialog/loans-account-view-guarantor-details-dialog/loans-account-view-guarantor-details-dialog.component';
 import { LoansAccountAddCollateralDialogComponent } from './custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
 import { LoansConfirmationDialogBoxComponent } from './custom-dialog/loans-confirmation-dialog-box/loans-confirmation-dialog-box.component';
+import { AddCollateralComponent } from './loans-view/loan-account-actions/add-collateral/add-collateral.component';
 
 /**
  * Loans Module
@@ -104,6 +105,7 @@ import { LoansConfirmationDialogBoxComponent } from './custom-dialog/loans-confi
     RejectLoanComponent,
     DisburseComponent,
     WithdrawnByClientComponent,
+    AddCollateralComponent
   ],
   entryComponents: [
     LoansAccountAddCollateralDialogComponent,

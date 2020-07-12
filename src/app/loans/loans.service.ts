@@ -71,8 +71,27 @@ export class LoansService {
    * Get Loan Account Details
    * @param loanId Loan Id
    */
-  getLoanAccountDetails(loanId: string) {
+  getLoanAccountDetails(loanId: string): Observable<any> {
     return this.http.get(`/loans/${loanId}`);
+  }
+
+  /**
+   * Get collateral template.
+   * @param {string} loanId Loan Id.
+   * @returns {Observable<any>}
+   */
+  getLoanCollateralTemplate(loanId: string): Observable<any> {
+    return this.http.get(`/loans/${loanId}/collaterals/template`);
+  }
+
+  /**
+   * Create Loan Collateral.
+   * @param {string} loanId Loan Id.
+   * @param {any} collateralData Collateral Data.
+   * @returns {Observable<any>}
+   */
+  createLoanCollateral(loanId: string, collateralData: any): Observable<any> {
+    return this.http.post(`/loans/${loanId}/collaterals`, collateralData);
   }
 
   /**

@@ -42,6 +42,8 @@ export class LoanActionButtonResolver implements Resolve<Object> {
             return this.loansService.rescheduleLoanTemplate();
         } else if (loanActionButton === 'prepay-loan') {
             return this.loansService.getLoanActionTemplate(loanId, 'prepayLoan');
+        } else if (loanActionButton === 'add-collateral') {
+            return this.loansService.getLoanCollateralTemplate(loanId);
         } else if (loanActionButton === 'disburse-to-savings') {
             return this.loansService.getLoanActionTemplate(loanId, 'disburseToSavings');
         } else if (loanActionButton === 'recovery-payment') {

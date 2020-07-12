@@ -17,5 +17,6 @@
     <mifosx-reject-loan *ngIf="actions.reject"></mifosx-reject-loan>
     <mifosx-disburse [dataObject]="actionButtonData" *ngIf="actions.disburse"></mifosx-disburse>
     <mifosx-withdrawn-by-client *ngIf="actions.withdrawn_by_client"></mifosx-withdrawn-by-client>
+    <mifosx-add-collateral [dataObject]="actionButtonData" *ngIf="actions.add_collateral"></mifosx-add-collateral>
   </mat-card>
 </div>

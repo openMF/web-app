@@ -1,0 +1,44 @@
+<div class="container">
+
+  <form [formGroup]="collateralForm" (ngSubmit)="submit()">
+
+    <mat-card-content>
+
+      <div fxLayout="column">
+
+        <mat-form-field>
+          <mat-label>Collateral Type</mat-label>
+          <mat-select required formControlName="collateralTypeId">
+            <mat-option *ngFor="let collateral of dataObject.allowedCollateralTypes" [value]="collateral.id"> {{ collateral.name }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="collateralForm.controls.collateralTypeId.hasError('required')">
+            Collateral type <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Value</mat-label>
+          <input matInput required formControlName="value">
+          <mat-error *ngIf="collateralForm.controls.value.hasError('required')">
+            Value is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description"></textarea>
+        </mat-form-field>
+      
+
+      </div>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!collateralForm.valid" *mifosxHasPermission="'CREATE_COLLATERAL'">Submit</button>
+      </mat-card-actions>
+
+    </mat-card-content>
+
+  </form>
+  
+</div>
