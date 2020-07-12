@@ -27,7 +27,8 @@ export class LoanAccountActionsComponent {
             reschedule: boolean,
             recovery_payment: boolean,
             view_guarantors: boolean,
-            create_guarantor: boolean } = {
+            create_guarantor: boolean,
+            disburse: boolean } = {
               close: false,
               undo_approval: false,
               write_off: false,
@@ -42,7 +43,8 @@ export class LoanAccountActionsComponent {
               reschedule: false,
               recovery_payment: false,
               view_guarantors: false,
-              create_guarantor: false };
+              create_guarantor: false,
+              disburse: false };
 
   actionButtonData: any;
   actionName: any;

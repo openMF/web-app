@@ -66,7 +66,7 @@ export class AssignLoanOfficerComponent implements OnInit {
     assignForm.dateFormat = dateFormat;
     assignForm.fromLoanOfficerId = this.dataObject.loanOfficerId || '';
 
-    this.loanService.loanActionButtons(this.loanId, assignForm, 'assignLoanOfficer')
+    this.loanService.loanActionButtons(this.loanId, 'assignLoanOfficer', assignForm)
       .subscribe((response: any) => {
         this.router.navigate([`../../${this.loanId}/general`], { relativeTo: this.route });
     });

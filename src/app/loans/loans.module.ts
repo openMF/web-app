@@ -44,13 +44,14 @@ import { LoansAccountPreviewStepComponent } from './loans-account-stepper/loans-
 import { RecoveryRepaymentComponent } from './loans-view/loan-account-actions/recovery-repayment/recovery-repayment.component';
 import { ViewGuarantorsComponent } from './loans-view/loan-account-actions/view-guarantors/view-guarantors.component';
 import { CreateGuarantorComponent } from './loans-view/loan-account-actions/create-guarantor/create-guarantor.component';
+import { DisburseLoanAccountComponent } from './loans-view/loan-account-actions/disburse-loan-account/disburse-loan-account.component';
+import { DisburseComponent } from './loans-view/loan-account-actions/disburse/disburse.component';
+import { RejectLoanComponent } from './loans-view/loan-account-actions/reject-loan/reject-loan.component';
 
 /** Dialog Components */
 import { LoansAccountViewGuarantorDetailsDialogComponent } from './custom-dialog/loans-account-view-guarantor-details-dialog/loans-account-view-guarantor-details-dialog.component';
 import { LoansAccountAddCollateralDialogComponent } from './custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
 import { LoansConfirmationDialogBoxComponent } from './custom-dialog/loans-confirmation-dialog-box/loans-confirmation-dialog-box.component';
-import { DisburseLoanAccountComponent } from './loans-view/loan-account-actions/disburse-loan-account/disburse-loan-account.component';
-import { RejectLoanComponent } from './loans-view/loan-account-actions/reject-loan/reject-loan.component';
 
 /**
  * Loans Module
@@ -99,7 +100,8 @@ import { RejectLoanComponent } from './loans-view/loan-account-actions/reject-lo
     LoansAccountViewGuarantorDetailsDialogComponent,
     LoansConfirmationDialogBoxComponent,
     DisburseLoanAccountComponent,
-    RejectLoanComponent
+    RejectLoanComponent,
+    DisburseComponent,
   ],
   entryComponents: [
     LoansAccountAddCollateralDialogComponent,

@@ -50,6 +50,8 @@ export class LoanActionButtonResolver implements Resolve<Object> {
             return this.loansService.getLoanAccountResource(loanId, 'guarantors');
         } else if (loanActionButton === 'create-guarantor') {
             return this.loansService.getGuarantorTemplate(loanId);
+        } else if (loanActionButton === 'disburse') {
+            return this.loansService.getLoanActionTemplate(loanId, 'disburse');
         } else {
             return undefined;
         }

@@ -15,5 +15,6 @@
     <mifosx-create-guarantor [dataObject]="actionButtonData" *ngIf="actions.create_guarantor"></mifosx-create-guarantor>
     <mifosx-disburse-loan-account [dataObject]="actionButtonData" *ngIf="actions.disburse_to_savings"></mifosx-disburse-loan-account>
     <mifosx-reject-loan *ngIf="actions.reject"></mifosx-reject-loan>
+    <mifosx-disburse [dataObject]="actionButtonData" *ngIf="actions.disburse"></mifosx-disburse>
   </mat-card>
 </div>
