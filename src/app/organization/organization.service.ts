@@ -226,11 +226,29 @@ export class OrganizationService {
   }
 
   /**
+   * @param {string} adhocQueryId Adhoc Query ID of adhoc query.
+   * @returns {Observable<any>} Adhoc query and template.
+   */
+  getAdhocQueryAndTemplate(adhocQueryId: string): Observable<any> {
+    const httpParams = new HttpParams().set('template', 'true');
+    return this.http.get(`/adhocquery/${adhocQueryId}`, { params: httpParams });
+  }
+
+  /**
    * @param {any} adhocQuery Adhoc Query to be created.
    * @returns {Observable<any>}
    */
   createAdhocQuery(adhocQuery: any): Observable<any> {
     return this.http.post('/adhocquery', adhocQuery);
+  }
+
+  /**
+   * @param {any} queryId Query Id
+   * @param {any} adhocQuery Adhoc Query to be created.
+   * @returns {Observable<any>}
+   */
+  updateAdhocQuery(queryId: any, adhocQuery: any): Observable<any> {
+    return this.http.put(`/adhocquery/${queryId}`, adhocQuery);
   }
 
   /**

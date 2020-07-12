@@ -51,6 +51,7 @@ import { AllocateCashComponent } from './tellers/cashiers/allocate-cash/allocate
 import { EditCashierComponent } from './tellers/cashiers/edit-cashier/edit-cashier.component';
 import { CreateCashierComponent } from './tellers/cashiers/create-cashier/create-cashier.component';
 import { EditHolidayComponent } from './holidays/edit-holiday/edit-holiday.component';
+import { EditAdhocQueryComponent } from './adhoc-query/edit-adhoc-query/edit-adhoc-query.component';
 
 /**
  * Organization Module
@@ -108,6 +109,7 @@ import { EditHolidayComponent } from './holidays/edit-holiday/edit-holiday.compo
     EditCashierComponent,
     CreateCashierComponent,
     EditHolidayComponent,
+    EditAdhocQueryComponent
   ]
 })
 export class OrganizationModule { }
