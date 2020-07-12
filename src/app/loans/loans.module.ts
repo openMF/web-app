@@ -49,6 +49,7 @@ import { CreateGuarantorComponent } from './loans-view/loan-account-actions/crea
 import { LoansAccountViewGuarantorDetailsDialogComponent } from './custom-dialog/loans-account-view-guarantor-details-dialog/loans-account-view-guarantor-details-dialog.component';
 import { LoansAccountAddCollateralDialogComponent } from './custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
 import { LoansConfirmationDialogBoxComponent } from './custom-dialog/loans-confirmation-dialog-box/loans-confirmation-dialog-box.component';
+import { DisburseLoanAccountComponent } from './loans-view/loan-account-actions/disburse-loan-account/disburse-loan-account.component';
 
 /**
  * Loans Module
@@ -96,6 +97,7 @@ import { LoansConfirmationDialogBoxComponent } from './custom-dialog/loans-confi
     CreateGuarantorComponent,
     LoansAccountViewGuarantorDetailsDialogComponent,
     LoansConfirmationDialogBoxComponent,
+    DisburseLoanAccountComponent
   ],
   entryComponents: [
     LoansAccountAddCollateralDialogComponent,
