@@ -284,6 +284,27 @@ export class OrganizationService {
     return this.http.get(`/tellers/${tellerId}/cashiers/${cashierId}/summaryandtransactions`, { params: httpParams });
   }
 
+  /** Get Cashier Transaction template.
+   * @param {string} tellerId Teller Id.
+   * @param {string} cashierId Cashier Id.
+   * @returns {Observable<any>} Cashier Transaction data.
+   */
+  getCashierTransactionTemplate(tellerId: string, cashierId: string): Observable<any> {
+    return this.http.get(`/tellers/${tellerId}/cashiers/${cashierId}/transactions/template`);
+  }
+
+  /**
+   * Settle Cash.
+   * @param {string} tellerId Teller Id.
+   * @param {string} cashierId Cashier Id.
+   * @param {string} cashData Cash Data.
+   * @returns {Observable<any>}
+   */
+  settleCash(tellerId: string, cashierId: string, cashData: any): Observable<any> {
+    const httpParams = new HttpParams().set('command', 'settle');
+    return this.http.post(`/tellers/${tellerId}/cashiers/${cashierId}/settle`, cashData, {params: httpParams});
+  }
+
   /**
    * @param {string} tellerId Teller ID of teller to be deleted.
    * @returns {Observable<any>}

@@ -74,6 +74,8 @@ import { OfficeDatatableResolver } from './offices/common-resolvers/office-datat
 import { OfficeDatatablesResolver } from './offices/common-resolvers/office-datatables.resolver';
 import { SmsCampaignResolver } from './sms-campaigns/common-resolvers/sms-campaign.resolver';
 import { ManageFundsResolver } from './manage-funds/manage-funds.resolver';
+import { SettleCashComponent } from './tellers/settle-cash/settle-cash.component';
+import { CashierTransactionTemplateResolver } from './tellers/teller-transaction-template.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -356,6 +358,14 @@ const routes: Routes = [
                           resolve: {
                             currencies: CurrenciesResolver
                           }
+                        },
+                        {
+                          path: 'settle',
+                          component: SettleCashComponent,
+                          data: { title: extract('Settle Cash'), breadcrumb: 'Settle Cash', routeParamBreadcrumb: false },
+                          resolve: {
+                            cashierTemplate: CashierTransactionTemplateResolver
+                          }
                         }
                       ]
                     }
@@ -499,7 +509,8 @@ const routes: Routes = [
     OfficeResolver,
     OfficeDatatableResolver,
     OfficeDatatablesResolver,
-    ManageFundsResolver
+    ManageFundsResolver,
+    CashierTransactionTemplateResolver
   ]
 })
 export class OrganizationRoutingModule { }
