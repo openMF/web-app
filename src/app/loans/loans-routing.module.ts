@@ -35,6 +35,7 @@ import { LoanDatatableResolver } from './common-resolvers/loan-datatable.resolve
 import { LoanActionButtonResolver } from './common-resolvers/loan-action-button.resolver';
 import { LoansAccountTemplateResolver } from './common-resolvers/loans-account-template.resolver';
 
+/** Loans Route. */
 const routes: Routes = [
   {
     path: '',
