@@ -48,6 +48,7 @@ import { SettleCashComponent } from './tellers/cashiers/settle-cash/settle-cash.
 import { EditCashierComponent } from './tellers/cashiers/edit-cashier/edit-cashier.component';
 import { CreateCashierComponent } from './tellers/cashiers/create-cashier/create-cashier.component';
 import { EditHolidayComponent } from './holidays/edit-holiday/edit-holiday.component';
+import { EditAdhocQueryComponent } from './adhoc-query/edit-adhoc-query/edit-adhoc-query.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -57,8 +58,8 @@ import { EmployeeResolver } from './employees/employee.resolver';
 import { EditEmployeeResolver } from './employees/edit-employee.resolver';
 import { CurrenciesResolver } from './currencies/currencies.resolver';
 import { SmsCampaignsResolver } from './sms-campaigns/common-resolvers/sms-campaigns.resolver';
-import { AdhocQueriesResolver } from './adhoc-query/adhoc-queries.resolver';
-import { AdhocQueryResolver } from './adhoc-query/adhoc-query.resolver';
+import { AdhocQueriesResolver } from './adhoc-query/common-resolvers/adhoc-queries.resolver';
+import { AdhocQueryResolver } from './adhoc-query/common-resolvers/adhoc-query.resolver';
 import { TellersResolver } from './tellers/common-resolvers/tellers.resolver';
 import { TellerResolver } from './tellers/common-resolvers/teller.resolver';
 import { PaymentTypesResolver } from './payment-types/payment-types.resolver';
@@ -82,6 +83,7 @@ import { ManageFundsResolver } from './manage-funds/manage-funds.resolver';
 import { CashierTransactionTemplateResolver } from './tellers/teller-transaction-template.resolver';
 import { EditCashierResolver } from './tellers/common-resolvers/edit-cashier.resolver';
 import { HolidayTemplateResolver } from './holidays/holiday-template.resolver';
+import { AdhocQueryAndTemplateResolver } from './adhoc-query/common-resolvers/adhoc-query-and-template.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -288,11 +290,24 @@ const routes: Routes = [
             },
             {
               path: ':id',
-              component: ViewAdhocQueryComponent,
-              data: { title: extract('View Adhoc Query'), routeResolveBreadcrumb: ['adhocQuery', 'name']},
-              resolve: {
-                adhocQuery: AdhocQueryResolver
-              }
+              data: { title: extract('View Adhoc Query'), routeParamBreadcrumb: 'id' },
+              children: [
+                {
+                  path: '',
+                  component: ViewAdhocQueryComponent,
+                  resolve: {
+                    adhocQuery: AdhocQueryResolver
+                  },
+                },
+                {
+                  path: 'edit',
+                  component: EditAdhocQueryComponent,
+                  data: { title: extract('Edit Adhoc Query'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    adhocQueryAndTemplate: AdhocQueryAndTemplateResolver
+                  }
+                }
+              ]
             }
           ]
         },
@@ -543,6 +558,7 @@ const routes: Routes = [
     WorkingDaysResolver,
     EditOfficeResolver,
     AdhocQueryTemplateResolver,
+    AdhocQueryAndTemplateResolver,
     LoanProvisioningCriteriasResolver,
     CashierResolver,
     CashiersResolver,
