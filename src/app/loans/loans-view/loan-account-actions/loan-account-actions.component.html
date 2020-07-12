@@ -16,5 +16,6 @@
     <mifosx-disburse-loan-account [dataObject]="actionButtonData" *ngIf="actions.disburse_to_savings"></mifosx-disburse-loan-account>
     <mifosx-reject-loan *ngIf="actions.reject"></mifosx-reject-loan>
     <mifosx-disburse [dataObject]="actionButtonData" *ngIf="actions.disburse"></mifosx-disburse>
+    <mifosx-withdrawn-by-client *ngIf="actions.withdrawn_by_client"></mifosx-withdrawn-by-client>
   </mat-card>
 </div>
