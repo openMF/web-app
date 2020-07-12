@@ -57,7 +57,7 @@ export class DisburseComponent implements OnInit {
   }
 
   /**
-   * Creates the create close form.
+   * Creates the disbursement loan form.
    */
   createDisbursementLoanForm() {
     this.disbursementLoanForm = this.formBuilder.group({
