@@ -1,0 +1,35 @@
+<div class="container">
+
+  <form [formGroup]="rejectLoanForm" (ngSubmit)="submit()">
+
+    <mat-card-content>
+
+      <div fxLayout="column">
+
+        <mat-form-field>
+          <mat-label>Rejected On</mat-label>
+          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="rejectedDatePicker" required formControlName="rejectedOnDate">
+          <mat-datepicker-toggle matSuffix [for]="rejectedDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #rejectedDatePicker></mat-datepicker>
+          <mat-error *ngIf="rejectLoanForm.controls.rejectedOnDate.hasError('required')">
+            Rejected Date <strong>is required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Note</mat-label>
+          <textarea matInput formControlName="note"></textarea>
+        </mat-form-field>
+
+      </div>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!rejectLoanForm.valid" *mifosxHasPermission="'REJECT_LOAN'" >Submit</button>
+      </mat-card-actions>
+
+    </mat-card-content>
+
+  </form>
+
+</div>
