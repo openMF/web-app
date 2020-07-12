@@ -43,6 +43,8 @@ import { ManageFundsComponent } from './manage-funds/manage-funds.component';
 import { ManageCurrenciesComponent } from './currencies/manage-currencies/manage-currencies.component';
 import { CashiersComponent } from './tellers/cashiers/cashiers.component';
 import { TransactionsComponent } from './tellers/transactions/transactions.component';
+import { AllocateCashComponent } from './tellers/allocate-cash/allocate-cash.component';
+import { SettleCashComponent } from './tellers/settle-cash/settle-cash.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -74,7 +76,6 @@ import { OfficeDatatableResolver } from './offices/common-resolvers/office-datat
 import { OfficeDatatablesResolver } from './offices/common-resolvers/office-datatables.resolver';
 import { SmsCampaignResolver } from './sms-campaigns/common-resolvers/sms-campaign.resolver';
 import { ManageFundsResolver } from './manage-funds/manage-funds.resolver';
-import { SettleCashComponent } from './tellers/settle-cash/settle-cash.component';
 import { CashierTransactionTemplateResolver } from './tellers/teller-transaction-template.resolver';
 
 /** Organization Routes */
@@ -363,6 +364,11 @@ const routes: Routes = [
                           path: 'settle',
                           component: SettleCashComponent,
                           data: { title: extract('Settle Cash'), breadcrumb: 'Settle Cash', routeParamBreadcrumb: false },
+                        },
+                        {
+                          path: 'allocate',
+                          component: AllocateCashComponent,
+                          data: { title: extract('Allocate Cash'), breadcrumb: 'Allocate Cash', routeParamBreadcrumb: false },
                           resolve: {
                             cashierTemplate: CashierTransactionTemplateResolver
                           }

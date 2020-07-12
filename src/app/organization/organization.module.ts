@@ -47,6 +47,7 @@ import { ManageCurrenciesComponent } from './currencies/manage-currencies/manage
 import { CashiersComponent } from './tellers/cashiers/cashiers.component';
 import { TransactionsComponent } from './tellers/transactions/transactions.component';
 import { SettleCashComponent } from './tellers/settle-cash/settle-cash.component';
+import { AllocateCashComponent } from './tellers/allocate-cash/allocate-cash.component';
 
 /**
  * Organization Module
@@ -99,7 +100,8 @@ import { SettleCashComponent } from './tellers/settle-cash/settle-cash.component
     ManageCurrenciesComponent,
     CashiersComponent,
     TransactionsComponent,
-    SettleCashComponent
+    SettleCashComponent,
+    AllocateCashComponent
   ]
 })
 export class OrganizationModule { }

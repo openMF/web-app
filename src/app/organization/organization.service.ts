@@ -295,6 +295,7 @@ export class OrganizationService {
 
   /**
    * Settle Cash.
+   * Allocate Cash.
    * @param {string} tellerId Teller Id.
    * @param {string} cashierId Cashier Id.
    * @param {string} cashData Cash Data.
@@ -303,6 +304,11 @@ export class OrganizationService {
   settleCash(tellerId: string, cashierId: string, cashData: any): Observable<any> {
     const httpParams = new HttpParams().set('command', 'settle');
     return this.http.post(`/tellers/${tellerId}/cashiers/${cashierId}/settle`, cashData, {params: httpParams});
+  }
+
+  allocateCash(tellerId: string, cashierId: string, cashData: any): Observable<any> {
+    const httpParams = new HttpParams().set('command', 'allocate');
+    return this.http.post(`/tellers/${tellerId}/cashiers/${cashierId}/allocate`, cashData, {params: httpParams});
   }
 
   /**
