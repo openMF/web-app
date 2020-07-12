@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material';
 /** Dialog Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
-import { LoansAccountAddCollateralDialogComponent } from 'app/loans/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
+import { LoansAccountAddCollateralDialogComponent } from 'app/loans/custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
 
 /** Custom Services */
 import { DatePipe } from '@angular/common';
@@ -211,7 +211,6 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
     });
     addCollateralDialogRef.afterClosed().subscribe((response: any) => {
       if (response.addCollateralForm) {
-        console.log('formdata: ', response.addCollateralForm);
         const collateralData = {
           type: response.addCollateralForm.value.type,
           value: response.addCollateralForm.value.value,

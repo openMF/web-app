@@ -26,6 +26,27 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}/transactions/template`, { params: httpParams });
   }
 
+  getLoanAccountResource(loanId: string, associations: string): Observable<any> {
+    const httpParams = new HttpParams().set('associations', associations);
+    return this.http.get(`/loans/${loanId}`, { params: httpParams });
+  }
+
+  getGuarantorTemplate(loanId: string): Observable<any> {
+    return this.http.get(`/loans/${loanId}/guarantors/template`);
+  }
+
+  createNewGuarantor(loanId: string, data: any): Observable<any> {
+    return this.http.post(`/loans/${loanId}/guarantors`, data);
+  }
+
+  deleteGuarantor(loanId: any, guarantorId: any): Observable<any> {
+    return this.http.delete(`/loans/${loanId}/guarantors/${guarantorId}`);
+  }
+
+  deleteLoanAccount(loanId: any): Observable<any> {
+    return this.http.delete(`/loans/${loanId}`);
+  }
+
   /**
    * Returns the loan template data with specific condition
    * @param loanId Loan Id
@@ -169,7 +190,7 @@ export class LoansService {
    * @param {any} data Data.
    * @returns {Observable<any>}
    */
-  loanActionButtons(loanId: string, data: any, command: any): Observable<any> {
+  loanActionButtons(loanId: any, command: any, data?: any): Observable<any> {
     const httpParams = new HttpParams().set('command', command);
     return this.http.post(`/loans/${loanId}`, data, {params: httpParams});
   }

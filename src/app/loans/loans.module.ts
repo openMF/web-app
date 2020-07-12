@@ -41,8 +41,14 @@ import { LoansAccountDetailsStepComponent } from './loans-account-stepper/loans-
 import { LoansAccountTermsStepComponent } from './loans-account-stepper/loans-account-terms-step/loans-account-terms-step.component';
 import { LoansAccountChargesStepComponent } from './loans-account-stepper/loans-account-charges-step/loans-account-charges-step.component';
 import { LoansAccountPreviewStepComponent } from './loans-account-stepper/loans-account-preview-step/loans-account-preview-step.component';
-import { LoansAccountAddCollateralDialogComponent } from './loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
 import { RecoveryRepaymentComponent } from './loans-view/loan-account-actions/recovery-repayment/recovery-repayment.component';
+import { ViewGuarantorsComponent } from './loans-view/loan-account-actions/view-guarantors/view-guarantors.component';
+import { CreateGuarantorComponent } from './loans-view/loan-account-actions/create-guarantor/create-guarantor.component';
+
+/** Dialog Components */
+import { LoansAccountViewGuarantorDetailsDialogComponent } from './custom-dialog/loans-account-view-guarantor-details-dialog/loans-account-view-guarantor-details-dialog.component';
+import { LoansAccountAddCollateralDialogComponent } from './custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
+import { LoansConfirmationDialogBoxComponent } from './custom-dialog/loans-confirmation-dialog-box/loans-confirmation-dialog-box.component';
 
 /**
  * Loans Module
@@ -86,9 +92,15 @@ import { RecoveryRepaymentComponent } from './loans-view/loan-account-actions/re
     LoansAccountPreviewStepComponent,
     LoansAccountAddCollateralDialogComponent,
     RecoveryRepaymentComponent,
+    ViewGuarantorsComponent,
+    CreateGuarantorComponent,
+    LoansAccountViewGuarantorDetailsDialogComponent,
+    LoansConfirmationDialogBoxComponent,
   ],
   entryComponents: [
-    LoansAccountAddCollateralDialogComponent
+    LoansAccountAddCollateralDialogComponent,
+    LoansAccountViewGuarantorDetailsDialogComponent,
+    LoansConfirmationDialogBoxComponent
   ],
   providers: [DatePipe],
 })

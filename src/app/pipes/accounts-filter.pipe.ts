@@ -69,6 +69,15 @@ export class AccountsFilterPipe implements PipeTransform {
           });
         }
       }
+      if (type === 'guarantor') {
+        if (status === false) {
+          accounts = accounts.filter((account: any) => {
+            return (account.status === true);
+          });
+        } else {
+          return accounts;
+        }
+      }
       return accounts;
     }
   }

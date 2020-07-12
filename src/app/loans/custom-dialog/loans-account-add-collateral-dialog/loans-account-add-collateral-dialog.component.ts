@@ -26,8 +26,6 @@ export class LoansAccountAddCollateralDialogComponent implements OnInit {
 
   ngOnInit() {
     this.dialogRef.updateSize('400px');
-    console.log('collateral: ', this.data.collateralTypeOptions);
-
     this.collateralTypeData = this.data.collateralTypeOptions;
   }
 
