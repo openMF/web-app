@@ -48,6 +48,7 @@ import { CashiersComponent } from './tellers/cashiers/cashiers.component';
 import { TransactionsComponent } from './tellers/transactions/transactions.component';
 import { SettleCashComponent } from './tellers/settle-cash/settle-cash.component';
 import { AllocateCashComponent } from './tellers/allocate-cash/allocate-cash.component';
+import { EditCashierComponent } from './tellers/edit-cashier/edit-cashier.component';
 
 /**
  * Organization Module
@@ -101,7 +102,8 @@ import { AllocateCashComponent } from './tellers/allocate-cash/allocate-cash.com
     CashiersComponent,
     TransactionsComponent,
     SettleCashComponent,
-    AllocateCashComponent
+    AllocateCashComponent,
+    EditCashierComponent
   ]
 })
 export class OrganizationModule { }

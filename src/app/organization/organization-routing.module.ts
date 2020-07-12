@@ -45,6 +45,7 @@ import { CashiersComponent } from './tellers/cashiers/cashiers.component';
 import { TransactionsComponent } from './tellers/transactions/transactions.component';
 import { AllocateCashComponent } from './tellers/allocate-cash/allocate-cash.component';
 import { SettleCashComponent } from './tellers/settle-cash/settle-cash.component';
+import { EditCashierComponent } from './tellers/edit-cashier/edit-cashier.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -77,6 +78,7 @@ import { OfficeDatatablesResolver } from './offices/common-resolvers/office-data
 import { SmsCampaignResolver } from './sms-campaigns/common-resolvers/sms-campaign.resolver';
 import { ManageFundsResolver } from './manage-funds/manage-funds.resolver';
 import { CashierTransactionTemplateResolver } from './tellers/teller-transaction-template.resolver';
+import { EditCashierResolver } from './tellers/edit-cashier/edit-cashier.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -332,7 +334,7 @@ const routes: Routes = [
                 },
                 {
                   path: 'cashiers',
-                  data: { title: extract('View Cashiers'), breadcrumb: 'View Cashiers', routeParamBreadcrumb: false },
+                  data: { title: extract('Cashiers'), breadcrumb: 'Cashiers', routeParamBreadcrumb: false },
                   children: [
                     {
                       path: '',
@@ -348,6 +350,7 @@ const routes: Routes = [
                         {
                           path: '',
                           component: ViewCashierComponent,
+                          data: { title: extract('View Cashier'), breadcrumb: 'View Cashier', routeParamBreadcrumb: false },
                           resolve: {
                             cashier: CashierResolver
                           }
@@ -371,6 +374,15 @@ const routes: Routes = [
                           data: { title: extract('Allocate Cash'), breadcrumb: 'Allocate Cash', routeParamBreadcrumb: false },
                           resolve: {
                             cashierTemplate: CashierTransactionTemplateResolver
+                          }
+                        },
+                        {
+                          path: 'edit',
+                          component: EditCashierComponent,
+                          data: { title: extract('Edit Cashier'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                          resolve: {
+                            cashier: CashierResolver,
+                            cashierTemplate: EditCashierResolver
                           }
                         }
                       ]
@@ -516,7 +528,8 @@ const routes: Routes = [
     OfficeDatatableResolver,
     OfficeDatatablesResolver,
     ManageFundsResolver,
-    CashierTransactionTemplateResolver
+    CashierTransactionTemplateResolver,
+    EditCashierResolver
   ]
 })
 export class OrganizationRoutingModule { }
