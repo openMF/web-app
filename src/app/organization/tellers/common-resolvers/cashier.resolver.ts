@@ -25,7 +25,7 @@ export class CashierResolver implements Resolve<Object> {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const cashierId = route.paramMap.get('id');
-    const tellerId = route.parent.paramMap.get('id');
+    const tellerId = route.parent.parent.paramMap.get('id');
     return this.organizationService.getCashier(tellerId, cashierId);
   }
 

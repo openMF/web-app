@@ -34,7 +34,7 @@ import { EditEmployeeComponent } from './employees/edit-employee/edit-employee.c
 import { CreateTellerComponent } from './tellers/create-teller/create-teller.component';
 import { EditTellerComponent } from './tellers/edit-teller/edit-teller.component';
 import { ViewLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/view-loan-provisioning-criteria/view-loan-provisioning-criteria.component';
-import { ViewCashierComponent } from './tellers/view-cashier/view-cashier.component';
+import { ViewCashierComponent } from './tellers/cashiers/view-cashier/view-cashier.component';
 import { ViewHolidaysComponent } from './holidays/view-holidays/view-holidays.component';
 import { ViewOfficeComponent } from './offices/view-office/view-office.component';
 import { GeneralTabComponent } from './offices/view-office/general-tab/general-tab.component';
@@ -45,10 +45,11 @@ import { ViewCampaignComponent } from './sms-campaigns/view-campaign/view-campai
 import { ManageFundsComponent } from './manage-funds/manage-funds.component';
 import { ManageCurrenciesComponent } from './currencies/manage-currencies/manage-currencies.component';
 import { CashiersComponent } from './tellers/cashiers/cashiers.component';
-import { TransactionsComponent } from './tellers/transactions/transactions.component';
-import { SettleCashComponent } from './tellers/settle-cash/settle-cash.component';
-import { AllocateCashComponent } from './tellers/allocate-cash/allocate-cash.component';
-import { EditCashierComponent } from './tellers/edit-cashier/edit-cashier.component';
+import { TransactionsComponent } from './tellers/cashiers/transactions/transactions.component';
+import { SettleCashComponent } from './tellers/cashiers/settle-cash/settle-cash.component';
+import { AllocateCashComponent } from './tellers/cashiers/allocate-cash/allocate-cash.component';
+import { EditCashierComponent } from './tellers/cashiers/edit-cashier/edit-cashier.component';
+import { CreateCashierComponent } from './tellers/cashiers/create-cashier/create-cashier.component';
 
 /**
  * Organization Module
@@ -103,7 +104,8 @@ import { EditCashierComponent } from './tellers/edit-cashier/edit-cashier.compon
     TransactionsComponent,
     SettleCashComponent,
     AllocateCashComponent,
-    EditCashierComponent
+    EditCashierComponent,
+    CreateCashierComponent
   ]
 })
 export class OrganizationModule { }

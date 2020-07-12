@@ -284,7 +284,8 @@ export class OrganizationService {
     return this.http.get(`/tellers/${tellerId}/cashiers/${cashierId}/summaryandtransactions`, { params: httpParams });
   }
 
-  /** Get Cashier Transaction template.
+  /**
+   * Get Cashier Transaction template.
    * @param {string} tellerId Teller Id.
    * @param {string} cashierId Cashier Id.
    * @returns {Observable<any>} Cashier Transaction data.
@@ -294,8 +295,24 @@ export class OrganizationService {
   }
 
   /**
-   * Settle Cash.
-   * Allocate Cash.
+   * @param {string} tellerId Teller Id
+   * @param {any} cashier Cashier
+   * @returns {Observable<any>}
+   */
+  createCashier(tellerId: string, cashier: any): Observable<any> {
+    return this.http.post(`/tellers/${tellerId}/cashiers`, cashier);
+  }
+
+  /**
+   * @param {string} tellerId Teller ID of teller.
+   * @param {string} cashierId Cashier ID of cashier
+   * @returns {Observable<any>}
+   */
+  deleteCashier(tellerId: string, cashierId: string): Observable<any> {
+    return this.http.delete(`/tellers/${tellerId}/cashiers/${cashierId}`);
+  }
+
+  /**
    * @param {string} tellerId Teller Id.
    * @param {string} cashierId Cashier Id.
    * @param {string} cashData Cash Data.
@@ -306,6 +323,12 @@ export class OrganizationService {
     return this.http.post(`/tellers/${tellerId}/cashiers/${cashierId}/settle`, cashData, {params: httpParams});
   }
 
+  /**
+   * @param {string} tellerId Teller Id.
+   * @param {string} cashierId Cashier Id.
+   * @param {string} cashData Cash Data.
+   * @returns {Observable<any>}
+   */
   allocateCash(tellerId: string, cashierId: string, cashData: any): Observable<any> {
     const httpParams = new HttpParams().set('command', 'allocate');
     return this.http.post(`/tellers/${tellerId}/cashiers/${cashierId}/allocate`, cashData, {params: httpParams});
@@ -459,7 +482,7 @@ export class OrganizationService {
    * @param holidayId Holiday Id to be deleted.
    * @returns {Observable<any>} Resource Id.
    */
-  deleteHoliday(holidayId: string) {
+  deleteHoliday(holidayId: string): Observable<any> {
     return this.http.delete(`/holidays/${holidayId}`);
   }
 

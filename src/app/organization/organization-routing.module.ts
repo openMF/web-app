@@ -33,7 +33,7 @@ import { HolidaysComponent } from './holidays/holidays.component';
 import { EditEmployeeComponent } from './employees/edit-employee/edit-employee.component';
 import { CreateTellerComponent } from './tellers/create-teller/create-teller.component';
 import { EditTellerComponent } from './tellers/edit-teller/edit-teller.component';
-import { ViewCashierComponent } from './tellers/view-cashier/view-cashier.component';
+import { ViewCashierComponent } from './tellers/cashiers/view-cashier/view-cashier.component';
 import { ViewHolidaysComponent } from './holidays/view-holidays/view-holidays.component';
 import { ViewOfficeComponent } from './offices/view-office/view-office.component';
 import { GeneralTabComponent } from './offices/view-office/general-tab/general-tab.component';
@@ -42,10 +42,11 @@ import { ViewCampaignComponent } from './sms-campaigns/view-campaign/view-campai
 import { ManageFundsComponent } from './manage-funds/manage-funds.component';
 import { ManageCurrenciesComponent } from './currencies/manage-currencies/manage-currencies.component';
 import { CashiersComponent } from './tellers/cashiers/cashiers.component';
-import { TransactionsComponent } from './tellers/transactions/transactions.component';
-import { AllocateCashComponent } from './tellers/allocate-cash/allocate-cash.component';
-import { SettleCashComponent } from './tellers/settle-cash/settle-cash.component';
-import { EditCashierComponent } from './tellers/edit-cashier/edit-cashier.component';
+import { TransactionsComponent } from './tellers/cashiers/transactions/transactions.component';
+import { AllocateCashComponent } from './tellers/cashiers/allocate-cash/allocate-cash.component';
+import { SettleCashComponent } from './tellers/cashiers/settle-cash/settle-cash.component';
+import { EditCashierComponent } from './tellers/cashiers/edit-cashier/edit-cashier.component';
+import { CreateCashierComponent } from './tellers/cashiers/create-cashier/create-cashier.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -78,7 +79,7 @@ import { OfficeDatatablesResolver } from './offices/common-resolvers/office-data
 import { SmsCampaignResolver } from './sms-campaigns/common-resolvers/sms-campaign.resolver';
 import { ManageFundsResolver } from './manage-funds/manage-funds.resolver';
 import { CashierTransactionTemplateResolver } from './tellers/teller-transaction-template.resolver';
-import { EditCashierResolver } from './tellers/edit-cashier/edit-cashier.resolver';
+import { EditCashierResolver } from './tellers/common-resolvers/edit-cashier.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -344,6 +345,14 @@ const routes: Routes = [
                       }
                     },
                     {
+                      path: 'create',
+                      data: { title: extract('Cashiers'), breadcrumb: 'Create Cashier' },
+                      component: CreateCashierComponent,
+                      resolve: {
+                        cashierTemplate: EditCashierResolver
+                      }
+                    },
+                    {
                       path: ':id',
                       data: { title: extract('View Cashier'),  routeParamBreadcrumb: 'id' },
                       children: [
@@ -353,6 +362,15 @@ const routes: Routes = [
                           data: { title: extract('View Cashier'), breadcrumb: 'View Cashier', routeParamBreadcrumb: false },
                           resolve: {
                             cashier: CashierResolver
+                          }
+                        },
+                        {
+                          path: 'edit',
+                          component: EditCashierComponent,
+                          data: { title: extract('Edit Cashier'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                          resolve: {
+                            cashier: CashierResolver,
+                            cashierTemplate: EditCashierResolver
                           }
                         },
                         {
@@ -367,6 +385,9 @@ const routes: Routes = [
                           path: 'settle',
                           component: SettleCashComponent,
                           data: { title: extract('Settle Cash'), breadcrumb: 'Settle Cash', routeParamBreadcrumb: false },
+                          resolve: {
+                            cashierTemplate: CashierTransactionTemplateResolver
+                          }
                         },
                         {
                           path: 'allocate',
@@ -374,15 +395,6 @@ const routes: Routes = [
                           data: { title: extract('Allocate Cash'), breadcrumb: 'Allocate Cash', routeParamBreadcrumb: false },
                           resolve: {
                             cashierTemplate: CashierTransactionTemplateResolver
-                          }
-                        },
-                        {
-                          path: 'edit',
-                          component: EditCashierComponent,
-                          data: { title: extract('Edit Cashier'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
-                          resolve: {
-                            cashier: CashierResolver,
-                            cashierTemplate: EditCashierResolver
                           }
                         }
                       ]
