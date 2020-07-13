@@ -8,7 +8,7 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
 
 /** Custom Services */
 import { ClientsService } from '../../clients.service';
-import { EditNotesDialogComponent } from '../edit-notes-dialog/edit-notes-dialog.component';
+import { EditNotesDialogComponent } from '../custom-dialogs/edit-notes-dialog/edit-notes-dialog.component';
 
 @Component({
   selector: 'mifosx-notes-tab',

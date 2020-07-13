@@ -7,7 +7,7 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 
 /** Custom Components */
-import { UploadDocumentDialogComponent } from '../upload-document-dialog/upload-document-dialog.component';
+import { UploadDocumentDialogComponent } from '../custom-dialogs/upload-document-dialog/upload-document-dialog.component';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 

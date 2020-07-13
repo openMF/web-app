@@ -19,6 +19,7 @@ import { NotesTabComponent } from './clients-view/notes-tab/notes-tab.component'
 import { DocumentsTabComponent } from './clients-view/documents-tab/documents-tab.component';
 import { DatatableTabComponent } from './clients-view/datatable-tab/datatable-tab.component';
 import { AddressTabComponent } from './clients-view/address-tab/address-tab.component';
+import { ClientActionsComponent } from './clients-view/client-actions/client-actions.component';
 
 /** Custom Resolvers */
 import { ClientViewResolver } from './common-resolvers/client-view.resolver';
@@ -39,6 +40,7 @@ import { ClientAddressFieldConfigurationResolver } from './common-resolvers/clie
 import { ClientAddressTemplateResolver } from './common-resolvers/client-address-template.resolver';
 import { ChargesOverviewComponent } from './clients-view/charges-overview/charges-overview.component';
 import { ClientChargeOverviewResolver } from './clients-view/charges-overview/charge-overview.resolver';
+import { ClientActionsResolver } from './common-resolvers/client-actions.resolver';
 
 const routes: Routes = [
   Route.withShell([{
@@ -169,6 +171,14 @@ const routes: Routes = [
         data: { title: extract('Clients View'), routeParamBreadcrumb: 'clientId' },
         children: [
           {
+            path: 'actions/:name',
+            data: { title: extract('Client Actions'), routeParamBreadcrumb: 'name' },
+            component: ClientActionsComponent,
+            resolve: {
+              clientActionData: ClientActionsResolver
+            }
+          },
+          {
             path: 'loans',
             data: { title: extract('Loans'), breadcrumb: 'loans', routeParamBreadcrumb: false },
             loadChildren: '../loans/loans.module#LoansModule'
@@ -216,7 +226,8 @@ const routes: Routes = [
     ClientIdentifierTemplateResolver,
     ClientAddressFieldConfigurationResolver,
     ClientAddressTemplateResolver,
-    ClientChargeOverviewResolver
+    ClientChargeOverviewResolver,
+    ClientActionsResolver
   ]
 })
 export class ClientsRoutingModule { }
