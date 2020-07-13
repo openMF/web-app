@@ -45,6 +45,7 @@
         <button mat-menu-item (click)="doAction('Close')">Close</button>
         <button mat-menu-item (click)="doAction('Survey')"> Survey</button>
         <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item (click)="doAction('Reject')">Reject</button></span>
+        <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item (click)="doAction('Delete')">Delete</button></span>
       </mat-menu>
     </mat-card-actions>
   </mat-card-header>

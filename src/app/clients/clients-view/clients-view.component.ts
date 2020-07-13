@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 
 /** Custom Dialogs */
 import { UnassignStaffDialogComponent } from './custom-dialogs/unassign-staff-dialog/unassign-staff-dialog.component';
+import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
@@ -59,6 +60,8 @@ export class ClientsViewComponent implements OnInit {
        case 'Unassign Staff':
         this.unassignStaff();
         break;
+      case 'Delete':
+        this.deleteClient();
     }
   }
 
@@ -74,7 +77,23 @@ export class ClientsViewComponent implements OnInit {
   }
 
   /**
-   * Unassign's the group's staff.
+   * Deletes the client
+   */
+  private deleteClient() {
+    const deleteClientDialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { deleteContext: `client with id: ${this.clientViewData.id}` }
+    });
+    deleteClientDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.delete) {
+        this.clientsService.deleteClient(this.clientViewData.id).subscribe(() => {
+          this.router.navigate(['/clients'], { relativeTo: this.route });
+        });
+      }
+    });
+  }
+
+  /**
+   * Unassign's the client's staff.
    */
   private unassignStaff() {
     const unAssignStaffDialogRef = this.dialog.open(UnassignStaffDialogComponent);
