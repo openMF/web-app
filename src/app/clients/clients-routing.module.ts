@@ -20,6 +20,7 @@ import { DocumentsTabComponent } from './clients-view/documents-tab/documents-ta
 import { DatatableTabComponent } from './clients-view/datatable-tab/datatable-tab.component';
 import { AddressTabComponent } from './clients-view/address-tab/address-tab.component';
 import { ClientActionsComponent } from './clients-view/client-actions/client-actions.component';
+import { TakeSurveyComponent } from './clients-view/client-actions/view-survey/take-survey/take-survey.component';
 
 /** Custom Resolvers */
 import { ClientViewResolver } from './common-resolvers/client-view.resolver';
@@ -41,6 +42,7 @@ import { ClientAddressTemplateResolver } from './common-resolvers/client-address
 import { ChargesOverviewComponent } from './clients-view/charges-overview/charges-overview.component';
 import { ClientChargeOverviewResolver } from './clients-view/charges-overview/charge-overview.resolver';
 import { ClientActionsResolver } from './common-resolvers/client-actions.resolver';
+import { TakeSurveyResolver } from './common-resolvers/take-survey.resolver';
 
 const routes: Routes = [
   Route.withShell([{
@@ -173,10 +175,23 @@ const routes: Routes = [
           {
             path: 'actions/:name',
             data: { title: extract('Client Actions'), routeParamBreadcrumb: 'name' },
-            component: ClientActionsComponent,
-            resolve: {
-              clientActionData: ClientActionsResolver
-            }
+            children: [
+              {
+                path: '',
+                component: ClientActionsComponent,
+                resolve: {
+                  clientActionData: ClientActionsResolver
+                }
+              },
+              {
+                path: 'Take-Survey',
+                component: TakeSurveyComponent,
+                data: { title: extract('Take Survey'), breadcrumb: 'Take Survey', routeParamBreadcrumb: 'Survey' },
+                resolve: {
+                  allSurveysData: TakeSurveyResolver
+                }
+              },
+            ]
           },
           {
             path: 'loans',
@@ -227,7 +242,8 @@ const routes: Routes = [
     ClientAddressFieldConfigurationResolver,
     ClientAddressTemplateResolver,
     ClientChargeOverviewResolver,
-    ClientActionsResolver
+    ClientActionsResolver,
+    TakeSurveyResolver
   ]
 })
 export class ClientsRoutingModule { }

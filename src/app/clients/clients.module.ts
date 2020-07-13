@@ -33,6 +33,7 @@ import { ViewSurveyComponent } from './clients-view/client-actions/view-survey/v
 import { RejectClientComponent } from './clients-view/client-actions/reject-client/reject-client.component';
 import { ActivateClientComponent } from './clients-view/client-actions/activate-client/activate-client.component';
 import { WithdrawClientComponent } from './clients-view/client-actions/withdraw-client/withdraw-client.component';
+import { TakeSurveyComponent } from './clients-view/client-actions/view-survey/take-survey/take-survey.component';
 
 
 /**
@@ -71,7 +72,8 @@ import { WithdrawClientComponent } from './clients-view/client-actions/withdraw-
     ViewSurveyComponent,
     RejectClientComponent,
     ActivateClientComponent,
-    WithdrawClientComponent
+    WithdrawClientComponent,
+    TakeSurveyComponent
   ],
   entryComponents: [
     UploadDocumentDialogComponent,
