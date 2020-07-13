@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material';
 import { ClientsService } from '../../clients.service';
 
 /** Custom Components */
-import { UploadDocumentDialogComponent } from '../upload-document-dialog/upload-document-dialog.component';
+import { UploadDocumentDialogComponent } from '../custom-dialogs/upload-document-dialog/upload-document-dialog.component';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 
 

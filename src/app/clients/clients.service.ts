@@ -45,6 +45,13 @@ export class ClientsService {
     return this.http.get(`/clients/${clientId}`);
   }
 
+  getClientDataAndTemplate(clientId: string) {
+    const httpParams = new HttpParams()
+        .set('template', 'true')
+        .set('staffInSelectedOfficeOnly', 'true');
+    return this.http.get(`/clients/${clientId}`, { params: httpParams });
+  }
+
   getClientDatatables() {
     const httpParams = new HttpParams().set('apptable', 'm_client');
     return this.http.get(`/datatables`, { params: httpParams });
@@ -205,4 +212,10 @@ export class ClientsService {
   editClientAddress(clientId: string, addressTypeId: string, addressData: any) {
     return this.http.put(`/client/${clientId}/addresses?type=${addressTypeId}`, addressData);
   }
+
+  executeClientCommand(clientId: string, command: string, data: any): Observable<any> {
+    const httpParams = new HttpParams().set('command', command);
+    return this.http.post(`/clients/${clientId}`, data, { params: httpParams });
+  }
+
 }
