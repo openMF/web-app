@@ -29,6 +29,7 @@ export class ClientActionsResolver implements Resolve<Object> {
     const clientId = route.paramMap.get('clientId') || route.parent.parent.paramMap.get('clientId');
     switch (actionName) {
       case 'Assign Staff':
+      case 'Update Default Savings':
         return this.clientsService.getClientDataAndTemplate(clientId);
       case 'Survey':
         return this.clientsService.getSurveys(clientId);

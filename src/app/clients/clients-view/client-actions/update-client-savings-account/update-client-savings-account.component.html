@@ -1,0 +1,36 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="clientSavingsAccountForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Default Savings Account</mat-label>
+            <mat-select formControlName="savingsAccountId">
+              <mat-option *ngFor="let account of savingsAccounts" [value]="account.id">
+                {{ account.accountNo }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="clientSavingsAccountForm.controls.savingsAccountId.hasError('required')">
+              Account is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!clientSavingsAccountForm.valid">Confirm</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>
