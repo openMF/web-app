@@ -9,10 +9,10 @@ import { Observable } from 'rxjs';
 import { ProductsService } from '../products.service';
 
 /**
- * Loan Product data resolver.
+ * Recurring Deposit Product data resolver.
  */
 @Injectable()
-export class LoanProductResolver implements Resolve<Object> {
+export class RecurringDepositProductResolver implements Resolve<Object> {
 
   /**
    * @param {ProductsService} productsService Products service.
@@ -20,12 +20,12 @@ export class LoanProductResolver implements Resolve<Object> {
   constructor(private productsService: ProductsService) { }
 
   /**
-   * Returns the loan product data.
+   * Returns the recurring deposit product data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const id = route.paramMap.get('id');
-    return this.productsService.getLoanProduct(id);
+    return this.productsService.getRecurringDepositProduct(id);
   }
 
 }

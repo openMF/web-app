@@ -102,6 +102,20 @@ export class ProductsService {
   }
 
   /**
+   * @param {string} recurringDepositProductId Product Id of recurring Deposit
+   * @param {boolean} template Template
+   * @return {Observable<any>} Recurring Deposit Product Details
+   */
+  getRecurringDepositProduct(recurringDepositProductId: string, template: boolean = false): Observable<any> {
+    const httpParams = new HttpParams().set('template', template.toString());
+    return this.http.get(`/recurringdepositproducts/${recurringDepositProductId}`, { params: httpParams });
+  }
+
+  getRecurringDepositProductsTemplate(): Observable<any> {
+    return this.http.get('/recurringdepositproducts/template');
+  }
+
+  /**
    * @returns {Observable<any>} Charges data.
    */
   getCharges(): Observable<any> {
@@ -252,5 +266,14 @@ export class ProductsService {
    */
   getProductMix(productId: string): Observable<any> {
     return this.http.get(`/loanproducts/${productId}/productmix`);
+  }
+
+  /*
+   * @param {string} productId Product ID
+   * @returns {Observable<any>}
+   */
+  getAllInterestRateCharts(productId: string): Observable<any> {
+    const httpParams = new HttpParams().set('productId', productId);
+    return this.http.get(`/interestratecharts`, {params: httpParams});
   }
 }
