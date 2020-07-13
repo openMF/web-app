@@ -36,6 +36,7 @@ import { WithdrawClientComponent } from './clients-view/client-actions/withdraw-
 import { TakeSurveyComponent } from './clients-view/client-actions/view-survey/take-survey/take-survey.component';
 import { UpdateClientSavingsAccountComponent } from './clients-view/client-actions/update-client-savings-account/update-client-savings-account.component';
 import { TransferClientComponent } from './clients-view/client-actions/transfer-client/transfer-client.component';
+import { UndoClientTransferComponent } from './clients-view/client-actions/undo-client-transfer/undo-client-transfer.component';
 
 
 /**
@@ -77,7 +78,8 @@ import { TransferClientComponent } from './clients-view/client-actions/transfer-
     WithdrawClientComponent,
     TakeSurveyComponent,
     UpdateClientSavingsAccountComponent,
-    TransferClientComponent
+    TransferClientComponent,
+    UndoClientTransferComponent
   ],
   entryComponents: [
     UploadDocumentDialogComponent,

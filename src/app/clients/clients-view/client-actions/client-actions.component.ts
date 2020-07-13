@@ -21,6 +21,9 @@ export class ClientActionsComponent {
     'Withdraw': boolean
     'Update Default Savings': boolean
     'Transfer Client': boolean
+    'Undo Transfer': boolean
+    'Accept Transfer': boolean
+    'Reject Transfer': boolean
   } = {
     'Assign Staff': false,
     'Close': false,
@@ -28,7 +31,10 @@ export class ClientActionsComponent {
     'Survey': false,
     'Withdraw': false,
     'Update Default Savings': false,
-    'Transfer Client': false
+    'Transfer Client': false,
+    'Undo Transfer': false,
+    'Accept Transfer': false,
+    'Reject Transfer': false
   };
 
   /**

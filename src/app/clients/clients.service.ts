@@ -220,6 +220,10 @@ export class ClientsService {
     return this.http.get(`/clients/template`, { params: httpParams });
   }
 
+  getClientTransferProposalDate(clientId: any): Observable<any> {
+    return this.http.get(`/clients/${clientId}/transferproposaldate`);
+  }
+
   /**
    * @returns {Observable<any>} Offices data
    */
