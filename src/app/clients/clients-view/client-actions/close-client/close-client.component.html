@@ -1,0 +1,46 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="closeClientForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Closed On Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closureDatePicker" required formControlName="closureDate">
+            <mat-datepicker-toggle matSuffix [for]="closureDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #closureDatePicker></mat-datepicker>
+            <mat-error *ngIf="closeClientForm.controls.closureDate.hasError('required')">
+              Closed On Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Closure Reason</mat-label>
+            <mat-select formControlName="closureReasonId">
+              <mat-option *ngFor="let reason of closureData" [value]="reason.id">
+                {{ reason.description }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="closeClientForm.controls.closureReasonId.hasError('required')">
+              Closure Reason is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+        <button mat-raised-button color="warn" [disabled]="!closeClientForm.valid">Confirm</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>
