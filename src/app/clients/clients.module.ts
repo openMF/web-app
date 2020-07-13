@@ -28,6 +28,7 @@ import { ChargesOverviewComponent } from './clients-view/charges-overview/charge
 import { ClientActionsComponent } from './clients-view/client-actions/client-actions.component';
 import { ClientAssignStaffComponent } from './clients-view/client-actions/client-assign-staff/client-assign-staff.component';
 import { UnassignStaffDialogComponent } from './clients-view/custom-dialogs/unassign-staff-dialog/unassign-staff-dialog.component';
+import { CloseClientComponent } from './clients-view/client-actions/close-client/close-client.component';
 
 
 /**
@@ -61,7 +62,8 @@ import { UnassignStaffDialogComponent } from './clients-view/custom-dialogs/unas
     ChargesOverviewComponent,
     ClientActionsComponent,
     ClientAssignStaffComponent,
-    UnassignStaffDialogComponent
+    UnassignStaffDialogComponent,
+    CloseClientComponent
   ],
   entryComponents: [
     UploadDocumentDialogComponent,
