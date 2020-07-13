@@ -34,6 +34,8 @@ export class ClientActionsResolver implements Resolve<Object> {
         return this.clientsService.getClientCommandTemplate('close');
       case 'Survey':
         return this.clientsService.getSurveys(clientId);
+      case 'Reject':
+        return this.clientsService.getClientCommandTemplate('reject');
       default:
         return undefined;
     }

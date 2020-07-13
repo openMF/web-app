@@ -30,6 +30,8 @@ import { ClientAssignStaffComponent } from './clients-view/client-actions/client
 import { UnassignStaffDialogComponent } from './clients-view/custom-dialogs/unassign-staff-dialog/unassign-staff-dialog.component';
 import { CloseClientComponent } from './clients-view/client-actions/close-client/close-client.component';
 import { ViewSurveyComponent } from './clients-view/client-actions/view-survey/view-survey.component';
+import { RejectClientComponent } from './clients-view/client-actions/reject-client/reject-client.component';
+
 
 /**
  * Clients Module
@@ -64,7 +66,8 @@ import { ViewSurveyComponent } from './clients-view/client-actions/view-survey/v
     ClientAssignStaffComponent,
     UnassignStaffDialogComponent,
     CloseClientComponent,
-    ViewSurveyComponent
+    ViewSurveyComponent,
+    RejectClientComponent
   ],
   entryComponents: [
     UploadDocumentDialogComponent,

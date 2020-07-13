@@ -15,11 +15,13 @@ export class ClientActionsComponent {
   /** Flag object to store possible actions and render appropriate UI to the user */
   actions: {
     'Assign Staff': boolean
-    'Close': boolean,
+    'Close': boolean
+    'Reject': boolean
     'Survey': boolean
   } = {
     'Assign Staff': false,
     'Close': false,
+    'Reject': false,
     'Survey': false
   };
 
