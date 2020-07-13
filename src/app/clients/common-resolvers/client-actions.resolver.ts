@@ -39,6 +39,8 @@ export class ClientActionsResolver implements Resolve<Object> {
         return this.clientsService.getClientCommandTemplate('reject');
       case 'Withdraw':
         return this.clientsService.getClientCommandTemplate('withdraw');
+      case 'Transfer Client':
+        return this.clientsService.getOffices();
       default:
         return undefined;
     }

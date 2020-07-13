@@ -35,6 +35,7 @@ import { ActivateClientComponent } from './clients-view/client-actions/activate-
 import { WithdrawClientComponent } from './clients-view/client-actions/withdraw-client/withdraw-client.component';
 import { TakeSurveyComponent } from './clients-view/client-actions/view-survey/take-survey/take-survey.component';
 import { UpdateClientSavingsAccountComponent } from './clients-view/client-actions/update-client-savings-account/update-client-savings-account.component';
+import { TransferClientComponent } from './clients-view/client-actions/transfer-client/transfer-client.component';
 
 
 /**
@@ -75,7 +76,8 @@ import { UpdateClientSavingsAccountComponent } from './clients-view/client-actio
     ActivateClientComponent,
     WithdrawClientComponent,
     TakeSurveyComponent,
-    UpdateClientSavingsAccountComponent
+    UpdateClientSavingsAccountComponent,
+    TransferClientComponent
   ],
   entryComponents: [
     UploadDocumentDialogComponent,
