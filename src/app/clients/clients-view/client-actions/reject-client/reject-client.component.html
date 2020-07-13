@@ -1,0 +1,46 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="rejectClientForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Rejection Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="rejectionDatePicker" required formControlName="rejectionDate">
+            <mat-datepicker-toggle matSuffix [for]="rejectionDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #rejectionDatePicker></mat-datepicker>
+            <mat-error *ngIf="rejectClientForm.controls.rejectionDate.hasError('required')">
+              Rejection Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Rejection Reason</mat-label>
+            <mat-select formControlName="rejectionReasonId">
+              <mat-option *ngFor="let reason of rejectionData" [value]="reason.id">
+                {{ reason.description }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="rejectClientForm.controls.rejectionReasonId.hasError('required')">
+              Rejection Reason is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+        <button mat-raised-button color="warn" [disabled]="!rejectClientForm.valid">Confirm</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>
