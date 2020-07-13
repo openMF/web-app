@@ -18,11 +18,13 @@ export class ClientActionsComponent {
     'Close': boolean
     'Reject': boolean
     'Survey': boolean
+    'Withdraw': boolean
   } = {
     'Assign Staff': false,
     'Close': false,
     'Reject': false,
-    'Survey': false
+    'Survey': false,
+    'Withdraw': false
   };
 
   /**

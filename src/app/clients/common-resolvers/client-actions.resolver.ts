@@ -30,12 +30,14 @@ export class ClientActionsResolver implements Resolve<Object> {
     switch (actionName) {
       case 'Assign Staff':
         return this.clientsService.getClientDataAndTemplate(clientId);
-      case 'Close':
-        return this.clientsService.getClientCommandTemplate('close');
       case 'Survey':
         return this.clientsService.getSurveys(clientId);
+      case 'Close':
+        return this.clientsService.getClientCommandTemplate('close');
       case 'Reject':
         return this.clientsService.getClientCommandTemplate('reject');
+      case 'Withdraw':
+        return this.clientsService.getClientCommandTemplate('withdraw');
       default:
         return undefined;
     }

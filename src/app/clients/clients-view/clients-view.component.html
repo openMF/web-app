@@ -42,9 +42,10 @@
         <button mat-menu-item [routerLink]="['fixed-deposits-accounts', 'create-fixed-deposit-account']">New Fixed Deposits Account</button>
         <span *ngIf="!clientViewData.staffId"><button mat-menu-item (click)="doAction('Assign Staff')">Assign Staff</button></span>
         <span *ngIf="clientViewData.staffId"><button mat-menu-item (click)="doAction('Unassign Staff')">Unassign Staff</button></span>
-        <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item (click)="doAction('Activate')">Activate</button></span>
         <button mat-menu-item (click)="doAction('Close')">Close</button>
         <button mat-menu-item (click)="doAction('Survey')"> Survey</button>
+        <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item (click)="doAction('Activate')">Activate</button></span>
+        <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item (click)="doAction('Withdraw')">Withdraw</button></span>
         <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item (click)="doAction('Reject')">Reject</button></span>
         <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item (click)="doAction('Delete')">Delete</button></span>
       </mat-menu>
