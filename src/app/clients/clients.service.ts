@@ -221,6 +221,13 @@ export class ClientsService {
   }
 
   /**
+   * @returns {Observable<any>} Offices data
+   */
+  getOffices(): Observable<any> {
+    return this.http.get('/offices');
+  }
+
+  /**
    * returns the list of survey data of the particular Client
    * @param clientId
    */
