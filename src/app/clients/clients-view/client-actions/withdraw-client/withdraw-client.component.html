@@ -1,0 +1,46 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="withdrawClientForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Withdrawal Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="withdrawalDatePicker" required formControlName="withdrawalDate">
+            <mat-datepicker-toggle matSuffix [for]="withdrawalDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #withdrawalDatePicker></mat-datepicker>
+            <mat-error *ngIf="withdrawClientForm.controls.withdrawalDate.hasError('required')">
+              Withdrawal Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Withdrawal Reason</mat-label>
+            <mat-select formControlName="withdrawalReasonId">
+              <mat-option *ngFor="let reason of withdrawalData" [value]="reason.id">
+                {{ reason.description }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="withdrawClientForm.controls.withdrawalReasonId.hasError('required')">
+              Withdrawal Reason is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!withdrawClientForm.valid">Confirm</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>

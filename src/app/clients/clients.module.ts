@@ -32,6 +32,7 @@ import { CloseClientComponent } from './clients-view/client-actions/close-client
 import { ViewSurveyComponent } from './clients-view/client-actions/view-survey/view-survey.component';
 import { RejectClientComponent } from './clients-view/client-actions/reject-client/reject-client.component';
 import { ActivateClientComponent } from './clients-view/client-actions/activate-client/activate-client.component';
+import { WithdrawClientComponent } from './clients-view/client-actions/withdraw-client/withdraw-client.component';
 
 
 /**
@@ -69,7 +70,8 @@ import { ActivateClientComponent } from './clients-view/client-actions/activate-
     CloseClientComponent,
     ViewSurveyComponent,
     RejectClientComponent,
-    ActivateClientComponent
+    ActivateClientComponent,
+    WithdrawClientComponent
   ],
   entryComponents: [
     UploadDocumentDialogComponent,
