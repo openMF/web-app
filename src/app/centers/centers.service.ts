@@ -209,4 +209,8 @@ export class CentersService {
       return this.http.get(`/groups/${centerId}`, { params: httpParams });
     }
 
+    deleteCenter(centerId: any): Observable<any> {
+      return this.http.delete(`/centers/${centerId}`);
+    }
+
 }
