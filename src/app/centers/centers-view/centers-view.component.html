@@ -31,23 +31,29 @@
                 {{(centerViewData.activationDate)?(centerViewData.activationDate|date) :'Not Activated'}}<br />
               </p>
             </div>
-            <div fxFlex="50%">
-              <p class="meetingDetails">
-                Next Meeting On: 
-                <span *ngIf="meetingData"> 
-                  {{centerViewData.collectionMeetingCalendar.nextTenRecurringDates[0]|date}} 
-                  <span *ngIf="centerViewData.collectionMeetingCalendar">
-                    <a href="#" *mifosxHasPermission="'UPDATE_MEETING'"> <i class="fa fa-edit" style="color:#ffffff; padding: 5px;"></i> </a>
-                  </span> <br/>
-                  <span *ngIf="centerViewData.collectionMeetingCalendar.humanReadable"> Meeting Frequency: {{centerViewData.collectionMeetingCalendar.humanReadable}} </span>
-                </span>
-                <span *ngIf="!(meetingData)"> Unassigned </span><br/>
-                <span *ngIf="centerViewData.status.value === 'Closed'"> Closed Date: {{centerViewData.timeline.closedOnDate|date}}</span>
-              </p>
-            </div>
           </div>
         </mat-card-subtitle>
       </div>
+
+      <div class="center-meeting" fxLayoutAlign="start start">
+        <div *ngIf="centerViewData.collectionMeetingCalendar; else unassigned">
+          <p>
+             Next Meeting on: {{centerViewData.collectionMeetingCalendar?.nextTenRecurringDates[0] | date}}   
+             <i class="fa fa-edit"></i><br/>
+             Meeting Frequency: {{centerViewData.collectionMeetingCalendar?.frequency.value | lowercase}}
+          </p>
+        </div>
+        <ng-template #unassigned>
+          <div>
+            <p>
+              Next Meeting on: Unassigned
+              <i class="fa fa-calendar"></i><br/>
+              Meeting Frequency: N/A
+          </p>
+        </div>
+        </ng-template>
+      </div>
+
     </mat-card-title-group>
     <mat-card-actions class="center-actions" *ngIf="!(centerViewData.status.value==='Closed')">
       <span *ngIf="!(centerViewData.status.value=='Active')">
@@ -75,7 +81,7 @@
         </span>
         <button mat-menu-item *mifosxHasPermission="'CLOSE_CENTER'" (click)="doAction('Close')"> Close </button>
         <span *ngIf="centerViewData.status.value==='Active' && !(centerViewData.collectionMeetingCalendar)">
-          <button mat-menu-item *mifosxHasPermission="'CREATE_MEETING'"> Attach Meeting </button>
+          <button mat-menu-item *mifosxHasPermission="'CREATE_MEETING'" (click)="doAction('Attach Meeting')"> Attach Meeting </button>
         </span>
         <button mat-menu-item *mifosxHasPermission="'READ_Staff Assignment History'" > Staff Assignment History </button>
       </mat-menu>

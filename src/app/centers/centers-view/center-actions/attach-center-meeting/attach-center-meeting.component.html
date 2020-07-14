@@ -1,0 +1,74 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="centerMeetingForm">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Meeting Start Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="startDatePicker" required formControlName="startDate">
+            <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #startDatePicker></mat-datepicker>
+            <mat-error *ngIf="centerMeetingForm.controls.startDate.hasError('required')">
+              Start Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-checkbox class="m-t-10 m-b-10" labelPosition="before" formControlName="repeating">
+            Repeats?
+          </mat-checkbox>
+
+          <mat-form-field *ngIf="centerMeetingForm.contains('frequency')">
+            <mat-label>Repetition Frequency</mat-label>
+            <mat-select formControlName="frequency">
+              <mat-option *ngFor="let option of frequencyOptions" [value]="option.id">
+                {{ option.value }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="centerMeetingForm.controls.frequency.hasError('repeatsOnDay')">
+              Repetition Frequency is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="centerMeetingForm.contains('interval')">
+            <mat-label>Repetition Interval</mat-label>
+            <mat-select formControlName="interval">
+              <mat-option *ngFor="let interval of repetitionIntervals" [value]="interval">
+                {{ interval }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="centerMeetingForm.controls.interval.hasError('repeatsOnDay')">
+              Repeition Interval is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="centerMeetingForm.contains('repeatsOnDay')">
+          <mat-label>Repeats on Day</mat-label>
+          <mat-select formControlName="repeatsOnDay" required>
+            <mat-option *ngFor="let day of repeatsOnDays" [value]="day.id">
+              {{ day.value }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="centerMeetingForm.controls.repeatsOnDay.hasError('repeatsOnDay')">
+            At least <strong>one</strong> day must be selected
+          </mat-error>
+        </mat-form-field>
+  
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!centerMeetingForm.valid" (click)="submit()">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>

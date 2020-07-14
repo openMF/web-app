@@ -17,12 +17,14 @@ export class CenterActionsComponent {
     'Activate': boolean,
     'Assign Staff': boolean,
     'Close': boolean,
-    'Attendance': boolean
+    'Attendance': boolean,
+    'Attach Meeting': boolean
   } = {
     'Activate': false,
     'Assign Staff': false,
     'Close': false,
-    'Attendance': false
+    'Attendance': false,
+    'Attach Meeting': false
   };
 
   /**
