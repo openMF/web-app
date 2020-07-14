@@ -30,6 +30,8 @@ export class CenterActionsResolver implements Resolve<Object> {
     switch (actionName) {
       case 'Assign Staff':
         return this.centersService.getGroupStaffData(centerId);
+      case 'Attendance':
+        return this.centersService.getCentersData(centerId);
       default:
         return undefined;
     }

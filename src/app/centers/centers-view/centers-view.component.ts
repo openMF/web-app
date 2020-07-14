@@ -59,6 +59,7 @@ export class CentersViewComponent implements OnInit {
       case 'Activate':
       case 'Assign Staff':
       case 'Close':
+      case 'Attendance':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
       case 'Unassign Staff':

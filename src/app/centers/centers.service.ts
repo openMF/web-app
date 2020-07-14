@@ -213,4 +213,19 @@ export class CentersService {
       return this.http.delete(`/centers/${centerId}`);
     }
 
+    getCentersData(centerId: string) {
+      const httpParams = new HttpParams().set('associations', 'groupMembers,collectionMeetingCalendar');
+      return this.http.get(`/centers/${centerId}`, {params: httpParams});
+    }
+
+    getMeetingsTemplate(centerId: any, calendarId: any): Observable<any> {
+      const httpParams = new HttpParams().set('calenderId', calendarId);
+      return this.http.get(`/centers/${centerId}/meetings/template`);
+    }
+
+    assignCenterAttendance(centerId: any, calendarId: any, data: any): Observable<any> {
+      const httpParams = new HttpParams().set('calenderId', calendarId);
+      return this.http.post(`/centers/${centerId}/meetings`, data, {params: httpParams});
+    }
+
 }
