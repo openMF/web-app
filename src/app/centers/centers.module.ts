@@ -21,6 +21,7 @@ import { ActivateCenterComponent } from './centers-view/center-actions/activate-
 import { CenterAssignStaffComponent } from './centers-view/center-actions/center-assign-staff/center-assign-staff.component';
 import { CloseCenterComponent } from './centers-view/center-actions/close-center/close-center.component';
 import { CenterAttendanceComponent } from './centers-view/center-actions/center-attendance/center-attendance.component';
+import { AttachCenterMeetingComponent } from './centers-view/center-actions/attach-center-meeting/attach-center-meeting.component';
 
 /**
  * Centers Module
@@ -47,7 +48,8 @@ import { CenterAttendanceComponent } from './centers-view/center-actions/center-
     ActivateCenterComponent,
     CenterAssignStaffComponent,
     CloseCenterComponent,
-    CenterAttendanceComponent
+    CenterAttendanceComponent,
+    AttachCenterMeetingComponent
   ]
 })
 export class CentersModule { }

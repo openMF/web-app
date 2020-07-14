@@ -32,6 +32,8 @@ export class CenterActionsResolver implements Resolve<Object> {
         return this.centersService.getGroupStaffData(centerId);
       case 'Attendance':
         return this.centersService.getCentersData(centerId);
+      case 'Attach Meeting':
+        return this.centersService.getCalendarTemplate(centerId);
       default:
         return undefined;
     }

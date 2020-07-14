@@ -228,4 +228,12 @@ export class CentersService {
       return this.http.post(`/centers/${centerId}/meetings`, data, {params: httpParams});
     }
 
+    getCalendarTemplate(centerId: any): Observable<any> {
+      return this.http.get(`/centers/${centerId}/calendars/template`);
+    }
+
+    createCenterMeeting(centerId: any, data: any): Observable<any> {
+      return this.http.post(`/centers/${centerId}/calendars`, data);
+    }
+
 }
