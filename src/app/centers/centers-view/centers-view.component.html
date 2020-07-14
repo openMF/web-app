@@ -39,7 +39,7 @@
         <div *ngIf="centerViewData.collectionMeetingCalendar; else unassigned">
           <p>
              Next Meeting on: {{centerViewData.collectionMeetingCalendar?.nextTenRecurringDates[0] | date}}   
-             <i class="fa fa-edit"></i><br/>
+             <i class="fa fa-edit" *ngIf="editMeeting" (click)="doAction('Edit Meeting')"></i><br/>
              Meeting Frequency: {{centerViewData.collectionMeetingCalendar?.frequency.value | lowercase}}
           </p>
         </div>

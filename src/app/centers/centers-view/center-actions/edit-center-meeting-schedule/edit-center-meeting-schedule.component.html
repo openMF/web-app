@@ -1,0 +1,46 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="centerEditMeetingScheduleForm">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+        <mat-form-field>
+          <mat-label>Existing Meeting Date</mat-label>
+          <mat-select formControlName="presentMeetingDate">
+            <mat-option *ngFor="let date of nextMeetingDates" [value]="date">
+              {{ date | date }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="centerEditMeetingScheduleForm.controls.presentMeetingDate.hasError('repeatsOnDay')">
+            Existing Meeting Date is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Revised Meeting Date</mat-label>
+          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="newMeetingDatePicker" required formControlName="newMeetingDate">
+          <mat-datepicker-toggle matSuffix [for]="newMeetingDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #newMeetingDatePicker></mat-datepicker>
+          <mat-error *ngIf="centerEditMeetingScheduleForm.controls.newMeetingDate.hasError('required')">
+            Revised Meeting Date is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+  
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!centerEditMeetingScheduleForm.valid" (click)="submit()">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>

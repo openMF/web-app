@@ -51,6 +51,19 @@ export class CentersViewComponent implements OnInit {
   }
 
   /**
+   * Checks if meeting is editable.
+   */
+  get editMeeting() {
+    if (this.centerViewData.collectionMeetingCalendar) {
+      const entityType = this.centerViewData.collectionMeetingCalendar.entityType.value;
+      if (entityType === 'CENTERS' && this.centerViewData.hierarchy === '.' + this.centerViewData.id + '.' ) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * Performs action button/option action.
    * @param {string} name action name.
    */
@@ -62,6 +75,10 @@ export class CentersViewComponent implements OnInit {
       case 'Attendance':
       case 'Attach Meeting':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
+        break;
+      case 'Edit Meeting':
+        const queryParams: any = { calendarId: this.centerViewData.collectionMeetingCalendar.id };
+        this.router.navigate([`actions/${name}`], { relativeTo: this.route, queryParams: queryParams });
         break;
       case 'Unassign Staff':
         this.centersUnassignStaff();
