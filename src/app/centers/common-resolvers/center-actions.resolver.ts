@@ -34,6 +34,10 @@ export class CenterActionsResolver implements Resolve<Object> {
         return this.centersService.getCentersData(centerId);
       case 'Attach Meeting':
         return this.centersService.getCalendarTemplate(centerId);
+      case 'Edit Meeting':
+      case 'Edit Meeting Schedule':
+        const calendarId = route.queryParamMap.get('calendarId');
+        return this.centersService.getCalendarAndTemplate(centerId, calendarId);
       default:
         return undefined;
     }

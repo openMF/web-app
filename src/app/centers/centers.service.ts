@@ -236,4 +236,13 @@ export class CentersService {
       return this.http.post(`/centers/${centerId}/calendars`, data);
     }
 
+    getCalendarAndTemplate(centerId: any, calendarId: any): Observable<any> {
+      const httpParams = new HttpParams().set('template', 'true');
+      return this.http.get(`/centers/${centerId}/calendars/${calendarId}`, { params: httpParams });
+    }
+
+    updateCenterMeeting(centerId: any, data: any, calendarId: any): Observable<any> {
+      return this.http.put(`/centers/${centerId}/calendars/${calendarId}`, data);
+    }
+
 }

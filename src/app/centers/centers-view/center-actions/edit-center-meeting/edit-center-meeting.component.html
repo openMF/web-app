@@ -1,0 +1,81 @@
+<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end">
+  <button mat-raised-button color="primary" (click)="editSchedule()">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit Schedule
+  </button>
+</div>
+
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="centerEditMeetingForm">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Repetition Frequency</mat-label>
+            <mat-select formControlName="frequency">
+              <mat-option *ngFor="let option of frequencyOptions" [value]="option.id">
+                {{ option.value }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="centerEditMeetingForm.controls.frequency.hasError('repeatsOnDay')">
+              Repetition Frequency is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Repetition Interval</mat-label>
+            <mat-select formControlName="interval">
+              <mat-option *ngFor="let interval of repetitionIntervals" [value]="interval">
+                {{ interval }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="centerEditMeetingForm.controls.interval.hasError('repeatsOnDay')">
+              Repeition Interval is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="centerEditMeetingForm.contains('repeatsOnDay')">
+          <mat-label>Repeats on Day</mat-label>
+          <mat-select formControlName="repeatsOnDay" required>
+            <mat-option *ngFor="let day of repeatsOnDays" [value]="day.id">
+              {{ day.value }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="centerEditMeetingForm.controls.repeatsOnDay.hasError('repeatsOnDay')">
+            At least <strong>one</strong> day must be selected
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="m-b-5">
+          <mat-label>Above Changes are Effective from</mat-label>
+          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="startDatePicker" required formControlName="startDate">
+          <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #startDatePicker></mat-datepicker>
+          <mat-error *ngIf="centerEditMeetingForm.controls.startDate.hasError('required')">
+            Changes Affection Date is <strong>required</strong>
+          </mat-error>
+          <mat-hint>
+            Note: 'Repeats' and 'Repeats every' cannot not be modified if there are active accounts <br>
+            (JLG Loans, Recurring Deposits etc) dependent on this meeting.
+          </mat-hint>
+        </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!centerEditMeetingForm.valid" (click)="submit()">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>

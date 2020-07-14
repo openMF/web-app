@@ -18,13 +18,17 @@ export class CenterActionsComponent {
     'Assign Staff': boolean,
     'Close': boolean,
     'Attendance': boolean,
-    'Attach Meeting': boolean
+    'Attach Meeting': boolean,
+    'Edit Meeting': boolean,
+    'Edit Meeting Schedule': boolean
   } = {
     'Activate': false,
     'Assign Staff': false,
     'Close': false,
     'Attendance': false,
-    'Attach Meeting': false
+    'Attach Meeting': false,
+    'Edit Meeting': false,
+    'Edit Meeting Schedule': false
   };
 
   /**
