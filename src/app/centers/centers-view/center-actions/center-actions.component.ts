@@ -15,10 +15,12 @@ export class CenterActionsComponent {
   /** Flag object to store possible actions and render appropriate UI to the user */
   actions: {
     'Activate': boolean,
-    'Assign Staff': boolean
+    'Assign Staff': boolean,
+    'Close': boolean
   } = {
     'Activate': false,
-    'Assign Staff': false
+    'Assign Staff': false,
+    'Close': false
   };
 
   /**

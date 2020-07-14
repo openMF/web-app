@@ -71,9 +71,9 @@
           <button mat-menu-item *mifosxHasPermission="'UNASSIGNSTAFF_GROUP'" (click)="doAction('Unassign Staff')"> Unassign Staff </button>
         </span>
         <span *ngIf="centerViewData.status.value==='Active'">
-          <button mat-menu-item *mifosxHasPermission="'DELETE_CENTER'" > Delete </button>
+          <button mat-menu-item *mifosxHasPermission="'DELETE_CENTER'" (click)="doAction('Delete')"> Delete </button>
         </span>
-        <button mat-menu-item *mifosxHasPermission="'CLOSE_CENTER'" > Close </button>
+        <button mat-menu-item *mifosxHasPermission="'CLOSE_CENTER'" (click)="doAction('Close')"> Close </button>
         <span *ngIf="centerViewData.status.value==='Active' && !(centerViewData.collectionMeetingCalendar)">
           <button mat-menu-item *mifosxHasPermission="'CREATE_MEETING'"> Attach Meeting </button>
         </span>

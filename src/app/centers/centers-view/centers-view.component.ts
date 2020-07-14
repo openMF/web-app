@@ -8,6 +8,7 @@ import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/conf
 
 /** Custom Services */
 import { CentersService } from '../centers.service';
+import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 /**
  * Create Center View
@@ -57,11 +58,14 @@ export class CentersViewComponent implements OnInit {
     switch (name) {
       case 'Activate':
       case 'Assign Staff':
+      case 'Close':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
       case 'Unassign Staff':
         this.centersUnassignStaff();
         break;
+      case 'Delete':
+        this.deleteCenter();
     }
   }
 
@@ -78,6 +82,22 @@ export class CentersViewComponent implements OnInit {
           .subscribe(() => {
             this.reload();
           });
+      }
+    });
+  }
+
+  /**
+   * Deletes the center
+   */
+  private deleteCenter() {
+    const deleteGroupDialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { deleteContext: `center with id: ${this.centerViewData.id}` }
+    });
+    deleteGroupDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.delete) {
+        this.centersService.deleteCenter(this.centerViewData.id).subscribe(() => {
+          this.router.navigate(['/centers'], { relativeTo: this.route });
+        });
       }
     });
   }
