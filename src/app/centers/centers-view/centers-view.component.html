@@ -65,10 +65,10 @@
           <button mat-menu-item *mifosxHasPermission="'SAVEORUPDATEATTENDANCE_MEETING'"> Attendance </button>
         </span>
         <span *ngIf="!(centerViewData.staffId)">
-          <button mat-menu-item *mifosxHasPermission="'ASSIGNSTAFF_GROUP'" > Assign Staff </button>
+          <button mat-menu-item *mifosxHasPermission="'ASSIGNSTAFF_GROUP'" (click)="doAction('Assign Staff')"> Assign Staff </button>
         </span>
         <span *ngIf="centerViewData.staffId">
-          <button mat-menu-item *mifosxHasPermission="'UNASSIGNSTAFF_GROUP'" > Unassign Staff </button>
+          <button mat-menu-item *mifosxHasPermission="'UNASSIGNSTAFF_GROUP'" (click)="doAction('Unassign Staff')"> Unassign Staff </button>
         </span>
         <span *ngIf="centerViewData.status.value==='Active'">
           <button mat-menu-item *mifosxHasPermission="'DELETE_CENTER'" > Delete </button>

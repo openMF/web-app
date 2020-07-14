@@ -14,6 +14,7 @@ import { ThemePickerComponent } from './theme-picker/theme-picker.component';
 import { ChangePasswordDialogComponent } from './change-password-dialog/change-password-dialog.component';
 import { EnableDialogComponent } from './enable-dialog/enable-dialog.component';
 import { DisableDialogComponent } from './disable-dialog/disable-dialog.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 /** Custom Modules */
 import { IconsModule } from './icons.module';
@@ -41,7 +42,8 @@ import { MaterialModule } from './material.module';
     ThemePickerComponent,
     ChangePasswordDialogComponent,
     EnableDialogComponent,
-    DisableDialogComponent
+    DisableDialogComponent,
+    ConfirmationDialogComponent
   ],
   exports: [
     FileUploadComponent,
@@ -59,7 +61,8 @@ import { MaterialModule } from './material.module';
     DeleteDialogComponent,
     ChangePasswordDialogComponent,
     EnableDialogComponent,
-    DisableDialogComponent
+    DisableDialogComponent,
+    ConfirmationDialogComponent
   ]
 })
 export class SharedModule { }
