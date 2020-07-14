@@ -7,17 +7,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ClientsService } from 'app/clients/clients.service';
 
 /**
- * Undo Client Transfer Component
+ * Reject Client Transfer Component
  */
 @Component({
-  selector: 'mifosx-undo-client-transfer',
-  templateUrl: './undo-client-transfer.component.html',
-  styleUrls: ['./undo-client-transfer.component.scss']
+  selector: 'mifosx-reject-client-transfer',
+  templateUrl: './reject-client-transfer.component.html',
+  styleUrls: ['./reject-client-transfer.component.scss']
 })
-export class UndoClientTransferComponent implements OnInit {
+export class RejectClientTransferComponent implements OnInit {
 
-  /** Undo Approval Savings Account form. */
-  undoClientTransferForm: FormGroup;
+  /** Reject Approval Savings Account form. */
+  rejectClientTransferForm: FormGroup;
   /** Client Id */
   clientId: any;
   /** Transfer Date */
@@ -40,31 +40,31 @@ export class UndoClientTransferComponent implements OnInit {
   }
 
   /**
-   * Creates the undo-approval savings form.
+   * Creates the reject-approval savings form.
    */
   ngOnInit() {
-    this.createUndoClientTransferForm();
+    this.createRejectClientTransferForm();
   }
 
   /**
-   * Creates the undo-approval savings account form.
+   * Creates the reject-approval savings account form.
    */
-  createUndoClientTransferForm() {
-    this.undoClientTransferForm = this.formBuilder.group({
+  createRejectClientTransferForm() {
+    this.rejectClientTransferForm = this.formBuilder.group({
       'transferDate': {value: new Date(this.transferDate), disabled: true},
       'note': ['']
     });
   }
 
   /**
-   * Submits the form and undo the transfer of client
+   * Submits the form and reject the transfer of client
    * if successful redirects to the client.
    */
   submit() {
     const data = {
-      ...this.undoClientTransferForm.value,
+      ...this.rejectClientTransferForm.value,
     };
-    this.clientsService.executeClientCommand(this.clientId, 'withdrawTransfer', data).subscribe(() => {
+    this.clientsService.executeClientCommand(this.clientId, 'rejectTransfer', data).subscribe(() => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }

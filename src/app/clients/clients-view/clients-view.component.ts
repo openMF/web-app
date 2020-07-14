@@ -40,9 +40,13 @@ export class ClientsViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.clientsService.getClientProfileImage(this.clientViewData.id).subscribe((base64Image: any) => {
-      this.clientImage = this._sanitizer.bypassSecurityTrustResourceUrl(base64Image);
-    });
+    this.clientsService.getClientProfileImage(this.clientViewData.id).subscribe(
+      (base64Image: any) => {
+        this.clientImage = this._sanitizer.bypassSecurityTrustResourceUrl(base64Image);
+      },
+      (error: any) => {}
+    );
+
   }
 
   /**

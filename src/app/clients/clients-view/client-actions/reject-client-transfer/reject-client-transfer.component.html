@@ -2,7 +2,7 @@
 
   <mat-card>
 
-    <form [formGroup]="undoClientTransferForm" (ngSubmit)="submit()">
+    <form [formGroup]="rejectClientTransferForm" (ngSubmit)="submit()">
 
       <mat-card-content fxLayout="column">
 
@@ -22,7 +22,7 @@
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
         <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!undoClientTransferForm.valid">Confirm</button>
+        <button mat-raised-button color="primary" [disabled]="!rejectClientTransferForm.valid">Confirm</button>
       </mat-card-actions>
 
     </form>
