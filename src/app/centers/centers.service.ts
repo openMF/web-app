@@ -176,4 +176,15 @@ export class CentersService {
       return this.http.delete(`/datatables/${datatableName}/${centerId}`, { params: httpParams });
     }
 
+    /**
+     * @param {string} centerId Center Id
+     * @param {string} command Command
+     * @param {any} data Data
+     * @returns {Observable<any>}
+     */
+    executeCenterActionCommand(centerId: string, command: string, data: any): Observable<any> {
+      const httpParams = new HttpParams().set('command', command);
+      return this.http.post(`/centers/${centerId}`, data, { params: httpParams });
+    }
+
 }

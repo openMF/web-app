@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
 
 /**
  * Create Center View
@@ -23,7 +24,9 @@ export class CentersViewComponent implements OnInit {
    * Retrieves the data for center
    * @param route route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              public dialog: MatDialog) {
       this.route.data.subscribe((data: {
         centerViewData: any,
         centerDatatables: any
@@ -37,6 +40,18 @@ export class CentersViewComponent implements OnInit {
     if (this.centerViewData.collectionMeetingCalendar) {
       this.meetingData = true;
     } else { this.meetingData = false; }
+  }
+
+  /**
+   * Performs action button/option action.
+   * @param {string} name action name.
+   */
+  doAction(name: string) {
+    switch (name) {
+      case 'Activate':
+        this.router.navigate([`actions/${name}`], { relativeTo: this.route });
+        break;
+    }
   }
 
 }
