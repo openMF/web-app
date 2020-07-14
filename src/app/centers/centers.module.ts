@@ -18,6 +18,7 @@ import { MultiRowComponent } from './centers-view/datatable-tab/multi-row/multi-
 import { SingleRowComponent } from './centers-view/datatable-tab/single-row/single-row.component';
 import { CenterActionsComponent } from './centers-view/center-actions/center-actions.component';
 import { ActivateCenterComponent } from './centers-view/center-actions/activate-center/activate-center.component';
+import { CenterAssignStaffComponent } from './centers-view/center-actions/center-assign-staff/center-assign-staff.component';
 
 /**
  * Centers Module
@@ -41,7 +42,8 @@ import { ActivateCenterComponent } from './centers-view/center-actions/activate-
     MultiRowComponent,
     SingleRowComponent,
     CenterActionsComponent,
-    ActivateCenterComponent
+    ActivateCenterComponent,
+    CenterAssignStaffComponent
   ]
 })
 export class CentersModule { }

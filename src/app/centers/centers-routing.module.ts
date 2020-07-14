@@ -25,6 +25,7 @@ import { CenterNotesResolver } from './common-resolvers/center-notes.resolver';
 import { CenterDatatableResolver } from './common-resolvers/center-datatable.resolver';
 import { CenterDatatablesResolver } from './common-resolvers/center-datatables.resolver';
 import { CenterActionsComponent } from './centers-view/center-actions/center-actions.component';
+import { CenterActionsResolver } from './common-resolvers/center-actions.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -91,7 +92,10 @@ const routes: Routes = [
             {
               path: 'actions/:name',
               data: { title: extract('Center Actions'), routeParamBreadcrumb: 'name' },
-              component: CenterActionsComponent
+              component: CenterActionsComponent,
+              resolve: {
+                centersActionData: CenterActionsResolver
+              }
             },
           ]
         }
@@ -111,7 +115,8 @@ const routes: Routes = [
     CenterSummaryResolver,
     CenterNotesResolver,
     CenterDatatableResolver,
-    CenterDatatablesResolver
+    CenterDatatablesResolver,
+    CenterActionsResolver
   ]
 })
 export class CentersRoutingModule { }

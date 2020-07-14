@@ -187,4 +187,26 @@ export class CentersService {
       return this.http.post(`/centers/${centerId}`, data, { params: httpParams });
     }
 
+    /**
+     * @param {string} centerId Center Id
+     * @param {string} command Command
+     * @param {any} data Data
+     * @returns {Observable<any>}
+     */
+    executeGroupActionCommand(centerId: string, command: string, data: any): Observable<any> {
+      const httpParams = new HttpParams().set('command', command);
+      return this.http.post(`/groups/${centerId}`, data, { params: httpParams });
+    }
+
+    /**
+     * @param centerId Center Id of center to get data for.
+     * @returns {Observable<any>} Center data.
+     */
+    getGroupStaffData(centerId: string): Observable<any> {
+      const httpParams = new HttpParams().set('groupOrCenter', 'centers')
+                                       .set('staffInSelectedOfficeOnly', 'true')
+                                       .set('template', 'true');
+      return this.http.get(`/groups/${centerId}`, { params: httpParams });
+    }
+
 }
