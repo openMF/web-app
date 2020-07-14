@@ -38,6 +38,7 @@ import { UpdateClientSavingsAccountComponent } from './clients-view/client-actio
 import { TransferClientComponent } from './clients-view/client-actions/transfer-client/transfer-client.component';
 import { UndoClientTransferComponent } from './clients-view/client-actions/undo-client-transfer/undo-client-transfer.component';
 import { RejectClientTransferComponent } from './clients-view/client-actions/reject-client-transfer/reject-client-transfer.component';
+import { AcceptClientTransferComponent } from './clients-view/client-actions/accept-client-transfer/accept-client-transfer.component';
 
 
 /**
@@ -81,7 +82,8 @@ import { RejectClientTransferComponent } from './clients-view/client-actions/rej
     UpdateClientSavingsAccountComponent,
     TransferClientComponent,
     UndoClientTransferComponent,
-    RejectClientTransferComponent
+    RejectClientTransferComponent,
+    AcceptClientTransferComponent
   ],
   entryComponents: [
     UploadDocumentDialogComponent,
