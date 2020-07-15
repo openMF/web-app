@@ -61,7 +61,7 @@
       </span>
       <button mat-raised-button *mifosxHasPermission="'UPDATE_CENTER'"><i class="fa fa-edit"></i> Edit </button>
       <button mat-raised-button *mifosxHasPermission="'CREATE_GROUP'"><i class="fa fa-plus"></i> Add Group </button>
-      <button mat-raised-button *mifosxHasPermission="'ASSOCIATEGROUPS_CENTER'"> <i class="fa fa-edit"></i> Manage Groups </button>
+      <button mat-raised-button *mifosxHasPermission="'ASSOCIATEGROUPS_CENTER'" (click)="doAction('Manage Groups')"> <i class="fa fa-edit"></i> Manage Groups </button>
       <span  *ngIf="centerViewData.active">
       <button mat-raised-button *mifosxHasPermission="'CREATE_SAVINGSACCOUNT'"> <i class="fa fa-file"></i> Centers Saving Application</button>
       </span>

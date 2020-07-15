@@ -213,8 +213,9 @@ export class CentersService {
       return this.http.delete(`/centers/${centerId}`);
     }
 
-    getCentersData(centerId: string) {
-      const httpParams = new HttpParams().set('associations', 'groupMembers,collectionMeetingCalendar');
+    getCentersData(centerId: string, associations: string, template?: string) {
+      let httpParams = new HttpParams().set('associations', associations);
+      httpParams = template ? httpParams.set('template', template) : httpParams;
       return this.http.get(`/centers/${centerId}`, {params: httpParams});
     }
 

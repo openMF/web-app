@@ -25,7 +25,7 @@ export class GroupsService {
    * @param {string} name Filter value for groups names.
    * @returns {Observable<any>} Groups.
    */
-  getFilteredGroups(orderBy: string, sortOrder: string, name: string, officeId?: any): Observable<any> {
+  getFilteredGroups(orderBy: string, sortOrder: string, name: string, officeId?: any, orphansOnly?: any): Observable<any> {
     let httpParams = new HttpParams()
       .set('name', name)
       .set('sortOrder', sortOrder)
@@ -33,6 +33,7 @@ export class GroupsService {
     if (officeId) {
       httpParams = httpParams.set('officeId', officeId);
     }
+    httpParams = orphansOnly ? httpParams.set('orphansOnly', orphansOnly) : httpParams;
     return this.http.get('/groups', { params: httpParams });
   }
 
