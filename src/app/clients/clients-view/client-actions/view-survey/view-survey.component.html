@@ -1,71 +1,51 @@
+<div class="container m-b-20" fxLayoutAlign="end">
+  <button mat-raised-button color="primary" [routerLink]="['../Take Survey']">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Take Survey
+  </button>
+</div>
+
+
 <div class="container">
 
-  <mat-card>
+  <div fxLayout="row">
+    <mat-form-field fxFlex>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event.target.value)">
+    </mat-form-field>
+  </div>
 
-    <div class="container">
+  <div class="mat-elevation-z8">
 
-      <mat-card-content>
+    <table mat-table [dataSource]="dataSource" matSort>
 
-        <div class="headingContent">
-          <div fxLayout="column" fxFlex="50%">
-            <div className="headingName">
-              <h3>List of All Surveys</h3>
-            </div>
-          </div>
-          <div fxLayout="column" fxFlex="50%">
-            <div fxLayout="row" fxLayoutAlign="flex-end">
-              <button mat-raised-button color="primary" [routerLink]="['./Take-Survey']">
-                <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
-                Take Survey
-              </button>
-            </div>
-          </div>
-        </div>
+      <ng-container matColumnDef="surveyName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header='surveyName'> Survey </th>
+        <td mat-cell *matCellDef="let survey"> {{ survey.surveyName }} </td>
+      </ng-container>
 
-        <div fxLayout="row">
-          <mat-form-field fxFlex>
-            <mat-label>Filter</mat-label>
-            <input matInput (keyup)="applyFilter($event.target.value)">
-          </mat-form-field>
-        </div>
+      <ng-container matColumnDef="createdBy">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header='createdBy'> Created By </th>
+        <td mat-cell *matCellDef="let survey"> {{ survey.createdBy }} </td>
+      </ng-container>
 
-        <div>
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+        <td mat-cell *matCellDef="let survey"> {{ survey.date | date }} </td>
+      </ng-container>
 
-          <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="score">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Score </th>
+        <td mat-cell *matCellDef="let survey"> {{ survey.score }} </td>
+      </ng-container>
 
-            <ng-container matColumnDef="surveyName">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header='surveyName'> Survey </th>
-              <td mat-cell *matCellDef="let surveydata"> {{ surveydata.surveyName }} </td>
-            </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-            <ng-container matColumnDef="createdBy">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header='createdby'> Created By </th>
-              <td mat-cell *matCellDef="let surveydata"> {{ surveydata.createdby }} </td>
-            </ng-container>
+    </table>
 
-            <ng-container matColumnDef="date">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-              <td mat-cell *matCellDef="let surveydata"> {{ surveydata.date | date }} </td>
-            </ng-container>
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
 
-            <ng-container matColumnDef="score">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Score </th>
-              <td mat-cell *matCellDef="let surveydata"> {{ surveydata.score }} </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row"></tr>
-
-          </table>
-
-          <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-
-        </div>
-
-      </mat-card-content>
-
-    </div>
-
-  </mat-card>
+  </div>
 
 </div>

@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
-import { ClientsService } from '../../../../clients.service';
-import { AuthenticationService } from '../../../../../core/authentication/authentication.service';
+import { ClientsService } from '../../../clients.service';
+import { AuthenticationService } from '../../../../core/authentication/authentication.service';
 /**
  * Take Survey Component
  */
@@ -44,8 +44,8 @@ export class TakeSurveyComponent implements OnInit {
               private clientsService: ClientsService,
               private router: Router,
               private authenticationService: AuthenticationService) {
-    this.route.data.subscribe((data: { allSurveysData: any }) => {
-      this.allSurveyData = data.allSurveysData;
+    this.route.data.subscribe((data: { clientActionData: any }) => {
+      this.allSurveyData = data.clientActionData;
       this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
     });
 

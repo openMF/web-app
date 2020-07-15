@@ -33,7 +33,7 @@ import { ViewSurveyComponent } from './clients-view/client-actions/view-survey/v
 import { RejectClientComponent } from './clients-view/client-actions/reject-client/reject-client.component';
 import { ActivateClientComponent } from './clients-view/client-actions/activate-client/activate-client.component';
 import { WithdrawClientComponent } from './clients-view/client-actions/withdraw-client/withdraw-client.component';
-import { TakeSurveyComponent } from './clients-view/client-actions/view-survey/take-survey/take-survey.component';
+import { TakeSurveyComponent } from './clients-view/client-actions/take-survey/take-survey.component';
 import { UpdateClientSavingsAccountComponent } from './clients-view/client-actions/update-client-savings-account/update-client-savings-account.component';
 import { TransferClientComponent } from './clients-view/client-actions/transfer-client/transfer-client.component';
 import { UndoClientTransferComponent } from './clients-view/client-actions/undo-client-transfer/undo-client-transfer.component';
