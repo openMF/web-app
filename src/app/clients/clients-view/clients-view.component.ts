@@ -68,6 +68,7 @@ export class ClientsViewComponent implements OnInit {
       case 'Reject Transfer':
       case 'Reactivate':
       case 'Undo Rejection':
+      case 'Add Charge':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
        case 'Unassign Staff':

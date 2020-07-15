@@ -1,0 +1,93 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="clientChargeForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+          <mat-form-field>
+            <mat-label>Charge</mat-label>
+            <mat-select required formControlName="chargeId">
+              <mat-option *ngFor="let clientCharge of clientChargeOptions" [value]="clientCharge.id">
+                {{ clientCharge.name + ' (' + clientCharge.currency.name + ')' }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="clientChargeForm.controls.chargeId.hasError('required')">
+              Charge is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <div *ngIf="chargeDetails" fxLayout="column">
+
+            <mat-form-field>
+              <mat-label>Amount</mat-label>
+              <input type=number required matInput formControlName="amount" />
+              <mat-error *ngIf="clientChargeForm.controls.amount.hasError('required')">
+                Amount is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Charge Calculation</mat-label>
+              <mat-select formControlName="chargeCalculationType">
+                <mat-option *ngFor="let chargeCalculation of chargeDetails.chargeCalculationTypeOptions"
+                  [value]="chargeCalculation.id">
+                  {{ chargeCalculation.value }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Charge time type</mat-label>
+              <mat-select formControlName="chargeTimeType">
+                <mat-option *ngFor="let chargeTime of chargeDetails.chargeTimeTypeOptions" [value]="chargeTime.id">
+                  {{ chargeTime.value }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="clientChargeForm.contains('dueDate')">
+              <mat-label>Due for collection on</mat-label>
+              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dueDatePicker" required
+                formControlName="dueDate">
+              <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #dueDatePicker></mat-datepicker>
+              <mat-error *ngIf="clientChargeForm.controls.dueDate.hasError('required')">
+                Due for collection on is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="clientChargeForm.contains('feeOnMonthDay')">
+              <mat-label>Due On</mat-label>
+              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="feeOnMonthDayPicker" required
+                formControlName="feeOnMonthDay">
+              <mat-datepicker-toggle matSuffix [for]="feeOnMonthDayPicker"></mat-datepicker-toggle>
+              <mat-datepicker #feeOnMonthDayPicker></mat-datepicker>
+              <mat-error *ngIf="clientChargeForm.controls.feeOnMonthDay.hasError('required')">
+                Due Date is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="clientChargeForm.contains('feeInterval')">
+              <mat-label>Repeats Every</mat-label>
+              <input matInput formControlName="feeInterval" />
+            </mat-form-field>
+
+          </div>
+
+        </div>
+
+        <mat-card-actions fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
+          <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+          <button mat-raised-button color="primary" [disabled]="!clientChargeForm.valid">Submit</button>
+        </mat-card-actions>
+
+      </mat-card-content>
+
+    </form>
+
+  </mat-card>
+
+</div>

@@ -41,6 +41,7 @@ import { RejectClientTransferComponent } from './clients-view/client-actions/rej
 import { AcceptClientTransferComponent } from './clients-view/client-actions/accept-client-transfer/accept-client-transfer.component';
 import { ReactivateClientComponent } from './clients-view/client-actions/reactivate-client/reactivate-client.component';
 import { UndoClientRejectionComponent } from './clients-view/client-actions/undo-client-rejection/undo-client-rejection.component';
+import { AddClientChargeComponent } from './clients-view/client-actions/add-client-charge/add-client-charge.component';
 
 
 /**
@@ -87,7 +88,8 @@ import { UndoClientRejectionComponent } from './clients-view/client-actions/undo
     RejectClientTransferComponent,
     AcceptClientTransferComponent,
     ReactivateClientComponent,
-    UndoClientRejectionComponent
+    UndoClientRejectionComponent,
+    AddClientChargeComponent
   ],
   entryComponents: [
     UploadDocumentDialogComponent,

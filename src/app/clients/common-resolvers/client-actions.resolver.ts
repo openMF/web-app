@@ -45,6 +45,8 @@ export class ClientActionsResolver implements Resolve<Object> {
       case 'Accept Transfer':
       case 'Reject Transfer':
         return this.clientsService.getClientTransferProposalDate(clientId);
+      case 'Add Charge':
+        return this.clientsService.getClientChargeTemplate(clientId);
       default:
         return undefined;
     }

@@ -224,6 +224,19 @@ export class ClientsService {
     return this.http.get(`/clients/${clientId}/transferproposaldate`);
   }
 
+  getClientChargeTemplate(clientId: any): Observable<any> {
+    return this.http.get(`/clients/${clientId}/charges/template`);
+  }
+
+  getChargeAndTemplate(chargeId: any): Observable<any> {
+    const httpParams = new HttpParams().set('template', 'true');
+    return this.http.get(`/charges/${chargeId}`, { params: httpParams });
+  }
+
+  createClientCharge(clientId: any, charge: any) {
+    return this.http.post(`/clients/${clientId}/charges`, charge);
+  }
+
   /**
    * @returns {Observable<any>} Offices data
    */
