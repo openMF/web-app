@@ -6,7 +6,7 @@ import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ClientsService } from '../../clients.service';
+import { ClientsService } from '../../../clients.service';
 
 /**
  * Client Charges data resolver.
