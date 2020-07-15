@@ -24,6 +24,7 @@ import { CenterAttendanceComponent } from './centers-view/center-actions/center-
 import { AttachCenterMeetingComponent } from './centers-view/center-actions/attach-center-meeting/attach-center-meeting.component';
 import { EditCenterMeetingComponent } from './centers-view/center-actions/edit-center-meeting/edit-center-meeting.component';
 import { EditCenterMeetingScheduleComponent } from './centers-view/center-actions/edit-center-meeting-schedule/edit-center-meeting-schedule.component';
+import { ManageGroupsComponent } from './centers-view/center-actions/manage-groups/manage-groups.component';
 
 /**
  * Centers Module
@@ -53,7 +54,8 @@ import { EditCenterMeetingScheduleComponent } from './centers-view/center-action
     CenterAttendanceComponent,
     AttachCenterMeetingComponent,
     EditCenterMeetingComponent,
-    EditCenterMeetingScheduleComponent
+    EditCenterMeetingScheduleComponent,
+    ManageGroupsComponent
   ]
 })
 export class CentersModule { }

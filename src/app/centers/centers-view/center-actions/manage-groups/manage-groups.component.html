@@ -1,0 +1,55 @@
+<div class="container" fxLayout="row" fxLayoutGap="3%">
+
+  <mat-card fxFlex class="group-card" fxLayout="column" fxLayoutGap="2%">
+
+    <mat-form-field fxFlex="30%">
+      <mat-label>Add Groups</mat-label>
+      <input matInput [formControl]="groupChoice" [matAutocomplete]="groupsAutocomplete">
+    </mat-form-field>
+
+    <mat-autocomplete autoActiveFirstOption #groupsAutocomplete="matAutocomplete" [displayWith]="displayGroup">
+      <mat-option *ngFor="let group of groupsData" [value]="group">
+        {{ group.name }}
+      </mat-option>
+    </mat-autocomplete>
+
+    <div class="mat-table">
+      <div class="mat-header-row">
+        <div class="mat-header-cell">Group Details</div>
+        <button mat-icon-button (click)="addGroup()">
+          <fa-icon icon="plus"></fa-icon>
+        </button>
+      </div>
+      <div class="mat-row">
+        <div class="mat-cell">Name</div>
+        <div class="mat-cell">{{groupChoice.value.name}}</div>
+      </div>
+      <div class="mat-row">
+        <div class="mat-cell">Id</div>
+        <div class="mat-cell">{{groupChoice.value.id}}</div>
+      </div>
+      <div class="mat-row">
+        <div class="mat-cell">Office</div>
+        <div class="mat-cell">{{groupChoice.value.officeName}}</div>
+      </div>
+    </div>
+
+  </mat-card>
+
+  <mat-card fxFlex="40%">
+
+    <h3 matSubheader>Group Members</h3>
+
+    <mat-nav-list  *ngIf="groupMembers?.length">
+      <div mat-list-item *ngFor="let group of groupMembers index as i">
+        <span matLine class="p-t-10">{{group.name}}</span>
+        <div fxFlex></div>
+        <button mat-icon-button color="warn" (click)="removeGroup(i, group)">
+          <fa-icon icon="trash"></fa-icon>
+        </button>
+      </div>
+    </mat-nav-list>
+
+  </mat-card>
+
+</div>
