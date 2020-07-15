@@ -13,11 +13,13 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 })
 export class ViewSurveyComponent implements OnInit {
 
+  /** Survey Data */
   surveyData: any;
   /** Data source for view surveys table. */
   dataSource: MatTableDataSource<any>;
   /** Columns to be displayed in list of surveys table. */
   displayedColumns: string[] = ['surveyName', 'createdBy', 'date', 'score'];
+
   /** Paginator for list of surveys table. */
   @ViewChild(MatPaginator) paginator: MatPaginator;
   /** Sorter for list of surveys table. */
@@ -35,26 +37,26 @@ export class ViewSurveyComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.constructSurvey(this.surveyData);
+    this.constructSurveys(this.surveyData);
   }
 
   /**
-   * Constructs the list of survey data
+   * Sets datasource, paginator and sorter for surveys table.
    * @param data Survey Data
    */
-  constructSurvey(data: any) {
-    const surveys: any[] = [];
-    data.forEach((ele: { id: number, userId: number, username: string, clientId: number, surveyId: number, surveyName: string, scorecardValues: Object[] }) => {
-      ele.scorecardValues.forEach((element: { createdOn: number, value: number }) => {
-        const item = {} as { surveyName: string, createdby: string, date: number, score: number };
-        item.surveyName = ele.surveyName;
-        item.createdby = ele.username;
-        item.date = element.createdOn;
-        item.score = element.value;
-        surveys.push(item);
+  constructSurveys(data: any) {
+    let surveys: any[] = [];
+    data.forEach((entry: any) => {
+      const scoreCards: any[] = entry.scorecardValues.map((element: any) => {
+        return {
+          surveyName: entry.surveyName,
+          createdBy: entry.username,
+          date: element.createdOn,
+          score: element.value
+        };
       });
+      surveys = surveys.concat(scoreCards);
     });
-
     this.dataSource = new MatTableDataSource(surveys);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
