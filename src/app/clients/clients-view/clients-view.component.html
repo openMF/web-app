@@ -54,6 +54,7 @@
         <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item (click)="doAction('Reject')">Reject</button></span>
         <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item (click)="doAction('Delete')">Delete</button></span>
         <span *ngIf="clientViewData.status.value === 'Closed'"><button mat-menu-item (click)="doAction('Reactivate')">Reactivate</button></span>
+        <span *ngIf="clientViewData.status.value === 'Rejected'"><button mat-menu-item (click)="doAction('Undo Rejection')">Undo Rejection</button></span>
       </mat-menu>
     </mat-card-actions>
   </mat-card-header>

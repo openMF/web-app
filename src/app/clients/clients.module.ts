@@ -40,6 +40,7 @@ import { UndoClientTransferComponent } from './clients-view/client-actions/undo-
 import { RejectClientTransferComponent } from './clients-view/client-actions/reject-client-transfer/reject-client-transfer.component';
 import { AcceptClientTransferComponent } from './clients-view/client-actions/accept-client-transfer/accept-client-transfer.component';
 import { ReactivateClientComponent } from './clients-view/client-actions/reactivate-client/reactivate-client.component';
+import { UndoClientRejectionComponent } from './clients-view/client-actions/undo-client-rejection/undo-client-rejection.component';
 
 
 /**
@@ -85,7 +86,8 @@ import { ReactivateClientComponent } from './clients-view/client-actions/reactiv
     UndoClientTransferComponent,
     RejectClientTransferComponent,
     AcceptClientTransferComponent,
-    ReactivateClientComponent
+    ReactivateClientComponent,
+    UndoClientRejectionComponent
   ],
   entryComponents: [
     UploadDocumentDialogComponent,
