@@ -8,27 +8,27 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ClientsService } from 'app/clients/clients.service';
 
 /**
- * Activate Client Component
+ * Reactivate Client Component
  */
 @Component({
-  selector: 'mifosx-activate-client',
-  templateUrl: './activate-client.component.html',
-  styleUrls: ['./activate-client.component.scss']
+  selector: 'mifosx-reactivate-client',
+  templateUrl: './reactivate-client.component.html',
+  styleUrls: ['./reactivate-client.component.scss']
 })
-export class ActivateClientComponent implements OnInit {
+export class ReactivateClientComponent implements OnInit {
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
   maxDate = new Date();
-  /** Activate client form. */
-  activateClientForm: FormGroup;
+  /** Reactivate client form. */
+  reactivateClientForm: FormGroup;
   /** Client Account Id */
   clientId: any;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {clientsService} clientsService Cliens Service
+   * @param {clientsService} clientsService Clients Service
    * @param {DatePipe} datePipe Date Pipe
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
@@ -42,39 +42,39 @@ export class ActivateClientComponent implements OnInit {
   }
 
   /**
-   * Creates the activate client form.
+   * Creates the reactivate client form.
    */
   ngOnInit() {
-    this.createActivateClientForm();
+    this.createReactivateClientForm();
   }
 
   /**
-   * Creates the activate client form.
+   * Creates the reactivate client form.
    */
-  createActivateClientForm() {
-    this.activateClientForm = this.formBuilder.group({
-      'activationDate': ['', Validators.required]
+  createReactivateClientForm() {
+    this.reactivateClientForm = this.formBuilder.group({
+      'reactivationDate': ['', Validators.required]
     });
   }
 
   /**
-   * Submits the form and activates the client,
+   * Submits the form and reactivates the client,
    * if successful redirects to the client.
    */
   submit() {
     // TODO: Update once language and date settings are setup
     const locale = 'en';
     const dateFormat = 'dd MMMM yyyy';
-    const prevActivationDate: Date = this.activateClientForm.value.activationDate;
-    this.activateClientForm.patchValue({
-      activationDate: this.datePipe.transform(prevActivationDate, dateFormat),
+    const prevReactivationDate: Date = this.reactivateClientForm.value.reactivationDate;
+    this.reactivateClientForm.patchValue({
+      reactivationDate: this.datePipe.transform(prevReactivationDate, dateFormat),
     });
     const data = {
-      ...this.activateClientForm.value,
+      ...this.reactivateClientForm.value,
       dateFormat,
       locale
     };
-    this.clientsService.executeClientCommand(this.clientId, 'activate', data).subscribe(() => {
+    this.clientsService.executeClientCommand(this.clientId, 'reactivate', data).subscribe(() => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }

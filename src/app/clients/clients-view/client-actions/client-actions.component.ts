@@ -24,6 +24,7 @@ export class ClientActionsComponent {
     'Undo Transfer': boolean
     'Accept Transfer': boolean
     'Reject Transfer': boolean
+    'Reactivate': boolean
   } = {
     'Assign Staff': false,
     'Close': false,
@@ -34,7 +35,8 @@ export class ClientActionsComponent {
     'Transfer Client': false,
     'Undo Transfer': false,
     'Accept Transfer': false,
-    'Reject Transfer': false
+    'Reject Transfer': false,
+    'Reactivate': false
   };
 
   /**

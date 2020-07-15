@@ -22,7 +22,7 @@
             <mat-label>Rejection Reason</mat-label>
             <mat-select formControlName="rejectionReasonId">
               <mat-option *ngFor="let reason of rejectionData" [value]="reason.id">
-                {{ reason.description }}
+                {{ reason.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="rejectClientForm.controls.rejectionReasonId.hasError('required')">

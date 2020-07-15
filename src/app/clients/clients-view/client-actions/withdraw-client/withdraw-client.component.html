@@ -22,7 +22,7 @@
             <mat-label>Withdrawal Reason</mat-label>
             <mat-select formControlName="withdrawalReasonId">
               <mat-option *ngFor="let reason of withdrawalData" [value]="reason.id">
-                {{ reason.description }}
+                {{ reason.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="withdrawClientForm.controls.withdrawalReasonId.hasError('required')">
