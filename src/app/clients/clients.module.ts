@@ -24,7 +24,7 @@ import { DatatableTabComponent } from './clients-view/datatable-tab/datatable-ta
 import { MultiRowComponent } from './clients-view/datatable-tab/multi-row/multi-row.component';
 import { SingleRowComponent } from './clients-view/datatable-tab/single-row/single-row.component';
 import { AddressTabComponent } from './clients-view/address-tab/address-tab.component';
-import { ChargesOverviewComponent } from './clients-view/charges-overview/charges-overview.component';
+import { ChargesOverviewComponent } from './clients-view/charges/charges-overview/charges-overview.component';
 import { ClientActionsComponent } from './clients-view/client-actions/client-actions.component';
 import { ClientAssignStaffComponent } from './clients-view/client-actions/client-assign-staff/client-assign-staff.component';
 import { UnassignStaffDialogComponent } from './clients-view/custom-dialogs/unassign-staff-dialog/unassign-staff-dialog.component';
@@ -42,8 +42,8 @@ import { AcceptClientTransferComponent } from './clients-view/client-actions/acc
 import { ReactivateClientComponent } from './clients-view/client-actions/reactivate-client/reactivate-client.component';
 import { UndoClientRejectionComponent } from './clients-view/client-actions/undo-client-rejection/undo-client-rejection.component';
 import { AddClientChargeComponent } from './clients-view/client-actions/add-client-charge/add-client-charge.component';
-import { ViewChargeComponent } from './clients-view/view-charge/view-charge.component';
-import { ClientPayChargesComponent } from './clients-view/client-pay-charges/client-pay-charges.component';
+import { ViewChargeComponent } from './clients-view/charges/view-charge/view-charge.component';
+import { ClientPayChargesComponent } from './clients-view/charges/client-pay-charges/client-pay-charges.component';
 
 
 /**

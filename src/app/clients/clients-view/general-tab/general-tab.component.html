@@ -22,7 +22,7 @@
     </div>
     <div fxLayout="column" fxFlex="50%">
       <div fxLayout="row" fxLayoutAlign="flex-end">
-        <button mat-raised-button class="f-right" color="primary" [routerLink]="['../', 'chargeoverview']">Charges
+        <button mat-raised-button class="f-right" color="primary" [routerLink]="['../', 'charges', 'overview']">Charges
           Overview</button>
       </div>
     </div>
@@ -66,11 +66,11 @@
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let element">
         <button class="account-action-button" mat-raised-button color="primary"
-          [routerLink]="['../','paycharge',element.id]">
+          (click)="routeEdit($event)" [routerLink]="['../','charges', element.id, 'pay']">
           <i class="fa fa-dollar"></i>
         </button>
         <button class="account-action-button" mat-raised-button color="primary"
-          (click)="waiveCharge(element.id,element.clientId)">
+          (click)="routeEdit($event); waiveCharge(element.id,element.clientId)">
           <i class="fa fa-flag"></i>
         </button>
       </td>
@@ -78,7 +78,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="upcomingChargesColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: upcomingChargesColumns;" [routerLink]="[routeToCharges,row.id]"></tr>
+    <tr mat-row *matRowDef="let row; columns: upcomingChargesColumns;" [routerLink]="['../','charges',row.id]"></tr>
   </table>
 
 
@@ -157,7 +157,6 @@
     <tr mat-header-row *matHeaderRowDef="openLoansColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: openLoansColumns;"
       [routerLink]="['../', 'loans', row.id, 'general']" class="select-row"></tr>
-    <tr mat-row *matRowDef="let row; columns: openLoansColumns;" [routerLink]="['../paycharge',row.id]"></tr>
   </table>
 
   <!-- Closed Loan Accounts -->

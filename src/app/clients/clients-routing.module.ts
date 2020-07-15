@@ -20,6 +20,8 @@ import { DocumentsTabComponent } from './clients-view/documents-tab/documents-ta
 import { DatatableTabComponent } from './clients-view/datatable-tab/datatable-tab.component';
 import { AddressTabComponent } from './clients-view/address-tab/address-tab.component';
 import { ClientActionsComponent } from './clients-view/client-actions/client-actions.component';
+import { ViewChargeComponent } from './clients-view/charges/view-charge/view-charge.component';
+import { ClientPayChargesComponent } from './clients-view/charges/client-pay-charges/client-pay-charges.component';
 
 /** Custom Resolvers */
 import { ClientViewResolver } from './common-resolvers/client-view.resolver';
@@ -38,8 +40,8 @@ import { ClientDatatableResolver } from './common-resolvers/client-datatable.res
 import { ClientIdentifierTemplateResolver } from './common-resolvers/client-identifier-template.resolver';
 import { ClientAddressFieldConfigurationResolver } from './common-resolvers/client-address-fieldconfiguration.resolver';
 import { ClientAddressTemplateResolver } from './common-resolvers/client-address-template.resolver';
-import { ChargesOverviewComponent } from './clients-view/charges-overview/charges-overview.component';
-import { ClientChargeOverviewResolver } from './clients-view/charges-overview/charge-overview.resolver';
+import { ChargesOverviewComponent } from './clients-view/charges/charges-overview/charges-overview.component';
+import { ClientChargeOverviewResolver } from './clients-view/charges/charges-overview/charge-overview.resolver';
 import { ClientActionsResolver } from './common-resolvers/client-actions.resolver';
 import { ClientChargeViewResolver } from './common-resolvers/client-charge-view.resolver';
 import { ClientTransactionPayResolver } from './common-resolvers/client-transaction-pay.resolver';
@@ -151,14 +153,6 @@ const routes: Routes = [
                 clientDatatable: ClientDatatableResolver
               }
             }]
-          },
-          {
-            path: 'chargeoverview',
-            data: { title: extract('Charges Overview'), breadcrumb: 'Charges Overview', routeParamBreadcrumb: 'chargeId' },
-            component: ChargesOverviewComponent,
-            resolve: {
-              clientChargesData: ClientChargeOverviewResolver,
-            }
           }
         ]
       },
@@ -179,6 +173,40 @@ const routes: Routes = [
             resolve: {
               clientActionData: ClientActionsResolver
             }
+          },
+          {
+            path: 'charges',
+            children: [
+              {
+                path: 'overview',
+                data: { title: extract('Charges Overview'), breadcrumb: 'Charges Overview' },
+                component: ChargesOverviewComponent,
+                resolve: {
+                  clientChargesData: ClientChargeOverviewResolver
+                }
+              },
+              {
+                path: ':chargeId',
+                data: { title: extract('Charges'), routeParamBreadcrumb: 'chargeId' },
+                children: [
+                  {
+                    path: '',
+                    component: ViewChargeComponent,
+                    resolve: {
+                      clientChargeData: ClientChargeViewResolver
+                    }
+                  },
+                  {
+                    path: 'pay',
+                    data: { title: extract('Pay Charge'), routeParamBreadcrumb: false },
+                    component: ClientPayChargesComponent,
+                    resolve: {
+                      transactionData: ClientTransactionPayResolver
+                    }
+                  }
+                ]
+              }
+            ]
           },
           {
             path: 'loans',
