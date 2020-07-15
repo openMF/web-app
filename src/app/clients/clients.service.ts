@@ -122,6 +122,24 @@ export class ClientsService {
     return this.http.delete(`/clients/${clientId}/charges/${chargeId}?associations=all`);
   }
 
+  /*
+   * @param clientId Client Id of payer.
+   * @param chargeId Charge Id of the charge to be paid.
+   */
+  getClientTransactionPay(clientId: string, chargeId: string) {
+    return this.http.get(`/clients/${clientId}/charges/${chargeId}`);
+  }
+
+  /**
+   * @param clientId Client Id of the payment.
+   * @param chargeId Charge Id of the payment.
+   * @param payment  Client Payment data.
+   */
+  payClientCharge(clientId: string, chargeId: string, payment: any) {
+    const httpParams = new HttpParams().set('command', 'paycharge');
+    return this.http.post(`/clients/${clientId}/charges/${chargeId}?command=paycharge`, payment, { params: httpParams });
+  }
+
   getClientSummary(clientId: string) {
     const httpParams = new HttpParams().set('R_clientId', clientId)
       .set('genericResultSet', 'false');
