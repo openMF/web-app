@@ -43,6 +43,7 @@ import { ReactivateClientComponent } from './clients-view/client-actions/reactiv
 import { UndoClientRejectionComponent } from './clients-view/client-actions/undo-client-rejection/undo-client-rejection.component';
 import { AddClientChargeComponent } from './clients-view/client-actions/add-client-charge/add-client-charge.component';
 import { ViewChargeComponent } from './clients-view/view-charge/view-charge.component';
+import { ClientPayChargesComponent } from './clients-view/client-pay-charges/client-pay-charges.component';
 
 
 /**
@@ -91,7 +92,8 @@ import { ViewChargeComponent } from './clients-view/view-charge/view-charge.comp
     ReactivateClientComponent,
     UndoClientRejectionComponent,
     AddClientChargeComponent,
-    ViewChargeComponent
+    ViewChargeComponent,
+    ClientPayChargesComponent
   ],
   entryComponents: [
     UploadDocumentDialogComponent,
