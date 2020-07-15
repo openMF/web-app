@@ -22,7 +22,7 @@
             <mat-label>Closure Reason</mat-label>
             <mat-select formControlName="closureReasonId">
               <mat-option *ngFor="let reason of closureData" [value]="reason.id">
-                {{ reason.description }}
+                {{ reason.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="closeClientForm.controls.closureReasonId.hasError('required')">
