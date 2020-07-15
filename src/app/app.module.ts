@@ -34,7 +34,7 @@ import { OrganizationModule } from './organization/organization.module';
 import { TemplatesModule } from './templates/templates.module';
 import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
-
+import { ConfigurationWizardModule } from './configuration-wizard/configuration-wizard.module';
 
 
 /** Main Routing Module */
@@ -68,6 +68,7 @@ import { AppRoutingModule } from './app-routing.module';
     OrganizationModule,
     TemplatesModule,
     UsersModule,
+    ConfigurationWizardModule,
     AppRoutingModule,
   ],
   declarations: [WebAppComponent, NotFoundComponent],
