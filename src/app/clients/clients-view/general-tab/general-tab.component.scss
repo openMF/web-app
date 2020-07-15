@@ -12,6 +12,9 @@
 
   table {
     width: 100%;
+    td:hover {
+      cursor: pointer;
+    }
     .account-action-button{
       min-width: 26px;
       padding: 0 6px;

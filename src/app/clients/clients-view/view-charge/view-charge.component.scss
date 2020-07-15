@@ -1,0 +1,19 @@
+.delBtn{
+    width: 20px !important;
+    height: 25px;
+    min-width: 20px!important;
+    line-height: 0px;
+    padding-left: 10px;
+    padding-right: 25px;
+}
+
+.strikeoff {
+    color: red !important;
+    text-decoration: line-through;
+    text-decoration-style: double;
+}
+
+.share-account-tables {
+    display: flex;
+    justify-content: space-between;
+} 

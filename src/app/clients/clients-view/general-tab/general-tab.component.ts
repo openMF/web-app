@@ -35,6 +35,8 @@ export class GeneralTabComponent {
   showClosedFixedAccounts = false;
 
   clientid: any;
+  /** Route to Charges */
+  routeToCharges: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -48,6 +50,11 @@ export class GeneralTabComponent {
       this.upcomingCharges = data.clientChargesData.pageItems;
       this.clientSummary = data.clientSummary[0];
       this.clientid = this.route.parent.snapshot.params['clientId'];
+  });
+
+    /** Get Client Id and generate the route link. */
+    this.route.parent.params.subscribe((params: any) => {
+      this.routeToCharges = '../../' + params.clientId + '/charges';
     });
   }
 
