@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Delete Client Signature</h1>
+
+<div *ngIf="signatureId" mat-dialog-content>
+  <p>Are you sure you want to delete this clients signature ?</p>
+</div>
+
+<div *ngIf="!signatureId" mat-dialog-content>
+  <p>Client Signature is not provided.</p>
+</div>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button *ngIf="signatureId" color="warn" [mat-dialog-close]="{ delete: true, id: signatureId }">Confirm</button>
+  <button mat-raised-button *ngIf="!signatureId" color="primary" [mat-dialog-close]="{ upload: true }">Upload</button>
+</mat-dialog-actions>

@@ -151,6 +151,18 @@ export class ClientsService {
     return this.http.skipErrorHandler().get(`/clients/${clientId}/images`, { params: httpParams, responseType: 'text' });
   }
 
+  uploadClientSignature(clientId: string, signature: File) {
+    const formData = new FormData();
+    formData.append('file', signature);
+    formData.append('filename', signature.name);
+    return this.http.post(`/clients/${clientId}/images`, formData);
+  }
+
+  getClientSignatureImage(clientId: string, documentId: string) {
+    const httpParams = new HttpParams().set('tenantIdentifier', 'default');
+    return this.http.get(`/clients/${clientId}/documents/${documentId}/attachment`, { params: httpParams, responseType: 'blob' });
+  }
+
   getClientFamilyMembers(clientId: string) {
     return this.http.get(`/clients/${clientId}/familymembers`);
   }

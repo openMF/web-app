@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Upload Client Signature</h1>
+
+<div>
+
+  <mifosx-file-upload flex="60%" (change)="onFileSelect($event)"></mifosx-file-upload>
+
+  <mat-dialog-actions align="end">
+      <button mat-raised-button mat-dialog-close>Cancel</button>
+      <button mat-raised-button color="primary" [disabled]="!signature" [mat-dialog-close]="signature">Confirm</button>
+  </mat-dialog-actions>
+
+</div>

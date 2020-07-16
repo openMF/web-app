@@ -6,6 +6,9 @@ import { MatDialog } from '@angular/material';
 
 /** Custom Dialogs */
 import { UnassignStaffDialogComponent } from './custom-dialogs/unassign-staff-dialog/unassign-staff-dialog.component';
+import { UploadSignatureDialogComponent } from './custom-dialogs/upload-signature-dialog/upload-signature-dialog.component';
+import { ViewSignatureDialogComponent } from './custom-dialogs/view-signature-dialog/view-signature-dialog.component';
+import { DeleteSignatureDialogComponent } from './custom-dialogs/delete-signature-dialog/delete-signature-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 /** Custom Services */
@@ -43,10 +46,8 @@ export class ClientsViewComponent implements OnInit {
     this.clientsService.getClientProfileImage(this.clientViewData.id).subscribe(
       (base64Image: any) => {
         this.clientImage = this._sanitizer.bypassSecurityTrustResourceUrl(base64Image);
-      },
-      (error: any) => {}
+      }, (error: any) => {}
     );
-
   }
 
   /**
@@ -76,6 +77,16 @@ export class ClientsViewComponent implements OnInit {
         break;
       case 'Delete':
         this.deleteClient();
+        break;
+      case 'View Signature':
+        this.viewSignature();
+        break;
+      case 'Upload Signature':
+        this.uploadSignature();
+        break;
+      case 'Delete Signature':
+        this.deleteSignature();
+        break;
     }
   }
 
@@ -118,6 +129,63 @@ export class ClientsViewComponent implements OnInit {
             this.reload();
           });
       }
+    });
+  }
+
+  /**
+   * Shows client signature in a dialog
+   */
+  private viewSignature() {
+    this.clientsService.getClientDocuments(this.clientViewData.id).subscribe((documents: any) => {
+      const viewSignatureDialogRef = this.dialog.open(ViewSignatureDialogComponent, {
+        data: {
+          documents: documents,
+          id: this.clientViewData.id
+        }
+      });
+      viewSignatureDialogRef.afterClosed().subscribe((response: any) => {
+        if (response.upload) {
+          this.uploadSignature();
+        } else if (response.delete) {
+          this.deleteSignature();
+        }
+      });
+    });
+  }
+
+  /**
+   * Uploads client signature
+   */
+  private uploadSignature() {
+    const uploadSignatureDialogRef = this.dialog.open(UploadSignatureDialogComponent);
+    uploadSignatureDialogRef.afterClosed().subscribe((signature: File) => {
+      if (signature) {
+        this.clientsService.uploadClientSignature(this.clientViewData.id, signature)
+          .subscribe(() => {
+            this.reload();
+          });
+      }
+    });
+  }
+
+  /**
+   * Deletes client signature
+   */
+  private deleteSignature() {
+    this.clientsService.getClientDocuments(this.clientViewData.id).subscribe((documents: any) => {
+      const deleteSignatureDialogRef = this.dialog.open(DeleteSignatureDialogComponent, {
+        data: documents
+      });
+      deleteSignatureDialogRef.afterClosed().subscribe((response: any) => {
+        if (response.delete) {
+          this.clientsService.deleteClientDocument(this.clientViewData.id, response.id)
+            .subscribe(() => {
+              this.reload();
+            });
+        } else if (response.upload) {
+          this.uploadSignature();
+        }
+      });
     });
   }
 

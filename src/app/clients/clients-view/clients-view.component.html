@@ -47,6 +47,9 @@
         <button mat-menu-item (click)="doAction('Update Default Savings')"> Update Default Savings </button>
         <button mat-menu-item (click)="doAction('Transfer Client')"> Transfer Client </button>
         <button mat-menu-item (click)="doAction('Add Charge')"> Add Charge </button>
+        <button mat-menu-item (click)="doAction('Upload Signature')"> Upload Signature </button>
+        <button mat-menu-item (click)="doAction('Delete Signature')"> Delete Signature </button>
+        <button mat-menu-item (click)="doAction('View Signature')"> View Signature </button>
         <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item (click)="doAction('Undo Transfer')">Undo Transfer</button></span>
         <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item (click)="doAction('Accept Transfer')">Accept Transfer</button></span>
         <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item (click)="doAction('Reject Transfer')">Reject transfer</button></span>
