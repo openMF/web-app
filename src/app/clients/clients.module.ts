@@ -44,6 +44,9 @@ import { UndoClientRejectionComponent } from './clients-view/client-actions/undo
 import { AddClientChargeComponent } from './clients-view/client-actions/add-client-charge/add-client-charge.component';
 import { ViewChargeComponent } from './clients-view/charges/view-charge/view-charge.component';
 import { ClientPayChargesComponent } from './clients-view/charges/client-pay-charges/client-pay-charges.component';
+import { ViewSignatureDialogComponent } from './clients-view/custom-dialogs/view-signature-dialog/view-signature-dialog.component';
+import { UploadSignatureDialogComponent } from './clients-view/custom-dialogs/upload-signature-dialog/upload-signature-dialog.component';
+import { DeleteSignatureDialogComponent } from './clients-view/custom-dialogs/delete-signature-dialog/delete-signature-dialog.component';
 
 
 /**
@@ -93,12 +96,18 @@ import { ClientPayChargesComponent } from './clients-view/charges/client-pay-cha
     UndoClientRejectionComponent,
     AddClientChargeComponent,
     ViewChargeComponent,
-    ClientPayChargesComponent
+    ClientPayChargesComponent,
+    ViewSignatureDialogComponent,
+    UploadSignatureDialogComponent,
+    DeleteSignatureDialogComponent
   ],
   entryComponents: [
     UploadDocumentDialogComponent,
     EditNotesDialogComponent,
-    UnassignStaffDialogComponent
+    UnassignStaffDialogComponent,
+    ViewSignatureDialogComponent,
+    UploadSignatureDialogComponent,
+    DeleteSignatureDialogComponent
   ],
   providers: [DatePipe]
 
