@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 /**
  * Custom file upload component based on angular material.
@@ -9,21 +9,20 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.scss']
 })
-export class FileUploadComponent implements OnInit {
+export class FileUploadComponent {
 
-  /** Name of file. */
-  fileName = '';
+  /** Form field flex dimension */
+  @Input() flex: any;
+  /** Selected file name */
+  fileName: File;
 
   constructor() { }
 
-  ngOnInit() {
-  }
-
   /**
-   * Uploads a file.
-   * @param {any} event The file input change event.
+   * Sets the file name.
+   * @param {any} event File input change event.
    */
-  onFileSelected($event: any) {
+  onFileSelect($event: any) {
     this.fileName = $event.target.files[0].name;
   }
 

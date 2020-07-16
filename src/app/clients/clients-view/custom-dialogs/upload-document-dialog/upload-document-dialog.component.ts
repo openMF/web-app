@@ -8,14 +8,22 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
   styleUrls: ['./upload-document-dialog.component.scss']
 })
 export class UploadDocumentDialogComponent implements OnInit {
+
   /** Upload Document form. */
   uploadDocumentForm: FormGroup;
-  file: any;
+  /** Upload Document Data */
   uploadDocumentData: any = [];
+  /** Triggers description field */
   documentIdentifier = false;
+
+  /**
+   * @param {MatDialogRef} dialogRef Dialog reference element
+   * @param {FormBuilder} formBuilder Form Builder
+   * @param {any} data Dialog Data
+   */
   constructor(public dialogRef: MatDialogRef<UploadDocumentDialogComponent>,
-    private formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
+              private formBuilder: FormBuilder,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
     this.documentIdentifier = data.documentIdentifier;
   }
 
@@ -33,12 +41,18 @@ export class UploadDocumentDialogComponent implements OnInit {
       'file': ['']
     });
   }
-  onFileSelect(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
+
+  /**
+   * Sets file form control value.
+   * @param {any} $event file change event.
+   */
+  onFileSelect($event: any) {
+    if ($event.target.files.length > 0) {
+      const file = $event.target.files[0];
       this.uploadDocumentForm.get('file').setValue(file);
     }
   }
+
 }
 
 
