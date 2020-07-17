@@ -49,12 +49,14 @@ import { DisburseComponent } from './loans-view/loan-account-actions/disburse/di
 import { RejectLoanComponent } from './loans-view/loan-account-actions/reject-loan/reject-loan.component';
 import { WithdrawnByClientComponent } from './loans-view/loan-account-actions/withdrawn-by-client/withdrawn-by-client.component';
 import { UndoDisbursalComponent } from './loans-view/loan-account-actions/undo-disbursal/undo-disbursal.component';
+import { AddCollateralComponent } from './loans-view/loan-account-actions/add-collateral/add-collateral.component';
+import { LoanDocumentsTabComponent } from './loans-view/loan-documents-tab/loan-documents-tab.component';
 
 /** Dialog Components */
 import { LoansAccountViewGuarantorDetailsDialogComponent } from './custom-dialog/loans-account-view-guarantor-details-dialog/loans-account-view-guarantor-details-dialog.component';
 import { LoansAccountAddCollateralDialogComponent } from './custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
 import { LoansConfirmationDialogBoxComponent } from './custom-dialog/loans-confirmation-dialog-box/loans-confirmation-dialog-box.component';
-import { AddCollateralComponent } from './loans-view/loan-account-actions/add-collateral/add-collateral.component';
+import { LoanAccountLoadDocumentsDialogComponent } from './custom-dialog/loan-account-load-documents-dialog/loan-account-load-documents-dialog.component';
 
 /**
  * Loans Module
@@ -108,11 +110,14 @@ import { AddCollateralComponent } from './loans-view/loan-account-actions/add-co
     WithdrawnByClientComponent,
     AddCollateralComponent,
     UndoDisbursalComponent,
+    LoanDocumentsTabComponent,
+    LoanAccountLoadDocumentsDialogComponent,
   ],
   entryComponents: [
     LoansAccountAddCollateralDialogComponent,
     LoansAccountViewGuarantorDetailsDialogComponent,
-    LoansConfirmationDialogBoxComponent
+    LoansConfirmationDialogBoxComponent,
+    LoanAccountLoadDocumentsDialogComponent
   ],
   providers: [DatePipe],
 })

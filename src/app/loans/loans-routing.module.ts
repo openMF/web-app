@@ -22,18 +22,19 @@ import { FloatingInterestRatesComponent } from './loans-view/floating-interest-r
 import { LoanTrancheDetailsComponent } from './loans-view/loan-tranche-details/loan-tranche-details.component';
 import { LoanCollateralTabComponent } from './loans-view/loan-collateral-tab/loan-collateral-tab.component';
 import { CreateLoansAccountComponent } from './create-loans-account/create-loans-account.component';
-import { RejectLoanComponent } from './loans-view/loan-account-actions/reject-loan/reject-loan.component';
+import { LoanDocumentsTabComponent } from './loans-view/loan-documents-tab/loan-documents-tab.component';
 
 /** Custom Resolvers */
 import { LoanChargeTemplateResolver } from './common-resolvers/loan-charge-template.resolver';
 import { LoanDetailsResolver } from './common-resolvers/loan-details.resolver';
 import { LoanDetailsGeneralResolver } from './common-resolvers/loan-details-general.resolver';
-import { LoanNotesResolver } from './common-resolvers/loan-notes-resolver';
+import { LoanNotesResolver } from './common-resolvers/loan-notes.resolver';
 import { LoanDetailsChargesResolver } from './common-resolvers/loan-details-charges.resolver';
 import { LoanDatatablesResolver } from './common-resolvers/loan-datatables.resolver';
 import { LoanDatatableResolver } from './common-resolvers/loan-datatable.resolver';
 import { LoanActionButtonResolver } from './common-resolvers/loan-action-button.resolver';
 import { LoansAccountTemplateResolver } from './common-resolvers/loans-account-template.resolver';
+import { LoanDocumentsResolver } from './common-resolvers/loan-documents.resolver';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -140,6 +141,15 @@ const routes: Routes = [
           }
         },
         {
+          path: 'loan-documents',
+          component: LoanDocumentsTabComponent,
+          data: { title: extract('Loan Documents'), breadcrumb: 'Loan Documents', routeParamBreadcrumb: false },
+          resolve: {
+            loanDocuments: LoanDocumentsResolver,
+            loanDetailsData: LoanDetailsGeneralResolver
+          },
+        },
+        {
           path: 'notes',
           component: NotesTabComponent,
           data: { title: extract('Notes'), breadcrumb: 'Notes', routeParamBreadcrumb: false },
@@ -191,7 +201,8 @@ const routes: Routes = [
     LoanDatatablesResolver,
     LoanDatatableResolver,
     LoanActionButtonResolver,
-    LoansAccountTemplateResolver
+    LoansAccountTemplateResolver,
+    LoanDocumentsResolver
   ]
 })
 

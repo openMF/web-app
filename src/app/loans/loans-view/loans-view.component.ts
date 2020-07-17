@@ -123,8 +123,6 @@ export class LoansViewComponent implements OnInit {
   }
 
   loanAction(button: string) {
-    console.log('button: ', button);
-
     switch (button) {
       case 'Recover From Guarantor':
         this.recoverFromGuarantor();
