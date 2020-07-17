@@ -38,13 +38,16 @@
       <ng-container matColumnDef="vaultActions">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Vault Actions </th>
         <td mat-cell *matCellDef="let cashier">
-          <button class="cashier-action-button" mat-raised-button color="accent" matTooltip="Allocate Cash">
+          <button class="cashier-action-button" mat-raised-button color="accent" matTooltip="Allocate Cash"
+            (click)="routeEdit($event)" [routerLink]="[cashier.id, 'allocate']">
             <i class="fa fa-arrow-up"></i>
           </button>
-          <button class="cashier-action-button" mat-raised-button color="warn" matTooltip="Settle Cash">
+          <button class="cashier-action-button" mat-raised-button color="warn" matTooltip="Settle Cash"
+            (click)="routeEdit($event)" [routerLink]="[cashier.id, 'settle']">
             <i class="fa fa-arrow-down"></i>
           </button>
-          <button class="cashier-action-button" mat-raised-button color="primary" matTooltip="View Transactions">
+          <button class="cashier-action-button" mat-raised-button color="primary" matTooltip="View Transactions"
+            (click)="routeEdit($event)" [routerLink]="[cashier.id, 'transactions']">
             <i class="fa fa-eye"></i>
           </button>   
         </td>

@@ -1,27 +1,31 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
 
-  <button mat-raised-button color="primary">
-    <fa-icon icon="upload"></fa-icon>&nbsp;&nbsp;
-    Import Employees
-  </button>
+  <div #buttonImportEmployees>
+    <button mat-raised-button color="primary">
+      <fa-icon icon="upload"></fa-icon>&nbsp;&nbsp;
+      Import Employees
+    </button>
+  </div>
 
+  <div #buttonCreateEmployee>
   <button mat-raised-button color="primary" [routerLink]="['create']">
     <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
     Create Employee
   </button>
+  </div>
 
 </div>
 
 <div class="container">
 
-  <div fxLayout="row" fxLayoutGap="20px">
+  <div #filter fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
       <mat-label>Filter</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)">
     </mat-form-field>
   </div>
 
-  <div class="mat-elevation-z8">
+  <div #tableEmployees class="mat-elevation-z8">
 
     <table mat-table [dataSource]="dataSource" matSort>
 
@@ -64,3 +68,37 @@
   </div>
 
 </div>
+
+<ng-template #templateButtonImportEmployees let-data let-popover="popover">
+  <h2>Import Employees</h2>
+  <p class="mw300">This button is used to import employee details from your local device.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonCreateEmployee,buttonCreateEmployee,'bottom', true)">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateButtonCreateEmployee let-popover="popover">
+  <h2>Create Employee</h2>
+  <p class="mw300">This option allows you to create new employees in your organization.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonImportEmployees,buttonImportEmployees,'bottom', true)">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter,'bottom', true)">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateFilter let-popover="popover">
+  <h4>Search bar to filter employees.</h4>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonCreateEmployee,buttonCreateEmployee,'bottom', true)">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateTableEmployees,tableEmployees,'top', true)">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateTableEmployees let-popover="popover">
+  <h4>List of employees in the organization.</h4>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter,'bottom', true)">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
+  </div>
+</ng-template>

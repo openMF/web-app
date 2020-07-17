@@ -6,8 +6,8 @@
 
       <mat-card-content>
 
-        <div fxLayout="column">
-
+        <div #createEmployeeFormRef fxLayout="column">
+          
           <mat-form-field>
             <mat-label>Office</mat-label>
             <mat-select required formControlName="officeId">
@@ -19,7 +19,7 @@
               Office is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-
+          
           <mat-form-field>
             <mat-label>First Name</mat-label>
             <input matInput required formControlName="firstname">
@@ -75,3 +75,13 @@
   </mat-card>
 
 </div>
+
+<ng-template #templateCreateEmployeeForm let-popover="popover">
+  <h2>Create Employee</h2>
+  <p class="mw300">Click to start filling the details. * mark fields are neccessary. <br> For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141732/Manage+Employees" target="_blank">Manage Employees</a></p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close()">Create Employee</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button> 
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
+  </div>
+</ng-template>

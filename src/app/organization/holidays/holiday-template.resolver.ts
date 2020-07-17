@@ -1,18 +1,18 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
+import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { OrganizationService } from 'app/organization/organization.service';
 
 /**
- * Adhoc Queries data resolver.
+ * Holiday data template resolver.
  */
 @Injectable()
-export class AdhocQueriesResolver implements Resolve<Object> {
+export class HolidayTemplateResolver implements Resolve<Object> {
 
   /**
    * @param {OrganizationService} organizationService Organization service.
@@ -20,11 +20,11 @@ export class AdhocQueriesResolver implements Resolve<Object> {
   constructor(private organizationService: OrganizationService) {}
 
   /**
-   * Returns the adhoc queries data.
+   * Returns the holiday data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.organizationService.getAdhocQueries();
+    return this.organizationService.getHolidayTemplate();
   }
 
 }

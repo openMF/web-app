@@ -1,15 +1,17 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
 
-  <button mat-raised-button color="primary">
-    <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
-    Create Holiday
-  </button>
+  <div #buttonCreateHoliday class="in-block">
+    <button mat-raised-button color="primary">
+      <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+      Create Holiday
+    </button>
+  </div>
 
 </div>
 
 <div class="container">
 
-  <div fxLayout="row" fxLayoutGap="20px">
+  <div #filterRef fxLayout="row" fxLayoutGap="20px">
 
     <mat-form-field fxFlex>
       <mat-label>Filter</mat-label>
@@ -65,3 +67,20 @@
   </div>
 
 </div>
+
+<ng-template #templateButtonCreateHoliday let-popover="popover">
+  <h2>Create Holiday</h2>
+  <p class="mw300">This option allows you to create holidays for different offices in your organization.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep();">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilterRef,filterRef,'bottom', true);">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateFilterRef let-popover="popover">
+  <h4>Search bar to filter holidays based on different offices.</h4>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonCreateHoliday,buttonCreateHoliday,'bottom', true);">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep();">Next</button>
+  </div>
+</ng-template>

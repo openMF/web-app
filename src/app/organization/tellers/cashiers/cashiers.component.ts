@@ -32,7 +32,6 @@ export class CashiersComponent implements OnInit {
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe(( data: { cashiersData: any }) => {
       this.cashiersData = data.cashiersData.cashiers;
-      console.log(this.cashiersData);
     });
   }
 
@@ -58,6 +57,14 @@ export class CashiersComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.cashiersData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  /**
+   * Stops the propagation to view pages.
+   * @param $event Mouse Event
+   */
+  routeEdit($event: MouseEvent) {
+    $event.stopPropagation();
   }
 
 }
