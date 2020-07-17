@@ -50,6 +50,8 @@
         <button mat-menu-item (click)="doAction('Upload Signature')"> Upload Signature </button>
         <button mat-menu-item (click)="doAction('Delete Signature')"> Delete Signature </button>
         <button mat-menu-item (click)="doAction('View Signature')"> View Signature </button>
+        <button mat-menu-item (click)="doAction('Upload Image')"> Upload Image </button>
+        <span *ngIf="clientImage"><button mat-menu-item (click)="doAction('Delete Image')"> Delete Image </button></span>
         <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item (click)="doAction('Undo Transfer')">Undo Transfer</button></span>
         <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item (click)="doAction('Accept Transfer')">Accept Transfer</button></span>
         <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item (click)="doAction('Reject Transfer')">Reject transfer</button></span>

@@ -151,7 +151,18 @@ export class ClientsService {
     return this.http.skipErrorHandler().get(`/clients/${clientId}/images`, { params: httpParams, responseType: 'text' });
   }
 
-  uploadClientSignature(clientId: string, signature: File) {
+  uploadClientProfileImage(clientId: string, image: File) {
+    const formData = new FormData();
+    formData.append('file', image);
+    formData.append('filename', 'file');
+    return this.http.post(`/clients/${clientId}/images`, formData);
+  }
+
+  deleteClientProfileImage(clientId: string) {
+    return this.http.delete(`/clients/${clientId}/images`);
+  }
+
+  uploadClientSignatureImage(clientId: string, signature: File) {
     const formData = new FormData();
     formData.append('file', signature);
     formData.append('filename', signature.name);

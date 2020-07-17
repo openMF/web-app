@@ -47,6 +47,7 @@ import { ClientPayChargesComponent } from './clients-view/charges/client-pay-cha
 import { ViewSignatureDialogComponent } from './clients-view/custom-dialogs/view-signature-dialog/view-signature-dialog.component';
 import { UploadSignatureDialogComponent } from './clients-view/custom-dialogs/upload-signature-dialog/upload-signature-dialog.component';
 import { DeleteSignatureDialogComponent } from './clients-view/custom-dialogs/delete-signature-dialog/delete-signature-dialog.component';
+import { UploadImageDialogComponent } from './clients-view/custom-dialogs/upload-image-dialog/upload-image-dialog.component';
 
 
 /**
@@ -99,7 +100,8 @@ import { DeleteSignatureDialogComponent } from './clients-view/custom-dialogs/de
     ClientPayChargesComponent,
     ViewSignatureDialogComponent,
     UploadSignatureDialogComponent,
-    DeleteSignatureDialogComponent
+    DeleteSignatureDialogComponent,
+    UploadImageDialogComponent
   ],
   entryComponents: [
     UploadDocumentDialogComponent,
@@ -107,7 +109,8 @@ import { DeleteSignatureDialogComponent } from './clients-view/custom-dialogs/de
     UnassignStaffDialogComponent,
     ViewSignatureDialogComponent,
     UploadSignatureDialogComponent,
-    DeleteSignatureDialogComponent
+    DeleteSignatureDialogComponent,
+    UploadImageDialogComponent
   ],
   providers: [DatePipe]
 
