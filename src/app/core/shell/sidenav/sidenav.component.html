@@ -9,7 +9,7 @@
     <!-- TODO: Allow customization by organization -->
     <div class="app-brand" [routerLink]="['/home']">
       <img src="assets/images/MifosX_logo.png" alt="app-logo" class="app-logo">
-      <span class="app-logo-text text-muted">Mifos</span>
+      <span #logo class="app-logo-text text-muted">Mifos</span>
     </div>
 
     <div class="app-user">
@@ -20,7 +20,7 @@
       <span class="app-user-name mb-05">
         {{ username }}
       </span>
-      <div class="app-user-controls">
+      <div #userPanel class="app-user-controls">
         <button class="text-muted xs-button" mat-icon-button matTooltip="Settings" [routerLink]="['/settings']">
           <fa-icon icon="cog"></fa-icon>
         </button>
@@ -33,26 +33,28 @@
     <div class="app-sidenav">
 
       <!-- TODO: Generate frequently accessed routes dynamically -->
-      <div class="mt-1 mb-1 nav-item-sep">
-        <mat-divider></mat-divider>
-        <span class="text-muted icon-menu-title">Frequently Accessed</span>
-      </div>
-      <div class="icon-menu">
-        <div class="icon-menu-item">
-          <button mat-raised-button matTooltip="Home" [routerLink]="['/home']">
-            <fa-icon icon="home" size="lg"></fa-icon>
-          </button>
-        </div>
-        <div class="icon-menu-item">
-          <button mat-raised-button matTooltip="Dashboard" [routerLink]="['/dashboard']">
-            <fa-icon icon="tachometer-alt" size="lg"></fa-icon>
-          </button>
-        </div>
-        <div class="icon-menu-item">
-          <button mat-raised-button matTooltip="Navigation" [routerLink]="['/navigation']">
-            <fa-icon icon="location-arrow" size="lg"></fa-icon>
-          </button>
-        </div>
+      <div #frequentlyAccessed>
+	      <div class="mt-1 mb-1 nav-item-sep">
+	        <mat-divider></mat-divider>
+	        <span class="text-muted icon-menu-title">Frequently Accessed</span>
+	      </div>
+	      <div class="icon-menu">
+	        <div class="icon-menu-item">
+	          <button mat-raised-button matTooltip="Home" [routerLink]="['/home']">
+	            <fa-icon icon="home" size="lg"></fa-icon>
+	          </button>
+	        </div>
+	        <div class="icon-menu-item">
+	          <button mat-raised-button matTooltip="Dashboard" [routerLink]="['/dashboard']">
+	            <fa-icon icon="tachometer-alt" size="lg"></fa-icon>
+	          </button>
+	        </div>
+	        <div class="icon-menu-item">
+	          <button mat-raised-button matTooltip="Navigation" [routerLink]="['/navigation']">
+	            <fa-icon icon="location-arrow" size="lg"></fa-icon>
+	          </button>
+	        </div>
+	      </div>
       </div>
 
       <div class="nav-item-sep">
@@ -65,31 +67,31 @@
           <mat-icon matListIcon>
             <fa-icon icon="tachometer-alt" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine>Dashboard</a>
+          <a matLine #dashboard>Dashboard</a>
         </mat-list-item>
         <mat-list-item [routerLink]="['/navigation']">
           <mat-icon matListIcon>
             <fa-icon icon="location-arrow" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine>Navigation</a>
+          <a matLine #navigation>Navigation</a>
         </mat-list-item>
         <mat-list-item [routerLink]="['/accounting/journal-entries/frequent-postings']">
           <mat-icon matListIcon>
             <fa-icon icon="sync" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine>Frequent Postings</a>
+          <a matLine #frequentPostings>Frequent Postings</a>
         </mat-list-item>
         <mat-list-item [routerLink]="['/accounting/journal-entries/create']">
           <mat-icon matListIcon>
             <fa-icon icon="plus" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine>Create Journal Entry</a>
+          <a matLine #createJournalEntry>Create Journal Entry</a>
         </mat-list-item>
         <mat-list-item [routerLink]="['/accounting/chart-of-accounts']">
           <mat-icon matListIcon>
             <fa-icon icon="sitemap" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine>Chart of Accounts</a>
+          <a matLine #chartOfAccounts>Chart of Accounts</a>
         </mat-list-item>
       </mat-nav-list>
 
@@ -98,3 +100,75 @@
   </div>
 
 </div>
+
+
+<ng-template #templateLogo let-popover="popover">
+  <p class="mw300">This logo will return the user to the welcome page from anywhere in the system..</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateUserPanel,userPanel,'bottom', true);">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateUserPanel let-popover="popover">
+  <h2>User Panel</h2>
+  <p class="mw300">This section contains user name, user photograph, user settings and sign out button.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateLogo,logo,'bottom', true);">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFrequentlyAccessed,frequentlyAccessed,'bottom', true);">Next</button>
+  </div>  
+</ng-template>
+
+<ng-template #templateFrequentlyAccessed let-popover="popover">
+  <h2>Frequently Accessed</h2>
+  <p class="mw300">This contains shortcut to the frequently accessed components.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateUserPanel,userPanel,'bottom', true);">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateDashboard,dashboard,'bottom', true);">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateDashboard let-popover="popover">
+  <h2>Dashboard</h2>
+  <p class="mw300">This will navigate the user to dashboard component.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFrequentlyAccessed,frequentlyAccessed,'bottom', true);">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateNavigation,navigation,'bottom', true);">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateNavigation let-popover="popover">
+  <h2>Navigation</h2>
+  <p class="mw300">This will navigate the user to entity navigation screen.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateDashboard,dashboard,'bottom', true);">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFrequentPostings,frequentPostings,'bottom', true);">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateFrequentPostings let-popover="popover">
+  <h2>Frequent Postings</h2>
+  <p class="mw300">Shortcut to Journal entry screen with accouting rules in place</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateNavigation,navigation,'bottom', true);">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateCreateJournalEntry,createJournalEntry,'top', true);">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateCreateJournalEntry let-popover="popover">
+  <h2>Create Journal Entry</h2>
+  <p class="mw300">Shortcut to the create journal entry screen.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFrequentPostings,frequentPostings,'bottom', true);">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateChartOfAccounts,chartOfAccounts,'top', true);">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateChartOfAccounts let-popover="popover">
+  <h2>Chart of Accounts</h2>
+  <p class="mw300">Shortcut to chart of accounts screen to add/modify the ledger accounts.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateCreateJournalEntry,createJournalEntry,'top', true);">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
+  </div>
+</ng-template>
