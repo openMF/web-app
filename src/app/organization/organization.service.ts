@@ -226,11 +226,29 @@ export class OrganizationService {
   }
 
   /**
+   * @param {string} adhocQueryId Adhoc Query ID of adhoc query.
+   * @returns {Observable<any>} Adhoc query and template.
+   */
+  getAdhocQueryAndTemplate(adhocQueryId: string): Observable<any> {
+    const httpParams = new HttpParams().set('template', 'true');
+    return this.http.get(`/adhocquery/${adhocQueryId}`, { params: httpParams });
+  }
+
+  /**
    * @param {any} adhocQuery Adhoc Query to be created.
    * @returns {Observable<any>}
    */
   createAdhocQuery(adhocQuery: any): Observable<any> {
     return this.http.post('/adhocquery', adhocQuery);
+  }
+
+  /**
+   * @param {any} queryId Query Id
+   * @param {any} adhocQuery Adhoc Query to be created.
+   * @returns {Observable<any>}
+   */
+  updateAdhocQuery(queryId: any, adhocQuery: any): Observable<any> {
+    return this.http.put(`/adhocquery/${queryId}`, adhocQuery);
   }
 
   /**
@@ -271,6 +289,86 @@ export class OrganizationService {
    */
   getCashier(tellerId: string, cashierId: string): Observable<any> {
     return this.http.get(`/tellers/${tellerId}/cashiers/${cashierId}`);
+  }
+
+  /**
+   * @param {string} tellerId Teller Id
+   * @param {string} cashierId Cashier Id
+   * @param {string} currencyCode Currency Code
+   * @returns {Observable<any>}
+   */
+  getCashierSummaryAndTransactions(tellerId: string, cashierId: string, currencyCode: string): Observable<any> {
+    const httpParams = new HttpParams().set('currencyCode', currencyCode);
+    return this.http.get(`/tellers/${tellerId}/cashiers/${cashierId}/summaryandtransactions`, { params: httpParams });
+  }
+
+  /**
+   * Get Cashier Transaction template.
+   * @param {string} tellerId Teller Id.
+   * @param {string} cashierId Cashier Id.
+   * @returns {Observable<any>} Cashier Transaction data.
+   */
+  getCashierTransactionTemplate(tellerId: string, cashierId: string): Observable<any> {
+    return this.http.get(`/tellers/${tellerId}/cashiers/${cashierId}/transactions/template`);
+  }
+
+  /**
+   * @param {string} tellerId Teller Id
+   * @param {any} cashier Cashier
+   * @returns {Observable<any>}
+   */
+  createCashier(tellerId: string, cashier: any): Observable<any> {
+    return this.http.post(`/tellers/${tellerId}/cashiers`, cashier);
+  }
+
+  /**
+   * @param {string} tellerId Teller ID of teller.
+   * @param {string} cashierId Cashier ID of cashier
+   * @returns {Observable<any>}
+   */
+  deleteCashier(tellerId: string, cashierId: string): Observable<any> {
+    return this.http.delete(`/tellers/${tellerId}/cashiers/${cashierId}`);
+  }
+
+  /**
+   * @param {string} tellerId Teller Id.
+   * @param {string} cashierId Cashier Id.
+   * @param {string} cashData Cash Data.
+   * @returns {Observable<any>}
+   */
+  settleCash(tellerId: string, cashierId: string, cashData: any): Observable<any> {
+    const httpParams = new HttpParams().set('command', 'settle');
+    return this.http.post(`/tellers/${tellerId}/cashiers/${cashierId}/settle`, cashData, {params: httpParams});
+  }
+
+  /**
+   * @param {string} tellerId Teller Id.
+   * @param {string} cashierId Cashier Id.
+   * @param {string} cashData Cash Data.
+   * @returns {Observable<any>}
+   */
+  allocateCash(tellerId: string, cashierId: string, cashData: any): Observable<any> {
+    const httpParams = new HttpParams().set('command', 'allocate');
+    return this.http.post(`/tellers/${tellerId}/cashiers/${cashierId}/allocate`, cashData, {params: httpParams});
+  }
+
+  /** Get Cashier Template.
+   * @param tellerId Teller ID.
+   * @returns {Observable<any>} Cashier template.
+   */
+  getCashierTemplate(tellerId: string): Observable<any> {
+    return this.http.get(`/tellers/${tellerId}/cashiers/template`);
+  }
+
+  /**
+   * Update Cashier.
+   * @param tellerId Teller Id.
+   * @param cashierId Cashier Id.
+   * @param cashierData Cashier data to be updated.
+   * @returns {Observable<any>}
+   */
+  updateCashier(tellerId: string, cashierId: string, cashierData: any): Observable<any> {
+    return this.http.put(`/tellers/${tellerId}/cashiers/${cashierId}`, cashierData);
   }
 
   /**
@@ -398,11 +496,29 @@ export class OrganizationService {
   }
 
   /**
+   * Get Holiday template.
+   * @returns {Observable<any>} Holiday data.
+   */
+  getHolidayTemplate(): Observable<any> {
+    return this.http.get('/holidays/template');
+  }
+
+  /**
+   * Update Holiday.
+   * @param holidayId Holiday Id to be updated.
+   * @param holidayData Holiday data to be updated.
+   * @returns {Observable<any>}
+   */
+  updateHoliday(holidayId: any, holidayData: any): Observable<any> {
+    return this.http.put(`/holidays/${holidayId}`, holidayData);
+  }
+
+  /**
    * Delete Holiday.
    * @param holidayId Holiday Id to be deleted.
    * @returns {Observable<any>} Resource Id.
    */
-  deleteHoliday(holidayId: string) {
+  deleteHoliday(holidayId: string): Observable<any> {
     return this.http.delete(`/holidays/${holidayId}`);
   }
 

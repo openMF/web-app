@@ -8,29 +8,35 @@
 
         <mat-nav-list>
 
-          <mat-list-item [routerLink]="['offices']">
-            <mat-icon matListIcon>
-              <fa-icon icon="building" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>Manage Offices</h4>
-            <p matLine>Add new office or modify or deactivate office or modify hierarchy</p>
-          </mat-list-item>
+          <div #office>
+            <mat-list-item [routerLink]="['offices']">
+              <mat-icon matListIcon>
+                <fa-icon icon="building" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>Manage Offices</h4>
+              <p matLine>Add new office or modify or deactivate office or modify hierarchy</p>
+            </mat-list-item>
+          </div>
 
-          <mat-list-item [routerLink]="['holidays']">
-            <mat-icon matListIcon>
-              <fa-icon icon="calendar-alt" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>Manage Holidays</h4>
-            <p matLine>Define holidays for office</p>
-          </mat-list-item>
+          <div #holidays>
+            <mat-list-item [routerLink]="['holidays']">
+              <mat-icon matListIcon>
+                <fa-icon icon="calendar-alt" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>Manage Holidays</h4>
+              <p matLine>Define holidays for office</p>
+            </mat-list-item>
+          </div>
 
-          <mat-list-item [routerLink]="['employees']">
-            <mat-icon matListIcon>
-              <fa-icon icon="user" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>Manage Employees</h4>
-            <p matLine>An employee represents loan officers with no access to systems</p>
-          </mat-list-item>
+          <div #employee>
+            <mat-list-item [routerLink]="['employees']">
+              <mat-icon matListIcon>
+                <fa-icon icon="user" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>Manage Employees</h4>
+              <p matLine>An employee represents loan officers with no access to systems</p>
+            </mat-list-item>
+          </div>
 
           <mat-list-item>
             <mat-icon matListIcon>
@@ -80,22 +86,25 @@
 
         <mat-nav-list>
 
-          <mat-list-item [routerLink]="['currencies']">
-            <mat-icon matListIcon>
-              <fa-icon icon="cogs" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>Currency Configuration</h4>
-            <p matLine>Currencies available across organization for different products</p>
-          </mat-list-item>
+          <div #addEditCurrency>
+            <mat-list-item [routerLink]="['currencies']">
+              <mat-icon matListIcon>
+                <fa-icon icon="cogs" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>Currency Configuration</h4>
+              <p matLine>Currencies available across organization for different products</p>
+            </mat-list-item>
+          </div>
 
-
-          <mat-list-item [routerLink]="['manage-funds']">
-            <mat-icon matListIcon>
-              <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>Manage Funds</h4>
-            <p matLine>Funds are associated with loans</p>
-          </mat-list-item>
+          <div #manageFunds>
+            <mat-list-item [routerLink]="['manage-funds']">
+              <mat-icon matListIcon>
+                <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>Manage Funds</h4>
+              <p matLine>Funds are associated with loans</p>
+            </mat-list-item>
+          </div>
 
           <mat-list-item>
             <mat-icon matListIcon>
@@ -113,13 +122,15 @@
             <p matLine>Manage Tellers / Cashiers and Cash Allocation and Settlement</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['working-days']">
-            <mat-icon matListIcon>
-              <fa-icon icon="calendar-alt" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>Working Days</h4>
-            <p matLine>Define working days and configure behaviour of payments due on holidays</p>
-          </mat-list-item>
+          <div #workingDays>
+            <mat-list-item [routerLink]="['working-days']">
+              <mat-icon matListIcon>
+                <fa-icon icon="calendar-alt" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>Working Days</h4>
+              <p matLine>Define working days and configure behaviour of payments due on holidays</p>
+            </mat-list-item>
+          </div>
 
           <mat-list-item [routerLink]="['payment-types']">
             <mat-icon matListIcon>
@@ -162,3 +173,57 @@
   </mat-card>
 
 </div>
+
+<ng-template #templateOffice let-popover="popover">
+  <h2>Manage Offices</h2>
+  <p class="mw300">The Manage Offices page allows you to create, edit and add the offices within your organization.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();previousStepOffice()">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStepOffice()">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateAddEditCurrency let-popover="popover">
+  <h2>Currency Configuration</h2>
+  <p class="mw300">This section allows an organization to define what currencies will be used throughout their interactions within the Mifos X system.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();previousStepAddEditCurrency()">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStepAddEditCurrency()">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateHolidays let-popover="popover">
+  <h2>Manage Holidays</h2>
+  <p class="mw300">The ability to manage holidays for individual offices is a very useful tool for an organization spanning multiple locations.Use this option to customize holidays for each office of your organization.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();previousStepHolidays()">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStepHolidays()">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateEmployee let-popover="popover">
+  <h2>Manage Employees</h2>
+  <p class="mw300">With this option, you may view, edit and/or delete your organization's employees.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();previousStepEmployee()">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStepEmployee()">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateWorkingDays let-popover="popover">
+  <h2>Working Days</h2>
+  <p class="mw300">Working days page allows you to define which days of the week are working days.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();previousStepWorkingDays()">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStepWorkingDays()">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateManageFunds let-popover="popover">
+  <h2>Manage Funds</h2>
+  <p class="mw300">This allows you to manage funds associated with loans.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();previousStepManageFunds()">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStepManageFunds()">Next</button>
+  </div>
+</ng-template>

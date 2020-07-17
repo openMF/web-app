@@ -1,0 +1,79 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="holidayForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput required autofocus formControlName="name">
+            <mat-error *ngIf="holidayForm.controls.name.hasError('required')">
+              Name <strong>is required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="!isActiveHoliday">
+            <mat-label>From Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fromDatePicker" required formControlName="fromDate">
+            <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #fromDatePicker></mat-datepicker>
+            <mat-error *ngIf="holidayForm.controls.fromDate.hasError('required')">
+              From Date <strong>is required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="!isActiveHoliday">
+            <mat-label>To Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="toDatePicker" required formControlName="toDate">
+            <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #toDatePicker></mat-datepicker>
+            <mat-error *ngIf="holidayForm.controls.toDate.hasError('required')">
+              To Date <strong>is required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="!isActiveHoliday">
+            <mat-label>Repayment Scheduling Type</mat-label>
+            <mat-select required formControlName="reschedulingType">
+              <mat-option *ngFor="let repayments of holidayData.repaymentSchedulingTypes" [value]="repayments.id">
+                {{ repayments.value }} 
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="holidayForm.controls.reschedulingType.hasError('required')">
+              Repayment Scheduling Type is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="!isActiveHoliday && reSchedulingType === 2">
+            <mat-label>Repayment scheduled to</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="repaymentDatePicker" required formControlName="repaymentsRescheduledTo">
+            <mat-datepicker-toggle matSuffix [for]="repaymentDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #repaymentDatePicker></mat-datepicker>
+            <mat-error *ngIf="holidayForm.controls.repaymentsRescheduledTo.hasError('required')">
+              Repayment Scheduled To <strong>is required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description">
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!holidayForm.valid">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>

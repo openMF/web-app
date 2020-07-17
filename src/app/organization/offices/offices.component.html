@@ -1,32 +1,38 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
 
-  <button mat-raised-button color="primary">
-    <fa-icon icon="sitemap"></fa-icon>&nbsp;&nbsp;
-    Tree View
-  </button>
+  <div #buttonTreeView class="in-block">
+    <button mat-raised-button color="primary">
+      <fa-icon icon="sitemap"></fa-icon>&nbsp;&nbsp;
+      Tree View
+    </button>
+  </div>
 
-  <button mat-raised-button color="primary" [routerLink]="['create']">
-    <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
-    Create Office
-  </button>
+  <div #buttonCreateOffice class="in-block">
+    <button mat-raised-button color="primary" [routerLink]="['create']">
+      <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+      Create Office
+    </button>
+  </div>
 
-  <button mat-raised-button color="primary">
-    <fa-icon icon="upload"></fa-icon>&nbsp;&nbsp;
-    Import Offices
-  </button>
+  <div #buttonImportOffices class="in-block">
+    <button mat-raised-button color="primary">
+      <fa-icon icon="upload"></fa-icon>&nbsp;&nbsp;
+      Import Offices
+    </button>
+  </div>
 
 </div>
 
 <div class="container">
 
-  <div fxLayout="row" fxLayoutGap="20px">
+  <div #filter fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
       <mat-label>Filter</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)">
     </mat-form-field>
   </div>
 
-  <div class="mat-elevation-z8">
+  <div #tableOffices class="mat-elevation-z8">
 
     <table mat-table [dataSource]="dataSource" matSort>
 
@@ -60,3 +66,46 @@
   </div>
 
 </div>
+
+<ng-template #templateButtonTreeView let-popover="popover">
+  <h2>Tree View</h2>
+  <p class="mw300">This will launch an alternative view which allows you to view the office hierarchy for your organization.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep();">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonCreateOffice,buttonCreateOffice,'bottom', true);">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateButtonCreateOffice let-popover="popover">
+  <h2>Create Office</h2>
+  <p class="mw300">This option allows you to create new offices in your organization.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonTreeView,buttonTreeView,'bottom', true);">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonImportOffices,buttonImportOffices,'bottom', true);">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateButtonImportOffices let-popover="popover">
+  <h2>Import Offices</h2>
+  <p class="mw300">This will launch the Bulk import/Offices page.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonCreateOffice,buttonCreateOffice,'bottom', true);">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter,'bottom', true);">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateFilter let-popover="popover">
+  <h4>Search bar to filter offices.</h4>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonImportOffices,buttonImportOffices,'bottom', true);">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateTableOffices,tableOffices,'top', true);">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateTableOffices let-popover="popover">
+  <h4>List of offices in the organization.</h4>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter,'bottom', true);">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
+  </div>
+</ng-template>
