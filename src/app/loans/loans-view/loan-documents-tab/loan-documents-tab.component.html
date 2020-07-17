@@ -1,0 +1,59 @@
+<div class="tab-container mat-typography">
+
+  <div>
+    <div fxLayout="column" fxFlex="100%">
+      <div fxLayout="row" fxLayoutAlign="flex-end">
+        <button mat-raised-button color="primary" (click)="uploadDocument()" *ngIf="choice">
+          <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Upload
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="loanDocuments.length > 0">
+
+    <table mat-table #documentsTable [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <td mat-cell *matCellDef="let document"> {{ document.name }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+        <td mat-cell *matCellDef="let document"> {{ document.description }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="filename">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> File Name </th>
+        <td mat-cell *matCellDef="let document"> {{ document.fileName }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+        <td mat-cell *matCellDef="let document; let index">
+          <button class="loan-document-action-button" mat-raised-button color="primary">
+            <fa-icon icon="cloud-download-alt"></fa-icon>
+          </button>
+
+          <button class="loan-document-action-button" mat-raised-button color="primary" *ngIf="document.fileIsImage">
+            <i class="fa fa-eye"></i>
+          </button>
+
+          <button class="loan-document-action-button" mat-raised-button color="warn"
+            (click)="deleteDocument(document.id, index)">
+            <fa-icon icon="times"></fa-icon>
+          </button>
+
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+  </ng-container>
+
+</div>

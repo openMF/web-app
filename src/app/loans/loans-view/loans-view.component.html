@@ -97,6 +97,9 @@
 		  Charges
 		</a>
 	  </ng-container>
+		<a mat-tab-link [routerLink]="['./loan-documents']" routerLinkActive #loanDocuments="routerLinkActive" [active]="loanDocuments.isActive">
+			Loan Documents
+		</a>
 	  <a mat-tab-link *mifosxHasPermission="'READ_LOANNOTE'" [routerLink]="['./notes']" routerLinkActive #notes="routerLinkActive" [active]="notes.isActive">
 		Notes
 	  </a>
