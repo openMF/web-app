@@ -23,6 +23,7 @@ import { LoanTrancheDetailsComponent } from './loans-view/loan-tranche-details/l
 import { LoanCollateralTabComponent } from './loans-view/loan-collateral-tab/loan-collateral-tab.component';
 import { CreateLoansAccountComponent } from './create-loans-account/create-loans-account.component';
 import { LoanDocumentsTabComponent } from './loans-view/loan-documents-tab/loan-documents-tab.component';
+import { StandingInstructionsTabComponent } from 'app/loans/loans-view/standing-instructions-tab/standing-instructions-tab.component';
 
 /** Custom Resolvers */
 import { LoanChargeTemplateResolver } from './common-resolvers/loan-charge-template.resolver';
@@ -155,6 +156,14 @@ const routes: Routes = [
           data: { title: extract('Notes'), breadcrumb: 'Notes', routeParamBreadcrumb: false },
           resolve: {
             loanNotes: LoanNotesResolver
+          },
+        },
+        {
+          path: 'standing-instruction',
+          component: StandingInstructionsTabComponent,
+          data: { title: extract('Standing Instructions'), breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false },
+          resolve: {
+            loanDetailsData: LoanDetailsGeneralResolver
           },
         },
         {

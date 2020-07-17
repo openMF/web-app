@@ -57,6 +57,7 @@ import { LoansAccountViewGuarantorDetailsDialogComponent } from './custom-dialog
 import { LoansAccountAddCollateralDialogComponent } from './custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
 import { LoansConfirmationDialogBoxComponent } from './custom-dialog/loans-confirmation-dialog-box/loans-confirmation-dialog-box.component';
 import { LoanAccountLoadDocumentsDialogComponent } from './custom-dialog/loan-account-load-documents-dialog/loan-account-load-documents-dialog.component';
+import { StandingInstructionsTabComponent } from './loans-view/standing-instructions-tab/standing-instructions-tab.component';
 
 /**
  * Loans Module
@@ -112,6 +113,7 @@ import { LoanAccountLoadDocumentsDialogComponent } from './custom-dialog/loan-ac
     UndoDisbursalComponent,
     LoanDocumentsTabComponent,
     LoanAccountLoadDocumentsDialogComponent,
+    StandingInstructionsTabComponent,
   ],
   entryComponents: [
     LoansAccountAddCollateralDialogComponent,
