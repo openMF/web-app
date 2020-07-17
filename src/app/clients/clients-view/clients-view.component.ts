@@ -10,6 +10,7 @@ import { UploadSignatureDialogComponent } from './custom-dialogs/upload-signatur
 import { ViewSignatureDialogComponent } from './custom-dialogs/view-signature-dialog/view-signature-dialog.component';
 import { DeleteSignatureDialogComponent } from './custom-dialogs/delete-signature-dialog/delete-signature-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { UploadImageDialogComponent } from './custom-dialogs/upload-image-dialog/upload-image-dialog.component';
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
@@ -87,6 +88,12 @@ export class ClientsViewComponent implements OnInit {
       case 'Delete Signature':
         this.deleteSignature();
         break;
+      case 'Upload Image':
+        this.uploadProfileImage();
+        break;
+      case 'Delete Image':
+        this.deleteProfileImage();
+        break;
     }
   }
 
@@ -160,7 +167,7 @@ export class ClientsViewComponent implements OnInit {
     const uploadSignatureDialogRef = this.dialog.open(UploadSignatureDialogComponent);
     uploadSignatureDialogRef.afterClosed().subscribe((signature: File) => {
       if (signature) {
-        this.clientsService.uploadClientSignature(this.clientViewData.id, signature)
+        this.clientsService.uploadClientSignatureImage(this.clientViewData.id, signature)
           .subscribe(() => {
             this.reload();
           });
@@ -186,6 +193,38 @@ export class ClientsViewComponent implements OnInit {
           this.uploadSignature();
         }
       });
+    });
+  }
+
+  /**
+   * Uploads the clients image.
+   */
+  private uploadProfileImage() {
+    const uploadImageDialogRef = this.dialog.open(UploadImageDialogComponent);
+    uploadImageDialogRef.afterClosed().subscribe((image: File) => {
+      if (image) {
+        this.clientsService.uploadClientProfileImage(this.clientViewData.id, image)
+          .subscribe(() => {
+            this.reload();
+          });
+      }
+    });
+  }
+
+  /**
+   * Deletes the client image.
+   */
+  private deleteProfileImage() {
+    const deleteClientImageDialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { deleteContext: `the profile image of ${this.clientViewData.displayName}` }
+    });
+    deleteClientImageDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.delete) {
+        this.clientsService.deleteClientProfileImage(this.clientViewData.id)
+          .subscribe(() => {
+            this.reload();
+          });
+      }
     });
   }
 
