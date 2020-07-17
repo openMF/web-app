@@ -297,4 +297,27 @@ export class LoansService {
     return this.http.post(`/loans/${loanId}/documents`, data);
   }
 
+  /**
+   * @param clientId Client Id
+   * @param clientName Client Name
+   * @param fromAccountId Account Id
+   * @param locale Locale
+   * @param dateFormat Date Format
+   * @returns {Observable<any>} Standing Instructions
+   */
+  getStandingInstructions(
+    clientId: string, clientName: string, fromAccountId: string,
+    locale: string, dateFormat: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('clientId', clientId)
+      .set('clientName', clientName)
+      .set('fromAccountId', fromAccountId)
+      .set('fromAccountType', '1')
+      .set('locale', locale)
+      .set('dateFormat', dateFormat)
+      .set('limit', '14')
+      .set('offset', '0');
+    return this.http.get(`/standinginstructions`, { params: httpParams });
+  }
+
 }
