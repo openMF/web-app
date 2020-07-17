@@ -1,0 +1,57 @@
+<div class="container m-b-20">
+
+    <mat-card>
+
+        <form [formGroup]="loanScreenReportForm" (ngSubmit)="generate()">
+
+            <mat-card-content>
+
+                <div>
+
+                    <mat-form-field fxFlex>
+                        <mat-label>Loan Screen Reports</mat-label>
+                        <mat-select formControlName="templateId">
+                            <mat-option *ngFor="let template of templatesData" [value]="template.id">
+                                {{ template.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="loanScreenReportForm.controls.templateId.hasError('required')">
+                            Screen Report is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+
+            </mat-card-content>
+
+            <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+                <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+                <button mat-raised-button color="primary" [disabled]="!loanScreenReportForm.valid">
+                    <fa-icon icon="cogs" size="sm"></fa-icon>&nbsp;&nbsp;Generate Report
+                </button>
+            </mat-card-actions>
+
+        </form>
+
+    </mat-card>
+
+</div>
+
+<div #output class="container">
+
+    <mat-card fxLayout="column" fxLayoutGap="3%">
+
+        <div fxLayoutAlign="end">
+            <button mat-stroked-button color="primary" [disabled]="!template" (click)="print()">
+                <fa-icon icon="file"></fa-icon>&nbsp;&nbsp;
+                Print
+            </button>
+        </div>
+
+        <div #screenReport class="screen-report">
+            <p>Please select a screen report.</p>
+        </div>
+
+    </mat-card>
+
+</div>
