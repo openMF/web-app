@@ -58,7 +58,7 @@
             </button>
           </span>
           <button class="account-action-button" mat-raised-button color="primary" matTooltip="View Standing Instruction"
-            *mifosxHasPermission="'READ_STANDINGINSTRUCTION'">
+            *mifosxHasPermission="'READ_STANDINGINSTRUCTION'" [routerLink]="['../', 'standing-instructions', instruction.id, 'view']">
             <i class="fa fa-eye"></i>
           </button>
         </td>
