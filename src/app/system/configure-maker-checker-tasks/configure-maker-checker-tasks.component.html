@@ -1,8 +1,10 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
-  <button mat-raised-button color="primary" (click)="editTask(); backupCheckValues();">
-    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
-    Edit
-  </button>
+  <div #buttonEdit class="in-block">
+    <button mat-raised-button color="primary" (click)="editTask(); backupCheckValues();">
+      <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+      Edit
+    </button>
+  </div>
 </div>
 
 <div class="container">
@@ -13,7 +15,7 @@
 
       <div fxLayout="row">
 
-        <div fxFlex="30" fxLayout="column">
+        <div #mcTable fxFlex="30" fxLayout="column">
           <mat-list>
             <mat-list-item [ngClass]="selectedItem == grouping ? 'active' : 'inactive'" *ngFor="let grouping of groupings" (click)="showPermissions(grouping)">
               <span class="groupingName">
@@ -52,3 +54,20 @@
   </mat-card>
 
 </div>
+
+<ng-template #templateButtonEdit let-popover="popover">
+  <h2>Edit</h2>
+  <p class="mw300">To add or remove a task from the Maker-Checker list.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateMcTable,mcTable,'top', true);">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateMcTable let-popover="popover">
+  <h4 class="mw300">List of all maker checker tasks. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895359/Configure+Maker-Checker+Tasks" target="_blank">Configure Maker-Checker Tasks</a></h4>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonEdit,buttonEdit,'bottom', true);">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
+  </div>
+</ng-template>

@@ -1,8 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+/** Angular Imports */
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { constructor } from 'lodash';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as _ from 'lodash';
+
+/** Custom Services */
+import { PopoverService } from '../../configuration-wizard/popover/popover.service';
+import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
 import { SystemService } from '../system.service';
 
 @Component({
@@ -10,7 +15,7 @@ import { SystemService } from '../system.service';
   templateUrl: './configure-maker-checker-tasks.component.html',
   styleUrls: ['./configure-maker-checker-tasks.component.scss']
 })
-export class ConfigureMakerCheckerTasksComponent implements OnInit {
+export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewInit {
 
   permissionsData: any;
   groupings: string[] = [];
@@ -31,9 +36,29 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit {
     permissions: { code: string }[]
   }[];
 
+  /* Reference of edit button */
+  @ViewChild('buttonEdit') buttonEdit: ElementRef<any>;
+  /* Template for popover on edit button */
+  @ViewChild('templateButtonEdit') templateButtonEdit: TemplateRef<any>;
+  /* Reference of maker checker taks table */
+  @ViewChild('mcTable') mcTable: ElementRef<any>;
+  /* Template for popover on maker checker taks table */
+  @ViewChild('templateMcTable') templateMcTable: TemplateRef<any>;
+
+  /**
+   * @param {FormBuilder} formBuilder Form Builder.
+   * @param {SystemService} systemService Accounting Service.
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {Router} router Router for navigation.
+   * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
+   * @param {PopoverService} popoverService PopoverService.
+   */
   constructor(private route: ActivatedRoute,
     private systemService: SystemService,
-    private formBuilder: FormBuilder, ) {
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService ) {
     this.route.data.subscribe((data: { permissions: any }) => {
       this.permissionsData = data.permissions;
     });
@@ -161,4 +186,50 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit {
     });
   }
 
+  /**
+   * Popover function
+   * @param template TemplateRef<any>.
+   * @param target HTMLElement | ElementRef<any>.
+   * @param position String.
+   * @param backdrop Boolean.
+   */
+  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+    setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
+  }
+
+  /**
+   * To show popover.
+   */
+  ngAfterViewInit() {
+    if (this.configurationWizardService.showMakerCheckerTablePage === true) {
+      setTimeout(() => {
+          this.showPopover(this.templateButtonEdit, this.buttonEdit.nativeElement, 'bottom', true);
+      });
+    }
+    if (this.configurationWizardService.showMakerCheckerTableList === true) {
+      setTimeout(() => {
+          this.showPopover(this.templateMcTable, this.mcTable.nativeElement, 'top', true);
+      });
+    }
+  }
+
+  /**
+   * Next Step (Global Configurations System Page) Configuration Wizard.
+   */
+  nextStep() {
+    this.configurationWizardService.showMakerCheckerTablePage = false;
+    this.configurationWizardService.showMakerCheckerTableList = false;
+    this.configurationWizardService.showConfigurations = true;
+    this.router.navigate(['/system']);
+  }
+
+  /**
+   * Previous Step (Maker Checker Tasks System Page) Configuration Wizard.
+   */
+  previousStep() {
+    this.configurationWizardService.showMakerCheckerTablePage = false;
+    this.configurationWizardService.showMakerCheckerTableList = false;
+    this.configurationWizardService.showMakerCheckerTable = true;
+    this.router.navigate(['/system']);
+  }
 }
