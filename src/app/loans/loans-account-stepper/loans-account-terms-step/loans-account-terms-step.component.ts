@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /**
@@ -15,6 +15,8 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
 
   /** Loans Account Product Template */
   @Input() loansAccountProductTemplate: any;
+  /** Loans Account Template */
+  @Input() loansAccountTemplate: any;
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -82,7 +84,15 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if (this.loansAccountTemplate) {
+      if (this.loansAccountTemplate.loanProductId) {
+        this.loansAccountTermsForm.patchValue({
+          'repaymentsStartingFromDate': this.loansAccountTemplate.expectedFirstRepaymentOnDate && new Date(this.loansAccountTemplate.expectedFirstRepaymentOnDate)
+        });
+      }
+    }
+  }
 
   /** Create Loans Account Terms Form */
   createloansAccountTermsForm() {
@@ -102,19 +112,20 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       // 'interestRateDifferential': [''],
       'isFloatingInterestRate': [''],
       'isEqualAmortization': [''],
-      'amortizationType': [''],
+      'amortizationType': ['', Validators.required],
       'interestCalculationPeriodType': [''],
       'allowPartialPeriodInterestCalcualtion': [''],
       'inArrearsTolerance': [''],
       'graceOnInterestCharged': [''],
-      'transactionProcessingStrategyId': [''],
+      'transactionProcessingStrategyId': ['', Validators.required],
       'graceOnPrincipalPayment': [''],
       'graceOnInterestPayment': [''],
       'graceOnArrearsAgeing': [''],
       'loanIdToClose': [''],
       'fixedEmiAmount': [''],
       'isTopup': [''],
-      'maxOutstandingLoanBalance': ['']
+      'maxOutstandingLoanBalance': [''],
+      'recalculationCompoundingFrequencyDate': ['']
     });
   }
 

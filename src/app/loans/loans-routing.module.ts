@@ -24,6 +24,7 @@ import { LoanCollateralTabComponent } from './loans-view/loan-collateral-tab/loa
 import { CreateLoansAccountComponent } from './create-loans-account/create-loans-account.component';
 import { LoanDocumentsTabComponent } from './loans-view/loan-documents-tab/loan-documents-tab.component';
 import { StandingInstructionsTabComponent } from 'app/loans/loans-view/standing-instructions-tab/standing-instructions-tab.component';
+import { EditLoansAccountComponent } from './edit-loans-account/edit-loans-account.component';
 
 /** Custom Resolvers */
 import { LoanChargeTemplateResolver } from './common-resolvers/loan-charge-template.resolver';
@@ -36,6 +37,7 @@ import { LoanDatatableResolver } from './common-resolvers/loan-datatable.resolve
 import { LoanActionButtonResolver } from './common-resolvers/loan-action-button.resolver';
 import { LoansAccountTemplateResolver } from './common-resolvers/loans-account-template.resolver';
 import { LoanDocumentsResolver } from './common-resolvers/loan-documents.resolver';
+import { LoansAccountAndTemplateResolver } from './common-resolvers/loans-account-and-template.resolver';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -54,143 +56,156 @@ const routes: Routes = [
       {
       path: ':loanId',
       data: { title: extract('Loan View'), routeParamBreadcrumb: 'loanId' },
-      component: LoansViewComponent,
-      resolve: {
-        loanDetailsData: LoanDetailsResolver,
-        loanDatatables: LoanDatatablesResolver,
-      },
       // Component For Loan View Comes Here
       children: [
         {
-          path: 'general',
-          component: GeneralTabComponent,
-          data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false },
+          path: '',
+          component: LoansViewComponent,
           resolve: {
-            loanDetailsData: LoanDetailsGeneralResolver
-          }
-        },
-        {
-          path: 'accountdetail',
-          component: AccountDetailsComponent,
-          data: { title: extract('Account Detail'), breadcrumb: 'Account Detail', routeParamBreadcrumb: false },
-          resolve: {
-            loanDetailsData: LoanDetailsGeneralResolver
-          }
-        },
-        {
-          path: 'original-schedule',
-          component: OriginalScheduleTabComponent,
-          data: { title: extract('Original Schedule'), breadcrumb: 'Original Schedule', routeParamBreadcrumb: false },
-          resolve: {
-            loanDetailsAssociationData: LoanDetailsChargesResolver
-          }
-        },
-        {
-          path: 'repayment-schedule',
-          component: RepaymentScheduleTabComponent,
-          data: { title: extract('Repayment Schedule'), breadcrumb: 'Repayment Schedule', routeParamBreadcrumb: false },
-          resolve: {
-            loanDetailsAssociationData: LoanDetailsChargesResolver
-          }
-        },
-        {
-          path: 'transactions',
-          component: TransactionsTabComponent,
-          data: { title: extract('Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
-          resolve: {
-            loanDetailsAssociationData: LoanDetailsChargesResolver
-          }
-        },
-        {
-          path: 'loan-collateral',
-          component: LoanCollateralTabComponent,
-          data: { title: extract('Loan Collateral Details'), breadcrumb: 'Loan Collateral Details', routeParamBreadcrumb: false },
-          resolve: {
-            loanDetailsAssociationData: LoanDetailsChargesResolver
-          }
-        },
-        {
-          path: 'loan-tranche-details',
-          component: LoanTrancheDetailsComponent,
-          data: { title: extract('Loan Tranche Details'), breadcrumb: 'Loan Tranche Details', routeParamBreadcrumb: false },
-          resolve: {
-            loanDetailsAssociationData: LoanDetailsChargesResolver
-          }
-        },
-        {
-          path: 'overdue-charges',
-          component: OverdueChargesTabComponent,
-          data: { title: extract('Overdue Charges'), breadcrumb: 'Overdue Charges', routeParamBreadcrumb: false },
-          resolve: {
-            loanDetailsData: LoanDetailsGeneralResolver
-          }
-        },
-        {
-          path: 'floating-interest-rates',
-          component: FloatingInterestRatesComponent,
-          data: { title: extract('Floating Interest Rates'), breadcrumb: 'Floating Interest Rates', routeParamBreadcrumb: false },
-          resolve: {
-            loanDetailsAssociationData: LoanDetailsChargesResolver
-          }
-        },
-        {
-          path: 'charges',
-          component: ChargesTabComponent,
-          data: { title: extract('Charges'), breadcrumb: 'Charges', routeParamBreadcrumb: false },
-          resolve: {
-            loanDetailsAssociationData: LoanDetailsChargesResolver
-          }
-        },
-        {
-          path: 'loan-documents',
-          component: LoanDocumentsTabComponent,
-          data: { title: extract('Loan Documents'), breadcrumb: 'Loan Documents', routeParamBreadcrumb: false },
-          resolve: {
-            loanDocuments: LoanDocumentsResolver,
-            loanDetailsData: LoanDetailsGeneralResolver
+            loanDetailsData: LoanDetailsResolver,
+            loanDatatables: LoanDatatablesResolver,
           },
+          children: [
+            {
+              path: 'general',
+              component: GeneralTabComponent,
+              data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false },
+              resolve: {
+                loanDetailsData: LoanDetailsGeneralResolver
+              }
+            },
+            {
+              path: 'accountdetail',
+              component: AccountDetailsComponent,
+              data: { title: extract('Account Detail'), breadcrumb: 'Account Detail', routeParamBreadcrumb: false },
+              resolve: {
+                loanDetailsData: LoanDetailsGeneralResolver
+              }
+            },
+            {
+              path: 'original-schedule',
+              component: OriginalScheduleTabComponent,
+              data: { title: extract('Original Schedule'), breadcrumb: 'Original Schedule', routeParamBreadcrumb: false },
+              resolve: {
+                loanDetailsAssociationData: LoanDetailsChargesResolver
+              }
+            },
+            {
+              path: 'repayment-schedule',
+              component: RepaymentScheduleTabComponent,
+              data: { title: extract('Repayment Schedule'), breadcrumb: 'Repayment Schedule', routeParamBreadcrumb: false },
+              resolve: {
+                loanDetailsAssociationData: LoanDetailsChargesResolver
+              }
+            },
+            {
+              path: 'transactions',
+              component: TransactionsTabComponent,
+              data: { title: extract('Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+              resolve: {
+                loanDetailsAssociationData: LoanDetailsChargesResolver
+              }
+            },
+            {
+              path: 'loan-collateral',
+              component: LoanCollateralTabComponent,
+              data: { title: extract('Loan Collateral Details'), breadcrumb: 'Loan Collateral Details', routeParamBreadcrumb: false },
+              resolve: {
+                loanDetailsAssociationData: LoanDetailsChargesResolver
+              }
+            },
+            {
+              path: 'loan-tranche-details',
+              component: LoanTrancheDetailsComponent,
+              data: { title: extract('Loan Tranche Details'), breadcrumb: 'Loan Tranche Details', routeParamBreadcrumb: false },
+              resolve: {
+                loanDetailsAssociationData: LoanDetailsChargesResolver
+              }
+            },
+            {
+              path: 'overdue-charges',
+              component: OverdueChargesTabComponent,
+              data: { title: extract('Overdue Charges'), breadcrumb: 'Overdue Charges', routeParamBreadcrumb: false },
+              resolve: {
+                loanDetailsData: LoanDetailsGeneralResolver
+              }
+            },
+            {
+              path: 'floating-interest-rates',
+              component: FloatingInterestRatesComponent,
+              data: { title: extract('Floating Interest Rates'), breadcrumb: 'Floating Interest Rates', routeParamBreadcrumb: false },
+              resolve: {
+                loanDetailsAssociationData: LoanDetailsChargesResolver
+              }
+            },
+            {
+              path: 'charges',
+              component: ChargesTabComponent,
+              data: { title: extract('Charges'), breadcrumb: 'Charges', routeParamBreadcrumb: false },
+              resolve: {
+                loanDetailsAssociationData: LoanDetailsChargesResolver
+              }
+            },
+            {
+              path: 'loan-documents',
+              component: LoanDocumentsTabComponent,
+              data: { title: extract('Loan Documents'), breadcrumb: 'Loan Documents', routeParamBreadcrumb: false },
+              resolve: {
+                loanDocuments: LoanDocumentsResolver,
+                loanDetailsData: LoanDetailsGeneralResolver
+              },
+            },
+            {
+              path: 'notes',
+              component: NotesTabComponent,
+              data: { title: extract('Notes'), breadcrumb: 'Notes', routeParamBreadcrumb: false },
+              resolve: {
+                loanNotes: LoanNotesResolver
+              },
+            },
+            {
+              path: 'standing-instruction',
+              component: StandingInstructionsTabComponent,
+              data: { title: extract('Standing Instructions'), breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false },
+              resolve: {
+                loanDetailsData: LoanDetailsGeneralResolver
+              },
+            },
+            {
+              path: 'datatables',
+              children: [{
+                path: ':datatableName',
+                component: DatatableTabComponent,
+                data: { title: extract('Data Table View'), routeParamBreadcrumb: 'datatableName' },
+                resolve: {
+                  loanDatatable: LoanDatatableResolver
+                }
+              }]
+            },
+            {
+              path: 'add-loan-charge',
+              component: AddLoanChargeComponent,
+              data: { title: extract('Add Loan Charge'), breadcrumb: 'Add Loan Charge', routeParamBreadcrumb: false },
+              resolve: {
+                loanChargeTemplate: LoanChargeTemplateResolver
+              }
+            },
+            {
+              path: 'actions/:action',
+              component: LoanAccountActionsComponent,
+              data: { title: extract('Loan Account Actions'), routeParamBreadcrumb: 'action' },
+              resolve: {
+                actionButtonData: LoanActionButtonResolver
+              }
+            },
+          ]
         },
         {
-          path: 'notes',
-          component: NotesTabComponent,
-          data: { title: extract('Notes'), breadcrumb: 'Notes', routeParamBreadcrumb: false },
+          path: 'edit-loans-account',
+          data: { title: extract('Edit Loans Account'), breadcrumb: 'Edit Loans Account', routeParamBreadcrumb: 'Edit' },
+          component: EditLoansAccountComponent,
           resolve: {
-            loanNotes: LoanNotesResolver
-          },
-        },
-        {
-          path: 'standing-instruction',
-          component: StandingInstructionsTabComponent,
-          data: { title: extract('Standing Instructions'), breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false },
-          resolve: {
-            loanDetailsData: LoanDetailsGeneralResolver
-          },
-        },
-        {
-          path: 'datatables',
-          children: [{
-            path: ':datatableName',
-            component: DatatableTabComponent,
-            data: { title: extract('Data Table View'), routeParamBreadcrumb: 'datatableName' },
-            resolve: {
-              loanDatatable: LoanDatatableResolver
-            }
-          }]
-        },
-        {
-          path: 'add-loan-charge',
-          component: AddLoanChargeComponent,
-          data: { title: extract('Add Loan Charge'), breadcrumb: 'Add Loan Charge', routeParamBreadcrumb: false },
-          resolve: {
-            loanChargeTemplate: LoanChargeTemplateResolver
-          }
-        },
-        {
-          path: ':action',
-          component: LoanAccountActionsComponent,
-          data: { title: extract('Loan Account Actions'), routeParamBreadcrumb: 'action' },
-          resolve: {
-            actionButtonData: LoanActionButtonResolver
+            loansAccountAndTemplate: LoansAccountAndTemplateResolver
           }
         },
       ]
@@ -211,7 +226,8 @@ const routes: Routes = [
     LoanDatatableResolver,
     LoanActionButtonResolver,
     LoansAccountTemplateResolver,
-    LoanDocumentsResolver
+    LoanDocumentsResolver,
+    LoansAccountAndTemplateResolver
   ]
 })
 

@@ -25,7 +25,7 @@
 
       <ng-template matStepLabel>DETAILS</ng-template>
 
-      <mifosx-loans-account-details-step [loansAccountTemplate]="loansAccountTemplate"
+      <mifosx-loans-account-details-step [loansAccountTemplate]="loansAccountAndTemplate"
         (loansAccountProductTemplate)="setTemplate($event)">
       </mifosx-loans-account-details-step>
 
@@ -36,7 +36,7 @@
       <ng-template matStepLabel>TERMS</ng-template>
 
       <mifosx-loans-account-terms-step [loansAccountProductTemplate]="loansAccountProductTemplate"
-      [loansAccountTemplate] = "loansAccountTemplate">
+      [loansAccountTemplate]="loansAccountAndTemplate">
       </mifosx-loans-account-terms-step>
 
     </mat-step>
@@ -46,17 +46,17 @@
       <ng-template matStepLabel>CHARGES</ng-template>
 
       <mifosx-loans-account-charges-step [loansAccountProductTemplate]="loansAccountProductTemplate"
-        [loansAccountTemplate]="loansAccountTemplate" [collateralOptions]="collateralOptions"
-        [loansAccountFormValid]="loansAccountFormValid">
+        [loansAccountTemplate]="loansAccountAndTemplate" [collateralOptions]="collateralOptions"
+        [loansAccountFormValid]="loansAccountFormValidAndNotPristine">
       </mifosx-loans-account-charges-step>
 
     </mat-step>
 
-    <mat-step state="preview" *ngIf="loansAccountFormValid" completed>
+    <mat-step state="preview" *ngIf="loansAccountFormValidAndNotPristine" completed>
 
       <ng-template matStepLabel>PREVIEW</ng-template>
 
-      <mifosx-loans-account-preview-step [loansAccountTemplate]="loansAccountTemplate"
+      <mifosx-loans-account-preview-step [loansAccountTemplate]="loansAccountAndTemplate"
         [loansAccountProductTemplate]="loansAccountProductTemplate" [loansAccount]="loansAccount" (submit)="submit()">
       </mifosx-loans-account-preview-step>
 

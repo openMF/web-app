@@ -48,6 +48,8 @@
         <mat-datepicker #repaymentsPicker></mat-datepicker>
       </mat-form-field>
 
+      <h4 fxFlex="98%" class="mat-h4">Repaid Every</h4>
+
       <mat-form-field fxFlex="48%">
         <mat-label>Repaid every</mat-label>
         <input matInput required formControlName="repaymentEvery"
@@ -152,13 +154,16 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Amortization</mat-label>
-      <mat-select [disabled]="!loansAccountProductTemplate?.product.allowAttributeOverrides.amortizationType"
+      <mat-select required [disabled]="!loansAccountProductTemplate?.product.allowAttributeOverrides.amortizationType"
         formControlName="amortizationType">
         <mat-option *ngFor="let amortizationType of amortizationTypeData"
           [value]="amortizationType.id">
           {{ amortizationType.value }}
         </mat-option>
       </mat-select>
+      <mat-error *ngIf="loansAccountTermsForm.controls.amortizationType.hasError('required')">
+        Amortization Type is <strong>required</strong>
+      </mat-error>
     </mat-form-field>
 
     <h4 fxFlex="98%" class="mat-h4">Interest Calculations</h4>
@@ -196,15 +201,18 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Repayment strategy</mat-label>
-      <mat-select
+      <mat-select required
         [disabled]="!loansAccountProductTemplate?.product.allowAttributeOverrides.transactionProcessingStrategyId"
         formControlName="transactionProcessingStrategyId">
         <mat-option
           *ngFor="let transactionProcessingStrategy of transactionProcessingStrategyData"
           [value]="transactionProcessingStrategy.id">
-          {{ transactionProcessingStrategy.value }}
+          {{ transactionProcessingStrategy.name }}
         </mat-option>
       </mat-select>
+      <mat-error *ngIf="loansAccountTermsForm.controls.transactionProcessingStrategyId.hasError('required')">
+        Repayment Strategy is <strong>required</strong>
+      </mat-error>
     </mat-form-field>
 
     <h4 fxFlex="98%" class="mat-h4">Moratorium</h4>
@@ -243,6 +251,18 @@
             {{ clientActiveLoan.accountNo }}
           </mat-option>
         </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="48%"
+        *ngIf="loansAccountProductTemplate.isInterestRecalculationEnabled && loansAccountProductTemplate.interestRecalculationData.interestRecalculationCompoundingType.id != 0 && loansAccountProductTemplate.interestRecalculationData.recalculationCompoundingFrequencyType.id != 1">
+        <mat-label>Frequency Date for recalculation</mat-label>
+        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="recalculationCompoundingFrequencyDatePicker"
+          formControlName="recalculationCompoundingFrequencyDate">
+        <mat-datepicker-toggle matSuffix [for]="recalculationCompoundingFrequencyDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #recalculationCompoundingFrequencyDatePicker></mat-datepicker>
+        <mat-error *ngIf="loansAccountTermsForm.controls.recalculationCompoundingFrequencyDate.hasError('required')">
+          Frequency Data for recalculation is <strong>required</strong>
+        </mat-error>
       </mat-form-field>
 
     </ng-container>
