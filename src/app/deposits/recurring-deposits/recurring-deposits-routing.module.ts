@@ -32,7 +32,7 @@ import { RecurringDepositsAccountTransactionTemplateResolver } from './common-re
 const routes: Routes = [
   {
     path: '',
-    data: { title: extract('All Recurring Deposits'), breadcrumb: 'Recurring Deposits', routeParamBreadcrumb: false },
+    data: { title: extract('Recurring Deposits'), breadcrumb: 'Recurring Deposits', routeParamBreadcrumb: false },
     children: [
       {
         path: 'create-recurring-deposits-account',
@@ -144,6 +144,23 @@ const routes: Routes = [
               recurringDepositsAccountActionData: RecurringDepositsAccountActionsResolver
             }
           }
+        ]
+      }
+    ]
+  },
+  {
+    path: '',
+    data: { title: extract('All Recurring Deposits'), breadcrumb: 'Recurring Deposits', routeParamBreadcrumb: false },
+    children: [
+      {
+        path: ':recurringDepositAccountId',
+        data: { title: extract('RecurringDeposit Account View'), routeParamBreadcrumb: 'recurringDepositAccountId' },
+        children: [
+          {
+            path: 'standing-instructions',
+            data: { title: extract('Standing Instructions'), breadcrumb: 'standing-instructions', routeParamBreadcrumb: false },
+            loadChildren: '../../account-transfers/account-transfers.module#AccountTransfersModule'
+          },
         ]
       }
     ]
