@@ -10,6 +10,7 @@ import { DirectivesModule } from '../directives/directives.module';
 
 /** Custom Components */
 import { ViewStandingInstructionsComponent } from './view-standing-instructions/view-standing-instructions.component';
+import { EditStandingInstructionsComponent } from './edit-standing-instructions/edit-standing-instructions.component';
 
 /**
  * Account Transfers Module
@@ -19,7 +20,8 @@ import { ViewStandingInstructionsComponent } from './view-standing-instructions/
 @NgModule({
   imports: [SharedModule, PipesModule, DirectivesModule, AccountTransfersRoutingModule],
   declarations: [
-    ViewStandingInstructionsComponent
+    ViewStandingInstructionsComponent,
+    EditStandingInstructionsComponent
   ],
   providers: [DatePipe]
 })

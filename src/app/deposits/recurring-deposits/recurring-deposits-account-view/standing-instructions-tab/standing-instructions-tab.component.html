@@ -47,7 +47,8 @@
         <td mat-cell *matCellDef="let instruction">
           <span *ngIf="instruction.status.value!=='Deleted'">
             <button class="account-action-button" mat-raised-button color="primary"
-              matTooltip="Edit Standing Instruction" *mifosxHasPermission="'UPDATE_STANDINGINSTRUCTION'">
+              matTooltip="Edit Standing Instruction" *mifosxHasPermission="'UPDATE_STANDINGINSTRUCTION'"
+              [routerLink]="['../', 'standing-instructions', instruction.id, 'edit']">
               <i class="fa fa-edit"></i>
             </button>
           </span>

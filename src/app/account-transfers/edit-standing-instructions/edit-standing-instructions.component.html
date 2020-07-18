@@ -1,0 +1,170 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="editStandingInstructionsForm">
+
+      <mat-card-content>
+
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Applicant</mat-label>
+            <input matInput formControlName="applicant">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Type</mat-label>
+            <input matInput formControlName="type">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>From Account Type</mat-label>
+            <input matInput formControlName="fromAccountType">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Priority</mat-label>
+            <mat-select required formControlName="priority">
+              <mat-option *ngFor="let priorityType of priorityTypeData" [value]="priorityType.id">
+                {{ priorityType.value }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="editStandingInstructionsForm.controls.priority.hasError('required')">
+              Priority is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Status</mat-label>
+            <mat-select required formControlName="status">
+              <mat-option *ngFor="let statusType of statusTypeData" [value]="statusType.id">
+                {{ statusType.value }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="editStandingInstructionsForm.controls.status.hasError('required')">
+              Status is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>From Account</mat-label>
+            <input matInput formControlName="fromAccount">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Destination</mat-label>
+            <input matInput formControlName="destination">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>To Office</mat-label>
+            <input matInput formControlName="toOffice">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Beneficiary</mat-label>
+            <input matInput formControlName="toClientId">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>To Account Type</mat-label>
+            <input matInput formControlName="toAccountType">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>To Account</mat-label>
+            <input matInput formControlName="toAccount">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Standing Instruction Type</mat-label>
+            <mat-select formControlName="instructionType">
+              <mat-option *ngFor="let instructionsType of instructionTypeData"
+                [value]="instructionsType.id">
+                {{ instructionsType.value }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Amount</mat-label>
+            <input matInput formControlName="type">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Validity From</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="validFromDatePicker" required
+              formControlName="validFrom">
+            <mat-datepicker-toggle matSuffix [for]="validFromDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #validFromDatePicker></mat-datepicker>
+            <mat-error *ngIf="editStandingInstructionsForm.controls.validFrom.hasError('required')">
+              Valid From Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Validity To</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="validTillDatePicker" required
+              formControlName="validTill">
+            <mat-datepicker-toggle matSuffix [for]="validTillDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #validTillDatePicker></mat-datepicker>
+            <mat-error *ngIf="editStandingInstructionsForm.controls.validTill.hasError('required')">
+              Valid Till Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Recurrence Type</mat-label>
+            <mat-select required formControlName="recurrenceType">
+              <mat-option *ngFor="let recurrenceType of recurrenceTypeData" [value]="recurrenceType.id">
+                {{ recurrenceType.value }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="editStandingInstructionsForm.controls.recurrenceType.hasError('required')">
+              Recurrence Type is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Interval</mat-label>
+            <input matInput formControlName="recurrenceInterval">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Recurrence Frequency</mat-label>
+            <mat-select formControlName="recurrenceFrequency">
+              <mat-option *ngFor="let recurrenceFrequencyType of recurrenceFrequencyTypeData"
+                [value]="recurrenceFrequencyType.id">
+                {{ recurrenceFrequencyType.value }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>On Month Day</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="recurrenceOnMonthDayDatePicker"
+              formControlName="recurrenceOnMonthDay">
+            <mat-datepicker-toggle matSuffix [for]="recurrenceOnMonthDayDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #recurrenceOnMonthDayDatePicker></mat-datepicker>
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!editStandingInstructionsForm.valid" (click)="submit()">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>
