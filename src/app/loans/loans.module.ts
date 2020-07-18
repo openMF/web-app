@@ -58,6 +58,7 @@ import { LoansAccountAddCollateralDialogComponent } from './custom-dialog/loans-
 import { LoansConfirmationDialogBoxComponent } from './custom-dialog/loans-confirmation-dialog-box/loans-confirmation-dialog-box.component';
 import { LoanAccountLoadDocumentsDialogComponent } from './custom-dialog/loan-account-load-documents-dialog/loan-account-load-documents-dialog.component';
 import { StandingInstructionsTabComponent } from './loans-view/standing-instructions-tab/standing-instructions-tab.component';
+import { EditLoansAccountComponent } from './edit-loans-account/edit-loans-account.component';
 
 /**
  * Loans Module
@@ -114,6 +115,7 @@ import { StandingInstructionsTabComponent } from './loans-view/standing-instruct
     LoanDocumentsTabComponent,
     LoanAccountLoadDocumentsDialogComponent,
     StandingInstructionsTabComponent,
+    EditLoansAccountComponent,
   ],
   entryComponents: [
     LoansAccountAddCollateralDialogComponent,

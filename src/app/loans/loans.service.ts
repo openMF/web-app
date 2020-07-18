@@ -266,6 +266,13 @@ export class LoansService {
     return this.http.get('/loans/template', { params: httpParams });
   }
 
+  getLoansAccountAndTemplateResource(loanId: any): Observable<any> {
+    const httpParams = new HttpParams().set('associations', 'charges,collateral,meeting,multiDisburseDetails')
+                                       .set('staffInSelectedOfficeOnly', 'true')
+                                       .set('template', 'true');
+    return this.http.get(`/loans/${loanId}`, { params: httpParams });
+  }
+
   /**
    * Get Loans Collateral Template
    * @param {any} productId Product ID
@@ -318,6 +325,10 @@ export class LoansService {
       .set('limit', '14')
       .set('offset', '0');
     return this.http.get(`/standinginstructions`, { params: httpParams });
+  }
+
+  updateLoansAccount(loanId: any, loanData: any): Observable<any> {
+    return this.http.put(`/loans/${loanId}`, loanData);
   }
 
 }

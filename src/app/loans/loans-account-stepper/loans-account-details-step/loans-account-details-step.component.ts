@@ -59,6 +59,11 @@ export class LoansAccountDetailsStepComponent implements OnInit {
         this.loansAccountDetailsForm.patchValue({
           'productId': this.loansAccountTemplate.loanProductId,
           'submittedOnDate': this.loansAccountTemplate.timeline.submittedOnDate && new Date(this.loansAccountTemplate.timeline.submittedOnDate),
+          'loanOfficerId': this.loansAccountTemplate.loanOfficerId,
+          'loanPurposeId': this.loansAccountTemplate.loanPurposeId,
+          'fundId': this.loansAccountTemplate.fundId,
+          'expectedDisbursementDate': this.loansAccountTemplate.timeline.expectedDisbursementDate && new Date(this.loansAccountTemplate.timeline.expectedDisbursementDate),
+          'externalId': this.loansAccountTemplate.externalId
         });
       }
     }

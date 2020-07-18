@@ -130,11 +130,14 @@ export class LoansViewComponent implements OnInit {
       case 'Delete':
         this.deleteLoanAccount();
         break;
+      case 'Modify Application':
+        this.router.navigate(['edit-loans-account'], { relativeTo: this.route});
+        break;
       default:
         button = button.replace(/\s/g, '-').toLowerCase();
         button = button.replace(/\(/g, '');
         button = button.replace(/\)/g, '');
-        this.router.navigate([button], { relativeTo: this.route });
+        this.router.navigate(['actions', button], { relativeTo: this.route });
         break;
     }
   }
