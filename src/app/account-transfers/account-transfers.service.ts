@@ -23,4 +23,14 @@ export class AccountTransfersService {
     return this.http.get(`/standinginstructions/${standingInstructionsId}`);
   }
 
+  getStandingInstructionsDataAndTemplate(standingInstructionsId: any): Observable<any> {
+    const httpParams = new HttpParams().set('associations', 'template');
+    return this.http.get(`/standinginstructions/${standingInstructionsId}`, { params: httpParams });
+  }
+
+  updateStandingInstructionsData(standinginstructionsId: any, data: any): Observable<any> {
+    const httpParams = new HttpParams().set('command', 'update');
+    return this.http.put(`/standinginstructions/${standinginstructionsId}`, data, { params: httpParams });
+  }
+
 }
