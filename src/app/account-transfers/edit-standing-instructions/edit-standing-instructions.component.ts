@@ -86,7 +86,7 @@ export class EditStandingInstructionsComponent implements OnInit {
   }
 
   /**
-   * Creates the group form.
+   * Creates the standing instructions form.
    */
   createEditStandingInstructionsForm() {
     this.editStandingInstructionsForm = this.formBuilder.group({

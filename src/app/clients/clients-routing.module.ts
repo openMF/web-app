@@ -229,6 +229,10 @@ const routes: Routes = [
             path: 'sharesaccounts',
             loadChildren: '../shares/shares.module#SharesModule'
           },
+          {
+            path: 'standing-instructions',
+            loadChildren: '../account-transfers/account-transfers.module#AccountTransfersModule'
+          },
         ]
       }
     ]

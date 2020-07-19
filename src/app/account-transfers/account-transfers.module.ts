@@ -11,6 +11,7 @@ import { DirectivesModule } from '../directives/directives.module';
 /** Custom Components */
 import { ViewStandingInstructionsComponent } from './view-standing-instructions/view-standing-instructions.component';
 import { EditStandingInstructionsComponent } from './edit-standing-instructions/edit-standing-instructions.component';
+import { CreateStandingInstructionsComponent } from './create-standing-instructions/create-standing-instructions.component';
 
 /**
  * Account Transfers Module
@@ -21,7 +22,8 @@ import { EditStandingInstructionsComponent } from './edit-standing-instructions/
   imports: [SharedModule, PipesModule, DirectivesModule, AccountTransfersRoutingModule],
   declarations: [
     ViewStandingInstructionsComponent,
-    EditStandingInstructionsComponent
+    EditStandingInstructionsComponent,
+    CreateStandingInstructionsComponent
   ],
   providers: [DatePipe]
 })

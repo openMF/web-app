@@ -33,4 +33,22 @@ export class AccountTransfersService {
     return this.http.put(`/standinginstructions/${standinginstructionsId}`, data, { params: httpParams });
   }
 
+  getStandingInstructionsTemplate(clientId: any, officeId: any, accountTypeId: string, formValue?: any): Observable<any> {
+    let httpParams = new HttpParams().set('fromAccountType', accountTypeId)
+                                       .set('fromClientId', clientId)
+                                       .set('fromOfficeId', officeId);
+    if (formValue) {
+      const propNames = Object.getOwnPropertyNames(formValue);
+      for (let i = 0; i < propNames.length; i++) {
+        const propName = propNames[i];
+        httpParams = httpParams.set(propName, formValue[propName]);
+      }
+    }
+    return this.http.get(`/standinginstructions/template`, { params: httpParams });
+  }
+
+  createStandingInstructions(data: Object): Observable<any> {
+    return this.http.post(`/standinginstructions`, data);
+  }
+
 }
