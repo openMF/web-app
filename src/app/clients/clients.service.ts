@@ -301,6 +301,18 @@ export class ClientsService {
     return this.http.post(`/clients/${clientId}/charges`, charge);
   }
 
+  getClientReportTemplates() {
+    const httpParams = new HttpParams()
+          .set('entityId', '0')
+          .set('typeId', '0');
+    return this.http.get('/templates', { params: httpParams });
+  }
+
+  retrieveClientReportTemplate(templateId: string, clientId: string) {
+    const httpParams = new HttpParams().set('clientId', clientId);
+    return this.http.post(`/templates/${templateId}`, {}, { params: httpParams, responseType: 'text' });
+  }
+
   /**
    * @returns {Observable<any>} Offices data
    */

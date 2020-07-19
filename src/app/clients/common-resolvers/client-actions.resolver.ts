@@ -28,9 +28,6 @@ export class ClientActionsResolver implements Resolve<Object> {
     const actionName = route.paramMap.get('name');
     const clientId = route.paramMap.get('clientId') || route.parent.parent.paramMap.get('clientId');
     switch (actionName) {
-      case 'Assign Staff':
-      case 'Update Default Savings':
-        return this.clientsService.getClientDataAndTemplate(clientId);
       case 'Survey':
         return this.clientsService.getSurveys(clientId);
       case 'Take Survey':
@@ -43,12 +40,17 @@ export class ClientActionsResolver implements Resolve<Object> {
         return this.clientsService.getClientCommandTemplate('withdraw');
       case 'Transfer Client':
         return this.clientsService.getOffices();
+      case 'Add Charge':
+        return this.clientsService.getClientChargeTemplate(clientId);
+      case 'Client Screen Reports':
+        return this.clientsService.getClientReportTemplates();
+      case 'Assign Staff':
+      case 'Update Default Savings':
+        return this.clientsService.getClientDataAndTemplate(clientId);
       case 'Undo Transfer':
       case 'Accept Transfer':
       case 'Reject Transfer':
         return this.clientsService.getClientTransferProposalDate(clientId);
-      case 'Add Charge':
-        return this.clientsService.getClientChargeTemplate(clientId);
       default:
         return undefined;
     }
