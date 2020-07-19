@@ -154,6 +154,12 @@ export class LoansService {
     return this.http.post(`/loans/${loanId}/transactions`, data, {params: httpParams});
   }
 
+  getLoanScreenReportsData(): Observable<any> {
+    const httpParams = new HttpParams().set('entityId', '1')
+                                       .set('typeId', '0');
+    return this.http.get(`/templates`, {params: httpParams});
+  }
+
   /**
    * Get Loan Datatables
    */
@@ -329,6 +335,11 @@ export class LoansService {
 
   updateLoansAccount(loanId: any, loanData: any): Observable<any> {
     return this.http.put(`/loans/${loanId}`, loanData);
+  }
+
+  getTemplateData(templateId: any, loanId: any): Observable<any> {
+    const httpParams = new HttpParams().set('loanId', loanId);
+    return this.http.post(`/templates/${templateId}`, {}, { params: httpParams, responseType: 'text'});
   }
 
 }

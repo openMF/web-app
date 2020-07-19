@@ -31,7 +31,8 @@ export class LoanAccountActionsComponent {
             create_guarantor: boolean,
             disburse: boolean,
             withdrawn_by_client: boolean,
-            undo_disbursal: boolean } = {
+            undo_disbursal: boolean,
+            loan_screen_reports: boolean } = {
               close: false,
               undo_approval: false,
               write_off: false,
@@ -50,7 +51,9 @@ export class LoanAccountActionsComponent {
               create_guarantor: false,
               disburse: false,
               withdrawn_by_client: false,
-              undo_disbursal: false };
+              undo_disbursal: false,
+              loan_screen_reports: false };
+
   actionButtonData: any;
   actionName: any;
 
