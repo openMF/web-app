@@ -76,7 +76,7 @@ const routes: Routes = [
                 data: { title: extract('Recurring Deposit Account Charges'), breadcrumb: 'Charges', routeParamBreadcrumb: false }
               },
               {
-                path: 'standing-instructions',
+                path: 'standing-instructions-tab',
                 component: StandingInstructionsTabComponent,
                 data: { title: extract('Recurring Deposit Account Standing Instructions'), breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false },
                 resolve: {
@@ -158,7 +158,6 @@ const routes: Routes = [
         children: [
           {
             path: 'standing-instructions',
-            data: { title: extract('Standing Instructions'), breadcrumb: 'standing-instructions', routeParamBreadcrumb: false },
             loadChildren: '../../account-transfers/account-transfers.module#AccountTransfersModule'
           },
         ]

@@ -8,16 +8,26 @@ import { extract } from '../core/i18n/i18n.service';
 /** Custom Components */
 import { ViewStandingInstructionsComponent } from './view-standing-instructions/view-standing-instructions.component';
 import { EditStandingInstructionsComponent } from './edit-standing-instructions/edit-standing-instructions.component';
+import { CreateStandingInstructionsComponent } from './create-standing-instructions/create-standing-instructions.component';
 
 /** Custom Resolvers */
 import { ViewStandingInstructionsResolver } from './common-resolvers/view-standing-instructions.resolver';
 import { StandingInstructionsDataAndTemplateResolver } from './common-resolvers/standing-instructions-data-and-template.resolver';
+import { StandingInstructionsTemplateResolver } from './common-resolvers/standing-instructions-template.resolver';
 
 /** Loans Route. */
 const routes: Routes = [
   {
     path: '',
     children: [
+      {
+        path: 'create-standing-instructions',
+        data: { title: extract('Create Standing Instructions'), breadcrumb: 'Create Standing Instructions', routeParamBreadcrumb: 'Create Standing Instructions' },
+        component: CreateStandingInstructionsComponent,
+        resolve: {
+          standingIntructionsTemplate: StandingInstructionsTemplateResolver
+        }
+      },
       {
         path: ':standingInstructionsId',
         data: { title: extract('Standing Instructions'), routeParamBreadcrumb: 'standingInstructionsId' },
@@ -39,8 +49,9 @@ const routes: Routes = [
             },
           }
         ]
-      }]
-  }
+      }
+    ]
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],
@@ -48,7 +59,8 @@ const routes: Routes = [
   declarations: [],
   providers: [
     ViewStandingInstructionsResolver,
-    StandingInstructionsDataAndTemplateResolver
+    StandingInstructionsDataAndTemplateResolver,
+    StandingInstructionsTemplateResolver
   ]
 })
 
