@@ -49,6 +49,7 @@ import { UploadSignatureDialogComponent } from './clients-view/custom-dialogs/up
 import { DeleteSignatureDialogComponent } from './clients-view/custom-dialogs/delete-signature-dialog/delete-signature-dialog.component';
 import { UploadImageDialogComponent } from './clients-view/custom-dialogs/upload-image-dialog/upload-image-dialog.component';
 import { ClientScreenReportsComponent } from './clients-view/client-actions/client-screen-reports/client-screen-reports.component';
+import { EditClientComponent } from './edit-client/edit-client.component';
 
 
 /**
@@ -103,7 +104,8 @@ import { ClientScreenReportsComponent } from './clients-view/client-actions/clie
     UploadSignatureDialogComponent,
     DeleteSignatureDialogComponent,
     UploadImageDialogComponent,
-    ClientScreenReportsComponent
+    ClientScreenReportsComponent,
+    EditClientComponent
   ],
   entryComponents: [
     UploadDocumentDialogComponent,
