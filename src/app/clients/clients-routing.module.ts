@@ -22,6 +22,7 @@ import { AddressTabComponent } from './clients-view/address-tab/address-tab.comp
 import { ClientActionsComponent } from './clients-view/client-actions/client-actions.component';
 import { ViewChargeComponent } from './clients-view/charges/view-charge/view-charge.component';
 import { ClientPayChargesComponent } from './clients-view/charges/client-pay-charges/client-pay-charges.component';
+import { EditClientComponent } from './edit-client/edit-client.component';
 
 /** Custom Resolvers */
 import { ClientViewResolver } from './common-resolvers/client-view.resolver';
@@ -45,6 +46,7 @@ import { ClientChargeOverviewResolver } from './clients-view/charges/charges-ove
 import { ClientActionsResolver } from './common-resolvers/client-actions.resolver';
 import { ClientChargeViewResolver } from './common-resolvers/client-charge-view.resolver';
 import { ClientTransactionPayResolver } from './common-resolvers/client-transaction-pay.resolver';
+import { ClientDataAndTemplateResolver } from './common-resolvers/client-and-template.resolver';
 
 const routes: Routes = [
   Route.withShell([{
@@ -167,6 +169,14 @@ const routes: Routes = [
         data: { title: extract('Clients View'), routeParamBreadcrumb: 'clientId' },
         children: [
           {
+            path: 'edit',
+            data: { title: extract('Edit Client'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+            component: EditClientComponent,
+            resolve: {
+              clientDataAndTemplate: ClientDataAndTemplateResolver
+            }
+          },
+          {
             path: 'actions/:name',
             data: { title: extract('Client Actions'), routeParamBreadcrumb: 'name' },
             component: ClientActionsComponent,
@@ -263,7 +273,8 @@ const routes: Routes = [
     ClientChargeOverviewResolver,
     ClientActionsResolver,
     ClientChargeViewResolver,
-    ClientTransactionPayResolver
+    ClientTransactionPayResolver,
+    ClientDataAndTemplateResolver
   ]
 })
 export class ClientsRoutingModule { }

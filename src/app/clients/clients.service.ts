@@ -45,6 +45,10 @@ export class ClientsService {
     return this.http.get(`/clients/${clientId}`);
   }
 
+  updateClient(clientId: string, client: any) {
+    return this.http.put(`/clients/${clientId}`, client);
+  }
+
   deleteClient(clientId: string) {
     return this.http.delete(`/clients/${clientId}`);
   }
