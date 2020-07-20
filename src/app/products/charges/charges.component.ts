@@ -1,10 +1,14 @@
 /** Angular Imports */
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** rxjs Imports */
 import { of } from 'rxjs';
+
+/** Custom Services */
+import { PopoverService } from '../../configuration-wizard/popover/popover.service';
+import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
 
 /**
  * Charges component.
@@ -14,7 +18,7 @@ import { of } from 'rxjs';
   templateUrl: './charges.component.html',
   styleUrls: ['./charges.component.scss']
 })
-export class ChargesComponent implements OnInit {
+export class ChargesComponent implements OnInit, AfterViewInit {
 
   /** Charge data. */
   chargeData: any;
@@ -28,11 +32,26 @@ export class ChargesComponent implements OnInit {
   /** Sorter for charges table. */
   @ViewChild(MatSort) sort: MatSort;
 
+  /* Reference of create charges button */
+  @ViewChild('buttonCreateCharge') buttonCreateCharge: ElementRef<any>;
+  /* Template for popover on create charges button */
+  @ViewChild('templateButtonCreateCharge') templateButtonCreateCharge: TemplateRef<any>;
+  /* Reference of charges table */
+  @ViewChild('chargesTable') chargesTable: ElementRef<any>;
+  /* Template for popover on charges table */
+  @ViewChild('templateChargesTable') templateChargesTable: TemplateRef<any>;
+
   /**
    * Retrieves the charges data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
+   * @param {Router} router Router.
+   * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
+   * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private configurationWizardService: ConfigurationWizardService,
+              private popoverService: PopoverService) {
     this.route.data.subscribe(( data: { charges: any }) => {
       this.chargeData = data.charges;
     });
@@ -68,4 +87,51 @@ export class ChargesComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  /**
+   * To show popover.
+   */
+  ngAfterViewInit() {
+    if (this.configurationWizardService.showChargesPage === true) {
+      setTimeout(() => {
+        this.showPopover(this.templateButtonCreateCharge, this.buttonCreateCharge.nativeElement, 'bottom', true);
+      });
+    }
+
+    if (this.configurationWizardService.showChargesList === true) {
+      setTimeout(() => {
+        this.showPopover(this.templateChargesTable, this.chargesTable.nativeElement, 'top', true);
+      });
+    }
+  }
+
+  /**
+   * Popover function
+   * @param template TemplateRef<any>.
+   * @param target HTMLElement | ElementRef<any>.
+   * @param position String.
+   * @param backdrop Boolean.
+   */
+  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+    setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
+  }
+
+  /**
+   * Next Step (Loan Products - Products Page) Configuration Wizard.
+   */
+  nextStep() {
+    this.configurationWizardService.showChargesPage = false;
+    this.configurationWizardService.showChargesList = false;
+    this.configurationWizardService.showLoanProducts = true;
+    this.router.navigate(['/products']);
+  }
+
+  /**
+   * Previous Step (Charges - Products Page) Configuration Wizard.
+   */
+  previousStep() {
+    this.configurationWizardService.showChargesPage = false;
+    this.configurationWizardService.showChargesList = false;
+    this.configurationWizardService.showCharges = true;
+    this.router.navigate(['/products']);
+  }
 }

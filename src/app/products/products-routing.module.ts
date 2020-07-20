@@ -24,6 +24,7 @@ import { ViewShareProductComponent } from './share-products/view-share-product/v
 import { EditShareProductComponent } from './share-products/edit-share-product/edit-share-product.component';
 import { ManageTaxConfigurationsComponent } from './manage-tax-configurations/manage-tax-configurations.component';
 import { RecurringDepositProductsComponent } from './recurring-deposit-products/recurring-deposit-products.component';
+import { ViewRecurringDepositProductComponent } from './recurring-deposit-products/view-recurring-deposit-product/view-recurring-deposit-product.component';
 import { ChargesComponent } from './charges/charges.component';
 import { ViewChargeComponent } from './charges/view-charge/view-charge.component';
 import { FixedDepositProductsComponent } from './fixed-deposit-products/fixed-deposit-products.component';
@@ -56,6 +57,7 @@ import { ShareProductsTemplateResolver } from './share-products/share-products-t
 import { ShareProductResolver } from './share-products/share-product-resolver';
 import { ShareProductAndTemplateResolver } from './share-products/edit-share-product/share-product-and-template.resolver';
 import { RecurringDepositProductsResolver } from './recurring-deposit-products/recurring-deposit-products.resolver';
+import { RecurringDepositProductResolver } from './recurring-deposit-products/recurring-deposit-product.resolver';
 import { ChargesResolver } from './charges/charges.resolver';
 import { ChargeResolver } from './charges/charge.resolver';
 import { FixedDepositProductsResolver } from './fixed-deposit-products/fixed-deposit-products.resolver';
@@ -72,6 +74,7 @@ import { EditChargeComponent } from './charges/edit-charge/edit-charge.component
 import { ChargesTemplateResolver } from './charges/charges-template.resolver';
 import { TaxGroupResolver } from './manage-tax-groups/tax-group.resolver';
 import { DividendsResolver } from './share-products/dividends-share-product/dividends.resolver';
+import { RecurringDepositProductsTemplateResolver } from './recurring-deposit-products/recurring-deposit-products-template.resolver';
 
 /** Products Routes */
 const routes: Routes = [
@@ -298,11 +301,30 @@ const routes: Routes = [
         },
         {
           path: 'recurring-deposit-products',
-          component: RecurringDepositProductsComponent,
-          resolve: {
+          data: { title: extract('Recurring Deposit Products'), breadcrumb: 'Recurring Deposit Products' },
+          children: [
+            {
+              path: '',
+              component: RecurringDepositProductsComponent,
+              resolve: {
                 recurringDepositProducts: RecurringDepositProductsResolver
-          },
-          data: { title:  extract('Recurring Deposit Products'), breadcrumb: 'Recurring Deposit Products' },
+              }
+            },
+            {
+              path: ':id',
+              data: { title: extract('View Recurring Deposit Product'), routeParamBreadcrumb: 'id' },
+              children: [
+                {
+                  path: '',
+                  component: ViewRecurringDepositProductComponent,
+                  resolve: {
+                    recurringDepositProduct: RecurringDepositProductResolver,
+                    recurringDepositProductsTemplate: RecurringDepositProductsTemplateResolver
+                  }
+                }
+              ]
+            },
+          ]
         },
         {
           path: 'fixed-deposit-products',
@@ -448,6 +470,7 @@ const routes: Routes = [
     ShareProductResolver,
     ShareProductAndTemplateResolver,
     RecurringDepositProductsResolver,
+    RecurringDepositProductResolver,
     ChargesResolver,
     ChargeResolver,
     ChargesTemplateResolver,
@@ -463,7 +486,8 @@ const routes: Routes = [
     TaxComponentTemplateResolver,
     EditTaxComponentComponent,
     TaxGroupResolver,
-    DividendsResolver
+    DividendsResolver,
+    RecurringDepositProductsTemplateResolver
   ]
 })
 export class ProductsRoutingModule { }
