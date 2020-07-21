@@ -60,6 +60,29 @@ export class LoansService {
   }
 
   /**
+   * Approve Loan.
+   * @param {string} loanId Loan Id.
+   * @param {any} loanData Loan Data.
+   * @returns {Observable<any>}
+   */
+  approveLoan(loanId: string, loanData: any): Observable<any> {
+    const httpParams = new HttpParams()
+    .set('command', 'approve');
+    return this.http.post(`/loans/${loanId}`, loanData, {params: httpParams});
+  }
+
+  /**
+   * Get Loan Charge Aproval template.
+   * @param {string} loanId Loan Id.
+   * @returns {Observable<any>}
+   */
+  getLoanApprovalTemplate(loanId: string): Observable<any> {
+    const httpParams = new HttpParams()
+    .set('templateType', 'approval');
+    return this.http.get(`/loans/${loanId}/template`, {params: httpParams});
+  }
+
+  /**
    * @param {any} loanCharge to apply on a Loan Account.
    * @returns {Observable<any>}
    */

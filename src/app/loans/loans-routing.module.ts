@@ -13,10 +13,10 @@ import { AccountDetailsComponent } from './loans-view/account-details/account-de
 import { NotesTabComponent } from './loans-view/notes-tab/notes-tab.component';
 import { RepaymentScheduleTabComponent } from './loans-view/repayment-schedule-tab/repayment-schedule-tab.component';
 import { TransactionsTabComponent } from './loans-view/transactions-tab/transactions-tab.component';
-import { OriginalScheduleTabComponent } from './loans-view/original-schedule-tab/original-schedule-tab.component';
-import { OverdueChargesTabComponent } from './loans-view/overdue-charges-tab/overdue-charges-tab.component';
-import { ChargesTabComponent } from './loans-view/charges-tab/charges-tab.component';
 import { DatatableTabComponent } from './loans-view/datatable-tab/datatable-tab.component';
+import { OverdueChargesTabComponent } from './loans-view/overdue-charges-tab/overdue-charges-tab.component';
+import { OriginalScheduleTabComponent } from './loans-view/original-schedule-tab/original-schedule-tab.component';
+import { ChargesTabComponent } from './loans-view/charges-tab/charges-tab.component';
 import { LoanAccountActionsComponent } from './loans-view/loan-account-actions/loan-account-actions.component';
 import { FloatingInterestRatesComponent } from './loans-view/floating-interest-rates/floating-interest-rates.component';
 import { LoanTrancheDetailsComponent } from './loans-view/loan-tranche-details/loan-tranche-details.component';
@@ -32,6 +32,8 @@ import { LoanDetailsResolver } from './common-resolvers/loan-details.resolver';
 import { LoanDetailsGeneralResolver } from './common-resolvers/loan-details-general.resolver';
 import { LoanNotesResolver } from './common-resolvers/loan-notes.resolver';
 import { LoanDetailsChargesResolver } from './common-resolvers/loan-details-charges.resolver';
+import { MultiDisburseLoanDetailsResolver } from './common-resolvers/loan-multidisburse-details.resolver';
+import { LoanApprovalTemplateResolver } from './common-resolvers/loan-approval-template.resolver';
 import { LoanDatatablesResolver } from './common-resolvers/loan-datatables.resolver';
 import { LoanDatatableResolver } from './common-resolvers/loan-datatable.resolver';
 import { LoanActionButtonResolver } from './common-resolvers/loan-action-button.resolver';
@@ -205,7 +207,10 @@ const routes: Routes = [
           data: { title: extract('Edit Loans Account'), breadcrumb: 'Edit Loans Account', routeParamBreadcrumb: 'Edit' },
           component: EditLoansAccountComponent,
           resolve: {
-            loansAccountAndTemplate: LoansAccountAndTemplateResolver
+            loansAccountAndTemplate: LoansAccountAndTemplateResolver,
+            actionButtonData: LoanActionButtonResolver,
+            loanTemplate: LoanApprovalTemplateResolver,
+            loanData: LoanDetailsGeneralResolver
           }
         },
       ]
@@ -227,7 +232,9 @@ const routes: Routes = [
     LoanActionButtonResolver,
     LoansAccountTemplateResolver,
     LoanDocumentsResolver,
-    LoansAccountAndTemplateResolver
+    LoansAccountAndTemplateResolver,
+    LoanApprovalTemplateResolver,
+    MultiDisburseLoanDetailsResolver
   ]
 })
 

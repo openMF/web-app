@@ -1,0 +1,121 @@
+<div class="container">
+
+  <form [formGroup]="approveLoanForm" (ngSubmit)="submit()">
+
+    <mat-card-content>
+
+      <div fxLayout="column">
+
+        <mat-form-field>
+          <mat-label>Approved On</mat-label>
+          <input matInput [min]="minDate" [matDatepicker]="approvedDatePicker" required formControlName="approvedOnDate">
+          <mat-datepicker-toggle matSuffix [for]="approvedDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #approvedDatePicker></mat-datepicker>
+          <mat-error *ngIf="approveLoanForm.controls.approvedOnDate.hasError('required')">
+            Approved Date <strong>is required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Expected disbursement on</mat-label>
+          <input matInput [min]="minDate" [matDatepicker]="disbursementDatePicker" required formControlName="expectedDisbursementDate">
+          <mat-datepicker-toggle matSuffix [for]="disbursementDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #disbursementDatePicker></mat-datepicker>
+          <mat-error *ngIf="approveLoanForm.controls.expectedDisbursementDate.hasError('required')">
+            Disbursement Date <strong>is required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Approved Amount</mat-label>
+          <input matInput formControlName="approvedLoanAmount">
+        </mat-form-field>
+
+        <div *ngIf="disbursementDetails.length !== 0">
+
+          <mat-label> Loan Tranche Details </mat-label>
+
+          <div fxLayoutAlign="right">
+            <button mat-button color="primary" (click)="addTranche()">Add Tranche</button>
+          </div>
+
+          <table mat-table [dataSource]="dataSource">
+
+            <ng-container matColumnDef="title">
+              <th mat-header-cell *matHeaderCellDef>  </th>
+              <td mat-cell *matCellDef="let element"> Tranche{{element}} </td>
+              <td mat-footer-cell *matFooterCellDef> Total </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="disbursementDate">
+              <th mat-header-cell *matHeaderCellDef> Expected disbursement on </th>
+              <td mat-cell *matCellDef="let element">
+                <mat-form-field *ngIf="element < disbursementDetails.length-1 || index === disbursementDetails.length-1">
+                  <mat-label>Expected disbursement on</mat-label>
+                  <input matInput [min]="minDate" [matDatepicker]="disbursementDatePicker" [value]="disbursementDetails[element].expectedDisbursementDate" required formControlName="disDate{{element}}">
+                  <mat-datepicker-toggle matSuffix [for]="disbursementDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #disbursementDatePicker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field *ngIf="element > disbursementDetails.length-1">
+                  <mat-label>Expected disbursement on</mat-label>
+                  <input matInput [min]="minDate" [matDatepicker]="disbursementDatePicker" required formControlName="disDate{{element}}">
+                  <mat-datepicker-toggle matSuffix [for]="disbursementDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #disbursementDatePicker></mat-datepicker>
+                </mat-form-field> 
+              </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef> Principal Amount </th>
+              <td mat-cell *matCellDef="let element">
+                <mat-form-field *ngIf="element < disbursementDetails.length-1 || element === disbursementDetails.length-1">
+                  <mat-label>Principal</mat-label>
+                  <input matInput [value]="disbursementDetails[element].principal" required formControlName="disPrincipal{{element}}">
+                </mat-form-field>
+                <mat-form-field *ngIf="element > disbursementDetails.length-1">
+                  <mat-label>Principal</mat-label>
+                  <input matInput required formControlName="disPrincipal{{element}}">
+                </mat-form-field>
+              </td>
+              <td mat-footer-cell *matFooterCellDef> {{total}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef> Actions </th>
+              <td mat-cell *matCellDef="let element">
+                <button class="document-action-button" mat-raised-button color="warn" (click)="removeTranche(disbursementDetails[element].id)" *ngIf="element < disbursementDetails.length-1 || element === disbursementDetails.length-1"> <fa-icon icon="times"></fa-icon></button>
+                <button class="document-action-button" mat-raised-button color="warn" (click)="removeTranche()" *ngIf="element > disbursementDetails.length-1"> <fa-icon icon="times"></fa-icon></button>
+              </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          
+        </div>
+
+        <mat-form-field>
+          <mat-label>Transaction Amount</mat-label>
+          <input matInput required formControlName="approvedLoanAmount">
+          <mat-error *ngIf="approveLoanForm.controls.approvedLoanAmount.hasError('required')">
+            Approved Amount is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Note</mat-label>
+          <textarea matInput formControlName="note"></textarea>
+        </mat-form-field>
+
+      </div>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!approveLoanForm.valid" *mifosxHasPermission="'APPROVE_LOAN'">Submit</button>
+      </mat-card-actions>
+
+    </mat-card-content>
+
+  </form>
+
+</div>
