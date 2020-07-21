@@ -105,6 +105,11 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}`, {params: httpParams});
   }
 
+  getApproveAssociationsDetails(loanId: any) {
+    const httpParams = new HttpParams()
+      .set('associations', 'multiDisburseDetails');
+    return this.http.get(`/loans/${loanId}`, { params: httpParams });
+  }
   /**
    * @param loanId Loan Id
    * @returns The notes for particular loan
@@ -340,6 +345,17 @@ export class LoansService {
   getTemplateData(templateId: any, loanId: any): Observable<any> {
     const httpParams = new HttpParams().set('loanId', loanId);
     return this.http.post(`/templates/${templateId}`, {}, { params: httpParams, responseType: 'text'});
+  }
+
+  /**
+   * Get Loan Charge Aproval template.
+   * @param {string} loanId Loan Id.
+   * @returns {Observable<any>}
+   */
+  getLoanApprovalTemplate(loanId: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('templateType', 'approval');
+    return this.http.get(`/loans/${loanId}/template`, { params: httpParams });
   }
 
 }
