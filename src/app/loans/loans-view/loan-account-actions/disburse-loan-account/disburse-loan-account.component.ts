@@ -72,7 +72,7 @@ export class DisburseLoanAccountComponent implements OnInit {
     disbursementForm.locale = 'en';
     disbursementForm.dateFormat = dateFormat;
     this.loanService.loanActionButtons(loanId, 'disbursetosavings', disbursementForm).subscribe((response: any) => {
-      this.router.navigate(['../general'], {relativeTo: this.route});
+      this.router.navigate(['../../general'], {relativeTo: this.route});
     });
   }
 

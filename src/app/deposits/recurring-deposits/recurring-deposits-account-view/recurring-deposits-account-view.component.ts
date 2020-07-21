@@ -99,7 +99,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
       }
 
       if (!this.isprematureAllowed) {
-        this.buttonConfig.addOption({
+        this.buttonConfig.addButton({
           name: 'Close',
           icon: 'fa fa-arrow-right'
         });

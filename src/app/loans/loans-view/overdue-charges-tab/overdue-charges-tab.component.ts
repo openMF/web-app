@@ -33,7 +33,7 @@ export class OverdueChargesTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { loanDetailsData: any }) => {
+    this.route.parent.data.subscribe(( data: { loanDetailsData: any }) => {
       this.loanDetails = data.loanDetailsData;
     });
   }

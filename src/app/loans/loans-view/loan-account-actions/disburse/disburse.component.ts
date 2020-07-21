@@ -109,7 +109,7 @@ export class DisburseComponent implements OnInit {
     disbursementLoanData.dateFormat = dateFormat;
     this.loanService.loanActionButtons(this.loanId, 'disburse', disbursementLoanData )
       .subscribe((response: any) => {
-        this.router.navigate(['../general'], { relativeTo: this.route });
+        this.router.navigate(['../../general'], { relativeTo: this.route });
       });
   }
 

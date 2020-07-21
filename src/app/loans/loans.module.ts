@@ -9,7 +9,7 @@ import { SharedModule } from 'app/shared/shared.module';
 import { PipesModule } from '../pipes/pipes.module';
 
 /** Custom Components */
-import { AddLoanChargeComponent } from './add-loan-charge/add-loan-charge.component';
+import { AddLoanChargeComponent } from './loans-view/loan-account-actions/add-loan-charge/add-loan-charge.component';
 import { LoansViewComponent } from './loans-view/loans-view.component';
 import { GeneralTabComponent } from './loans-view/general-tab/general-tab.component';
 import { AccountDetailsComponent } from './loans-view/account-details/account-details.component';

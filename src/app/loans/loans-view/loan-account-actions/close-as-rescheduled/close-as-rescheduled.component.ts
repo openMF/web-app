@@ -68,7 +68,7 @@ export class CloseAsRescheduledComponent implements OnInit {
     closeForm.dateFormat = dateFormat;
     this.loanService.submitLoanActionButton(this.loanId, closeForm, 'close-rescheduled')
       .subscribe((response: any) => {
-        this.router.navigate(['../general'], { relativeTo: this.route });
+        this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
 }

@@ -6,7 +6,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { extract } from '../core/i18n/i18n.service';
 
 /** Custom Components */
-import { AddLoanChargeComponent } from './add-loan-charge/add-loan-charge.component';
 import { LoansViewComponent } from './loans-view/loans-view.component';
 import { GeneralTabComponent } from './loans-view/general-tab/general-tab.component';
 import { AccountDetailsComponent } from './loans-view/account-details/account-details.component';
@@ -27,9 +26,7 @@ import { StandingInstructionsTabComponent } from 'app/loans/loans-view/standing-
 import { EditLoansAccountComponent } from './edit-loans-account/edit-loans-account.component';
 
 /** Custom Resolvers */
-import { LoanChargeTemplateResolver } from './common-resolvers/loan-charge-template.resolver';
 import { LoanDetailsResolver } from './common-resolvers/loan-details.resolver';
-import { LoanDetailsGeneralResolver } from './common-resolvers/loan-details-general.resolver';
 import { LoanNotesResolver } from './common-resolvers/loan-notes.resolver';
 import { LoanDetailsChargesResolver } from './common-resolvers/loan-details-charges.resolver';
 import { LoanDatatablesResolver } from './common-resolvers/loan-datatables.resolver';
@@ -69,18 +66,12 @@ const routes: Routes = [
             {
               path: 'general',
               component: GeneralTabComponent,
-              data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false },
-              resolve: {
-                loanDetailsData: LoanDetailsGeneralResolver
-              }
+              data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false }
             },
             {
               path: 'accountdetail',
               component: AccountDetailsComponent,
-              data: { title: extract('Account Detail'), breadcrumb: 'Account Detail', routeParamBreadcrumb: false },
-              resolve: {
-                loanDetailsData: LoanDetailsGeneralResolver
-              }
+              data: { title: extract('Account Detail'), breadcrumb: 'Account Detail', routeParamBreadcrumb: false }
             },
             {
               path: 'original-schedule',
@@ -125,10 +116,7 @@ const routes: Routes = [
             {
               path: 'overdue-charges',
               component: OverdueChargesTabComponent,
-              data: { title: extract('Overdue Charges'), breadcrumb: 'Overdue Charges', routeParamBreadcrumb: false },
-              resolve: {
-                loanDetailsData: LoanDetailsGeneralResolver
-              }
+              data: { title: extract('Overdue Charges'), breadcrumb: 'Overdue Charges', routeParamBreadcrumb: false }
             },
             {
               path: 'floating-interest-rates',
@@ -152,7 +140,7 @@ const routes: Routes = [
               data: { title: extract('Loan Documents'), breadcrumb: 'Loan Documents', routeParamBreadcrumb: false },
               resolve: {
                 loanDocuments: LoanDocumentsResolver,
-                loanDetailsData: LoanDetailsGeneralResolver
+                loanDetailsData: LoanDetailsResolver
               },
             },
             {
@@ -166,10 +154,7 @@ const routes: Routes = [
             {
               path: 'standing-instruction',
               component: StandingInstructionsTabComponent,
-              data: { title: extract('Standing Instructions'), breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false },
-              resolve: {
-                loanDetailsData: LoanDetailsGeneralResolver
-              },
+              data: { title: extract('Standing Instructions'), breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false }
             },
             {
               path: 'datatables',
@@ -181,14 +166,6 @@ const routes: Routes = [
                   loanDatatable: LoanDatatableResolver
                 }
               }]
-            },
-            {
-              path: 'add-loan-charge',
-              component: AddLoanChargeComponent,
-              data: { title: extract('Add Loan Charge'), breadcrumb: 'Add Loan Charge', routeParamBreadcrumb: false },
-              resolve: {
-                loanChargeTemplate: LoanChargeTemplateResolver
-              }
             },
             {
               path: 'actions/:action',
@@ -217,8 +194,6 @@ const routes: Routes = [
   exports: [RouterModule],
   declarations: [],
   providers: [
-    LoanChargeTemplateResolver,
-    LoanDetailsGeneralResolver,
     LoanDetailsResolver,
     LoanNotesResolver,
     LoanDetailsChargesResolver,

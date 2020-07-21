@@ -33,7 +33,8 @@ export class LoanAccountActionsComponent {
             withdrawn_by_client: boolean,
             undo_disbursal: boolean,
             loan_screen_reports: boolean,
-            approve: boolean } = {
+            approve: boolean,
+            add_loan_charge: boolean } = {
               close: false,
               undo_approval: false,
               write_off: false,
@@ -54,7 +55,8 @@ export class LoanAccountActionsComponent {
               withdrawn_by_client: false,
               undo_disbursal: false,
               loan_screen_reports: false,
-              approve: false };
+              approve: false,
+              add_loan_charge: false };
 
   actionButtonData: any;
   actionName: any;
@@ -73,6 +75,9 @@ export class LoanAccountActionsComponent {
       this.actionName = params['action'];
       if (this.actionName === 'change-loan-officer') {
         this.actionName = 'assign-loan-officer';
+      }
+      for (const key of Object.keys(this.actions)) {
+        this.actions[key] = false;
       }
       this.actions[this.actionName.replace(/-/g, '_')] = true;
     });

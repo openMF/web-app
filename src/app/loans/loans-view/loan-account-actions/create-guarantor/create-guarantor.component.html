@@ -5,32 +5,67 @@
 
       <div fxLayout="column">
 
-          <mat-checkbox labelPosition="before" formControlName="existingClient">
-            Existing Client
-          </mat-checkbox>
+        <mat-checkbox labelPosition="before" formControlName="existingClient">
+          Existing Client
+        </mat-checkbox>
 
         <ng-container *ngIf="!showClientDetailsForm">
 
-          <mat-form-field>
+          <mat-form-field fxFlex="30%">
             <mat-label>Name</mat-label>
-            <input matInput required formControlName="name" required>
+            <input matInput formControlName="name" [matAutocomplete]="clientsAutocomplete">
             <mat-error *ngIf="newGuarantorForm.controls.name.hasError('required')">
               Name <strong>is required</strong>
             </mat-error>
           </mat-form-field>
 
+          <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient"
+            (optionSelected)='clientSelected($event.option.value)'>
+            <mat-option *ngFor="let client of clientsData" [value]="client">
+              {{ client.displayName }}
+            </mat-option>
+          </mat-autocomplete>
+
+          <mat-form-field>
+            <mat-label>Relationship</mat-label>
+            <mat-select formControlName="clientRelationshipTypeId">
+              <mat-option *ngFor="let relationType of relationTypes" [value]="relationType.id">
+                {{ relationType.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <ng-container *ngIf="accountOptions.length > 0">
+
+            <mat-form-field>
+              <mat-label>Account</mat-label>
+              <mat-select formControlName="savingsId">
+                <mat-option *ngFor="let accountOption of accountOptions" [value]="accountOption.id">
+                  {{ accountOption.productName }} - {{ accountOption.accountNo }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Amount</mat-label>
+              <input type="number" matInput required formControlName="amount" required>
+            </mat-form-field>
+
+          </ng-container>
+
         </ng-container>
 
-        <mat-form-field>
-          <mat-label>Relationship</mat-label>
-          <mat-select formControlName="clientRelationshipTypeId">
-            <mat-option *ngFor="let relationType of relationTypes" [value]="relationType.id">
-              {{ relationType.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
         <ng-container *ngIf="showClientDetailsForm">
+
+          <mat-form-field>
+            <mat-label>Relationship</mat-label>
+            <mat-select formControlName="clientRelationshipTypeId">
+              <mat-option *ngFor="let relationType of relationTypes" [value]="relationType.id">
+                {{ relationType.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
           <mat-form-field>
             <mat-label>First Name</mat-label>
             <input matInput required formControlName="firstname" required>
@@ -89,7 +124,7 @@
       </div>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../general']">Cancel</button>
+        <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
         <button mat-raised-button color="primary" [disabled]="!newGuarantorForm.valid"
           *mifosxHasPermission="'CREATE_GUARANTOR'">Submit</button>
       </mat-card-actions>
@@ -97,4 +132,25 @@
     </mat-card-content>
 
   </form>
+
+  <ng-container *ngIf="!(newGuarantorForm.controls.name === undefined)">
+    <div class="mat-table">
+      <div class="mat-header-row">
+        <div class="mat-header-cell">Client Details</div>
+      </div>
+      <div class="mat-row">
+        <div class="mat-cell">Name</div>
+        <div class="mat-cell">{{newGuarantorForm.controls.name.value.displayName}}</div>
+      </div>
+      <div class="mat-row">
+        <div class="mat-cell">Id</div>
+        <div class="mat-cell">{{newGuarantorForm.controls.name.value.id}}</div>
+      </div>
+      <div class="mat-row">
+        <div class="mat-cell">Office</div>
+        <div class="mat-cell">{{newGuarantorForm.controls.name.value.officeName}}</div>
+      </div>
+    </div>
+  </ng-container>
+
 </div>

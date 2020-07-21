@@ -12,6 +12,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class ConfirmationDialogComponent implements OnInit {
 
+  color: string;
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    * @param {any} data Provides a deleteContext.
@@ -20,6 +21,24 @@ export class ConfirmationDialogComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
+    this.setColor();
   }
+
+  setColor() {
+    switch (this.data.type) {
+      case 'Basic':
+        this.color = 'primary';
+        break;
+      case 'Mild':
+        this.color = 'accent';
+        break;
+      case 'Strong':
+        this.color = 'warn';
+        break;
+      default:
+        this.color = 'warn';
+    }
+  }
+
 
 }

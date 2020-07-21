@@ -7,10 +7,10 @@ import { MatDialog } from '@angular/material';
 import { LoansService } from '../loans.service';
 
 /** Custom Buttons Configuration */
-import { ButtonConfig } from './button-config';
+import { LoansAccountButtonConfiguration } from './loan-accounts-button-config';
 
 /** Dialog Components */
-import { LoansConfirmationDialogBoxComponent } from '../custom-dialog/loans-confirmation-dialog-box/loans-confirmation-dialog-box.component';
+import { ConfirmationDialogComponent } from '../../shared/confirmation-dialog/confirmation-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 @Component({
@@ -20,23 +20,20 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 })
 export class LoansViewComponent implements OnInit {
 
+  /** Loan Details Data */
   loanDetailsData: any;
+  /** Loan Datatables */
   loanDatatables: any;
+  /** Recalculate Interest */
   recalculateInterest: any;
+  /** Status */
   status: string;
-  buttons: {
-    singlebuttons: {
-      name: string,
-      icon: string,
-      taskPermissionName: string,
-    }[],
-    options?: {
-      name: string,
-      taskPermissionName: string
-    }[]
-  };
+  /** Loan Id */
   loanId: number;
+  /** Client Id */
   clientId: any;
+  /** Button Configuration */
+  buttonConfig: LoansAccountButtonConfiguration;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -54,72 +51,69 @@ export class LoansViewComponent implements OnInit {
 
     this.recalculateInterest = this.loanDetailsData.recalculateInterest || true;
     this.status = this.loanDetailsData.status.value;
+    this.setConditionalButtons();
+  }
 
-    // Defines the buttons based on the status of the loan account
+  // Defines the buttons based on the status of the loan account
+  setConditionalButtons() {
+    this.buttonConfig = new LoansAccountButtonConfiguration(this.status);
+
     if (this.status === 'Submitted and pending approval') {
-      this.buttons = ButtonConfig['Submitted and pending approval'];
 
-      this.buttons.options.splice(1, 0, {
-        name: (this.loanDetailsData.loanOfficerName ? 'Change Loan Officer' : 'Assign Loan Officer' ),
+      this.buttonConfig.addOption({
+        name: (this.loanDetailsData.loanOfficerName ? 'Change Loan Officer' : 'Assign Loan Officer'),
         taskPermissionName: 'DISBURSE_LOAN'
       });
 
       if (this.loanDetailsData.isVariableInstallmentsAllowed) {
-        this.buttons.options.push({
-            name: 'Edit Repayment Schedule',
-            taskPermissionName: 'ADJUST_REPAYMENT_SCHEDULE'
-        }) ;
-    }
+        this.buttonConfig.addOption({
+          name: 'Edit Repayment Schedule',
+          taskPermissionName: 'ADJUST_REPAYMENT_SCHEDULE'
+        });
+      }
 
     } else if (this.status === 'Approved') {
-      this.buttons = ButtonConfig['Approved'];
 
-      this.buttons.singlebuttons.splice(1, 0, {
-        name: (this.loanDetailsData.loanOfficerName ? 'Change Loan Officer' : 'Assign Loan Officer' ),
+      this.buttonConfig.addButton({
+        name: (this.loanDetailsData.loanOfficerName ? 'Change Loan Officer' : 'Assign Loan Officer'),
         icon: 'fa fa-user',
         taskPermissionName: 'DISBURSE_LOAN'
       });
 
     } else if (this.status === 'Active') {
-      this.buttons = ButtonConfig['Active'];
 
       if (this.loanDetailsData.canDisburse) {
-        this.buttons.singlebuttons.splice(1, 0, {
-            name: 'Disburse',
-            icon: 'fa fa-flag',
-            taskPermissionName: 'DISBURSE_LOAN'
+        this.buttonConfig.addButton({
+          name: 'Disburse',
+          icon: 'fa fa-flag',
+          taskPermissionName: 'DISBURSE_LOAN'
         });
-        this.buttons.singlebuttons.splice(1, 0, {
-            name: 'Disburse To Savings',
-            icon: 'fa fa-flag',
-            taskPermissionName: 'DISBURSETOSAVINGS_LOAN'
+        this.buttonConfig.addButton({
+          name: 'Disburse To Savings',
+          icon: 'fa fa-flag',
+          taskPermissionName: 'DISBURSETOSAVINGS_LOAN'
         });
       }
 
       // loan officer not assigned to loan, below logic
       // helps to display otherwise not
       if (!this.loanDetailsData.loanOfficerName) {
-        this.buttons.singlebuttons.splice(1, 0, {
-            name: 'Assign Loan Officer',
-            icon: 'fa fa-user',
-            taskPermissionName: 'UPDATELOANOFFICER_LOAN'
+        this.buttonConfig.addButton({
+          name: 'Assign Loan Officer',
+          icon: 'fa fa-user',
+          taskPermissionName: 'UPDATELOANOFFICER_LOAN'
         });
       }
 
       if (this.recalculateInterest) {
-          this.buttons.singlebuttons.splice(1, 0, {
-              name: 'Prepay Loan',
-              icon: 'fa fa-money',
-              taskPermissionName: 'REPAYMENT_LOAN'
-          });
+        this.buttonConfig.addButton({
+          name: 'Prepay Loan',
+          icon: 'fa fa-money',
+          taskPermissionName: 'REPAYMENT_LOAN'
+        });
       }
 
-    } else if (this.status === 'Overpaid') {
-      this.buttons = ButtonConfig['Overpaid'];
-    } else if (this.status === 'Closed (written off)') {
-      this.buttons = ButtonConfig['ClosedWrittenOff'];
     }
-
   }
 
   loanAction(button: string) {
@@ -146,8 +140,8 @@ export class LoansViewComponent implements OnInit {
    * Recover from guarantor action
    */
   private recoverFromGuarantor() {
-    const recoverFromGuarantorDialogRef = this.dialog.open(LoansConfirmationDialogBoxComponent, {
-      data: { heading: 'Recover from Guarantor', dialogContext: 'Are you sure you want recover from Guarantor ?' }
+    const recoverFromGuarantorDialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { heading: 'Recover from Guarantor', dialogContext: 'Are you sure you want recover from Guarantor ?', type: 'Mild' }
     });
     recoverFromGuarantorDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
@@ -158,6 +152,9 @@ export class LoansViewComponent implements OnInit {
     });
   }
 
+  /**
+   * Delete loan Account
+   */
   private deleteLoanAccount() {
     const deleteGuarantorDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `with loan id: ${this.loanId}` }

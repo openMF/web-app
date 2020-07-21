@@ -45,8 +45,8 @@ export class UndoDisbursalComponent implements OnInit {
    * Submits the undo disbursal form.
    */
   submit() {
-    this.loansService.loanActionButtons(this.loanId, 'undoDisbursal', {'note': this.note.value}).subscribe((response: any) => {
-      this.router.navigate(['../general'], { relativeTo: this.route });
+    this.loansService.loanActionButtons(this.loanId, 'undodisbursal', {'note': this.note.value}).subscribe((response: any) => {
+      this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
 
