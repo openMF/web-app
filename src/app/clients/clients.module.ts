@@ -50,6 +50,12 @@ import { DeleteSignatureDialogComponent } from './clients-view/custom-dialogs/de
 import { UploadImageDialogComponent } from './clients-view/custom-dialogs/upload-image-dialog/upload-image-dialog.component';
 import { ClientScreenReportsComponent } from './clients-view/client-actions/client-screen-reports/client-screen-reports.component';
 import { EditClientComponent } from './edit-client/edit-client.component';
+import { CreateClientComponent } from './create-client/create-client.component';
+import { ClientGeneralStepComponent } from './client-stepper/client-general-step/client-general-step.component';
+import { ClientFamilyMembersStepComponent } from './client-stepper/client-family-members-step/client-family-members-step.component';
+import { ClientPreviewStepComponent } from './client-stepper/client-preview-step/client-preview-step.component';
+import { ClientAddressStepComponent } from './client-stepper/client-address-step/client-address-step.component';
+import { ClientFamilyMemberDialogComponent } from './client-stepper/client-family-members-step/client-family-member-dialog/client-family-member-dialog.component';
 
 
 /**
@@ -105,7 +111,13 @@ import { EditClientComponent } from './edit-client/edit-client.component';
     DeleteSignatureDialogComponent,
     UploadImageDialogComponent,
     ClientScreenReportsComponent,
-    EditClientComponent
+    EditClientComponent,
+    CreateClientComponent,
+    ClientGeneralStepComponent,
+    ClientFamilyMembersStepComponent,
+    ClientPreviewStepComponent,
+    ClientAddressStepComponent,
+    ClientFamilyMemberDialogComponent
   ],
   entryComponents: [
     UploadDocumentDialogComponent,
@@ -114,7 +126,8 @@ import { EditClientComponent } from './edit-client/edit-client.component';
     ViewSignatureDialogComponent,
     UploadSignatureDialogComponent,
     DeleteSignatureDialogComponent,
-    UploadImageDialogComponent
+    UploadImageDialogComponent,
+    ClientFamilyMemberDialogComponent
   ],
   providers: [DatePipe]
 

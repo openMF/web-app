@@ -1,0 +1,36 @@
+h2, h3, h4 {
+  margin: 0;
+  font-weight: 500;
+}
+
+span {
+  margin: 0.5em 0;
+}
+
+mat-divider {
+  margin: 0 0 0.5em 0;
+}
+
+.margin-t {
+  margin-top: 2em;
+}
+
+.family-member {
+  h3 {
+    margin: 1% auto;
+  }
+  p {
+    line-height: 30px;
+    margin-left: 2%;
+  }
+}
+
+.address {
+  h3 {
+    margin: 1% auto;
+  }
+  p {
+    line-height: 30px;
+    margin-left: 2%;
+  }
+}

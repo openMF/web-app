@@ -1,0 +1,104 @@
+<h1 mat-dialog-title>{{ data.context }} Family Member</h1>
+
+<form [formGroup]="familyMemberForm">
+
+  <div fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutAlign="start center" fxLayoutGap="2%">
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>First Name</mat-label>
+      <input formControlName="firstName" required matInput />
+      <mat-error *ngIf="familyMemberForm.controls.firstName.hasError('required')">
+        First Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Middle Name</mat-label>
+      <input formControlName="middleName" matInput />
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Last Name</mat-label>
+      <input formControlName="lastName" required matInput />
+      <mat-error *ngIf="familyMemberForm.controls.lastName.hasError('required')">
+        Last Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Qualification</mat-label>
+      <input formControlName="qualification" matInput />
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Age</mat-label>
+      <input type="number" formControlName="age" matInput />
+      <mat-error *ngIf="familyMemberForm.controls.age.hasError('required')">
+        Age is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-checkbox formControlName="isDependent" labelPosition="before" fxFlex="48%">Is Dependent?</mat-checkbox>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Relationship</mat-label>
+      <mat-select formControlName="relationshipId" required>
+        <mat-option *ngFor="let relation of data.options.relationshipIdOptions" [value]="relation.id">
+          {{ relation.name  }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="familyMemberForm.controls.relationshipId.hasError('required')">
+        Relationship is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Gender</mat-label>
+      <mat-select formControlName="genderId">
+        <mat-option *ngFor="let gender of data.options.genderIdOptions" [value]="gender.id">
+          {{ gender.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="familyMemberForm.controls.genderId.hasError('required')">
+        Gender is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Profession</mat-label>
+      <mat-select formControlName="professionId">
+        <mat-option *ngFor="let profession of data.options.professionIdOptions" [value]="profession.id">
+          {{ profession.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Marital Status</mat-label>
+      <mat-select formControlName="maritalStatusId">
+        <mat-option *ngFor="let maritalStatus of data.options.maritalStatusIdOptions"
+          [value]="maritalStatus.id">
+          {{ maritalStatus.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <mat-form-field fxFlex="98%">
+      <mat-label>Date Of Birth</mat-label>
+      <input formControlName="dateOfBirth" matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dueDatePicker">
+      <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #dueDatePicker></mat-datepicker>
+      <mat-error *ngIf="familyMemberForm.controls.dateOfBirth.hasError('required')">
+        Date of birth is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+  </div>
+
+  <mat-dialog-actions align="center">
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" [disabled]="!familyMemberForm.valid" [mat-dialog-close]="{ member: familyMember }">Confirm</button>
+  </mat-dialog-actions>
+
+</form>
