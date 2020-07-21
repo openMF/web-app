@@ -1,0 +1,58 @@
+<div class="container">
+
+  <form [formGroup]="approveLoanForm" (ngSubmit)="submit()">
+
+    <mat-card-content>
+
+      <div fxLayout="column">
+
+        <mat-form-field>
+          <mat-label>Approved On</mat-label>
+          <input matInput [min]="minDate" [matDatepicker]="approvedDatePicker" required
+            formControlName="approvedOnDate">
+          <mat-datepicker-toggle matSuffix [for]="approvedDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #approvedDatePicker></mat-datepicker>
+          <mat-error *ngIf="approveLoanForm.controls.approvedOnDate.hasError('required')">
+            Approved Date <strong>is required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Expected disbursement on</mat-label>
+          <input matInput [min]="minDate" [matDatepicker]="disbursementDatePicker"
+            formControlName="expectedDisbursementDate">
+          <mat-datepicker-toggle matSuffix [for]="disbursementDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #disbursementDatePicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Approved Amount</mat-label>
+          <input matInput type="number" formControlName="approvedLoanAmount">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Transaction Amount</mat-label>
+          <input matInput type="number" required formControlName="approvedLoanAmount" required>
+          <mat-error *ngIf="approveLoanForm.controls.approvedLoanAmount.hasError('required')">
+            Transaction Amount is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Note</mat-label>
+          <textarea matInput formControlName="note"></textarea>
+        </mat-form-field>
+
+      </div>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!approveLoanForm.valid"
+          *mifosxHasPermission="'APPROVE_LOAN'">Submit</button>
+      </mat-card-actions>
+
+    </mat-card-content>
+
+  </form>
+
+</div>

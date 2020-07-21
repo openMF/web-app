@@ -20,5 +20,6 @@
     <mifosx-add-collateral [dataObject]="actionButtonData" *ngIf="actions.add_collateral"></mifosx-add-collateral>
     <mifosx-undo-disbursal *ngIf="actions.undo_disbursal"></mifosx-undo-disbursal>
     <mifosx-loan-screen-reports [dataObject]="actionButtonData" *ngIf="actions.loan_screen_reports"></mifosx-loan-screen-reports>
+    <mifosx-approve-loan *ngIf="actions.approve" ></mifosx-approve-loan>
   </mat-card>
 </div>
