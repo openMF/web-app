@@ -117,7 +117,7 @@ export class ForeclosureComponent implements OnInit {
 
     this.loanService.loanForclosureData(this.loanId, formData)
       .subscribe((response: any) => {
-        this.router.navigate([`../general`], { relativeTo: this.route });
+        this.router.navigate([`../../general`], { relativeTo: this.route });
       });
     }
 

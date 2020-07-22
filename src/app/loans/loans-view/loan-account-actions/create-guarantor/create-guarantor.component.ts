@@ -1,11 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
 import { DatePipe } from '@angular/common';
+import { ClientsService } from 'app/clients/clients.service';
 
 /**
  * Create Guarantor Action
@@ -15,7 +16,7 @@ import { DatePipe } from '@angular/common';
   templateUrl: './create-guarantor.component.html',
   styleUrls: ['./create-guarantor.component.scss']
 })
-export class CreateGuarantorComponent implements OnInit {
+export class CreateGuarantorComponent implements OnInit, AfterViewInit {
 
   @Input() dataObject: any;
   /** New Guarantor Form */
@@ -30,6 +31,10 @@ export class CreateGuarantorComponent implements OnInit {
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
   maxDate = new Date();
+  /** Client data. */
+  clientsData: any = [];
+  /** Account Options */
+  accountOptions: any = [];
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -42,7 +47,8 @@ export class CreateGuarantorComponent implements OnInit {
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe) {
+    private datePipe: DatePipe,
+    private clientsService: ClientsService) {
     this.loanId = this.route.parent.snapshot.params['loanId'];
   }
 
@@ -57,7 +63,9 @@ export class CreateGuarantorComponent implements OnInit {
     this.newGuarantorForm = this.formBuilder.group({
       'existingClient': [''],
       'name': ['', Validators.required],
-      'clientRelationshipTypeId': ['']
+      'clientRelationshipTypeId': [''],
+      'savingsId': [''],
+      'amount': ['']
     });
   }
 
@@ -86,8 +94,12 @@ export class CreateGuarantorComponent implements OnInit {
         this.newGuarantorForm.addControl('mobileNumber', new FormControl(''));
         this.newGuarantorForm.addControl('housePhoneNumber', new FormControl(''));
         this.newGuarantorForm.removeControl('name');
+        this.newGuarantorForm.removeControl('savingsId');
+        this.newGuarantorForm.removeControl('amount');
       } else {
         this.newGuarantorForm.addControl('name', new FormControl(''));
+        this.newGuarantorForm.addControl('savingsId', new FormControl(''));
+        this.newGuarantorForm.addControl('amount', new FormControl(''));
         this.newGuarantorForm.removeControl('firstname');
         this.newGuarantorForm.removeControl('lastname');
         this.newGuarantorForm.removeControl('dob');
@@ -101,6 +113,39 @@ export class CreateGuarantorComponent implements OnInit {
     });
   }
 
+  /**
+   * Subscribes to Clients search filter:
+   */
+  ngAfterViewInit() {
+    if (this.newGuarantorForm.value.existingClient) {
+      this.newGuarantorForm.get('name').valueChanges.subscribe((value: string) => {
+        if (value.length >= 2) {
+          this.clientsService.getFilteredClients('displayName', 'ASC', true, value)
+            .subscribe((data: any) => {
+              this.clientsData = data.pageItems;
+            });
+        }
+      });
+    }
+  }
+
+  clientSelected(clientDetails: any){
+    console.log(clientDetails);
+    this.accountOptions = [];
+    this.loanService.guarantorAccountResource(this.loanId, clientDetails.id).subscribe((response: any) => {
+      this.accountOptions = response.accountLinkingOptions;
+    })
+  }
+
+  /**
+   * Displays Client name in form control input.
+   * @param {any} client Client data.
+   * @returns {string} Client name if valid otherwise undefined.
+   */
+  displayClient(client: any): string | undefined {
+    return client ? client.displayName : undefined;
+  }
+
   /** Submits the new guarantor details form */
   submit() {
     const prevdob: Date = this.newGuarantorForm.value.dob;
@@ -108,17 +153,25 @@ export class CreateGuarantorComponent implements OnInit {
     // TODO: Update once language and date settings are setup
     const dateFormat = 'dd-MM-yyyy';
     const locale = 'en';
-    const newGuarantorData = {
+    let newGuarantorData = {
       ... this.newGuarantorForm.value,
-      dob: this.datePipe.transform(prevdob, dateFormat),
       locale,
-      dateFormat,
       guarantorTypeId
     };
+
+    if(this.newGuarantorForm.value.existingClient) {
+      newGuarantorData['entityId'] = this.newGuarantorForm.controls.name.value.id;
+    } else {
+      newGuarantorData['dob'] = this.datePipe.transform(prevdob, dateFormat),
+      newGuarantorData['dateFormat'] = dateFormat
+    }
+
     delete newGuarantorData.existingClient;
+    delete newGuarantorData.name;
+
     this.loanService.createNewGuarantor(this.loanId, newGuarantorData)
       .subscribe((response: any) => {
-        this.router.navigate(['../general'], { relativeTo: this.route });
+        this.router.navigate(['../../general'], { relativeTo: this.route });
       });
   }
 

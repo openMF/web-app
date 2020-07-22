@@ -358,4 +358,10 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}/template`, { params: httpParams });
   }
 
+  guarantorAccountResource(loanId: string, clientId: any): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('clientId', clientId);
+    return this.http.get(`/loans/${loanId}/guarantors/accounts/template`, { params: httpParams });
+  }
+
 }

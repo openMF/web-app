@@ -32,7 +32,7 @@ export class GeneralTabComponent implements OnInit {
   detailsDataSource: MatTableDataSource<any>;
 
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { loanDetailsData: any, }) => {
+    this.route.parent.data.subscribe((data: { loanDetailsData: any, }) => {
       this.loanDetails = data.loanDetailsData;
     });
   }

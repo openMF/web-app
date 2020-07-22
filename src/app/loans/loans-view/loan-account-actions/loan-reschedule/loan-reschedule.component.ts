@@ -81,7 +81,7 @@ export class LoanRescheduleComponent implements OnInit {
       // TODO: needs to be updated
       // mentioned in Community App:
       // location.path('/loans/' + scope.loanId + '/viewreschedulerequest/'+ data.resourceId);
-        this.router.navigate(['../general'], { relativeTo: this.route });
+        this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
 

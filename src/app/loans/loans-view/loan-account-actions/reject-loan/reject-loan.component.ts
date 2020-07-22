@@ -68,7 +68,7 @@ export class RejectLoanComponent implements OnInit {
     rejectForm.locale = 'en';
     rejectForm.dateFormat = dateFormat;
     this.loanService.loanActionButtons(this.loanId, 'reject', rejectForm).subscribe((response: any) => {
-      this.router.navigate(['../general'], { relativeTo: this.route });
+      this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
 

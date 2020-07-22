@@ -5,13 +5,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
-import { LoansService } from '../loans.service';
+import { LoansService } from '../../../loans.service';
 
 /**
  * Create Add Loan Charge component.
  */
 @Component({
-  selector: 'mifosx-addloancharge',
+  selector: 'mifosx-add-loan-charge',
   templateUrl: './add-loan-charge.component.html',
   styleUrls: ['./add-loan-charge.component.scss']
 })
@@ -28,6 +28,9 @@ export class AddLoanChargeComponent implements OnInit {
     id: number;
     name: string;
     amount: number;
+    currency: {
+      name: string;
+    };
     chargeCalculationType: {
       value: any;
     };
@@ -51,10 +54,10 @@ export class AddLoanChargeComponent implements OnInit {
               private router: Router,
               private datePipe: DatePipe,
               private loansService: LoansService) {
-    this.route.data.subscribe((data: { loanChargeTemplate: any }) => {
-      this.loanChargeOptions = data.loanChargeTemplate.chargeOptions;
+    this.route.data.subscribe((data: { actionButtonData: any }) => {
+      this.loanChargeOptions = data.actionButtonData.chargeOptions;
     });
-    this.loanId = this.route.snapshot.params['loanId'];
+    this.loanId = this.route.parent.snapshot.params['loanId'];
   }
 
   /**
@@ -102,7 +105,7 @@ export class AddLoanChargeComponent implements OnInit {
     loanCharge.locale = 'en';
     loanCharge.dateFormat = dateFormat;
     this.loansService.createLoanCharge(this.loanId, 'charges', loanCharge).subscribe(res => {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
 }

@@ -70,7 +70,7 @@ export class WriteOffPageComponent implements OnInit {
     writeOffForm.locale = 'en';
     writeOffForm.dateFormat = dateFormat;
     this.loanService.submitLoanActionButton(loanId, writeOffForm, 'writeoff').subscribe((response: any) => {
-      this.router.navigate(['../general'], {relativeTo: this.route});
+      this.router.navigate(['../../../general'], {relativeTo: this.route});
     });
   }
 

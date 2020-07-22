@@ -73,7 +73,7 @@ export class WithdrawnByClientComponent implements OnInit {
     WithdrawnByClientLoanData.dateFormat = dateFormat;
     this.loanService.loanActionButtons(this.loanId, 'withdrawnByApplicant', WithdrawnByClientLoanData)
       .subscribe((response: any) => {
-        this.router.navigate(['../general'], { relativeTo: this.route });
+        this.router.navigate(['../../../general'], { relativeTo: this.route });
       });
   }
 

@@ -71,7 +71,7 @@ export class WaiveInterestComponent implements OnInit {
     loanInterestForm.locale = 'en';
     loanInterestForm.dateFormat = dateFormat;
     this.loanService.submitLoanActionButton(loanId, loanInterestForm, 'waiveinterest').subscribe((response: any) => {
-      this.router.navigate(['../general'], {relativeTo: this.route});
+      this.router.navigate(['../../general'], {relativeTo: this.route});
     });
   }
 

@@ -62,7 +62,7 @@ export class AddCollateralComponent implements OnInit {
     const collateralForm = this.collateralForm.value;
     collateralForm.locale = 'en';
     this.loanService.createLoanCollateral(loanId, collateralForm).subscribe((response: any) => {
-      this.router.navigate(['../general'], { relativeTo: this.route });
+      this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
 

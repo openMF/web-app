@@ -109,7 +109,7 @@ export class RecoveryRepaymentComponent implements OnInit {
     recoveryRepaymentLoanData.dateFormat = dateFormat;
     this.loanService.submitLoanActionButton(this.loanId, recoveryRepaymentLoanData, 'recoverypayment')
       .subscribe((response: any) => {
-        this.router.navigate(['../general'], { relativeTo: this.route });
+        this.router.navigate(['../../general'], { relativeTo: this.route });
       });
   }
 

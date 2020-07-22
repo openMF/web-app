@@ -52,7 +52,6 @@ export class LoanScreenReportsComponent implements OnInit {
   ngOnInit() {
     this.templatesData = this.dataObject;
     this.createLoanScreenReportForm();
-    console.log('templateData: ', this.templatesData);
   }
 
   /**

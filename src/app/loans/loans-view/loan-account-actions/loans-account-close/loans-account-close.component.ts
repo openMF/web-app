@@ -69,7 +69,7 @@ export class LoansAccountCloseComponent implements OnInit {
     closeForm.dateFormat = dateFormat;
     this.loanService.submitLoanActionButton(this.loanId, closeForm, 'close')
       .subscribe((response: any) => {
-        this.router.navigate(['../general'], { relativeTo: this.route });
+        this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
 

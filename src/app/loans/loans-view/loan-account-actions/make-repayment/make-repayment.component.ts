@@ -108,7 +108,7 @@ export class MakeRepaymentComponent implements OnInit {
     repaymentLoanData.dateFormat = dateFormat;
     this.loanService.submitLoanActionButton(this.loanId, repaymentLoanData, 'repayment')
       .subscribe((response: any) => {
-        this.router.navigate(['../general'], { relativeTo: this.route });
+        this.router.navigate(['../../../general'], { relativeTo: this.route });
     });
   }
 

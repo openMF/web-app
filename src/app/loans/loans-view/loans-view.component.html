@@ -3,6 +3,14 @@
   <mat-card-header fxLayout="column" class="header">
 
 	<mat-card-title-group class="header-title-group">
+
+	<div class="profile-image-container">
+		<div>
+			<img mat-card-md-image class="profile-image" matTooltip="Recurring Deposits Account"
+				[src]="'assets/images/loans.png'">
+		</div>
+	</div>
+
 	  <div class="mat-typography loan-card-title">
 	    <mat-card-title>
 		  <div fxLayout="row" fxLayout.lt-md="column">
@@ -32,15 +40,15 @@
 
 	<mat-card-actions class="loan-actions">
 
-	  <ng-container *ngFor="let item of buttons.singlebuttons" class="loan-span">
+	  <ng-container *ngFor="let item of buttonConfig.singleButtons" class="loan-span">
 		<button mat-raised-button *mifosxHasPermission="item.taskPermissionName" (click)="loanAction(item.name)">
 		  <i class="{{item.icon}}"></i> {{item.name}} </button>
 	  </ng-container>
 
-	  <ng-container *ngIf="!(buttons.options === undefined)" class="loan-span">
+	  <ng-container *ngIf="buttonConfig.options.length" class="loan-span">
 		<button mat-raised-button [matMenuTriggerFor]="More">More</button>
 		  <mat-menu #More="matMenu">
-			<span *ngFor="let item of buttons.options">
+			<span *ngFor="let item of buttonConfig.options">
 			  <button mat-menu-item *mifosxHasPermission="item.taskPermissionName" (click)="loanAction(item.name)">{{item.name}}</button>
 			</span>
 		  </mat-menu>
