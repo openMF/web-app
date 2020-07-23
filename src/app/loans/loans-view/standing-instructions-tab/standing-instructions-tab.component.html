@@ -56,7 +56,7 @@
           </span>
           <span *ngIf="instruction.status.value!=='Deleted'">
             <button class="account-action-button" mat-raised-button color="warn"
-              matTooltip="Delete Standing Instruction" *mifosxHasPermission="'DELETE_STANDINGINSTRUCTION'">
+              matTooltip="Delete Standing Instruction" *mifosxHasPermission="'DELETE_STANDINGINSTRUCTION'" (click)="deleteStandingInstruction(instruction.id)">
               <i class="fa fa-times"></i>
             </button>
           </span>

@@ -96,8 +96,12 @@ export class ClientsViewComponent implements OnInit {
         this.deleteProfileImage();
         break;
       case 'Create Standing Instructions':
-        const queryParams: any = { officeId: this.clientViewData.officeId, accountType: 'fromsavings' };
-        this.router.navigate(['standing-instructions/create-standing-instructions'], { relativeTo: this.route, queryParams: queryParams });
+        const createStandingInstructionsQueryParams: any = { officeId: this.clientViewData.officeId, accountType: 'fromsavings' };
+        this.router.navigate(['standing-instructions/create-standing-instructions'], { relativeTo: this.route, queryParams: createStandingInstructionsQueryParams });
+        break;
+      case 'View Standing Instructions':
+        const viewStandingInstructionsQueryParams: any = { officeId: this.clientViewData.officeId, accountType: 'fromsavings' };
+        this.router.navigate(['standing-instructions/list-standing-instructions'], { relativeTo: this.route, queryParams: viewStandingInstructionsQueryParams });
         break;
     }
   }

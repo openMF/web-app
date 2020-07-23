@@ -1,10 +1,14 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatTable } from '@angular/material';
+import { MatTableDataSource, MatTable, MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
+import { AccountTransfersService } from 'app/account-transfers/account-transfers.service';
+
+/** Dialog Components */
+import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 /**
  * Savings Standing Instructions Tab
@@ -41,7 +45,9 @@ export class StandingInstructionsTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute,
-              private savingsService: SavingsService) {
+              private savingsService: SavingsService,
+              private dialog: MatDialog,
+              private accountTransfersService: AccountTransfersService) {
     this.route.parent.data.subscribe((data: { savingsAccountData: any }) => {
       this.savingsData = data.savingsAccountData;
     });
@@ -64,6 +70,18 @@ export class StandingInstructionsTabComponent implements OnInit {
       this.instructionsData = response.pageItems;
       this.dataSource.data = this.instructionsData;
       this.instructionTableRef.renderRows();
+    });
+  }
+
+  deleteStandingInstruction(instructionId: any) {
+    const deleteStandingInstructionDialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { deleteContext: `standing instruction id: ${instructionId}` }
+    });
+    deleteStandingInstructionDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.delete) {
+        this.accountTransfersService.deleteStandingInstrucions(instructionId)
+          .subscribe(() => { });
+      }
     });
   }
 

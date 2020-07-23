@@ -16,6 +16,7 @@ import { StandingInstructionsDataAndTemplateResolver } from './common-resolvers/
 import { StandingInstructionsTemplateResolver } from './common-resolvers/standing-instructions-template.resolver';
 import { MakeAccountTransersComponent } from './make-account-transers/make-account-transers.component';
 import { MakeAccountTransferTemplateResolver } from './common-resolvers/make-account-transfer-template.resolver';
+import { ListStandingInstructionsComponent } from './list-standing-instructions/list-standing-instructions.component';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -39,6 +40,14 @@ const routes: Routes = [
         }
       },
       {
+        path: 'list-standing-instructions',
+        data: { title: extract('List Standing Instructions'), breadcrumb: 'List Standing Instructions', routeParamBreadcrumb: 'List Standing Instructions' },
+        component: ListStandingInstructionsComponent,
+        resolve: {
+          standingIntructionsTemplate: StandingInstructionsTemplateResolver
+        }
+      },
+      {
         path: ':standingInstructionsId',
         data: { title: extract('Standing Instructions'), routeParamBreadcrumb: 'standingInstructionsId' },
         children: [
@@ -59,7 +68,7 @@ const routes: Routes = [
             },
           }
         ]
-      }
+      },
     ]
   },
 ];

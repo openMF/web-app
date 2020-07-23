@@ -242,7 +242,7 @@ const routes: Routes = [
           {
             path: 'standing-instructions',
             loadChildren: '../account-transfers/account-transfers.module#AccountTransfersModule'
-          },
+          }
         ]
       }
     ]
