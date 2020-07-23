@@ -175,6 +175,10 @@ const routes: Routes = [
                 actionButtonData: LoanActionButtonResolver
               }
             },
+            {
+              path: 'transfer-funds',
+              loadChildren: '../account-transfers/account-transfers.module#AccountTransfersModule'
+            }
           ]
         },
         {
@@ -187,7 +191,7 @@ const routes: Routes = [
         },
       ]
     }]
-  }
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],

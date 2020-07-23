@@ -152,6 +152,10 @@ export class SavingsAccountViewComponent implements OnInit {
       case 'Disable Withhold Tax':
         this.disableWithHoldTax();
         break;
+      case 'Transfer Funds':
+        const queryParams: any = { savingsId: this.savingsAccountData.id, accountType: 'fromsavings' };
+        this.router.navigate(['transfer-funds/make-account-transfer'], { relativeTo: this.route, queryParams: queryParams });
+        break;
     }
   }
 

@@ -157,7 +157,8 @@
         </span>
         <span *ngIf="!element.status.pendingApproval && !element.status.active && element.status.overpaid">
         <button class="account-action-button" mat-raised-button color="primary" matTooltip="Transfer Funds"
-          matTooltipPosition="above" *mifosxHasPermission="'DISBURSE_LOAN'">
+          matTooltipPosition="above" *mifosxHasPermission="'DISBURSE_LOAN'"
+          (click)="routeEdit($event); routeTransferFund(element.id)">
           <i class="fa fa-exchange"></i>
         </button>
         </span>

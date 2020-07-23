@@ -129,12 +129,12 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
     }
   }
 
-  clientSelected(clientDetails: any){
+  clientSelected(clientDetails: any) {
     console.log(clientDetails);
     this.accountOptions = [];
     this.loanService.guarantorAccountResource(this.loanId, clientDetails.id).subscribe((response: any) => {
       this.accountOptions = response.accountLinkingOptions;
-    })
+    });
   }
 
   /**
@@ -153,17 +153,17 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
     // TODO: Update once language and date settings are setup
     const dateFormat = 'dd-MM-yyyy';
     const locale = 'en';
-    let newGuarantorData = {
+    const newGuarantorData = {
       ... this.newGuarantorForm.value,
       locale,
       guarantorTypeId
     };
 
-    if(this.newGuarantorForm.value.existingClient) {
+    if (this.newGuarantorForm.value.existingClient) {
       newGuarantorData['entityId'] = this.newGuarantorForm.controls.name.value.id;
     } else {
       newGuarantorData['dob'] = this.datePipe.transform(prevdob, dateFormat),
-      newGuarantorData['dateFormat'] = dateFormat
+      newGuarantorData['dateFormat'] = dateFormat;
     }
 
     delete newGuarantorData.existingClient;

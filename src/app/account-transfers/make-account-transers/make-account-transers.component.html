@@ -1,0 +1,141 @@
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" fxLayout.lt-md="column">
+
+        <h3 class="mat-h3" fxFlexFill>Transferring From Details</h3>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Applicant</span>
+          <span fxFlex="60%">{{ accountTransferTemplateData.fromClient.displayName }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Office</span>
+          <span fxFlex="60%">{{ accountTransferTemplateData.fromOffice.name }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">From Account</span>
+          <span
+            fxFlex="60%">{{ accountTransferTemplateData.fromAccount.productName}}&nbsp;-&nbsp;#{{ accountTransferTemplateData.fromAccount.accountNo }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">From Account Type</span>
+          <span fxFlex="60%">{{ accountTransferTemplateData.fromAccountType.value }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Currency</span>
+          <span fxFlex="60%">{{ accountTransferTemplateData.currency.name }}</span>
+        </div>
+
+      </div>
+
+      <h3 class="mat-h3" fxFlexFill>Transferring To</h3>
+
+      <mat-divider [inset]="true"></mat-divider>
+
+      <form [formGroup]="makeAccountTransferForm">
+
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+          <mat-form-field fxFlex="98%">
+            <mat-label>Office</mat-label>
+            <mat-select required formControlName="toOfficeId" (selectionChange)="changeEvent()">
+              <mat-option *ngFor="let toOfficeType of toOfficeTypeData" [value]="toOfficeType.id">
+                {{ toOfficeType.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="makeAccountTransferForm.controls.toOfficeId.hasError('required')">
+              Office is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="98%">
+            <mat-label>Client</mat-label>
+            <input matInput formControlName="toClientId" [matAutocomplete]="clientsAutocomplete">
+            <mat-error *ngIf="makeAccountTransferForm.controls.toClientId.hasError('required')">
+              Client is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">
+            <mat-option *ngFor="let client of clientsData" [value]="client">
+              {{ client.id }} - {{ client.displayName }}
+            </mat-option>
+          </mat-autocomplete>
+
+          <mat-form-field fxFlex="98%">
+            <mat-label>Account Type</mat-label>
+            <mat-select required formControlName="toAccountType" (selectionChange)="changeEvent()">
+              <mat-option *ngFor="let toAccountType of toAccountTypeData" [value]="toAccountType.id">
+                {{ toAccountType.value }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="makeAccountTransferForm.controls.toAccountType.hasError('required')">
+              Account Type is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="98%">
+            <mat-label>Account</mat-label>
+            <mat-select required formControlName="toAccountId" (selectionChange)="changeEvent()">
+              <mat-option *ngFor="let toAccount of toAccountData" [value]="toAccount.id">
+                {{ toAccount.productName }} - {{ toAccount.accountNo }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="makeAccountTransferForm.controls.toAccountId.hasError('required')">
+              Account is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="98%">
+            <mat-label>Amount</mat-label>
+            <input type="number" matInput required formControlName="transferAmount">
+            <mat-error *ngIf="makeAccountTransferForm.controls.transferAmount.hasError('required')">
+              Amount is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="98%">
+            <mat-label>Transaction Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transferDatePicker" required
+              formControlName="transferDate">
+            <mat-datepicker-toggle matSuffix [for]="transferDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #transferDatePicker></mat-datepicker>
+            <mat-error *ngIf="makeAccountTransferForm.controls.transferDate.hasError('required')">
+              Transactions Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="98%">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="transferDescription"></textarea>
+            <mat-error *ngIf="makeAccountTransferForm.controls.transferDescription.hasError('required')">
+              Transfer Description is <strong>required</strong>
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+
+      </form>
+
+    </mat-card-content>
+
+    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+      <button mat-raised-button color="primary" [disabled]="!makeAccountTransferForm.valid"
+        (click)="submit()">Submit</button>
+    </mat-card-actions>
+
+  </mat-card>
+
+</div>

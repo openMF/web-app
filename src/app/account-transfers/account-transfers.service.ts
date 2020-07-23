@@ -51,4 +51,22 @@ export class AccountTransfersService {
     return this.http.post(`/standinginstructions`, data);
   }
 
+  newAccountTranferResource(id: any, accountTypeId: any, formValue?: any): Observable<any> {
+    let httpParams = new HttpParams().set('fromAccountId', id)
+      .set('fromAccountType', accountTypeId);
+    if (formValue) {
+      const propNames = Object.getOwnPropertyNames(formValue);
+      for (let i = 0; i < propNames.length; i++) {
+        const propName = propNames[i];
+        httpParams = httpParams.set(propName, formValue[propName]);
+      }
+    }
+    return this.http.get(`/accounttransfers/template`, { params: httpParams });
+
+  }
+
+  createAccountTransfer(data: any): Observable<any> {
+    return this.http.post(`/accounttransfers`, data);
+  }
+
 }
