@@ -69,4 +69,29 @@ export class AccountTransfersService {
     return this.http.post(`/accounttransfers`, data);
   }
 
+  /**
+   * @param clientId Client Id
+   * @param clientName Client Name
+   * @param fromAccountId Account Id
+   * @param locale Locale
+   * @param dateFormat Date Format
+   * @returns {Observable<any>} Standing Instructions
+   */
+  getStandingInstructions(searchData: any): Observable<any> {
+    let httpParams = new HttpParams();
+    const propNames = Object.getOwnPropertyNames(searchData);
+    for (let i = 0; i < propNames.length; i++) {
+      const propName = propNames[i];
+      if (!(searchData[propName] === '' || searchData[propName] === undefined || searchData[propName] === null)) {
+        httpParams = httpParams.set(propName, searchData[propName]);
+      }
+    }
+    return this.http.get(`/standinginstructions`, { params: httpParams });
+  }
+
+  deleteStandingInstrucions(id: any) {
+    const httpParams = new HttpParams().set('command', 'delete');
+    return this.http.delete(`/standinginstructions/${id}`, { params: httpParams });
+  }
+
 }
