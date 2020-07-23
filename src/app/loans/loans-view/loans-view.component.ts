@@ -127,6 +127,10 @@ export class LoansViewComponent implements OnInit {
       case 'Modify Application':
         this.router.navigate(['edit-loans-account'], { relativeTo: this.route});
         break;
+      case 'Transfer Funds':
+        const queryParams: any = { loanId: this.loanId, accountType: 'fromloans' };
+        this.router.navigate(['transfer-funds/make-account-transfer'], { relativeTo: this.route, queryParams: queryParams });
+        break;
       default:
         button = button.replace(/\s/g, '-').toLowerCase();
         button = button.replace(/\(/g, '');

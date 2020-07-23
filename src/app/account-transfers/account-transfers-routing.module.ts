@@ -14,6 +14,8 @@ import { CreateStandingInstructionsComponent } from './create-standing-instructi
 import { ViewStandingInstructionsResolver } from './common-resolvers/view-standing-instructions.resolver';
 import { StandingInstructionsDataAndTemplateResolver } from './common-resolvers/standing-instructions-data-and-template.resolver';
 import { StandingInstructionsTemplateResolver } from './common-resolvers/standing-instructions-template.resolver';
+import { MakeAccountTransersComponent } from './make-account-transers/make-account-transers.component';
+import { MakeAccountTransferTemplateResolver } from './common-resolvers/make-account-transfer-template.resolver';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -26,6 +28,14 @@ const routes: Routes = [
         component: CreateStandingInstructionsComponent,
         resolve: {
           standingIntructionsTemplate: StandingInstructionsTemplateResolver
+        }
+      },
+      {
+        path: 'make-account-transfer',
+        data: { title: extract('Account Transfer'), breadcrumb: 'Account Transfer', routeParamBreadcrumb: 'Account Transfer' },
+        component: MakeAccountTransersComponent,
+        resolve: {
+          accountTransferTemplate: MakeAccountTransferTemplateResolver
         }
       },
       {
@@ -60,7 +70,8 @@ const routes: Routes = [
   providers: [
     ViewStandingInstructionsResolver,
     StandingInstructionsDataAndTemplateResolver,
-    StandingInstructionsTemplateResolver
+    StandingInstructionsTemplateResolver,
+    MakeAccountTransferTemplateResolver
   ]
 })
 

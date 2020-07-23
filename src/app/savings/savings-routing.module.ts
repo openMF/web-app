@@ -172,6 +172,10 @@ const routes: Routes = [
             resolve: {
               savingsAccountActionData: SavingsAccountActionsResolver
             }
+          },
+          {
+            path: 'transfer-funds',
+            loadChildren: '../account-transfers/account-transfers.module#AccountTransfersModule'
           }
         ]
       }

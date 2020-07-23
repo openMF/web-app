@@ -38,7 +38,8 @@ export class GeneralTabComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private clientService: ClientsService
+    private clientService: ClientsService,
+    private router: Router
   ) {
     this.route.data.subscribe((data: { clientAccountsData: any, clientChargesData: any, clientSummary: any }) => {
       this.clientAccountData = data.clientAccountsData;
@@ -101,5 +102,11 @@ export class GeneralTabComponent {
     $event.stopPropagation();
   }
 
+  routeTransferFund(loanId: any) {
+    console.log('loanId: ', loanId);
+
+    const queryParams: any = { loanId: loanId, accountType: 'fromloans' };
+    this.router.navigate(['../', 'loans', loanId, 'transfer-funds', 'make-account-transfer'], { relativeTo: this.route, queryParams: queryParams });
+  }
 
 }
