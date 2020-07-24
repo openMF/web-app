@@ -23,6 +23,7 @@ import { ClientActionsComponent } from './clients-view/client-actions/client-act
 import { ViewChargeComponent } from './clients-view/charges/view-charge/view-charge.component';
 import { ClientPayChargesComponent } from './clients-view/charges/client-pay-charges/client-pay-charges.component';
 import { EditClientComponent } from './edit-client/edit-client.component';
+import { CreateClientComponent } from './create-client/create-client.component';
 
 /** Custom Resolvers */
 import { ClientViewResolver } from './common-resolvers/client-view.resolver';
@@ -55,7 +56,16 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: ClientsComponent,
+        component: ClientsComponent
+      },
+      {
+        path: 'create',
+        data: { title: extract('Create Client'), breadcrumb: 'Create Client', routeParamBreadcrumb: false },
+        component: CreateClientComponent,
+        resolve: {
+          clientAddressFieldConfig: ClientAddressFieldConfigurationResolver,
+          clientTemplate: ClientTemplateResolver
+        }
       },
       {
         path: ':clientId',

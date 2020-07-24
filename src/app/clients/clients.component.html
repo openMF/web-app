@@ -8,10 +8,10 @@
       </mat-checkbox>
     </div>
     <div class="action-button" fxLayoutGap="25px">
-      <button mat-raised-button color="primary" [routerLink]="['./import']">
+      <button mat-raised-button color="primary" [routerLink]="['import']">
         <fa-icon icon="download"></fa-icon>&nbsp;&nbsp;Import Client
       </button>
-      <button mat-raised-button color="primary" [routerLink]="['./add']">
+      <button mat-raised-button color="primary" [routerLink]="['create']">
         <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Create Client
       </button>
     </div>
@@ -64,7 +64,6 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header='officeName'> OfficeName </th>
         <td mat-cell *matCellDef="let row"> {{row.officeName}} </td>
       </ng-container>
-
 
       <!-- ID Column -->
       <ng-container matColumnDef="staff">

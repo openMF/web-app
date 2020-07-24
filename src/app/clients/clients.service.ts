@@ -45,6 +45,10 @@ export class ClientsService {
     return this.http.get(`/clients/${clientId}`);
   }
 
+  createClient(client: any) {
+    return this.http.post(`/clients`, client);
+  }
+
   updateClient(clientId: string, client: any) {
     return this.http.put(`/clients/${clientId}`, client);
   }
