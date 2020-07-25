@@ -166,6 +166,10 @@ export class ClientsService {
     return this.http.post(`/clients/${clientId}/images`, formData);
   }
 
+  uploadCapturedClientProfileImage(clientId: string, imageURL: string) {
+    return this.http.post(`/clients/${clientId}/images`, imageURL);
+  }
+
   deleteClientProfileImage(clientId: string) {
     return this.http.delete(`/clients/${clientId}/images`);
   }

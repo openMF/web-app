@@ -56,6 +56,7 @@ import { ClientFamilyMembersStepComponent } from './client-stepper/client-family
 import { ClientPreviewStepComponent } from './client-stepper/client-preview-step/client-preview-step.component';
 import { ClientAddressStepComponent } from './client-stepper/client-address-step/client-address-step.component';
 import { ClientFamilyMemberDialogComponent } from './client-stepper/client-family-members-step/client-family-member-dialog/client-family-member-dialog.component';
+import { CaptureImageDialogComponent } from './clients-view/custom-dialogs/capture-image-dialog/capture-image-dialog.component';
 
 
 /**
@@ -117,7 +118,8 @@ import { ClientFamilyMemberDialogComponent } from './client-stepper/client-famil
     ClientFamilyMembersStepComponent,
     ClientPreviewStepComponent,
     ClientAddressStepComponent,
-    ClientFamilyMemberDialogComponent
+    ClientFamilyMemberDialogComponent,
+    CaptureImageDialogComponent
   ],
   entryComponents: [
     UploadDocumentDialogComponent,
@@ -127,7 +129,8 @@ import { ClientFamilyMemberDialogComponent } from './client-stepper/client-famil
     UploadSignatureDialogComponent,
     DeleteSignatureDialogComponent,
     UploadImageDialogComponent,
-    ClientFamilyMemberDialogComponent
+    ClientFamilyMemberDialogComponent,
+    CaptureImageDialogComponent
   ],
   providers: [DatePipe]
 

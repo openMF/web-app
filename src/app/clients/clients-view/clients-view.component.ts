@@ -11,6 +11,7 @@ import { ViewSignatureDialogComponent } from './custom-dialogs/view-signature-di
 import { DeleteSignatureDialogComponent } from './custom-dialogs/delete-signature-dialog/delete-signature-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { UploadImageDialogComponent } from './custom-dialogs/upload-image-dialog/upload-image-dialog.component';
+import { CaptureImageDialogComponent } from './custom-dialogs/capture-image-dialog/capture-image-dialog.component';
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
@@ -88,6 +89,9 @@ export class ClientsViewComponent implements OnInit {
         break;
       case 'Delete Signature':
         this.deleteSignature();
+        break;
+      case 'Capture Image':
+        this.captureProfileImage();
         break;
       case 'Upload Image':
         this.uploadProfileImage();
@@ -202,6 +206,21 @@ export class ClientsViewComponent implements OnInit {
           this.uploadSignature();
         }
       });
+    });
+  }
+
+  /**
+   * Captures clients profile image.
+   */
+  private captureProfileImage() {
+    const captureImageDialogRef = this.dialog.open(CaptureImageDialogComponent);
+    captureImageDialogRef.afterClosed().subscribe((imageURL: string) => {
+      if (imageURL) {
+        this.clientsService.uploadCapturedClientProfileImage(this.clientViewData.id, imageURL)
+          .subscribe(() => {
+            this.reload();
+          });
+      }
     });
   }
 

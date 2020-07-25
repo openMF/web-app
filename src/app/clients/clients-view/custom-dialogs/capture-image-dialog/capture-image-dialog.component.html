@@ -1,0 +1,25 @@
+<div fxLayout="column" fxLayoutGap="2%">
+
+  <h1 mat-dialog-title align="center">Capture Client Image</h1>
+
+  <video #video width="540" height="480" autoplay></video>
+
+  <canvas #canvas class="canvas"></canvas>
+
+  <p #fallback class="fallback" align="center"></p>
+
+  <div fxFlex="20%" align="center">
+    <button #captureButton *ngIf="!isCaptured" mat-stroked-button color="primary" (click)="capture()">
+      Capture
+    </button>
+    <button *ngIf="isCaptured" mat-stroked-button color="primary" (click)="recapture()">
+      <fa-icon icon="undo" size="sm"></fa-icon>&nbsp;&nbsp;Recapture
+    </button>
+  </div>
+
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+    <button [disabled]="!isCaptured" mat-raised-button color="primary" [mat-dialog-close]="clientImageDataURL">Upload</button>
+  </mat-dialog-actions>
+
+</div>
