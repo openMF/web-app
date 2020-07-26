@@ -94,4 +94,13 @@ export class AccountTransfersService {
     return this.http.delete(`/standinginstructions/${id}`, { params: httpParams });
   }
 
+
+  getStandingInstructionsTransactions(standingInstructionsId: any) {
+    const httpParams = new HttpParams().set('associations', 'transactions')
+                                        .set('dateFormat', 'dd MMMM yyyy')
+                                        .set('limit', '14')
+                                        .set('locale', 'en')
+                                        .set('offset', '0');
+    return this.http.get(`/standinginstructions/${standingInstructionsId}`, { params: httpParams });
+  }
 }

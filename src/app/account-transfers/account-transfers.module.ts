@@ -14,6 +14,7 @@ import { EditStandingInstructionsComponent } from './edit-standing-instructions/
 import { CreateStandingInstructionsComponent } from './create-standing-instructions/create-standing-instructions.component';
 import { MakeAccountTransersComponent } from './make-account-transers/make-account-transers.component';
 import { ListStandingInstructionsComponent } from './list-standing-instructions/list-standing-instructions.component';
+import { ListTransactionsComponent } from './list-transactions/list-transactions.component';
 
 /**
  * Account Transfers Module
@@ -27,7 +28,8 @@ import { ListStandingInstructionsComponent } from './list-standing-instructions/
     EditStandingInstructionsComponent,
     CreateStandingInstructionsComponent,
     MakeAccountTransersComponent,
-    ListStandingInstructionsComponent
+    ListStandingInstructionsComponent,
+    ListTransactionsComponent
   ],
   providers: [DatePipe]
 })

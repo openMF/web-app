@@ -1,0 +1,17 @@
+.content {
+  div {
+    line-height: 3rem;
+
+    &.header {
+      font-weight: 500;
+    }
+  }
+}
+
+table {
+  width: 100%;
+
+  .select-row:hover {
+    cursor: pointer;
+  }
+}

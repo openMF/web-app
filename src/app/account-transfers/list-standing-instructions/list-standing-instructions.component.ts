@@ -11,7 +11,7 @@ import { AccountTransfersService } from '../account-transfers.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 /**
- * Recurring Deposits Standing Instructions Tab
+ * Lists all the standing intructions of particular ID
  */
 @Component({
   selector: 'mifosx-list-standing-instructions',
@@ -36,6 +36,14 @@ export class ListStandingInstructionsComponent implements OnInit {
   clientName: any;
   /** Transfer Type Options Data */
   transferTypeDatas: any;
+  /** Account Type */
+  accountType: any;
+  /** Account Type ID */
+  accountTypeId: string;
+  /** Id */
+  id: any;
+  /** Is from Client? */
+  isFromClient: Boolean;
   /** Data source for instructions table. */
   dataSource = new MatTableDataSource();
   /** Columns to be displayed in instructions table. */
@@ -45,14 +53,13 @@ export class ListStandingInstructionsComponent implements OnInit {
   @ViewChild('instructionsTable') instructionTableRef: MatTable<Element>;
   /** Paginator for centers table. */
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  accountType: any;
-  accountTypeId: string;
-  id: any;
-  isFromClient: Boolean;
+
 
   /**
-   * Retrieves Recurring Deposits Account Data from `resolve`.
+   * Retrieves Standing Instructions Data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
+   * @param {MatDialog} route Mat Dialog
+   * @param {AccountTransfersService} accountTransfersService Account Transfers Service
    */
   constructor(private route: ActivatedRoute,
     private accountTransfersService: AccountTransfersService,
@@ -113,6 +120,7 @@ export class ListStandingInstructionsComponent implements OnInit {
     });
   }
 
+  /** Deletes selected Standing Instruction */
   deleteStandingInstruction(instructionId: any) {
     const deleteStandingInstructionDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `standing instruction id: ${instructionId}` }
