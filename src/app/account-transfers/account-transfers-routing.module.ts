@@ -9,14 +9,16 @@ import { extract } from '../core/i18n/i18n.service';
 import { ViewStandingInstructionsComponent } from './view-standing-instructions/view-standing-instructions.component';
 import { EditStandingInstructionsComponent } from './edit-standing-instructions/edit-standing-instructions.component';
 import { CreateStandingInstructionsComponent } from './create-standing-instructions/create-standing-instructions.component';
+import { MakeAccountTransersComponent } from './make-account-transers/make-account-transers.component';
+import { ListStandingInstructionsComponent } from './list-standing-instructions/list-standing-instructions.component';
+import { ListTransactionsComponent } from './list-transactions/list-transactions.component';
 
 /** Custom Resolvers */
 import { ViewStandingInstructionsResolver } from './common-resolvers/view-standing-instructions.resolver';
 import { StandingInstructionsDataAndTemplateResolver } from './common-resolvers/standing-instructions-data-and-template.resolver';
 import { StandingInstructionsTemplateResolver } from './common-resolvers/standing-instructions-template.resolver';
-import { MakeAccountTransersComponent } from './make-account-transers/make-account-transers.component';
 import { MakeAccountTransferTemplateResolver } from './common-resolvers/make-account-transfer-template.resolver';
-import { ListStandingInstructionsComponent } from './list-standing-instructions/list-standing-instructions.component';
+import { ListTransactionsResolver } from './common-resolvers/list-transactions.resolver';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -66,7 +68,15 @@ const routes: Routes = [
             resolve: {
               standingInstructionsDataAndTemplate: StandingInstructionsDataAndTemplateResolver,
             },
-          }
+          },
+          {
+            path: 'list-account-transactions',
+            data: { title: extract('List Account Transactions'), breadcrumb: 'List Account Transactions', routeParamBreadcrumb: 'List Account Transactions' },
+            component: ListTransactionsComponent,
+            resolve: {
+              listTransactionData: ListTransactionsResolver
+            }
+          },
         ]
       },
     ]
@@ -80,7 +90,8 @@ const routes: Routes = [
     ViewStandingInstructionsResolver,
     StandingInstructionsDataAndTemplateResolver,
     StandingInstructionsTemplateResolver,
-    MakeAccountTransferTemplateResolver
+    MakeAccountTransferTemplateResolver,
+    ListTransactionsResolver
   ]
 })
 

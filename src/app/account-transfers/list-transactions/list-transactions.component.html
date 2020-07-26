@@ -1,0 +1,73 @@
+<div class="container m-b-20">
+
+  <mat-card class="mat-elevation-z8">
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" class="content">
+
+        <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
+          From Account
+        </div>
+
+        <div fxFlex="25%" fxFlex.lt-md="50%">
+          {{ listTransactionData.fromAccount.accountNo }}({{ listTransactionData.fromAccountType.value }})
+        </div>
+
+        <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
+          To Account
+        </div>
+
+        <div fxFlex="25%" fxFlex.lt-md="50%">
+          {{ listTransactionData.toAccount.accountNo }}({{ listTransactionData.toAccountType.value }})
+        </div>
+
+        <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
+          Destination
+        </div>
+
+        <div fxFlex="25%" fxFlex.lt-md="50%">
+          {{ listTransactionData.toClient.displayName }}
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>
+
+<div class="mat-elevation-z8 container">
+
+  <table mat-table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="transactionDate">
+      <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
+      <td mat-cell *matCellDef="let transaction"> {{ transaction.transferDate | date }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef> Amount </th>
+      <td mat-cell *matCellDef="let transaction"> {{ transaction.transferAmount }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="notes">
+      <th mat-header-cell *matHeaderCellDef> Notes </th>
+      <td mat-cell *matCellDef="let transaction"> {{ transaction.transferDescription }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="reversed">
+      <th mat-header-cell *matHeaderCellDef> Reversed </th>
+      <td mat-cell *matCellDef="let transaction"> {{ transaction.reversed ? 'Yes' : 'No' }} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    </tr>
+
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+</div>

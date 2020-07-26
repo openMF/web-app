@@ -60,7 +60,9 @@ export class EditStandingInstructionsComponent implements OnInit {
     this.createEditStandingInstructionsForm();
     const presentDate = new Date();
     const n = presentDate.getFullYear();
-    this.standingInstructionsData.recurrenceOnMonthDay.push(n);
+    if (this.standingInstructionsData.recurrenceOnMonthDay) {
+      this.standingInstructionsData.recurrenceOnMonthDay.push(n);
+    }
     this.editStandingInstructionsForm.patchValue({
       'name': this.standingInstructionsData.name,
       'applicant': this.standingInstructionsData.fromClient.displayName,
@@ -81,7 +83,7 @@ export class EditStandingInstructionsComponent implements OnInit {
       'recurrenceType': this.standingInstructionsData.recurrenceType.id,
       'recurrenceInterval': this.standingInstructionsData.recurrenceInterval,
       'recurrenceFrequency': this.standingInstructionsData.recurrenceFrequency.id,
-      'recurrenceOnMonthDay': new Date(this.standingInstructionsData.recurrenceOnMonthDay)
+      'recurrenceOnMonthDay': this.standingInstructionsData.recurrenceOnMonthDay && new Date(this.standingInstructionsData.recurrenceOnMonthDay)
     });
   }
 
