@@ -45,6 +45,7 @@
   <h2>Create fixed deposit product</h2>
   <p class="mw300">This option allows you to create new fixed deposit product.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">Next</button>
   </div>
@@ -53,6 +54,7 @@
 <ng-template #templateFilter let-popover="popover">
   <h4>Search bar to filter fixed deposit products.</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonCreateFixedProduct,buttonCreateFixedProduct , 'bottom', true)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFixedProductsTable,fixedProductsTable, 'top', true)">Next</button>
   </div>
@@ -61,6 +63,7 @@
 <ng-template #templateFixedProductsTable let-popover="popover">
   <h4 class="mw300">List of fixed deposit products in the organization. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102629544/Fixed+Deposit+Products" target="_blank">Fixed Deposit Products</a></h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
   </div>

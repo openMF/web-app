@@ -1,11 +1,14 @@
 /** Angular Imports */
 import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /* Custom Services */
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
+
+/** Custom Dialog Component */
+import { CompletionDialogComponent } from '../../configuration-wizard/completion-dialog/completion-dialog.component';
 
 /**
  * Manage Reports Component.
@@ -40,11 +43,13 @@ export class ManageReportsComponent implements OnInit, AfterViewInit {
    * @param {Router} router Router for navigation.
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
+   * @param {Matdialog} matdialog Matdialog.
    */
   constructor(private route: ActivatedRoute,
               private router: Router,
               private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) {
+              private popoverService: PopoverService,
+              private dialog: MatDialog) {
     this.route.data.subscribe((data: { reports: any }) => {
       this.reportsData = data.reports;
     });
@@ -101,7 +106,7 @@ export class ManageReportsComponent implements OnInit, AfterViewInit {
    */
   nextStep() {
     this.configurationWizardService.showManageReports = false;
-    this.router.navigate(['/home']);
+    this.openNextStepDialog();
   }
 
   /**
@@ -109,5 +114,15 @@ export class ManageReportsComponent implements OnInit, AfterViewInit {
    */
   previousStep() {
     this.router.navigate(['/system']);
+  }
+
+  /**
+   * Completed Configuration Wizard Tour Dialog.
+   */
+  openNextStepDialog() {
+    const completionDialogRef = this.dialog.open( CompletionDialogComponent );
+    completionDialogRef.afterClosed().subscribe(() => {
+      this.router.navigate(['/home']);
+    });
   }
 }

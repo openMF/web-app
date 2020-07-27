@@ -59,6 +59,7 @@
   <h2>Create loan product</h2>
   <p class="mw300">This option allows you to create new loan product.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">Next</button>
   </div>
@@ -67,6 +68,7 @@
 <ng-template #templateFilter let-popover="popover">
   <h4>Search bar to filter loan products.</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonCreateLoanProduct,buttonCreateLoanProduct, 'bottom', true)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateLoanProductsTable,loanProductsTable, 'top', true)">Next</button>
   </div>
@@ -75,6 +77,7 @@
 <ng-template #templateLoanProductsTable let-popover="popover">
   <h4 class="mw300">List of loan products in the organization. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102039585/Loan+Products" target="_blank">Loan Products</a></h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
   </div>

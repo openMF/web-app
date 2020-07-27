@@ -46,6 +46,7 @@
   <h2>Dashboard</h2>
   <p class="mw300">This will navigate the user to the dashboard component.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateSearchActivity, searchActivity,'bottom',true)">Next</button>
   </div>
@@ -55,6 +56,7 @@
   <h2>Search Activity</h2>
   <p class="mw300">This will navigate the user to the searched activity.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonDashboard, buttonDashboard,'bottom',true)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
   </div>

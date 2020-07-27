@@ -44,6 +44,7 @@
   <h2>Manage Codes</h2>
   <p class="mw300">To create additional codes.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStep();">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true);">Next</button>
   </div>
@@ -52,6 +53,7 @@
 <ng-template #templateFilter let-popover="popover">
   <h4>Search bar to filter codes.</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonCreateCode, buttonCreateCode, 'bottom', true);">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateTableCodes, tableCodes, 'top', true);">Next</button>
   </div>
@@ -60,6 +62,7 @@
 <ng-template #templateTableCodes let-popover="popover">
   <h4>List of all codes in the Mifos system for your organization.</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true);">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
   </div>

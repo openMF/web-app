@@ -67,6 +67,7 @@
 <ng-template #templateFilter let-data let-popover="popover">
  <h4>Search bar to filter configurations.</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateConfigurationsTable, configurationsTable, 'top', true)">Next</button>
   </div>
@@ -75,6 +76,7 @@
 <ng-template #templateConfigurationsTable let-data let-popover="popover">
   <h4 class="mw300">Global Configuration options and their current status. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895362/Global+Configuration" target="_blank">Global Configurations</a></h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
   </div>

@@ -33,8 +33,9 @@
 
 <ng-template #templateCodeFormRef let-data let-popover="popover">
   <h2>Create Code</h2>
-  <p>To create code, click on create code and enter the code name.<br> For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895350/Manage+Codes" target="_blank">Manage Codes</a></p>
+  <p class="mw400">To create code, click on create code and enter the code name.<br> For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895350/Manage+Codes" target="_blank">Manage Codes</a></p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close()">Create Code</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>

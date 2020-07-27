@@ -12,6 +12,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class ConfigurationWizardComponent implements OnInit {
 
+  show: number;
   /**
    * @param {MatDialogRef<ConfigurationWizardComponent>} dialogRef MatDialogRef<ConfigurationWizardComponent>.
    */

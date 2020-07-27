@@ -63,6 +63,7 @@
   <h2>Add Role</h2>
   <p class="mw300">To create a new role.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStep();">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true);">Next</button>
   </div>
@@ -71,6 +72,7 @@
 <ng-template #templateFilter let-popover="popover">
   <h4>Search bar to filter roles.</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonAddRole, buttonAddRole, 'bottom', true)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateTableRolesandPermissions, tableRolesandPermissions, 'top', true)">Next</button>
   </div>
@@ -79,6 +81,7 @@
 <ng-template #templateTableRolesandPermissions let-popover="popover">
   <h4 class="mw300">List of roles defined within the organization. or more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895364/Manage+Roles+and+Permissions" target="_blank">Manage Roles and Permission</a></h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true);">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
   </div>

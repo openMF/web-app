@@ -114,6 +114,7 @@
   <h2>Charges</h2>
   <p class="mw400">Mifos supports two types of charges—fees and penalties.Fees are charged for services—for example, membership fees, loan disbursement fees, withdrawal fees. Penalties are charged to discourage clients from deviating from the terms of a product</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepCharges()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepCharges()">Next</button>
   </div>
@@ -123,6 +124,7 @@
   <h2>Loan Products</h2>
   <p class="mw400">Loan products define the rules, default settings, and constraints for a financial institution's lending offerings. A loan product provides a template for multiple loan accounts for the financial institution's clients.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepLoanProducts()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepLoanProducts()">Next</button>
   </div>
@@ -132,6 +134,7 @@
   <h2>Savings Products</h2>
   <p class="mw400">Savings products define the rules, default settings, and constraints for a financial institution's current/checking and passbook savings accounts. A saving product provides a template for multiple accounts that are or will be held by the financial institution's clients, groups and centers.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepSavingsProducts()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepSavingsProducts()">Next</button>
   </div>
@@ -141,6 +144,7 @@
   <h2>Share Products</h2>
   <p class="mw400">Share products define the rules, default settings, and constraints for a financial institution's Shares and dividends. A share product provides a template for multiple accounts that are or will be held by the financial institution's clients.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepShareProducts()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepShareProducts()">Next</button>
   </div>
@@ -150,6 +154,7 @@
   <h2>Fixed Deposit Products</h2>
   <p class="mw400">Fixed Deposit Products defines the rules, default settings, and constraints for a financial institution's <br> fixed deposit offerings (also referred to as term deposits). A fixed deposit product provides a template for multiple fixed deposit accounts for the financial institution's clients.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepFixedDepositProducts()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepFixedDepositProducts()">Next</button>
   </div>
@@ -159,6 +164,7 @@
   <h2>Recurring Deposit Products</h2>
   <p class="mw400">Recurring Deposit products define the rules, default settings, and constraints for a financial institution's recurring deposit offerings (a type of term deposit with recurring deposits). A recurring deposit product provides a template for multiple recurring deposit accounts for the financial institution's clients.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepRecurringDepositProducts()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepRecurringDepositProducts()">Next</button>
   </div>

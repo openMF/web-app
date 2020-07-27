@@ -45,6 +45,7 @@
   <h2>Create saving product</h2>
   <p class="mw300">This option allows you to create new savings product.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">Next</button>
   </div>
@@ -53,6 +54,7 @@
 <ng-template #templateFilter let-popover="popover">
   <h4>Search bar to filter saving products.</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonSavingProduct,buttonSavingProduct , 'bottom', true)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateSavingProductTable,savingProductTable, 'top', true)">Next</button>
   </div>
@@ -61,6 +63,7 @@
 <ng-template #templateSavingProductTable let-popover="popover">
   <h4 class="mw300">List of saving products in the organization. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102629497/Savings+Products" target="_blank">Savings Products</a></h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
   </div>

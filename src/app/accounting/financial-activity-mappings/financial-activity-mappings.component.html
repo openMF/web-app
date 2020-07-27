@@ -38,6 +38,7 @@
   <h2>Define New Mapping</h2>
   <p class="mw300">To define new mapping.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateActivitiesTable, activitiesTable, 'top', true)">Next</button>
   </div>
@@ -46,6 +47,7 @@
 <ng-template #templateActivitiesTable let-popover="popover">
   <h4 class="mw300">List of accounts linked to different financial activities. To know more click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/106430472/Accounts+linked+to+Financial+Activities" target="_blank">Accounts linked to Financial Activities</a> </h4>  
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonDefineMapping, buttonDefineMapping , 'bottom', true)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
   </div>

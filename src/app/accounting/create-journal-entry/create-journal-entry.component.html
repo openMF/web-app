@@ -181,6 +181,7 @@
   <h2>Add Journal Entry Form</h2>
   <p class="mw300">Fields with a red asterisk (*) are required. To know more click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895310/Add+Journal+Entries" target="_blank">Add Journal Entries</a></p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
   </div>

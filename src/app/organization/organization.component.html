@@ -178,6 +178,7 @@
   <h2>Manage Offices</h2>
   <p class="mw300">The Manage Offices page allows you to create, edit and add the offices within your organization.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepOffice()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepOffice()">Next</button>
   </div>
@@ -187,6 +188,7 @@
   <h2>Currency Configuration</h2>
   <p class="mw300">This section allows an organization to define what currencies will be used throughout their interactions within the Mifos X system.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepAddEditCurrency()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepAddEditCurrency()">Next</button>
   </div>
@@ -196,6 +198,7 @@
   <h2>Manage Holidays</h2>
   <p class="mw300">The ability to manage holidays for individual offices is a very useful tool for an organization spanning multiple locations.Use this option to customize holidays for each office of your organization.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepHolidays()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepHolidays()">Next</button>
   </div>
@@ -205,6 +208,7 @@
   <h2>Manage Employees</h2>
   <p class="mw300">With this option, you may view, edit and/or delete your organization's employees.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepEmployee()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepEmployee()">Next</button>
   </div>
@@ -214,6 +218,7 @@
   <h2>Working Days</h2>
   <p class="mw300">Working days page allows you to define which days of the week are working days.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepWorkingDays()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepWorkingDays()">Next</button>
   </div>
@@ -223,6 +228,7 @@
   <h2>Manage Funds</h2>
   <p class="mw300">This allows you to manage funds associated with loans.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepManageFunds()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepManageFunds()">Next</button>
   </div>
