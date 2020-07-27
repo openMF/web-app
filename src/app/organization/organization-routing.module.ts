@@ -49,6 +49,10 @@ import { EditCashierComponent } from './tellers/cashiers/edit-cashier/edit-cashi
 import { CreateCashierComponent } from './tellers/cashiers/create-cashier/create-cashier.component';
 import { EditHolidayComponent } from './holidays/edit-holiday/edit-holiday.component';
 import { EditAdhocQueryComponent } from './adhoc-query/edit-adhoc-query/edit-adhoc-query.component';
+import { EditOfficeComponent } from './offices/edit-office/edit-office.component';
+import { BulkImportComponent } from './bulk-import/bulk-import.component';
+import { ViewBulkImportComponent } from './bulk-import/view-bulk-import/view-bulk-import.component';
+import { ViewLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/view-loan-provisioning-criteria/view-loan-provisioning-criteria.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -68,9 +72,7 @@ import { PasswordPreferencesTemplateResolver } from './password-preferences/pass
 import { EntityDataTableChecksResolver } from './entity-data-table-checks/entity-data-table-checks.resolver';
 import { WorkingDaysResolver } from './working-days/working-days.resolver';
 import { EditOfficeResolver } from './offices/common-resolvers/edit-office.resolver';
-import { EditOfficeComponent } from './offices/edit-office/edit-office.component';
 import { AdhocQueryTemplateResolver } from './adhoc-query/adhoc-query-template.resolver';
-import { ViewLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/view-loan-provisioning-criteria/view-loan-provisioning-criteria.component';
 import { LoanProvisioningCriteriasResolver } from './loan-provisioning-criteria/loan-provisioning-criterias.resolver';
 import { CashierResolver } from './tellers/common-resolvers/cashier.resolver';
 import { CashiersResolver } from './tellers/common-resolvers/cashiers.resolver';
@@ -84,6 +86,7 @@ import { CashierTransactionTemplateResolver } from './tellers/teller-transaction
 import { EditCashierResolver } from './tellers/common-resolvers/edit-cashier.resolver';
 import { HolidayTemplateResolver } from './holidays/holiday-template.resolver';
 import { AdhocQueryAndTemplateResolver } from './adhoc-query/common-resolvers/adhoc-query-and-template.resolver';
+import { BulkImportResolver } from './bulk-import/bulk-import.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -107,7 +110,6 @@ const routes: Routes = [
                 loanProvisioningCriterias: LoanProvisioningCriteriasResolver
               }
             },
-
             {
               path: ':id',
               data: { title: extract('View Provisioning Criteria'), routeParamBreadcrumb: 'id' },
@@ -488,7 +490,22 @@ const routes: Routes = [
         },
         {
           path: 'bulk-import',
-          loadChildren: '../bulk-import/bulk-import.module#BulkImportModule'
+          data: { title: extract('Bulk Import'), breadcrumb: 'Bulk Import' },
+          children: [
+            {
+              path: '',
+              component: BulkImportComponent,
+            },
+            {
+              path: ':import-name',
+              component: ViewBulkImportComponent,
+              data: { title: extract('View Bulk Import'), routeParamBreadcrumb: 'import-name' },
+              resolve: {
+                offices: OfficesResolver,
+                imports: BulkImportResolver
+              }
+            }
+          ]
         },
         {
           path: 'holidays',
@@ -570,7 +587,8 @@ const routes: Routes = [
     CashierTransactionTemplateResolver,
     EditCashierResolver,
     HolidayResolver,
-    HolidayTemplateResolver
+    HolidayTemplateResolver,
+    BulkImportResolver
   ]
 })
 export class OrganizationRoutingModule { }
