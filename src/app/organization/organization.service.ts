@@ -562,4 +562,77 @@ export class OrganizationService {
     return this.http.put(`/funds/${fundId}`, fundData);
   }
 
+  /*
+   * @param {any} officeId ID of office to retrieve staff from.
+   * @returns {Observable<any>} Staff data.
+   */
+  getStaff(officeId: any): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('officeId', officeId.toString());
+    return this.http.get('/staff', { params: httpParams });
+  }
+
+  /**
+   * @param {string} entity Entity to get imports data for.
+   * @returns {Observable<any>} Imports data.
+   */
+  getImports(entity: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('entityType', entity);
+    return this.http.get('/imports', { params: httpParams } );
+  }
+
+  /**
+   * @param urlSuffix of Bulk-Import
+   * @param officeId Office ID for template retrieval
+   * @param staffId Staff ID for template retrieval
+   * @param legalFormType Legal Form type fortemplate retrieval
+   * @returns {Observable<any>} Import Template
+   */
+  getImportTemplate(urlSuffix: string, officeId: any, staffId: any, legalFormType: string): Observable<any> {
+    let httpParams = new HttpParams()
+      .set('tenantIdentifier', 'default')
+      .set('locale', 'en')
+      .set('dateFormat', 'dd MMMM yyyy');
+    if (officeId) {
+      httpParams = httpParams.set('officeId', officeId.toString());
+    }
+    if (staffId) {
+      httpParams = httpParams.set('staffId', staffId.toString());
+    }
+    if (legalFormType.length) {
+      httpParams = httpParams.set('legalFormType', legalFormType);
+    }
+    return this.http.get(`${urlSuffix}/downloadtemplate`, { params: httpParams, responseType: 'arraybuffer', observe: 'response'} );
+  }
+
+  /**
+   * @param {any} id Import ID for document retrieval
+   * @returns {Observable<any>} Import Document
+   */
+  getImportDocument(id: any): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('importDocumentId', id)
+      .set('tenantIdentifier', 'default' );
+    return this.http.get('/imports/downloadOutputTemplate', { params: httpParams, responseType: 'arraybuffer', observe: 'response'});
+  }
+
+  /**
+   * @param {File} file File to be uploaded
+   * @param {string} urlSuffix URL suffix
+   * @param {string} legalFormType Legal Form type for file upload
+   * @returns {Observable<any>}
+   */
+  uploadImportDocument(file: File, urlSuffix: string, legalFormType: string): Observable<any> {
+    let httpParams = new HttpParams();
+    if (legalFormType.length) {
+      httpParams = httpParams.set('legalFormType', legalFormType);
+    }
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('locale', 'en');
+    formData.append('datefFormat', 'dd MMMM yyyy');
+    return this.http.post(`${urlSuffix}/uploadtemplate`, formData , { params: httpParams } );
+  }
+
 }

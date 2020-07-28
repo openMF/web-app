@@ -11,7 +11,7 @@
       </mat-checkbox>
     </div>
     <div class="action-button" fxLayoutGap="25px">
-      <button mat-raised-button color="primary">
+      <button mat-raised-button color="primary" [routerLink]="['../', 'organization', 'bulk-import', 'Centers']">
         <fa-icon icon="download"></fa-icon>&nbsp;&nbsp;Import Center
       </button>
       <button mat-raised-button color="primary" [routerLink]="['create']">
