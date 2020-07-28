@@ -50,8 +50,9 @@
 
 <ng-template #templateCurrencyFormRef let-popover="popover">
   <h4>Add Currency Form</h4>
-  <p class="mw300">This form will be used to add currency. To add currency click on add currency and fill the form and then click add else click back or next. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141734/Currency+Configuration" target="_blank">Currency Configuration</a></p>
+  <p class="mw400">This form will be used to add currency. To add currency click on add currency and fill the form and then click add else click back or next. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141734/Currency+Configuration" target="_blank">Currency Configuration</a></p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();">Add Currency</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>

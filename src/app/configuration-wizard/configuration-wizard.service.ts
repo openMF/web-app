@@ -197,4 +197,94 @@ export class ConfigurationWizardService {
   showManageReports = false;
 
   constructor() { }
+
+  /**
+   * Set all variables to false.
+   */
+  closeConfigWizard(): void {
+
+    this.showToolbar = false;
+    this.showToolbarAdmin = false;
+    this.showSideNav = false;
+    this.showSideNavChartofAccounts = false;
+    this.showBreadcrumbs = false;
+    this.showHome = false;
+    this.showHomeSearchActivity = false;
+
+    this.showCreateOffice = false;
+    this.showOfficeList = false;
+    this.showOfficeTable = false;
+    this.showOfficeForm = false;
+    this.showAddEditCurrency = false;
+    this.showCurrencyPage = false;
+    this.showCurrencyList = false;
+    this.showCurrencyForm = false;
+    this.showCreateHoliday = false;
+    this.showHolidayPage = false;
+    this.showHolidayFilter = false;
+    this.showCreateEmployee = false;
+    this.showEmployeeList = false;
+    this.showEmployeeTable = false;
+    this.showEmployeeForm = false;
+    this.showDefineWorkingDays = false;
+
+    this.showDatatables = false;
+    this.showDatatablesPage = false;
+    this.showDatatablesList = false;
+    this.showDatatablesForm = false;
+    this.showSystemCodes = false;
+    this.showSystemCodesPage = false;
+    this.showSystemCodesList = false;
+    this.showSystemCodesForm = false;
+    this.showRolesandPermission = false;
+    this.showRolesandPermissionPage = false;
+    this.showRolesandPermissionList = false;
+    this.showUsers = false;
+    this.showUsersList = false;
+    this.showUsersForm = false;
+    this.showMakerCheckerTable = false;
+    this.showMakerCheckerTablePage = false;
+    this.showMakerCheckerTableList = false;
+    this.showConfigurations = false;
+    this.showConfigurationsPage = false;
+    this.showConfigurationsList = false;
+    this.showSchedulerJobs = false;
+    this.showSchedulerJobsPage = false;
+    this.showSchedulerJobsList = false;
+
+    this.showChartofAccounts = false;
+    this.showChartofAccountsPage = false;
+    this.showChartofAccountsList = false;
+    this.showChartofAccountsForm = false;
+    this.showAccountsLinked = false;
+    this.showAccountsLinkedPage = false;
+    this.showAccountsLinkedList = false;
+    this.showMigrateOpeningBalances = false;
+    this.showClosingEntries = false;
+    this.showClosingEntriesPage = false;
+    this.showClosingEntriesList = false;
+    this.showCreateJournalEntries = false;
+
+    this.showCharges = false;
+    this.showChargesPage = false;
+    this.showChargesList = false;
+    this.showLoanProducts = false;
+    this.showLoanProductsPage = false;
+    this.showLoanProductsList = false;
+    this.showSavingsProducts = false;
+    this.showSavingsProductsPage = false;
+    this.showSavingsProductsList = false;
+    this.showShareProducts = false;
+    this.showShareProductsPage = false;
+    this.showShareProductsList = false;
+    this.showFixedDepositProducts = false;
+    this.showFixedDepositProductsPage = false;
+    this.showFixedDepositProductsList = false;
+    this.showRecurringDepositProducts = false;
+    this.showRecurringDepositProductsPage = false;
+    this.showRecurringDepositProductsList = false;
+
+    this.showManageFunds = false;
+    this.showManageReports = false;
+  }
 }

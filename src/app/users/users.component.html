@@ -55,6 +55,7 @@
   <h2>Create User</h2>
   <p class="mw300">This option allows you to create new users in your organization.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true)">Next</button>
   </div>
@@ -63,6 +64,7 @@
 <ng-template #templateFilter let-popover="popover">
   <h4>Search bar to filter users.</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonCreateUser, buttonCreateUser, 'bottom', true)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateUsersTable, usersTable, 'top', true)">Next</button>
   </div>
@@ -71,6 +73,7 @@
 <ng-template #templateUsersTable let-popover="popover">
   <h4>List of Users with their details.</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
   </div>

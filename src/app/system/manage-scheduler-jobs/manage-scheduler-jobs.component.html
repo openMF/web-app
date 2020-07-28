@@ -107,6 +107,7 @@
 <ng-template #templateSchedulerStatus let-data let-popover="popover">
   <h4>Scheduler Status. Button will be used to change the status.</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true)">Next</button>
   </div>
@@ -115,6 +116,7 @@
 <ng-template #templateFilter let-data let-popover="popover">
   <h4>Search bar to filter jobs.</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateSchedulerStatus,schedulerStatus, 'bottom', true)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateJobsTable,jobsTable, 'top', true)">Next</button>
   </div>
@@ -123,6 +125,7 @@
 <ng-template #templateJobsTable let-data let-popover="popover">
   <h4>List of all scheduled batch jobs <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895356/Manage+Scheduler+Jobs" target="_blank">Schedular Jobs</a></h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
   </div>

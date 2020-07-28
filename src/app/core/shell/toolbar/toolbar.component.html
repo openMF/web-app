@@ -150,6 +150,7 @@
   <h2>Institution</h2>
   <p class="mw300">This button will be used for individual accounts, groups and centers</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateAccounting, accounting)">Next</button>
   </div>
 </ng-template>
@@ -158,6 +159,7 @@
   <h2>Accounting</h2>
   <p class="mw300">This button opens the menu to access the system tools required by the accounting department.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateInstitution, institution)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateReports, reports)">Next</button>
   </div>
@@ -167,6 +169,7 @@
   <h2>Reports</h2>
   <p class="mw300">Dropdown provides access to all types of system reports including the defualt reports provided by the Mifos and system reports that will be developed by the organization.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateAccounting, accounting)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateAdmin, admin)">Next</button>
   </div>
@@ -176,6 +179,7 @@
   <h2>Admin</h2>
   <p class="mw300">This is where the system is setup according to your organization including users, organization, products and templates.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateReports, reports)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateSelfService, selfService)">Next</button>
   </div>
@@ -185,6 +189,7 @@
   <h2>Self Service</h2>
   <p class="mw300">Dropdown provides access to self service user administrative portal, app configuration and task management.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateAdmin, admin)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateConfigWizard, configWizard)">Next</button>
   </div>
@@ -194,6 +199,7 @@
   <h2>Configuration Wizard</h2>
   <p class="mw300">This buttons opens up the configuration wizard to help the user in initial setup and application tour.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateSelfService, selfService)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateGlobalSearch, globalSearch)">Next</button>
   </div>
@@ -203,6 +209,7 @@
   <h2>Global Search</h2>
   <p class="mw300">This will allow the user to quickly navigate the system selecting entity while searching makes the navigation more robust.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateConfigWizard, configWizard)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover( templateLanguageSelector, languageSelector)">Next</button>
   </div>
@@ -212,6 +219,7 @@
   <h2>Language Selector</h2>
   <p class="mw300">Organization can select a language here from the available languages here.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateGlobalSearch, globalSearch)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateThemePicker, themePicker)">Next</button>
   </div>
@@ -221,6 +229,7 @@
   <h2>Theme Picker</h2>
   <p class="mw300">This will be used to choose a theme as per organization will.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover( templateLanguageSelector, languageSelector)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateNotifications, notifications)">Next</button>
   </div>
@@ -230,6 +239,7 @@
   <h2>Notifications</h2>
   <p class="mw300">This shows all the notifications.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateThemePicker, themePicker)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateAppMenu, appMenu)">Next</button>
   </div>
@@ -239,6 +249,7 @@
   <h2>Application Menu</h2>
   <p class="mw300">This will have logged in user settings and sign out button.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateNotifications, notifications)">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">Next</button>
   </div>

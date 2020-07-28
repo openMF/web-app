@@ -204,6 +204,7 @@
   <h2>Tree View</h2>
   <p class="mw300">There is an alternative way to view your accounts - using the Tree View.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStep();">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover( templateButtonAddAccount, buttonAddAccount, 'bottom', true);">Next</button>
   </div>
@@ -213,6 +214,7 @@
   <h2>Add Account</h2>
   <p class="mw300">This option allows you to create new GL accounts.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonTreeView, buttonTreeView , 'bottom', true);">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true);">Next</button>
   </div>
@@ -221,6 +223,7 @@
 <ng-template #templateFilter let-popover="popover">
   <h4>Search bar to filter GL accounts.</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover( templateButtonAddAccount, buttonAddAccount, 'bottom', true);">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateAccountsTable, accountsTable, 'top', true);">Next</button>
   </div>
@@ -229,6 +232,7 @@
 <ng-template #templateAccountsTable let-popover="popover">
   <h4 class="mw300">List of chart of all the accounts being used by your organization.</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true);">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
   </div>

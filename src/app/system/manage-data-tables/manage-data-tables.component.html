@@ -45,6 +45,7 @@
   <h2>Create Data Table</h2>
   <p class="mw300">This will launch a page that will allow you to create a new data table.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStep();">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter,'bottom', true);">Next</button>
   </div>
@@ -53,6 +54,7 @@
 <ng-template #templateFilter let-popover="popover">
   <h4>Search bar to filter datatables.</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateCreateDatatableRef,createDatatableRef,'bottom', true);">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateDatatablesList,datatablesList,'top', true);">Next</button>
   </div>
@@ -61,6 +63,7 @@
 <ng-template #templateDatatablesList let-popover="popover">
   <h4>List of all currently available data tables.</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter,'bottom', true);">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStep();">Next</button>
   </div>

@@ -49,8 +49,9 @@
 
 <ng-template #templateWorkingDaysFormRef let-data let-popover="popover">
   <h2>Working Days</h2>
-  <p class="mw300">Click (Define Working Days) to define working days. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/90243212/Working+Days" target="_blank">Working Days</a></p>
+  <p class="mw400">Click (Define Working Days) to define working days. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/90243212/Working+Days" target="_blank">Working Days</a></p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close()">Define Working Days</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next Step</button>

@@ -14,6 +14,7 @@ import { PopoverComponent } from './popover/popover.component';
 import { ConfigurationWizardComponent } from './configuration-wizard.component';
 import { ContinueSetupDialogComponent } from './continue-setup-dialog/continue-setup-dialog.component';
 import { NextStepDialogComponent } from './next-step-dialog/next-step-dialog.component';
+import { CompletionDialogComponent } from './completion-dialog/completion-dialog.component';
 
 /** Custom Modules */
 import { SharedModule } from '../shared/shared.module';
@@ -28,7 +29,8 @@ import { SharedModule } from '../shared/shared.module';
     PopoverArrowDirective,
     ConfigurationWizardComponent,
     ContinueSetupDialogComponent,
-    NextStepDialogComponent
+    NextStepDialogComponent,
+    CompletionDialogComponent
   ],
   imports: [
     SharedModule,
@@ -44,7 +46,9 @@ import { SharedModule } from '../shared/shared.module';
     PopoverComponent,
     ConfigurationWizardComponent,
     ContinueSetupDialogComponent,
-    NextStepDialogComponent
+    NextStepDialogComponent,
+    CompletionDialogComponent
   ]
 })
+
 export class ConfigurationWizardModule { }

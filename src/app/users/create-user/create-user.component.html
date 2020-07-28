@@ -132,8 +132,9 @@
 
 <ng-template #templateUserFormRef let-popover="popover">
   <h2>Create User</h2>
-  <p class="mw300">Click to start filling the details. * mark fields are neccessary. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141740/Users" target="_blank">Users</a></p>
+  <p class="mw400">Click to start filling the details. * mark fields are neccessary. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141740/Users" target="_blank">Users</a></p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close()">Create User</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>

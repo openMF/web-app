@@ -156,6 +156,7 @@
   <h2>Manage Data Tables</h2>
   <p class="mw300">Mifos X data-tables allow the user to add custom fields in addition to the built-in fields to a client profile, loan/saving account, group, center or an office.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepDatatables()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepDatatables()">Next</button>
   </div>
@@ -165,6 +166,7 @@
   <h2>Manage Codes</h2>
   <p class="mw300">From this selection you can create new drop-downs and edit their values as well as edit the values for system-generated codes and drop-downs.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepCodes()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepCodes()">Next</button>
   </div>
@@ -174,6 +176,7 @@
   <h2>Manage Roles and Permissions</h2>
   <p class="mw300">Roles and Permissions allow the administrator to control access to Mifos based on what roles are assigned to Users and what Permissions are assigned to roles.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepRolesandPermission()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepRolesandPermission()">Next</button>
   </div>
@@ -183,6 +186,7 @@
   <h2>Configure Maker-Checker Tasks</h2>
   <p class="mw300">The “Maker-Checker” principle requires every tasks to be completed by two people to reduce the chance of errors and misuse. One person initiates the process and the second completes it.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepMakerCheckerTable()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepMakerCheckerTable()">Next</button>
   </div>
@@ -192,6 +196,7 @@
   <h2>Configuration</h2>
   <p class="mw300">The Configurations page allows you to further customize the way your organization uses the Mifos system.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepConfigurations()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepConfigurations()">Next</button>
   </div>
@@ -201,6 +206,7 @@
   <h2>Manage Scheduler Jobs</h2>
   <p class="mw300">By using Scheduler Jobs, you can set batch jobs to be completed at regular intervals. From this page you can schedule, modify or delete jobs.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepSchedulerJobs()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepSchedulerJobs()">Next</button>
   </div>
@@ -210,6 +216,7 @@
   <h2>Manage Reports</h2>
   <p class="mw300">You may add customized reports and edit core reports for your organization.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepManageReports()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepManageReports()">Next</button>
   </div>
