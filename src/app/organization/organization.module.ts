@@ -54,6 +54,14 @@ import { EditHolidayComponent } from './holidays/edit-holiday/edit-holiday.compo
 import { EditAdhocQueryComponent } from './adhoc-query/edit-adhoc-query/edit-adhoc-query.component';
 import { BulkImportComponent } from './/bulk-import/bulk-import.component';
 import { ViewBulkImportComponent } from './bulk-import/view-bulk-import/view-bulk-import.component';
+import { CreateCampaignComponent } from './sms-campaigns/create-campaign/create-campaign.component';
+import { SmsCampaignStepComponent } from './sms-campaigns/sms-campaign-stepper/sms-campaign-step/sms-campaign-step.component';
+import { CampaignMessageStepComponent } from './sms-campaigns/sms-campaign-stepper/campaign-message-step/campaign-message-step.component';
+import { CampaignPreviewStepComponent } from './sms-campaigns/sms-campaign-stepper/campaign-preview-step/campaign-preview-step.component';
+import { BusinessRuleParametersComponent } from './sms-campaigns/sms-campaign-stepper/sms-campaign-step/business-rule-parameters/business-rule-parameters.component';
+import { EditCampaignComponent } from './sms-campaigns/edit-campaign/edit-campaign.component';
+import { EditSmsCampaignStepComponent } from './sms-campaigns/sms-campaign-stepper/edit-sms-campaign-step/edit-sms-campaign-step.component';
+import { EditBusinessRuleParametersComponent } from './sms-campaigns/sms-campaign-stepper/edit-sms-campaign-step/edit-business-rule-parameters/edit-business-rule-parameters.component';
 
 /**
  * Organization Module
@@ -113,7 +121,15 @@ import { ViewBulkImportComponent } from './bulk-import/view-bulk-import/view-bul
     EditHolidayComponent,
     EditAdhocQueryComponent,
     BulkImportComponent,
-    ViewBulkImportComponent
+    ViewBulkImportComponent,
+    CreateCampaignComponent,
+    SmsCampaignStepComponent,
+    CampaignMessageStepComponent,
+    CampaignPreviewStepComponent,
+    BusinessRuleParametersComponent,
+    EditCampaignComponent,
+    EditSmsCampaignStepComponent,
+    EditBusinessRuleParametersComponent
   ]
 })
 export class OrganizationModule { }

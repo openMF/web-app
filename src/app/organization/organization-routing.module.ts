@@ -53,6 +53,8 @@ import { EditOfficeComponent } from './offices/edit-office/edit-office.component
 import { BulkImportComponent } from './bulk-import/bulk-import.component';
 import { ViewBulkImportComponent } from './bulk-import/view-bulk-import/view-bulk-import.component';
 import { ViewLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/view-loan-provisioning-criteria/view-loan-provisioning-criteria.component';
+import { CreateCampaignComponent } from './sms-campaigns/create-campaign/create-campaign.component';
+import { EditCampaignComponent } from './sms-campaigns/edit-campaign/edit-campaign.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
@@ -87,6 +89,7 @@ import { EditCashierResolver } from './tellers/common-resolvers/edit-cashier.res
 import { HolidayTemplateResolver } from './holidays/holiday-template.resolver';
 import { AdhocQueryAndTemplateResolver } from './adhoc-query/common-resolvers/adhoc-query-and-template.resolver';
 import { BulkImportResolver } from './bulk-import/bulk-import.resolver';
+import { SmsCampaignTemplateResolver } from './sms-campaigns/common-resolvers/sms-campaign-template.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -262,12 +265,34 @@ const routes: Routes = [
               }
             },
             {
+              path: 'create',
+              data: { title: extract('Create SMS Campaign'), breadcrumb: 'Create Campaign' },
+              component: CreateCampaignComponent,
+              resolve: {
+                smsCampaignTemplate: SmsCampaignTemplateResolver
+              }
+            },
+            {
               path: ':id',
-              component: ViewCampaignComponent,
               data: { title: extract('View SMS Campaign'), routeResolveBreadcrumb: ['smsCampaign', 'campaignName'] },
               resolve: {
                 smsCampaign: SmsCampaignResolver
-              }
+              },
+              runGuardsAndResolvers: 'always',
+              children: [
+                {
+                  path: '',
+                  component: ViewCampaignComponent,
+                },
+                {
+                  path: 'edit',
+                  component: EditCampaignComponent,
+                  data: { title: extract('Edit SMS Campaign'), breadcrumb: 'Edit', routeResolveBreadcrumb: false},
+                  resolve: {
+                    smsCampaignTemplate: SmsCampaignTemplateResolver,
+                  }
+                }
+              ]
             }
           ]
         },
@@ -564,6 +589,7 @@ const routes: Routes = [
     CurrenciesResolver,
     SmsCampaignsResolver,
     SmsCampaignResolver,
+    SmsCampaignTemplateResolver,
     AdhocQueriesResolver,
     AdhocQueryResolver,
     TellersResolver,

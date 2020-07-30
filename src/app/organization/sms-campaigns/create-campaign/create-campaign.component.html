@@ -1,0 +1,63 @@
+<div class="container">
+
+  <mat-horizontal-stepper class="mat-elevation-z8" labelPosition="bottom" #smsCampaignStepper>
+
+    <ng-template matStepperIcon="number">
+      <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="edit">
+      <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="done">
+      <fa-icon icon="check" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="error">
+      <fa-icon icon="exclamation-triangle" size="lg"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="preview">
+      <fa-icon icon="eye" size="sm"></fa-icon>
+    </ng-template>
+
+    <mat-step [stepControl]="smsCampaignForm">
+
+      <ng-template matStepLabel>CAMPAIGN</ng-template>
+
+      <mifosx-sms-campaign-step 
+        [smsCampaignTemplate]="smsCampaignTemplate"
+        (templateParameters)="setParameters($event)"
+      >
+      </mifosx-sms-campaign-step>
+
+    </mat-step>
+
+    <mat-step>
+
+      <ng-template matStepLabel>MESSAGE</ng-template>
+
+      <mifosx-campaign-message-step
+        [templateParameters]="templateParameters"
+        [smsCampaignFormValid]="smsCampaignForm.valid"
+      >
+      </mifosx-campaign-message-step>
+
+    </mat-step>
+
+    <mat-step state="preview" *ngIf="smsCampaignForm.valid" completed>
+
+      <ng-template matStepLabel>PREVIEW</ng-template>
+
+      <mifosx-campaign-preview-step 
+        [smsCampaignTemplate]="smsCampaignTemplate"
+        [campaign]="smsCampaign" (submit)="submit()"
+      >
+      </mifosx-campaign-preview-step>
+
+    </mat-step>
+
+  </mat-horizontal-stepper>
+
+</div>

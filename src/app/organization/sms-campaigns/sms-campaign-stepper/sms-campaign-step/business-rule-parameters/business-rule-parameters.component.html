@@ -1,0 +1,61 @@
+<div fxLayout="column">
+
+  <mat-divider fxFlex="98%"></mat-divider>
+
+  <h3 fxFlex="98%" class="mat-h3">Business Rule Parameters</h3>
+
+  <form [formGroup]="ReportForm">
+
+    <div fxLayout="row wrap" fxLayoutGap="2%">
+
+      <ng-container  *ngFor="let param of paramData" [ngSwitch]="param.displayType">
+
+        <ng-container *ngIf="ReportForm.contains(param.name)">
+
+          <mat-form-field fxFlex="48%" *ngSwitchCase="'text'">
+            <mat-label>{{param.label}}</mat-label>
+            <input matInput required [formControlName]="param.name">
+            <mat-error *ngIf="ReportForm.controls[param.name].hasError('required')">
+              {{param.label}} is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex="48%" *ngSwitchCase="'date'">
+            <mat-label>{{param.label}}</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="runReportDatePicker" required
+              [formControlName]="param.name">
+            <mat-datepicker-toggle matSuffix [for]="runReportDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #runReportDatePicker></mat-datepicker>
+            <mat-error *ngIf="ReportForm.controls[param.name].hasError('required')">
+              {{param.label}} is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex="48%" *ngSwitchCase="'select'">
+            <mat-label>{{param.label}}</mat-label>
+            <mat-select required [formControlName]="param.name">
+              <mat-option *ngFor="let option of param.selectOptions" [value]="option">
+                {{option.name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="ReportForm.controls[param.name].hasError('required')">
+              {{param.label}} is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+        </ng-container>
+
+      </ng-container>
+
+    </div>
+
+  </form>
+
+</div>
+
+<div class="margin-t" fxLayoutAlign="center">
+  <button mat-raised-button matStepperNext color="primary" (click)="getResponseHeaders()"
+    [disabled]="!this.ReportForm.valid">
+      Get Parameters
+  </button>
+</div>
