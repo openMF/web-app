@@ -1,0 +1,59 @@
+<mat-card class="container">
+
+  <div *ngIf="XBRLSuccess">
+     <h1><strong>Saved Successfully</strong></h1>
+  </div>
+
+  <div *ngIf="!XBRLSuccess">
+
+      <mat-tab-group (selectedTabChange)="filterTaxonomiesBy($event.index)">
+         <mat-tab label="Portfolio"></mat-tab>
+         <mat-tab label="BalanceSheet"></mat-tab>
+         <mat-tab label="Incomes"></mat-tab>
+         <mat-tab label="Expenses"></mat-tab>
+      </mat-tab-group>
+
+      <table mat-table [dataSource]="dataSource">
+
+         <ng-container matColumnDef="info">
+            <td mat-cell *matCellDef="let mixtaxonomy">
+               <fa-icon icon="question-circle" [matTooltip]="mixtaxonomy.description"></fa-icon>
+            </td>
+         </ng-container>
+
+         <ng-container matColumnDef="name">
+            <td mat-cell *matCellDef="let mixtaxonomy"> {{ mixtaxonomy.name }} </td>
+         </ng-container>
+
+         <ng-container matColumnDef="dimension">
+            <td mat-cell *matCellDef="let mixtaxonomy"> {{ mixtaxonomy.dimension }} </td>
+         </ng-container>
+
+         <ng-container matColumnDef="mapping">
+            <td mat-cell *matCellDef="let mixtaxonomy"> <input [formControl]="mixtaxonomy.mapping" [matAutocomplete]="glAccountAutocomplete"></td>
+         </ng-container>
+
+         <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row"></tr>
+
+      </table>
+
+      <div class="container m-t-20" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px">
+         <button mat-raised-button color="primary" [routerLink]="['./report']">
+            <fa-icon icon="cog"></fa-icon>
+            &nbsp;&nbsp; Generate Report
+         </button>
+         <button mat-raised-button color="accent" (click)="submit()">
+            <fa-icon icon="download"></fa-icon>
+            &nbsp;&nbsp; Save Changes 
+         </button>
+      </div>
+
+      <mat-autocomplete autoActiveFirstOption #glAccountAutocomplete="matAutocomplete">
+         <mat-option *ngFor="let glAccount of filteredGlAccounts" [value]="'{' + glAccount.glCode + '}'">
+         {{ glAccount.name + ' (' + glAccount.glCode + ')' }}
+         </mat-option>
+      </mat-autocomplete>
+
+  </div>
+
+</mat-card>

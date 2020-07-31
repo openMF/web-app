@@ -89,7 +89,7 @@ export class CreateRecurringDepositProductComponent implements OnInit {
 
   submit() {
     // TODO: Update once language and date settings are setup
-    let recurringDepositProduct = {
+    const recurringDepositProduct = {
       ...this.recurringDepositProduct,
       charges: this.recurringDepositProduct.charges.map((charge: any) => ({ id: charge.id })),
       locale: 'en' // locale required for depositAmount

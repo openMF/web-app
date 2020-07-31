@@ -12,6 +12,8 @@ import { RunReportComponent } from './run-report/run-report.component';
 import { TableAndSmsComponent } from './run-report/table-and-sms/table-and-sms.component';
 import { ChartComponent } from './run-report/chart/chart.component';
 import { PentahoComponent } from './run-report/pentaho/pentaho.component';
+import { XBRLComponent } from './xbrl/xbrl.component';
+import { XBRLReportComponent } from './xbrl-report/xbrl-report.component';
 
 /**
  * Reports Module
@@ -28,7 +30,9 @@ import { PentahoComponent } from './run-report/pentaho/pentaho.component';
     RunReportComponent,
     TableAndSmsComponent,
     ChartComponent,
-    PentahoComponent
+    PentahoComponent,
+    XBRLComponent,
+    XBRLReportComponent
   ],
   providers: [ DecimalPipe ]
 })
