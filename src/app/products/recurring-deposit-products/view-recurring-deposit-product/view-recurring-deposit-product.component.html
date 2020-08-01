@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
-  <button mat-raised-button color="primary">
+  <button mat-raised-button color="primary" [routerLink]="['edit']">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
     Edit
   </button>
@@ -137,7 +137,7 @@
           <span fxFlex="60%">{{ recurringDepositProduct.taxGroup.name }}</span>
         </div>
 
-        <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column" >
+        <div *ngIf="recurringDepositProduct.activeChart" fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column" >
 
           <h3 class="mat-h3" fxFlexFill>Interest Rate Charts</h3>
       
@@ -298,8 +298,6 @@
               <tr mat-row *matRowDef="let row; columns: chartSlabsIncentivesDisplayedColumns;" class="incentives-row"></tr>
 
             </table>
-
-            <mat-divider [inset]="true"></mat-divider>
       
           </div>
       
@@ -380,8 +378,6 @@
           <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
             <span fxFlex="40%">Interest on savings:</span>
             <span fxFlex="60%">{{ recurringDepositProduct.accountingMappings.interestOnSavingsAccount.name }}</span>
-            <span fxFlex="40%">Write-off:</span>
-            <span fxFlex="60%">{{ recurringDepositProduct.accountingMappings.writeOffAccount.name }}</span>
           </div>
 
           <h4 fxFlexFill class="mat-h4">Income</h4>

@@ -26,7 +26,13 @@ export class RecurringDepositProductTermsStepComponent implements OnInit {
     this.interestPostingPeriodTypeData = this.recurringDepositProductsTemplate.interestPostingPeriodTypeOptions;
     this.interestCalculationTypeData = this.recurringDepositProductsTemplate.interestCalculationTypeOptions;
     this.interestCalculationDaysInYearTypeData = this.recurringDepositProductsTemplate.interestCalculationDaysInYearTypeOptions;
-
+    if (!(this.recurringDepositProductsTemplate === undefined) && this.recurringDepositProductsTemplate.id) {
+      this.recurringDepositProductTermsForm.patchValue({
+        'minDepositAmount': this.recurringDepositProductsTemplate.minDepositAmount,
+        'depositAmount': this.recurringDepositProductsTemplate.depositAmount,
+        'maxDepositAmount': this.recurringDepositProductsTemplate.maxDepositAmount,
+      });
+    }
     this.recurringDepositProductTermsForm.patchValue({
       'interestCompoundingPeriodType': this.recurringDepositProductsTemplate.interestCompoundingPeriodType.id,
       'interestPostingPeriodType': this.recurringDepositProductsTemplate.interestPostingPeriodType.id,
