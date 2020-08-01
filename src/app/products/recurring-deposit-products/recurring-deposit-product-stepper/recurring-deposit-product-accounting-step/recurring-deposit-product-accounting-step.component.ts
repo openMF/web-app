@@ -46,6 +46,60 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
     this.incomeAccountData = this.recurringDepositProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
     this.expenseAccountData = this.recurringDepositProductsTemplate.accountingMappingOptions.expenseAccountOptions || [];
     this.liabilityAccountData = this.recurringDepositProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
+    if (!(this.recurringDepositProductsTemplate === undefined) && this.recurringDepositProductsTemplate.id) {
+      this.assignAccountingStepData();
+    }
+  }
+
+  assignAccountingStepData() {
+    if (this.recurringDepositProductsTemplate.accountingRule.id === 2) {
+      this.recurringDepositProductAccountingForm.patchValue({
+        'accountingRule': this.recurringDepositProductsTemplate.accountingRule.id
+      });
+      this.recurringDepositProductAccountingForm.patchValue({
+        'savingsReferenceAccountId': this.recurringDepositProductsTemplate.accountingMappings.savingsReferenceAccount.id,
+        'savingsControlAccountId': this.recurringDepositProductsTemplate.accountingMappings.savingsControlAccount.id,
+        'transfersInSuspenseAccountId': this.recurringDepositProductsTemplate.accountingMappings.transfersInSuspenseAccount.id,
+        'incomeFromFeeAccountId': this.recurringDepositProductsTemplate.accountingMappings.incomeFromFeeAccount.id,
+        'incomeFromPenaltyAccountId': this.recurringDepositProductsTemplate.accountingMappings.incomeFromPenaltyAccount.id,
+        'interestOnSavingsAccountId': this.recurringDepositProductsTemplate.accountingMappings.interestOnSavingsAccount.id
+      });
+      if (this.recurringDepositProductsTemplate.paymentChannelToFundSourceMappings || this.recurringDepositProductsTemplate.feeToIncomeAccountMappings || this.recurringDepositProductsTemplate.penaltyToIncomeAccountMappings) {
+        this.recurringDepositProductAccountingForm.patchValue({
+          'advancedAccountingRules': true
+        });
+      }
+      if (this.recurringDepositProductsTemplate.paymentChannelToFundSourceMappings) {
+        this.recurringDepositProductsTemplate.paymentChannelToFundSourceMappings.forEach((paymentChannelToFundSourceMapping: any) => {
+          const paymentChannelToFundSourceMappingData = this.formBuilder.group({
+            paymentTypeId: [paymentChannelToFundSourceMapping.paymentType.id, Validators.required],
+            fundSourceAccountId: [paymentChannelToFundSourceMapping.fundSourceAccount.id, Validators.required]
+          });
+          const formArray = this.recurringDepositProductAccountingForm.controls['paymentChannelToFundSourceMappings'] as FormArray;
+          formArray.push(paymentChannelToFundSourceMappingData);
+        });
+      }
+      if (this.recurringDepositProductsTemplate.feeToIncomeAccountMappings) {
+        this.recurringDepositProductsTemplate.feeToIncomeAccountMappings.forEach((feeToIncomeAccountMapping: any) => {
+          const feeToIncomeAccountMappingData = this.formBuilder.group({
+            chargeId: [feeToIncomeAccountMapping.charge.id, Validators.required],
+            incomeAccountId: [feeToIncomeAccountMapping.incomeAccount.id, Validators.required]
+          });
+          const formArray = this.recurringDepositProductAccountingForm.controls['feeToIncomeAccountMappings'] as FormArray;
+          formArray.push(feeToIncomeAccountMappingData);
+        });
+      }
+      if (this.recurringDepositProductsTemplate.penaltyToIncomeAccountMappings) {
+        this.recurringDepositProductsTemplate.penaltyToIncomeAccountMappings.forEach((penaltyToIncomeAccountMapping: any) => {
+          const penaltyToIncomeAccountMappingData = this.formBuilder.group({
+            chargeId: [penaltyToIncomeAccountMapping.charge.id, Validators.required],
+            incomeAccountId: [penaltyToIncomeAccountMapping.incomeAccount.id, Validators.required]
+          });
+          const formArray = this.recurringDepositProductAccountingForm.controls['penaltyToIncomeAccountMappings'] as FormArray;
+          formArray.push(penaltyToIncomeAccountMappingData);
+        });
+      }
+    }
   }
 
   createrecurringDepositProductAccountingForm() {

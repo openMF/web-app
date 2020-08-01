@@ -277,8 +277,17 @@ export class ProductsService {
     return this.http.get(`/interestratecharts`, {params: httpParams});
   }
 
-  createRecurringDepositProduct(recurringDepositProduct: string): Observable<any> {
+  createRecurringDepositProduct(recurringDepositProduct: any): Observable<any> {
     return this.http.post('/recurringdepositproducts', recurringDepositProduct);
+  }
+
+  getRecurringDepositProductAndTemplate(recurringDepositProductId: any) {
+    const httpParams = new HttpParams().set('template', 'true');
+    return this.http.get(`/recurringdepositproducts/${recurringDepositProductId}`, { params: httpParams });
+  }
+
+  updateRecurringDepositProduct(recurringDepositProductId: any, recurringDepositProduct: any): Observable<any> {
+    return this.http.put(`/recurringdepositproducts/${recurringDepositProductId}`, recurringDepositProduct);
   }
 
 }

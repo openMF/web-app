@@ -24,9 +24,11 @@ export class RecurringDepositProductChargesStepComponent implements OnInit {
 
   ngOnInit() {
     this.chargeData = this.recurringDepositProductsTemplate.chargeOptions;
-
-    this.chargesDataSource = [];
-
+    if (!(this.recurringDepositProductsTemplate === undefined) && this.recurringDepositProductsTemplate.id) {
+      this.chargesDataSource = this.recurringDepositProductsTemplate.charges;
+    } else {
+      this.chargesDataSource = [];
+    }
     this.currencyCode.valueChanges.subscribe(() => this.chargesDataSource = []);
   }
 

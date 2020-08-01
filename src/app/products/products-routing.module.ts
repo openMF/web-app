@@ -76,6 +76,8 @@ import { ChargesTemplateResolver } from './charges/charges-template.resolver';
 import { TaxGroupResolver } from './manage-tax-groups/tax-group.resolver';
 import { DividendsResolver } from './share-products/dividends-share-product/dividends.resolver';
 import { RecurringDepositProductsTemplateResolver } from './recurring-deposit-products/recurring-deposit-products-template.resolver';
+import { EditRecurringDepositProductComponent } from './recurring-deposit-products/edit-recurring-deposit-product/edit-recurring-deposit-product.component';
+import { RecurringDepositProductAndTemplateResolver } from './recurring-deposit-products/edit-recurring-deposit-product/recurring-deposit-product-and-template.resolver';
 
 /** Products Routes */
 const routes: Routes = [
@@ -305,6 +307,14 @@ const routes: Routes = [
           data: { title:  extract('Recurring Deposit Products'), breadcrumb: 'Recurring Deposit Products' },
           children: [
             {
+              path: 'create',
+              component: CreateRecurringDepositProductComponent,
+              data: { title: extract('Create Recurring Deposit Product'), breadcrumb: 'Create' },
+              resolve: {
+                recurringDepositProductsTemplate: RecurringDepositProductsTemplateResolver
+              }
+            },
+            {
               path: '',
               component: RecurringDepositProductsComponent,
               resolve: {
@@ -322,16 +332,16 @@ const routes: Routes = [
                     recurringDepositProduct: RecurringDepositProductResolver,
                     recurringDepositProductsTemplate: RecurringDepositProductsTemplateResolver
                   }
+                },
+                {
+                  path: 'edit',
+                  data: { title: extract('Edit Recurring Deposit Product'), breadcrumb: 'edit', routeParamBreadcrumb: false },
+                  component: EditRecurringDepositProductComponent,
+                  resolve: {
+                    recurringDepositProductAndTemplate: RecurringDepositProductAndTemplateResolver
+                  }
                 }
               ]
-            },
-            {
-              path: 'create',
-              component: CreateRecurringDepositProductComponent,
-              data: { title: extract('Create Recurring Deposit Product'), breadcrumb: 'Create' },
-              resolve: {
-                recurringDepositProductsTemplate: RecurringDepositProductsTemplateResolver
-              }
             }
           ]
         },
@@ -496,7 +506,8 @@ const routes: Routes = [
     EditTaxComponentComponent,
     TaxGroupResolver,
     DividendsResolver,
-    RecurringDepositProductsTemplateResolver
+    RecurringDepositProductsTemplateResolver,
+    RecurringDepositProductAndTemplateResolver
   ]
 })
 export class ProductsRoutingModule { }

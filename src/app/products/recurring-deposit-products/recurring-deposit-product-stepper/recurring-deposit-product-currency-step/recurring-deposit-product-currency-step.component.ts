@@ -20,11 +20,19 @@ export class RecurringDepositProductCurrencyStepComponent implements OnInit {
 
   ngOnInit() {
     this.currencyData = this.recurringDepositProductsTemplate.currencyOptions;
+    if (!(this.recurringDepositProductsTemplate === undefined) && this.recurringDepositProductsTemplate.id) {
+      this.recurringDepositProductCurrencyForm.patchValue({
+        'currencyCode': this.recurringDepositProductsTemplate.currency.code,
+        'digitsAfterDecimal': this.recurringDepositProductsTemplate.currency.decimalPlaces,
+        'inMultiplesOf': this.recurringDepositProductsTemplate.currency.inMultiplesOf
+      });
+    } else {
+      this.recurringDepositProductCurrencyForm.patchValue({
+        'currencyCode': this.currencyData[0].code,
+        'digitsAfterDecimal': 2
+      });
+    }
 
-    this.recurringDepositProductCurrencyForm.patchValue({
-      'currencyCode': this.currencyData[0].code,
-      'digitsAfterDecimal': 2
-    });
   }
 
   createrecurringDepositProductCurrencyForm() {
