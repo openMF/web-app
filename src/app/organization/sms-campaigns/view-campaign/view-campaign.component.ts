@@ -1,9 +1,17 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { MatTableDataSource, MatTable } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import { MatTableDataSource, MatTable, MatDialog } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+
+/** Custom Dialogs */
+import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
+
+/** Custom Models */
+import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
+import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
@@ -61,13 +69,17 @@ export class ViewCampaignComponent implements OnInit {
   ];
 
   /**
-   * Retrieves the SMS Campaign data from `resolve`
+   * Retrieves the SMS Campaign data from `resolve
+   * @param {Router} router Router
    * @param {ActivatedRoute} route Activated Route
+   * @param {MatDialog} dialog Mat Dialog
    * @param {FormBuilder} formBuilder Form Builder
    * @param {DatePipe} datePipe Date Pipe
    * @param {OrganizationService} organizationService Organization Service
    */
-  constructor(private route: ActivatedRoute,
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              public dialog: MatDialog,
               private formBuilder: FormBuilder,
               private datePipe: DatePipe,
               private organizationService: OrganizationService) {
@@ -104,6 +116,137 @@ export class ViewCampaignComponent implements OnInit {
     this.dataSource.data = [];
     this.messageTableRef.renderRows();
     this.smsForm.reset();
+  }
+
+  /**
+   * Closes the SMS Campaign.
+   */
+  closeCampaign() {
+    const formfields: FormfieldBase[] = [
+      new DatepickerBase({
+        controlName: 'closureDate',
+        label: 'Closure Date',
+        value: '',
+        type: 'date',
+        required: true
+      })
+    ];
+    const data = {
+      title: 'Close SMS Campaign',
+      layout: { addButtonText: 'Confirm' },
+      formfields: formfields
+    };
+    const closeCampaignDialogRef = this.dialog.open(FormDialogComponent, { data });
+    closeCampaignDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.data) {
+        const locale = 'en';
+        const dateFormat = 'dd MMMM yyyy';
+        const dataObject = {
+          closureDate: this.datePipe.transform(response.data.value.closureDate, dateFormat),
+          dateFormat,
+          locale
+        };
+        this.organizationService.executeSmsCampaignCommand(this.smsCampaignData.id, dataObject,  'close').subscribe(() => {
+          this.reload();
+        });
+      }
+    });
+  }
+
+  /**
+   * Activates the SMS Campaign.
+   */
+  activateCampaign() {
+    const formfields: FormfieldBase[] = [
+      new DatepickerBase({
+        controlName: 'activationDate',
+        label: 'Activation Date',
+        value: '',
+        type: 'date',
+        required: true
+      })
+    ];
+    const data = {
+      title: 'Activate SMS Campaign',
+      layout: { addButtonText: 'Confirm' },
+      formfields: formfields
+    };
+    const activateCampaignDialogRef = this.dialog.open(FormDialogComponent, { data });
+    activateCampaignDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.data) {
+        const locale = 'en';
+        const dateFormat = 'dd MMMM yyyy';
+        const dataObject = {
+          activationDate: this.datePipe.transform(response.data.value.activationDate, dateFormat),
+          dateFormat,
+          locale
+        };
+        this.organizationService.executeSmsCampaignCommand(this.smsCampaignData.id, dataObject,  'activate').subscribe(() => {
+          this.reload();
+        });
+      }
+    });
+  }
+
+  /**
+   * Reactivates the SMS Campaign.
+   */
+  reactivateCampaign() {
+    const formfields: FormfieldBase[] = [
+      new DatepickerBase({
+        controlName: 'activationDate',
+        label: 'Reactivation Date',
+        value: '',
+        type: 'date',
+        required: true
+      })
+    ];
+    const data = {
+      title: 'Reactivate SMS Campaign',
+      layout: { addButtonText: 'Confirm' },
+      formfields: formfields
+    };
+    const reactivateCampaignDialogRef = this.dialog.open(FormDialogComponent, { data });
+    reactivateCampaignDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.data) {
+        const locale = 'en';
+        const dateFormat = 'dd MMMM yyyy';
+        const dataObject = {
+          activationDate: this.datePipe.transform(response.data.value.activationDate, dateFormat),
+          dateFormat,
+          locale
+        };
+        this.organizationService.executeSmsCampaignCommand(this.smsCampaignData.id, dataObject,  'reactivate').subscribe(() => {
+          this.reload();
+        });
+      }
+    });
+  }
+
+  /**
+   * Deletes the SMS Campaign.
+   */
+  deleteCampaign() {
+    const deleteSmsCampaignDialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { deleteContext: `sms campaing with id: ${this.smsCampaignData.id}` }
+    });
+    deleteSmsCampaignDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.delete) {
+        this.organizationService.deleteSmsCampaign(this.smsCampaignData.id).subscribe(() => {
+          this.router.navigate(['../'], { relativeTo: this.route });
+        });
+      }
+    });
+  }
+
+  /**
+   * Refetches data fot the component
+   * TODO: Replace by a custom reload component instead of hard-coded back-routing.
+   */
+  private reload() {
+    const url: string = this.router.url;
+    this.router.navigateByUrl(`/organization/sms-campaigns`, {skipLocationChange: true})
+      .then(() => this.router.navigate([url]));
   }
 
   /**

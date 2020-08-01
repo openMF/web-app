@@ -206,10 +206,29 @@ export class OrganizationService {
   }
 
   /**
+   * @param {any} campaign Campaign to be deleted.
+   * @returns {Observable<any>}
+   */
+  deleteSmsCampaign(campaignId: string): Observable<any> {
+    return this.http.delete(`/smscampaigns/${campaignId}`);
+  }
+
+  /**
    * @returns {Observable<any>} SMS Campaign template
    */
   getSmsCampaignTemplate(): Observable<any> {
     return this.http.get('/smscampaigns/template');
+  }
+
+  /**
+   * @param {string} campaignId Campaign Id
+   * @param {any} data Data
+   * @param {string} command Command
+   * @returns {Observable<any>}
+   */
+  executeSmsCampaignCommand(campaignId: string, data: any, command: string): Observable<any> {
+    const httpParams = new HttpParams().set('command', command.toString());
+    return this.http.post(`/smscampaigns/${campaignId}`, data, { params: httpParams });
   }
 
   /**

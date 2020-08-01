@@ -9,25 +9,25 @@
     </span>
 
     <span *ngIf="smsCampaignData.campaignStatus.value === 'Pending'">
-      <button mat-raised-button color="accent" *mifosxHasPermission="'ACTIVATE_SMSCAMPAIGN'">
+      <button mat-raised-button color="accent" *mifosxHasPermission="'ACTIVATE_SMSCAMPAIGN'" (click)="activateCampaign()">
         <fa-icon icon="lock-open"></fa-icon>&nbsp;&nbsp;Activate
       </button>
     </span>
 
     <span *ngIf="smsCampaignData.campaignStatus.value !== 'closed'">
-      <button mat-raised-button color="warn" *mifosxHasPermission="'CLOSE_SMSCAMPAIGN'">
+      <button mat-raised-button color="warn" *mifosxHasPermission="'CLOSE_SMSCAMPAIGN'" (click)="closeCampaign()">
         <fa-icon icon="times"></fa-icon>&nbsp;&nbsp;Close
       </button>
     </span>
 
     <span *ngIf="smsCampaignData.campaignStatus.value !== 'Pending' && smsCampaignData.campaignStatus.value !== 'active'">
-      <button mat-raised-button color="accent" *mifosxHasPermission="'REACTIVATE_SMSCAMPAIGN'">
+      <button mat-raised-button color="accent" *mifosxHasPermission="'REACTIVATE_SMSCAMPAIGN'" (click)="reactivateCampaign()">
         <fa-icon icon="undo"></fa-icon>&nbsp;&nbsp;Reactivate
       </button>
     </span>
 
     <span *ngIf="smsCampaignData.campaignStatus.value === 'closed'">
-      <button mat-raised-button color="warn" *mifosxHasPermission="'DELETE_SMSCAMPAIGN'">
+      <button mat-raised-button color="warn" *mifosxHasPermission="'DELETE_SMSCAMPAIGN'" (click)="deleteCampaign()">
         <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;Delete
       </button>
     </span>
