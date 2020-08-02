@@ -104,6 +104,20 @@ export class ProductsService {
     return this.http.post(`/shareproduct/${shareProductId}/dividend`, dividendData);
   }
 
+  getDividendData(shareProductId: any, dividendId: any): Observable<any> {
+    const httpParams = new HttpParams().set('dateFormat', 'dd MMMM yyyy')
+                                        .set('limit', '10')
+                                        .set('locale', 'en')
+                                        .set('offset', '0');
+    return this.http.get(`/shareproduct/${shareProductId}/dividend/${dividendId}`, { params: httpParams });
+  }
+
+  approveDividend(shareProductId: any, dividendId: any, data: any): Observable<any> {
+    const httpParams = new HttpParams().set('command', 'approve');
+    return this.http.put(`/shareproduct/${shareProductId}/dividend/${dividendId}`, data, { params: httpParams });
+
+  }
+
   /**
    * @returns {Observable<any>} Recurring deposit products data
    */

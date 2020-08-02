@@ -79,6 +79,8 @@ import { DividendsResolver } from './share-products/dividends-share-product/divi
 import { RecurringDepositProductsTemplateResolver } from './recurring-deposit-products/recurring-deposit-products-template.resolver';
 import { EditRecurringDepositProductComponent } from './recurring-deposit-products/edit-recurring-deposit-product/edit-recurring-deposit-product.component';
 import { RecurringDepositProductAndTemplateResolver } from './recurring-deposit-products/edit-recurring-deposit-product/recurring-deposit-product-and-template.resolver';
+import { ViewDividendComponent } from './share-products/view-dividend/view-dividend.component';
+import { ViewDividendDataResolver } from './share-products/view-dividend/view-dividend-data.resolver';
 
 /** Products Routes */
 const routes: Routes = [
@@ -230,6 +232,14 @@ const routes: Routes = [
                       data: { title: extract('Create Dividend'), breadcrumb: 'Create', routeParamBreadcrumb: false },
                       resolve: {
                         shareProduct: ShareProductResolver
+                      }
+                    },
+                    {
+                      path: ':dividendId',
+                      component: ViewDividendComponent,
+                      data: { title: extract('View Dividend'), routeParamBreadcrumb: 'dividendId' },
+                      resolve: {
+                        dividendData: ViewDividendDataResolver
                       }
                     }
                   ]
@@ -440,7 +450,6 @@ const routes: Routes = [
             }
           ]
         },
-
         {
           path: 'charges',
           data: { title: extract('Charges'), breadcrumb: 'Charges' },
@@ -521,7 +530,8 @@ const routes: Routes = [
     TaxGroupResolver,
     DividendsResolver,
     RecurringDepositProductsTemplateResolver,
-    RecurringDepositProductAndTemplateResolver
+    RecurringDepositProductAndTemplateResolver,
+    ViewDividendDataResolver
   ]
 })
 export class ProductsRoutingModule { }
