@@ -36,7 +36,7 @@ export class ClientsDataSource implements DataSource<any> {
     this.clientsSubject.next([]);
     this.clientsService.getClients(orderBy, sortOrder, pageIndex * limit, limit)
       .subscribe((clients: any) => {
-        clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => client.active)) : clients.pageItems;
+        clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => client.active)) : (clients.pageItems.filter((client: any) => !client.active));
         this.recordsSubject.next(clients.totalFilteredRecords);
         this.clientsSubject.next(clients.pageItems);
       });
@@ -55,6 +55,23 @@ export class ClientsDataSource implements DataSource<any> {
   disconnect(collectionViewer: CollectionViewer): void {
     this.clientsSubject.complete();
     this.recordsSubject.complete();
+  }
+
+  /** Filter Active Client Data.
+   * @param {string} filterValue Filter Value which clients should be filtered.
+   * @param {string} orderBy Property by which clients should be sorted.
+   * @param {string} sortOrder Sort order: ascending or descending.
+   * @param {number} pageIndex Page number.
+   * @param {number} limit Number of clients within the page.
+   */
+  filterClients(filter: string, orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true) {
+    this.clientsSubject.next([]);
+    this.clientsService.getClients(orderBy, sortOrder, pageIndex * limit, limit)
+      .subscribe((clients: any) => {
+        clients.pageItems = clients.pageItems.filter((client: any) => client.active === clientActive && client.displayName.toLowerCase().includes(filter));
+        this.recordsSubject.next(clients.totalFilteredRecords);
+        this.clientsSubject.next(clients.pageItems);
+      });
   }
 
 }
