@@ -56,9 +56,11 @@ import { ViewLoanProvisioningCriteriaComponent } from './loan-provisioning-crite
 import { CreateCampaignComponent } from './sms-campaigns/create-campaign/create-campaign.component';
 import { EditCampaignComponent } from './sms-campaigns/edit-campaign/edit-campaign.component';
 import { CreateEnityDataTableChecksComponent } from './entity-data-table-checks/create-enity-data-table-checks/create-enity-data-table-checks.component';
+import { CreateLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/create-loan-provisioning-criteria/create-loan-provisioning-criteria.component';
+import { BulkLoanReassignmnetComponent } from './bulk-loan-reassignmnet/bulk-loan-reassignmnet.component';
 
 /** Custom Resolvers */
-import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/loan-provisioning-criteria.resolver';
+import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/common-resolvers/loan-provisioning-criteria.resolver';
 import { OfficesResolver } from './offices/common-resolvers/offices.resolver';
 import { EmployeesResolver } from './employees/employees.resolver';
 import { EmployeeResolver } from './employees/employee.resolver';
@@ -76,7 +78,7 @@ import { EntityDataTableChecksResolver } from './entity-data-table-checks/entity
 import { WorkingDaysResolver } from './working-days/working-days.resolver';
 import { EditOfficeResolver } from './offices/common-resolvers/edit-office.resolver';
 import { AdhocQueryTemplateResolver } from './adhoc-query/adhoc-query-template.resolver';
-import { LoanProvisioningCriteriasResolver } from './loan-provisioning-criteria/loan-provisioning-criterias.resolver';
+import { LoanProvisioningCriteriasResolver } from './loan-provisioning-criteria/common-resolvers/loan-provisioning-criterias.resolver';
 import { CashierResolver } from './tellers/common-resolvers/cashier.resolver';
 import { CashiersResolver } from './tellers/common-resolvers/cashiers.resolver';
 import { HolidayResolver } from './holidays/holiday.resolver';
@@ -92,7 +94,7 @@ import { AdhocQueryAndTemplateResolver } from './adhoc-query/common-resolvers/ad
 import { BulkImportResolver } from './bulk-import/bulk-import.resolver';
 import { SmsCampaignTemplateResolver } from './sms-campaigns/common-resolvers/sms-campaign-template.resolver';
 import { EntityDataTableChecksTemplateResolver } from './entity-data-table-checks/enitity-data-table-checks-template.resolver';
-import { BulkLoanReassignmnetComponent } from './bulk-loan-reassignmnet/bulk-loan-reassignmnet.component';
+import { LoanProvisioningCriteriaTemplateResolver } from './loan-provisioning-criteria/common-resolvers/loan-provisioning-criteria-template.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -114,6 +116,14 @@ const routes: Routes = [
               component: LoanProvisioningCriteriaComponent,
               resolve: {
                 loanProvisioningCriterias: LoanProvisioningCriteriasResolver
+              }
+            },
+            {
+              path: 'create',
+              data: { title: extract('Create Provisioning Criteria'), breadcrumb: 'Create Provisioning Criteria' },
+              component: CreateLoanProvisioningCriteriaComponent,
+              resolve: {
+                loanProvisioningCriteriaTemplate: LoanProvisioningCriteriaTemplateResolver,
               }
             },
             {
@@ -641,7 +651,8 @@ const routes: Routes = [
     BulkImportResolver,
     HolidayResolver,
     EntityDataTableChecksTemplateResolver,
-    LoanProvisioningCriteriasResolver
+    LoanProvisioningCriteriasResolver,
+    LoanProvisioningCriteriaTemplateResolver
   ]
 })
 export class OrganizationRoutingModule { }

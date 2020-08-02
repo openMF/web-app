@@ -1,8 +1,7 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 /** Custom Services */
@@ -30,9 +29,6 @@ export class ViewLoanProvisioningCriteriaComponent implements OnInit {
   /** Data source for loan provisioning criteria table. */
   dataSource: MatTableDataSource<any>;
 
-  /** Paginator for loan provisioning criteria table. */
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-
   /**
    * Retrieves the Provisioning data from `resolve`.
    * @param {OrganizationService} organizationService Organization Service.
@@ -58,7 +54,6 @@ export class ViewLoanProvisioningCriteriaComponent implements OnInit {
    */
   setLoanProvisioningSelectedCriteria() {
     this.dataSource = new MatTableDataSource(this.provisioningData.definitions);
-    this.dataSource.paginator = this.paginator;
 
      /** Get load products as a string. */
     for (let _id = 0; _id < this.provisioningData.loanProducts.length; _id++) {
