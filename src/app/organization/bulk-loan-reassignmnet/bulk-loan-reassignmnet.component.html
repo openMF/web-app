@@ -1,0 +1,159 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="bulkLoanForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Office</mat-label>
+            <mat-select required (selectionChange)="getOffice($event.value)">
+              <mat-option *ngFor="let office of offices" [value]="office.id">
+                {{ office.name }} 
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Assignment Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="assignmentDatePicker" required formControlName="assignmentDate">
+            <mat-datepicker-toggle matSuffix [for]="assignmentDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #assignmentDatePicker></mat-datepicker>
+            <mat-error *ngIf="bulkLoanForm.controls.assignmentDate.hasError('required')">
+              Assignment Date <strong>is required</strong>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+          <mat-form-field fxFlex="48%" *ngIf="fromLoanOfficers !== undefined">
+            <mat-label>From loan officer</mat-label>
+            <mat-select required formControlName="fromLoanOfficerId" (selectionChange)="getFromOfficers($event.value)">
+              <mat-option *ngFor="let fromOfficers of fromLoanOfficers" [value]="fromOfficers.id">
+                {{ fromOfficers.displayName }} 
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="bulkLoanForm.controls.fromLoanOfficerId.hasError('required')">
+              From Loan Officer is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>To loan officer</mat-label>
+            <mat-select required formControlName="toLoanOfficerId">
+              <mat-option *ngFor="let toOfficers of toLoanOfficers" [value]="toOfficers.id">
+                {{ toOfficers.displayName }} 
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="bulkLoanForm.controls.toLoanOfficerId.hasError('required')">
+              To Loan Officer is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+          <table *ngIf="officerTemplate !== undefined" fxFlex="48%">
+
+            <thead>
+
+              <th> Clients </th>
+
+            </thead>
+
+            <tbody>
+
+              <tr *ngFor="let clients of officerTemplate.accountSummaryCollection.clients">
+
+                <table>
+  
+                  <tr>
+  
+                    <td> <strong> {{ clients.displayName }} </strong></td>
+  
+                  </tr>
+
+                  <tr *ngFor="let loans of clients.loans">
+
+                    <td> 
+
+                      <mat-checkbox (change)="getLoans($event,loans.id)">{{ loans.productName}}({{ loans.accountNo }})</mat-checkbox>
+
+                    </td>
+
+                  </tr>
+  
+                </table>
+  
+              </tr>
+
+            </tbody>
+
+          </table>
+
+          <table *ngIf="officerTemplate !== undefined" fxFlex="48%">
+
+            <thead>
+
+              <th> Groups </th>
+
+            </thead>
+
+            <tbody>
+
+              <tr *ngFor="let groups of officerTemplate.accountSummaryCollection.groups">
+
+                <table>
+  
+                  <tr>
+  
+                    <td> <strong> {{ groups.displayName }} </strong></td>
+  
+                  </tr>
+
+                  <tr *ngFor="let loans of groups.loans">
+
+                    <td> 
+
+                      <mat-checkbox>{{ loans.productName}}({{ loans.accountNo }})</mat-checkbox>
+
+                    </td>
+
+                  </tr>
+  
+                </table>
+  
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!bulkLoanForm.valid">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>
