@@ -64,6 +64,7 @@ import { EditSmsCampaignStepComponent } from './sms-campaigns/sms-campaign-stepp
 import { EditBusinessRuleParametersComponent } from './sms-campaigns/sms-campaign-stepper/edit-sms-campaign-step/edit-business-rule-parameters/edit-business-rule-parameters.component';
 import { CreateEnityDataTableChecksComponent } from './entity-data-table-checks/create-enity-data-table-checks/create-enity-data-table-checks.component';
 import { BulkLoanReassignmnetComponent } from './bulk-loan-reassignmnet/bulk-loan-reassignmnet.component';
+import { CreateLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/create-loan-provisioning-criteria/create-loan-provisioning-criteria.component';
 
 /**
  * Organization Module
@@ -134,6 +135,7 @@ import { BulkLoanReassignmnetComponent } from './bulk-loan-reassignmnet/bulk-loa
     EditBusinessRuleParametersComponent,
     CreateEnityDataTableChecksComponent,
     BulkLoanReassignmnetComponent,
+    CreateLoanProvisioningCriteriaComponent,
   ]
 })
 export class OrganizationModule { }

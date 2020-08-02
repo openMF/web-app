@@ -6,13 +6,13 @@ import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { OrganizationService } from '../../organization.service';
 
 /**
- * Charges data resolver.
+ * Provisioning criteria template resolver.
  */
 @Injectable()
-export class LoanProvisioningCriteriasResolver implements Resolve<Object> {
+export class LoanProvisioningCriteriaTemplateResolver implements Resolve<Object> {
 
   /**
    * @param {OrganizationService} organizationService Products service.
@@ -20,11 +20,11 @@ export class LoanProvisioningCriteriasResolver implements Resolve<Object> {
   constructor(private organizationService: OrganizationService) {}
 
   /**
-   * Returns the products data.
+   * Returns the Pprovisioning criteria template
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.organizationService.getProvisioningCriterias();
+    return this.organizationService.getProvisioningCriteriaTemplate();
   }
 
 }

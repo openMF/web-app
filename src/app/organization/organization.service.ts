@@ -42,6 +42,14 @@ export class OrganizationService {
   }
 
   /**
+   * @param {any} Criteria Provisioning Criteria to be created.
+   * @returns {Observable<any>}
+   */
+  createProvisioningCriteria(criteriaData: any): Observable<any> {
+    return this.http.post('/provisioningcriteria', criteriaData);
+  }
+
+  /**
    * @param {string} provisioningId Provisioning ID of provisioning criteria to be deleted.
    * @returns {Observable<any>}
    */

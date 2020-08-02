@@ -6,7 +6,7 @@ import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { OrganizationService } from '../../organization.service';
 
 /**
  * Loan Provisioning Criteria data resolver.
