@@ -95,6 +95,16 @@ export class ProductsService {
   }
 
   /**
+   * Create Dividend.
+   * @param shareProductId Share Product Id.
+   * @param dividendData Dividend Data.
+   * @returns {Observable<any>}
+   */
+  createDividend(shareProductId: string, dividendData: any): Observable<any> {
+    return this.http.post(`/shareproduct/${shareProductId}/dividend`, dividendData);
+  }
+
+  /**
    * @returns {Observable<any>} Recurring deposit products data
    */
   getRecurringDepositProducts(): Observable<any> {

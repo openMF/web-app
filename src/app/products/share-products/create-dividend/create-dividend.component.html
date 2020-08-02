@@ -1,0 +1,52 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="createDividendForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Dividend Period Start Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="startDatePicker" required formControlName="dividendPeriodStartDate">
+            <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #startDatePicker></mat-datepicker>
+            <mat-error *ngIf="createDividendForm.controls.dividendPeriodStartDate.hasError('required')">
+              Starting date <strong>is required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Dividend Period End Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="endDatePicker" required formControlName="dividendPeriodEndDate">
+            <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #endDatePicker></mat-datepicker>
+            <mat-error *ngIf="createDividendForm.controls.dividendPeriodEndDate.hasError('required')">
+              End date <strong>is required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Dividend Amount</mat-label>
+            <input matInput required formControlName="dividendAmount">
+            <mat-error *ngIf="createDividendForm.controls.dividendAmount.hasError('required')">
+              Amount is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!createDividendForm.valid">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>
