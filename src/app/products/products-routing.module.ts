@@ -43,6 +43,7 @@ import { EditTaxComponentComponent } from './manage-tax-components/edit-tax-comp
 import { ViewTaxGroupComponent } from './manage-tax-groups/view-tax-group/view-tax-group.component';
 import { ShareProductsDividendsComponent } from './share-products/dividends-share-product/dividends.components';
 import { CreateRecurringDepositProductComponent } from './recurring-deposit-products/create-recurring-deposit-product/create-recurring-deposit-product.component';
+import { CreateDividendComponent } from './share-products/create-dividend/create-dividend.component';
 
 /** Custom Resolvers */
 import { LoanProductsResolver } from './loan-products/loan-products.resolver';
@@ -215,10 +216,23 @@ const routes: Routes = [
                 {
                   path: 'dividends',
                   data: { title: extract('Share Products Dividends'), breadcrumb: 'Dividends', routeParamBreadcrumb: false},
-                  component: ShareProductsDividendsComponent,
-                  resolve: {
-                    dividends: DividendsResolver
-                  }
+                  children: [
+                    {
+                      path: '',
+                      component: ShareProductsDividendsComponent,
+                      resolve: {
+                        dividends: DividendsResolver
+                      }
+                    },
+                    {
+                      path: 'create',
+                      component: CreateDividendComponent,
+                      data: { title: extract('Create Dividend'), breadcrumb: 'Create', routeParamBreadcrumb: false },
+                      resolve: {
+                        shareProduct: ShareProductResolver
+                      }
+                    }
+                  ]
                 }
               ]
             }
