@@ -44,6 +44,7 @@ import { ViewTaxGroupComponent } from './manage-tax-groups/view-tax-group/view-t
 import { ShareProductsDividendsComponent } from './share-products/dividends-share-product/dividends.components';
 import { CreateRecurringDepositProductComponent } from './recurring-deposit-products/create-recurring-deposit-product/create-recurring-deposit-product.component';
 import { CreateDividendComponent } from './share-products/create-dividend/create-dividend.component';
+import { ViewFixedDepositProductComponent } from './fixed-deposit-products/view-fixed-deposit-product/view-fixed-deposit-product.component';
 
 /** Custom Resolvers */
 import { LoanProductsResolver } from './loan-products/loan-products.resolver';
@@ -81,6 +82,7 @@ import { EditRecurringDepositProductComponent } from './recurring-deposit-produc
 import { RecurringDepositProductAndTemplateResolver } from './recurring-deposit-products/edit-recurring-deposit-product/recurring-deposit-product-and-template.resolver';
 import { ViewDividendComponent } from './share-products/view-dividend/view-dividend.component';
 import { ViewDividendDataResolver } from './share-products/view-dividend/view-dividend-data.resolver';
+import { FixedDepositProductResolver } from './fixed-deposit-products/fixed-deposit-product.resolver';
 
 /** Products Routes */
 const routes: Routes = [
@@ -387,6 +389,20 @@ const routes: Routes = [
               resolve: {
                 fixedDepositProductsTemplate: FixedDepositProductsTemplateResolver
               }
+            },
+            {
+              path: ':id',
+              data: { title: extract('View Fixed Deposit Product'), routeParamBreadcrumb: 'id' },
+              children: [
+                {
+                  path: '',
+                  component: ViewFixedDepositProductComponent,
+                  resolve: {
+                    fixedDepositProduct: FixedDepositProductResolver,
+                    fixedDepositProductsTemplate: FixedDepositProductsTemplateResolver
+                  }
+                }
+              ]
             }
           ]
         },
@@ -531,7 +547,8 @@ const routes: Routes = [
     DividendsResolver,
     RecurringDepositProductsTemplateResolver,
     RecurringDepositProductAndTemplateResolver,
-    ViewDividendDataResolver
+    ViewDividendDataResolver,
+    FixedDepositProductResolver
   ]
 })
 export class ProductsRoutingModule { }

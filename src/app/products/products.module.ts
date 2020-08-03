@@ -89,6 +89,7 @@ import { RecurringDepositProductTermsStepComponent } from './recurring-deposit-p
 import { EditRecurringDepositProductComponent } from './recurring-deposit-products/edit-recurring-deposit-product/edit-recurring-deposit-product.component';
 import { CreateDividendComponent } from './share-products/create-dividend/create-dividend.component';
 import { ViewDividendComponent } from './share-products/view-dividend/view-dividend.component';
+import { ViewFixedDepositProductComponent } from './fixed-deposit-products/view-fixed-deposit-product/view-fixed-deposit-product.component';
 
 /**
  * Products Module
@@ -181,7 +182,8 @@ import { ViewDividendComponent } from './share-products/view-dividend/view-divid
     RecurringDepositProductTermsStepComponent,
     EditRecurringDepositProductComponent,
     CreateDividendComponent,
-    ViewDividendComponent
+    ViewDividendComponent,
+    ViewFixedDepositProductComponent
   ],
   entryComponents: [
     DepositProductIncentiveFormDialogComponent,
