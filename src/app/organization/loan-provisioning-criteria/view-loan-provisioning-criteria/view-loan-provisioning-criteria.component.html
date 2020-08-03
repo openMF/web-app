@@ -3,7 +3,7 @@
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
     Edit
   </button>
-  <button mat-raised-button color="warn" (click)="deleteCharge()">
+  <button mat-raised-button color="warn" (click)="deleteCriteria()">
     <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
     Delete
   </button>
@@ -29,7 +29,7 @@
 
       <div>
 
-        <table mat-table [dataSource]="dataSource">
+        <table mat-table class="mat-elevation-z1" [dataSource]="dataSource">
 
           <ng-container matColumnDef="category">
             <th mat-header-cell *matHeaderCellDef> Category </th>

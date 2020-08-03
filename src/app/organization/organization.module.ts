@@ -65,6 +65,7 @@ import { EditBusinessRuleParametersComponent } from './sms-campaigns/sms-campaig
 import { CreateEnityDataTableChecksComponent } from './entity-data-table-checks/create-enity-data-table-checks/create-enity-data-table-checks.component';
 import { BulkLoanReassignmnetComponent } from './bulk-loan-reassignmnet/bulk-loan-reassignmnet.component';
 import { CreateLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/create-loan-provisioning-criteria/create-loan-provisioning-criteria.component';
+import { EditLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/edit-loan-provisioning-criteria/edit-loan-provisioning-criteria.component';
 
 /**
  * Organization Module
@@ -136,6 +137,7 @@ import { CreateLoanProvisioningCriteriaComponent } from './loan-provisioning-cri
     CreateEnityDataTableChecksComponent,
     BulkLoanReassignmnetComponent,
     CreateLoanProvisioningCriteriaComponent,
+    EditLoanProvisioningCriteriaComponent,
   ]
 })
 export class OrganizationModule { }
