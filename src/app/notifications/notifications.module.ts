@@ -8,18 +8,23 @@ import { NotificationsRoutingModule } from './notifications-routing.module';
 
 /** Custom Components */
 import { NotificationsPageComponent } from './notifications-page/notifications-page.component';
+import { NotificationsTrayComponent } from './notifications-tray/notifications-tray.component';
 
 /**
  * Notifications Module
  */
 @NgModule({
   declarations: [
-    NotificationsPageComponent
+    NotificationsPageComponent,
+    NotificationsTrayComponent
   ],
   imports: [
     SharedModule,
     PipesModule,
     NotificationsRoutingModule
+  ],
+  exports: [
+    NotificationsTrayComponent
   ]
 })
 export class NotificationsModule { }

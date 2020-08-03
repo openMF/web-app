@@ -1,0 +1,21 @@
+.mifosx-notifications-menu {
+
+  max-height: 20rem !important;
+  width: 12.5rem !important;
+
+  .mat-menu-content {
+    padding: 0 !important;
+  }
+
+  [mat-menu-item] {
+    height: 5rem;
+    line-height: 2.2rem;
+    .time{
+      font-size: small;
+    }
+    &.unread, &.view-all {
+      background-color: #E0F7FF !important;
+    }
+  }
+
+}
