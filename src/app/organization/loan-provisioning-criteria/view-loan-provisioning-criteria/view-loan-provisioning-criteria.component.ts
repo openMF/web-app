@@ -64,11 +64,11 @@ export class ViewLoanProvisioningCriteriaComponent implements OnInit {
   /**
    * Delete Selected Provisioning Criteria.
    */
-  deleteCharge() {
-    const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `loanProvisioningCriteria ${this.provisioningData.criteriaId}` }
+  deleteCriteria() {
+    const deleteCriteriaDialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { deleteContext: `Loan Provisioning Criteria id: ${this.provisioningData.criteriaId}` }
     });
-    deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
+    deleteCriteriaDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
         this.organizationService.deleteProvisioningCriteria(this.provisioningData.criteriaId)
           .subscribe(() => {

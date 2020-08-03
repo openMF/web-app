@@ -18,8 +18,8 @@
   
           <mat-form-field fxFlex>
             <mat-label>Selected Products</mat-label>
-            <mat-select formControlName="loanProducts" multiple>
-              <mat-option *ngFor="let product of loanProvisioningCriteriaTemplate.loanProducts" [value]="product">
+            <mat-select formControlName="loanProducts" [compareWith]="compareOptions" multiple>
+              <mat-option *ngFor="let product of loanProducts" [value]="product">
                 {{ product.name }}
               </mat-option>
             </mat-select>
@@ -59,12 +59,12 @@
 
         <ng-container matColumnDef="liabilityAccount">
           <th mat-header-cell *matHeaderCellDef> Liability Account </th>
-          <td mat-cell *matCellDef="let definition"> {{ (definition.liabilityAccount | find:loanProvisioningCriteriaTemplate.glAccounts:'id':'name') || '-' }} </td>
+          <td mat-cell *matCellDef="let definition"> {{ (definition.liabilityAccount | find:loanProvisioningCriteriaAndTemplate.glAccounts:'id':'name') || '-' }} </td>
         </ng-container>
   
         <ng-container matColumnDef="expenseAccount">
           <th mat-header-cell *matHeaderCellDef> Expense Account </th>
-          <td mat-cell *matCellDef="let definition"> {{ (definition.expenseAccount | find:loanProvisioningCriteriaTemplate.glAccounts:'id':'name') || '-' }} </td>
+          <td mat-cell *matCellDef="let definition"> {{ (definition.expenseAccount | find:loanProvisioningCriteriaAndTemplate.glAccounts:'id':'name') || '-' }} </td>
         </ng-container>
 
         <ng-container matColumnDef="edit">

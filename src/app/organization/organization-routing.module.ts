@@ -58,6 +58,7 @@ import { EditCampaignComponent } from './sms-campaigns/edit-campaign/edit-campai
 import { CreateEnityDataTableChecksComponent } from './entity-data-table-checks/create-enity-data-table-checks/create-enity-data-table-checks.component';
 import { CreateLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/create-loan-provisioning-criteria/create-loan-provisioning-criteria.component';
 import { BulkLoanReassignmnetComponent } from './bulk-loan-reassignmnet/bulk-loan-reassignmnet.component';
+import {EditLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/edit-loan-provisioning-criteria/edit-loan-provisioning-criteria.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/common-resolvers/loan-provisioning-criteria.resolver';
@@ -95,6 +96,7 @@ import { BulkImportResolver } from './bulk-import/bulk-import.resolver';
 import { SmsCampaignTemplateResolver } from './sms-campaigns/common-resolvers/sms-campaign-template.resolver';
 import { EntityDataTableChecksTemplateResolver } from './entity-data-table-checks/enitity-data-table-checks-template.resolver';
 import { LoanProvisioningCriteriaTemplateResolver } from './loan-provisioning-criteria/common-resolvers/loan-provisioning-criteria-template.resolver';
+import { LoanProvisioningCriteriaAndTemplateResolver } from './loan-provisioning-criteria/common-resolvers/loan-provisioning-criteria-and-template.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -137,6 +139,14 @@ const routes: Routes = [
                     loanProvisioningCriteria: LoanProvisioningCriteriaResolver
                   }
                 },
+                {
+                  path: 'edit',
+                  component: EditLoanProvisioningCriteriaComponent,
+                  data: { title: extract('Edit Provisioning Criteria'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    loanProvisioningCriteriaAndTemplate: LoanProvisioningCriteriaAndTemplateResolver
+                  }
+                }
               ]
             }
           ],
@@ -652,7 +662,8 @@ const routes: Routes = [
     HolidayResolver,
     EntityDataTableChecksTemplateResolver,
     LoanProvisioningCriteriasResolver,
-    LoanProvisioningCriteriaTemplateResolver
+    LoanProvisioningCriteriaTemplateResolver,
+    LoanProvisioningCriteriaAndTemplateResolver
   ]
 })
 export class OrganizationRoutingModule { }
