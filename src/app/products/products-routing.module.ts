@@ -45,6 +45,9 @@ import { ShareProductsDividendsComponent } from './share-products/dividends-shar
 import { CreateRecurringDepositProductComponent } from './recurring-deposit-products/create-recurring-deposit-product/create-recurring-deposit-product.component';
 import { CreateDividendComponent } from './share-products/create-dividend/create-dividend.component';
 import { ViewFixedDepositProductComponent } from './fixed-deposit-products/view-fixed-deposit-product/view-fixed-deposit-product.component';
+import { ViewDividendComponent } from './share-products/view-dividend/view-dividend.component';
+import { CreateTaxGroupComponent } from './manage-tax-groups/create-tax-group/create-tax-group.component';
+import { EditTaxGroupComponent } from './manage-tax-groups/edit-tax-group/edit-tax-group.component';
 
 /** Custom Resolvers */
 import { LoanProductsResolver } from './loan-products/loan-products.resolver';
@@ -80,9 +83,10 @@ import { DividendsResolver } from './share-products/dividends-share-product/divi
 import { RecurringDepositProductsTemplateResolver } from './recurring-deposit-products/recurring-deposit-products-template.resolver';
 import { EditRecurringDepositProductComponent } from './recurring-deposit-products/edit-recurring-deposit-product/edit-recurring-deposit-product.component';
 import { RecurringDepositProductAndTemplateResolver } from './recurring-deposit-products/edit-recurring-deposit-product/recurring-deposit-product-and-template.resolver';
-import { ViewDividendComponent } from './share-products/view-dividend/view-dividend.component';
 import { ViewDividendDataResolver } from './share-products/view-dividend/view-dividend-data.resolver';
 import { FixedDepositProductResolver } from './fixed-deposit-products/fixed-deposit-product.resolver';
+import { ManageTaxGroupTemplateResolver } from './manage-tax-groups/create-tax-group/manage-tax-group-template.resolver';
+import { EditTaxGroupResolver } from './manage-tax-groups/edit-tax-group/edit-tax-group.resolver';
 
 /** Products Routes */
 const routes: Routes = [
@@ -312,6 +316,14 @@ const routes: Routes = [
                   }
                 },
                 {
+                  path: 'create',
+                  component: CreateTaxGroupComponent,
+                  data: { title: extract('Create Tax Group'), breadcrumb: 'Create' },
+                  resolve: {
+                    taxGroupTemplate: ManageTaxGroupTemplateResolver
+                  }
+                },
+                {
                   path: ':id',
                   data: { title: extract('View Tax Group'), routeParamBreadcrumb: 'id' },
                   children: [
@@ -321,7 +333,15 @@ const routes: Routes = [
                       resolve: {
                         taxGroup: TaxGroupResolver
                       }
-                    }
+                    },
+                    {
+                      path: 'edit',
+                      data: { title: extract('Edit Tax Group'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                      component: EditTaxGroupComponent,
+                      resolve: {
+                        taxGroup: EditTaxGroupResolver
+                      }
+                    },
                   ]
                 }
               ]
@@ -548,7 +568,9 @@ const routes: Routes = [
     RecurringDepositProductsTemplateResolver,
     RecurringDepositProductAndTemplateResolver,
     ViewDividendDataResolver,
-    FixedDepositProductResolver
+    FixedDepositProductResolver,
+    ManageTaxGroupTemplateResolver,
+    EditTaxGroupResolver
   ]
 })
 export class ProductsRoutingModule { }

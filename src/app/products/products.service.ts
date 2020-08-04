@@ -245,10 +245,36 @@ export class ProductsService {
 
   /**
    * @param {string} taxGroupId Tax Component ID of Tax Component.
+   * @param {string} template Template
    * @returns {Observable<any>} Tax Component.
    */
-  getTaxGroup(taxGroupId: string): Observable<any> {
-    return this.http.get(`/taxes/group/${taxGroupId}`);
+  getTaxGroup(taxGroupId: string, template: string): Observable<any> {
+    const httpParams = new HttpParams().set('template', template);
+    return this.http.get(`/taxes/group/${taxGroupId}`, { params: httpParams });
+  }
+
+  /**
+   * @returns {Observable<any>} Tax Group Template
+   */
+  getTaxGroupTemplate(): Observable<any> {
+    return this.http.get('/taxes/group/template');
+  }
+
+  /**
+   * @param {any} taxGroup Tax Group
+   * @returns {Observable<any>} Tax Group Resource Id
+   */
+  createTaxGroup(taxGroup: any): Observable<any> {
+    return this.http.post('/taxes/group', taxGroup);
+  }
+
+  /**
+   * @param {any} taxGroupId Tax Group ID
+   * @param {any} taxGroup Tax Group
+   * @returns {Observable<any>} Changes in the Tax Group
+   */
+  updateTaxGroup(taxGroupId: any, taxGroup: any): Observable<any> {
+    return this.http.put(`/taxes/group/${taxGroupId}`, taxGroup);
   }
 
   /**
