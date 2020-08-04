@@ -61,14 +61,7 @@
 
   <mifosx-theme-picker fxHide.lt-md></mifosx-theme-picker>
 
-  <!--
-    TODO: Notifications
-    Separate into its own component in shared module for reuse.
-    Implement functionality.
-  -->
-  <button mat-icon-button class="ml-1" matTooltip="Notifications">
-    <fa-icon icon="bell" size="lg"></fa-icon>
-  </button>
+  <mifosx-notifications-tray fxHide.lt-md></mifosx-notifications-tray>
 
   <button mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu">
     <img src="assets/images/user_placeholder.png">

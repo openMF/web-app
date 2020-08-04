@@ -20,6 +20,23 @@ export class NotificationsPageComponent implements OnInit {
   /** Data source for notifications table. */
   dataSource: MatTableDataSource<any>;
 
+  /**
+   * Gets router link prefix from notification's objectType attribute
+   * Shares, Savings, Deposits, Loans routes inaccessible because of dependency on entity ID.
+   */
+  routeMap: any = {
+    'client' : '/clients/',
+    'group' : '/groups/',
+    'loan' : '/loans/',
+    'center' : '/centers/',
+    'shareAccount' : '/sharesaccounts/',
+    'fixedDeposit' : '/fixed-deposits-accounts/',
+    'recurringDepositAccount': '/recurringdeposits/',
+    'savingsAccount' : '/savingsaccounts/',
+    'shareProduct': '/products/share-products/',
+    'loanProduct' : '/products/loan-products/'
+  };
+
   /** Paginator for notifications table. */
   @ViewChild(MatPaginator) paginator: MatPaginator;
   /** Sorter for notifications table. */

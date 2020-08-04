@@ -28,6 +28,7 @@ import { RouteReusableStrategy } from './route/route-reusable-strategy';
 
 /** Custom Modules */
 import { SharedModule } from '../shared/shared.module';
+import { NotificationsModule } from '../notifications/notifications.module';
 
 /** Custom Components */
 import { ShellComponent } from './shell/shell.component';
@@ -44,6 +45,7 @@ import { ContentComponent } from './shell/content/content.component';
 @NgModule({
   imports: [
     SharedModule,
+    NotificationsModule,
     HttpClientModule,
     TranslateModule,
     RouterModule

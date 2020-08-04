@@ -37,7 +37,8 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
-  MatTreeModule
+  MatTreeModule,
+  MatBadgeModule
 } from '@angular/material';
 
 /**
@@ -81,7 +82,8 @@ import {
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatTreeModule
+    MatTreeModule,
+    MatBadgeModule
   ],
   providers: [
     {
