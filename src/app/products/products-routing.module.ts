@@ -48,6 +48,7 @@ import { ViewFixedDepositProductComponent } from './fixed-deposit-products/view-
 import { ViewDividendComponent } from './share-products/view-dividend/view-dividend.component';
 import { CreateTaxGroupComponent } from './manage-tax-groups/create-tax-group/create-tax-group.component';
 import { EditTaxGroupComponent } from './manage-tax-groups/edit-tax-group/edit-tax-group.component';
+import { CreateProductMixComponent } from './products-mix/create-product-mix/create-product-mix.component';
 
 /** Custom Resolvers */
 import { LoanProductsResolver } from './loan-products/loan-products.resolver';
@@ -87,6 +88,8 @@ import { ViewDividendDataResolver } from './share-products/view-dividend/view-di
 import { FixedDepositProductResolver } from './fixed-deposit-products/fixed-deposit-product.resolver';
 import { ManageTaxGroupTemplateResolver } from './manage-tax-groups/create-tax-group/manage-tax-group-template.resolver';
 import { EditTaxGroupResolver } from './manage-tax-groups/edit-tax-group/edit-tax-group.resolver';
+import { ProductsMixTemplateResolver } from './products-mix/products-mix-template.resolver';
+import { EditProductMixComponent } from './products-mix/edit-product-mix/edit-product-mix.component';
 
 /** Products Routes */
 const routes: Routes = [
@@ -431,20 +434,41 @@ const routes: Routes = [
           data: { title:  extract('Products Mix'), breadcrumb: 'Products Mix' },
           children: [
             {
-              path: '',
-              component: ProductsMixComponent,
+              path: 'create',
+              component: CreateProductMixComponent,
+              data: { title: extract('Create Product Mix'), breadcrumb: 'Create' },
               resolve: {
-                    products: ProductsMixResolver
+                productsMixTemplate: ProductsMixTemplateResolver
               }
             },
             {
-              path: ':id',
-              component: ViewProductMixComponent,
-              data: { title: extract('View Product Mix'), routeParamBreadcrumb: 'id'},
+              path: '',
+              component: ProductsMixComponent,
               resolve: {
-                productMix: ViewProductMixResolver
+                products: ProductsMixResolver
               },
-            }
+            },
+            {
+              path: ':id',
+              data: { title: extract('View Product Mix'), routeParamBreadcrumb: 'id'},
+              children: [
+                {
+                  path: '',
+                  component: ViewProductMixComponent,
+                  resolve: {
+                    productMix: ViewProductMixResolver
+                  }
+                },
+                {
+                  path: 'edit',
+                  data: { title: extract('Edit Product Mix'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  component: EditProductMixComponent,
+                  resolve: {
+                    productMix: ViewProductMixResolver
+                  }
+                },
+              ]
+            },
           ]
         },
         {
@@ -497,7 +521,6 @@ const routes: Routes = [
                 charges: ChargesResolver
               }
             },
-
             {
               path: ':id',
               data: { title: extract('View Charges'), routeParamBreadcrumb: 'id' },
@@ -570,7 +593,8 @@ const routes: Routes = [
     ViewDividendDataResolver,
     FixedDepositProductResolver,
     ManageTaxGroupTemplateResolver,
-    EditTaxGroupResolver
+    EditTaxGroupResolver,
+    ProductsMixTemplateResolver
   ]
 })
 export class ProductsRoutingModule { }

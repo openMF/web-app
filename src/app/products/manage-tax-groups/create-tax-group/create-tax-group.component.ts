@@ -99,13 +99,10 @@ export class CreateTaxGroupComponent implements OnInit {
       layout: { addButtonText: 'Add' },
       formfields: formfields
     };
-    const memberAttendanceDialogRef = this.dialog.open(FormDialogComponent, { data });
-    memberAttendanceDialogRef.afterClosed().subscribe((response: any) => {
+    const taxComponentDialogRef = this.dialog.open(FormDialogComponent, { data });
+    taxComponentDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        // this.taxComponents.push(response.data.value);
         this.taxComponentsDataSource = this.taxComponentsDataSource.concat(response.data.value);
-
-        console.log('tjos.taxComponents: ', this.taxComponentsDataSource);
       }
     });
   }
@@ -136,15 +133,12 @@ export class CreateTaxGroupComponent implements OnInit {
       layout: { addButtonText: 'Submit' },
       formfields: formfields
     };
-    const memberAttendanceDialogRef = this.dialog.open(FormDialogComponent, { data });
-    memberAttendanceDialogRef.afterClosed().subscribe((response: any) => {
+    const taxComponentDialogRef = this.dialog.open(FormDialogComponent, { data });
+    taxComponentDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        // this.taxComponents.push(response.data.value);
-        // this.taxComponentsDataSource = this.taxComponentsDataSource.concat(response.data.value);
         const updatedMemeber = { ...taxComponent, ...response.data.value };
         this.taxComponentsDataSource.splice(this.taxComponentsDataSource.indexOf(taxComponent), 1, updatedMemeber);
         this.taxComponentsDataSource = this.taxComponentsDataSource.concat([]);
-        console.log('tjos.taxComponents: ', this.taxComponentsDataSource);
       }
     });
   }
@@ -177,8 +171,6 @@ export class CreateTaxGroupComponent implements OnInit {
       dateFormat,
       locale
     };
-    console.log(taxGroup);
-
     for (const taxComponent of taxGroup.taxComponents) {
       taxComponent.startDate = this.datePipe.transform(taxComponent.startDate, dateFormat) || '';
     }
