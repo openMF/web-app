@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
-  <button mat-raised-button color="primary">
+  <button mat-raised-button color="primary" [routerLink]="['edit']">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
     Edit
   </button>
@@ -89,16 +89,19 @@
             {{ fixedDepositProductData.lockinPeriodFrequency }} {{ fixedDepositProductData.lockinPeriodFrequencyType.value }}</span>
         </div>
 
-        <!-- <div fxFlexFill *ngIf="fixedDepositProductData.minDepositTerm">
+        <div fxFlexFill *ngIf="fixedDepositProductData.minDepositTerm">
           <span fxFlex="40%">Minimum Deposit Term:</span>
-          <span fxFlex="60%">{{ fixedDepositProductData.minDepositTerm }}
+          <span fxFlex="60%"
+            *ngIf="fixedDepositProductData.minDepositTerm !== undefined">{{ fixedDepositProductData.minDepositTerm }}
             &nbsp;
             {{ fixedDepositProductData.minDepositTermType.value }}</span>
-        </div> -->
+        </div>
 
         <div fxFlexFill *ngIf="fixedDepositProductData.maxDepositTerm">
           <span fxFlex="40%">Maximum Deposit Term:</span>
-          <span fxFlex="60%">{{ fixedDepositProductData.maxDepositTerm }}
+          <span fxFlex="60%"
+            *ngIf="fixedDepositProductData.maxDepositTerm !== undefined">{{ fixedDepositProductData.maxDepositTerm }}
+            &nbsp;
             {{ fixedDepositProductData.maxDepositTermType.value }}</span>
         </div>
 
@@ -107,7 +110,7 @@
           <span fxFlex="60%">{{ fixedDepositProductData.inMultiplesOfDepositTerm }}
             -
             {{ fixedDepositProductData.inMultiplesOfDepositTermType.value }}</span>
-        </div> 
+        </div>
 
         <div fxFlexFill>
 		  <span fxFlex="40%">Apply Penal Interest (less):</span>
@@ -136,7 +139,7 @@
           <span fxFlex="60%">{{ fixedDepositProductData.taxGroup.name }}</span>
         </div>
 
-        <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column" >
+        <div *ngIf="fixedDepositProductData.activeChart" fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column" >
 
           <h3 class="mat-h3" fxFlexFill>Interest Rate Chart</h3>
 
@@ -297,8 +300,6 @@
               <tr mat-row *matRowDef="let row; columns: chartSlabsIncentivesDisplayedColumns;" class="incentives-row"></tr>
 
             </table>
-
-            <mat-divider [inset]="true"></mat-divider>
 
           </div>
 

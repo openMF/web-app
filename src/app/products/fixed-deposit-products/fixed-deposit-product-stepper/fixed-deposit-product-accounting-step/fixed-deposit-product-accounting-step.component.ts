@@ -46,6 +46,60 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
     this.incomeAccountData = this.fixedDepositProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
     this.expenseAccountData = this.fixedDepositProductsTemplate.accountingMappingOptions.expenseAccountOptions || [];
     this.liabilityAccountData = this.fixedDepositProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
+    if (!(this.fixedDepositProductsTemplate === undefined) && this.fixedDepositProductsTemplate.id) {
+      this.assignAccountingStepData();
+    }
+  }
+
+  assignAccountingStepData() {
+    if (this.fixedDepositProductsTemplate.accountingRule.id === 2) {
+      this.fixedDepositProductAccountingForm.patchValue({
+        'accountingRule': this.fixedDepositProductsTemplate.accountingRule.id
+      });
+      this.fixedDepositProductAccountingForm.patchValue({
+        'savingsReferenceAccountId': this.fixedDepositProductsTemplate.accountingMappings.savingsReferenceAccount.id,
+        'savingsControlAccountId': this.fixedDepositProductsTemplate.accountingMappings.savingsControlAccount.id,
+        'transfersInSuspenseAccountId': this.fixedDepositProductsTemplate.accountingMappings.transfersInSuspenseAccount.id,
+        'incomeFromFeeAccountId': this.fixedDepositProductsTemplate.accountingMappings.incomeFromFeeAccount.id,
+        'incomeFromPenaltyAccountId': this.fixedDepositProductsTemplate.accountingMappings.incomeFromPenaltyAccount.id,
+        'interestOnSavingsAccountId': this.fixedDepositProductsTemplate.accountingMappings.interestOnSavingsAccount.id
+      });
+      if (this.fixedDepositProductsTemplate.paymentChannelToFundSourceMappings || this.fixedDepositProductsTemplate.feeToIncomeAccountMappings || this.fixedDepositProductsTemplate.penaltyToIncomeAccountMappings) {
+        this.fixedDepositProductAccountingForm.patchValue({
+          'advancedAccountingRules': true
+        });
+      }
+      if (this.fixedDepositProductsTemplate.paymentChannelToFundSourceMappings) {
+        this.fixedDepositProductsTemplate.paymentChannelToFundSourceMappings.forEach((paymentChannelToFundSourceMapping: any) => {
+          const paymentChannelToFundSourceMappingData = this.formBuilder.group({
+            paymentTypeId: [paymentChannelToFundSourceMapping.paymentType.id, Validators.required],
+            fundSourceAccountId: [paymentChannelToFundSourceMapping.fundSourceAccount.id, Validators.required]
+          });
+          const formArray = this.fixedDepositProductAccountingForm.controls['paymentChannelToFundSourceMappings'] as FormArray;
+          formArray.push(paymentChannelToFundSourceMappingData);
+        });
+      }
+      if (this.fixedDepositProductsTemplate.feeToIncomeAccountMappings) {
+        this.fixedDepositProductsTemplate.feeToIncomeAccountMappings.forEach((feeToIncomeAccountMapping: any) => {
+          const feeToIncomeAccountMappingData = this.formBuilder.group({
+            chargeId: [feeToIncomeAccountMapping.charge.id, Validators.required],
+            incomeAccountId: [feeToIncomeAccountMapping.incomeAccount.id, Validators.required]
+          });
+          const formArray = this.fixedDepositProductAccountingForm.controls['feeToIncomeAccountMappings'] as FormArray;
+          formArray.push(feeToIncomeAccountMappingData);
+        });
+      }
+      if (this.fixedDepositProductsTemplate.penaltyToIncomeAccountMappings) {
+        this.fixedDepositProductsTemplate.penaltyToIncomeAccountMappings.forEach((penaltyToIncomeAccountMapping: any) => {
+          const penaltyToIncomeAccountMappingData = this.formBuilder.group({
+            chargeId: [penaltyToIncomeAccountMapping.charge.id, Validators.required],
+            incomeAccountId: [penaltyToIncomeAccountMapping.incomeAccount.id, Validators.required]
+          });
+          const formArray = this.fixedDepositProductAccountingForm.controls['penaltyToIncomeAccountMappings'] as FormArray;
+          formArray.push(penaltyToIncomeAccountMappingData);
+        });
+      }
+    }
   }
 
   createfixedDepositProductAccountingForm() {

@@ -206,6 +206,15 @@ export class ProductsService {
     return this.http.get(`/fixeddepositproducts/${fixedDepositProductId}`);
   }
 
+  getFixedDepositProductAndTemplate(fixedDepositProductId: any) {
+    const httpParams = new HttpParams().set('template', 'true');
+    return this.http.get(`/fixeddepositproducts/${fixedDepositProductId}`, { params: httpParams });
+  }
+
+  updateFixedDepositProduct(fixedDepositProductId: any, fixedDepositProduct: any): Observable<any> {
+    return this.http.put(`/fixeddepositproducts/${fixedDepositProductId}`, fixedDepositProduct);
+  }
+
   /**
    * @returns {Observable<any>} Tax Components data
    */

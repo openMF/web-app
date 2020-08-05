@@ -27,6 +27,26 @@ export class FixedDepositProductSettingsStepComponent implements OnInit {
     this.periodFrequencyTypeData = this.fixedDepositProductsTemplate.periodFrequencyTypeOptions.slice(0, -1);
     this.preClosurePenalInterestOnTypeData = this.fixedDepositProductsTemplate.preClosurePenalInterestOnTypeOptions;
     this.taxGroupData = this.fixedDepositProductsTemplate.taxGroupOptions;
+
+    if (!(this.fixedDepositProductsTemplate === undefined) && this.fixedDepositProductsTemplate.id) {
+      this.fixedDepositProductSettingsForm.patchValue({
+        'isMandatoryDeposit': this.fixedDepositProductsTemplate.isMandatoryDeposit,
+        'adjustAdvanceTowardsFuturePayments': this.fixedDepositProductsTemplate.adjustAdvanceTowardsFuturePayments,
+        'allowWithdrawal': this.fixedDepositProductsTemplate.allowWithdrawal,
+        'lockinPeriodFrequency': this.fixedDepositProductsTemplate.lockinPeriodFrequency,
+        'lockinPeriodFrequencyType': this.fixedDepositProductsTemplate.lockinPeriodFrequencyType ? this.fixedDepositProductsTemplate.lockinPeriodFrequencyType.id : '',
+        'minDepositTerm': this.fixedDepositProductsTemplate.minDepositTerm,
+        'minDepositTermTypeId': this.fixedDepositProductsTemplate.minDepositTermType ? this.fixedDepositProductsTemplate.minDepositTermType.id : '',
+        'inMultiplesOfDepositTerm': this.fixedDepositProductsTemplate.inMultiplesOfDepositTerm,
+        'inMultiplesOfDepositTermTypeId': this.fixedDepositProductsTemplate.inMultiplesOfDepositTermType ? this.fixedDepositProductsTemplate.inMultiplesOfDepositTerm.id : '',
+        'maxDepositTerm': this.fixedDepositProductsTemplate.maxDepositTerm,
+        'maxDepositTermTypeId': this.fixedDepositProductsTemplate.maxDepositTermType ? this.fixedDepositProductsTemplate.minDepositTermType.id : '',
+        'preClosurePenalApplicable': this.fixedDepositProductsTemplate.preClosurePenalApplicable,
+        'preClosurePenalInterest': this.fixedDepositProductsTemplate.preClosurePenalInterest,
+        'preClosurePenalInterestOnTypeId': this.fixedDepositProductsTemplate.preClosurePenalInterestOnType ? this.fixedDepositProductsTemplate.preClosurePenalInterestOnType.id : '',
+        'withHoldTax': this.fixedDepositProductsTemplate.withHoldTax
+      });
+    }
   }
 
   createFixedDepositProductSettingsForm() {

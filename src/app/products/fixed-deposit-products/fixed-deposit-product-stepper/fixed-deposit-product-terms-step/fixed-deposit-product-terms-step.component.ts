@@ -27,6 +27,14 @@ export class FixedDepositProductTermsStepComponent implements OnInit {
     this.interestCalculationTypeData = this.fixedDepositProductsTemplate.interestCalculationTypeOptions;
     this.interestCalculationDaysInYearTypeData = this.fixedDepositProductsTemplate.interestCalculationDaysInYearTypeOptions;
 
+    if (!(this.fixedDepositProductsTemplate === undefined) && this.fixedDepositProductsTemplate.id) {
+      this.fixedDepositProductTermsForm.patchValue({
+        'minDepositAmount': this.fixedDepositProductsTemplate.minDepositAmount,
+        'depositAmount': this.fixedDepositProductsTemplate.depositAmount,
+        'maxDepositAmount': this.fixedDepositProductsTemplate.maxDepositAmount,
+      });
+    }
+
     this.fixedDepositProductTermsForm.patchValue({
       'interestCompoundingPeriodType': this.fixedDepositProductsTemplate.interestCompoundingPeriodType.id,
       'interestPostingPeriodType': this.fixedDepositProductsTemplate.interestPostingPeriodType.id,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -8,6 +8,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class FixedDepositProductDetailsStepComponent implements OnInit {
 
+  @Input() fixedDepositProductsTemplate: any;
+
   fixedDepositProductDetailsForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {
@@ -15,13 +17,20 @@ export class FixedDepositProductDetailsStepComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!(this.fixedDepositProductsTemplate === undefined) && this.fixedDepositProductsTemplate.id) {
+      this.fixedDepositProductDetailsForm.patchValue({
+        'name': this.fixedDepositProductsTemplate.name,
+        'shortName': this.fixedDepositProductsTemplate.shortName,
+        'description': this.fixedDepositProductsTemplate.description,
+      });
+    }
   }
 
   createFixedDepositProductDetailsForm() {
     this.fixedDepositProductDetailsForm = this.formBuilder.group({
       'name': ['', Validators.required],
       'shortName': ['', Validators.required],
-      'description': ['']
+      'description': ['', Validators.required]
     });
   }
 

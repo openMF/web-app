@@ -95,6 +95,7 @@ import { EditTaxGroupComponent } from './manage-tax-groups/edit-tax-group/edit-t
 import { CreateProductMixComponent } from './products-mix/create-product-mix/create-product-mix.component';
 import { EditProductMixComponent } from './products-mix/edit-product-mix/edit-product-mix.component';
 import { CreateChargeComponent } from './charges/create-charge/create-charge.component';
+import { EditFixedDepositProductComponent } from './fixed-deposit-products/edit-fixed-deposit-product/edit-fixed-deposit-product.component';
 
 /**
  * Products Module
@@ -194,7 +195,8 @@ import { CreateChargeComponent } from './charges/create-charge/create-charge.com
     CreateProductMixComponent,
     EditProductMixComponent,
     ManageTaxGroupsComponent,
-    CreateChargeComponent
+    CreateChargeComponent,
+    EditFixedDepositProductComponent
   ],
   entryComponents: [
     DepositProductIncentiveFormDialogComponent,
