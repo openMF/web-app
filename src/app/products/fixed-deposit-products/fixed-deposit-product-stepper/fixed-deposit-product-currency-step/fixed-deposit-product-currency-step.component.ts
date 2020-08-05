@@ -21,10 +21,18 @@ export class FixedDepositProductCurrencyStepComponent implements OnInit {
   ngOnInit() {
     this.currencyData = this.fixedDepositProductsTemplate.currencyOptions;
 
-    this.fixedDepositProductCurrencyForm.patchValue({
-      'currencyCode': this.currencyData[0].code,
-      'digitsAfterDecimal': 2
-    });
+    if (!(this.fixedDepositProductsTemplate === undefined) && this.fixedDepositProductsTemplate.id) {
+      this.fixedDepositProductCurrencyForm.patchValue({
+        'currencyCode': this.fixedDepositProductsTemplate.currency.code,
+        'digitsAfterDecimal': this.fixedDepositProductsTemplate.currency.decimalPlaces,
+        'inMultiplesOf': this.fixedDepositProductsTemplate.currency.inMultiplesOf
+      });
+    } else {
+      this.fixedDepositProductCurrencyForm.patchValue({
+        'currencyCode': this.currencyData[0].code,
+        'digitsAfterDecimal': 2
+      });
+    }
   }
 
   createFixedDepositProductCurrencyForm() {

@@ -92,6 +92,8 @@ import { EditTaxGroupResolver } from './manage-tax-groups/edit-tax-group/edit-ta
 import { ProductsMixTemplateResolver } from './products-mix/products-mix-template.resolver';
 import { EditProductMixComponent } from './products-mix/edit-product-mix/edit-product-mix.component';
 import { ChargesTemplateAndResolver } from './charges/charges-template-and-resolver';
+import { EditFixedDepositProductComponent } from './fixed-deposit-products/edit-fixed-deposit-product/edit-fixed-deposit-product.component';
+import { FixedDepositProductAndTemplateResolver } from './fixed-deposit-products/edit-fixed-deposit-product/fixed-deposit-product-and-template.resolver';
 
 /** Products Routes */
 const routes: Routes = [
@@ -401,19 +403,19 @@ const routes: Routes = [
           data: { title:  extract('Fixed Deposit Products'), breadcrumb: 'Fixed Deposit Products' },
           children: [
             {
-              path: '',
-              component: FixedDepositProductsComponent,
-              resolve: {
-                    fixedDepositProducts: FixedDepositProductsResolver
-              },
-            },
-            {
               path: 'create',
               component: CreateFixedDepositProductComponent,
               data: { title: extract('Create Fixed Deposit Product'), breadcrumb: 'Create' },
               resolve: {
                 fixedDepositProductsTemplate: FixedDepositProductsTemplateResolver
               }
+            },
+            {
+              path: '',
+              component: FixedDepositProductsComponent,
+              resolve: {
+                fixedDepositProducts: FixedDepositProductsResolver
+              },
             },
             {
               path: ':id',
@@ -425,6 +427,14 @@ const routes: Routes = [
                   resolve: {
                     fixedDepositProduct: FixedDepositProductResolver,
                     fixedDepositProductsTemplate: FixedDepositProductsTemplateResolver
+                  }
+                },
+                {
+                  path: 'edit',
+                  data: { title: extract('Edit Fixed Deposit Product'), breadcrumb: 'edit', routeParamBreadcrumb: false },
+                  component: EditFixedDepositProductComponent,
+                  resolve: {
+                    fixedDepositProductAndTemplate: FixedDepositProductAndTemplateResolver
                   }
                 }
               ]
@@ -605,7 +615,8 @@ const routes: Routes = [
     FixedDepositProductResolver,
     ManageTaxGroupTemplateResolver,
     EditTaxGroupResolver,
-    ProductsMixTemplateResolver
+    ProductsMixTemplateResolver,
+    FixedDepositProductAndTemplateResolver
   ]
 })
 export class ProductsRoutingModule { }

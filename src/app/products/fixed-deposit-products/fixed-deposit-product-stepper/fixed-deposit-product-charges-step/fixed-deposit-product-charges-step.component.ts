@@ -24,9 +24,11 @@ export class FixedDepositProductChargesStepComponent implements OnInit {
 
   ngOnInit() {
     this.chargeData = this.fixedDepositProductsTemplate.chargeOptions;
-
-    this.chargesDataSource = [];
-
+    if (!(this.fixedDepositProductsTemplate === undefined) && this.fixedDepositProductsTemplate.id) {
+      this.chargesDataSource = this.fixedDepositProductsTemplate.charges;
+    } else {
+      this.chargesDataSource = [];
+    }
     this.currencyCode.valueChanges.subscribe(() => this.chargesDataSource = []);
   }
 

@@ -47,6 +47,8 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
   maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 10));
 
   expandChartSlabIndex: number[] = [];
+  chartDetailData: any = [];
+  chartsDetail: any[] = [];
 
   constructor(private formBuilder: FormBuilder,
               public dialog: MatDialog,
@@ -63,6 +65,130 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     this.clientTypeData = this.fixedDepositProductsTemplate.chartTemplate.clientTypeOptions;
     this.clientClassificationData = this.fixedDepositProductsTemplate.chartTemplate.clientClassificationOptions;
     this.incentiveTypeData = this.fixedDepositProductsTemplate.chartTemplate.incentiveTypeOptions;
+
+    if (!(this.fixedDepositProductsTemplate === undefined) && this.fixedDepositProductsTemplate.id) {
+      this.assignFormData();
+    }
+  }
+
+  assignFormData() {
+    this.addChart();
+    const isChartArray = Array.isArray(this.fixedDepositProductsTemplate.activeChart);
+    if (!isChartArray) {
+      this.chartDetailData.push(this.fixedDepositProductsTemplate.activeChart);
+    } else {
+      this.chartDetailData = this.fixedDepositProductsTemplate.activeChart;
+    }
+
+    // Build the array of Objects from the retrived value
+    this.getChartsDetailsData();
+
+    // Iterates for every chart in charts
+    this.charts.controls.forEach((chartDetailControl: FormGroup, i: number) => {
+
+      // Iterate for every chartSlab in chart
+      this.chartsDetail[i].chartSlabs.forEach((chartSlabDetail: any, j: number) => {
+
+        const chartSlabInfo = this.formBuilder.group({
+          amountRangeFrom: [chartSlabDetail.amountRangeFrom],
+          amountRangeTo: [chartSlabDetail.amountRangeTo],
+          annualInterestRate: [chartSlabDetail.annualInterestRate, Validators.required],
+          description: [chartSlabDetail.description, Validators.required],
+          fromPeriod: [chartSlabDetail.fromPeriod, Validators.required],
+          toPeriod: [chartSlabDetail.toPeriod],
+          periodType: [chartSlabDetail.periodType, Validators.required],
+          incentives: this.formBuilder.array([])
+        });
+        const formArray = chartDetailControl.controls['chartSlabs'] as FormArray;
+        formArray.push(chartSlabInfo);
+
+        // Iterate for every slab in chartSlab
+        const chartIncentiveControl = chartDetailControl.controls['chartSlabs']['controls'][j];
+
+        // Iterate to input all the incentive for particular chart slab
+        this.chartsDetail[i].chartSlabs[j].incentives.forEach((chartIncentiveDetail: any) => {
+          const incentiveInfo = this.formBuilder.group({
+            amount: [chartIncentiveDetail.amount, Validators.required],
+            attributeName: [chartIncentiveDetail.attributeName, Validators.required],
+            attribureValue: [chartIncentiveDetail.attribureValue, Validators.required],
+            conditionType: [chartIncentiveDetail.conditionType, Validators.required],
+            entityType: [chartIncentiveDetail.entityType, Validators.required],
+            incentiveType: [chartIncentiveDetail.incentiveType, Validators.required]
+          });
+          const newFormArray = chartIncentiveControl['controls']['incentives'] as FormArray;
+          newFormArray.push(incentiveInfo);
+        });
+
+      });
+
+    });
+  }
+
+  getChartsDetailsData() {
+    this.chartDetailData.forEach((chartData: any) => {
+      const chart = {
+        endDate: chartData.endDate ? new Date(chartData.endDate) : '',
+        fromDate: chartData.fromDate ? new Date(chartData.fromDate) : '',
+        isPrimaryGroupingByAmount: chartData.isPrimaryGroupingByAmount,
+        name: chartData.name,
+        chartSlabs: this.getChartSlabsData(chartData)
+      };
+      this.chartsDetail.push(chart);
+    });
+    this.fixedDepositProductInterestRateChartForm.patchValue({
+      'charts': this.chartsDetail
+    });
+  }
+
+  getChartSlabsData(chartData: any) {
+    const chartSlabs: any[] = [];
+    let chartSlabData: any[] = [];
+    const isChartSlabArray = Array.isArray(chartData.chartSlabs);
+    if (!isChartSlabArray) {
+      chartSlabData.push(chartData.chartSlabs);
+    } else {
+      chartSlabData = chartData.chartSlabs;
+    }
+
+    chartSlabData.forEach((eachChartSlabData: any) => {
+      const chartSlab = {
+        periodType: eachChartSlabData.periodType.id,
+        amountRangeFrom: eachChartSlabData.amountRangeFrom,
+        amountRangeTo: eachChartSlabData.amountRangeTo,
+        annualInterestRate: eachChartSlabData.annualInterestRate,
+        description: eachChartSlabData.description ? eachChartSlabData.description : '',
+        fromPeriod: eachChartSlabData.fromPeriod,
+        toPeriod: eachChartSlabData.toPeriod,
+        incentives: this.getIncentivesData(chartSlabData)
+      };
+      chartSlabs.push(chartSlab);
+    });
+    return chartSlabs;
+  }
+
+  getIncentivesData(chartSlabData: any) {
+    const incentives: any[] = [];
+    let incentiveDatas: any[] = [];
+    if (chartSlabData.incentives) {
+      const isChartIncentiveArray = Array.isArray(chartSlabData.incentives);
+      if (!isChartIncentiveArray) {
+        incentiveDatas.push(chartSlabData.incentives);
+      } else {
+        incentiveDatas = chartSlabData.incentives;
+      }
+      incentiveDatas.forEach((incentiveData: any) => {
+        const incentive = {
+          amount: incentiveData.amount,
+          attributeName: incentiveData.attributeName,
+          attributeValue: incentiveData.attributeValue,
+          conditionType: incentiveData.conditionType,
+          entityType: incentiveData.entityType,
+          incentiveType: incentiveData.incentiveType,
+        };
+        incentives.push(incentive);
+      });
+    }
+    return incentives;
   }
 
   createFixedDepositProductInterestRateChartForm() {
