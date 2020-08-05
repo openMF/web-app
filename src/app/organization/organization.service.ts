@@ -682,9 +682,29 @@ export class OrganizationService {
    * @returns {Observable<any>} Imports data.
    */
   getImports(entity: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('entityType', entity);
+    const httpParams = new HttpParams().set('entityType', entity);
     return this.http.get('/imports', { params: httpParams } );
+  }
+
+  /**
+   * @returns {Observable<any>}
+   */
+  getStandingInstructionTemplate(): Observable<any> {
+    return this.http.get('/standinginstructions/template');
+  }
+
+  /**
+   * @param {any} instruction
+   * @returns {Observable<any>} Standing Instructions
+   */
+  getStandingInstructions(instruction: any): Observable<any> {
+    let httpParams = new HttpParams();
+    for (const key in instruction) {
+      if (instruction[key] !== '' && instruction[key] !== null) {
+        httpParams = httpParams.set(key, instruction[key]);
+      }
+    }
+    return this.http.get(`/standinginstructionrunhistory`, { params: httpParams });
   }
 
   /**

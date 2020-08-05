@@ -66,6 +66,7 @@ import { CreateEnityDataTableChecksComponent } from './entity-data-table-checks/
 import { BulkLoanReassignmnetComponent } from './bulk-loan-reassignmnet/bulk-loan-reassignmnet.component';
 import { CreateLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/create-loan-provisioning-criteria/create-loan-provisioning-criteria.component';
 import { EditLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/edit-loan-provisioning-criteria/edit-loan-provisioning-criteria.component';
+import { StandingInstructionsHistoryComponent } from './standing-instructions-history/standing-instructions-history.component';
 
 /**
  * Organization Module
@@ -138,6 +139,7 @@ import { EditLoanProvisioningCriteriaComponent } from './loan-provisioning-crite
     BulkLoanReassignmnetComponent,
     CreateLoanProvisioningCriteriaComponent,
     EditLoanProvisioningCriteriaComponent,
+    StandingInstructionsHistoryComponent,
   ]
 })
 export class OrganizationModule { }

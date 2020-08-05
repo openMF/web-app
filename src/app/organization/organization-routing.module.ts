@@ -58,7 +58,8 @@ import { EditCampaignComponent } from './sms-campaigns/edit-campaign/edit-campai
 import { CreateEnityDataTableChecksComponent } from './entity-data-table-checks/create-enity-data-table-checks/create-enity-data-table-checks.component';
 import { CreateLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/create-loan-provisioning-criteria/create-loan-provisioning-criteria.component';
 import { BulkLoanReassignmnetComponent } from './bulk-loan-reassignmnet/bulk-loan-reassignmnet.component';
-import {EditLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/edit-loan-provisioning-criteria/edit-loan-provisioning-criteria.component';
+import { EditLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/edit-loan-provisioning-criteria/edit-loan-provisioning-criteria.component';
+import { StandingInstructionsHistoryComponent } from './standing-instructions-history/standing-instructions-history.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/common-resolvers/loan-provisioning-criteria.resolver';
@@ -88,7 +89,7 @@ import { OfficeDatatableResolver } from './offices/common-resolvers/office-datat
 import { OfficeDatatablesResolver } from './offices/common-resolvers/office-datatables.resolver';
 import { SmsCampaignResolver } from './sms-campaigns/common-resolvers/sms-campaign.resolver';
 import { ManageFundsResolver } from './manage-funds/manage-funds.resolver';
-import { CashierTransactionTemplateResolver } from './tellers/teller-transaction-template.resolver';
+import { CashierTransactionTemplateResolver } from './tellers/common-resolvers/teller-transaction-template.resolver';
 import { EditCashierResolver } from './tellers/common-resolvers/edit-cashier.resolver';
 import { HolidayTemplateResolver } from './holidays/holiday-template.resolver';
 import { AdhocQueryAndTemplateResolver } from './adhoc-query/common-resolvers/adhoc-query-and-template.resolver';
@@ -97,6 +98,7 @@ import { SmsCampaignTemplateResolver } from './sms-campaigns/common-resolvers/sm
 import { EntityDataTableChecksTemplateResolver } from './entity-data-table-checks/enitity-data-table-checks-template.resolver';
 import { LoanProvisioningCriteriaTemplateResolver } from './loan-provisioning-criteria/common-resolvers/loan-provisioning-criteria-template.resolver';
 import { LoanProvisioningCriteriaAndTemplateResolver } from './loan-provisioning-criteria/common-resolvers/loan-provisioning-criteria-and-template.resolver';
+import { StandingInstructionsTemplateResolver } from './standing-instructions-history/standing-instructions-template.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -318,6 +320,14 @@ const routes: Routes = [
               ]
             }
           ]
+        },
+        {
+          path: 'standing-instructions-history',
+          component: StandingInstructionsHistoryComponent,
+          data: { title: extract('Standing Instructions History'), breadcrumb: 'Standing Instructions History' },
+          resolve: {
+            standingInstructionsTemplate: StandingInstructionsTemplateResolver
+          }
         },
         {
           path: 'adhoc-query',
@@ -663,7 +673,8 @@ const routes: Routes = [
     EntityDataTableChecksTemplateResolver,
     LoanProvisioningCriteriasResolver,
     LoanProvisioningCriteriaTemplateResolver,
-    LoanProvisioningCriteriaAndTemplateResolver
+    LoanProvisioningCriteriaAndTemplateResolver,
+    StandingInstructionsTemplateResolver
   ]
 })
 export class OrganizationRoutingModule { }
