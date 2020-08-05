@@ -27,6 +27,7 @@ import { RecurringDepositProductsComponent } from './recurring-deposit-products/
 import { ViewRecurringDepositProductComponent } from './recurring-deposit-products/view-recurring-deposit-product/view-recurring-deposit-product.component';
 import { ChargesComponent } from './charges/charges.component';
 import { ViewChargeComponent } from './charges/view-charge/view-charge.component';
+import { CreateChargeComponent } from './charges/create-charge/create-charge.component';
 import { FixedDepositProductsComponent } from './fixed-deposit-products/fixed-deposit-products.component';
 import { CreateFixedDepositProductComponent } from './fixed-deposit-products/create-fixed-deposit-product/create-fixed-deposit-product.component';
 import { ProductsMixComponent } from './products-mix/products-mix.component';
@@ -67,6 +68,7 @@ import { RecurringDepositProductsResolver } from './recurring-deposit-products/r
 import { RecurringDepositProductResolver } from './recurring-deposit-products/recurring-deposit-product.resolver';
 import { ChargesResolver } from './charges/charges.resolver';
 import { ChargeResolver } from './charges/charge.resolver';
+import { ChargesTemplateResolver } from './charges/charges-template.resolver';
 import { FixedDepositProductsResolver } from './fixed-deposit-products/fixed-deposit-products.resolver';
 import { FixedDepositProductsTemplateResolver } from './fixed-deposit-products/fixed-deposit-products-template.resolver';
 import { ProductsMixResolver } from './products-mix/products-mix.resolver';
@@ -78,7 +80,6 @@ import { ManageTaxGroupsResolver } from './manage-tax-groups/manage-tax-groups.r
 import { TaxComponentResolver } from './manage-tax-components/tax-component.resolver';
 import { TaxComponentTemplateResolver } from './manage-tax-components/tax-component-template.resolver';
 import { EditChargeComponent } from './charges/edit-charge/edit-charge.component';
-import { ChargesTemplateResolver } from './charges/charges-template.resolver';
 import { TaxGroupResolver } from './manage-tax-groups/tax-group.resolver';
 import { DividendsResolver } from './share-products/dividends-share-product/dividends.resolver';
 import { RecurringDepositProductsTemplateResolver } from './recurring-deposit-products/recurring-deposit-products-template.resolver';
@@ -90,6 +91,7 @@ import { ManageTaxGroupTemplateResolver } from './manage-tax-groups/create-tax-g
 import { EditTaxGroupResolver } from './manage-tax-groups/edit-tax-group/edit-tax-group.resolver';
 import { ProductsMixTemplateResolver } from './products-mix/products-mix-template.resolver';
 import { EditProductMixComponent } from './products-mix/edit-product-mix/edit-product-mix.component';
+import { ChargesTemplateAndResolver } from './charges/charges-template-and-resolver';
 
 /** Products Routes */
 const routes: Routes = [
@@ -515,6 +517,14 @@ const routes: Routes = [
           data: { title: extract('Charges'), breadcrumb: 'Charges' },
           children: [
             {
+              path: 'create',
+              component: CreateChargeComponent,
+              data: { title: extract('Create Charge'), breadcrumb: 'Create Charge' },
+              resolve: {
+                chargesTemplate: ChargesTemplateResolver
+              }
+            },
+            {
               path: '',
               component: ChargesComponent,
               resolve: {
@@ -537,7 +547,7 @@ const routes: Routes = [
                   component: EditChargeComponent,
                   data: { title: extract('Edit Charge'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
-                    chargesTemplate: ChargesTemplateResolver
+                    chargesTemplate: ChargesTemplateAndResolver
                   }
                 },
               ]
@@ -574,6 +584,7 @@ const routes: Routes = [
     RecurringDepositProductResolver,
     ChargesResolver,
     ChargeResolver,
+    ChargesTemplateAndResolver,
     ChargesTemplateResolver,
     FixedDepositProductsResolver,
     FixedDepositProductsTemplateResolver,
