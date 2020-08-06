@@ -60,6 +60,7 @@ import { CreateLoanProvisioningCriteriaComponent } from './loan-provisioning-cri
 import { BulkLoanReassignmnetComponent } from './bulk-loan-reassignmnet/bulk-loan-reassignmnet.component';
 import { EditLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/edit-loan-provisioning-criteria/edit-loan-provisioning-criteria.component';
 import { StandingInstructionsHistoryComponent } from './standing-instructions-history/standing-instructions-history.component';
+import { FundMappingComponent } from './fund-mapping/fund-mapping.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/common-resolvers/loan-provisioning-criteria.resolver';
@@ -99,6 +100,7 @@ import { EntityDataTableChecksTemplateResolver } from './entity-data-table-check
 import { LoanProvisioningCriteriaTemplateResolver } from './loan-provisioning-criteria/common-resolvers/loan-provisioning-criteria-template.resolver';
 import { LoanProvisioningCriteriaAndTemplateResolver } from './loan-provisioning-criteria/common-resolvers/loan-provisioning-criteria-and-template.resolver';
 import { StandingInstructionsTemplateResolver } from './standing-instructions-history/standing-instructions-template.resolver';
+import { AdvanceSearchTemplateResolver } from './fund-mapping/advance-search-template.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -327,6 +329,14 @@ const routes: Routes = [
           data: { title: extract('Standing Instructions History'), breadcrumb: 'Standing Instructions History' },
           resolve: {
             standingInstructionsTemplate: StandingInstructionsTemplateResolver
+          }
+        },
+        {
+          path: 'fund-mapping',
+          component: FundMappingComponent,
+          data: { title: extract('Advance Search'), breadcrumb: 'Advance Search' },
+          resolve: {
+            advanceSearchTemplate: AdvanceSearchTemplateResolver
           }
         },
         {
@@ -674,7 +684,8 @@ const routes: Routes = [
     LoanProvisioningCriteriasResolver,
     LoanProvisioningCriteriaTemplateResolver,
     LoanProvisioningCriteriaAndTemplateResolver,
-    StandingInstructionsTemplateResolver
+    StandingInstructionsTemplateResolver,
+    AdvanceSearchTemplateResolver
   ]
 })
 export class OrganizationRoutingModule { }

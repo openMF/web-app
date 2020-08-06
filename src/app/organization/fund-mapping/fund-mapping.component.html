@@ -1,0 +1,223 @@
+<mat-card class="container" *ngIf="!isCollapsed">
+
+  <form [formGroup]="fundMappingForm" (ngSubmit)="submit()">
+
+    <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="start center">
+  
+      <mat-form-field fxFlex="48%">
+        <mat-label>Loan Status</mat-label>
+        <mat-select formControlName="loanStatus" multiple>
+          <mat-option value="all">All</mat-option>
+          <mat-option value="active">Active</mat-option>
+          <mat-option value="closed">Overpaid</mat-option>
+          <mat-option value="overpaid">Closed (obligations met)</mat-option>
+          <mat-option value="writeoff">Closed (written-off)</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <span fxFlex="48%" fxHide.lt-md></span>
+
+      <mat-form-field fxFlex="48%">
+        <mat-label>Product</mat-label>
+        <mat-select formControlName="loanProducts" multiple>
+          <mat-option *ngFor="let product of advanceSearchTemplate.loanProducts" [value]="product.id">
+            {{ product.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <mat-form-field fxFlex="48%">
+        <mat-label>Office</mat-label>
+        <mat-select formControlName="offices" multiple>
+          <mat-option *ngFor="let office of advanceSearchTemplate.offices" [value]="office.id">
+            {{ office.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>Date Type</mat-label>
+        <mat-select required formControlName="loanDateOption">
+          <mat-option value="approvalDate">Approval Date</mat-option>
+          <mat-option value="createdDate">Creation Date</mat-option>
+          <mat-option value="disbursalDate">Disbursement Date</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>From Date</mat-label>
+        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fromDatePicker" 
+          required formControlName="loanFromDate" required>
+        <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #fromDatePicker></mat-datepicker>
+        <mat-error *ngIf="fundMappingForm.controls.loanFromDate.hasError('required')">
+          From Date is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>To Date</mat-label>
+        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="toDatePicker" 
+          required formControlName="loanToDate" required>
+        <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #toDatePicker></mat-datepicker>
+        <mat-error *ngIf="fundMappingForm.controls.loanToDate.hasError('required')">
+          To Date is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="includeOutStandingAmountPercentage" class="margin-b">
+        Loan Outstanding Percentage
+      </mat-checkbox>
+  
+      <div *ngIf="fundMappingForm.value.includeOutStandingAmountPercentage" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+        <mat-form-field *ngIf="fundMappingForm.contains('outStandingAmountPercentageCondition')" fxFlex="31%">
+          <mat-label>Comparison Condition</mat-label>
+          <mat-select required formControlName="outStandingAmountPercentageCondition">
+            <mat-option value="between">between</mat-option>
+            <mat-option value="<="><=</mat-option>
+            <mat-option value=">=">>=</mat-option>
+            <mat-option value="<"><</mat-option>
+            <mat-option value=">">></mat-option>
+            <mat-option value="=">=</mat-option>
+          </mat-select>
+          <mat-error *ngIf="fundMappingForm.controls.outStandingAmountPercentageCondition.hasError('required')">
+            Comparison Condition is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field *ngIf="fundMappingForm.contains('minOutStandingAmountPercentage')" fxFlex="31%">
+          <mat-label>Minimum Value</mat-label>
+          <input type="number" matInput required formControlName="minOutStandingAmountPercentage">
+          <mat-error *ngIf="fundMappingForm.controls.minOutStandingAmountPercentage.hasError('required')">
+            Minimum Value is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="fundMappingForm.contains('outStandingAmountPercentage')" fxFlex="31%">
+          <mat-label>Comparison Value</mat-label>
+          <input type="number" matInput required formControlName="outStandingAmountPercentage">
+          <mat-error *ngIf="fundMappingForm.controls.outStandingAmountPercentage.hasError('required')">
+            Comparison Value is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field *ngIf="fundMappingForm.contains('maxOutStandingAmountPercentage')" fxFlex="31%">
+          <mat-label>Maximum Value</mat-label>
+          <input type="number" matInput required formControlName="maxOutStandingAmountPercentage">
+          <mat-error *ngIf="fundMappingForm.controls.maxOutStandingAmountPercentage.hasError('required')">
+            Maximum Value is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+  
+      </div>
+  
+      <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="includeOutstandingAmount" class="margin-b">
+        Loan Outstanding Amount
+      </mat-checkbox>
+  
+      <div *ngIf="fundMappingForm.value.includeOutstandingAmount" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+  
+        <mat-form-field *ngIf="fundMappingForm.contains('outstandingAmountCondition')" fxFlex="31%">
+          <mat-label>Comparison Condition</mat-label>
+          <mat-select required formControlName="outstandingAmountCondition">
+            <mat-option value="between">between</mat-option>
+            <mat-option value="<="><=</mat-option>
+            <mat-option value=">=">>=</mat-option>
+            <mat-option value="<"><</mat-option>
+            <mat-option value=">">></mat-option>
+            <mat-option value="=">=</mat-option>
+          </mat-select>
+          <mat-error *ngIf="fundMappingForm.controls.outstandingAmountCondition.hasError('required')">
+            Comparison Condition is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field *ngIf="fundMappingForm.contains('minOutstandingAmount')" fxFlex="31%">
+          <mat-label>Minimum Value</mat-label>
+          <input type="number" matInput required formControlName="minOutstandingAmount">
+          <mat-error *ngIf="fundMappingForm.controls.minOutstandingAmount.hasError('required')">
+            Minimum Value is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="fundMappingForm.contains('outstandingAmount')" fxFlex="31%">
+          <mat-label>Comparison Value</mat-label>
+          <input type="number" matInput required formControlName="outstandingAmount">
+          <mat-error *ngIf="fundMappingForm.controls.outstandingAmount.hasError('required')">
+            Comparison Value is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field *ngIf="fundMappingForm.contains('maxOutstandingAmount')" fxFlex="31%">
+          <mat-label>Maximum Value</mat-label>
+          <input type="number" matInput required formControlName="maxOutstandingAmount">
+          <mat-error *ngIf="fundMappingForm.controls.maxOutstandingAmount.hasError('required')">
+            Maximum Value is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+  
+      </div>
+
+    </div>
+
+    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+      <button mat-raised-button color="primary" [disabled]="!fundMappingForm.valid">
+        <fa-icon icon="search"></fa-icon>&nbsp; Summary
+      </button>
+    </mat-card-actions>
+  
+  </form>  
+
+</mat-card>
+
+
+<div class="container" *ngIf="isCollapsed">
+
+  <mat-card>
+
+    <div class="m-b-20">
+      <button mat-raised-button color="primary" (click)="isCollapsed = false">
+        Parameters
+      </button>
+    </div>
+
+    <table class="mat-elevation-z1" mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="officeName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Office Name </th>
+        <td mat-cell *matCellDef="let loan"> {{ loan.officeName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="productName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Name </th>
+        <td mat-cell *matCellDef="let loan"> {{ loan.loanProductName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="count">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Count </th>
+        <td mat-cell *matCellDef="let loan"> {{ loan.count }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="outstanding">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Outstanding </th>
+        <td mat-cell *matCellDef="let loan"> {{ loan.loanOutStanding }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="percentage">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Percentage </th>
+        <td mat-cell *matCellDef="let loan"> {{ loan.percentage }} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+  </mat-card>
+
+</div>
