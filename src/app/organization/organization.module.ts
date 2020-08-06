@@ -67,6 +67,7 @@ import { BulkLoanReassignmnetComponent } from './bulk-loan-reassignmnet/bulk-loa
 import { CreateLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/create-loan-provisioning-criteria/create-loan-provisioning-criteria.component';
 import { EditLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/edit-loan-provisioning-criteria/edit-loan-provisioning-criteria.component';
 import { StandingInstructionsHistoryComponent } from './standing-instructions-history/standing-instructions-history.component';
+import { FundMappingComponent } from './fund-mapping/fund-mapping.component';
 
 /**
  * Organization Module
@@ -140,6 +141,7 @@ import { StandingInstructionsHistoryComponent } from './standing-instructions-hi
     CreateLoanProvisioningCriteriaComponent,
     EditLoanProvisioningCriteriaComponent,
     StandingInstructionsHistoryComponent,
+    FundMappingComponent,
   ]
 })
 export class OrganizationModule { }

@@ -689,6 +689,20 @@ export class OrganizationService {
   /**
    * @returns {Observable<any>}
    */
+  getAdvanceSearchTemplate(): Observable<any> {
+    return this.http.get('/search/template');
+  }
+
+  /**
+   * @returns {Observable<any>}
+   */
+  retrieveAdvanceSearchResults(queryObject: any): Observable<any> {
+    return this.http.post('/search/advance', queryObject);
+  }
+
+  /**
+   * @returns {Observable<any>}
+   */
   getStandingInstructionTemplate(): Observable<any> {
     return this.http.get('/standinginstructions/template');
   }
