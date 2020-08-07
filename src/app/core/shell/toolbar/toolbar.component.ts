@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { MatSidenav } from '@angular/material';
+import { MatSidenav, MatDialog } from '@angular/material';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
 
@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 
 /** Custom Services */
 import { AuthenticationService } from '../../authentication/authentication.service';
+import { KeyboardShortcutsDialogComponent } from 'app/shared/keyboard-shortcuts-dialog/keyboard-shortcuts-dialog.component';
 
 /**
  * Toolbar component.
@@ -42,7 +43,8 @@ export class ToolbarComponent implements OnInit {
    */
   constructor(private breakpointObserver: BreakpointObserver,
               private router: Router,
-              private authenticationService: AuthenticationService) { }
+              private authenticationService: AuthenticationService,
+              private dialog: MatDialog) { }
 
   /**
    * Subscribes to breakpoint for handset.
@@ -76,6 +78,11 @@ export class ToolbarComponent implements OnInit {
   logout() {
     this.authenticationService.logout()
       .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+  }
+
+  showKeyboardShortcuts() {
+    const dialogRef = this.dialog.open(KeyboardShortcutsDialogComponent);
+    dialogRef.afterClosed().subscribe((response: any) => {});
   }
 
 }

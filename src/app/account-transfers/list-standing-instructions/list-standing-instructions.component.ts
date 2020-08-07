@@ -68,7 +68,6 @@ export class ListStandingInstructionsComponent implements OnInit {
       this.standingIntructionsTemplateData = data.standingIntructionsTemplate;
       if (data.standingIntructionsTemplate.fromClient) {
         this.clientName = this.standingIntructionsTemplateData.fromClient.displayName;
-        console.log('here');
         this.getStandingInstructions();
       }
       this.setParams();
