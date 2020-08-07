@@ -38,6 +38,8 @@
     "@angular/platform-browser-dynamic": "7.2.15",
     "@angular/router": "7.2.15",
     "@angular/service-worker": "7.2.15",
+    "@ckeditor/ckeditor5-angular": "1.2.3",
+    "@ckeditor/ckeditor5-build-classic": "21.0.0",
     "@fortawesome/angular-fontawesome": "0.3.0",
     "@fortawesome/fontawesome-svg-core": "1.2.18",
     "@fortawesome/free-solid-svg-icons": "5.8.2",
