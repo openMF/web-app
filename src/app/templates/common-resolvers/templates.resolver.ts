@@ -6,7 +6,7 @@ import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { TemplatesService } from './templates.service';
+import { TemplatesService } from '../templates.service';
 
 /**
  * Templates data resolver.
