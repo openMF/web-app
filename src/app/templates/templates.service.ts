@@ -34,11 +34,27 @@ export class TemplatesService {
   }
 
   /**
+   * @returns {Observable<any>}.
+   */
+  getCreateTemplateData(): Observable<any> {
+    return this.http.get('/templates/template');
+  }
+
+  /**
    * @param templateId Template Id.
    * @returns {Observable<any>}.
    */
   getEditTemplateData(templateId: string): Observable<any> {
     return this.http.get(`/templates/${templateId}/template`);
+  }
+
+  /**
+   * @param templateData Template to be created.
+   * @param templateId Template Id.
+   * @returns {Observable<any>}.
+   */
+  createTemplate(templateData: any): Observable<any>  {
+    return this.http.post(`/templates`, templateData);
   }
 
   /**

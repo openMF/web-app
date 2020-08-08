@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** CKEditor5 Imports */
@@ -13,14 +13,14 @@ import { clientParameterLabels, loanParameterLabels, repaymentParameterLabels } 
 import { TemplatesService } from '../templates.service';
 
 /**
- * Edit Template Component.
+ * Create Template Component.
  */
 @Component({
-  selector: 'mifosx-edit-template',
-  templateUrl: './edit-template.component.html',
-  styleUrls: ['./edit-template.component.scss']
+  selector: 'mifosx-create-template',
+  templateUrl: './create-template.component.html',
+  styleUrls: ['./create-template.component.scss']
 })
-export class EditTemplateComponent implements OnInit {
+export class CreateTemplateComponent implements OnInit {
 
   /** CKEditor5 */
   public Editor = ClassicEditor;
@@ -30,7 +30,7 @@ export class EditTemplateComponent implements OnInit {
   /** Template form. */
   templateForm: FormGroup;
   /** Edit Template Data. */
-  editTemplateData: any;
+  createTemplateData: any;
   /** Template Mappers */
   mappers: any[] = [];
   /** Toggles Visibility of Advance Options */
@@ -54,14 +54,8 @@ export class EditTemplateComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private templateService: TemplatesService) {
-    this.route.data.subscribe((data: { editTemplateData: any }) => {
-      this.editTemplateData = data.editTemplateData;
-      this.mappers = this.editTemplateData.template.mappers
-        .map((mapper: any) => ({
-          mappersorder: mapper.mapperorder,
-          mapperskey: new FormControl(mapper.mapperkey),
-          mappersvalue: new FormControl(mapper.mappervalue)
-        }));
+    this.route.data.subscribe((data: { createTemplateData: any }) => {
+      this.createTemplateData = data.createTemplateData;
     });
   }
 
@@ -75,9 +69,9 @@ export class EditTemplateComponent implements OnInit {
    */
   createTemplateForm() {
     this.templateForm = this.formBuilder.group({
-      'entity': [this.editTemplateData.entities.find((entity: any) => entity.name === this.editTemplateData.template.entity).id],
-      'type': [this.editTemplateData.types.find((type: any) => type.name === this.editTemplateData.template.type).id],
-      'name': [this.editTemplateData.template.name]
+      'entity': ['', Validators.required],
+      'type': ['', Validators.required],
+      'name': ['', Validators.required]
     });
   }
 
@@ -102,6 +96,7 @@ export class EditTemplateComponent implements OnInit {
       }
       this.setEditorContent('');
     });
+    this.templateForm.get('entity').patchValue(0);
   }
 
   /**
@@ -158,7 +153,7 @@ export class EditTemplateComponent implements OnInit {
   }
 
   /**
-   * Edits an existing template.
+   * Creates a template.
    */
   submit() {
     const template: any = {
@@ -170,8 +165,8 @@ export class EditTemplateComponent implements OnInit {
       })),
       text: this.getEditorContent()
     };
-    this.templateService.updateTemplate(template, this.editTemplateData.template.id).subscribe(() => {
-      this.router.navigate(['../'], { relativeTo: this.route });
+    this.templateService.createTemplate(template).subscribe((response: any) => {
+      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
     });
   }
 

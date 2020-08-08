@@ -12,11 +12,13 @@ import { extract } from '../core/i18n/i18n.service';
 import { TemplatesComponent } from './templates.component';
 import { ViewTemplateComponent } from './view-template/view-template.component';
 import { EditTemplateComponent } from './edit-template/edit-template.component';
+import { CreateTemplateComponent } from './create-template/create-template.component';
 
 /** Custom Resolvers */
 import { TemplatesResolver } from './common-resolvers/templates.resolver';
 import { TemplateResolver } from './common-resolvers/template.resolver';
 import { EditTemplateResolver } from './common-resolvers/edit-template.resolver';
+import { CreateTemplateResolver } from './common-resolvers/create-template.resolver';
 
 /** Templates Routes */
 const routes: Routes = [
@@ -30,6 +32,14 @@ const routes: Routes = [
           component: TemplatesComponent,
           resolve: {
             templates: TemplatesResolver
+          }
+        },
+        {
+          path: 'create',
+          data: { title: extract('Create Template'), breadcrumb: 'Create Template' },
+          component: CreateTemplateComponent,
+          resolve: {
+            createTemplateData: CreateTemplateResolver
           }
         },
         {
@@ -69,7 +79,8 @@ const routes: Routes = [
   providers: [
     TemplatesResolver,
     TemplateResolver,
-    EditTemplateResolver
+    EditTemplateResolver,
+    CreateTemplateResolver
   ]
 })
 export class TemplatesRoutingModule { }
