@@ -1,6 +1,7 @@
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
+import { MatTable } from '@angular/material';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 /**
  * Recurring Deposits Account Interest Rate Chart Step
@@ -8,7 +9,14 @@ import { MatTableDataSource } from '@angular/material';
 @Component({
   selector: 'mifosx-recurring-deposits-account-interest-rate-chart-step',
   templateUrl: './recurring-deposits-account-interest-rate-chart-step.component.html',
-  styleUrls: ['./recurring-deposits-account-interest-rate-chart-step.component.scss']
+  styleUrls: ['./recurring-deposits-account-interest-rate-chart-step.component.scss'],
+  animations: [
+    trigger('expandChartSlab', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
+    ])
+  ]
 })
 export class RecurringDepositsAccountInterestRateChartStepComponent implements OnInit, OnChanges {
 
@@ -16,11 +24,17 @@ export class RecurringDepositsAccountInterestRateChartStepComponent implements O
   @Input() recurringDepositsAccountProductTemplate: any;
 
   /** Interest Rate Chart Data */
-  interestRateChartData: any;
+  interestRateChartData: any = [];
   /** Columns to be displayed in interest rate chart table. */
-  displayedColumns: string[] = ['period', 'amountRange', 'interest', 'description', 'incentives'];
-  /** Data source for interest rate chart table. */
-  dataSource: MatTableDataSource<any>;
+  chartSlabsDisplayedColumns: any[] = ['period', 'amountRange', 'interest', 'description', 'actions'];
+  /** Columns to be displayed in incentives sub-table. */
+  incentivesDisplayedColumns: string[] = ['entityType', 'attributeName', 'conditionType', 'attributeValue', 'incentiveType', 'amount'];
+  /** Additional Column to disblac incentives table  */
+  chartSlabsIncentivesDisplayedColumns: string[] = ['incentives'];
+  /** Expand Chart Slab Index used in the view */
+  expandChartSlabIndex: number;
+
+  @ViewChild('chartsTable') chartsTableRef: MatTable<Element>;
 
   constructor() {
   }

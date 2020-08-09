@@ -1,5 +1,6 @@
 /** Angular Imports */
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 /**
  * Recurring Deposit Preview Step
@@ -7,9 +8,16 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angu
 @Component({
   selector: 'mifosx-recurring-deposits-account-preview-step',
   templateUrl: './recurring-deposits-account-preview-step.component.html',
-  styleUrls: ['./recurring-deposits-account-preview-step.component.scss']
+  styleUrls: ['./recurring-deposits-account-preview-step.component.scss'],
+  animations: [
+    trigger('expandChartSlab', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
+    ])
+  ]
 })
-export class RecurringDepositsAccountPreviewStepComponent implements OnInit, OnChanges {
+export class RecurringDepositsAccountPreviewStepComponent implements OnChanges {
 
   /** Input Data */
   @Input() recurringDepositsAccountTemplate: any;
@@ -20,10 +28,16 @@ export class RecurringDepositsAccountPreviewStepComponent implements OnInit, OnC
 
   /** Charges Displayed Columns */
   chargesDisplayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'date', 'repaymentsEvery'];
-  /** Interest Rate Chart Displayed Columns */
-  interestRateChartDisplayedColumns: string[] = ['period', 'amountRange', 'interest', 'description', 'incentives'];
   /** Interest Rate Chart Data */
-  interestRateChartData: any;
+  interestRateChartData: any = [];
+  /** Columns to be displayed in interest rate chart table. */
+  chartSlabsDisplayedColumns: any[] = ['period', 'amountRange', 'interest', 'description', 'actions'];
+  /** Columns to be displayed in incentives sub-table. */
+  incentivesDisplayedColumns: string[] = ['entityType', 'attributeName', 'conditionType', 'attributeValue', 'incentiveType', 'amount'];
+  /** Additional Column to disblac incentives table  */
+  chartSlabsIncentivesDisplayedColumns: string[] = ['incentives'];
+  /** Expand Chart Slab Index used in the view */
+  expandChartSlabIndex: number;
 
   constructor() { }
 
@@ -32,10 +46,5 @@ export class RecurringDepositsAccountPreviewStepComponent implements OnInit, OnC
       this.interestRateChartData = this.recurringDepositsAccountProductTemplate.accountChart.chartSlabs;
     }
   }
-
-  ngOnInit() {
-    this.interestRateChartData = [];
-  }
-
 
 }

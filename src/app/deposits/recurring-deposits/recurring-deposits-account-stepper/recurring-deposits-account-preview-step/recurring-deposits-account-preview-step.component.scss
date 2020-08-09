@@ -22,3 +22,32 @@ mat-divider {
 .margin-t {
   margin-top: 1em;
 }
+
+.margin-t {
+  margin-top: 1em;
+}
+
+.margin-b {
+  margin-bottom: 0.25em;
+}
+
+.irc-table {
+  width: 100%;
+
+  tr.incentives-row {
+    height: 0;
+
+    > td {
+      padding: 0;
+    }
+
+    .incentives {
+      overflow: hidden;
+    }
+
+    .mat-card {
+      border-radius: 0;
+    }
+  }
+}
+
