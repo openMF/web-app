@@ -43,4 +43,8 @@ export class SidenavComponent implements OnInit {
       .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }
 
+  help() {
+    window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
+  }
+
 }

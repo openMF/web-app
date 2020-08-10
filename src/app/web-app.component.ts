@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material';
@@ -19,9 +19,11 @@ import { Logger } from './core/logger/logger.service';
 import { I18nService } from './core/i18n/i18n.service';
 import { ThemeStorageService } from './shared/theme-picker/theme-storage.service';
 import { AlertService } from './core/alert/alert.service';
+import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
 
 /** Custom Models */
 import { Alert } from './core/alert/alert.model';
+import { AuthenticationService } from './core/authentication/authentication.service';
 
 /** Initialize Logger */
 const log = new Logger('MifosX');
@@ -36,6 +38,8 @@ const log = new Logger('MifosX');
 })
 export class WebAppComponent implements OnInit {
 
+  buttonConfig: KeyboardShortcutsConfiguration;
+
   /**
    * @param {Router} router Router for navigation.
    * @param {ActivatedRoute} activatedRoute Activated Route.
@@ -45,6 +49,7 @@ export class WebAppComponent implements OnInit {
    * @param {ThemeStorageService} themeStorageService Theme Storage Service.
    * @param {MatSnackBar} snackBar Material Snackbar for notifications.
    * @param {AlertService} alertService Alert Service.
+   * @param {AuthenticationService} authenticationService Authentication service.
    */
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -53,7 +58,8 @@ export class WebAppComponent implements OnInit {
               private i18nService: I18nService,
               private themeStorageService: ThemeStorageService,
               public snackBar: MatSnackBar,
-              private alertService: AlertService) { }
+              private alertService: AlertService,
+              private authenticationService: AuthenticationService) { }
 
   /**
    * Initial Setup:
@@ -126,6 +132,55 @@ export class WebAppComponent implements OnInit {
         verticalPosition: 'top'
       });
     });
+    this.buttonConfig = new KeyboardShortcutsConfiguration();
+  }
+
+  logout() {
+    this.authenticationService.logout()
+      .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+  }
+
+  help() {
+    window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
+  }
+
+  // Monitor all keyboard events and excute keyboard shortcuts
+  @HostListener('window:keydown', ['$event'])
+  onKeydownHandler(event: KeyboardEvent) {
+    const routeD = this.buttonConfig.buttonCombinations.find(x => (x.ctrlKey === event.ctrlKey && x.shiftKey === event.shiftKey && x.altKey === event.altKey && x.key === event.key));
+    if (!(routeD === undefined)) {
+      switch (routeD.id) {
+        case 'logout':
+          this.logout();
+          break;
+        case 'help':
+          this.help();
+          break;
+        case 'runReport':
+          document.getElementById('runReport').click();
+          break;
+        case 'cancel':
+          const cancelButtons = document.querySelectorAll('button');
+          const filteredcancelButtons = Array.prototype.filter.call(cancelButtons, function (el: any) {
+            return el.textContent.trim() === 'Cancel';
+          });
+          if (filteredcancelButtons.length > 0) {
+            filteredcancelButtons[0].click();
+          }
+          break;
+        case 'submit':
+          const submitButton = document.querySelectorAll('button');
+          const filteredSubmitButton = Array.prototype.filter.call(submitButton, function (el: any) {
+            return el.textContent.trim() === 'Submit';
+          });
+          if (filteredSubmitButton.length > 0) {
+            filteredSubmitButton[0].click();
+          }
+          break;
+        default:
+          this.router.navigate([routeD.route], { relativeTo: this.activatedRoute });
+      }
+    }
   }
 
 }

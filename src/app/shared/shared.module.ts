@@ -15,6 +15,7 @@ import { ChangePasswordDialogComponent } from './change-password-dialog/change-p
 import { EnableDialogComponent } from './enable-dialog/enable-dialog.component';
 import { DisableDialogComponent } from './disable-dialog/disable-dialog.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { KeyboardShortcutsDialogComponent } from './keyboard-shortcuts-dialog/keyboard-shortcuts-dialog.component';
 
 /** Custom Modules */
 import { IconsModule } from './icons.module';
@@ -43,7 +44,8 @@ import { MaterialModule } from './material.module';
     ChangePasswordDialogComponent,
     EnableDialogComponent,
     DisableDialogComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    KeyboardShortcutsDialogComponent
   ],
   exports: [
     FileUploadComponent,
@@ -62,7 +64,8 @@ import { MaterialModule } from './material.module';
     ChangePasswordDialogComponent,
     EnableDialogComponent,
     DisableDialogComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    KeyboardShortcutsDialogComponent
   ]
 })
 export class SharedModule { }

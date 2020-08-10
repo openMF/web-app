@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>Keyboard Shortcuts</h1>
+
+<div mat-dialog-content>
+  <div fxLayout="column" fxLayoutGap="2%">
+    <ng-container *ngFor="let item of buttonConfig.buttonCombinations">
+      <div fxFlexFill fxFlex="50%">
+        <span fxFlex="50%">
+          <span *ngIf="item.ctrlKey"> <span class="modifierKey">Ctrl</span> + </span>
+          <span *ngIf="item.shiftKey"> <span class="modifierKey">Shift</span> + </span>
+          <span *ngIf="item.altKey"> <span class="modifierKey">Alt</span> + </span>
+          <span *ngIf="item.key"> <span class="modifierKey">{{ item.key }}</span></span>
+        </span>
+        <span fxFlex="50%">{{ item.title }}</span>
+      </div>
+      <mat-divider [inset]="true"></mat-divider>
+    </ng-container>
+  </div>
+</div>
