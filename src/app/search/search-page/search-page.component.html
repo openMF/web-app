@@ -1,0 +1,22 @@
+<div class="container">
+
+  <mat-card fxLayout="column" fxLayoutGap="2%">
+
+    <mat-error *ngIf="overload">Searched query resulted more than 200 records, showing first 200 records.</mat-error>
+
+    <mat-list>
+
+      <mat-list-item (click)="navigate(entity)" *ngFor="let entity of searchResults">
+        <h3 matLine><span class="link">{{ entity.entityName }}</span> | #{{ entity.entityAccountNo }}</h3>
+        <p matLine>
+          <span>Entity: {{ entity.entityType }} 
+            | {{ ['CLIENT','GROUP', 'CENTER'].includes(entity.entityType) ? 'Office' : 'Client' }}: {{ entity.parentName }}
+          </span>
+        </p>
+      </mat-list-item>
+      
+    </mat-list>
+
+  </mat-card>
+
+</div>

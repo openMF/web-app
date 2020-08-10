@@ -9,20 +9,21 @@ import { Route } from '../core/route/route.service';
 import { extract } from '../core/i18n/i18n.service';
 
 /** Custom Components */
-import { NotificationsPageComponent } from './notifications-page/notifications-page.component';
+import { SearchPageComponent } from './search-page/search-page.component';
 
 /** Custom Resolvers */
-import { NotificationsResolver } from './notifications.resolver';
+import { SearchResolver } from './search.resolver';
 
-/** Notification Routes */
+/** Search Routes */
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'notifications',
-      component: NotificationsPageComponent,
-      data: { title: extract('Notifications'), breadcrumb: 'Notifications' },
+      path: 'search',
+      component: SearchPageComponent,
+      data: { title: extract('Search'), breadcrumb: 'Search' },
+      runGuardsAndResolvers: 'paramsOrQueryParamsChange',
       resolve: {
-        notifications: NotificationsResolver
+        searchResults: SearchResolver
       }
     }
   ])
@@ -30,7 +31,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  providers: [NotificationsResolver],
+  providers: [SearchResolver],
   exports: [RouterModule]
 })
-export class NotificationsRoutingModule { }
+export class SearchRoutingModule { }
