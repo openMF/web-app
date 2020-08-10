@@ -2,7 +2,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { MatSidenav } from '@angular/material';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { style, animate, transition, trigger } from '@angular/animations';
 import { Router } from '@angular/router';
 
 /** rxjs Imports */
@@ -18,18 +17,7 @@ import { AuthenticationService } from '../../authentication/authentication.servi
 @Component({
   selector: 'mifosx-toolbar',
   templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss'],
-  animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate(500, style({ opacity: 1 }))
-      ]),
-      transition(':leave', [
-        animate(500, style({ opacity: 0 }))
-      ])
-    ])
-  ]
+  styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
 
@@ -39,8 +27,6 @@ export class ToolbarComponent implements OnInit {
       map(result => result.matches)
     );
 
-  /** Sets the initial visibility of search input as hidden. Visible if true. */
-  searchVisible = false;
   /** Sets the initial state of sidenav as collapsed. Not collapsed if false. */
   sidenavCollapsed = true;
 
@@ -82,13 +68,6 @@ export class ToolbarComponent implements OnInit {
   toggleSidenavCollapse(sidenavCollapsed?: boolean) {
     this.sidenavCollapsed = sidenavCollapsed || !this.sidenavCollapsed;
     this.collapse.emit(this.sidenavCollapsed);
-  }
-
-  /**
-   * Toggles the visibility of search input with fadeInOut animation.
-   */
-  toggleSearchVisibility() {
-    this.searchVisible = !this.searchVisible;
   }
 
   /**

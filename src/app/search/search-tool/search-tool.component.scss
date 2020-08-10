@@ -1,0 +1,18 @@
+.search-bar {
+  .search {
+    max-width: 400px;
+    width: 100%;
+    font-size: 1rem;
+  }
+  .resource {
+    max-width: 90px;
+    width: 100%;
+    font-size: 1rem;
+  }
+}
+
+.search-icon {
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+}

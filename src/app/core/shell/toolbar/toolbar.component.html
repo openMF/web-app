@@ -41,21 +41,7 @@
 
   <span fxFlex="auto"></span>
 
-  <!--
-    TODO: Search
-    Separate into its own component in shared module for reuse.
-    Implement functionality.
-  -->
-  <div *ngIf="searchVisible" class="search-bar" fxFlex="auto" fxHide.lt-sm="true" [@fadeInOut]>
-    <mat-form-field class="search">
-      <mat-label>Search</mat-label>
-      <input matInput type="text" (focusout)="toggleSearchVisibility()">
-    </mat-form-field>
-  </div>
-
-  <button mat-icon-button class="ml-1" (click)="toggleSearchVisibility()" fxHide.lt-sm="true">
-    <fa-icon icon="search" size="lg"></fa-icon>
-  </button>
+  <mifosx-search-tool></mifosx-search-tool>
 
   <mifosx-language-selector class="ml-1 language" fxHide.lt-md></mifosx-language-selector>
 
