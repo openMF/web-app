@@ -103,4 +103,9 @@ export class AccountTransfersService {
                                         .set('offset', '0');
     return this.http.get(`/standinginstructions/${standingInstructionsId}`, { params: httpParams });
   }
+
+  getViewAccountTransferDetails(transferId: any): Observable<any> {
+    return this.http.get(`/accounttransfers/${transferId}`);
+  }
+
 }

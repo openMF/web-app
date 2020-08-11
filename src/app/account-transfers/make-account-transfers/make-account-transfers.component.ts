@@ -6,11 +6,11 @@ import { DatePipe } from '@angular/common';
 import { ClientsService } from 'app/clients/clients.service';
 
 @Component({
-  selector: 'mifosx-make-account-transers',
-  templateUrl: './make-account-transers.component.html',
-  styleUrls: ['./make-account-transers.component.scss']
+  selector: 'mifosx-make-account-transfers',
+  templateUrl: './make-account-transfers.component.html',
+  styleUrls: ['./make-account-transfers.component.scss']
 })
-export class MakeAccountTransersComponent implements OnInit, AfterViewInit {
+export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
 
   /** Standing Instructions Data */
   accountTransferTemplateData: any;

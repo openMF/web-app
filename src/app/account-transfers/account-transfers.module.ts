@@ -12,10 +12,10 @@ import { DirectivesModule } from '../directives/directives.module';
 import { ViewStandingInstructionsComponent } from './view-standing-instructions/view-standing-instructions.component';
 import { EditStandingInstructionsComponent } from './edit-standing-instructions/edit-standing-instructions.component';
 import { CreateStandingInstructionsComponent } from './create-standing-instructions/create-standing-instructions.component';
-import { MakeAccountTransersComponent } from './make-account-transers/make-account-transers.component';
+import { MakeAccountTransfersComponent } from './make-account-transfers/make-account-transfers.component';
 import { ListStandingInstructionsComponent } from './list-standing-instructions/list-standing-instructions.component';
 import { ListTransactionsComponent } from './list-transactions/list-transactions.component';
-
+import { ViewAccountTransferComponent } from './view-account-transfer/view-account-transfer.component';
 /**
  * Account Transfers Module
  *
@@ -27,9 +27,10 @@ import { ListTransactionsComponent } from './list-transactions/list-transactions
     ViewStandingInstructionsComponent,
     EditStandingInstructionsComponent,
     CreateStandingInstructionsComponent,
-    MakeAccountTransersComponent,
+    MakeAccountTransfersComponent,
     ListStandingInstructionsComponent,
-    ListTransactionsComponent
+    ListTransactionsComponent,
+    ViewAccountTransferComponent
   ],
   providers: [DatePipe]
 })

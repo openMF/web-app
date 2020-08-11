@@ -117,6 +117,10 @@ const routes: Routes = [
                 redirectTo: '../transactions', pathMatch: 'prefix'
               },
               {
+                path: 'account-transfers',
+                loadChildren: '../account-transfers/account-transfers.module#AccountTransfersModule'
+              },
+              {
                 path: ':id',
                 data: { routeParamBreadcrumb: 'id' },
                 children: [
@@ -180,7 +184,7 @@ const routes: Routes = [
         ]
       }
     ]
-  }
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],
