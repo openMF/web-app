@@ -131,6 +131,10 @@ const routes: Routes = [
                     resolve: {
                       recurringDepositsAccountTransactionTemplate: RecurringDepositsAccountTransactionTemplateResolver
                     }
+                  },
+                  {
+                    path: 'account-transfers',
+                    loadChildren: '../../account-transfers/account-transfers.module#AccountTransfersModule'
                   }
                 ]
               }

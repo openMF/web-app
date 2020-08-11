@@ -1,0 +1,82 @@
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" fxLayout.lt-md="column">
+
+        <h3 class="mat-h3" fxFlexFill>Transaction Details</h3>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Transaction Amount:</span>
+          <span fxFlex="60%">{{ viewAccountTransferData.transferAmount }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Transaction Date:</span>
+          <span fxFlex="60%">{{ viewAccountTransferData.transferDate | date }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Description:</span>
+          <span fxFlex="60%">{{ viewAccountTransferData.transferDescription }}</span>
+        </div>
+
+        <h3 class="mat-h3" fxFlexFill>Transferred From</h3>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Office:</span>
+          <span fxFlex="60%">{{ viewAccountTransferData.fromOffice.name }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Client:</span>
+          <span fxFlex="60%">{{ viewAccountTransferData.fromClient.displayName }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Account Type:</span>
+          <span fxFlex="60%">{{ viewAccountTransferData.fromAccountType.value }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Account #:</span>
+          <span fxFlex="60%">{{ viewAccountTransferData.fromAccount.accountNo }}</span>
+        </div>
+
+        <h3 class="mat-h3" fxFlexFill>Transferred To</h3>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Office:</span>
+          <span fxFlex="60%">{{ viewAccountTransferData.toOffice.name }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Client:</span>
+          <span fxFlex="60%">{{ viewAccountTransferData.toClient.displayName }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Account Type:</span>
+          <span fxFlex="60%">{{ viewAccountTransferData.toAccountType.value }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Account #:</span>
+          <span fxFlex="60%">{{ viewAccountTransferData.toAccount.accountNo }}</span>
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>
