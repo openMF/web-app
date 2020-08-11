@@ -246,4 +246,18 @@ export class CentersService {
       return this.http.put(`/centers/${centerId}/calendars/${calendarId}`, data);
     }
 
+  /**
+   * Run Report Data for Staff Assignement History.
+   * @param {any} reportName reportName object containing 'name' of the report
+   * @param {object} centerId CenterId.
+   * @returns {Observable<any>}
+   */
+  getStaffAssignmentHistoryData(reportName: any, centerId: any, tenantIdentifier: string, locale: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('tenantIdentifier', tenantIdentifier)
+      .set('locale', locale)
+      .set('R_centerId', centerId);
+    return this.http.get(`/runreports/${reportName}`, { responseType: 'arraybuffer', observe: 'response', params: httpParams });
+  }
+
 }

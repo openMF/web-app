@@ -83,7 +83,7 @@
         <span *ngIf="centerViewData.status.value==='Active' && !(centerViewData.collectionMeetingCalendar)">
           <button mat-menu-item *mifosxHasPermission="'CREATE_MEETING'" (click)="doAction('Attach Meeting')"> Attach Meeting </button>
         </span>
-        <button mat-menu-item *mifosxHasPermission="'READ_Staff Assignment History'" > Staff Assignment History </button>
+        <button mat-menu-item *mifosxHasPermission="'READ_Staff Assignment History'" (click)="doAction('Staff Assignment History')"> Staff Assignment History </button>
       </mat-menu>
     </mat-card-actions>
   </mat-card-header>

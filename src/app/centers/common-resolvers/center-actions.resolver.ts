@@ -40,6 +40,8 @@ export class CenterActionsResolver implements Resolve<Object> {
       case 'Edit Meeting Schedule':
         const calendarId = route.queryParamMap.get('calendarId');
         return this.centersService.getCalendarAndTemplate(centerId, calendarId);
+      case 'Staff Assignment History':
+        return this.centersService.getStaffAssignmentHistoryData('Staff Assignment History', centerId, 'default', 'en');
       default:
         return undefined;
     }

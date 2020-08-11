@@ -75,6 +75,7 @@ export class CentersViewComponent implements OnInit {
       case 'Attendance':
       case 'Attach Meeting':
       case 'Manage Groups':
+      case 'Staff Assignment History':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
       case 'Edit Meeting':
