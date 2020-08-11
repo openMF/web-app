@@ -61,6 +61,7 @@ import { BulkLoanReassignmnetComponent } from './bulk-loan-reassignmnet/bulk-loa
 import { EditLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/edit-loan-provisioning-criteria/edit-loan-provisioning-criteria.component';
 import { StandingInstructionsHistoryComponent } from './standing-instructions-history/standing-instructions-history.component';
 import { FundMappingComponent } from './fund-mapping/fund-mapping.component';
+import { CreateHolidayComponent } from './holidays/create-holiday/create-holiday.component';
 
 /** Custom Resolvers */
 import { LoanProvisioningCriteriaResolver } from './loan-provisioning-criteria/common-resolvers/loan-provisioning-criteria.resolver';
@@ -605,6 +606,15 @@ const routes: Routes = [
               component: HolidaysComponent,
               resolve: {
                 offices: OfficesResolver
+              }
+            },
+            {
+              path: 'create',
+              component: CreateHolidayComponent,
+              data: { title: extract('Create Holiday'), breadcrumb: 'Create' },
+              resolve: {
+                offices: OfficesResolver,
+                holidayTemplate: HolidayTemplateResolver
               }
             },
             {

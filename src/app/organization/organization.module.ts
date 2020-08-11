@@ -68,6 +68,7 @@ import { CreateLoanProvisioningCriteriaComponent } from './loan-provisioning-cri
 import { EditLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/edit-loan-provisioning-criteria/edit-loan-provisioning-criteria.component';
 import { StandingInstructionsHistoryComponent } from './standing-instructions-history/standing-instructions-history.component';
 import { FundMappingComponent } from './fund-mapping/fund-mapping.component';
+import { CreateHolidayComponent } from './holidays/create-holiday/create-holiday.component';
 
 /**
  * Organization Module
@@ -142,6 +143,7 @@ import { FundMappingComponent } from './fund-mapping/fund-mapping.component';
     EditLoanProvisioningCriteriaComponent,
     StandingInstructionsHistoryComponent,
     FundMappingComponent,
+    CreateHolidayComponent,
   ]
 })
 export class OrganizationModule { }

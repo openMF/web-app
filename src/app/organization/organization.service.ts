@@ -609,6 +609,15 @@ export class OrganizationService {
   }
 
   /**
+   * Create Holiday.
+   * @param holidayData Holiday data to be created.
+   * @returns {Observable<any>}
+   */
+  createHoliday(holidayData: any): Observable<any> {
+    return this.http.post('/holidays', holidayData);
+  }
+
+  /**
    * Update Holiday.
    * @param holidayId Holiday Id to be updated.
    * @param holidayData Holiday data to be updated.
