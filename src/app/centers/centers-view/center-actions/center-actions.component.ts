@@ -21,7 +21,8 @@ export class CenterActionsComponent {
     'Attach Meeting': boolean,
     'Edit Meeting': boolean,
     'Edit Meeting Schedule': boolean,
-    'Manage Groups': boolean
+    'Manage Groups': boolean,
+    'Staff Assignment History': boolean
   } = {
     'Activate': false,
     'Assign Staff': false,
@@ -30,7 +31,8 @@ export class CenterActionsComponent {
     'Attach Meeting': false,
     'Edit Meeting': false,
     'Edit Meeting Schedule': false,
-    'Manage Groups': false
+    'Manage Groups': false,
+    'Staff Assignment History': false
   };
 
   /**
