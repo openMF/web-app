@@ -1,4 +1,5 @@
 <mat-card class="container">
+
   <div fxLayout="row" fxLayoutAlign="start center">
     <div class="search-box">
       <mat-form-field>
@@ -10,7 +11,7 @@
       <button mat-raised-button color="primary" [routerLink]="['../', 'organization', 'bulk-import', 'Groups']">
         <fa-icon icon="download"></fa-icon>&nbsp;&nbsp;Import Group
       </button>
-      <button mat-raised-button color="primary" [routerLink]="['create']">
+      <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_GROUP'">
         <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Create Group
       </button>
     </div>

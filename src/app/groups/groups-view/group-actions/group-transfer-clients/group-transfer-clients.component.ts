@@ -24,7 +24,7 @@ export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
   groupsData: any = [];
   /** Staff data. */
   staffData: any;
-  /** Group Members. */
+  /** Client Members. */
   clientMembers: any[] = [];
 
   /**

@@ -18,7 +18,7 @@ export class AddRoleComponent implements OnInit {
 
   /** Groups Add Role Form */
   groupsAddRoleForm: FormGroup;
-  /** Client Menmber Data */
+  /** Client Member Data */
   clientMemberData: any;
   /** Role Data */
   roleData: any;

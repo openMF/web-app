@@ -28,6 +28,9 @@ export class GroupsViewComponent {
   /**
    * Fetches group data from `resolve`
    * @param {ActivatedRoute} route Activated Route
+   * @param {GroupsService} groupsService Groups Service
+   * @param {Router} router Router
+   * @param {MatDialog} dialog Dialog
    */
   constructor(private route: ActivatedRoute,
               private groupsService: GroupsService,

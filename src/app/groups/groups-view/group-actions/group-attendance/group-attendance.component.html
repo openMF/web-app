@@ -41,7 +41,8 @@
 
     <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
       <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-      <button mat-raised-button color="primary" (click)="submit()">Confirm</button>
+      <button mat-raised-button color="primary" (click)="submit()"
+        *mifosxHasPermission="'SAVEORUPDATEATTENDANCE_MEETING'">Confirm</button>
     </mat-card-actions>
 
   </mat-card>

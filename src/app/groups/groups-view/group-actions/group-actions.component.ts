@@ -37,6 +37,7 @@ export class GroupActionsComponent {
 
   /**
    * @param {ActivatedRoute} route Activated Route
+   * @param {Router} router Router
    */
   constructor(private route: ActivatedRoute,
               private router: Router) {

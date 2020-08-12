@@ -15,12 +15,12 @@ import { GroupsService } from '../groups.service';
 export class GroupActionsResolver implements Resolve<Object> {
 
   /**
-   * @param {GroupsService} groupsService Savings service.
+   * @param {GroupsService} groupsService Groups service.
    */
   constructor(private groupsService: GroupsService) { }
 
   /**
-   * Returns the Savings account actions data.
+   * Returns the group actions data.
    * @param {ActivatedRouteSnapshot} route Route Snapshot
    * @returns {Observable<any>}
    */

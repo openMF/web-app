@@ -2,7 +2,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator, MatSort, MatCheckbox } from '@angular/material';
 import { FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
 
 /** rxjs Imports */
 import { merge } from 'rxjs';
@@ -44,6 +43,9 @@ export class GroupsComponent implements OnInit, AfterViewInit {
   /** Sorter for groups table. */
   @ViewChild(MatSort) sort: MatSort;
 
+  /**
+   * @param {GroupsService} groupsService Groups Service
+   */
   constructor(private groupsService: GroupsService) { }
 
   ngOnInit() {

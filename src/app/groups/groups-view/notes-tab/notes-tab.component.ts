@@ -41,6 +41,9 @@ export class NotesTabComponent implements OnInit {
   /**
    * Fetches notes data from `resolve`
    * @param {Activated Route} route Activated Route.
+   * @param {FormBuilder} formBuilder FormBuilder
+   * @param {GroupsService} groupsService Groups Service
+   * @param {MatDialog} dialog MatDialog
    * @param {AuthenticationService} authenticationService Authentication Service.
    */
   constructor(private route: ActivatedRoute,
