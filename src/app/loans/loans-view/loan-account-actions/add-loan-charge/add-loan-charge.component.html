@@ -48,7 +48,7 @@
 
     <mat-card-actions fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
       <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-      <button mat-raised-button color="primary" [disabled]="!loanChargeForm.valid">Submit</button>
+      <button mat-raised-button color="primary" [disabled]="!loanChargeForm.valid" *mifosxHasPermission="'CREATE_LOANCHARGE'">Submit</button>
     </mat-card-actions>
 
   </mat-card-content>

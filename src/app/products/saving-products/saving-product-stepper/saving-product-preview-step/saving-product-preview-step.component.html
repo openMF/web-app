@@ -341,7 +341,7 @@
   <button mat-raised-button [routerLink]="['../']">
     Cancel
   </button>
-  <button mat-raised-button color="primary" (click)="submit.emit()">
+  <button mat-raised-button color="primary" (click)="submit.emit()" *mifosxHasPermission="taskPermission">
     Submit
   </button>
 </div>

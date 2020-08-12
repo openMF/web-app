@@ -35,7 +35,7 @@
       <input matInput placeholder="From Account Id" [formControl]="fromAccountId">
     </mat-form-field>
 
-    <button mat-raised-button color="primary" (click)="filterStandingInstructions()" class="filter-button">
+    <button mat-raised-button color="primary" *mifosxHasPermission="'READ_STANDINGINSTRUCTION'" (click)="filterStandingInstructions()" class="filter-button">
       &nbsp;&nbsp;Filter
     </button>
   </div>

@@ -38,3 +38,13 @@ mat-list-item {
 .inactive:hover {
   transform: scale(1.1);
 }
+
+.content {
+  div {
+    line-height: 3rem;
+
+    &.header {
+      font-weight: 500;
+    }
+  }
+}

@@ -20,7 +20,7 @@
 
     <mat-dialog-actions align="end">
       <button mat-raised-button mat-dialog-close>Cancel</button>
-      <button mat-raised-button color="primary" [disabled]="!uploadDocumentForm.valid"
+      <button mat-raised-button color="primary" [disabled]="!uploadDocumentForm.valid" *mifosxHasPermission="'CREATE_DOCUMENT'"
         [mat-dialog-close]="{data: {name: uploadDocumentForm.value.name, description: uploadDocumentForm.value.description, file: uploadDocumentForm.value.file} }">Confirm</button>
     </mat-dialog-actions>
 

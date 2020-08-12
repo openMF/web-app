@@ -11,10 +11,10 @@
       </mat-checkbox>
     </div>
     <div class="action-button" fxLayoutGap="25px">
-      <button mat-raised-button color="primary" [routerLink]="['../', 'organization', 'bulk-import', 'Centers']">
+      <button mat-raised-button color="primary" [routerLink]="['../', 'organization', 'bulk-import', 'Centers']" *mifosxHasPermission="'CREATE_CENTER'">
         <fa-icon icon="download"></fa-icon>&nbsp;&nbsp;Import Center
       </button>
-      <button mat-raised-button color="primary" [routerLink]="['create']">
+      <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_CENTER'">
         <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Create Center
       </button>
     </div>

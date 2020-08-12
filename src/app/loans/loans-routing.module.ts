@@ -35,6 +35,8 @@ import { LoanActionButtonResolver } from './common-resolvers/loan-action-button.
 import { LoansAccountTemplateResolver } from './common-resolvers/loans-account-template.resolver';
 import { LoanDocumentsResolver } from './common-resolvers/loan-documents.resolver';
 import { LoansAccountAndTemplateResolver } from './common-resolvers/loans-account-and-template.resolver';
+import { LoansAccountChargeResolver } from './common-resolvers/loans-account-charge.resolver';
+import { ViewChargeComponent } from './loans-view/view-charge/view-charge.component';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -128,11 +130,24 @@ const routes: Routes = [
             },
             {
               path: 'charges',
-              component: ChargesTabComponent,
-              data: { title: extract('Charges'), breadcrumb: 'Charges', routeParamBreadcrumb: false },
-              resolve: {
-                loanDetailsAssociationData: LoanDetailsChargesResolver
-              }
+              data: { title: extract('Loans Account Charges'), breadcrumb: 'Charges', routeParamBreadcrumb: false },
+              children: [
+                {
+                  path: '',
+                  component: ChargesTabComponent,
+                  resolve: {
+                    loanDetailsAssociationData: LoanDetailsChargesResolver
+                  }
+                },
+                {
+                  path: ':id',
+                  data: { routeParamBreadcrumb: 'id' },
+                  component: ViewChargeComponent,
+                  resolve: {
+                    loansAccountCharge: LoansAccountChargeResolver
+                  }
+                }
+              ]
             },
             {
               path: 'loan-documents',
@@ -206,7 +221,8 @@ const routes: Routes = [
     LoanActionButtonResolver,
     LoansAccountTemplateResolver,
     LoanDocumentsResolver,
-    LoansAccountAndTemplateResolver
+    LoansAccountAndTemplateResolver,
+    LoansAccountChargeResolver
   ]
 })
 
