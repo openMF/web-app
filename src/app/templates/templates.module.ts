@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 /** Custom Modules */
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { SharedModule } from '../shared/shared.module';
+import { DirectivesModule } from '../directives/directives.module';
 import { TemplatesRoutingModule } from './templates-routing.module';
 
 /** Custom Components */
@@ -21,6 +22,7 @@ import { CreateTemplateComponent } from './create-template/create-template.compo
   imports: [
     CKEditorModule,
     SharedModule,
+    DirectivesModule,
     TemplatesRoutingModule
   ],
   declarations: [
