@@ -29,7 +29,7 @@ export class CreateTemplateComponent implements OnInit {
 
   /** Template form. */
   templateForm: FormGroup;
-  /** Edit Template Data. */
+  /** Create Template Data. */
   createTemplateData: any;
   /** Template Mappers */
   mappers: any[] = [];
