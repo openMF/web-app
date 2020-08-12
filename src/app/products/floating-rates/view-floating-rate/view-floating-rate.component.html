@@ -1,6 +1,6 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
 
-  <button mat-raised-button color="primary" [routerLink]="['edit']">
+  <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_FLOATINGRATE'">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
     Edit
   </button>

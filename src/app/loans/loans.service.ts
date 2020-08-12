@@ -364,4 +364,44 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}/guarantors/accounts/template`, { params: httpParams });
   }
 
+  /**
+   * @param {string} accountId loans account Id
+   * @param {string} chargeId loans charge Id
+   * @returns {Observable<any>}
+   */
+  getLoansAccountCharge(accountId: string, chargeId: string): Observable<any> {
+    return this.http.get(`/loans/${accountId}/charges/${chargeId}`);
+  }
+
+  /**
+   * @param {string} accountId Loans Account Id
+   * @param {string} command Command
+   * @param {any} data Data
+   * @param {string} chargeId Charge Id
+   * @returns {Observable<any>}
+   */
+  executeLoansAccountChargesCommand(accountId: string, command: string, data: any, chargeId: any): Observable<any> {
+    const httpParams = new HttpParams().set('command', command);
+    return this.http.post(`/loans/${accountId}/charges/${chargeId}`, data, { params: httpParams });
+  }
+
+  /**
+   * @param {string} accountId  Loans Account Id
+   * @param {any} data Charge Data
+   * @param {any} chargeId Charge Id
+   * @returns {Observable<any>}
+   */
+  editLoansAccountCharge(accountId: string, data: any, chargeId: any): Observable<any> {
+    return this.http.put(`/loans/${accountId}/charges/${chargeId}`, data);
+  }
+
+  /**
+   * @param {string} accountId  Loans Account Id
+   * @param {any} chargeId Charge Id
+   * @returns {Observable<any>}
+   */
+  deleteLoansAccountCharge(accountId: string, chargeId: any): Observable<any> {
+    return this.http.delete(`/loans/${accountId}/charges/${chargeId}`);
+  }
+
 }

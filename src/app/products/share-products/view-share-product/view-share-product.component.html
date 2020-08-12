@@ -1,9 +1,9 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
-  <button mat-raised-button color="primary" [routerLink]="['edit']">
+  <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_SHAREPRODUCT'">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
     Edit
   </button>
-  <button mat-raised-button color="primary" [routerLink]="['dividends']">
+  <button mat-raised-button color="primary" [routerLink]="['dividends']" *mifosxHasPermission="'UPDATE_SHAREPRODUCT'">
     <fa-icon icon="hand-holding-usd"></fa-icon>&nbsp;&nbsp;
     Dividends
   </button>

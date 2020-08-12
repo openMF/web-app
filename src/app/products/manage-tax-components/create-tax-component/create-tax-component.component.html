@@ -86,7 +86,7 @@
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
         <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!taxComponentForm.valid">Submit</button>
+        <button mat-raised-button color="primary" [disabled]="!taxComponentForm.valid" *mifosxHasPermission="'CREATE_TAXCOMPONENT'">Submit</button>
       </mat-card-actions>
 
     </form>

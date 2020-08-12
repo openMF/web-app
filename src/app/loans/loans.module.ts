@@ -51,16 +51,17 @@ import { WithdrawnByClientComponent } from './loans-view/loan-account-actions/wi
 import { UndoDisbursalComponent } from './loans-view/loan-account-actions/undo-disbursal/undo-disbursal.component';
 import { AddCollateralComponent } from './loans-view/loan-account-actions/add-collateral/add-collateral.component';
 import { LoanDocumentsTabComponent } from './loans-view/loan-documents-tab/loan-documents-tab.component';
+import { ViewChargeComponent } from './loans-view/view-charge/view-charge.component';
+import { StandingInstructionsTabComponent } from './loans-view/standing-instructions-tab/standing-instructions-tab.component';
+import { EditLoansAccountComponent } from './edit-loans-account/edit-loans-account.component';
+import { LoanScreenReportsComponent } from './loans-view/loan-account-actions/loan-screen-reports/loan-screen-reports.component';
+import { ApproveLoanComponent } from './loans-view/loan-account-actions/approve-loan/approve-loan.component';
 
 /** Dialog Components */
 import { LoansAccountViewGuarantorDetailsDialogComponent } from './custom-dialog/loans-account-view-guarantor-details-dialog/loans-account-view-guarantor-details-dialog.component';
 import { LoansAccountAddCollateralDialogComponent } from './custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
 import { LoansConfirmationDialogBoxComponent } from './custom-dialog/loans-confirmation-dialog-box/loans-confirmation-dialog-box.component';
 import { LoanAccountLoadDocumentsDialogComponent } from './custom-dialog/loan-account-load-documents-dialog/loan-account-load-documents-dialog.component';
-import { StandingInstructionsTabComponent } from './loans-view/standing-instructions-tab/standing-instructions-tab.component';
-import { EditLoansAccountComponent } from './edit-loans-account/edit-loans-account.component';
-import { LoanScreenReportsComponent } from './loans-view/loan-account-actions/loan-screen-reports/loan-screen-reports.component';
-import { ApproveLoanComponent } from './loans-view/loan-account-actions/approve-loan/approve-loan.component';
 
 /**
  * Loans Module
@@ -119,7 +120,8 @@ import { ApproveLoanComponent } from './loans-view/loan-account-actions/approve-
     StandingInstructionsTabComponent,
     EditLoansAccountComponent,
     LoanScreenReportsComponent,
-    ApproveLoanComponent
+    ApproveLoanComponent,
+    ViewChargeComponent
   ],
   entryComponents: [
     LoansAccountAddCollateralDialogComponent,

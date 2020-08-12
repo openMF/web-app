@@ -48,8 +48,8 @@ export class EntityToEntityMappingComponent implements OnInit {
   /**
    * stores the data for clicked mapType
    */
-  firstEntityData: string[] = [];
-  secondEntityData: string[] = [];
+  firstEntityData: any = [];
+  secondEntityData: any = [];
   firstMappingEntity: string;
   secondMappingEntity: string;
 

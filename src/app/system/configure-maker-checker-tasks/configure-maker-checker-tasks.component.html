@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
-  <button mat-raised-button color="primary" (click)="editTask(); backupCheckValues();">
+  <button mat-raised-button color="primary" (click)="editTask(); backupCheckValues();" *mifosxHasPermission="'UPDATE_PERMISSION'">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
     Edit
   </button>
@@ -23,6 +23,8 @@
           </mat-list>
         </div>
 
+        <mat-divider [vertical]="true"></mat-divider>
+
         <div fxFlex="70" fxLayout="column" class="listPermission">
           <form [formGroup]="formGroup" (submit)="submit()">
 
@@ -45,7 +47,7 @@
     <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px" *ngIf="!isDisabled">
       <mat-card-actions>
         <button type="button" mat-raised-button (click)="cancel(); restoreCheckboxes();">Cancel</button>
-        <button mat-raised-button color="primary" (click)="submit()">Submit</button>
+        <button mat-raised-button color="primary" (click)="submit()" *mifosxHasPermission="'UPDATE_PERMISSION'">Submit</button>
       </mat-card-actions>
     </div>
 

@@ -1,7 +1,7 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog, MatTableDataSource, MatTable, MatPaginator, MatSort } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
@@ -17,66 +17,46 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 
+/**
+ * View Charge Component.
+ */
 @Component({
-  selector: 'mifosx-charges-tab',
-  templateUrl: './charges-tab.component.html',
-  styleUrls: ['./charges-tab.component.scss']
+  selector: 'mifosx-view-charge',
+  templateUrl: './view-charge.component.html',
+  styleUrls: ['./view-charge.component.scss']
 })
-export class ChargesTabComponent implements OnInit {
+export class ViewChargeComponent {
 
-  /** Loan Details Data */
-  loanDetails: any;
-  /** Charges Data */
-  chargesData: any;
-  /** Status */
-  status: any;
-  /** Columns to be displayed in charges table. */
-  displayedColumns: string[] = ['name', 'feepenalty', 'paymentdueat', 'dueasof', 'calculationtype', 'due', 'paid', 'waived', 'outstanding', 'actions'];
-  /** Data source for charges table. */
-  dataSource: MatTableDataSource<any>;
-
-  /** Paginator for charges table. */
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  /** Sorter for charges table. */
-  @ViewChild(MatSort) sort: MatSort;
+  /** Charge data. */
+  chargeData: any;
+  /** Loans Account Data */
+  loansAccountData: any;
 
   /**
-   * Retrieves the loans data from `resolve`.
+   * Retrieves the Charge data from `resolve`.
+   * @param {LoansService} loansService Loans Service
    * @param {ActivatedRoute} route Activated Route.
+   * @param {Router} router Router for navigation.
+   * @param {MatDialog} dialog Dialog reference.
+   * @param {DatePipe} datePipe DatePipe.
    */
   constructor(private loansService: LoansService,
               private route: ActivatedRoute,
               private datePipe: DatePipe,
               private router: Router,
               public dialog: MatDialog) {
-    this.route.data.subscribe(( data: { loanDetailsAssociationData: any }) => {
-      this.loanDetails = data.loanDetailsAssociationData;
+    this.route.data.subscribe((data: { loansAccountCharge: any }) => {
+      this.chargeData = data.loansAccountCharge;
     });
-  }
-
-
-  ngOnInit() {
-    this.chargesData = this.loanDetails.charges;
-    this.status = this.loanDetails.status.value;
-    let actionFlag;
-    this.chargesData.forEach((element: any) => {
-      if (element.paid || element.waived || element.chargeTimeType.value === 'Disbursement' || this.loanDetails.status.value !== 'Active') {
-        actionFlag = true;
-      } else {
-        actionFlag = false;
-      }
-      element.actionFlag = actionFlag;
+    this.route.parent.parent.data.subscribe((data: { loanDetailsData: any }) => {
+      this.loansAccountData = data.loanDetailsData;
     });
-    this.dataSource = new MatTableDataSource(this.chargesData);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   /**
    * Pays the charge.
-   * @param {any} chargeId Charge Id
    */
-  payCharge(chargeId: any) {
+  payCharge() {
     const formfields: FormfieldBase[] = [
       new InputBase({
         controlName: 'amount',
@@ -94,7 +74,7 @@ export class ChargesTabComponent implements OnInit {
       })
     ];
     const data = {
-      title: `Pay Charge ${chargeId}`,
+      title: 'Pay Charge',
       layout: { addButtonText: 'Confirm' },
       formfields: formfields
     };
@@ -109,7 +89,7 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.loansService.executeLoansAccountChargesCommand(this.loanDetails.id, 'paycharge', dataObject, chargeId)
+        this.loansService.executeLoansAccountChargesCommand(this.chargeData.accountId, 'paycharge', dataObject, this.chargeData.id)
           .subscribe(() => {
             this.reload();
           });
@@ -119,13 +99,12 @@ export class ChargesTabComponent implements OnInit {
 
   /**
    * Waive's the charge
-   * @param {any} chargeId Charge Id
    */
-  waiveCharge(chargeId: any) {
-    const waiveChargeDialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { heading: 'Waive Charge', dialogContext: `Are you sure you want to waive charge with id: ${chargeId}`, type: 'Basic' } });
+  waiveCharge() {
+    const waiveChargeDialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { heading: 'Waive Charge', dialogContext: `Are you sure you want to waive charge with id: ${this.chargeData.id}`, type: 'Basic' } });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.loansService.executeLoansAccountChargesCommand(this.loanDetails.id, 'waive', {}, chargeId)
+        this.loansService.executeLoansAccountChargesCommand(this.chargeData.accountId, 'waive', {}, this.chargeData.id)
           .subscribe(() => {
             this.reload();
           });
@@ -135,20 +114,19 @@ export class ChargesTabComponent implements OnInit {
 
   /**
    * Edits the charge
-   * @param {any} charge Charge
    */
-  editCharge(charge: any) {
+  editCharge() {
     const formfields: FormfieldBase[] = [
       new InputBase({
         controlName: 'amount',
         label: 'Amount',
-        value: charge.amount || charge.amountOrPercentage,
+        value: this.chargeData.amount || this.chargeData.amountOrPercentage,
         type: 'number',
         required: true
       })
     ];
     const data = {
-      title: `Edit Charge ${charge.id}`,
+      title: 'Edit Charge',
       layout: { addButtonText: 'Confirm' },
       formfields: formfields
     };
@@ -162,7 +140,7 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.loansService.editLoansAccountCharge(this.loanDetails.id, dataObject, charge.id)
+        this.loansService.editLoansAccountCharge(this.loansAccountData.id, dataObject, this.chargeData.id)
           .subscribe(() => {
             this.reload();
           });
@@ -172,15 +150,14 @@ export class ChargesTabComponent implements OnInit {
 
   /**
    * Deletes the charge
-   * @param {any} chargeId Charge Id
    */
-  deleteCharge(chargeId: any) {
+  deleteCharge() {
     const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `charge id:${chargeId}` }
+      data: { deleteContext: `charge id:${this.chargeData.id}` }
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.loansService.deleteLoansAccountCharge(this.loanDetails.id, chargeId)
+        this.loansService.deleteLoansAccountCharge(this.loansAccountData.id, this.chargeData.id)
           .subscribe(() => {
             this.reload();
           });
@@ -189,21 +166,13 @@ export class ChargesTabComponent implements OnInit {
   }
 
   /**
-   * Stops the propagation to view charge page.
-   * @param $event Mouse Event
-   */
-  routeEdit($event: MouseEvent) {
-    $event.stopPropagation();
-  }
-
-  /**
    * Refetches data fot the component
    * TODO: Replace by a custom reload component instead of hard-coded back-routing.
    */
   private reload() {
-    const clientId = this.loanDetails.clientId;
-    const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients/${clientId}/loans`, { skipLocationChange: true })
+    const clientId = this.loansAccountData.clientId;
+    const url: string = this.router.url.replace(`/${this.chargeData.id}`, '');
+    this.router.navigateByUrl(`/clients/${clientId}/loansaccounts`, {skipLocationChange: true})
       .then(() => this.router.navigate([url]));
   }
 

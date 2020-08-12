@@ -1,0 +1,119 @@
+<div *ngIf="loansAccountData.status.value === 'Active' && chargeData.amountOutstanding !== 0"
+  fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+    <button mat-raised-button color="accent" *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'" (click)="payCharge()">
+      <fa-icon icon="dollar-sign"></fa-icon>&nbsp;&nbsp;
+      Pay
+    </button>
+    <button mat-raised-button color="primary" *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'" (click)="waiveCharge()">
+      <fa-icon icon="flag"></fa-icon>&nbsp;&nbsp;
+      Waive
+    </button>
+</div>
+
+<div *ngIf="loansAccountData.status.value === 'Submitted and pending approval'"
+  fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+    <button mat-raised-button color="primary" *mifosxHasPermission="'UPDATE_SAVINGSACCOUNTCHARGE'" (click)="editCharge()">
+      <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+      Edit
+    </button>
+    <button mat-raised-button color="warn" *mifosxHasPermission="'DELETE_SAVINGSACCOUNTCHARGE'" (click)="deleteCharge()">
+      <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+      Delete
+    </button>
+</div>
+
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" class="content">
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Name
+        </div>
+
+        <div fxFlex="50%">
+          {{ chargeData.name }}
+        </div>
+        
+        <div fxFlex="50%" class="mat-body-strong">
+          Charge Type
+        </div>
+
+        <div fxFlex="50%">
+          {{ chargeData.penalty ? 'Penalty' : 'Fees' }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Currency
+        </div>
+
+        <div fxFlex="50%">
+          {{ chargeData.currency.displayLabel }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Payment due at
+        </div>
+
+        <div fxFlex="50%">
+          {{ chargeData.chargeTimeType.value }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Payment due as of
+        </div>
+
+        <div fxFlex="50%">
+          {{ chargeData.dueDate | date }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Calculation Type
+        </div>
+
+        <div fxFlex="50%">
+          {{ chargeData.chargeCalculationType.value }}
+        </div>
+        
+        <div fxFlex="50%" class="mat-body-strong">
+          Due
+        </div>
+
+        <div fxFlex="50%">
+          {{ chargeData.amount }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Paid
+        </div>
+
+        <div fxFlex="50%">
+          {{ chargeData.amountPaid }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Waived
+        </div>
+
+        <div fxFlex="50%">
+          {{ chargeData.amountWaived }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Outstanding
+        </div>
+
+        <div fxFlex="50%">
+          {{ chargeData.amountOutstanding }}
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

@@ -9,10 +9,10 @@ import { Observable } from 'rxjs';
 import { LoansService } from '../loans.service';
 
 /**
- * Clients data resolver.
+ * Loans Account Charge data resolver.
  */
 @Injectable()
-export class LoanDetailsChargesResolver implements Resolve<Object> {
+export class LoansAccountChargeResolver implements Resolve<Object> {
 
     /**
      * @param {LoansService} LoansService Loans service.
@@ -20,12 +20,14 @@ export class LoanDetailsChargesResolver implements Resolve<Object> {
     constructor(private loansService: LoansService) { }
 
     /**
-     * Returns the Loans with Association data.
+     * Returns the Loans Account Charge data.
+     * @param {ActivatedRouteSnapshot} route Route Snapshot
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const loanId = route.parent.parent.paramMap.get('loanId');
-        return this.loansService.getLoanAccountAssociationDetails(loanId);
+        const loanAccountId = route.parent.parent.paramMap.get('loanId');
+        const chargeId = route.paramMap.get('id');
+        return this.loansService.getLoansAccountCharge(loanAccountId, chargeId);
     }
 
 }

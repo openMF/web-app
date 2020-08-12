@@ -21,21 +21,41 @@
 
 </div>
 
-<div class="container">
+<div class="container m-b-20">
+
+  <mat-card class="mat-elevation-z8">
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" class="content">
+
+        <div fxFlex="40%" fxFlex.lt-md="50%" class="header">
+          <b>Name:</b>
+        </div>
+
+        <div fxFlex="60%" fxFlex.lt-md="50%">
+          {{ rolePermissionService.name }}
+        </div>
+
+        <div fxFlex="40%" fxFlex.lt-md="50%" class="header">
+          <b>Description:</b>
+        </div>
+
+        <div fxFlex="60%" fxFlex.lt-md="50%">
+          {{ rolePermissionService.description }}
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>
+
+<div class="mat-elevation-z8 container">
 
   <mat-card>
-
-    <div fxFlexFill>
-      <span fxFlex="30%">Name:</span>
-      <span fxFlex="70%">{{ rolePermissionService.name }}</span>
-    </div>
-
-    <div fxFlexFill>
-      <span fxFlex="30%">Description:</span>
-      <span fxFlex="70%">{{ rolePermissionService.description }}</span>
-    </div>
-
-    <mat-divider></mat-divider>
 
     <ng-container>
 
@@ -66,6 +86,8 @@
 
         </div>
 
+        <mat-divider [vertical]="true"></mat-divider>
+
         <div fxFlex="70" fxLayout="column" class="listPermission">
 
           <form [formGroup]="formGroup" (submit)="submit()">
@@ -73,8 +95,7 @@
             <div *ngFor="let permission of permissions.permissions" class="displayPermissions">
                 <div formArrayName="roster">
                   <div [formGroupName]="permission.id">
-                    <mat-checkbox name="cp" id="{{ permission.code }}" formControlName="selected"
-                   >
+                    <mat-checkbox name="cp" id="{{ permission.code }}" formControlName="selected">
                     {{ permissionName(permission.code) }}
                   </mat-checkbox>
                   </div>

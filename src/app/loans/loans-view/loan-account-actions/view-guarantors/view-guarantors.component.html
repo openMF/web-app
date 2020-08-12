@@ -150,7 +150,7 @@
       <th mat-header-cell *matHeaderCellDef> Action </th>
       <td mat-cell *matCellDef="let guarantor; let id = index">
         <span *ngIf="!guarantor.guarantorFundingDetails">
-          <button mat-raised-button class="account-action-button" color="primary" (click)="viewGuarantorDetails(guarantor)">
+          <button mat-raised-button class="account-action-button" color="primary" *mifosxHasPermission="'READ_SAVINGSACCOUNT'" (click)="viewGuarantorDetails(guarantor)">
             <fa-icon icon="eye"></fa-icon>&nbsp;&nbsp;
           </button>
           <button mat-raised-button class="account-action-button" color="primary" *ngIf="guarantor.status && guarantor.guarantorType.id == 3 && guarantor.id">

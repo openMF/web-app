@@ -8,7 +8,7 @@
 
         <mat-nav-list>
 
-          <mat-list-item [routerLink]="['tax-components']">
+          <mat-list-item [routerLink]="['tax-components']" *mifosxHasPermission="'READ_TAXCOMPONENT'">
             <mat-icon matListIcon>
               <fa-icon icon="building" size="sm"></fa-icon>
             </mat-icon>
@@ -24,7 +24,7 @@
 
         <mat-nav-list>
 
-          <mat-list-item [routerLink]="['tax-groups']">
+          <mat-list-item [routerLink]="['tax-groups']" *mifosxHasPermission="'READ_TAXGROUP'">
             <mat-icon matListIcon>
               <fa-icon icon="building" size="sm"></fa-icon>
             </mat-icon>

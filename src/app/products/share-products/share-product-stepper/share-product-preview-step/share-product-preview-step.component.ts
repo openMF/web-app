@@ -10,6 +10,7 @@ export class ShareProductPreviewStepComponent implements OnInit {
   @Input() shareProductsTemplate: any;
   @Input() accountingRuleData: any;
   @Input() shareProduct: any;
+  @Input() taskPermission: string;
   @Output() submit = new EventEmitter();
 
   marketPriceDisplayedColumns: string[] = ['fromDate', 'shareValue'];
