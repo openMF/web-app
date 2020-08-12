@@ -18,7 +18,7 @@ export class GroupAssignStaffComponent implements OnInit {
 
   /** Group Assign Staff form. */
   groupAssignStaffForm: FormGroup;
-  /** Field Officer Data */
+  /** Staff Data */
   staffData: any;
   /** Group Data */
   groupData: any;
@@ -39,9 +39,6 @@ export class GroupAssignStaffComponent implements OnInit {
     });
   }
 
-  /**
-   * Creates the group assign staff form.
-   */
   ngOnInit() {
     this.staffData = this.groupData.staffOptions;
     this.createGroupAssignStaffForm();

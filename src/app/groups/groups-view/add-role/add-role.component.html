@@ -38,7 +38,8 @@
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
         <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!groupsAddRoleForm.valid">Confirm</button>
+        <button mat-raised-button color="primary" [disabled]="!groupsAddRoleForm.valid"
+          *mifosxHasPermission="'ASSIGNROLE_GROUP'">Confirm</button>
       </mat-card-actions>
 
     </form>

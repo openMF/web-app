@@ -11,7 +11,9 @@ import { GroupsService } from 'app/groups/groups.service';
 import { ClientsService } from 'app/clients/clients.service';
 import { MatDialog } from '@angular/material';
 
-
+/**
+ * Manage Group Members Component
+ */
 @Component({
   selector: 'mifosx-manage-group-members',
   templateUrl: './manage-group-members.component.html',
@@ -25,7 +27,7 @@ export class ManageGroupMembersComponent implements AfterViewInit {
   clientsData: any = [];
   /** Client Members. */
   clientMembers: any[] = [];
-  /** ClientChoice. */
+  /** Client Choice. */
   clientChoice = new FormControl('');
 
   /**
@@ -72,7 +74,8 @@ export class ManageGroupMembersComponent implements AfterViewInit {
 
   /**
    * Remove client.
-   * @param index Client's array index.
+   * @param {number} index Client's array index.
+   * @param {any} client Client
    */
   removeClient(index: number, client: any) {
     const removeMemberDialogRef = this.dialog.open(DeleteDialogComponent, {

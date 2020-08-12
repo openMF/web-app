@@ -21,7 +21,7 @@ export class EditGroupComponent implements OnInit {
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
   maxDate = new Date();
-  /** Group form. */
+  /** Edit Group form. */
   editGroupForm: FormGroup;
   /** Staff data. */
   staffData: any;
@@ -51,7 +51,7 @@ export class EditGroupComponent implements OnInit {
   }
 
   /**
-   * Creates and sets the group form.
+   * Creates and sets the edit group form.
    */
   ngOnInit() {
     this.createEditGroupForm();
@@ -64,7 +64,7 @@ export class EditGroupComponent implements OnInit {
   }
 
   /**
-   * Creates the group form.
+   * Creates the edit group form.
    */
   createEditGroupForm() {
     this.editGroupForm = this.formBuilder.group({
@@ -89,7 +89,7 @@ export class EditGroupComponent implements OnInit {
   }
 
   /**
-   * Submits the group form and creates group,
+   * Submits the group form and edits group,
    * if successful redirects to groups.
    */
   submit() {

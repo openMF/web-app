@@ -23,12 +23,12 @@ export class ActivateGroupComponent implements OnInit {
   maxDate = new Date();
   /** Activate group form. */
   activateGroupForm: FormGroup;
-  /** Group Account Id */
+  /** Group Id */
   groupId: any;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {groupsService} groupsService Shares Service
+   * @param {groupsService} groupsService Groups Service
    * @param {DatePipe} datePipe Date Pipe
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
@@ -41,9 +41,6 @@ export class ActivateGroupComponent implements OnInit {
     this.groupId = this.route.parent.snapshot.params['groupId'];
   }
 
-  /**
-   * Creates the activate group form.
-   */
   ngOnInit() {
     this.createActivateGroupForm();
   }
