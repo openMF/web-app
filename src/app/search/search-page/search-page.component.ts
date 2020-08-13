@@ -48,7 +48,7 @@ export class SearchPageComponent {
         this.router.navigate(['groups', entity.entityId]);
         break;
       case 'SHARE':
-        this.router.navigate(['clients', entity.parentId, 'sharesaccounts', entity.entityId]);
+        this.router.navigate(['clients', entity.parentId, 'shares-accounts', entity.entityId]);
         break;
       case 'SAVING':
         this.router.navigate(['clients', entity.parentId, 'savingsaccounts', entity.entityId]);

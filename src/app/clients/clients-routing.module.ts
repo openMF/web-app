@@ -246,7 +246,7 @@ const routes: Routes = [
             loadChildren: '../deposits/recurring-deposits/recurring-deposits.module#RecurringDepositsModule'
           },
           {
-            path: 'sharesaccounts',
+            path: 'shares-accounts',
             loadChildren: '../shares/shares.module#SharesModule'
           },
           {

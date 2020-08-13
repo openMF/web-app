@@ -98,7 +98,7 @@ export class EditSharesAccountComponent {
   }
 
   /**
-   * Creates a new share account.
+   * Updates a share account.
    */
   submit() {
     // TODO: Update once language and date settings are setup

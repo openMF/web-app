@@ -29,7 +29,7 @@ export class NotificationsPageComponent implements OnInit {
     'group' : '/groups/',
     'loan' : '/loans/',
     'center' : '/centers/',
-    'shareAccount' : '/sharesaccounts/',
+    'shareAccount' : '/shares-accounts/',
     'fixedDeposit' : '/fixed-deposits-accounts/',
     'recurringDepositAccount': '/recurringdeposits/',
     'savingsAccount' : '/savingsaccounts/',

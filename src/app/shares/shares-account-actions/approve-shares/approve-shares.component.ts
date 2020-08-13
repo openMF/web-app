@@ -21,7 +21,7 @@ import { SharesService } from 'app/shares/shares.service';
 export class ApproveSharesComponent implements OnInit {
 
   /** Shares account data. */
-  @Input() sharesAccountData: any;
+  sharesAccountData: any;
 
   /** Shares account Id */
   accountId: any;
@@ -46,6 +46,9 @@ export class ApproveSharesComponent implements OnInit {
               private route: ActivatedRoute,
               public dialog: MatDialog) {
     this.accountId = this.route.parent.snapshot.params['shareAccountId'];
+    this.route.data.subscribe((data: { shareAccountActionData: any }) => {
+      this.sharesAccountData = data.shareAccountActionData;
+    });
   }
 
   /**

@@ -13,10 +13,14 @@ import { Observable } from 'rxjs';
 })
 export class SharesService {
 
+  /**
+   * @param {HttpClient} http Http Client
+   */
   constructor(private http: HttpClient) {}
 
   /**
-   * @param accountId Shares Account Id of account to get data for.
+   * @param {string} accountId Shares Account Id of account to get data for.
+   * @param {boolean} template Shares account template required?.
    * @returns {Observable<any>} Shares data.
    */
   getSharesAccountData(accountId: string, template: boolean): Observable<any> {
@@ -25,7 +29,8 @@ export class SharesService {
   }
 
   /**
-   * @param clientId Client Id assosciated with shares account.
+   * @param {string} clientId Client Id assosciated with shares account.
+   * @param {string} productId Product Id
    * @returns {Observable<any>} Shares account template.
    */
   getSharesAccountTemplate(clientId: string, productId?: string): Observable<any> {
@@ -43,6 +48,7 @@ export class SharesService {
   }
 
   /**
+   * @param {string} accountId: Shares account Id.
    * @param {any} sharesAccount Shares Account
    * @returns {Observable<any>}
    */
