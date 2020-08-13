@@ -36,6 +36,7 @@ export class FixedDepositAccountInterestRateChartStepComponent implements OnChan
   /** Expand Chart Slab Index used in the view */
   expandChartSlabIndex: number;
 
+  /** Interest Rate charts table reference */
   @ViewChild('chartsTable') chartsTableRef: MatTable<Element>;
 
   constructor() { }

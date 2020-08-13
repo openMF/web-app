@@ -5,7 +5,6 @@ import { MatDialog } from '@angular/material';
 
 /**
  * View Transaction Component.
- * TODO: Add support for account transfers.
  */
 @Component({
   selector: 'mifosx-view-transaction',

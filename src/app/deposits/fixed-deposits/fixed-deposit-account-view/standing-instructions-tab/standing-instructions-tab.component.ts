@@ -43,6 +43,9 @@ export class StandingInstructionsTabComponent implements OnInit {
   /**
    * Retrieves Fixed Deposits Account Data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
+   * @param {FixedDepositsService} fixedDepositsService FixedDepositsService
+   * @param {MatDialog} dialog Mat Dialog
+   * @param {AccountTransfersService} accountTransfersService Accounts Transfer Service
    */
   constructor(private route: ActivatedRoute,
               private fixedDepositsService: FixedDepositsService,
@@ -73,6 +76,10 @@ export class StandingInstructionsTabComponent implements OnInit {
     });
   }
 
+  /**
+   * Deletes a standing instruction
+   * @param {any} instructionId Instruction Id
+   */
   deleteStandingInstruction(instructionId: any) {
     const deleteStandingInstructionDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `standing instruction id: ${instructionId}` }

@@ -25,6 +25,7 @@ export class TransactionsTabComponent implements OnInit {
   /**
    * Retrieves fixed deposits account data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
+   * @param {Router} router Router
    */
   constructor(private route: ActivatedRoute,
               private router: Router) {
@@ -49,7 +50,7 @@ export class TransactionsTabComponent implements OnInit {
 
   /**
    * Show Transactions Details
-   * @param transactionsData Transactions Data
+   * @param {any} transactionsData Transactions Data
    */
   showTransactions(transactionsData: any) {
     if (transactionsData.transfer) {

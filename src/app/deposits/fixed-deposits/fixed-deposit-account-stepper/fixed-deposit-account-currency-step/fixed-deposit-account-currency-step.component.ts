@@ -22,6 +22,9 @@ export class FixedDepositAccountCurrencyStepComponent implements OnChanges {
   /** Currency Data */
   currencyData: any;
 
+  /**
+   * @param {FormBuilder} formBuilder Form Builder
+   */
   constructor(private formBuilder: FormBuilder) {
     this.createFixedDepositAccountCurrencyForm();
   }
@@ -36,6 +39,9 @@ export class FixedDepositAccountCurrencyStepComponent implements OnChanges {
     }
   }
 
+  /**
+   * Creates fd currency form.
+   */
   createFixedDepositAccountCurrencyForm() {
     this.fixedDepositAccountCurrencyForm = this.formBuilder.group({
       'currencyCode': [{ value: '', disabled: true}],

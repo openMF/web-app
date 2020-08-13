@@ -103,7 +103,7 @@ export class FixedDepositAccountViewComponent implements OnInit {
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
       case 'Modify Application':
-        this.router.navigate(['edit-fixed-deposit-account'], { relativeTo: this.route });
+        this.router.navigate(['edit'], { relativeTo: this.route });
         break;
       case 'Delete':
         this.deleteFixedDepositsAccount();
@@ -140,7 +140,7 @@ export class FixedDepositAccountViewComponent implements OnInit {
   }
 
   /**
-   * Calculates savings account's interest
+   * Calculates fixed deposit account's interest
    */
   private calculateInterest() {
     const calculateInterestAccountDialogRef = this.dialog.open(CalculateInterestDialogComponent);
@@ -154,7 +154,7 @@ export class FixedDepositAccountViewComponent implements OnInit {
   }
 
   /**
-   * Posts savings account's interest
+   * Posts fixed deposit account's interest
    */
   private postInterest() {
     const postInterestAccountDialogRef = this.dialog.open(PostInterestDialogComponent);
