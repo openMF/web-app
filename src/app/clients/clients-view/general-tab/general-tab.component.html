@@ -544,15 +544,15 @@
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let element">
         <button *ngIf="element.status.submittedAndPendingApproval" class="account-action-button" mat-raised-button
-          color="primary" (click)="routeEdit($event)" [routerLink]="['../','sharesaccounts', element.id, 'actions', 'Approve']">
+          color="primary" (click)="routeEdit($event)" [routerLink]="['../','shares-accounts', element.id, 'actions', 'Approve']">
           <i class="fa fa-check"></i>
         </button>
         <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
-          class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)" [routerLink]="['../','sharesaccounts', element.id, 'actions', 'Undo Approval']">
+          class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)" [routerLink]="['../','shares-accounts', element.id, 'actions', 'Undo Approval']">
           <i class="fa fa-undo"></i>
         </button>
         <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
-          class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)" [routerLink]="['../','sharesaccounts', element.id, 'actions', 'Activate']">
+          class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)" [routerLink]="['../','shares-accounts', element.id, 'actions', 'Activate']">
           <i class="fa fa-check-circle"></i>
         </button>
       </td>
@@ -561,7 +561,7 @@
 
     <tr mat-header-row *matHeaderRowDef="openSharesColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: openSharesColumns;"
-      [routerLink]="['../', 'sharesaccounts', row.id, 'transactions']"></tr>
+      [routerLink]="['../', 'shares-accounts', row.id, 'transactions']"></tr>
   </table>
   <!-- Closed Share Accounts -->
   <table *ngIf="showClosedShareAccounts" mat-table [dataSource]="shareAccounts|accountsFilter:'share':'closed'">

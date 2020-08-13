@@ -38,7 +38,7 @@
           <i class="{{button.icon}}"></i> {{button.name}}</button>
       </ng-container>
   
-      <ng-container *ngIf="buttonConfig.options">
+      <ng-container *ngIf="buttonConfig.options.length">
         <button mat-raised-button [matMenuTriggerFor]="More">More</button>
         <mat-menu #More="matMenu">
         <span *ngFor="let option of buttonConfig.options">

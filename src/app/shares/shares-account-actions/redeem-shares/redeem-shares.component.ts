@@ -18,7 +18,7 @@ import { SharesService } from 'app/shares/shares.service';
 export class RedeemSharesComponent implements OnInit {
 
   /** Shares account data. */
-  @Input() sharesAccountData: any;
+  sharesAccountData: any;
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -42,6 +42,9 @@ export class RedeemSharesComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router) {
     this.accountId = this.route.parent.snapshot.params['shareAccountId'];
+    this.route.data.subscribe((data: { shareAccountActionData: any }) => {
+      this.sharesAccountData = data.shareAccountActionData;
+    });
   }
 
   /**

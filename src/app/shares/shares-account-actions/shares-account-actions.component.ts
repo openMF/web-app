@@ -43,14 +43,9 @@ export class SharesAccountActionsComponent {
   /**
    * @param {ActivatedRoute} route Activated Route
    */
-  constructor(private route: ActivatedRoute,
-              private sharesService: SharesService) {
+  constructor(private route: ActivatedRoute) {
     const name = this.route.snapshot.params['name'];
-    const accountId = this.route.parent.snapshot.params['shareAccountId'];
-    this.sharesService.getSharesAccountData(accountId, false).subscribe((response: any) => {
-      this.sharesAccountData = response;
-      this.actions[name] = true;
-    });
+    this.actions[name] = true;
   }
 
 }

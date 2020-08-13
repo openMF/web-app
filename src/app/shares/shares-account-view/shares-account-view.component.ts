@@ -30,6 +30,9 @@ export class SharesAccountViewComponent implements OnInit {
   /**
    * Fetches shares account data from `resolve`
    * @param {ActivatedRoute} route Activated Route
+   * @param {Router} router Router
+   * @param {SharesService} sharesService Shares Service
+   * @param {MatDialog} dialog Mat Dialog
    */
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -94,7 +97,7 @@ export class SharesAccountViewComponent implements OnInit {
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
       case 'Modify Application':
-        this.router.navigate(['edit-shares-account'], { relativeTo: this.route });
+        this.router.navigate(['edit'], { relativeTo: this.route });
         break;
       case 'Delete':
         this.deleteSharesAccount();

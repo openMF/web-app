@@ -16,16 +16,18 @@ import { SharesAccountActionsComponent } from './shares-account-actions/shares-a
 
 /** Custom Resolvers */
 import { SharesAccountViewResolver } from './common-resolvers/share-account-view.resolver';
+import { ShareAccountActionsResolver } from './common-resolvers/share-account-actions.resolver';
 import { SharesAccountTemplateResolver } from './common-resolvers/shares-account-template.resolver';
 import { SharesAccountAndTemplateResolver } from './common-resolvers/share-account-and-template.resolver';
 
+/** Shares Routes */
 const routes: Routes = [
   {
     path: '',
     data: { title: extract('Shares'), breadcrumb: 'Shares', routeParamBreadcrumb: false },
     children: [
       {
-        path: 'create-shares-account',
+        path: 'create',
         data: { title: extract('Create Shares Account'), breadcrumb: 'Create Shares Account' },
         component: CreateSharesAccountComponent,
         resolve: {
@@ -61,7 +63,7 @@ const routes: Routes = [
             ]
           },
           {
-            path: 'edit-shares-account',
+            path: 'edit',
             data: { title: extract('Edit Shares Account'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
             component: EditSharesAccountComponent,
             resolve: {
@@ -71,7 +73,10 @@ const routes: Routes = [
           {
             path: 'actions/:name',
             data: { title: extract('Shares Account Actions'), breadcrumb: 'Actions', routeParamBreadcrumb: 'name' },
-            component: SharesAccountActionsComponent
+            component: SharesAccountActionsComponent,
+            resolve: {
+              shareAccountActionData: ShareAccountActionsResolver
+            }
           }
         ]
       },
@@ -79,13 +84,17 @@ const routes: Routes = [
   }
 ];
 
+/**
+ * Shares Routinf Module
+ */
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   providers: [
     SharesAccountViewResolver,
     SharesAccountTemplateResolver,
-    SharesAccountAndTemplateResolver
+    SharesAccountAndTemplateResolver,
+    ShareAccountActionsResolver
   ]
 })
 export class SharesRoutingModule { }
