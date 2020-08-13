@@ -23,6 +23,7 @@ import { EditHookComponent } from './manage-hooks/edit-hook/edit-hook.component'
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
 import { AddRoleComponent } from './roles-and-permissions/add-role/add-role.component';
 import { ManageSurveysComponent } from './manage-surveys/manage-surveys.component';
+import { CreateSurveyComponent } from './manage-surveys/create-survey/create-survey.component';
 import { ManageSchedulerJobsComponent } from './manage-scheduler-jobs/manage-scheduler-jobs.component';
 import { GlobalConfigurationsComponent } from './global-configurations/global-configurations.component';
 import { EditConfigurationComponent } from './global-configurations/edit-configuration/edit-configuration.component';
@@ -372,11 +373,21 @@ const routes: Routes = [
         },
       {
         path: 'surveys',
-        component: ManageSurveysComponent,
-        resolve: {
-              surveys: ManageSurveysResolver
-        },
         data: { title:  extract('Manage Surveys'), breadcrumb: 'Manage Surveys' },
+        children: [
+          {
+            path: '',
+            component: ManageSurveysComponent,
+            resolve: {
+              surveys: ManageSurveysResolver
+            }
+          },
+          {
+            path: 'create',
+            component: CreateSurveyComponent,
+            data: { title:  extract('Create Survey'), breadcrumb: 'Create' },
+          }
+        ]
       },
       {
         path: 'scheduler-jobs',

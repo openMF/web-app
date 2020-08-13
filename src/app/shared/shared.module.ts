@@ -7,6 +7,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FormfieldComponent } from './form-dialog/formfield/formfield.component';
 import { FormDialogComponent } from './form-dialog/form-dialog.component';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
+import { CancelDialogComponent } from './cancel-dialog/cancel-dialog.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { FooterComponent } from './footer/footer.component';
 import { LanguageSelectorComponent } from './language-selector/language-selector.component';
@@ -37,6 +38,7 @@ import { MaterialModule } from './material.module';
     FormfieldComponent,
     FormDialogComponent,
     DeleteDialogComponent,
+    CancelDialogComponent,
     FileUploadComponent,
     FooterComponent,
     LanguageSelectorComponent,
@@ -65,7 +67,8 @@ import { MaterialModule } from './material.module';
     EnableDialogComponent,
     DisableDialogComponent,
     ConfirmationDialogComponent,
-    KeyboardShortcutsDialogComponent
+    KeyboardShortcutsDialogComponent,
+    CancelDialogComponent
   ]
 })
 export class SharedModule { }

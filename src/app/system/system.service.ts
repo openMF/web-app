@@ -214,6 +214,14 @@ export class SystemService {
   }
 
   /**
+   * @param {any} survey Survey to be created.
+   * @returns {Observable<any>}
+   */
+  createSurvey(survey: any): Observable<any> {
+    return this.http.post('/surveys', survey);
+  }
+
+  /**
    * @returns {Observable<any>} Fetches Jobs.
    */
   getJobs(): Observable<any> {

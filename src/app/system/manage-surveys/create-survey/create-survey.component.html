@@ -1,0 +1,169 @@
+<div class="container">
+
+  <form [formGroup]="surveyForm" (ngSubmit)="submit()">
+
+    <div fxLayout="column" fxLayoutGap="4%">
+
+      <mat-card>
+
+        <mat-card-content>
+
+          <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+            <mat-form-field fxFlex="48%">
+              <mat-label>Key</mat-label>
+              <input matInput maxlength="32" required formControlName="key">
+              <mat-error *ngIf="surveyForm.controls.key.hasError('required')">
+                Key is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+            
+            <mat-form-field fxFlex="48%">
+              <mat-label>Name</mat-label>
+              <input matInput maxlength="255" required formControlName="name">
+              <mat-error *ngIf="surveyForm.controls.name.hasError('required')">
+                Name is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="48%">
+              <mat-label>Country Code</mat-label>
+              <input matInput maxlength="2" required formControlName="countryCode">
+              <mat-error *ngIf="surveyForm.controls.countryCode.hasError('required')">
+                Country Code is <strong>required</strong>
+              </mat-error>
+              <mat-error *ngIf="surveyForm.controls.countryCode.hasError('pattern')">
+                Country Code <strong>must consist of 2 alphabetic characters</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="98%">
+              <mat-label>Description</mat-label>
+              <textarea matInput formControlName="description"></textarea>
+            </mat-form-field>
+
+            <div fxFlexFill fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px" *ngIf="!questionDatas.length">
+              <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+              <button type="button" mat-raised-button color="primary" [disabled]="!(this.surveyForm.get('key').valid && this.surveyForm.get('name').valid && this.surveyForm.get('countryCode').valid)" (click)="addQuestion()">
+                Proceed
+              </button>
+            </div>
+
+          </div>
+
+        </mat-card-content>
+
+      </mat-card>
+
+      <div cdkDropList (cdkDropListDropped)="dropQuestion($event)" fxLayout="column" fxLayoutGap="4%">
+
+        <mat-card cdkDrag cdkDragLockAxis="y" formArrayName="questionDatas" *ngFor="let question of questionDatas.controls; let questionIndex = index; last as isLast">
+
+          <mat-card-content>
+
+            <div fxFlexFill fxLayoutGap="2%" fxLayout.lt-md="column" fxLayout="row wrap" [formGroupName]="questionIndex">
+
+              <div fxFlex="98%" fxLayout="row wrap" fxLayoutGap="2%" fxLayoutAlign="space-between center">
+                <h2 class="mat-h2">Question {{ questionIndex + 1 }}</h2>
+                <button mat-raised-button color="warn" (click)="removeQuestion(questionIndex)" [disabled]="questionDatas.controls.length === 1">
+                  <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+                  Delete Question
+                </button>
+              </div>
+
+              <mat-form-field fxFlex="48%">
+                <mat-label>Key</mat-label>
+                <input matInput maxlength="32" required formControlName="key">
+                <mat-error *ngIf="question.controls.key.hasError('required')">
+                  Key is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+              
+              <mat-form-field fxFlex="48">
+                <mat-label>Text</mat-label>
+                <input matInput maxlength="255" required formControlName="text">
+                <mat-error *ngIf="question.controls.text.hasError('required')">
+                  Text is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="98%">
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description"></textarea>
+              </mat-form-field>
+
+              <mat-divider [inset]="true"></mat-divider>
+
+              <div fxFlex="98%" fxLayout="row" fxLayoutAlign="space-between center">
+                <h4 class="mat-h4">Options</h4>
+                <button type="button" mat-raised-button color="primary" (click)="addResponse(questionIndex)">
+                  <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+                  Add Option
+                </button>
+              </div>
+        
+              <div cdkDropList (cdkDropListDropped)="dropResponse($event, questionIndex)" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%">
+
+                <div cdkDrag cdkDragLockAxis="y" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" formArrayName="responseDatas" *ngFor="let response of getResponseDatas(questionIndex).controls; let responseIndex = index;">
+                  
+                  <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" [formGroupName]="responseIndex">
+
+                    <mat-form-field fxFlex="43%">
+                      <mat-label>Text</mat-label>
+                      <input matInput required formControlName="text">
+                      <mat-error *ngIf="response.controls.text.hasError('required')">
+                        Text is <strong>required</strong>
+                      </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="43%">
+                      <mat-label>Value</mat-label>
+                      <input matInput required formControlName="value">
+                      <mat-error *ngIf="response.controls.value.hasError('required')">
+                        Value is <strong>required</strong>
+                      </mat-error>
+                      <mat-error *ngIf="response.controls.value.hasError('pattern')">
+                        Value <strong>must be an integer between -9999 and 9999</strong>
+                      </mat-error>
+                    </mat-form-field>
+
+                    <div fxFlex="8%">
+                      <div class="delete-wrapper">
+                        <button type="button" color="warn" mat-icon-button matTooltip="Delete" matTooltipPosition="above" (click)="removeResponse(getResponseDatas(questionIndex), responseIndex)" [disabled]="getResponseDatas(questionIndex).controls.length === 1">
+                          <fa-icon icon="trash" size="lg"></fa-icon>
+                        </button>  
+                      </div>
+                    </div>
+                          
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </mat-card-content>
+
+          <div>
+
+            <mat-card-actions *ngIf="isLast" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+              <button type="button" mat-raised-button (click)="cancelSurvey()">Cancel</button>
+              <button type="button" mat-raised-button color="primary"(click)="addQuestion()">
+                <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+                Add Question
+              </button>
+              <button mat-raised-button color="primary" [disabled]="!surveyForm.valid">Submit</button>
+            </mat-card-actions>    
+
+          </div>
+
+        </mat-card>  
+
+      </div>
+
+    </div>
+
+  </form>
+
+</div>
