@@ -13,6 +13,9 @@ import { Observable } from 'rxjs';
 })
 export class FixedDepositsService {
 
+  /**
+   * @param {HttpClient} http HttpClient
+   */
   constructor(private http: HttpClient) {}
 
   /**
@@ -83,7 +86,10 @@ export class FixedDepositsService {
     return this.http.get('/fixeddepositaccounts/template', { params: httpParams });
   }
 
-
+  /**
+   * @param {string} accountId Fixed Deposits Account Id
+   * @returns {Observable<any>}
+   */
   getFixedDepositsAccountAndTemplate(accountId: any) {
     const httpParams = new HttpParams().set('associations', 'charges,+linkedAccount')
       .set('template', 'true');

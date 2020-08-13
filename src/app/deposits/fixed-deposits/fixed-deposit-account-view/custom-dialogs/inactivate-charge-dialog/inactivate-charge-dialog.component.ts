@@ -14,7 +14,6 @@ export class InactivateChargeDialogComponent {
 
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
-   * @param {any} data.
    */
   constructor(public dialogRef: MatDialogRef<InactivateChargeDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }

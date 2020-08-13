@@ -42,6 +42,11 @@ import { FixedDepositAccountPreviewStepComponent } from './fixed-deposit-account
 import { FixedDepositAccountCurrencyStepComponent } from './fixed-deposit-account-stepper/fixed-deposit-account-currency-step/fixed-deposit-account-currency-step.component';
 import { EditFixedDepositAccountComponent } from './edit-fixed-deposit-account/edit-fixed-deposit-account.component';
 
+/**
+ * Fixed Deposits Module
+ *
+ * All components related to fixed deposits functions should be declared here.
+ */
 @NgModule({
   declarations: [
     FixedDepositAccountViewComponent,

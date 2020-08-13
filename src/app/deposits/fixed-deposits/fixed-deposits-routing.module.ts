@@ -32,7 +32,7 @@ const routes: Routes = [
     data: { title: extract('All Fixed Deposits'), breadcrumb: 'Fixed Deposits', routeParamBreadcrumb: false },
     children: [
       {
-        path: 'create-fixed-deposit-account',
+        path: 'create',
         data: { title: extract('Create Fixed Deposit Account'), breadcrumb: 'Create Fixed Deposit Account' },
         component: CreateFixedDepositAccountComponent,
         resolve: {
@@ -87,7 +87,7 @@ const routes: Routes = [
             ]
           },
           {
-            path: 'edit-fixed-deposit-account',
+            path: 'edit',
             data: { title: extract('Edit Fixed Deposit Account'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
             component: EditFixedDepositAccountComponent,
             resolve: {

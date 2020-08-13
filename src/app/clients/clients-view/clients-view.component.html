@@ -66,7 +66,7 @@
         <button mat-menu-item [routerLink]="['savingsaccounts', 'create-savings-account']">New Savings Account</button>
         <button mat-menu-item *mifosxHasPermission="'CREATE_SHAREACCOUNT'" [routerLink]="['shares-accounts', 'create']">New Share Account</button>
         <button mat-menu-item [routerLink]="['recurringdeposits', 'create-recurring-deposits-account']">New Recurring Deposit Account</button>
-        <button mat-menu-item [routerLink]="['fixed-deposits-accounts', 'create-fixed-deposit-account']">New Fixed Deposits Account</button>
+        <button mat-menu-item [routerLink]="['fixed-deposits-accounts', 'create']">New Fixed Deposits Account</button>
       </mat-menu>
 
       <button mat-raised-button [matMenuTriggerFor]="Actions">
