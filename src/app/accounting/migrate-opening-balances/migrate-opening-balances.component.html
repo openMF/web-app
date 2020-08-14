@@ -116,7 +116,7 @@
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px" *ngIf="openingBalancesData">
         <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!openingBalancesForm.valid">Submit</button>
+        <button mat-raised-button color="primary" [disabled]="!openingBalancesForm.valid" *mifosxHasPermission="'DEFINEOPENINGBALANCE_JOURNALENTRY'">Submit</button>
       </mat-card-actions>
 
     </form>

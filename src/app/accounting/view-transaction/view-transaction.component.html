@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="end" class="container m-b-20" *ngIf="dataSource?.data[0].manualEntry">
-  <button mat-raised-button color="primary" (click)="revertTransaction()" [disabled]="dataSource?.data[0].reversed">
+  <button mat-raised-button color="primary" (click)="revertTransaction()" *mifosxHasPermission="'REVERSE_JOURNALENTRY'" [disabled]="dataSource?.data[0].reversed">
     <span *ngIf="!dataSource.data[0].reversed">
       <fa-icon icon="undo"></fa-icon>&nbsp;&nbsp;
       Revert Transaction
