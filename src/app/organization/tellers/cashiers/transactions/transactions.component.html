@@ -1,9 +1,9 @@
 <div fxLayout="row" fxLayoutGap="1%" fxLayoutAlign="end" class="container m-b-20">
-  <button mat-raised-button color="accent" [routerLink]="['../allocate']">
+  <button mat-raised-button color="accent" [routerLink]="['../allocate']" *mifosxHasPermission="'ALLOCATECASHIER_TELLER'">
       <fa-icon icon="arrow-up"></fa-icon>&nbsp;&nbsp;
       Allocate Cash
   </button>
-  <button mat-raised-button color="warn" [routerLink]="['../settle']">
+  <button mat-raised-button color="warn" [routerLink]="['../settle']" *mifosxHasPermission="'SETTLECASHFROMCASHIER_TELLER'">
       <fa-icon icon="arrow-down"></fa-icon>&nbsp;&nbsp;
       Settle Cash
   </button>

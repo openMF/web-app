@@ -38,7 +38,7 @@
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
         <button mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="workingDaysForm.pristine">Submit</button>
+        <button mat-raised-button color="primary" [disabled]="workingDaysForm.pristine" *mifosxHasPermission="'UPDATE_WORKINGDAYS'">Submit</button>
       </mat-card-actions>
 
     </form>

@@ -1,11 +1,11 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
 
-  <button mat-raised-button color="primary">
+  <button mat-raised-button color="primary" *mifosxHasPermission="'CREATE_STAFF'" [routerLink]="['../', 'organization', 'bulk-import', 'Employees']">
     <fa-icon icon="upload"></fa-icon>&nbsp;&nbsp;
     Import Employees
   </button>
 
-  <button mat-raised-button color="primary" [routerLink]="['create']">
+  <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_STAFF'">
     <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
     Create Employee
   </button>

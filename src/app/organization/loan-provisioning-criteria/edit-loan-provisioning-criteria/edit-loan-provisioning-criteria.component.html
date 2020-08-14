@@ -86,7 +86,7 @@
 
     <div class="m-t-20" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px">
       <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-      <button mat-raised-button color="primary" [disabled]="!provisioningCriteriaFormValid" (click)="submit()">Submit</button>
+      <button mat-raised-button color="primary" [disabled]="!provisioningCriteriaFormValid" (click)="submit()" *mifosxHasPermission="'UPDATE_CRITERIA'">Submit</button>
     </div>
 
   </mat-card>

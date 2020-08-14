@@ -5,7 +5,7 @@
     <div>
 
       <form #formRef="ngForm" [formGroup]="fundForm" fxLayout="row" fxLayoutAlign="start baseline" fxLayoutGap="20px"
-        (ngSubmit)="addFund()">
+        (ngSubmit)="addFund()" *mifosxHasPermission="'CREATE_FUND'">
 
         <mat-form-field fxFlex="calc(90%-20px)">
           <textarea formControlName="name" matInput placeholder="New Fund"></textarea>
@@ -29,7 +29,7 @@
         <input matInput [value]="fund.name">
 
         <div fxLayout="row" fxLayoutAlign="flex-start">
-          <button mat-button color="primary" (click)="editFund(fund.id,fund.name,i)">
+          <button mat-button color="primary" (click)="editFund(fund.id,fund.name,i)" *mifosxHasPermission="'UPDATE_FUND'">
             <fa-icon icon="edit"></fa-icon>
           </button>
         </div>
