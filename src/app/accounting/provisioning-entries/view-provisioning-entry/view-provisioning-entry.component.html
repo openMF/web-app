@@ -1,7 +1,7 @@
 <div class="container" *ngIf="provisioningEntry">
 
   <div class="m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
-    <button mat-raised-button color="primary" (click)="createProvisioningJournalEntries()" [disabled]="provisioningEntry.journalEntry">
+    <button mat-raised-button color="primary" (click)="createProvisioningJournalEntries()" [disabled]="provisioningEntry.journalEntry" *mifosxHasPermission="'CREATE_JOURNAL_ENTRY'">
       <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
       Create Journal Entries
     </button>
