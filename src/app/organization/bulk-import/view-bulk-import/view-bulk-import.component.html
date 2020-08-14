@@ -47,7 +47,7 @@
       </form>
       
       <div fxFlex="13%">
-        <button mat-raised-button color="primary" (click)="downloadTemplate()">
+        <button mat-raised-button color="primary" (click)="downloadTemplate()" *mifosxHasPermission="bulkImport.permission">
           <i class="fa fa-download"></i>&nbsp;&nbsp;Download
         </button>
       </div>
@@ -130,7 +130,7 @@
         <ng-container matColumnDef="download">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Download </th>
           <td mat-cell *matCellDef="let import">
-            <button mat-icon-button (click)="downloadDocument(import.name, import.importId)">
+            <button mat-icon-button (click)="downloadDocument(import.name, import.importId)" *mifosxHasPermission="'READ_DOCUMENT'">
               <fa-icon icon="cloud-download-alt"></fa-icon>
             </button>
           </td>

@@ -1,13 +1,15 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
-  <button mat-raised-button color="accent" *ngIf="holidayData.status.value !== 'Active'">
-    <fa-icon icon="lock-open"></fa-icon>&nbsp;&nbsp;
-    Activate
-  </button>
-  <button mat-raised-button color="primary" [routerLink]="['edit']">
+  <span *mifosxHasPermission="'ACTIVATE_HOLIDAY'">
+    <button mat-raised-button color="accent" *ngIf="holidayData.status.value !== 'Active'">
+      <fa-icon icon="lock-open"></fa-icon>&nbsp;&nbsp;
+      Activate
+    </button>
+  </span>
+  <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_HOLIDAY'">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
     Edit
   </button>
-  <button mat-raised-button color="warn" (click)="deleteHoliday()">
+  <button mat-raised-button color="warn" (click)="deleteHoliday()" *mifosxHasPermission="'DELETE_HOLIDAY'">
     <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
     Delete
   </button>

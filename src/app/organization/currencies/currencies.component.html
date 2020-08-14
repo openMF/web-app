@@ -1,5 +1,5 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
-  <button mat-raised-button color="primary" [routerLink]="'manage'">
+  <button mat-raised-button color="primary" [routerLink]="'manage'" *mifosxHasPermission="'UPDATE_CURRENCY'">
     <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
     Add/Edit
   </button>

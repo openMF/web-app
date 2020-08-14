@@ -1,6 +1,6 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
 
-  <button mat-raised-button color="primary" [routerLink]="['create']">
+  <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_CASHIERS_FOR_TELLER'">
     <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
     New Cashier
   </button>
@@ -39,15 +39,15 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Vault Actions </th>
         <td mat-cell *matCellDef="let cashier">
           <button class="cashier-action-button" mat-raised-button color="accent" matTooltip="Allocate Cash"
-            (click)="routeEdit($event)" [routerLink]="[cashier.id, 'allocate']">
+            (click)="routeEdit($event)" [routerLink]="[cashier.id, 'allocate']" *mifosxHasPermission="'ALLOCATECASHIER_TELLER'">
             <i class="fa fa-arrow-up"></i>
           </button>
           <button class="cashier-action-button" mat-raised-button color="warn" matTooltip="Settle Cash"
-            (click)="routeEdit($event)" [routerLink]="[cashier.id, 'settle']">
+            (click)="routeEdit($event)" [routerLink]="[cashier.id, 'settle']" *mifosxHasPermission="'SETTLECASHIER_TELLER'">
             <i class="fa fa-arrow-down"></i>
           </button>
           <button class="cashier-action-button" mat-raised-button color="primary" matTooltip="View Transactions"
-            (click)="routeEdit($event)" [routerLink]="[cashier.id, 'transactions']">
+            (click)="routeEdit($event)" [routerLink]="[cashier.id, 'transactions']" *mifosxHasPermission="'ALLOCATECASHIER_TELLER'">
             <i class="fa fa-eye"></i>
           </button>   
         </td>

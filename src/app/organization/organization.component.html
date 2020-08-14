@@ -8,7 +8,7 @@
 
         <mat-nav-list>
 
-          <mat-list-item [routerLink]="['offices']">
+          <mat-list-item [routerLink]="['offices']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="building" size="sm"></fa-icon>
             </mat-icon>
@@ -16,7 +16,7 @@
             <p matLine>Add new office or modify or deactivate office or modify hierarchy</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['holidays']">
+          <mat-list-item [routerLink]="['holidays']" *mifosxHasPermission="'READ_HOLIDAY'">
             <mat-icon matListIcon>
               <fa-icon icon="calendar-alt" size="sm"></fa-icon>
             </mat-icon>
@@ -24,7 +24,7 @@
             <p matLine>Define holidays for office</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['employees']">
+          <mat-list-item [routerLink]="['employees']" *mifosxHasPermission="'READ_STAFF'">
             <mat-icon matListIcon>
               <fa-icon icon="user" size="sm"></fa-icon>
             </mat-icon>
@@ -32,7 +32,7 @@
             <p matLine>An employee represents loan officers with no access to systems</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['standing-instructions-history']">
+          <mat-list-item [routerLink]="['standing-instructions-history']" *mifosxHasPermission="'READ_STANDINGINSTRUCTION'">
             <mat-icon matListIcon>
               <fa-icon icon="book" size="sm"></fa-icon>
             </mat-icon>
@@ -40,7 +40,7 @@
             <p matLine>View logged history of standing instructions</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['fund-mapping']">
+          <mat-list-item [routerLink]="['fund-mapping']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
             </mat-icon>
@@ -48,7 +48,7 @@
             <p matLine>Bulk entry screen for mapping fund sources to loans</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['password-preferences']">
+          <mat-list-item [routerLink]="['password-preferences']" *mifosxHasPermission="'READ_PASSWORD_VALIDATION_POLICY'">
             <mat-icon matListIcon>
               <fa-icon icon="lock" size="sm"></fa-icon>
             </mat-icon>
@@ -56,7 +56,7 @@
             <p matLine>Define standards for enforcing the usage of stronger passwords</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['provisioning-criteria']">
+          <mat-list-item [routerLink]="['provisioning-criteria']" *mifosxHasPermission="'VIEW_PROVISIONS'">
             <mat-icon matListIcon>
               <fa-icon icon="edit" size="sm"></fa-icon>
             </mat-icon>
@@ -64,7 +64,7 @@
             <p matLine>Define Loan Provisioning Criteria for Organization</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['entity-data-table-checks']">
+          <mat-list-item [routerLink]="['entity-data-table-checks']" *mifosxHasPermission="'READ_ENTITY_DATATABLE_CHECK'">
             <mat-icon matListIcon>
               <fa-icon icon="check" size="sm"></fa-icon>
             </mat-icon>
@@ -80,7 +80,7 @@
 
         <mat-nav-list>
 
-          <mat-list-item [routerLink]="['currencies']">
+          <mat-list-item [routerLink]="['currencies']" *mifosxHasPermission="'READ_CURRENCY'">
             <mat-icon matListIcon>
               <fa-icon icon="cogs" size="sm"></fa-icon>
             </mat-icon>
@@ -89,7 +89,7 @@
           </mat-list-item>
 
 
-          <mat-list-item [routerLink]="['manage-funds']">
+          <mat-list-item [routerLink]="['manage-funds']" *mifosxHasPermission="'READ_FUND'">
             <mat-icon matListIcon>
               <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
             </mat-icon>
@@ -97,7 +97,7 @@
             <p matLine>Funds are associated with loans</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['bulkloan']">
+          <mat-list-item [routerLink]="['bulkloan']" *mifosxHasPermission="'BULKREASSIGN_LOAN'">
             <mat-icon matListIcon>
               <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
             </mat-icon>
@@ -105,7 +105,7 @@
             <p matLine>Easy way to reassign all the loan from one LO to another LO</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['tellers']">
+          <mat-list-item [routerLink]="['tellers']" *mifosxHasPermission="'READ_TELLER'">
             <mat-icon matListIcon>
               <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
             </mat-icon>
@@ -113,7 +113,7 @@
             <p matLine>Manage Tellers / Cashiers and Cash Allocation and Settlement</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['working-days']">
+          <mat-list-item [routerLink]="['working-days']" *mifosxHasPermission="'READ_WORKINGDAYS'">
             <mat-icon matListIcon>
               <fa-icon icon="calendar-alt" size="sm"></fa-icon>
             </mat-icon>
@@ -121,7 +121,7 @@
             <p matLine>Define working days and configure behaviour of payments due on holidays</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['payment-types']">
+          <mat-list-item [routerLink]="['payment-types']" *mifosxHasPermission="'READ_PAYMENTTYPE'">
             <mat-icon matListIcon>
               <fa-icon icon="dollar-sign" size="sm"></fa-icon>
             </mat-icon>
@@ -129,7 +129,7 @@
             <p matLine>Manage payment types</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['sms-campaigns']">
+          <mat-list-item [routerLink]="['sms-campaigns']" *mifosxHasPermission="'VIEW_SMSCAMPAIGNS'">
             <mat-icon matListIcon>
               <fa-icon icon="envelope" size="sm"></fa-icon>
             </mat-icon>
@@ -137,7 +137,7 @@
             <p matLine>Define SMS Campaigns for Organization</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['adhoc-query']">
+          <mat-list-item [routerLink]="['adhoc-query']" *mifosxHasPermission="'VIEW_ADHOC'">
             <mat-icon matListIcon>
               <fa-icon icon="chevron-right" size="sm"></fa-icon>
             </mat-icon>
@@ -145,7 +145,7 @@
             <p matLine>Define AdHocQuery for Organization</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['bulk-import']">
+          <mat-list-item [routerLink]="['bulk-import']" *mifosxHasPermission="'VIEW_BULKIMPORT'">
             <mat-icon matListIcon>
               <fa-icon icon="upload" size="sm"></fa-icon>
             </mat-icon>

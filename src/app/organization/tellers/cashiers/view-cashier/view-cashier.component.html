@@ -1,9 +1,9 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
-  <button mat-raised-button color="primary" [routerLink]="['edit']">
+  <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CASHIER'">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
     Edit
   </button>
-  <button mat-raised-button color="warn" (click)="deleteCashier()">
+  <button mat-raised-button color="warn" (click)="deleteCashier()" *mifosxHasPermission="'DELETECASHIER_TELLER'">
     <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
     Delete
   </button>

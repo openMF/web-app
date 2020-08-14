@@ -20,7 +20,7 @@
         </mat-form-field>
 
         <button mat-raised-button fxFlex color="primary" 
-          [disabled]="!currencyForm.valid">
+          [disabled]="!currencyForm.valid" *mifosxHasPermission="'UPDATE_CURRENCY'">
           <fa-icon icon="plus"></fa-icon>
         </button>
 
@@ -35,7 +35,7 @@
         <input matInput [value]="currency.name">
 
         <div fxLayout="row" fxLayoutAlign="flex-start">
-          <button mat-button color="warn" (click)="deleteCurrency(currency.code, i)">
+          <button mat-button color="warn" (click)="deleteCurrency(currency.code, i)" *mifosxHasPermission="'UPDATE_CURRENCY'">
             <fa-icon icon="trash"></fa-icon>
           </button>
         </div>

@@ -1,9 +1,9 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
-  <button mat-raised-button color="primary" [routerLink]="['edit']">
+  <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_ADHOC'">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
     Edit
   </button>
-  <button mat-raised-button color="warn" (click)="deleteAdhocQuery()">
+  <button mat-raised-button color="warn" (click)="deleteAdhocQuery()" *mifosxHasPermission="'DELETE_ADHOC'">
     <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
     Delete
   </button>

@@ -1,3 +1,4 @@
+<!-- TODO: Refactor Permissions -->
 <div class="container">
 
   <mat-card>
@@ -8,56 +9,56 @@
 
         <mat-nav-list>
 
-          <mat-list-item [routerLink]="['Offices']">
+          <mat-list-item [routerLink]="['Offices']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="building" size="sm"></fa-icon>
             </mat-icon>
             <h4 matLine>Offices</h4>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['Users']">
+          <mat-list-item [routerLink]="['Users']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="user" size="sm"></fa-icon>
             </mat-icon>
             <h4 matLine>Users</h4>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['Groups']">
+          <mat-list-item [routerLink]="['Groups']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="users" size="sm"></fa-icon>
             </mat-icon>
             <h4 matLine>Groups</h4>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['Loan Accounts']">
+          <mat-list-item [routerLink]="['Loan Accounts']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
             </mat-icon>
             <h4 matLine>Loan Accounts</h4>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['Savings Accounts']">
+          <mat-list-item [routerLink]="['Savings Accounts']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
             </mat-icon>
             <h4 matLine>Savings Accounts</h4>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['Fixed Deposit Accounts']">
+          <mat-list-item [routerLink]="['Fixed Deposit Accounts']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
             </mat-icon>
             <h4 matLine>Fixed Deposit Accounts</h4>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['Chart of Accounts']">
+          <mat-list-item [routerLink]="['Chart of Accounts']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
             </mat-icon>
             <h4 matLine>Chart of Accounts</h4>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['Share Accounts']">
+          <mat-list-item [routerLink]="['Share Accounts']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
             </mat-icon>
@@ -72,7 +73,7 @@
 
         <mat-nav-list>
 
-          <mat-list-item [routerLink]="['Employees']">
+          <mat-list-item [routerLink]="['Employees']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="user" size="sm"></fa-icon>
             </mat-icon>
@@ -80,56 +81,56 @@
           </mat-list-item>
 
 
-          <mat-list-item [routerLink]="['Clients']">
+          <mat-list-item [routerLink]="['Clients']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="user" size="sm"></fa-icon>
             </mat-icon>
             <h4 matLine>Clients</h4>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['Centers']">
+          <mat-list-item [routerLink]="['Centers']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="users" size="sm"></fa-icon>
             </mat-icon>
             <h4 matLine>Centers</h4>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['Loan Repayments']">
+          <mat-list-item [routerLink]="['Loan Repayments']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="chevron-right" size="sm"></fa-icon>
             </mat-icon>
             <h4 matLine>Loan Repayments</h4>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['Savings Transactions']">
+          <mat-list-item [routerLink]="['Savings Transactions']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="chevron-right" size="sm"></fa-icon>
             </mat-icon>
             <h4 matLine>Savings Transactions</h4>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['Fixed Deposit Transactions']">
+          <mat-list-item [routerLink]="['Fixed Deposit Transactions']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="chevron-right" size="sm"></fa-icon>
             </mat-icon>
             <h4 matLine>Fixed Deposit Transactions</h4>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['Recurring Deposit Transactions']">
+          <mat-list-item [routerLink]="['Recurring Deposit Transactions']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="chevron-right" size="sm"></fa-icon>
             </mat-icon>
             <h4 matLine>Recurring Deposit Transactions</h4>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['Journal Entries']">
+          <mat-list-item [routerLink]="['Journal Entries']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="chevron-right" size="sm"></fa-icon>
             </mat-icon>
             <h4 matLine>Journal Entries</h4>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['Guarantors']">
+          <mat-list-item [routerLink]="['Guarantors']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="chevron-right" size="sm"></fa-icon>
             </mat-icon>
