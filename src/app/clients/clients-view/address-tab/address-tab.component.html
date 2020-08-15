@@ -1,12 +1,17 @@
 <div class="tab-container mat-typography">
+
   <h3>Address</h3>
+
   <div fxLayout="row" fxLayoutAlign="flex-end">
     <button mat-raised-button color="primary" (click)="addAddress()">
       <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Add
     </button>
   </div>
+
   <mat-accordion>
+
     <mat-expansion-panel *ngFor="let address of clientAddressData;index as i" class="address">
+
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{address.addressType}}
@@ -15,13 +20,16 @@
           {{address.relationship}}
         </mat-panel-description>
       </mat-expansion-panel-header>
+
       <mat-divider [inset]="true"></mat-divider>
+
       <div class="address-actions" fxLayout="row" fxLayoutAlign="flex-end center">
         <button mat-button color="primary" (click)="editAddress(address,i)">
           <fa-icon icon="edit"></fa-icon>
         </button>
-        <mat-slide-toggle [checked]="address.isActive" (change)="toogleAddress(address)"></mat-slide-toggle>
+        <mat-slide-toggle [checked]="address.isActive" (change)="toggleAddress(address)"></mat-slide-toggle>
       </div>
+
       <p>
         <span *ngIf="isFieldEnabled('street')">Street : {{address.street}}<br /></span>
         <span *ngIf="isFieldEnabled('addressLine1')">Address Line 1 : {{address.addressLine1}}<br /></span>
@@ -36,6 +44,9 @@
         <span *ngIf="isFieldEnabled('postalCode')">Postal Code : {{address.postalCode}}<br /></span>
         <span *ngIf="isFieldEnabled('isActive')">Active Status : {{address.isActive}}<br /></span>
       </p>
+
     </mat-expansion-panel>
+
   </mat-accordion>
+
 </div>

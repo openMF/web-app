@@ -16,7 +16,7 @@ import { ClientsService } from 'app/clients/clients.service';
 })
 export class RejectClientTransferComponent implements OnInit {
 
-  /** Reject Approval Savings Account form. */
+  /** Reject Client Transfer form. */
   rejectClientTransferForm: FormGroup;
   /** Client Id */
   clientId: any;
@@ -39,15 +39,12 @@ export class RejectClientTransferComponent implements OnInit {
     this.clientId = this.route.parent.snapshot.params['clientId'];
   }
 
-  /**
-   * Creates the reject-approval savings form.
-   */
   ngOnInit() {
     this.createRejectClientTransferForm();
   }
 
   /**
-   * Creates the reject-approval savings account form.
+   * Creates the reject client transfer form.
    */
   createRejectClientTransferForm() {
     this.rejectClientTransferForm = this.formBuilder.group({

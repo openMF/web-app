@@ -18,7 +18,7 @@ export class ClientAssignStaffComponent implements OnInit {
 
   /** Client Assign Staff form. */
   clientAssignStaffForm: FormGroup;
-  /** Field Officer Data */
+  /** Staff Data */
   staffData: any;
   /** Client Data */
   clientData: any;

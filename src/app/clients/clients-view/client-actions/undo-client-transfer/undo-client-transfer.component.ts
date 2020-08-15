@@ -16,7 +16,7 @@ import { ClientsService } from 'app/clients/clients.service';
 })
 export class UndoClientTransferComponent implements OnInit {
 
-  /** Undo Approval Savings Account form. */
+  /** Undo Client Transfer form. */
   undoClientTransferForm: FormGroup;
   /** Client Id */
   clientId: any;
@@ -40,14 +40,14 @@ export class UndoClientTransferComponent implements OnInit {
   }
 
   /**
-   * Creates the undo-approval savings form.
+   * Creates the undo client transfer form.
    */
   ngOnInit() {
     this.createUndoClientTransferForm();
   }
 
   /**
-   * Creates the undo-approval savings account form.
+   * Creates the undo client transfer form.
    */
   createUndoClientTransferForm() {
     this.undoClientTransferForm = this.formBuilder.group({

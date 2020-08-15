@@ -1,7 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+/** Angular Imports */
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material';
+
+/** Custom Models */
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
@@ -14,22 +17,36 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 /** Custom Services */
 import { ClientsService } from '../../clients.service';
 
+/**
+ * Identities Tab Component
+ */
 @Component({
   selector: 'mifosx-identities-tab',
   templateUrl: './identities-tab.component.html',
   styleUrls: ['./identities-tab.component.scss']
 })
-export class IdentitiesTabComponent implements OnInit {
+export class IdentitiesTabComponent {
 
-  @ViewChild('identifiersTable') identifiersTable: MatTable<Element>;
-  identitiesColumns: string[] = ['id', 'description', 'type', 'documents', 'status', 'actions'];
+  /** Client Identities */
   clientIdentities: any;
+  /** Client Identifier Template */
   clientIdentifierTemplate: any;
+  /** Client Id */
   clientId: string;
+  /** Identities Columns */
+  identitiesColumns: string[] = ['id', 'description', 'type', 'documents', 'status', 'actions'];
 
+  /** Identifiers Table */
+  @ViewChild('identifiersTable') identifiersTable: MatTable<Element>;
+
+  /**
+   * @param {ActivatedRoute} route Activated Route
+   * @param {MatDialog} dialog Mat Dialog
+   * @param {ClientsService} clientService Clients Service
+   */
   constructor(private route: ActivatedRoute,
-    public dialog: MatDialog,
-    private clientService: ClientsService) {
+              public dialog: MatDialog,
+              private clientService: ClientsService) {
     this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
     this.route.data.subscribe((data: { clientIdentities: any, clientIdentifierTemplate: any }) => {
       this.clientIdentities = data.clientIdentities;
@@ -37,8 +54,11 @@ export class IdentitiesTabComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
-
+  /**
+   * Download Client Document
+   * @param {string} parentEntityId Parent Entity Id
+   * @param {string} documentId Document ID
+   */
   download(parentEntityId: string, documentId: string) {
     this.clientService.downloadClientIdentificationDocument(parentEntityId, documentId).subscribe(res => {
       const url = window.URL.createObjectURL(res);
@@ -46,6 +66,9 @@ export class IdentitiesTabComponent implements OnInit {
     });
   }
 
+  /**
+   * Add Client Identifier
+   */
   addIdentifier() {
     const formfields: FormfieldBase[] = [
       new SelectBase({
@@ -103,6 +126,12 @@ export class IdentitiesTabComponent implements OnInit {
     });
   }
 
+  /**
+   * Delete Client Identifier
+   * @param {string} clientId Client Id
+   * @param {string} identifierId Identifier Id
+   * @param {number} index Index
+   */
   deleteIdentifier(clientId: string, identifierId: string, index: number) {
     const deleteIdentifierDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `identifier id:${identifierId}` }
@@ -117,6 +146,11 @@ export class IdentitiesTabComponent implements OnInit {
     });
   }
 
+  /**
+   * Upload Document
+   * @param {number} index Index
+   * @param {string} identifierId Identifier Id
+   */
   uploadDocument(index: number, identifierId: string) {
     const uploadDocumentDialogRef = this.dialog.open(UploadDocumentDialogComponent, {
       data: { documentIdentifier: true }

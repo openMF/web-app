@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+/** Angular Imports */
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
@@ -11,21 +12,33 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 /** Custom Services */
 import { ClientsService } from '../../clients.service';
 
+/**
+ * Clients Address Tab Component
+ */
 @Component({
   selector: 'mifosx-address-tab',
   templateUrl: './address-tab.component.html',
   styleUrls: ['./address-tab.component.scss']
 })
-export class AddressTabComponent implements OnInit {
+export class AddressTabComponent {
 
+  /** Client Address Data */
   clientAddressData: any;
+  /** Client Address Field Config */
   clientAddressFieldConfig: any;
+  /** Client Address Template */
   clientAddressTemplate: any;
+  /** Client Id */
   clientId: string;
 
+  /**
+   * @param {ActivatedRoute} route Activated Route
+   * @param {ClientsService} clientService Clients Service
+   * @param {MatDialog} dialog Mat Dialog
+   */
   constructor(private route: ActivatedRoute,
-    private clientService: ClientsService,
-    private dialog: MatDialog) {
+              private clientService: ClientsService,
+              private dialog: MatDialog) {
     this.route.data.subscribe((data: {
       clientAddressData: any,
       clientAddressFieldConfig: any,
@@ -38,11 +51,10 @@ export class AddressTabComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
-
+  /**
+   * Adds a client address.
+   */
   addAddress() {
-
     const data = {
       title: 'Add Client Address',
       formfields: this.getAddressFormFields('add')
@@ -63,6 +75,11 @@ export class AddressTabComponent implements OnInit {
     });
   }
 
+  /**
+   * Edits an existing address.
+   * @param {any} address Client address
+   * @param {number} index address index
+   */
   editAddress(address: any, index: number) {
     const data = {
       title: 'Edit Client Address',
@@ -85,7 +102,11 @@ export class AddressTabComponent implements OnInit {
     });
   }
 
-  toogleAddress(address: any) {
+  /**
+   * Toggles address activity.
+   * @param {any} address Client Address
+   */
+  toggleAddress(address: any) {
     const addressData = {
       'addressId': address.addressId,
       'isActive': address.isActive ? false : true
@@ -95,14 +116,28 @@ export class AddressTabComponent implements OnInit {
     });
   }
 
+  /**
+   * Checks if field is enabled in address config.
+   * @param {any} fieldName Field Name
+   */
   isFieldEnabled(fieldName: any) {
     return (this.clientAddressFieldConfig.find((fieldObj: any) => fieldObj.field === fieldName)).is_enabled;
   }
 
+  /**
+   * Find Pipe doesn't work with accordian
+   * @param {any} fieldName Field Name
+   * @param {any} fieldId Field Id
+   */
   getSelectedValue(fieldName: any, fieldId: any) {
     return (this.clientAddressTemplate[fieldName].find((fieldObj: any) => fieldObj.id === fieldId));
   }
 
+  /**
+   * Returns address form fields for form dialog.
+   * @param {string} formType Form Type
+   * @param {any} address Address
+   */
   getAddressFormFields(formType?: string, address?: any) {
     let formfields: FormfieldBase[] = [];
     if (formType === 'add') {

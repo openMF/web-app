@@ -1,3 +1,4 @@
+/** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
@@ -10,24 +11,38 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
 import { ClientsService } from '../../clients.service';
 import { EditNotesDialogComponent } from '../custom-dialogs/edit-notes-dialog/edit-notes-dialog.component';
 
+/**
+ * Notes Tab Component
+ */
 @Component({
   selector: 'mifosx-notes-tab',
   templateUrl: './notes-tab.component.html',
   styleUrls: ['./notes-tab.component.scss']
 })
 export class NotesTabComponent implements OnInit {
+
+  /** Client ID */
   clientId: string;
+  /** Username */
   username: string;
+  /** Client Notes */
   clientNotes: any;
+  /** Note Form */
   noteForm: FormGroup;
+
+  /** Notes Form Reference */
   @ViewChild('formRef') formRef: any;
 
-
+  /**
+   * @param {ActivatedRoute} route Activated Route
+   * @param {FormBuilder} formBuilder Form Builder
+   * @param {ClientsService} clientsService Clients Service
+   * @param {MatDialog} dialog Mat Dialog
+   */
   constructor(private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
-    private clientsService: ClientsService,
-    public dialog: MatDialog) {
-
+              private formBuilder: FormBuilder,
+              private clientsService: ClientsService,
+              public dialog: MatDialog) {
     this.username = JSON.parse(sessionStorage.getItem('mifosXCredentials')).username;
     this.clientId = this.route.parent.snapshot.params['clientId'];
     this.route.data.subscribe((data: { clientNotes: any }) => {
@@ -39,24 +54,21 @@ export class NotesTabComponent implements OnInit {
     this.createNoteForm();
   }
 
+  /**
+   * Creates the note form
+   */
   createNoteForm() {
     this.noteForm = this.formBuilder.group({
       'note': ['', Validators.required]
     });
   }
 
-  submit() {
-    this.clientsService.createClientNote(this.clientId, this.noteForm.value).subscribe((response: any) => {
-      this.clientNotes.push({
-        id: response.resourceId,
-        createdByUsername: this.username,
-        createdOn: new Date(),
-        note: this.noteForm.value.note
-      });
-      this.formRef.resetForm();
-    });
-  }
-
+  /**
+   * Edits a client note.
+   * @param {string} noteId Note Id
+   * @param {string} noteContent Note Content
+   * @param {number} index Index
+   */
   editNote(noteId: string, noteContent: string, index: number) {
     const editNoteDialogRef = this.dialog.open(EditNotesDialogComponent, {
       data: { noteContent: noteContent }
@@ -70,8 +82,11 @@ export class NotesTabComponent implements OnInit {
     });
   }
 
-
-
+  /**
+   * Deletes a client note.
+   * @param {string} noteId Note Id
+   * @param {number} index Index
+   */
   deleteNote(noteId: string, index: number) {
     const deleteNoteDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `Note id:${noteId}` }
@@ -83,6 +98,21 @@ export class NotesTabComponent implements OnInit {
             this.clientNotes.splice(index, 1);
           });
       }
+    });
+  }
+
+  /**
+   * Creates a client note.
+   */
+  submit() {
+    this.clientsService.createClientNote(this.clientId, this.noteForm.value).subscribe((response: any) => {
+      this.clientNotes.push({
+        id: response.resourceId,
+        createdByUsername: this.username,
+        createdOn: new Date(),
+        note: this.noteForm.value.note
+      });
+      this.formRef.resetForm();
     });
   }
 

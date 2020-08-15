@@ -1,9 +1,9 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
-  <button mat-raised-button color="primary" [routerLink]="['../../','paycharge',chargeData.id]">
+  <button mat-raised-button color="primary" [routerLink]="['pay']" *mifosxHasPermission="'PAY_CLIENTCHARGE'">
     <fa-icon icon="dollar-sign"></fa-icon>&nbsp;&nbsp;
     Pay
   </button>
-  <button mat-raised-button color="primary" (click)="waiveCharge()">
+  <button mat-raised-button color="primary" (click)="waiveCharge()" *mifosxHasPermission="'WAIVE_CLIENTCHARGE'">
     <i class="fa fa-flag"></i>
     Waive Charge
   </button>

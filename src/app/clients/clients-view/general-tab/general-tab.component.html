@@ -1,4 +1,5 @@
 <div class="tab-container mat-typography">
+
   <h3>Performance History</h3>
   <div fxLayout="row" fxLayoutGap="32px" class="performance-history-container">
     <p>
@@ -13,26 +14,26 @@
   </div>
 
   <!-- Upcoming Charges -->
-
-  <div class="headingContent">
+  <div class="heading-content">
     <div fxLayout="column" fxFlex="50%">
-      <div className="headingName">
+      <div className="heading-name">
         <h3>Upcoming Charges</h3>
       </div>
     </div>
     <div fxLayout="column" fxFlex="50%">
       <div fxLayout="row" fxLayoutAlign="flex-end">
-        <button mat-raised-button class="f-right" color="primary" [routerLink]="['../', 'charges', 'overview']">Charges
+        <button mat-raised-button class="f-right" color="primary" [routerLink]="['../', 'charges', 'overview']" *mifosxHasPermission="'READ_CLIENTCHARGE'">Charges
           Overview</button>
       </div>
     </div>
   </div>
 
   <table mat-table [dataSource]="upcomingCharges">
+
     <ng-container matColumnDef="Name">
       <th mat-header-cell *matHeaderCellDef> Name </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop"
-          [ngClass]="(!(element.isWaived || element.isPaid))|statusLookup"></i>
+          [ngClass]="(!(element.isWaived || element.isPaid)) | statusLookup"></i>
         {{element.name}} </td>
     </ng-container>
 
@@ -45,6 +46,7 @@
       <th mat-header-cell *matHeaderCellDef> Due </th>
       <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
     </ng-container>
+
     <ng-container matColumnDef="Paid">
       <th mat-header-cell *matHeaderCellDef>Paid </th>
       <td mat-cell *matCellDef="let element"> {{element.amountPaid}} </td>
@@ -55,22 +57,20 @@
       <td mat-cell *matCellDef="let element"> {{element.amountWaived}} </td>
     </ng-container>
 
-
     <ng-container matColumnDef="Outstanding">
       <th mat-header-cell *matHeaderCellDef> Outstanding </th>
       <td mat-cell *matCellDef="let element"> {{element.amountOutstanding}} </td>
     </ng-container>
 
-
     <ng-container matColumnDef="Actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let element">
         <button class="account-action-button" mat-raised-button color="primary"
-          (click)="routeEdit($event)" [routerLink]="['../','charges', element.id, 'pay']">
+          (click)="routeEdit($event)" [routerLink]="['../','charges', element.id, 'pay']" *mifosxHasPermission="'PAY_CLIENTCHARGE'">
           <i class="fa fa-dollar"></i>
         </button>
         <button class="account-action-button" mat-raised-button color="primary"
-          (click)="routeEdit($event); waiveCharge(element.id,element.clientId)">
+          (click)="routeEdit($event); waiveCharge(element.id,element.clientId)" *mifosxHasPermission="'WAIVE_CLIENTCHARGE'">
           <i class="fa fa-flag"></i>
         </button>
       </td>
@@ -79,13 +79,13 @@
 
     <tr mat-header-row *matHeaderRowDef="upcomingChargesColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: upcomingChargesColumns;" [routerLink]="['../','charges',row.id]"></tr>
+
   </table>
 
-
   <!-- loans overview table -->
-  <div class="headingContent">
+  <div class="heading-content">
     <div fxLayout="column" fxFlex="50%">
-      <div class="headingName">
+      <div class="heading-name">
         <h3>Loan Accounts</h3>
       </div>
     </div>
@@ -96,6 +96,7 @@
       </div>
     </div>
   </div>
+
   <table *ngIf="!showClosedLoanAccounts" mat-table [dataSource]="loanAccounts|accountsFilter:'loan'">
 
     <ng-container matColumnDef="Account No">
@@ -125,14 +126,12 @@
       <td mat-cell *matCellDef="let element"> {{element.accountBalance}} </td>
     </ng-container>
 
-
     <ng-container matColumnDef="Type">
       <th mat-header-cell *matHeaderCellDef> Type </th>
       <td mat-cell *matCellDef="let element">
         <i class="fa fa-large" [ngClass]="(element.loanType.value=== 'Individual')?'fa-user':'fa-group'" matTooltip=" {{ element.loanType.value }}" matTooltipPosition="above"></i>
       </td>
     </ng-container>
-
 
     <ng-container matColumnDef="Actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
@@ -168,6 +167,7 @@
     <tr mat-header-row *matHeaderRowDef="openLoansColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: openLoansColumns;"
       [routerLink]="['../', 'loans', row.id, 'general']" class="select-row"></tr>
+
   </table>
 
   <!-- Closed Loan Accounts -->
@@ -190,6 +190,7 @@
       <th mat-header-cell *matHeaderCellDef> Original Loan </th>
       <td mat-cell *matCellDef="let element"> {{element.lastActiveTransactionDate | date}} </td>
     </ng-container>
+
     <ng-container matColumnDef="Loan Balance">
       <th mat-header-cell *matHeaderCellDef>Loan Balance </th>
       <td mat-cell *matCellDef="let element"> {{element.loanBalance}} </td>
@@ -199,7 +200,6 @@
       <th mat-header-cell *matHeaderCellDef> Amount Paid </th>
       <td mat-cell *matCellDef="let element"> {{element.accountBalance}} </td>
     </ng-container>
-
 
     <ng-container matColumnDef="Type">
       <th mat-header-cell *matHeaderCellDef> Type </th>
@@ -216,13 +216,13 @@
     <tr mat-header-row *matHeaderRowDef="closedLoansColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: closedLoansColumns;"
     [routerLink]="['../', 'loans', row.id, 'general']" class="select-row"></tr>
+
   </table>
 
-
   <!-- Saving overview Table -->
-  <div class="headingContent">
+  <div class="heading-content">
     <div fxLayout="column" fxFlex="50%">
-      <div class="headingName">
+      <div class="heading-name">
         <h3>Saving Accounts</h3>
       </div>
     </div>
@@ -289,6 +289,7 @@
     <tr mat-header-row *matHeaderRowDef="openSavingsColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: openSavingsColumns;"
       [routerLink]="['../', 'savingsaccounts', row.id, 'transactions']"></tr>
+
   </table>
 
   <!-- Closed Saving Accounts -->
@@ -314,13 +315,13 @@
 
     <tr mat-header-row *matHeaderRowDef="closedSavingsColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: closedSavingsColumns;"></tr>
+
   </table>
 
-
   <!-- Fixed Deposit Table -->
-  <div class="headingContent">
+  <div class="heading-content">
     <div fxLayout="column" fxFlex="50%">
-      <div class="headingName">
+      <div class="heading-name">
         <h3>Fixed Deposit Accounts</h3>
       </div>
     </div>
@@ -331,6 +332,7 @@
       </div>
     </div>
   </div>
+
   <table *ngIf="!showClosedFixedAccounts" mat-table
     [dataSource]="savingAccounts|accountsFilter:'saving':'open':'isFixed'">
 
@@ -378,6 +380,7 @@
     <tr mat-header-row *matHeaderRowDef="openSavingsColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: openSavingsColumns;"
       [routerLink]="['../', 'fixed-deposits-accounts', row.id, 'interest-rate-chart']"></tr>
+
   </table>
 
   <!-- Closed Fixed Deposit Accounts -->
@@ -404,12 +407,13 @@
     <tr mat-header-row *matHeaderRowDef="closedSavingsColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: closedSavingsColumns;"
       [routerLink]="['../', 'fixed-deposits-account', row.id]"></tr>
+
   </table>
 
   <!-- Recurring Deposit Table -->
-  <div class="headingContent">
+  <div class="heading-content">
     <div fxLayout="column" fxFlex="50%">
-      <div class="headingName">
+      <div class="heading-name">
         <h3>Recurring Deposit Accounts</h3>
       </div>
     </div>
@@ -468,16 +472,15 @@
           </button>
         </ng-container>
       </td>
-
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="openSavingsColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: openSavingsColumns;"
       [routerLink]="['../', 'recurringdeposits', row.id, 'interest-rate-chart']" class="select-row"></tr>
+
   </table>
 
   <!-- Closed Recurring Deposit Accounts -->
-
   <table *ngIf="showClosedRecurringAccounts" mat-table
     [dataSource]="savingAccounts|accountsFilter:'saving':'closed':'isRecurring'">
 
@@ -503,9 +506,9 @@
   </table>
 
   <!-- Shares overview Table -->
-  <div class="headingContent">
+  <div class="heading-content">
     <div fxLayout="column" fxFlex="50%">
-      <div class="headingName">
+      <div class="heading-name">
         <h3>Shares Accounts</h3>
       </div>
     </div>
@@ -556,13 +559,14 @@
           <i class="fa fa-check-circle"></i>
         </button>
       </td>
-
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="openSharesColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: openSharesColumns;"
       [routerLink]="['../', 'shares-accounts', row.id, 'transactions']"></tr>
+
   </table>
+
   <!-- Closed Share Accounts -->
   <table *ngIf="showClosedShareAccounts" mat-table [dataSource]="shareAccounts|accountsFilter:'share':'closed'">
 
@@ -594,6 +598,7 @@
 
     <tr mat-header-row *matHeaderRowDef="closedSharesColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: closedSharesColumns;"></tr>
+
   </table>
 
 </div>

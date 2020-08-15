@@ -4,7 +4,7 @@
 
     <h3>Documents</h3>
 
-    <button mat-raised-button class="f-right" color="primary" (click)="uploadDocument()">
+    <button mat-raised-button class="f-right" color="primary" (click)="uploadDocument()" *mifosxHasPermission="'CREATE_DOCUMENT'">
     <fa-icon icon="plus"></fa-icon>
     &nbsp;&nbsp; Add
   </button>

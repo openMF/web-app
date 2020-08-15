@@ -40,14 +40,14 @@ export class AcceptClientTransferComponent implements OnInit {
   }
 
   /**
-   * Creates the accept-approval savings form.
+   * Creates the accept client transfer form.
    */
   ngOnInit() {
     this.createAcceptClientTransferForm();
   }
 
   /**
-   * Creates the accept-approval savings account form.
+   * Creates the accept client transfer form.
    */
   createAcceptClientTransferForm() {
     this.acceptClientTransferForm = this.formBuilder.group({
