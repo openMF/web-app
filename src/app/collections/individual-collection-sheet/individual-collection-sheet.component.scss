@@ -1,0 +1,42 @@
+.container {
+
+  max-width: 37em;
+
+  .margin-v {
+    margin: 1em 0;
+  }
+  
+  .margin-b {
+    margin: 0 0 1em 0;
+  }
+  
+  .margin-t {
+    margin-top: 1em;
+  }
+
+}
+
+.showCollectionSheet {
+  .container {
+    max-width: 73rem;
+  }
+}
+
+.alert {
+  background-color: rgb(253, 236, 234);
+  padding: 6px 16px;
+  font-size: 0.875rem;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  line-height: 1.43;
+  border-radius: 4px;
+  letter-spacing: 0.01071em;
+
+  .message {
+    padding: 8px 0;
+  }
+  .alert-check {
+    color:#f44336;
+    margin-right: 2px;
+  }
+}
