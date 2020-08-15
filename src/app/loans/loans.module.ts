@@ -56,6 +56,10 @@ import { StandingInstructionsTabComponent } from './loans-view/standing-instruct
 import { EditLoansAccountComponent } from './edit-loans-account/edit-loans-account.component';
 import { LoanScreenReportsComponent } from './loans-view/loan-account-actions/loan-screen-reports/loan-screen-reports.component';
 import { ApproveLoanComponent } from './loans-view/loan-account-actions/approve-loan/approve-loan.component';
+import { ViewRecieptComponent } from './loans-view/transactions/view-reciept/view-reciept.component';
+import { ExportTransactionsComponent } from './loans-view/transactions/export-transactions/export-transactions.component';
+import { ViewTransactionComponent } from './loans-view/transactions/view-transaction/view-transaction.component';
+import { EditTransactionComponent } from './loans-view/transactions/edit-transaction/edit-transaction.component';
 
 /** Dialog Components */
 import { LoansAccountViewGuarantorDetailsDialogComponent } from './custom-dialog/loans-account-view-guarantor-details-dialog/loans-account-view-guarantor-details-dialog.component';
@@ -121,7 +125,11 @@ import { LoanAccountLoadDocumentsDialogComponent } from './custom-dialog/loan-ac
     EditLoansAccountComponent,
     LoanScreenReportsComponent,
     ApproveLoanComponent,
-    ViewChargeComponent
+    ViewChargeComponent,
+    ViewTransactionComponent,
+    EditTransactionComponent,
+    ViewRecieptComponent,
+    ExportTransactionsComponent
   ],
   entryComponents: [
     LoansAccountAddCollateralDialogComponent,
