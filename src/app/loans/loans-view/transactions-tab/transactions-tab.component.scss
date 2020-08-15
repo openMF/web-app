@@ -1,22 +1,28 @@
-table {
-  width: 100%;
-  margin: 3% 0%;
-}
-
 .container {
   padding-bottom: 2%;
-}
 
-.transaction-buttons {
-  margin-right: 5%;
-  padding-top: 5%;
-}
+  .transaction-buttons {
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    .accruals {
+      padding-top: 1%;
+    }
+  }
 
-.strike {
-  text-decoration: line-through;
-  color: red;
-}
-
-.accruals {
-  padding-top: 1%;
+  table {
+    width: 100%;
+    .account-action-button{
+      min-width: 26px;
+      padding: 0 0 3px 0;
+      margin: 0 10%;
+      line-height: 25px;
+    }
+    .select-row:hover {
+      cursor: pointer;
+    }
+    .strike {
+      text-decoration: line-through;
+      color: red;
+    }
+  }
 }

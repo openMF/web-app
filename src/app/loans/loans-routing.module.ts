@@ -24,6 +24,11 @@ import { CreateLoansAccountComponent } from './create-loans-account/create-loans
 import { LoanDocumentsTabComponent } from './loans-view/loan-documents-tab/loan-documents-tab.component';
 import { StandingInstructionsTabComponent } from 'app/loans/loans-view/standing-instructions-tab/standing-instructions-tab.component';
 import { EditLoansAccountComponent } from './edit-loans-account/edit-loans-account.component';
+import { ViewChargeComponent } from './loans-view/view-charge/view-charge.component';
+import { ViewTransactionComponent } from './loans-view/transactions/view-transaction/view-transaction.component';
+import { EditTransactionComponent } from './loans-view/transactions/edit-transaction/edit-transaction.component';
+import { ViewRecieptComponent } from './loans-view/transactions/view-reciept/view-reciept.component';
+import { ExportTransactionsComponent } from './loans-view/transactions/export-transactions/export-transactions.component';
 
 /** Custom Resolvers */
 import { LoanDetailsResolver } from './common-resolvers/loan-details.resolver';
@@ -36,7 +41,9 @@ import { LoansAccountTemplateResolver } from './common-resolvers/loans-account-t
 import { LoanDocumentsResolver } from './common-resolvers/loan-documents.resolver';
 import { LoansAccountAndTemplateResolver } from './common-resolvers/loans-account-and-template.resolver';
 import { LoansAccountChargeResolver } from './common-resolvers/loans-account-charge.resolver';
-import { ViewChargeComponent } from './loans-view/view-charge/view-charge.component';
+import { LoansAccountTransactionResolver } from './common-resolvers/loans-account-transaction.resolver';
+import { LoansTransactionRecieptResolver } from './common-resolvers/loans-transaction-reciept.resolver';
+import { LoansAccountTransactionTemplateResolver } from './common-resolvers/loans-account-transaction-template.resolver';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -93,11 +100,50 @@ const routes: Routes = [
             },
             {
               path: 'transactions',
-              component: TransactionsTabComponent,
-              data: { title: extract('Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+              data: { title: extract('Loans Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
               resolve: {
                 loanDetailsAssociationData: LoanDetailsChargesResolver
-              }
+              },
+              children: [
+                {
+                  path: '',
+                  component: TransactionsTabComponent
+
+                },
+                {
+                  path: 'export',
+                  component: ExportTransactionsComponent
+                },
+                {
+                  path: ':id',
+                  data: { routeParamBreadcrumb: 'id' },
+                  children: [
+                    {
+                      path: '',
+                      component: ViewTransactionComponent,
+                      resolve: {
+                        loansAccountTransaction: LoansAccountTransactionResolver
+                      }
+                    },
+                    {
+                      path: 'edit',
+                      component: EditTransactionComponent,
+                      data: { breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                      resolve: {
+                        loansAccountTransactionTemplate: LoansAccountTransactionTemplateResolver
+                      }
+                    },
+                    {
+                      path: 'reciept',
+                      component: ViewRecieptComponent,
+                      data: { breadcrumb: 'Reciept', routeParamBreadcrumb: false },
+                      resolve: {
+                        loansTransactionReciept: LoansTransactionRecieptResolver
+                      }
+                    }
+                  ]
+                }
+              ]
             },
             {
               path: 'loan-collateral',
@@ -222,7 +268,10 @@ const routes: Routes = [
     LoansAccountTemplateResolver,
     LoanDocumentsResolver,
     LoansAccountAndTemplateResolver,
-    LoansAccountChargeResolver
+    LoansAccountChargeResolver,
+    LoansAccountTransactionResolver,
+    LoansAccountTransactionTemplateResolver,
+    LoansTransactionRecieptResolver
   ]
 })
 

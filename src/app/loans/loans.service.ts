@@ -404,4 +404,38 @@ export class LoansService {
     return this.http.delete(`/loans/${accountId}/charges/${chargeId}`);
   }
 
+  /**
+   * @param {string} accountId Loans Account Id
+   * @param {string} transactionId Transaction Id
+   * @returns {Observable<any>}
+   */
+  getLoansAccountTransaction(accountId: string, transactionId: string): Observable<any> {
+    return this.http.get(`/loans/${accountId}/transactions/${transactionId}`);
+  }
+
+  /**
+   * @param {string} accountId Loans Account Id
+   * @param {string} transactionId Transaction Id
+   * @returns {Observable<any>}
+   */
+  getLoansAccountTransactionTemplate(accountId: string, transactionId: string): Observable<any> {
+    const httpParams = new HttpParams().set('template', 'true');
+    return this.http.get(`/loans/${accountId}/transactions/${transactionId}`, { params: httpParams });
+  }
+
+  /**
+   * @param {string} accountId Loans Account Id
+   * @param {string} command Command
+   * @param {any} data Data
+   * @param {string} transactionId Transaction Id
+   * @returns {Observable<any>}
+   */
+  executeLoansAccountTransactionsCommand(accountId: string, command: string, data: any, transactionId?: any): Observable<any> {
+    const httpParams = new HttpParams().set('command', command);
+    if (transactionId) {
+      return this.http.post(`/loans/${accountId}/transactions/${transactionId}`, data, { params: httpParams });
+    }
+    return this.http.post(`/loans/${accountId}/transactions`, data, { params: httpParams });
+  }
+
 }

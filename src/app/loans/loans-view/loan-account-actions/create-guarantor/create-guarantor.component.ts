@@ -130,7 +130,6 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
   }
 
   clientSelected(clientDetails: any) {
-    console.log(clientDetails);
     this.accountOptions = [];
     this.loanService.guarantorAccountResource(this.loanId, clientDetails.id).subscribe((response: any) => {
       this.accountOptions = response.accountLinkingOptions;
