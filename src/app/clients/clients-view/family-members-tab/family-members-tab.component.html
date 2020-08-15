@@ -1,13 +1,19 @@
 <div class="tab-container mat-typography">
+
   <router-outlet>
+
     <h3>Family Members</h3>
+
     <div fxLayout="row" fxLayoutAlign="flex-end">
       <button mat-raised-button color="primary" [routerLink]="['./add']">
         <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Add
       </button>
     </div>
+
     <mat-accordion>
+
       <mat-expansion-panel *ngFor="let member of clientFamilyMembers;index as i" class="family-member">
+
         <mat-expansion-panel-header>
           <mat-panel-title>
             {{member.firstName+' '+member.middleName+' '+member.lastName}}
@@ -16,7 +22,9 @@
             {{member.relationship}}
           </mat-panel-description>
         </mat-expansion-panel-header>
+
         <mat-divider [inset]="true"></mat-divider>
+
         <div class="family-member-actions" fxLayout="row" fxLayoutAlign="flex-end">
           <button mat-button color="primary">
             <fa-icon icon="edit" [routerLink]="[member.id,'edit']"></fa-icon>
@@ -24,8 +32,8 @@
           <button mat-button color="warn" (click)="deleteFamilyMember(member.clientId,member.id,member.firstName,i)">
             <fa-icon icon="trash"></fa-icon>
           </button>
-
         </div>
+
         <p>
           First Name : {{member.firstName}}<br />
           Middle Name : {{member.middleName}}<br />
@@ -43,5 +51,7 @@
       </mat-expansion-panel>
 
     </mat-accordion>
+
   </router-outlet>
+
 </div>

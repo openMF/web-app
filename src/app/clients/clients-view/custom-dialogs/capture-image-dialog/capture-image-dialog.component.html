@@ -4,9 +4,11 @@
 
   <video #video width="540" height="480" autoplay></video>
 
-  <canvas #canvas class="canvas"></canvas>
+  <!-- Using a class will break renderer changes -->
+  <canvas #canvas [ngStyle]="{'display': 'none'}"></canvas>
 
-  <p #fallback class="fallback" align="center"></p>
+  <!-- Using a class will break renderer changes -->
+  <p #fallback [ngStyle]="{'display': 'none'}" align="center"></p>
 
   <div fxFlex="20%" align="center">
     <button #captureButton *ngIf="!isCaptured" mat-stroked-button color="primary" (click)="capture()">

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+/** Angular Imports */
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 
 /** Custom Components */
@@ -8,23 +9,30 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
 /** Custom Services */
 import { ClientsService } from '../../clients.service';
 
+/**
+ * Client Family Members Tab
+ */
 @Component({
   selector: 'mifosx-family-members-tab',
   templateUrl: './family-members-tab.component.html',
   styleUrls: ['./family-members-tab.component.scss']
 })
-export class FamilyMembersTabComponent implements OnInit {
+export class FamilyMembersTabComponent {
+
+  /** Client Family Members */
   clientFamilyMembers: any;
+
+  /**
+   * @param {ActivatedRoute} route Activated Route
+   * @param {ClientsService} clientsService Clients Service
+   * @param {MatDialog }dialog Mat Dialog
+   */
   constructor(private route: ActivatedRoute,
-    private router: Router,
-    private clientsService: ClientsService,
-    public dialog: MatDialog) {
+              private clientsService: ClientsService,
+              public dialog: MatDialog) {
     this.route.data.subscribe((data: { clientFamilyMembers: any }) => {
       this.clientFamilyMembers = data.clientFamilyMembers;
     });
-  }
-
-  ngOnInit() {
   }
 
   /**

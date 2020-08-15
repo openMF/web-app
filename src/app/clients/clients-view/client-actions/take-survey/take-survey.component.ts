@@ -1,10 +1,11 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from '../../../clients.service';
 import { AuthenticationService } from '../../../../core/authentication/authentication.service';
+
 /**
  * Take Survey Component
  */
@@ -13,7 +14,7 @@ import { AuthenticationService } from '../../../../core/authentication/authentic
   templateUrl: './take-survey.component.html',
   styleUrls: ['./take-survey.component.scss']
 })
-export class TakeSurveyComponent implements OnInit {
+export class TakeSurveyComponent {
 
   /** List of all Survey Data */
   allSurveyData: any;
@@ -38,7 +39,10 @@ export class TakeSurveyComponent implements OnInit {
 
   /**
    * Retrieves the survey data from `resolve`.
-   * @param {ActivatedRoute} route Activated Route.
+   * @param {ActivatedRoute} route Activated Route
+   * @param {ClientsService} clientsService ClientsService
+   * @param {Router} router Router
+   * @param {AuthenticationService} authenticationService AuthenticationService
    */
   constructor(private route: ActivatedRoute,
               private clientsService: ClientsService,
@@ -48,15 +52,12 @@ export class TakeSurveyComponent implements OnInit {
       this.allSurveyData = data.clientActionData;
       this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
     });
-
     /** Retrieves User ID */
     const savedCredentials = this.authenticationService.getCredentials();
     this.userId = savedCredentials.userId;
   }
 
-  ngOnInit() {
-  }
-
+  // TODO: document the function
   onSurveyChange(resEvent: any) {
     if (resEvent.value) {
       this.surveyData = resEvent.value;
@@ -68,6 +69,7 @@ export class TakeSurveyComponent implements OnInit {
     }
   }
 
+  // TODO: document the function
   groupBy(array: any, func: any) {
     const groups = {};
     array.forEach((ele: any) => {
@@ -80,6 +82,24 @@ export class TakeSurveyComponent implements OnInit {
     });
   }
 
+
+  /**
+   * Checks if there is any response or not from the user and enables the submit button accordingly
+   */
+  isAnyResponse(): boolean {
+    if (this.surveyData) {
+      this.surveyData.questionDatas.forEach((element: any) => {
+        if (element.answer) {
+          return false;
+        }
+      });
+    }
+    return true;
+  }
+
+  /**
+   * Submits the user survey response.
+   */
   submit() {
     this.formData = {
       userId: 0,
@@ -109,24 +129,9 @@ export class TakeSurveyComponent implements OnInit {
         this.formData.scorecardValues.push(tmp);
       }
     });
-
-    // Submits the user survey response
     this.clientsService.createNewSurvey(this.surveyData.id, this.formData).subscribe(() => {
       this.router.navigate(['../'], { relativeTo: this.route });
-
     });
-  }
-
-  // Checks if there is any response or not from the user and enables the submit button accordingly
-  isAnyResponse(): boolean {
-    if (this.surveyData) {
-      this.surveyData.questionDatas.forEach((element: any) => {
-        if (element.answer) {
-          return false;
-        }
-      });
-    }
-    return true;
   }
 
 }

@@ -18,7 +18,7 @@ export class UpdateClientSavingsAccountComponent implements OnInit {
 
   /** Client Update Savings Account form. */
   clientSavingsAccountForm: FormGroup;
-  /** Savings Accounts Officer Data */
+  /** Savings Accounts Data */
   savingsAccounts: any;
   /** Client Data */
   clientData: any;
@@ -39,9 +39,6 @@ export class UpdateClientSavingsAccountComponent implements OnInit {
     });
   }
 
-  /**
-   * Creates the client update savings account form.
-   */
   ngOnInit() {
     this.savingsAccounts = this.clientData.savingAccountOptions;
     this.createClientSavingsAccountForm();
