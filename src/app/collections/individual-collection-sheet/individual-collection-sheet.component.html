@@ -1,0 +1,176 @@
+<mat-card class="container" *ngIf="!isCollapsed">
+
+  <div class="alert" *ngIf="noData">
+
+    <div class="message">
+      <i class="fa fa-exclamation-circle alert-check"></i>
+        No repayments and disbursal are available for selected client and meeting date
+    </div>
+
+  </div>
+
+  <form [formGroup]="collectionSheetForm" (ngSubmit)="previewCollectionSheet()">
+
+    <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="start center">
+
+      <mat-form-field fxFlex="98%">
+        <mat-label>Branch Office</mat-label>
+        <mat-select formControlName="officeId" required>
+          <mat-option *ngFor="let office of officesData" [value]="office.id">
+            {{ office.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="collectionSheetForm.controls.officeId.hasError('required')">
+          Branch Office is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="98%">
+        <mat-label>Repayment date</mat-label>
+        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDatePicker" required
+          formControlName="transactionDate" required>
+        <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #transactionDatePicker></mat-datepicker>
+        <mat-error *ngIf="collectionSheetForm.controls.transactionDate.hasError('required')">
+          Repayment Date is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="98%">
+        <mat-label>Staff</mat-label>
+        <mat-select formControlName="staffId">
+          <mat-option *ngFor="let loanOfficer of loanOfficerData" [value]="loanOfficer.id">
+            {{ loanOfficer.displayName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+
+    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+      <button mat-raised-button color="primary" [disabled]="!collectionSheetForm.valid">
+        <fa-icon icon="search"></fa-icon>&nbsp; Collection Sheet
+      </button>
+    </mat-card-actions>
+
+  </form>
+
+</mat-card>
+
+<div class="showCollectionSheet">
+
+  <div class="container" *ngIf="isCollapsed">
+
+    <mat-card>
+
+      <div class="m-b-20">
+        <button mat-raised-button color="primary" (click)="isCollapsed = false">
+          Parameters
+        </button>
+      </div>
+
+      <ng-container *ngIf="loansDataSource">
+
+        <h2 class="mat-h2">Due Collections</h2>
+
+        <table class="mat-elevation-z1" mat-table [dataSource]="loansDataSource" matSort>
+
+          <ng-container matColumnDef="loanAccount">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Loan Account# </th>
+            <td mat-cell *matCellDef="let loan"> {{ loan.accountId }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="productName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Name </th>
+            <td mat-cell *matCellDef="let loan"> {{ loan.productShortName }}({{ loan.productId }}) </td>
+          </ng-container>
+
+          <ng-container matColumnDef="clientName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Client Name </th>
+            <td mat-cell *matCellDef="let loan"> {{ loan.clientName }}({{ loan.clientId }}) </td>
+          </ng-container>
+
+          <ng-container matColumnDef="totalDue">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Due </th>
+            <td mat-cell *matCellDef="let loan"> {{ loan.totalDue }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="charges">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Charges </th>
+            <td mat-cell *matCellDef="let loan"> {{ loan.feeDue }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+            <td mat-cell *matCellDef="let loan; let i = index">
+              <button mat-raised-button color="primary" (click)="showAndStorePaymentDetails('loans', loan, i)">Add Payment</button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="loansDisplayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: loansDisplayedColumns;"></tr>
+
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+      </ng-container>
+
+      <ng-container *ngIf="savingsDataSource">
+
+        <h2 class="mat-h2">Due Savings Collections</h2>
+
+        <table class="mat-elevation-z1" mat-table [dataSource]="savingsDataSource" matSort>
+
+          <ng-container matColumnDef="depositAccount">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Deposit Account </th>
+            <td mat-cell *matCellDef="let saving"> {{ saving.depositAccountType }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="savingsAccountNo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Savings Account # </th>
+            <td mat-cell *matCellDef="let saving"> {{ saving.accountId }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="productName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Name </th>
+            <td mat-cell *matCellDef="let saving"> {{ saving.productName }}({{ saving.productId }}) </td>
+          </ng-container>
+
+          <ng-container matColumnDef="clientName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Client Name </th>
+            <td mat-cell *matCellDef="let saving"> {{ saving.clientName }}({{ saving.clientId }}) </td>
+          </ng-container>
+
+          <ng-container matColumnDef="totalDue">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Due </th>
+            <td mat-cell *matCellDef="let saving"> {{ saving.dueAmount }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+            <td mat-cell *matCellDef="let saving; let j = index">
+              <button mat-raised-button color="primary" (click)="showAndStorePaymentDetails('savings', saving, j)">Add Payment</button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="savingsDisplayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: savingsDisplayedColumns;"></tr>
+
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+      </ng-container>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" (click)="submit()">Submit</button>
+      </mat-card-actions>
+
+    </mat-card>
+
+  </div>
+
+</div>

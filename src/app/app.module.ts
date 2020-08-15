@@ -35,6 +35,7 @@ import { TemplatesModule } from './templates/templates.module';
 import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { CollectionsModule } from './collections/collections.module';
 
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
@@ -68,6 +69,7 @@ import { AppRoutingModule } from './app-routing.module';
     TemplatesModule,
     UsersModule,
     NotificationsModule,
+    CollectionsModule,
     AppRoutingModule,
   ],
   declarations: [WebAppComponent, NotFoundComponent],
