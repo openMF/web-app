@@ -19,11 +19,12 @@ import { Logger } from './core/logger/logger.service';
 import { I18nService } from './core/i18n/i18n.service';
 import { ThemeStorageService } from './shared/theme-picker/theme-storage.service';
 import { AlertService } from './core/alert/alert.service';
-import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
-
-/** Custom Models */
-import { Alert } from './core/alert/alert.model';
 import { AuthenticationService } from './core/authentication/authentication.service';
+import { SettingsService } from './settings/settings.service';
+
+/** Custom Items */
+import { Alert } from './core/alert/alert.model';
+import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
 
 /** Initialize Logger */
 const log = new Logger('MifosX');
@@ -59,6 +60,7 @@ export class WebAppComponent implements OnInit {
               private themeStorageService: ThemeStorageService,
               public snackBar: MatSnackBar,
               private alertService: AlertService,
+              private settingsService: SettingsService,
               private authenticationService: AuthenticationService) { }
 
   /**
@@ -133,6 +135,17 @@ export class WebAppComponent implements OnInit {
       });
     });
     this.buttonConfig = new KeyboardShortcutsConfiguration();
+
+    // initialize language and date format if they are null.
+    if (!localStorage.getItem('mifosXLanguage')) {
+      this.settingsService.setLanguage({
+        name: 'English',
+        code: 'en'
+      });
+    }
+    if (!localStorage.getItem('mifosXDateFormat')) {
+      this.settingsService.setDateFormat('dd MMMM yyyy');
+    }
   }
 
   logout() {
