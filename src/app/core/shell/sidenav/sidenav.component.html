@@ -38,19 +38,9 @@
         <span class="text-muted icon-menu-title">Frequently Accessed</span>
       </div>
       <div class="icon-menu">
-        <div class="icon-menu-item">
-          <button mat-raised-button matTooltip="Home" [routerLink]="['/home']">
-            <fa-icon icon="home" size="lg"></fa-icon>
-          </button>
-        </div>
-        <div class="icon-menu-item">
-          <button mat-raised-button matTooltip="Dashboard" [routerLink]="['/dashboard']">
-            <fa-icon icon="tachometer-alt" size="lg"></fa-icon>
-          </button>
-        </div>
-        <div class="icon-menu-item">
-          <button mat-raised-button matTooltip="Navigation" [routerLink]="['/navigation']">
-            <fa-icon icon="location-arrow" size="lg"></fa-icon>
+        <div class="icon-menu-item" *ngFor="let activity of mappedActivities">
+          <button mat-flat-button [matTooltip]="activity.toolTip" [routerLink]="[activity.path]">
+            <fa-icon [icon]="activity.icon" size="lg"></fa-icon>
           </button>
         </div>
       </div>

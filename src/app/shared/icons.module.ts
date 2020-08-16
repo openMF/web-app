@@ -94,7 +94,9 @@ import {
   faFlag,
   faArrowUp,
   faArrowDown,
-  faFolderOpen
+  faFolderOpen,
+  faIdBadge,
+  faAddressCard
 } from '@fortawesome/free-solid-svg-icons';
 
 /** Add icons to the library for convenient access in other components. */
@@ -188,7 +190,9 @@ library.add(
   faFlag,
   faArrowUp,
   faArrowDown,
-  faFolderOpen
+  faFolderOpen,
+  faIdBadge,
+  faAddressCard
 );
 
 /**
