@@ -80,6 +80,16 @@ export class ToolbarComponent implements OnInit {
       .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }
 
+  /**
+   * Opens Mifos JIRA Wiki page.
+   */
+  help() {
+    window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
+  }
+
+  /**
+   * Opens Keyboard shortcuts dialog.
+   */
   showKeyboardShortcuts() {
     const dialogRef = this.dialog.open(KeyboardShortcutsDialogComponent);
     dialogRef.afterClosed().subscribe((response: any) => {});

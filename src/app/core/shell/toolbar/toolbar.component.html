@@ -98,6 +98,18 @@
 
 <!-- Application User Help Menu -->
 <mat-menu #applicationMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item (click)="help()">
+    <mat-icon matListIcon>
+      <fa-icon icon="question-circle" size="sm"></fa-icon>
+    </mat-icon>
+    <span>Help</span>
+  </button>
+  <button mat-menu-item [routerLink]="['/profile']">
+    <mat-icon>
+      <fa-icon icon="user" size="sm"></fa-icon>
+    </mat-icon>
+    <span>Profile</span>
+  </button>
   <button mat-menu-item [routerLink]="['/settings']">
     <mat-icon>
       <fa-icon icon="cog" size="sm"></fa-icon>
@@ -106,7 +118,7 @@
   </button>
   <button mat-menu-item (click)="logout()" id="logout">
     <mat-icon>
-        <fa-icon icon="sign-out-alt" size="sm"></fa-icon>
+      <fa-icon icon="sign-out-alt" size="sm"></fa-icon>
     </mat-icon>
     <span>Sign Out</span>
   </button>

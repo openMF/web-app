@@ -36,6 +36,7 @@ import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { CollectionsModule } from './collections/collections.module';
+import { ProfileModule } from './profile/profile.module';
 
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
@@ -55,6 +56,7 @@ import { AppRoutingModule } from './app-routing.module';
     CoreModule,
     HomeModule,
     LoginModule,
+    ProfileModule,
     SettingsModule,
     NavigationModule,
     ClientsModule,
