@@ -1,19 +1,23 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px" fxLayout.xs="column">
 
-  <button mat-raised-button color="primary" (click)="addCodeValueRow()">
+  <button mat-raised-button color="primary" (click)="addCodeValueRow()" *mifosxHasPermission="'CREATE_CODEVALUE'">
     <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
     Add Code Value
   </button>
 
-  <button mat-raised-button color="primary" [routerLink]="['edit']" *ngIf="!codeData.systemDefined">
+  <span *ngIf="!codeData.systemDefined">
+  <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CODE'">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
     Edit Code
   </button>
+  </span>
 
-  <button mat-raised-button color="warn" (click)="delete()" *ngIf="!codeData.systemDefined">
-    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
-    Delete Code
-  </button>
+  <span *ngIf="!codeData.systemDefined">
+    <button mat-raised-button color="warn" (click)="delete()" *mifosxHasPermission="'DELETE_CODEVALUE'">
+      <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+      Delete Code
+    </button>
+  </span>
 
 </div>
 
@@ -57,9 +61,12 @@
             </div>
 
             <div fxLayoutGap="2%" fxFlex="22%" class="options-wrapper">
-              <button mat-stroked-button color="primary" *ngIf="codeValueRowStatus[i] === 'edit'" [disabled]="codeValues.at(i).pristine" (click)="updateCodeValue(i)">
-                Submit
-              </button>
+              <span *ngIf="codeValueRowStatus[i] === 'edit'">
+                <button mat-stroked-button color="primary" [disabled]="codeValues.at(i).pristine" (click)="updateCodeValue(i)"
+                  *mifosxHasPermission="'UPDATE_CODEVALUE'">
+                  Submit
+                </button>
+              </span>
               <button mat-button *ngIf="codeValueRowStatus[i] === 'edit'" (click)="disableRow(i)">
                 Cancel
               </button>
@@ -69,7 +76,7 @@
               <button type="button" color="primary" *ngIf="codeValueRowStatus[i] === 'disabled'" mat-icon-button matTooltip="Edit" matTooltipPosition="above" (click)="enableRow(i)">
                 <fa-icon icon="edit" size="lg"></fa-icon>
               </button>
-              <button type="button" color="warn" mat-icon-button matTooltip="Delete" matTooltipPosition="above" (click)="codeValueRowStatus[i] === 'new' ? removeNewCodeValue(i) : deleteCodeValue(i)">
+              <button type="button" color="warn" mat-icon-button matTooltip="Delete" *mifosxHasPermission="'DELETE_CODEVALUE'" matTooltipPosition="above" (click)="codeValueRowStatus[i] === 'new' ? removeNewCodeValue(i) : deleteCodeValue(i)">
                 <fa-icon icon="trash" size="lg"></fa-icon>
               </button>
             </div>

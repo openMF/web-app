@@ -565,7 +565,6 @@ export class SystemService {
   updateMakerCheckerPermission(data: any): Observable<any> {
     const httpParams = new HttpParams()
                       .set('makerCheckerable', 'true');
-                      console.log('data: ', data);
     return this.http.put('/permissions', data, { params: httpParams });
   }
 
