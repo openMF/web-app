@@ -124,7 +124,7 @@
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
         <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
         <button mat-raised-button type="submit" color="primary"
-          [disabled]="!reportForm.valid && reportParametersData.length === 0">Submit</button>
+          [disabled]="!reportForm.valid && reportParametersData.length === 0" *mifosxHasPermission="'CREATE_REPORT'">Submit</button>
       </mat-card-actions>
 
     </form>
