@@ -32,16 +32,16 @@
 
         <mat-form-field>
           <mat-label>Default Language</mat-label>
-          <mat-select>
+          <mat-select [formControl]="language" [compareWith]="compareOptions">
             <mat-option *ngFor="let language of languages" [value]="language">
-              {{ language }}
+              {{ language.name }}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Default Date Format</mat-label>
-          <mat-select>
+          <mat-select [formControl]="dateFormat">
             <mat-option *ngFor="let dateFormat of dateFormats" [value]="dateFormat">
               {{ dateFormat }}
             </mat-option>

@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Create Office component.
@@ -36,6 +37,7 @@ export class CreateOfficeComponent implements OnInit {
    */
   constructor(private formBuilder: FormBuilder,
               private organizationService: OrganizationService,
+              private settingsService: SettingsService,
               private router: Router,
               private route: ActivatedRoute,
               private datePipe: DatePipe) {
@@ -67,12 +69,12 @@ export class CreateOfficeComponent implements OnInit {
   submit() {
     const prevOpeningDate: Date = this.officeForm.value.openingDate;
     // TODO: Update once language and date settings are setup
-    const dateFormat = 'yyyy-MM-dd';
+    const dateFormat = this.settingsService.dateFormat;
     this.officeForm.patchValue({
       openingDate: this.datePipe.transform(prevOpeningDate, dateFormat)
     });
     const office = this.officeForm.value;
-    office.locale = 'en';
+    office.locale = this.settingsService.language.code;
     office.dateFormat = dateFormat;
     this.organizationService.createOffice(office).subscribe(response => {
       this.router.navigate(['../'], { relativeTo: this.route });
