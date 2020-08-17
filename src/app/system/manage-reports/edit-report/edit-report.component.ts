@@ -2,7 +2,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
@@ -44,9 +47,9 @@ export class EditReportComponent implements OnInit {
   isReportParametersChanged: Boolean = false;
 
   /** Paginator for report parameters table. */
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for report parameters table. */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /**
    * Retrieves the report and report template data from `resolve`.

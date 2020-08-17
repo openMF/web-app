@@ -13,9 +13,9 @@ import { LoansAccountChargesStepComponent } from '../loans-account-stepper/loans
 })
 export class EditLoansAccountComponent implements OnInit {
 
-  @ViewChild(LoansAccountDetailsStepComponent) loansAccountDetailsStep: LoansAccountDetailsStepComponent;
-  @ViewChild(LoansAccountTermsStepComponent) loansAccountTermsStep: LoansAccountTermsStepComponent;
-  @ViewChild(LoansAccountChargesStepComponent) loansAccountChargesStep: LoansAccountChargesStepComponent;
+  @ViewChild(LoansAccountDetailsStepComponent, { static: true }) loansAccountDetailsStep: LoansAccountDetailsStepComponent;
+  @ViewChild(LoansAccountTermsStepComponent, { static: true }) loansAccountTermsStep: LoansAccountTermsStepComponent;
+  @ViewChild(LoansAccountChargesStepComponent, { static: true }) loansAccountChargesStep: LoansAccountChargesStepComponent;
 
   loansAccountAndTemplate: any;
   /** Loans Account Product Template */

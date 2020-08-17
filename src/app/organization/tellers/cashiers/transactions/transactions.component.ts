@@ -1,6 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
 
@@ -33,9 +35,9 @@ export class TransactionsComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
 
   /** Paginator for transactions table. */
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   /** Sorter for transactions table. */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   /**
    * Retrieves the currencies data from `resolve`.

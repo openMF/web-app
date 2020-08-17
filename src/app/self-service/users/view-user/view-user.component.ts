@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChangePasswordDialogComponent } from 'app/shared/change-password-dialog/change-password-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services. */
 import { UserService } from '../user.service';

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 
 /**
  * Upload image dialog component.

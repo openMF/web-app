@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatTable, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -38,7 +39,7 @@ export class StandingInstructionsTabComponent implements OnInit {
   ];
 
   /** Instruction Table Reference */
-  @ViewChild('instructionsTable') instructionTableRef: MatTable<Element>;
+  @ViewChild('instructionsTable', { static: true }) instructionTableRef: MatTable<Element>;
 
   /**
    * Retrieves Fixed Deposits Account Data from `resolve`.

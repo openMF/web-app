@@ -1,7 +1,9 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 /**
  * Manage Reports Component.
@@ -21,9 +23,9 @@ export class ManageReportsComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
 
    /** Paginator for reports table. */
-   @ViewChild(MatPaginator) paginator: MatPaginator;
+   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
    /** Sorter for reports table. */
-   @ViewChild(MatSort) sort: MatSort;
+   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /**
    * Retrieves the reports data from `resolve`.

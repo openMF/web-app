@@ -1,6 +1,8 @@
 /** Angular Imports. */
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatPaginator, MatSort, MatCheckbox } from '@angular/material';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { ClientsDataSource } from './clients.datasource';
 
 /** rxjs Imports */
@@ -16,7 +18,7 @@ import { ClientsService } from './clients.service';
   styleUrls: ['./clients.component.scss'],
 })
 export class ClientsComponent implements OnInit, AfterViewInit {
-  @ViewChild('showClosedAccounts') showClosedAccounts: MatCheckbox;
+  @ViewChild('showClosedAccounts', { static: true }) showClosedAccounts: MatCheckbox;
 
 
   displayedColumns = ['name', 'clientno', 'externalid', 'status', 'mobileNo', 'gender', 'office', 'staff'];
@@ -24,8 +26,8 @@ export class ClientsComponent implements OnInit, AfterViewInit {
   /** Get the required filter value. */
   searchValue = '';
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(private clientsService: ClientsService) {
 

@@ -1,6 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -18,9 +20,9 @@ export class CodesComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
 
   /** Paginator for codes table. */
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for codes table. */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /**
    * Retrieves the codes data from `resolve`.

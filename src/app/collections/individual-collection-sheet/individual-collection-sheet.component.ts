@@ -1,6 +1,9 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -67,9 +70,9 @@ export class IndividualCollectionSheetComponent implements OnInit {
 
 
   /** Paginator for table. */
-  @ViewChild(MatPaginator, { read: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { read: true, static: false }) paginator: MatPaginator;
   /** Sorter for table. */
-  @ViewChild(MatSort, { read: true }) sort: MatSort;
+  @ViewChild(MatSort, { read: true, static: false }) sort: MatSort;
 
   /**
    * Retrieves the offices data from `resolve`.

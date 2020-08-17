@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /**
  * View journal entry dialog component.

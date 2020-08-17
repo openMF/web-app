@@ -121,7 +121,9 @@ export class SidenavComponent implements OnInit {
    */
   pushActivity(path: string) {
     const activity = this.frequentActivities.find((entry: any) => entry.path === path);
-    this.mappedActivities.push(activity);
+    if (!this.mappedActivities.includes(activity)) {
+      this.mappedActivities.push(activity);
+    }
   }
 
 }

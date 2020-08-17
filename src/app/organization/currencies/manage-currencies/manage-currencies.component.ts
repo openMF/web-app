@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { FormBuilder, Validators } from '@angular/forms';
 
 /** Custom Dialogs */
@@ -28,7 +28,7 @@ export class ManageCurrenciesComponent implements OnInit {
   currencyForm: any;
 
   /** Currency form reference */
-  @ViewChild('formRef') formRef: any;
+  @ViewChild('formRef', { static: true }) formRef: any;
 
   /**
    * Retrieves the currency data from `resolve`.

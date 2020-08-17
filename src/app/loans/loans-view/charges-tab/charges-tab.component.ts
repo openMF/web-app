@@ -1,7 +1,10 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog, MatTableDataSource, MatTable, MatPaginator, MatSort } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
@@ -36,9 +39,9 @@ export class ChargesTabComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
 
   /** Paginator for charges table. */
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for charges table. */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /**
    * Retrieves the loans data from `resolve`.

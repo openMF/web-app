@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
-import { MatTable } from '@angular/material';
+import { MatTable } from '@angular/material/table';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 /**
@@ -34,7 +34,7 @@ export class RecurringDepositsAccountInterestRateChartStepComponent implements O
   /** Expand Chart Slab Index used in the view */
   expandChartSlabIndex: number;
 
-  @ViewChild('chartsTable') chartsTableRef: MatTable<Element>;
+  @ViewChild('chartsTable', { static: true }) chartsTableRef: MatTable<Element>;
 
   constructor() {
   }

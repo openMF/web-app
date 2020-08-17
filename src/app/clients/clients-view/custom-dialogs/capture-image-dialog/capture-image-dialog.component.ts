@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, ViewChild, ElementRef, AfterViewInit, Renderer2, OnDestroy } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 
 /**
  * Capture image dialog component
@@ -13,13 +13,13 @@ import { MatDialogRef } from '@angular/material';
 export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
 
   /** Video element reference */
-  @ViewChild('video') video: ElementRef;
+  @ViewChild('video', { static: true }) video: ElementRef;
   /** Canvas element reference */
-  @ViewChild('canvas') canvas: ElementRef;
+  @ViewChild('canvas', { static: true }) canvas: ElementRef;
   /** Fallback element reference */
-  @ViewChild('fallback') fallback: ElementRef;
+  @ViewChild('fallback', { static: true }) fallback: ElementRef;
   /** Capture button element reference */
-  @ViewChild('captureButton') captureButton: ElementRef;
+  @ViewChild('captureButton', { static: false }) captureButton: ElementRef;
 
   /** Toggles button states */
   isCaptured = false;

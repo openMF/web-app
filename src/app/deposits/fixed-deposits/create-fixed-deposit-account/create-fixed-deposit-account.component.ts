@@ -24,15 +24,15 @@ import { FixedDepositAccountChargesStepComponent } from '../fixed-deposit-accoun
 export class CreateFixedDepositAccountComponent {
 
   /** Fixed Deposits Account Details Step */
-  @ViewChild(FixedDepositAccountDetailsStepComponent) fixedDepositsAccountDetailsStep: FixedDepositAccountDetailsStepComponent;
+  @ViewChild(FixedDepositAccountDetailsStepComponent, { static: true }) fixedDepositsAccountDetailsStep: FixedDepositAccountDetailsStepComponent;
   /** Fixed Deposits Account Currency Step */
-  @ViewChild(FixedDepositAccountCurrencyStepComponent) fixedDepositAccountCurrencyStep: FixedDepositAccountCurrencyStepComponent;
+  @ViewChild(FixedDepositAccountCurrencyStepComponent, { static: true }) fixedDepositAccountCurrencyStep: FixedDepositAccountCurrencyStepComponent;
   /** Fixed Deposits Account Terms Step */
-  @ViewChild(FixedDepositAccountTermsStepComponent) fixedDepositAccountTermsStep: FixedDepositAccountTermsStepComponent;
+  @ViewChild(FixedDepositAccountTermsStepComponent, { static: true }) fixedDepositAccountTermsStep: FixedDepositAccountTermsStepComponent;
   /** Fixed Deposits Account Settings Step */
-  @ViewChild(FixedDepositAccountSettingsStepComponent) fixedDepositAccountSettingsStep: FixedDepositAccountSettingsStepComponent;
+  @ViewChild(FixedDepositAccountSettingsStepComponent, { static: true }) fixedDepositAccountSettingsStep: FixedDepositAccountSettingsStepComponent;
   /** Fixed Deposits Account Charges Step */
-  @ViewChild(FixedDepositAccountChargesStepComponent) fixedDepositAccountChargesStep: FixedDepositAccountChargesStepComponent;
+  @ViewChild(FixedDepositAccountChargesStepComponent, { static: true }) fixedDepositAccountChargesStep: FixedDepositAccountChargesStepComponent;
 
   /** Fixed Deposits Account Template */
   fixedDepositsAccountTemplate: any;

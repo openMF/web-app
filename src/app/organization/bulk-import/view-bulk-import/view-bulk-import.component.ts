@@ -1,7 +1,9 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatPaginator, MatSort, MatTableDataSource, MatTable } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { FormGroup, FormBuilder} from '@angular/forms';
 
 /** Custom Imports */
@@ -48,11 +50,11 @@ export class ViewBulkImportComponent implements OnInit {
   ];
 
   /** Paginator for imports table. */
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for imports table. */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   /** Imports table reference */
-  @ViewChild('importsTable') importsTableRef: MatTable<Element>;
+  @ViewChild('importsTable', { static: true }) importsTableRef: MatTable<Element>;
 
   /**
    * fetches offices and imports data from resolve

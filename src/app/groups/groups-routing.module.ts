@@ -135,7 +135,7 @@ const routes: Routes = [
             },
             {
               path: 'savingsaccounts',
-              loadChildren: '../savings/savings.module#SavingsModule'
+              loadChildren: () => import('../savings/savings.module').then(m => m.SavingsModule)
             },
           ]
         }

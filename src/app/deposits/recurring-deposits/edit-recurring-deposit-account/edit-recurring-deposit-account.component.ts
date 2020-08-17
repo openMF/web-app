@@ -24,11 +24,11 @@ import { RecurringDepositsAccountChargesStepComponent } from '../recurring-depos
 export class EditRecurringDepositAccountComponent implements OnInit {
 
   /** Imports all the step component */
-  @ViewChild(RecurringDepositsAccountDetailsStepComponent) recurringDepositsAccountDetailsStep: RecurringDepositsAccountDetailsStepComponent;
-  @ViewChild(RecurringDepositsAccountCurrencyStepComponent) recurringDepositAccountCurrencyStep: RecurringDepositsAccountCurrencyStepComponent;
-  @ViewChild(RecurringDepositsAccountTermsStepComponent) recurringDepositAccountTermsStep: RecurringDepositsAccountTermsStepComponent;
-  @ViewChild(RecurringDepositsAccountSettingsStepComponent) recurringDepositAccountSettingsStep: RecurringDepositsAccountSettingsStepComponent;
-  @ViewChild(RecurringDepositsAccountChargesStepComponent) recurringDepositAccountChargesStep: RecurringDepositsAccountChargesStepComponent;
+  @ViewChild(RecurringDepositsAccountDetailsStepComponent, { static: true }) recurringDepositsAccountDetailsStep: RecurringDepositsAccountDetailsStepComponent;
+  @ViewChild(RecurringDepositsAccountCurrencyStepComponent, { static: true }) recurringDepositAccountCurrencyStep: RecurringDepositsAccountCurrencyStepComponent;
+  @ViewChild(RecurringDepositsAccountTermsStepComponent, { static: true }) recurringDepositAccountTermsStep: RecurringDepositsAccountTermsStepComponent;
+  @ViewChild(RecurringDepositsAccountSettingsStepComponent, { static: true }) recurringDepositAccountSettingsStep: RecurringDepositsAccountSettingsStepComponent;
+  @ViewChild(RecurringDepositsAccountChargesStepComponent, { static: true }) recurringDepositAccountChargesStep: RecurringDepositsAccountChargesStepComponent;
 
   /** Recurring Deposits Account And Template */
   recurringDepositsAccountAndTemplate: any;

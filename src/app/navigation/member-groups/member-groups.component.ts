@@ -1,6 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'mifosx-member-groups',
@@ -15,9 +17,9 @@ export class MemberGroupsComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
 
   /** Paginator for member groups table. */
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for member groups table. */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /** Member Group Data Setter */
   @Input() set memberGroupData(data: any) {

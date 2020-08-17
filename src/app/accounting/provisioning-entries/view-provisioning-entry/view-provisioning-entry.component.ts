@@ -2,7 +2,9 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 /** rxjs Imports */
 import { startWith, map, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
@@ -56,9 +58,9 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
   };
 
   /** Paginator for provisioning entry entries table. */
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for provisioning entry entries table. */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /**
    * Retrieves the provisioning entry, provisioning entry entries, offices,

@@ -231,27 +231,27 @@ const routes: Routes = [
           {
             path: 'loans',
             data: { title: extract('Loans'), breadcrumb: 'loans', routeParamBreadcrumb: false },
-            loadChildren: '../loans/loans.module#LoansModule'
+            loadChildren: () => import('../loans/loans.module').then(m => m.LoansModule)
           },
           {
             path: 'fixed-deposits-accounts',
-            loadChildren: '../deposits/fixed-deposits/fixed-deposits.module#FixedDepositsModule'
+            loadChildren: () => import('../deposits/fixed-deposits/fixed-deposits.module').then(m => m.FixedDepositsModule)
           },
           {
             path: 'savingsaccounts',
-            loadChildren: '../savings/savings.module#SavingsModule'
+            loadChildren: () => import('../savings/savings.module').then(m => m.SavingsModule)
           },
           {
             path: 'recurringdeposits',
-            loadChildren: '../deposits/recurring-deposits/recurring-deposits.module#RecurringDepositsModule'
+            loadChildren: () => import('../deposits/recurring-deposits/recurring-deposits.module').then(m => m.RecurringDepositsModule)
           },
           {
             path: 'shares-accounts',
-            loadChildren: '../shares/shares.module#SharesModule'
+            loadChildren: () => import('../shares/shares.module').then(m => m.SharesModule)
           },
           {
             path: 'standing-instructions',
-            loadChildren: '../account-transfers/account-transfers.module#AccountTransfersModule'
+            loadChildren: () => import('../account-transfers/account-transfers.module').then(m => m.AccountTransfersModule)
           }
         ]
       }

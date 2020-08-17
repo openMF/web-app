@@ -1,6 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatTable, MatPaginator, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
 
@@ -29,7 +31,7 @@ export class ListTransactionsComponent {
   displayedColumns: string[] = ['transactionDate', 'amount', 'notes', 'reversed'];
 
   /** Paginator for centers table. */
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   /**
    * Retrieves Recurring Deposits Account Data from `resolve`.

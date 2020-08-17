@@ -43,7 +43,7 @@ const routes: Routes = [
         },
         {
           path: ':id',
-          data: { title: extract('View User'), routeResolveBreadcrumb: ['user', 'username'] },
+          data: { title: extract('View User'), routeParamBreadcrumb: 'id' },
           children: [
             {
               path: '',

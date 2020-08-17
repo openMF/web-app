@@ -27,11 +27,11 @@ export class EditSharesAccountComponent {
   sharesAccountProductTemplate: any;
 
   /** Shares Account Details Step */
-  @ViewChild(SharesAccountDetailsStepComponent) sharesAccountDetailsStep: SharesAccountDetailsStepComponent;
+  @ViewChild(SharesAccountDetailsStepComponent, { static: true }) sharesAccountDetailsStep: SharesAccountDetailsStepComponent;
   /** Shares Account Terms Step */
-  @ViewChild(SharesAccountTermsStepComponent) sharesAccountTermsStep: SharesAccountTermsStepComponent;
+  @ViewChild(SharesAccountTermsStepComponent, { static: true }) sharesAccountTermsStep: SharesAccountTermsStepComponent;
   /** Shares Account Charges Step */
-  @ViewChild(SharesAccountChargesStepComponent) sharesAccountChargesStep: SharesAccountChargesStepComponent;
+  @ViewChild(SharesAccountChargesStepComponent, { static: true }) sharesAccountChargesStep: SharesAccountChargesStepComponent;
 
   /**
    * Fetches shares account template from `resolve`

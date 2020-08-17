@@ -1,7 +1,9 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 /**
  * Floating Rates Component.
@@ -21,9 +23,9 @@ export class FloatingRatesComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
 
   /** Paginator for floating rates table. */
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for floating rates table. */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /**
    * Retrieves the floating rates data from `resolve`.

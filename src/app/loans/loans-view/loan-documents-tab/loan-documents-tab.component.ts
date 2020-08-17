@@ -1,6 +1,9 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatTable } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -20,7 +23,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   styleUrls: ['./loan-documents-tab.component.scss']
 })
 export class LoanDocumentsTabComponent implements OnInit {
-  @ViewChild('documentsTable') documentsTable: MatTable<Element>;
+  @ViewChild('documentsTable', { static: false }) documentsTable: MatTable<Element>;
 
   /** Stores the resolved loan documents data */
   loanDocuments: any;
@@ -37,9 +40,9 @@ export class LoanDocumentsTabComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
 
   /** Paginator for codes table. */
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   /** Sorter for codes table. */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   /**
    * Retrieves the loans data from `resolve`.

@@ -18,13 +18,13 @@ import { ProductsService } from 'app/products/products.service';
 })
 export class EditRecurringDepositProductComponent implements OnInit {
 
-  @ViewChild(RecurringDepositProductDetailsStepComponent) recurringDepositProductDetailsStep: RecurringDepositProductDetailsStepComponent;
-  @ViewChild(RecurringDepositProductCurrencyStepComponent) recurringDepositProductCurrencyStep: RecurringDepositProductCurrencyStepComponent;
-  @ViewChild(RecurringDepositProductTermsStepComponent) recurringDepositProductTermsStep: RecurringDepositProductTermsStepComponent;
-  @ViewChild(RecurringDepositProductSettingsStepComponent) recurringDepositProductSettingsStep: RecurringDepositProductSettingsStepComponent;
-  @ViewChild(RecurringDepositProductInterestRateChartStepComponent) recurringDepositProductInterestRateChartStep: RecurringDepositProductInterestRateChartStepComponent;
-  @ViewChild(RecurringDepositProductChargesStepComponent) recurringDepositProductChargesStep: RecurringDepositProductChargesStepComponent;
-  @ViewChild(RecurringDepositProductAccountingStepComponent) recurringDepositProductAccountingStep: RecurringDepositProductAccountingStepComponent;
+  @ViewChild(RecurringDepositProductDetailsStepComponent, { static: true }) recurringDepositProductDetailsStep: RecurringDepositProductDetailsStepComponent;
+  @ViewChild(RecurringDepositProductCurrencyStepComponent, { static: true }) recurringDepositProductCurrencyStep: RecurringDepositProductCurrencyStepComponent;
+  @ViewChild(RecurringDepositProductTermsStepComponent, { static: true }) recurringDepositProductTermsStep: RecurringDepositProductTermsStepComponent;
+  @ViewChild(RecurringDepositProductSettingsStepComponent, { static: true }) recurringDepositProductSettingsStep: RecurringDepositProductSettingsStepComponent;
+  @ViewChild(RecurringDepositProductInterestRateChartStepComponent, { static: true }) recurringDepositProductInterestRateChartStep: RecurringDepositProductInterestRateChartStepComponent;
+  @ViewChild(RecurringDepositProductChargesStepComponent, { static: true }) recurringDepositProductChargesStep: RecurringDepositProductChargesStepComponent;
+  @ViewChild(RecurringDepositProductAccountingStepComponent, { static: true }) recurringDepositProductAccountingStep: RecurringDepositProductAccountingStepComponent;
 
   recurringDepositProductsTemplate: any;
   accountingRuleData = ['None', 'Cash'];

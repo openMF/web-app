@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { FormBuilder, Validators } from '@angular/forms';
 
 /** Custom Dialogs */
@@ -29,7 +29,7 @@ export class ManageFundsComponent implements OnInit {
   /** New Fund form */
   fundForm: any;
   /** Funds form reference */
-  @ViewChild('formRef') formRef: any;
+  @ViewChild('formRef', { static: false }) formRef: any;
 
   /**
    * Retrieves the manage funds data from `resolve`.

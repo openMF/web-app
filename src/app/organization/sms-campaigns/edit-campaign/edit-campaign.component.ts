@@ -27,7 +27,7 @@ export class EditCampaignComponent {
   templateParameters: any;
 
   /** Campaign Message Step */
-  @ViewChild(CampaignMessageStepComponent) campaignMessageStep: CampaignMessageStepComponent;
+  @ViewChild(CampaignMessageStepComponent, { static: true }) campaignMessageStep: CampaignMessageStepComponent;
 
   /**
    * Fetches campaign template from `resolve`
