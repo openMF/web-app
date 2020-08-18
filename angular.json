@@ -10,13 +10,14 @@
       "prefix": "mifosx",
       "schematics": {
         "@schematics/angular:component": {
-          "styleext": "scss"
+          "style": "scss"
         }
       },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/web-app",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -31,41 +32,41 @@
             ],
             "styles": [
               "src/main.scss",
-              {
+              {"inject":false,
                 "input": "src/theme/deeppurple-amber.scss",
-                "bundleName": "theme/deeppurple-amber",
-                "lazy": true
-              },
-              {
+                "bundleName": "theme/deeppurple-amber"
+},
+              {"inject":false,
                 "input": "src/theme/indigo-pink.scss",
-                "bundleName": "theme/indigo-pink",
-                "lazy": true
-              },
-              {
+                "bundleName": "theme/indigo-pink"
+},
+              {"inject":false,
                 "input": "src/theme/pink-bluegrey.scss",
-                "bundleName": "theme/pink-bluegrey",
-                "lazy": true
-              },
-              {
+                "bundleName": "theme/pink-bluegrey"
+},
+              {"inject":false,
                 "input": "src/theme/purple-green.scss",
-                "bundleName": "theme/purple-green",
-                "lazy": true
-              },
-              {
+                "bundleName": "theme/purple-green"
+},
+              {"inject":false,
                 "input": "src/theme/custom/denim-yellowgreen.scss",
-                "bundleName": "theme/denim-yellowgreen",
-                "lazy": true
-              },
-              {
+                "bundleName": "theme/denim-yellowgreen"
+},
+              {"inject":false,
                 "input": "src/theme/custom/pictonblue-yellowgreen.scss",
-                "bundleName": "theme/pictonblue-yellowgreen",
-                "lazy": true
-              }
+                "bundleName": "theme/pictonblue-yellowgreen"
+}
             ],
             "scripts": []
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -112,36 +113,30 @@
             "scripts": [],
             "styles": [
               "src/main.scss",
-              {
+              {"inject":false,
                 "input": "src/theme/deeppurple-amber.scss",
-                "bundleName": "theme/deeppurple-amber",
-                "lazy": true
-              },
-              {
+                "bundleName": "theme/deeppurple-amber"
+},
+              {"inject":false,
                 "input": "src/theme/indigo-pink.scss",
-                "bundleName": "theme/indigo-pink",
-                "lazy": true
-              },
-              {
+                "bundleName": "theme/indigo-pink"
+},
+              {"inject":false,
                 "input": "src/theme/pink-bluegrey.scss",
-                "bundleName": "theme/pink-bluegrey",
-                "lazy": true
-              },
-              {
+                "bundleName": "theme/pink-bluegrey"
+},
+              {"inject":false,
                 "input": "src/theme/purple-green.scss",
-                "bundleName": "theme/purple-green",
-                "lazy": true
-              },
-              {
+                "bundleName": "theme/purple-green"
+},
+              {"inject":false,
                 "input": "src/theme/custom/denim-yellowgreen.scss",
-                "bundleName": "theme/denim-yellowgreen",
-                "lazy": true
-              },
-              {
+                "bundleName": "theme/denim-yellowgreen"
+},
+              {"inject":false,
                 "input": "src/theme/custom/pictonblue-yellowgreen.scss",
-                "bundleName": "theme/pictonblue-yellowgreen",
-                "lazy": true
-              }
+                "bundleName": "theme/pictonblue-yellowgreen"
+}
             ],
             "assets": [
               "src/favicon.ico",

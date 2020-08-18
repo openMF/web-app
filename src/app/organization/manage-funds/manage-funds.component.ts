@@ -29,7 +29,7 @@ export class ManageFundsComponent implements OnInit {
   /** New Fund form */
   fundForm: any;
   /** Funds form reference */
-  @ViewChild('formRef', { static: false }) formRef: any;
+  @ViewChild('formRef') formRef: any;
 
   /**
    * Retrieves the manage funds data from `resolve`.

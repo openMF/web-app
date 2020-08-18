@@ -43,7 +43,7 @@ export class ViewCampaignComponent implements OnInit {
   dataSource = new MatTableDataSource();
 
   /** Message Table Reference */
-  @ViewChild('messageTable', { static: false }) messageTableRef: MatTable<Element>;
+  @ViewChild('messageTable') messageTableRef: MatTable<Element>;
 
   /** SMS Camapaign Tabs */
   smsTabs: any[] = [

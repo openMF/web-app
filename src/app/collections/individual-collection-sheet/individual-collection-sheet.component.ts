@@ -70,9 +70,9 @@ export class IndividualCollectionSheetComponent implements OnInit {
 
 
   /** Paginator for table. */
-  @ViewChild(MatPaginator, { read: true, static: false }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { read: true }) paginator: MatPaginator;
   /** Sorter for table. */
-  @ViewChild(MatSort, { read: true, static: false }) sort: MatSort;
+  @ViewChild(MatSort, { read: true }) sort: MatSort;
 
   /**
    * Retrieves the offices data from `resolve`.

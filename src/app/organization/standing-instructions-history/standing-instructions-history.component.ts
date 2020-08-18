@@ -37,9 +37,9 @@ export class StandingInstructionsHistoryComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
 
   /** Paginator for instructions table. */
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   /** Sorter for instructions table. */
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
 
   /**
    * Retrieves the instructions template from `resolve`.

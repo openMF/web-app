@@ -13,8 +13,8 @@ import { SavingsAccountTableComponent } from '../savings-account-table/savings-a
 })
 export class CenterNavigationComponent implements OnInit {
 
-  @ViewChild(LoanAccountTableComponent, { static: false }) loanAccountTableComponent: LoanAccountTableComponent;
-  @ViewChild(SavingsAccountTableComponent, { static: false }) savingsAccountTableComponent: SavingsAccountTableComponent;
+  @ViewChild(LoanAccountTableComponent) loanAccountTableComponent: LoanAccountTableComponent;
+  @ViewChild(SavingsAccountTableComponent) savingsAccountTableComponent: SavingsAccountTableComponent;
 
   @Input() centerData: any;
   @Input() centerAccountsData: any;

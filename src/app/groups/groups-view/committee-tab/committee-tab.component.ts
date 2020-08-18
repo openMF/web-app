@@ -30,7 +30,7 @@ export class CommitteeTabComponent {
   groupRolesColumns: string[] = ['Name', 'Role', 'Client Id', 'Actions'];
 
   /** Roles Table */
-  @ViewChild('rolesTable', { static: false }) rolesTableRef: MatTable<Element>;
+  @ViewChild('rolesTable') rolesTableRef: MatTable<Element>;
 
   /**
    * Fetches groups data from parent's `resolve`.

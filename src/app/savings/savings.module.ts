@@ -99,14 +99,6 @@ import { ApplyAnnualFeesSavingsAccountComponent } from './saving-account-actions
     EditTransactionComponent,
     ApplyAnnualFeesSavingsAccountComponent
   ],
-  entryComponents: [
-    CalculateInterestDialogComponent,
-    PostInterestDialogComponent,
-    UndoTransactionDialogComponent,
-    WaiveChargeDialogComponent,
-    InactivateChargeDialogComponent,
-    ToggleWithholdTaxDialogComponent
-  ],
   providers: [DatePipe]
 })
 export class SavingsModule {}

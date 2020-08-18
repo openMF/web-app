@@ -68,7 +68,7 @@ export class XBRLComponent implements OnInit, AfterViewInit {
   */
   ngAfterViewInit() {
     this.mixtaxonomyArray.forEach( (taxonomy: any) => {
-      taxonomy.mapping.valueChanges.subscribe( (value: string) => {
+      taxonomy.mapping?.valueChanges.subscribe( (value: string) => {
         this.filteredGlAccounts = this.applyFilter(value);
       });
     });

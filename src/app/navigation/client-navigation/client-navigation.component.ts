@@ -14,10 +14,10 @@ import { MemberGroupsComponent } from '../member-groups/member-groups.component'
 })
 export class ClientNavigationComponent implements OnInit {
 
-  @ViewChild(LoanAccountTableComponent, { static: false }) loanAccountTableComponent: LoanAccountTableComponent;
-  @ViewChild(SavingsAccountTableComponent, { static: false }) savingsAccountTableComponent: SavingsAccountTableComponent;
-  @ViewChild(ShareAccountTableComponent, { static: false }) shareAccountTableComponent: ShareAccountTableComponent;
-  @ViewChild(MemberGroupsComponent, { static: false }) memberGroupsComponent: MemberGroupsComponent;
+  @ViewChild(LoanAccountTableComponent) loanAccountTableComponent: LoanAccountTableComponent;
+  @ViewChild(SavingsAccountTableComponent) savingsAccountTableComponent: SavingsAccountTableComponent;
+  @ViewChild(ShareAccountTableComponent) shareAccountTableComponent: ShareAccountTableComponent;
+  @ViewChild(MemberGroupsComponent) memberGroupsComponent: MemberGroupsComponent;
 
   @Input() clientData: any;
   @Input() clientAccountsData: any;

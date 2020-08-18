@@ -200,10 +200,6 @@ import { EditFixedDepositProductComponent } from './fixed-deposit-products/edit-
     CreateChargeComponent,
     EditFixedDepositProductComponent
   ],
-  entryComponents: [
-    DepositProductIncentiveFormDialogComponent,
-    FloatingRatePeriodDialogComponent
-  ],
   providers: [DatePipe]
 })
 export class ProductsModule { }

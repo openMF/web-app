@@ -24,11 +24,11 @@ import { ClientNavigationComponent } from './client-navigation/client-navigation
 export class NavigationComponent implements OnInit {
 
   /** Navigation Components */
-  @ViewChild(OfficeNavigationComponent, { static: false }) officeNavigationComponent: OfficeNavigationComponent;
-  @ViewChild(StaffNavigationComponent, { static: false }) staffNavigationComponent: StaffNavigationComponent;
-  @ViewChild(CenterNavigationComponent, { static: false }) centerNavigationComponent: CenterNavigationComponent;
-  @ViewChild(GroupNavigationComponent, { static: false }) groupNavigationComponent: GroupNavigationComponent;
-  @ViewChild(ClientNavigationComponent, { static: false }) clientNavigationComponent: ClientNavigationComponent;
+  @ViewChild(OfficeNavigationComponent) officeNavigationComponent: OfficeNavigationComponent;
+  @ViewChild(StaffNavigationComponent) staffNavigationComponent: StaffNavigationComponent;
+  @ViewChild(CenterNavigationComponent) centerNavigationComponent: CenterNavigationComponent;
+  @ViewChild(GroupNavigationComponent) groupNavigationComponent: GroupNavigationComponent;
+  @ViewChild(ClientNavigationComponent) clientNavigationComponent: ClientNavigationComponent;
 
   /** Office data */
   officeData: any;

@@ -23,7 +23,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   styleUrls: ['./loan-documents-tab.component.scss']
 })
 export class LoanDocumentsTabComponent implements OnInit {
-  @ViewChild('documentsTable', { static: false }) documentsTable: MatTable<Element>;
+  @ViewChild('documentsTable') documentsTable: MatTable<Element>;
 
   /** Stores the resolved loan documents data */
   loanDocuments: any;
@@ -40,9 +40,9 @@ export class LoanDocumentsTabComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
 
   /** Paginator for codes table. */
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   /** Sorter for codes table. */
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
 
   /**
    * Retrieves the loans data from `resolve`.

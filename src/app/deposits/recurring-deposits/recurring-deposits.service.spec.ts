@@ -6,7 +6,7 @@ describe('RecurringDepositsService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: RecurringDepositsService = TestBed.get(RecurringDepositsService);
+    const service: RecurringDepositsService = TestBed.inject(RecurringDepositsService);
     expect(service).toBeTruthy();
   });
 });

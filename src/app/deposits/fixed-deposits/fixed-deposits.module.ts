@@ -88,13 +88,6 @@ import { EditFixedDepositAccountComponent } from './edit-fixed-deposit-account/e
     DirectivesModule,
     FixedDepositsRoutingModule
   ],
-  entryComponents: [
-    PostInterestDialogComponent,
-    CalculateInterestDialogComponent,
-    ToggleWithholdTaxDialogComponent,
-    WaiveChargeDialogComponent,
-    InactivateChargeDialogComponent
-  ],
   providers: [DatePipe]
 })
 export class FixedDepositsModule { }

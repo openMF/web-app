@@ -6,7 +6,7 @@ describe('FixedDepositsService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: FixedDepositsService = TestBed.get(FixedDepositsService);
+    const service: FixedDepositsService = TestBed.inject(FixedDepositsService);
     expect(service).toBeTruthy();
   });
 });

@@ -24,7 +24,7 @@ export class SmsCampaignStepComponent implements OnInit {
   /** SMS Campaign Template */
   @Input() smsCampaignTemplate: any;
   /** Business Rule Parameters Component */
-  @ViewChild(BusinessRuleParametersComponent, { static: false }) businessRuleParametersComponent: BusinessRuleParametersComponent;
+  @ViewChild(BusinessRuleParametersComponent) businessRuleParametersComponent: BusinessRuleParametersComponent;
 
   /** Min. Date */
   minDate = new Date();

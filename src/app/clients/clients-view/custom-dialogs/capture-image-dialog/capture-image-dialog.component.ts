@@ -19,7 +19,7 @@ export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
   /** Fallback element reference */
   @ViewChild('fallback', { static: true }) fallback: ElementRef;
   /** Capture button element reference */
-  @ViewChild('captureButton', { static: false }) captureButton: ElementRef;
+  @ViewChild('captureButton') captureButton: ElementRef;
 
   /** Toggles button states */
   isCaptured = false;

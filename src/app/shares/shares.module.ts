@@ -66,10 +66,6 @@ import { RejectShareDialogComponent } from './shares-account-actions/reject-shar
     RejectSharesComponent,
     RejectShareDialogComponent
   ],
-  providers: [DatePipe],
-  entryComponents: [
-    ApproveShareDialogComponent,
-    RejectShareDialogComponent
-  ]
+  providers: [DatePipe]
 })
 export class SharesModule { }

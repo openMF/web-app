@@ -32,7 +32,7 @@ export class TableAndSmsComponent implements OnChanges {
   csvData: any;
 
   /** Paginator for run-report table. */
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   /**
    * @param {ReportsService} reportsService Reports Service
