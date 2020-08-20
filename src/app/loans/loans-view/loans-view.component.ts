@@ -145,7 +145,7 @@ export class LoansViewComponent implements OnInit {
    */
   private recoverFromGuarantor() {
     const recoverFromGuarantorDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Recover from Guarantor', dialogContext: 'Are you sure you want recover from Guarantor ?', type: 'Mild' }
+      data: { heading: 'Recover from Guarantor', dialogContext: 'Are you sure you want recover from Guarantor', type: 'Mild' }
     });
     recoverFromGuarantorDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {

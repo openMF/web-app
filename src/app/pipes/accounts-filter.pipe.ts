@@ -78,6 +78,11 @@ export class AccountsFilterPipe implements PipeTransform {
           return accounts;
         }
       }
+      if (type === 'clientApproval') {
+        accounts = accounts.filter((account: any) => {
+          return (account.active === false && account.status.value === 'Pending');
+        });
+      }
       return accounts;
     }
   }

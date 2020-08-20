@@ -37,6 +37,7 @@ import { ReportsModule } from './reports/reports.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { CollectionsModule } from './collections/collections.module';
 import { ProfileModule } from './profile/profile.module';
+import { TasksModule } from './tasks/tasks.module';
 
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
@@ -73,6 +74,7 @@ import { AppRoutingModule } from './app-routing.module';
     UsersModule,
     NotificationsModule,
     CollectionsModule,
+    TasksModule,
     AppRoutingModule,
   ],
   declarations: [WebAppComponent, NotFoundComponent],

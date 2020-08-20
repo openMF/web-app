@@ -1,0 +1,65 @@
+<div class="tab-container mat-typography" *ngIf="loans.length > 0">
+
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <div class="search-box" fxFlex="40%">
+      <mat-form-field fxFlex="90%">
+        <input matInput placeholder="Filter by name" (keyup)="applyFilter($event.target.value)">
+      </mat-form-field>
+    </div>
+    <div fxFlex="60%">
+      <button mat-raised-button color="success" *mifosxHasPermission="'APPROVE_LOAN'" (click)="disburseLoan()">
+        <fa-icon icon="check"></fa-icon>&nbsp;&nbsp;Disburse
+      </button>
+    </div>
+  </div>
+
+  <table mat-table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="client">
+      <th mat-header-cell *matHeaderCellDef> Client Name </th>
+      <td mat-cell *matCellDef="let loan" class="view-details" [routerLink]="['../../clients', loan.clientId, 'general']"> {{loan.clientName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="loanAccountNumber">
+      <th mat-header-cell *matHeaderCellDef> Loan Account# </th>
+      <td mat-cell *matCellDef="let loan" class="view-details" [routerLink]="['../../clients', loan.clientId, 'loans', loan.id, 'general']"> {{loan.accountNo}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="loanProduct">
+      <th mat-header-cell *matHeaderCellDef> Loan Product </th>
+      <td mat-cell *matCellDef="let loan" class="view-details" [routerLink]="['../../clients', loan.clientId, 'loans', loan.id, 'general']"> {{loan.loanProductName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="principal">
+      <th mat-header-cell *matHeaderCellDef> Principal </th>
+      <td mat-cell *matCellDef="let loan"> {{loan.principal | number}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+    </tr>
+  </table>
+
+</div>
+
+<div class="alert" *ngIf="loans.length === 0">
+
+  <div class="message">
+    <i class="fa fa-exclamation-circle alert-check"></i>
+    No pending loan available for disbursal.
+  </div>
+
+</div>
