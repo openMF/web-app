@@ -1,0 +1,29 @@
+.mat-elevation-z1 {
+    margin: 1em 0 1.5em 0;
+}
+
+h2, h3, h4 {
+    margin: 0;
+    font-weight: 500;
+}
+
+span {
+    margin: 0.5em 0;
+}
+
+.margin-t {
+    margin-top: 1em;
+}
+
+mat-divider {
+  margin: 0 0 0.5em 0;
+}
+
+.mat-raised-button.mat-success {
+  color: #fff;
+  background-color: #008000ab;
+}
+.mat-raised-button.mat-reject {
+  color: #fff;
+  background-color: #FFCA00;
+}

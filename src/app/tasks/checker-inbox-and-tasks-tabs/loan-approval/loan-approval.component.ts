@@ -20,7 +20,7 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./loan-approval.component.scss']
 })
 export class LoanApprovalComponent {
-  // settingsService: SettingsService;
+
   /** Offices Data */
   offices: any;
   /** Loans Data */
