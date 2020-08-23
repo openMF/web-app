@@ -17,6 +17,11 @@
   .view-details{
     cursor: pointer;
   }
+  table {
+    tr.select-row:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .alert {

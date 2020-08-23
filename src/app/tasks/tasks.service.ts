@@ -102,4 +102,12 @@ export class TasksService {
     return this.http.delete(`/makercheckers/${makerCheckerId}`);
   }
 
+  /**
+   * Get Maker Checker Details.
+   * @param {makerCheckerId} MakerCheckerId
+   */
+  getCheckerInboxDetail(makerCheckerId: any): Observable<any> {
+    return this.http.get(`/audits/${makerCheckerId}`);
+  }
+
 }

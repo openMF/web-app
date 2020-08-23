@@ -12,7 +12,6 @@ import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/conf
 
 /** Custom Services */
 import { TasksService } from '../../tasks.service';
-import { SettingsRoutingModule } from 'app/settings/settings-routing.module';
 import { SettingsService } from 'app/settings/settings.service';
 
 @Component({

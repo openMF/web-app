@@ -1,0 +1,102 @@
+<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="1%" fxLayout.lt-md="column" class="container m-b-20">
+  <button mat-raised-button color="success" (click)="approveChecker()">
+    <fa-icon icon="check"></fa-icon>&nbsp;&nbsp;Approve
+  </button>
+  <button mat-raised-button color="warn" (click)="deleteChecker()">
+    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;Delete
+  </button>
+  <button mat-raised-button color="reject" (click)="rejectChecker()">
+    <fa-icon icon="times"></fa-icon>&nbsp;&nbsp;Reject
+  </button>
+</div>
+
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" fxLayout.lt-md="column">
+
+        <h2 class="mat-h2" fxFlexFill> View Checker Inbox </h2>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <h3 class="mat-h3" fxFlexFill>Details</h3>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">ID:</span>
+          <span fxFlex="60%">{{ checkerInboxDetail.id }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Status:</span>
+          <span fxFlex="60%">{{ checkerInboxDetail.processingResult }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">User:</span>
+          <span fxFlex="60%">{{ checkerInboxDetail.maker }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Action:</span>
+          <span fxFlex="60%">{{ checkerInboxDetail.actionName }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Entity:</span>
+          <span fxFlex="60%">{{ checkerInboxDetail.entityName }}</span>
+        </div>
+
+        <div fxFlexFill *ngIf="checkerInboxDetail.resourceId">
+          <span fxFlex="40%">Resource ID:</span>
+          <span fxFlex="60%">{{ checkerInboxDetail.resourceId }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Date:</span>
+          <span fxFlex="60%">{{ checkerInboxDetail.madeOnDate | date}}</span>
+        </div>
+
+        <div fxFlexFill *ngIf="checkerInboxDetail.officeName">
+          <span fxFlex="40%">Office:</span>
+          <span fxFlex="60%">{{ checkerInboxDetail.officeName }}</span>
+        </div>
+
+        <div fxFlexFill *ngIf="checkerInboxDetail.savingsAccountNo">
+          <span fxFlex="40%">Savings Account Number:</span>
+          <span fxFlex="60%">{{ checkerInboxDetail.savingsAccountNo }}</span>
+        </div>
+
+        <div fxFlexFill *ngIf="checkerInboxDetail.groupLevelName">
+          <span fxFlex="40%"> {{ checkerInboxDetail.groupLevelName }}</span>
+          <span fxFlex="60%">{{ checkerInboxDetail.groupName }}</span>
+        </div>
+
+        <ng-container *ngIf="displayJSONData">
+
+          <h3 class="mat-h3" fxFlexFill>Command</h3>
+
+          <mat-divider [inset]="true"></mat-divider>
+
+          <ng-container *ngFor="let json of jsondata | keyvalue">
+
+          <div fxFlexFill>
+            <span fxFlex="40%">{{ json.key }}:</span>
+            <span fxFlex="60%">{{ json.value }}</span>
+          </div>
+
+        </ng-container>
+
+        </ng-container>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

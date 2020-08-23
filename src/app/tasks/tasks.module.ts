@@ -14,6 +14,7 @@ import { ClientApprovalComponent } from './checker-inbox-and-tasks-tabs/client-a
 import { LoanApprovalComponent } from './checker-inbox-and-tasks-tabs/loan-approval/loan-approval.component';
 import { LoanDisbursalComponent } from './checker-inbox-and-tasks-tabs/loan-disbursal/loan-disbursal.component';
 import { RescheduleLoanComponent } from './checker-inbox-and-tasks-tabs/reschedule-loan/reschedule-loan.component';
+import { ViewCheckerInboxComponent } from './view-checker-inbox/view-checker-inbox.component';
 
 /**
  * Tasks Module
@@ -31,7 +32,8 @@ import { RescheduleLoanComponent } from './checker-inbox-and-tasks-tabs/reschedu
     ClientApprovalComponent,
     LoanApprovalComponent,
     LoanDisbursalComponent,
-    RescheduleLoanComponent
+    RescheduleLoanComponent,
+    ViewCheckerInboxComponent
   ],
   providers: [DatePipe]
 })

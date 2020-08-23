@@ -15,6 +15,7 @@ import { ClientApprovalComponent } from './checker-inbox-and-tasks-tabs/client-a
 import { LoanApprovalComponent } from './checker-inbox-and-tasks-tabs/loan-approval/loan-approval.component';
 import { LoanDisbursalComponent } from './checker-inbox-and-tasks-tabs/loan-disbursal/loan-disbursal.component';
 import { RescheduleLoanComponent } from './checker-inbox-and-tasks-tabs/reschedule-loan/reschedule-loan.component';
+import { ViewCheckerInboxComponent } from './view-checker-inbox/view-checker-inbox.component';
 
 /** Custom Resolvers */
 import { GetMakerCheckers } from './common-resolvers/getmakercheckers.resolver';
@@ -23,6 +24,7 @@ import { GetOffices } from './common-resolvers/getOffices.resolver';
 import { GetLoans } from './common-resolvers/getLoans.resolver';
 import { GetRescheduleLoans } from './common-resolvers/getRescheduleLoans.resolver';
 import { MakerCheckerTemplate } from './common-resolvers/makerCheckerTemplate.resolver';
+import { GetCheckerInboxDetailResolver } from './common-resolvers/getCheckerInboxDetail.resolver';
 
 /** Tasks Routes */
 const routes: Routes = [
@@ -39,7 +41,7 @@ const routes: Routes = [
           resolve: {
             makerCheckerResource: GetMakerCheckers,
             makerCheckerTemplate: MakerCheckerTemplate
-          },
+          }
         },
         {
           path: 'client-approval',
@@ -75,7 +77,20 @@ const routes: Routes = [
           }
         }
       ]
-    }
+    },
+    {
+      path: 'checker-inbox-and-tasks/checker-inbox',
+      children: [
+        {
+          path: ':id/view',
+          component: ViewCheckerInboxComponent,
+          data: { title: extract('View Checker Inbox Component'), routeParamBreadcrumb: 'clientId' },
+          resolve: {
+            checkerInboxDetail: GetCheckerInboxDetailResolver
+          }
+        }
+      ]
+    },
   ])
 ];
 
@@ -88,7 +103,8 @@ const routes: Routes = [
     GetOffices,
     GetLoans,
     GetRescheduleLoans,
-    MakerCheckerTemplate
+    MakerCheckerTemplate,
+    GetCheckerInboxDetailResolver
   ]
 })
 export class TasksRoutingModule { }
