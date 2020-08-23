@@ -1,0 +1,62 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="editCenterForm" (ngSubmit)="submit()">
+
+	  <mat-card-content>
+
+	    <div fxLayout="column">
+
+		  <mat-form-field>
+		    <mat-label>Name</mat-label>
+			<input matInput required formControlName="name">
+			<mat-error *ngIf="editCenterForm.controls.name.hasError('required')">
+			  Center Name is <strong>required</strong>
+			</mat-error>
+			<mat-error *ngIf="editCenterForm.controls.name.hasError('pattern')">
+			  Center Name <strong>cannot</strong> begin with a special character or number
+			</mat-error>
+			</mat-form-field>
+
+			<mat-form-field>
+			  <mat-label>Staff</mat-label>
+			  <mat-select formControlName="staffId">
+				<mat-option *ngFor="let staff of staffs" [value]="staff.id">
+				  {{ staff.displayName }}
+				</mat-option>
+			  </mat-select>
+			</mat-form-field>
+
+			<mat-form-field>
+			  <mat-label>External id</mat-label>
+			  <input matInput formControlName="externalId">
+			</mat-form-field>
+
+			<ng-container *ngIf="centerData.status.value=='Pending'">
+			  <mat-form-field>
+				<mat-label>Activation date</mat-label>
+				<input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="activatedOnDatePicker" required
+				  formControlName="activationDate">
+				<mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
+				<mat-datepicker #activatedOnDatePicker></mat-datepicker>
+				<mat-error *ngIf="editCenterForm.controls.activationDate.hasError('required')">
+				  Activation Date is <strong>required</strong>
+				</mat-error>
+			  </mat-form-field>
+			</ng-container>
+
+		</div>
+
+	  </mat-card-content>
+
+	  <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+	    <button type="button" mat-raised-button [routerLink]="['../general']">Cancel</button>
+	    <button mat-raised-button color="accent" [disabled]="!editCenterForm.valid">Confirm</button>
+	  </mat-card-actions>
+
+	</form>
+
+  </mat-card>
+
+</div>

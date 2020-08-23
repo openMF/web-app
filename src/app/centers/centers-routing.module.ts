@@ -14,6 +14,7 @@ import { CentersViewComponent } from './centers-view/centers-view.component';
 import { GeneralTabComponent } from './centers-view/general-tab/general-tab.component';
 import { NotesTabComponent } from './centers-view/notes-tab/notes-tab.component';
 import { DatatableTabComponent } from './centers-view/datatable-tab/datatable-tab.component';
+import { EditCenterComponent } from './edit-center/edit-center.component';
 
 /** Custom Resolvers */
 import { OfficesResolver } from 'app/accounting/common-resolvers/offices.resolver';
@@ -26,6 +27,7 @@ import { CenterDatatableResolver } from './common-resolvers/center-datatable.res
 import { CenterDatatablesResolver } from './common-resolvers/center-datatables.resolver';
 import { CenterActionsComponent } from './centers-view/center-actions/center-actions.component';
 import { CenterActionsResolver } from './common-resolvers/center-actions.resolver';
+import { CenterDataAndTemplateResolver } from './common-resolvers/center-data-and-template.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -90,6 +92,14 @@ const routes: Routes = [
               ]
             },
             {
+              path: 'edit',
+              component: EditCenterComponent,
+              data: { title: extract('Edit Center'), breadcrumb: 'Edit', routeParamBreadcrumb: 'Edit' },
+              resolve: {
+                centerData: CenterDataAndTemplateResolver,
+              }
+            },
+            {
               path: 'actions/:name',
               data: { title: extract('Center Actions'), routeParamBreadcrumb: 'name' },
               component: CenterActionsComponent,
@@ -116,7 +126,8 @@ const routes: Routes = [
     CenterNotesResolver,
     CenterDatatableResolver,
     CenterDatatablesResolver,
-    CenterActionsResolver
+    CenterActionsResolver,
+    CenterDataAndTemplateResolver
   ]
 })
 export class CentersRoutingModule { }

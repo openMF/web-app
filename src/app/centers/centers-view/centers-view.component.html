@@ -61,7 +61,7 @@
       <span *ngIf="!(centerViewData.status.value=='Active')">
         <button mat-raised-button *mifosxHasPermission="'ACTIVATE_CENTER'" (click)="doAction('Activate')"><i class="fa fa-check-sign"></i> Activate </button>
       </span>
-      <button mat-raised-button *mifosxHasPermission="'UPDATE_CENTER'"><i class="fa fa-edit"></i> Edit </button>
+      <button mat-raised-button *mifosxHasPermission="'UPDATE_CENTER'" (click)="doAction('Edit')"><i class="fa fa-edit"></i> Edit </button>
       <button mat-raised-button *mifosxHasPermission="'CREATE_GROUP'"><i class="fa fa-plus"></i> Add Group </button>
       <button mat-raised-button *mifosxHasPermission="'ASSOCIATEGROUPS_CENTER'" (click)="doAction('Manage Groups')"> <i class="fa fa-edit"></i> Manage Groups </button>
       <span  *ngIf="centerViewData.active">

@@ -26,6 +26,7 @@ import { EditCenterMeetingComponent } from './centers-view/center-actions/edit-c
 import { EditCenterMeetingScheduleComponent } from './centers-view/center-actions/edit-center-meeting-schedule/edit-center-meeting-schedule.component';
 import { ManageGroupsComponent } from './centers-view/center-actions/manage-groups/manage-groups.component';
 import { StaffAssignmentHistoryComponent } from './centers-view/center-actions/staff-assignment-history/staff-assignment-history.component';
+import { EditCenterComponent } from './edit-center/edit-center.component';
 
 /**
  * Centers Module
@@ -57,7 +58,8 @@ import { StaffAssignmentHistoryComponent } from './centers-view/center-actions/s
     EditCenterMeetingComponent,
     EditCenterMeetingScheduleComponent,
     ManageGroupsComponent,
-    StaffAssignmentHistoryComponent
+    StaffAssignmentHistoryComponent,
+    EditCenterComponent
   ]
 })
 export class CentersModule { }
