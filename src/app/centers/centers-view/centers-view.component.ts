@@ -95,7 +95,7 @@ export class CentersViewComponent implements OnInit {
    */
   private centersUnassignStaff() {
     const unAssignStaffDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Unassign Staff', dialogContext: 'Are you sure you want Unassign Staff ?' }
+      data: { heading: 'Unassign Staff', dialogContext: 'Are you sure you want Unassign Staff' }
     });
     unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
