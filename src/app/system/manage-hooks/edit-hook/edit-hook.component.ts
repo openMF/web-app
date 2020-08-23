@@ -2,7 +2,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 /** Custom Services */
 import { SystemService } from '../../system.service';
@@ -36,7 +39,7 @@ export class EditHookComponent implements OnInit {
   /** Boolean to check if events data is changed or not. */
   eventsDataChanged: Boolean = false;
   /** Sorter for events table. */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /**
    * Retrieves the hooks template data from `resolve`.

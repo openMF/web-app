@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 
 /**
@@ -21,7 +22,7 @@ export class AmazonS3Component implements OnInit {
   dataSource: MatTableDataSource<any>;
 
   /** Sorter for Amazon S3 configuration table. */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /**
    * Retrieves the Amazon S3 configuration data from `resolve`.

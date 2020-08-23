@@ -1,6 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatPaginator, MatSort, MatCheckbox } from '@angular/material';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -23,7 +25,7 @@ import { CentersDataSource } from './centers.datasource';
   styleUrls: ['./centers.component.scss'],
 })
 export class CentersComponent implements OnInit, AfterViewInit {
-  @ViewChild('showClosedCenters') showClosedCenters: MatCheckbox;
+  @ViewChild('showClosedCenters', { static: true }) showClosedCenters: MatCheckbox;
 
   /** Name form control. */
   name = new FormControl();
@@ -46,9 +48,9 @@ export class CentersComponent implements OnInit, AfterViewInit {
   ];
 
   /** Paginator for centers table. */
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for centers table. */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(private centersService: CentersService) { }
 

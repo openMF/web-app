@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ProductsService } from 'app/products/products.service';
 
 @Component({
@@ -14,8 +16,8 @@ export class ViewDividendComponent implements OnInit {
   status: any;
   isdividendPosted = false;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   displayedColumns: string[] = ['clientName', 'shareAccount', 'dividendAmount', 'status'];
   dataSource: MatTableDataSource<any>;
 

@@ -2,7 +2,7 @@
 import { Component, OnChanges, OnInit, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatTable } from '@angular/material/table';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 
 /** Custom Dialogs */
@@ -44,7 +44,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
   showDeleteBotton: boolean;
 
   /** Data Table Reference */
-  @ViewChild('dataTable') dataTableRef: MatTable<Element>;
+  @ViewChild('dataTable', { static: true }) dataTableRef: MatTable<Element>;
 
   /**
    * Fetches savings account Id from parent route params.

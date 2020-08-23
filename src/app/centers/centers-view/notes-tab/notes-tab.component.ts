@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 /** Custom Components */
@@ -21,7 +21,7 @@ export class NotesTabComponent implements OnInit {
   username: string;
   centerNotes: any;
   noteForm: FormGroup;
-  @ViewChild('formRef') formRef: any;
+  @ViewChild('formRef', { static: true }) formRef: any;
 
 
   constructor(private route: ActivatedRoute,

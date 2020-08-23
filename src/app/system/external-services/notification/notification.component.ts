@@ -1,7 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 /**
  * Notification Configuration Component.
@@ -21,7 +22,7 @@ export class NotificationComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
 
   /** Sorter for Notification configuration table. */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /**
    * Retrieves the Notification configuration data from `resolve`.

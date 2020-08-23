@@ -2,7 +2,9 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "src",
+    "downlevelIteration": true,
     "importHelpers": true,
+    "module": "esnext",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -13,7 +15,8 @@
     "suppressImplicitAnyIndexErrors": true,
     "target": "es5",
     "typeRoots": [
-      "node_modules/@types"
+      "node_modules/@types",
+      "src/typings.d.ts"
     ],
     "lib": [
       "es2017",

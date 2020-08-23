@@ -70,10 +70,6 @@ import { GroupTransferClientsComponent } from './groups-view/group-actions/group
     EditGroupMeetingScheduleComponent,
     GroupTransferClientsComponent
   ],
-  entryComponents: [
-    UnassignRoleDialogComponent,
-    UnassignStaffDialogComponent
-  ],
   providers: [DatePipe]
 })
 export class GroupsModule { }

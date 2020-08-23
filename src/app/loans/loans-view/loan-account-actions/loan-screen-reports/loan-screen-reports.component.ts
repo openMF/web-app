@@ -28,7 +28,7 @@ export class LoanScreenReportsComponent implements OnInit {
   template: any;
 
   /** Screen report output reference */
-  @ViewChild('screenReport') screenReportRef: ElementRef;
+  @ViewChild('screenReport', { static: true }) screenReportRef: ElementRef;
 
   /**
    * Fetches Loan Action Data from `resolve`

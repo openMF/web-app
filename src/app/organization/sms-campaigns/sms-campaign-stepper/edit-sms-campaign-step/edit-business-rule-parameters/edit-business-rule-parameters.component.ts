@@ -36,6 +36,10 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
   parentParameters: any[] = [];
   /** Displayed user choices */
   paramValue: any;
+  /** Minimum Date allowed. */
+  minDate = new Date(2000, 0, 1);
+  /** Maximum Date allowed. */
+  maxDate = new Date();
 
   /**
    * @param {ReportsService} reportsService Reports Service

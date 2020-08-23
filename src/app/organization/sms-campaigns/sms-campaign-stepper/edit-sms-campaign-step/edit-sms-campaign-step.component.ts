@@ -35,6 +35,10 @@ export class EditSmsCampaignStepComponent implements OnInit {
   businessRules: any[];
   /** Repetition Intervals */
   repetitionIntervals: any[];
+  /** Minimum Date allowed. */
+  minDate = new Date(2000, 0, 1);
+  /** Maximum Date allowed. */
+  maxDate = new Date();
 
   /** Template Parameters Event Emitter */
   @Output() templateParameters = new EventEmitter();

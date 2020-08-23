@@ -2,7 +2,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatTable } from '@angular/material/table';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Models */
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
@@ -37,7 +37,7 @@ export class IdentitiesTabComponent {
   identitiesColumns: string[] = ['id', 'description', 'type', 'documents', 'status', 'actions'];
 
   /** Identifiers Table */
-  @ViewChild('identifiersTable') identifiersTable: MatTable<Element>;
+  @ViewChild('identifiersTable', { static: true }) identifiersTable: MatTable<Element>;
 
   /**
    * @param {ActivatedRoute} route Activated Route

@@ -1,6 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 /** Custom Pipes */
 import { AccountsFilterPipe } from '../../pipes/accounts-filter.pipe';
@@ -22,9 +24,9 @@ export class LoanAccountTableComponent implements OnInit {
   accountData: any;
 
   /** Paginator for loan accounts table. */
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for loan accounts table. */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /** Loan Account Setter */
   @Input() set loanAccountData(data: any) {

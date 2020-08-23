@@ -7,7 +7,7 @@ node_js:
 
 before_script:
   - npm i npm@latest -g
-  - npm install -g --silent @angular/cli@7.3.9
+  - npm install -g --silent @angular/cli@9.1.12
 
 script:
   - ng lint

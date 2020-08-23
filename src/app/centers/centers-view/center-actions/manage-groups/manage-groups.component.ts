@@ -9,7 +9,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 /** Custom Services */
 import { CentersService } from 'app/centers/centers.service';
 import { GroupsService } from 'app/groups/groups.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({

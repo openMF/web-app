@@ -131,12 +131,6 @@ import { LoanAccountLoadDocumentsDialogComponent } from './custom-dialog/loan-ac
     ViewRecieptComponent,
     ExportTransactionsComponent
   ],
-  entryComponents: [
-    LoansAccountAddCollateralDialogComponent,
-    LoansAccountViewGuarantorDetailsDialogComponent,
-    LoansConfirmationDialogBoxComponent,
-    LoanAccountLoadDocumentsDialogComponent
-  ],
   providers: [DatePipe],
 })
 export class LoansModule {}

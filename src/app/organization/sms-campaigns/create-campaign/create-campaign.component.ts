@@ -26,9 +26,9 @@ export class CreateCampaignComponent {
   templateParameters: any;
 
   /** SMS Campaign Step */
-  @ViewChild(SmsCampaignStepComponent) smsCampaignStep: SmsCampaignStepComponent;
+  @ViewChild(SmsCampaignStepComponent, { static: true }) smsCampaignStep: SmsCampaignStepComponent;
   /** Campaign Message Step */
-  @ViewChild(CampaignMessageStepComponent) campaignMessageStep: CampaignMessageStepComponent;
+  @ViewChild(CampaignMessageStepComponent, { static: true }) campaignMessageStep: CampaignMessageStepComponent;
 
   /**
    * Fetches campaign template from `resolve`

@@ -1,7 +1,10 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatPaginator, MatSort, MatTableDataSource, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 /** Custom Services */
@@ -29,13 +32,13 @@ export class ViewProductMixComponent implements OnInit {
   restrictedProductsDisplayedColumns: string[] = ['name'];
 
   /** Paginator for allowed products table. */
-  @ViewChild('allowed') allowedPaginator: MatPaginator;
+  @ViewChild('allowed', { static: true }) allowedPaginator: MatPaginator;
   /** Paginator for restricted products table. */
-  @ViewChild('restricted') restrictedPaginator: MatPaginator;
+  @ViewChild('restricted', { static: true }) restrictedPaginator: MatPaginator;
   /** Sorter for allowed products table. */
-  @ViewChild(MatSort) allowedSort: MatSort;
+  @ViewChild(MatSort, { static: true }) allowedSort: MatSort;
   /** Sorter for restricted products table. */
-  @ViewChild(MatSort) restrictedSort: MatSort;
+  @ViewChild(MatSort, { static: true }) restrictedSort: MatSort;
 
   /**
    * Retrieves the product mix data from `resolve`.

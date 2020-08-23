@@ -27,11 +27,11 @@ export class CreateSavingsAccountComponent {
   savingsAccountProductTemplate: any;
 
   /** Savings Account Details Step */
-  @ViewChild(SavingsAccountDetailsStepComponent) savingsAccountDetailsStep: SavingsAccountDetailsStepComponent;
+  @ViewChild(SavingsAccountDetailsStepComponent, { static: true }) savingsAccountDetailsStep: SavingsAccountDetailsStepComponent;
   /** Savings Account Terms Step */
-  @ViewChild(SavingsAccountTermsStepComponent) savingsAccountTermsStep: SavingsAccountTermsStepComponent;
+  @ViewChild(SavingsAccountTermsStepComponent, { static: true }) savingsAccountTermsStep: SavingsAccountTermsStepComponent;
   /** Savings Account Charges Step */
-  @ViewChild(SavingsAccountChargesStepComponent) savingsAccountChargesStep: SavingsAccountChargesStepComponent;
+  @ViewChild(SavingsAccountChargesStepComponent, { static: true }) savingsAccountChargesStep: SavingsAccountChargesStepComponent;
 
   /**
    * Fetches savings account template from `resolve`

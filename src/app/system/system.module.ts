@@ -115,11 +115,6 @@ import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-t
     EntityToEntityMappingComponent,
     ConfigureMakerCheckerTasksComponent,
     CreateSurveyComponent
-  ],
-  entryComponents: [
-    ReportParameterDialogComponent,
-    AddEventDialogComponent,
-    ColumnDialogComponent
   ]
 })
 export class SystemModule { }

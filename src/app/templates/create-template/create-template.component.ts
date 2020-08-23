@@ -25,7 +25,7 @@ export class CreateTemplateComponent implements OnInit {
   /** CKEditor5 */
   public Editor = ClassicEditor;
   /** CKEditor5 Template Reference */
-  @ViewChild('ckEditor') ckEditor: any;
+  @ViewChild('ckEditor', { static: true }) ckEditor: any;
 
   /** Template form. */
   templateForm: FormGroup;

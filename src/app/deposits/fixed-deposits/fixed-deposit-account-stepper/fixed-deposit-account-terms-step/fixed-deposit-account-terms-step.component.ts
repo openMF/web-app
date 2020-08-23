@@ -48,7 +48,7 @@ export class FixedDepositAccountTermsStepComponent implements OnInit, OnChanges 
   }
 
   ngOnInit() {
-    if (this.fixedDepositsAccountTemplate) {
+    if (this.fixedDepositsAccountTemplate.interestCompoundingPeriodType) {
       this.fixedDepositAccountTermsForm.patchValue({
         'interestCompoundingPeriodType': this.fixedDepositsAccountTemplate.interestCompoundingPeriodType.id,
         'interestPostingPeriodType': this.fixedDepositsAccountTemplate.interestPostingPeriodType.id,

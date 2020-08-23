@@ -15,7 +15,7 @@ It is a Single-Page App (SPA) written in standard web technologies [HTML5](http:
 
 2. Install [angular-cli](https://github.com/angular/angular-cli) globally.
 ```
-npm install -g @angular/cli@7.3.9
+npm install -g @angular/cli@9.1.12
 ```
 
 3. Clone the project locally into your system.

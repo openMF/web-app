@@ -121,17 +121,6 @@ import { CaptureImageDialogComponent } from './clients-view/custom-dialogs/captu
     ClientFamilyMemberDialogComponent,
     CaptureImageDialogComponent
   ],
-  entryComponents: [
-    UploadDocumentDialogComponent,
-    EditNotesDialogComponent,
-    UnassignStaffDialogComponent,
-    ViewSignatureDialogComponent,
-    UploadSignatureDialogComponent,
-    DeleteSignatureDialogComponent,
-    UploadImageDialogComponent,
-    ClientFamilyMemberDialogComponent,
-    CaptureImageDialogComponent
-  ],
   providers: [DatePipe]
 
 })

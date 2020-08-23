@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { MatSidenav, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
 

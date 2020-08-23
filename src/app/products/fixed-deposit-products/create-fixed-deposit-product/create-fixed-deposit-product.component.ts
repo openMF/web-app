@@ -18,13 +18,13 @@ import { ProductsService } from 'app/products/products.service';
 })
 export class CreateFixedDepositProductComponent implements OnInit {
 
-  @ViewChild(FixedDepositProductDetailsStepComponent) fixedDepositProductDetailsStep: FixedDepositProductDetailsStepComponent;
-  @ViewChild(FixedDepositProductCurrencyStepComponent) fixedDepositProductCurrencyStep: FixedDepositProductCurrencyStepComponent;
-  @ViewChild(FixedDepositProductTermsStepComponent) fixedDepositProductTermsStep: FixedDepositProductTermsStepComponent;
-  @ViewChild(FixedDepositProductSettingsStepComponent) fixedDepositProductSettingsStep: FixedDepositProductSettingsStepComponent;
-  @ViewChild(FixedDepositProductInterestRateChartStepComponent) fixedDepositProductInterestRateChartStep: FixedDepositProductInterestRateChartStepComponent;
-  @ViewChild(FixedDepositProductChargesStepComponent) fixedDepositProductChargesStep: FixedDepositProductChargesStepComponent;
-  @ViewChild(FixedDepositProductAccountingStepComponent) fixedDepositProductAccountingStep: FixedDepositProductAccountingStepComponent;
+  @ViewChild(FixedDepositProductDetailsStepComponent, { static: true }) fixedDepositProductDetailsStep: FixedDepositProductDetailsStepComponent;
+  @ViewChild(FixedDepositProductCurrencyStepComponent, { static: true }) fixedDepositProductCurrencyStep: FixedDepositProductCurrencyStepComponent;
+  @ViewChild(FixedDepositProductTermsStepComponent, { static: true }) fixedDepositProductTermsStep: FixedDepositProductTermsStepComponent;
+  @ViewChild(FixedDepositProductSettingsStepComponent, { static: true }) fixedDepositProductSettingsStep: FixedDepositProductSettingsStepComponent;
+  @ViewChild(FixedDepositProductInterestRateChartStepComponent, { static: true }) fixedDepositProductInterestRateChartStep: FixedDepositProductInterestRateChartStepComponent;
+  @ViewChild(FixedDepositProductChargesStepComponent, { static: true }) fixedDepositProductChargesStep: FixedDepositProductChargesStepComponent;
+  @ViewChild(FixedDepositProductAccountingStepComponent, { static: true }) fixedDepositProductAccountingStep: FixedDepositProductAccountingStepComponent;
 
   fixedDepositProductsTemplate: any;
   accountingRuleData = ['None', 'Cash'];

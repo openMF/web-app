@@ -17,12 +17,12 @@ import { ProductsService } from 'app/products/products.service';
 })
 export class CreateSavingProductComponent implements OnInit {
 
-  @ViewChild(SavingProductDetailsStepComponent) savingProductDetailsStep: SavingProductDetailsStepComponent;
-  @ViewChild(SavingProductCurrencyStepComponent) savingProductCurrencyStep: SavingProductCurrencyStepComponent;
-  @ViewChild(SavingProductTermsStepComponent) savingProductTermsStep: SavingProductTermsStepComponent;
-  @ViewChild(SavingProductSettingsStepComponent) savingProductSettingsStep: SavingProductSettingsStepComponent;
-  @ViewChild(SavingProductChargesStepComponent) savingProductChargesStep: SavingProductChargesStepComponent;
-  @ViewChild(SavingProductAccountingStepComponent) savingProductAccountingStep: SavingProductAccountingStepComponent;
+  @ViewChild(SavingProductDetailsStepComponent, { static: true }) savingProductDetailsStep: SavingProductDetailsStepComponent;
+  @ViewChild(SavingProductCurrencyStepComponent, { static: true }) savingProductCurrencyStep: SavingProductCurrencyStepComponent;
+  @ViewChild(SavingProductTermsStepComponent, { static: true }) savingProductTermsStep: SavingProductTermsStepComponent;
+  @ViewChild(SavingProductSettingsStepComponent, { static: true }) savingProductSettingsStep: SavingProductSettingsStepComponent;
+  @ViewChild(SavingProductChargesStepComponent, { static: true }) savingProductChargesStep: SavingProductChargesStepComponent;
+  @ViewChild(SavingProductAccountingStepComponent, { static: true }) savingProductAccountingStep: SavingProductAccountingStepComponent;
 
   savingProductsTemplate: any;
   accountingRuleData = ['None', 'Cash'];

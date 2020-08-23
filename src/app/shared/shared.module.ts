@@ -59,16 +59,6 @@ import { MaterialModule } from './material.module';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule
-  ],
-  entryComponents: [
-    FormDialogComponent,
-    DeleteDialogComponent,
-    ChangePasswordDialogComponent,
-    EnableDialogComponent,
-    DisableDialogComponent,
-    ConfirmationDialogComponent,
-    KeyboardShortcutsDialogComponent,
-    CancelDialogComponent
   ]
 })
 export class SharedModule { }

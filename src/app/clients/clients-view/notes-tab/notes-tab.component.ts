@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 /** Custom Components */
@@ -31,7 +31,7 @@ export class NotesTabComponent implements OnInit {
   noteForm: FormGroup;
 
   /** Notes Form Reference */
-  @ViewChild('formRef') formRef: any;
+  @ViewChild('formRef', { static: true }) formRef: any;
 
   /**
    * @param {ActivatedRoute} route Activated Route

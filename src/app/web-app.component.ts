@@ -2,7 +2,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 /** rxjs Imports */
 import { merge } from 'rxjs';

@@ -86,9 +86,6 @@ import { RecurringDepositConfirmationDialogComponent } from './recurring-deposit
     ViewTransactionComponent,
     EditTransactionComponent
   ],
-  entryComponents: [
-    RecurringDepositConfirmationDialogComponent
-  ],
   providers: [DatePipe]
 })
 export class RecurringDepositsModule {}

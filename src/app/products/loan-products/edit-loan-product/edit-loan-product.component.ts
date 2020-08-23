@@ -17,12 +17,12 @@ import { ProductsService } from 'app/products/products.service';
 })
 export class EditLoanProductComponent implements OnInit {
 
-  @ViewChild(LoanProductDetailsStepComponent) loanProductDetailsStep: LoanProductDetailsStepComponent;
-  @ViewChild(LoanProductCurrencyStepComponent) loanProductCurrencyStep: LoanProductCurrencyStepComponent;
-  @ViewChild(LoanProductTermsStepComponent) loanProductTermsStep: LoanProductTermsStepComponent;
-  @ViewChild(LoanProductSettingsStepComponent) loanProductSettingsStep: LoanProductSettingsStepComponent;
-  @ViewChild(LoanProductChargesStepComponent) loanProductChargesStep: LoanProductChargesStepComponent;
-  @ViewChild(LoanProductAccountingStepComponent) loanProductAccountingStep: LoanProductAccountingStepComponent;
+  @ViewChild(LoanProductDetailsStepComponent, { static: true }) loanProductDetailsStep: LoanProductDetailsStepComponent;
+  @ViewChild(LoanProductCurrencyStepComponent, { static: true }) loanProductCurrencyStep: LoanProductCurrencyStepComponent;
+  @ViewChild(LoanProductTermsStepComponent, { static: true }) loanProductTermsStep: LoanProductTermsStepComponent;
+  @ViewChild(LoanProductSettingsStepComponent, { static: true }) loanProductSettingsStep: LoanProductSettingsStepComponent;
+  @ViewChild(LoanProductChargesStepComponent, { static: true }) loanProductChargesStep: LoanProductChargesStepComponent;
+  @ViewChild(LoanProductAccountingStepComponent, { static: true }) loanProductAccountingStep: LoanProductAccountingStepComponent;
 
   loanProductAndTemplate: any;
   accountingRuleData = ['None', 'Cash', 'Accrual (periodic)', 'Accrual (upfront)'];

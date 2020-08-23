@@ -1,7 +1,9 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 /**
  * View Audit Component.
@@ -23,7 +25,7 @@ export class ViewAuditComponent implements OnInit {
   /** Paginator for audit trails table. */
   @ViewChild(MatPaginator) paginator: MatPaginator;
   /** Sorter for audit trails table. */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /**
    * Retrieves the audit trail data from `resolve`.

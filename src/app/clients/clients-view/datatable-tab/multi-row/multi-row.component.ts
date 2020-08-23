@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatTable } from '@angular/material/table';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
@@ -21,7 +21,7 @@ import { ClientsService } from '../../../clients.service';
   styleUrls: ['./multi-row.component.scss']
 })
 export class MultiRowComponent implements OnInit, OnChanges {
-  @ViewChild('dataTable') dataTableRef: MatTable<Element>;
+  @ViewChild('dataTable', { static: true }) dataTableRef: MatTable<Element>;
   @Input() dataObject: any;
   datatableName: string;
   datatableColumns: string[] = [];

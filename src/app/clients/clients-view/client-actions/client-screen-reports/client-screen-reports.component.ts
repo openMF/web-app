@@ -27,7 +27,7 @@ export class ClientScreenReportsComponent implements OnInit {
   template: any;
 
   /** Screen report output reference */
-  @ViewChild('screenReport') screenReportRef: ElementRef;
+  @ViewChild('screenReport', { static: true }) screenReportRef: ElementRef;
 
   /**
    * Fetches Client Action Data from `resolve`

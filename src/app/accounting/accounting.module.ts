@@ -78,10 +78,6 @@ import { ViewProvisioningJournalEntriesComponent } from './provisioning-entries/
     CreateProvisioningEntryComponent,
     ViewProvisioningEntryComponent,
     ViewProvisioningJournalEntriesComponent
-  ],
-  entryComponents: [
-    RevertTransactionComponent,
-    ViewJournalEntryComponent
   ]
 })
 export class AccountingModule { }

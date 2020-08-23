@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 
 /** Custom Components */

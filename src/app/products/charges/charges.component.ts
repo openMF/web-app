@@ -1,6 +1,8 @@
 /** Angular Imports */
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 
 /** rxjs Imports */
@@ -24,9 +26,9 @@ export class ChargesComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
 
   /** Paginator for charges table. */
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for charges table. */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /**
    * Retrieves the charges data from `resolve`.

@@ -21,11 +21,11 @@ import { ClientAddressStepComponent } from '../client-stepper/client-address-ste
 export class CreateClientComponent {
 
   /** Client General Step */
-  @ViewChild(ClientGeneralStepComponent) clientGeneralStep: ClientGeneralStepComponent;
+  @ViewChild(ClientGeneralStepComponent, { static: true }) clientGeneralStep: ClientGeneralStepComponent;
   /** Client Family Members Step */
-  @ViewChild(ClientFamilyMembersStepComponent) clientFamilyMembersStep: ClientFamilyMembersStepComponent;
+  @ViewChild(ClientFamilyMembersStepComponent, { static: true }) clientFamilyMembersStep: ClientFamilyMembersStepComponent;
   /** Client Address Step */
-  @ViewChild(ClientAddressStepComponent) clientAddressStep: ClientAddressStepComponent;
+  @ViewChild(ClientAddressStepComponent, { static: true }) clientAddressStep: ClientAddressStepComponent;
 
   /** Client Template */
   clientTemplate: any;

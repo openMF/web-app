@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 

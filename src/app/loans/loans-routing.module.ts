@@ -238,7 +238,7 @@ const routes: Routes = [
             },
             {
               path: 'transfer-funds',
-              loadChildren: '../account-transfers/account-transfers.module#AccountTransfersModule'
+              loadChildren: () => import('../account-transfers/account-transfers.module').then(m => m.AccountTransfersModule)
             }
           ]
         },

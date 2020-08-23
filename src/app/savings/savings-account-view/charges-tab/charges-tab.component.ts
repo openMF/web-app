@@ -1,7 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog, MatTableDataSource, MatTable } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
@@ -52,7 +53,7 @@ export class ChargesTabComponent implements OnInit {
   ];
 
   /** Charges Table Reference */
-  @ViewChild('chargesTable') chargesTableRef: MatTable<Element>;
+  @ViewChild('chargesTable', { static: true }) chargesTableRef: MatTable<Element>;
 
   /**
    * Retrieves the Savings account data from `resolve`.

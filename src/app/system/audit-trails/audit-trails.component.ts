@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -118,9 +119,9 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
   checker = new FormControl();
 
   /** Paginator for audit trails table. */
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for audit trails table. */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /**
    * Retrieves the audit trail search template data from `resolve`.

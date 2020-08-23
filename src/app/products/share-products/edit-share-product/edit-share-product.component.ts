@@ -18,13 +18,13 @@ import { ProductsService } from 'app/products/products.service';
 })
 export class EditShareProductComponent implements OnInit {
 
-  @ViewChild(ShareProductDetailsStepComponent) shareProductDetailsStep: ShareProductDetailsStepComponent;
-  @ViewChild(ShareProductCurrencyStepComponent) shareProductCurrencyStep: ShareProductCurrencyStepComponent;
-  @ViewChild(ShareProductTermsStepComponent) shareProductTermsStep: ShareProductTermsStepComponent;
-  @ViewChild(ShareProductSettingsStepComponent) shareProductSettingsStep: ShareProductSettingsStepComponent;
-  @ViewChild(ShareProductMarketPriceStepComponent) shareProductMarketPriceStep: ShareProductMarketPriceStepComponent;
-  @ViewChild(ShareProductChargesStepComponent) shareProductChargesStep: ShareProductChargesStepComponent;
-  @ViewChild(ShareProductAccountingStepComponent) shareProductAccountingStep: ShareProductAccountingStepComponent;
+  @ViewChild(ShareProductDetailsStepComponent, { static: true }) shareProductDetailsStep: ShareProductDetailsStepComponent;
+  @ViewChild(ShareProductCurrencyStepComponent, { static: true }) shareProductCurrencyStep: ShareProductCurrencyStepComponent;
+  @ViewChild(ShareProductTermsStepComponent, { static: true }) shareProductTermsStep: ShareProductTermsStepComponent;
+  @ViewChild(ShareProductSettingsStepComponent, { static: true }) shareProductSettingsStep: ShareProductSettingsStepComponent;
+  @ViewChild(ShareProductMarketPriceStepComponent, { static: true }) shareProductMarketPriceStep: ShareProductMarketPriceStepComponent;
+  @ViewChild(ShareProductChargesStepComponent, { static: true }) shareProductChargesStep: ShareProductChargesStepComponent;
+  @ViewChild(ShareProductAccountingStepComponent, { static: true }) shareProductAccountingStep: ShareProductAccountingStepComponent;
 
   shareProductAndTemplate: any;
   accountingRuleData = ['None', 'Cash'];

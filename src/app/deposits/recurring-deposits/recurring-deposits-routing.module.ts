@@ -134,7 +134,7 @@ const routes: Routes = [
                   },
                   {
                     path: 'account-transfers',
-                    loadChildren: '../../account-transfers/account-transfers.module#AccountTransfersModule'
+                    loadChildren: () => import('../../account-transfers/account-transfers.module').then(m => m.AccountTransfersModule)
                   }
                 ]
               }
@@ -162,7 +162,7 @@ const routes: Routes = [
         children: [
           {
             path: 'standing-instructions',
-            loadChildren: '../../account-transfers/account-transfers.module#AccountTransfersModule'
+            loadChildren: () => import('../../account-transfers/account-transfers.module').then(m => m.AccountTransfersModule)
           },
         ]
       }

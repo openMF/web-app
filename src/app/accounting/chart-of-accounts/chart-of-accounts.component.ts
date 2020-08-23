@@ -1,6 +1,9 @@
 /** Angular Imports */
 import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource, MatTreeNestedDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -40,9 +43,9 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
   glAccount: GLAccountNode;
 
   /** Paginator for chart of accounts table. */
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for chart of accounts table. */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /**
    * Retrieves the gl accounts data from `resolve` and initializes(generates) gl accounts tree.
