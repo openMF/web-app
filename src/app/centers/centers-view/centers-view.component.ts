@@ -87,6 +87,9 @@ export class CentersViewComponent implements OnInit {
         break;
       case 'Delete':
         this.deleteCenter();
+        break;
+      case 'Edit':
+        this.router.navigate(['edit'], { relativeTo: this.route });
     }
   }
 
