@@ -15,6 +15,12 @@
      * from the global scope.
      */
     class Adapter {
+        constructor(scope) {
+            // Suffixing `ngsw` with the baseHref to avoid clash of cache names
+            // for SWs with different scopes on the same domain.
+            const baseHref = this.parseUrl(scope.registration.scope).path;
+            this.cacheNamePrefix = 'ngsw:' + baseHref;
+        }
         /**
          * Wrapper around the `Request` constructor.
          */
@@ -24,31 +30,43 @@
         /**
          * Wrapper around the `Response` constructor.
          */
-        newResponse(body, init) { return new Response(body, init); }
+        newResponse(body, init) {
+            return new Response(body, init);
+        }
         /**
          * Wrapper around the `Headers` constructor.
          */
-        newHeaders(headers) { return new Headers(headers); }
+        newHeaders(headers) {
+            return new Headers(headers);
+        }
         /**
          * Test if a given object is an instance of `Client`.
          */
-        isClient(source) { return (source instanceof Client); }
+        isClient(source) {
+            return (source instanceof Client);
+        }
         /**
          * Read the current UNIX time in milliseconds.
          */
-        get time() { return Date.now(); }
+        get time() {
+            return Date.now();
+        }
         /**
          * Extract the pathname of a URL.
          */
         parseUrl(url, relativeTo) {
-            const parsed = new URL(url, relativeTo);
-            return { origin: parsed.origin, path: parsed.pathname };
+            // Workaround a Safari bug, see
+            // https://github.com/angular/angular/issues/31061#issuecomment-503637978
+            const parsed = !relativeTo ? new URL(url) : new URL(url, relativeTo);
+            return { origin: parsed.origin, path: parsed.pathname, search: parsed.search };
         }
         /**
          * Wait for a given amount of time before completing a Promise.
          */
         timeout(ms) {
-            return new Promise(resolve => { setTimeout(() => resolve(), ms); });
+            return new Promise(resolve => {
+                setTimeout(() => resolve(), ms);
+            });
         }
     }
 
@@ -90,14 +108,14 @@
             if (this.tables.has(name)) {
                 this.tables.delete(name);
             }
-            return this.scope.caches.delete(`ngsw:db:${name}`);
+            return this.scope.caches.delete(`${this.adapter.cacheNamePrefix}:db:${name}`);
         }
         list() {
-            return this.scope.caches.keys().then(keys => keys.filter(key => key.startsWith('ngsw:db:')));
+            return this.scope.caches.keys().then(keys => keys.filter(key => key.startsWith(`${this.adapter.cacheNamePrefix}:db:`)));
         }
         open(name) {
             if (!this.tables.has(name)) {
-                const table = this.scope.caches.open(`ngsw:db:${name}`)
+                const table = this.scope.caches.open(`${this.adapter.cacheNamePrefix}:db:${name}`)
                     .then(cache => new CacheTable(name, cache, this.adapter));
                 this.tables.set(name, table);
             }
@@ -113,8 +131,12 @@
             this.cache = cache;
             this.adapter = adapter;
         }
-        request(key) { return this.adapter.newRequest('/' + key); }
-        'delete'(key) { return this.cache.delete(this.request(key)); }
+        request(key) {
+            return this.adapter.newRequest('/' + key);
+        }
+        'delete'(key) {
+            return this.cache.delete(this.request(key));
+        }
         keys() {
             return this.cache.keys().then(requests => requests.map(req => req.url.substr(1)));
         }
@@ -129,6 +151,31 @@
         write(key, value) {
             return this.cache.put(this.request(key), this.adapter.newResponse(JSON.stringify(value)));
         }
+    }
+
+    /*! *****************************************************************************
+    Copyright (c) Microsoft Corporation. All rights reserved.
+    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+    this file except in compliance with the License. You may obtain a copy of the
+    License at http://www.apache.org/licenses/LICENSE-2.0
+
+    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+    MERCHANTABLITY OR NON-INFRINGEMENT.
+
+    See the Apache Version 2.0 License for specific language governing permissions
+    and limitations under the License.
+    ***************************************************************************** */
+
+    function __awaiter(thisArg, _arguments, P, generator) {
+        function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+        return new (P || (P = Promise))(function (resolve, reject) {
+            function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+            function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+            function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+            step((generator = generator.apply(thisArg, _arguments || [])).next());
+        });
     }
 
     /**
@@ -194,7 +241,7 @@
         return _sha1(words32, buffer.byteLength * 8);
     }
     function _sha1(words32, len) {
-        const w = new Array(80);
+        const w = [];
         let [a, b, c, d, e] = [0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476, 0xc3d2e1f0];
         words32[len >> 5] |= 0x80 << (24 - len % 32);
         words32[((len + 64 >> 9) << 4) + 15] = len;
@@ -245,16 +292,18 @@
         return [b ^ c ^ d, 0xca62c1d6];
     }
     function stringToWords32(str, endian) {
-        const words32 = Array((str.length + 3) >>> 2);
-        for (let i = 0; i < words32.length; i++) {
+        const size = (str.length + 3) >>> 2;
+        const words32 = [];
+        for (let i = 0; i < size; i++) {
             words32[i] = wordAt(str, i * 4, endian);
         }
         return words32;
     }
     function arrayBufferToWords32(buffer, endian) {
-        const words32 = Array((buffer.byteLength + 3) >>> 2);
+        const size = (buffer.byteLength + 3) >>> 2;
+        const words32 = [];
         const view = new Uint8Array(buffer);
-        for (let i = 0; i < words32.length; i++) {
+        for (let i = 0; i < size; i++) {
             words32[i] = wordAt(view, i * 4, endian);
         }
         return words32;
@@ -307,14 +356,6 @@
      * Use of this source code is governed by an MIT-style license that can be
      * found in the LICENSE file at https://angular.io/license
      */
-    var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-        return new (P || (P = Promise))(function (resolve, reject) {
-            function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-            function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-            function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-            step((generator = generator.apply(thisArg, _arguments || [])).next());
-        });
-    };
     /**
      * A group of assets that are cached in a `Cache` and managed by a given policy.
      *
@@ -350,8 +391,7 @@
             this.metadata = this.db.open(`${this.prefix}:${this.config.name}:meta`);
             // Determine the origin from the registration scope. This is used to differentiate between
             // relative and absolute URLs.
-            this.origin =
-                this.adapter.parseUrl(this.scope.registration.scope, this.scope.registration.scope).origin;
+            this.origin = this.adapter.parseUrl(this.scope.registration.scope).origin;
         }
         cacheStatus(url) {
             return __awaiter(this, void 0, void 0, function* () {
@@ -411,7 +451,9 @@
                             // This resource has no hash, and yet exists in the cache. Check how old this request is
                             // to make sure it's still usable.
                             if (yield this.needToRevalidate(req, cachedResponse)) {
-                                this.idle.schedule(`revalidate(${this.prefix}, ${this.config.name}): ${req.url}`, () => __awaiter(this, void 0, void 0, function* () { yield this.fetchAndCacheOnce(req); }));
+                                this.idle.schedule(`revalidate(${this.prefix}, ${this.config.name}): ${req.url}`, () => __awaiter(this, void 0, void 0, function* () {
+                                    yield this.fetchAndCacheOnce(req);
+                                }));
                             }
                             // In either case (revalidation or not), the cached response must be good.
                             return cachedResponse;
@@ -809,7 +851,7 @@
                         // Write it into the cache. It may already be expired, but it can still serve
                         // traffic until it's updated (stale-while-revalidate approach).
                         yield cache.put(req, res.response);
-                        yield metaTable.write(url, Object.assign({}, res.metadata, { used: false }));
+                        yield metaTable.write(url, Object.assign(Object.assign({}, res.metadata), { used: false }));
                     }), Promise.resolve());
                 }
             });
@@ -865,14 +907,6 @@
      * Use of this source code is governed by an MIT-style license that can be
      * found in the LICENSE file at https://angular.io/license
      */
-    var __awaiter$1 = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-        return new (P || (P = Promise))(function (resolve, reject) {
-            function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-            function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-            function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-            step((generator = generator.apply(thisArg, _arguments || [])).next());
-        });
-    };
     /**
      * Manages an instance of `LruState` and moves URLs to the head of the
      * chain when requested.
@@ -892,7 +926,9 @@
         /**
          * The current count of URLs in the list.
          */
-        get size() { return this.state.count; }
+        get size() {
+            return this.state.count;
+        }
         /**
          * Remove the tail.
          */
@@ -1000,11 +1036,12 @@
      * for caching.
      */
     class DataGroup {
-        constructor(scope, adapter, config, db, prefix) {
+        constructor(scope, adapter, config, db, debugHandler, prefix) {
             this.scope = scope;
             this.adapter = adapter;
             this.config = config;
             this.db = db;
+            this.debugHandler = debugHandler;
             this.prefix = prefix;
             /**
              * Tracks the LRU state of resources in this cache.
@@ -1019,7 +1056,7 @@
          * Lazily initialize/load the LRU chain.
          */
         lru() {
-            return __awaiter$1(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 if (this._lru === null) {
                     const table = yield this.lruTable;
                     try {
@@ -1036,12 +1073,21 @@
          * Sync the LRU chain to non-volatile storage.
          */
         syncLru() {
-            return __awaiter$1(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 if (this._lru === null) {
                     return;
                 }
                 const table = yield this.lruTable;
-                return table.write('lru', this._lru.state);
+                try {
+                    return table.write('lru', this._lru.state);
+                }
+                catch (err) {
+                    // Writing lru cache table failed. This could be a result of a full storage.
+                    // Continue serving clients as usual.
+                    this.debugHandler.log(err, `DataGroup(${this.config.name}@${this.config.version}).syncLru()`);
+                    // TODO: Better detect/handle full storage; e.g. using
+                    // [navigator.storage](https://developer.mozilla.org/en-US/docs/Web/API/NavigatorStorage/storage).
+                }
             });
         }
         /**
@@ -1049,7 +1095,7 @@
          * or `null` otherwise.
          */
         handleFetch(req, ctx) {
-            return __awaiter$1(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 // Do nothing
                 if (!this.patterns.some(pattern => pattern.test(req.url))) {
                     return null;
@@ -1088,7 +1134,7 @@
             });
         }
         handleFetchWithPerformance(req, ctx, lru) {
-            return __awaiter$1(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 let res = null;
                 // Check the cache first. If the resource exists there (and is not expired), the cached
                 // version can be used.
@@ -1097,7 +1143,7 @@
                     res = fromCache.res;
                     // Check the age of the resource.
                     if (this.config.refreshAheadMs !== undefined && fromCache.age >= this.config.refreshAheadMs) {
-                        ctx.waitUntil(this.safeCacheResponse(req, this.safeFetch(req)));
+                        ctx.waitUntil(this.safeCacheResponse(req, this.safeFetch(req), lru));
                     }
                 }
                 if (res !== null) {
@@ -1112,15 +1158,17 @@
                     // The request timed out. Return a Gateway Timeout error.
                     res = this.adapter.newResponse(null, { status: 504, statusText: 'Gateway Timeout' });
                     // Cache the network response eventually.
-                    ctx.waitUntil(this.safeCacheResponse(req, networkFetch));
+                    ctx.waitUntil(this.safeCacheResponse(req, networkFetch, lru));
                 }
-                // The request completed in time, so cache it inline with the response flow.
-                yield this.cacheResponse(req, res, lru);
+                else {
+                    // The request completed in time, so cache it inline with the response flow.
+                    yield this.safeCacheResponse(req, res, lru);
+                }
                 return res;
             });
         }
         handleFetchWithFreshness(req, ctx, lru) {
-            return __awaiter$1(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 // Start with a network fetch.
                 const [timeoutFetch, networkFetch] = this.networkFetchWithTimeout(req);
                 let res;
@@ -1133,14 +1181,14 @@
                 }
                 // If the network fetch times out or errors, fall back on the cache.
                 if (res === undefined) {
-                    ctx.waitUntil(this.safeCacheResponse(req, networkFetch));
+                    ctx.waitUntil(this.safeCacheResponse(req, networkFetch, lru, true));
                     // Ignore the age, the network response will be cached anyway due to the
                     // behavior of freshness.
                     const fromCache = yield this.loadFromCache(req, lru);
                     res = (fromCache !== null) ? fromCache.res : null;
                 }
                 else {
-                    yield this.cacheResponse(req, res, lru, true);
+                    yield this.safeCacheResponse(req, res, lru, true);
                 }
                 // Either the network fetch didn't time out, or the cache yielded a usable response.
                 // In either case, use it.
@@ -1148,9 +1196,7 @@
                     return res;
                 }
                 // No response in the cache. No choice but to fall back on the full network fetch.
-                res = yield networkFetch;
-                yield this.cacheResponse(req, res, lru, true);
-                return res;
+                return networkFetch;
             });
         }
         networkFetchWithTimeout(req) {
@@ -1158,7 +1204,7 @@
             // Otherwise, just fetch from the network directly.
             if (this.config.timeoutMs !== undefined) {
                 const networkFetch = this.scope.fetch(req);
-                const safeNetworkFetch = (() => __awaiter$1(this, void 0, void 0, function* () {
+                const safeNetworkFetch = (() => __awaiter(this, void 0, void 0, function* () {
                     try {
                         return yield networkFetch;
                     }
@@ -1169,7 +1215,7 @@
                         });
                     }
                 }))();
-                const networkFetchUndefinedError = (() => __awaiter$1(this, void 0, void 0, function* () {
+                const networkFetchUndefinedError = (() => __awaiter(this, void 0, void 0, function* () {
                     try {
                         return yield networkFetch;
                     }
@@ -1189,18 +1235,29 @@
                 return [networkFetch, networkFetch];
             }
         }
-        safeCacheResponse(req, res) {
-            return __awaiter$1(this, void 0, void 0, function* () {
+        safeCacheResponse(req, resOrPromise, lru, okToCacheOpaque) {
+            return __awaiter(this, void 0, void 0, function* () {
                 try {
-                    yield this.cacheResponse(req, yield res, yield this.lru());
+                    const res = yield resOrPromise;
+                    try {
+                        yield this.cacheResponse(req, res, lru, okToCacheOpaque);
+                    }
+                    catch (err) {
+                        // Saving the API response failed. This could be a result of a full storage.
+                        // Since this data is cached lazily and temporarily, continue serving clients as usual.
+                        this.debugHandler.log(err, `DataGroup(${this.config.name}@${this.config.version}).safeCacheResponse(${req.url}, status: ${res.status})`);
+                        // TODO: Better detect/handle full storage; e.g. using
+                        // [navigator.storage](https://developer.mozilla.org/en-US/docs/Web/API/NavigatorStorage/storage).
+                    }
                 }
                 catch (_a) {
-                    // TODO: handle this error somehow?
+                    // Request failed
+                    // TODO: Handle this error somehow?
                 }
             });
         }
         loadFromCache(req, lru) {
-            return __awaiter$1(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 // Look for a response in the cache. If one exists, return it.
                 const cache = yield this.cache;
                 let res = yield cache.match(req);
@@ -1237,9 +1294,9 @@
          * request will still be running in the background, to be cached when it completes.
          */
         cacheResponse(req, res, lru, okToCacheOpaque = false) {
-            return __awaiter$1(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 // Only cache successful responses.
-                if (!res.ok || (okToCacheOpaque && res.type === 'opaque')) {
+                if (!(res.ok || (okToCacheOpaque && res.type === 'opaque'))) {
                     return;
                 }
                 // If caching this response would make the cache exceed its maximum size, evict something
@@ -1269,7 +1326,7 @@
          * Delete all of the saved state which this group uses to track resources.
          */
         cleanup() {
-            return __awaiter$1(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 // Remove both the cache and the database entries which track LRU stats.
                 yield Promise.all([
                     this.scope.caches.delete(`${this.prefix}:dynamic:${this.config.name}:cache`),
@@ -1286,7 +1343,7 @@
          * the cache itself, as well as the metadata stored in the age table.
          */
         clearCacheForUrl(url) {
-            return __awaiter$1(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 const [cache, ageTable] = yield Promise.all([this.cache, this.ageTable]);
                 yield Promise.all([
                     cache.delete(this.adapter.newRequest(url, { method: 'GET' })),
@@ -1296,7 +1353,7 @@
             });
         }
         safeFetch(req) {
-            return __awaiter$1(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 try {
                     return this.scope.fetch(req);
                 }
@@ -1317,14 +1374,6 @@
      * Use of this source code is governed by an MIT-style license that can be
      * found in the LICENSE file at https://angular.io/license
      */
-    var __awaiter$2 = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-        return new (P || (P = Promise))(function (resolve, reject) {
-            function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-            function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-            function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-            step((generator = generator.apply(thisArg, _arguments || [])).next());
-        });
-    };
     const BACKWARDS_COMPATIBILITY_NAVIGATION_URLS = [
         { positive: true, regex: '^/.*$' },
         { positive: false, regex: '^/.*\\.[^/]*$' },
@@ -1338,11 +1387,12 @@
      * that can be installed as an update to any previously installed versions.
      */
     class AppVersion {
-        constructor(scope, adapter, database, idle, manifest, manifestHash) {
+        constructor(scope, adapter, database, idle, debugHandler, manifest, manifestHash) {
             this.scope = scope;
             this.adapter = adapter;
             this.database = database;
             this.idle = idle;
+            this.debugHandler = debugHandler;
             this.manifest = manifest;
             this.manifestHash = manifestHash;
             /**
@@ -1364,7 +1414,7 @@
             this.assetGroups = (manifest.assetGroups || []).map(config => {
                 // Every asset group has a cache that's prefixed by the manifest hash and the name of the
                 // group.
-                const prefix = `ngsw:${this.manifestHash}:assets`;
+                const prefix = `${adapter.cacheNamePrefix}:${this.manifestHash}:assets`;
                 // Check the caching mode, which determines when resources will be fetched/updated.
                 switch (config.installMode) {
                     case 'prefetch':
@@ -1374,8 +1424,9 @@
                 }
             });
             // Process each `DataGroup` declared in the manifest.
-            this.dataGroups = (manifest.dataGroups || [])
-                .map(config => new DataGroup(this.scope, this.adapter, config, this.database, `ngsw:${config.version}:data`));
+            this.dataGroups =
+                (manifest.dataGroups || [])
+                    .map(config => new DataGroup(this.scope, this.adapter, config, this.database, this.debugHandler, `${adapter.cacheNamePrefix}:${config.version}:data`));
             // This keeps backwards compatibility with app versions without navigation urls.
             // Fix: https://github.com/angular/angular/issues/27209
             manifest.navigationUrls = manifest.navigationUrls || BACKWARDS_COMPATIBILITY_NAVIGATION_URLS;
@@ -1387,19 +1438,21 @@
                 exclude: excludeUrls.map(spec => new RegExp(spec.regex)),
             };
         }
-        get okay() { return this._okay; }
+        get okay() {
+            return this._okay;
+        }
         /**
          * Fully initialize this version of the application. If this Promise resolves successfully, all
          * required
          * data has been safely downloaded.
          */
         initializeFully(updateFrom) {
-            return __awaiter$2(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 try {
                     // Fully initialize each asset group, in series. Starts with an empty Promise,
                     // and waits for the previous groups to have been initialized before initializing
                     // the next one in turn.
-                    yield this.assetGroups.reduce((previous, group) => __awaiter$2(this, void 0, void 0, function* () {
+                    yield this.assetGroups.reduce((previous, group) => __awaiter(this, void 0, void 0, function* () {
                         // Wait for the previous groups to complete initialization. If there is a
                         // failure, this will throw, and each subsequent group will throw, until the
                         // whole sequence fails.
@@ -1415,7 +1468,7 @@
             });
         }
         handleFetch(req, context) {
-            return __awaiter$2(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 // Check the request against each `AssetGroup` in sequence. If an `AssetGroup` can't handle the
                 // request,
                 // it will return `null`. Thus, the first non-null response is the SW's answer to the request.
@@ -1423,7 +1476,7 @@
                 // the group list, keeping track of a possible response. If there is one, it gets passed
                 // through, and if
                 // not the next group is consulted to produce a candidate response.
-                const asset = yield this.assetGroups.reduce((potentialResponse, group) => __awaiter$2(this, void 0, void 0, function* () {
+                const asset = yield this.assetGroups.reduce((potentialResponse, group) => __awaiter(this, void 0, void 0, function* () {
                     // Wait on the previous potential response. If it's not null, it should just be passed
                     // through.
                     const resp = yield potentialResponse;
@@ -1441,7 +1494,7 @@
                 }
                 // Perform the same reduction operation as above, but this time processing
                 // the data caching groups.
-                const data = yield this.dataGroups.reduce((potentialResponse, group) => __awaiter$2(this, void 0, void 0, function* () {
+                const data = yield this.dataGroups.reduce((potentialResponse, group) => __awaiter(this, void 0, void 0, function* () {
                     const resp = yield potentialResponse;
                     if (resp !== null) {
                         return resp;
@@ -1483,7 +1536,7 @@
          * Check this version for a given resource with a particular hash.
          */
         lookupResourceWithHash(url, hash) {
-            return __awaiter$2(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 // Verify that this version has the requested resource cached. If not,
                 // there's no point in trying.
                 if (!this.hashTable.has(url)) {
@@ -1504,7 +1557,7 @@
         lookupResourceWithoutHash(url) {
             // Limit the search to asset groups, and only scan the cache, don't
             // load resources from the network.
-            return this.assetGroups.reduce((potentialResponse, group) => __awaiter$2(this, void 0, void 0, function* () {
+            return this.assetGroups.reduce((potentialResponse, group) => __awaiter(this, void 0, void 0, function* () {
                 const resp = yield potentialResponse;
                 if (resp !== null) {
                     return resp;
@@ -1518,13 +1571,13 @@
          * List all unhashed resources from all asset groups.
          */
         previouslyCachedResources() {
-            return this.assetGroups.reduce((resources, group) => __awaiter$2(this, void 0, void 0, function* () {
+            return this.assetGroups.reduce((resources, group) => __awaiter(this, void 0, void 0, function* () {
                 return (yield resources).concat(yield group.unhashedResources());
             }), Promise.resolve([]));
         }
         recentCacheStatus(url) {
-            return __awaiter$2(this, void 0, void 0, function* () {
-                return this.assetGroups.reduce((current, group) => __awaiter$2(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
+                return this.assetGroups.reduce((current, group) => __awaiter(this, void 0, void 0, function* () {
                     const status = yield current;
                     if (status === UpdateCacheStatus.CACHED) {
                         return status;
@@ -1541,7 +1594,7 @@
          * Erase this application version, by cleaning up all the caches.
          */
         cleanup() {
-            return __awaiter$2(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 yield Promise.all(this.assetGroups.map(group => group.cleanup()));
                 yield Promise.all(this.dataGroups.map(group => group.cleanup()));
             });
@@ -1549,7 +1602,9 @@
         /**
          * Get the opaque application data which was provided with the manifest.
          */
-        get appData() { return this.manifest.appData || null; }
+        get appData() {
+            return this.manifest.appData || null;
+        }
         /**
          * Check whether a request accepts `text/html` (based on the `Accept` header).
          */
@@ -1570,14 +1625,6 @@
      * Use of this source code is governed by an MIT-style license that can be
      * found in the LICENSE file at https://angular.io/license
      */
-    var __awaiter$3 = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-        return new (P || (P = Promise))(function (resolve, reject) {
-            function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-            function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-            function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-            step((generator = generator.apply(thisArg, _arguments || [])).next());
-        });
-    };
     const DEBUG_LOG_BUFFER_SIZE = 100;
     class DebugHandler {
         constructor(driver, adapter) {
@@ -1592,7 +1639,7 @@
             this.debugLogB = [];
         }
         handleFetch(req) {
-            return __awaiter$3(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 const [state, versions, idle] = yield Promise.all([
                     this.driver.debugState(),
                     this.driver.debugVersions(),
@@ -1655,7 +1702,9 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
             // Log the message.
             this.debugLogA.push({ value, time: this.adapter.time, context });
         }
-        errorToString(err) { return `${err.name}(${err.message}, ${err.stack})`; }
+        errorToString(err) {
+            return `${err.name}(${err.message}, ${err.stack})`;
+        }
         formatDebugLog(log) {
             return log.map(entry => `[${this.since(entry.time)}] ${entry.value} ${entry.context}`)
                 .join('\n');
@@ -1669,14 +1718,6 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
      * Use of this source code is governed by an MIT-style license that can be
      * found in the LICENSE file at https://angular.io/license
      */
-    var __awaiter$4 = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-        return new (P || (P = Promise))(function (resolve, reject) {
-            function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-            function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-            function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-            step((generator = generator.apply(thisArg, _arguments || [])).next());
-        });
-    };
     class IdleScheduler {
         constructor(adapter, threshold, debug) {
             this.adapter = adapter;
@@ -1690,7 +1731,7 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
             this.lastRun = null;
         }
         trigger() {
-            return __awaiter$4(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 this.lastTrigger = this.adapter.time;
                 if (this.queue.length === 0) {
                     return;
@@ -1711,12 +1752,12 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
             });
         }
         execute() {
-            return __awaiter$4(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 this.lastRun = this.adapter.time;
                 while (this.queue.length > 0) {
                     const queue = this.queue;
                     this.queue = [];
-                    yield queue.reduce((previous, task) => __awaiter$4(this, void 0, void 0, function* () {
+                    yield queue.reduce((previous, task) => __awaiter(this, void 0, void 0, function* () {
                         yield previous;
                         try {
                             yield task.run();
@@ -1736,11 +1777,17 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
         schedule(desc, run) {
             this.queue.push({ desc, run });
             if (this.emptyResolve === null) {
-                this.empty = new Promise(resolve => { this.emptyResolve = resolve; });
+                this.empty = new Promise(resolve => {
+                    this.emptyResolve = resolve;
+                });
             }
         }
-        get size() { return this.queue.length; }
-        get taskDescriptions() { return this.queue.map(task => task.desc); }
+        get size() {
+            return this.queue.length;
+        }
+        get taskDescriptions() {
+            return this.queue.map(task => task.desc);
+        }
     }
 
     /**
@@ -1775,14 +1822,6 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
      * Use of this source code is governed by an MIT-style license that can be
      * found in the LICENSE file at https://angular.io/license
      */
-    var __awaiter$5 = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-        return new (P || (P = Promise))(function (resolve, reject) {
-            function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-            function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-            function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-            step((generator = generator.apply(thisArg, _arguments || [])).next());
-        });
-    };
     const IDLE_THRESHOLD = 5000;
     const SUPPORTED_CONFIG_VERSION = 1;
     const NOTIFICATION_OPTION_NAMES = [
@@ -1856,13 +1895,13 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
             // The activate event is triggered when this version of the service worker is
             // first activated.
             this.scope.addEventListener('activate', (event) => {
-                event.waitUntil((() => __awaiter$5(this, void 0, void 0, function* () {
+                event.waitUntil((() => __awaiter(this, void 0, void 0, function* () {
                     // As above, it's safe to take over from existing clients immediately, since the new SW
                     // version will continue to serve the old application.
                     yield this.scope.clients.claim();
                     // Once all clients have been taken over, we can delete caches used by old versions of
                     // `@angular/service-worker`, which are no longer needed. This can happen in the background.
-                    this.idle.schedule('activate: cleanup-old-sw-caches', () => __awaiter$5(this, void 0, void 0, function* () {
+                    this.idle.schedule('activate: cleanup-old-sw-caches', () => __awaiter(this, void 0, void 0, function* () {
                         try {
                             yield this.cleanupOldSwCaches();
                         }
@@ -1906,6 +1945,9 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
             const req = event.request;
             const scopeUrl = this.scope.registration.scope;
             const requestUrlObj = this.adapter.parseUrl(req.url, scopeUrl);
+            if (req.headers.has('ngsw-bypass') || /[?&]ngsw-bypass(?:[=&]|$)/i.test(requestUrlObj.search)) {
+                return;
+            }
             // The only thing that is served unconditionally is the debug page.
             if (requestUrlObj.path === '/ngsw/state') {
                 // Allow the debugger to handle the request, but don't affect SW state in any other way.
@@ -1916,7 +1958,6 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
             // returning causes the request to fall back on the network. This is preferred over
             // `respondWith(fetch(req))` because the latter still shows in DevTools that the
             // request was handled by the SW.
-            // TODO: try to handle DriverReadyState.EXISTING_CLIENTS_ONLY here.
             if (this.state === DriverReadyState.SAFE_MODE) {
                 // Even though the worker is in safe mode, idle tasks still need to happen so
                 // things like update checks, etc. can take place.
@@ -1965,30 +2006,21 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
             if (!data || !data.action) {
                 return;
             }
-            // Initialization is the only event which is sent directly from the SW to itself,
-            // and thus `event.source` is not a Client. Handle it here, before the check
-            // for Client sources.
-            if (data.action === 'INITIALIZE') {
-                // Only initialize if not already initialized (or initializing).
-                if (this.initialized === null) {
-                    // Initialize the SW.
-                    this.initialized = this.initialize();
-                    // Wait until initialization is properly scheduled, then trigger idle
-                    // events to allow it to complete (assuming the SW is idle).
-                    event.waitUntil((() => __awaiter$5(this, void 0, void 0, function* () {
-                        yield this.initialized;
-                        yield this.idle.trigger();
-                    }))());
+            event.waitUntil((() => __awaiter(this, void 0, void 0, function* () {
+                // Initialization is the only event which is sent directly from the SW to itself, and thus
+                // `event.source` is not a `Client`. Handle it here, before the check for `Client` sources.
+                if (data.action === 'INITIALIZE') {
+                    return this.ensureInitialized(event);
                 }
-                return;
-            }
-            // Only messages from true clients are accepted past this point (this is essentially
-            // a typecast).
-            if (!this.adapter.isClient(event.source)) {
-                return;
-            }
-            // Handle the message and keep the SW alive until it's handled.
-            event.waitUntil(this.handleMessage(data, event.source));
+                // Only messages from true clients are accepted past this point.
+                // This is essentially a typecast.
+                if (!this.adapter.isClient(event.source)) {
+                    return;
+                }
+                // Handle the message and keep the SW alive until it's handled.
+                yield this.ensureInitialized(event);
+                yield this.handleMessage(data, event.source);
+            }))());
         }
         onPush(msg) {
             // Push notifications without data have no effect.
@@ -2002,10 +2034,39 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
             // Handle the click event and keep the SW alive until it's handled.
             event.waitUntil(this.handleClick(event.notification, event.action));
         }
+        ensureInitialized(event) {
+            return __awaiter(this, void 0, void 0, function* () {
+                // Since the SW may have just been started, it may or may not have been initialized already.
+                // `this.initialized` will be `null` if initialization has not yet been attempted, or will be a
+                // `Promise` which will resolve (successfully or unsuccessfully) if it has.
+                if (this.initialized !== null) {
+                    return this.initialized;
+                }
+                // Initialization has not yet been attempted, so attempt it. This should only ever happen once
+                // per SW instantiation.
+                try {
+                    this.initialized = this.initialize();
+                    yield this.initialized;
+                }
+                catch (error) {
+                    // If initialization fails, the SW needs to enter a safe state, where it declines to respond
+                    // to network requests.
+                    this.state = DriverReadyState.SAFE_MODE;
+                    this.stateMessage = `Initialization failed due to error: ${errorToString(error)}`;
+                    throw error;
+                }
+                finally {
+                    // Regardless if initialization succeeded, background tasks still need to happen.
+                    event.waitUntil(this.idle.trigger());
+                }
+            });
+        }
         handleMessage(msg, from) {
-            return __awaiter$5(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 if (isMsgCheckForUpdates(msg)) {
-                    const action = (() => __awaiter$5(this, void 0, void 0, function* () { yield this.checkForUpdate(); }))();
+                    const action = (() => __awaiter(this, void 0, void 0, function* () {
+                        yield this.checkForUpdate();
+                    }))();
                     yield this.reportStatus(from, action, msg.statusNonce);
                 }
                 else if (isMsgActivateUpdate(msg)) {
@@ -2014,7 +2075,7 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
             });
         }
         handlePush(data) {
-            return __awaiter$5(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 yield this.broadcast({
                     type: 'PUSH',
                     data,
@@ -2030,7 +2091,7 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
             });
         }
         handleClick(notification, action) {
-            return __awaiter$5(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 notification.close();
                 const options = {};
                 // The filter uses `name in notification` because the properties are on the prototype so
@@ -2044,19 +2105,19 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
             });
         }
         reportStatus(client, promise, nonce) {
-            return __awaiter$5(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 const response = { type: 'STATUS', nonce, status: true };
                 try {
                     yield promise;
                     client.postMessage(response);
                 }
                 catch (e) {
-                    client.postMessage(Object.assign({}, response, { status: false, error: e.toString() }));
+                    client.postMessage(Object.assign(Object.assign({}, response), { status: false, error: e.toString() }));
                 }
             });
         }
         updateClient(client) {
-            return __awaiter$5(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 // Figure out which version the client is on. If it's not on the latest,
                 // it needs to be moved.
                 const existing = this.clientVersionMap.get(client.id);
@@ -2086,27 +2147,12 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
             });
         }
         handleFetch(event) {
-            return __awaiter$5(this, void 0, void 0, function* () {
-                // Since the SW may have just been started, it may or may not have been initialized already.
-                // this.initialized will be `null` if initialization has not yet been attempted, or will be a
-                // Promise which will resolve (successfully or unsuccessfully) if it has.
-                if (this.initialized === null) {
-                    // Initialization has not yet been attempted, so attempt it. This should only ever happen once
-                    // per SW instantiation.
-                    this.initialized = this.initialize();
-                }
-                // If initialization fails, the SW needs to enter a safe state, where it declines to respond to
-                // network requests.
+            return __awaiter(this, void 0, void 0, function* () {
                 try {
-                    // Wait for initialization.
-                    yield this.initialized;
+                    // Ensure the SW instance has been initialized.
+                    yield this.ensureInitialized(event);
                 }
-                catch (e) {
-                    // Initialization failed. Enter a safe state.
-                    this.state = DriverReadyState.SAFE_MODE;
-                    this.stateMessage = `Initialization failed due to error: ${errorToString(e)}`;
-                    // Even though the driver entered safe mode, background tasks still need to happen.
-                    event.waitUntil(this.idle.trigger());
+                catch (_a) {
                     // Since the SW is already committed to responding to the currently active request,
                     // respond with a network fetch.
                     return this.safeFetch(event.request);
@@ -2114,7 +2160,7 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
                 // On navigation requests, check for new updates.
                 if (event.request.mode === 'navigate' && !this.scheduledNavUpdateCheck) {
                     this.scheduledNavUpdateCheck = true;
-                    this.idle.schedule('check-updates-on-navigation', () => __awaiter$5(this, void 0, void 0, function* () {
+                    this.idle.schedule('check-updates-on-navigation', () => __awaiter(this, void 0, void 0, function* () {
                         this.scheduledNavUpdateCheck = false;
                         yield this.checkForUpdate();
                     }));
@@ -2136,7 +2182,7 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
                 catch (err) {
                     if (err.isCritical) {
                         // Something went wrong with the activation of this version.
-                        yield this.versionFailed(appVersion, err, this.latestHash === appVersion.manifestHash);
+                        yield this.versionFailed(appVersion, err);
                         event.waitUntil(this.idle.trigger());
                         return this.safeFetch(event.request);
                     }
@@ -2161,7 +2207,7 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
          * Attempt to quickly reach a state where it's safe to serve responses.
          */
         initialize() {
-            return __awaiter$5(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 // On initialization, all of the serialized state is read out of the 'control'
                 // table. This includes:
                 // - map of hashes to manifests of currently loaded application versions
@@ -2185,7 +2231,7 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
                     ]);
                     // Successfully loaded from saved state. This implies a manifest exists, so
                     // the update check needs to happen in the background.
-                    this.idle.schedule('init post-load (update, cleanup)', () => __awaiter$5(this, void 0, void 0, function* () {
+                    this.idle.schedule('init post-load (update, cleanup)', () => __awaiter(this, void 0, void 0, function* () {
                         yield this.checkForUpdate();
                         try {
                             yield this.cleanupCaches();
@@ -2222,7 +2268,7 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
                     // If the manifest is newly initialized, an AppVersion may have already been
                     // created for it.
                     if (!this.versions.has(hash)) {
-                        this.versions.set(hash, new AppVersion(this.scope, this.adapter, this.db, this.idle, manifest, hash));
+                        this.versions.set(hash, new AppVersion(this.scope, this.adapter, this.db, this.idle, this.debugger, manifest, hash));
                     }
                 });
                 // Map each client ID to its associated hash. Along the way, verify that the hash
@@ -2250,12 +2296,12 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
                 // full initialization.
                 // If any of these initializations fail, versionFailed() will be called either
                 // synchronously or asynchronously to handle the failure and re-map clients.
-                yield Promise.all(Object.keys(manifests).map((hash) => __awaiter$5(this, void 0, void 0, function* () {
+                yield Promise.all(Object.keys(manifests).map((hash) => __awaiter(this, void 0, void 0, function* () {
                     try {
                         // Attempt to schedule or initialize this version. If this operation is
                         // successful, then initialization either succeeded or was scheduled. If
                         // it fails, then full initialization was attempted and failed.
-                        yield this.scheduleInitialization(this.versions.get(hash), this.latestHash === hash);
+                        yield this.scheduleInitialization(this.versions.get(hash));
                     }
                     catch (err) {
                         this.debugger.log(err, `initialize: schedule init of ${hash}`);
@@ -2275,7 +2321,7 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
          * Decide which version of the manifest to use for the event.
          */
         assignVersion(event) {
-            return __awaiter$5(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 // First, check whether the event has a (non empty) client ID. If it does, the version may
                 // already be associated.
                 const clientId = event.clientId;
@@ -2355,14 +2401,14 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
             });
         }
         fetchLatestManifest(ignoreOfflineError = false) {
-            return __awaiter$5(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 const res = yield this.safeFetch(this.adapter.newRequest('ngsw.json?ngsw-cache-bust=' + Math.random()));
                 if (!res.ok) {
                     if (res.status === 404) {
                         yield this.deleteAllCaches();
                         yield this.scope.registration.unregister();
                     }
-                    else if (res.status === 504 && ignoreOfflineError) {
+                    else if ((res.status === 503 || res.status === 504) && ignoreOfflineError) {
                         return null;
                     }
                     throw new Error(`Manifest fetch failed! (status: ${res.status})`);
@@ -2372,10 +2418,10 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
             });
         }
         deleteAllCaches() {
-            return __awaiter$5(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 yield (yield this.scope.caches.keys())
-                    .filter(key => key.startsWith('ngsw:'))
-                    .reduce((previous, key) => __awaiter$5(this, void 0, void 0, function* () {
+                    .filter(key => key.startsWith(`${this.adapter.cacheNamePrefix}:`))
+                    .reduce((previous, key) => __awaiter(this, void 0, void 0, function* () {
                     yield Promise.all([
                         previous,
                         this.scope.caches.delete(key),
@@ -2388,15 +2434,15 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
          * when the SW is not busy and has connectivity. This returns a Promise which must be
          * awaited, as under some conditions the AppVersion might be initialized immediately.
          */
-        scheduleInitialization(appVersion, latest) {
-            return __awaiter$5(this, void 0, void 0, function* () {
-                const initialize = () => __awaiter$5(this, void 0, void 0, function* () {
+        scheduleInitialization(appVersion) {
+            return __awaiter(this, void 0, void 0, function* () {
+                const initialize = () => __awaiter(this, void 0, void 0, function* () {
                     try {
                         yield appVersion.initializeFully();
                     }
                     catch (err) {
                         this.debugger.log(err, `initializeFully for ${appVersion.manifestHash}`);
-                        yield this.versionFailed(appVersion, err, latest);
+                        yield this.versionFailed(appVersion, err);
                     }
                 });
                 // TODO: better logic for detecting localhost.
@@ -2406,8 +2452,8 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
                 this.idle.schedule(`initialization(${appVersion.manifestHash})`, initialize);
             });
         }
-        versionFailed(appVersion, err, latest) {
-            return __awaiter$5(this, void 0, void 0, function* () {
+        versionFailed(appVersion, err) {
+            return __awaiter(this, void 0, void 0, function* () {
                 // This particular AppVersion is broken. First, find the manifest hash.
                 const broken = Array.from(this.versions.entries()).find(([hash, version]) => version === appVersion);
                 if (broken === undefined) {
@@ -2415,26 +2461,25 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
                     return;
                 }
                 const brokenHash = broken[0];
+                const affectedClients = Array.from(this.clientVersionMap.entries())
+                    .filter(([clientId, hash]) => hash === brokenHash)
+                    .map(([clientId]) => clientId);
                 // TODO: notify affected apps.
                 // The action taken depends on whether the broken manifest is the active (latest) or not.
                 // If so, the SW cannot accept new clients, but can continue to service old ones.
-                if (this.latestHash === brokenHash || latest) {
+                if (this.latestHash === brokenHash) {
                     // The latest manifest is broken. This means that new clients are at the mercy of the
                     // network, but caches continue to be valid for previous versions. This is
                     // unfortunate but unavoidable.
                     this.state = DriverReadyState.EXISTING_CLIENTS_ONLY;
                     this.stateMessage = `Degraded due to: ${errorToString(err)}`;
-                    // Cancel the binding for these clients.
-                    Array.from(this.clientVersionMap.keys())
-                        .forEach(clientId => this.clientVersionMap.delete(clientId));
+                    // Cancel the binding for the affected clients.
+                    affectedClients.forEach(clientId => this.clientVersionMap.delete(clientId));
                 }
                 else {
-                    // The current version is viable, but this older version isn't. The only
+                    // The latest version is viable, but this older version isn't. The only
                     // possible remedy is to stop serving the older version and go to the network.
-                    // Figure out which clients are affected and put them on the latest.
-                    const affectedClients = Array.from(this.clientVersionMap.keys())
-                        .filter(clientId => this.clientVersionMap.get(clientId) === brokenHash);
-                    // Push the affected clients onto the latest version.
+                    // Put the affected clients on the latest version.
                     affectedClients.forEach(clientId => this.clientVersionMap.set(clientId, this.latestHash));
                 }
                 try {
@@ -2448,8 +2493,8 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
             });
         }
         setupUpdate(manifest, hash) {
-            return __awaiter$5(this, void 0, void 0, function* () {
-                const newVersion = new AppVersion(this.scope, this.adapter, this.db, this.idle, manifest, hash);
+            return __awaiter(this, void 0, void 0, function* () {
+                const newVersion = new AppVersion(this.scope, this.adapter, this.db, this.idle, this.debugger, manifest, hash);
                 // Firstly, check if the manifest version is correct.
                 if (manifest.configVersion !== SUPPORTED_CONFIG_VERSION) {
                     yield this.deleteAllCaches();
@@ -2463,12 +2508,18 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
                 this.versions.set(hash, newVersion);
                 // Future new clients will use this hash as the latest version.
                 this.latestHash = hash;
+                // If we are in `EXISTING_CLIENTS_ONLY` mode (meaning we didn't have a clean copy of the last
+                // latest version), we can now recover to `NORMAL` mode and start accepting new clients.
+                if (this.state === DriverReadyState.EXISTING_CLIENTS_ONLY) {
+                    this.state = DriverReadyState.NORMAL;
+                    this.stateMessage = '(nominal)';
+                }
                 yield this.sync();
-                yield this.notifyClientsAboutUpdate();
+                yield this.notifyClientsAboutUpdate(newVersion);
             });
         }
         checkForUpdate() {
-            return __awaiter$5(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 let hash = '(unknown)';
                 try {
                     const manifest = yield this.fetchLatestManifest(true);
@@ -2498,15 +2549,19 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
          * Synchronize the existing state to the underlying database.
          */
         sync() {
-            return __awaiter$5(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 // Open up the DB table.
                 const table = yield this.db.open('control');
                 // Construct a serializable map of hashes to manifests.
                 const manifests = {};
-                this.versions.forEach((version, hash) => { manifests[hash] = version.manifest; });
+                this.versions.forEach((version, hash) => {
+                    manifests[hash] = version.manifest;
+                });
                 // Construct a serializable map of client ids to version hashes.
                 const assignments = {};
-                this.clientVersionMap.forEach((hash, clientId) => { assignments[clientId] = hash; });
+                this.clientVersionMap.forEach((hash, clientId) => {
+                    assignments[clientId] = hash;
+                });
                 // Record the latest entry. Since this is a sync which is necessarily happening after
                 // initialization, latestHash should always be valid.
                 const latest = {
@@ -2521,7 +2576,7 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
             });
         }
         cleanupCaches() {
-            return __awaiter$5(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 // Query for all currently active clients, and list the client ids. This may skip
                 // some clients in the browser back-forward cache, but not much can be done about
                 // that.
@@ -2541,7 +2596,7 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
                 const obsoleteVersions = Array.from(this.versions.keys())
                     .filter(version => !usedVersions.has(version) && version !== this.latestHash);
                 // Remove all the versions which are no longer used.
-                yield obsoleteVersions.reduce((previous, version) => __awaiter$5(this, void 0, void 0, function* () {
+                yield obsoleteVersions.reduce((previous, version) => __awaiter(this, void 0, void 0, function* () {
                     // Wait for the other cleanup operations to complete.
                     yield previous;
                     // Try to get past the failure of one particular version to clean up (this
@@ -2570,9 +2625,9 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
          * (Since at this point the SW has claimed all clients, it is safe to remove those caches.)
          */
         cleanupOldSwCaches() {
-            return __awaiter$5(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 const cacheNames = yield this.scope.caches.keys();
-                const oldSwCacheNames = cacheNames.filter(name => /^ngsw:(?:active|staged|manifest:.+)$/.test(name));
+                const oldSwCacheNames = cacheNames.filter(name => /^ngsw:(?!\/)/.test(name));
                 yield Promise.all(oldSwCacheNames.map(name => this.scope.caches.delete(name)));
             });
         }
@@ -2590,7 +2645,7 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
                 // reduction, if a response has already been identified, then pass it through, as no
                 // future operation could change the response. If no response has been found yet, keep
                 // checking versions until one is or until all versions have been exhausted.
-                .reduce((prev, version) => __awaiter$5(this, void 0, void 0, function* () {
+                .reduce((prev, version) => __awaiter(this, void 0, void 0, function* () {
                 // First, check the previous result. If a non-null result has been found already, just
                 // return it.
                 if ((yield prev) !== null) {
@@ -2601,22 +2656,24 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
             }), Promise.resolve(null));
         }
         lookupResourceWithoutHash(url) {
-            return __awaiter$5(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 yield this.initialized;
                 const version = this.versions.get(this.latestHash);
-                return version.lookupResourceWithoutHash(url);
+                return version ? version.lookupResourceWithoutHash(url) : null;
             });
         }
         previouslyCachedResources() {
-            return __awaiter$5(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 yield this.initialized;
                 const version = this.versions.get(this.latestHash);
-                return version.previouslyCachedResources();
+                return version ? version.previouslyCachedResources() : [];
             });
         }
         recentCacheStatus(url) {
-            const version = this.versions.get(this.latestHash);
-            return version.recentCacheStatus(url);
+            return __awaiter(this, void 0, void 0, function* () {
+                const version = this.versions.get(this.latestHash);
+                return version ? version.recentCacheStatus(url) : UpdateCacheStatus.NOT_CACHED;
+            });
         }
         mergeHashWithAppData(manifest, hash) {
             return {
@@ -2624,12 +2681,11 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
                 appData: manifest.appData,
             };
         }
-        notifyClientsAboutUpdate() {
-            return __awaiter$5(this, void 0, void 0, function* () {
+        notifyClientsAboutUpdate(next) {
+            return __awaiter(this, void 0, void 0, function* () {
                 yield this.initialized;
                 const clients = yield this.scope.clients.matchAll();
-                const next = this.versions.get(this.latestHash);
-                yield clients.reduce((previous, client) => __awaiter$5(this, void 0, void 0, function* () {
+                yield clients.reduce((previous, client) => __awaiter(this, void 0, void 0, function* () {
                     yield previous;
                     // Firstly, determine which version this client is on.
                     const version = this.clientVersionMap.get(client.id);
@@ -2653,13 +2709,15 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
             });
         }
         broadcast(msg) {
-            return __awaiter$5(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 const clients = yield this.scope.clients.matchAll();
-                clients.forEach(client => { client.postMessage(msg); });
+                clients.forEach(client => {
+                    client.postMessage(msg);
+                });
             });
         }
         debugState() {
-            return __awaiter$5(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 return {
                     state: DriverReadyState[this.state],
                     why: this.stateMessage,
@@ -2669,7 +2727,7 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
             });
         }
         debugVersions() {
-            return __awaiter$5(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 // Build list of versions.
                 return Array.from(this.versions.keys()).map(hash => {
                     const version = this.versions.get(hash);
@@ -2678,14 +2736,15 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
                         .map(([clientId, version]) => clientId);
                     return {
                         hash,
-                        manifest: version.manifest, clients,
+                        manifest: version.manifest,
+                        clients,
                         status: '',
                     };
                 });
             });
         }
         debugIdleState() {
-            return __awaiter$5(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 return {
                     queue: this.idle.taskDescriptions,
                     lastTrigger: this.idle.lastTrigger,
@@ -2694,7 +2753,7 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
             });
         }
         safeFetch(req) {
-            return __awaiter$5(this, void 0, void 0, function* () {
+            return __awaiter(this, void 0, void 0, function* () {
                 try {
                     return yield this.scope.fetch(req);
                 }
@@ -2717,7 +2776,7 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
      * found in the LICENSE file at https://angular.io/license
      */
     const scope = self;
-    const adapter = new Adapter();
+    const adapter = new Adapter(scope);
     const driver = new Driver(scope, adapter, new CacheDatabase(scope, adapter));
 
 }());
