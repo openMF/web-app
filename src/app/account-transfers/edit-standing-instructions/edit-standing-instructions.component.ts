@@ -1,9 +1,16 @@
+/** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AccountTransfersService } from '../account-transfers.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
+/** Custom Services */
+import { AccountTransfersService } from '../account-transfers.service';
+import { SettingsService } from 'app/settings/settings.service';
+
+/**
+ * Edit Standing Instructions
+ */
 @Component({
   selector: 'mifosx-edit-standing-instructions',
   templateUrl: './edit-standing-instructions.component.html',
@@ -35,13 +42,19 @@ export class EditStandingInstructionsComponent implements OnInit {
   maxDate = new Date();
 
   /**
-   * Retrieves the standing instructions data from `resolve`.
+   * Retrieves the standing instructions template from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
+   * @param {FormBuilder} formBuilder Form Builder
+   * @param {Router} router Router
+   * @param {AccountTransfersService} accountTransfersService Account Transfers Service
+   * @param {SettingsService} settingsService Settings Service
+   * @param {DatePipe} datePipe Date Pipe
    */
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private accountTransfersService: AccountTransfersService,
+    private settingsService: SettingsService,
     private datePipe: DatePipe) {
     this.route.data.subscribe((data: { standingInstructionsDataAndTemplate: any }) => {
       this.standingInstructionsData = data.standingInstructionsDataAndTemplate;
@@ -127,12 +140,13 @@ export class EditStandingInstructionsComponent implements OnInit {
    * Submits the standing instructions form
    */
   submit() {
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = this.settingsService.dateFormat;
+    const locale = this.settingsService.language.code;
     const standingInstructionData = {
       amount: this.editStandingInstructionsForm.value.amount,
-      dateFormat: dateFormat,
+      dateFormat,
       instructionType: this.editStandingInstructionsForm.value.instructionType,
-      locale: 'en',
+      locale,
       monthDayFormat:	'dd MMMM',
       priority: this.editStandingInstructionsForm.value.priority,
       recurrenceFrequency:	this.editStandingInstructionsForm.value.recurrenceFrequency,
@@ -144,7 +158,7 @@ export class EditStandingInstructionsComponent implements OnInit {
       validTill: this.datePipe.transform(this.editStandingInstructionsForm.value.validTill, dateFormat)
     };
     this.accountTransfersService.updateStandingInstructionsData(this.standingInstructionsId, standingInstructionData).subscribe((response: any) => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+      this.router.navigate(['../view'], { relativeTo: this.route });
     });
   }
 

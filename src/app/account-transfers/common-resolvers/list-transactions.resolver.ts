@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 
 /** Custom Services */
 import { AccountTransfersService } from '../account-transfers.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * View Standing Instructions resolver.
@@ -15,9 +16,11 @@ import { AccountTransfersService } from '../account-transfers.service';
 export class ListTransactionsResolver implements Resolve<Object> {
 
     /**
-     * @param {accountTransfersService} AccountTransfersService Account Transfers service.
+     * @param {AccountTransfersService} accountTransfersService Account Transfers service.
+     * @param {SettingsService} settingsService Settings Service.
      */
-    constructor(private accountTransfersService: AccountTransfersService) { }
+    constructor(private accountTransfersService: AccountTransfersService,
+        private settingsService: SettingsService) { }
 
     /**
      * Returns the Standing Instructions Data.
@@ -26,6 +29,8 @@ export class ListTransactionsResolver implements Resolve<Object> {
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
         const id = route.parent.paramMap.get('standingInstructionsId');
-        return this.accountTransfersService.getStandingInstructionsTransactions(id);
+        const dateFormat = this.settingsService.dateFormat;
+        const locale = this.settingsService.language.code;
+        return this.accountTransfersService.getStandingInstructionsTransactions(id, dateFormat, locale);
     }
 }
