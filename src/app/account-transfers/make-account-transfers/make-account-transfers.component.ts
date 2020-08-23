@@ -1,10 +1,18 @@
+/** Angular Imports */
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AccountTransfersService } from '../account-transfers.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+
+/** Custom Services */
+import { AccountTransfersService } from '../account-transfers.service';
+import { SettingsService } from 'app/settings/settings.service';
 import { ClientsService } from 'app/clients/clients.service';
 
+
+/**
+ * Create account transfers
+ */
 @Component({
   selector: 'mifosx-make-account-transfers',
   templateUrl: './make-account-transfers.component.html',
@@ -44,12 +52,15 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    * @param {Router} router Router
    * @param {AccountTransfersService} accountTransfersService Account Transfers Service
    * @param {DatePipe} datePipe Date Pipe
+   * @param {SettingsService} settingsService Settings Service
+   * @param {ClientsService} clientsService Clients Service
    */
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private accountTransfersService: AccountTransfersService,
     private datePipe: DatePipe,
+    private settingsService: SettingsService,
     private clientsService: ClientsService) {
     this.route.data.subscribe((data: { accountTransferTemplate: any }) => {
       this.accountTransferTemplateData = data.accountTransferTemplate;
@@ -161,8 +172,8 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    * Submits the standing instructions form
    */
   submit() {
-    const dateFormat = 'dd MMMM yyyy';
-    const locale = 'en';
+    const dateFormat = this.settingsService.dateFormat;
+    const locale = this.settingsService.language.code;
     const makeAccountTransferData = {
       ... this.makeAccountTransferForm.value,
       transferDate: this.datePipe.transform(this.makeAccountTransferForm.value.transferDate, dateFormat),

@@ -1,9 +1,16 @@
+/** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AccountTransfersService } from '../account-transfers.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
+/** Custom Services */
+import { AccountTransfersService } from '../account-transfers.service';
+import { SettingsService } from 'app/settings/settings.service';
+
+/**
+ * Create Standing Instructions
+ */
 @Component({
   selector: 'mifosx-create-standing-instructions',
   templateUrl: './create-standing-instructions.component.html',
@@ -62,12 +69,14 @@ export class CreateStandingInstructionsComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {Router} router Router
    * @param {AccountTransfersService} accountTransfersService Account Transfers Service
+   * @param {SettingsService} settingsService Settings Service
    * @param {DatePipe} datePipe Date Pipe
    */
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private accountTransfersService: AccountTransfersService,
+    private settingsService: SettingsService,
     private datePipe: DatePipe) {
     this.route.data.subscribe((data: { standingIntructionsTemplate: any }) => {
       this.standingIntructionsTemplate = data.standingIntructionsTemplate;
@@ -75,6 +84,7 @@ export class CreateStandingInstructionsComponent implements OnInit {
       this.setOptions();
     });
   }
+
   /** Sets the value from the URL */
   setParams() {
     this.officeId = this.route.snapshot.queryParams['officeId'];
@@ -202,11 +212,12 @@ export class CreateStandingInstructionsComponent implements OnInit {
    * Submits the standing instructions form
    */
   submit() {
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = this.settingsService.dateFormat;
+    const locale = this.settingsService.language.code;
     const standingInstructionData = {
       ... this.createStandingInstructionsForm.value,
-      dateFormat: dateFormat,
-      locale: 'en',
+      dateFormat,
+      locale,
       monthDayFormat: 'dd MMMM',
       fromClientId: this.clientId,
       fromOfficeId: this.officeId,

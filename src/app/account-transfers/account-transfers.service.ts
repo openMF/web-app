@@ -95,11 +95,11 @@ export class AccountTransfersService {
   }
 
 
-  getStandingInstructionsTransactions(standingInstructionsId: any) {
+  getStandingInstructionsTransactions(standingInstructionsId: any, dateFormat: any, locale: any) {
     const httpParams = new HttpParams().set('associations', 'transactions')
-                                        .set('dateFormat', 'dd MMMM yyyy')
+                                        .set('dateFormat', dateFormat)
                                         .set('limit', '14')
-                                        .set('locale', 'en')
+                                        .set('locale', locale)
                                         .set('offset', '0');
     return this.http.get(`/standinginstructions/${standingInstructionsId}`, { params: httpParams });
   }

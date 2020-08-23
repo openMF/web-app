@@ -11,6 +11,7 @@ import { AccountTransfersService } from '../account-transfers.service';
 
 /** Dialog Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Lists all the standing intructions of particular ID
@@ -61,10 +62,12 @@ export class ListStandingInstructionsComponent implements OnInit {
    * Retrieves Standing Instructions Data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    * @param {MatDialog} route Mat Dialog
+   * @param {SettingsService} settingsService Settings Service
    * @param {AccountTransfersService} accountTransfersService Account Transfers Service
    */
   constructor(private route: ActivatedRoute,
     private accountTransfersService: AccountTransfersService,
+    private settingsService: SettingsService,
     private dialog: MatDialog) {
     this.route.data.subscribe((data: { standingIntructionsTemplate: any }) => {
       this.standingIntructionsTemplateData = data.standingIntructionsTemplate;
@@ -103,11 +106,13 @@ export class ListStandingInstructionsComponent implements OnInit {
    * Retrieves standing instructions and initializes instructions table.
    */
   getStandingInstructions() {
+    const dateFormat = this.settingsService.dateFormat;
+    const locale = this.settingsService.language.code;
     const searchData = {
       clientId : this.standingIntructionsTemplateData.fromClient.id || this.fromClientId.value,
       clientName: this.standingIntructionsTemplateData.fromClient.displayName || this.clientNameControl.value,
-      locale : 'en',
-      dateFormat : 'dd MMMM yyyy',
+      locale,
+      dateFormat,
       limit: 14,
       offset: 0,
       fromAccountType: this.accountTypeId,
