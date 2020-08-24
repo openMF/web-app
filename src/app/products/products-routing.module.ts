@@ -616,7 +616,8 @@ const routes: Routes = [
     ManageTaxGroupTemplateResolver,
     EditTaxGroupResolver,
     ProductsMixTemplateResolver,
-    FixedDepositProductAndTemplateResolver
+    FixedDepositProductAndTemplateResolver,
+    FloatingRatesResolver
   ]
 })
 export class ProductsRoutingModule { }

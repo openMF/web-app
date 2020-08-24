@@ -44,10 +44,11 @@ import { CreateReportComponent } from './manage-reports/create-report/create-rep
 import { EditReportComponent } from './manage-reports/edit-report/edit-report.component';
 import { AuditTrailsComponent } from './audit-trails/audit-trails.component';
 import { ViewAuditComponent } from './audit-trails/view-audit/view-audit.component';
+import { ColumnDialogComponent } from './manage-data-tables/column-dialog/column-dialog.component';
+import { ViewHistorySchedulerJobComponent } from './manage-scheduler-jobs/view-history-scheduler-job/view-history-scheduler-job.component';
 import { EditHookComponent } from './manage-hooks/edit-hook/edit-hook.component';
 import { ViewHookComponent } from './manage-hooks/view-hook/view-hook.component';
 import { CreateHookComponent } from './manage-hooks/create-hook/create-hook.component';
-import { ColumnDialogComponent } from './manage-data-tables/column-dialog/column-dialog.component';
 import { ViewRoleComponent } from './roles-and-permissions/view-role/view-role.component';
 import { EditRoleComponent } from './roles-and-permissions/edit-role/edit-role.component';
 import { EntityToEntityMappingComponent } from './entity-to-entity-mapping/entity-to-entity-mapping.component';
@@ -114,7 +115,9 @@ import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-t
     EditRoleComponent,
     EntityToEntityMappingComponent,
     ConfigureMakerCheckerTasksComponent,
-    CreateSurveyComponent
-  ]
+    CreateSurveyComponent,
+    EditSchedulerJobComponent,
+    ViewHistorySchedulerJobComponent
+  ],
 })
 export class SystemModule { }

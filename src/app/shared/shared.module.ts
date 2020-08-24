@@ -21,6 +21,7 @@ import { KeyboardShortcutsDialogComponent } from './keyboard-shortcuts-dialog/ke
 /** Custom Modules */
 import { IconsModule } from './icons.module';
 import { MaterialModule } from './material.module';
+import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 
 /**
  * Shared Module
@@ -47,7 +48,8 @@ import { MaterialModule } from './material.module';
     EnableDialogComponent,
     DisableDialogComponent,
     ConfirmationDialogComponent,
-    KeyboardShortcutsDialogComponent
+    KeyboardShortcutsDialogComponent,
+    ErrorDialogComponent
   ],
   exports: [
     FileUploadComponent,
@@ -58,7 +60,8 @@ import { MaterialModule } from './material.module';
     IconsModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ErrorDialogComponent
   ]
 })
 export class SharedModule { }

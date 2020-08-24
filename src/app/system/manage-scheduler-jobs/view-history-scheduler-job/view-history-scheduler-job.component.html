@@ -1,0 +1,56 @@
+<div class="container">
+
+  <div fxLayout="row" fxLayoutGap="20px">
+
+    <mat-form-field fxFlex>
+      <mat-label>Filter By Version</mat-label>
+      <input matInput (keyup)="applyFilter($event.target.value)">
+    </mat-form-field>
+  </div>
+
+  <div class="mat-elevation-z8">
+
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="version" >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Version </th>
+        <td mat-cell *matCellDef="let jobHistoryData"> {{ jobHistoryData.version }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="run_start_time">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Run Start Time </th>
+        <td mat-cell *matCellDef="let jobHistoryData"> {{ jobHistoryData.jobRunStartTime }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <td mat-cell *matCellDef="let jobHistoryData"> 
+          <fa-icon *ngIf="jobHistoryData.status === 'success'" class="success" matTooltip="Successful" matTooltipPosition="right" icon="check-circle" size="lg"></fa-icon>
+          <fa-icon *ngIf="!(jobHistoryData.status == 'success')" class="fail" matTooltip="Failed" matTooltipPosition="right" icon="times-circle" size="lg"></fa-icon>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="run_type">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Run Type </th>
+        <td mat-cell *matCellDef="let jobHistoryData">{{ jobHistoryData.triggerType }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="error_log">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Error Log </th>
+        <td mat-cell *matCellDef="let jobHistoryData">
+          <button mat-icon-button class="errorlog" *ngIf="!(jobHistoryData.status == 'success')" matTooltip="Error Log" matTooltipPosition="right" (click)="openError(jobHistoryData.version)">
+            <fa-icon icon="exclamation-circle" size="lg"></fa-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row"></tr>
+
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+  </div>
+
+</div>

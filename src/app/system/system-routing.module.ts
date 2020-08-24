@@ -83,6 +83,8 @@ import { ViewRoleResolver } from './roles-and-permissions/view-role/view-role.re
 import { EntityToEntityMappingResolver } from './entity-to-entity-mapping/entity-to-entity-mapping.resolver';
 import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-tasks/configure-maker-checker-tasks.component';
 import { MakerCheckerTasksResolver } from './configure-maker-checker-tasks/configure-maker-checker-tasks.resolver';
+import { ViewHistorySchedulerJobComponent } from './manage-scheduler-jobs/view-history-scheduler-job/view-history-scheduler-job.component';
+import { ViewHistorySchedulerJobsResolver } from './manage-scheduler-jobs/view-history-scheduler-job/view-history-scheduler-job.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -418,6 +420,14 @@ const routes: Routes = [
                 resolve: {
                   jobSelected: ManageSchedulerJobResolver
                 }
+              },
+              {
+                path: 'viewhistory',
+                component: ViewHistorySchedulerJobComponent,
+                data: { title: extract('Scheduler Job History'), breadcrumb: 'View History' },
+                resolve: {
+                  jobsSchedulerHistory: ViewHistorySchedulerJobsResolver
+                },
               }
             ]
           }
@@ -589,7 +599,8 @@ const routes: Routes = [
     ManageSchedulerJobResolver,
     ViewRoleResolver,
     EntityToEntityMappingResolver,
-    MakerCheckerTasksResolver
+    MakerCheckerTasksResolver,
+    ViewHistorySchedulerJobsResolver
   ]
 })
 export class SystemRoutingModule { }
