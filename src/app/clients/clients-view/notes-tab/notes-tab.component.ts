@@ -6,10 +6,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 /** Custom Components */
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
+import { EditNotesDialogComponent } from '../custom-dialogs/edit-notes-dialog/edit-notes-dialog.component';
 
 /** Custom Services */
 import { ClientsService } from '../../clients.service';
-import { EditNotesDialogComponent } from '../custom-dialogs/edit-notes-dialog/edit-notes-dialog.component';
+import { AuthenticationService } from 'app/core/authentication/authentication.service';
 
 /**
  * Notes Tab Component
@@ -37,13 +38,16 @@ export class NotesTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {FormBuilder} formBuilder Form Builder
    * @param {ClientsService} clientsService Clients Service
+   * @param {AuthenticationService} authenticationService Authentication Service
    * @param {MatDialog} dialog Mat Dialog
    */
   constructor(private route: ActivatedRoute,
               private formBuilder: FormBuilder,
               private clientsService: ClientsService,
+              private authenticationService: AuthenticationService,
               public dialog: MatDialog) {
-    this.username = JSON.parse(sessionStorage.getItem('mifosXCredentials')).username;
+    const credentials = this.authenticationService.getCredentials();
+    this.username = credentials.username;
     this.clientId = this.route.parent.snapshot.params['clientId'];
     this.route.data.subscribe((data: { clientNotes: any }) => {
       this.clientNotes = data.clientNotes;

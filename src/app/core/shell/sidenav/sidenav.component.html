@@ -32,14 +32,13 @@
 
     <div class="app-sidenav">
 
-      <!-- TODO: Generate frequently accessed routes dynamically -->
       <div class="mt-1 mb-1 nav-item-sep">
         <mat-divider></mat-divider>
         <span class="text-muted icon-menu-title">Frequently Accessed</span>
       </div>
       <div class="icon-menu">
         <div class="icon-menu-item" *ngFor="let activity of mappedActivities">
-          <button mat-flat-button [matTooltip]="activity.toolTip" [routerLink]="[activity.path]">
+          <button mat-raised-button [matTooltip]="activity.toolTip" [routerLink]="[activity.path]">
             <fa-icon [icon]="activity.icon" size="lg"></fa-icon>
           </button>
         </div>
@@ -98,6 +97,12 @@
             <fa-icon icon="sitemap" size="sm"></fa-icon>
           </mat-icon>
           <a matLine>Chart of Accounts</a>
+        </mat-list-item>
+        <mat-list-item (click)="showKeyboardShortcuts()">
+          <mat-icon matListIcon>
+            <fa-icon icon="keyboard" size="sm"></fa-icon>
+          </mat-icon>
+          <a matLine>Keyboard Shortcuts</a>
         </mat-list-item>
         <mat-list-item>
           <mat-icon matListIcon (click)="help()">

@@ -134,9 +134,14 @@ const routes: Routes = [
               }
             },
             {
+              path: 'loans',
+              data: { title: extract('Loans'), breadcrumb: 'loans', routeParamBreadcrumb: false },
+              loadChildren: () => import('../loans/loans.module').then(m => m.LoansModule)
+            },
+            {
               path: 'savingsaccounts',
               loadChildren: () => import('../savings/savings.module').then(m => m.SavingsModule)
-            },
+            }
           ]
         }
       ]
