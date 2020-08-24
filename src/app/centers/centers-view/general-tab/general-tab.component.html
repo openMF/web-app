@@ -46,7 +46,7 @@
       </ng-container>
   
       <tr mat-header-row *matHeaderRowDef="groupsColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: groupsColumns;"></tr>
+      <tr mat-row *matRowDef="let row; columns: groupsColumns;" [routerLink]="['/groups', row.id, 'general']"></tr>
   
     </table>
   </ng-container>
@@ -129,7 +129,7 @@
         </ng-container>
     
         <tr mat-header-row *matHeaderRowDef="savingsAccountColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: savingsAccountColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: savingsAccountColumns;" [routerLink]="['../', 'savingsaccounts', row.id, 'transactions']"></tr>
       </table>
   
     </ng-container>

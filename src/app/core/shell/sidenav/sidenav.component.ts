@@ -1,6 +1,10 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+
+/** Custom Components */
+import { KeyboardShortcutsDialogComponent } from 'app/shared/keyboard-shortcuts-dialog/keyboard-shortcuts-dialog.component';
 
 /** Custom Services */
 import { AuthenticationService } from '../../authentication/authentication.service';
@@ -32,9 +36,11 @@ export class SidenavComponent implements OnInit {
 
   /**
    * @param {Router} router Router for navigation.
+   * @param {MatDialog} dialog Mat Dialog
    * @param {AuthenticationService} authenticationService Authentication Service.
    */
   constructor(private router: Router,
+              public dialog: MatDialog,
               private authenticationService: AuthenticationService) {
     this.userActivity = JSON.parse(localStorage.getItem('mifosXLocation'));
   }
@@ -61,6 +67,14 @@ export class SidenavComponent implements OnInit {
    */
   help() {
     window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
+  }
+
+  /**
+   * Opens Keyboard shortcuts dialog.
+   */
+  showKeyboardShortcuts() {
+    const dialogRef = this.dialog.open(KeyboardShortcutsDialogComponent);
+    dialogRef.afterClosed().subscribe((response: any) => {});
   }
 
   /**

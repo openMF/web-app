@@ -46,8 +46,6 @@ import { ContentComponent } from './shell/content/content.component';
 @NgModule({
   imports: [
     SharedModule,
-    SearchModule,
-    NotificationsModule,
     HttpClientModule,
     TranslateModule,
     RouterModule

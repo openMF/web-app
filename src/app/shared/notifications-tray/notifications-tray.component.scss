@@ -10,10 +10,10 @@
   [mat-menu-item] {
     height: 5rem;
     line-height: 2.2rem;
-    .time{
+    .time {
       font-size: small;
     }
-    &.unread, &.view-all {
+    &.unread {
       background-color: #E0F7FF !important;
     }
   }

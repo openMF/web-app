@@ -11,7 +11,6 @@ import { map } from 'rxjs/operators';
 
 /** Custom Services */
 import { AuthenticationService } from '../../authentication/authentication.service';
-import { KeyboardShortcutsDialogComponent } from 'app/shared/keyboard-shortcuts-dialog/keyboard-shortcuts-dialog.component';
 
 /**
  * Toolbar component.
@@ -86,14 +85,6 @@ export class ToolbarComponent implements OnInit {
    */
   help() {
     window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
-  }
-
-  /**
-   * Opens Keyboard shortcuts dialog.
-   */
-  showKeyboardShortcuts() {
-    const dialogRef = this.dialog.open(KeyboardShortcutsDialogComponent);
-    dialogRef.afterClosed().subscribe((response: any) => {});
   }
 
 }

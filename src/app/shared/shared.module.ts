@@ -16,12 +16,14 @@ import { ChangePasswordDialogComponent } from './change-password-dialog/change-p
 import { EnableDialogComponent } from './enable-dialog/enable-dialog.component';
 import { DisableDialogComponent } from './disable-dialog/disable-dialog.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
+import { NotificationsTrayComponent } from './notifications-tray/notifications-tray.component';
+import { SearchToolComponent } from './search-tool/search-tool.component';
 import { KeyboardShortcutsDialogComponent } from './keyboard-shortcuts-dialog/keyboard-shortcuts-dialog.component';
 
 /** Custom Modules */
 import { IconsModule } from './icons.module';
 import { MaterialModule } from './material.module';
-import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 
 /**
  * Shared Module
@@ -49,19 +51,23 @@ import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
     DisableDialogComponent,
     ConfirmationDialogComponent,
     KeyboardShortcutsDialogComponent,
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    NotificationsTrayComponent,
+    SearchToolComponent
   ],
   exports: [
     FileUploadComponent,
     FooterComponent,
     LanguageSelectorComponent,
     ThemePickerComponent,
+    NotificationsTrayComponent,
+    SearchToolComponent,
+    ErrorDialogComponent,
     CommonModule,
     IconsModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    ErrorDialogComponent
   ]
 })
 export class SharedModule { }

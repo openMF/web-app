@@ -37,21 +37,21 @@ export class KeyboardShortcutsConfiguration {
                 id: 'runReport'
             },
             // Checker Inbox & Pending Tasks - ctrl + alt + i
-            // {
-            // title: 'Checker Inbox & Pending Tasks',
-            // ctrlKey: true,
-            // shiftKey: false,
-            // altKey: true,
-            // key: 'i,
-            // route: ''
-            // },
+            {
+              title: 'Checker Inbox & Pending Tasks',
+              ctrlKey: true,
+              shiftKey: false,
+              altKey: true,
+              key: 'i',
+              route: 'checker-inbox-and-tasks/checker-inbox'
+            },
             // Collection Sheet- ctrl + alt + o
             // {
             // title: 'Collection Sheet',
             // ctrlKey: true,
             // shiftKey: false,
             // altKey: true,
-            // key: 'o,
+            // key: 'o',
             // route: ''
             // },
             // Create Client - ctrl + alt + c
@@ -146,15 +146,6 @@ export class KeyboardShortcutsConfiguration {
                 route: '',
                 id: 'cancel'
             },
-            // Search - alt + x
-            // {
-            //     title: 'Search'
-            //     ctrlKey: true,
-            //     shiftKey: false,
-            //     altKey: true,
-            //     key: 88,
-            //     route: ''
-            // },
             // Help - ctrl + alt + h
             {
                 title: 'Help',

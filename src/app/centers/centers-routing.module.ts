@@ -107,6 +107,10 @@ const routes: Routes = [
                 centersActionData: CenterActionsResolver
               }
             },
+            {
+              path: 'savingsaccounts',
+              loadChildren: () => import('../savings/savings.module').then(m => m.SavingsModule)
+            }
           ]
         }
       ]

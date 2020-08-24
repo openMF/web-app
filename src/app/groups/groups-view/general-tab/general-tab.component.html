@@ -136,7 +136,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="openLoansColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: openLoansColumns;"></tr>
+      <tr mat-row *matRowDef="let row; columns: openLoansColumns;" [routerLink]="['../', 'loans', row.id, 'general']"></tr>
 
     </table>
 
@@ -187,7 +187,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="closedLoansColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: closedLoansColumns;"></tr>
+      <tr mat-row *matRowDef="let row; columns: closedLoansColumns;" [routerLink]="['../', 'loans', row.id, 'general']"></tr>
 
     </table>
 
@@ -280,7 +280,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="closedSavingsColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: closedSavingsColumns;"></tr>
+      <tr mat-row *matRowDef="let row; columns: closedSavingsColumns;" [routerLink]="['../', 'savingsaccounts', row.id, 'transactions']"></tr>
 
     </table>
 

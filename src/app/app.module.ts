@@ -34,6 +34,7 @@ import { OrganizationModule } from './organization/organization.module';
 import { TemplatesModule } from './templates/templates.module';
 import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
+import { SearchModule } from './search/search.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { CollectionsModule } from './collections/collections.module';
 import { ProfileModule } from './profile/profile.module';
@@ -73,6 +74,7 @@ import { AppRoutingModule } from './app-routing.module';
     TemplatesModule,
     UsersModule,
     NotificationsModule,
+    SearchModule,
     CollectionsModule,
     TasksModule,
     AppRoutingModule,

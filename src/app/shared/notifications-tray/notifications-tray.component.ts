@@ -5,7 +5,7 @@ import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { forkJoin } from 'rxjs';
 
 /** Custom Services */
-import { NotificationsService } from '../notifications.service';
+import { NotificationsService } from 'app/notifications/notifications.service';
 
 /**
  * Notifications Tray Component
