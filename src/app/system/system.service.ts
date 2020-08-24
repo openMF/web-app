@@ -252,6 +252,14 @@ export class SystemService {
     return this.http.put(`/jobs/${jobId}`, job);
   }
 
+  /*
+   * @param jobId Job Id to view the history.
+   * @returns {Observable<any>} Fetches History of the Job.
+   */
+  getHistoryScheduler(jobId: string): Observable<any> {
+    return this.http.get(`/jobs/${jobId}/runhistory`);
+  }
+
   /**
    * @param {any} code Code to be created.
    * @returns {Observable<any>}
