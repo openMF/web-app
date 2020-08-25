@@ -39,7 +39,7 @@ export class PentahoComponent implements OnChanges {
   }
 
   getRunReportData() {
-    this.reportsService.getPentahoRunReportData(this.dataObject.reportData, this.dataObject.formData, 'default', 'en', 'dd MMMM yyyy')
+    this.reportsService.getPentahoRunReportData(this.dataObject.report.name, this.dataObject.formData, 'default', 'en', 'dd MMMM yyyy')
       .subscribe( (res: any) => {
         const contentType = res.headers.get('Content-Type');
         const file = new Blob([res.body], {type: contentType});

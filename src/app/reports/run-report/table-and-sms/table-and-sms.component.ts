@@ -52,7 +52,7 @@ export class TableAndSmsComponent implements OnChanges {
   }
 
   getRunReportData() {
-    this.reportsService.getRunReportData(this.dataObject.reportData, this.dataObject.formData)
+    this.reportsService.getRunReportData(this.dataObject.report.name, this.dataObject.formData)
     .subscribe( (res: any) => {
       this.csvData = res.data;
       this.setOutputTable(res.data);
@@ -85,7 +85,7 @@ export class TableAndSmsComponent implements OnChanges {
     csv = csv.join('\r\n');
     const link = document.createElement('a');
     link.setAttribute('href', encodeURI(csv));
-    link.setAttribute('download', `${this.dataObject.reportData.name}.csv`);
+    link.setAttribute('download', `${this.dataObject.report.name}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

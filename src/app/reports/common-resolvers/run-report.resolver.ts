@@ -20,11 +20,11 @@ export class RunReportResolver implements Resolve<Object> {
   constructor(private reportsService: ReportsService) {}
 
   /**
-   * Returns the reports data.
+   * Returns the report parameters data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    return this.reportsService.getReportParams(route.params['report-name']);
+    return this.reportsService.getReportParams(route.params['name']);
   }
 
 }

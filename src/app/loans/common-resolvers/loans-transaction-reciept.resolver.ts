@@ -30,7 +30,7 @@ export class LoansTransactionRecieptResolver implements Resolve<Object> {
       'output-type':	'PDF',
       R_transactionId:	transactionId
     };
-    return this.reportsService.getPentahoRunReportData({name: 'Loan Transaction Receipt'}, data, 'default', 'en', 'dd MMMM yyyy');
+    return this.reportsService.getPentahoRunReportData('Loan Transaction Receipt', data, 'default', 'en', 'dd MMMM yyyy');
   }
 
 }

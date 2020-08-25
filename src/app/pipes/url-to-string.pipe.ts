@@ -12,11 +12,12 @@ export class UrlToStringPipe implements PipeTransform {
 
   transform(url: string): any {
     url = decodeURIComponent(url);
-    if (url.includes('search?query')) {
-      const query = url.substring(url.indexOf('=') + 1, url.indexOf('&'));
-      return 'Search ' + query;
-    }
     const urlSubstrings: string[] = url.slice(1).split('/');
+    if (url.includes('?')) { // Query params URL.
+      const query = urlSubstrings.pop();
+      const prefix = query.slice(0, query.indexOf('?'));
+      urlSubstrings.push(prefix);
+    }
     const stringRepresentation =
       urlSubstrings
         .map((path: string) => {

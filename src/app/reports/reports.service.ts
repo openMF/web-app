@@ -57,7 +57,7 @@ export class ReportsService {
    * @param {any} dates start date and end date
    * @returns {Observable<any>} Mix Report
    */
-  getMixReport(dates: any) {
+  getMixReport(dates: any): Observable<any> {
     const httpParams = new HttpParams()
       .set('startDate', dates.startDate)
       .set('endDate', dates.endDate);
@@ -98,40 +98,40 @@ export class ReportsService {
 
   /**
    * Run Report Data for Table and SMS.
-   * @param {any} report report object containing 'id', 'name' & 'type' attributes.
+   * @param {any} reportName report name
    * @param {object} formData Form Data.
    * @returns {Observable<any>}
    */
-  getRunReportData(report: any, formData: object): Observable<any> {
+  getRunReportData(reportName: string, formData: object): Observable<any> {
     let httpParams = new HttpParams();
     for (const [key, value] of Object.entries(formData)) {
       httpParams = httpParams.set(key, value);
     }
-    return this.http.get(`/runreports/${report.name}`, {params: httpParams});
+    return this.http.get(`/runreports/${reportName}`, {params: httpParams});
   }
 
   /**
    * Run Report Data for Charts.
-   * @param {any} report report object containing 'id', 'name' & 'type' attributes.
+   * @param {any} reportName report name
    * @param {object} formData Form Data.
    * @returns {Observable<ChartData>}
    */
-  getChartRunReportData(report: any, formData: object): Observable<ChartData> {
+  getChartRunReportData(reportName: string, formData: object): Observable<ChartData> {
     let httpParams = new HttpParams();
     for (const [key, value] of Object.entries(formData)) {
       httpParams = httpParams.set(key, value);
     }
-    return this.http.get(`/runreports/${report.name}`, {params: httpParams})
+    return this.http.get(`/runreports/${reportName}`, {params: httpParams})
     .pipe(map((response: any) => new ChartData(response)));
   }
 
   /**
    * Run Report Data for Pentaho.
-   * @param {any} report report object containing 'id', 'name' & 'type' attributes.
+   * @param {any} reportName report name
    * @param {object} formData Form Data.
    * @returns {Observable<any>}
    */
-  getPentahoRunReportData(report: any, formData: object, tenantIdentifier: string, locale: string, dateFormat: string): Observable<any> {
+  getPentahoRunReportData(reportName: string, formData: object, tenantIdentifier: string, locale: string, dateFormat: string): Observable<any> {
     let httpParams = new HttpParams()
         .set('tenantIdentifier', tenantIdentifier)
         .set('locale', locale)
@@ -139,7 +139,7 @@ export class ReportsService {
     for (const [key, value] of Object.entries(formData)) {
       httpParams = httpParams.set(key, value);
     }
-    return this.http.get(`/runreports/${report.name}`, {responseType: 'arraybuffer', observe: 'response', params: httpParams});
+    return this.http.get(`/runreports/${reportName}`, {responseType: 'arraybuffer', observe: 'response', params: httpParams});
   }
 
 }

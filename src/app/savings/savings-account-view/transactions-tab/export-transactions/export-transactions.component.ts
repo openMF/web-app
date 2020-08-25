@@ -74,7 +74,7 @@ export class ExportTransactionsComponent implements OnInit {
       R_endDate:	this.datePipe.transform(this.transactionsReportForm.value.toDate, 'yyyy-MM-dd'),
       R_savingsAccountId:	this.savingsAccountId
     };
-    this.reportsService.getPentahoRunReportData({name: 'Client Saving Transactions'}, data, 'default', 'en', 'dd MMMM yyyy')
+    this.reportsService.getPentahoRunReportData('Client Saving Transactions', data, 'default', 'en', 'dd MMMM yyyy')
       .subscribe( (res: any) => {
         const contentType = res.headers.get('Content-Type');
         const file = new Blob([res.body], {type: contentType});

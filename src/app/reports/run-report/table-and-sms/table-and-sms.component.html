@@ -1,6 +1,6 @@
 <div *ngIf = "!hideOutput">
 
-  <div class="m-b-10" *ngIf = "dataObject.reportData.type === 'Table'" fxLayoutAlign="end">
+  <div class="m-b-10" *ngIf = "dataObject.report.type === 'Table'" fxLayoutAlign="end">
     <button mat-raised-button color="primary" (click)="downloadCSV()" >
       Export CSV
     </button>
