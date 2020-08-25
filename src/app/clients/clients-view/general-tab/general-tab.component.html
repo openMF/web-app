@@ -262,25 +262,25 @@
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let element">
         <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary"
-          (click)="routeEdit($event)" [routerLink]="['../','savingsaccounts', element.id, 'actions', 'Deposit']">
+          (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Deposit']">
           <i class="fa fa-arrow-up"></i>
         </button>
         <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary"
-          (click)="routeEdit($event)" [routerLink]="['../','savingsaccounts', element.id, 'actions', 'Withdrawal']">
+          (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Withdrawal']">
           <i class="fa fa-arrow-down"></i>
         </button>
         <button *ngIf="element.status.submittedAndPendingApproval" class="account-action-button" mat-raised-button
-          color="primary" (click)="routeEdit($event)" [routerLink]="['../','savingsaccounts', element.id, 'actions', 'Approve']">
+          color="primary" (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Approve']">
           <i class="fa fa-check"></i>
         </button>
         <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
           class="account-action-button" mat-raised-button color="primary"
-          [routerLink]="['../','savingsaccounts', element.id, 'actions', 'Undo Approval']">
+          [routerLink]="['../','savings-accounts', element.id, 'actions', 'Undo Approval']">
           <i class="fa fa-undo"></i>
         </button>
         <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
           class="account-action-button" mat-raised-button color="primary"
-          [routerLink]="['../','savingsaccounts', element.id, 'actions', 'Activate']">
+          [routerLink]="['../','savings-accounts', element.id, 'actions', 'Activate']">
           <i class="fa fa-check-circle"></i>
         </button>
       </td>
@@ -288,12 +288,11 @@
 
     <tr mat-header-row *matHeaderRowDef="openSavingsColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: openSavingsColumns;"
-      [routerLink]="['../', 'savingsaccounts', row.id, 'transactions']"></tr>
+      [routerLink]="['../', 'savings-accounts', row.id, 'transactions']"></tr>
 
   </table>
 
   <!-- Closed Saving Accounts -->
-
   <table *ngIf="showClosedSavingAccounts" mat-table
     [dataSource]="savingAccounts|accountsFilter:'saving':'closed':'isSavings'">
 
@@ -314,7 +313,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="closedSavingsColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: closedSavingsColumns;" [routerLink]="['../', 'savingsaccounts', row.id, 'transactions']"></tr>
+    <tr mat-row *matRowDef="let row; columns: closedSavingsColumns;" [routerLink]="['../', 'savings-accounts', row.id, 'transactions']"></tr>
 
   </table>
 

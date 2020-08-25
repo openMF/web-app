@@ -238,7 +238,7 @@ const routes: Routes = [
             loadChildren: () => import('../deposits/fixed-deposits/fixed-deposits.module').then(m => m.FixedDepositsModule)
           },
           {
-            path: 'savingsaccounts',
+            path: 'savings-accounts',
             loadChildren: () => import('../savings/savings.module').then(m => m.SavingsModule)
           },
           {

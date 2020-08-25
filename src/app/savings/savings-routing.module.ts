@@ -32,14 +32,14 @@ import { SavingsAccountActionsResolver } from './common-resolvers/savings-accoun
 import { SavingsTransactionRecieptResolver } from './common-resolvers/savings-transaction-reciept.resolver';
 import { SavingsAccountTransactionTemplateResolver } from './common-resolvers/savings-account-transaction-template.resolver';
 
-
+/** Savings Routes */
 const routes: Routes = [
   {
     path: '',
     data: { title: extract('All Savings'), breadcrumb: 'Savings', routeParamBreadcrumb: false },
     children: [
       {
-        path: 'create-savings-account',
+        path: 'create',
         data: { title: extract('Create Savings Account'), breadcrumb: 'Create Savings Account' },
         component: CreateSavingsAccountComponent,
         resolve: {
@@ -49,14 +49,12 @@ const routes: Routes = [
       {
         path: ':savingAccountId',
         data: { title: extract('Saving Account View'), routeParamBreadcrumb: 'savingAccountId' },
-        resolve: {
-          savingsAccountData: SavingsAccountViewResolver
-        },
         children: [
           {
             path: '',
             component: SavingsAccountViewComponent,
             resolve: {
+              savingsAccountData: SavingsAccountViewResolver,
               savingsDatatables: SavingsDatatablesResolver
             },
             children: [
@@ -101,7 +99,7 @@ const routes: Routes = [
             ]
           },
           {
-            path: 'edit-savings-account',
+            path: 'edit',
             data: { title: extract('Edit Savings Account'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
             component: EditSavingsAccountComponent,
             resolve: {
@@ -164,6 +162,7 @@ const routes: Routes = [
                 data: { routeParamBreadcrumb: 'id' },
                 component: ViewChargeComponent,
                 resolve: {
+                  savingsAccountData: SavingsAccountViewResolver,
                   savingsAccountCharge: SavingsAccountChargeResolver
                 }
               }

@@ -108,7 +108,6 @@ export class EditSavingsAccountComponent {
     const monthDayFormat = 'dd MMMM';
     const savingsAccount = {
       ...this.savingsAccount,
-      clientId: this.savingsAccountAndTemplate.clientId,
       charges: this.savingsAccount.charges.map((charge: any) => ({
         chargeId: charge.id,
         amount: charge.amount,
@@ -121,6 +120,11 @@ export class EditSavingsAccountComponent {
       monthDayFormat,
       locale
     };
+    if (this.savingsAccountAndTemplate.clientId) {
+      savingsAccount.clientId = this.savingsAccountAndTemplate.clientId;
+    } else {
+      savingsAccount.groupId = this.savingsAccountAndTemplate.groupId;
+    }
     this.savingsService.updateSavingsAccount(this.savingsAccountAndTemplate.id, savingsAccount).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });

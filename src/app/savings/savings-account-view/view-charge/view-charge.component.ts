@@ -49,7 +49,7 @@ export class ViewChargeComponent {
     this.route.data.subscribe((data: { savingsAccountCharge: any }) => {
       this.chargeData = data.savingsAccountCharge;
     });
-    this.route.parent.parent.data.subscribe((data: { savingsAccountData: any }) => {
+    this.route.data.subscribe((data: { savingsAccountData: any }) => {
       this.savingsAccountData = data.savingsAccountData;
     });
   }
@@ -194,9 +194,9 @@ export class ViewChargeComponent {
    * TODO: Replace by a custom reload component instead of hard-coded back-routing.
    */
   private reload() {
-    const clientId = this.savingsAccountData.clientId;
     const url: string = this.router.url.replace(`/${this.chargeData.id}`, '');
-    this.router.navigateByUrl(`/clients/${clientId}/savingsaccounts`, {skipLocationChange: true})
+    const refreshUrl: string = this.router.url.slice(0, this.router.url.indexOf('savings-accounts') + 'savings-accounts'.length);
+    this.router.navigateByUrl(refreshUrl, {skipLocationChange: true})
       .then(() => this.router.navigate([url]));
   }
 

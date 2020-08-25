@@ -21,7 +21,7 @@
         </mat-card-title>
         <mat-card-subtitle>
           <p>
-            Account #: {{savingsAccountData.accountNo}} | Client Name: {{savingsAccountData.clientName}}<br/>
+            Account #: {{savingsAccountData.accountNo}} | {{entityType}} Name: {{savingsAccountData.clientName || savingsAccountData.groupName}}<br/>
             <span *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval">
               Current Balance: {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.accountBalance}}<br/>
               Available Balance: {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.availableBalance}}<br/>

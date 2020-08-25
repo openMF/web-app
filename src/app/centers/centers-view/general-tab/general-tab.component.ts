@@ -45,4 +45,13 @@ export class GeneralTabComponent implements OnInit {
   ngOnInit() {
   }
 
+
+  /**
+   * Stops the propagation to view pages.
+   * @param $event Mouse Event
+   */
+  routeEdit($event: MouseEvent) {
+    $event.stopPropagation();
+  }
+
 }

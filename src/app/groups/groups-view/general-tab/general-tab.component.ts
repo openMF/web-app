@@ -67,4 +67,12 @@ export class GeneralTabComponent {
     this.showClosedSavingAccounts = !this.showClosedSavingAccounts;
   }
 
+  /**
+   * Stops the propagation to view pages.
+   * @param $event Mouse Event
+   */
+  routeEdit($event: MouseEvent) {
+    $event.stopPropagation();
+  }
+
 }

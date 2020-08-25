@@ -108,7 +108,7 @@ const routes: Routes = [
               }
             },
             {
-              path: 'savingsaccounts',
+              path: 'savings-accounts',
               loadChildren: () => import('../savings/savings.module').then(m => m.SavingsModule)
             }
           ]

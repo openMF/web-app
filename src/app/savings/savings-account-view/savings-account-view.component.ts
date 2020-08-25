@@ -29,6 +29,8 @@ export class SavingsAccountViewComponent implements OnInit {
   savingsDatatables: any;
   /** Button Configurations */
   buttonConfig: SavingsButtonsConfiguration;
+  /** Entity Type */
+  entityType: string;
 
   /**
    * Fetches savings account data from `resolve`
@@ -44,6 +46,13 @@ export class SavingsAccountViewComponent implements OnInit {
       this.savingsAccountData = data.savingsAccountData;
       this.savingsDatatables = data.savingsDatatables;
     });
+    if (this.router.url.includes('clients')) {
+      this.entityType = 'Client';
+    } else if (this.router.url.includes('groups')) {
+      this.entityType = 'Group';
+    } else if (this.router.url.includes('centers')) {
+      this.entityType = 'Center';
+    }
   }
 
   ngOnInit() {
@@ -101,13 +110,13 @@ export class SavingsAccountViewComponent implements OnInit {
 
 
   /**
-   * Refetches data fot the component
+   * Refetches data foe the component
    * TODO: Replace by a custom reload component instead of hard-coded back-routing.
    */
-  reload() {
-    const clientId = this.savingsAccountData.clientId;
+  private reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients/${clientId}/savingsaccounts`, {skipLocationChange: true})
+    const refreshUrl: string = this.router.url.slice(0, this.router.url.indexOf('savings-accounts') + 'savings-accounts'.length);
+    this.router.navigateByUrl(refreshUrl, {skipLocationChange: true})
       .then(() => this.router.navigate([url]));
   }
 
@@ -135,7 +144,7 @@ export class SavingsAccountViewComponent implements OnInit {
         this.router.navigate([`actions/Withdrawal`], { relativeTo: this.route });
         break;
       case 'Modify Application':
-        this.router.navigate(['edit-savings-account'], { relativeTo: this.route });
+        this.router.navigate(['edit'], { relativeTo: this.route });
         break;
       case 'Delete':
         this.deleteSavingsAccount();

@@ -43,8 +43,8 @@ export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router) {
     this.accountId = this.route.parent.snapshot.params['savingAccountId'];
-    this.route.parent.data.subscribe((data: { savingsAccountData: any }) => {
-      this.savingsAccountData = data.savingsAccountData;
+    this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
+      this.savingsAccountData = data.savingsAccountActionData;
     });
   }
 

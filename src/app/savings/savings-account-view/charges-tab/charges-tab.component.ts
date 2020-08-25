@@ -248,9 +248,9 @@ export class ChargesTabComponent implements OnInit {
    * TODO: Replace by a custom reload component instead of hard-coded back-routing.
    */
   private reload() {
-    const clientId = this.savingsAccountData.clientId;
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients/${clientId}/savingsaccounts`, {skipLocationChange: true})
+    const refreshUrl: string = this.router.url.slice(0, this.router.url.indexOf('savings-accounts') + 'savings-accounts'.length);
+    this.router.navigateByUrl(refreshUrl, {skipLocationChange: true})
       .then(() => this.router.navigate([url]));
   }
 
