@@ -33,35 +33,20 @@ const routes: Routes = [
       children: [
         {
           path: '',
-          component: ReportsComponent,
+          component: ReportsComponent
         },
         {
           path: ':filter',
           data: { routeParamBreadcrumb: 'filter' },
-          component: ReportsComponent,
-        }
-      ]
-    },
-    {
-      path: 'run-report',
-      data: { title: extract('Reports'), breadcrumb: 'Reports' },
-      children: [
-        {
-          path: '',
-          redirectTo: '/reports', pathMatch: 'full'
+          component: ReportsComponent
         },
         {
-          path: ':report-name/:report-type/:report-id',
-          data: { title: extract('Run Report'), routeParamBreadcrumb: 'report-name' },
-          children: [
-            {
-              path: '',
-              component: RunReportComponent,
-              resolve: {
-                params: RunReportResolver
-              }
-            }
-          ]
+          path: 'run/:name',
+          data: { title: extract('Reports'), routeParamBreadcrumb: 'name' },
+          component: RunReportComponent,
+          resolve: {
+            reportParameters: RunReportResolver
+          }
         }
       ]
     },

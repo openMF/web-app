@@ -83,23 +83,25 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
         } else { // Child Parameter
           const parent: ReportParameter = this.paramData
             .find((entry: any) => entry.name === param.parentParameterName);
-          // TODO: Refactor once Report Parameter Model is updated for multi-child support.
-          if (parent.childParameter instanceof Array) {
-            parent.childParameter.push(param);
-          } else {
-            parent.childParameter = [];
-            parent.childParameter.push(param);
-          }
-          const parentNames = this.parentParameters.map(parameter => parameter.name);
-          if (!parentNames.includes(parent.name)) {
-            this.parentParameters.push(parent);
-          } else {
-            const index = parentNames.indexOf(parent.name);
-            this.parentParameters[index] = parent;
-          }
+            parent.childParameters.push(param);
+            this.updateParentParameters(parent);
         }
       });
     this.setChildControls();
+  }
+
+  /**
+   * Updates the array of parent parameters.
+   * @param {ReportParameter} parent Parent report parameter
+   */
+  updateParentParameters(parent: ReportParameter) {
+    const parentNames = this.parentParameters.map(parameter => parameter.name);
+    if (!parentNames.includes(parent.name)) { // Parent's first child.
+      this.parentParameters.push(parent);
+    } else { // Parent already has a child
+      const index = parentNames.indexOf(parent.name);
+      this.parentParameters[index] = parent;
+    }
   }
 
   /**
@@ -108,7 +110,7 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
   setChildControls() {
     this.parentParameters.forEach((param: ReportParameter) => {
       this.ReportForm.get(param.name).valueChanges.subscribe((option: any) => {
-        param.childParameter.forEach((child: ReportParameter) => {
+        param.childParameters.forEach((child: ReportParameter) => {
           if (child.displayType === 'none') {
             this.ReportForm.addControl(child.name, new FormControl(child.defaultVal));
           } else {
@@ -183,10 +185,10 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
    * TODO: Replace report object with report name once reports service is refactored.
    */
   getResponseHeaders() {
-    const report = { name: this.paramValue.reportName };
+    const reportName = this.paramValue.reportName;
     delete this.paramValue.reportName;
     const formattedResponse = this.formatUserResponse(this.paramValue, true);
-    this.reportsService.getRunReportData(report, formattedResponse).subscribe(
+    this.reportsService.getRunReportData(reportName, formattedResponse).subscribe(
       (response: any) => {
         this.templateParameters.emit(response.columnHeaders);
       },

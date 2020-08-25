@@ -30,7 +30,7 @@ export class SavingsTransactionRecieptResolver implements Resolve<Object> {
       'output-type':	'PDF',
       R_transactionId:	transactionId
     };
-    return this.reportsService.getPentahoRunReportData({name: 'Savings Transaction Receipt'}, data, 'default', 'en', 'dd MMMM yyyy');
+    return this.reportsService.getPentahoRunReportData('Savings Transaction Receipt', data, 'default', 'en', 'dd MMMM yyyy');
   }
 
 }

@@ -44,7 +44,7 @@ export class XBRLComponent implements OnInit, AfterViewInit {
               private reportService: ReportsService) {
     this.route.data.subscribe(( data: { mixtaxonomy: any, mixmapping: any, glAccounts: any }) => {
       this.mixtaxonomyArray = data.mixtaxonomy;
-      this.mixMappingJson = data.mixmapping.config;
+      this.mixMappingJson = data.mixmapping.config || JSON.stringify({});
       this.glAccounts = data.glAccounts;
     });
   }
@@ -67,7 +67,7 @@ export class XBRLComponent implements OnInit, AfterViewInit {
   * Subscribe to taxonomy's value changes and filters options accordingly.
   */
   ngAfterViewInit() {
-    this.mixtaxonomyArray.forEach( (taxonomy: any) => {
+    this.mixtaxonomyArray.forEach((taxonomy: any) => {
       taxonomy.mapping?.valueChanges.subscribe( (value: string) => {
         this.filteredGlAccounts = this.applyFilter(value);
       });
@@ -78,13 +78,11 @@ export class XBRLComponent implements OnInit, AfterViewInit {
    * Maps Taxonomy to it's value and add's formcontrol.
    */
   createMappings() {
-    if (this.mixMappingJson !== undefined && this.mixMappingJson.length > 0) {
-      this.mixtaxonomyArray.forEach( (taxonomy: any) => {
-        const mapping = JSON.parse(this.mixMappingJson)[taxonomy.id];
-          taxonomy.mapping = new FormControl('');
-          taxonomy.mapping.value = mapping;
-      });
-    }
+    this.mixtaxonomyArray.forEach((taxonomy: any) => {
+      const mapping = JSON.parse(this.mixMappingJson)[taxonomy.id];
+        taxonomy.mapping = new FormControl('');
+        taxonomy.mapping.value = mapping || '';
+    });
   }
 
   /**

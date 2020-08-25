@@ -28,7 +28,7 @@
 
       
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row" [routerLink]="['/run-report', row.reportName, row.reportType, row.id]"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row" [routerLink]="['/reports','run', row.reportName]" [queryParams]="{ type: row.reportType, id: row.id }"></tr>
 
     </table>
 
