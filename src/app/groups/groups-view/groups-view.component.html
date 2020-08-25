@@ -66,12 +66,12 @@
         <button mat-raised-button *mifosxHasPermission="'TRANSFERCLIENTS_GROUP'" (click)="doAction('Manage Members')">
           <i class="fa fa-user"></i>Manage Members</button>
 
-        <button mat-raised-button *ngIf="groupViewData.active" [matMenuTriggerFor]="LoanApplications">
-          <i class="fa fa-file"></i>Loan Applications</button>
-        <mat-menu #LoanApplications="matMenu">
+        <button mat-raised-button *ngIf="groupViewData.active" [matMenuTriggerFor]="AccountApplications">
+          <i class="fa fa-file"></i>Applications</button>
+        <mat-menu #AccountApplications="matMenu">
           <span *ngIf="groupViewData.clientMembers">
             <button mat-menu-item *mifosxHasPermission="'CREATE_LOAN'">Bulk JLG Loan Application</button></span>
-          <button mat-menu-item *mifosxHasPermission="'CREATE_SAVINGSACCOUNT'">Group Saving Application</button>
+          <button mat-menu-item *mifosxHasPermission="'CREATE_SAVINGSACCOUNT'" [routerLink]="['savings-accounts', 'create']">Group Saving Application</button>
           <button mat-menu-item *mifosxHasPermission="'CREATE_LOAN'">Group Loan Application</button>
         </mat-menu>
 

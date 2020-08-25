@@ -74,9 +74,10 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
    * Fetches savings account product template on productId value changes
    */
   buildDependencies() {
-    const clientId = this.savingsAccountTemplate.clientId;
+    const entityId = this.savingsAccountTemplate.clientId || this.savingsAccountTemplate.groupId;
     this.savingsAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
-      this.savingsService.getSavingsAccountTemplate(clientId, productId).subscribe((response: any) => {
+      this.savingsService.getSavingsAccountTemplate(entityId, productId, this.savingsAccountTemplate.groupId ? true : false)
+      .subscribe((response: any) => {
         this.savingsAccountProductTemplate.emit(response);
         this.fieldOfficerData = response.fieldOfficerOptions;
         if (!this.isFieldOfficerPatched && this.savingsAccountTemplate.fieldOfficerId) {

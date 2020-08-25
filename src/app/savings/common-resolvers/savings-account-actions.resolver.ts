@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 
 /** Custom Services */
 import { SavingsService } from '../savings.service';
@@ -34,8 +34,14 @@ export class SavingsAccountActionsResolver implements Resolve<Object> {
         return this.savingsService.getSavingsChargeTemplateResource(savingAccountId);
       case 'Withdrawal':
       case 'Deposit':
-      case 'Close':
         return this.savingsService.getSavingsTransactionTemplateResource(savingAccountId);
+      case 'Close':
+        return forkJoin([
+          this.savingsService.getSavingsTransactionTemplateResource(savingAccountId),
+          this.savingsService.getSavingsAccountData(savingAccountId)
+        ]);
+      case 'Apply Annual Fees':
+        return this.savingsService.getSavingsAccountData(savingAccountId);
       default:
         return undefined;
     }

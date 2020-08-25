@@ -45,10 +45,8 @@ export class CloseSavingsAccountComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router) {
     this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
-      this.paymentTypeOptions = data.savingsAccountActionData.paymentTypeOptions;
-    });
-    this.route.parent.data.subscribe((data: { savingsAccountData: any }) => {
-      this.transactionAmount = data.savingsAccountData.summary.accountBalance;
+      this.paymentTypeOptions = data.savingsAccountActionData[0].paymentTypeOptions;
+      this.transactionAmount = data.savingsAccountActionData[1].summary.accountBalance;
     });
     this.accountId = this.route.parent.snapshot.params['savingAccountId'];
   }

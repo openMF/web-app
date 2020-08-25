@@ -140,11 +140,11 @@ export class SavingsService {
   }
 
   /**
-   * @param clientId Client Id assosciated with savings account.
+   * @param entityId Entity Id assosciated with savings account.
    * @returns {Observable<any>} Savings account template.
    */
-  getSavingsAccountTemplate(clientId: string, productId?: string): Observable<any> {
-    let httpParams = new HttpParams().set('clientId', clientId);
+  getSavingsAccountTemplate(entityId: string, productId?: string, isGroup?: boolean): Observable<any> {
+    let httpParams = new HttpParams().set( isGroup ? 'groupId' : 'clientId', entityId);
     httpParams = productId ? httpParams.set('productId', productId) : httpParams;
     return this.http.get('/savingsaccounts/template', { params: httpParams });
   }

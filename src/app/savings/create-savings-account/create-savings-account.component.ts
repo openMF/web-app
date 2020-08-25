@@ -103,7 +103,6 @@ export class CreateSavingsAccountComponent {
     const monthDayFormat = 'dd MMMM';
     const savingsAccount = {
       ...this.savingsAccount,
-      clientId: this.savingsAccountTemplate.clientId,
       charges: this.savingsAccount.charges.map((charge: any) => ({
         chargeId: charge.id,
         amount: charge.amount,
@@ -116,6 +115,11 @@ export class CreateSavingsAccountComponent {
       monthDayFormat,
       locale
     };
+    if (this.savingsAccountTemplate.clientId) {
+      savingsAccount.clientId = this.savingsAccountTemplate.clientId;
+    } else {
+      savingsAccount.groupId = this.savingsAccountTemplate.groupId;
+    }
     this.savingsService.createSavingsAccount(savingsAccount).subscribe((response: any) => {
       this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
     });

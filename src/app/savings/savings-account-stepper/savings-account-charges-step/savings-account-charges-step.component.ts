@@ -5,7 +5,6 @@ import { FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
 /** Custom Dialogs */
-import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 
 /** Custom Models */
@@ -180,15 +179,8 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
    * @param {any} charge Charge
    */
   deleteCharge(charge: any) {
-    const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `charge ${charge.name}` }
-    });
-    deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
-        this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1);
-        this.chargesDataSource = this.chargesDataSource.concat([]);
-      }
-    });
+    this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1);
+    this.chargesDataSource = this.chargesDataSource.concat([]);
     this.pristine = false;
   }
 

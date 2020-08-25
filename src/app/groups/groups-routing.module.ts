@@ -139,7 +139,7 @@ const routes: Routes = [
               loadChildren: () => import('../loans/loans.module').then(m => m.LoansModule)
             },
             {
-              path: 'savingsaccounts',
+              path: 'savings-accounts',
               loadChildren: () => import('../savings/savings.module').then(m => m.SavingsModule)
             }
           ]
