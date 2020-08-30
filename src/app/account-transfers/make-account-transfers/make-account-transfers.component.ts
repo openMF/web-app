@@ -186,7 +186,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
       fromOfficeId: this.accountTransferTemplateData.fromClient.officeId
     };
     this.accountTransfersService.createAccountTransfer(makeAccountTransferData).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+      this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
 

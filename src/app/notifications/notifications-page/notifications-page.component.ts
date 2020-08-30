@@ -29,7 +29,7 @@ export class NotificationsPageComponent implements OnInit {
   routeMap: any = {
     'client' : '/clients/',
     'group' : '/groups/',
-    'loan' : '/loans/',
+    'loan': '/loans-accounts/',
     'center' : '/centers/',
     'shareAccount' : '/shares-accounts/',
     'fixedDeposit' : '/fixed-deposits-accounts/',

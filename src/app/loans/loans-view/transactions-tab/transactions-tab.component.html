@@ -65,7 +65,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let transaction" [ngClass]="{'strike': transaction.manuallyReversed}">
-          <button class="account-action-button" *ngIf="!transaction.manuallyReversedession" mat-raised-button color="primary" (click)="routeEdit($event)"
+          <button class="account-action-button" *ngIf="!transaction.manuallyReversed" mat-raised-button color="primary" (click)="routeEdit($event)"
             [routerLink]="[transaction.id, 'reciept']" matTooltip="View Receipts">
             <i class="fa fa-file-text"></i>
           </button>

@@ -132,9 +132,6 @@ export class LoansViewComponent implements OnInit {
         this.router.navigate(['transfer-funds/make-account-transfer'], { relativeTo: this.route, queryParams: queryParams });
         break;
       default:
-        button = button.replace(/\s/g, '-').toLowerCase();
-        button = button.replace(/\(/g, '');
-        button = button.replace(/\)/g, '');
         this.router.navigate(['actions', button], { relativeTo: this.route });
         break;
     }
@@ -179,7 +176,7 @@ export class LoansViewComponent implements OnInit {
   private reload() {
     const clientId = this.clientId;
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients/${clientId}/loans`, { skipLocationChange: true })
+    this.router.navigateByUrl(`/clients/${clientId}/loans-accounts`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
 

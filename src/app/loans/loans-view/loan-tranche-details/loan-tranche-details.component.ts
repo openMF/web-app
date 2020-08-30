@@ -20,8 +20,8 @@ export class LoanTrancheDetailsComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { loanDetailsAssociationData: any }) => {
-      this.loanDetails = data.loanDetailsAssociationData;
+    this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
+      this.loanDetails = data.loanDetailsData;
     });
   }
 

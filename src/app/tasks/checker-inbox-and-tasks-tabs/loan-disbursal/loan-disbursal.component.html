@@ -35,12 +35,12 @@
 
     <ng-container matColumnDef="loanAccountNumber">
       <th mat-header-cell *matHeaderCellDef> Loan Account# </th>
-      <td mat-cell *matCellDef="let loan" class="view-details" [routerLink]="['../../clients', loan.clientId, 'loans', loan.id, 'general']"> {{loan.accountNo}} </td>
+      <td mat-cell *matCellDef="let loan" class="view-details" [routerLink]="['../../clients', loan.clientId, 'loans-accounts', loan.id, 'general']"> {{loan.accountNo}} </td>
     </ng-container>
 
     <ng-container matColumnDef="loanProduct">
       <th mat-header-cell *matHeaderCellDef> Loan Product </th>
-      <td mat-cell *matCellDef="let loan" class="view-details" [routerLink]="['../../clients', loan.clientId, 'loans', loan.id, 'general']"> {{loan.loanProductName}} </td>
+      <td mat-cell *matCellDef="let loan" class="view-details" [routerLink]="['../../clients', loan.clientId, 'loans-accounts', loan.id, 'general']"> {{loan.loanProductName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="principal">

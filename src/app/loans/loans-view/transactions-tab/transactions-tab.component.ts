@@ -28,10 +28,10 @@ export class TransactionsTabComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute,
               private router: Router) {
-    this.route.parent.data.subscribe(( data: { loanDetailsAssociationData: any }) => {
-      this.transactions = data.loanDetailsAssociationData.transactions;
-      this.tempTransaction = data.loanDetailsAssociationData.transactions;
-      this.status = data.loanDetailsAssociationData.status.value;
+    this.route.parent.parent.data.subscribe((data: { loanDetailsData: any }) => {
+      this.transactions = data.loanDetailsData.transactions;
+      this.tempTransaction = data.loanDetailsData.transactions;
+      this.status = data.loanDetailsData.status.value;
     });
   }
 

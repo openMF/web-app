@@ -62,7 +62,7 @@
       <button mat-raised-button [matMenuTriggerFor]="Applications">
         <i class="fa fa-file"></i>Applications</button>
       <mat-menu #Applications="matMenu">
-        <button mat-menu-item [routerLink]="['loans', 'create-loans-account']">New Loan Account</button>
+        <button mat-menu-item [routerLink]="['loans-accounts', 'create']">New Loan Account</button>
         <button mat-menu-item [routerLink]="['savings-accounts', 'create']">New Savings Account</button>
         <button mat-menu-item *mifosxHasPermission="'CREATE_SHAREACCOUNT'" [routerLink]="['shares-accounts', 'create']">New Share Account</button>
         <button mat-menu-item *mifosxHasPermission="'CREATE_RECURRINGDEPOSITACCOUNT'" [routerLink]="['recurringdeposits', 'create-recurring-deposits-account']">New Recurring Deposit Account</button>

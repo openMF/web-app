@@ -54,7 +54,7 @@ export class SearchPageComponent {
         this.router.navigate(['clients', entity.parentId, 'savings-accounts', entity.entityId]);
         break;
       case 'LOAN':
-        this.router.navigate(['clients', entity.parentId, 'loans', entity.entityId]);
+        this.router.navigate(['clients', entity.parentId, 'loans-accounts', entity.entityId]);
         break;
     }
   }

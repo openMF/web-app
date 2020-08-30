@@ -44,8 +44,8 @@ export class ExportTransactionsComponent implements OnInit {
               private formBuilder: FormBuilder,
               private datePipe: DatePipe,
               private route: ActivatedRoute) {
-    this.route.parent.data.subscribe((data: { loanDetailsAssociationData: any }) => {
-      this.loansAccountId = data.loanDetailsAssociationData.accountNo;
+    this.route.parent.parent.data.subscribe((data: { loanDetailsData: any }) => {
+      this.loansAccountId = data.loanDetailsData.accountNo;
     });
   }
 

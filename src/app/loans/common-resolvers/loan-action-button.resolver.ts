@@ -26,39 +26,39 @@ export class LoanActionButtonResolver implements Resolve<Object> {
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
         const loanId = route.parent.paramMap.get('loanId');
         const loanActionButton = route.paramMap.get('action');
-        if (loanActionButton === 'assign-loan-officer' || loanActionButton === 'change-loan-officer') {
+        if (loanActionButton === 'Assign Loan Officer' || loanActionButton === 'Change Loan Officer') {
             return this.loansService.getLoanTemplate(loanId);
         // } else if (loanActionButton === 'make-repayment') {
         //     return this.loansService.getLoanActionTemplate(loanId, 'repayment');
-        } else if (loanActionButton === 'waive-interest') {
+        } else if (loanActionButton === 'Waive Interest') {
             return this.loansService.getLoanActionTemplate(loanId, 'waiveinterest');
-        } else if (loanActionButton === 'write-off') {
+        } else if (loanActionButton === 'Write Off') {
             return this.loansService.getLoanActionTemplate(loanId, 'writeoff');
-        } else if (loanActionButton === 'close') {
+        } else if (loanActionButton === 'Close') {
             return this.loansService.getLoanActionTemplate(loanId, 'close');
-        } else if (loanActionButton === 'close-as-rescheduled') {
+        } else if (loanActionButton === 'Close (as Rescheduled)') {
             return this.loansService.getLoanActionTemplate(loanId, 'close-rescheduled');
-        } else if (loanActionButton === 'reschedule') {
+        } else if (loanActionButton === 'Reschedule') {
             return this.loansService.rescheduleLoanTemplate();
-        } else if (loanActionButton === 'prepay-loan') {
+        } else if (loanActionButton === 'Prepay Loan') {
             return this.loansService.getLoanActionTemplate(loanId, 'prepayLoan');
-        } else if (loanActionButton === 'add-collateral') {
+        } else if (loanActionButton === 'Add Collateral') {
             return this.loansService.getLoanCollateralTemplate(loanId);
-        } else if (loanActionButton === 'disburse-to-savings') {
+        } else if (loanActionButton === 'Disburse to Savings') {
             return this.loansService.getLoanActionTemplate(loanId, 'disburseToSavings');
-        } else if (loanActionButton === 'recovery-payment') {
+        } else if (loanActionButton === 'Recovery Payment') {
             return this.loansService.getLoanActionTemplate(loanId, 'recoverypayment');
-        } else if (loanActionButton === 'view-guarantors') {
+        } else if (loanActionButton === 'View Guarantors') {
             return this.loansService.getLoanAccountResource(loanId, 'guarantors');
-        } else if (loanActionButton === 'create-guarantor') {
+        } else if (loanActionButton === 'Create Guarantor') {
             return this.loansService.getGuarantorTemplate(loanId);
-        } else if (loanActionButton === 'disburse') {
+        } else if (loanActionButton === 'Disburse') {
             return this.loansService.getLoanActionTemplate(loanId, 'disburse');
-        } else if (loanActionButton === 'loan-screen-reports') {
+        } else if (loanActionButton === 'Loan Screen Reports') {
             return this.loansService.getLoanScreenReportsData();
-        } else if (loanActionButton === 'approve') {
+        } else if (loanActionButton === 'Approve') {
             return this.loansService.getLoanApprovalTemplate(loanId);
-        } else if (loanActionButton === 'add-loan-charge') {
+        } else if (loanActionButton === 'Add Loan Charge') {
             return this.loansService.getLoanChargeTemplateResource(loanId);
         } else {
             return undefined;

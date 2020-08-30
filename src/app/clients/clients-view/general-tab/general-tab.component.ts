@@ -148,7 +148,7 @@ export class GeneralTabComponent {
    */
   routeTransferFund(loanId: any) {
     const queryParams: any = { loanId: loanId, accountType: 'fromloans' };
-    this.router.navigate(['../', 'loans', loanId, 'transfer-funds', 'make-account-transfer'], { relativeTo: this.route, queryParams: queryParams });
+    this.router.navigate(['../', 'loans-accounts', loanId, 'transfer-funds', 'make-account-transfer'], { relativeTo: this.route, queryParams: queryParams });
   }
 
 }

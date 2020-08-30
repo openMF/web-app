@@ -105,7 +105,7 @@ export class AddLoanChargeComponent implements OnInit {
     loanCharge.locale = 'en';
     loanCharge.dateFormat = dateFormat;
     this.loansService.createLoanCharge(this.loanId, 'charges', loanCharge).subscribe(res => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+      this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
 }
