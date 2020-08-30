@@ -52,8 +52,8 @@ export class ChargesTabComponent implements OnInit {
               private datePipe: DatePipe,
               private router: Router,
               public dialog: MatDialog) {
-    this.route.data.subscribe(( data: { loanDetailsAssociationData: any }) => {
-      this.loanDetails = data.loanDetailsAssociationData;
+    this.route.parent.data.subscribe(( data: { loanDetailsData: any }) => {
+      this.loanDetails = data.loanDetailsData;
     });
   }
 
@@ -206,7 +206,7 @@ export class ChargesTabComponent implements OnInit {
   private reload() {
     const clientId = this.loanDetails.clientId;
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients/${clientId}/loans`, { skipLocationChange: true })
+    this.router.navigateByUrl(`/clients/${clientId}/loans-accounts`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
 

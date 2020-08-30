@@ -82,7 +82,7 @@
 
   </table>
 
-  <!-- loans overview table -->
+  <!-- loans accounts overview table -->
   <div class="heading-content">
     <div fxLayout="column" fxFlex="50%">
       <div class="heading-name">
@@ -137,20 +137,20 @@
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let element">
         <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary" matTooltip="Make Repayment" matTooltipPosition="above"
-        (click)="routeEdit($event)" [routerLink]="['../','loans', element.id, 'actions', 'make-repayment']">
+        (click)="routeEdit($event)" [routerLink]="['../','loans-accounts', element.id, 'actions', 'Make Repayment']">
           <i class="fa fa-dollar"></i>
         </button>
         <span *ngIf="element.status.pendingApproval">
           <button class="account-action-button" mat-raised-button color="primary" matTooltip="Approve"
             matTooltipPosition="above" *mifosxHasPermission="'APPROVE_LOAN'" (click)="routeEdit($event)"
-            [routerLink]="['../','loans', element.id, 'actions', 'approve']">
+            [routerLink]="['../','loans-accounts', element.id, 'actions', 'Approve']">
             <i class="fa fa-check"></i>
           </button>
         </span>
         <span *ngIf="!element.status.pendingApproval && !element.status.active && !element.status.overpaid">
           <button class="account-action-button" mat-raised-button color="primary" matTooltip="Disburse" 
             matTooltipPosition="above" *mifosxHasPermission="'DISBURSE_LOAN'" 
-            (click)="routeEdit($event)" [routerLink]="['../','loans', element.id, 'actions', 'disburse']">
+            (click)="routeEdit($event)" [routerLink]="['../','loans-accounts', element.id, 'actions', 'Disburse']">
             <i class="fa fa-flag"></i>
           </button>
         </span>
@@ -166,7 +166,7 @@
 
     <tr mat-header-row *matHeaderRowDef="openLoansColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: openLoansColumns;"
-      [routerLink]="['../', 'loans', row.id, 'general']" class="select-row"></tr>
+      [routerLink]="['../', 'loans-accounts', row.id, 'general']" class="select-row"></tr>
 
   </table>
 
@@ -215,7 +215,7 @@
 
     <tr mat-header-row *matHeaderRowDef="closedLoansColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: closedLoansColumns;"
-    [routerLink]="['../', 'loans', row.id, 'general']" class="select-row"></tr>
+    [routerLink]="['../', 'loans-accounts', row.id, 'general']" class="select-row"></tr>
 
   </table>
 

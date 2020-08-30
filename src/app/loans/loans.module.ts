@@ -64,7 +64,6 @@ import { EditTransactionComponent } from './loans-view/transactions/edit-transac
 /** Dialog Components */
 import { LoansAccountViewGuarantorDetailsDialogComponent } from './custom-dialog/loans-account-view-guarantor-details-dialog/loans-account-view-guarantor-details-dialog.component';
 import { LoansAccountAddCollateralDialogComponent } from './custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
-import { LoansConfirmationDialogBoxComponent } from './custom-dialog/loans-confirmation-dialog-box/loans-confirmation-dialog-box.component';
 import { LoanAccountLoadDocumentsDialogComponent } from './custom-dialog/loan-account-load-documents-dialog/loan-account-load-documents-dialog.component';
 
 /**
@@ -112,7 +111,6 @@ import { LoanAccountLoadDocumentsDialogComponent } from './custom-dialog/loan-ac
     ViewGuarantorsComponent,
     CreateGuarantorComponent,
     LoansAccountViewGuarantorDetailsDialogComponent,
-    LoansConfirmationDialogBoxComponent,
     DisburseLoanAccountComponent,
     RejectLoanComponent,
     DisburseComponent,

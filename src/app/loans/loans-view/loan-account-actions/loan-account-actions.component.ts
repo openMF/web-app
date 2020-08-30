@@ -13,50 +13,50 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class LoanAccountActionsComponent {
 
   /** flag object to store possible actions and render appropriate UI to the user */
-  actions: { close: boolean,
-            undo_approval: boolean,
-            write_off: boolean,
-            add_collateral: boolean,
-            assign_loan_officer: boolean,
-            foreclosure: boolean,
-            prepay_loan: boolean,
-            reject: boolean,
-            disburse_to_savings: boolean,
-            make_repayment: boolean,
-            waive_interest: boolean,
-            close_as_rescheduled: boolean,
-            reschedule: boolean,
-            recovery_payment: boolean,
-            view_guarantors: boolean,
-            create_guarantor: boolean,
-            disburse: boolean,
-            withdrawn_by_client: boolean,
-            undo_disbursal: boolean,
-            loan_screen_reports: boolean,
-            approve: boolean,
-            add_loan_charge: boolean } = {
-              close: false,
-              undo_approval: false,
-              write_off: false,
-              add_collateral: false,
-              assign_loan_officer: false,
-              foreclosure: false,
-              prepay_loan: false,
-              reject: false,
-              disburse_to_savings: false,
-              make_repayment: false,
-              waive_interest: false,
-              close_as_rescheduled: false,
-              reschedule: false,
-              recovery_payment: false,
-              view_guarantors: false,
-              create_guarantor: false,
-              disburse: false,
-              withdrawn_by_client: false,
-              undo_disbursal: false,
-              loan_screen_reports: false,
-              approve: false,
-              add_loan_charge: false };
+  actions: { 'Close': boolean,
+            'Undo Approval': boolean,
+            'Write Off': boolean,
+            'Add Collateral': boolean,
+            'Assign Loan Officer': boolean,
+            'Foreclosure': boolean,
+            'Prepay Loan': boolean,
+            'Reject': boolean,
+            'Disburse To Savings': boolean,
+            'Make Repayment': boolean,
+            'Waive Interest': boolean,
+            'Close (as Rescheduled)': boolean,
+            'Reschedule': boolean,
+            'Recovery Payment': boolean,
+            'View Guarantors': boolean,
+            'Create Guarantor': boolean,
+            'Disburse': boolean,
+            'Withdrawn by Client': boolean,
+            'Undo Disbursal': boolean,
+            'Loan Screen Reports': boolean,
+            'Approve': boolean,
+            'Add Loan Charge': boolean } = {
+              'Close': false,
+              'Undo Approval': false,
+              'Write Off':  false,
+              'Add Collateral':  false,
+              'Assign Loan Officer':  false,
+              'Foreclosure':  false,
+              'Prepay Loan':  false,
+              'Reject':  false,
+              'Disburse To Savings':  false,
+              'Make Repayment':  false,
+              'Waive Interest':  false,
+              'Close (as Rescheduled)':  false,
+              'Reschedule':  false,
+              'Recovery Payment':  false,
+              'View Guarantors':  false,
+              'Create Guarantor':  false,
+              'Disburse':  false,
+              'Withdrawn by Client':  false,
+              'Undo Disbursal':  false,
+              'Loan Screen Reports':  false,
+              'Approve':  false,
+              'Add Loan Charge':  false };
 
   actionButtonData: any;
   actionName: any;
@@ -73,13 +73,13 @@ export class LoanAccountActionsComponent {
 
     this.route.params.subscribe(params => {
       this.actionName = params['action'];
-      if (this.actionName === 'change-loan-officer') {
-        this.actionName = 'assign-loan-officer';
+      if (this.actionName === 'Change Loan Officer') {
+        this.actionName = 'Assign Loan Officer';
       }
       for (const key of Object.keys(this.actions)) {
         this.actions[key] = false;
       }
-      this.actions[this.actionName.replace(/-/g, '_')] = true;
+      this.actions[this.actionName] = true;
     });
   }
 

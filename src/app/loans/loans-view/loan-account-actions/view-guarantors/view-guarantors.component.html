@@ -1,174 +1,186 @@
-<div class="viewGuarantors-account-tables" fxLayout="row" fxLayoutGap="2%">
+<div class="container">
 
-  <div fxFlex="49%">
-    <table>
-      <tbody>
-        <tr>
-          <td>Disbursement Date</td>
-          <td>{{dataObject.timeline.actualDisbursementDate}}<span
-              *ngIf="!dataObject.timeline.actualDisbursementDate">Not Available</span></td>
-        </tr>
-        <tr>
-          <td>Currency</td>
-          <td>{{dataObject.currency.name}}</td>
-        </tr>
-        <tr>
-          <td>Loan Officer</td>
-          <td>{{dataObject.loanOfficerName}} <span *ngIf="!dataObject.loanOfficerName">Unassigned</span>
-            <span *ngIf="dataObject.loanOfficerName">
-              <fa-icon icon="times"></fa-icon>
-            </span></td>
-        </tr>
-        <tr>
-          <td>External Id</td>
-          <td>{{dataObject.externalId}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <mat-card>
 
-  <div fxFlex="49%">
-    <table>
-      <tbody>
-        <tr>
-          <td>Loan Purpose</td>
-          <td>
-            {{dataObject.loanPurposeName}} <span *ngIf="!dataObject.loanPurposeName"> Not Provided </span>
-          </td>
-        </tr>
-        <tr>
-          <td>Approved Amount</td>
-          <td>
-            <span>{{dataObject.approvedPrincipal | number}}</span>
-          </td>
-        </tr>
-        <tr>
-          <td>Disburse Amount</td>
-          <td>
-            <span>{{dataObject.principal | number}}</span>
-          </td>
-        </tr>
-        <tr>
-          <td>Arrears By</td>
-          <td>{{dataObject.summary.totalOverdue | number}}
-            <span *ngIf="dataObject.summary.totalOverdue < 0">Not Provided</span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+    <div class="viewGuarantors-account-tables" fxLayout="row" fxLayoutGap="2%">
 
-<div fxFlexFill *ngIf="guarantorDetails" fxLayout="row wrap" fxLayout.lt-md="column">
+      <div fxFlex="49%">
+        <table>
+          <tbody>
+            <tr>
+              <td>Disbursement Date</td>
+              <td>{{dataObject.timeline.actualDisbursementDate}}<span
+                  *ngIf="!dataObject.timeline.actualDisbursementDate">Not Available</span></td>
+            </tr>
+            <tr>
+              <td>Currency</td>
+              <td>{{dataObject.currency.name}}</td>
+            </tr>
+            <tr>
+              <td>Loan Officer</td>
+              <td>{{dataObject.loanOfficerName}} <span *ngIf="!dataObject.loanOfficerName">Unassigned</span>
+                <span *ngIf="dataObject.loanOfficerName">
+                  <fa-icon icon="times"></fa-icon>
+                </span></td>
+            </tr>
+            <tr>
+              <td>External Id</td>
+              <td>{{dataObject.externalId}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-  <!-- guarantors details table -->
-  <div class="headingContent">
-    <div fxLayout="column" fxFlex="50%">
-      <div class="headingName">
-        <h3>Guarantors Details</h3>
+      <div fxFlex="49%">
+        <table>
+          <tbody>
+            <tr>
+              <td>Loan Purpose</td>
+              <td>
+                {{dataObject.loanPurposeName}} <span *ngIf="!dataObject.loanPurposeName"> Not Provided </span>
+              </td>
+            </tr>
+            <tr>
+              <td>Approved Amount</td>
+              <td>
+                <span>{{dataObject.approvedPrincipal | number}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Disburse Amount</td>
+              <td>
+                <span>{{dataObject.principal | number}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Arrears By</td>
+              <td>{{dataObject.summary.totalOverdue | number}}
+                <span *ngIf="dataObject.summary.totalOverdue < 0">Not Provided</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-    <div fxLayout="column" fxFlex="50%">
-      <div fxLayout="row" fxLayoutAlign="flex-end">
-        <button mat-raised-button class="f-right" color="primary"
-          (click)="toggleGuarantorsDetailsOverview()">{{showDeletedGuarantorsAccounts?'Hide Deleted Guarantors':'Show Deleted Guarantors'}}</button>
+
+    <div fxFlexFill *ngIf="guarantorDetails" fxLayout="row wrap" fxLayout.lt-md="column">
+
+      <!-- guarantors details table -->
+      <div class="headingContent">
+        <div fxLayout="column" fxFlex="50%">
+          <div class="headingName">
+            <h3>Guarantors Details</h3>
+          </div>
+        </div>
+        <div fxLayout="column" fxFlex="50%">
+          <div fxLayout="row" fxLayoutAlign="flex-end">
+            <button mat-raised-button class="f-right" color="primary"
+              (click)="toggleGuarantorsDetailsOverview()">{{showDeletedGuarantorsAccounts?'Hide Deleted Guarantors':'Show Deleted Guarantors'}}</button>
+          </div>
+        </div>
       </div>
+
+      <table fxFlexFill mat-table
+        [dataSource]="guarantorDetails|accountsFilter:'guarantor':showDeletedGuarantorsAccounts">
+        <!-- <ng-container *ngIf="expression"> -->
+        <ng-container matColumnDef="fullname">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let guarantor">
+            <span *ngIf="!guarantor.guarantorFundingDetails">
+              {{guarantor.firstname}} &nbsp; {{guarantor.lastname}}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="relationship">
+          <th mat-header-cell *matHeaderCellDef> Relationship </th>
+          <td mat-cell *matCellDef="let guarantor">
+            <span *ngIf="!guarantor.guarantorFundingDetails">
+              {{guarantor.clientRelationshipType.name}}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="guarantortype">
+          <th mat-header-cell *matHeaderCellDef> Guarantor Type </th>
+          <td mat-cell *matCellDef="let guarantor">
+            <span *ngIf="!guarantor.guarantorFundingDetails">
+              {{guarantor.guarantorType.value}}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="depositAccount">
+          <th mat-header-cell *matHeaderCellDef> Deposit Account </th>
+          <td mat-cell *matCellDef="let guarantor">
+            <span *ngIf="!guarantor.guarantorFundingDetails">
+
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef> Amount </th>
+          <td mat-cell *matCellDef="let guarantor">
+            <span *ngIf="!guarantor.guarantorFundingDetails">
+
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="remainingAmount">
+          <th mat-header-cell *matHeaderCellDef> Remaining Amount </th>
+          <td mat-cell *matCellDef="let guarantor">
+            <span *ngIf="!guarantor.guarantorFundingDetails">
+
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef> Status </th>
+          <td mat-cell *matCellDef="let guarantor">
+            <span *ngIf="!guarantor.guarantorFundingDetails">
+              <span *ngIf="guarantor.status">
+                Active
+              </span>
+              <span *ngIf="!guarantor.status">
+                Deleted
+              </span>
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Action </th>
+          <td mat-cell *matCellDef="let guarantor; let id = index">
+            <span *ngIf="!guarantor.guarantorFundingDetails">
+              <button mat-raised-button class="account-action-button" color="primary"
+                *mifosxHasPermission="'READ_SAVINGSACCOUNT'" (click)="viewGuarantorDetails(guarantor)">
+                <fa-icon icon="eye"></fa-icon>&nbsp;&nbsp;
+              </button>
+              <button mat-raised-button class="account-action-button" color="primary"
+                *ngIf="guarantor.status && guarantor.guarantorType.id == 3 && guarantor.id">
+                <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+              </button>
+              <span *ngIf="guarantor.status">
+                <button mat-raised-button class="account-action-button" color="warn"
+                  *mifosxHasPermission='"DELETE_GUARANTOR"' (click)="deleteGuarantor(guarantor.id)">
+                  <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+                </button>
+              </span>
+            </span>
+          </td>
+        </ng-container>
+        <!-- </ng-container> -->
+
+
+        <tr mat-header-row *matHeaderRowDef="guarantorsDisplayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: guarantorsDisplayedColumns"></tr>
+
+      </table>
     </div>
-  </div>
 
-  <table fxFlexFill mat-table [dataSource]="guarantorDetails|accountsFilter:'guarantor':showDeletedGuarantorsAccounts">
-    <!-- <ng-container *ngIf="expression"> -->
-    <ng-container matColumnDef="fullname">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let guarantor">
-        <span *ngIf="!guarantor.guarantorFundingDetails">
-          {{guarantor.firstname}} &nbsp; {{guarantor.lastname}}
-        </span>
-      </td>
-    </ng-container>
+  </mat-card>
 
-    <ng-container matColumnDef="relationship">
-      <th mat-header-cell *matHeaderCellDef> Relationship </th>
-      <td mat-cell *matCellDef="let guarantor">
-        <span *ngIf="!guarantor.guarantorFundingDetails">
-          {{guarantor.clientRelationshipType.name}}
-        </span>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="guarantortype">
-      <th mat-header-cell *matHeaderCellDef> Guarantor Type </th>
-      <td mat-cell *matCellDef="let guarantor">
-        <span *ngIf="!guarantor.guarantorFundingDetails">
-          {{guarantor.guarantorType.value}}
-        </span>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="depositAccount">
-      <th mat-header-cell *matHeaderCellDef> Deposit Account </th>
-      <td mat-cell *matCellDef="let guarantor">
-        <span *ngIf="!guarantor.guarantorFundingDetails">
-
-        </span>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="amount">
-      <th mat-header-cell *matHeaderCellDef> Amount </th>
-      <td mat-cell *matCellDef="let guarantor">
-        <span *ngIf="!guarantor.guarantorFundingDetails">
-
-        </span>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="remainingAmount">
-      <th mat-header-cell *matHeaderCellDef> Remaining Amount </th>
-      <td mat-cell *matCellDef="let guarantor">
-        <span *ngIf="!guarantor.guarantorFundingDetails">
-
-        </span>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef> Status </th>
-      <td mat-cell *matCellDef="let guarantor">
-        <span *ngIf="!guarantor.guarantorFundingDetails">
-          <span *ngIf="guarantor.status">
-            Active
-          </span>
-          <span *ngIf="!guarantor.status">
-            Deleted
-          </span>
-        </span>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef> Action </th>
-      <td mat-cell *matCellDef="let guarantor; let id = index">
-        <span *ngIf="!guarantor.guarantorFundingDetails">
-          <button mat-raised-button class="account-action-button" color="primary" *mifosxHasPermission="'READ_SAVINGSACCOUNT'" (click)="viewGuarantorDetails(guarantor)">
-            <fa-icon icon="eye"></fa-icon>&nbsp;&nbsp;
-          </button>
-          <button mat-raised-button class="account-action-button" color="primary" *ngIf="guarantor.status && guarantor.guarantorType.id == 3 && guarantor.id">
-            <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
-          </button>
-          <span *ngIf="guarantor.status">
-          <button mat-raised-button class="account-action-button" color="warn" *mifosxHasPermission='"DELETE_GUARANTOR"' (click)="deleteGuarantor(guarantor.id)">
-            <fa-icon icon="trash" ></fa-icon>&nbsp;&nbsp;
-          </button>
-          </span>
-        </span>
-      </td>
-    </ng-container>
-    <!-- </ng-container> -->
-
-
-    <tr mat-header-row *matHeaderRowDef="guarantorsDisplayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: guarantorsDisplayedColumns"></tr>
-
-  </table>
 </div>

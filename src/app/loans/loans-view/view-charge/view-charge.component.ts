@@ -45,10 +45,8 @@ export class ViewChargeComponent {
               private datePipe: DatePipe,
               private router: Router,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { loansAccountCharge: any }) => {
+    this.route.data.subscribe((data: { loansAccountCharge: any, loanDetailsData: any }) => {
       this.chargeData = data.loansAccountCharge;
-    });
-    this.route.parent.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loansAccountData = data.loanDetailsData;
     });
   }

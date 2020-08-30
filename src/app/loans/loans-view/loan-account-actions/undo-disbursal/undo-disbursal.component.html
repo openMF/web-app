@@ -1,17 +1,22 @@
 <div class="container">
 
-  <mat-card-content>
+  <mat-card>
 
-    <mat-form-field fxLayoutAlign="center">
-      <mat-label>Note</mat-label>
-      <textarea matInput [formControl]="note"></textarea>
-    </mat-form-field>
+    <mat-card-content>
+
+      <mat-form-field fxFlex>
+        <mat-label>Note</mat-label>
+        <textarea matInput [formControl]="note"></textarea>
+      </mat-form-field>
+
+    </mat-card-content>
 
     <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
       <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
-      <button mat-raised-button color="primary" (click)="submit()" *mifosxHasPermission="'DISBURSALUNDO_LOAN'">Submit</button>
+      <button mat-raised-button color="primary" (click)="submit()"
+        *mifosxHasPermission="'DISBURSALUNDO_LOAN'">Submit</button>
     </mat-card-actions>
 
-  </mat-card-content>
+  </mat-card>
 
 </div>

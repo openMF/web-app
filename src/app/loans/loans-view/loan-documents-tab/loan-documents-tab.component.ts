@@ -51,8 +51,10 @@ export class LoanDocumentsTabComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private loansService: LoansService,
     public dialog: MatDialog) {
-    this.route.data.subscribe((data: { loanDocuments: any, loanDetailsData: any }) => {
+    this.route.data.subscribe((data: { loanDocuments: any }) => {
       this.getLoanDocumentsData(data.loanDocuments);
+    });
+    this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loanDetailsData = data.loanDetailsData;
     });
   }

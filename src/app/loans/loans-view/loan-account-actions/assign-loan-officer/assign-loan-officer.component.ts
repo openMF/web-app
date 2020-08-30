@@ -68,7 +68,7 @@ export class AssignLoanOfficerComponent implements OnInit {
 
     this.loanService.loanActionButtons(this.loanId, 'assignLoanOfficer', assignForm)
       .subscribe((response: any) => {
-        this.router.navigate([`../../${this.loanId}/general`], { relativeTo: this.route });
+        this.router.navigate([`../../general`], { relativeTo: this.route });
     });
   }
 

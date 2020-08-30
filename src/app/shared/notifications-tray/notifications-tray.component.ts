@@ -34,7 +34,7 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
   routeMap: any = {
     'client' : '/clients/',
     'group' : '/groups/',
-    'loan' : '/loans/',
+    'loan': '/loans-accounts/',
     'center' : '/centers/',
     'shareAccount' : '/shares-accounts/',
     'fixedDeposit' : '/fixed-deposits-accounts/',

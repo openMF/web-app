@@ -76,7 +76,7 @@ export class ViewGuarantorsComponent implements OnInit {
   private reload() {
     const clientId = this.dataObject.clientId;
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients/${clientId}/loans`, { skipLocationChange: true })
+    this.router.navigateByUrl(`/clients/${clientId}/loans-accounts`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
 
