@@ -13,6 +13,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 /** Custom Components */
 import { DeleteDialogComponent } from '../../shared/delete-dialog/delete-dialog.component';
+import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
+import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
+import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
+import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 
 /**
  * Entity to Entity Mapping Component
@@ -40,10 +44,6 @@ export class EntityToEntityMappingComponent implements OnInit {
   relId: number;
   /** Stores filtered data */
   filterPreference: any;
-  /** Checks where add form is to be displayed */
-  addScreenFilter = false;
-  /** Checks where edit form is to be displayed */
-  editScreenFilter = false;
   /** details of particular map id */
   entityMap: any;
   /** Map Id to ID */
@@ -63,10 +63,6 @@ export class EntityToEntityMappingComponent implements OnInit {
 
   /** Filter Preference Form */
   filterPreferenceForm: FormGroup;
-  /** Add entity Form */
-  addMappingForm: FormGroup;
-  /** Edit entity Form */
-  editMappingForm: FormGroup;
   /** List of Entity to Entity Mapping */
   displayedColumns: string[] = ['entitymapping'];
   /** Columns for details of a chosen mapping */
@@ -111,8 +107,6 @@ export class EntityToEntityMappingComponent implements OnInit {
 
   setMapping() {
     this.datasource = new MatTableDataSource(this.entityMappings);
-    this.datasource.paginator = this.paginator;
-    this.datasource.sort = this.sort;
   }
 
   /**
@@ -199,42 +193,13 @@ export class EntityToEntityMappingComponent implements OnInit {
       this.filterPreference.mappingSecondParamId = 0;
     }
     this.hasClickedFilters = true;
-    this.addScreenFilter = false;
-    this.editScreenFilter = false;
 
     this.selectedFromId = this.filterPreference.mappingFirstParamId;
     this.selectedToId = this.filterPreference.mappingSecondParamId;
     this.systemService.getEntitytoEntityData(this.retrieveById, this.selectedFromId, this.selectedToId).subscribe((response: any) => {
       this.entityMappingsListData = new MatTableDataSource(response);
-      // this.entityMappingsListData.paginator = this.paginator;
-      // this.entityMappingsListData.sort = this.sort;
-    });
-  }
-
-  /**
-   * Creates the add mapping form
-   */
-  createAddMappingForm() {
-    this.addMappingForm = this.formBuilder.group({
-      'fromId': ['', Validators.required],
-      'toId': ['', Validators.required],
-      'startDate': [''],
-      'endDate': ['']
-    });
-  }
-
-  /**
-   * Edits the mapping data
-   */
-  createEditMappingForm(data: any) {
-    const dateFormat = 'dd MMMM yyyy';
-    const startDate = new Date(data[0].startDate);
-    const endDate = new Date(data[0].endDate);
-    this.editMappingForm = this.formBuilder.group({
-      'fromId': [data[0].fromId, Validators.required],
-      'toId': [data[0].toId, Validators.required],
-      'startDate': [startDate, Validators.required],
-      'endDate': [endDate, Validators.required]
+      this.entityMappingsListData.paginator = this.paginator;
+      this.entityMappingsListData.sort = this.sort;
     });
   }
 
@@ -243,12 +208,45 @@ export class EntityToEntityMappingComponent implements OnInit {
    * @param selectedType selected Map Type
    */
   showAddScreen(selectedType: number) {
-    this.createAddMappingForm();
     this.relId = selectedType;
-    this.hasClickedFilters = false;
-    this.addScreenFilter = true;
-    this.editScreenFilter = false;
     this.fetchRelatedData(this.relId);
+    const formfields: FormfieldBase[] = [
+      new SelectBase({
+        controlName: 'fromId',
+        label: this.firstMappingEntity,
+        options: { label: 'name', value: 'id', data: this.firstEntityData },
+        required: true
+      }),
+      new SelectBase({
+        controlName: 'toId',
+        label: this.secondMappingEntity,
+        options: { label: 'name', value: 'id', data: this.secondEntityData },
+        required: true
+      }),
+      new DatepickerBase({
+        controlName: 'startDate',
+        label: 'Start Date',
+        type: 'date',
+        required: false
+      }),
+      new DatepickerBase({
+        controlName: 'endDate',
+        label: 'End Date',
+        type: 'date',
+        required: false
+      })
+    ];
+    const data = {
+      title: 'Add Entity to Entity Mapping',
+      layout: { addButtonText: 'Confirm' },
+      formfields: formfields
+    };
+    const addEntitytoEntityMappingDialogRef = this.dialog.open(FormDialogComponent, { data });
+    addEntitytoEntityMappingDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.data) {
+        this.submitNew(response.data);
+      }
+    });
   }
 
   /**
@@ -262,37 +260,69 @@ export class EntityToEntityMappingComponent implements OnInit {
     this.fetchRelatedData(this.relId);
     this.systemService.getMapIdData(selectedMap).subscribe((response: any) => {
       this.entityMap = response;
-      this.createEditMappingForm(this.entityMap);
-      this.hasClickedFilters = false;
-      this.addScreenFilter = false;
-      this.editScreenFilter = true;
+    });
+    const formfields: FormfieldBase[] = [
+      new SelectBase({
+        controlName: 'fromId',
+        label: this.firstMappingEntity,
+        options: { label: 'name', value: 'id', data: this.firstEntityData },
+        required: true
+      }),
+      new SelectBase({
+        controlName: 'toId',
+        label: this.secondMappingEntity,
+        options: { label: 'name', value: 'id', data: this.secondEntityData },
+        required: true
+      }),
+      new DatepickerBase({
+        controlName: 'startDate',
+        label: 'Start Date',
+        type: 'date',
+        required: false
+      }),
+      new DatepickerBase({
+        controlName: 'endDate',
+        label: 'End Date',
+        type: 'date',
+        required: false
+      })
+    ];
+    const data = {
+      title: 'Edit Entity to Entity Mapping',
+      layout: { addButtonText: 'Confirm' },
+      formfields: formfields
+    };
+    const editEntitytoEntityMappingDialogRef = this.dialog.open(FormDialogComponent, { data });
+    editEntitytoEntityMappingDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.data) {
+        this.submitEdit(response.data);
+      }
     });
   }
 
 
   /**
    * Submits the new mapping
-   * @param id Map type id
+   * @param addMappingForm Add Mapping Form Data
    */
-  submitNew(id: number) {
+  submitNew(addMappingForm: any) {
 
-    if (this.addMappingForm.value.fromId === '') {
-      this.addMappingForm.value.fromId = undefined;
+    if (addMappingForm.value.fromId === '') {
+      addMappingForm.value.fromId = undefined;
     }
-    if (this.addMappingForm.value.toId === '') {
-      this.addMappingForm.value.toId = undefined;
+    if (addMappingForm.value.toId === '') {
+      addMappingForm.value.toId = undefined;
     }
-    this.relId = id;
     const dateFormat = 'dd MMMM yyyy';
 
-    const startDate: Date = this.addMappingForm.value.startDate;
-    const endDate: Date = this.addMappingForm.value.endDate;
+    const startDate: Date = addMappingForm.value.startDate;
+    const endDate: Date = addMappingForm.value.endDate;
 
-    this.addMappingForm.patchValue({
+    addMappingForm.patchValue({
       startDate: this.datePipe.transform(startDate, dateFormat),
       endDate: this.datePipe.transform(endDate, dateFormat)
     });
-    const newMappingData = this.addMappingForm.value;
+    const newMappingData = addMappingForm.value;
     newMappingData.dateFormat = dateFormat;
     newMappingData.locale = 'en';
     this.systemService.createMapping(this.relId, newMappingData).subscribe((response: any) => {
@@ -302,23 +332,22 @@ export class EntityToEntityMappingComponent implements OnInit {
 
   /**
    * Submits the edited data
-   * @param id Map Id
+   * @param editMappingForm Edit Mapping Form Id
    */
-  submitEdit(id: number) {
-    this.relId = id;
+  submitEdit(editMappingForm: any) {
     const dateFormat = 'dd MMMM yyyy';
 
-    const startDate: Date = this.editMappingForm.value.startDate;
-    const endDate: Date = this.editMappingForm.value.endDate;
+    const startDate: Date = editMappingForm.value.startDate;
+    const endDate: Date = editMappingForm.value.endDate;
 
-    this.editMappingForm.patchValue({
+    editMappingForm.patchValue({
       startDate: this.datePipe.transform(startDate, dateFormat),
       endDate: this.datePipe.transform(endDate, dateFormat)
     });
-    const newMappingData = this.editMappingForm.value;
+    const newMappingData = editMappingForm.value;
     newMappingData.dateFormat = dateFormat;
     newMappingData.locale = 'en';
-    this.systemService.editMapping(this.relId, newMappingData).subscribe((response: any) => {
+    this.systemService.editMapping(this.mapIdToEdit, newMappingData).subscribe((response: any) => {
       this.showFilteredData();
     });
   }
@@ -339,15 +368,6 @@ export class EntityToEntityMappingComponent implements OnInit {
           });
       }
     });
-  }
-
-  /**
-   * Cancels the add entity operation
-   */
-  cancelOperation() {
-    this.hasClickedFilters = true;
-    this.addScreenFilter = false;
-    this.editScreenFilter = false;
   }
 
 }
