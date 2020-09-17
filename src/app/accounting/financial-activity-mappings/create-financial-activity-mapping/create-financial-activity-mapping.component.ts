@@ -88,7 +88,7 @@ export class CreateFinancialActivityMappingComponent implements OnInit {
   submit() {
     this.accountingService.createFinancialActivityAccount(this.financialActivityMappingForm.value)
       .subscribe((response: any) => {
-        this.router.navigate(['../view', response.resourceId], { relativeTo: this.route });
+        this.router.navigate([`../${response.resourceId}`], { relativeTo: this.route });
     });
   }
 

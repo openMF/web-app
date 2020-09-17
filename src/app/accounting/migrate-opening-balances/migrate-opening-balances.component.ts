@@ -160,7 +160,7 @@ export class MigrateOpeningBalancesComponent implements OnInit {
     });
     delete openingBalances.glAccountEntries;
     this.accountingService.defineOpeningBalances(openingBalances).subscribe((response: any) => {
-      this.router.navigate(['/accounting/journal-entries/transactions/view', response.transactionId]);
+      this.router.navigate(['/accounting/journal-entries/transactions/', response.transactionId]);
     });
   }
 

@@ -240,7 +240,7 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
   createProvisioningJournalEntries() {
     this.accountingService.createProvisioningJournalEntries(this.provisioningEntryId)
       .subscribe((response: any) => {
-        this.router.navigate(['../../journal-entries/view', response.resourceId], { relativeTo: this.route });
+        this.router.navigate(['../../journal-entries', response.resourceId], { relativeTo: this.route });
       });
   }
 

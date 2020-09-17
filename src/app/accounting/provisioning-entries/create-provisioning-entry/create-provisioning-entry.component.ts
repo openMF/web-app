@@ -74,7 +74,7 @@ export class CreateProvisioningEntryComponent implements OnInit {
     }
     this.accountingService.createProvisioningEntry(provisioningEntry)
       .subscribe((response: any) => {
-        this.router.navigate(['../view', response.resourceId], { relativeTo: this.route });
+        this.router.navigate([`../${response.resourceId}`], { relativeTo: this.route });
       });
   }
 
