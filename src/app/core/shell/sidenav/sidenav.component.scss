@@ -19,6 +19,9 @@
     max-width: 15rem;
     z-index: 9999;
     color: #444;
+    &:hover {
+      cursor: pointer;
+    }
 
     .app-logo {
       width: auto;
