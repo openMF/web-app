@@ -18,7 +18,9 @@
     text-align: center;
     max-width: 15rem;
     z-index: 9999;
-    color: #444;
+    &:hover {
+      cursor: pointer;
+    }
 
     .app-logo {
       width: auto;
@@ -33,7 +35,9 @@
       font-weight: normal;
     }
   }
-
+  .text-muted-white{
+    color: white;
+  }
   .app-user {
     text-align: center;
     width: 100%;
