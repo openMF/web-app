@@ -12,4 +12,7 @@ table {
   tr.select-row:hover {
     cursor: pointer;
   }
+  tr:nth-child(odd).td{
+    color : black;
+  }
 }

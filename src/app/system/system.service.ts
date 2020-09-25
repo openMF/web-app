@@ -222,6 +222,15 @@ export class SystemService {
   }
 
   /**
+   * @param {string} reportId Survey ID.
+   * @returns {Observable<any>} Survey.
+   */
+  getSurvey(surveyId: string): Observable<any> {
+    return this.http.get(`/surveys/${surveyId}?template=true`);
+  }
+
+
+  /**
    * @returns {Observable<any>} Fetches Jobs.
    */
   getJobs(): Observable<any> {

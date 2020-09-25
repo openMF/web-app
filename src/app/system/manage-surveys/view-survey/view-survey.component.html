@@ -1,0 +1,111 @@
+<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+  <button mat-raised-button color="primary" *mifosxHasPermission="'UPDATE_REPORT'">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit
+  </button>
+</div>
+
+<div class="container m-b-20">
+  <mat-card>
+    <mat-card-header fxLayout="column">
+      <mat-card-title>Survey</mat-card-title>
+      <mat-divider [inset]="true"></mat-divider>
+    </mat-card-header>
+    <mat-card-content>
+
+      <div fxLayout="row wrap" class="content">
+        <div fxFlex="40%" fxFlex.lt-md="50%" class="header">
+          <b>Key:</b>
+        </div>
+
+        <div fxFlex="60%" fxFlex.lt-md="50%">
+          {{surveyData.key}}
+        </div>
+
+        <div fxFlex="40%" fxFlex.lt-md="50%" class="header">
+          <b>Name:</b>
+        </div>
+
+        <div fxFlex="60%" fxFlex.lt-md="50%">
+          {{surveyData.name}}
+        </div>
+
+        <div fxFlex="40%" fxFlex.lt-md="50%" class="header">
+          <b>Country Code:</b>
+        </div>
+
+        <div fxFlex="60%" fxFlex.lt-md="50%">
+          {{surveyData.countryCode}}
+        </div>
+
+        <div fxFlex="40%" fxFlex.lt-md="50%" class="header">
+          <b>Description:</b>
+        </div>
+
+        <div fxFlex="60%" fxFlex.lt-md="50%">
+          {{surveyData.description}}
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>
+
+<div class="container m-b-20">
+  <mat-card class="questions">
+    <mat-card-header fxLayout="column">
+      <mat-card-title>Questions</mat-card-title>
+      <mat-divider [inset]="true"></mat-divider>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="survey_questions" *ngFor="let questionData of surveyData.questionDatas; index as i">
+        <mat-card>
+          <mat-card-content>
+            <div>Question: {{i+1}}</div>
+            <div fxLayout="row" id="key_text">
+              <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
+                <b>Key:</b>
+              </div>
+
+              <div fxFlex="40%" fxFlex.lt-md="50%">
+                {{questionData.key}}
+              </div>
+              <div fxFlex="40%" fxFlex.lt-md="50%" class="header">
+                <b>Text:</b>
+              </div>
+
+              <div fxFlex="40%" fxFlex.lt-md="50%">
+                {{questionData.text}}
+              </div>
+            </div>
+            <div fxLayout="row" id="description">
+              <div fxFlex="20%" fxFlex.lt-md="50%" class="header">
+                <b>Description:</b>
+              </div>
+
+              <div fxFlex="40%" fxFlex.lt-md="50%">
+                {{questionData.description}}
+              </div>
+            </div>
+            <div fxLayout="column" id="questionaire">
+              <div><b>Option: </b></div>
+              <table id="response">
+                <tr>
+                  <th *ngFor="let column of displayedColumns">{{column | titlecase}}</th>
+                </tr>
+                <tr *ngFor="let row of questionData.responseDatas">
+                  <td *ngFor="let column of displayedColumns">
+                    {{row[column]}}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -24,6 +24,7 @@ import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-
 import { AddRoleComponent } from './roles-and-permissions/add-role/add-role.component';
 import { ManageSurveysComponent } from './manage-surveys/manage-surveys.component';
 import { CreateSurveyComponent } from './manage-surveys/create-survey/create-survey.component';
+import { ViewSurveyComponent } from './manage-surveys/view-survey/view-survey.component';
 import { ManageSchedulerJobsComponent } from './manage-scheduler-jobs/manage-scheduler-jobs.component';
 import { GlobalConfigurationsComponent } from './global-configurations/global-configurations.component';
 import { EditConfigurationComponent } from './global-configurations/edit-configuration/edit-configuration.component';
@@ -74,6 +75,7 @@ import { AuditTrailSearchTemplateResolver } from './audit-trails/audit-trail-sea
 import { AuditTrailResolver } from './audit-trails/view-audit/audit-trail.resolver';
 import { ReportsResolver } from './manage-reports/reports.resolver';
 import { ReportResolver } from './manage-reports/report.resolver';
+import { SurveyResolver } from './manage-surveys/survey.resolver';
 import { ReportTemplateResolver } from './manage-reports/report-template.resolver';
 import { ViewSchedulerJobComponent } from './manage-scheduler-jobs/view-scheduler-job/view-scheduler-job.component';
 import { ViewSchedulerJobResolver } from './manage-scheduler-jobs/view-scheduler-job/view-scheduler-job.resolver';
@@ -388,6 +390,19 @@ const routes: Routes = [
             path: 'create',
             component: CreateSurveyComponent,
             data: { title:  extract('Create Survey'), breadcrumb: 'Create' },
+          },
+          {
+            path: ':id',
+            data: {title: extract('View Survey'), routeParamBreadcrumb: 'id'},
+            children: [
+              {
+                path: '',
+                component: ViewSurveyComponent,
+                resolve: {
+                  survey: SurveyResolver
+                }
+              }
+            ]
           }
         ]
       },
@@ -580,6 +595,7 @@ const routes: Routes = [
     HooksTemplateResolver,
     RolesAndPermissionsResolver,
     ManageSurveysResolver,
+    SurveyResolver,
     ManageSchedulerJobsResolver,
     GlobalConfigurationsResolver,
     GlobalConfigurationResolver,
