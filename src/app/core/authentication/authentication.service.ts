@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable, of } from 'rxjs';
@@ -89,11 +89,17 @@ export class AuthenticationService {
     this.storage = this.rememberMe ? localStorage : sessionStorage;
 
     if (environment.oauth.enabled) {
-      let httpParams = new HttpParams();
-      httpParams = httpParams.set('client_id', 'community-app');
-      httpParams = httpParams.set('grant_type', 'password');
-      httpParams = httpParams.set('client_secret', '123');
-      return this.http.disableApiPrefix().post(`${environment.oauth.serverUrl}/oauth/token`, {}, { params: httpParams })
+      let bodyData = new HttpParams();
+      bodyData = bodyData.set('client_id', 'community-app');
+      bodyData = bodyData.set('grant_type', 'password');
+      bodyData = bodyData.set('client_secret', '123');
+      return this.http.disableApiPrefix().post(`${environment.oauth.serverUrl}/oauth/token`,
+          bodyData.toString(),
+          {
+            headers: new HttpHeaders()
+              .set('Content-Type', 'application/x-www-form-urlencoded')
+          }
+        )
         .pipe(
           map((tokenResponse: OAuth2Token) => {
             this.getUserDetails(tokenResponse);
