@@ -355,4 +355,12 @@ export class ClientsService {
   createNewSurvey(surveyId: Number, surveyData: any) {
     return this.http.post(`/surveys/scorecards/${surveyId}`, surveyData);
   }
+
+  /**
+   * @param userData User Data.
+   */
+  createSelfServiceUser(userData: any) {
+    return this.http.post(`/users`, userData);
+  }
+
 }

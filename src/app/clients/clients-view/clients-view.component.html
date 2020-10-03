@@ -106,7 +106,7 @@
         <span *ngIf="clientViewData.status.value!='Transfer on hold'">
           <button mat-menu-item (click)="doAction('View Standing Instructions')" *mifosxHasPermission="'CREATE_STANDINGINSTRUCTION'">View Standing Instructions</button>
         </span>
-        <!-- TODO: Create Self Service User -->
+        <button mat-menu-item (click)="doAction('Create Self Service User')">Create Self Service User</button>
       </mat-menu>
 
     </mat-card-actions>

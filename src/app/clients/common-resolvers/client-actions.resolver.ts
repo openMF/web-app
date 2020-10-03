@@ -51,6 +51,8 @@ export class ClientActionsResolver implements Resolve<Object> {
       case 'Accept Transfer':
       case 'Reject Transfer':
         return this.clientsService.getClientTransferProposalDate(clientId);
+      case 'Create Self Service User':
+        return this.clientsService.getClientData(clientId);
       default:
         return undefined;
     }
