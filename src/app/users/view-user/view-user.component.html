@@ -45,16 +45,13 @@
           {{ userData.lastname }}
         </div>
 
-        <div *ngIf="userData.email">
 
-          <div fxFlex="50%" class="mat-body-strong">
-            Email
-          </div>
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="userData.email">
+          Email
+        </div>
 
-          <div fxFlex="50%">
-            {{ userData.email }}
-          </div>
-
+        <div fxFlex="50%" *ngIf="userData.email">
+          {{ userData.email }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
