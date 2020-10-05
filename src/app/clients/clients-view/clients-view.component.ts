@@ -90,6 +90,9 @@ export class ClientsViewComponent implements OnInit {
       case 'Delete Signature':
         this.deleteSignature();
         break;
+      case 'Charges Overview':
+        this.router.navigate(['charges/overview'], { relativeTo: this.route });
+        break;
       case 'Capture Image':
         this.captureProfileImage();
         break;

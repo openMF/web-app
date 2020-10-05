@@ -199,7 +199,7 @@ const routes: Routes = [
             children: [
               {
                 path: 'overview',
-                data: { title: extract('Charges Overview'), breadcrumb: 'Charges Overview' },
+                data: { title: extract('Charges Overview'), breadcrumb: 'Charges Overview', routeParamBreadcrumb: false },
                 component: ChargesOverviewComponent,
                 resolve: {
                   clientChargesData: ClientChargeOverviewResolver

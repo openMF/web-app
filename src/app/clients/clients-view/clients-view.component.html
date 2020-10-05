@@ -101,6 +101,7 @@
         <button mat-menu-item (click)="doAction('Update Default Savings')" *mifosxHasPermission="'UPDATESAVINGSACCOUNT_CLIENT'"> Update Default Savings </button>
         <button mat-menu-item (click)="doAction('Upload Signature')" *mifosxHasPermission="'CREATE_CLIENTIMAGE'"> Upload Signature </button>
         <button mat-menu-item (click)="doAction('Delete Signature')" *mifosxHasPermission="'DELETE_CLIENTIMAGE'"> Delete Signature </button>
+        <button mat-menu-item (click)="doAction('Charges Overview')"> Charges Overview </button>
         <button mat-menu-item (click)="doAction('Client Screen Reports')"> Client Screen Reports </button>
         <button mat-menu-item (click)="doAction('Create Standing Instructions')" *mifosxHasPermission="'READ_STANDINGINSTRUCTION'">Create Standing Instructions</button>
         <span *ngIf="clientViewData.status.value!='Transfer on hold'">
