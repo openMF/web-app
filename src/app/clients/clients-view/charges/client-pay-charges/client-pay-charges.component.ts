@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services. */
 import { ClientsService } from 'app/clients/clients.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Client Pay Charge component.
@@ -30,13 +31,15 @@ export class ClientPayChargesComponent implements OnInit {
      * @param {FormBuilder} formBuilder Form Builder.
      * @param {ActivatedRoute} route Activated Route.
      * @param {Router} router Router for navigation.
+     * @param {SettingsService} settingsService Setting service
      */
   constructor(
     private clientsService: ClientsService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { transactionData: any }) => {
       this.transactionData = data.transactionData;
@@ -67,7 +70,7 @@ export class ClientPayChargesComponent implements OnInit {
       transactionDate: this.datePipe.transform(transactionDate, dateFormat)
     });
     const transactions = this.transactionForm.value;
-    transactions.locale = 'en';
+    transactions.locale = this.settingsService.language.code;
     transactions.dateFormat = dateFormat;
     this.clientsService.payClientCharge(this.transactionData.clientId, this.transactionData.id, transactions).subscribe(() => {
       this.router.navigate(['../', 'general']);

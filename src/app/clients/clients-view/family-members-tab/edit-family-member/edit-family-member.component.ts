@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { ClientsService } from '../../../clients.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Edit Family Member Component
@@ -34,12 +35,14 @@ export class EditFamilyMemberComponent implements OnInit {
    * @param {Router} router Router
    * @param {ActivatedRoute} route Route
    * @param {ClientsService} clientsService Clients Service
+   * @param {SettingsService} settingsService Setting service
    */
   constructor(private formBuilder: FormBuilder,
               private datePipe: DatePipe,
               private router: Router,
               private route: ActivatedRoute,
-              private clientsService: ClientsService) {
+              private clientsService: ClientsService,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { clientTemplate: any, editFamilyMember: any }) => {
       this.addFamilyMemberTemplate = data.clientTemplate.familyMemberOptions;
       this.familyMemberDetails = data.editFamilyMember;
@@ -76,12 +79,12 @@ export class EditFamilyMemberComponent implements OnInit {
   submit() {
     const prevDateOfBirth: Date = this.editFamilyMemberForm.value.dateOfBirth;
     // TODO: Update once language and date settings are setup
-    const dateFormat = 'yyyy-MM-dd';
+    const dateFormat = this.settingsService.dateFormat;
     this.editFamilyMemberForm.patchValue({
       dateOfBirth: this.datePipe.transform(prevDateOfBirth, dateFormat)
     });
     const familyMemberData = this.editFamilyMemberForm.value;
-    familyMemberData.locale = 'en';
+    familyMemberData.locale = this.settingsService.language.code;
     familyMemberData.dateFormat = dateFormat;
     this.clientsService.editFamilyMember(this.familyMemberDetails.clientId, this.familyMemberDetails.id, familyMemberData).subscribe(res => {
       this.router.navigate(['../../'], { relativeTo: this.route });

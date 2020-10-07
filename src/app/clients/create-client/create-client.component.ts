@@ -10,6 +10,10 @@ import { ClientGeneralStepComponent } from '../client-stepper/client-general-ste
 import { ClientFamilyMembersStepComponent } from '../client-stepper/client-family-members-step/client-family-members-step.component';
 import { ClientAddressStepComponent } from '../client-stepper/client-address-step/client-address-step.component';
 
+/** Custom Services */
+import { SettingsService } from 'app/settings/settings.service';
+
+
 /**
  * Create Client Component.
  */
@@ -37,10 +41,12 @@ export class CreateClientComponent {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {ClientsService} clientsService Clients Service
+   * @param {SettingsService} settingsService Setting service
    */
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private clientsService: ClientsService) {
+              private clientsService: ClientsService,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { clientTemplate: any, clientAddressFieldConfig: any }) => {
       this.clientTemplate = data.clientTemplate;
       this.clientAddressFieldConfig = data.clientAddressFieldConfig;
@@ -68,8 +74,8 @@ export class CreateClientComponent {
    * Submits the create client form.
    */
   submit() {
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     // TODO: Update once language and date settings are setup
     const clientData = {
       ...this.client,

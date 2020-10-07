@@ -3,6 +3,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
+/** Custom Services */
+import { SettingsService } from 'app/settings/settings.service';
+
 /**
  * Create Client Component
  */
@@ -45,9 +48,11 @@ export class ClientGeneralStepComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {DatePipe} datePipe Date Pipe
+   * @param {SettingsService} settingsService Setting service
    */
   constructor(private formBuilder: FormBuilder,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private settingsService: SettingsService) {
     this.setClientForm();
   }
 
@@ -140,8 +145,8 @@ export class ClientGeneralStepComponent implements OnInit {
    */
   get clientGeneralDetails() {
     const generalDetails = this.createClientForm.value;
-    const dateFormat = 'dd MMMM yyyy';
-    const locale = 'en';
+    const dateFormat = this.settingsService.dateFormat;
+    const locale = this.settingsService.language.code;
     // TODO: Update once language and date settings are setup
     for (const key in generalDetails) {
       if (generalDetails[key] === '' || key === 'addSavings') {

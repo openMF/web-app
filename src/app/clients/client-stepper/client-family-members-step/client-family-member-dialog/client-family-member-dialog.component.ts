@@ -4,6 +4,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
+/** Custom Services */
+import { SettingsService } from 'app/settings/settings.service';
+
 /**
  * Client Family Members Dialog
  */
@@ -27,11 +30,13 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {DatePipe} datePipe Date Pipe
    * @param {any} data Dialog Data
+   * @param {SettingsService} settingsService Setting service
    */
   constructor(public dialogRef: MatDialogRef<ClientFamilyMemberDialogComponent>,
               private formBuilder: FormBuilder,
               private datePipe: DatePipe,
-              @Inject(MAT_DIALOG_DATA) public data: any) { }
+              @Inject(MAT_DIALOG_DATA) public data: any,
+              private settingsService: SettingsService) { }
 
   ngOnInit() {
     this.createFamilyMemberForm();
@@ -75,8 +80,8 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
    * Returns Formatted Family Member
    */
   get familyMember() {
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     // TODO: Update once language and date settings are setup
     const familyMember = {
       ...this.familyMemberForm.value,

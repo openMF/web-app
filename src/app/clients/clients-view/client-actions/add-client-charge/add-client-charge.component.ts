@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Add Clients Charge component.
@@ -37,13 +38,15 @@ export class AddClientChargeComponent implements OnInit {
    * @param {Router} router Router
    * @param {DatePipe} datePipe Date Pipe
    * @param {ClientsService} clientsService Clients Service
+   * @param {SettingsService} settingsService Setting service
    */
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private datePipe: DatePipe,
-    private clientsService: ClientsService
+    private clientsService: ClientsService,
+    private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.clientChargeOptions = data.clientActionData.chargeOptions;
@@ -111,7 +114,7 @@ export class AddClientChargeComponent implements OnInit {
    */
   submit() {
     const clientCharge = this.clientChargeForm.value;
-    clientCharge.locale = 'en';
+    clientCharge.locale = this.settingsService.language.code;
     if (!clientCharge.feeInterval) {
       clientCharge.feeInterval = this.chargeDetails.feeInterval;
     }
@@ -124,7 +127,7 @@ export class AddClientChargeComponent implements OnInit {
           clientCharge.feeOnMonthDay = this.datePipe.transform(prevDate, monthDayFormat);
         }
       } else {
-        const dateFormat = 'yyyy-MM-dd';
+        const dateFormat = this.settingsService.dateFormat;
         clientCharge.dateFormat = dateFormat;
         if (clientCharge.dueDate) {
           const prevDate = this.clientChargeForm.value.dueDate;
