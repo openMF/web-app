@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Withdraw By Client Savings Account Component
@@ -32,12 +33,14 @@ export class WithdrawByClientSavingsAccountComponent implements OnInit {
    * @param {DatePipe} datePipe Date Pipe
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
+   * @param {SettingsService} settingsService Setting service
    */
   constructor(private formBuilder: FormBuilder,
               private savingsService: SavingsService,
               private datePipe: DatePipe,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private settingsService: SettingsService) {
     this.accountId = this.route.parent.snapshot.params['savingAccountId'];
   }
 
@@ -64,8 +67,8 @@ export class WithdrawByClientSavingsAccountComponent implements OnInit {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const prevWithdrawnOnDate: Date = this.withdrawSavingsAccountForm.value.withdrawnOnDate;
     this.withdrawSavingsAccountForm.patchValue({
       withdrawnOnDate: this.datePipe.transform(prevWithdrawnOnDate, dateFormat),

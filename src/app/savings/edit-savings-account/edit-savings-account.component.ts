@@ -10,6 +10,7 @@ import { SavingsAccountChargesStepComponent } from '../savings-account-stepper/s
 
 /** Custom Services */
 import { SavingsService } from '../savings.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Edit Savings Account Component
@@ -39,11 +40,13 @@ export class EditSavingsAccountComponent {
    * @param {Router} router Router
    * @param {DatePipe} datePipe Date Pipe
    * @param {SavingsService} savingsService Savings Service
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private route: ActivatedRoute,
               private router: Router,
               private datePipe: DatePipe,
-              private savingsService: SavingsService
+              private savingsService: SavingsService,
+              private settingsService: SettingsService
               ) {
     this.route.data.subscribe((data: { savingsAccountAndTemplate: any }) => {
       this.savingsAccountAndTemplate = data.savingsAccountAndTemplate;
@@ -103,8 +106,8 @@ export class EditSavingsAccountComponent {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const monthDayFormat = 'dd MMMM';
     const savingsAccount = {
       ...this.savingsAccount,
