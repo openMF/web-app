@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 /** Custom Services */
 import { RecurringDepositsService } from 'app/deposits/recurring-deposits/recurring-deposits.service';
 import { AccountTransfersService } from 'app/account-transfers/account-transfers.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Dialog Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -40,7 +41,8 @@ export class StandingInstructionsTabComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private recurringDepositsService: RecurringDepositsService,
     private dialog: MatDialog,
-    private accountTransfersService: AccountTransfersService) {
+    private accountTransfersService: AccountTransfersService,
+    private settingsService: SettingsService, ) {
     this.route.parent.data.subscribe((data: { recurringDepositsAccountData: any }) => {
       this.recurringDepositsData = data.recurringDepositsAccountData;
     });
@@ -57,8 +59,8 @@ export class StandingInstructionsTabComponent implements OnInit {
     const clientId = this.recurringDepositsData.clientId;
     const clientName = this.recurringDepositsData.clientName;
     const accountId = this.recurringDepositsData.id;
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     this.recurringDepositsService.getStandingInstructions(clientId, clientName, accountId, locale, dateFormat).subscribe((response: any) => {
       this.instructionsData = response.pageItems;
       this.dataSource.data = this.instructionsData;

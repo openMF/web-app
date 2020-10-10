@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -62,7 +63,8 @@ export class ChargesTabComponent implements OnInit {
               private savingsService: SavingsService,
               private datePipe: DatePipe,
               private router: Router,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private settingsService: SettingsService, ) {
       this.route.parent.data.subscribe((data: { recurringDepositsAccountData: any }) => {
       this.recurringDepositsAccountData = data.recurringDepositsAccountData;
       this.chargesData = this.recurringDepositsAccountData.charges;
@@ -103,8 +105,8 @@ export class ChargesTabComponent implements OnInit {
     const payChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
     payChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        const locale = 'en';
-        const dateFormat = 'dd MMMM yyyy';
+        const locale = this.settingsService.language.code;
+        const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
           ...response.data.value,
           dueDate: this.datePipe.transform(response.data.value.dueDate, dateFormat),
