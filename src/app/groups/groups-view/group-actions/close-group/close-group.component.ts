@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Close Group Component
@@ -34,12 +35,14 @@ export class CloseGroupComponent implements OnInit {
    * @param {DatePipe} datePipe Date Pipe
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
+   * @param {SettingsService} settingsService SettingsService
    */
   constructor(private formBuilder: FormBuilder,
               private groupsService: GroupsService,
               private datePipe: DatePipe,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { groupActionData: any }) => {
       this.closureData = data.groupActionData.closureReasons;
     });
@@ -65,8 +68,8 @@ export class CloseGroupComponent implements OnInit {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const prevClosedDate: Date = this.closeGroupForm.value.closureDate;
     this.closeGroupForm.patchValue({
       closureDate: this.datePipe.transform(prevClosedDate, dateFormat),

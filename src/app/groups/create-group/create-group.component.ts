@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 /** Custom Services */
 import { GroupsService } from '../groups.service';
 import { ClientsService } from '../../clients/clients.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Create Group component.
@@ -43,13 +44,15 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    * @param {ClientsService} clientsService CentersService.
    * @param {GroupsService} groupService GroupsService.
    * @param {DatePipe} datePipe Date Pipe to format date.
+   * @param {SettingsService} settingsService SettingsService
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private clientsService: ClientsService,
               private groupService: GroupsService,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private settingsService: SettingsService) {
     this.route.data.subscribe( (data: {offices: any} ) => {
       this.officeData = data.offices;
     });
@@ -149,13 +152,13 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     const submittedOnDate: Date = this.groupForm.value.submittedOnDate;
     const activationDate: Date = this.groupForm.value.activationDate;
     // TODO: Update once language and date settings are setup
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = this.settingsService.dateFormat;
     this.groupForm.patchValue({
       submittedOnDate: this.datePipe.transform(submittedOnDate, dateFormat),
       activationDate: this.datePipe.transform(activationDate, dateFormat)
     });
     const group = this.groupForm.value;
-    group.locale = 'en';
+    group.locale = this.settingsService.language.code;
     group.dateFormat = dateFormat;
     group.clientMembers = [];
     this.clientMembers.forEach((client: any) => group.clientMembers.push(client.id));
