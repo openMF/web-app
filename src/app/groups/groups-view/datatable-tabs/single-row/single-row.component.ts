@@ -17,7 +17,7 @@ import { CheckboxBase } from 'app/shared/form-dialog/formfield/model/checkbox-ba
 
 /** Custom Services */
 import { GroupsService } from '../../../groups.service';
-
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Groups Single Row Data Tables
@@ -43,11 +43,13 @@ export class SingleRowComponent implements OnInit {
    * @param {DatePipe} datePipe Date Pipe.
    * @param {GroupsService} groupsService Groups Service.
    * @param {MatDialog} dialog Mat Dialog.
+   * @param {SettingsService} settingsService SettingsService
    */
   constructor(private route: ActivatedRoute,
               private datePipe: DatePipe,
               private dialog: MatDialog,
-              private groupsService: GroupsService) {
+              private groupsService: GroupsService,
+              private settingsService: SettingsService) {
     this.groupId = this.route.parent.parent.snapshot.paramMap.get('groupId');
   }
 
@@ -65,7 +67,7 @@ export class SingleRowComponent implements OnInit {
    * Creates a new instance of the given single row data table.
    */
   add() {
-    let dataTableEntryObject: any = { locale: 'en' };
+    let dataTableEntryObject: any = { locale: this.settingsService.language.code };
     const dateTransformColumns: string[] = [];
     const columns = this.dataObject.columnHeaders.filter((column: any) => {
       return ((column.columnName !== 'id') && (column.columnName !== 'group_id'));

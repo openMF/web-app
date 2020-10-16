@@ -7,6 +7,7 @@ import { FormControl } from '@angular/forms';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -47,12 +48,14 @@ export class GroupAttendanceComponent implements OnInit {
    * @param {Router} router Router
    * @param {GroupsService} groupsService Groups Service
    * @param {MatDialog} dialog Mat Dialog
+   * @param {SettingsService} settingsService SettingsService
    */
   constructor(private route: ActivatedRoute,
               private datePipe: DatePipe,
               private router: Router,
               private groupsService: GroupsService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private settingsService: SettingsService) {
     this.route.data.subscribe(( data: { groupActionData: any }) => {
       this.groupData = data.groupActionData;
       this.membersData = data.groupActionData.clientMembers;
@@ -113,8 +116,8 @@ export class GroupAttendanceComponent implements OnInit {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const prevMeetingDate: Date = new Date(this.meetingDate.value);
     this.meetingDate.patchValue(this.datePipe.transform(prevMeetingDate, dateFormat));
     const data = {

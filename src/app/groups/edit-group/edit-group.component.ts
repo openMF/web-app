@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { GroupsService } from '../groups.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Edit Group component.
@@ -37,12 +38,14 @@ export class EditGroupComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {GroupsService} groupService GroupsService.
    * @param {DatePipe} datePipe Date Pipe to format date.
+   * @param {SettingsService} settingsService SettingsService
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private groupService: GroupsService,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private settingsService: SettingsService) {
     this.route.data.subscribe( (data: { groupAndTemplateData: any, groupViewData: any } ) => {
       this.staffData = data.groupAndTemplateData.staffOptions;
       this.groupData = data.groupAndTemplateData;
@@ -96,13 +99,13 @@ export class EditGroupComponent implements OnInit {
     const submittedOnDate: Date = this.editGroupForm.value.submittedOnDate;
     const activationDate: Date = this.editGroupForm.value.activationDate;
     // TODO: Update once language and date settings are setup
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = this.settingsService.dateFormat;
     this.editGroupForm.patchValue({
       submittedOnDate: this.datePipe.transform(submittedOnDate, dateFormat),
       activationDate: activationDate && this.datePipe.transform(activationDate, dateFormat)
     });
     const group = this.editGroupForm.value;
-    group.locale = 'en';
+    group.locale = this.settingsService.language.code;
     group.dateFormat = dateFormat;
     this.groupService.updateGroup(group, this.groupData.id).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });

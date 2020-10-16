@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Group Transfer Clients component.
@@ -33,11 +34,13 @@ export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation
    * @param {GroupsService} groupsService GroupsService.
+   * @param {SettingsService} settingsService SettingsService
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
-              private groupsService: GroupsService) {
+              private groupsService: GroupsService,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { groupActionData: any }) => {
       this.groupData = data.groupActionData;
       this.clientMembers = this.groupData.clientMembers;
@@ -87,7 +90,7 @@ export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
    * if successful redirects to group.
    */
   submit() {
-    const locale = 'en';
+    const locale = this.settingsService.language.code;
     const data = {
       ...this.transferClientsForm.value,
       destinationGroupId: this.transferClientsForm.get('destinationGroupId').value.id,
