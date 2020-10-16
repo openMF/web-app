@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -40,12 +41,14 @@ export class ViewChargeComponent {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    * @param {DatePipe} datePipe DatePipe.
+   * @param {SettingsService} settingsService Setting service
    */
   constructor(private savingsService: SavingsService,
               private route: ActivatedRoute,
               private datePipe: DatePipe,
               private router: Router,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { savingsAccountCharge: any }) => {
       this.chargeData = data.savingsAccountCharge;
     });
@@ -82,8 +85,8 @@ export class ViewChargeComponent {
     const payChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
     payChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        const locale = 'en';
-        const dateFormat = 'dd MMMM yyyy';
+        const locale = this.settingsService.language.code;
+        const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
           ...response.data.value,
           dueDate: this.datePipe.transform(response.data.value.dueDate, dateFormat),
@@ -149,8 +152,8 @@ export class ViewChargeComponent {
     const editChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
     editChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        const locale = 'en';
-        const dateFormat = 'dd MMMM yyyy';
+        const locale = this.settingsService.language.code;
+        const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
           ...response.data.value,
           dateFormat,
