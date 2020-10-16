@@ -1,0 +1,36 @@
+.mat-card{
+    margin: 5px
+}
+
+.survey_questions{
+    margin-bottom: 10px;
+}
+
+#key_text{
+    margin: 10px;
+}
+
+#description{
+    margin: 10px;
+}
+
+#questionaire{
+    margin: 10px;
+}
+
+#response {
+    width: 100%;
+}
+
+#response th,#response td{
+    text-align: left;
+    width: 100px;
+}
+
+#response tr:hover{
+    background-color: #ddd;
+}
+
+mat-card-header{
+    margin-bottom: 12px;
+}

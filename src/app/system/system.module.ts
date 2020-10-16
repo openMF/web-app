@@ -20,6 +20,7 @@ import { ManageHooksComponent } from './manage-hooks/manage-hooks.component';
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
 import { AddRoleComponent } from './roles-and-permissions/add-role/add-role.component';
 import { ManageSurveysComponent } from './manage-surveys/manage-surveys.component';
+import { ViewSurveyComponent } from './manage-surveys/view-survey/view-survey.component';
 import { CreateSurveyComponent } from './manage-surveys/create-survey/create-survey.component';
 import { ManageSchedulerJobsComponent } from './manage-scheduler-jobs/manage-scheduler-jobs.component';
 import { GlobalConfigurationsComponent } from './global-configurations/global-configurations.component';
@@ -117,7 +118,8 @@ import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-t
     ConfigureMakerCheckerTasksComponent,
     CreateSurveyComponent,
     EditSchedulerJobComponent,
-    ViewHistorySchedulerJobComponent
+    ViewHistorySchedulerJobComponent,
+    ViewSurveyComponent
   ],
 })
 export class SystemModule { }

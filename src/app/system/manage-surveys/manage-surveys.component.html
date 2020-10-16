@@ -60,7 +60,7 @@
       </ng-container>
   
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let survey; columns: displayedColumns;" class="select-row"></tr>
+      <tr mat-row *matRowDef="let survey; columns: displayedColumns;" [routerLink]="[survey.id]" class="select-row"></tr>
 
     </table>
 
