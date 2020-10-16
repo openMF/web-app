@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Undo Client Rejection Component
@@ -37,7 +38,8 @@ export class UndoClientRejectionComponent implements OnInit {
               private clientsService: ClientsService,
               private datePipe: DatePipe,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private settingsService: SettingsService) {
     this.clientId = this.route.parent.snapshot.params['clientId'];
   }
 
@@ -63,8 +65,8 @@ export class UndoClientRejectionComponent implements OnInit {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const prevReopenedDate: Date = this.undoClientRejectionForm.value.reopenedDate;
     this.undoClientRejectionForm.patchValue({
       reopenedDate: this.datePipe.transform(prevReopenedDate, dateFormat),

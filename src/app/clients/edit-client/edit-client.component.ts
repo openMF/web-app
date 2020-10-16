@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Edit Client Component
@@ -51,12 +52,14 @@ export class EditClientComponent implements OnInit {
    * @param {Router} router Router
    * @param {ClientsService} clientsService Clients Service
    * @param {DatePipe} datePipe Date Pipe
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private clientsService: ClientsService,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { clientDataAndTemplate: any }) => {
       this.clientDataAndTemplate = data.clientDataAndTemplate;
     });
@@ -151,8 +154,8 @@ export class EditClientComponent implements OnInit {
    * Submits the edit client form.
    */
   submit() {
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     // TODO: Update once language and date settings are setup
     const editClientFormValue: any = this.editClientForm.getRawValue();
     const clientData = {

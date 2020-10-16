@@ -14,6 +14,7 @@ import { DeleteDialogComponent } from '../../../../shared/delete-dialog/delete-d
 
 /** Custom Services */
 import { ClientsService } from '../../../clients.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
   selector: 'mifosx-multi-row',
@@ -32,7 +33,8 @@ export class MultiRowComponent implements OnInit, OnChanges {
   constructor(private route: ActivatedRoute,
     private datePipe: DatePipe,
     private clientsService: ClientsService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private settingsService: SettingsService) {
     this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
   }
 
@@ -51,7 +53,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
 
   add() {
     let dataTableEntryObject: any = {
-      locale: 'en'
+      locale: this.settingsService.language.code
     };
     const dateTransformColumns: string[] = [];
     const columns = this.dataObject.columnHeaders.filter((column: any) => {

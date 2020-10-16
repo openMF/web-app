@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Activate Client Component
@@ -32,12 +33,14 @@ export class ActivateClientComponent implements OnInit {
    * @param {DatePipe} datePipe Date Pipe
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
               private clientsService: ClientsService,
               private datePipe: DatePipe,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private settingsService: SettingsService) {
     this.clientId = this.route.parent.snapshot.params['clientId'];
   }
 
@@ -63,8 +66,8 @@ export class ActivateClientComponent implements OnInit {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const prevActivationDate: Date = this.activateClientForm.value.activationDate;
     this.activateClientForm.patchValue({
       activationDate: this.datePipe.transform(prevActivationDate, dateFormat),
