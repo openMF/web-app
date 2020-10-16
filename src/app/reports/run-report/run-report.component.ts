@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { ReportsService } from '../reports.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Models */
 import { ReportParameter } from '../common-models/report-parameter.model';
@@ -55,10 +56,12 @@ export class RunReportComponent implements OnInit {
    * Fetches report specifications from route params and retrieves report parameters data from `resolve`.
    * @param {ActivatedRoute} route ActivatedRoute.
    * @param {ReportsService} reportsService ReportsService
+   * @param {SettingsService} settingsService Settings Service
    * @param {DatePipe} datePipe Date Pipe
    */
   constructor(private route: ActivatedRoute,
               private reportsService: ReportsService,
+               private settingsService: SettingsService,
               private datePipe: DatePipe) {
     this.report.name = this.route.snapshot.params['name'];
     this.route.queryParams.subscribe((queryParams: { type: any, id: any }) => {
@@ -189,7 +192,7 @@ export class RunReportComponent implements OnInit {
           formattedResponse[newKey] = value['id'];
           break;
         case 'date':
-          const dateFormat = 'yyyy-MM-dd';
+          const dateFormat = this.settingsService.dateFormat;
           formattedResponse[newKey] = this.datePipe.transform(value, dateFormat);
           break;
         case 'none':

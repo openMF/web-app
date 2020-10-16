@@ -7,6 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 /** Custom Services */
 import { ReportsService } from '../reports.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * XBRL Report Component
@@ -41,9 +42,11 @@ export class XBRLReportComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private reportService: ReportsService,
               private formBuilder: FormBuilder,
+              private settingsService: SettingsService,
               private datePipe: DatePipe,
               private sanitizer: DomSanitizer) {}
 
@@ -88,7 +91,7 @@ export class XBRLReportComponent implements OnInit {
     const startDate: Date = this.xbrlForm.value.startDate;
     const endDate: Date = this.xbrlForm.value.endDate;
     // TODO: Update once language and date settings are setup
-    const dateFormat = 'yyyy-MM-dd';
+    const dateFormat = this.settingsService.dateFormat;
     this.xbrlForm.patchValue({
       startDate: this.datePipe.transform(startDate, dateFormat),
       endDate: this.datePipe.transform(endDate, dateFormat)
@@ -123,3 +126,4 @@ export class XBRLReportComponent implements OnInit {
   }
 
 }
+

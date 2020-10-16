@@ -4,6 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 /** Custom Services */
 import { ReportsService } from '../../reports.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Pentaho Component
@@ -26,9 +27,10 @@ export class PentahoComponent implements OnChanges {
   /**
    * @param {DomSanitizer} sanitizer DOM Sanitizer
    * @param {ReportsService} reportsService Reports Service
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private sanitizer: DomSanitizer,
-              private reportsService: ReportsService) { }
+              private reportsService: ReportsService, private settingsService: SettingsService) { }
 
   /**
    * Fetches run report data post changes in run report form.
@@ -39,7 +41,7 @@ export class PentahoComponent implements OnChanges {
   }
 
   getRunReportData() {
-    this.reportsService.getPentahoRunReportData(this.dataObject.report.name, this.dataObject.formData, 'default', 'en', 'dd MMMM yyyy')
+    this.reportsService.getPentahoRunReportData(this.dataObject.report.name, this.dataObject.formData, 'default', this.settingsService.language.code, this.settingsService.dateFormat)
       .subscribe( (res: any) => {
         const contentType = res.headers.get('Content-Type');
         const file = new Blob([res.body], {type: contentType});
