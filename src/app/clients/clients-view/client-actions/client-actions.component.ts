@@ -28,7 +28,8 @@ export class ClientActionsComponent {
     'Undo Rejection': boolean
     'Add Charge': boolean
     'Take Survey': boolean
-    'Client Screen Reports': boolean
+    'Client Screen Reports': boolean,
+    'Create Self Service User': boolean
   } = {
     'Assign Staff': false,
     'Close': false,
@@ -44,7 +45,8 @@ export class ClientActionsComponent {
     'Undo Rejection': false,
     'Add Charge': false,
     'Take Survey': false,
-    'Client Screen Reports': false
+    'Client Screen Reports': false,
+    'Create Self Service User': false
   };
 
   /**
