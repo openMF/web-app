@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 /** Custom Components */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Models */
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
@@ -43,11 +44,13 @@ export class SingleRowComponent implements OnInit {
    * @param {DatePipe} datePipe Date Pipe.
    * @param {SavingsService} savingsService Savingss Service.
    * @param {MatDialog} dialog Mat Dialog.
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private route: ActivatedRoute,
     private datePipe: DatePipe,
     private dialog: MatDialog,
-    private savingsService: SavingsService) {
+    private savingsService: SavingsService,
+    private settingsService: SettingsService, ) {
     this.accountId = this.route.parent.parent.snapshot.paramMap.get('recurringDepositAccountId');
   }
 
@@ -65,7 +68,7 @@ export class SingleRowComponent implements OnInit {
    * Creates a new instance of the given single row data table.
    */
   add() {
-    let dataTableEntryObject: any = { locale: 'en' };
+    let dataTableEntryObject: any = { locale: this.settingsService.language.code };
     const dateTransformColumns: string[] = [];
     const columns = this.dataObject.columnHeaders.filter((column: any) => {
       return ((column.columnName !== 'id') && (column.columnName !== 'savings_account_id'));

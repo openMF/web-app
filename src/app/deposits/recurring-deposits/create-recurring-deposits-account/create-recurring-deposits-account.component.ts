@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../recurring-deposits.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Step Components */
 import { RecurringDepositsAccountDetailsStepComponent } from '../recurring-deposits-account-stepper/recurring-deposits-account-details-step/recurring-deposits-account-details-step.component';
@@ -38,7 +39,8 @@ export class CreateRecurringDepositsAccountComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private datePipe: DatePipe,
-    private recurringDepositsService: RecurringDepositsService
+    private recurringDepositsService: RecurringDepositsService,
+    private settingsService: SettingsService,
   ) {
     this.route.data.subscribe((data: { recurringDepositsAccountTemplate: any }) => {
       this.recurringDepositsAccountTemplate = data.recurringDepositsAccountTemplate;
@@ -111,8 +113,8 @@ export class CreateRecurringDepositsAccountComponent implements OnInit {
    * Submits the recurring deposit form to create a new recurring deposit account
    */
   submit() {
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const monthDayFormat = 'dd MMMM';
     const recurringDepositAccount = {
       ...this.recurringDepositAccount,

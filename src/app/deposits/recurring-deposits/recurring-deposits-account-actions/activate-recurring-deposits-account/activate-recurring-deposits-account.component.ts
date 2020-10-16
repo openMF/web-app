@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../../recurring-deposits.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Activate Recurring Deposits Account Component
@@ -32,12 +33,14 @@ export class ActivateRecurringDepositsAccountComponent implements OnInit {
    * @param {DatePipe} datePipe Date Pipe
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
+   * @param {SavingsService} savingsService Savings Service
    */
   constructor(private formBuilder: FormBuilder,
     private recurringDepositsService: RecurringDepositsService,
     private datePipe: DatePipe,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    private settingsService: SettingsService) {
     this.accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
   }
 
@@ -63,8 +66,8 @@ export class ActivateRecurringDepositsAccountComponent implements OnInit {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const prevActivatedOnDate: Date = this.activateRecurringDepositsAccountForm.value.activatedOnDate;
     this.activateRecurringDepositsAccountForm.patchValue({
       activatedOnDate: this.datePipe.transform(prevActivatedOnDate, dateFormat),

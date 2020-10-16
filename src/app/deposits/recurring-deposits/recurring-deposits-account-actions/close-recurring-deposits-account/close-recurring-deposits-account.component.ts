@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../../recurring-deposits.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Close Recurring Deposits Account Component
@@ -42,13 +43,15 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {DatePipe} datePipe Date Pipe
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private datePipe: DatePipe,
-    private recurringDepositsService: RecurringDepositsService
+    private recurringDepositsService: RecurringDepositsService,
+    private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { recurringDepositsAccountActionData: any }) => {
       this.maturityAmount = data.recurringDepositsAccountActionData.maturityAmount;
@@ -97,8 +100,8 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
    */
   submit() {
     const closedOnDate = this.closeRecurringDepositForm.value.closedOnDate;
-    const dateFormat = 'yyyy-MM-dd';
-    const locale = 'en';
+    const dateFormat = this.settingsService.dateFormat;
+    const locale = this.settingsService.language.code;
     this.closeRecurringDepositForm.patchValue({
       closedOnDate: this.datePipe.transform(closedOnDate, dateFormat)
     });

@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Add Recurring Deposits Charge component.
@@ -44,7 +45,8 @@ export class AddChargeRecurringDepositsAccountComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private datePipe: DatePipe,
-    private savingsService: SavingsService
+    private savingsService: SavingsService,
+    private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { recurringDepositsAccountActionData: any }) => {
       this.savingsChargeOptions = data.recurringDepositsAccountActionData.chargeOptions;
@@ -112,7 +114,7 @@ export class AddChargeRecurringDepositsAccountComponent implements OnInit {
    */
   submit() {
     const savingsCharge = this.recurringDepositsChargeForm.value;
-    savingsCharge.locale = 'en';
+    savingsCharge.locale = this.settingsService.language.code;
     if (!savingsCharge.feeInterval) {
       savingsCharge.feeInterval = this.chargeDetails.feeInterval;
     }
@@ -125,7 +127,7 @@ export class AddChargeRecurringDepositsAccountComponent implements OnInit {
           savingsCharge.feeOnMonthDay = this.datePipe.transform(prevDate, monthDayFormat);
         }
       } else {
-        const dateFormat = 'yyyy-MM-dd';
+        const dateFormat = this.settingsService.dateFormat;
         savingsCharge.dateFormat = dateFormat;
         if (savingsCharge.dueDate) {
           const prevDate = this.recurringDepositsChargeForm.value.dueDate;

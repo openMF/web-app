@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../../recurring-deposits.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Premature Close Recurring Deposits Account Component
@@ -33,12 +34,14 @@ export class PrematureCloseRecurringDepositAccountComponent implements OnInit {
    * @param {DatePipe} datePipe Date Pipe
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
     private recurringDepositsService: RecurringDepositsService,
     private datePipe: DatePipe,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    private settingsService: SettingsService, ) {
     this.accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
   }
 
@@ -64,8 +67,8 @@ export class PrematureCloseRecurringDepositAccountComponent implements OnInit {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const prevClosedOnDate: Date = this.prematureCloseRecurringDepositsAccountForm.value.closedOnDate;
     this.prematureCloseRecurringDepositsAccountForm.patchValue({
       closedOnDate: this.datePipe.transform(prevClosedOnDate, dateFormat),

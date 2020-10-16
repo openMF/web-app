@@ -12,6 +12,7 @@ import { DatePipe } from '@angular/common';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Recurring Deposit Account Charges Step
@@ -40,7 +41,8 @@ export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnC
   isChargesPatched = false;
 
   constructor(public dialog: MatDialog,
-    private datePipe: DatePipe) {
+    private datePipe: DatePipe,
+    private settingsService: SettingsService, ) {
   }
 
   ngOnInit() {
@@ -123,7 +125,7 @@ export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnC
     editNoteDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         let newCharge: any;
-        const dateFormat = 'dd MMMM yyyy';
+        const dateFormat = this.settingsService.dateFormat;
         const date = this.datePipe.transform(response.data.value.date, dateFormat);
         switch (charge.chargeTimeType.value) {
           case 'Specified due date':
