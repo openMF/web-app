@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -46,12 +47,14 @@ export class ChargesTabComponent implements OnInit {
   /**
    * Retrieves the loans data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private loansService: LoansService,
               private route: ActivatedRoute,
               private datePipe: DatePipe,
               private router: Router,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private settingsService: SettingsService) {
     this.route.parent.data.subscribe(( data: { loanDetailsData: any }) => {
       this.loanDetails = data.loanDetailsData;
     });
@@ -105,7 +108,7 @@ export class ChargesTabComponent implements OnInit {
     payChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const locale = 'en';
-        const dateFormat = 'dd MMMM yyyy';
+        const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
           ...response.data.value,
           dueDate: this.datePipe.transform(response.data.value.dueDate, dateFormat),
@@ -158,8 +161,8 @@ export class ChargesTabComponent implements OnInit {
     const editChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
     editChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        const locale = 'en';
-        const dateFormat = 'dd MMMM yyyy';
+        const locale = this.settingsService.language.code;
+        const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
           ...response.data.value,
           dateFormat,

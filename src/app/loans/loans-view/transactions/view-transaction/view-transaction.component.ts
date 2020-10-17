@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */
 
@@ -31,12 +32,14 @@ export class ViewTransactionComponent {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    * @param {DatePipe} datePipe DatePipe.
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private loansService: LoansService,
               private route: ActivatedRoute,
               private datePipe: DatePipe,
               private router: Router,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { loansAccountTransaction: any }) => {
       this.transactionData = data.loansAccountTransaction;
     });
@@ -52,8 +55,8 @@ export class ViewTransactionComponent {
     });
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
-        const locale = 'en';
-        const dateFormat = 'dd MMMM yyyy';
+        const locale = this.settingsService.language.code;
+        const dateFormat = this.settingsService.dateFormat;
         const data = {
           transactionDate: this.datePipe.transform(this.transactionData.date && new Date(this.transactionData.date), dateFormat),
           transactionAmount: 0,

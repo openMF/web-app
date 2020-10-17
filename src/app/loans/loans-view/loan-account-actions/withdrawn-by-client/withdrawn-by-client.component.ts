@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
 import { DatePipe } from '@angular/common';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Withdrawn By Applicant Loan Form
@@ -33,12 +34,14 @@ export class WithdrawnByClientComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {DatePipe} datePipe Date Pipe.
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe) {
+    private datePipe: DatePipe,
+    private settingsService: SettingsService) {
     this.loanId = this.route.parent.snapshot.params['loanId'];
   }
 
@@ -64,12 +67,12 @@ export class WithdrawnByClientComponent implements OnInit {
   submit() {
     const prevTransactionDate: Date = this.withdrawnByClientLoanForm.value.withdrawnOnDate;
     // TODO: Update once language and date settings are setup
-    const dateFormat = 'dd-MM-yyyy';
+    const dateFormat = this.settingsService.dateFormat;
     this.withdrawnByClientLoanForm.patchValue({
       withdrawnOnDate: this.datePipe.transform(prevTransactionDate, dateFormat)
     });
     const WithdrawnByClientLoanData = this.withdrawnByClientLoanForm.value;
-    WithdrawnByClientLoanData.locale = 'en';
+    WithdrawnByClientLoanData.locale = this.settingsService.language.code;
     WithdrawnByClientLoanData.dateFormat = dateFormat;
     this.loanService.loanActionButtons(this.loanId, 'withdrawnByApplicant', WithdrawnByClientLoanData)
       .subscribe((response: any) => {

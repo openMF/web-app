@@ -6,6 +6,8 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services. */
 import { LoansService } from 'app/loans/loans.service';
+import { SettingsService } from 'app/settings/settings.service';
+
 /**
  * Write Off component.
  */
@@ -33,12 +35,14 @@ export class WriteOffPageComponent implements OnInit {
    * @param {LoansService} loanService Loan Service.
    * @param {DatePipe} datePipe Date Pipe.
    * @param {Router} router Router.
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private loanService: LoansService,
               private datePipe: DatePipe,
-              private router: Router) { }
+              private router: Router,
+              private settingsService: SettingsService) { }
 
   ngOnInit() {
     this.setWriteOffForm();
@@ -60,14 +64,14 @@ export class WriteOffPageComponent implements OnInit {
    */
   submit() {
     const transactionDate = this.writeOffForm.value.transactionDate;
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = this.settingsService.dateFormat;
     this.writeOffForm.patchValue({
       transactionDate: this.datePipe.transform(transactionDate, dateFormat)
     });
     const loanId = this.route.parent.snapshot.params['loanId'];
     const writeOffForm = this.writeOffForm.value;
     delete writeOffForm.amount;
-    writeOffForm.locale = 'en';
+    writeOffForm.locale = this.settingsService.language.code;
     writeOffForm.dateFormat = dateFormat;
     this.loanService.submitLoanActionButton(loanId, writeOffForm, 'writeoff').subscribe((response: any) => {
       this.router.navigate(['../../../general'], {relativeTo: this.route});

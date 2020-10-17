@@ -6,6 +6,12 @@ import { LoansAccountDetailsStepComponent } from '../loans-account-stepper/loans
 import { LoansAccountTermsStepComponent } from '../loans-account-stepper/loans-account-terms-step/loans-account-terms-step.component';
 import { LoansAccountChargesStepComponent } from '../loans-account-stepper/loans-account-charges-step/loans-account-charges-step.component';
 
+/** Custom Services */
+import { SettingsService } from 'app/settings/settings.service';
+
+/**
+ * Edit Loans
+ */
 @Component({
   selector: 'mifosx-edit-loans-account',
   templateUrl: './edit-loans-account.component.html',
@@ -31,11 +37,13 @@ export class EditLoansAccountComponent implements OnInit {
    * @param {router} Router Router.
    * @param {datePipe} DatePipe Date Pipe
    * @param {loansService} LoansService Loans Service
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private route: ActivatedRoute,
     private router: Router,
     private datePipe: DatePipe,
-    private loansService: LoansService
+    private loansService: LoansService,
+    private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { loansAccountAndTemplate: any }) => {
       this.loansAccountAndTemplate = data.loansAccountAndTemplate;
@@ -93,8 +101,8 @@ export class EditLoansAccountComponent implements OnInit {
    * Submits Data to create loan account
    */
   submit() {
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const loanType = 'individual';
     const loansAccountData = {
       ...this.loansAccount,

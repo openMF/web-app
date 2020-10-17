@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Service. */
 import { LoansService } from 'app/loans/loans.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Disburse To Savings component.
@@ -33,12 +34,14 @@ export class DisburseLoanAccountComponent implements OnInit {
    * @param {Router} router Router.
    * @param {DatePipe} datePipe DatePipe.
    * @param {LoansService} loanService Loan Service.
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private datePipe: DatePipe,
-              private loanService: LoansService) { }
+              private loanService: LoansService,
+              private settingsService: SettingsService) { }
 
   ngOnInit() {
     this.setDisbursementToSavingsForm();
@@ -63,13 +66,13 @@ export class DisburseLoanAccountComponent implements OnInit {
    */
   submit() {
     const actualDisbursementDate = this.disbursementForm.value.actualDisbursementDate;
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = this.settingsService.dateFormat;
     this.disbursementForm.patchValue({
       actualDisbursementDate: this.datePipe.transform(actualDisbursementDate, dateFormat)
     });
     const loanId = this.route.parent.snapshot.params['loanId'];
     const disbursementForm = this.disbursementForm.value;
-    disbursementForm.locale = 'en';
+    disbursementForm.locale = this.settingsService.language.code;
     disbursementForm.dateFormat = dateFormat;
     this.loanService.loanActionButtons(loanId, 'disbursetosavings', disbursementForm).subscribe((response: any) => {
       this.router.navigate(['../../general'], {relativeTo: this.route});

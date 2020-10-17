@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Edit Transaction component.
@@ -45,12 +46,14 @@ export class EditTransactionComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {DatePipe} datePipe DatePipe.
    * @param {Router} router Router for navigation.
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private datePipe: DatePipe,
-              private loansService: LoansService) {
+              private loansService: LoansService,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { loansAccountTransactionTemplate: any }) => {
       this.transactionTemplateData = data.loansAccountTransactionTemplate;
       this.paymentTypeOptions = this.transactionTemplateData.paymentTypeOptions;
@@ -107,12 +110,12 @@ export class EditTransactionComponent implements OnInit {
   submit() {
     const prevTransactionDate: Date = this.editTransactionForm.value.transactionDate;
     // TODO: Update once language and date settings are setup
-    const dateFormat = 'dd-MM-yyyy';
+    const dateFormat = this.settingsService.dateFormat;
     this.editTransactionForm.patchValue({
       transactionDate: this.datePipe.transform(prevTransactionDate, dateFormat)
     });
     const transactionData = this.editTransactionForm.value;
-    transactionData.locale = 'en';
+    transactionData.locale = this.settingsService.language.code;
     transactionData.dateFormat = dateFormat;
     this.loansService.executeLoansAccountTransactionsCommand(this.loanAccountId, 'modify', transactionData, this.transactionTemplateData.id)
       .subscribe((res: any) => {

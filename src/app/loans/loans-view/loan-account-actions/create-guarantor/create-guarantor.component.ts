@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoansService } from 'app/loans/loans.service';
 import { DatePipe } from '@angular/common';
 import { ClientsService } from 'app/clients/clients.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Create Guarantor Action
@@ -42,13 +43,15 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {DatePipe} datePipe Date Pipe.
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
     private datePipe: DatePipe,
-    private clientsService: ClientsService) {
+    private clientsService: ClientsService,
+    private settingsService: SettingsService) {
     this.loanId = this.route.parent.snapshot.params['loanId'];
   }
 
@@ -150,8 +153,8 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
     const prevdob: Date = this.newGuarantorForm.value.dob;
     const guarantorTypeId: number = this.newGuarantorForm.value.existingClient ? this.dataObject.guarantorTypeOptions[0].id : this.dataObject.guarantorTypeOptions[2].id;
     // TODO: Update once language and date settings are setup
-    const dateFormat = 'dd-MM-yyyy';
-    const locale = 'en';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const newGuarantorData = {
       ... this.newGuarantorForm.value,
       locale,
