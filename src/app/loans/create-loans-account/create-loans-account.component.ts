@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { LoansService } from '../loans.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Step Components */
 import { LoansAccountDetailsStepComponent } from '../loans-account-stepper/loans-account-details-step/loans-account-details-step.component';
@@ -39,11 +40,13 @@ export class CreateLoansAccountComponent implements OnInit {
    * @param {router} Router Router.
    * @param {datePipe} DatePipe Date Pipe
    * @param {loansService} LoansService Loans Service
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private route: ActivatedRoute,
     private router: Router,
     private datePipe: DatePipe,
-    private loansService: LoansService
+    private loansService: LoansService,
+    private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { loansAccountTemplate: any }) => {
       this.loansAccountTemplate = data.loansAccountTemplate;
@@ -95,8 +98,8 @@ export class CreateLoansAccountComponent implements OnInit {
    * Submits Data to create loan account
    */
   submit() {
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const loanType = 'individual';
     const loansAccountData = {
       ...this.loansAccount,

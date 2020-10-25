@@ -5,6 +5,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { LoansService } from 'app/loans/loans.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+/** Custom Services */
+import { SettingsService } from 'app/settings/settings.service';
+
 @Component({
   selector: 'mifosx-assign-loan-officer',
   templateUrl: './assign-loan-officer.component.html',
@@ -28,12 +31,14 @@ export class AssignLoanOfficerComponent implements OnInit {
    * @param {LoansService} systemService Loan Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe) {
+    private datePipe: DatePipe,
+    private settingsService: SettingsService) {
       this.loanId = this.route.parent.snapshot.params['loanId'];
     }
 
@@ -57,12 +62,12 @@ export class AssignLoanOfficerComponent implements OnInit {
 
   submit() {
     const assignmentDate = this.assignOfficerForm.value.assignmentDate;
-    const dateFormat = 'yyyy-MM-dd';
+    const dateFormat = this.settingsService.dateFormat;
     this.assignOfficerForm.patchValue({
       assignmentDate: this.datePipe.transform(assignmentDate, dateFormat)
     });
     const assignForm = this.assignOfficerForm.value;
-    assignForm.locale = 'en';
+    assignForm.locale = this.settingsService.language.code;
     assignForm.dateFormat = dateFormat;
     assignForm.fromLoanOfficerId = this.dataObject.loanOfficerId || '';
 

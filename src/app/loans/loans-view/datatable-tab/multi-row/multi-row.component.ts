@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
 /** Custom Dialogs */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DeleteDialogComponent } from '../../../../shared/delete-dialog/delete-dialog.component';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Models */
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
@@ -52,11 +53,13 @@ export class MultiRowComponent implements OnInit, OnChanges {
    * @param {DatePipe} datePipe Date Pipe.
    * @param {LoansService} loansService Loans Service.
    * @param {MatDialog} dialog Mat Dialog.
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private route: ActivatedRoute,
               private datePipe: DatePipe,
               private loansService: LoansService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private settingsService: SettingsService) {
     this.loanId = this.route.parent.parent.snapshot.paramMap.get('loanId');
   }
 
@@ -118,7 +121,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
         });
         case 'DATE': {
           dateTransformColumns.push(column.columnName);
-          dataTableEntryObject.dateFormat = 'yyyy-MM-dd';
+          dataTableEntryObject.dateFormat = this.settingsService.dateFormat;
           return new DatepickerBase({
             controlName: column.columnName,
             label: column.columnName,
@@ -129,7 +132,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
         }
         case 'DATETIME': {
           dateTransformColumns.push(column.columnName);
-          dataTableEntryObject.dateFormat = 'yyyy-MM-dd HH:mm';
+          dataTableEntryObject.dateFormat = this.settingsService.dateFormat;
           return new DatepickerBase({
             controlName: column.columnName,
             label: column.columnName,

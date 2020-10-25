@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom services. */
 import { LoansService } from 'app/loans/loans.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Reject Loan component.
@@ -32,12 +33,14 @@ export class RejectLoanComponent implements OnInit {
    * @param router Router.
    * @param route Activated Route.
    * @param datePipe Date Pipe.
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private route: ActivatedRoute,
               private loanService: LoansService,
-              private datePipe: DatePipe ) {
+              private datePipe: DatePipe,
+              private settingsService: SettingsService ) {
     this.loanId = this.route.parent.snapshot.params['loanId'];
   }
 
@@ -60,12 +63,12 @@ export class RejectLoanComponent implements OnInit {
    */
   submit() {
     const rejectedOnDate = this.rejectLoanForm.value.rejectedOnDate;
-    const dateFormat = 'yyyy-MM-dd';
+    const dateFormat = this.settingsService.dateFormat;
     this.rejectLoanForm.patchValue({
       rejectedOnDate: this.datePipe.transform(rejectedOnDate, dateFormat)
     });
     const rejectForm = this.rejectLoanForm.value;
-    rejectForm.locale = 'en';
+    rejectForm.locale = this.settingsService.language.code;
     rejectForm.dateFormat = dateFormat;
     this.loanService.loanActionButtons(this.loanId, 'reject', rejectForm).subscribe((response: any) => {
       this.router.navigate(['../../general'], { relativeTo: this.route });
