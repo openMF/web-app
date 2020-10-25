@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1602863792392,
+  "timestamp": 1603612227850,
   "index": "/web-app/index.html",
   "assetGroups": [
     {
@@ -74,7 +74,7 @@
     "/web-app/17.js": "8e4ff1d3ef18a0e29d9f3a7014293f3b69e9f0c1",
     "/web-app/2.js": "25809a09bde86a53b8c7d6d3f024976158e09b14",
     "/web-app/3.js": "175a2ac3ccfe529e85311e9fbf2f400b1e99c980",
-    "/web-app/4.js": "436f146995e7528688aeeaaacd97555d2f4b2bb6",
+    "/web-app/4.js": "6c69164d74ef3eebb08a9c3b1b5748d1558dff4f",
     "/web-app/assets/images/MifosX_logo.png": "fc66de5965e6054007a0e0c9e68f24f1ee250c21",
     "/web-app/assets/images/MifosX_logoSmall.png": "ebd340185b4888fdbe26b364303d2c072412b46e",
     "/web-app/assets/images/center_placeholder.png": "95a8b8a2c3bccacfabe57fac31207267582e11d8",
