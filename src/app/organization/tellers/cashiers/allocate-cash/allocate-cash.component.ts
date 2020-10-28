@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services. */
 import { OrganizationService } from 'app/organization/organization.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Allocate Cash component.
@@ -32,12 +33,14 @@ export class AllocateCashComponent implements OnInit {
    * @param {ActivatedRoute} route ActivateRoute.
    * @param {DatePipe} datePipe Date Pipe.
    * @param {OrganizationService} organizationService Organization Service.
+   * @param {SettingsService} settingsService Settings Service.
    * @param {Router} router Router.
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private datePipe: DatePipe,
               private organizationService: OrganizationService,
+              private settingsService: SettingsService,
               private router: Router) {
     this.route.data.subscribe((data: { cashierTemplate: any}) => {
       this.cashierData = data.cashierTemplate;
@@ -68,14 +71,14 @@ export class AllocateCashComponent implements OnInit {
    * Submits Allocate Cash form.
    */
   submit() {
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = this.settingsService.dateFormat;
     const txnDate = this.allocateCashForm.value.txnDate;
     this.allocateCashForm.patchValue({
       txnDate: this.datePipe.transform(txnDate, dateFormat)
     });
     const allocateCashForm = this.allocateCashForm.value;
     allocateCashForm.dateFormat = dateFormat;
-    allocateCashForm.locale = 'en';
+    allocateCashForm.locale = this.settingsService.language.code;
     this.organizationService.allocateCash(this.cashierData.tellerId, this.cashierData.cashierId, allocateCashForm).subscribe((response: any) => {
       this.router.navigate(['../'], {relativeTo: this.route});
     });

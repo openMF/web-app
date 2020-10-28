@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { OrganizationService } from 'app/organization/organization.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Components */
 import { CampaignMessageStepComponent } from '../sms-campaign-stepper/campaign-message-step/campaign-message-step.component';
@@ -35,11 +36,13 @@ export class EditCampaignComponent {
    * @param {Router} router Router
    * @param {DatePipe} datePipe Date Pipe
    * @param {OrganizationService} organizationService Organiztion Service
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private route: ActivatedRoute,
               private router: Router,
               private datePipe: DatePipe,
-              private organizationService: OrganizationService) {
+              private organizationService: OrganizationService,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { smsCampaign: any, smsCampaignTemplate: any }) => {
       this.smsCampaignTemplate = data.smsCampaignTemplate;
       this.smsCampaign = data.smsCampaign;
@@ -67,8 +70,8 @@ export class EditCampaignComponent {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const dateTimeFormat = 'dd MMMM yyyy HH:mm:ss';
     const smsCampaign: any = {
       campaignName: this.smsCampaign.campaignName,

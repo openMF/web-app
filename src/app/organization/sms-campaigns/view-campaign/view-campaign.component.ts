@@ -16,6 +16,7 @@ import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicke
 
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * View SMS Campaign Component
@@ -77,13 +78,15 @@ export class ViewCampaignComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {DatePipe} datePipe Date Pipe
    * @param {OrganizationService} organizationService Organization Service
+   * @param {SettingsService} settingsService Setting Service
    */
   constructor(private router: Router,
               private route: ActivatedRoute,
               public dialog: MatDialog,
               private formBuilder: FormBuilder,
               private datePipe: DatePipe,
-              private organizationService: OrganizationService) {
+              private organizationService: OrganizationService,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { smsCampaign: any }) => {
       this.smsCampaignData = data.smsCampaign;
     });
@@ -140,8 +143,8 @@ export class ViewCampaignComponent implements OnInit {
     const closeCampaignDialogRef = this.dialog.open(FormDialogComponent, { data });
     closeCampaignDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        const locale = 'en';
-        const dateFormat = 'dd MMMM yyyy';
+        const locale = this.settingsService.language.code;
+        const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
           closureDate: this.datePipe.transform(response.data.value.closureDate, dateFormat),
           dateFormat,
@@ -175,8 +178,8 @@ export class ViewCampaignComponent implements OnInit {
     const activateCampaignDialogRef = this.dialog.open(FormDialogComponent, { data });
     activateCampaignDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        const locale = 'en';
-        const dateFormat = 'dd MMMM yyyy';
+        const locale = this.settingsService.language.code;
+        const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
           activationDate: this.datePipe.transform(response.data.value.activationDate, dateFormat),
           dateFormat,
@@ -210,8 +213,8 @@ export class ViewCampaignComponent implements OnInit {
     const reactivateCampaignDialogRef = this.dialog.open(FormDialogComponent, { data });
     reactivateCampaignDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        const locale = 'en';
-        const dateFormat = 'dd MMMM yyyy';
+        const locale = this.settingsService.language.code;
+        const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
           activationDate: this.datePipe.transform(response.data.value.activationDate, dateFormat),
           dateFormat,
@@ -257,14 +260,14 @@ export class ViewCampaignComponent implements OnInit {
     const prevFromDate: Date = this.smsForm.value.fromDate;
     const prevToDate: Date = this.smsForm.value.toDate;
     // TODO: Update once language and date settings are setup
-    const dateFormat = 'yyyy-MM-dd';
+    const dateFormat = this.settingsService.dateFormat;
     this.smsForm.patchValue({
       fromDate: this.datePipe.transform(prevFromDate, dateFormat),
       toDate: this.datePipe.transform(prevToDate, dateFormat)
     });
     const SMS = this.smsForm.value;
     SMS.id = this.smsCampaignData.id;
-    SMS.locale = 'en';
+    SMS.locale = this.settingsService.language.code;
     SMS.dateFormat = dateFormat;
     SMS.status = this.status;
     this.organizationService.getMessagebyStatus(SMS).subscribe((response: any) => {

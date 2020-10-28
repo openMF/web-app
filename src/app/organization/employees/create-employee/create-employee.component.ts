@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Create employee component.
@@ -30,12 +31,14 @@ export class CreateEmployeeComponent implements OnInit {
    * Retrieves the offices data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {OrganizationService} organizationService Organization Service.
+   * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {DatePipe} datePipe Date Pipe to format date.
    */
   constructor(private formBuilder: FormBuilder,
               private organizationService: OrganizationService,
+              private settingsService: SettingsService,
               private route: ActivatedRoute,
               private router: Router,
               private datePipe: DatePipe) {
@@ -72,12 +75,12 @@ export class CreateEmployeeComponent implements OnInit {
   submit() {
     const prevJoiningDate: Date = this.employeeForm.value.joiningDate;
     // TODO: Update once language and date settings are setup
-    const dateFormat = 'yyyy-MM-dd';
+    const dateFormat = this.settingsService.dateFormat;
     this.employeeForm.patchValue({
       joiningDate: this.datePipe.transform(prevJoiningDate, dateFormat)
     });
     const employee = this.employeeForm.value;
-    employee.locale = 'en';
+    employee.locale = this.settingsService.language.code;
     employee.dateFormat = dateFormat;
     this.organizationService.createEmployee(employee).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });

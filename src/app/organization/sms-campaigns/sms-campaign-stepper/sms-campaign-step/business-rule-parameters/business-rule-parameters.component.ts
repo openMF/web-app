@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { ReportsService } from 'app/reports/reports.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Models */
 import { ReportParameter } from 'app/reports/common-models/report-parameter.model';
@@ -38,10 +39,12 @@ export class BusinessRuleParametersComponent implements OnChanges {
   @Output() templateParameters = new EventEmitter();
 
   /**
-   * @param {ReportsService} reportsService Reports Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {ReportsService} reportsService Reports Service.
+   * @param {SettingsService} settingsService Settings Service.
+   * @param {DatePipe} datePipe Date Pipe.
    */
   constructor(private reportsService: ReportsService,
+              private settingsService: SettingsService,
               private datePipe: DatePipe) { }
 
   ngOnChanges() {
@@ -152,7 +155,7 @@ export class BusinessRuleParametersComponent implements OnChanges {
           formattedResponse[newKey] = value['id'];
           break;
         case 'date':
-          const dateFormat = 'yyyy-MM-dd';
+          const dateFormat = this.settingsService.dateFormat;
           formattedResponse[newKey] = this.datePipe.transform(value, dateFormat);
           break;
         case 'none':

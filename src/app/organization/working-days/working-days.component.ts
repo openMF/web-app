@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { OrganizationService } from '../organization.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Recurrence default value. */
 const recurrenceDefaultValue = 'FREQ=WEEKLY;INTERVAL=1;BYDAY=';
@@ -41,11 +42,13 @@ export class WorkingDaysComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route Activated Route.
    * @param {OrganizationService} organizationService Organization Service.
+   * @param {SettingsService} settingsService Settings Service.
    * @param {Router} router Router for navigation.
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private organizationService: OrganizationService,
+              private settingsService: SettingsService,
               private router: Router) {
     this.route.data.subscribe((data: { workingDays: any }) => {
       this.workingDaysData = data.workingDays;
@@ -103,7 +106,7 @@ export class WorkingDaysComponent implements OnInit {
   submit() {
     const workingDays = this.workingDaysForm.value;
     // TODO: Update once language and date settings are setup
-    workingDays.locale = 'en';
+    workingDays.locale = this.settingsService.language.code;
     let recurrence = recurrenceDefaultValue;
     for (let i = 0; i < this.weekDays.length; i++) {
       if (workingDays.recurrence[i]) {

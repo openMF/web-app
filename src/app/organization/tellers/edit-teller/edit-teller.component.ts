@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Create teller component.
@@ -35,12 +36,14 @@ export class EditTellerComponent implements OnInit {
    * Retrieves the offices data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {OrganizationService} organizationService Organization Service.
+   * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {DatePipe} datePipe Date Pipe to format date.
    */
   constructor(private formBuilder: FormBuilder,
               private organizationService: OrganizationService,
+              private settingsService: SettingsService,
               private route: ActivatedRoute,
               private router: Router,
               private datePipe: DatePipe) {
@@ -89,13 +92,13 @@ export class EditTellerComponent implements OnInit {
     const prevStartDate: Date = this.tellerForm.value.startDate;
     const prevEndDate: Date = this.tellerForm.value.endDate;
     // TODO: Update once language and date settings are setup
-    const dateFormat = 'yyyy-MM-dd';
+    const dateFormat = this.settingsService.dateFormat;
     this.tellerForm.patchValue({
       startDate: this.datePipe.transform(prevStartDate, dateFormat),
       endDate: this.datePipe.transform(prevEndDate, dateFormat)
     });
     const teller = this.tellerForm.value;
-    teller.locale = 'en';
+    teller.locale = this.settingsService.language.code;
     teller.officeId = this.tellerData.officeId;
     teller.dateFormat = dateFormat;
     this.organizationService.updateTeller(this.tellerData.id, teller).subscribe((response: any) => {

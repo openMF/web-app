@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services. */
 import { OrganizationService } from 'app/organization/organization.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Edit Holiday component.
@@ -42,6 +43,7 @@ export class EditHolidayComponent implements OnInit {
               private route: ActivatedRoute,
               private datePipe: DatePipe,
               private organizatioService: OrganizationService,
+              private settings: SettingsService,
               private router: Router ) {
     this.route.data.subscribe((data: { holiday: any, holidayTemplate: any }) => {
       this.holidayData = data.holiday;
@@ -98,7 +100,7 @@ export class EditHolidayComponent implements OnInit {
    * Submits Edit Holiday Form.
    */
   submit() {
-    const dateFormat = 'yyyy-MM-dd';
+    const dateFormat = this.settings.dateFormat;
     if (!this.isActiveHoliday) {
       const fromDate: Date = this.holidayForm.value.fromDate;
       const toDate: Date = this.holidayForm.value.toDate;
@@ -114,7 +116,7 @@ export class EditHolidayComponent implements OnInit {
       });
     }
     const holidayForm = this.holidayForm.value;
-    holidayForm.locale = 'en';
+    holidayForm.locale = this.settings.language.code;
     holidayForm.dateFormat = dateFormat;
     this.organizatioService.updateHoliday(this.holidayData.id, holidayForm).subscribe(response => {
       /** TODO Add Redirects to ViewMakerCheckerTask page. */

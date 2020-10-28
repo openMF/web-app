@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services. */
 import { OrganizationService } from 'app/organization/organization.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Create Cashier component.
@@ -33,12 +34,14 @@ export class CreateCashierComponent implements OnInit {
    * @param {Router} router Router.
    * @param {DatePipe} datePipe Date Pipe.
    * @param {OrganizationService} organizationService Organization Service.
+   * @param {SettingsService} settingsService Settings Service.
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private datePipe: DatePipe,
-              private organizationService: OrganizationService ) {
+              private organizationService: OrganizationService,
+              private settingsService: SettingsService ) {
     this.route.data.subscribe((data: { cashierTemplate: any }) => {
       this.cashierTemplate = data.cashierTemplate;
     });
@@ -65,7 +68,7 @@ export class CreateCashierComponent implements OnInit {
    * Submits Create cashier form.
    */
   submit() {
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = this.settingsService.dateFormat;
     const startDate = this.createCashierForm.value.startDate;
     const endDate = this.createCashierForm.value.endDate;
     this.createCashierForm.patchValue({
@@ -73,7 +76,7 @@ export class CreateCashierComponent implements OnInit {
       'endDate': this.datePipe.transform(endDate, dateFormat)
     });
     const createCashierForm = this.createCashierForm.value;
-    createCashierForm.locale = 'en';
+    createCashierForm.locale = this.settingsService.language.code;
     createCashierForm.dateFormat = dateFormat;
     this.organizationService.createCashier(this.cashierTemplate.tellerId, createCashierForm).subscribe((response: any) => {
       this.router.navigate(['../'], {relativeTo: this.route});

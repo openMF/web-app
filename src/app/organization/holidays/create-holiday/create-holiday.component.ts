@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services. */
 import { OrganizationService } from 'app/organization/organization.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Create Holiday component.
@@ -41,6 +42,7 @@ export class CreateHolidayComponent implements OnInit {
               private route: ActivatedRoute,
               private datePipe: DatePipe,
               private organizationService: OrganizationService,
+              private settings: SettingsService,
               private router: Router ) {
     this.route.data.subscribe((data: { offices: any, holidayTemplate: any }) => {
       this.officesData = data.offices;
@@ -84,8 +86,8 @@ export class CreateHolidayComponent implements OnInit {
    * Submits the create holiday Form.
    */
   submit() {
-    const dateFormat = 'yyyy-MM-dd';
-    const locale = 'en';
+    const dateFormat = this.settings.dateFormat;
+    const locale = this.settings.language.code;
     this.holidayForm.patchValue({
       'fromDate': this.datePipe.transform(this.holidayForm.value.fromDate, dateFormat),
       'toDate': this.datePipe.transform(this.holidayForm.value.toDate, dateFormat),

@@ -9,6 +9,7 @@ import { CampaignMessageStepComponent } from '../sms-campaign-stepper/campaign-m
 
 /** Custom Services */
 import { OrganizationService } from 'app/organization/organization.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Create SMS Campaign Component
@@ -35,11 +36,13 @@ export class CreateCampaignComponent {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {OrganizationService} organizationService Organization Service
+   * @param {SettingsService} settingsService Settings Service
    * @param {DatePipe} datePipe Date Pipe
    */
   constructor(private route: ActivatedRoute,
               private router: Router,
               private organizationService: OrganizationService,
+              private settingsService: SettingsService,
               private datePipe: DatePipe) {
     this.route.data.subscribe((data: { smsCampaignTemplate: any }) => {
       this.smsCampaignTemplate = data.smsCampaignTemplate;
@@ -76,8 +79,8 @@ export class CreateCampaignComponent {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const dateTimeFormat = 'dd MMMM yyyy HH:mm:ss';
     const smsCampaign = {
       ...this.smsCampaign,

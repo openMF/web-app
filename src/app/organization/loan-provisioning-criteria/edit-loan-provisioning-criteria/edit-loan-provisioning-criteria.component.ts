@@ -15,6 +15,7 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Edit Loan Provisioning Criteria Component.
@@ -54,12 +55,14 @@ export class EditLoanProvisioningCriteriaComponent implements OnInit {
    * Retrieves the offices data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {OrganizationService} organizationService Organization Service.
+   * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(private formBuilder: FormBuilder,
               private organizationService: OrganizationService,
               private router: Router,
+              private settingsService: SettingsService,
               public dialog: MatDialog,
               private route: ActivatedRoute) {
      this.route.data.subscribe((data: { loanProvisioningCriteriaAndTemplate: any }) => {
@@ -179,7 +182,7 @@ export class EditLoanProvisioningCriteriaComponent implements OnInit {
    * Edits the loan provisioning criteria.
    */
   submit() {
-    const locale = 'en';
+    const locale = this.settingsService.language.code;
     const loanProvisioningCriteria = {
       ...this.provisioningCriteriaForm.value,
       loanProducts: this.provisioningCriteriaForm.get('loanProducts').value.map((product: any) => ({
