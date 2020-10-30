@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
 import { CentersService } from '../centers.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Create Center component.
@@ -41,6 +42,7 @@ export class CreateCenterComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {CentersService} centerService CentersService.
+   * @param {SettingsService} settingsService Settings Service.
    * @param {GroupsService} groupService GroupsService.
    * @param {DatePipe} datePipe Date Pipe to format date.
    */
@@ -48,6 +50,7 @@ export class CreateCenterComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private centerService: CentersService,
+              private settingsService: SettingsService,
               private groupService: GroupsService,
               private datePipe: DatePipe) {
     this.route.data.subscribe( (data: { offices: any }) => {
@@ -133,13 +136,13 @@ export class CreateCenterComponent implements OnInit {
       const prevSubmittedOnDate: Date = this.centerForm.value.submittedOnDate;
       const prevActivationDate: Date = this.centerForm.value.activationDate;
       // TODO: Update once language and date settings are setup
-      const dateFormat = 'dd MMMM yyyy';
+      const dateFormat = this.settingsService.dateFormat;
       this.centerForm.patchValue({
         submittedOnDate: this.datePipe.transform(prevSubmittedOnDate, dateFormat),
         activationDate: this.datePipe.transform(prevActivationDate, dateFormat)
       });
       const center = this.centerForm.value;
-      center.locale = 'en';
+      center.locale = this.settingsService.language.code;
       center.dateFormat = dateFormat;
       center.groupMembers = [];
       this.groupMembers.forEach((group: any) => center.groupMembers.push(group.id));

@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { CentersService } from 'app/centers/centers.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Activate Center Component
@@ -29,12 +30,14 @@ export class ActivateCenterComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {centersService} CentersService Shares Service
+   * @param {SettingsService} settingsService Settings Service.
    * @param {DatePipe} datePipe Date Pipe
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
   constructor(private formBuilder: FormBuilder,
               private centersService: CentersService,
+              private settingsService: SettingsService,
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
@@ -63,8 +66,8 @@ export class ActivateCenterComponent implements OnInit {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const prevactivationDate: Date = this.activateCenterForm.value.activationDate;
     this.activateCenterForm.patchValue({
       activationDate: this.datePipe.transform(prevactivationDate, dateFormat),
