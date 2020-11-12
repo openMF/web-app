@@ -7,6 +7,7 @@ import { FormControl } from '@angular/forms';
 
 /** Custom Services */
 import { CentersService } from 'app/centers/centers.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -50,12 +51,14 @@ export class CenterAttendanceComponent implements OnInit {
    * @param {DatePipe} datePipe Date Pipe
    * @param {Router} router Router
    * @param {CentersService} centersService Centers Service
+   * @param {SettingsService} settingsService Settings Service.
    * @param {MatDialog} dialog Mat Dialog
    */
   constructor(private route: ActivatedRoute,
               private datePipe: DatePipe,
               private router: Router,
               private centersService: CentersService,
+              private settingsService: SettingsService,
               public dialog: MatDialog) {
     this.route.data.subscribe(( data: { centersActionData: any }) => {
       this.centerData = data.centersActionData;
@@ -119,8 +122,8 @@ export class CenterAttendanceComponent implements OnInit {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const prevMeetingDate: Date = new Date(this.meetingDate.value);
     this.meetingDate.patchValue(this.datePipe.transform(prevMeetingDate, dateFormat));
     const data = {

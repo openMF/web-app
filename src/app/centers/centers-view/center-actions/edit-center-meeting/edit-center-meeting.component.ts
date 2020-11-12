@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { CentersService } from 'app/centers/centers.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Edit Center Meetings Component
@@ -40,12 +41,14 @@ export class EditCenterMeetingComponent implements OnInit {
    * Fetches Calendar Template from `resolve`
    * @param {FormBuilder} formBuilder Form Builder
    * @param {CentersService} centersService Shares Service
+   * @param {SettingsService} settingsService Settings Service.
    * @param {DatePipe} datePipe Date Pipe
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
   constructor(private formBuilder: FormBuilder,
               private centersService: CentersService,
+              private settingsService: SettingsService,
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
@@ -117,8 +120,8 @@ export class EditCenterMeetingComponent implements OnInit {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const title = `centers_${this.centerId}_CollectionMeeting`;
     const typeId = '1';
     const prevStartDate: Date = this.centerEditMeetingForm.value.startDate;
