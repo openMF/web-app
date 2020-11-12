@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { OrganizationService } from '../organization.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Fund Mapping Component.
@@ -45,11 +46,13 @@ export class FundMappingComponent implements OnInit {
    * Retrieves the advance search template from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {OrganizationService} organizationService Organization Service.
+   * @param {SettingsService} settingsService Settings Service.
    * @param {Router} router Router for navigation.
    * @param {DatePipe} datePipe Date Pipe to format date.
    */
   constructor(private formBuilder: FormBuilder,
               private organizationService: OrganizationService,
+              private settingsService: SettingsService,
               private route: ActivatedRoute,
               private datePipe: DatePipe) {
     this.route.data.subscribe((data: { advanceSearchTemplate: any }) => {
@@ -146,8 +149,8 @@ export class FundMappingComponent implements OnInit {
   submit() {
     this.isCollapsed = true;
     // TODO: Update once language and date settings are setup
-    const locale = 'en';
-    const dateFormat = 'yyyy-MM-dd';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     this.fundMappingForm.patchValue({
       'loanFromDate': this.datePipe.transform(this.fundMappingForm.value.loanFromDate, dateFormat),
       'loanToDate': this.datePipe.transform(this.fundMappingForm.value.loanToDate, dateFormat)

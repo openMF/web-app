@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { OrganizationService } from 'app/organization/organization.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Edit Office component.
@@ -29,6 +30,7 @@ export class EditOfficeComponent implements OnInit {
     /**
      * Retrieves the charge data from `resolve`.
      * @param {ProductsService} organizationService Organization Service.
+     * @param {SettingsService} settingsService Settings Service.
      * @param {FormBuilder} formBuilder Form Builder.
      * @param {ActivatedRoute} route Activated Route.
      * @param {Router} router Router for navigation.
@@ -36,6 +38,7 @@ export class EditOfficeComponent implements OnInit {
      * @param {DatePipe} datepipe Convert Date.
      */
     constructor(private organizationService: OrganizationService,
+                private settingsService: SettingsService,
                 private formBuilder: FormBuilder,
                 private route: ActivatedRoute,
                 private router: Router,
@@ -68,12 +71,12 @@ export class EditOfficeComponent implements OnInit {
    */
   submit() {
     const openedOn: Date = this.officeForm.value.openingDate;
-    const dateFormat = 'yyyy-MM-dd';
+    const dateFormat = this.settingsService.dateFormat;
     this.officeForm.patchValue({
       openingDate: this.datepipe.transform(openedOn, dateFormat)
     });
     const office = this.officeForm.value;
-    office.locale = 'en';
+    office.locale = this.settingsService.language.code;
     office.dateFormat = dateFormat;
     this.organizationService.updateOffice(this.officeData.id, office).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });

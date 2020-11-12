@@ -1,8 +1,12 @@
+/** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+
+/** Customer Services. */
 import { OrganizationService } from 'app/organization/organization.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
   selector: 'mifosx-settle-cash',
@@ -26,12 +30,14 @@ export class SettleCashComponent implements OnInit {
    * @param {ActivatedRoute} route ActivateRoute.
    * @param {DatePipe} datePipe Date Pipe.
    * @param {OrganizationService} organizationService Organization Service.
+   * @param {SettingsService} settingsService Settings Service.
    * @param {Router} router Router.
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private datePipe: DatePipe,
               private organizationService: OrganizationService,
+              private settingsService: SettingsService,
               private router: Router) {
     this.route.data.subscribe((data: { cashierTemplate: any}) => {
       this.cashierData = data.cashierTemplate;
@@ -62,14 +68,14 @@ export class SettleCashComponent implements OnInit {
    * Submits Settle Cash form.
    */
   submit() {
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = this.settingsService.dateFormat;
     const txnDate = this.settleCashForm.value.txnDate;
     this.settleCashForm.patchValue({
       txnDate: this.datePipe.transform(txnDate, dateFormat)
     });
     const settleCashForm = this.settleCashForm.value;
     settleCashForm.dateFormat = dateFormat;
-    settleCashForm.locale = 'en';
+    settleCashForm.locale = this.settingsService.language.code;
     this.organizationService.settleCash(this.cashierData.tellerId, this.cashierData.cashierId, settleCashForm).subscribe((response: any) => {
       this.router.navigate(['../'], {relativeTo: this.route});
     });

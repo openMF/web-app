@@ -17,6 +17,7 @@ import { CheckboxBase } from 'app/shared/form-dialog/formfield/model/checkbox-ba
 
 /** Custom Services */
 import { OrganizationService } from '../../../../organization.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Offices Single Row Data Tables
@@ -41,12 +42,14 @@ export class SingleRowComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {DatePipe} datePipe Date Pipe.
    * @param {OrganizationService} organizationService Organization Service.
+   * @param {SettingsService} settingsService Settings Service.
    * @param {MatDialog} dialog Mat Dialog.
    */
   constructor(private route: ActivatedRoute,
               private datePipe: DatePipe,
               private dialog: MatDialog,
-              private organizationService: OrganizationService) {
+              private organizationService: OrganizationService,
+              private settingsService: SettingsService ) {
     this.officeId = this.route.parent.parent.snapshot.paramMap.get('id');
   }
 
@@ -64,7 +67,7 @@ export class SingleRowComponent implements OnInit {
    * Creates a new instance of the given single row data table.
    */
   add() {
-    let dataTableEntryObject: any = { locale: 'en' };
+    let dataTableEntryObject: any = { locale: this.settingsService.language.code };
     const dateTransformColumns: string[] = [];
     const columns = this.dataObject.columnHeaders.filter((column: any) => {
       return ((column.columnName !== 'id') && (column.columnName !== 'office_id'));
@@ -94,7 +97,7 @@ export class SingleRowComponent implements OnInit {
    * Edits the current instance of single row data table.
    */
   edit() {
-    let dataTableEntryObject: any = { locale: 'en' };
+    let dataTableEntryObject: any = { locale: this.settingsService.language.code };
     const dateTransformColumns: string[] = [];
     const columns = this.dataObject.columnHeaders.filter((column: any) => {
       return ((column.columnName !== 'id') && (column.columnName !== 'office_id'));
@@ -179,7 +182,7 @@ export class SingleRowComponent implements OnInit {
         });
         case 'DATE': {
           dateTransformColumns.push(column.columnName);
-          dataTableEntryObject.dateFormat = 'yyyy-MM-dd';
+          dataTableEntryObject.dateFormat = this.settingsService.dateFormat;
           return new DatepickerBase({
             controlName: column.columnName,
             label: column.columnName,

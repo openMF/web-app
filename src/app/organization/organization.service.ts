@@ -5,6 +5,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
+/** Custom Imports. */
+import { SettingsService } from 'app/settings/settings.service';
+
 /**
  * Organization service.
  */
@@ -16,7 +19,7 @@ export class OrganizationService {
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private settingsService: SettingsService) { }
 
   /**
    * @returns {Observable<any>} Loan Provisioning Criteria data
@@ -740,8 +743,8 @@ export class OrganizationService {
   getImportTemplate(urlSuffix: string, officeId: any, staffId: any, legalFormType: string): Observable<any> {
     let httpParams = new HttpParams()
       .set('tenantIdentifier', 'default')
-      .set('locale', 'en')
-      .set('dateFormat', 'dd MMMM yyyy');
+      .set('locale', this.settingsService.language.code)
+      .set('dateFormat', this.settingsService.dateFormat);
     if (officeId) {
       httpParams = httpParams.set('officeId', officeId.toString());
     }
@@ -778,8 +781,8 @@ export class OrganizationService {
     }
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('locale', 'en');
-    formData.append('datefFormat', 'dd MMMM yyyy');
+    formData.append('locale', this.settingsService.language.code);
+    formData.append('datefFormat', this.settingsService.dateFormat);
     return this.http.post(`${urlSuffix}/uploadtemplate`, formData , { params: httpParams } );
   }
 

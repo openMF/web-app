@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { OrganizationService } from '../organization.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * View Standing Instructions History Component.
@@ -45,12 +46,14 @@ export class StandingInstructionsHistoryComponent implements OnInit {
    * Retrieves the instructions template from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {OrganizationService} organizationService Organization Service.
+   * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {DatePipe} datePipe Date Pipe to format date.
    */
   constructor(private formBuilder: FormBuilder,
               private organizationService: OrganizationService,
+              private settingsService: SettingsService,
               private router: Router,
               private route: ActivatedRoute,
               private datePipe: DatePipe) {
@@ -103,9 +106,9 @@ export class StandingInstructionsHistoryComponent implements OnInit {
   search() {
     this.isCollapsed = true;
     // TODO: Update once language and date settings are setup
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = this.settingsService.dateFormat;
     const instruction = this.instructionForm.value;
-    instruction.locale = 'en';
+    instruction.locale = this.settingsService.language.code;
     instruction.dateFormat = dateFormat;
     instruction.fromDate = this.datePipe.transform(instruction.fromDate, dateFormat);
     instruction.toDate = this.datePipe.transform(instruction.toDate, dateFormat);

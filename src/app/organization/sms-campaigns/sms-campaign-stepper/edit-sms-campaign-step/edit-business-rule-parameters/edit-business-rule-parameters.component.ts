@@ -8,6 +8,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
 
 /** Custom Services */
 import { ReportsService } from 'app/reports/reports.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Models */
 import { ReportParameter } from 'app/reports/common-models/report-parameter.model';
@@ -45,6 +46,7 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
    * @param {ReportsService} reportsService Reports Service
    */
   constructor(private reportsService: ReportsService,
+              private settingsService: SettingsService,
               private datePipe: DatePipe) { }
 
   ngOnChanges() {
@@ -75,7 +77,7 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
               this.fetchSelectOptions(param, param.name);
               break;
             case 'date':
-              const dateFormat = 'yyyy-MM-dd';
+              const dateFormat = this.settingsService.dateFormat;
               const newControlValue = this.datePipe.transform(controlValue, dateFormat);
               this.ReportForm.get(param.name).patchValue(newControlValue);
               break;

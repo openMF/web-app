@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services. */
 import { OrganizationService } from '../organization.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Bulk Loan Reassignment component.
@@ -40,11 +41,14 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    * Get Office data from `resolver`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route Activated Route.
+   * @param {OrganizationService} organizationSevice Organization Service.
+   * @param {SettingsService} settingsService Settings Service.
    * @param {Router} router Router.
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private organizationSevice: OrganizationService,
+              private settingsService: SettingsService,
               private datePipe: DatePipe,
               private router: Router) {
     this.route.data.subscribe((data: { offices: any} ) => {
@@ -109,13 +113,13 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    * Submits bulk loan reassignment form.
    */
   submit() {
-    const dateFormat = 'yyyy-MM-dd';
+    const dateFormat = this.settingsService.dateFormat;
     const assignmentDate = this.bulkLoanForm.value.assignmentDate;
     this.bulkLoanForm.patchValue({
       assignmentDate: this.datePipe.transform(assignmentDate, dateFormat)
     });
     const bulkForm = this.bulkLoanForm.value;
-    bulkForm.locale = 'en';
+    bulkForm.locale = this.settingsService.language.code;
     bulkForm.dateFormat = dateFormat;
     bulkForm.loans = this.loans;
     this.organizationSevice.createLoanReassignment(bulkForm).subscribe((response: any) => {

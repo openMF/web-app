@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services. */
 import { OrganizationService } from 'app/organization/organization.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Edit Cashier component.
@@ -35,12 +36,14 @@ export class EditCashierComponent implements OnInit {
    * @param {Router} router Router.
    * @param {DatePipe} datePipe Date Pipe.
    * @param {OrganizationService} organizationService Organization Service.
+   * @param {SettingsService} settingsService Settings Service.
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private datePipe: DatePipe,
-              private organizationService: OrganizationService ) {
+              private organizationService: OrganizationService,
+              private settingsService: SettingsService ) {
     this.route.data.subscribe((data: { cashier: any, cashierTemplate: any }) => {
       this.cashierData.data = data.cashier;
       this.cashierData.template = data.cashierTemplate;
@@ -69,7 +72,7 @@ export class EditCashierComponent implements OnInit {
    * Submits edit cashier form.
    */
   submit() {
-    const dateFormat = 'yyyy-MM-dd';
+    const dateFormat = this.settingsService.dateFormat;
     const startDate = this.editCashierForm.value.startDate;
     const endDate = this.editCashierForm.value.endDate;
     this.editCashierForm.patchValue({
@@ -77,7 +80,7 @@ export class EditCashierComponent implements OnInit {
       'endDate': this.datePipe.transform(endDate, dateFormat)
     });
     const editCashierForm = this.editCashierForm.value;
-    editCashierForm.locale = 'en';
+    editCashierForm.locale = this.settingsService.language.code;
     editCashierForm.dateFormat = dateFormat;
     editCashierForm.staffId = this.cashierData.data.staffId;
     this.organizationService.updateCashier(this.cashierData.data.tellerId, this.cashierData.data.id, editCashierForm).subscribe((response: any) => {
