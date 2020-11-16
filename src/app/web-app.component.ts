@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, HostListener } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute, RouterEvent } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -12,6 +12,7 @@ import { filter, map, mergeMap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
 /** Environment Configuration */
+import env from 'environments/env';
 import { environment } from 'environments/environment';
 
 /** Custom Services */
@@ -118,6 +119,16 @@ export class WebAppComponent implements OnInit {
     onNavigationEnd.subscribe(() => {
       activities.push(this.router.url);
       localStorage.setItem('mifosXLocation', JSON.stringify(activities));
+    });
+
+    // This is a workaround for appending queryParameters to app baseUrl since angular currently has an issue open to preserve query parameters
+    // https://github.com/angular/angular/issues/12664
+    onNavigationEnd.subscribe(() => {
+      if (env.allow_switching_backend_instance) {
+        const queryParamsString = `baseApiUrl=${environment.baseApiUrl}&apiProvider=${environment.apiProvider}&apiVersion=${environment.apiVersion}`;
+        window.history.replaceState({}, '', `${location.pathname}?${queryParamsString}`);
+      }
+      return;
     });
 
     // Setup theme
