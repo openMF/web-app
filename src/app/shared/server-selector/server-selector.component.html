@@ -1,0 +1,8 @@
+<mat-form-field id="server-selector">
+  <mat-label>Server</mat-label>
+  <mat-select [formControl]="serverSelector">
+    <mat-option *ngFor="let server of servers" [value]="server">
+      {{ server }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

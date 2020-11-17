@@ -34,6 +34,8 @@
     <!-- Language Selector to the extreme right -->
     <div fxLayout="row-reverse" fxFlex="1 0 auto">
       <mifosx-language-selector class="p-r-10 p-t-10"></mifosx-language-selector>
+      <div fxFlex></div>
+      <mifosx-server-selector class="p-l-10 p-t-10" *ngIf="environment.allowServerSwitch"></mifosx-server-selector>
     </div>
 
     <!-- Logo with Organization Name -->

@@ -8,9 +8,10 @@ import env from './.env';
 
 export const environment = {
   production: false,
-  version: env.npm_package_version + '-dev',
+  version: env.mifos_x_version + '-dev',
   fineractPlatformTenantId: 'default',  // For connecting to server running elsewhere update the tenant identifier
-  baseApiUrl: 'https://dev.mifos.io',  // For connecting to server running elsewhere update the base API URL
+  baseApiUrl: JSON.parse(localStorage.getItem('mifosXServerURL')) || 'https://dev.mifos.io',  // For connecting to server running elsewhere update the base API URL
+  allowServerSwitch: env.allow_switching_backend_instance,
   apiProvider: '/fineract-provider/api',
   apiVersion: '/v1',
   serverUrl: '',

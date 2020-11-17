@@ -1,6 +1,9 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
 
+/** Environment Imports */
+import { environment } from '../../environments/environment';
+
 /**
  * Settings Service
  */
@@ -28,6 +31,22 @@ export class SettingsService {
   }
 
   /**
+   * Sets server URL setting throughout the app.
+   * @param {string} url URL
+   */
+  setServer(url: string) {
+    localStorage.setItem('mifosXServerURL', JSON.stringify(url));
+  }
+
+  /**
+   * Sets server URL setting throughout the app.
+   * @param {string[]} list List of default servers
+   */
+  setServers(list: string[]) {
+    localStorage.setItem('mifosXServers', JSON.stringify(list));
+  }
+
+  /**
    * Returns date format setting.
    */
   get dateFormat() {
@@ -39,6 +58,20 @@ export class SettingsService {
    */
   get language() {
     return JSON.parse(localStorage.getItem('mifosXLanguage'));
+  }
+
+  /**
+   * Returns list of default server
+   */
+  get servers() {
+    return JSON.parse(localStorage.getItem('mifosXServers'));
+  }
+
+  /**
+   * Returns server setting
+   */
+  get server() {
+    return environment.baseApiUrl;
   }
 
 }

@@ -30,7 +30,7 @@ export class ClientPreviewStepComponent {
    * @param {any} fieldId Field Id
    */
   getSelectedValue(fieldName: any, fieldId: any) {
-    return (this.clientTemplate.address[fieldName].find((fieldObj: any) => fieldObj.id === fieldId));
+    return (this.clientTemplate.address[0][fieldName].find((fieldObj: any) => fieldObj.id === fieldId));
   }
 
   /**
