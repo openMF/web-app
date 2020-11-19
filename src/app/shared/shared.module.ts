@@ -20,6 +20,7 @@ import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { NotificationsTrayComponent } from './notifications-tray/notifications-tray.component';
 import { SearchToolComponent } from './search-tool/search-tool.component';
 import { KeyboardShortcutsDialogComponent } from './keyboard-shortcuts-dialog/keyboard-shortcuts-dialog.component';
+import { ServerSelectorComponent } from './server-selector/server-selector.component';
 
 /** Custom Modules */
 import { IconsModule } from './icons.module';
@@ -53,12 +54,14 @@ import { MaterialModule } from './material.module';
     KeyboardShortcutsDialogComponent,
     ErrorDialogComponent,
     NotificationsTrayComponent,
-    SearchToolComponent
+    SearchToolComponent,
+    ServerSelectorComponent
   ],
   exports: [
     FileUploadComponent,
     FooterComponent,
     LanguageSelectorComponent,
+    ServerSelectorComponent,
     ThemePickerComponent,
     NotificationsTrayComponent,
     SearchToolComponent,

@@ -11,6 +11,9 @@ import { Alert } from '../core/alert/alert.model';
 /** Custom Services */
 import { AlertService } from '../core/alert/alert.service';
 
+/** Environment Imports */
+import { environment } from '../../environments/environment';
+
 /**
  * Login component.
  */
@@ -20,6 +23,8 @@ import { AlertService } from '../core/alert/alert.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
+
+  public environment = environment;
 
   /** True if password requires a reset. */
   resetPassword = false;
