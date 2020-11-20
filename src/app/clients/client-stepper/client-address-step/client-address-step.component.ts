@@ -111,7 +111,7 @@ export class ClientAddressStepComponent {
    * @param {any} address Address
    */
   isFieldEnabled(fieldName: any) {
-    return (this.clientAddressFieldConfig.find((fieldObj: any) => fieldObj.field === fieldName)).is_enabled;
+    return (this.clientAddressFieldConfig.find((fieldObj: any) => fieldObj.field === fieldName))?.isEnabled;
   }
 
   /**
