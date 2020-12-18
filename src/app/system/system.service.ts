@@ -229,6 +229,10 @@ export class SystemService {
     return this.http.get(`/surveys/${surveyId}?template=true`);
   }
 
+  editSurvey(surveyId: string, survey: any): Observable<any> {
+    return this.http.put(`/surveys/${surveyId}`, survey);
+  }
+
 
   /**
    * @returns {Observable<any>} Fetches Jobs.

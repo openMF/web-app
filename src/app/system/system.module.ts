@@ -60,6 +60,7 @@ import { AddEventDialogComponent } from './manage-hooks/add-event-dialog/add-eve
 import { ViewSchedulerJobComponent } from './manage-scheduler-jobs/view-scheduler-job/view-scheduler-job.component';
 import { EditSchedulerJobComponent } from './manage-scheduler-jobs/edit-scheduler-job/edit-scheduler-job.component';
 import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-tasks/configure-maker-checker-tasks.component';
+import { EditSurveyComponent } from './manage-surveys/edit-survey/edit-survey.component';
 
 @NgModule({
   imports: [
@@ -119,7 +120,8 @@ import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-t
     CreateSurveyComponent,
     EditSchedulerJobComponent,
     ViewHistorySchedulerJobComponent,
-    ViewSurveyComponent
+    ViewSurveyComponent,
+    EditSurveyComponent
   ],
 })
 export class SystemModule { }
