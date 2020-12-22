@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { FixedDepositsService } from 'app/deposits/fixed-deposits/fixed-deposits.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Withdraw By Client Fixed Deposits Account Component
@@ -32,12 +33,14 @@ export class WithdrawByClientFixedDepositsAccountComponent implements OnInit {
    * @param {DatePipe} datePipe Date Pipe
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
               private fixedDepositsService: FixedDepositsService,
               private datePipe: DatePipe,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private settingsService: SettingsService) {
     this.accountId = this.route.parent.snapshot.params['fixedDepositAccountId'];
   }
 
@@ -63,9 +66,8 @@ export class WithdrawByClientFixedDepositsAccountComponent implements OnInit {
    * if successful redirects to the fixed deposit account.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const prevWithdrawnOnDate: Date = this.withdrawFixedDepositsAccountForm.value.withdrawnOnDate;
     this.withdrawFixedDepositsAccountForm.patchValue({
       withdrawnOnDate: this.datePipe.transform(prevWithdrawnOnDate, dateFormat),
