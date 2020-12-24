@@ -1,0 +1,129 @@
+<div class="container">
+    <button mat-raised-button color="primary" class="f-right" [routerLink]="['../creditBureauList']">CreditBureau Configuration </button>
+    <br>
+    <br>
+  <div class="mat-elevation-z8">
+    <button mat-raised-button class="f-right" color="primary" [routerLink]="['../addCreditBureauAlias']">Add credit Bureau</button>
+    <table mat-table [dataSource]="creditBureauSummaryDataSource" matSort>
+      <ng-container matColumnDef="CBId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> CB-ID </th>
+        <td mat-cell *matCellDef="let role"> {{ role.organisationCreditBureauId }} </td>
+      </ng-container>
+      <ng-container matColumnDef="Alias">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Alias </th>
+        <td mat-cell *matCellDef="let role"> {{ role.alias }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="CBName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> CB-Name </th>
+        <td mat-cell *matCellDef="let role"> {{ role.creditBureauName }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="CBProduct">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> CB-PRODUCT </th>
+        <td mat-cell *matCellDef="let role"> {{ role.creditBureauProduct }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> COUNTRY </th>
+        <td mat-cell *matCellDef="let role"> {{ role.creditBureauCountry }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="isActive">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <td mat-cell *matCellDef="let configuration">
+          <div [className]="configuration.isActive ? 'enabled' : 'disabled'">
+            <fa-icon icon="circle" size="lg" matTooltip="{{ configuration.isActive ? 'Enabled' : 'Disabled' }}" matTooltipPosition="right"></fa-icon>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef  mat-sort-header> Action </th>
+        <td mat-cell *matCellDef="let configuration">
+          <button mat-button *ngIf="!configuration.isActive" color="accent" (click)="toggleAliasStatus(configuration)">
+            <fa-icon icon="lock-open"></fa-icon>&nbsp;&nbsp;Enable
+          </button>
+          <button mat-button *ngIf="configuration.isActive" color="warn" (click)="toggleAliasStatus(configuration)">
+            <fa-icon icon="lock"></fa-icon>&nbsp;&nbsp;Disable
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="creditBureauSummaryDisplayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: creditBureauSummaryDisplayedColumns;" class="select-row"></tr>
+    </table>
+
+  </div>
+
+  <br>
+
+  <div class="mat-elevation-z8">
+    <button mat-raised-button class="f-right" color="primary" [routerLink]="['../mapCreditBureau']">Map credit Bureau to Loan Product</button>
+
+    <table mat-table [dataSource]="creditBureauMappingDataSource" matSort>
+
+      <ng-container matColumnDef="CBId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> CB_LP-ID </th>
+        <td mat-cell *matCellDef="let role"> {{ role.creditbureauLoanProductMappingId }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Alias">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Alias </th>
+        <td mat-cell *matCellDef="let role"> {{ role.alias }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="CBSummary">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> creditbureauSummary </th>
+        <td mat-cell *matCellDef="let role"> {{ role.creditbureauSummary }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="CBProduct">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> loanProductName </th>
+        <td mat-cell *matCellDef="let role"> {{ role.loanProductName }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="CreditCheckMandatory">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> isCreditCheckMandatory </th>
+        <td mat-cell *matCellDef="let role"> {{ role.isCreditCheckMandatory }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="skipCreditCheck">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> skipCrediCheckInFailure </th>
+        <td mat-cell *matCellDef="let role"> {{ role.skipCrediCheckInFailure }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="stalePeriod">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> stalePeriod </th>
+        <td mat-cell *matCellDef="let role"> {{ role.stalePeriod }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="isActive">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <td mat-cell *matCellDef="let role">
+          <div [className]="role.isActive ? 'enabled' : 'disabled'">
+            <fa-icon matTooltip="{{ role.isActive === true ? 'Enabled' : 'Disabled' }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef  mat-sort-header> Action </th>
+        <td mat-cell *matCellDef="let role">
+          <button mat-button *ngIf="!role.isActive" color="accent" (click)="toggleMappingStatus(role)">
+            <fa-icon icon="lock-open"></fa-icon>&nbsp;&nbsp;Enable
+          </button>
+          <button mat-button *ngIf="role.isActive" color="warn" (click)="toggleMappingStatus(role)">
+            <fa-icon icon="lock"></fa-icon>&nbsp;&nbsp;Disable
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="creditBureauMappingDisplayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: creditBureauMappingDisplayedColumns;" class="select-row"></tr>
+
+    </table>
+
+  </div>
+</div>
+

@@ -1,0 +1,212 @@
+<div class="container">
+  <mat-card>
+  <div fxLayout="row" fxLayoutAlign="start center"  fxLayoutGap="800px">
+    <div class="m-b-25" fxLayout="row">
+      <h3>Credit Report: ThitsaWorks</h3>
+    </div>
+  </div>
+
+   <div>
+    <form [formGroup]="thitsaworksForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+          <mat-form-field>
+            <mat-label>NRC</mat-label>
+            <input matInput required formControlName="NRC">
+            <mat-error *ngIf="thitsaworksForm.controls.NRC.hasError('required')">
+             NRC is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+      </mat-card-content>
+
+        <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+          <button mat-raised-button color="primary" [disabled]="!thitsaworksForm.valid" *mifosxHasPermission="'GET_CREDITREPORT'">Submit</button>
+        </mat-card-actions>
+    </form>
+   </div>
+  <br><br>
+
+     <table class="mat-elevation-z8" mat-table  [dataSource]="borrowerInfoDataSource">
+
+       <ng-container matColumnDef="Key">
+         <th mat-header-cell *matHeaderCellDef> Borrower Information. </th>
+         <td mat-cell *matCellDef="let elements"> {{elements.key}} </td>
+       </ng-container>
+
+
+       <ng-container matColumnDef="Value">
+         <th mat-header-cell *matHeaderCellDef> Values </th>
+         <td mat-cell *matCellDef="let element">
+           <ng-container *ngIf="element.key === 'MainIdentifier'" >
+             <span *ngIf="creditBureauReportBorrowerObject"> {{creditBureauReportBorrowerObject.MainIdentifier}} </span>
+             <span *ngIf="!creditBureauReportBorrowerObject"> Not Available </span>
+           </ng-container>
+
+          <ng-container *ngIf="element.key === 'Name'" >
+           <span *ngIf="creditBureauReportBorrowerObject"> {{creditBureauReportBorrowerObject.Name}} </span>
+           <span *ngIf="!creditBureauReportBorrowerObject"> Not Available </span>
+          </ng-container>
+
+           <ng-container *ngIf="element.key === 'NRC'" >
+             <span *ngIf="creditBureauReportBorrowerObject"> {{creditBureauReportBorrowerObject.NRC}} </span>
+             <span *ngIf="!creditBureauReportBorrowerObject"> Not Available </span>
+           </ng-container>
+
+          <ng-container *ngIf="element.key === 'Gender'" >
+           <span *ngIf="creditBureauReportBorrowerObject"> {{creditBureauReportBorrowerObject.Gender}} </span>
+           <span *ngIf="!creditBureauReportBorrowerObject"> Not Available </span>
+          </ng-container>
+
+          <ng-container *ngIf="element.key === 'DOB'" >
+           <span *ngIf="creditBureauReportBorrowerObject"> {{creditBureauReportBorrowerObject.DOB}} </span>
+           <span *ngIf="!creditBureauReportBorrowerObject"> Not Available </span>
+          </ng-container>
+
+           <ng-container *ngIf="element.key === 'FatherName'" >
+             <span *ngIf="creditBureauReportBorrowerObject"> {{creditBureauReportBorrowerObject.FatherName}} </span>
+             <span *ngIf="!creditBureauReportBorrowerObject"> Not Available </span>
+           </ng-container>
+
+          <ng-container *ngIf="element.key === 'Address'" >
+           <span *ngIf="creditBureauReportBorrowerObject"> {{creditBureauReportBorrowerObject.Address}} </span>
+           <span *ngIf="!creditBureauReportBorrowerObject"> Not Available </span>
+          </ng-container>
+
+           <ng-container *ngIf="element.key === 'LastUpdatedDtm'" >
+             <span *ngIf="creditBureauReportBorrowerObject"> {{creditBureauReportBorrowerObject.LastUpdatedDtm}} </span>
+             <span *ngIf="!creditBureauReportBorrowerObject"> Not Available </span>
+           </ng-container>
+
+           <ng-container *ngIf="element.key === 'PrintedDtm'" >
+             <span *ngIf="creditBureauReportBorrowerObject"> {{creditBureauReportBorrowerObject.PrintedDtm}} </span>
+             <span *ngIf="!creditBureauReportBorrowerObject"> Not Available </span>
+           </ng-container>
+
+
+         </td>
+       </ng-container>
+
+       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+     </table>
+
+<br><br>
+
+  <table class="mat-elevation-z8" mat-table  [dataSource]="creditScoreDataSource">
+
+    <ng-container matColumnDef="Key">
+      <th mat-header-cell *matHeaderCellDef> Credit Score </th>
+      <td mat-cell *matCellDef="let elements"> {{elements.key}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="Value">
+      <th mat-header-cell *matHeaderCellDef> Values </th>
+      <td mat-cell *matCellDef="let element">
+        <ng-container *ngIf="element.key === 'Score'" >
+          <span *ngIf="creditBureauReportCreditScore"> {{creditBureauReportCreditScore.Score}} </span>
+          <span *ngIf="!creditBureauReportCreditScore"> Not Available </span>
+        </ng-container>
+
+        <ng-container *ngIf="element.key === 'Class'" >
+          <span *ngIf="creditBureauReportCreditScore"> {{creditBureauReportCreditScore.Class}} </span>
+          <span *ngIf="!creditBureauReportCreditScore"> Not Available </span>
+        </ng-container>
+        <ng-container *ngIf="element.key === 'Note'" >
+          <span *ngIf="creditBureauReportCreditScore"> {{creditBureauReportCreditScore.Note}} </span>
+          <span *ngIf="!creditBureauReportCreditScore"> Not Available </span>
+        </ng-container>
+      </td>
+    </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <br><br>
+  <div class="action-button" fxLayoutAlign="end">
+    <button mat-raised-button color="primary" id="exportOpenAccounts" (click)="exportOpenAccounts()">Export TO CSV</button>Click twice!
+  </div>
+
+  <div class="mat-elevation-z8">
+
+    <table class="mat-elevation-z8" mat-table  [dataSource]="ActiveLoanDataSource">
+
+      <ng-container matColumnDef="Active Loans">
+        <mat-header-cell *matHeaderCellDef> Open Accounts </mat-header-cell>
+        <td mat-cell *matCellDef="let element">
+          <ng-container>
+            <div>
+              <br>
+              <label> ReportingDate : {{element.ReportingDate}} <br></label> <hr>
+              <label> LoanGUID : {{element.LoanGUID}} <br></label> <hr>
+              <label> Institution : {{element.Institution}} <br></label> <hr>
+              <label> Division : {{element.Division}} <br></label> <hr>
+              <label> Township : {{element.Township}} <br></label> <hr>
+              <label> PrincipalOutstandingAmount : {{element.PrincipalOutstandingAmount}} <br></label> <hr>
+              <label> TotalOutstandingAmount : {{element.TotalOutstandingAmount}} <br></label> <hr>
+              <label> PrincipalOverdueAmount : {{element.PrincipalOverdueAmount}} <br></label> <hr>
+              <label> TotalOverdueAmount : {{element.TotalOverdueAmount}} <br></label> <hr>
+              <label> DaysInDelay : {{element.DaysInDelay}} <br></label> <hr>
+              <label> UpdatedDtm : {{element.UpdatedDtm}} <br></label> <hr>
+              <label> SortColumn : {{element.SortColumn}} <br></label> <hr>
+              <br>
+            </div>
+          </ng-container>
+
+        </td>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedActiveLoans"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedActiveLoans;"></mat-row>
+    </table>
+  </div>
+
+  <br><br>
+  <div class="action-button" fxLayoutAlign="end">
+    <button mat-raised-button color="primary" id="exportClosedAccounts" (click)="exportClosedAccounts()">Export TO CSV</button>Click twice!
+  </div>
+
+  <div class="mat-elevation-z8">
+
+    <table class="mat-elevation-z8" mat-table  [dataSource]="PaidLoanDataSource">
+
+      <ng-container matColumnDef="Paid Loans">
+        <mat-header-cell *matHeaderCellDef> Closed Accounts </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <ng-container>
+            <div>
+              <br>
+              <label> ReportingDate : {{element.ReportingDate}} <br></label><hr>
+              <label> ClaimGUID : {{element.ClaimGUID}} <br></label><hr>
+              <label> Name : {{element.Name}} <br></label><hr>
+              <label> FatherName : {{element.FatherName}} <br></label><hr>
+              <label> Division : {{element.Division}} <br></label><hr>
+              <label> Township : {{element.Township}} <br></label><hr>
+              <label> WardVillage : {{element.WardVillage}} <br></label><hr>
+              <label> DisbursedDate : {{element.DisbursedDate}} <br></label><hr>
+              <label> DisbursedAmount : {{element.DisbursedAmount}} <br></label><hr>
+              <label> WriteOffDate : {{element.WriteOffDate}} <br></label><hr>
+              <label> PrincipalWriteOffAmount : {{element.PrincipalWriteOffAmount}} <br></label><hr>
+              <label> Note : {{element.Note}} <br></label><hr>
+              <label> UpdatedDtm : {{element.UpdatedDtm}} <br></label><hr>
+              <label> Status : {{element.Status}} <br></label><hr>
+              <label> Institution : {{element.Institution}} <br></label><hr>
+              <br>
+            </div>
+          </ng-container>
+
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedPaidLoans"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedPaidLoans;"></mat-row>
+    </table>
+  </div>
+
+  <br><br>
+  </mat-card>
+</div>
+

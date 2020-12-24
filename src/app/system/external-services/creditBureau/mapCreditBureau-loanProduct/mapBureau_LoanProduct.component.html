@@ -1,0 +1,64 @@
+<div class="container">
+  <mat-card>
+    <div fxLayout="row" fxLayoutAlign="start center"  fxLayoutGap="800px">
+      <div class="m-b-25" fxLayout="row">
+        <h3>Mapping Credit Bureau with Loan Product:</h3>
+      </div>
+    </div>
+
+    <form [formGroup]="CreditBureauMappingForm">
+
+      <mat-card-content>
+        <div fxLayout="column wrap" fxLayoutGap="5%" fxLayout.lt-md="column">
+
+          <mat-form-field fxFlex="55%">
+            <mat-label> Loan Product </mat-label>
+            <mat-select formControlName="loanProductId" required>
+              <mat-option *ngFor="let product of loanProductsData" [value]="product.id">
+                {{ product.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              Product Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="55%">
+            <mat-label> Credit Bureau Alias </mat-label>
+            <mat-select #organisationCreditBureau>
+              <mat-option *ngFor="let organisationCreditBureau of organisationCreditBureauConfigurationData" [value]="organisationCreditBureau">
+                {{ organisationCreditBureau.alias }}
+              </mat-option>
+              </mat-select>
+          </mat-form-field>
+
+          <mat-checkbox required labelPosition="before" formControlName="isCreditcheckMandatory">
+            Credit-Check Mandatory
+          </mat-checkbox>
+
+          <mat-checkbox required labelPosition="before" formControlName="skipCreditcheckInFailure">
+            Skip Credit-Check
+          </mat-checkbox>
+
+          <mat-form-field fxFlex="55%">
+            <mat-label required> Stale </mat-label>
+            <input type="number" matInput required formControlName="stalePeriod">
+            <mat-error *ngIf="CreditBureauMappingForm.controls.stalePeriod.hasError('required')">
+              Stale Period as <strong>Number of Days</strong> is required
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+
+        <button mat-raised-button color="primary" (click)="submit(organisationCreditBureau)">Submit</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+
+      </mat-card-actions>
+
+    </form>
+  </mat-card>
+</div>

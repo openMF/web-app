@@ -1,0 +1,59 @@
+<div class="container">
+  <mat-card>
+    <div fxLayout="row" fxLayoutAlign="start center"  fxLayoutGap="800px">
+      <div class="m-b-25" fxLayout="row">
+        <h3>Credit Bureau:</h3>
+      </div>
+    </div>
+
+    <form [formGroup]="CreditBureauConfigurationForm">
+
+      <mat-card-content>
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+          <mat-form-field fxFlex="55%">
+            <mat-label>Credit Bureau Configuration</mat-label>
+            <mat-select required formControlName="configkey">
+              <mat-option *ngFor="let creditBureauConfiguration of creditBureauConfigurationData" [value]="creditBureauConfiguration.creditBureauConfigurationId">
+                {{ creditBureauConfiguration.configurationKey }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="55%">
+            <mat-label> Value </mat-label>
+            <input matInput required formControlName="value">
+            <mat-error *ngIf="CreditBureauConfigurationForm.controls.value.hasError('required')">
+              Credit Bureau Configuration is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="CreditBureauConfigurationForm.controls.value.hasError('pattern')">
+              Configuration Value <strong>cannot</strong> begin with a special character or number
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="55%">
+            <mat-label> Description </mat-label>
+            <input matInput required formControlName="description">
+            <mat-error *ngIf="CreditBureauConfigurationForm.controls.description.hasError('required')">
+              Credit Bureau Configuration is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="CreditBureauConfigurationForm.controls.description.hasError('pattern')">
+              Configuration Value <strong>cannot</strong> begin with a special character or number
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+
+        <button mat-raised-button color="primary" (click)="submit()">Submit</button>
+        <button type="button" mat-raised-button color="primary" (click)="cancel()">Cancel</button>
+
+
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+</div>

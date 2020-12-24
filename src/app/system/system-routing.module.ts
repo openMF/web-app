@@ -49,6 +49,11 @@ import { ViewAuditComponent } from './audit-trails/view-audit/view-audit.compone
 import { ViewRoleComponent } from './roles-and-permissions/view-role/view-role.component';
 import { EditRoleComponent } from './roles-and-permissions/edit-role/edit-role.component';
 import { EntityToEntityMappingComponent } from './entity-to-entity-mapping/entity-to-entity-mapping.component';
+import { CreditBureauSummaryComponent } from './external-services/creditBureau/creditBureauSummary.component';
+import { CreditBureauConfigurationComponent } from './external-services/creditBureau/creditBureau-configuration/creditBureauConfiguration.component';
+import { CreditBureauListComponent } from './external-services/creditBureau/creditBureauList/creditBureauList.component';
+import { AddCreditBureauAliasComponent } from './external-services/creditBureau/addCreditBureauAlias/add_CreditBureauAlias.component';
+import { MapBureauLoanProductComponent } from './external-services/creditBureau/mapCreditBureau-loanProduct/mapBureau_LoanProduct.component';
 
 /** Custom Resolvers */
 import { CodesResolver } from './codes/codes.resolver';
@@ -87,6 +92,13 @@ import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-t
 import { MakerCheckerTasksResolver } from './configure-maker-checker-tasks/configure-maker-checker-tasks.resolver';
 import { ViewHistorySchedulerJobComponent } from './manage-scheduler-jobs/view-history-scheduler-job/view-history-scheduler-job.component';
 import { ViewHistorySchedulerJobsResolver } from './manage-scheduler-jobs/view-history-scheduler-job/view-history-scheduler-job.resolver';
+import { CreditBureauSummaryResolver } from './external-services/creditBureau/creditBureauSummary.resolver';
+import { CreditBureauMappingResolver } from './external-services/creditBureau/creditBureauMapping.resolver';
+import { CreditBureauConfigurationResolver } from '../clients/common-resolvers/creditBureau-configuration.resolver';
+import { CreditBureauResolver } from '../clients/common-resolvers/credit-bureau.resolver';
+import { OrganisationCreditBureauResolver } from '../clients/common-resolvers/organisation-creditBureau.resolver';
+import { LoanProductsResolver } from '../products/loan-products/loan-products.resolver';
+import {CreditBureauLoanProductMappingResolver} from './external-services/creditBureau/creditBureauLoanProductMapping.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -235,6 +247,53 @@ const routes: Routes = [
                   data: { title: extract('Edit Notification Configuration'), breadcrumb: 'Edit' },
                   resolve: {
                     notificationConfiguration: NotificationConfigurationResolver
+                  }
+                }
+              ]
+            },
+            {
+              path: 'creditBureau',
+              data: { title: extract('View Credit Bureau Summary'), breadcrumb: 'CreditBureau' },
+              children: [
+                {
+                  path: '',
+                  component: CreditBureauSummaryComponent,
+                  resolve: {
+                    creditBureauSummary: CreditBureauSummaryResolver,
+                    creditBureauMapping: CreditBureauMappingResolver
+                  }
+                },
+                {
+                  path: 'creditBureauList',
+                  component: CreditBureauListComponent,
+                  data: { title: extract('Credit Bureau List'), breadcrumb: 'CreditBureauList' },
+                  resolve: {
+                    creditBureauData: CreditBureauResolver
+                  }
+                },
+                {
+                  path: 'addCreditBureauAlias',
+                  component: AddCreditBureauAliasComponent,
+                  data: { title: extract('Credit Bureau Alias'), breadcrumb: 'CreditBureauAlias' },
+                  resolve: {
+                    creditBureauData: CreditBureauResolver
+                  }
+                },
+                {
+                  path: 'mapCreditBureau',
+                  component: MapBureauLoanProductComponent,
+                  data: { title: extract('Credit Bureau Mapping'), breadcrumb: 'CreditBureauMapping' },
+                  resolve: {
+                    OrganisationCreditBureauData: OrganisationCreditBureauResolver,
+                    loanProducts: LoanProductsResolver
+                  }
+                },
+                {
+                  path: 'creditBureauConfiguration/:creditBureauId',
+                  component: CreditBureauConfigurationComponent,
+                  data: { title: extract('CreditBureau Configuration'), breadcrumb: 'CreditBureau Configuration', routeParamBreadcrumb: 'creditBureauId' },
+                  resolve: {
+                   configurationData: CreditBureauConfigurationResolver
                   }
                 }
               ]
@@ -616,7 +675,11 @@ const routes: Routes = [
     ViewRoleResolver,
     EntityToEntityMappingResolver,
     MakerCheckerTasksResolver,
-    ViewHistorySchedulerJobsResolver
+    ViewHistorySchedulerJobsResolver,
+    CreditBureauMappingResolver,
+    CreditBureauSummaryResolver,
+    OrganisationCreditBureauResolver,
+    LoanProductsResolver
   ]
 })
 export class SystemRoutingModule { }

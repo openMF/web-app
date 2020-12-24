@@ -111,12 +111,12 @@
 	  <a mat-tab-link *mifosxHasPermission="'READ_LOANNOTE'" [routerLink]="['./notes']" routerLinkActive #notes="routerLinkActive" [active]="notes.isActive">
 		Notes
 	  </a>
-	<ng-container *ngIf="loanDetailsData.clientId">
+    <ng-container *ngIf="loanDetailsData.clientId">
 		<a mat-tab-link [routerLink]="['./standing-instruction']" routerLinkActive #standingInstruction="routerLinkActive"
 			[active]="standingInstruction.isActive">
 			Standing Instruction
 		</a>
-	</ng-container>
+	  </ng-container>
 	  <ng-container *ngFor="let loanDatatable of loanDatatables">
         <a mat-tab-link *mifosxHasPermission="'READ_' + loanDatatable.registeredTableName" [routerLink]="['./datatables',loanDatatable.registeredTableName]"
           routerLinkActive #datatable="routerLinkActive" [active]="datatable.isActive">

@@ -60,6 +60,12 @@ import { AddEventDialogComponent } from './manage-hooks/add-event-dialog/add-eve
 import { ViewSchedulerJobComponent } from './manage-scheduler-jobs/view-scheduler-job/view-scheduler-job.component';
 import { EditSchedulerJobComponent } from './manage-scheduler-jobs/edit-scheduler-job/edit-scheduler-job.component';
 import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-tasks/configure-maker-checker-tasks.component';
+import { CreditBureauSummaryComponent } from './external-services/creditBureau/creditBureauSummary.component';
+import { UploadCreditReportComponent } from '../clients/clients-view/credit-report/upload-CreditReport/upload-CreditReport.component';
+import { CreditBureauListComponent } from './external-services/creditBureau/creditBureauList/creditBureauList.component';
+import { CreditBureauConfigurationComponent } from './external-services/creditBureau/creditBureau-configuration/creditBureauConfiguration.component';
+import { AddCreditBureauAliasComponent } from './external-services/creditBureau/addCreditBureauAlias/add_CreditBureauAlias.component';
+import { MapBureauLoanProductComponent } from './external-services/creditBureau/mapCreditBureau-loanProduct/mapBureau_LoanProduct.component';
 
 @NgModule({
   imports: [
@@ -119,7 +125,13 @@ import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-t
     CreateSurveyComponent,
     EditSchedulerJobComponent,
     ViewHistorySchedulerJobComponent,
-    ViewSurveyComponent
+    ViewSurveyComponent,
+    CreditBureauSummaryComponent,
+    UploadCreditReportComponent,
+    CreditBureauListComponent,
+    CreditBureauConfigurationComponent,
+    AddCreditBureauAliasComponent,
+    MapBureauLoanProductComponent
   ],
 })
 export class SystemModule { }

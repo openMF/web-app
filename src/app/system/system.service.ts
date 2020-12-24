@@ -585,5 +585,43 @@ export class SystemService {
     return this.http.put('/permissions', data, { params: httpParams });
   }
 
+  getOrganisationCreditBureauSummary(): Observable<any> {
+    return this.http.get('/CreditBureauConfiguration/organisationCreditBureau');
+  }
+
+  getCreditBureauAllMappings(): Observable<any> {
+    return this.http.get('/CreditBureauConfiguration/mappings');
+  }
+
+  getCreditBureauMappingByLPId(loanProductId: any): Observable<any> {
+    return this.http.get(`/CreditBureauConfiguration/loanProduct/${loanProductId}`);
+  }
+
+  uploadImportDocument(file: File, urlSuffix: string, creditBureauId: string): Observable<any> {
+
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post(`/creditBureauIntegration/addCreditReport?creditBureauId=` + creditBureauId, formData);
+  }
+
+  putConfiguration(configurationId: number, mapData: any): Observable<any> {
+    return this.http.put(`/CreditBureauConfiguration/configuration/${configurationId}`, mapData);
+  }
+
+  postCreditBureauAlias(creditBureauId: number, mapData: any): Observable<any> {
+    return this.http.post(`/CreditBureauConfiguration/organisationCreditBureau/${creditBureauId}`, mapData);
+  }
+
+  postCreditBureauMapping(creditBureauId: number, mapData: any): Observable<any> {
+    return this.http.post(`/CreditBureauConfiguration/mappings/${creditBureauId}`, mapData);
+  }
+
+  updateOrganisationCreditBureauConfiguration(configuration: any): Observable<any> {
+    return this.http.put(`/CreditBureauConfiguration/organisationCreditBureau`, configuration);
+  }
+
+  updateMappingConfiguration(configuration: any): Observable<any> {
+    return this.http.put(`/CreditBureauConfiguration/mappings`, configuration);
+  }
 
 }

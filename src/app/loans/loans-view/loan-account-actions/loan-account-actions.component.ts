@@ -34,7 +34,7 @@ export class LoanAccountActionsComponent {
             'Undo Disbursal': boolean,
             'Loan Screen Reports': boolean,
             'Approve': boolean,
-            'Add Loan Charge': boolean } = {
+            'Add Loan Charge': boolean} = {
               'Close': false,
               'Undo Approval': false,
               'Write Off':  false,
@@ -56,7 +56,7 @@ export class LoanAccountActionsComponent {
               'Undo Disbursal':  false,
               'Loan Screen Reports':  false,
               'Approve':  false,
-              'Add Loan Charge':  false };
+              'Add Loan Charge':  false};
 
   actionButtonData: any;
   actionName: any;
