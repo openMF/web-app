@@ -32,30 +32,36 @@
             ],
             "styles": [
               "src/main.scss",
-              {"inject":false,
+              {
+                "inject": false,
                 "input": "src/theme/deeppurple-amber.scss",
                 "bundleName": "theme/deeppurple-amber"
-},
-              {"inject":false,
+              },
+              {
+                "inject": false,
                 "input": "src/theme/indigo-pink.scss",
                 "bundleName": "theme/indigo-pink"
-},
-              {"inject":false,
+              },
+              {
+                "inject": false,
                 "input": "src/theme/pink-bluegrey.scss",
                 "bundleName": "theme/pink-bluegrey"
-},
-              {"inject":false,
+              },
+              {
+                "inject": false,
                 "input": "src/theme/purple-green.scss",
                 "bundleName": "theme/purple-green"
-},
-              {"inject":false,
+              },
+              {
+                "inject": false,
                 "input": "src/theme/custom/denim-yellowgreen.scss",
                 "bundleName": "theme/denim-yellowgreen"
-},
-              {"inject":false,
+              },
+              {
+                "inject": false,
                 "input": "src/theme/custom/pictonblue-yellowgreen.scss",
                 "bundleName": "theme/pictonblue-yellowgreen"
-}
+              }
             ],
             "scripts": []
           },
@@ -113,30 +119,36 @@
             "scripts": [],
             "styles": [
               "src/main.scss",
-              {"inject":false,
+              {
+                "inject": false,
                 "input": "src/theme/deeppurple-amber.scss",
                 "bundleName": "theme/deeppurple-amber"
-},
-              {"inject":false,
+              },
+              {
+                "inject": false,
                 "input": "src/theme/indigo-pink.scss",
                 "bundleName": "theme/indigo-pink"
-},
-              {"inject":false,
+              },
+              {
+                "inject": false,
                 "input": "src/theme/pink-bluegrey.scss",
                 "bundleName": "theme/pink-bluegrey"
-},
-              {"inject":false,
+              },
+              {
+                "inject": false,
                 "input": "src/theme/purple-green.scss",
                 "bundleName": "theme/purple-green"
-},
-              {"inject":false,
+              },
+              {
+                "inject": false,
                 "input": "src/theme/custom/denim-yellowgreen.scss",
                 "bundleName": "theme/denim-yellowgreen"
-},
-              {"inject":false,
+              },
+              {
+                "inject": false,
                 "input": "src/theme/custom/pictonblue-yellowgreen.scss",
                 "bundleName": "theme/pictonblue-yellowgreen"
-}
+              }
             ],
             "assets": [
               "src/favicon.ico",
