@@ -1,0 +1,53 @@
+name: build-run
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    name: Run Lint and Deploy 
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js 14
+        uses: actions/setup-node@v1
+        with:
+          # no support for lts as of now with github actions.
+          # issue link : https://github.com/actions/setup-node/issues/26
+          node-version: '14'
+      - name: Angular CLI install
+        run : npm install -g --silent @angular/cli@9.1.12
+
+      - name: Npm install
+        run: npm install
+
+      - name: Run lint
+        run : ng lint
+
+      - name: Run build
+        run : npm run build:prod
+
+      - name: Deploy to github pages
+        if: ${{ github.event_name == 'push' }}
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: dist/web-app
+          #without preserve it only builds if you have untracked files
+          PRESERVE: true
+          # github user name and email shows up in the logs, 
+          # so it would be better to make it silent. 
+          SILENT: true 
