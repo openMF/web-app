@@ -23,7 +23,9 @@
     "translations:extract": "ngx-translate-extract --input ./src --output ./src/translations/template.json --format=json --clean -sort --marker extract",
     "docs": "hads ./docs -o",
     "env": "ngx-scripts env npm_package_version",
-    "postinstall": "ngcc"
+    "release": "release-it",
+    "heroku-postbuild": "ng build --base-href=\"/\" --configuration=$NODE_ENV",
+    "heroku-start": "npx http-server ./dist -p $PORT"
   },
   "dependencies": {
     "@angular/animations": "9.1.12",
@@ -76,6 +78,7 @@
     "karma-jasmine": "2.0.1",
     "karma-junit-reporter": "1.2.0",
     "protractor": "5.4.2",
+    "release-it": "^14.2.2",
     "stylelint": "10.0.1",
     "stylelint-config-recommended-scss": "3.3.0",
     "stylelint-config-standard": "18.3.0",
@@ -86,10 +89,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/openMF/web-app.git"
+    "url": "https://github.com/blossomfinance/kopi-backoffice-web-ap.git"
   },
   "bugs": {
-    "url": "https://github.com/openMF/web-app/issues"
+    "url": "https://github.com/blossomfinance/kopi-backoffice-web-ap/issues"
   },
   "engines": {
     "node": ">= 8.9.0",
