@@ -48,7 +48,19 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
         'currencyCode': this.savingsAccountProductTemplate.currency.code,
         'decimal': this.savingsAccountProductTemplate.currency.decimalPlaces,
         'currencyMultiple': this.savingsAccountProductTemplate.currency.inMultiplesOf,
-        'minBalanceForInterestCalculation': this.savingsAccountProductTemplate.minBalanceForInterestCalculation
+        'minBalanceForInterestCalculation': this.savingsAccountProductTemplate.minBalanceForInterestCalculation,
+        'nominalAnnualInterestRate': this.savingsAccountProductTemplate.nominalAnnualInterestRate,
+        'interestCompoundingPeriodType': this.savingsAccountProductTemplate.interestCompoundingPeriodType.id,
+        'interestPostingPeriodType': this.savingsAccountProductTemplate.interestPostingPeriodType.id,
+        'interestCalculationType': this.savingsAccountProductTemplate.interestCalculationType.id,
+        'interestCalculationDaysInYearType': this.savingsAccountProductTemplate.interestCalculationDaysInYearType.id,
+        'minRequiredOpeningBalance': this.savingsAccountProductTemplate.minRequiredOpeningBalance,
+        'withdrawalFeeForTransfers': this.savingsAccountProductTemplate.withdrawalFeeForTransfers,
+        'lockinPeriodFrequency': this.savingsAccountProductTemplate.lockinPeriodFrequency,
+        'lockinPeriodFrequencyType': this.savingsAccountProductTemplate.lockinPeriodFrequencyType && this.savingsAccountTemplate.lockinPeriodFrequencyType.id,
+        'allowOverdraft': this.savingsAccountProductTemplate.allowOverdraft,
+        'enforceMinRequiredBalance': this.savingsAccountProductTemplate.enforceMinRequiredBalance,
+        'minRequiredBalance': this.savingsAccountProductTemplate.minRequiredBalance,
       });
       this.setOptions();
     }

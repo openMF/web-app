@@ -54,6 +54,10 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
           'submittedOnDate': this.savingsAccountTemplate.timeline.submittedOnDate && new Date(this.savingsAccountTemplate.timeline.submittedOnDate),
           'externalId': this.savingsAccountTemplate.externalId
         });
+      } else {
+        this.savingsAccountDetailsForm.patchValue({
+          'submittedOnDate': new Date()
+        })
       }
     }
   }
