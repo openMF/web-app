@@ -24,7 +24,7 @@
     "docs": "hads ./docs -o",
     "env": "ngx-scripts env npm_package_version",
     "release": "release-it",
-    "heroku-postbuild": "./node_modules/@angular/cli/bin/ng build --base-href=\"/\" --configuration=$NODE_ENV",
+    "heroku-postbuild": "./node_modules/.bin/ng build --base-href=\"/\" --configuration=$NODE_ENV",
     "heroku-start": "npx http-server ./dist -p $PORT"
   },
   "dependencies": {
