@@ -8,12 +8,11 @@
     "fineract",
     "angular"
   ],
-  "homepage": "https://github.com/openMF/web-app",
+  "homepage": "https://github.com/blossomfinance/kopi-backoffice-web-app",
   "license": "MPL-2.0",
   "scripts": {
     "ng": "ng",
-    "build": "npm run env -s && ng build --prod --output-hashing=none",
-    "build:prod": "node --max-old-space-size=16384 ./node_modules/@angular/cli/bin/ng build --prod --output-hashing=none --base-href=\"/web-app/\"",
+    "build": "./node_modules/.bin/ng build --prod --output-hashing=none --base-href=\"/\" --configuration=$NODE_ENV",
     "start": "npm run env -s && ng serve --aot --proxy-config proxy.conf.js",
     "serve:sw": "npm run build -s && npx http-server ./dist -p 4200",
     "lint": "ng lint && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc",
@@ -23,9 +22,7 @@
     "translations:extract": "ngx-translate-extract --input ./src --output ./src/translations/template.json --format=json --clean -sort --marker extract",
     "docs": "hads ./docs -o",
     "env": "ngx-scripts env npm_package_version",
-    "release": "release-it",
-    "heroku-postbuild": "./node_modules/.bin/ng build --base-href=\"/\" --configuration=$NODE_ENV",
-    "heroku-start": "npx http-server ./dist -p $PORT"
+    "release": "release-it"
   },
   "dependencies": {
     "@angular/animations": "9.1.12",
@@ -89,10 +86,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/blossomfinance/kopi-backoffice-web-ap.git"
+    "url": "https://github.com/blossomfinance/kopi-backoffice-web-app.git"
   },
   "bugs": {
-    "url": "https://github.com/blossomfinance/kopi-backoffice-web-ap/issues"
+    "url": "https://github.com/blossomfinance/kopi-backoffice-web-app/issues"
   },
   "engines": {
     "node": ">= 8.9.0",
