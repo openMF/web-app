@@ -6,7 +6,7 @@
   "theme_color": "#fff",
   "background_color": "#fff",
   "display": "standalone",
-  "description": "Koppi Kantor adalah peralatan untuk tim koperasi untuk mengelola anggota, menerbitkan pembiayaan, transaksi, dan akunting.",
+  "description": "Koppi Kantor adalah peralatan buat tim koperasi untuk mengelola anggota, menerbitkan pembiayaan, transaksi, dan akunting.",
   "icons": [{
       "src": "/assets/icons/android-icon-36x36.png",
       "sizes": "36x36",
