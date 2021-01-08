@@ -80,7 +80,7 @@ export class TableAndSmsComponent implements OnChanges {
    */
   downloadCSV() {
     const headers = this.displayedColumns;
-    let csv = this.csvData.map((object: any) => object.row.join());
+    let csv = this.csvData.map((object: any) => (object.row.replace(',', '-')).join());
     csv.unshift(`data:text/csv;charset=utf-8,${headers.join()}`);
     csv = csv.join('\r\n');
     const link = document.createElement('a');
