@@ -13,7 +13,7 @@
   "scripts": {
     "ng": "ng",
     "build": "npm run env -s && ng build --prod --output-hashing=none",
-    "build:prod": "node --max-old-space-size=16384 ./node_modules/@angular/cli/bin/ng build --prod --output-hashing=none --base-href=\"/web-app/\"",
+    "build:prod": "node --max-old-space-size=16384 ./node_modules/@angular/cli/bin/ng build --prod --output-hashing=none --base-href=/web-app/",
     "start": "npm run env -s && ng serve --aot --proxy-config proxy.conf.js",
     "serve:sw": "npm run build -s && npx http-server ./dist -p 4200",
     "lint": "ng lint && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc",
