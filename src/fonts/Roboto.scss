@@ -1,0 +1,12 @@
+@import '~@angular/material/theming';
+
+/** Created style for tertiaryFont*/
+$typo3: mat-typography-config(
+  $font-family: 'Roboto',
+  $headline: mat-typography-level(32px, 48px, 700),
+  $body-1: mat-typography-level(16px, 24px, 500)
+);
+
+.roboto {
+  @include mat-core($typo3);
+}

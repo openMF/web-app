@@ -1,0 +1,9 @@
+<button mat-icon-button [matMenuTriggerFor]="fontMenu" matTooltip="Font Styles">
+  <h2>Aa</h2>
+</button>
+
+<mat-menu #fontMenu="matMenu" x-position="before">
+  <div *ngFor="let font of fonts">
+    <mat-option (click)="onFontChange(font)" value=font>{{font}}</mat-option>
+  </div>
+</mat-menu>
