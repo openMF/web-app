@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { AccountingService } from '../accounting.service';
-
+import { SettingsService } from 'app/settings/settings.service';
 /** Custom Validators */
 import { onlyOneOfTheFieldsIsRequiredValidator } from './only-one-of-the-fields-is-required.validator';
 
@@ -40,11 +40,13 @@ export class MigrateOpeningBalancesComponent implements OnInit {
    * Retrieves the offices and currencies from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {AccountingService} accountingService Accounting Service.
+   * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(private formBuilder: FormBuilder,
               private accountingService: AccountingService,
+              private settingsService: SettingsService,
               private route: ActivatedRoute,
               private router: Router) {
     this.route.data.subscribe((data: {
@@ -134,8 +136,8 @@ export class MigrateOpeningBalancesComponent implements OnInit {
   submit() {
     const openingBalances = this.openingBalancesForm.value;
     // TODO: Update once language and date settings are setup
-    openingBalances.locale = 'en';
-    openingBalances.dateFormat = 'yyyy-MM-dd';
+    openingBalances.locale = this.settingsService.language.code;
+    openingBalances.dateFormat = this.settingsService.dateFormat;
     if (openingBalances.transactionDate instanceof Date) {
       let day = openingBalances.transactionDate.getDate();
       let month = openingBalances.transactionDate.getMonth() + 1;
