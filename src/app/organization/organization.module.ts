@@ -70,6 +70,12 @@ import { StandingInstructionsHistoryComponent } from './standing-instructions-hi
 import { FundMappingComponent } from './fund-mapping/fund-mapping.component';
 import { CreateHolidayComponent } from './holidays/create-holiday/create-holiday.component';
 
+/** Custom Service */
+import { TodoItemNode } from './holidays/create-holiday/todo-item.class';
+import { TodoItemFlatNode } from './holidays/create-holiday/todo-flat-item.class';
+import { ChecklistDatabase } from './holidays/create-holiday/checklist-db.class';
+import { CreateHoliday } from './holidays/create-holiday/create-holiday.service';
+
 /**
  * Organization Module
  *
@@ -144,6 +150,12 @@ import { CreateHolidayComponent } from './holidays/create-holiday/create-holiday
     StandingInstructionsHistoryComponent,
     FundMappingComponent,
     CreateHolidayComponent,
+  ],
+  providers: [
+    CreateHoliday,
+    ChecklistDatabase,
+    TodoItemFlatNode,
+    TodoItemNode
   ]
 })
 export class OrganizationModule { }
