@@ -1,6 +1,8 @@
+/** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+/** Custom Components */
 import { RecurringDepositProductDetailsStepComponent } from '../recurring-deposit-product-stepper/recurring-deposit-product-details-step/recurring-deposit-product-details-step.component';
 import { RecurringDepositProductCurrencyStepComponent } from '../recurring-deposit-product-stepper/recurring-deposit-product-currency-step/recurring-deposit-product-currency-step.component';
 import { RecurringDepositProductTermsStepComponent } from '../recurring-deposit-product-stepper/recurring-deposit-product-terms-step/recurring-deposit-product-terms-step.component';
@@ -9,7 +11,9 @@ import { RecurringDepositProductInterestRateChartStepComponent } from '../recurr
 import { RecurringDepositProductChargesStepComponent } from '../recurring-deposit-product-stepper/recurring-deposit-product-charges-step/recurring-deposit-product-charges-step.component';
 import { RecurringDepositProductAccountingStepComponent } from '../recurring-deposit-product-stepper/recurring-deposit-product-accounting-step/recurring-deposit-product-accounting-step.component';
 
+/** Custom Services */
 import { ProductsService } from 'app/products/products.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
   selector: 'mifosx-create-recurring-deposit-product',
@@ -29,9 +33,17 @@ export class CreateRecurringDepositProductComponent implements OnInit {
   recurringDepositProductsTemplate: any;
   accountingRuleData = ['None', 'Cash'];
 
+  /**
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {ProductsService} productsService Products Service.
+   * @param {Router} router Router for navigation.
+   * @param {SettingsService} settingsService Settings Service.
+   */
+
   constructor(private route: ActivatedRoute,
-    private productsService: ProductsService,
-    private router: Router) {
+              private productsService: ProductsService,
+              private router: Router,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { recurringDepositProductsTemplate: any }) => {
       this.recurringDepositProductsTemplate = data.recurringDepositProductsTemplate;
     });
@@ -92,7 +104,7 @@ export class CreateRecurringDepositProductComponent implements OnInit {
     const recurringDepositProduct = {
       ...this.recurringDepositProduct,
       charges: this.recurringDepositProduct.charges.map((charge: any) => ({ id: charge.id })),
-      locale: 'en' // locale required for depositAmount
+      locale: this.settingsService.language.code // locale required for depositAmount
     };
     if (!recurringDepositProduct.description) {
       recurringDepositProduct.description = '';

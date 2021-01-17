@@ -10,6 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 
 /** Custom Services */
 import { ProductsService } from '../../products.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Components */
 import { FloatingRatePeriodDialogComponent } from '../floating-rate-period-dialog/floating-rate-period-dialog.component';
@@ -36,7 +37,7 @@ export class CreateFloatingRateComponent implements OnInit {
   /** Data source for floating rate periods table. */
   dataSource: MatTableDataSource<any>;
   /** Date Format. */
-  dateFormat = 'dd MMMM yyyy';
+  dateFormat = this.settingsService.dateFormat;
 
   /** Paginator for floating rate periods table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -50,13 +51,15 @@ export class CreateFloatingRateComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {DatePipe} datePipe Date Pipe.
    * @param {MatDialog} dialog Dialog reference.
+   * @param {SettingsService} settingsService Settings Service.
    */
   constructor(private router: Router,
               private formBuilder: FormBuilder,
               private productsService: ProductsService,
               private route: ActivatedRoute,
               private datePipe: DatePipe,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog,
+              private settingsService: SettingsService) { }
 
   /**
    * Sets the floating rate periods table.
@@ -111,7 +114,7 @@ export class CreateFloatingRateComponent implements OnInit {
           fromDate: this.datePipe.transform(response.fromDate, this.dateFormat),
           interestRate: response.interestRate,
           isDifferentialToBaseLendingRate: response.isDifferentialToBaseLendingRate,
-          locale: 'en',
+          locale: this.settingsService.language.code,
           dateFormat: this.dateFormat
         });
         this.dataSource.connect().next(this.floatingRatePeriodsData);
@@ -137,7 +140,7 @@ export class CreateFloatingRateComponent implements OnInit {
           fromDate: this.datePipe.transform(response.fromDate, this.dateFormat),
           interestRate: response.interestRate,
           isDifferentialToBaseLendingRate: response.isDifferentialToBaseLendingRate,
-          locale: 'en',
+          locale: this.settingsService.language.code,
           dateFormat: this.dateFormat
         };
         this.dataSource.connect().next(this.floatingRatePeriodsData);

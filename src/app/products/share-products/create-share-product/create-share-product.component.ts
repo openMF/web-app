@@ -1,6 +1,8 @@
+/** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+/** Custom Components */
 import { ShareProductDetailsStepComponent } from '../share-product-stepper/share-product-details-step/share-product-details-step.component';
 import { ShareProductCurrencyStepComponent } from '../share-product-stepper/share-product-currency-step/share-product-currency-step.component';
 import { ShareProductTermsStepComponent } from '../share-product-stepper/share-product-terms-step/share-product-terms-step.component';
@@ -9,7 +11,9 @@ import { ShareProductMarketPriceStepComponent } from '../share-product-stepper/s
 import { ShareProductChargesStepComponent } from '../share-product-stepper/share-product-charges-step/share-product-charges-step.component';
 import { ShareProductAccountingStepComponent } from '../share-product-stepper/share-product-accounting-step/share-product-accounting-step.component';
 
+/** Custom Services */
 import { ProductsService } from 'app/products/products.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
   selector: 'mifosx-create-share-product',
@@ -29,9 +33,17 @@ export class CreateShareProductComponent implements OnInit {
   shareProductsTemplate: any;
   accountingRuleData = ['None', 'Cash'];
 
+  /**
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {ProductsService} productsService Products Service.
+   * @param {Router} router Router.
+   * @param {SettingsService} settingsService Settings Service.
+   */
+
   constructor(private route: ActivatedRoute,
               private productsService: ProductsService,
-              private router: Router) {
+              private router: Router,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { shareProductsTemplate: any }) => {
       this.shareProductsTemplate = data.shareProductsTemplate;
     });
@@ -92,12 +104,12 @@ export class CreateShareProductComponent implements OnInit {
     const shareProduct = {
       ...this.shareProduct,
       chargesSelected: this.shareProduct.chargesSelected.map((charge: any) => ({ id: charge.id })),
-      locale: 'en' // locale required for digitsAfterDecimal
+      locale: this.settingsService.language.code // locale required for digitsAfterDecimal
     };
     this.productsService.createShareProduct(shareProduct)
       .subscribe((response: any) => {
         this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
-    });
+      });
   }
 
 }
