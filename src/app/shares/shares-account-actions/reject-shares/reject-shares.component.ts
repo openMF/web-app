@@ -12,6 +12,7 @@ import { RejectShareDialogComponent } from './reject-share-dialog/reject-share-d
 
 /** Custom Serices */
 import { SharesService } from 'app/shares/shares.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Reject shares component.
@@ -46,10 +47,12 @@ export class RejectSharesComponent implements OnInit {
    * @param {SharesService} sharesService Shares Service
    * @param {ActivatedRoute} route Activated Route
    * @param {MatDialog} dialog Mat Dialog
+   * @param {SettingsService} settingsService Settings Service.
    */
   constructor(private sharesService: SharesService,
               private route: ActivatedRoute,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private settingsService: SettingsService) {
     this.accountId = this.route.parent.snapshot.params['shareAccountId'];
     this.route.data.subscribe((data: { shareAccountActionData: any }) => {
       this.sharesAccountData = data.shareAccountActionData;
@@ -84,8 +87,8 @@ export class RejectSharesComponent implements OnInit {
     });
     rejectSharesDialogRef.afterClosed().subscribe((response: any) => {
       if (response.reject) {
-        const locale = 'en';
-        const dateFormat = 'dd MMMM yyyy';
+        const locale = this.settingsService.language.code;
+        const dateFormat = this.settingsService.dateFormat;
         const data = {
           requestedShares: [{id}],
           dateFormat,
