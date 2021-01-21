@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit, OnDestroy {
    * @param {Router} router Router for navigation.
    */
   constructor(private alertService: AlertService,
-              private router: Router) { }
+    private router: Router) { }
 
   /**
    * Subscribes to alert event of alert service.
@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       } else if (alertType === 'Authentication Success') {
         this.resetPassword = false;
         this.twoFactorAuthenticationRequired = false;
-        this.router.navigate(['/'], { replaceUrl: true });
+        this.router.navigate(['/dashboard'], { replaceUrl: true });
       }
     });
   }

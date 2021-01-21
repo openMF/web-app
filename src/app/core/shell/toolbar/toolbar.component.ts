@@ -42,9 +42,9 @@ export class ToolbarComponent implements OnInit {
    * @param {AuthenticationService} authenticationService Authentication service.
    */
   constructor(private breakpointObserver: BreakpointObserver,
-              private router: Router,
-              private authenticationService: AuthenticationService,
-              private dialog: MatDialog) { }
+    private router: Router,
+    private authenticationService: AuthenticationService,
+    private dialog: MatDialog) { }
 
   /**
    * Subscribes to breakpoint for handset.
@@ -84,7 +84,7 @@ export class ToolbarComponent implements OnInit {
    * Opens Mifos JIRA Wiki page.
    */
   help() {
-    window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
+    window.open('https://www.koperasipintar.org/kantor/user-manual', '_blank');
   }
 
 }

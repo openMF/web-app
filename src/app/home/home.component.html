@@ -18,7 +18,7 @@
     </mat-card-header>
 
     <mat-card-content>
-        
+
       <div fxLayout="column">
         <mat-form-field>
           <mat-label>Search Activity</mat-label>
@@ -28,13 +28,13 @@
 
       <mat-autocomplete #activitySearch="matAutocomplete">
         <mat-option *ngFor="let activity of filteredActivities | async" [routerLink]="activity.path">
-          <span>{{activity.activity}}</span>
+          <span>{{ activity.activity }}</span>
         </mat-option>
       </mat-autocomplete>
 
     </mat-card-content>
 
-    <img mat-card-image src="assets/images/mifos_lg-logo.jpg" alt="Mifos X">
+    <img mat-card-image src="assets/images/mifos_lg-logo.jpg" alt="Koppi Kantor">
 
   </mat-card>
 
