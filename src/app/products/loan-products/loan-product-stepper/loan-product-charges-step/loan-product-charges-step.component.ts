@@ -27,6 +27,8 @@ export class LoanProductChargesStepComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!this.loanProductsTemplate.penaltyOptions) this.loanProductsTemplate.penaltyOptions = [];
+
     this.chargeData = this.loanProductsTemplate.chargeOptions;
     this.overdueChargeData = this.loanProductsTemplate.penaltyOptions.filter((penalty: any) => penalty.chargeTimeType.code === 'chargeTimeType.overdueInstallment');
 

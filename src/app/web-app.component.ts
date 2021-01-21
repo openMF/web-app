@@ -53,15 +53,15 @@ export class WebAppComponent implements OnInit {
    * @param {AuthenticationService} authenticationService Authentication service.
    */
   constructor(private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private titleService: Title,
-              private translateService: TranslateService,
-              private i18nService: I18nService,
-              private themeStorageService: ThemeStorageService,
-              public snackBar: MatSnackBar,
-              private alertService: AlertService,
-              private settingsService: SettingsService,
-              private authenticationService: AuthenticationService) { }
+    private activatedRoute: ActivatedRoute,
+    private titleService: Title,
+    private translateService: TranslateService,
+    private i18nService: I18nService,
+    private themeStorageService: ThemeStorageService,
+    public snackBar: MatSnackBar,
+    private alertService: AlertService,
+    private settingsService: SettingsService,
+    private authenticationService: AuthenticationService) { }
 
   /**
    * Initial Setup:
@@ -164,7 +164,7 @@ export class WebAppComponent implements OnInit {
   }
 
   help() {
-    window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
+    window.open('https://www.koperasipintar.org/kantor/user-manual', '_blank');
   }
 
   // Monitor all keyboard events and excute keyboard shortcuts

@@ -7,68 +7,75 @@
     "callable-types": true,
     "class-name": true,
     "comment-format": [
-      true,
-      "check-space"
+      "check-space",
+      true
     ],
+    "component-class-suffix": true,
     "curly": true,
+    "cyclomatic-complexity": true,
     "deprecation": {
       "severity": "warn"
     },
+    "directive-class-suffix": true,
     "eofline": true,
     "forin": true,
     "import-blacklist": [
-      true,
-      "rxjs/Rx"
+      "rxjs/Rx",
+      true
     ],
     "import-spacing": true,
     "indent": [
-      true,
-      "spaces"
+      "spaces",
+      true
     ],
     "interface-over-type-literal": true,
-    "jsdoc-format": true,
     "label-position": true,
     "max-line-length": [
-      true,
-      250
+      140,
+      true
     ],
     "member-access": false,
     "member-ordering": [
-      true,
       {
         "order": [
-          "static-field",
           "instance-field",
-          "static-method",
-          "instance-method"
+          "instance-method",
+          "static-field",
+          "static-method"
         ]
-      }
+      },
+      true
     ],
     "no-arg": true,
     "no-bitwise": true,
     "no-console": [
-      true,
       "debug",
+      "info",
       "time",
       "timeEnd",
-      "trace"
+      "trace",
+      true
     ],
     "no-construct": true,
     "no-debugger": true,
-    "no-duplicate-variable": [
-      true,
-      "check-parameters"
-    ],
     "no-duplicate-super": true,
     "no-empty": false,
     "no-empty-interface": true,
     "no-eval": true,
+    "no-floating-promises": true,
+    "no-host-metadata-property": true,
     "no-inferrable-types": [
-      true,
-      "ignore-params"
+      "ignore-params",
+      true
     ],
+    "no-input-rename": true,
+    "no-inputs-metadata-property": true,
     "no-misused-new": true,
     "no-non-null-assertion": true,
+    "no-output-on-prefix": true,
+    "no-output-rename": true,
+    "no-outputs-metadata-property": true,
+    "no-redundant-jsdoc": true,
     "no-shadowed-variable": true,
     "no-string-literal": false,
     "no-string-throw": true,
@@ -76,76 +83,53 @@
     "no-trailing-whitespace": true,
     "no-unnecessary-initializer": true,
     "no-unused-expression": true,
+    "no-unused-variable": true,
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
     "one-line": [
-      true,
-      "check-open-brace",
       "check-catch",
       "check-else",
-      "check-whitespace"
+      "check-open-brace",
+      "check-whitespace",
+      true
     ],
+    "ordered-imports": true,
     "prefer-const": true,
     "quotemark": [
-      true,
-      "single"
+      "single",
+      true
     ],
     "radix": true,
     "semicolon": [
-      true,
-      "always"
+      "always",
+      true
     ],
     "triple-equals": [
-      true,
-      "allow-null-check"
-    ],
-    "typedef": [
-      true,
-      "parameter",
-      "property-declaration"
+      "allow-null-check",
+      true
     ],
     "typedef-whitespace": [
-      true,
       {
         "call-signature": "nospace",
         "index-signature": "nospace",
         "parameter": "nospace",
         "property-declaration": "nospace",
         "variable-declaration": "nospace"
-      }
+      },
+      true
     ],
     "unified-signatures": true,
+    "use-lifecycle-interface": true,
+    "use-pipe-transform-interface": true,
     "variable-name": false,
     "whitespace": [
-      true,
       "check-branch",
       "check-decl",
       "check-operator",
       "check-separator",
-      "check-type"
-    ],
-    "directive-selector": [
-      true,
-      "attribute",
-      "mifosx",
-      "camelCase"
-    ],
-    "component-selector": [
-      true,
-      "element",
-      "mifosx",
-      "kebab-case"
-    ],
-    "no-output-on-prefix": true,
-    "no-inputs-metadata-property": true,
-    "no-outputs-metadata-property": true,
-    "no-host-metadata-property": true,
-    "no-input-rename": true,
-    "no-output-rename": true,
-    "use-lifecycle-interface": true,
-    "use-pipe-transform-interface": true,
-    "component-class-suffix": true,
-    "directive-class-suffix": true
+      "check-type",
+      true
+    ]
   }
 }
