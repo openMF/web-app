@@ -11,7 +11,7 @@ import { Logger } from '../logger/logger.service';
 import { includes } from 'lodash';
 import * as enUS from '../../../translations/en-US.json';
 import * as frFR from '../../../translations/fr-FR.json';
-import * as idID from '../../../translations/id-ID.json';
+// import * as idID from '../../../translations/id-ID.json';
 
 /** Initialize Logger */
 const log = new Logger('I18nService');
@@ -39,7 +39,7 @@ export class I18nService {
     // Embed languages to avoid extra HTTP requests
     translateService.setTranslation('en-US', enUS);
     translateService.setTranslation('fr-FR', frFR);
-    translateService.setTranslation('id-ID', idID);
+    // translateService.setTranslation('id-ID', idID);
   }
 
   /**
