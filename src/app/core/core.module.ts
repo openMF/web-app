@@ -4,7 +4,7 @@ import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
 
 /** Translation Imports */
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, LangChangeEvent } from '@ngx-translate/core';
 
 /** Custom Services */
 import { AuthenticationService } from './authentication/authentication.service';

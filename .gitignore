@@ -53,4 +53,5 @@ testem.log
 Thumbs.db
 
 # WIP
+*.babel
 id-ID*

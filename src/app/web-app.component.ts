@@ -103,7 +103,7 @@ export class WebAppComponent implements OnInit {
       .subscribe(event => {
         const title = event['title'];
         if (title) {
-          this.titleService.setTitle(`${this.translateService.instant(title)} | Mifos X`);
+          this.titleService.setTitle(`${this.translateService.instant(title)} | Koppi Kantor`);
         }
       });
 
@@ -137,13 +137,13 @@ export class WebAppComponent implements OnInit {
     this.buttonConfig = new KeyboardShortcutsConfiguration();
 
     // initialize language and date format if they are null.
-    if (!localStorage.getItem('mifosXLanguage')) {
+    if (!localStorage.getItem('koppiKantorLanguage')) {
       this.settingsService.setLanguage({
         name: 'English',
         code: 'en'
       });
     }
-    if (!localStorage.getItem('mifosXDateFormat')) {
+    if (!localStorage.getItem('koppiKantorDateFormat')) {
       this.settingsService.setDateFormat('dd MMMM yyyy');
     }
     if (!localStorage.getItem('mifosXServers')) {

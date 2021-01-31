@@ -10,8 +10,7 @@ import { Logger } from '../logger/logger.service';
 /** Other Imports */
 import { includes } from 'lodash';
 import * as enUS from '../../../translations/en-US.json';
-import * as frFR from '../../../translations/fr-FR.json';
-// import * as idID from '../../../translations/id-ID.json';
+import * as idID from '../../../translations/id-ID.json';
 
 /** Initialize Logger */
 const log = new Logger('I18nService');
@@ -30,16 +29,15 @@ export function extract(s: string) {
 export class I18nService {
 
   /** Key to store current language of application in local storage. */
-  private languageStorageKey = 'mifosXLanguage';
+  private languageStorageKey = 'koppiKantorLanguage';
 
   defaultLanguage: string;
   supportedLanguages: string[];
 
   constructor(private translateService: TranslateService) {
     // Embed languages to avoid extra HTTP requests
+    translateService.setTranslation('id-ID', idID);
     translateService.setTranslation('en-US', enUS);
-    translateService.setTranslation('fr-FR', frFR);
-    // translateService.setTranslation('id-ID', idID);
   }
 
   /**

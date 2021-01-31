@@ -13,7 +13,7 @@
 
     <mat-card-header>
       <mat-card-title class="title">
-        Welcome, {{ username }}!
+        {{ 'home.Welcome' | translate }}, {{ username }}!
       </mat-card-title>
     </mat-card-header>
 
@@ -21,7 +21,7 @@
 
       <div fxLayout="column">
         <mat-form-field>
-          <mat-label>Search Activity</mat-label>
+          <mat-label>{{ 'home.Search Activity' | translate }}</mat-label>
           <input matInput [matAutocomplete]="activitySearch" [formControl]="searchText">
         </mat-form-field>
       </div>

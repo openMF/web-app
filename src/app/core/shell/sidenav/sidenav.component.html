@@ -1,5 +1,4 @@
-<div
-  [ngClass]="{
+<div [ngClass]="{
   'sidebar-full': !sidenavCollapsed,
   'sidebar-compact': sidenavCollapsed
   }">
@@ -9,7 +8,7 @@
     <!-- TODO: Allow customization by organization -->
     <div class="app-brand" [routerLink]="['/home']">
       <img src="assets/images/MifosX_logo.png" alt="app-logo" class="app-logo">
-      <span class="app-logo-text text-muted">Mifos</span>
+      <span class="app-logo-text text-muted">Koppi</span>
     </div>
 
     <div class="app-user">
@@ -104,8 +103,8 @@
           </mat-icon>
           <a matLine>Keyboard Shortcuts</a>
         </mat-list-item>
-        <mat-list-item>
-          <mat-icon matListIcon (click)="help()">
+        <mat-list-item (click)="help()">
+          <mat-icon matListIcon>
             <fa-icon icon="question-circle" size="sm"></fa-icon>
           </mat-icon>
           <a matLine>Help</a>

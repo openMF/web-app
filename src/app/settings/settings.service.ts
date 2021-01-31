@@ -19,7 +19,7 @@ export class SettingsService {
    * @param {string} dateFormat Date Format
    */
   setDateFormat(dateFormat: string) {
-    localStorage.setItem('mifosXDateFormat', JSON.stringify(dateFormat));
+    localStorage.setItem('koppiKantorDateFormat', JSON.stringify(dateFormat));
   }
 
   /**
@@ -27,7 +27,7 @@ export class SettingsService {
    * @param {any} language Language.
    */
   setLanguage(language: { name: string, code: string }) {
-    localStorage.setItem('mifosXLanguage', JSON.stringify(language));
+    localStorage.setItem('koppiKantorLanguage', JSON.stringify(language));
   }
 
   /**
@@ -35,7 +35,7 @@ export class SettingsService {
    * @param {string} url URL
    */
   setServer(url: string) {
-    localStorage.setItem('mifosXServerURL', JSON.stringify(url));
+    localStorage.setItem('koppiKantorServerURL', JSON.stringify(url));
   }
 
   /**
@@ -50,14 +50,14 @@ export class SettingsService {
    * Returns date format setting.
    */
   get dateFormat() {
-    return JSON.parse(localStorage.getItem('mifosXDateFormat'));
+    return JSON.parse(localStorage.getItem('koppiKantorDateFormat'));
   }
 
   /**
    * Returns language setting
    */
   get language() {
-    return JSON.parse(localStorage.getItem('mifosXLanguage'));
+    return JSON.parse(localStorage.getItem('koppiKantorLanguage'));
   }
 
   /**
