@@ -3,7 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 /** Custom Services */
-// import { I18nService } from '../../core/i18n/i18n.service';
+import { Logger } from '../../core/logger/logger.service';
+
+/** Initialize Logger */
+const log = new Logger('LanguageSelector');
 
 /**
  * Language selector component.
@@ -27,7 +30,7 @@ export class LanguageSelectorComponent implements OnInit {
   //  */
   constructor() {
     this.languageSelector.setValue(this.currentLanguage);
-    console.log('[LanguageSelector] currentLanguage', this.currentLanguage);
+    log.debug('Language is currently set to', this.currentLanguage);
   }
 
   ngOnInit() {

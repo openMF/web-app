@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
    */
   ngOnInit() {
     const credentials = this.authenticationService.getCredentials();
-    this.username = credentials.username;
+    this.username = credentials.username.charAt(0).toUpperCase() + credentials.username.slice(1);
     this.setFilteredActivities();
   }
 
@@ -52,9 +52,9 @@ export class HomeComponent implements OnInit {
    */
   setFilteredActivities() {
     this.filteredActivities = this.searchText.valueChanges
-    .pipe(
-      map((activity: any) => typeof activity === 'string' ? activity : activity.activity),
-      map((activityName: string) => activityName ? this.filterActivity(activityName) : this.allActivities));
+      .pipe(
+        map((activity: any) => typeof activity === 'string' ? activity : activity.activity),
+        map((activityName: string) => activityName ? this.filterActivity(activityName) : this.allActivities));
   }
 
   /**

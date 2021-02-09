@@ -50,7 +50,7 @@ export class SidenavComponent implements OnInit {
    */
   ngOnInit() {
     const credentials = this.authenticationService.getCredentials();
-    this.username = credentials.username;
+    this.username = credentials.username.charAt(0).toUpperCase() + credentials.username.slice(1);
     this.setMappedAcitivites();
   }
 
