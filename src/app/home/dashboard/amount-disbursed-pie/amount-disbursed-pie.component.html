@@ -3,7 +3,7 @@
   <mat-card-header class="header">
     <h3 fxFlex="100%">
       <fa-icon icon="money-bill"></fa-icon>
-      &nbsp;&nbsp; {{ 'dashboard.Amount Disbursed' | translate }}
+      &nbsp;&nbsp; {{ 'Amount Disbursed' | translate }}
       <div>
         <mat-form-field id="office" fxFlex="94%">
           <mat-label>Office</mat-label>
@@ -23,7 +23,7 @@
       <canvas id="disbursement-pie" width="800" height="600"></canvas>
     </div>
     <div *ngIf="showFallback" class="fallback" fxLayoutAlign="center center">
-      <p>{{ 'dashboard.No Data' | translate }}</p>
+      <p>{{ 'No Data' | translate }}</p>
     </div>
   </mat-card-content>
 

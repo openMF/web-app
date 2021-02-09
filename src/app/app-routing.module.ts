@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 // Not Found Component
 import { NotFoundComponent } from './not-found/not-found.component';
-import { TranslateModule } from '@ngx-translate/core';
+// import { TranslateModule } from '@ngx-translate/core';
 
 /**
  * Fallback to this route when no prior route is matched.
