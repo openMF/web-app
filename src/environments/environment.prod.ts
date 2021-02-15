@@ -5,7 +5,7 @@ export const environment = {
   production: true,
   version: env.mifos_x_version,
   fineractPlatformTenantId: 'default',  // For connecting to server running elsewhere update the tenant identifier
-  baseApiUrl: JSON.parse(localStorage.getItem('mifosXServerURL')) || 'https://api.koperasipintar.org',  // For connecting to server running elsewhere update the base API URL
+  baseApiUrl: JSON.parse(localStorage.getItem('koppiKantorServerURL')) || 'https://api.koperasipintar.org',  // For connecting to server running elsewhere update the base API URL
   allowServerSwitch: env.allow_switching_backend_instance,
   apiProvider: '/fineract-provider/api',
   apiVersion: '/v1',
@@ -14,10 +14,10 @@ export const environment = {
     enabled: false,  // For connecting to Mifos X using OAuth2 Authentication change the value to true
     serverUrl: ''
   },
-  defaultLanguage: 'en-US',
+  defaultLanguage: 'id',
   supportedLanguages: [
-    'en-US',
-    'fr-FR'
+    'id',
+    'en'
   ]
 };
 

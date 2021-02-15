@@ -8,9 +8,8 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { Logger } from '../logger/logger.service';
 
 /** Other Imports */
-import { includes } from 'lodash';
-import * as enUS from '../../../translations/en-US.json';
-import * as frFR from '../../../translations/fr-FR.json';
+import * as en from '../../../assets/i18n/en.json';
+import * as id from '../../../assets/i18n/id.json';
 
 /** Initialize Logger */
 const log = new Logger('I18nService');
@@ -29,15 +28,15 @@ export function extract(s: string) {
 export class I18nService {
 
   /** Key to store current language of application in local storage. */
-  private languageStorageKey = 'mifosXLanguage';
+  private languageStorageKey = 'koppiKantorLanguage';
 
   defaultLanguage: string;
   supportedLanguages: string[];
 
-  constructor(private translateService: TranslateService) {
+  constructor(private translate: TranslateService) {
     // Embed languages to avoid extra HTTP requests
-    translateService.setTranslation('en-US', enUS);
-    translateService.setTranslation('fr-FR', frFR);
+    translate.setTranslation('id', id);
+    translate.setTranslation('en', en);
   }
 
   /**
@@ -49,9 +48,14 @@ export class I18nService {
   init(defaultLanguage: string, supportedLanguages: string[]) {
     this.defaultLanguage = defaultLanguage;
     this.supportedLanguages = supportedLanguages;
+    log.debug('supportedLanguages', supportedLanguages);
     this.language = '';
 
-    this.translateService.onLangChange
+
+    log.debug(`defaultLanguage set to`, defaultLanguage);
+    this.translate.use('id');
+
+    this.translate.onLangChange
       .subscribe((event: LangChangeEvent) => { localStorage.setItem(this.languageStorageKey, event.lang); });
   }
 
@@ -62,23 +66,24 @@ export class I18nService {
    * @param {string} language The IETF language code to set.
    */
   set language(language: string) {
-    language = language || localStorage.getItem(this.languageStorageKey) || this.translateService.getBrowserCultureLang();
-    let isSupportedLanguage = includes(this.supportedLanguages, language);
+    language = language || localStorage.getItem(this.languageStorageKey) || this.translate.getBrowserCultureLang();
+    let isSupportedLanguage = this.supportedLanguages.includes(language);
 
+    // INFO: We don't support this. Onyl ID and EN.
     // If no exact match is found, search without the region
-    if (language && !isSupportedLanguage) {
-      language = language.split('-')[0];
-      language = this.supportedLanguages.find(supportedLanguage => supportedLanguage.startsWith(language)) || '';
-      isSupportedLanguage = Boolean(language);
-    }
+    // if (language && !isSupportedLanguage) {
+    //   language = language.split('-')[0];
+    //   language = this.supportedLanguages.find(supportedLanguage => supportedLanguage.startsWith(language)) || '';
+    //   isSupportedLanguage = Boolean(language);
+    // }
 
     // Fallback if language is not supported
     if (!isSupportedLanguage) {
       language = this.defaultLanguage;
     }
 
+    this.translate.use(language);
     log.debug(`Language set to ${language}`);
-    this.translateService.use(language);
   }
 
   /**
@@ -86,7 +91,7 @@ export class I18nService {
    * @return {string} The current language code.
    */
   get language(): string {
-    return this.translateService.currentLang;
+    return this.translate.currentLang;
   }
 
 }

@@ -3,7 +3,7 @@
   <mat-card-header class="header">
     <h3 fxFlex="100%">
       <fa-icon icon="chart-line"></fa-icon>
-      &nbsp;&nbsp; Client Trends
+      &nbsp;&nbsp; {{ 'Client Trends' | translate }}
       <div>
         <mat-form-field id="office" fxFlex="94%">
           <mat-label>Office</mat-label>
@@ -23,9 +23,9 @@
       <canvas id="client-trends-bar" width="800" height="465"></canvas>
     </div>
     <mat-button-toggle-group [formControl]="timescale" id='timescale' appearance="legacy">
-      <mat-button-toggle value="Day">Day</mat-button-toggle>
-      <mat-button-toggle value="Week">Week</mat-button-toggle>
-      <mat-button-toggle value="Month">Month</mat-button-toggle>
+      <mat-button-toggle value="Day">{{ 'Day' | translate }}</mat-button-toggle>
+      <mat-button-toggle value="Week">{{ 'Week' | translate }}</mat-button-toggle>
+      <mat-button-toggle value="Month">{{ 'Month' | translate }}</mat-button-toggle>
     </mat-button-toggle-group>
   </mat-card-content>
 

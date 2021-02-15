@@ -40,8 +40,8 @@ export class SidenavComponent implements OnInit {
    * @param {AuthenticationService} authenticationService Authentication Service.
    */
   constructor(private router: Router,
-              public dialog: MatDialog,
-              private authenticationService: AuthenticationService) {
+    public dialog: MatDialog,
+    private authenticationService: AuthenticationService) {
     this.userActivity = JSON.parse(localStorage.getItem('mifosXLocation'));
   }
 
@@ -50,7 +50,7 @@ export class SidenavComponent implements OnInit {
    */
   ngOnInit() {
     const credentials = this.authenticationService.getCredentials();
-    this.username = credentials.username;
+    this.username = credentials.username.charAt(0).toUpperCase() + credentials.username.slice(1);
     this.setMappedAcitivites();
   }
 
@@ -66,7 +66,7 @@ export class SidenavComponent implements OnInit {
    * Opens Mifos JIRA Wiki page.
    */
   help() {
-    window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
+    window.open('https://www.koperasipintar.org/kantor/user-manual', '_blank');
   }
 
   /**
@@ -74,15 +74,15 @@ export class SidenavComponent implements OnInit {
    */
   showKeyboardShortcuts() {
     const dialogRef = this.dialog.open(KeyboardShortcutsDialogComponent);
-    dialogRef.afterClosed().subscribe((response: any) => {});
+    dialogRef.afterClosed().subscribe((response: any) => { });
   }
 
   /**
    * Returns top three frequent activities.
    */
   getFrequentActivities() {
-    const frequencyCounts: any  = {};
-    let index  = this.userActivity.length;
+    const frequencyCounts: any = {};
+    let index = this.userActivity.length;
     while (index) {
       frequencyCounts[this.userActivity[--index]] = (frequencyCounts[this.userActivity[index]] || 0) + 1;
     }

@@ -42,9 +42,9 @@ export class ClientTrendsBarComponent implements OnInit {
    * @param {DatePipe} datePipe Date Pipe
    */
   constructor(private homeService: HomeService,
-              private route: ActivatedRoute,
-              private datePipe: DatePipe) {
-    this.route.data.subscribe( (data: { offices: any }) => {
+    private route: ActivatedRoute,
+    private datePipe: DatePipe) {
+    this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
   }
@@ -106,7 +106,7 @@ export class ClientTrendsBarComponent implements OnInit {
             });
             break;
         }
-    });
+      });
   }
 
   /**
@@ -155,7 +155,7 @@ export class ClientTrendsBarComponent implements OnInit {
    * @param {string} type 'client' or 'loan'.
    */
   getCounts(response: any[], labels: any[], timescale: string, type: string) {
-    let counts: number[]  = [];
+    let counts: number[] = [];
     switch (timescale) {
       case 'Day':
         labels.forEach((label: any) => {
@@ -197,10 +197,10 @@ export class ClientTrendsBarComponent implements OnInit {
       switch (type) {
         case 'client':
           counts.push(span.count);
-        break;
+          break;
         case 'loan':
           counts.push(span.lcount);
-        break;
+          break;
       }
     } else {
       counts.push(0);
@@ -223,12 +223,12 @@ export class ClientTrendsBarComponent implements OnInit {
           labels: labels,
           datasets: [
             {
-              label: 'New Clients',
+              label: 'Anggota Baru',
               backgroundColor: 'dodgerblue',
               data: clientCounts
             },
             {
-              label: 'Loans Disbursed',
+              label: 'Pembiayaan Tersalurkan',
               backgroundColor: 'green',
               data: loanCounts
             }

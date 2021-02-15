@@ -1,20 +1,36 @@
 <div class="container">
 
-  <mat-card class="card" fxLayout="column" fxLayoutGap="40px">
+  <mat-card class="card" fxLayout="column" fxLayoutAlign="space-around center" fxLayoutGap="40px">
 
-    <div fxLayout="row" fxLayoutGap="40px">
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-around center" fxLayoutGap="40px">
+
+      <mifosx-amount-disbursed-pie></mifosx-amount-disbursed-pie>
+
+      <mifosx-amount-collected-pie></mifosx-amount-collected-pie>
+
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-around center">
+
+      <mifosx-client-trends-bar></mifosx-client-trends-bar>
+
+    </div>
+
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-around center" fxLayoutGap="40px">
 
       <mat-card class="recent-activities">
 
         <mat-card-header class="header">
-          <h3><fa-icon icon="bolt"></fa-icon>
-          &nbsp;&nbsp; Recent Activities</h3>
+          <h3>
+            <fa-icon icon="bolt"></fa-icon>
+            &nbsp;&nbsp; {{ 'Recent Activities' | translate }}
+          </h3>
         </mat-card-header>
 
         <mat-card-content>
           <mat-action-list class="list">
-            <button mat-list-item *ngFor="let activity of recentActivities"
-            [routerLink]="activity"> {{ activity | urlToString }} </button>
+            <button mat-list-item *ngFor="let activity of recentActivities" [routerLink]="activity"> {{ activity |
+              urlToString }} </button>
           </mat-action-list>
         </mat-card-content>
 
@@ -23,31 +39,23 @@
       <mat-card class="frequent-activities">
 
         <mat-card-header class="header">
-          <h3><fa-icon icon="laptop"></fa-icon>
-          &nbsp;&nbsp; Frequent Activities</h3>
+          <h3>
+            <fa-icon icon="laptop"></fa-icon>
+            &nbsp;&nbsp; {{ 'Frequent Activities' | translate }}
+          </h3>
         </mat-card-header>
 
         <mat-card-content>
           <mat-action-list class="list">
-            <button mat-list-item *ngFor="let activity of frequentActivities"
-            [routerLink]="activity"> {{ activity | urlToString }} </button>
+            <button mat-list-item *ngFor="let activity of frequentActivities" [routerLink]="activity"> {{ activity |
+              urlToString }} </button>
           </mat-action-list>
         </mat-card-content>
-        
+
       </mat-card>
 
-      <mifosx-amount-disbursed-pie></mifosx-amount-disbursed-pie>
-
     </div>
 
-    <div fxLayout="row" fxLayoutGap="40px">
-
-      <mifosx-client-trends-bar></mifosx-client-trends-bar>
-
-      <mifosx-amount-collected-pie></mifosx-amount-collected-pie>
-
-    </div>
-    
   </mat-card>
 
 </div>

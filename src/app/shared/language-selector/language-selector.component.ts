@@ -3,7 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 /** Custom Services */
-import { I18nService } from '../../core/i18n/i18n.service';
+import { Logger } from '../../core/logger/logger.service';
+
+/** Initialize Logger */
+const log = new Logger('LanguageSelector');
 
 /**
  * Language selector component.
@@ -21,23 +24,25 @@ export class LanguageSelectorComponent implements OnInit {
   /** Language selector form control. */
   languageSelector = new FormControl();
 
-  /**
-   * Sets the language of the application in the selector on initial setup.
-   * @param {I18nService} i18nService Internationalization Service.
-   */
-  constructor(private i18nService: I18nService) {
+  // /**
+  //  * Sets the language of the application in the selector on initial setup.
+  //  * @param {I18nService} i18nService Internationalization Service.
+  //  */
+  constructor() {
     this.languageSelector.setValue(this.currentLanguage);
+    log.debug('Language is currently set to', this.currentLanguage);
   }
 
   ngOnInit() {
+    // console.log('[LanguageSelector] i18nService.language', this.i18nService.language);
   }
 
   /**
    * Sets a new language to be used by the application.
    * @param {string} language New language.
    */
-  setLanguage(language: string) {
-    this.i18nService.language = language;
+  setLanguage(language: any) {
+    // this.i18nService.language = language;
   }
 
   /**
@@ -45,7 +50,8 @@ export class LanguageSelectorComponent implements OnInit {
    * @returns {string} Current language.
    */
   get currentLanguage(): string {
-    return this.i18nService.language;
+    // return this.i18nService.language;
+    return 'id';
   }
 
   /**
@@ -53,7 +59,8 @@ export class LanguageSelectorComponent implements OnInit {
    * @return {string[]} Supported languages.
    */
   get languages(): string[] {
-    return this.i18nService.supportedLanguages;
+    return ['id'];
+    // return this.i18nService.supportedLanguages;
   }
 
 }

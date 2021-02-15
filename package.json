@@ -46,6 +46,7 @@
     "@fortawesome/fontawesome-svg-core": "1.2.18",
     "@fortawesome/free-solid-svg-icons": "5.8.2",
     "@ngx-translate/core": "11.0.1",
+    "@ngx-translate/http-loader": "^6.0.0",
     "chart.js": "3.0.0-alpha",
     "core-js": "2.5.0",
     "koppi-backoffice-l10n": "git+https://c121de71ceebe758eec68053bb7006eb0ee9715f:x-oauth-basic@github.com/blossomfinance/koppi-backoffice-l10n.git#0.2.0",
