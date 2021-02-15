@@ -5,6 +5,10 @@
 /tmp
 /out-tsc
 
+# Unlicensed Translations
+src/assets/i18n/*.json
+src/assets/i18n/**/*.json
+
 # Dependencies
 /node_modules
 
