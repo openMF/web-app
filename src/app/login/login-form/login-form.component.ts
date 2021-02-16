@@ -30,7 +30,7 @@ export class LoginFormComponent implements OnInit {
    * @param {AuthenticationService} authenticationService Authentication Service.
    */
   constructor(private formBuilder: FormBuilder,
-              private authenticationService: AuthenticationService) {  }
+    private authenticationService: AuthenticationService) { }
 
   /**
    * Creates login form.
@@ -59,7 +59,7 @@ export class LoginFormComponent implements OnInit {
   }
 
   /**
-   * TODO: Decision to be taken on providing this feature.
+   * TODO: Decide on how best to provide reset password feature.
    */
   forgotPassword() {
     console.log('Forgot Password feature currently unavailable.');

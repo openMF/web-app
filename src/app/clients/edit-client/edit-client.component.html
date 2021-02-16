@@ -68,7 +68,9 @@
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>{{ editClientForm.value.legalFormId === 1 ? 'Date of Birth' : 'Incorporation Date' }}</mat-label>
+            <mat-label>
+              {{ (editClientForm.value.legalFormId === 1 ? 'Date of Birth' : 'Incorporation Date') | translate }}
+            </mat-label>
             <input matInput [max]="maxDate" [matDatepicker]="dateOfBirthDatePicker" formControlName="dateOfBirth">
             <mat-datepicker-toggle matSuffix [for]="dateOfBirthDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #dateOfBirthDatePicker></mat-datepicker>
@@ -99,7 +101,7 @@
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Client Classification{{ 'Client Type' | translate }}</mat-label>
+            <mat-label>{{ 'Client Classification' | translate }}</mat-label>
             <mat-select formControlName="clientClassificationId">
               <mat-option *ngFor="let clientClassification of clientClassificationTypeOptions"
                 [value]="clientClassification.id">
