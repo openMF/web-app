@@ -4,15 +4,16 @@
       <mat-form-field>
         <input matInput placeholder="Search by client name" (keyup)="applyFilter($event.target.value)">
       </mat-form-field>
-      <mat-checkbox #showClosedAccounts labelPosition="after">Show Closed Accounts
+      <mat-checkbox #showClosedAccounts labelPosition="after">{{ 'Show Closed Accounts' | translate }}
       </mat-checkbox>
     </div>
     <div class="action-button" fxLayoutGap="25px">
-      <button mat-raised-button color="primary" [routerLink]="['../', 'organization', 'bulk-import', 'Clients']" *mifosxHasPermission="'CREATE_CLIENT'">
-        <fa-icon icon="download"></fa-icon>&nbsp;&nbsp;Import Client
+      <button mat-raised-button color="primary" [routerLink]="['../', 'organization', 'bulk-import', 'Clients']"
+        *mifosxHasPermission="'CREATE_CLIENT'">
+        <fa-icon icon="download"></fa-icon>&nbsp;&nbsp;{{ 'Import Client' | translate }}
       </button>
       <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_CLIENT'">
-        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Create Client
+        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;{{ 'Create Client' | translate }}
       </button>
     </div>
   </div>
@@ -21,25 +22,25 @@
 
       <!-- Name Column -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header='displayName'> Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header='displayName'> {{ 'Name' | translate }} </th>
         <td mat-cell *matCellDef="let row"> {{row.displayName}} </td>
       </ng-container>
 
       <!-- Account no Column -->
       <ng-container matColumnDef="clientno">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header='accountNo'> Account # </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header='accountNo'> {{ 'Account' | translate }} # </th>
         <td mat-cell *matCellDef="let row"> {{row.accountNo}} </td>
       </ng-container>
 
       <!-- External ID Column -->
       <ng-container matColumnDef="externalid">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header='externalId'> ExternalID </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header='externalId'> {{ 'External ID' | translate }} </th>
         <td mat-cell *matCellDef="let row"> {{row.externalId}} </td>
       </ng-container>
 
       <!-- Status Column -->
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <th mat-header-cell *matHeaderCellDef> {{ 'Status' | translate }} </th>
         <td mat-cell *matCellDef="let row">
           <div [ngClass]="row.active|statusLookup">
             <fa-icon icon="stop"></fa-icon>
@@ -49,25 +50,25 @@
 
       <!-- Mobile Number Column-->
       <ng-container matColumnDef="mobileNo">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile Number </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'Mobile Number' | translate }} </th>
         <td mat-cell *matCellDef="let client"> {{ client.mobileNo }} </td>
       </ng-container>
 
       <!--Gender column-->
       <ng-container matColumnDef="gender">
-        <th mat-header-cell *matHeaderCellDef> Gender </th>
+        <th mat-header-cell *matHeaderCellDef> {{ 'Gender' | translate }} </th>
         <td mat-cell *matCellDef="let client"> {{ client.gender.name }} </td>
       </ng-container>
 
       <!-- Color Column -->
       <ng-container matColumnDef="office">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header='officeName'> OfficeName </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header='officeName'> {{ 'Office Name' | translate }} </th>
         <td mat-cell *matCellDef="let row"> {{row.officeName}} </td>
       </ng-container>
 
       <!-- ID Column -->
       <ng-container matColumnDef="staff">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header='staffName'> StaffName </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header='staffName'> {{ 'Staff Name' | translate }} </th>
         <td mat-cell *matCellDef="let row"> {{row.staffName}} </td>
       </ng-container>
 

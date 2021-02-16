@@ -3,19 +3,19 @@
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Office</mat-label>
+      <mat-label>{{ 'Office' | translate }}</mat-label>
       <mat-select required formControlName="officeId">
         <mat-option *ngFor="let office of officeOptions" [value]="office.id">
           {{ office.name }}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="createClientForm.controls.officeId.hasError('required')">
-        Office is <strong>required</strong>
+        {{ 'Office' | translate }} <strong>{{ 'is required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Staff</mat-label>
+      <mat-label>{{ 'Staff' | translate }}</mat-label>
       <mat-select formControlName="staffId">
         <mat-option *ngFor="let staff of staffOptions" [value]="staff.id">
           {{ staff.displayName }}
@@ -24,7 +24,7 @@
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Legal Form</mat-label>
+      <mat-label>{{ 'Legal Form' | translate }}</mat-label>
       <mat-select formControlName="legalFormId">
         <mat-option *ngFor="let legalForm of legalFormOptions" [value]="legalForm.id">
           {{ legalForm.value }}
@@ -33,13 +33,13 @@
     </mat-form-field>
 
     <mat-form-field *ngIf="createClientForm.contains('fullname')" fxFlex="48%">
-      <mat-label>Name</mat-label>
+      <mat-label>{{ 'Name' | translate }}</mat-label>
       <input matInput required formControlName="fullname">
       <mat-error *ngIf="createClientForm.controls.fullname.hasError('required')">
-        Client name is <strong>required</strong>
+        {{ 'Client name' | translate }} <strong>{{ 'is required' | translate }}</strong>
       </mat-error>
       <mat-error *ngIf="createClientForm.controls.fullname.hasError('pattern')">
-        Client name <strong>cannot</strong> begin with a special character or number
+        {{ 'Client name' | translate }} <strong>cannot</strong> begin with a special character or number
       </mat-error>
     </mat-form-field>
 
@@ -99,7 +99,8 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-checkbox *ngIf="createClientForm.value.legalFormId === 1" fxFlex="48%" labelPosition="before" formControlName="isStaff" class="margin-v">
+    <mat-checkbox *ngIf="createClientForm.value.legalFormId === 1" fxFlex="48%" labelPosition="before"
+      formControlName="isStaff" class="margin-v">
       Is staff?
     </mat-checkbox>
 
@@ -115,7 +116,8 @@
     <mat-form-field fxFlex="48%">
       <mat-label>Client Classification</mat-label>
       <mat-select formControlName="clientClassificationId">
-        <mat-option *ngFor="let clientClassification of clientClassificationTypeOptions" [value]="clientClassification.id">
+        <mat-option *ngFor="let clientClassification of clientClassificationTypeOptions"
+          [value]="clientClassification.id">
           {{ clientClassification.name }}
         </mat-option>
       </mat-select>
@@ -123,7 +125,8 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Submitted On</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker" formControlName="submittedOnDate">
+      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker"
+        formControlName="submittedOnDate">
       <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #submittedOnDatePicker></mat-datepicker>
     </mat-form-field>
@@ -159,12 +162,13 @@
       </mat-error>
     </mat-form-field>
 
-    <div fxFlex="100%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" formGroupName="clientNonPersonDetails"
-      *ngIf="createClientForm.contains('clientNonPersonDetails')">
+    <div fxFlex="100%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"
+      formGroupName="clientNonPersonDetails" *ngIf="createClientForm.contains('clientNonPersonDetails')">
 
       <mat-form-field fxFlex="48%">
         <mat-label>Incorporation Validity Till Date</mat-label>
-        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="incorpValidityTillDateDatePicker" formControlName="incorpValidityTillDate">
+        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="incorpValidityTillDateDatePicker"
+          formControlName="incorpValidityTillDate">
         <mat-datepicker-toggle matSuffix [for]="incorpValidityTillDateDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #incorpValidityTillDateDatePicker></mat-datepicker>
       </mat-form-field>
