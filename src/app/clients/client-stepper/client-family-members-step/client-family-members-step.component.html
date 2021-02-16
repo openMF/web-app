@@ -36,20 +36,22 @@
       </div>
 
       <p>
-        First Name : {{ member.firstName }}<br />
+        {{ 'First Name' | translate }} : {{ member.firstName }}<br />
         Middle Name : {{ member.middleName }}<br />
-        Last Name : {{ member.lastName }}<br />
-        Qualification : {{ member.qualification }}<br />
-        Relationship : {{ member.relationshipId |
+        {{ 'Last Name' | translate }} : {{ member.lastName }}<br />
+        {{ 'Qualification' | translate }} : {{ member.qualification }}<br />
+        {{ 'Relationship' | translate }} : {{ member.relationshipId |
         find:clientTemplate.familyMemberOptions.relationshipIdOptions:'id':'name' }}<br />
-        Age : {{ member.age }}<br />
-        Is Dependent : {{ member.isDependent ? 'Yes' : 'No' }}<br />
-        Marital Status : {{ member.maritalStatusId |
+        {{ 'Age' | translate }} : {{ member.age }}<br />
+        {{ 'Is dependent' | translate }} : {{ member.isDependent ? 'Yes' : 'No' }}<br />
+        {{ 'Marital Status' | translate }} : {{ member.maritalStatusId |
         find:clientTemplate.familyMemberOptions.maritalStatusIdOptions:'id':'name' }}<br />
-        Gender : {{ member.genderId | find:clientTemplate.familyMemberOptions.genderIdOptions:'id':'name' }}<br />
-        Profession : {{member.professionId | find:clientTemplate.familyMemberOptions.professionIdOptions:'id':'name'
+        {{ 'Gender' | translate }} : {{ member.genderId |
+        find:clientTemplate.familyMemberOptions.genderIdOptions:'id':'name' }}<br />
+        {{ 'Profession' | translate }} : {{member.professionId |
+        find:clientTemplate.familyMemberOptions.professionIdOptions:'id':'name'
         }}<br />
-        Date Of Birth : {{member.dateOfBirth | date}}<br />
+        {{ 'Date Of Birth' | translate }} : {{member.dateOfBirth | date}}<br />
       </p>
 
     </mat-expansion-panel>
