@@ -3,7 +3,7 @@
   <mat-card-header class="header">
     <h3 fxFlex="100%">
       <fa-icon icon="donate"></fa-icon>
-      &nbsp;&nbsp; Amount Collected
+      &nbsp;&nbsp; {{ 'Amount Collected' | translate }}
       <div>
         <mat-form-field id="office" fxFlex="94%">
           <mat-label>Office</mat-label>
@@ -23,8 +23,8 @@
       <canvas id="collection-pie" width="800" height="600"></canvas>
     </div>
     <div *ngIf="showFallback" class="fallback" fxLayoutAlign="center center">
-      <p>No Data</p>
-    </div>     
+      <p>{{ 'No Data' | translate }}</p>
+    </div>
   </mat-card-content>
 
 </mat-card>

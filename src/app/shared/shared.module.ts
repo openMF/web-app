@@ -21,6 +21,7 @@ import { NotificationsTrayComponent } from './notifications-tray/notifications-t
 import { SearchToolComponent } from './search-tool/search-tool.component';
 import { KeyboardShortcutsDialogComponent } from './keyboard-shortcuts-dialog/keyboard-shortcuts-dialog.component';
 import { ServerSelectorComponent } from './server-selector/server-selector.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 /** Custom Modules */
 import { IconsModule } from './icons.module';
@@ -36,7 +37,8 @@ import { MaterialModule } from './material.module';
     CommonModule,
     IconsModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule
   ],
   declarations: [
     FormfieldComponent,
@@ -71,6 +73,7 @@ import { MaterialModule } from './material.module';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    TranslateModule
   ]
 })
 export class SharedModule { }

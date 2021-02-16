@@ -1,27 +1,28 @@
 <div fxLayout="row wrap" fxLayout.lt-md="column">
 
-  <h3 class="mat-h3" fxFlexFill>General</h3>
+  <h3 class="mat-h3" fxFlexFill>{{ 'General' | translate }}</h3>
 
   <mat-divider fxFlexFill></mat-divider>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Name</span>
+    <span fxFlex="40%">{{ 'Name' | translate }}</span>
     <span fxFlex="60%" *ngIf="client.legalFormId === 2">{{ client.fullname }}</span>
-    <span fxFlex="60%" *ngIf="client.legalFormId === 1">{{ client.firstname }} {{ client.middlename ? client.middlename + ' ' + client.lastname : client.lastname }}</span>
+    <span fxFlex="60%" *ngIf="client.legalFormId === 1">{{ client.firstname }} {{ client.middlename ? client.middlename
+      + ' ' + client.lastname : client.lastname }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Office</span>
+    <span fxFlex="40%">{{ 'Office' | translate }}</span>
     <span fxFlex="60%">{{ client.officeId | find:clientTemplate.officeOptions:'id':'name' }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Legal Form</span>
+    <span fxFlex="40%">{{ 'Legal Form' | translate }}</span>
     <span fxFlex="60%">{{ client.legalFormId | find:clientTemplate.clientLegalFormOptions:'id':'value' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.staffId">
-    <span fxFlex="40%">Staff</span>
+    <span fxFlex="40%">{{ 'Staff' | translate }}</span>
     <span fxFlex="60%">{{ client.staffId | find:clientTemplate.staffOptions:'id':'displayName' }}</span>
   </div>
 
@@ -31,54 +32,55 @@
   </div>
 
   <div fxFlexFill *ngIf="client.externalId">
-    <span fxFlex="40%">External Id</span>
+    <span fxFlex="40%">{{ 'External ID' | translate }}</span>
     <span fxFlex="60%">{{ client.externalId }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.mobileNo">
-    <span fxFlex="40%">Mobile No</span>
+    <span fxFlex="40%">{{ 'Mobile Number' | translate }}</span>
     <span fxFlex="60%">{{ client.mobileNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.clientTypeId">
-    <span fxFlex="40%">Client Type</span>
+    <span fxFlex="40%">{{ 'Client Type' | translate }}</span>
     <span fxFlex="60%">{{ client.clientTypeId | find:clientTemplate.clientTypeOptions:'id':'name' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.clientClassificationId">
-    <span fxFlex="40%">Client Classification</span>
-    <span fxFlex="60%">{{ client.clientClassificationId | find:clientTemplate.clientClassificationOptions:'id':'name' }}</span>
+    <span fxFlex="40%">{{ 'Client Classification' | translate }}</span>
+    <span fxFlex="60%">{{ client.clientClassificationId | find:clientTemplate.clientClassificationOptions:'id':'name'
+      }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.savingsProductId">
-    <span fxFlex="40%">Savings Product</span>
+    <span fxFlex="40%">{{ 'Savings Product' | translate }}</span>
     <span fxFlex="60%">{{ client.savingsProductId | find:clientTemplate.savingProductOptions:'id':'name' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.submittedOnDate">
-    <span fxFlex="40%">Submitted On Date</span>
+    <span fxFlex="40%">{{ 'Submitted On' | translate }}</span>
     <span fxFlex="60%">{{ client.submittedOnDate | date }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Active?</span>
+    <span fxFlex="40%">{{ 'Active?' | translate }}</span>
     <span fxFlex="60%">{{ client.active ? 'Yes' : 'No' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.activationDate">
-    <span fxFlex="40%">Activation Date</span>
+    <span fxFlex="40%">{{ 'Activation Date' | translate }}</span>
     <span fxFlex="60%">{{ client.activationDate | date }}</span>
   </div>
 
   <ng-container *ngIf="client.legalFormId === 1">
 
     <div fxFlexFill *ngIf="client.genderId">
-      <span fxFlex="40%">Gender</span>
+      <span fxFlex="40%">{{ 'Gender' | translate }}</span>
       <span fxFlex="60%">{{ client.genderId | find:clientTemplate.genderOptions:'id':'name' }}</span>
     </div>
-  
+
     <div fxFlexFill>
-      <span fxFlex="40%">Is Staff?</span>
+      <span fxFlex="40%">{{ 'Is staff?' | translate }}</span>
       <span fxFlex="60%">{{ client.isStaff ? 'Yes' : 'No' }}</span>
     </div>
 
@@ -87,27 +89,29 @@
   <ng-container *ngIf="client.legalFormId === 2">
 
     <div fxFlexFill *ngIf="client.clientNonPersonDetails.incorpValidityTillDate">
-      <span fxFlex="40%">Incorporation Validity Till Date</span>
+      <span fxFlex="40%">{{ 'Incorporation Validity Till Date' | translate }}</span>
       <span fxFlex="60%">{{ client.clientNonPersonDetails.incorpValidityTillDate | date }}</span>
     </div>
-  
+
     <div fxFlexFill>
-      <span fxFlex="40%">Incorportation Number</span>
+      <span fxFlex="40%">{{ 'Incorporation Number' | translate }}</span>
       <span fxFlex="60%">{{ client.clientNonPersonDetails.incorpNumber || 'Not Provided' }}</span>
     </div>
-  
+
     <div fxFlexFill *ngIf="client.clientNonPersonDetails.mainBusinessLineId">
-      <span fxFlex="40%">Main Business Line</span>
-      <span fxFlex="60%">{{ client.clientNonPersonDetails.mainBusinessLineId | find:clientTemplate.clientNonPersonMainBusinessLineOptions:'id':'name' }}</span>
+      <span fxFlex="40%">{{ 'Main Business Line' | translate }}</span>
+      <span fxFlex="60%">{{ client.clientNonPersonDetails.mainBusinessLineId |
+        find:clientTemplate.clientNonPersonMainBusinessLineOptions:'id':'name' }}</span>
     </div>
-  
+
     <div fxFlexFill *ngIf="client.clientNonPersonDetails.constitutionId">
-      <span fxFlex="40%">Constitution</span>
-      <span fxFlex="60%">{{ client.clientNonPersonDetails.constitutionId | find:clientTemplate.clientNonPersonConstitutionOptions:'id':'name'}}</span>
+      <span fxFlex="40%">{{ 'Constitution' | translate }}</span>
+      <span fxFlex="60%">{{ client.clientNonPersonDetails.constitutionId |
+        find:clientTemplate.clientNonPersonConstitutionOptions:'id':'name'}}</span>
     </div>
-  
+
     <div fxFlexFill>
-      <span fxFlex="40%">Remarks</span>
+      <span fxFlex="40%">{{ 'Remarks' | translate }}</span>
       <span fxFlex="60%">{{ client.clientNonPersonDetails.remarks || 'N/A' }}</span>
     </div>
 
@@ -115,7 +119,7 @@
 
   <div fxFlexFill *ngIf="client.familyMembers.length" fxLayout="row wrap" fxLayout.lt-md="column" class="m-b-20">
 
-    <h3 class="mat-h3" fxFlexFill>Family Members</h3>
+    <h3 class="mat-h3" fxFlexFill>{{ 'Family Members' | translate }}</h3>
 
     <mat-divider fxFlexFill></mat-divider>
 
@@ -142,45 +146,48 @@
           Middle Name : {{ member.middleName }}<br />
           Last Name : {{ member.lastName }}<br />
           Qualification : {{ member.qualification }}<br />
-          Relationship : {{ member.relationshipId | find:clientTemplate.familyMemberOptions.relationshipIdOptions:'id':'name' }}<br />
+          Relationship : {{ member.relationshipId |
+          find:clientTemplate.familyMemberOptions.relationshipIdOptions:'id':'name' }}<br />
           Age : {{ member.age }}<br />
           Is Dependent : {{ member.isDependent ? 'Yes' : 'No' }}<br />
-          Marital Status : {{ member.maritalStatusId | find:clientTemplate.familyMemberOptions.maritalStatusIdOptions:'id':'name' }}<br />
+          Marital Status : {{ member.maritalStatusId |
+          find:clientTemplate.familyMemberOptions.maritalStatusIdOptions:'id':'name' }}<br />
           Gender : {{ member.genderId | find:clientTemplate.familyMemberOptions.genderIdOptions:'id':'name' }}<br />
-          Profession : {{ member.professionId | find:clientTemplate.familyMemberOptions.professionIdOptions:'id':'name' }}<br />
+          Profession : {{ member.professionId | find:clientTemplate.familyMemberOptions.professionIdOptions:'id':'name'
+          }}<br />
           Date Of Birth : {{ member.dateOfBirth | date }}<br />
         </p>
 
       </mat-expansion-panel>
 
-    </mat-accordion>    
+    </mat-accordion>
 
   </div>
 
   <div fxFlexFill *ngIf="client.address.length" fxLayout="row wrap" fxLayout.lt-md="column">
 
-    <h3 class="mat-h3" fxFlexFill>Address</h3>
+    <h3 class="mat-h3" fxFlexFill>Address{{ 'Remarks' | translate }}</h3>
 
     <mat-divider fxFlexFill></mat-divider>
 
     <mat-accordion fxFlexFill class="m-t-5">
 
       <mat-expansion-panel *ngFor="let address of client.address" class="address">
-  
+
         <mat-expansion-panel-header>
-  
+
           <mat-panel-title>
             {{ getSelectedValue('addressTypeIdOptions',address.addressTypeId)?.name }}
           </mat-panel-title>
-  
+
           <mat-panel-description>
             {{address.relationship}}
           </mat-panel-description>
-  
+
         </mat-expansion-panel-header>
-  
+
         <mat-divider></mat-divider>
-  
+
         <p>
           <span *ngIf="isFieldEnabled('street')">Street : {{address.street}}<br /></span>
           <span *ngIf="isFieldEnabled('addressLine1')">Address Line 1 : {{address.addressLine1}}<br /></span>
@@ -195,9 +202,9 @@
           <span *ngIf="isFieldEnabled('postalCode')">Postal Code : {{address.postalCode}}<br /></span>
           <span *ngIf="isFieldEnabled('isActive')">Active Status : {{address.isActive}}<br /></span>
         </p>
-  
+
       </mat-expansion-panel>
-  
+
     </mat-accordion>
 
   </div>
@@ -207,12 +214,12 @@
 <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button matStepperPrevious>
     <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
-    Previous
+    {{ 'Previous' | translate }}
   </button>
   <button mat-raised-button [routerLink]="['../']">
-    Cancel
+    {{ 'Cancel' | translate }}
   </button>
   <button mat-raised-button color="primary" (click)="submit.emit()">
-    Submit
+    {{ 'Submit' | translate }}
   </button>
 </div>

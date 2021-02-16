@@ -36,8 +36,8 @@ export class AmountCollectedPieComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private homeService: HomeService,
-              private route: ActivatedRoute) {
-    this.route.data.subscribe( (data: { offices: any }) => {
+    private route: ActivatedRoute) {
+    this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
   }
@@ -57,9 +57,16 @@ export class AmountCollectedPieComponent implements OnInit {
   getChartData() {
     this.officeId.valueChanges.subscribe((value: number) => {
       this.homeService.getCollectedAmount(value).subscribe((response: any) => {
-        const data =  Object.entries(response[0]).map(entry => entry[1]);
+        const data = Object.entries(response[0]).map(entry => entry[1]);
+        const mockData = [10, 20];
+        console.debug('collection-pie data', data);
         if (!(data[0] === 0 && data[1] === 0)) {
           this.setChart(data);
+          this.hideOutput = false;
+          this.showFallback = false;
+        } else if (mockData.length) {
+          console.info('collection-pie currently shows mock data');
+          this.setChart(mockData);
           this.hideOutput = false;
           this.showFallback = false;
         } else {
@@ -73,6 +80,17 @@ export class AmountCollectedPieComponent implements OnInit {
   /**
    * Creates an instance of Chart.js pie chart
    * Refer: https://www.chartjs.org/docs/latest/charts/doughnut.html for configuration details.
+   * dataStructure = {
+   *      datasets: [{
+   *        data: [10, 20, 30]
+   *      }],
+   *      // These labels appear in the legend and in the tooltips when hovering different arcs
+   *      labels: [
+   *        'Red',
+   *        'Yellow',
+   *        'Blue'
+   *      ]
+   *    };
    * @param {any} data Chart Data.
    */
   setChart(data: any) {
@@ -82,7 +100,7 @@ export class AmountCollectedPieComponent implements OnInit {
         data: {
           labels: ['Pending', 'Collected'],
           datasets: [{
-            backgroundColor: ['red', 'green'],
+            backgroundColor: ['#ee9595', '#75cfb8'],
             data: data
           }]
         },

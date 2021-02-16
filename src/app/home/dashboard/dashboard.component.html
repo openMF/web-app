@@ -10,6 +10,12 @@
 
     </div>
 
+    <div fxLayout="row" fxLayoutAlign="space-around center">
+
+      <mifosx-client-trends-bar></mifosx-client-trends-bar>
+
+    </div>
+
     <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-around center" fxLayoutGap="40px">
 
       <mat-card class="recent-activities">
@@ -17,7 +23,7 @@
         <mat-card-header class="header">
           <h3>
             <fa-icon icon="bolt"></fa-icon>
-            &nbsp;&nbsp; Recent Activities
+            &nbsp;&nbsp; {{ 'Recent Activities' | translate }}
           </h3>
         </mat-card-header>
 
@@ -35,7 +41,7 @@
         <mat-card-header class="header">
           <h3>
             <fa-icon icon="laptop"></fa-icon>
-            &nbsp;&nbsp; Frequent Activities
+            &nbsp;&nbsp; {{ 'Frequent Activities' | translate }}
           </h3>
         </mat-card-header>
 
@@ -47,12 +53,6 @@
         </mat-card-content>
 
       </mat-card>
-
-    </div>
-
-    <div fxLayout="row" fxLayoutAlign="space-around center">
-
-      <mifosx-client-trends-bar></mifosx-client-trends-bar>
 
     </div>
 

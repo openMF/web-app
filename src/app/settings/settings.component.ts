@@ -18,8 +18,8 @@ export class SettingsComponent implements OnInit {
   /** Placeholder for languages. update once translations are set up */
   languages: any[] = [
     {
-      name: 'English',
-      code: 'en'
+      name: 'Bahasa Indonesia',
+      code: 'id'
     }
   ];
   /** Date formats. */
@@ -40,7 +40,7 @@ export class SettingsComponent implements OnInit {
   /** Language Setting */
   language = new FormControl('');
   /** Date Format Setting */
-  dateFormat =  new FormControl('');
+  dateFormat = new FormControl('');
 
   /**
    * @param {SettingsService} settingsService Settings Service

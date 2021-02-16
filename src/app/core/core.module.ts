@@ -4,14 +4,14 @@ import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
 
 /** Translation Imports */
-import { TranslateModule } from '@ngx-translate/core';
+// import { TranslateModule } from '@ngx-translate/core';
 
 /** Custom Services */
 import { AuthenticationService } from './authentication/authentication.service';
 import { HttpService } from './http/http.service';
 import { HttpCacheService } from './http/http-cache.service';
 import { ProgressBarService } from './progress-bar/progress-bar.service';
-import { I18nService } from './i18n/i18n.service';
+// import { I18nService } from './i18n/i18n.service';
 
 /** Custom Guards */
 import { AuthenticationGuard } from './authentication/authentication.guard';
@@ -47,7 +47,7 @@ import { ContentComponent } from './shell/content/content.component';
   imports: [
     SharedModule,
     HttpClientModule,
-    TranslateModule,
+    // TranslateModule,
     RouterModule
   ],
   declarations: [
@@ -69,7 +69,7 @@ import { ContentComponent } from './shell/content/content.component';
       useClass: AuthenticationInterceptor,
       multi: true
     },
-    I18nService,
+    // I18nService,
     HttpCacheService,
     ApiPrefixInterceptor,
     ErrorHandlerInterceptor,

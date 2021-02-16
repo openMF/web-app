@@ -16,7 +16,7 @@ import { environment } from 'environments/environment';
 
 /** Custom Services */
 import { Logger } from './core/logger/logger.service';
-import { I18nService } from './core/i18n/i18n.service';
+// import { I18nService } from './core/i18n/i18n.service';
 import { ThemeStorageService } from './shared/theme-picker/theme-storage.service';
 import { AlertService } from './core/alert/alert.service';
 import { AuthenticationService } from './core/authentication/authentication.service';
@@ -46,17 +46,19 @@ export class WebAppComponent implements OnInit {
    * @param {ActivatedRoute} activatedRoute Activated Route.
    * @param {Title} titleService Title Service.
    * @param {TranslateService} translateService Translate Service.
-   * @param {I18nService} i18nService I18n Service.
    * @param {ThemeStorageService} themeStorageService Theme Storage Service.
    * @param {MatSnackBar} snackBar Material Snackbar for notifications.
    * @param {AlertService} alertService Alert Service.
    * @param {AuthenticationService} authenticationService Authentication service.
    */
+  // INFO: We don't use I18nService. 
+  // * @param {I18nService} i18nService I18n Service.
+
   constructor(private router: Router,
     private activatedRoute: ActivatedRoute,
     private titleService: Title,
-    private translateService: TranslateService,
-    private i18nService: I18nService,
+    private translate: TranslateService,
+    // private i18nService: I18nService,
     private themeStorageService: ThemeStorageService,
     public snackBar: MatSnackBar,
     private alertService: AlertService,
@@ -84,11 +86,14 @@ export class WebAppComponent implements OnInit {
     log.debug('init');
 
     // Setup translations
-    this.i18nService.init(environment.defaultLanguage, environment.supportedLanguages);
+    this.translate.setDefaultLang(environment.defaultLanguage);
+    this.translate.use('id');
+
+    // this.i18nService.init(environment.defaultLanguage, environment.supportedLanguages);
 
     // Change page title on navigation or language change, based on route data
     const onNavigationEnd = this.router.events.pipe(filter(event => event instanceof NavigationEnd));
-    merge(this.translateService.onLangChange, onNavigationEnd)
+    merge(this.translate.onLangChange, onNavigationEnd)
       .pipe(
         map(() => {
           let route = this.activatedRoute;
@@ -103,7 +108,7 @@ export class WebAppComponent implements OnInit {
       .subscribe(event => {
         const title = event['title'];
         if (title) {
-          this.titleService.setTitle(`${this.translateService.instant(title)} | Mifos X`);
+          this.titleService.setTitle(`${this.translate.instant(title)} | Koppi Kantor`);
         }
       });
 
@@ -137,13 +142,13 @@ export class WebAppComponent implements OnInit {
     this.buttonConfig = new KeyboardShortcutsConfiguration();
 
     // initialize language and date format if they are null.
-    if (!localStorage.getItem('mifosXLanguage')) {
+    if (!localStorage.getItem('koppiKantorLanguage')) {
       this.settingsService.setLanguage({
-        name: 'English',
-        code: 'en'
+        name: 'Bahasa Indonesia',
+        code: 'id'
       });
     }
-    if (!localStorage.getItem('mifosXDateFormat')) {
+    if (!localStorage.getItem('koppiKantorDateFormat')) {
       this.settingsService.setDateFormat('dd MMMM yyyy');
     }
     if (!localStorage.getItem('mifosXServers')) {
