@@ -12,6 +12,9 @@ import { map } from 'rxjs/operators';
 /** Custom Services */
 import { AuthenticationService } from '../../authentication/authentication.service';
 
+/** Environment Imports */
+import { environment } from '../../../../environments/environment';
+
 /**
  * Toolbar component.
  */
@@ -21,6 +24,8 @@ import { AuthenticationService } from '../../authentication/authentication.servi
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
+
+  public environment = environment;
 
   /** Subscription to breakpoint observer for handset. */
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)

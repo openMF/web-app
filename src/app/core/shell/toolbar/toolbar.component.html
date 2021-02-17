@@ -44,7 +44,8 @@
 
   <mifosx-search-tool></mifosx-search-tool>
 
-  <mifosx-language-selector class="ml-1 language" fxHide.lt-md></mifosx-language-selector>
+  <mifosx-language-selector class="ml-1 language" *ngIf="environment.allowLanguageSelection" fxHide.lt-md>
+  </mifosx-language-selector>
 
   <mifosx-theme-picker fxHide.lt-md></mifosx-theme-picker>
 
