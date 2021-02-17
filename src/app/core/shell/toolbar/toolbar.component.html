@@ -4,7 +4,8 @@
     <fa-icon icon="bars" size="lg"></fa-icon>
   </button>
 
-  <button mat-icon-button *ngIf="sidenav.opened" (click)="toggleSidenavCollapse()" matTooltip="Toggle Collapse" fxHide.lt-md="true">
+  <button mat-icon-button *ngIf="sidenav.opened" (click)="toggleSidenavCollapse()" matTooltip="Toggle Collapse"
+    fxHide.lt-md="true">
     <fa-icon *ngIf="!sidenavCollapsed" icon="chevron-left"></fa-icon>
     <fa-icon *ngIf="sidenavCollapsed" icon="chevron-right"></fa-icon>
   </button>
@@ -13,27 +14,27 @@
 
     <a mat-tab-link class="tab-link" [matMenuTriggerFor]="institutionMenu" #institutionMenuTrigger="matMenuTrigger">
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
-      Institution
+      {{ 'Institution' | translate }}
     </a>
 
     <span fxHide.lt-lg="true">
 
       <a mat-tab-link class="tab-link" [routerLink]="['/accounting']">
         <fa-icon class="mr-05" icon="money-bill-alt" size="lg"></fa-icon>
-        Accounting
+        Accounting{{ 'Institution' | translate }}
       </a>
-      <a mat-tab-link class="tab-link" [matMenuTriggerFor]="reportsMenu" #reportsMenuTrigger="matMenuTrigger" >
+      <a mat-tab-link class="tab-link" [matMenuTriggerFor]="reportsMenu" #reportsMenuTrigger="matMenuTrigger">
         <fa-icon class="mr-05" icon="chart-bar" size="lg"></fa-icon>
-        Reports
+        Reports{{ 'Institution' | translate }}
       </a>
       <a mat-tab-link class="tab-link" [matMenuTriggerFor]="adminMenu" #adminMenuTrigger="matMenuTrigger">
         <fa-icon class="mr-05" icon="shield-alt" size="lg"></fa-icon>
-        Admin
+        Admin{{ 'Institution' | translate }}
       </a>
-      <a mat-tab-link class="tab-link" [matMenuTriggerFor]="selfServiceMenu" #selfServiceMenuTrigger="matMenuTrigger">
+      <!-- <a mat-tab-link class="tab-link" [matMenuTriggerFor]="selfServiceMenu" #selfServiceMenuTrigger="matMenuTrigger">
         <fa-icon class="mr-05" icon="users" size="lg"></fa-icon>
-        Self Service
-      </a>
+        {{ 'Self Service' | translate }}
+      </a> -->
 
     </span>
 
@@ -63,7 +64,7 @@
     <button mat-menu-item [routerLink]="['/accounting']">Accounting</button>
     <button mat-menu-item [matMenuTriggerFor]="reportsMenu">Reports</button>
     <button mat-menu-item [matMenuTriggerFor]="adminMenu">Admin</button>
-    <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">Self Service</button>
+    <!-- <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">{{ 'Self Service' | translate }}</button> -->
   </span>
 </mat-menu>
 
