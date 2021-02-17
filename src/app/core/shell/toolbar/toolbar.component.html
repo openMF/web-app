@@ -70,21 +70,21 @@
 
 <!-- Toolbar Menus -->
 <mat-menu #reportsMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [routerLink]="['/reports']">All</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Client']">Clients</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Loan']">Loans</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Savings']">Savings</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Fund']">Funds</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Accounting']">Accounting</button>
+  <button mat-menu-item [routerLink]="['/reports']">{{ 'All' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Client']">{{ 'Clients' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Loan']">{{ 'Loans' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Savings']">{{ 'Savings' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Fund']">{{ 'Funds' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Accounting']">{{ 'Accounting' | translate }}</button>
   <!-- <button mat-menu-item [routerLink]="['/xbrl']">XBRL</button> -->
 </mat-menu>
 
 <mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [routerLink]="['/users']">Users</button>
-  <button mat-menu-item [routerLink]="['/organization']">Organization</button>
-  <button mat-menu-item [routerLink]="['/system']">System</button>
-  <button mat-menu-item [routerLink]="['/products']">Products</button>
-  <button mat-menu-item [routerLink]="['/templates']">Templates</button>
+  <button mat-menu-item [routerLink]="['/users']">{{ 'Users' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/organization']">{{ 'Organization' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/system']">{{ 'System' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/products']">{{ 'Products' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/templates']">{{ 'Templates' | translate }}</button>
 </mat-menu>
 
 <!-- <mat-menu #selfServiceMenu="matMenu" [overlapTrigger]="false">
@@ -99,24 +99,24 @@
     <mat-icon matListIcon>
       <fa-icon icon="question-circle" size="sm"></fa-icon>
     </mat-icon>
-    <span>Help</span>
+    <span>{{ 'Help' | translate }}</span>
   </button>
   <button mat-menu-item [routerLink]="['/profile']">
     <mat-icon>
       <fa-icon icon="user" size="sm"></fa-icon>
     </mat-icon>
-    <span>Profile</span>
+    <span>{{ 'Profile' | translate }}</span>
   </button>
   <button mat-menu-item [routerLink]="['/settings']">
     <mat-icon>
       <fa-icon icon="cog" size="sm"></fa-icon>
     </mat-icon>
-    <span>Settings</span>
+    <span>{{ 'Settings' | translate }}</span>
   </button>
   <button mat-menu-item (click)="logout()" id="logout">
     <mat-icon>
       <fa-icon icon="sign-out-alt" size="sm"></fa-icon>
     </mat-icon>
-    <span>Sign Out</span>
+    <span>{{ 'Logout' | translate }}</span>
   </button>
 </mat-menu>
