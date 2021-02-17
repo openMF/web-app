@@ -44,9 +44,9 @@ export class CreateClientComponent {
    * @param {SettingsService} settingsService Setting service
    */
   constructor(private route: ActivatedRoute,
-              private router: Router,
-              private clientsService: ClientsService,
-              private settingsService: SettingsService) {
+    private router: Router,
+    private clientsService: ClientsService,
+    private settingsService: SettingsService) {
     this.route.data.subscribe((data: { clientTemplate: any, clientAddressFieldConfig: any }) => {
       this.clientTemplate = data.clientTemplate;
       this.clientAddressFieldConfig = data.clientAddressFieldConfig;
@@ -82,6 +82,7 @@ export class CreateClientComponent {
       dateFormat,
       locale
     };
+    console.log('clientData @ submit()', clientData);
     this.clientsService.createClient(clientData).subscribe((response: any) => {
       this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
     });

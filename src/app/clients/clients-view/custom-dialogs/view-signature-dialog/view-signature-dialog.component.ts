@@ -28,9 +28,9 @@ export class ViewSignatureDialogComponent implements OnInit {
    * @param {any} data Documents data
    */
   constructor(public dialogRef: MatDialogRef<ViewSignatureDialogComponent>,
-              private clientsService: ClientsService,
-              private sanitizer: DomSanitizer,
-              @Inject(MAT_DIALOG_DATA) public data: { documents: any[], id: string }) {
+    private clientsService: ClientsService,
+    private _sanitizer: DomSanitizer,
+    @Inject(MAT_DIALOG_DATA) public data: { documents: any[], id: string }) {
     const signature = this.data.documents.find((document: any) => document.name === 'clientSignature') || {};
     this.signatureId = signature.id;
     this.clientId = this.data.id;
@@ -41,8 +41,8 @@ export class ViewSignatureDialogComponent implements OnInit {
     if (this.signatureId) {
       this.clientsService.getClientSignatureImage(this.clientId, this.signatureId).subscribe(
         (base64Image: any) => {
-          this.signatureImage = this.sanitizer.bypassSecurityTrustResourceUrl(base64Image);
-        }, (error: any) => {}
+          this.signatureImage = this._sanitizer.bypassSecurityTrustResourceUrl(base64Image);
+        }, (error: any) => { }
       );
     }
   }

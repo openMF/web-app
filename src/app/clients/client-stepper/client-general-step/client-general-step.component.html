@@ -32,7 +32,8 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field *ngIf="createClientForm.contains('fullname')" fxFlex="48%">
+    <!-- <mat-form-field *ngIf="createClientForm.contains('fullname')" fxFlex="48%"> -->
+    <mat-form-field fxFlex="48%">
       <mat-label>{{ 'Name' | translate }}</mat-label>
       <input matInput required formControlName="fullname">
       <mat-error *ngIf="createClientForm.controls.fullname.hasError('required')">
@@ -43,7 +44,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field *ngIf="createClientForm.contains('firstname')" fxFlex="48%">
+    <!-- <mat-form-field *ngIf="createClientForm.contains('firstname')" fxFlex="48%">
       <mat-label>First Name</mat-label>
       <input matInput required formControlName="firstname">
       <mat-error *ngIf="createClientForm.controls.firstname.hasError('required')">
@@ -71,13 +72,14 @@
       <mat-error *ngIf="createClientForm.controls.lastname.hasError('pattern')">
         Client last name <strong>cannot</strong> begin with a special character or number
       </mat-error>
-    </mat-form-field>
+    </mat-form-field> -->
 
     <mat-form-field fxFlex="48%">
       <mat-label>
         {{ (createClientForm.value.legalFormId === 1 ? 'Date of Birth' : 'Incorporation Date') | translate }}
       </mat-label>
-      <input matInput [max]="maxDate" [matDatepicker]="dateOfBirthDatePicker" formControlName="dateOfBirth">
+      <input matInput [max]="maxDate" [matDatepicker]="dateOfBirthDatePicker" formControlName="dateOfBirth"
+        placeholder="{{ 'Input Date' | translate }}">
       <mat-datepicker-toggle matSuffix [for]="dateOfBirthDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #dateOfBirthDatePicker></mat-datepicker>
     </mat-form-field>

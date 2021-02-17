@@ -59,7 +59,7 @@ export class LanguageSelectorComponent implements OnInit {
    * @return {string[]} Supported languages.
    */
   get languages(): string[] {
-    return ['id'];
+    return ['Indonesia'];
     // return this.i18nService.supportedLanguages;
   }
 

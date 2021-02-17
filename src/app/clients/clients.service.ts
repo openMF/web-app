@@ -59,8 +59,8 @@ export class ClientsService {
 
   getClientDataAndTemplate(clientId: string) {
     const httpParams = new HttpParams()
-        .set('template', 'true')
-        .set('staffInSelectedOfficeOnly', 'true');
+      .set('template', 'true')
+      .set('staffInSelectedOfficeOnly', 'true');
     return this.http.get(`/clients/${clientId}`, { params: httpParams });
   }
 
@@ -178,7 +178,8 @@ export class ClientsService {
     const formData = new FormData();
     formData.append('file', signature);
     formData.append('filename', signature.name);
-    return this.http.post(`/clients/${clientId}/images`, formData);
+    console.log('UploadSignature', formData);
+    return this.http.post(`/clients/${clientId}/documents`, formData);
   }
 
   getClientSignatureImage(clientId: string, documentId: string) {
@@ -315,8 +316,8 @@ export class ClientsService {
 
   getClientReportTemplates() {
     const httpParams = new HttpParams()
-          .set('entityId', '0')
-          .set('typeId', '0');
+      .set('entityId', '0')
+      .set('typeId', '0');
     return this.http.get('/templates', { params: httpParams });
   }
 

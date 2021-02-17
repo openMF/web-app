@@ -38,7 +38,8 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field *ngIf="editClientForm.contains('fullname')" fxFlex="48%">
+          <!-- <mat-form-field *ngIf="editClientForm.contains('fullname')" fxFlex="48%"> -->
+          <mat-form-field fxFlex="48%">
             <mat-label>{{ 'Name' | translate }}</mat-label>
             <input matInput required formControlName="fullname">
             <mat-error *ngIf="editClientForm.controls.fullname.hasError('required')">
@@ -46,7 +47,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field *ngIf="editClientForm.contains('firstname')" fxFlex="48%">
+          <!-- <mat-form-field *ngIf="editClientForm.contains('firstname')" fxFlex="48%">
             <mat-label>{{ 'First Name' | translate }}</mat-label>
             <input matInput required formControlName="firstname">
             <mat-error *ngIf="editClientForm.controls.firstname.hasError('required')">
@@ -65,7 +66,7 @@
             <mat-error *ngIf="editClientForm.controls.lastname.hasError('required')">
               {{ 'Client last name' | translate }} <strong>{{ 'is required' | translate }}</strong>
             </mat-error>
-          </mat-form-field>
+          </mat-form-field> -->
 
           <mat-form-field fxFlex="48%">
             <mat-label>
