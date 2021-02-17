@@ -4,7 +4,7 @@
       <mat-form-field>
         <input matInput placeholder="Search by client name" (keyup)="applyFilter($event.target.value)">
       </mat-form-field>
-      <mat-checkbox #showClosedAccounts labelPosition="after">{{ 'Show Closed Accounts' | translate }}
+      <mat-checkbox #showClosedAccounts labelPosition="after">{{ 'Show Inactive Accounts' | translate }}
       </mat-checkbox>
     </div>
     <div class="action-button" fxLayoutGap="25px">
