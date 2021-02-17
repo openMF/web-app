@@ -57,13 +57,13 @@
 </mat-toolbar>
 
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item routerLink="/clients">Clients</button>
-  <button mat-menu-item routerLink="/groups">Groups</button>
-  <button mat-menu-item routerLink="/centers">Centers</button>
+  <button mat-menu-item routerLink="/clients">{{ 'Clients' | translate }}</button>
+  <button mat-menu-item routerLink="/groups">{{ 'Groups' | translate }}</button>
+  <button mat-menu-item routerLink="/centers">{{ 'Centers' | translate }}</button>
   <span fxHide.lg>
-    <button mat-menu-item [routerLink]="['/accounting']">Accounting</button>
-    <button mat-menu-item [matMenuTriggerFor]="reportsMenu">Reports</button>
-    <button mat-menu-item [matMenuTriggerFor]="adminMenu">Admin</button>
+    <button mat-menu-item [routerLink]="['/accounting']">{{ 'Accounting' | translate }}</button>
+    <button mat-menu-item [matMenuTriggerFor]="reportsMenu">{{ 'Reports' | translate }}</button>
+    <button mat-menu-item [matMenuTriggerFor]="adminMenu">{{ 'Admin' | translate }}</button>
     <!-- <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">{{ 'Self Service' | translate }}</button> -->
   </span>
 </mat-menu>
