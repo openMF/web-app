@@ -20,6 +20,7 @@ export const environment = {
     serverUrl: ''
   },
   defaultLanguage: 'id',
+  allowLanguageSelection: env.allow_app_language_selection,
   supportedLanguages: [
     'id',
     'en'
