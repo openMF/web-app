@@ -6,8 +6,7 @@
 
       <div class="profile-image-container">
         <div>
-          <img mat-card-md-image class="profile-image"
-            matTooltip="Savings Account"
+          <img mat-card-md-image class="profile-image" matTooltip="Savings Account"
             [src]="'assets/images/savings_account_placeholder.png'">
         </div>
       </div>
@@ -15,16 +14,20 @@
       <div class="mat-typography account-card-title">
         <mat-card-title>
           <h3>
-            <i class="fa fa-stop" [ngClass]="savingsAccountData.status.code | statusLookup" [matTooltip]="savingsAccountData.status.value"></i>
-              Account Name : {{savingsAccountData.savingsProductName}}
+            <i class="fa fa-stop" [ngClass]="savingsAccountData.status.code | statusLookup"
+              [matTooltip]="savingsAccountData.status.value"></i>
+            {{ 'Product Name' | translate }} : {{savingsAccountData.savingsProductName}}
           </h3>
         </mat-card-title>
         <mat-card-subtitle>
           <p>
-            Account #: {{savingsAccountData.accountNo}} | {{entityType}} Name: {{savingsAccountData.clientName || savingsAccountData.groupName}}<br/>
+            {{ 'Account' | translate }} #: {{savingsAccountData.accountNo}} | {{entityType}} Name:
+            {{savingsAccountData.clientName || savingsAccountData.groupName}}<br />
             <span *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval">
-              Current Balance: {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.accountBalance}}<br/>
-              Available Balance: {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.availableBalance}}<br/>
+              {{ 'Current Balance' | translate }}:
+              {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.accountBalance}}<br />
+              {{ 'Available Balance' | translate }}:
+              {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.availableBalance}}<br />
             </span>
           </p>
         </mat-card-subtitle>
@@ -38,16 +41,17 @@
         <button mat-raised-button *mifosxHasPermission="button.taskPermissionName" (click)="doAction(button.name)">
           <i class="{{button.icon}}"></i> {{button.name}}</button>
       </ng-container>
-  
+
       <ng-container *ngIf="buttonConfig.options">
-        <button mat-raised-button [matMenuTriggerFor]="More">More</button>
+        <button mat-raised-button [matMenuTriggerFor]="More">{{ 'More' | translate }}</button>
         <mat-menu #More="matMenu">
-        <span *ngFor="let option of buttonConfig.options">
-          <button mat-menu-item *mifosxHasPermission="option.taskPermissionName" (click)="doAction(option.name)">{{option.name}}</button>
-        </span>
+          <span *ngFor="let option of buttonConfig.options">
+            <button mat-menu-item *mifosxHasPermission="option.taskPermissionName"
+              (click)="doAction(option.name)">{{option.name}}</button>
+          </span>
         </mat-menu>
       </ng-container>
-  
+
     </mat-card-actions>
 
   </mat-card-header>
@@ -56,120 +60,129 @@
 
     <div class="savings-account-tables" fxLayout="row" fxLayoutGap="2%">
 
-      <div fxFlex="49%" *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval; else alternateSummary">
-        <h4 class="table-headers">Account Summary</h4>
+      <div fxFlex="49%"
+        *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval; else alternateSummary">
+        <h4 class="table-headers">{{ 'Account Summary' | translate }}</h4>
         <table>
           <tbody>
             <tr *ngIf="savingsAccountData.summary.totalWithdrawals">
-              <td>Total Withdrawls</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalWithdrawals}}</td>
+              <td>{{ 'Total Withdrawal' | translate }}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalWithdrawals}}
+              </td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.totalWithdrawalFees">
-              <td>Withdrawals Fees</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalWithdrawalFees}}</td>
+              <td>{{ 'Total Withdrawal Fees' | translate }}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalWithdrawalFees}}
+              </td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.totalAnnualFees">
-              <td>Annual Fees</td>
+              <td>{{ 'Annual Fees' | translate }}</td>
               <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalAnnualFees}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.totalInterestEarned >= 0">
-              <td>Interest Earned</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalInterestEarned}}</td>
+              <td>{{ 'Interest Earned' | translate }}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalInterestEarned}}
+              </td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.totalInterestPosted">
-              <td>Interest Posted</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalInterestPosted}}</td>
+              <td>{{ 'Interest Posted' | translate }}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalInterestPosted}}
+              </td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.interestNotPosted >= 0">
-              <td>Interest Earned Not Posted</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.interestNotPosted}}</td>
+              <td>{{ 'Interest Earned Not Posted' | translate }}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.interestNotPosted}}
+              </td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.totalOverdraftInterestDerived">
-              <td>Interest On Overdraft</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalOverdraftInterestDerived}}</td>
+              <td>{{ 'Interest On Overdraft' | translate }}</td>
+              <td>
+                {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalOverdraftInterestDerived}}
+              </td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.interestNotPosted < 0">
-              <td>Overdraft Interest Not Posted</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.interestNotPosted}}</td>
+              <td>{{ 'Overdraft Interest Not Posted' | translate }}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.interestNotPosted}}
+              </td>
             </tr>
             <tr>
-              <td>Nominal Interest Rate</td>
+              <td>{{ 'Nominal Interest Rate' | translate }}</td>
               <td>{{savingsAccountData.nominalAnnualInterestRate}}%</td>
             </tr>
             <tr>
-              <td>Interest Compounding Period</td>
+              <td>{{ 'Interest Compounding Period' | translate }}</td>
               <td>{{savingsAccountData.interestCompoundingPeriodType.value}}</td>
             </tr>
             <tr>
-              <td>Interest Posting Period</td>
+              <td>{{ 'Interest Posting Period' | translate }}</td>
               <td>{{savingsAccountData.interestPostingPeriodType.value}}</td>
             </tr>
             <tr>
-              <td>Interest Calculated Using</td>
+              <td>{{ 'Interest Calculated Using' | translate }}</td>
               <td>{{savingsAccountData.interestCalculationType.value}}</td>
             </tr>
             <tr>
-              <td># Days in Year</td>
+              <td>{{ '# Days in Year' | translate }}</td>
               <td>{{savingsAccountData.interestCalculationDaysInYearType.value}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.withdrawalFee">
-              <td>Withdrawal Fee</td>
+              <td>{{ 'Withdrawal Fee' | translate }}</td>
               <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.withdrawalFee.amount}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.lastActiveTransactionDate">
-              <td>Last Active Transaction Date</td>
+              <td>{{ 'Last Active Transaction Date' | translate }}</td>
               <td>{{savingsAccountData.lastActiveTransactionDate | date}}</td>
             </tr>
             <tr *ngIf="!(savingsAccountData.subStatus.id === 0)">
-              <td>Substatus</td>
+              <td>{{ 'Substatus' | translate }}</td>
               <td>{{savingsAccountData.subStatus.value}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.daysToInactive">
-              <td>Days to Inactive</td>
+              <td>{{ 'Days to Inactive' | translate }}</td>
               <td>{{savingsAccountData.daysToInactive}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.daysToDormancy">
-              <td>Days to Dormancy</td>
+              <td>{{ 'Days to Dormancy' | translate }}</td>
               <td>{{savingsAccountData.daysToDormancy}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.daysToEscheat">
-              <td>Days to Escheat</td>
+              <td>{{ 'Days to Escheat' | translate }}</td>
               <td>{{savingsAccountData.daysToEscheat}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.annualFee">
-              <td>Annual Fee</td>
+              <td>{{ 'Annual Fee' | translate }}</td>
               <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.annualFee.amount}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.allowOverdraft">
-              <td>Over Draft Limit</td>
+              <td>{{ 'Overdraft Limit' | translate }}</td>
               <td>{{savingsAccountData.overdraftLimit}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.allowOverdraft">
-              <td>Min Overdraft Required for Interest Calculation</td>
+              <td>{{ 'Min Overdraft Required for Interest Calculation' | translate }}</td>
               <td>{{savingsAccountData.minOverdraftForInterestCalculation}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.minBalanceForInterestCalculation">
-              <td>Min Balance Required for Interest Calculation</td>
+              <td>{{ 'Min Balance Required for Interest Calculation' | translate }}</td>
               <td>{{savingsAccountData.minBalanceForInterestCalculation}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.minRequiredBalance">
-              <td>Minimum Required Balance</td>
+              <td>{{ 'Minimum Required Balance' | translate }}</td>
               <td>{{savingsAccountData.minRequiredBalance}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.enforceMinRequiredBalance">
-              <td>Enforce Minimum Required Balance</td>
+              <td>{{ 'Enforce Minimum Required Balance' | translate }}</td>
               <td>{{savingsAccountData.enforceMinRequiredBalance}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.lastInterestCalculationDate">
-              <td>Interest Recalculation Date</td>
+              <td>{{ 'Interest Recalculation Date' | translate }}</td>
               <td>{{savingsAccountData.summary.lastInterestCalculationDate | date}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.onHoldFunds">
-              <td>On Hold Funds</td>
+              <td>{{ 'On Hold Funds' | translate }}</td>
               <td><a *mifosxHasPermission="'READ_SAVINGSACCOUNT'">{{savingsAccountData.onHoldFunds}}</a></td>
             </tr>
             <tr *ngIf="savingsAccountData.withHoldTax">
-              <td>Withhold Tax Group</td>
+              <td>{{ 'Withhold Tax Group' | translate }}</td>
               <td>{{savingsAccountData.taxGroup.name}}</td>
             </tr>
           </tbody>
@@ -177,20 +190,21 @@
       </div>
 
       <ng-template #alternateSummary>
-        <div fxFlex="49%" >
-          <h4 class="table-headers">Account Summary</h4>
+        <div fxFlex="49%">
+          <h4 class="table-headers">{{ 'Account Summary' | translate }}</h4>
           <table>
             <tbody>
               <tr>
-                <td>Activated On</td>
-                <td>{{savingsAccountData.timeline.activatedOnDate ? (savingsAccountData.timeline.activatedOnDate | date) : 'Not Activated'}}</td>
+                <td>{{ 'Activated On' | translate }}</td>
+                <td>{{savingsAccountData.timeline.activatedOnDate ? (savingsAccountData.timeline.activatedOnDate | date)
+                  : 'Not Activated'}}</td>
               </tr>
               <tr>
-                <td>Currency</td>
+                <td>{{ 'Currency' | translate }}</td>
                 <td>{{savingsAccountData.currency.name}} [{{savingsAccountData.currency.code}}]</td>
               </tr>
               <tr>
-                <td>External Id</td>
+                <td>{{ 'External ID' | translate }}</td>
                 <td>{{savingsAccountData.externalId ? savingsAccountData.externalId : 'Not Provided'}}</td>
               </tr>
             </tbody>
@@ -200,28 +214,30 @@
 
       <div fxFlex="49%" fxLayout="column" fxLayoutGap="4%">
 
-        <div *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval; else alternateDetails">
-          <h4 class="table-headers">Savings Details</h4>
+        <div
+          *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval; else alternateDetails">
+          <h4 class="table-headers">{{ 'Savings Details' | translate }}</h4>
           <table>
             <tbody>
               <tr>
-                <td>Activated On</td>
-                <td>{{savingsAccountData.timeline.activatedOnDate ? (savingsAccountData.timeline.activatedOnDate | date) : 'Not Activated'}}</td>
+                <td>{{ 'Activated On' | translate }}</td>
+                <td>{{savingsAccountData.timeline.activatedOnDate ? (savingsAccountData.timeline.activatedOnDate | date)
+                  : 'Not Activated'}}</td>
               </tr>
               <tr>
-                <td>Field Officer</td>
+                <td>{{ 'Field Officer' | translate }}</td>
                 <td>{{savingsAccountData.fieldOfficerName ? savingsAccountData.fieldOfficerName : 'Unassigned'}}</td>
               </tr>
               <tr>
-                <td>External Id</td>
+                <td>{{ 'External ID' | translate }}</td>
                 <td>{{savingsAccountData.externalId ? savingsAccountData.externalId : 'Not Provided'}}</td>
               </tr>
               <tr>
-                <td>Currency</td>
+                <td>{{ 'Currency' | translate }}</td>
                 <td>{{savingsAccountData.currency.name}} [{{savingsAccountData.currency.code}}]</td>
               </tr>
               <tr>
-                <td>Nominal Interest Rate</td>
+                <td>{{ 'Nominal Interest Rate' | translate }}</td>
                 <td>{{savingsAccountData.nominalAnnualInterestRate}}%</td>
               </tr>
             </tbody>
@@ -230,15 +246,15 @@
 
         <ng-template #alternateDetails>
           <div>
-            <h4 class="table-headers">Savings Details</h4>
+            <h4 class="table-headers">{{ 'Savings Details' | translate }}</h4>
             <table>
               <tbody>
                 <tr>
-                  <td>Field Officer</td>
+                  <td>{{ 'Field Officer' | translate }}</td>
                   <td>{{savingsAccountData.fieldOfficerName ? savingsAccountData.fieldOfficerName : 'Unassigned'}}</td>
                 </tr>
                 <tr>
-                  <td>Balance</td>
+                  <td>{{ 'Balance' | translate }}</td>
                   <td>{{savingsAccountData.summary.accountBalance}}</td>
                 </tr>
               </tbody>
@@ -247,16 +263,18 @@
         </ng-template>
 
         <div *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval">
-          <h4 class="table-headers">Performance History</h4>
+          <h4 class="table-headers">{{ 'Performance History' | translate }}</h4>
           <table>
             <tbody>
               <tr *ngIf="savingsAccountData.summary.totalDeposits">
-                <td>Total Deposits</td>
+                <td>{{ 'Total Deposits' | translate }}</td>
                 <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalDeposits}}</td>
               </tr>
               <tr *ngIf="savingsAccountData.summary.totalInterestEarned >= 0">
-                <td>Total Interest Earned</td>
-                <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalInterestEarned}}</td>
+                <td>{{ 'Total Interest Earned' | translate }}</td>
+                <td>
+                  {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalInterestEarned}}
+                </td>
               </tr>
           </table>
         </div>
@@ -267,23 +285,24 @@
 
     <nav mat-tab-nav-bar class="navigation-tabs">
       <a mat-tab-link [routerLink]="['./transactions']" routerLinkActive #transactions="routerLinkActive"
-      [active]="transactions.isActive">
-        Transactions
+        [active]="transactions.isActive">
+        {{ 'Transactions' | translate }}
       </a>
       <a mat-tab-link [routerLink]="['./charges']" routerLinkActive #charges="routerLinkActive"
-      [active]="charges.isActive">
-        Charges
+        [active]="charges.isActive">
+        {{ 'Charges' | translate }}
       </a>
       <ng-container *mifosxHasPermission="'READ_SAVINGSACCOUNTCHARGE'">
-        <a mat-tab-link [routerLink]="['./standing-instructions']" routerLinkActive #standingInstructions="routerLinkActive"
-          [active]="standingInstructions.isActive" *ngIf="savingsAccountData.clientId">
-          Standing Instructions
+        <a mat-tab-link [routerLink]="['./standing-instructions']" routerLinkActive
+          #standingInstructions="routerLinkActive" [active]="standingInstructions.isActive"
+          *ngIf="savingsAccountData.clientId">
+          {{ 'Standing Instructions' | translate }}
         </a>
       </ng-container>
       <ng-container *ngFor="let savingsDatatable of savingsDatatables">
         <a mat-tab-link *mifosxHasPermission="'READ_' + savingsDatatable.registeredTableName"
-          [routerLink]="['./datatables',savingsDatatable.registeredTableName]"
-          routerLinkActive #datatable="routerLinkActive" [active]="datatable.isActive">
+          [routerLink]="['./datatables',savingsDatatable.registeredTableName]" routerLinkActive
+          #datatable="routerLinkActive" [active]="datatable.isActive">
           {{savingsDatatable.registeredTableName}}
         </a>
       </ng-container>

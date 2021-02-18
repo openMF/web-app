@@ -24,51 +24,41 @@
 
     <mat-step [stepControl]="savingsAccountDetailsForm">
 
-      <ng-template matStepLabel>DETAILS</ng-template>
+      <ng-template matStepLabel>{{ 'Details' | translate }}</ng-template>
 
-      <mifosx-savings-account-details-step
-        [savingsAccountTemplate]="savingsAccountAndTemplate" 
-        (savingsAccountProductTemplate)="setTemplate($event)"
-      >
+      <mifosx-savings-account-details-step [savingsAccountTemplate]="savingsAccountAndTemplate"
+        (savingsAccountProductTemplate)="setTemplate($event)">
       </mifosx-savings-account-details-step>
 
     </mat-step>
 
     <mat-step [stepControl]="savingsAccountTermsForm">
 
-      <ng-template matStepLabel>TERMS</ng-template>
+      <ng-template matStepLabel>{{ 'Terms' | translate }}</ng-template>
 
-      <mifosx-savings-account-terms-step 
-        [savingsAccountProductTemplate]="savingsAccountProductTemplate"
-        [savingsAccountTemplate]="savingsAccountAndTemplate"
-      ></mifosx-savings-account-terms-step>
+      <mifosx-savings-account-terms-step [savingsAccountProductTemplate]="savingsAccountProductTemplate"
+        [savingsAccountTemplate]="savingsAccountAndTemplate"></mifosx-savings-account-terms-step>
 
     </mat-step>
 
     <mat-step>
 
-      <ng-template matStepLabel>CHARGES</ng-template>
+      <ng-template matStepLabel>{{ 'Charges' | translate }}</ng-template>
 
-      <mifosx-savings-account-charges-step
-        [savingsAccountProductTemplate]="savingsAccountProductTemplate"
+      <mifosx-savings-account-charges-step [savingsAccountProductTemplate]="savingsAccountProductTemplate"
         [savingsAccountTemplate]="savingsAccountAndTemplate"
-        [currencyCode]="savingsAccountTermsForm.get('currencyCode')"
-      >
+        [currencyCode]="savingsAccountTermsForm.get('currencyCode')">
       </mifosx-savings-account-charges-step>
 
     </mat-step>
 
     <mat-step *ngIf="savingsAccountFormValidAndNotPristine" completed>
 
-      <ng-template matStepLabel>PREVIEW</ng-template>
+      <ng-template matStepLabel>{{ 'Preview' | translate }}</ng-template>
 
-      <mifosx-savings-account-preview-step
-        [savingsAccountProductTemplate]="savingsAccountProductTemplate"
-        [savingsAccountTemplate]="savingsAccountAndTemplate"
-        [savingsAccountTermsForm]="savingsAccountTermsForm"
-        [savingsAccount]="savingsAccount"
-        (submit)="submit()"
-      >
+      <mifosx-savings-account-preview-step [savingsAccountProductTemplate]="savingsAccountProductTemplate"
+        [savingsAccountTemplate]="savingsAccountAndTemplate" [savingsAccountTermsForm]="savingsAccountTermsForm"
+        [savingsAccount]="savingsAccount" (submit)="submit()">
       </mifosx-savings-account-preview-step>
 
     </mat-step>
