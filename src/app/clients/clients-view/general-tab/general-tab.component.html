@@ -3,13 +3,13 @@
   <h3>Performance History</h3>
   <div fxLayout="row" fxLayoutGap="32px" class="performance-history-container">
     <p>
-      No. Of Loan Cycles :{{clientSummary?.loanCycle}} <br />
-      No. of Active Loans :{{clientSummary?.activeLoans}} <br />
-      Last Loan Amount :{{clientSummary?.lastLoanAmount}} <br />
+      {{ 'No. of Loan Cycles' | translate }} :{{clientSummary?.loanCycle}} <br />
+      {{ 'No. of Active Loans' | translate }} :{{clientSummary?.activeLoans}} <br />
+      {{ 'Last Loan Amount' | translate }} :{{clientSummary?.lastLoanAmount}} <br />
     </p>
     <p>
-      No. of Active Savings :{{clientSummary?.activeSavings}} <br />
-      Total Savings :{{clientSummary?.totalSavings}} <br />
+      {{ 'No. of Active Savings' | translate }} :{{clientSummary?.activeSavings}} <br />
+      {{ 'Total Savings' | translate }} :{{clientSummary?.totalSavings}} <br />
     </p>
   </div>
 
@@ -17,13 +17,14 @@
   <div class="heading-content">
     <div fxLayout="column" fxFlex="50%">
       <div className="heading-name">
-        <h3>Upcoming Charges</h3>
+        <h3>{{ 'Upcoming Charges' | translate }}</h3>
       </div>
     </div>
     <div fxLayout="column" fxFlex="50%">
       <div fxLayout="row" fxLayoutAlign="flex-end">
-        <button mat-raised-button class="f-right" color="primary" [routerLink]="['../', 'charges', 'overview']" *mifosxHasPermission="'READ_CLIENTCHARGE'">Charges
-          Overview</button>
+        <button mat-raised-button class="f-right" color="primary" [routerLink]="['../', 'charges', 'overview']"
+          *mifosxHasPermission="'READ_CLIENTCHARGE'">Charges
+          {{ 'Overview' | translate }}</button>
       </div>
     </div>
   </div>
@@ -31,46 +32,47 @@
   <table mat-table [dataSource]="upcomingCharges">
 
     <ng-container matColumnDef="Name">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Name' | translate }} </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop"
           [ngClass]="(!(element.isWaived || element.isPaid)) | statusLookup"></i>
         {{element.name}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Due as of">
-      <th mat-header-cell *matHeaderCellDef> Due as of </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Due as of' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.dueDate|date}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Due">
-      <th mat-header-cell *matHeaderCellDef> Due </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Due' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Paid">
-      <th mat-header-cell *matHeaderCellDef>Paid </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Paid' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.amountPaid}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Waived">
-      <th mat-header-cell *matHeaderCellDef> Waived </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Waived' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.amountWaived}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Outstanding">
-      <th mat-header-cell *matHeaderCellDef> Outstanding </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Outstanding' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.amountOutstanding}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Actions' | translate }} </th>
       <td mat-cell *matCellDef="let element">
-        <button class="account-action-button" mat-raised-button color="primary"
-          (click)="routeEdit($event)" [routerLink]="['../','charges', element.id, 'pay']" *mifosxHasPermission="'PAY_CLIENTCHARGE'">
+        <button class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)"
+          [routerLink]="['../','charges', element.id, 'pay']" *mifosxHasPermission="'PAY_CLIENTCHARGE'">
           <i class="fa fa-dollar"></i>
         </button>
         <button class="account-action-button" mat-raised-button color="primary"
-          (click)="routeEdit($event); waiveCharge(element.id,element.clientId)" *mifosxHasPermission="'WAIVE_CLIENTCHARGE'">
+          (click)="routeEdit($event); waiveCharge(element.id,element.clientId)"
+          *mifosxHasPermission="'WAIVE_CLIENTCHARGE'">
           <i class="fa fa-flag"></i>
         </button>
       </td>
@@ -86,13 +88,14 @@
   <div class="heading-content">
     <div fxLayout="column" fxFlex="50%">
       <div class="heading-name">
-        <h3>Loan Accounts</h3>
+        <h3>{{ 'Loan Accounts' | translate }}</h3>
       </div>
     </div>
     <div fxLayout="column" fxFlex="50%">
       <div fxLayout="row" fxLayoutAlign="flex-end">
-        <button mat-raised-button class="f-right" color="primary"
-          (click)="toggleLoanAccountsOverview()">{{showClosedLoanAccounts?'View Active Accounts':'View Closed Accounts'}}</button>
+        <button mat-raised-button class="f-right" color="primary" (click)="toggleLoanAccountsOverview()">
+          {{ (showClosedLoanAccounts ? 'View Active Accounts' : 'View Closed Accounts') | translate }}
+        </button>
       </div>
     </div>
   </div>
@@ -100,7 +103,7 @@
   <table *ngIf="!showClosedLoanAccounts" mat-table [dataSource]="loanAccounts|accountsFilter:'loan'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Account No' | translate }} </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop"
           [ngClass]="element.inArrears?'status-active-overdue':(element.status.code|statusLookup)"></i>
         {{element.accountNo}}
@@ -108,36 +111,38 @@
     </ng-container>
 
     <ng-container matColumnDef="Loan Account">
-      <th mat-header-cell *matHeaderCellDef> Loan Account </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Loan Accounts' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Original Loan">
-      <th mat-header-cell *matHeaderCellDef> Original Loan </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Original Loan' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.lastActiveTransactionDate | date}} </td>
     </ng-container>
     <ng-container matColumnDef="Loan Balance">
-      <th mat-header-cell *matHeaderCellDef>Loan Balance </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Loan Balance' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.loanBalance}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Amount Paid">
-      <th mat-header-cell *matHeaderCellDef> Amount Paid </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Amount Paid' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.accountBalance}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Type">
-      <th mat-header-cell *matHeaderCellDef> Type </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Type' | translate }} </th>
       <td mat-cell *matCellDef="let element">
-        <i class="fa fa-large" [ngClass]="(element.loanType.value=== 'Individual')?'fa-user':'fa-group'" matTooltip=" {{ element.loanType.value }}" matTooltipPosition="above"></i>
+        <i class="fa fa-large" [ngClass]="(element.loanType.value=== 'Individual')?'fa-user':'fa-group'"
+          matTooltip=" {{ element.loanType.value }}" matTooltipPosition="above"></i>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Actions' | translate }} </th>
       <td mat-cell *matCellDef="let element">
-        <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary" matTooltip="Make Repayment" matTooltipPosition="above"
-        (click)="routeEdit($event)" [routerLink]="['../','loans-accounts', element.id, 'actions', 'Make Repayment']">
+        <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary"
+          matTooltip="Make Repayment" matTooltipPosition="above" (click)="routeEdit($event)"
+          [routerLink]="['../','loans-accounts', element.id, 'actions', 'Make Repayment']">
           <i class="fa fa-dollar"></i>
         </button>
         <span *ngIf="element.status.pendingApproval">
@@ -148,18 +153,18 @@
           </button>
         </span>
         <span *ngIf="!element.status.pendingApproval && !element.status.active && !element.status.overpaid">
-          <button class="account-action-button" mat-raised-button color="primary" matTooltip="Disburse" 
-            matTooltipPosition="above" *mifosxHasPermission="'DISBURSE_LOAN'" 
-            (click)="routeEdit($event)" [routerLink]="['../','loans-accounts', element.id, 'actions', 'Disburse']">
+          <button class="account-action-button" mat-raised-button color="primary" matTooltip="Disburse"
+            matTooltipPosition="above" *mifosxHasPermission="'DISBURSE_LOAN'" (click)="routeEdit($event)"
+            [routerLink]="['../','loans-accounts', element.id, 'actions', 'Disburse']">
             <i class="fa fa-flag"></i>
           </button>
         </span>
         <span *ngIf="!element.status.pendingApproval && !element.status.active && element.status.overpaid">
-        <button class="account-action-button" mat-raised-button color="primary" matTooltip="Transfer Funds"
-          matTooltipPosition="above" *mifosxHasPermission="'DISBURSE_LOAN'"
-          (click)="routeEdit($event); routeTransferFund(element.id)">
-          <i class="fa fa-exchange"></i>
-        </button>
+          <button class="account-action-button" mat-raised-button color="primary" matTooltip="Transfer Funds"
+            matTooltipPosition="above" *mifosxHasPermission="'DISBURSE_LOAN'"
+            (click)="routeEdit($event); routeTransferFund(element.id)">
+            <i class="fa fa-exchange"></i>
+          </button>
         </span>
       </td>
     </ng-container>
@@ -174,7 +179,7 @@
   <table *ngIf="showClosedLoanAccounts" mat-table [dataSource]="loanAccounts|accountsFilter:'loan':'closed'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Account No' | translate }} </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop"
           [ngClass]="element.inArrears?'status-active-overdue':(element.status.code|statusLookup)"></i>
         {{element.accountNo}}
@@ -182,40 +187,41 @@
     </ng-container>
 
     <ng-container matColumnDef="Loan Account">
-      <th mat-header-cell *matHeaderCellDef> Loan Account </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Loan Account' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Original Loan">
-      <th mat-header-cell *matHeaderCellDef> Original Loan </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Original Loan' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.lastActiveTransactionDate | date}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Loan Balance">
-      <th mat-header-cell *matHeaderCellDef>Loan Balance </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Loan Balance' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.loanBalance}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Amount Paid">
-      <th mat-header-cell *matHeaderCellDef> Amount Paid </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Amount Paid' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.accountBalance}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Type">
-      <th mat-header-cell *matHeaderCellDef> Type </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Type' | translate }} </th>
       <td mat-cell *matCellDef="let element">
-        <i class="fa fa-large" [ngClass]="(element.loanType.value === 'Individual')?'fa-user':'fa-group'" matTooltip=" {{ element.loanType.value }}" matTooltipPosition="above"></i>
+        <i class="fa fa-large" [ngClass]="(element.loanType.value === 'Individual')?'fa-user':'fa-group'"
+          matTooltip=" {{ element.loanType.value }}" matTooltipPosition="above"></i>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="Closed Date">
-      <th mat-header-cell *matHeaderCellDef> Closed Date </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Closed Date' | translate }} </th>
       <td mat-cell *matCellDef="let element">{{element.timeline.closedOnDate | date}}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="closedLoansColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: closedLoansColumns;"
-    [routerLink]="['../', 'loans-accounts', row.id, 'general']" class="select-row"></tr>
+      [routerLink]="['../', 'loans-accounts', row.id, 'general']" class="select-row"></tr>
 
   </table>
 
@@ -223,13 +229,14 @@
   <div class="heading-content">
     <div fxLayout="column" fxFlex="50%">
       <div class="heading-name">
-        <h3>Saving Accounts</h3>
+        <h3> {{ 'Saving Accounts' | translate }} </h3>
       </div>
     </div>
     <div fxLayout="column" fxFlex="50%">
       <div fxLayout="row" fxLayoutAlign="flex-end">
-        <button mat-raised-button class="f-right" color="primary"
-          (click)="toggleSavingAccountsOverview()">{{showClosedSavingAccounts?'View Active Accounts':'View Closed Accounts'}}</button>
+        <button mat-raised-button class="f-right" color="primary" (click)="toggleSavingAccountsOverview()">
+          {{ (showClosedSavingAccounts ? 'View Active Accounts' : 'View Closed Accounts') | translate }}
+        </button>
       </div>
     </div>
   </div>
@@ -238,28 +245,28 @@
     [dataSource]="savingAccounts|accountsFilter:'saving':'open':'isSavings'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Account No' | translate }} </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         {{element.accountNo}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Saving Account">
-      <th mat-header-cell *matHeaderCellDef> Saving Account </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Saving Accounts' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Last Active">
-      <th mat-header-cell *matHeaderCellDef> Last Active </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Last Active' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.lastActiveTransactionDate | date}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Balance">
-      <th mat-header-cell *matHeaderCellDef> Balance </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Balance' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.accountBalance}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Actions' | translate }} </th>
       <td mat-cell *matCellDef="let element">
         <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary"
           (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Deposit']">
@@ -270,7 +277,8 @@
           <i class="fa fa-arrow-down"></i>
         </button>
         <button *ngIf="element.status.submittedAndPendingApproval" class="account-action-button" mat-raised-button
-          color="primary" (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Approve']">
+          color="primary" (click)="routeEdit($event)"
+          [routerLink]="['../','savings-accounts', element.id, 'actions', 'Approve']">
           <i class="fa fa-check"></i>
         </button>
         <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
@@ -297,23 +305,24 @@
     [dataSource]="savingAccounts|accountsFilter:'saving':'closed':'isSavings'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Account No' | translate }} </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         {{element.accountNo}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Saving Account">
-      <th mat-header-cell *matHeaderCellDef> Saving Account </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Saving Accounts' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Closed Date">
-      <th mat-header-cell *matHeaderCellDef> Closed Date </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Closed Date' | translate }} </th>
       <td mat-cell *matCellDef="let element">{{element.timeline.closedOnDate | date}}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="closedSavingsColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: closedSavingsColumns;" [routerLink]="['../', 'savings-accounts', row.id, 'transactions']"></tr>
+    <tr mat-row *matRowDef="let row; columns: closedSavingsColumns;"
+      [routerLink]="['../', 'savings-accounts', row.id, 'transactions']"></tr>
 
   </table>
 
@@ -321,13 +330,14 @@
   <div class="heading-content">
     <div fxLayout="column" fxFlex="50%">
       <div class="heading-name">
-        <h3>Fixed Deposit Accounts</h3>
+        <h3>{{ 'Fixed Deposit Accounts' | translate }}</h3>
       </div>
     </div>
     <div fxLayout="column" fxFlex="50%">
       <div fxLayout="row" fxLayoutAlign="flex-end">
-        <button mat-raised-button class="f-right" color="primary"
-          (click)="toggleFixedAccountsOverview()">{{showClosedFixedAccounts?'View Active Accounts':'View Closed Accounts'}}</button>
+        <button mat-raised-button class="f-right" color="primary" (click)="toggleFixedAccountsOverview()">
+          {{ (showClosedFixedAccounts ? 'View Active Accounts' : 'View Closed Accounts') | translate }}
+        </button>
       </div>
     </div>
   </div>
@@ -336,31 +346,32 @@
     [dataSource]="savingAccounts|accountsFilter:'saving':'open':'isFixed'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Account No' | translate }} </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         {{element.accountNo}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Saving Account">
-      <th mat-header-cell *matHeaderCellDef> Saving Account </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Saving Accounts' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Last Active">
-      <th mat-header-cell *matHeaderCellDef> Last Active </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Last Active' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.lastActiveTransactionDate | date}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Balance">
-      <th mat-header-cell *matHeaderCellDef> Balance </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Balance' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.accountBalance}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Actions' | translate }} </th>
       <td mat-cell *matCellDef="let element">
         <button *ngIf="element.status.submittedAndPendingApproval" class="account-action-button" mat-raised-button
-          color="primary" (click)="routeEdit($event)" [routerLink]="['../','fixed-deposits-accounts', element.id, 'actions', 'Approve']">
+          color="primary" (click)="routeEdit($event)"
+          [routerLink]="['../','fixed-deposits-accounts', element.id, 'actions', 'Approve']">
           <i class="fa fa-check"></i>
         </button>
         <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
@@ -388,18 +399,18 @@
     [dataSource]="savingAccounts|accountsFilter:'saving':'closed':'isFixed'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Account No' | translate }} </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         {{element.accountNo}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Saving Account">
-      <th mat-header-cell *matHeaderCellDef> Saving Account </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Saving Accounts' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Closed Date">
-      <th mat-header-cell *matHeaderCellDef> Closed Date </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Closed Date' | translate }} </th>
       <td mat-cell *matCellDef="let element">{{element.timeline.closedOnDate | date}}</td>
     </ng-container>
 
@@ -413,13 +424,14 @@
   <div class="heading-content">
     <div fxLayout="column" fxFlex="50%">
       <div class="heading-name">
-        <h3>Recurring Deposit Accounts</h3>
+        <h3>{{ 'Recurring Deposit Accounts' | translate }}</h3>
       </div>
     </div>
     <div fxLayout="column" fxFlex="50%">
       <div fxLayout="row" fxLayoutAlign="flex-end">
-        <button mat-raised-button class="f-right" color="primary"
-          (click)="toggleRecurringAccountsOverview()">{{showClosedRecurringAccounts?'View Active Accounts':'View Closed Accounts'}}</button>
+        <button mat-raised-button class="f-right" color="primary" (click)="toggleRecurringAccountsOverview()">
+          {{ (showClosedRecurringAccounts ? 'View Active Accounts' : 'View Closed Accounts') | translate }}
+        </button>
       </div>
     </div>
   </div>
@@ -428,38 +440,37 @@
     [dataSource]="savingAccounts|accountsFilter:'saving':'open':'isRecurring'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Account No' | translate }} </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         {{element.accountNo}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Saving Account">
-      <th mat-header-cell *matHeaderCellDef> Saving Account </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Saving Accounts' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Last Active">
-      <th mat-header-cell *matHeaderCellDef> Last Active </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Last Active' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.lastActiveTransactionDate | date}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Balance">
-      <th mat-header-cell *matHeaderCellDef> Balance </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Balance' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.accountBalance}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Actions' | translate }} </th>
       <td mat-cell *matCellDef="let element">
         <ng-container *ngIf="element.status.submittedAndPendingApproval">
-          <button class="account-action-button" mat-raised-button *mifosxHasPermission="'APPROVE_SAVINGSACCOUNT'" 
-          [routerLink]="['../','recurringdeposits', element.id, 'actions', 'Approve']" color="primary">
+          <button class="account-action-button" mat-raised-button *mifosxHasPermission="'APPROVE_SAVINGSACCOUNT'"
+            [routerLink]="['../','recurringdeposits', element.id, 'actions', 'Approve']" color="primary">
             <i class="fa fa-check"></i>
           </button>
         </ng-container>
         <ng-container *ngIf="!element.status.submittedAndPendingApproval && !element.status.active">
-          <button
-            class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)"
+          <button class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)"
             *mifosxHasPermission="'APPROVALUNDO_SAVINGSACCOUNT'"
             [routerLink]="['../','recurringdeposits', element.id, 'actions', 'Undo Approval']">
             <i class="fa fa-undo"></i>
@@ -484,37 +495,38 @@
     [dataSource]="savingAccounts|accountsFilter:'saving':'closed':'isRecurring'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Account No' | translate }} </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         {{element.accountNo}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Saving Account">
-      <th mat-header-cell *matHeaderCellDef> Saving Account </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Saving Accounts' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Closed Date">
-      <th mat-header-cell *matHeaderCellDef> Closed Date </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Closed Date' | translate }} </th>
       <td mat-cell *matCellDef="let element">{{element.timeline.closedOnDate | date}}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="closedSavingsColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: closedSavingsColumns;" 
-    [routerLink]="['../', 'recurringdeposits', row.id, 'interest-rate-chart']" class="select-row"></tr>
+    <tr mat-row *matRowDef="let row; columns: closedSavingsColumns;"
+      [routerLink]="['../', 'recurringdeposits', row.id, 'interest-rate-chart']" class="select-row"></tr>
   </table>
 
   <!-- Shares overview Table -->
   <div class="heading-content">
     <div fxLayout="column" fxFlex="50%">
       <div class="heading-name">
-        <h3>Shares Accounts</h3>
+        <h3>{{ 'Shares Accounts' | translate }}</h3>
       </div>
     </div>
     <div fxLayout="column" fxFlex="50%">
       <div fxLayout="row" fxLayoutAlign="flex-end">
-        <button mat-raised-button class="f-right" color="primary"
-          (click)="toggleShareAccountsOverview()">{{showClosedSavingAccounts?'View Active Accounts':'View Closed Accounts'}}</button>
+        <button mat-raised-button class="f-right" color="primary" (click)="toggleShareAccountsOverview()">
+          {{ (showClosedSavingAccounts ? 'View Active Accounts' : 'View Closed Accounts') | translate }}
+        </button>
       </div>
     </div>
   </div>
@@ -522,39 +534,42 @@
   <table *ngIf="!showClosedShareAccounts" mat-table [dataSource]="shareAccounts|accountsFilter:'share'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Account No' | translate }} </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         {{element.accountNo}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Share Account">
-      <th mat-header-cell *matHeaderCellDef> Share Account </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Shares Accounts' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Approved Shares">
-      <th mat-header-cell *matHeaderCellDef> Approved Shares </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Approved Shares' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.totalApprovedShares}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Pending For Approval Shares">
-      <th mat-header-cell *matHeaderCellDef> Pending For Approval Shares </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Pending For Approval Shares' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.totalPendingForApprovalShares}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Actions' | translate }} </th>
       <td mat-cell *matCellDef="let element">
         <button *ngIf="element.status.submittedAndPendingApproval" class="account-action-button" mat-raised-button
-          color="primary" (click)="routeEdit($event)" [routerLink]="['../','shares-accounts', element.id, 'actions', 'Approve']">
+          color="primary" (click)="routeEdit($event)"
+          [routerLink]="['../','shares-accounts', element.id, 'actions', 'Approve']">
           <i class="fa fa-check"></i>
         </button>
         <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
-          class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)" [routerLink]="['../','shares-accounts', element.id, 'actions', 'Undo Approval']">
+          class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)"
+          [routerLink]="['../','shares-accounts', element.id, 'actions', 'Undo Approval']">
           <i class="fa fa-undo"></i>
         </button>
         <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
-          class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)" [routerLink]="['../','shares-accounts', element.id, 'actions', 'Activate']">
+          class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)"
+          [routerLink]="['../','shares-accounts', element.id, 'actions', 'Activate']">
           <i class="fa fa-check-circle"></i>
         </button>
       </td>
@@ -570,33 +585,34 @@
   <table *ngIf="showClosedShareAccounts" mat-table [dataSource]="shareAccounts|accountsFilter:'share':'closed'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Account No' | translate }} </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         {{element.accountNo}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Share Account">
-      <th mat-header-cell *matHeaderCellDef> Share Account </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Share Accounts' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Approved Shares">
-      <th mat-header-cell *matHeaderCellDef> Approved Shares </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Approved Shares' | translate }}</th>
       <td mat-cell *matCellDef="let element"> {{element.totalApprovedShares}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Pending For Approval Shares">
-      <th mat-header-cell *matHeaderCellDef> Pending For Approval Shares </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Pending For Approval Shares' | translate }} </th>
       <td mat-cell *matCellDef="let element"> {{element.totalPendingForApprovalShares}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Closed Date">
-      <th mat-header-cell *matHeaderCellDef> Closed Date </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'Closed Date' | translate }} </th>
       <td mat-cell *matCellDef="let element">{{element.timeline.closedOnDate | date}}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="closedSharesColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: closedSharesColumns;" [routerLink]="['../', 'shares-accounts', row.id, 'transactions']"></tr>
+    <tr mat-row *matRowDef="let row; columns: closedSharesColumns;"
+      [routerLink]="['../', 'shares-accounts', row.id, 'transactions']"></tr>
 
   </table>
 

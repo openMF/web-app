@@ -51,8 +51,8 @@ export class ClientGeneralStepComponent implements OnInit {
    * @param {SettingsService} settingsService Setting service
    */
   constructor(private formBuilder: FormBuilder,
-              private datePipe: DatePipe,
-              private settingsService: SettingsService) {
+    private datePipe: DatePipe,
+    private settingsService: SettingsService) {
     this.setClientForm();
   }
 
@@ -103,17 +103,10 @@ export class ClientGeneralStepComponent implements OnInit {
    */
   buildDependencies() {
     this.createClientForm.get('legalFormId').valueChanges.subscribe((legalFormId: any) => {
+      this.createClientForm.addControl('fullname', new FormControl('', [Validators.required, Validators.pattern('(^[A-z]).*')]));
       if (legalFormId === 1) {
-        this.createClientForm.removeControl('fullname');
         this.createClientForm.removeControl('clientNonPersonDetails');
-        this.createClientForm.addControl('firstname', new FormControl('', [Validators.required, Validators.pattern('(^[A-z]).*')]));
-        this.createClientForm.addControl('middlename', new FormControl('', Validators.pattern('(^[A-z]).*')));
-        this.createClientForm.addControl('lastname', new FormControl('', [Validators.required, Validators.pattern('(^[A-z]).*')]));
       } else {
-        this.createClientForm.removeControl('firstname');
-        this.createClientForm.removeControl('middlename');
-        this.createClientForm.removeControl('lastname');
-        this.createClientForm.addControl('fullname', new FormControl('', [Validators.required, Validators.pattern('(^[A-z]).*')]));
         this.createClientForm.addControl('clientNonPersonDetails', this.formBuilder.group({
           'constitutionId': [''],
           'incorpValidityTillDate': [''],
@@ -147,7 +140,6 @@ export class ClientGeneralStepComponent implements OnInit {
     const generalDetails = this.createClientForm.value;
     const dateFormat = this.settingsService.dateFormat;
     const locale = this.settingsService.language.code;
-    // TODO: Update once language and date settings are setup
     for (const key in generalDetails) {
       if (generalDetails[key] === '' || key === 'addSavings') {
         delete generalDetails[key];

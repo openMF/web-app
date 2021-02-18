@@ -145,7 +145,7 @@ export class WebAppComponent implements OnInit {
     if (!localStorage.getItem('koppiKantorLanguage')) {
       this.settingsService.setLanguage({
         name: 'Bahasa Indonesia',
-        code: 'id'
+        code: 'en'
       });
     }
     if (!localStorage.getItem('koppiKantorDateFormat')) {

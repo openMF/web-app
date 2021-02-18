@@ -1,9 +1,9 @@
 <div class="tab-container mat-typography">
 
-  <h3>Notes</h3>
+  <h3>{{ 'Notes' | translate }}</h3>
 
   <div>
-    
+
     <form #formRef="ngForm" [formGroup]="noteForm" fxLayout="row" fxLayoutAlign="start baseline" fxLayoutGap="20px"
       (ngSubmit)="submit()">
 
@@ -11,8 +11,9 @@
         <textarea formControlName="note" matInput placeholder="Write a note ...."></textarea>
       </mat-form-field>
 
-      <button mat-raised-button fxFlex color="primary" [disabled]="!noteForm.valid" *mifosxHasPermission="'CREATE_CLIENTNOTE'">
-        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp; Add
+      <button mat-raised-button fxFlex color="primary" [disabled]="!noteForm.valid"
+        *mifosxHasPermission="'CREATE_CLIENTNOTE'">
+        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp; {{ 'Add' | translate }}
       </button>
 
     </form>
@@ -25,14 +26,16 @@
       <fa-icon icon="sticky-note" matListIcon></fa-icon>
       <h3 matLine>{{clientNote.note}} </h3>
       <p matLine>
-        <span>Created by: {{clientNote.createdByUsername}}</span><br />
-        <span>Date: {{clientNote.createdOn | date}}</span>
+        <span>{{ 'Created by' | translate }}: {{clientNote.createdByUsername}}</span><br />
+        <span>{{ 'Date' | translate }}: {{clientNote.createdOn | date}}</span>
       </p>
       <div fxLayout="row" fxLayoutAlign="flex-start">
-        <button mat-button color="primary" (click)="editNote(clientNote.id,clientNote.note,i)" *mifosxHasPermission="'CREATE_CLIENTNOTE'">
+        <button mat-button color="primary" (click)="editNote(clientNote.id,clientNote.note,i)"
+          *mifosxHasPermission="'CREATE_CLIENTNOTE'">
           <fa-icon icon="edit"></fa-icon>
         </button>
-        <button mat-button color="warn" (click)="deleteNote(clientNote.id,i)" *mifosxHasPermission="'DELETE_CLIENTNOTE'">
+        <button mat-button color="warn" (click)="deleteNote(clientNote.id,i)"
+          *mifosxHasPermission="'DELETE_CLIENTNOTE'">
           <fa-icon icon="trash"></fa-icon>
         </button>
       </div>

@@ -33,7 +33,7 @@
 
       <div class="mt-1 mb-1 nav-item-sep">
         <mat-divider></mat-divider>
-        <span class="text-muted icon-menu-title">Frequently Accessed</span>
+        <span class="text-muted icon-menu-title">{{ 'Frequently Accessed' | translate }}</span>
       </div>
       <div class="icon-menu">
         <div class="icon-menu-item" *ngFor="let activity of mappedActivities">
@@ -45,7 +45,7 @@
 
       <div class="nav-item-sep">
         <mat-divider></mat-divider>
-        <span class="text-muted">Main Items</span>
+        <span class="text-muted">{{ 'Main Items' | translate }}</span>
       </div>
 
       <mat-nav-list>
@@ -53,61 +53,61 @@
           <mat-icon matListIcon>
             <fa-icon icon="tachometer-alt" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine>Dashboard</a>
+          <a matLine>{{ 'Dashboard' | translate }}</a>
         </mat-list-item>
         <mat-list-item [routerLink]="['/navigation']">
           <mat-icon matListIcon>
             <fa-icon icon="location-arrow" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine>Navigation</a>
+          <a matLine>{{ 'Navigation' | translate }}</a>
         </mat-list-item>
         <mat-list-item [routerLink]="['/checker-inbox-and-tasks/checker-inbox']">
           <mat-icon matListIcon>
             <i class="fa fa-check"></i>
           </mat-icon>
-          <a matLine>Checker Inbox and Tasks</a>
+          <a matLine>{{ 'Checker Inbox and Tasks' | translate }}</a>
         </mat-list-item>
         <mat-list-item [routerLink]="['/collections/individual-collection-sheet']">
           <mat-icon matListIcon>
             <i class="fa fa-tasks "></i>
           </mat-icon>
-          <a matLine>Individual Collection Sheet</a>
+          <a matLine>{{ 'Individual Collection Sheet' | translate }}</a>
         </mat-list-item>
         <mat-list-item [routerLink]="['/notifications']">
           <mat-icon matListIcon>
             <fa-icon icon="bell" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine>Notifications</a>
+          <a matLine>{{ 'Notifications' | translate }}</a>
         </mat-list-item>
         <mat-list-item [routerLink]="['/accounting/journal-entries/frequent-postings']">
           <mat-icon matListIcon>
             <fa-icon icon="sync" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine>Frequent Postings</a>
+          <a matLine>{{ 'Frequent Postings' | translate }}</a>
         </mat-list-item>
         <mat-list-item [routerLink]="['/accounting/journal-entries/create']">
           <mat-icon matListIcon>
             <fa-icon icon="plus" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine>Create Journal Entry</a>
+          <a matLine>{{ 'Create Journal Entry' | translate }}</a>
         </mat-list-item>
         <mat-list-item [routerLink]="['/accounting/chart-of-accounts']">
           <mat-icon matListIcon>
             <fa-icon icon="sitemap" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine>Chart of Accounts</a>
+          <a matLine>{{ 'Chart of Accounts' | translate }}</a>
         </mat-list-item>
         <mat-list-item (click)="showKeyboardShortcuts()">
           <mat-icon matListIcon>
             <fa-icon icon="keyboard" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine>Keyboard Shortcuts</a>
+          <a matLine>{{ 'Keyboard Shortcuts' | translate }}</a>
         </mat-list-item>
         <mat-list-item (click)="help()">
           <mat-icon matListIcon>
             <fa-icon icon="question-circle" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine>Help</a>
+          <a matLine>{{ 'Help' | translate }}</a>
         </mat-list-item>
       </mat-nav-list>
 

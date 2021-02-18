@@ -55,11 +55,11 @@ export class EditClientComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
-              private route: ActivatedRoute,
-              private router: Router,
-              private clientsService: ClientsService,
-              private datePipe: DatePipe,
-              private settingsService: SettingsService) {
+    private route: ActivatedRoute,
+    private router: Router,
+    private clientsService: ClientsService,
+    private datePipe: DatePipe,
+    private settingsService: SettingsService) {
     this.route.data.subscribe((data: { clientDataAndTemplate: any }) => {
       this.clientDataAndTemplate = data.clientDataAndTemplate;
     });
@@ -127,18 +127,11 @@ export class EditClientComponent implements OnInit {
    * Adds controls conditionally.
    */
   buildDependencies() {
+    this.editClientForm.addControl('fullname', new FormControl(this.clientDataAndTemplate.fullname, Validators.required));
     this.editClientForm.get('legalFormId').valueChanges.subscribe((legalFormId: any) => {
       if (legalFormId === 1) {
-        this.editClientForm.removeControl('fullname');
         this.editClientForm.removeControl('clientNonPersonDetails');
-        this.editClientForm.addControl('firstname', new FormControl(this.clientDataAndTemplate.firstname, Validators.required));
-        this.editClientForm.addControl('middlename', new FormControl(this.clientDataAndTemplate.middlename));
-        this.editClientForm.addControl('lastname', new FormControl(this.clientDataAndTemplate.lastname, Validators.required));
       } else {
-        this.editClientForm.removeControl('firstname');
-        this.editClientForm.removeControl('middlename');
-        this.editClientForm.removeControl('lastname');
-        this.editClientForm.addControl('fullname', new FormControl(this.clientDataAndTemplate.fullname, Validators.required));
         this.editClientForm.addControl('clientNonPersonDetails', this.formBuilder.group({
           'constitutionId': [this.clientDataAndTemplate.clientNonPersonDetails.constitution && this.clientDataAndTemplate.clientNonPersonDetails.constitution.id],
           'incorpValidityTillDate': [this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate && new Date(this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate)],
