@@ -2,34 +2,34 @@
 
   <mat-card>
 
-    <h2 mat-title *ngIf="transactionType.withdrawal">Withdraw Money From Saving Account</h2>
-    <h2 mat-title *ngIf="transactionType.deposit">Deposit Money To Saving Account</h2>
+    <h2 mat-title *ngIf="transactionType.withdrawal">{{ 'Withdraw Money From Saving Account' | translate }}</h2>
+    <h2 mat-title *ngIf="transactionType.deposit">{{ 'Deposit Money To Saving Account' | translate }}</h2>
 
     <form [formGroup]="savingAccountTransactionForm" (ngSubmit)="submit()">
 
       <mat-card-content fxLayout="column">
 
         <mat-form-field>
-          <mat-label>Transaction Date</mat-label>
+          <mat-label>{{ 'Transaction Date' | translate }}</mat-label>
           <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dueDatePicker"
             formControlName="transactionDate" required>
           <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #dueDatePicker></mat-datepicker>
           <mat-error *ngIf="savingAccountTransactionForm.controls.transactionDate.hasError('required')">
-            Transaction Date is <strong>required</strong>
+            {{ 'Transaction Date' | translate }} <strong>{{ 'is required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Transaction Amount</mat-label>
+          <mat-label>{{ 'Transaction Amount' | translate }}</mat-label>
           <input type="number" formControlName="transactionAmount" required matInput />
           <mat-error *ngIf="savingAccountTransactionForm.controls.transactionAmount.hasError('required')">
-            Transaction Amount is <strong>required</strong>
+            {{ 'Transaction Amount' | translate }} <strong>{{ 'is required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Payment Type</mat-label>
+          <mat-label>{{ 'Payment Type' | translate }}</mat-label>
           <mat-select formControlName="paymentTypeId">
             <mat-option *ngFor="let paymentType of paymentTypeOptions" [value]="paymentType.id">
               {{ paymentType.name }}
@@ -38,52 +38,52 @@
         </mat-form-field>
 
         <div fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column">
-          <mat-label fxFlexAlign="center">Show Payment Details</mat-label>
+          <mat-label fxFlexAlign="center">{{ 'Show Payment Details' | translate }}</mat-label>
           <button type="button" mat-mini-fab color="primary" (click)="addPaymentDetails()">
             <fa-icon [icon]="!addPaymentDetailsFlag ? 'plus-circle' : 'minus-circle'" size="lg"></fa-icon>
           </button>
         </div>
 
         <mat-form-field *ngIf="savingAccountTransactionForm.controls['accountNumber']">
-          <mat-label>Account Number</mat-label>
+          <mat-label>{{ 'Account Number' | translate }}</mat-label>
           <input type="number" formControlName="accountNumber" matInput />
         </mat-form-field>
 
         <mat-form-field *ngIf="savingAccountTransactionForm.controls['checkNumber']">
-          <mat-label>Cheque</mat-label>
+          <mat-label>{{ 'Cheque' | translate }}</mat-label>
           <input type="number" formControlName="checkNumber" matInput />
         </mat-form-field>
 
         <mat-form-field *ngIf="savingAccountTransactionForm.controls['routingCode']">
-          <mat-label>Routing Code</mat-label>
+          <mat-label>{{ 'Routing Code' | translate }}</mat-label>
           <input formControlName="routingCode" matInput />
         </mat-form-field>
 
         <mat-form-field *ngIf="savingAccountTransactionForm.controls['receiptNumber']">
-          <mat-label>Receipt Number</mat-label>
+          <mat-label>{{ 'Receipt Number' | translate }}</mat-label>
           <input formControlName="receiptNumber" matInput />
         </mat-form-field>
 
         <mat-form-field *ngIf="savingAccountTransactionForm.controls['bankNumber']">
-          <mat-label>Bank</mat-label>
+          <mat-label>{{ 'Bank' | translate }}</mat-label>
           <input formControlName="bankNumber" matInput />
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Notes</mat-label>
+          <mat-label>{{ 'Notes' | translate }}</mat-label>
           <textarea formControlName="note" matInput></textarea>
         </mat-form-field>
 
         <mat-card-actions fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
-          <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-          <button mat-raised-button color="primary" [disabled]="!savingAccountTransactionForm.valid">Submit</button>
+          <button type="button" mat-raised-button [routerLink]="['../../']">{{ 'Cancel' | translate }}</button>
+          <button mat-raised-button color="primary" [disabled]="!savingAccountTransactionForm.valid">{{ 'Confirm' |
+            translate }}</button>
         </mat-card-actions>
 
       </mat-card-content>
-      
+
     </form>
 
   </mat-card>
 
 </div>
-  
