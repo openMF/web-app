@@ -9,7 +9,7 @@
         <div fxLayout="column">
 
           <mat-form-field fxFlex="48%">
-            <mat-label>To Savings Officer</mat-label>
+            <mat-label>{{ 'To Savings Officer' | transfer }}</mat-label>
             <mat-select formControlName="toSavingsOfficerId">
               <mat-option *ngFor="let officer of fieldOfficerData" [value]="officer.id">
                 {{ officer.displayName }}
@@ -18,12 +18,13 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Assignment Date</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="assignmentDatePicker" required formControlName="assignmentDate">
+            <mat-label>{{ 'Assignment Date' | transfer }}</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="assignmentDatePicker" required
+              formControlName="assignmentDate">
             <mat-datepicker-toggle matSuffix [for]="assignmentDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #assignmentDatePicker></mat-datepicker>
             <mat-error *ngIf="savingsAssignStaffForm.controls.assignmentDate.hasError('required')">
-              Assignment Date is <strong>required</strong>
+              {{ 'Assignment Date' | transfer }} <strong>{{ 'is required' | transfer }}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -32,8 +33,10 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!savingsAssignStaffForm.valid">Confirm</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">{{ 'Cancel' | transfer }}</button>
+        <button mat-raised-button color="primary" [disabled]="!savingsAssignStaffForm.valid">
+          {{ 'Confirm' | transfer }}
+        </button>
       </mat-card-actions>
 
     </form>

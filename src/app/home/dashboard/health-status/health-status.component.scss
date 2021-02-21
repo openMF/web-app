@@ -1,0 +1,27 @@
+.card {
+    // width: 60vw;
+    max-width: 37rem;
+    min-width: 41.25rem;
+    padding: 0;
+    .header {
+      #office{
+        margin-bottom: -1.20em;
+      }
+    }
+    #health-table {
+        border-spacing: 0.5rem;
+        font-size: large;
+        td {
+            padding: 0.5rem;
+            text-align: center;
+            vertical-align: middle;
+            background: hsl(150, 50%, 50%);
+            color: whitesmoke;
+            font-weight: bolder;
+        }
+    }
+    #timescale {
+      margin: 2% 35%;
+    }
+  }
+  

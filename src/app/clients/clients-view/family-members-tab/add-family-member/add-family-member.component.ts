@@ -38,11 +38,11 @@ export class AddFamilyMemberComponent implements OnInit {
    * @param {SettingsService} settingsService Setting service
    */
   constructor(private formBuilder: FormBuilder,
-              private datePipe: DatePipe,
-              private router: Router,
-              private route: ActivatedRoute,
-              private clientsService: ClientsService,
-              private settingsService: SettingsService) {
+    private datePipe: DatePipe,
+    private router: Router,
+    private route: ActivatedRoute,
+    private clientsService: ClientsService,
+    private settingsService: SettingsService) {
     this.route.data.subscribe((data: { clientTemplate: any }) => {
       this.addFamilyMemberTemplate = data.clientTemplate.familyMemberOptions;
     });

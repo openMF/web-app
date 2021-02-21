@@ -13,6 +13,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AmountCollectedPieComponent } from './dashboard/amount-collected-pie/amount-collected-pie.component';
 import { AmountDisbursedPieComponent } from './dashboard/amount-disbursed-pie/amount-disbursed-pie.component';
 import { ClientTrendsBarComponent } from './dashboard/client-trends-bar/client-trends-bar.component';
+import { HealthStatusComponent } from './dashboard/health-status/health-status.component';
 
 /**
  * Home Component
@@ -30,7 +31,8 @@ import { ClientTrendsBarComponent } from './dashboard/client-trends-bar/client-t
     DashboardComponent,
     AmountCollectedPieComponent,
     AmountDisbursedPieComponent,
-    ClientTrendsBarComponent
+    ClientTrendsBarComponent,
+    HealthStatusComponent
   ],
   providers: [
     DatePipe

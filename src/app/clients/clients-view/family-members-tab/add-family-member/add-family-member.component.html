@@ -45,7 +45,7 @@
         <mat-label>Relationship</mat-label>
         <mat-select formControlName="relationshipId" required>
           <mat-option *ngFor="let relation of addFamilyMemberTemplate.relationshipIdOptions" [value]="relation.id">
-            {{ relation.name  }}
+            {{ relation.name }}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="addFamilyMemberForm.controls.relationshipId.hasError('required')">
@@ -98,7 +98,7 @@
       </mat-form-field>
 
     </div>
-    
+
     <div fxLayout="row" fxLayoutGap="32px" fxLayoutAlign="center">
       <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
       <button type="submit" mat-raised-button color="primary" [disabled]="!addFamilyMemberForm.valid">Submit</button>

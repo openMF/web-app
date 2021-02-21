@@ -9,12 +9,13 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Annual Fees Transaction Date</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dueDatePicker" required formControlName="dueDate">
+            <mat-label>{{ 'Annual Fees Transaction Date' | translate }}</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dueDatePicker" required
+              formControlName="dueDate">
             <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #dueDatePicker></mat-datepicker>
             <mat-error *ngIf="applyAnnualFeesForm.controls.dueDate.hasError('required')">
-              Due Date is <strong>required</strong>
+              {{ 'Due Date' | translate }} <strong>{{ 'is required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -22,7 +23,7 @@
             <mat-label>Amount</mat-label>
             <input type="number" formControlName="amount" required matInput />
             <mat-error *ngIf="applyAnnualFeesForm.controls.amount.hasError('required')">
-              Amount is <strong>required</strong>
+              {{ 'Amount' | translate }} <strong>{{ 'is required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -31,8 +32,9 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!applyAnnualFeesForm.valid">Confirm</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">{{ 'Cancel' | translate }}</button>
+        <button mat-raised-button color="primary" [disabled]="!applyAnnualFeesForm.valid">{{ 'Confirm' | translate
+          }}</button>
       </mat-card-actions>
 
     </form>

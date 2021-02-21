@@ -2,11 +2,11 @@
 
   <router-outlet>
 
-    <h3>Family Members</h3>
+    <h3>{{ 'Family Members' | translate }}</h3>
 
     <div fxLayout="row" fxLayoutAlign="flex-end">
       <button mat-raised-button color="primary" [routerLink]="['./add']">
-        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Add
+        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;{{ 'Add' | translate }}
       </button>
     </div>
 
@@ -35,17 +35,17 @@
         </div>
 
         <p>
-          First Name : {{member.firstName}}<br />
-          Middle Name : {{member.middleName}}<br />
-          Last Name : {{member.lastName}}<br />
-          Qualification : {{member.qualification}}<br />
-          Mobile Number : {{member.mobileNumber}}<br />
-          Age : {{member.age}}<br />
-          Is Dependent : {{member.isDependent}}<br />
-          Martial Status : {{member.maritalStatus}}<br />
-          Gender : {{member.gender}}<br />
-          Profession : {{member.profession}}<br />
-          Date Of Birth : {{member.dateOfBirth|date}}<br />
+          {{ 'First Name' | translate }} : {{member.firstName}}<br />
+          {{ 'Middle Name' | translate }} : {{member.middleName}}<br />
+          {{ 'Last Name' | translate }} : {{member.lastName}}<br />
+          {{ 'Qualification' | translate }} : {{member.qualification}}<br />
+          {{ 'Mobile Number' | translate }} : {{member.mobileNumber}}<br />
+          {{ 'Age' | translate }} : {{member.age}}<br />
+          {{ 'Is dependent' | translate }} : {{member.isDependent}}<br />
+          {{ 'Marital Status' | translate }} : {{member.maritalStatus}}<br />
+          {{ 'Gender' | translate }} : {{member.gender}}<br />
+          {{ 'Profession' | translate }} : {{member.profession}}<br />
+          {{ 'Date Of Birth' | translate }}h : {{member.dateOfBirth|date}}<br />
         </p>
 
       </mat-expansion-panel>
