@@ -35,28 +35,28 @@ export class SearchToolComponent {
   /** Resource Options */
   resourceOptions: any[] = [
     {
-      name: 'All',
+      name: 'Semua',
       value: 'clients,clientIdentifiers,groups,savings,shares,loans'
     },
     {
-      name: 'Clients',
+      name: 'Anggota',
       value: 'clients,clientIdentifiers'
     },
     {
-      name: 'Groups',
+      name: 'Kelompok',
       value: 'groups'
     },
     {
-      name: 'Savings',
+      name: 'Simpanan',
       value: 'savings'
     },
     {
-      name: 'Shares',
-      value: 'shares'
+      name: 'Pembiayaan',
+      value: 'loans'
     },
     {
-      name: 'Loans',
-      value: 'loans'
+      name: 'Ekuitas',
+      value: 'shares'
     },
   ];
 
