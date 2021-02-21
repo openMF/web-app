@@ -78,11 +78,11 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
    */
   createSavingsAccountTermsForm() {
     this.savingsAccountTermsForm = this.formBuilder.group({
-      'currencyCode': [{value: '', disabled: true}],
-      'decimal': [{value: '',  disabled: true}],
+      'currencyCode': [{ value: '', disabled: true }],
+      'decimal': [{ value: 1, disabled: true }],
       'nominalAnnualInterestRate': ['', Validators.required],
       'interestCompoundingPeriodType': ['', Validators.required],
-      'currencyMultiple': [{value: '', disabled: true}],
+      'currencyMultiple': [{ value: 1, disabled: true }],
       'interestPostingPeriodType': ['', Validators.required],
       'interestCalculationType': ['', Validators.required],
       'interestCalculationDaysInYearType': ['', Validators.required],
@@ -93,7 +93,7 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
       'allowOverdraft': [false],
       'enforceMinRequiredBalance': [false],
       'minRequiredBalance': [''],
-      'minBalanceForInterestCalculation': [{value: '', disabled: true}]
+      'minBalanceForInterestCalculation': [{ value: '', disabled: true }]
     });
   }
 

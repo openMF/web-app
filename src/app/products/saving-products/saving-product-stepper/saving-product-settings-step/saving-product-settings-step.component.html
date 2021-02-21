@@ -6,7 +6,7 @@
       <mat-label>Minimum Opening Balance</mat-label>
       <input type="number" matInput formControlName="minRequiredOpeningBalance">
     </mat-form-field>
-    
+
     <span fxFlex="48%" fxHide.lt-md></span>
 
     <mat-form-field fxFlex="48%">
@@ -16,7 +16,8 @@
 
     <mat-form-field fxFlex="48%">
       <mat-select formControlName="lockinPeriodFrequencyType">
-        <mat-option *ngFor="let lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData" [value]="lockinPeriodFrequencyType.id">
+        <mat-option *ngFor="let lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData"
+          [value]="lockinPeriodFrequencyType.id">
           {{ lockinPeriodFrequencyType.value }}
         </mat-option>
       </mat-select>
@@ -58,7 +59,7 @@
 
     <mat-divider fxFlex="98%"></mat-divider>
 
-    <h3 fxFlex="23%" class="mat-h3">Overdraft</h3>
+    <!-- <h3 fxFlex="23%" class="mat-h3">Overdraft</h3>
 
     <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="allowOverdraft" class="margin-b">
       Is Overdraft Allowed?
@@ -81,7 +82,7 @@
         <input type="number" matInput formControlName="overdraftLimit">
       </mat-form-field>
 
-    </div>
+    </div> -->
 
     <mat-divider fxFlex="98%"></mat-divider>
 
@@ -91,7 +92,8 @@
       Enable Dormancy Tracking
     </mat-checkbox>
 
-    <div *ngIf="savingProductSettingsForm.value.isDormancyTrackingActive" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <div *ngIf="savingProductSettingsForm.value.isDormancyTrackingActive" fxFlexFill fxLayout="row wrap"
+      fxLayoutGap="2%" fxLayout.lt-md="column">
 
       <mat-form-field fxFlex="31%">
         <mat-label>Number of Days to Inactive sub-status</mat-label>
