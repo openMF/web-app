@@ -8,8 +8,8 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { Logger } from '../logger/logger.service';
 
 /** Other Imports */
-import * as en from '../../../assets/i18n/en.json';
-import * as id from '../../../assets/i18n/id.json';
+// import * as en from '../../../assets/i18n/en.json';
+// import * as id from '../../../assets/i18n/id.json';
 
 /** Initialize Logger */
 const log = new Logger('I18nService');
@@ -29,14 +29,16 @@ export class I18nService {
 
   /** Key to store current language of application in local storage. */
   private languageStorageKey = 'koppiKantorLanguage';
+  id = false;
+  en = false;
 
   defaultLanguage: string;
   supportedLanguages: string[];
 
   constructor(private translate: TranslateService) {
     // Embed languages to avoid extra HTTP requests
-    translate.setTranslation('id', id);
-    translate.setTranslation('en', en);
+    translate.setTranslation('id', this.id);
+    translate.setTranslation('en', this.en);
   }
 
   /**
