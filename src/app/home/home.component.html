@@ -19,7 +19,11 @@
 
     <mat-card-content>
 
-      <div fxLayout="column">
+      <div id="search-tool">
+        <mifosx-search-tool [searchVisible]="true" [iconVisible]="false"></mifosx-search-tool>
+      </div>
+
+      <!-- <div fxLayout="column">
         <mat-form-field>
           <mat-label>{{ 'Search Activity' | translate }}</mat-label>
           <input matInput [matAutocomplete]="activitySearch" [formControl]="searchText">
@@ -30,7 +34,7 @@
         <mat-option *ngFor="let activity of filteredActivities | async" [routerLink]="activity.path">
           <span>{{ activity.activity }}</span>
         </mat-option>
-      </mat-autocomplete>
+      </mat-autocomplete> -->
 
     </mat-card-content>
 
