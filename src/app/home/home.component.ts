@@ -30,6 +30,8 @@ export class HomeComponent implements OnInit {
   filteredActivities: Observable<any[]>;
   /** All User Activities. */
   allActivities: any[] = activities;
+  /** Sets the initial visibility of search input as hidden. Visible if true. */
+  searchVisible = true;
 
   /**
    * @param {AuthenticationService} authenticationService Authentication Service.

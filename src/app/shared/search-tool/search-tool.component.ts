@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { style, animate, transition, trigger } from '@angular/animations';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
@@ -30,8 +30,10 @@ export class SearchToolComponent {
   /** Resource Form Control */
   resource = new FormControl('');
 
-  /** Sets the initial visibility of search input as hidden. Visible if true. */
-  searchVisible = false;
+  /** Visibility. */
+  @Input() searchVisible: boolean;
+  @Input() iconVisible: boolean;
+
   /** Resource Options */
   resourceOptions: any[] = [
     {
