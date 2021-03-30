@@ -9,14 +9,16 @@ import env from './.env';
 export const environment = {
   production: false,
   version: env.mifos_x_version + '-dev',
-  fineractPlatformTenantId: 'default',  // For connecting to server running elsewhere update the tenant identifier
-  baseApiUrl: JSON.parse(localStorage.getItem('koppiKantorServerURL')) || 'https://api.koperasipintar.org',  // For connecting to server running elsewhere update the base API URL
+  fineractPlatformTenantId: 'default',
+  // For connecting to server running elsewhere update the tenant identifier
+  baseApiUrl: JSON.parse(localStorage.getItem('koppiKantorServerURL')) || 'https://localhost:8443', // 'https://api.koperasipintar.org',
+  // For connecting to server running elsewhere update the base API URL
   allowServerSwitch: env.allow_switching_backend_instance,
   apiProvider: '/fineract-provider/api',
   apiVersion: '/v1',
   serverUrl: '',
   oauth: {
-    enabled: false,  // For connecting to Mifos X using OAuth2 Authentication change the value to true
+    enabled: false,  // To enable OAuth2 Authentication change the value to true
     serverUrl: ''
   },
   defaultLanguage: 'id',

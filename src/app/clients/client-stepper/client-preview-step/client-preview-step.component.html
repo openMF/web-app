@@ -6,9 +6,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">{{ 'Name' | translate }}</span>
-    <span fxFlex="60%" *ngIf="client.legalFormId === 2">{{ client.fullname }}</span>
-    <span fxFlex="60%" *ngIf="client.legalFormId === 1">{{ client.firstname }} {{ client.middlename ? client.middlename
-      + ' ' + client.lastname : client.lastname }}</span>
+    <span fxFlex="60%">{{ client.fullname }}</span>
   </div>
 
   <div fxFlexFill>

@@ -99,7 +99,9 @@ export class AmountDisbursedPieComponent implements OnInit {
               top: 10,
               bottom: 15
             }
-          }
+          },
+          maintainAspectRatio: true,
+          responsive: true,
         }
       });
     } else {

@@ -101,7 +101,7 @@ export class AmountCollectedPieComponent implements OnInit {
           labels: ['Pending', 'Collected'],
           datasets: [{
             backgroundColor: ['#ee9595', '#75cfb8'],
-            data: data
+            data: data,
           }]
         },
         options: {
@@ -110,7 +110,9 @@ export class AmountCollectedPieComponent implements OnInit {
               top: 10,
               bottom: 15
             }
-          }
+          },
+          maintainAspectRatio: true,
+          responsive: true,
         }
       });
     } else {

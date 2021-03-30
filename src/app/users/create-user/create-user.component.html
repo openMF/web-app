@@ -50,7 +50,7 @@
           </mat-form-field>
 
           <div fxFlex="48%" class="password-never-expires-wrapper">
-            <mat-checkbox labelPosition="before" formControlName="passwordNeverExpires" >
+            <mat-checkbox labelPosition="before" formControlName="passwordNeverExpires">
               Override password expiry policy
             </mat-checkbox>
           </div>
@@ -77,10 +77,11 @@
             </mat-error>
           </mat-form-field>
 
-          <p fxFlex="98%" class="reset-password-error" *ngIf="userForm.errors?.passwordsDoNotMatch &&
+          <p fxFlex="98%" class="reset-password-error"
+            *ngIf="userForm.errors?.passwordsDoNotMatch &&
           (!userForm.controls.password.hasError('required') && !userForm.controls.repeatPassword.hasError('required'))">
-          Passwords <strong>do not match</strong>
-          </p>      
+            Passwords <strong>do not match</strong>
+          </p>
 
           <mat-form-field fxFlex="48%">
             <mat-label>Office</mat-label>
@@ -121,7 +122,8 @@
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
         <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!userForm.valid">Submit</button>
+        <button mat-raised-button color="primary" [disabled]="!userForm.valid"
+          *mifosxHasPermission="'CREATE_USER'">Submit</button>
       </mat-card-actions>
 
     </form>

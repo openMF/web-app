@@ -19,7 +19,7 @@
           <div fxLayout="column">
 
             <mat-form-field>
-              <mat-label>Office</mat-label>
+              <mat-label>{{ 'Office' | translate }}</mat-label>
               <mat-select>
                 <mat-option *ngFor="let office of officeData" [value]="office">
                   {{ office }}
@@ -28,7 +28,7 @@
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Staff</mat-label>
+              <mat-label>{{ 'Staff' | translate }}</mat-label>
               <mat-select>
                 <mat-option *ngFor="let staff of staffData" [value]="staff">
                   {{ staff }}
@@ -37,7 +37,7 @@
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Client</mat-label>
+              <mat-label>{{ 'Client' | translate }}</mat-label>
               <mat-select>
                 <mat-option *ngFor="let client of clientData" [value]="client">
                   {{ client }}
@@ -50,10 +50,10 @@
         </mat-card-content>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+          <button type="button" mat-raised-button [routerLink]="['../']">{{ 'Cancel' | translate }}</button>
           <button mat-raised-button color="accent">
             <fa-icon icon="lock-open"></fa-icon>&nbsp;&nbsp;
-            Activate Self Service User
+            {{ 'Activate Self Service User' | translate }}
           </button>
         </mat-card-actions>
 
