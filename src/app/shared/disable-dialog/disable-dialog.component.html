@@ -1,8 +1,8 @@
-<h1 mat-dialog-title>Disable</h1>
+<h1 mat-dialog-title>{{ 'Disable' | translate }}</h1>
 <div mat-dialog-content>
-  <p>Are you sure you want to disable {{ data.disableContext }} ?</p>
+  <p>{{ 'Are you sure you want to disable' | translate }} {{ data.disableContext }} ?</p>
 </div>
 <mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close>Cancel</button>
-  <button mat-raised-button color="warn" [mat-dialog-close]="{ disable: true }">Confirm</button>
+  <button mat-raised-button mat-dialog-close>{{ 'Cancel' | translate }}</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="{ disable: true }">{{ 'Confirm' | translate }}</button>
 </mat-dialog-actions>
