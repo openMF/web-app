@@ -11,7 +11,7 @@ export const environment = {
   version: env.mifos_x_version + '-dev',
   fineractPlatformTenantId: 'default',
   // For connecting to server running elsewhere update the tenant identifier
-  baseApiUrl: JSON.parse(localStorage.getItem('koppiKantorServerURL')) || 'https://localhost:8443', // 'https://api.koperasipintar.org',
+  baseApiUrl: JSON.parse(localStorage.getItem('koppiKantorServerURL')) || 'https://localhost:8443', // 'https://api.koperasipintar.org:8443',
   // For connecting to server running elsewhere update the base API URL
   allowServerSwitch: env.allow_switching_backend_instance,
   apiProvider: '/fineract-provider/api',
