@@ -12,9 +12,9 @@ const proxyConfig = [
   {
     context: '/api',
     pathRewrite: { '^/api': '' },
-    target: 'https://api.chucknorris.io',
+    target: 'https://api.koperasipintar.org:8443',
     changeOrigin: true,
-    secure: false
+    secure: true
   }
 ];
 
