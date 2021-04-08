@@ -1,5 +1,7 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
-  <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_USER'">
+  <button mat-raised-button color="primary" [routerLink]="['create']">
+    <!-- TODO: Add Validation for Create User -->
+    <!-- <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_STAFF'"> -->
     <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
     {{ 'Create User' | translate }}
   </button>
