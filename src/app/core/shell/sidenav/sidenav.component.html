@@ -1,5 +1,4 @@
-<div
-  [ngClass]="{
+<div [ngClass]="{
   'sidebar-full': !sidenavCollapsed,
   'sidebar-compact': sidenavCollapsed
   }">
@@ -50,61 +49,61 @@
       </div>
 
       <mat-nav-list>
-        <mat-list-item [routerLink]="['/dashboard']">
-          <mat-icon matListIcon>
+        <mat-list-item [routerLink]="['/dashboard']" matTooltip="Dashboard">
+          <mat-icon matListIcon >
             <fa-icon icon="tachometer-alt" size="sm"></fa-icon>
           </mat-icon>
           <a matLine>Dashboard</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/navigation']">
+        <mat-list-item [routerLink]="['/navigation']" matTooltip="Navigation">
           <mat-icon matListIcon>
             <fa-icon icon="location-arrow" size="sm"></fa-icon>
           </mat-icon>
           <a matLine>Navigation</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/checker-inbox-and-tasks/checker-inbox']">
+        <mat-list-item [routerLink]="['/checker-inbox-and-tasks/checker-inbox']" matTooltip="Checker Inbox and Tasks">
           <mat-icon matListIcon>
-            <i class="fa fa-check"></i>
+            <i class="fa fa-check" ></i>
           </mat-icon>
           <a matLine>Checker Inbox and Tasks</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/collections/individual-collection-sheet']">
+        <mat-list-item [routerLink]="['/collections/individual-collection-sheet']" matTooltip="Individual Collection Sheet">
           <mat-icon matListIcon>
             <i class="fa fa-tasks "></i>
           </mat-icon>
           <a matLine>Individual Collection Sheet</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/notifications']">
+        <mat-list-item [routerLink]="['/notifications']" matTooltip="Notifications">
           <mat-icon matListIcon>
             <fa-icon icon="bell" size="sm"></fa-icon>
           </mat-icon>
           <a matLine>Notifications</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/accounting/journal-entries/frequent-postings']">
+        <mat-list-item [routerLink]="['/accounting/journal-entries/frequent-postings']" matTooltip="Frequent Postings">
           <mat-icon matListIcon>
             <fa-icon icon="sync" size="sm"></fa-icon>
           </mat-icon>
           <a matLine>Frequent Postings</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/accounting/journal-entries/create']">
+        <mat-list-item [routerLink]="['/accounting/journal-entries/create']" matTooltip="Create Journal Entry">
           <mat-icon matListIcon>
             <fa-icon icon="plus" size="sm"></fa-icon>
           </mat-icon>
           <a matLine>Create Journal Entry</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/accounting/chart-of-accounts']">
+        <mat-list-item [routerLink]="['/accounting/chart-of-accounts']" matTooltip="Chart Of Accounts">
           <mat-icon matListIcon>
             <fa-icon icon="sitemap" size="sm"></fa-icon>
           </mat-icon>
           <a matLine>Chart of Accounts</a>
         </mat-list-item>
-        <mat-list-item (click)="showKeyboardShortcuts()">
+        <mat-list-item (click)="showKeyboardShortcuts()" matTooltip="Keyboard Shortcuts">
           <mat-icon matListIcon>
             <fa-icon icon="keyboard" size="sm"></fa-icon>
           </mat-icon>
           <a matLine>Keyboard Shortcuts</a>
         </mat-list-item>
-        <mat-list-item>
+        <mat-list-item matTooltip="Help">
           <mat-icon matListIcon (click)="help()">
             <fa-icon icon="question-circle" size="sm"></fa-icon>
           </mat-icon>
