@@ -37,8 +37,8 @@ export class AddressTabComponent {
    * @param {MatDialog} dialog Mat Dialog
    */
   constructor(private route: ActivatedRoute,
-              private clientService: ClientsService,
-              private dialog: MatDialog) {
+    private clientService: ClientsService,
+    private dialog: MatDialog) {
     this.route.data.subscribe((data: {
       clientAddressData: any,
       clientAddressFieldConfig: any,
@@ -159,7 +159,7 @@ export class AddressTabComponent {
     }) : null);
     formfields.push(this.isFieldEnabled('addressLine1') ? new InputBase({
       controlName: 'addressLine1',
-      label: 'Address Line 1',
+      label: 'Maps Point',
       value: address ? address.addressLine1 : '',
       type: 'text',
       order: 3

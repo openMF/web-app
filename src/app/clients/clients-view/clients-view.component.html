@@ -158,12 +158,13 @@
 
   <mat-card-content>
     <nav mat-tab-nav-bar class="navigation-tabs">
-      <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive"
+      <!-- <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive"
         [active]="general.isActive">
         {{ 'General' | translate }}
-      </a>
+      </a> -->
       <a mat-tab-link [routerLink]="['./address']" routerLinkActive #address="routerLinkActive"
-        [active]="address.isActive" *ngIf="clientTemplateData.isAddressEnabled">
+        [active]="address.isActive">
+        <!-- [active]="address.isActive" *ngIf="clientTemplateData.isAddressEnabled"> -->
         {{ 'Address' | translate }}
       </a>
       <a mat-tab-link [routerLink]="['./family-members']" routerLinkActive #familyMembers="routerLinkActive"
