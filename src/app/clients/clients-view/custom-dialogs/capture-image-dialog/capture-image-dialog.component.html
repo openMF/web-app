@@ -2,7 +2,9 @@
 
   <h1 mat-dialog-title align="center">Capture Client Image</h1>
 
-  <video #video width="540" height="480" autoplay></video>
+  <div fxFlex="100%">
+    <video #video width="100%" height="auto" autoplay></video>
+  </div>
 
   <!-- Using a class will break renderer changes -->
   <canvas #canvas [ngStyle]="{'display': 'none'}"></canvas>
@@ -21,7 +23,8 @@
 
   <mat-dialog-actions align="end">
     <button mat-raised-button mat-dialog-close>Cancel</button>
-    <button [disabled]="!isCaptured" mat-raised-button color="primary" [mat-dialog-close]="clientImageDataURL">Upload</button>
+    <button [disabled]="!isCaptured" mat-raised-button color="primary"
+      [mat-dialog-close]="clientImageDataURL">Upload</button>
   </mat-dialog-actions>
 
 </div>
