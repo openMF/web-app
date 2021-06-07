@@ -3,7 +3,7 @@
   background-size: cover;
   position: relative;
   z-index: 0;
-  max-width: 70vw;
+  max-width: 100vw;
 
   &::after {
     content: "";
@@ -49,6 +49,10 @@
   box-shadow: 1px 1px 50px #000;
   height: 100vh;
   overflow: auto;
+
+  @media (max-width: 500px) {
+    width: 100vw;
+  }
 
   .img-container {
     max-width: 18rem;
