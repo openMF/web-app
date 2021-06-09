@@ -1,12 +1,19 @@
 <mat-card class="container">
-  <div fxLayout="row" fxLayoutAlign="start center">
-    <div class="search-box">
-      <mat-form-field>
-        <input matInput placeholder="Search by client name" (keyup)="applyFilter($event.target.value)">
-      </mat-form-field>
-      <mat-checkbox #showClosedAccounts labelPosition="after">{{ 'Show Inactive Accounts' | translate }}
-      </mat-checkbox>
+  <div fxLayout="row" fxLayoutAlign="start center" fxFill>
+    <div fxLayout="column" fxLayoutAlign="space-around start">
+      <div class="search-box">
+        <!-- <mat-form-field>
+          <input matInput placeholder="Search by client name" (keyup)="applyFilter($event.target.value)">
+        </mat-form-field> -->
+        <mifosx-search-tool [searchVisible]="true" [iconVisible]="false"></mifosx-search-tool>
+      </div>
+      <div class="inactive-filter">
+        <mat-checkbox #showClosedAccounts labelPosition="after">
+          {{ 'Show Inactive Accounts' | translate }}
+        </mat-checkbox>
+      </div>
     </div>
+
     <div class="action-button" fxLayoutGap="25px">
       <button mat-raised-button color="primary" [routerLink]="['../', 'organization', 'bulk-import', 'Clients']"
         *mifosxHasPermission="'CREATE_CLIENT'">

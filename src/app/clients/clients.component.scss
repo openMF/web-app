@@ -2,15 +2,16 @@
   .action-button {
     margin-left: 1rem;
     button {
+      margin: 0.5rem;
+      min-width: 30px;
       @media screen and (max-width: 500px) {
-        margin: 0.5rem;
         .button-text {
           display: none;
         }
       }
     }
   }
-  .search-button {
+  .search-box {
     min-width: 30px;
     margin: 4px;
   }
