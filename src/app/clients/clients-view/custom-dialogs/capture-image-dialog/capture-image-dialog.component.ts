@@ -25,6 +25,8 @@ export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
   isCaptured = false;
   /** Client image file */
   clientImageDataURL: string;
+  /** Client image file */
+  videoStream: object;
 
   /**
    * @param {MatDialogRef} dialogRef Mat Dialog Reference
@@ -51,7 +53,7 @@ export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
         if (deviceInfo.kind === 'videoinput') {
           option.text = deviceInfo.label || `camera ${i + 1}`;
           videoSelect.appendChild(option);
-          console.debug('Camera ' + i, option);
+          console.debug('Camera ' + i, deviceInfo);
         } else {
           console.log('This is not recognized as a video device', deviceInfo);
         }
@@ -63,13 +65,14 @@ export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
 
   /**
    * Initializes camera video stream once user grants permission.
+   * facingMode : "environment" will prefer the rear camera if available.
    * Sets fallback if permission not granted.
    * See https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices for configuration details.
    */
   startCamera() {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.enumerateDevices().then(this.selectCamera).catch(this.handleError);
-      navigator.mediaDevices.getUserMedia({ video: true })
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
         .then((stream: MediaStream) => {
           this.renderer.setProperty(this.video.nativeElement, 'srcObject', stream);
           this.video.nativeElement.play();
