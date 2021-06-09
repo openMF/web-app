@@ -14,7 +14,8 @@ export class SearchPageComponent {
 
   /** Search Results */
   searchResults: any;
-  /** Flags if number of search results exceed 200 */
+  /** Flags if number of search results is 0 or exceed 200 */
+  notFound: boolean;
   overload: boolean;
 
   /**
@@ -22,9 +23,10 @@ export class SearchPageComponent {
    * @param {Router} router Router
    */
   constructor(private route: ActivatedRoute,
-              private router: Router) {
-    this.route.data.subscribe(( data: { searchResults: any }) => {
+    private router: Router) {
+    this.route.data.subscribe((data: { searchResults: any }) => {
       this.searchResults = data.searchResults;
+      this.notFound = this.searchResults.length < 1 ? true : false;
       this.overload = this.searchResults.length > 200 ? true : false;
       if (this.overload) {
         this.searchResults = this.searchResults.slice(0, 200);
