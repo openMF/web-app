@@ -1,9 +1,13 @@
 <div fxLayout="column" fxLayoutGap="2%">
 
-  <h1 mat-dialog-title align="center">Capture Client Image</h1>
+  <h1 mat-dialog-title align="center">{{ 'Capture Client Image' | translate }}</h1>
+
+  <div class="select">
+    <label for="videoSource">{{ 'Select camera' | translate }}: </label><select id="videoSource"></select>
+  </div>
 
   <div fxFlex="100%">
-    <video #video width="100%" height="auto" autoplay></video>
+    <video #video width="100%" height="100%" autoplay></video>
   </div>
 
   <!-- Using a class will break renderer changes -->
@@ -14,17 +18,17 @@
 
   <div fxFlex="20%" align="center">
     <button #captureButton *ngIf="!isCaptured" mat-stroked-button color="primary" (click)="capture()">
-      Capture
+      {{ 'Capture' | translate }}
     </button>
     <button *ngIf="isCaptured" mat-stroked-button color="primary" (click)="recapture()">
-      <fa-icon icon="undo" size="sm"></fa-icon>&nbsp;&nbsp;Recapture
+      <fa-icon icon="undo" size="sm"></fa-icon>&nbsp;&nbsp;{{ 'Recapture' | translate }}
     </button>
   </div>
 
   <mat-dialog-actions align="end">
-    <button mat-raised-button mat-dialog-close>Cancel</button>
-    <button [disabled]="!isCaptured" mat-raised-button color="primary"
-      [mat-dialog-close]="clientImageDataURL">Upload</button>
+    <button mat-raised-button mat-dialog-close>{{ 'Cancel' | translate }}</button>
+    <button [disabled]="!isCaptured" mat-raised-button color="primary" [mat-dialog-close]="clientImageDataURL">{{
+      'Submit' | translate }}</button>
   </mat-dialog-actions>
 
 </div>
