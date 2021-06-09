@@ -2,6 +2,10 @@
 
   <mat-card fxLayout="column" fxLayoutGap="2%">
 
+    <mat-error *ngIf="notFound">
+      {{ 'No results is found. Try to modify your query.' | translate }}
+    </mat-error>
+
     <mat-error *ngIf="overload">
       {{ 'Searched query resulted more than 200 records, showing first 200 records.' | translate }}
     </mat-error>
