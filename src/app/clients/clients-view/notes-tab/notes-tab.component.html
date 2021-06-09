@@ -11,9 +11,10 @@
         <textarea formControlName="note" matInput placeholder="Write a note ...."></textarea>
       </mat-form-field>
 
-      <button mat-raised-button fxFlex color="primary" [disabled]="!noteForm.valid"
-        *mifosxHasPermission="'CREATE_CLIENTNOTE'">
-        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp; {{ 'Add' | translate }}
+      <!-- <button mat-raised-button fxFlex color="primary" [disabled]="!noteForm.valid" *mifosxHasPermission="'CREATE_CLIENTNOTE'"> -->
+      <button mat-raised-button fxFlex="1 1 50px" color="primary" *mifosxHasPermission="'CREATE_CLIENTNOTE'">
+        <fa-icon icon="plus"></fa-icon>
+        <!-- &nbsp;&nbsp; {{ 'Add' | translate }} -->
       </button>
 
     </form>
@@ -30,11 +31,11 @@
         <span>{{ 'Date' | translate }}: {{clientNote.createdOn | date}}</span>
       </p>
       <div fxLayout="row" fxLayoutAlign="flex-start">
-        <button mat-button color="primary" (click)="editNote(clientNote.id,clientNote.note,i)"
+        <button mat-button color="primary" (click)="editNote(clientNote.id,clientNote.note,i)" disabled
           *mifosxHasPermission="'CREATE_CLIENTNOTE'">
           <fa-icon icon="edit"></fa-icon>
         </button>
-        <button mat-button color="warn" (click)="deleteNote(clientNote.id,i)"
+        <button mat-button color="warn" (click)="deleteNote(clientNote.id,i)" disabled
           *mifosxHasPermission="'DELETE_CLIENTNOTE'">
           <fa-icon icon="trash"></fa-icon>
         </button>

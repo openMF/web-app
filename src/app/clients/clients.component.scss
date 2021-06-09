@@ -4,6 +4,9 @@
     button {
       @media screen and (max-width: 500px) {
         margin: 0.5rem;
+        .button-text {
+          display: none;
+        }
       }
     }
   }

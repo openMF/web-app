@@ -147,7 +147,7 @@ export class ClientAddressStepComponent {
     }) : null);
     formfields.push(this.isFieldEnabled('addressLine1') ? new InputBase({
       controlName: 'addressLine1',
-      label: 'Maps Point',
+      label: 'Address Line 1',
       value: address ? address.addressLine1 : '',
       type: 'text',
       order: 3
@@ -161,7 +161,7 @@ export class ClientAddressStepComponent {
     }) : null);
     formfields.push(this.isFieldEnabled('addressLine3') ? new InputBase({
       controlName: 'addressLine3',
-      label: 'Address Line 3',
+      label: 'Maps Point',
       value: address ? address.addressLine3 : '',
       type: 'text',
       order: 5

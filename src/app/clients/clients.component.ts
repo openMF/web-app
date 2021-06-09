@@ -32,6 +32,7 @@ export class ClientsComponent implements OnInit, AfterViewInit {
       this.displayedColumns = ['name', 'externalid', 'status', 'staff'];
       console.debug('Mobile View');
     } else {
+      this.displayedColumns = ['name', 'clientno', 'externalid', 'status', 'mobileNo', 'gender', 'office', 'staff'];
       console.debug('Desktop View');
     }
   }

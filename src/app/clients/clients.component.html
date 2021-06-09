@@ -10,10 +10,11 @@
     <div class="action-button" fxLayoutGap="25px">
       <button mat-raised-button color="primary" [routerLink]="['../', 'organization', 'bulk-import', 'Clients']"
         *mifosxHasPermission="'CREATE_CLIENT'">
-        <fa-icon icon="download"></fa-icon>&nbsp;&nbsp;{{ 'Import Client' | translate }}
+        <fa-icon icon="download"></fa-icon><span class="button-text">&nbsp;&nbsp;{{ 'Import Client' | translate
+          }}</span>
       </button>
       <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_CLIENT'">
-        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;{{ 'Create Client' | translate }}
+        <fa-icon icon="plus"></fa-icon><span class="button-text">&nbsp;&nbsp;{{ 'Create Client' | translate }}</span>
       </button>
     </div>
   </div>

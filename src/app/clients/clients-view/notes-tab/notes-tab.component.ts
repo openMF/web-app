@@ -41,16 +41,18 @@ export class NotesTabComponent implements OnInit {
    * @param {AuthenticationService} authenticationService Authentication Service
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(private route: ActivatedRoute,
-              private formBuilder: FormBuilder,
-              private clientsService: ClientsService,
-              private authenticationService: AuthenticationService,
-              public dialog: MatDialog) {
+  constructor(
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private clientsService: ClientsService,
+    private authenticationService: AuthenticationService,
+    public dialog: MatDialog) {
     const credentials = this.authenticationService.getCredentials();
     this.username = credentials.username;
     this.clientId = this.route.parent.snapshot.params['clientId'];
     this.route.data.subscribe((data: { clientNotes: any }) => {
       this.clientNotes = data.clientNotes;
+      console.debug(this.clientNotes);
     });
   }
 
@@ -92,6 +94,7 @@ export class NotesTabComponent implements OnInit {
    * @param {number} index Index
    */
   deleteNote(noteId: string, index: number) {
+    console.debug(noteId, index);
     const deleteNoteDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `Note id:${noteId}` }
     });
