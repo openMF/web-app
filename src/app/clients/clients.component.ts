@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, HostListener } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -20,18 +20,28 @@ import { ClientsService } from './clients.service';
 export class ClientsComponent implements OnInit, AfterViewInit {
   @ViewChild('showClosedAccounts', { static: true }) showClosedAccounts: MatCheckbox;
 
+  constructor(private clientsService: ClientsService) {
+    this.getScreenSize();
+  }
 
   displayedColumns = ['name', 'clientno', 'externalid', 'status', 'mobileNo', 'gender', 'office', 'staff'];
+
+  @HostListener('window:resize', ['$event'])
+  getScreenSize() {
+    if (window.innerWidth < 500) {
+      this.displayedColumns = ['name', 'externalid', 'status', 'staff'];
+      console.debug('Mobile View');
+    } else {
+      console.debug('Desktop View');
+    }
+  }
+
   dataSource: ClientsDataSource;
   /** Get the required filter value. */
   searchValue = '';
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-
-  constructor(private clientsService: ClientsService) {
-
-  }
 
   ngOnInit() {
     this.getClients();
@@ -54,9 +64,9 @@ export class ClientsComponent implements OnInit, AfterViewInit {
     }
 
     if (this.searchValue !== '') {
-    this.applyFilter(this.searchValue);
+      this.applyFilter(this.searchValue);
     } else {
-    this.dataSource.getClients(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
+      this.dataSource.getClients(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
     }
   }
 
@@ -72,7 +82,7 @@ export class ClientsComponent implements OnInit, AfterViewInit {
    * Filter Client Data
    * @param {string} filterValue Value to filter data.
    */
-  applyFilter(filterValue: string= '') {
+  applyFilter(filterValue: string = '') {
     this.searchValue = filterValue;
     this.dataSource.filterClients(filterValue.trim().toLowerCase(), this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
   }
