@@ -31,7 +31,7 @@ export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
    * @param {Renderer2} renderer Template Renderer
    */
   constructor(public dialogRef: MatDialogRef<CaptureImageDialogComponent>,
-              private renderer: Renderer2) {}
+    private renderer: Renderer2) { }
 
   ngAfterViewInit() {
     this.startCamera();
@@ -41,6 +41,26 @@ export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
     this.stopCamera();
   }
 
+  selectCamera(deviceInfos: Array<any>) {
+    const videoSelect = document.querySelector('select#videoSource');
+    if (navigator.mediaDevices) {
+      for (let i = 0; i !== deviceInfos.length; ++i) {
+        const deviceInfo = deviceInfos[i];
+        const option = document.createElement('option');
+        option.value = deviceInfo.deviceId;
+        if (deviceInfo.kind === 'videoinput') {
+          option.text = deviceInfo.label || `camera ${i + 1}`;
+          videoSelect.appendChild(option);
+          console.debug('Camera ' + i, option);
+        } else {
+          console.log('This is not recognized as a video device', deviceInfo);
+        }
+      }
+    } else {
+      throw new Error('No media devices is detected');
+    }
+  }
+
   /**
    * Initializes camera video stream once user grants permission.
    * Sets fallback if permission not granted.
@@ -48,14 +68,15 @@ export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
    */
   startCamera() {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.enumerateDevices().then(this.selectCamera).catch(this.handleError);
       navigator.mediaDevices.getUserMedia({ video: true })
-      .then((stream: MediaStream) => {
-        this.renderer.setProperty(this.video.nativeElement, 'srcObject', stream);
-        this.video.nativeElement.play();
-      })
-      .catch((error: Error) => {
-        this.handleError(error);
-      });
+        .then((stream: MediaStream) => {
+          this.renderer.setProperty(this.video.nativeElement, 'srcObject', stream);
+          this.video.nativeElement.play();
+        })
+        .catch((error: Error) => {
+          this.handleError(error);
+        });
     } else {
       throw new Error('Cannot connect to camera');
     }
