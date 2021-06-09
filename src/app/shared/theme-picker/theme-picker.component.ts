@@ -49,24 +49,24 @@ export class ThemePickerComponent implements OnInit {
       accent: '#FFC107',
       isDark: false
     },
-    {
-      href: 'pink-bluegrey.css',
-      primary: '#E91E63',
-      accent: '#607D8B',
-      isDark: true
-    },
-    {
-      href: 'purple-green.css',
-      primary: '#9C27B0',
-      accent: '#4CAF50',
-      isDark: true
-    }
+    // {
+    //   href: 'pink-bluegrey.css',
+    //   primary: '#E91E63',
+    //   accent: '#607D8B',
+    //   isDark: true
+    // },
+    // {
+    //   href: 'purple-green.css',
+    //   primary: '#9C27B0',
+    //   accent: '#4CAF50',
+    //   isDark: true
+    // }
   ];
 
   /**
    * @param {ThemeStorageService} themeStorageService Theme Storage Service.
    */
-  constructor(public themeStorageService: ThemeStorageService) {  }
+  constructor(public themeStorageService: ThemeStorageService) { }
 
   /**
    * Initializes the theme for the application.
