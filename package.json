@@ -41,7 +41,7 @@
     "@angular/platform-browser-dynamic": "9.1.12",
     "@angular/router": "9.1.12",
     "@angular/service-worker": "9.1.12",
-    "@blossomfinance/koppi-backoffice-l10n": "^0.2.3-3",
+    "@blossomfinance/koppi-backoffice-l10n": "^0.2.3",
     "@ckeditor/ckeditor5-angular": "1.2.3",
     "@ckeditor/ckeditor5-build-classic": "21.0.0",
     "@fortawesome/angular-fontawesome": "0.6.1",
