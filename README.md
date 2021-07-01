@@ -78,6 +78,20 @@ For connecting to server running elsewhere update the base API URL and/or tenant
 
 By default OAuth2 is disabled. To enable it, change the value of oauth.enabled property to true in the `environments/environment.ts` file and `environments/environment.prod.ts` file for development and production use respectively.
 
+### Docker
+
+
+To locally build this Docker image from source (after `git clone` this repo), run:
+```
+docker build -t openmf/web-app:latest .
+```
+You can then run a Docker Container from the image above like this:
+```
+docker run -d -p 4200:80 openmf/web-app:latest
+```
+
+Access the webapp on http://localhost:4200 in your browser.
+
 
 ## Want to help? [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/openMF/web-app/issues)
 
