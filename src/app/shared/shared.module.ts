@@ -25,6 +25,7 @@ import { ServerSelectorComponent } from './server-selector/server-selector.compo
 /** Custom Modules */
 import { IconsModule } from './icons.module';
 import { MaterialModule } from './material.module';
+import { FontPickerComponent } from './font-picker/font-picker.component';
 
 /**
  * Shared Module
@@ -47,6 +48,7 @@ import { MaterialModule } from './material.module';
     FooterComponent,
     LanguageSelectorComponent,
     ThemePickerComponent,
+    FontPickerComponent,
     ChangePasswordDialogComponent,
     EnableDialogComponent,
     DisableDialogComponent,
@@ -63,6 +65,7 @@ import { MaterialModule } from './material.module';
     LanguageSelectorComponent,
     ServerSelectorComponent,
     ThemePickerComponent,
+    FontPickerComponent,
     NotificationsTrayComponent,
     SearchToolComponent,
     ErrorDialogComponent,
