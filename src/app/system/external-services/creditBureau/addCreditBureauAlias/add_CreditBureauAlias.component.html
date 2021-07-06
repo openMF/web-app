@@ -1,0 +1,43 @@
+<div class="container">
+  <mat-card>
+    <div fxLayout="row" fxLayoutAlign="start center"  fxLayoutGap="800px">
+      <div class="m-b-25" fxLayout="row">
+        <h3>Credit Bureau Alias:</h3>
+      </div>
+    </div>
+
+    <form [formGroup]="CreditBureauAliasForm">
+      <mat-card-content>
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+        <mat-form-field fxFlex="55%">
+          <mat-label> Alias </mat-label>
+          <input matInput required formControlName="alias">
+          <mat-error *ngIf="CreditBureauAliasForm.controls.alias.hasError('required')">
+            Credit Bureau Configuration is <strong>required</strong>
+          </mat-error>
+          <mat-error *ngIf="CreditBureauAliasForm.controls.alias.hasError('pattern')">
+            Configuration Value <strong>cannot</strong> begin with a special character or number
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="55%">
+          <mat-label>Credit Bureau : </mat-label>
+          <mat-select required formControlName="creditBureauId">
+            <mat-option *ngFor="let creditbureau of creditbureaus" [value]="creditbureau.creditBureauId">
+              {{ creditbureau.creditBureauSummary }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+
+        <button mat-raised-button color="primary" (click)="submit()">Submit</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+
+      </mat-card-actions>
+
+    </form>
+  </mat-card>
+</div>

@@ -24,6 +24,9 @@ import { ViewChargeComponent } from './clients-view/charges/view-charge/view-cha
 import { ClientPayChargesComponent } from './clients-view/charges/client-pay-charges/client-pay-charges.component';
 import { EditClientComponent } from './edit-client/edit-client.component';
 import { CreateClientComponent } from './create-client/create-client.component';
+import { CreditReportComponent } from 'app/clients/clients-view/credit-report/credit-report.component';
+import { ThitsaworksComponent } from './clients-view/credit-report/thitsaworks/thitsaworks.component';
+import { CreditBureauConfigurationComponent } from '../system/external-services/creditBureau/creditBureau-configuration/creditBureauConfiguration.component';
 
 /** Custom Resolvers */
 import { ClientViewResolver } from './common-resolvers/client-view.resolver';
@@ -48,6 +51,9 @@ import { ClientActionsResolver } from './common-resolvers/client-actions.resolve
 import { ClientChargeViewResolver } from './common-resolvers/client-charge-view.resolver';
 import { ClientTransactionPayResolver } from './common-resolvers/client-transaction-pay.resolver';
 import { ClientDataAndTemplateResolver } from './common-resolvers/client-and-template.resolver';
+import { CreditBureauResolver } from './common-resolvers/credit-bureau.resolver';
+import { CreditBureauConfigurationResolver } from './common-resolvers/creditBureau-configuration.resolver';
+import {UploadCreditReportComponent} from './clients-view/credit-report/upload-CreditReport/upload-CreditReport.component';
 
 const routes: Routes = [
   Route.withShell([{
@@ -156,6 +162,14 @@ const routes: Routes = [
             }
           },
           {
+            path: 'creditReport',
+            component: CreditReportComponent,
+            data: { title: extract('Credit Report'), breadcrumb: 'Credit Report', routeParamBreadcrumb: false },
+            resolve: {
+              creditBureauData: CreditBureauResolver
+            }
+          },
+          {
             path: 'datatables',
             children: [{
               path: ':datatableName',
@@ -255,7 +269,37 @@ const routes: Routes = [
         ]
       }
     ]
-  }
+  },
+    {
+      path: 'creditReport',
+      data: { title: extract('Clients'), breadcrumb: 'Clients', routeParamBreadcrumb: false },
+      children: [
+        {
+          path: 'THITSAWORKS',
+          component: ThitsaworksComponent,
+          data: { title: extract('THITSAWORKS'), breadcrumb: 'THITSAWORKS', routeParamBreadcrumb: false },
+         /* resolve: {
+            thitsaworkCreditReportData: CreditBureauConfigurationResolver
+          } */
+        },
+        {
+          path: 'upload',
+          component: UploadCreditReportComponent,
+          data: { title: extract('THITSAWORKS'), breadcrumb: 'THITSAWORKS', routeParamBreadcrumb: false },
+          /* resolve: {
+             thitsaworkCreditReportData: CreditBureauConfigurationResolver
+           } */
+        },
+        {
+          path: 'creditBureauConfiguration/:configurationId',
+          component: CreditBureauConfigurationComponent,
+          data: { title: extract('CreditBureau Configuration'), breadcrumb: 'CreditBureau Configuration', routeParamBreadcrumb: 'configurationId' },
+          resolve: {
+             configurationData: CreditBureauConfigurationResolver
+           }
+        },
+      ]
+    },
   ])
 ];
 
@@ -283,7 +327,9 @@ const routes: Routes = [
     ClientActionsResolver,
     ClientChargeViewResolver,
     ClientTransactionPayResolver,
-    ClientDataAndTemplateResolver
+    ClientDataAndTemplateResolver,
+    CreditBureauResolver,
+    CreditBureauConfigurationResolver
   ]
 })
 export class ClientsRoutingModule { }

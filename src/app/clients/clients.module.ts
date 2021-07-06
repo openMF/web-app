@@ -58,6 +58,9 @@ import { ClientAddressStepComponent } from './client-stepper/client-address-step
 import { ClientFamilyMemberDialogComponent } from './client-stepper/client-family-members-step/client-family-member-dialog/client-family-member-dialog.component';
 import { CaptureImageDialogComponent } from './clients-view/custom-dialogs/capture-image-dialog/capture-image-dialog.component';
 import { CreateSelfServiceUserComponent } from './clients-view/client-actions/create-self-service-user/create-self-service-user.component';
+import {CreditReportComponent} from './clients-view/credit-report/credit-report.component';
+import {ThitsaworksComponent} from './clients-view/credit-report/thitsaworks/thitsaworks.component';
+import { CreditBureauConfigurationComponent } from '../system/external-services/creditBureau/creditBureau-configuration/creditBureauConfiguration.component';
 
 
 /**
@@ -121,7 +124,9 @@ import { CreateSelfServiceUserComponent } from './clients-view/client-actions/cr
     ClientAddressStepComponent,
     ClientFamilyMemberDialogComponent,
     CaptureImageDialogComponent,
-    CreateSelfServiceUserComponent
+    CreateSelfServiceUserComponent,
+    CreditReportComponent,
+    ThitsaworksComponent
   ],
   providers: [DatePipe]
 

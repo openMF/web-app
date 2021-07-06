@@ -43,6 +43,8 @@ import { LoansAccountChargeResolver } from './common-resolvers/loans-account-cha
 import { LoansAccountTransactionResolver } from './common-resolvers/loans-account-transaction.resolver';
 import { LoansTransactionRecieptResolver } from './common-resolvers/loans-transaction-reciept.resolver';
 import { LoansAccountTransactionTemplateResolver } from './common-resolvers/loans-account-transaction-template.resolver';
+import { CreditBureauMappingResolver } from '../system/external-services/creditBureau/creditBureauMapping.resolver';
+import {CreditBureauLoanProductMappingResolver} from '../system/external-services/creditBureau/creditBureauLoanProductMapping.resolver';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -68,6 +70,7 @@ const routes: Routes = [
           resolve: {
             loanDetailsData: LoanDetailsResolver,
             loanDatatables: LoanDatatablesResolver,
+            creditBureauLoanProductMappingData: CreditBureauLoanProductMappingResolver,
           },
           children: [
             {
@@ -265,7 +268,8 @@ const routes: Routes = [
     LoansAccountChargeResolver,
     LoansAccountTransactionResolver,
     LoansAccountTransactionTemplateResolver,
-    LoansTransactionRecieptResolver
+    LoansTransactionRecieptResolver,
+    CreditBureauLoanProductMappingResolver
   ]
 })
 

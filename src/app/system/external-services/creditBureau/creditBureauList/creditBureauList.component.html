@@ -1,0 +1,41 @@
+<div class="container">
+  <mat-card>
+    <div fxLayout="row" fxLayoutAlign="start center"  fxLayoutGap="800px">
+      <div class="m-b-25" fxLayout="row">
+        <h3>Credit Bureau:</h3>
+      </div>
+    </div>
+
+    <div>
+    <form [formGroup]="CreditBureauForm">
+
+      <mat-card-content>
+
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+          <mat-form-field fxFlex="48%">
+            <mat-label>Credit Bureau</mat-label>
+
+            <mat-select required formControlName="BureauId">
+              <mat-option *ngFor="let creditBureau of creditBureauList" [value]="creditBureau.creditBureauId">
+                {{ creditBureau.creditBureauName }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="CreditBureauForm.controls.BureauId.hasError('required')">
+              Credit Bureau is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+
+        <button mat-raised-button color="primary" (click)="submit()">Submit</button>
+
+      </mat-card-actions>
+
+    </form>
+    </div>
+  </mat-card>
+  </div>
+

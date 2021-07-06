@@ -1,0 +1,42 @@
+<div class="tab-container mat-typography">
+  <div class="container">
+
+    <div class="m-b-10">
+      <h3>Credit Bureau</h3>
+    </div>
+    <!--
+    put a dropdown box to select creditbureau, after selecting credit bureau, the nrc textbox > then on same page or new page credit report with save button
+ formControlName="creditBureauId"
+    -->
+    <form [formGroup]="CreditBureauForm">
+
+      <mat-card-content>
+
+    <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <mat-form-field fxFlex="48%">
+      <mat-label>Credit Bureau</mat-label>
+      <mat-select required formControlName="creditBureauName">
+        <mat-option *ngFor="let creditBureau of creditBureauList" [value]="creditBureau.creditBureauName">
+          {{ creditBureau.creditBureauName }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="CreditBureauForm.controls.creditBureauName.hasError('required')">
+        Credit Bureau is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+
+        <button mat-raised-button color="primary" (click)="submit()">Fetch CreditReport</button>
+        <button mat-raised-button color="primary" (click)="upload()">Upload CreditReport</button>
+
+      </mat-card-actions>
+
+    </form>
+
+
+  </div>
+</div>

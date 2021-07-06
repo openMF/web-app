@@ -75,6 +75,7 @@ export class GlobalConfigurationsComponent implements OnInit {
     this.systemService.updateConfiguration(configuration.id, { enabled: !configuration.enabled })
       .subscribe((response: any) => {
         configuration.enabled = response.changes.enabled;
+        console.log('response.isActive' + configuration.enabled);
       });
   }
 

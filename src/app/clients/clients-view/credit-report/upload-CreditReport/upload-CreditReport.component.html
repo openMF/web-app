@@ -1,0 +1,23 @@
+<div class="container">
+
+  <div fxLayoutGap="2%" class="m-b-20">
+    <mat-card fxLayout="column" fxLayoutGap="2%" fxFlex="50%">
+      <h1 mat-dialog-title>Upload Credit Report</h1>
+
+      <h4>Select CSV File</h4>
+
+      <mifosx-file-upload  flex="75%" (change)="onFileSelect($event)"></mifosx-file-upload>
+
+      <mat-hint>Please retain the value of the filename as per Documentation.</mat-hint>
+
+      <div fxFlex="13%">
+        <button mat-raised-button color="primary" [disabled]="!template" (click)="uploadTemplate()">
+          <i class="fa fa-upload"></i>&nbsp;&nbsp;Upload
+        </button>
+        <button type="button" mat-raised-button (click)="cancel()">Cancel</button>
+      </div>
+
+    </mat-card>
+
+  </div>
+</div>

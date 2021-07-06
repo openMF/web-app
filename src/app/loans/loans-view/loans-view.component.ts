@@ -12,6 +12,7 @@ import { LoansAccountButtonConfiguration } from './loan-accounts-button-config';
 /** Dialog Components */
 import { ConfirmationDialogComponent } from '../../shared/confirmation-dialog/confirmation-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { SystemService } from '../../system/system.service';
 
 @Component({
   selector: 'mifosx-loans-view',
@@ -24,6 +25,8 @@ export class LoansViewComponent implements OnInit {
   loanDetailsData: any;
   /** Loan Datatables */
   loanDatatables: any;
+
+  creditCheckStatus: any;
   /** Recalculate Interest */
   recalculateInterest: any;
   /** Status */
@@ -38,17 +41,18 @@ export class LoansViewComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               public loansService: LoansService,
+              public systemService: SystemService,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { loanDetailsData: any, loanDatatables: any}) => {
+    this.route.data.subscribe((data: { loanDetailsData: any, loanDatatables: any, creditBureauMappingData: any, creditBureauLoanProductMappingData: any}) => {
       this.loanDetailsData = data.loanDetailsData;
       this.loanDatatables = data.loanDatatables;
+      this.creditCheckStatus = data.creditBureauLoanProductMappingData;
     });
     this.loanId = this.route.snapshot.params['loanId'];
     this.clientId = this.loanDetailsData.clientId;
   }
 
   ngOnInit() {
-
     this.recalculateInterest = this.loanDetailsData.recalculateInterest || true;
     this.status = this.loanDetailsData.status.value;
     this.setConditionalButtons();
@@ -57,7 +61,6 @@ export class LoansViewComponent implements OnInit {
   // Defines the buttons based on the status of the loan account
   setConditionalButtons() {
     this.buttonConfig = new LoansAccountButtonConfiguration(this.status);
-
     if (this.status === 'Submitted and pending approval') {
 
       this.buttonConfig.addOption({
@@ -71,6 +74,13 @@ export class LoansViewComponent implements OnInit {
           taskPermissionName: 'ADJUST_REPAYMENT_SCHEDULE'
         });
       }
+      if (this.creditCheckStatus.isActive) {
+        this.buttonConfig.addButton({
+          name: 'Credit Report',
+          icon: 'fa fa-id-card',
+          taskPermissionName: 'GET_CREDITREPORT'
+        });
+     }
 
     } else if (this.status === 'Approved') {
 
@@ -118,6 +128,9 @@ export class LoansViewComponent implements OnInit {
 
   loanAction(button: string) {
     switch (button) {
+      case 'Credit Report':
+        this.getCreditBureauByOcbId();
+        break;
       case 'Recover From Guarantor':
         this.recoverFromGuarantor();
         break;
@@ -167,6 +180,13 @@ export class LoansViewComponent implements OnInit {
         });
       }
     });
+  }
+
+  private getCreditBureauByOcbId() {
+    const creditbureauSummary = this.creditCheckStatus.creditbureauSummary;
+      if (creditbureauSummary === '1 - THITSAWORKS - Myanmar') {
+        this.router.navigateByUrl(`creditReport/THITSAWORKS`);
+      }
   }
 
   /**
