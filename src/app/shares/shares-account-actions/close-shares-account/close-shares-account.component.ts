@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { SharesService } from 'app/shares/shares.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Close Shares Account Component
@@ -32,12 +33,14 @@ export class CloseSharesAccountComponent implements OnInit {
    * @param {DatePipe} datePipe Date Pipe
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
+   * @param {SettingsService} settingsService Settings Service.
    */
   constructor(private formBuilder: FormBuilder,
               private sharesService: SharesService,
               private datePipe: DatePipe,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private settingsService: SettingsService) {
     this.accountId = this.route.parent.snapshot.params['shareAccountId'];
   }
 
@@ -64,8 +67,8 @@ export class CloseSharesAccountComponent implements OnInit {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const prevClosedDate: Date = this.closeSharesAccountForm.value.closedDate;
     this.closeSharesAccountForm.patchValue({
       closedDate: this.datePipe.transform(prevClosedDate, dateFormat),

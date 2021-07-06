@@ -10,6 +10,7 @@ import { SharesAccountChargesStepComponent } from '../shares-account-stepper/sha
 
 /** Custom Services */
 import { SharesService } from '../shares.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Create Shares Account Component
@@ -39,11 +40,13 @@ export class CreateSharesAccountComponent {
    * @param {Router} router Router
    * @param {DatePipe} datePipe Date Pipe
    * @param {SharesService} sharesService Shares Service
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private route: ActivatedRoute,
               private router: Router,
               private datePipe: DatePipe,
-              private sharesService: SharesService) {
+              private sharesService: SharesService,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { sharesAccountTemplate: any }) => {
       this.sharesAccountTemplate = data.sharesAccountTemplate;
     });
@@ -97,8 +100,8 @@ export class CreateSharesAccountComponent {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const sharesAccount = {
       ...this.sharesAccount,
       clientId: this.sharesAccountTemplate.clientId,

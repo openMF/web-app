@@ -12,6 +12,7 @@ import { ApproveShareDialogComponent } from './approve-share-dialog/approve-shar
 
 /** Custom Serices */
 import { SharesService } from 'app/shares/shares.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Approve shares component.
@@ -44,10 +45,14 @@ export class ApproveSharesComponent implements OnInit {
 
   /**
    * @param {SharesService} sharesService Shares Service
+   * @param {ActivatedRoute} route Activated Route
+   * @param {MatDialog} dialog Dialog reference.
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private sharesService: SharesService,
               private route: ActivatedRoute,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private settingsService: SettingsService) {
     this.accountId = this.route.parent.snapshot.params['shareAccountId'];
     this.route.data.subscribe((data: { shareAccountActionData: any }) => {
       this.sharesAccountData = data.shareAccountActionData;
@@ -82,8 +87,8 @@ export class ApproveSharesComponent implements OnInit {
     });
     approveSharesDialogRef.afterClosed().subscribe((response: any) => {
       if (response.approve) {
-        const locale = 'en';
-        const dateFormat = 'dd MMMM yyyy';
+        const locale = this.settingsService.language.code;
+        const dateFormat = this.settingsService.dateFormat;
         const data = {
           requestedShares: [{id}],
           dateFormat,
