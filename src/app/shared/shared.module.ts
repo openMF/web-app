@@ -25,6 +25,7 @@ import { ServerSelectorComponent } from './server-selector/server-selector.compo
 /** Custom Modules */
 import { IconsModule } from './icons.module';
 import { MaterialModule } from './material.module';
+import { CustomServerComponent } from './server-selector/custom-server/custom-server.component';
 
 /**
  * Shared Module
@@ -55,7 +56,8 @@ import { MaterialModule } from './material.module';
     ErrorDialogComponent,
     NotificationsTrayComponent,
     SearchToolComponent,
-    ServerSelectorComponent
+    ServerSelectorComponent,
+    CustomServerComponent
   ],
   exports: [
     FileUploadComponent,
@@ -71,6 +73,6 @@ import { MaterialModule } from './material.module';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-  ]
+  ],
 })
 export class SharedModule { }
