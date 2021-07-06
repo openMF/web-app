@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -7,6 +7,9 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'mifosx-saving-product-accounting-step',
@@ -30,6 +33,16 @@ export class SavingProductAccountingStepComponent implements OnInit {
   expenseAccountData: any;
   liabilityAccountData: any;
   incomeAndLiabilityAccountData: any;
+  writeOffFiltered: Observable<string[]>;
+  incomeFromFeeFiltered: Observable<string[]>;
+  savingControlFiltered: Observable<string[]>;
+  savingReferenceFiltered: Observable<string[]>;
+  escheatLiabilityFiltered: Observable<string[]>;
+  interestOnSavingsFiltered: Observable<string[]>;
+  overdraftPortfolioFiltered: Observable<string[]>;
+  savingTransfersSuspenseFiltered: Observable<string[]>;
+  incomeFromPenaltyFiltered: Observable<string[]>;
+  incomeFromInterestFiltered: Observable<string[]>;
 
   paymentFundSourceDisplayedColumns: string[] = ['paymentTypeId', 'fundSourceAccountId', 'actions'];
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId', 'actions'];
@@ -90,25 +103,52 @@ export class SavingProductAccountingStepComponent implements OnInit {
     this.savingProductAccountingForm.get('accountingRule').valueChanges
       .subscribe((accountingRule: any) => {
         if (accountingRule === 2) {
-          this.savingProductAccountingForm.addControl('savingsReferenceAccountId', new FormControl('', Validators.required));
-          this.savingProductAccountingForm.addControl('overdraftPortfolioControlId', new FormControl('', Validators.required));
-          this.savingProductAccountingForm.addControl('savingsControlAccountId', new FormControl('', Validators.required));
-          this.savingProductAccountingForm.addControl('transfersInSuspenseAccountId', new FormControl('', Validators.required));
-          this.savingProductAccountingForm.addControl('interestOnSavingsAccountId', new FormControl('', Validators.required));
-          this.savingProductAccountingForm.addControl('writeOffAccountId', new FormControl('', Validators.required));
-          this.savingProductAccountingForm.addControl('incomeFromFeeAccountId', new FormControl('', Validators.required));
-          this.savingProductAccountingForm.addControl('incomeFromPenaltyAccountId', new FormControl('', Validators.required));
-          this.savingProductAccountingForm.addControl('incomeFromInterestId', new FormControl('', Validators.required));
+          this.savingProductAccountingForm.addControl('savingsReferenceAccountId', new FormControl('', [Validators.required, this.autoSelectValidation]));
+          this.savingProductAccountingForm.addControl('overdraftPortfolioControlId', new FormControl('', [Validators.required, this.autoSelectValidation]));
+          this.savingProductAccountingForm.addControl('savingsControlAccountId', new FormControl('', [Validators.required, this.autoSelectValidation]));
+          this.savingProductAccountingForm.addControl('transfersInSuspenseAccountId', new FormControl('', [Validators.required, this.autoSelectValidation]));
+          this.savingProductAccountingForm.addControl('interestOnSavingsAccountId', new FormControl('', [Validators.required, this.autoSelectValidation]));
+          this.savingProductAccountingForm.addControl('writeOffAccountId', new FormControl('', [Validators.required, this.autoSelectValidation]));
+          this.savingProductAccountingForm.addControl('incomeFromFeeAccountId', new FormControl('', [Validators.required, this.autoSelectValidation]));
+          this.savingProductAccountingForm.addControl('incomeFromPenaltyAccountId', new FormControl('', [Validators.required, this.autoSelectValidation]));
+          this.savingProductAccountingForm.addControl('incomeFromInterestId', new FormControl('', [Validators.required, this.autoSelectValidation]));
           this.savingProductAccountingForm.addControl('advancedAccountingRules', new FormControl(false));
+          
+          const generateMapFn = (type: string, data: Array<any>) => {
+            return (value: any) => {
+              if (typeof value == 'number')
+                return this._filter(this.dispAutoSelectedOptn(type, value), data);
+              return this._filter(value, data);
+            }
+          }
+
+          const getFiltered = (formControlName: string, type: string, data: Array<any>) => {
+            return this.savingProductAccountingForm.get(formControlName).valueChanges.pipe(
+              startWith(''),
+              map(generateMapFn(type, data))
+            );
+          }
+        
+          this.savingReferenceFiltered = getFiltered('savingsReferenceAccountId', 'savingReference', this.assetAccountData);
+          this.overdraftPortfolioFiltered = getFiltered('overdraftPortfolioControlId', 'overdraftPortfolio', this.assetAccountData);
+          this.savingControlFiltered = getFiltered('savingsControlAccountId', 'savingControl', this.liabilityAccountData);
+          this.savingTransfersSuspenseFiltered = getFiltered('transfersInSuspenseAccountId', 'savingTransfersSuspense', this.liabilityAccountData);
+          this.interestOnSavingsFiltered = getFiltered('interestOnSavingsAccountId', 'interestOnSavings', this.expenseAccountData);
+          this.writeOffFiltered = getFiltered('writeOffAccountId', 'writeOff', this.expenseAccountData);
+          this.incomeFromFeeFiltered = getFiltered('incomeFromFeeAccountId', 'incomeFromFee', this.incomeAccountData);
+          this.incomeFromPenaltyFiltered = getFiltered('incomeFromPenaltyAccountId', 'incomeFromPenalty', this.incomeAccountData);
+          this.incomeFromInterestFiltered = getFiltered('incomeFromInterestId', 'incomeFromInterest', this.incomeAccountData);
 
           if (this.isDormancyTrackingActive.value) {
-            this.savingProductAccountingForm.addControl('escheatLiabilityId', new FormControl('', Validators.required));
+            this.savingProductAccountingForm.addControl('escheatLiabilityId', new FormControl('', [Validators.required, this.autoSelectValidation]));
+            this.escheatLiabilityFiltered = getFiltered('escheatLiabilityId', 'escheatLiability', this.liabilityAccountData);
           }
 
           this.isDormancyTrackingActive.valueChanges
             .subscribe((isDormancyTrackingActive: boolean) => {
               if (isDormancyTrackingActive) {
                 this.savingProductAccountingForm.addControl('escheatLiabilityId', new FormControl('', Validators.required));
+                this.escheatLiabilityFiltered = getFiltered('escheatLiabilityId', 'escheatLiability', this.liabilityAccountData);
               } else {
                 this.savingProductAccountingForm.removeControl('escheatLiabilityId');
               }
@@ -266,6 +306,48 @@ export class SavingProductAccountingStepComponent implements OnInit {
       })
     ];
     return formfields;
+  }
+
+  autoSelectValidation(control: AbstractControl): {[key: string]: any} | null {
+    const val = control.value;
+    if (!val)
+      return null;
+    if (typeof control.value == 'string')
+      return { 'autoSelect': true }
+  }
+
+  dispAutoSelectedOptn(type: string, id?: number) {
+    switch(type){
+      case 'savingReference':
+      case 'overdraftPortfolio':
+        return id ? this.assetAccountData.filter((ele: any) => ele.id === id)[0].name : undefined
+      case 'savingControl':
+      case 'savingTransfersSuspense':
+      case 'escheatLiability':
+        return id ? this.liabilityAccountData.filter((ele: any) => ele.id === id)[0].name : undefined
+      case 'interestOnSavings':
+      case 'writeOff':
+        return id ? this.expenseAccountData.filter((ele: any) => ele.id === id)[0].name : undefined
+      case  'incomeFromFee':
+      case 'incomeFromPenalty':
+      case  'incomeFromInterest':
+        return id ? this.incomeAccountData.filter((ele: any) => ele.id === id)[0].name : undefined
+      default:
+        return undefined;
+    }
+  }
+
+  private _filter(value: string, data: Array<any>): string[] {
+    const filterValue = value.toLowerCase();
+    return data.filter((option: any) => {
+        return option.name.toLowerCase().includes(filterValue);
+    })
+  }
+
+  updateField(event: MatAutocompleteSelectedEvent, field: string){
+    this.savingProductAccountingForm.patchValue({
+      [field]: event.option.value
+    })
   }
 
   get savingProductAccounting() {

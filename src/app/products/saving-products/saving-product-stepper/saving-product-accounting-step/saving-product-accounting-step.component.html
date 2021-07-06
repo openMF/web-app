@@ -16,25 +16,53 @@
 
       <mat-form-field fxFlex="48%">
         <mat-label>Saving reference</mat-label>
-        <mat-select formControlName="savingsReferenceAccountId" required>
-          <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
+        <input type="text"
+           matInput
+           required
+           [formControl]="savingProductAccountingForm.get('savingsReferenceAccountId')"
+           [matAutocomplete]="savingReferenceAuto">
+        <mat-autocomplete 
+          #savingReferenceAuto="matAutocomplete" 
+          [displayWith]="dispAutoSelectedOptn.bind(this, 'savingReference')"
+          (optionSelected)="updateField($event, 'savingsReferenceAccountId')">
+          <mat-option 
+            *ngFor="let assetAccount of savingReferenceFiltered | async" 
+            [value]="assetAccount.id"
+          >
             {{ assetAccount.name }}
           </mat-option>
-        </mat-select>
-        <mat-error>
+        </mat-autocomplete>
+        <mat-error *ngIf="savingProductAccountingForm.get('savingsReferenceAccountId').errors?.required">
           Saving reference is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="savingProductAccountingForm.get('savingsReferenceAccountId').hasError('autoSelect')">
+          Please Select a valid option from the list
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
         <mat-label>Overdraft portfolio</mat-label>
-        <mat-select formControlName="overdraftPortfolioControlId" required>
-          <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
+        <input type="text"
+          matInput
+          required
+          [formControl]="savingProductAccountingForm.get('overdraftPortfolioControlId')"
+          [matAutocomplete]="overdraftPortfolioAuto">
+        <mat-autocomplete
+          #overdraftPortfolioAuto="matAutocomplete"
+          [displayWith]="dispAutoSelectedOptn.bind(this, 'overdraftPortfolio')"
+          (optionSelected)="updateField($event, 'overdraftPortfolioControlId')">
+          <mat-option 
+            *ngFor="let assetAccount of overdraftPortfolioFiltered | async" 
+            [value]="assetAccount.id"
+          >
             {{ assetAccount.name }}
           </mat-option>
-        </mat-select>
-        <mat-error>
+        </mat-autocomplete>
+        <mat-error *ngIf="savingProductAccountingForm.get('overdraftPortfolioControlId').errors?.required">
           Overdraft portfolio is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="savingProductAccountingForm.get('overdraftPortfolioControlId').hasError('autoSelect')">
+          Please Select a valid option from the list
         </mat-error>
       </mat-form-field>
 
@@ -44,37 +72,79 @@
 
       <mat-form-field fxFlex="48%">
         <mat-label>Saving control</mat-label>
-        <mat-select formControlName="savingsControlAccountId" required>
-          <mat-option *ngFor="let liabilityAccount of liabilityAccountData" [value]="liabilityAccount.id">
+        <input type="text"
+          matInput
+          required
+          [formControl]="savingProductAccountingForm.get('savingsControlAccountId')"
+          [matAutocomplete]="savingControlAuto">
+        <mat-autocomplete
+          #savingControlAuto="matAutocomplete"
+          [displayWith]="dispAutoSelectedOptn.bind(this, 'savingControl')"
+          (optionSelected)="updateField($event, 'savingsControlAccountId')">
+          <mat-option 
+            *ngFor="let liabilityAccount of savingControlFiltered | async" 
+            [value]="liabilityAccount.id"
+          >
             {{ liabilityAccount.name }}
           </mat-option>
-        </mat-select>
-        <mat-error>
+        </mat-autocomplete>
+        <mat-error *ngIf="savingProductAccountingForm.get('savingsControlAccountId').errors?.required">
           Saving control is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="savingProductAccountingForm.get('savingsControlAccountId').hasError('autoSelect')">
+          Please Select a valid option from the list
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
         <mat-label>Savings transfers in suspense</mat-label>
-        <mat-select formControlName="transfersInSuspenseAccountId" required>
-          <mat-option *ngFor="let liabilityAccount of liabilityAccountData" [value]="liabilityAccount.id">
+        <input type="text"
+          matInput
+          required
+          [formControl]="savingProductAccountingForm.get('transfersInSuspenseAccountId')"
+          [matAutocomplete]="savingTransfersSuspenseAuto">
+        <mat-autocomplete
+          #savingTransfersSuspenseAuto="matAutocomplete"
+          [displayWith]="dispAutoSelectedOptn.bind(this, 'savingTransfersSuspense')"
+          (optionSelected)="updateField($event, 'transfersInSuspenseAccountId')">
+          <mat-option 
+            *ngFor="let liabilityAccount of savingTransfersSuspenseFiltered | async" 
+            [value]="liabilityAccount.id"
+          >
             {{ liabilityAccount.name }}
           </mat-option>
-        </mat-select>
-        <mat-error>
+        </mat-autocomplete>
+        <mat-error *ngIf="savingProductAccountingForm.get('transfersInSuspenseAccountId').errors?.required">
           Savings transfers in suspense is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="savingProductAccountingForm.get('transfersInSuspenseAccountId').hasError('autoSelect')">
+          Please Select a valid option from the list
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%" *ngIf="isDormancyTrackingActive.value">
         <mat-label>Escheat liability</mat-label>
-        <mat-select formControlName="escheatLiabilityId" required>
-          <mat-option *ngFor="let liabilityAccount of liabilityAccountData" [value]="liabilityAccount.id">
+        <input type="text"
+          matInput
+          required
+          [formControl]="savingProductAccountingForm.get('escheatLiabilityId')"
+          [matAutocomplete]="escheatLiabilityAuto">
+        <mat-autocomplete
+          #escheatLiabilityAuto="matAutocomplete"
+          [displayWith]="dispAutoSelectedOptn.bind(this, 'escheatLiability')"
+          (optionSelected)="updateField($event, 'escheatLiabilityId')">
+          <mat-option 
+            *ngFor="let liabilityAccount of escheatLiabilityFiltered | async" 
+            [value]="liabilityAccount.id"
+          >
             {{ liabilityAccount.name }}
           </mat-option>
-        </mat-select>
-        <mat-error>
+        </mat-autocomplete>
+        <mat-error *ngIf="savingProductAccountingForm.get('escheatLiabilityId').errors?.required">
           Escheat liability is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="savingProductAccountingForm.get('escheatLiabilityId').hasError('autoSelect')">
+          Please Select a valid option from the list
         </mat-error>
       </mat-form-field>
 
@@ -84,25 +154,55 @@
 
       <mat-form-field fxFlex="48%">
         <mat-label>Interest on savings</mat-label>
-        <mat-select formControlName="interestOnSavingsAccountId" required>
-          <mat-option *ngFor="let expenseAccount of expenseAccountData" [value]="expenseAccount.id">
+        <input type="text"
+          matInput
+          required
+          [formControl]="savingProductAccountingForm.get('interestOnSavingsAccountId')"
+          [matAutocomplete]="interestOnSavingsAuto">
+        <mat-autocomplete
+          #interestOnSavingsAuto="matAutocomplete"
+          [displayWith]="dispAutoSelectedOptn.bind(this, 'interestOnSavings')"
+          (optionSelected)="updateField($event, 'interestOnSavingsAccountId')">
+          <mat-option 
+            *ngFor="let expenseAccount of interestOnSavingsFiltered | async" 
+            [value]="expenseAccount.id"
+          >
             {{ expenseAccount.name }}
           </mat-option>
-        </mat-select>
-        <mat-error>
+        </mat-autocomplete>
+
+        <mat-error *ngIf="savingProductAccountingForm.get('interestOnSavingsAccountId').errors?.required">
           Interest on savings is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="savingProductAccountingForm.get('interestOnSavingsAccountId').hasError('autoSelect')">
+          Please Select a valid option from the list
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
         <mat-label>Write-off</mat-label>
-        <mat-select formControlName="writeOffAccountId" required>
-          <mat-option *ngFor="let expenseAccount of expenseAccountData" [value]="expenseAccount.id">
+        <input type="text"
+          matInput
+          required
+          [formControl]="savingProductAccountingForm.get('writeOffAccountId')"
+          [matAutocomplete]="writeOffAuto">
+        <mat-autocomplete
+          #writeOffAuto="matAutocomplete"
+          [displayWith]="dispAutoSelectedOptn.bind(this, 'writeOff')"
+          (optionSelected)="updateField($event, 'writeOffAccountId')">
+          <mat-option 
+            *ngFor="let expenseAccount of writeOffFiltered | async" 
+            [value]="expenseAccount.id"
+          >
             {{ expenseAccount.name }}
           </mat-option>
-        </mat-select>
-        <mat-error>
+        </mat-autocomplete>
+
+        <mat-error *ngIf="savingProductAccountingForm.get('writeOffAccountId').errors?.required">
           Write-off is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="savingProductAccountingForm.get('writeOffAccountId').hasError('autoSelect')">
+          Please Select a valid option from the list
         </mat-error>
       </mat-form-field>
 
@@ -112,37 +212,82 @@
 
       <mat-form-field fxFlex="48%">
         <mat-label>Income from fees</mat-label>
-        <mat-select formControlName="incomeFromFeeAccountId" required>
-          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
+        <input type="text"
+          matInput
+          required
+          [formControl]="savingProductAccountingForm.get('incomeFromFeeAccountId')"
+          [matAutocomplete]="incomeFromFeeAuto">
+        <mat-autocomplete
+          #incomeFromFeeAuto="matAutocomplete"
+          [displayWith]="dispAutoSelectedOptn.bind(this, 'incomeFromFee')"
+          (optionSelected)="updateField($event, 'incomeFromFeeAccountId')">
+          <mat-option 
+            *ngFor="let incomeAccount of incomeFromFeeFiltered | async" 
+            [value]="incomeAccount.id"
+          >
             {{ incomeAccount.name }}
           </mat-option>
-        </mat-select>
-        <mat-error>
+        </mat-autocomplete>
+
+        <mat-error *ngIf="savingProductAccountingForm.get('incomeFromFeeAccountId').errors?.required">
           Income from fees Repayments is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="savingProductAccountingForm.get('incomeFromFeeAccountId').hasError('autoSelect')">
+          Please Select a valid option from the list
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
         <mat-label>Income from penalties</mat-label>
-        <mat-select formControlName="incomeFromPenaltyAccountId" required>
-          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
+        <input type="text"
+          matInput
+          required
+          [formControl]="savingProductAccountingForm.get('incomeFromPenaltyAccountId')"
+          [matAutocomplete]="incomeFromPenaltyAuto">
+        <mat-autocomplete
+          #incomeFromPenaltyAuto="matAutocomplete"
+          [displayWith]="dispAutoSelectedOptn.bind(this, 'incomeFromPenalty')"
+          (optionSelected)="updateField($event, 'incomeFromPenaltyAccountId')">
+          <mat-option 
+            *ngFor="let incomeAccount of incomeFromPenaltyFiltered | async" 
+            [value]="incomeAccount.id"
+          >
             {{ incomeAccount.name }}
           </mat-option>
-        </mat-select>
-        <mat-error>
+        </mat-autocomplete>
+
+        <mat-error *ngIf="savingProductAccountingForm.get('incomeFromPenaltyAccountId').errors?.required">
           Income from penalties is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="savingProductAccountingForm.get('incomeFromPenaltyAccountId').hasError('autoSelect')">
+          Please Select a valid option from the list
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
         <mat-label>Overdraft Interest Income</mat-label>
-        <mat-select formControlName="incomeFromInterestId" required>
-          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
+        <input type="text"
+          matInput
+          required
+          [formControl]="savingProductAccountingForm.get('incomeFromInterestId')"
+          [matAutocomplete]="incomeFromInterestAuto">
+        <mat-autocomplete
+          #incomeFromInterestAuto="matAutocomplete"
+          [displayWith]="dispAutoSelectedOptn.bind(this, 'incomeFromInterest')"
+          (optionSelected)="updateField($event, 'incomeFromInterestId')">
+          <mat-option 
+            *ngFor="let incomeAccount of incomeFromInterestFiltered | async" 
+            [value]="incomeAccount.id"
+          >
             {{ incomeAccount.name }}
           </mat-option>
-        </mat-select>
-        <mat-error>
+        </mat-autocomplete>
+
+        <mat-error *ngIf="savingProductAccountingForm.get('incomeFromInterestId').errors?.required">
           Overdraft Interest Income is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="savingProductAccountingForm.get('incomeFromInterestId').hasError('autoSelect')">
+          Please Select a valid option from the list
         </mat-error>
       </mat-form-field>
 
