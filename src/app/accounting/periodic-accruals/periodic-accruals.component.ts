@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { AccountingService } from '../accounting.service';
-
+import { SettingsService } from 'app/settings/settings.service';
 /**
  * Periodic accruals component.
  */
@@ -26,11 +26,13 @@ export class PeriodicAccrualsComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {AccountingService} accountingService Accounting Service.
+   * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(private formBuilder: FormBuilder,
               private accountingService: AccountingService,
+              private settingsService: SettingsService,
               private route: ActivatedRoute,
               private router: Router) { }
 
@@ -57,8 +59,8 @@ export class PeriodicAccrualsComponent implements OnInit {
   submit() {
     const periodicAccruals = this.periodicAccrualsForm.value;
     // TODO: Update once language and date settings are setup
-    periodicAccruals.locale = 'en';
-    periodicAccruals.dateFormat = 'yyyy-MM-dd';
+    periodicAccruals.locale = this.settingsService.language.code;
+    periodicAccruals.dateFormat = this.settingsService.dateFormat;
     if (periodicAccruals.tillDate instanceof Date) {
       let day = periodicAccruals.tillDate.getDate();
       let month = periodicAccruals.tillDate.getMonth() + 1;

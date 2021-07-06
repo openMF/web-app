@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { AccountingService } from '../accounting.service';
-
+import { SettingsService } from 'app/settings/settings.service';
 /**
  * Create Journal Entry component.
  */
@@ -35,11 +35,13 @@ export class CreateJournalEntryComponent implements OnInit {
    * Retrieves the offices, currencies, payment types and gl accounts data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {AccountingService} accountingService Accounting Service.
+   * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(private formBuilder: FormBuilder,
               private accountingService: AccountingService,
+              private settingsService: SettingsService,
               private route: ActivatedRoute,
               private router: Router) {
     this.route.data.subscribe((data: {
@@ -134,8 +136,8 @@ export class CreateJournalEntryComponent implements OnInit {
   submit() {
     const journalEntry = this.journalEntryForm.value;
     // TODO: Update once language and date settings are setup
-    journalEntry.locale = 'en';
-    journalEntry.dateFormat = 'yyyy-MM-dd';
+    journalEntry.locale = this.settingsService.language.code;
+    journalEntry.dateFormat = this.settingsService.dateFormat;
     if (journalEntry.transactionDate instanceof Date) {
       let day = journalEntry.transactionDate.getDate();
       let month = journalEntry.transactionDate.getMonth() + 1;

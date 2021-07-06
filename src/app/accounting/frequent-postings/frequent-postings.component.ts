@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { AccountingService } from '../accounting.service';
-
+import { SettingsService } from 'app/settings/settings.service';
 /**
  * Frequent Postings component.
  */
@@ -43,11 +43,13 @@ export class FrequentPostingsComponent implements OnInit {
    * Retrieves the offices, accounting rules, currencies and payment types data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {AccountingService} accountingService Accounting Service.
+   * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(private formBuilder: FormBuilder,
               private accountingService: AccountingService,
+              private settingsService: SettingsService,
               private route: ActivatedRoute,
               private router: Router) {
     this.route.data.subscribe((data: {
@@ -165,8 +167,8 @@ export class FrequentPostingsComponent implements OnInit {
     const journalEntry = this.frequentPostingsForm.value;
     journalEntry.accountingRule = journalEntry.accountingRule.id;
     // TODO: Update once language and date settings are setup
-    journalEntry.locale = 'en';
-    journalEntry.dateFormat = 'yyyy-MM-dd';
+    journalEntry.locale = this.settingsService.language.code;
+    journalEntry.dateFormat = this.settingsService.dateFormat;
     if (journalEntry.transactionDate instanceof Date) {
       let day = journalEntry.transactionDate.getDate();
       let month = journalEntry.transactionDate.getMonth() + 1;

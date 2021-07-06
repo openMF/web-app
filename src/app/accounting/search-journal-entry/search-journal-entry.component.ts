@@ -11,7 +11,7 @@ import { tap, startWith, map, distinctUntilChanged, debounceTime} from 'rxjs/ope
 
 /** Custom Services */
 import { AccountingService } from '../accounting.service';
-
+import { SettingsService } from 'app/settings/settings.service';
 /** Custom Data Source */
 import { JournalEntriesDataSource } from './journal-entry.datasource';
 
@@ -96,11 +96,11 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
     },
     {
       type: 'dateFormat',
-      value: 'yyyy-MM-dd'
+      value: this.settingsService.dateFormat
     },
     {
       type: 'locale',
-      value: 'en'
+      value: this.settingsService.language.code
     }
   ];
 
@@ -113,8 +113,10 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    * Retrieves the offices and gl accounts data from `resolve`.
    * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
+   * @param {SettingsService} settingsService Settings Service.
    */
   constructor(private accountingService: AccountingService,
+              private settingsService: SettingsService,
               private route: ActivatedRoute) {
     this.route.data.subscribe((data: {
         offices: any,
