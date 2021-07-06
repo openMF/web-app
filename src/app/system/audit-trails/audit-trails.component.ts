@@ -11,6 +11,7 @@ import { AuditTrailsDataSource } from './audit-trail.datasource';
 
 /** Custom Services */
 import { SystemService } from '../system.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** rxjs Imports */
 import { merge } from 'rxjs';
@@ -90,11 +91,11 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
     },
     {
       type: 'dateFormat',
-      value: 'yyyy-MM-dd'
+      value: this.settingsService.dateFormat
     },
     {
       type: 'locale',
-      value: 'en'
+      value: this.settingsService.language.code
     }
   ];
   /** User form control. */
@@ -130,7 +131,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    */
   constructor(private route: ActivatedRoute,
               private systemService: SystemService,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { auditTrailSearchTemplate: any }) => {
       this.auditTrailSearchTemplateData = data.auditTrailSearchTemplate;
     });
@@ -382,7 +384,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * Generates the CSV file of Audit Trails Data.
    */
   downloadCSV() {
-    const dateFormat = 'yyyy-MM-dd';
+    const dateFormat = this.settingsService.dateFormat;
     const replacer = (key: any, value: any) => value === undefined ? '' : value;
     const header = ['ID', 'Resource ID', 'Status', 'Office', 'Made On', 'Maker', 'Checked On', 'Checker', 'Entity', 'Action', 'Client'];
     const headerCode = ['id', 'resourceId', 'processingResult', 'officeName', 'madeOnDate', 'maker', 'checkedOnDate', 'checker', 'entityName', 'actionName', 'clientName'];
@@ -411,7 +413,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * @param {any} timestamp Timestamp from which date is to be extracted.
    */
   private getDate(timestamp: any) {
-    const dateFormat = 'yyyy-MM-dd';
+    const dateFormat = this.settingsService.dateFormat;
     return this.datePipe.transform(timestamp, dateFormat);
   }
 
