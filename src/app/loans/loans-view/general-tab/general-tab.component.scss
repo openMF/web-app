@@ -20,3 +20,27 @@
 span {
   margin: 0.5em 0;
 }
+
+.loan-card {
+  margin: 0 auto;
+  width: 100%;
+  padding: 0;
+  .content {
+    padding-left: 0px;
+    margin-left: 0px;
+    .loan-tables {
+      padding: 1%;
+      margin: 1%;
+      .table-headers {
+        margin: 0;
+        padding: 6px;
+      }
+      td {
+        padding: 3px;
+      }
+    } 
+  }
+  i, img:hover {
+    cursor: pointer;
+  }
+}

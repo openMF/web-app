@@ -22,18 +22,14 @@ export class GeneralTabComponent implements OnInit {
     'outstanding': string,
     'overdue': string
   }[];
-  loanDetailsTableData: {
-    'key': string,
-    'value'?: string
-  }[];
 
   /** Data source for loans summary table. */
   dataSource: MatTableDataSource<any>;
-  detailsDataSource: MatTableDataSource<any>;
 
   constructor(private route: ActivatedRoute) {
     this.route.parent.data.subscribe((data: { loanDetailsData: any, }) => {
       this.loanDetails = data.loanDetailsData;
+      console.log(this.loanDetails);
     });
   }
 
@@ -41,9 +37,6 @@ export class GeneralTabComponent implements OnInit {
     this.status = this.loanDetails.value;
     if (this.loanDetails.summary) {
       this.setloanSummaryTableData();
-      this.setloanDetailsTableData();
-    } else {
-      this.setloanNonDetailsTableData();
     }
   }
 
@@ -97,59 +90,6 @@ export class GeneralTabComponent implements OnInit {
     }
     ];
     this.dataSource = new MatTableDataSource(this.loanSummaryTableData);
-  }
-
-  setloanDetailsTableData() {
-
-    this.loanDetailsTableData = [
-      {
-        'key': 'Disbursement Date'
-      },
-      {
-        'key': 'Loan Purpose'
-      },
-      {
-        'key': 'Loan Officer'
-      },
-      {
-        'key': 'Currency'
-      },
-      {
-        'key': 'External Id'
-      },
-      {
-        'key': 'Proposed Amount',
-        'value': this.loanDetails.proposedPrincipal,
-      },
-      {
-        'key': 'Approved Amount',
-        'value': this.loanDetails.approvedPrincipal,
-      },
-      {
-        'key': 'Disburse Amount',
-        'value': this.loanDetails.principal,
-      },
-    ];
-    this.detailsDataSource = new MatTableDataSource(this.loanDetailsTableData);
-
-  }
-
-  setloanNonDetailsTableData() {
-    this.loanDetailsTableData = [
-      {
-        'key': 'Disbursement Date'
-      },
-      {
-        'key': 'Currency'
-      },
-      {
-        'key': 'Loan Officer'
-      },
-      {
-        'key': 'External Id'
-      }
-    ];
-    this.detailsDataSource = new MatTableDataSource(this.loanDetailsTableData);
   }
 
   showApprovedAmountBasedOnStatus() {
