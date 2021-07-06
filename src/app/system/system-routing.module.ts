@@ -1,3 +1,4 @@
+import { EditSurveyComponent } from './manage-surveys/edit-survey/edit-survey.component';
 import { NgModule } from '@angular/core';
 
 /** Routing Imports */
@@ -398,6 +399,14 @@ const routes: Routes = [
               {
                 path: '',
                 component: ViewSurveyComponent,
+                resolve: {
+                  survey: SurveyResolver
+                }
+              },
+              {
+                path: 'edit',
+                component: EditSurveyComponent,
+                data: { title: extract('Edit Survey'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
                 resolve: {
                   survey: SurveyResolver
                 }
