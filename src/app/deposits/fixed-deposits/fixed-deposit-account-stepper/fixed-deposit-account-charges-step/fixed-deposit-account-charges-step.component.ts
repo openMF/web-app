@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 /** Dialog Components */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Services */
 import { DatePipe } from '@angular/common';
@@ -45,9 +46,11 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
   /**
    * @param {MatDialog} dialog Mat Dialog
    * @param {DatePipe} datePipe Date Pipe
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(public dialog: MatDialog,
-              private datePipe: DatePipe) { }
+              private datePipe: DatePipe,
+              private settingsService: SettingsService) { }
 
   ngOnInit() {
     this.currencyCode.valueChanges.subscribe(() => {
@@ -128,7 +131,7 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
     editChargeDateDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         let newCharge: any;
-        const dateFormat = 'dd MMMM yyyy';
+        const dateFormat = this.settingsService.dateFormat;
         const date = this.datePipe.transform(response.data.value.date, dateFormat);
         switch (charge.chargeTimeType.value) {
           case 'Specified due date':

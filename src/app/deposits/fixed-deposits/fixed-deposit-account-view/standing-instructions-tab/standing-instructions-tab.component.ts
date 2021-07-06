@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 /** Custom Services */
 import { FixedDepositsService } from 'app/deposits/fixed-deposits/fixed-deposits.service';
 import { AccountTransfersService } from 'app/account-transfers/account-transfers.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Dialog Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -47,11 +48,13 @@ export class StandingInstructionsTabComponent implements OnInit {
    * @param {FixedDepositsService} fixedDepositsService FixedDepositsService
    * @param {MatDialog} dialog Mat Dialog
    * @param {AccountTransfersService} accountTransfersService Accounts Transfer Service
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private route: ActivatedRoute,
               private fixedDepositsService: FixedDepositsService,
               private dialog: MatDialog,
-              private accountTransfersService: AccountTransfersService) {
+              private accountTransfersService: AccountTransfersService,
+              private settingsService: SettingsService) {
     this.route.parent.data.subscribe((data: { fixedDepositsAccountData: any }) => {
       this.fixedDepositsData = data.fixedDepositsAccountData;
     });
@@ -68,8 +71,8 @@ export class StandingInstructionsTabComponent implements OnInit {
     const clientId = this.fixedDepositsData.clientId;
     const clientName = this.fixedDepositsData.clientName;
     const accountId = this.fixedDepositsData.id;
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     this.fixedDepositsService.getStandingInstructions(clientId, clientName, accountId, locale, dateFormat).subscribe((response: any) => {
       this.instructionsData = response.pageItems;
       this.dataSource.data = this.instructionsData;

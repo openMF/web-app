@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Add Fixed Deposits Charge component.
@@ -38,13 +39,15 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
    * @param {Router} router Router
    * @param {DatePipe} datePipe Date Pipe
    * @param {SavingsService} savingsService Savings Service
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private datePipe: DatePipe,
-    private savingsService: SavingsService
+    private savingsService: SavingsService,
+    private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { fixedDepositsAccountActionData: any }) => {
       this.savingsChargeOptions = data.fixedDepositsAccountActionData.chargeOptions;
@@ -112,7 +115,7 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
    */
   submit() {
     const savingsCharge = this.fixedDepositsChargeForm.value;
-    savingsCharge.locale = 'en';
+    savingsCharge.locale = this.settingsService.language.code;
     if (!savingsCharge.feeInterval) {
       savingsCharge.feeInterval = this.chargeDetails.feeInterval;
     }
@@ -125,7 +128,7 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
           savingsCharge.feeOnMonthDay = this.datePipe.transform(prevDate, monthDayFormat);
         }
       } else {
-        const dateFormat = 'yyyy-MM-dd';
+        const dateFormat = this.settingsService.dateFormat;
         savingsCharge.dateFormat = dateFormat;
         if (savingsCharge.dueDate) {
           const prevDate = this.fixedDepositsChargeForm.value.dueDate;

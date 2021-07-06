@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { FixedDepositsService } from '../fixed-deposits.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Components */
 import { FixedDepositAccountDetailsStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-details-step/fixed-deposit-account-details-step.component';
@@ -45,11 +46,13 @@ export class EditFixedDepositAccountComponent {
    * @param {Router} router Router
    * @param {DatePipe} datePipe Date Pipe
    * @param {FixedDepositsService} fixedDepositsService Fixed Deposits Service
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private route: ActivatedRoute,
               private router: Router,
               private datePipe: DatePipe,
-              private fixedDepositsService: FixedDepositsService) {
+              private fixedDepositsService: FixedDepositsService,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { fixedDepositsAccountAndTemplate: any }) => {
       this.fixedDepositsAccountAndTemplate = data.fixedDepositsAccountAndTemplate;
     });
@@ -124,8 +127,8 @@ export class EditFixedDepositAccountComponent {
    * Submits the fixed deposit form and creates a new fixed deposit account
    */
   submit() {
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const monthDayFormat = 'dd MMMM';
     const fixedDepositAccount = {
       ...this.fixedDepositAccount,

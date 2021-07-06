@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { FixedDepositsService } from 'app/deposits/fixed-deposits/fixed-deposits.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Approve Fixed Deposits Account Component
@@ -32,12 +33,14 @@ export class ApproveFixedDepositsAccountComponent implements OnInit {
    * @param {DatePipe} datePipe Date Pipe
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
               private fixedDepositsService: FixedDepositsService,
               private datePipe: DatePipe,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private settingsService: SettingsService) {
     this.accountId = this.route.parent.snapshot.params['fixedDepositAccountId'];
   }
 
@@ -63,9 +66,8 @@ export class ApproveFixedDepositsAccountComponent implements OnInit {
    * if successful redirects to the fixed deposit account.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const prevApprovedOnDate: Date = this.approveFixedDepositsAccountForm.value.approvedOnDate;
     this.approveFixedDepositsAccountForm.patchValue({
       approvedOnDate: this.datePipe.transform(prevApprovedOnDate, dateFormat),
