@@ -1,14 +1,18 @@
+/** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
+/** Dialog Components */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
-
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
+
+/** Custom Services */
+import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
   selector: 'mifosx-share-product-market-price-step',
@@ -21,11 +25,20 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
 
   shareProductMarketPriceForm: FormGroup;
 
+  /** For displaying required columns */
   displayedColumns: string[] = ['fromDate', 'shareValue', 'actions'];
+
+  /**
+   * @param {FormBuilder} formBuilder Form Builder.
+   * @param {DatePipe} datePipe Date Pipe to format date.
+   * @param {DatePipe} datePipe Date Pipe to format date.
+   * @param {SettingsService} settingsService Settings Service
+   */
 
   constructor(private formBuilder: FormBuilder,
               public dialog: MatDialog,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private settingsService: SettingsService) {
     this.createShareProductMarketPriceForm();
   }
 
@@ -37,7 +50,7 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
 
   createShareProductMarketPriceForm() {
     this.shareProductMarketPriceForm = this.formBuilder.group({
-      'marketPricePeriods':  this.formBuilder.array([])
+      'marketPricePeriods': this.formBuilder.array([])
     });
   }
 
@@ -113,14 +126,15 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
 
   get shareProductMarketPrice() {
     // TODO: Update once language and date settings are setup
-    const dateFormat = 'yyyy-MM-dd';
+    const dateFormat = this.settingsService.dateFormat;
+    const locale = this.settingsService.language.code;
     const marketPricePeriods = [];
     for (const marketPricePeriod of this.marketPricePeriods.value) {
       marketPricePeriods.push({
         ...marketPricePeriod,
         fromDate: this.datePipe.transform(marketPricePeriod.fromDate, dateFormat),
         dateFormat,
-        locale: 'en'
+        locale
       });
     }
     return { marketPricePeriods };

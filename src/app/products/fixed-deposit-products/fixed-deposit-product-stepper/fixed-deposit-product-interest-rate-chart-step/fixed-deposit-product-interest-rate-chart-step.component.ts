@@ -1,16 +1,22 @@
+/** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
+/** Custom Components */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DepositProductIncentiveFormDialogComponent } from 'app/products/deposit-product-incentive-form-dialog/deposit-product-incentive-form-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
+/** Dialog Components */
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
+
+/** Custom Services */
+import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
   selector: 'mifosx-fixed-deposit-product-interest-rate-chart-step',
@@ -50,9 +56,17 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
   chartDetailData: any = [];
   chartsDetail: any[] = [];
 
+  /**
+   * @param {FormBuilder} formBuilder Form Builder.
+   * @param {MatDialog} dialog Dialog reference.
+   * @param {DatePipe} datePipe Date Pipe.
+   * @param {SettingsService} settingsService Settings Service.
+   */
+
   constructor(private formBuilder: FormBuilder,
               public dialog: MatDialog,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private settingsService: SettingsService) {
     this.createFixedDepositProductInterestRateChartForm();
   }
 
@@ -284,7 +298,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
 
   getData(formType: string, values?: any) {
     switch (formType) {
-      case 'Slab': return  { title: 'Slab', formfields: this.getSlabFormfields(values) };
+      case 'Slab': return { title: 'Slab', formfields: this.getSlabFormfields(values) };
       case 'Incentive': return { values, chartTemplate: this.fixedDepositProductsTemplate.chartTemplate };
     }
   }
@@ -349,8 +363,8 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
 
   get fixedDepositProductInterestRateChart() {
     // TODO: Update once language and date settings are setup
-    const dateFormat = 'yyyy-MM-dd';
-    const locale = 'en';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const fixedDepositProductInterestRateChart = this.fixedDepositProductInterestRateChartForm.value;
     for (const chart of fixedDepositProductInterestRateChart.charts) {
       chart.dateFormat = dateFormat;

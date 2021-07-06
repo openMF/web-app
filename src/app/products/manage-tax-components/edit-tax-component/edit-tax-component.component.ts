@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { ProductsService } from '../../products.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Edit tax component.
@@ -31,12 +32,14 @@ export class EditTaxComponentComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {DatePipe} datePipe Date Pipe to format date.
+   * @param {SettingsService} settingsService Settings Service.
    */
   constructor(private formBuilder: FormBuilder,
               private productsService: ProductsService,
               private route: ActivatedRoute,
               private router: Router,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { taxComponent: any }) => {
       this.taxComponentData = data.taxComponent;
     });
@@ -57,8 +60,8 @@ export class EditTaxComponentComponent implements OnInit {
       'name': [this.taxComponentData.name, [Validators.required]],
       'percentage': [this.taxComponentData.percentage, [Validators.required, Validators.pattern('^(0*[1-9][0-9]*(\\.[0-9]+)?|0+\\.[0-9]*[1-9][0-9]*)$'), Validators.max(100)]],
       'startDate': [this.taxComponentData.startDate && new Date(this.taxComponentData.startDate)],
-      'creditAccountType': [{value: this.taxComponentData.creditAccountType.value, disabled: true}],
-      'creditAccount': [{value: this.taxComponentData.creditAccount.name, disabled: true}]
+      'creditAccountType': [{ value: this.taxComponentData.creditAccountType.value, disabled: true }],
+      'creditAccount': [{ value: this.taxComponentData.creditAccount.name, disabled: true }]
     });
   }
 
@@ -69,12 +72,12 @@ export class EditTaxComponentComponent implements OnInit {
   submit() {
     const prevStartDate: Date = this.taxComponentForm.value.startDate;
     // TODO: Update once language and date settings are setup
-    const dateFormat = 'yyyy-MM-dd';
+    const dateFormat = this.settingsService.dateFormat;
     this.taxComponentForm.patchValue({
       startDate: this.datePipe.transform(prevStartDate, dateFormat)
     });
     const taxComponent = this.taxComponentForm.value;
-    taxComponent.locale = 'en';
+    taxComponent.locale = this.settingsService.language.code;
     taxComponent.dateFormat = dateFormat;
     this.productsService.updateTaxComponent(this.taxComponentData.id, taxComponent).subscribe((response: any) => {
       this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });

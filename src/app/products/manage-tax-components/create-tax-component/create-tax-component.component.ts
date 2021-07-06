@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { ProductsService } from '../../products.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Create Tax Component component.
@@ -41,13 +42,15 @@ export class CreateTaxComponentComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {DatePipe} datePipe Date Pipe to format date.
+   * @param {SettingsService} settingsService Settings Service.
    */
   constructor(private formBuilder: FormBuilder,
               private productsService: ProductsService,
               private route: ActivatedRoute,
               private router: Router,
-              private datePipe: DatePipe) {
-    this.route.data.subscribe(( data: { taxComponentTemplate: any }) => {
+              private datePipe: DatePipe,
+              private settingsService: SettingsService) {
+    this.route.data.subscribe((data: { taxComponentTemplate: any }) => {
       this.taxComponentTemplateData = data.taxComponentTemplate;
     });
   }
@@ -114,12 +117,12 @@ export class CreateTaxComponentComponent implements OnInit {
   submit() {
     const prevStartDate: Date = this.taxComponentForm.value.startDate;
     // TODO: Update once language and date settings are setup
-    const dateFormat = 'yyyy-MM-dd';
+    const dateFormat = this.settingsService.dateFormat;
     this.taxComponentForm.patchValue({
       startDate: this.datePipe.transform(prevStartDate, dateFormat)
     });
     const taxComponent = this.taxComponentForm.value;
-    taxComponent.locale = 'en';
+    taxComponent.locale = this.settingsService.language.code;
     taxComponent.dateFormat = dateFormat;
     this.productsService.createTaxComponent(taxComponent).subscribe((response: any) => {
       this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
