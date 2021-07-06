@@ -19,6 +19,9 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 
+/** Custom Services */
+import { SettingsService } from 'app/settings/settings.service';
+
 /**
  * Individual Collection Sheet
  */
@@ -82,13 +85,15 @@ export class IndividualCollectionSheetComponent implements OnInit {
    * @param {DatePipe} datePipe Date Pipe to format date.
    * @param {Dialog} dialog Dialog component.
    * @param {Router} router Router for navigation.
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
-    private collectionsService: CollectionsService,
-    private route: ActivatedRoute,
-    private datePipe: DatePipe,
-    public dialog: MatDialog,
-    private router: Router, ) {
+              private collectionsService: CollectionsService,
+              private route: ActivatedRoute,
+              private datePipe: DatePipe,
+              public dialog: MatDialog,
+              private router: Router,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { officesData: any }) => {
       this.officesData = data.officesData;
     });
@@ -276,8 +281,8 @@ export class IndividualCollectionSheetComponent implements OnInit {
    */
   previewCollectionSheet() {
     // TODO: Update once language and date settings are setup
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const collectionSheet = {
       ...this.collectionSheetForm.value,
       'transactionDate': this.datePipe.transform(this.collectionSheetForm.value.transactionDate, dateFormat),
@@ -304,8 +309,8 @@ export class IndividualCollectionSheetComponent implements OnInit {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     this.bulkDisbursementTransactionsData['bulkRepaymentTransactions'] = this.bulkRepaymentTransactions;
     this.bulkDisbursementTransactionsData['bulkSavingsDueTransactions'] = this.bulkSavingsDueTransactions;
     const finalSubmitData = {
