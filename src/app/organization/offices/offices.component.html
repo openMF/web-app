@@ -1,9 +1,13 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
 
-  <button mat-raised-button color="primary">
-    <fa-icon icon="sitemap"></fa-icon>&nbsp;&nbsp;
-    Tree View
-  </button>
+  <mat-button-toggle-group [formControl]="viewGroup">
+    <mat-button-toggle value="listView">
+      <fa-icon icon="list"></fa-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="treeView">
+      <fa-icon icon="sitemap"></fa-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
 
   <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_OFFICE'">
     <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
@@ -17,7 +21,9 @@
 
 </div>
 
-<div class="container">
+<!-- List View -->
+
+<div class="container" [hidden]="viewGroup.value !== 'listView'">
 
   <div fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
@@ -56,6 +62,130 @@
     </table>
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+  </div>
+
+</div>
+
+<!-- Tree View -->
+
+<div class="container" [hidden]="viewGroup.value !== 'treeView'">
+
+  <div class="m-b-20" fxLayout="row" fxLayoutAlign="start" fxLayoutGap="20px">
+    <button mat-raised-button (click)="nestedTreeControl.expandAll()">  <!-- Bug(angular-material): https://github.com/angular/material2/issues/12170 -->
+      Expand All
+    </button>
+    <button mat-raised-button (click)="nestedTreeControl.collapseAll()">
+      Collapse All
+    </button>
+  </div>
+
+  <div fxLayout="row" fxLayoutGap="4%" fxLayout.lt-md="column">
+
+    <div fxFlex>
+
+      <mat-card>
+
+        <mat-card-content>
+
+          <mat-tree [dataSource]="nestedTreeDataSource" [treeControl]="nestedTreeControl" class="office-tree">
+
+            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+              <li class="mat-tree-node">
+                <button mat-icon-button disabled></button>
+                <span (click)="viewOfficeNode(node)">&nbsp;&nbsp;
+                  {{ node.name }}
+                </span>
+              </li>
+            </mat-tree-node>
+
+            <mat-nested-tree-node *matTreeNodeDef="let node; when: hasNestedChild">
+              <li>
+                <div class="mat-tree-node">
+                  <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+                    <fa-icon class="mat-icon-rtl-mirror" icon="{{ nestedTreeControl.isExpanded(node) ? 'chevron-down' : 'chevron-right' }}"></fa-icon>
+                  </button>
+                  <span (click)="viewOfficeNode(node)">&nbsp;&nbsp;
+                    {{ node.name }}
+                  </span>
+                </div>
+                <ul [class.office-tree-invisible]="!nestedTreeControl.isExpanded(node)">
+                  <ng-container matTreeNodeOutlet></ng-container>
+                </ul>
+              </li>
+            </mat-nested-tree-node>
+
+          </mat-tree>
+
+        </mat-card-content>
+
+      </mat-card>
+
+    </div>
+
+    <div fxFlex="48%" *ngIf="office">
+
+      <mat-card>
+
+        <mat-card-content>
+
+          <div fxLayout="row">
+
+            <mat-card-title>
+              {{ office.name }}
+            </mat-card-title>
+
+            <div fxFlex fxLayoutAlign="end">
+              <button mat-icon-button (click)="closeOffice()">
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+
+          </div>
+
+          <mat-tab-group>
+
+            <mat-tab label="General">
+
+              <div fxLayout="row wrap" class="content">
+
+                <div fxFlex="50%" class="mat-body-strong" *ngIf="office.parentId">
+                  Parent Office
+                </div>
+
+                <div fxFlex="50%" *ngIf="office.parentId">
+                  {{ office.parentName }}
+                </div>
+
+                <div fxFlex="50%" class="mat-body-strong">
+                  Opened On
+                </div>
+
+                <div fxFlex="50%">
+                  {{ office.openingDate | date }}
+                </div>
+
+                <div fxFlex="50%" class="mat-body-strong" *ngIf="office.externalId">
+                  External ID
+                </div>
+
+                <div fxFlex="50%" *ngIf="office.externalId">
+                  {{ office.externalId }}
+                </div>
+
+              </div>
+
+            </mat-tab>
+
+            <mat-tab *ngFor="let dataTable of dataTablesData" label="{{ dataTable.registeredTableName }}"></mat-tab>
+
+          </mat-tab-group>
+
+        </mat-card-content>
+
+      </mat-card>
+
+    </div>
 
   </div>
 
