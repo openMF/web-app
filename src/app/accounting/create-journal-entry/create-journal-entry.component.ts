@@ -149,7 +149,7 @@ export class CreateJournalEntryComponent implements OnInit {
       journalEntry.transactionDate = `${year}-${month}-${day}`;
     }
     this.accountingService.createJournalEntry(journalEntry).subscribe(response => {
-      this.router.navigate(['../transactions/view', response.transactionId], { relativeTo: this.route });
+      this.router.navigate(['../transactions', response.transactionId], { relativeTo: this.route });
     });
   }
 

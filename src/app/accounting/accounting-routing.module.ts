@@ -115,7 +115,7 @@ const routes: Routes = [
               data: { title: extract('Transactions'), breadcrumb: 'Transactions', addBreadcrumbLink: false },
               children: [
                 {
-                  path: 'view/:id',
+                  path: ':id',
                   component: ViewTransactionComponent,
                   data: { title: extract('View Transaction'), routeParamBreadcrumb: 'id' },
                   resolve: {
@@ -146,7 +146,7 @@ const routes: Routes = [
               }
             },
             {
-              path: 'view/:id',
+              path: ':id',
               data: { title: extract('View Financial Activity Mapping'), routeParamBreadcrumb: 'id' },
               children: [
                 {
@@ -200,7 +200,7 @@ const routes: Routes = [
                   }
                 },
                 {
-                  path: 'view/:id',
+                  path: ':id',
                   data: { title: extract('View GL Account'), routeResolveBreadcrumb: ['glAccountAndChartOfAccountsTemplate', 'name'] },
                   resolve: {
                     glAccountAndChartOfAccountsTemplate: GlAccountAndChartOfAccountsTemplateResolver
@@ -243,7 +243,7 @@ const routes: Routes = [
               }
             },
             {
-              path: 'view/:id',
+              path: ':id',
               data: { title: extract('View Accounting Closure'), routeParamBreadcrumb: 'id' },
               resolve: {
                 glAccountClosure: ClosingEntryResolver
@@ -283,7 +283,7 @@ const routes: Routes = [
               }
             },
             {
-              path: 'view/:id',
+              path: ':id',
               data: { title: extract('View Accounting Rule'), routeResolveBreadcrumb: ['accountingRule', 'name'] },
               resolve: {
                 accountingRule: AccountingRuleResolver
@@ -328,7 +328,21 @@ const routes: Routes = [
               data: { title: extract('Create Provisioning Entry'), breadcrumb: 'Create' }
             },
             {
-              path: 'view/:id',
+              path: 'journal-entries',
+              data: { breadcrumb: 'Journal Entries', addBreadcrumbLink: false },
+              children: [
+                {
+                  path: ':id',
+                  component: ViewProvisioningJournalEntriesComponent,
+                  data: { title: extract('View Provisioning Journal Entry'), routeParamBreadcrumb: 'id' },
+                  resolve: {
+                    provisioningJournalEntries: ProvisioningJournalEntriesResolver
+                  }
+                }
+              ]
+            },
+            {
+              path: ':id',
               component: ViewProvisioningEntryComponent,
               data: { title: extract('View Provisioning Entry'), routeParamBreadcrumb: 'id' },
               resolve: {
@@ -338,20 +352,6 @@ const routes: Routes = [
                 loanProducts: LoanProductsResolver,
                 provisioningCategories: ProvisioningCategoriesResolver
               }
-            },
-            {
-              path: 'journal-entries',
-              data: { breadcrumb: 'Journal Entries', addBreadcrumbLink: false },
-              children: [
-                {
-                  path: 'view/:id',
-                  component: ViewProvisioningJournalEntriesComponent,
-                  data: { title: extract('View Provisioning Journal Entry'), routeParamBreadcrumb: 'id' },
-                  resolve: {
-                    provisioningJournalEntries: ProvisioningJournalEntriesResolver
-                  }
-                }
-              ]
             }
           ]
         }

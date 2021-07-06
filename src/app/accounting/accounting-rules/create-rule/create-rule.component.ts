@@ -121,7 +121,7 @@ export class CreateRuleComponent implements OnInit {
     delete accountingRule.debitRuleType;
     delete accountingRule.creditRuleType;
     this.accountingService.createAccountingRule(accountingRule).subscribe((response: any) => {
-      this.router.navigate(['../view', response.resourceId], { relativeTo: this.route });
+      this.router.navigate([`../${response.resourceId}`], { relativeTo: this.route });
     });
   }
 

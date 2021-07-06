@@ -81,7 +81,7 @@ export class CreateClosureComponent implements OnInit {
       accountingClosure.closingDate = `${year}-${month}-${day}`;
     }
     this.accountingService.createAccountingClosure(accountingClosure).subscribe((response: any) => {
-      this.router.navigate(['../view', response.resourceId], { relativeTo: this.route });
+      this.router.navigate([`../${response.resourceId}`], { relativeTo: this.route });
     });
   }
 

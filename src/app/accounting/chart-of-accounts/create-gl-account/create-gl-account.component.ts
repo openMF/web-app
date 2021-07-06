@@ -118,7 +118,7 @@ export class CreateGlAccountComponent implements OnInit {
    */
   submit() {
     this.accountingService.createGlAccount(this.glAccountForm.value).subscribe((response: any) => {
-      this.router.navigate(['../view', response.resourceId], { relativeTo: this.route });
+      this.router.navigate([`../${response.resourceId}`], { relativeTo: this.route });
     });
   }
 

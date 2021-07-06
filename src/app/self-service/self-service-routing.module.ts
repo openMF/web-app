@@ -46,7 +46,7 @@ const routes: Routes = [
               data: { title: extract('Create Self Service User'), breadcrumb: 'Create' }
             },
             {
-              path: 'view/:id',
+              path: ':id',
               data: { title: extract('View Self Service User'), routeResolveBreadcrumb: ['user', 'username'] },
               resolve: {
                 user: ViewUserResolver

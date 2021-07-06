@@ -87,7 +87,7 @@ export class ProvisioningEntriesComponent implements OnInit {
    * @param {number} provisioningEntryId Provisioning entry id.
    */
   viewJournalEntry($event: Event, provisioningEntryId: number) {
-    this.router.navigate(['journal-entries/view', provisioningEntryId], { relativeTo: this.route });
+    this.router.navigate(['journal-entries', provisioningEntryId], { relativeTo: this.route });
     $event.stopPropagation();
   }
 
