@@ -11,6 +11,7 @@ import { SettingsService } from 'app/settings/settings.service';
 import { LoansAccountDetailsStepComponent } from '../loans-account-stepper/loans-account-details-step/loans-account-details-step.component';
 import { LoansAccountTermsStepComponent } from '../loans-account-stepper/loans-account-terms-step/loans-account-terms-step.component';
 import { LoansAccountChargesStepComponent } from '../loans-account-stepper/loans-account-charges-step/loans-account-charges-step.component';
+import { LoansAccountScorecardStepComponent } from '../loans-account-stepper/loans-account-scorecard-step/loans-account-scorecard-step.component';
 
 /**
  * Create loans account
@@ -26,6 +27,7 @@ export class CreateLoansAccountComponent implements OnInit {
   @ViewChild(LoansAccountDetailsStepComponent, { static: true }) loansAccountDetailsStep: LoansAccountDetailsStepComponent;
   @ViewChild(LoansAccountTermsStepComponent, { static: true }) loansAccountTermsStep: LoansAccountTermsStepComponent;
   @ViewChild(LoansAccountChargesStepComponent, { static: true }) loansAccountChargesStep: LoansAccountChargesStepComponent;
+  @ViewChild(LoansAccountScorecardStepComponent, { static: true }) loanAccountScorecardStep: LoansAccountScorecardStepComponent;
 
   /** Loans Account Template */
   loansAccountTemplate: any;
@@ -81,7 +83,8 @@ export class CreateLoansAccountComponent implements OnInit {
   get loansAccountFormValid() {
     return (
       this.loansAccountDetailsForm.valid &&
-      this.loansAccountTermsForm.valid
+      this.loansAccountTermsForm.valid &&
+      this.loanAccountScorecardStep.formIsNotPristineAndValid()
     );
   }
 
@@ -91,6 +94,7 @@ export class CreateLoansAccountComponent implements OnInit {
       ...this.loansAccountDetailsStep.loansAccountDetails,
       ...this.loansAccountTermsStep.loansAccountTerms,
       ...this.loansAccountChargesStep.loansAccountCharges,
+      ...this.loanAccountScorecardStep.loansAccountScorecard,
     };
   }
 

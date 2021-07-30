@@ -69,7 +69,7 @@
 
       <ng-container matColumnDef="Value">
         <th mat-header-cell *matHeaderCellDef> Value </th>
-        <td mat-cell *matCellDef="let ele"> 
+        <td mat-cell *matCellDef="let ele">
           <ng-container *ngIf="ele.key === 'Disbursement Date'" >
             <span *ngIf="loanDetails.timeline.actualDisbursementDate"> {{loanDetails.timeline.actualDisbursementDate | date}} </span>
             <span *ngIf="!loanDetails.timeline.actualDisbursementDate"> Not Available </span>
@@ -124,7 +124,7 @@
 
       <ng-container matColumnDef="Value">
         <th mat-header-cell *matHeaderCellDef> Value </th>
-        <td mat-cell *matCellDef="let ele"> 
+        <td mat-cell *matCellDef="let ele">
           <ng-container *ngIf="ele.key === 'Disbursement Date'" >
             <span *ngIf="loanDetails.timeline.actualDisbursementDate"> {{loanDetails.timeline.actualDisbursementDate | date}} </span>
             <span *ngIf="!loanDetails.timeline.actualDisbursementDate"> Not Available </span>

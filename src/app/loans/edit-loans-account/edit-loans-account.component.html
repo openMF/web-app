@@ -52,6 +52,18 @@
 
     </mat-step>
 
+    <mat-step>
+
+      <ng-template matStepLabel>SCORECARD</ng-template>
+
+      <mifosx-loans-account-scorecard-step
+        [loansAccountProductTemplate]="loansAccountProductTemplate"
+        [loansAccountTemplate]="loansAccountAndTemplate"
+        [loansAccountFormValid]="loansAccountFormValidAndNotPristine">
+      </mifosx-loans-account-scorecard-step>
+
+    </mat-step>
+
     <mat-step state="preview" *ngIf="loansAccountFormValidAndNotPristine" completed>
 
       <ng-template matStepLabel>PREVIEW</ng-template>

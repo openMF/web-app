@@ -8,6 +8,7 @@ import { LoansAccountChargesStepComponent } from '../loans-account-stepper/loans
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
+import { LoansAccountScorecardStepComponent } from '../loans-account-stepper/loans-account-scorecard-step/loans-account-scorecard-step.component';
 
 /**
  * Edit Loans
@@ -22,7 +23,7 @@ export class EditLoansAccountComponent implements OnInit {
   @ViewChild(LoansAccountDetailsStepComponent, { static: true }) loansAccountDetailsStep: LoansAccountDetailsStepComponent;
   @ViewChild(LoansAccountTermsStepComponent, { static: true }) loansAccountTermsStep: LoansAccountTermsStepComponent;
   @ViewChild(LoansAccountChargesStepComponent, { static: true }) loansAccountChargesStep: LoansAccountChargesStepComponent;
-
+  @ViewChild(LoansAccountScorecardStepComponent, { static: true }) loansAccountScorecardStep: LoansAccountScorecardStepComponent;
   loansAccountAndTemplate: any;
   /** Loans Account Product Template */
   loansAccountProductTemplate: any;
@@ -80,11 +81,8 @@ export class EditLoansAccountComponent implements OnInit {
     return (
       this.loansAccountDetailsForm.valid &&
       this.loansAccountTermsForm.valid &&
-      (
-        !this.loansAccountDetailsForm.pristine ||
-        !this.loansAccountTermsForm.pristine ||
-        !this.loansAccountChargesStep.pristine
-      )
+      this.loansAccountScorecardStep.formIsNotPristineAndValid() &&
+      (!this.loansAccountDetailsForm.pristine || !this.loansAccountTermsForm.pristine)
     );
   }
 
@@ -94,6 +92,7 @@ export class EditLoansAccountComponent implements OnInit {
       ...this.loansAccountDetailsStep.loansAccountDetails,
       ...this.loansAccountTermsStep.loansAccountTerms,
       ...this.loansAccountChargesStep.loansAccountCharges,
+      ...this.loansAccountScorecardStep.loansAccountScorecard
     };
   }
 
@@ -137,6 +136,9 @@ export class EditLoansAccountComponent implements OnInit {
 
     if (loansAccountData.recalculationCompoundingFrequencyDate) {
       loansAccountData.recalculationCompoundingFrequencyDate = this.datePipe.transform(this.loansAccount.recalculationCompoundingFrequencyDate, dateFormat);
+      if (loansAccountData.recalculationCompoundingFrequencyDate === null) {
+        delete loansAccountData.recalculationCompoundingFrequencyDate;
+      }
     }
 
     if (loansAccountData.interestCalculationPeriodType === 0) {

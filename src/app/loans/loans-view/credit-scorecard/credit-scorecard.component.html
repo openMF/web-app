@@ -1,0 +1,59 @@
+<div class="container">
+  <div *ngIf="scorecard">
+
+    <h3> Credit Scorecard [ {{ scorecard.scoringMethod?.toUpperCase() }} ] </h3>
+
+    <table mat-table
+     *ngIf="scorecard.scoringMethod === 'ruleBased'"
+     [dataSource]="criteriaScoreDataSource">
+
+      <ng-container [matColumnDef]="column" *ngFor="let column of criteriaScoreTableColumns">
+        <th mat-header-cell *matHeaderCellDef> {{ column }} </th>
+        <td mat-cell *matCellDef="let element"> {{ element[column] }} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="criteriaScoreTableColumns.slice()"></tr>
+      <tr mat-row *matRowDef="let row; columns: criteriaScoreTableColumns.slice();"></tr>
+    </table>
+
+    <div *ngIf="scorecard.scoringMethod === 'ruleBased'" class="container">
+      <div fxLayout="row wrap" fxLayout.lt-md="column">
+        <div fxFlexFill>
+          <h3>
+            <span fxFlex="50%">Overall Score:</span>
+            <span fxFlex="50%">{{ ruleBasedScorecard.overallScore | number }}</span>
+
+            <span fxFlex="50%">Overall Color</span>
+            <span fxFlex="50%" [ngStyle]="{ color:ruleBasedScorecard.overallColor }">
+              {{ ruleBasedScorecard.overallColor?.toUpperCase() }}
+            </span>
+          </h3>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="scorecard.scoringMethod === 'ml'" class="container">
+      <table mat-table [dataSource]="mlScorecardData">
+
+        <ng-container matColumnDef="key">
+          <th mat-header-cell *matHeaderCellDef> Key </th>
+          <td mat-cell *matCellDef="let ele"> {{ ele.key }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="value">
+          <th mat-header-cell *matHeaderCellDef> Value </th>
+          <td mat-cell *matCellDef="let ele">
+            <span
+              [ngStyle]="{ color: ele.key === 'Predicted Risk' ? (ele.value === 'bad' ? 'red' : 'green') : null }"
+            > {{ ele.key === 'Predicted Risk' ? ele.value?.toUpperCase() : ele.value }} </span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="mlScorecardColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: mlScorecardColumns;"></tr>
+
+      </table>
+    </div>
+  </div>
+
+</div>

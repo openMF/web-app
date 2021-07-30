@@ -66,6 +66,9 @@
 	  <a mat-tab-link [routerLink]="['./accountdetail']" routerLinkActive #accountdetail="routerLinkActive" [active]="accountdetail.isActive">
 		Account Details
 	  </a>
+	  <a mat-tab-link *ngIf="loanDetailsData.scorecard" [routerLink]="['./creditscorecard']" routerLinkActive #creditscorecard="routerLinkActive" [active]="creditscorecard.isActive">
+		Credit Scorecard
+	  </a>
 	  <ng-container *ngIf="loanDetailsData.originalSchedule">
 		<a mat-tab-link [routerLink]="['./original-schedule']" routerLinkActive #originalSchedule="routerLinkActive" [active]="originalSchedule.isActive">
 		  Original Schedule

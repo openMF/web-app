@@ -45,10 +45,23 @@
 
       <ng-template matStepLabel>CHARGES</ng-template>
 
-      <mifosx-loans-account-charges-step [loansAccountProductTemplate]="loansAccountProductTemplate"
+      <mifosx-loans-account-charges-step
+        [loansAccountProductTemplate]="loansAccountProductTemplate"
         [loansAccountTemplate]="loansAccountTemplate" [collateralOptions]="collateralOptions"
         [loansAccountFormValid]="loansAccountFormValid">
       </mifosx-loans-account-charges-step>
+
+    </mat-step>
+
+    <mat-step>
+
+      <ng-template matStepLabel>SCORECARD</ng-template>
+
+      <mifosx-loans-account-scorecard-step
+        [loansAccountProductTemplate]="loansAccountProductTemplate"
+        [loansAccountTemplate]="loansAccountTemplate"
+        [loansAccountFormValid]="loansAccountFormValid">
+      </mifosx-loans-account-scorecard-step>
 
     </mat-step>
 

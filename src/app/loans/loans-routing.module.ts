@@ -29,6 +29,7 @@ import { ViewTransactionComponent } from './loans-view/transactions/view-transac
 import { EditTransactionComponent } from './loans-view/transactions/edit-transaction/edit-transaction.component';
 import { ViewRecieptComponent } from './loans-view/transactions/view-reciept/view-reciept.component';
 import { ExportTransactionsComponent } from './loans-view/transactions/export-transactions/export-transactions.component';
+import { CreditScorecardComponent } from './loans-view/credit-scorecard/credit-scorecard.component';
 
 /** Custom Resolvers */
 import { LoanDetailsResolver } from './common-resolvers/loan-details.resolver';
@@ -79,6 +80,11 @@ const routes: Routes = [
               path: 'accountdetail',
               component: AccountDetailsComponent,
               data: { title: extract('Account Detail'), breadcrumb: 'Account Detail', routeParamBreadcrumb: false }
+            },
+            {
+              path: 'creditscorecard',
+              component: CreditScorecardComponent,
+              data: { title: extract('Credit Scorecard'), breadcrumb: 'Credit Scorecard', routeParamBreadcrumb: false }
             },
             {
               path: 'original-schedule',
