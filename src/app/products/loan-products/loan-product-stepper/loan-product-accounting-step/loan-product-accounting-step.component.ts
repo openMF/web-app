@@ -17,7 +17,6 @@ export class LoanProductAccountingStepComponent implements OnInit {
 
   @Input() loanProductsTemplate: any;
   @Input() accountingRuleData: any;
-  @Input() loanProductFormValid: boolean;
 
   loanProductAccountingForm: FormGroup;
 

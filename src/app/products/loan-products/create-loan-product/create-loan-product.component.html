@@ -78,9 +78,20 @@
       <mifosx-loan-product-accounting-step
         [loanProductsTemplate]="loanProductsTemplate"
         [accountingRuleData]="accountingRuleData"
-        [loanProductFormValid]="loanProductFormValid"
       >
       </mifosx-loan-product-accounting-step>
+
+    </mat-step>
+
+    <mat-step>
+
+      <ng-template matStepLabel>SCORECARD</ng-template>
+
+      <mifosx-loan-product-scorecard-features-step
+        [loanProductsTemplate]="loanProductsTemplate"
+        [loanProductFormValid]="loanProductFormValid"
+      >
+      </mifosx-loan-product-scorecard-features-step>
 
     </mat-step>
 

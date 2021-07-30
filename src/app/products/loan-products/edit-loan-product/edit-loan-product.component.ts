@@ -9,6 +9,7 @@ import { LoanProductChargesStepComponent } from '../loan-product-stepper/loan-pr
 import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan-product-accounting-step/loan-product-accounting-step.component';
 
 import { ProductsService } from 'app/products/products.service';
+import { LoanProductScorecardFeaturesStepComponent } from '../loan-product-stepper/loan-product-scorecard-features-step/loan-product-scorecard-features-step.component';
 
 @Component({
   selector: 'mifosx-edit-loan-product',
@@ -23,6 +24,7 @@ export class EditLoanProductComponent implements OnInit {
   @ViewChild(LoanProductSettingsStepComponent, { static: true }) loanProductSettingsStep: LoanProductSettingsStepComponent;
   @ViewChild(LoanProductChargesStepComponent, { static: true }) loanProductChargesStep: LoanProductChargesStepComponent;
   @ViewChild(LoanProductAccountingStepComponent, { static: true }) loanProductAccountingStep: LoanProductAccountingStepComponent;
+  @ViewChild(LoanProductScorecardFeaturesStepComponent, { static: true }) loanProductScorecardFeaturesStep: LoanProductScorecardFeaturesStepComponent;
 
   loanProductAndTemplate: any;
   accountingRuleData = ['None', 'Cash', 'Accrual (periodic)', 'Accrual (upfront)'];
@@ -58,6 +60,10 @@ export class EditLoanProductComponent implements OnInit {
     return this.loanProductAccountingStep.loanProductAccountingForm;
   }
 
+  get loanProductScorecardFeaturesForm() {
+    return this.loanProductScorecardFeaturesStep.loanProductScorecardFeaturesStepForm;
+  }
+
   get loanProductFormValidAndNotPristine() {
     return (
       this.loanProductDetailsForm.valid &&
@@ -71,7 +77,8 @@ export class EditLoanProductComponent implements OnInit {
         !this.loanProductTermsForm.pristine ||
         !this.loanProductSettingsForm.pristine ||
         !this.loanProductChargesStep.pristine ||
-        !this.loanProductAccountingForm.pristine
+        !this.loanProductAccountingForm.pristine ||
+        !this.loanProductScorecardFeaturesForm.pristine
       )
     );
   }
@@ -83,7 +90,8 @@ export class EditLoanProductComponent implements OnInit {
       ...this.loanProductTermsStep.loanProductTerms,
       ...this.loanProductSettingsStep.loanProductSettings,
       ...this.loanProductChargesStep.loanProductCharges,
-      ...this.loanProductAccountingStep.loanProductAccounting
+      ...this.loanProductAccountingStep.loanProductAccounting,
+      ...this.loanProductScorecardFeaturesStep.loanProductScorecardFeatures
     };
   }
 
@@ -98,6 +106,8 @@ export class EditLoanProductComponent implements OnInit {
     };
     delete loanProduct.allowAttributeConfiguration;
     delete loanProduct.advancedAccountingRules;
+
+    console.log(loanProduct);
     this.productsService.updateLoanProduct(this.loanProductAndTemplate.id, loanProduct)
       .subscribe((response: any) => {
         this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });

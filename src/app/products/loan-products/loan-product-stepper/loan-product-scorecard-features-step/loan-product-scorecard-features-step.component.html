@@ -1,0 +1,182 @@
+
+<form [formGroup]="loanProductScorecardFeaturesStepForm">
+  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <mat-form-field fxFlex="48%">
+      <mat-label>Feature</mat-label>
+      <mat-select formControlName="feature">
+        <mat-option *ngFor="let feature of featureOptions" [value]="feature">
+          {{ feature.name }} [Value Type: {{ feature.valueType.value }}] [Data Type: {{ feature.dataType.value }}]
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="selectedFeature" fxFlex="48%">
+      <mat-label>Weightage (Range : 0.0 - 1.0(Default is 0))</mat-label>
+      <input type="text" matInput formControlName="weightage">
+    </mat-form-field>
+
+
+    <span fxFlex="98%" fxHide.lt-md></span>
+
+
+    <div *ngIf="selectedFeature" fxLayoutGap="2%" fxLayout="row wrap" fxLayout.lt-md="column">
+
+      <div fxFlex="47%" fxLayoutGap="2%" fxLayout="row wrap">
+        <h3 fxFlex="98%" class="mat-h3">Color Configuration</h3>
+
+
+        <h4 fxFlex="14%" class="mat-h4" fxFlexAlign="center">Green</h4>
+
+        <div fxFlex="80%" fxLayoutGap="2%" fxLayout="row wrap" fxLayoutAlign.gt-sm="start center">
+          <mat-form-field fxFlex="48%">
+            <mat-label>Min Score Range</mat-label>
+            <input type="number" matInput formControlName="greenMin">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Max Score Range</mat-label>
+            <input type="number" matInput formControlName="greenMax">
+          </mat-form-field>
+        </div>
+
+
+        <span fxFlex="98%" fxHide.lt-md></span>
+
+
+        <h4 fxFlex="14%" class="mat-h4" fxFlexAlign="center">Amber</h4>
+
+        <div fxFlex="80%" fxLayoutGap="2%" fxLayout="row wrap" fxLayoutAlign.gt-sm="start center">
+          <mat-form-field fxFlex="48%">
+            <mat-label>Min Score Range</mat-label>
+            <input type="number" matInput formControlName="amberMin">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Max Score Range</mat-label>
+            <input type="number" matInput formControlName="amberMax">
+          </mat-form-field>
+        </div>
+
+
+        <span fxFlex="98%" fxHide.lt-md></span>
+
+
+        <h4 fxFlex="14%" class="mat-h4" fxFlexAlign="center">Red</h4>
+
+        <div fxFlex="80%" fxLayoutGap="2%" fxLayout="row wrap" fxLayoutAlign.gt-sm="start center">
+          <mat-form-field fxFlex="48%">
+            <mat-label>Min Score Range</mat-label>
+            <input type="number" matInput formControlName="redMin">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Max Score Range</mat-label>
+            <input type="number" matInput formControlName="redMax">
+          </mat-form-field>
+        </div>
+      </div>
+
+
+      <mat-divider [vertical]="true"></mat-divider>
+
+
+      <div fxFlex="47%" fxLayoutGap="2%" fxLayout="row wrap" fxLayoutAlign.gt-sm="start">
+
+        <h3 fxFlex="98%" class="mat-h3">Criteria Configuration</h3>
+
+        <h4 fxFlex="98%" fxFlexAlign="center" class="mat-h4">
+          Add Multiple Criteria Scores&nbsp;&nbsp;
+          <button mat-raised-button (click)="addCriteriaScore()" color="primary">
+            <fa-icon icon="plus"></fa-icon>
+          </button>
+        </h4>
+
+        <div formArrayName="criteriaScores" *ngFor="let sc of criteriaScore().controls; let i = index;" fxLayoutGap="2%">
+
+          <div [formGroupName]="i" fxFlex="92%" fxLayoutGap="2%" fxLayout="row wrap" fxLayoutAlign.gt-sm="start center">
+            <mat-form-field fxFlex="48%">
+              <mat-label>Criteria</mat-label>
+              <input type="text" matInput formControlName="criteria">
+            </mat-form-field>
+
+            <mat-form-field fxFlex="48%">
+              <mat-label>Score</mat-label>
+              <input type="text" matInput formControlName="score">
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="4%" fxFlexAlign="center">
+            <button mat-raised-button (click)="removeCriteriaScore(i)" color="warn">
+              <fa-icon icon="minus"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div fxLayout="row" class="margin-t+" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+    <button type="button" mat-raised-button color="primary" (click)="addFeature()" [disabled]="!loanProductScorecardFeaturesStepForm.valid">
+      <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+      Add Feature
+    </button>
+  </div>
+
+</form>
+
+<div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="featuresDataSource">
+
+    <ng-container matColumnDef="feature">
+      <th mat-header-cell *matHeaderCellDef> Feature </th>
+      <td mat-cell *matCellDef="let scorecardFeature">
+        {{ scorecardFeature.name }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="valueType">
+      <th mat-header-cell *matHeaderCellDef> Value Type </th>
+      <td mat-cell *matCellDef="let scorecardFeature">
+        {{ scorecardFeature.valueType.value }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dataType">
+      <th mat-header-cell *matHeaderCellDef> Data Type </th>
+      <td mat-cell *matCellDef="let scorecardFeature">
+        {{ scorecardFeature.dataType.value }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef> Category </th>
+      <td mat-cell *matCellDef="let scorecardFeature">
+        {{ scorecardFeature.category.value }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let scorecardFeature">
+        <button mat-icon-button color="warn" (click)="deleteFeature(scorecardFeature)">
+          <fa-icon icon="trash"></fa-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editFeature(row)" class="select-row"></tr>
+
+  </table>
+</div>
+
+<div fxLayout="row" class="margin-t+" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <button mat-raised-button matStepperPrevious>
+    <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+    Previous
+  </button>
+  <button mat-raised-button matStepperNext [disabled]="!loanProductFormValid">
+    Next&nbsp;&nbsp;
+    <fa-icon icon="arrow-right"></fa-icon>
+  </button>
+</div>

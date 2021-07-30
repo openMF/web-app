@@ -7,9 +7,9 @@ import { LoanProductTermsStepComponent } from '../loan-product-stepper/loan-prod
 import { LoanProductSettingsStepComponent } from '../loan-product-stepper/loan-product-settings-step/loan-product-settings-step.component';
 import { LoanProductChargesStepComponent } from '../loan-product-stepper/loan-product-charges-step/loan-product-charges-step.component';
 import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan-product-accounting-step/loan-product-accounting-step.component';
+import { LoanProductScorecardFeaturesStepComponent } from '../loan-product-stepper/loan-product-scorecard-features-step/loan-product-scorecard-features-step.component';
 
 import { ProductsService } from 'app/products/products.service';
-
 @Component({
   selector: 'mifosx-create-loan-product',
   templateUrl: './create-loan-product.component.html',
@@ -23,6 +23,7 @@ export class CreateLoanProductComponent implements OnInit {
   @ViewChild(LoanProductSettingsStepComponent, { static: true }) loanProductSettingsStep: LoanProductSettingsStepComponent;
   @ViewChild(LoanProductChargesStepComponent, { static: true }) loanProductChargesStep: LoanProductChargesStepComponent;
   @ViewChild(LoanProductAccountingStepComponent, { static: true }) loanProductAccountingStep: LoanProductAccountingStepComponent;
+  @ViewChild(LoanProductScorecardFeaturesStepComponent, { static: true }) loanProductScorecardFeaturesStep: LoanProductScorecardFeaturesStepComponent;
 
   loanProductsTemplate: any;
   accountingRuleData = ['None', 'Cash', 'Accrual (periodic)', 'Accrual (upfront)'];
@@ -75,7 +76,8 @@ export class CreateLoanProductComponent implements OnInit {
       ...this.loanProductTermsStep.loanProductTerms,
       ...this.loanProductSettingsStep.loanProductSettings,
       ...this.loanProductChargesStep.loanProductCharges,
-      ...this.loanProductAccountingStep.loanProductAccounting
+      ...this.loanProductAccountingStep.loanProductAccounting,
+      ...this.loanProductScorecardFeaturesStep.loanProductScorecardFeatures
     };
   }
 

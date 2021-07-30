@@ -98,6 +98,7 @@ import { CreateProductMixComponent } from './products-mix/create-product-mix/cre
 import { EditProductMixComponent } from './products-mix/edit-product-mix/edit-product-mix.component';
 import { CreateChargeComponent } from './charges/create-charge/create-charge.component';
 import { EditFixedDepositProductComponent } from './fixed-deposit-products/edit-fixed-deposit-product/edit-fixed-deposit-product.component';
+import { LoanProductScorecardFeaturesStepComponent } from './loan-products/loan-product-stepper/loan-product-scorecard-features-step/loan-product-scorecard-features-step.component';
 
 /**
  * Products Module
@@ -119,6 +120,7 @@ import { EditFixedDepositProductComponent } from './fixed-deposit-products/edit-
     LoanProductTermsStepComponent,
     LoanProductSettingsStepComponent,
     LoanProductChargesStepComponent,
+    LoanProductScorecardFeaturesStepComponent,
     LoanProductAccountingStepComponent,
     LoanProductPreviewStepComponent,
     CreateLoanProductComponent,
