@@ -24,6 +24,7 @@ import { ViewTellerComponent } from './tellers/view-teller/view-teller.component
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
 import { EditPaymentTypeComponent } from './payment-types/edit-payment-type/edit-payment-type.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
+import { ScorecardComponent } from './scorecard/scorecard.component';
 import { EntityDataTableChecksComponent } from './entity-data-table-checks/entity-data-table-checks.component';
 import { WorkingDaysComponent } from './working-days/working-days.component';
 import { CreateOfficeComponent } from './offices/create-office/create-office.component';
@@ -102,6 +103,12 @@ import { LoanProvisioningCriteriaTemplateResolver } from './loan-provisioning-cr
 import { LoanProvisioningCriteriaAndTemplateResolver } from './loan-provisioning-criteria/common-resolvers/loan-provisioning-criteria-and-template.resolver';
 import { StandingInstructionsTemplateResolver } from './standing-instructions-history/standing-instructions-template.resolver';
 import { AdvanceSearchTemplateResolver } from './fund-mapping/advance-search-template.resolver';
+import { ScorecardResolver } from './scorecard/scorecard.resolver';
+import { ViewScorecardFeatureComponent } from './scorecard/view-scorecard-feature/view-scorecard-feature.component';
+import { CreateScorecardFeatureResolver } from './scorecard/scorecard-feature-actions/create-scorecard-feature.resolver';
+import { ViewScorecardFeatureResolver } from './scorecard/view-scorecard-feature/view-scorecard-feature.resolver';
+import { EditScorecardFeatureResolver } from './scorecard/scorecard-feature-actions/edit-scorecard-feature.resolver';
+import { ScorecardFeatureActionsComponent } from './scorecard/scorecard-feature-actions/scorecard-feature-actions.component';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -563,6 +570,54 @@ const routes: Routes = [
           ]
         },
         {
+          path: 'scorecard',
+          data: { title: extract('Scorecard'), breadcrumb: 'Scorecard' },
+          children: [
+            {
+              path: '',
+              component: ScorecardComponent,
+              resolve: {
+                scorecard: ScorecardResolver
+              },
+            },
+            {
+              path: 'feature',
+              data: { title: extract('Feature'), breadcrumb: 'Feature', addBreadcrumbLink: false },
+              children: [
+                {
+                  path: 'create',
+                  data: { title: extract('Create Scorecard Feature'), breadcrumb: 'Create' },
+                  component: ScorecardFeatureActionsComponent,
+                  resolve: {
+                    scorecard: CreateScorecardFeatureResolver
+                  },
+                },
+                {
+                  path: ':featureId',
+                  data: { title: extract('View Feature'),  routeParamBreadcrumb: 'featureId' },
+                  children: [
+                    {
+                      path: '',
+                      component: ViewScorecardFeatureComponent,
+                      resolve: {
+                        scorecard: ViewScorecardFeatureResolver
+                      }
+                    },
+                    {
+                      path: 'edit',
+                      component: ScorecardFeatureActionsComponent,
+                      data: { title: extract('Edit Feature'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                      resolve: {
+                        scorecard: EditScorecardFeatureResolver
+                      }
+                    }
+                  ]
+                },
+              ]
+            }
+          ]
+        },
+        {
           path: 'working-days',
           component: WorkingDaysComponent,
           data: { title: extract('Working Days'), breadcrumb: 'Working Days' },
@@ -671,6 +726,10 @@ const routes: Routes = [
     PaymentTypesResolver,
     PaymentTypeResolver,
     PasswordPreferencesTemplateResolver,
+    ScorecardResolver,
+    CreateScorecardFeatureResolver,
+    EditScorecardFeatureResolver,
+    ViewScorecardFeatureResolver,
     EntityDataTableChecksResolver,
     WorkingDaysResolver,
     EditOfficeResolver,

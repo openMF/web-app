@@ -21,6 +21,7 @@ import { ViewTellerComponent } from './tellers/view-teller/view-teller.component
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
 import { EditPaymentTypeComponent } from './payment-types/edit-payment-type/edit-payment-type.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
+import { ScorecardComponent } from './scorecard/scorecard.component';
 import { EntityDataTableChecksComponent } from './entity-data-table-checks/entity-data-table-checks.component';
 import { WorkingDaysComponent } from './working-days/working-days.component';
 import { CreateOfficeComponent } from './offices/create-office/create-office.component';
@@ -69,6 +70,8 @@ import { EditLoanProvisioningCriteriaComponent } from './loan-provisioning-crite
 import { StandingInstructionsHistoryComponent } from './standing-instructions-history/standing-instructions-history.component';
 import { FundMappingComponent } from './fund-mapping/fund-mapping.component';
 import { CreateHolidayComponent } from './holidays/create-holiday/create-holiday.component';
+import { ViewScorecardFeatureComponent } from './scorecard/view-scorecard-feature/view-scorecard-feature.component';
+import { ScorecardFeatureActionsComponent } from './scorecard/scorecard-feature-actions/scorecard-feature-actions.component';
 
 /**
  * Organization Module
@@ -96,6 +99,9 @@ import { CreateHolidayComponent } from './holidays/create-holiday/create-holiday
     PaymentTypesComponent,
     EditPaymentTypeComponent,
     PasswordPreferencesComponent,
+    ScorecardComponent,
+    ScorecardFeatureActionsComponent,
+    ViewScorecardFeatureComponent,
     EntityDataTableChecksComponent,
     WorkingDaysComponent,
     CreateOfficeComponent,

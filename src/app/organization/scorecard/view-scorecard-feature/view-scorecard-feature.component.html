@@ -1,0 +1,66 @@
+<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+
+  <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CREDIT_SCORECARD_FEATURE'">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit
+  </button>
+
+  <button mat-raised-button color="error" (click)="deleteScorecardFeature(scorecardFeatureData.id)" *mifosxHasPermission="'DELETE_CREDIT_SCORECARD_FEATURE'">
+    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+    Delete
+  </button>
+</div>
+
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-title>
+      <i class="fa fa-stop" [ngClass]="scorecardFeatureData.active|statusLookup" matTooltip="{{ scorecardFeatureData.active === true ? 'Active' : 'Inactive' }}"></i> {{ scorecardFeatureData.name }}
+    </mat-card-title>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" class="content">
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Value Type
+        </div>
+        <div fxFlex="50%">
+          {{ scorecardFeatureData.valueType.value }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Data Type
+        </div>
+        <div fxFlex="50%">
+          {{ scorecardFeatureData.dataType.value }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Category
+        </div>
+        <div fxFlex="50%">
+          {{ scorecardFeatureData.category.value }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Active
+        </div>
+        <div fxFlex="50%">
+          {{ scorecardFeatureData.active === true ? 'true' : 'false' }}
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <button type="button" mat-raised-button (click)="navigateBack()" *mifosxHasPermission="'READ_CREDIT_SCORECARD_FEATURE'">Back</button>
+    </mat-card-actions>
+
+  </mat-card>
+
+</div>

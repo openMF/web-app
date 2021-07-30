@@ -1,0 +1,70 @@
+<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+
+  <button mat-raised-button color="primary" [routerLink]="['feature/create']" *mifosxHasPermission="'CREATE_FEATURE'">
+    <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+    Create Feature
+  </button>
+
+</div>
+
+<div class="container">
+
+  <div fxLayout="row" fxLayoutGap="20px">
+    <mat-form-field fxFlex>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event.target.value)">
+    </mat-form-field>
+  </div>
+
+  <div class="mat-elevation-z8">
+
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="feature">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Feature </th>
+        <td mat-cell *matCellDef="let scorecardFeature"> {{ scorecardFeature.name }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="valueType">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Value Type </th>
+        <td mat-cell *matCellDef="let scorecardFeature"> {{ scorecardFeature.valueType.value }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dataType">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Data Type </th>
+        <td mat-cell *matCellDef="let scorecardFeature"> {{ scorecardFeature.dataType.value }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+        <td mat-cell *matCellDef="let scorecardFeature"> {{ scorecardFeature.category.value }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <td mat-cell *matCellDef="let scorecardFeature">
+          <div [className]="scorecardFeature.active === true ? 'true' : 'false'">
+            <fa-icon matTooltip="{{ scorecardFeature.active === true ? 'Active' : 'Inactive' }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let scorecardFeature">
+          <button mat-button (click)="deleteScorecardFeature(scorecardFeature.id)" color="warn" *mifosxHasPermission="'DELETE_CREDIT_SCORECARD_FEATURE'">
+            <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;Delete
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['feature/' + row.id]" class="select-row"></tr>
+
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+  </div>
+
+</div>

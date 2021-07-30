@@ -1,0 +1,70 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="scorecardFeatureForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label for="feature">Feature</mat-label>
+            <input matInput type="text" formControlName="name" required>
+            <mat-error *ngIf="scorecardFeatureForm.controls.name.hasError('required')">
+              Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Value Type</mat-label>
+            <mat-select required formControlName="valueType">
+              <mat-option *ngFor="let valueType of valueTypeOptions" [value]="valueType.id">
+                {{ valueType.value }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="scorecardFeatureForm.controls.valueType.hasError('required')">
+              Value Type is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Data Type</mat-label>
+            <mat-select required formControlName="dataType">
+              <mat-option *ngFor="let dataType of dataTypeOptions" [value]="dataType.id">
+                {{ dataType.value }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="scorecardFeatureForm.controls.dataType.hasError('required')">
+              Data Type is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Category</mat-label>
+            <mat-select required formControlName="category">
+              <mat-option *ngFor="let category of categoryOptions" [value]="category.id">
+                {{ category.value }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="scorecardFeatureForm.controls.category.hasError('required')">
+              Category is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-checkbox labelPosition="before" formControlName="active">Status</mat-checkbox>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button (click)="navigateBack()">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!scorecardFeatureForm.valid">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>

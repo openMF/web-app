@@ -539,6 +539,57 @@ export class OrganizationService {
    * @param {number} limit Number of entries within the page.
    * @returns {Observable<any>} Entity Data Table Checks data.
    */
+   getCreditScorecardFeatures(offset: number = 0, limit: number = -1): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('offset', offset.toString())
+      .set('limit', limit.toString());
+    return this.http.get('/creditScorecard/features', { params: httpParams });
+  }
+
+  /**
+   * Get Entity Data Table Checks Template.
+   */
+   getCreditScorecardFeature(featureId: string, template: boolean = false): Observable<any> {
+    const httpParams = new HttpParams().set('template', template.toString());
+    return this.http.get(`/creditScorecard/features/${featureId}`, { params: httpParams });
+  }
+
+  /**
+   * Get Entity Data Table Checks Template.
+   */
+   getCreditScorecardFeatureTemplate(): Observable<any> {
+    return this.http.get('/creditScorecard/features/template');
+  }
+
+  /**
+   * Create Entity Data Table Checks.
+   * @param entityData Data to be passed.
+   */
+  createCreditScorecardFeature(entityData: any): Observable<any> {
+    return this.http.post('/creditScorecard/features', entityData);
+  }
+
+  /**
+   * Create Entity Data Table Checks.
+   * @param entityData Data to be passed.
+   */
+  updateCreditScorecardFeature(featureId: string, entityData: any): Observable<any> {
+    return this.http.put(`/creditScorecard/features/${featureId}`, entityData);
+  }
+
+  /**
+   * @param {string} entityDataTableCheckId Entity Data Table Check ID of entity data table to be deleted.
+   * @returns {Observable<any>}
+   */
+  deleteCreditScorecardFeature(featureId: string): Observable<any> {
+    return this.http.delete(`/creditScorecard/features/${featureId}`);
+  }
+
+  /**
+   * @param {number} offset Page offset.
+   * @param {number} limit Number of entries within the page.
+   * @returns {Observable<any>} Entity Data Table Checks data.
+   */
   getEntityDataTableChecks(offset: number = 0, limit: number = -1): Observable<any> {
     const httpParams = new HttpParams()
       .set('offset', offset.toString())

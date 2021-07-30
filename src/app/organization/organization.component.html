@@ -72,6 +72,14 @@
             <p matLine>Define Entity Data Table Checks for Organization</p>
           </mat-list-item>
 
+          <mat-list-item [routerLink]="['scorecard']" *mifosxHasPermission="'VIEW_SCORECARD'">
+            <mat-icon matListIcon>
+              <fa-icon icon="table" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Scorecard </h4>
+            <p matLine>Define and configure scorecard and features, etc...</p>
+          </mat-list-item>
+
         </mat-nav-list>
 
       </div>
