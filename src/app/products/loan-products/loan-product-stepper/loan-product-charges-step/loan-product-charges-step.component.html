@@ -16,7 +16,7 @@
     </button>
   </div>
 
-  <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="chargesDataSource | chargesPenaltyFilter:false" #chargesTable [hidden]="chargesTable.dataSource.length === 0">
+  <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="chargesDataSource | chargesPenaltyFilter:false" #chargesTable [hidden]="chargesTable?.dataSource?.length === 0">
 
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> Name </th>
@@ -82,7 +82,7 @@
     </button>
   </div>
 
- <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="chargesDataSource | chargesPenaltyFilter:true" #overdueChargesTable [hidden]="overdueChargesTable.dataSource.length === 0">
+ <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="chargesDataSource | chargesPenaltyFilter:true" #overdueChargesTable [hidden]="overdueChargesTable?.dataSource?.length === 0">
 
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> Name </th>
