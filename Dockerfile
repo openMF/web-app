@@ -14,10 +14,44 @@ COPY . .
 
 RUN npm run build:prod
 
-FROM nginx:1.19.3
+RUN ls -la /usr/src/app/dist/web-app
 
-COPY --from=builder /usr/src/app/dist/web-app /usr/share/nginx/html
+# Stage 2: Host Web App on OpenLiteSpeed
+FROM litespeedtech/openlitespeed:latest AS runner
 
-EXPOSE 80
+ENV LANG en_US.UTF-8  
+ENV LANGUAGE en_US:en  
+ENV LC_ALL en_US.UTF-8 
 
-CMD ["nginx", "-g", "daemon off;"]
+# Update distro and install some packages
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install locales locales-all -y && \
+    apt-get install --no-install-recommends -y openssl python3-setuptools python3-testtools python3-nose python3-pip vim curl supervisor logrotate locales  telnet && \
+    update-locale LANG=C.UTF-8 LC_MESSAGES=POSIX && \
+    locale-gen es_MX.UTF-8 \
+    && ln -fs /usr/share/zoneinfo/America/Mexico_City /etc/localtime \
+	&& dpkg-reconfigure --frontend noninteractive tzdata \
+	&& mkdir -p /etc/ssl/certs/ \	
+    && dpkg-reconfigure locales \
+    && apt-get clean all && \ 
+    rm -rf /var/lib/apt/lists/*
+
+RUN mv /usr/local/lsws/Example /usr/local/lsws/Mifos
+
+#COPY --from=builder /usr/src/app/dist/web-app /usr/local/lsws/Mifos/html
+COPY --from=builder /usr/src/app/dist/web-app /var/www/vhosts/localhost/html
+
+COPY ./httpd_config.conf /usr/local/lsws/conf/httpd_config.conf
+
+COPY ./vhconf.conf /usr/local/lsws/conf/vhosts/Mifos/vhconf.conf 
+
+COPY ./.htaccess /usr/local/lsws/Mifos/html
+
+COPY entrypoint.sh /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+
+EXPOSE 80 443 7080 
