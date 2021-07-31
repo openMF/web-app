@@ -23,7 +23,7 @@ export const environment = {
   supportedLanguages: [
     'en-US',
     'fr-FR',
-    'es-MX'
+    //'es-MX'
   ]
 };
 
