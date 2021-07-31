@@ -89,10 +89,10 @@ docker build -t openmf/web-app:latest .
 ```
 You can then run a Docker Container from the image above like this:
 ```
-docker run -d -p 4200:80 openmf/web-app:latest
+docker run -d -p 80:80 -p 443:443 openmf/web-app:latest
 ```
 
-Access the webapp on http://localhost:4200 in your browser.
+Access the webapp on https://localhost/web-app/login in your browser (please accept the self signed certificate). This setup must be secured for a Production environment.
 
 
 ## Want to help? [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/openMF/web-app/issues)
