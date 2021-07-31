@@ -37,16 +37,18 @@ RUN apt-get update && \
     && apt-get clean all && \ 
     rm -rf /var/lib/apt/lists/*
 
-RUN mv /usr/local/lsws/Example /usr/local/lsws/Mifos
+#RUN mv /usr/local/lsws/Example /usr/local/lsws/web-app
 
-#COPY --from=builder /usr/src/app/dist/web-app /usr/local/lsws/Mifos/html
+#RUN mkdir /usr/local/lsws/conf/vhosts/web-app
+
+#COPY --from=builder /usr/src/app/dist/web-app /usr/local/lsws/web-app/html
 COPY --from=builder /usr/src/app/dist/web-app /var/www/vhosts/localhost/html
 
-COPY ./httpd_config.conf /usr/local/lsws/conf/httpd_config.conf
+#COPY ./httpd_config.conf /usr/local/lsws/conf/httpd_config.conf
 
-COPY ./vhconf.conf /usr/local/lsws/conf/vhosts/Mifos/vhconf.conf 
+#COPY ./vhconf.conf /usr/local/lsws/conf/vhosts/web-app/vhconf.conf 
 
-COPY ./.htaccess /usr/local/lsws/Mifos/html
+#COPY ./.htaccess /usr/local/lsws/web-app/html
 
 COPY entrypoint.sh /entrypoint.sh
 
