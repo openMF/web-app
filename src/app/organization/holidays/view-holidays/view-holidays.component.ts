@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { OrganizationService } from 'app/organization/organization.service';
 
 /** Custom Components. */
+import { ConfirmationDialogComponent } from '../../../shared/confirmation-dialog/confirmation-dialog.component';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 
 /**
@@ -47,6 +48,23 @@ export class ViewHolidaysComponent {
         this.organizationService.deleteHoliday(this.holidayData.id)
           .subscribe(() => {
             this.router.navigate(['../'], { relativeTo: this.route });
+          });
+      }
+    });
+  }
+
+  /**
+   * Activate holiday.
+   */
+  activateHoliday() {
+    const unAssignStaffDialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { heading: 'Holiday', dialogContext: `Are you sure you want to activate ${this.holidayData.name} holiday` }
+    });
+    unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+      if (response.confirm) {
+        this.organizationService.activateHoliday(this.holidayData.id)
+          .subscribe((response: any) => {
+            this.router.navigate(['/organization/holidays']);
           });
       }
     });
