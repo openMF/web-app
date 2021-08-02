@@ -639,6 +639,17 @@ export class OrganizationService {
     return this.http.delete(`/holidays/${holidayId}`);
   }
 
+    /**
+   * Activate Holiday.
+   * @param holidayId Holiday Id to be deleted.
+   * @returns {Observable<any>} Resource Id.
+   */
+  activateHoliday(holidayId: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('command','activate');
+    return this.http.post(`/holidays/${holidayId}`, null, { params: httpParams });
+  }
+
   /**
    * @param {any} employeeId Employee ID of Employee to be edited.
    * @returns {Observable<any>}
