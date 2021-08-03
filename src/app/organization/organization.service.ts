@@ -93,8 +93,8 @@ export class OrganizationService {
    */
   getOfficerTemplate(officerId: string, officeId: string): Observable<any> {
     const httpParams = new HttpParams()
-                       .set('fromLoanOfficerId', officerId.toString())
-                       .set('officeId', officerId.toString());
+      .set('fromLoanOfficerId', officerId.toString())
+      .set('officeId', officerId.toString());
     return this.http.get('/loans/loanreassignment/template', { params: httpParams });
   }
 
@@ -134,9 +134,9 @@ export class OrganizationService {
     return this.http.put(`/offices/${officeId}`, office);
   }
 
- /**
-  * @returns {Observable<any>}
-  */
+  /**
+   * @returns {Observable<any>}
+   */
   getOfficeDatatables(): Observable<any> {
     const httpParams = new HttpParams().set('apptable', 'm_office');
     return this.http.get(`/datatables`, { params: httpParams });
@@ -222,7 +222,7 @@ export class OrganizationService {
    * @returns {Observable<any>} Currencies data
    */
   updateCurrencies(currencies: any[]): Observable<any> {
-    return this.http.put('/currencies', {currencies});
+    return this.http.put('/currencies', { currencies });
   }
 
   /**
@@ -431,7 +431,7 @@ export class OrganizationService {
    */
   settleCash(tellerId: string, cashierId: string, cashData: any): Observable<any> {
     const httpParams = new HttpParams().set('command', 'settle');
-    return this.http.post(`/tellers/${tellerId}/cashiers/${cashierId}/settle`, cashData, {params: httpParams});
+    return this.http.post(`/tellers/${tellerId}/cashiers/${cashierId}/settle`, cashData, { params: httpParams });
   }
 
   /**
@@ -442,7 +442,7 @@ export class OrganizationService {
    */
   allocateCash(tellerId: string, cashierId: string, cashData: any): Observable<any> {
     const httpParams = new HttpParams().set('command', 'allocate');
-    return this.http.post(`/tellers/${tellerId}/cashiers/${cashierId}/allocate`, cashData, {params: httpParams});
+    return this.http.post(`/tellers/${tellerId}/cashiers/${cashierId}/allocate`, cashData, { params: httpParams });
   }
 
   /** Get Cashier Template.
@@ -639,14 +639,14 @@ export class OrganizationService {
     return this.http.delete(`/holidays/${holidayId}`);
   }
 
-    /**
+  /**
    * Activate Holiday.
    * @param holidayId Holiday Id to be deleted.
    * @returns {Observable<any>} Resource Id.
    */
   activateHoliday(holidayId: string): Observable<any> {
     const httpParams = new HttpParams()
-      .set('command','activate');
+      .set('command', 'activate');
     return this.http.post(`/holidays/${holidayId}`, null, { params: httpParams });
   }
 
@@ -706,7 +706,7 @@ export class OrganizationService {
    */
   getImports(entity: string): Observable<any> {
     const httpParams = new HttpParams().set('entityType', entity);
-    return this.http.get('/imports', { params: httpParams } );
+    return this.http.get('/imports', { params: httpParams });
   }
 
   /**
@@ -765,7 +765,7 @@ export class OrganizationService {
     if (legalFormType.length) {
       httpParams = httpParams.set('legalFormType', legalFormType);
     }
-    return this.http.get(`${urlSuffix}/downloadtemplate`, { params: httpParams, responseType: 'arraybuffer', observe: 'response'} );
+    return this.http.get(`${urlSuffix}/downloadtemplate`, { params: httpParams, responseType: 'arraybuffer', observe: 'response' });
   }
 
   /**
@@ -775,8 +775,8 @@ export class OrganizationService {
   getImportDocument(id: any): Observable<any> {
     const httpParams = new HttpParams()
       .set('importDocumentId', id)
-      .set('tenantIdentifier', 'default' );
-    return this.http.get('/imports/downloadOutputTemplate', { params: httpParams, responseType: 'arraybuffer', observe: 'response'});
+      .set('tenantIdentifier', 'default');
+    return this.http.get('/imports/downloadOutputTemplate', { params: httpParams, responseType: 'arraybuffer', observe: 'response' });
   }
 
   /**
@@ -794,7 +794,7 @@ export class OrganizationService {
     formData.append('file', file);
     formData.append('locale', this.settingsService.language.code);
     formData.append('dateFormat', this.settingsService.dateFormat);
-    return this.http.post(`${urlSuffix}/uploadtemplate`, formData , { params: httpParams } );
+    return this.http.post(`${urlSuffix}/uploadtemplate`, formData, { params: httpParams });
   }
 
 }
