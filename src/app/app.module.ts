@@ -55,7 +55,7 @@ import { AppRoutingModule } from './app-routing.module';
     HammerModule,
     HttpClientModule,
     ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
-    TranslateModule.forRoot(),
+    //TranslateModule.forRoot(),
     CoreModule,
     HomeModule,
     LoginModule,

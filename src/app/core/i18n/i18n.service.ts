@@ -34,11 +34,7 @@ export class I18nService {
   defaultLanguage: string;
   supportedLanguages: string[];
 
-  constructor(private translateService: TranslateService) {
-    // Embed languages to avoid extra HTTP requests
-    translateService.setTranslation('en-US', enUS);
-    translateService.setTranslation('fr-FR', frFR);
-  }
+  constructor(private translateService: TranslateService) { }
 
   /**
    * Initializes i18n for the application.
@@ -78,7 +74,8 @@ export class I18nService {
     }
 
     log.debug(`Language set to ${language}`);
-    this.translateService.use(language);
+    localStorage.setItem(this.languageStorageKey, language)
+    this.translateService.setDefaultLang(language);
   }
 
   /**
