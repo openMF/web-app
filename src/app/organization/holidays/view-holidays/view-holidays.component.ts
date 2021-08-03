@@ -63,7 +63,7 @@ export class ViewHolidaysComponent {
     unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
         this.organizationService.activateHoliday(this.holidayData.id)
-          .subscribe((response: any) => {
+          .subscribe(() => {
             this.router.navigate(['/organization/holidays']);
           });
       }
