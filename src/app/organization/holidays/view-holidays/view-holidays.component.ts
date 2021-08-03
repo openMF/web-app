@@ -28,10 +28,10 @@ export class ViewHolidaysComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute,
-              private router: Router,
-              private dialog: MatDialog,
-              private organizationService: OrganizationService ) {
-    this.route.data.subscribe((data: { holidays: any}) => {
+    private router: Router,
+    private dialog: MatDialog,
+    private organizationService: OrganizationService) {
+    this.route.data.subscribe((data: { holidays: any }) => {
       this.holidayData = data.holidays;
     });
   }
