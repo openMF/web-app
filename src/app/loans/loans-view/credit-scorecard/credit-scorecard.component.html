@@ -3,21 +3,26 @@
 
     <h3> Credit Scorecard [ {{ scorecard.scoringMethod?.toUpperCase() }} ] </h3>
 
-    <table mat-table
-     *ngIf="scorecard.scoringMethod === 'ruleBased'"
-     [dataSource]="criteriaScoreDataSource">
-
-      <ng-container [matColumnDef]="column" *ngFor="let column of criteriaScoreTableColumns">
-        <th mat-header-cell *matHeaderCellDef> {{ column }} </th>
-        <td mat-cell *matCellDef="let element"> {{ element[column] }} </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="criteriaScoreTableColumns.slice()"></tr>
-      <tr mat-row *matRowDef="let row; columns: criteriaScoreTableColumns.slice();"></tr>
-    </table>
-
     <div *ngIf="scorecard.scoringMethod === 'ruleBased'" class="container">
-      <div fxLayout="row wrap" fxLayout.lt-md="column">
+
+      <table mat-table [dataSource]="criteriaScoreDataSource">
+
+        <ng-container [matColumnDef]="column" *ngFor="let column of criteriaScoreTableColumns">
+          <th mat-header-cell *matHeaderCellDef [ngClass]="column === 'color' ? 'w-125' : null"> {{ column }} </th>
+          <td mat-cell *matCellDef="let element" [ngClass]="column === 'color' ? 'w-125' : null">
+            <span
+              [ngStyle]="{ color: column === 'color' ? element[column] : null }"
+            > {{ column === 'color' ? element[column].toUpperCase() : element[column] }} </span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="criteriaScoreTableColumns.slice()"></tr>
+        <tr mat-row *matRowDef="let row; columns: criteriaScoreTableColumns.slice();"></tr>
+
+      </table>
+
+
+      <div fxLayout="row wrap" fxLayout.lt-md="column" class="container">
         <div fxFlexFill>
           <h3>
             <span fxFlex="50%">Overall Score:</span>
@@ -31,6 +36,8 @@
         </div>
       </div>
     </div>
+
+
 
     <div *ngIf="scorecard.scoringMethod === 'ml'" class="container">
       <table mat-table [dataSource]="mlScorecardData">
@@ -54,6 +61,31 @@
 
       </table>
     </div>
+
+
+    <div *ngIf="scorecard.scoringMethod === 'stat'" class="container">
+      <table mat-table [dataSource]="statScorecardData">
+
+        <ng-container matColumnDef="key">
+          <th mat-header-cell *matHeaderCellDef> Key </th>
+          <td mat-cell *matCellDef="let ele"> {{ ele.key }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="value">
+          <th mat-header-cell *matHeaderCellDef> Value </th>
+          <td mat-cell *matCellDef="let ele">
+            <span
+              [ngStyle]="{ color: ele.key === 'Color' ? ele.value : null }"
+            > {{ ele.key === 'Color' ? ele.value?.toUpperCase() : ele.value }} </span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="statScorecardColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: statScorecardColumns;"></tr>
+
+      </table>
+    </div>
+
   </div>
 
 </div>

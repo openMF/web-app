@@ -21,6 +21,10 @@ export class CreditScorecardComponent implements OnInit {
   mlScorecardColumns: string[] = ['key', 'value'];
   mlScorecardData: any[];
 
+  statScorecard: any;
+  statScorecardColumns: string[] = ['key', 'value'];
+  statScorecardData: any[];
+
   criteriaScoreTableColumns: string[] = ['feature', 'value', 'score', 'color'];
   criteriaScoreDataSource: any;
 
@@ -42,6 +46,11 @@ export class CreditScorecardComponent implements OnInit {
         this.setMLScorecardTableData();
       }
 
+      if (this.scorecard.scoringMethod === "stat") {
+        this.statScorecard = this.scorecard?.statScorecard;
+        this.setStatScorecardTableData();
+      }
+
       if (this.scorecard.scoringMethod === "ruleBased") {
         this.ruleBasedScorecard = this.scorecard?.ruleBasedScorecard;
         this.criteriaScoreDataSource = this.scorecard?.ruleBasedScorecard?.criteriaScores;
@@ -61,6 +70,23 @@ export class CreditScorecardComponent implements OnInit {
       {
         'key': 'Accuracy',
         'value': this.mlScorecard?.accuracy
+      },
+      {
+        'key': 'Scoring Model',
+        'value': this.scorecard?.scoringModel
+      },
+    ];
+  }
+
+  setStatScorecardTableData() {
+    this.statScorecardData = [
+      {
+        'key': 'Color',
+        'value': this.statScorecard?.color
+      },
+      {
+        'key': 'Accuracy',
+        'value': this.statScorecard?.prediction
       },
       {
         'key': 'Scoring Model',

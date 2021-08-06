@@ -60,13 +60,69 @@
 
 
 
-  <div *ngIf="scoringMethod === 'statistical'" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div *ngIf="scoringMethod === 'stat'" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
     <label id="scoring-model">Statistical Model : </label>
     <mat-radio-group aria-labelledby="scoring-model" formControlName="scoringModel">
         <mat-radio-button *ngFor="let model of statScoringModels" [value]="model.code">
           {{ model.value }}
         </mat-radio-button><br>
     </mat-radio-group>
+  </div>
+
+  <div *ngIf="scoringMethod === 'stat'" formGroupName="statScorecard">
+
+    <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+        <mat-form-field fxFlex="48%">
+          <mat-label>Age</mat-label>
+          <input required matInput type="number" formControlName="age">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48%">
+          <mat-label>Gender</mat-label>
+          <mat-select required formControlName="sex">
+            <mat-option *ngFor="let gender of scorecard?.mlScorecard?.genderOptions" [value]="gender?.code">
+              {{ gender?.value }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48%">
+          <mat-label>Job</mat-label>
+          <mat-select required formControlName="job">
+            <mat-option *ngFor="let job of scorecard?.mlScorecard?.jobOptions" [value]="job?.code">
+              {{ job?.value }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48%">
+          <mat-label>Housing</mat-label>
+          <mat-select required formControlName="housing">
+            <mat-option *ngFor="let housing of scorecard?.mlScorecard?.housingOptions" [value]="housing?.code">
+              {{ housing?.value }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48%">
+          <mat-label>Credit Amount</mat-label>
+          <input required matInput type="number" formControlName="creditAmount">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48%">
+          <mat-label>Duration</mat-label>
+          <input required matInput type="number" formControlName="duration">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48%">
+          <mat-label>Purpose</mat-label>
+          <mat-select required formControlName="purpose">
+            <mat-option *ngFor="let purpose of scorecard?.mlScorecard?.purposeOptions" [value]="purpose?.code">
+              {{ purpose?.value }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+    </div>
   </div>
 
   <div *ngIf="scoringMethod === 'ml'" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">

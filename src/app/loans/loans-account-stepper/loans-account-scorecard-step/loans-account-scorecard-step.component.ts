@@ -72,9 +72,10 @@ export class LoansAccountScorecardStepComponent implements OnInit, OnChanges {
     this.featureOptions = this.loansAccountProductTemplate?.scorecardFeatureOptions as [];
 
     this.scoringMethods = this.loansAccountProductTemplate?.scorecard?.scoringMethods;
-    this.mlScoringModels = this.loansAccountProductTemplate?.scorecard?.mlScoringModels;
-    this.statScoringModels = this.loansAccountProductTemplate?.scorecard?.statScoringModels;
-    this.ruleBasedScoringModels = this.loansAccountProductTemplate?.scorecard?.ruleBasedScoringModels;
+
+    this.mlScoringModels = this.loansAccountProductTemplate?.scorecard?.mlScorecard?.scoringModels;
+    this.statScoringModels = this.loansAccountProductTemplate?.scorecard?.statScorecard?.scoringModels;
+    this.ruleBasedScoringModels = this.loansAccountProductTemplate?.scorecard?.ruleBasedScorecard?.scoringModels;
 
     this.scorecard = this.loansAccountTemplate?.scorecard;
 
@@ -88,13 +89,14 @@ export class LoansAccountScorecardStepComponent implements OnInit, OnChanges {
       this.loanAccountScorecardForm.removeControl('ruleBasedScorecard');
 
       if (selectedValue === "ml") {
-        this.loanAccountScorecardForm.addControl('mlScorecard', this.mlScorecardForm());
+        this.loanAccountScorecardForm.addControl('mlScorecard', this.mlAndStatScorecardForm());
         this.loanAccountScorecardForm.patchValue({
-          'scoringModel': "randomForest"
+          'scoringModel': "RandomForestClassifier"
         });
       }
 
       if (selectedValue === "stat") {
+        this.loanAccountScorecardForm.addControl('statScorecard', this.mlAndStatScorecardForm());
         this.loanAccountScorecardForm.patchValue({
           'scoringModel': "linearRegression"
         });
@@ -124,7 +126,7 @@ export class LoansAccountScorecardStepComponent implements OnInit, OnChanges {
     })
   }
 
-  private mlScorecardForm() {
+  private mlAndStatScorecardForm() {
     return new FormGroup({
       'age': new FormControl(null, [Validators.required]),
       'sex': new FormControl(null, [Validators.required]),
@@ -188,6 +190,11 @@ export class LoansAccountScorecardStepComponent implements OnInit, OnChanges {
     if (data.mlScorecard) {
       data.mlScorecard.locale = locale;
       data.mlScorecard.dateFormat = dateFormat;
+    }
+
+    if (data.statScorecard) {
+      data.statScorecard.locale = locale;
+      data.statScorecard.dateFormat = dateFormat;
     }
 
     console.log(data);
