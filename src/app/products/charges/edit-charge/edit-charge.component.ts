@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
+import { SettingsService } from 'app/settings/settings.service';
+
 
 /**
  * Edit Charge component.
@@ -43,19 +45,19 @@ export class EditChargeComponent implements OnInit {
   /** Show Fee Options. */
   showFeeOptions = false;
 
-    /**
-     * Retrieves the charge data from `resolve`.
-     * @param {ProductsService} productsService Products Service.
-     * @param {FormBuilder} formBuilder Form Builder.
-     * @param {ActivatedRoute} route Activated Route.
-     * @param {Router} router Router for navigation.
-     */
-  constructor(
-    private productsService: ProductsService,
-    private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-  ) {
+  /**
+   * Retrieves the charge data from `resolve`.
+   * @param {ProductsService} productsService Products Service.
+   * @param {FormBuilder} formBuilder Form Builder.
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {Router} router Router for navigation.
+   * @param {SettingsService} settingsService Settings Service
+   */
+  constructor(private productsService: ProductsService,
+              private formBuilder: FormBuilder,
+              private route: ActivatedRoute,
+              private router: Router,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { chargesTemplate: any }) => {
       this.chargeData = data.chargesTemplate;
     });
@@ -71,7 +73,7 @@ export class EditChargeComponent implements OnInit {
   editChargeForm() {
     this.chargeForm = this.formBuilder.group({
       'name': [this.chargeData.name, Validators.required],
-      'chargeAppliesTo': [{value: this.chargeData.chargeAppliesTo.id, disabled: true}, Validators.required],
+      'chargeAppliesTo': [{ value: this.chargeData.chargeAppliesTo.id, disabled: true }, Validators.required],
       'currencyCode': [this.chargeData.currency.code, Validators.required],
       'amount': [this.chargeData.amount, Validators.required],
       'active': [this.chargeData.active],
@@ -112,9 +114,9 @@ export class EditChargeComponent implements OnInit {
       }
     }
     if (this.chargeData.taxGroup) {
-      this.chargeForm.addControl('taxGroupId', this.formBuilder.control({value: this.chargeData.taxGroup.id, disabled: true}, Validators.required));
+      this.chargeForm.addControl('taxGroupId', this.formBuilder.control({ value: this.chargeData.taxGroup.id, disabled: true }, Validators.required));
     } else {
-      this.chargeForm.addControl('taxGroupId', this.formBuilder.control({value: '?', disabled: true}));
+      this.chargeForm.addControl('taxGroupId', this.formBuilder.control({ value: '?', disabled: true }));
     }
   }
 
@@ -137,12 +139,12 @@ export class EditChargeComponent implements OnInit {
    */
   submit() {
     const charges = this.chargeForm.value;
-    charges.locale = 'en';
+    charges.locale = this.settingsService.language.code;
     charges.chargePaymentMode = this.chargeData.chargePaymentMode.id;
     this.productsService.updateCharge(this.chargeData.id.toString(), charges)
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
-   });
+      });
   }
 
 }

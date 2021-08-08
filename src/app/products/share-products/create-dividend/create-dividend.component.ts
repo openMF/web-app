@@ -6,6 +6,8 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services. */
 import { ProductsService } from 'app/products/products.service';
+import { SettingsService } from 'app/settings/settings.service';
+
 
 /**
  * Create Dividend component.
@@ -30,13 +32,17 @@ export class CreateDividendComponent implements OnInit {
    * Get Share Product data from `Resolver`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route Activated Route.
+   * @param {DatePipe} datePipe Date Pipe to format date.
+   * @param {ProductsService} productsService Products Service.
    * @param {Router} router Router.
+   * @param {SettingsService} settingsService Settings Service.
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private datePipe: DatePipe,
               private productService: ProductsService,
-              private router: Router) {
+              private router: Router,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { shareProduct: any }) => {
       this.shareProductData = data.shareProduct;
     });
@@ -61,7 +67,7 @@ export class CreateDividendComponent implements OnInit {
    * Submits Create Dividend form.
    */
   submit() {
-    const dateFormat = 'yyyy-MM-dd';
+    const dateFormat = this.settingsService.dateFormat;
     const startDate = this.createDividendForm.value.dividendPeriodStartDate;
     const endDate = this.createDividendForm.value.dividendPeriodEndDate;
     this.createDividendForm.patchValue({
@@ -69,7 +75,7 @@ export class CreateDividendComponent implements OnInit {
       'dividendPeriodEndDate': this.datePipe.transform(endDate, dateFormat)
     });
     const dividendForm = this.createDividendForm.value;
-    dividendForm.locale = 'en';
+    dividendForm.locale = this.settingsService.language.code;
     dividendForm.dateFormat = dateFormat;
     this.productService.createDividend(this.shareProductData.id, dividendForm).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });

@@ -1,6 +1,8 @@
+/** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+/** Custom Components */
 import { SavingProductDetailsStepComponent } from '../saving-product-stepper/saving-product-details-step/saving-product-details-step.component';
 import { SavingProductCurrencyStepComponent } from '../saving-product-stepper/saving-product-currency-step/saving-product-currency-step.component';
 import { SavingProductTermsStepComponent } from '../saving-product-stepper/saving-product-terms-step/saving-product-terms-step.component';
@@ -8,7 +10,10 @@ import { SavingProductSettingsStepComponent } from '../saving-product-stepper/sa
 import { SavingProductChargesStepComponent } from '../saving-product-stepper/saving-product-charges-step/saving-product-charges-step.component';
 import { SavingProductAccountingStepComponent } from '../saving-product-stepper/saving-product-accounting-step/saving-product-accounting-step.component';
 
+/** Custom Services */
 import { ProductsService } from 'app/products/products.service';
+import { SettingsService } from 'app/settings/settings.service';
+
 
 @Component({
   selector: 'mifosx-edit-saving-product',
@@ -27,9 +32,17 @@ export class EditSavingProductComponent implements OnInit {
   savingProductAndTemplate: any;
   accountingRuleData = ['None', 'Cash'];
 
+  /**
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {ProductsService} productsService Products Service.
+   * @param {Router} router Router for navigation.
+   * @param {SettingsService} settingsService Settings Service.
+   */
+
   constructor(private route: ActivatedRoute,
               private productsService: ProductsService,
-              private router: Router) {
+              private router: Router,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { savingProductAndTemplate: any }) => {
       this.savingProductAndTemplate = data.savingProductAndTemplate;
     });
@@ -92,13 +105,13 @@ export class EditSavingProductComponent implements OnInit {
     const savingProduct = {
       ...this.savingProduct,
       charges: this.savingProduct.charges.map((charge: any) => ({ id: charge.id })),
-      locale: 'en' // locale required for nominalAnnualInterestRate
+      locale: this.settingsService.language.code // locale required for nominalAnnualInterestRate
     };
     delete savingProduct.advancedAccountingRules;
     this.productsService.updateSavingProduct(this.savingProductAndTemplate.id, savingProduct)
       .subscribe((response: any) => {
         this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
-    });
+      });
   }
 
 }

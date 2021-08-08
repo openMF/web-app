@@ -1,6 +1,8 @@
+/** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+/** Custom Components */
 import { FixedDepositProductDetailsStepComponent } from '../fixed-deposit-product-stepper/fixed-deposit-product-details-step/fixed-deposit-product-details-step.component';
 import { FixedDepositProductCurrencyStepComponent } from '../fixed-deposit-product-stepper/fixed-deposit-product-currency-step/fixed-deposit-product-currency-step.component';
 import { FixedDepositProductTermsStepComponent } from '../fixed-deposit-product-stepper/fixed-deposit-product-terms-step/fixed-deposit-product-terms-step.component';
@@ -9,7 +11,9 @@ import { FixedDepositProductInterestRateChartStepComponent } from '../fixed-depo
 import { FixedDepositProductChargesStepComponent } from '../fixed-deposit-product-stepper/fixed-deposit-product-charges-step/fixed-deposit-product-charges-step.component';
 import { FixedDepositProductAccountingStepComponent } from '../fixed-deposit-product-stepper/fixed-deposit-product-accounting-step/fixed-deposit-product-accounting-step.component';
 
+/** Custom Services */
 import { ProductsService } from 'app/products/products.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
   selector: 'mifosx-edit-fixed-deposit-product',
@@ -29,9 +33,17 @@ export class EditFixedDepositProductComponent implements OnInit {
   fixedDepositProductsTemplate: any;
   accountingRuleData = ['None', 'Cash'];
 
+  /**
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {ProductsService} productsService Products Service.
+   * @param {Router} router Router for navigation.
+   * @param {SettingsService} settingsService Settings Service
+   */
+
   constructor(private route: ActivatedRoute,
-    private productsService: ProductsService,
-    private router: Router) {
+              private productsService: ProductsService,
+              private router: Router,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { fixedDepositProductAndTemplate: any }) => {
       this.fixedDepositProductsTemplate = data.fixedDepositProductAndTemplate;
     });
@@ -100,7 +112,7 @@ export class EditFixedDepositProductComponent implements OnInit {
     const fixedDepositProduct = {
       ...this.fixedDepositProduct,
       charges: this.fixedDepositProduct.charges.map((charge: any) => ({ id: charge.id })),
-      locale: 'en' // locale required for depositAmount
+      locale: this.settingsService.language.code // locale required for depositAmount
     };
     if (!fixedDepositProduct.description) {
       fixedDepositProduct.description = '';
