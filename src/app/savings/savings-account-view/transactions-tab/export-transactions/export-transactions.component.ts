@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { ReportsService } from 'app/reports/reports.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Export Client Savings Transactions Component
@@ -38,12 +39,14 @@ export class ExportTransactionsComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {DatePipe} datePipe Date Pipe
    * @param {ActivatedRoute} route Activated Route
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private sanitizer: DomSanitizer,
               private reportsService: ReportsService,
               private formBuilder: FormBuilder,
               private datePipe: DatePipe,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private settingsService: SettingsService) {
     this.route.parent.parent.data.subscribe((data: { savingsAccountData: any }) => {
       this.savingsAccountId = data.savingsAccountData.accountNo;
     });
@@ -70,11 +73,11 @@ export class ExportTransactionsComponent implements OnInit {
   generate() {
     const data = {
       'output-type':	'PDF',
-      R_startDate:	this.datePipe.transform(this.transactionsReportForm.value.fromDate, 'yyyy-MM-dd'),
-      R_endDate:	this.datePipe.transform(this.transactionsReportForm.value.toDate, 'yyyy-MM-dd'),
+      R_startDate:	this.datePipe.transform(this.transactionsReportForm.value.fromDate, this.settingsService.dateFormat),
+      R_endDate:	this.datePipe.transform(this.transactionsReportForm.value.toDate, this.settingsService.dateFormat),
       R_savingsAccountId:	this.savingsAccountId
     };
-    this.reportsService.getPentahoRunReportData('Client Saving Transactions', data, 'default', 'en', 'dd MMMM yyyy')
+    this.reportsService.getPentahoRunReportData('Client Saving Transactions', data, 'default', this.settingsService.language.code, this.settingsService.dateFormat)
       .subscribe( (res: any) => {
         const contentType = res.headers.get('Content-Type');
         const file = new Blob([res.body], {type: contentType});

@@ -10,6 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 
 /** Custom Services */
 import { ProductsService } from '../../products.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Components */
 import { FloatingRatePeriodDialogComponent } from '../floating-rate-period-dialog/floating-rate-period-dialog.component';
@@ -38,7 +39,7 @@ export class EditFloatingRateComponent implements OnInit {
   /** Data source for floating rate periods table. */
   dataSource: MatTableDataSource<any>;
   /** Date Format. */
-  dateFormat = 'dd MMMM yyyy';
+  dateFormat = this.settingsService.dateFormat;
   /** Floating Rate Period Data. */
   floatingRatePeriodsData: any[] = [];
 
@@ -55,13 +56,15 @@ export class EditFloatingRateComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {DatePipe} datePipe Date Pipe.
    * @param {MatDialog} dialog Dialog reference.
+   * @param {SettingsService} settingsService Settings Service.
    */
   constructor(private router: Router,
               private formBuilder: FormBuilder,
               private productsService: ProductsService,
               private route: ActivatedRoute,
               private datePipe: DatePipe,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { floatingRate: any }) => {
       this.floatingRateData = data.floatingRate;
       this.floatingRatePeriodsData = data.floatingRate.ratePeriods ? data.floatingRate.ratePeriods : [];
@@ -109,7 +112,7 @@ export class EditFloatingRateComponent implements OnInit {
           fromDate: this.datePipe.transform(response.fromDate, this.dateFormat),
           interestRate: response.interestRate,
           isDifferentialToBaseLendingRate: response.isDifferentialToBaseLendingRate,
-          locale: 'en',
+          locale: this.settingsService.language.code,
           dateFormat: this.dateFormat
         });
         this.dataSource.connect().next(this.floatingRatePeriodsData);
@@ -136,7 +139,7 @@ export class EditFloatingRateComponent implements OnInit {
           fromDate: this.datePipe.transform(response.fromDate, this.dateFormat),
           interestRate: response.interestRate,
           isDifferentialToBaseLendingRate: response.isDifferentialToBaseLendingRate,
-          locale: 'en',
+          locale: this.settingsService.language.code,
           dateFormat: this.dateFormat
         };
         this.dataSource.connect().next(this.floatingRatePeriodsData);
@@ -174,7 +177,7 @@ export class EditFloatingRateComponent implements OnInit {
       floatingRatePeriod.modifiedBy = undefined;
       floatingRatePeriod.createdBy = undefined;
       floatingRatePeriod.isActive = undefined;
-      floatingRatePeriod.locale = 'en';
+      floatingRatePeriod.locale = this.settingsService.language.code;
       floatingRatePeriod.dateFormat = this.dateFormat;
       floatingRatePeriod.fromDate = this.datePipe.transform(floatingRatePeriod.fromDate, this.dateFormat);
     });
