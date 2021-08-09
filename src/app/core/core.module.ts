@@ -4,7 +4,8 @@ import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
 
 /** Translation Imports */
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 /** Custom Services */
 import { AuthenticationService } from './authentication/authentication.service';
@@ -47,7 +48,15 @@ import { ContentComponent } from './shell/content/content.component';
   imports: [
     SharedModule,
     HttpClientModule,
-    TranslateModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => {
+          return new TranslateHttpLoader(http, `${ window.location.protocol }//${ window.location.host }/assets/translations/`, '.json');
+        },
+        deps: [HttpClient]
+      }
+    }),
     RouterModule
   ],
   declarations: [

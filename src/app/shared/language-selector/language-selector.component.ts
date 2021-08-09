@@ -27,6 +27,7 @@ export class LanguageSelectorComponent implements OnInit {
    */
   constructor(private i18nService: I18nService) {
     this.languageSelector.setValue(this.currentLanguage);
+    this.languageSelector.valueChanges.subscribe( language => this.setLanguage(language) );
   }
 
   ngOnInit() {
