@@ -19,6 +19,7 @@ import { DatatableTabsComponent } from './groups-view/datatable-tabs/datatable-t
 import { AddRoleComponent } from './groups-view/add-role/add-role.component';
 import { GroupActionsComponent } from './groups-view/group-actions/group-actions.component';
 import { EditGroupComponent } from './edit-group/edit-group.component';
+import { JlgLoansAccountComponent } from 'app/loans/jlg-loans-account/jlg-loans-account.component';
 
 /** Custom Resolvers */
 import { GroupViewResolver } from './common-resolvers/group-view.resolver';
@@ -140,6 +141,12 @@ const routes: Routes = [
             {
               path: 'savings-accounts',
               loadChildren: () => import('../savings/savings.module').then(m => m.SavingsModule)
+            },
+            {
+              path: 'jlg-loans-account',
+              data: { title: extract('Bulk JLG Loan Application'), breadcrumb: 'Bulk JLG Loan Application', routeParamBreadcrumb: false },
+              component: JlgLoansAccountComponent,
+              resolve: { }
             }
           ]
         }

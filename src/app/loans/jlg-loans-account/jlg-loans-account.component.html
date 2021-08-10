@@ -1,0 +1,143 @@
+<div class="container">
+
+    <mat-card>
+
+            <mat-card-content>
+
+                <form [formGroup]="jlgLoanForm">
+
+                    <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+                        <mat-form-field fxFlex="48%">
+                            <mat-label>Product</mat-label>
+                            <mat-select required formControlName="productId">
+                            <mat-option *ngFor="let product of productOptions" [value]="product.id">
+                                {{ product.name }}
+                            </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <div fxFlex="48%"></div>
+
+                        <ng-container *ngIf="showCompleteForm">
+                            <mat-form-field fxFlex="48%">
+                                <mat-label>Loan Officer</mat-label>
+                                <mat-select formControlName="loanOfficerId">
+                                <mat-option *ngFor="let loanOfficer of loanOfficerOptions" [value]="loanOfficer.id">
+                                    {{ loanOfficer.displayName }}
+                                </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                
+                            <mat-form-field fxFlex="48%">
+                                <mat-label>Fund</mat-label>
+                                <mat-select formControlName="fundId">
+                                <mat-option *ngFor="let fund of fundOptions" [value]="fund.id">
+                                    {{ fund.name }}
+                                </mat-option>
+                                </mat-select>
+                            </mat-form-field>          
+                
+                            <mat-form-field fxFlex="48%">
+                                <mat-label>Submitted On</mat-label>
+                                <input required matInput [matDatepicker]="submittedOnDatePicker" formControlName="submittedOnDate">
+                                <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
+                                <mat-datepicker #submittedOnDatePicker></mat-datepicker>
+                            </mat-form-field>
+                
+                            <mat-form-field fxFlex="48%">
+                                <mat-label>Disbursement On</mat-label>
+                                <input required matInput [matDatepicker]="disbursementOnDatePicker" formControlName="disbursementOnDate">
+                                <mat-datepicker-toggle matSuffix [for]="disbursementOnDatePicker"></mat-datepicker-toggle>
+                                <mat-datepicker #disbursementOnDatePicker></mat-datepicker>
+                            </mat-form-field>
+                        </ng-container>
+
+                    </div>
+        
+                </form>
+
+            </mat-card-content>
+
+            <ng-container *ngIf="showCompleteForm">
+
+                <br>
+
+                <table mat-table [dataSource]="dataSource">
+
+                    <!-- Check Column -->
+                    <ng-container matColumnDef="check">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox (change)="toggleSelects()" [(ngModel)]="selectAllItems"></mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-checkbox (change)="toggleSelect()" [(ngModel)]="element.selected"></mat-checkbox>
+                        </td>
+                    </ng-container>
+    
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="position">
+                      <th mat-header-cell *matHeaderCellDef> Client ID </th>
+                      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                    </ng-container>
+                
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                      <th mat-header-cell *matHeaderCellDef> Client Name </th>
+                      <td mat-cell *matCellDef="let element"> {{element.displayName}} </td>
+                    </ng-container>
+                
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="weight">
+                      <th mat-header-cell *matHeaderCellDef> Loan Purpose </th>
+                      <td mat-cell *matCellDef="let element">
+                        <mat-form-field>
+                            <mat-label>Select Purpose</mat-label>
+                            <mat-select [(ngModel)]="element.loanPurposeId">
+                            <mat-option *ngFor="let purpose of loanPurposeOptions" [value]="purpose.id">
+                                {{ purpose.name }}
+                            </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                      </td>
+                    </ng-container>
+                
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="symbol">
+                      <th mat-header-cell *matHeaderCellDef> Original Loan </th>
+                      <td mat-cell *matCellDef="let element">
+                        <mat-form-field>
+                            <input type="number" matInput [(ngModel)]="element.principal">
+                        </mat-form-field>
+                      </td>
+                    </ng-container>
+    
+                     <!-- Charges Column -->
+                     <ng-container matColumnDef="charges">
+                        <th mat-header-cell *matHeaderCellDef> Charges </th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-chip-list #chipList aria-label="Charges selection">
+                                <mat-chip *ngFor="let charge of element.charges" [selectable]="true"
+                                    [removable]="true" (removed)="removeCharge(charge.chargeId, element)">
+                                    {{charge.name}}
+                                    <mat-icon matChipRemove>cancel</mat-icon>
+                                </mat-chip>
+                            </mat-chip-list>
+                        </td>
+                      </ng-container>
+                
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
+    
+                <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+                <button type="button" mat-raised-button (click)="goBack()">Cancel</button>
+                <button mat-raised-button [disabled]="jlgLoanForm.invalid" type="button" (click)="sendFormData()" color="primary">Submit</button>
+                </mat-card-actions>
+            </ng-container>
+
+           
+
+    </mat-card>
+
+</div>

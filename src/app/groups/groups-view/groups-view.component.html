@@ -70,7 +70,7 @@
           <i class="fa fa-file"></i>Applications</button>
         <mat-menu #AccountApplications="matMenu">
           <span *ngIf="groupViewData.clientMembers">
-            <button mat-menu-item *mifosxHasPermission="'CREATE_LOAN'">Bulk JLG Loan Application</button></span>
+            <button mat-menu-item *mifosxHasPermission="'CREATE_LOAN'" [routerLink]="['jlg-loans-account']">Bulk JLG Loan Application</button></span>
           <button mat-menu-item *mifosxHasPermission="'CREATE_SAVINGSACCOUNT'" [routerLink]="['savings-accounts', 'create']">Group Saving Application</button>
           <button mat-menu-item *mifosxHasPermission="'CREATE_LOAN'">Group Loan Application</button>
         </mat-menu>

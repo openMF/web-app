@@ -438,4 +438,20 @@ export class LoansService {
     return this.http.post(`/loans/${accountId}/transactions`, data, { params: httpParams });
   }
 
+  /**
+   * @param {string} groupId  Group Id
+   * @param {string} productId Product Id
+   * @returns {Observable<any>}
+   */
+   getLoansAccount(groupId: string, productId?: string): Observable<any> {
+    let httpParams = new HttpParams()
+      .set('groupId', groupId)
+      .set('lendingStrategy', '300')
+      .set('templateType', 'jlgbulk');
+
+    httpParams = productId ? httpParams.set('productId', productId) : httpParams;
+
+    return this.http.get(`/loans/template`, { params: httpParams });
+  }
+
 }
