@@ -5,9 +5,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
-/** Tanslation Imports */
-import { TranslateModule } from '@ngx-translate/core';
-
 /** Environment Configuration */
 import { environment } from 'environments/environment';
 
@@ -55,7 +52,6 @@ import { AppRoutingModule } from './app-routing.module';
     HammerModule,
     HttpClientModule,
     ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
-    TranslateModule.forRoot(),
     CoreModule,
     HomeModule,
     LoginModule,
