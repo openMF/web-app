@@ -1,0 +1,20 @@
+{
+  "APP_NAME": "MifosX",
+  "About": "About",
+  "Home": "Home",
+  "Logged in as": "Logged in as",
+  "Login": "Login",
+  "Logout": "Logout",
+  "Password": "Password",
+  "Password is required": "Password is required",
+  "Username": "Username",
+  "Username is required": "Username is required",
+  "Username or password incorrect.": "Username or password incorrect",
+  "Remember me": "Remember me",
+  "Version": "Version",
+  "Accounting": "Accounting",
+  "Reports": "Reports",
+  "Admin": "Admin",
+  "Self Service": "Self Service",
+  "Institution": "Institution"
+}
