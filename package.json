@@ -45,6 +45,7 @@
     "@fortawesome/fontawesome-svg-core": "1.2.18",
     "@fortawesome/free-solid-svg-icons": "5.8.2",
     "@ngx-translate/core": "11.0.1",
+    "@ngx-translate/http-loader": "^6.0.0",
     "chart.js": "3.0.0-alpha",
     "core-js": "2.5.0",
     "lodash": "4.17.21",

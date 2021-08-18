@@ -5,6 +5,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
+/** Custom Services */
+import { SettingsService } from 'app/settings/settings.service';
+
 /**
  * Products service.
  */
@@ -15,8 +18,10 @@ export class ProductsService {
 
   /**
    * @param {HttpClient} http Http Client to send requests.
+   * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private settingsService: SettingsService) { }
 
   /**
    * @returns {Observable<any>} Loan products data
@@ -105,10 +110,10 @@ export class ProductsService {
   }
 
   getDividendData(shareProductId: any, dividendId: any): Observable<any> {
-    const httpParams = new HttpParams().set('dateFormat', 'dd MMMM yyyy')
-                                        .set('limit', '10')
-                                        .set('locale', 'en')
-                                        .set('offset', '0');
+    const httpParams = new HttpParams().set('dateFormat', this.settingsService.dateFormat)
+                                       .set('limit', '10')
+                                       .set('locale', this.settingsService.language.code)
+                                       .set('offset', '0');
     return this.http.get(`/shareproduct/${shareProductId}/dividend/${dividendId}`, { params: httpParams });
   }
 
@@ -394,7 +399,7 @@ export class ProductsService {
    */
   getAllInterestRateCharts(productId: string): Observable<any> {
     const httpParams = new HttpParams().set('productId', productId);
-    return this.http.get(`/interestratecharts`, {params: httpParams});
+    return this.http.get(`/interestratecharts`, { params: httpParams });
   }
 
   createRecurringDepositProduct(recurringDepositProduct: any): Observable<any> {

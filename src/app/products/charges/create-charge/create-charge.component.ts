@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { ProductsService } from '../../products.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Create charge component.
@@ -43,12 +44,14 @@ export class CreateChargeComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {DatePipe} datePipe Date Pipe to format date.
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
               private productsService: ProductsService,
               private route: ActivatedRoute,
               private router: Router,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { chargesTemplate: any }) => {
       this.chargesTemplateData = data.chargesTemplate;
       this.incomeAndLiabilityAccountData = data.chargesTemplate.incomeOrLiabilityAccountOptions.incomeAccountOptions
@@ -216,7 +219,7 @@ export class CreateChargeComponent implements OnInit {
     });
     const charge = this.chargeForm.getRawValue();
     // TODO: Update once language and date settings are setup
-    charge.locale = 'en';
+    charge.locale = this.settingsService.language.code;
     charge.monthDayFormat = monthDayFormat;
     delete charge.addFeeFrequency;
     if (!charge.taxGroupId) {

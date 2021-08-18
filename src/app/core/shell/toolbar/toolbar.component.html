@@ -20,19 +20,19 @@
 
       <a mat-tab-link class="tab-link" [routerLink]="['/accounting']">
         <fa-icon class="mr-05" icon="money-bill-alt" size="lg"></fa-icon>
-        Accounting
+        {{ 'Accounting' | translate }}
       </a>
       <a mat-tab-link class="tab-link" [matMenuTriggerFor]="reportsMenu" #reportsMenuTrigger="matMenuTrigger" >
         <fa-icon class="mr-05" icon="chart-bar" size="lg"></fa-icon>
-        Reports
+        {{ 'Reports' | translate }}
       </a>
       <a mat-tab-link class="tab-link" [matMenuTriggerFor]="adminMenu" #adminMenuTrigger="matMenuTrigger">
         <fa-icon class="mr-05" icon="shield-alt" size="lg"></fa-icon>
-        Admin
+        {{ 'Admin' | translate }}
       </a>
       <a mat-tab-link class="tab-link" [matMenuTriggerFor]="selfServiceMenu" #selfServiceMenuTrigger="matMenuTrigger">
         <fa-icon class="mr-05" icon="users" size="lg"></fa-icon>
-        Self Service
+        {{ 'Self Service' | translate }}
       </a>
 
     </span>

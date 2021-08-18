@@ -1,16 +1,22 @@
+/** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
+/** Custom Components */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DepositProductIncentiveFormDialogComponent } from 'app/products/deposit-product-incentive-form-dialog/deposit-product-incentive-form-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
+/** Dialog Components */
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
+
+
+import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
   selector: 'mifosx-recurring-deposit-product-interest-rate-chart-step',
@@ -50,9 +56,17 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
   chartDetailData: any = [];
   chartsDetail: any[] = [];
 
+  /**
+   * @param {FormBuilder} formBuilder Form Builder.
+   * @param {MatDialog} dialog Dialog reference.
+   * @param {DatePipe} datePipe Date Pipe to format date.
+   * @param {SettingsService} settingsService Settings Service.
+   */
+
   constructor(private formBuilder: FormBuilder,
-    public dialog: MatDialog,
-    private datePipe: DatePipe) {
+              public dialog: MatDialog,
+              private datePipe: DatePipe,
+              private settingsService: SettingsService) {
     this.createrecurringDepositProductInterestRateChartForm();
   }
 
@@ -350,8 +364,8 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
 
   get recurringDepositProductInterestRateChart() {
     // TODO: Update once language and date settings are setup
-    const dateFormat = 'yyyy-MM-dd';
-    const locale = 'en';
+    const dateFormat = this.settingsService.dateFormat;
+    const locale = this.settingsService.language.code;
     const recurringDepositProductInterestRateChart = this.recurringDepositProductInterestRateChartForm.value;
     for (const chart of recurringDepositProductInterestRateChart.charts) {
       chart.dateFormat = dateFormat;

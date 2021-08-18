@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
 import { ProductsService } from '../../products.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Dialog Components */
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
@@ -48,13 +49,16 @@ export class EditTaxGroupComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {DatePipe} datePipe Date Pipe to format date.
+   * @param {MatDialog} dialog Dialog reference.
+   * @param {SettingsService} settingsService Settings Service.
    */
   constructor(private formBuilder: FormBuilder,
-    private productsService: ProductsService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private datePipe: DatePipe,
-    public dialog: MatDialog) {
+              private productsService: ProductsService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private datePipe: DatePipe,
+              public dialog: MatDialog,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { taxGroup: any }) => {
       this.taxGroupData = data.taxGroup;
       this.taxComponentOptions = this.taxGroupData.taxComponents;
@@ -193,8 +197,8 @@ export class EditTaxGroupComponent implements OnInit {
    * if successful redirects to Tax Groups.
    */
   submit() {
-    const dateFormat = 'yyyy-MM-dd';
-    const locale = 'en';
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const taxGroup = {
       ...this.taxGroupForm.value,
       taxComponents: this.taxComponentsDataSource,

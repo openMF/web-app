@@ -1,1 +1,10 @@
 @import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
+
+div.alert {
+    background-color: dimgray !important;
+}
+
+table.mat-table tbody tr:nth-child(even) {
+    background-color: dimgray !important;
+}
+
