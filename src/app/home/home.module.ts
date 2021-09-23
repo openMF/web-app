@@ -1,11 +1,16 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 /** Custom Modules */
 import { SharedModule } from '../shared/shared.module';
 import { HomeRoutingModule } from './home-routing.module';
 import { PipesModule } from '../pipes/pipes.module';
+
+/** Translation Imports */
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 /** Custom Components */
 import { HomeComponent } from './home.component';
@@ -23,7 +28,16 @@ import { ClientTrendsBarComponent } from './dashboard/client-trends-bar/client-t
   imports: [
     SharedModule,
     PipesModule,
-    HomeRoutingModule
+    HomeRoutingModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => {
+          return new TranslateHttpLoader(http, `${ window.location.protocol }//${ window.location.host }/assets/translations/`, '.json');
+        },
+        deps: [HttpClient]
+      }
+    }),
   ],
   declarations: [
     HomeComponent,

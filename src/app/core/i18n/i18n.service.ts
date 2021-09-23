@@ -11,6 +11,7 @@ import { Logger } from '../logger/logger.service';
 import { includes } from 'lodash';
 import * as enUS from '../../../translations/en-US.json';
 import * as frFR from '../../../translations/fr-FR.json';
+import * as esES from '../../../translations/es-Es.json';
 
 /** Initialize Logger */
 const log = new Logger('I18nService');

@@ -1,22 +1,22 @@
 <mat-toolbar fxLayout="row" color="primary" id="mifosx-toolbar">
 
-  <button mat-icon-button *ngIf="!sidenavCollapsed" (click)="toggleSidenav()" matTooltip="Toggle Hide/Open">
+    <button mat-icon-button *ngIf="!sidenavCollapsed" (click)="toggleSidenav()" [matTooltip]="'label.anchor.togglehideopen' | translate">
     <fa-icon icon="bars" size="lg"></fa-icon>
   </button>
 
-  <button mat-icon-button *ngIf="sidenav.opened" (click)="toggleSidenavCollapse()" matTooltip="Toggle Collapse" fxHide.lt-md="true">
+    <button mat-icon-button *ngIf="sidenav.opened" (click)="toggleSidenavCollapse()" [matTooltip]="'label.anchor.togglecollapse' | translate" fxHide.lt-md="true">
     <fa-icon *ngIf="!sidenavCollapsed" icon="chevron-left"></fa-icon>
     <fa-icon *ngIf="sidenavCollapsed" icon="chevron-right"></fa-icon>
   </button>
 
-  <nav mat-tab-nav-bar backgroundColor="primary" class="ml-1">
+    <nav mat-tab-nav-bar backgroundColor="primary" class="ml-1">
 
-    <a mat-tab-link class="tab-link" [matMenuTriggerFor]="institutionMenu" #institutionMenuTrigger="matMenuTrigger">
-      <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
-      Institution
-    </a>
+        <a mat-tab-link class="tab-link" [matMenuTriggerFor]="institutionMenu" #institutionMenuTrigger="matMenuTrigger">
+            <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
+            {{ "label.anchor.institution" | translate }}
+        </a>
 
-    <span fxHide.lt-lg="true">
+        <span fxHide.lt-lg="true">
 
       <a mat-tab-link class="tab-link" [routerLink]="['/accounting']">
         <fa-icon class="mr-05" icon="money-bill-alt" size="lg"></fa-icon>
@@ -37,85 +37,85 @@
 
     </span>
 
-  </nav>
+    </nav>
 
-  <span fxFlex="auto"></span>
+    <span fxFlex="auto"></span>
 
-  <mifosx-search-tool></mifosx-search-tool>
+    <mifosx-search-tool></mifosx-search-tool>
 
-  <mifosx-language-selector class="ml-1 language" fxHide.lt-md></mifosx-language-selector>
+    <mifosx-language-selector class="ml-1 language" fxHide.lt-md></mifosx-language-selector>
 
-  <mifosx-theme-picker fxHide.lt-md></mifosx-theme-picker>
+    <mifosx-theme-picker fxHide.lt-md></mifosx-theme-picker>
 
-  <mifosx-notifications-tray fxHide.lt-md></mifosx-notifications-tray>
+    <mifosx-notifications-tray fxHide.lt-md></mifosx-notifications-tray>
 
-  <button mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu">
+    <button mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu">
     <img src="assets/images/user_placeholder.png">
   </button>
 
 </mat-toolbar>
 
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item routerLink="/clients">Clients</button>
-  <button mat-menu-item routerLink="/groups">Groups</button>
-  <button mat-menu-item routerLink="/centers">Centers</button>
-  <span fxHide.lg>
-    <button mat-menu-item [routerLink]="['/accounting']">Accounting</button>
-    <button mat-menu-item [matMenuTriggerFor]="reportsMenu">Reports</button>
-    <button mat-menu-item [matMenuTriggerFor]="adminMenu">Admin</button>
-    <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">Self Service</button>
+    <button mat-menu-item routerLink="/clients">{{ "label.anchor.clients" | translate }}</button>
+    <button mat-menu-item routerLink="/groups">{{ "label.anchor.groups" | translate }}</button>
+    <button mat-menu-item routerLink="/centers">{{ "label.anchor.centers" | translate }}</button>
+    <span fxHide.lg>
+    <button mat-menu-item [routerLink]="['/accounting']">{{ 'Accounting' | translate }}</button>
+    <button mat-menu-item [matMenuTriggerFor]="reportsMenu">{{ 'Reports' | translate }}</button>
+    <button mat-menu-item [matMenuTriggerFor]="adminMenu">{{ 'Admin' | translate }}</button>
+    <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">{{ 'Self Service' | translate }}</button>
   </span>
 </mat-menu>
 
 <!-- Toolbar Menus -->
 <mat-menu #reportsMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [routerLink]="['/reports']">All</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Client']">Clients</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Loan']">Loans</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Savings']">Savings</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Fund']">Funds</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Accounting']">Accounting</button>
-  <button mat-menu-item [routerLink]="['/xbrl']">XBRL</button>
+    <button mat-menu-item [routerLink]="['/reports']">{{ "label.anchor.all" | translate }}</button>
+    <button mat-menu-item [routerLink]="['/reports', 'Client']">{{ "label.anchor.clients" | translate }}</button>
+    <button mat-menu-item [routerLink]="['/reports', 'Loan']">{{ "label.anchor.loans" | translate }}</button>
+    <button mat-menu-item [routerLink]="['/reports', 'Savings']">{{ "label.anchor.savings" | translate }}</button>
+    <button mat-menu-item [routerLink]="['/reports', 'Fund']">{{ "label.anchor.funds" | translate }}</button>
+    <button mat-menu-item [routerLink]="['/reports', 'Accounting']">{{ "label.anchor.accounting" | translate }}</button>
+    <button mat-menu-item [routerLink]="['/xbrl']">{{ "label.anchor.xbrl" | translate }}</button>
 </mat-menu>
 
 <mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [routerLink]="['/users']">Users</button>
-  <button mat-menu-item [routerLink]="['/organization']">Organization</button>
-  <button mat-menu-item [routerLink]="['/system']">System</button>
-  <button mat-menu-item [routerLink]="['/products']">Products</button>
-  <button mat-menu-item [routerLink]="['/templates']">Templates</button>
+    <button mat-menu-item [routerLink]="['/users']">{{ "label.anchor.users" | translate }}</button>
+    <button mat-menu-item [routerLink]="['/organization']">{{ "label.anchor.organization" | translate }}</button>
+    <button mat-menu-item [routerLink]="['/system']">{{ "label.anchor.system" | translate }}</button>
+    <button mat-menu-item [routerLink]="['/products']">{{ "label.anchor.products" | translate }}</button>
+    <button mat-menu-item [routerLink]="['/templates']">{{ "label.anchor.templates" | translate }}</button>
 </mat-menu>
 
 <mat-menu #selfServiceMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [routerLink]="['/self-service/users']">User Management</button>
-  <button mat-menu-item [routerLink]="['/self-service/app-configuration']">App Configuration</button>
-  <button mat-menu-item [routerLink]="['/self-service/task-management']">Task Management</button>
+    <button mat-menu-item [routerLink]="['/self-service/users']">{{ "label.anchor.usermanagement" | translate }}</button>
+    <button mat-menu-item [routerLink]="['/self-service/app-configuration']">{{ "label.anchor.appconfiguration" | translate }}</button>
+    <button mat-menu-item [routerLink]="['/self-service/task-management']">{{ "label.anchor.taskmanagement" | translate }}</button>
 </mat-menu>
 
 <!-- Application User Help Menu -->
 <mat-menu #applicationMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item (click)="help()">
+    <button mat-menu-item (click)="help()">
     <mat-icon matListIcon>
       <fa-icon icon="question-circle" size="sm"></fa-icon>
     </mat-icon>
-    <span>Help</span>
+    <span>{{ "label.anchor.help" | translate }}</span>
   </button>
-  <button mat-menu-item [routerLink]="['/profile']">
+    <button mat-menu-item [routerLink]="['/profile']">
     <mat-icon>
       <fa-icon icon="user" size="sm"></fa-icon>
     </mat-icon>
-    <span>Profile</span>
+    <span>{{ "label.anchor.profile" | translate }}</span>
   </button>
-  <button mat-menu-item [routerLink]="['/settings']">
+    <button mat-menu-item [routerLink]="['/settings']">
     <mat-icon>
       <fa-icon icon="cog" size="sm"></fa-icon>
     </mat-icon>
-    <span>Settings</span>
+    <span>{{ "label.anchor.settings" | translate }}</span>
   </button>
-  <button mat-menu-item (click)="logout()" id="logout">
+    <button mat-menu-item (click)="logout()" id="logout">
     <mat-icon>
       <fa-icon icon="sign-out-alt" size="sm"></fa-icon>
     </mat-icon>
-    <span>Sign Out</span>
+    <span>{{ "label.anchor.logout" | translate }}</span>
   </button>
 </mat-menu>

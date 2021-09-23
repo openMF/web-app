@@ -3,116 +3,116 @@
   'sidebar-compact': sidenavCollapsed
   }">
 
-  <div class="navigation-panel" fxLayout="column">
+    <div class="navigation-panel" fxLayout="column">
 
-    <!-- TODO: Allow customization by organization -->
-    <div class="app-brand" [routerLink]="['/home']">
-      <img src="assets/images/MifosX_logo.png" alt="app-logo" class="app-logo">
-      <span class="app-logo-text text-muted">Mifos</span>
-    </div>
+        <!-- TODO: Allow customization by organization -->
+        <div class="app-brand" [routerLink]="['/home']">
+            <img src="assets/images/MifosX_logo.png" alt="app-logo" class="app-logo">
+            <span class="app-logo-text text-muted">Mifos</span>
+        </div>
 
-    <div class="app-user">
-      <div class="app-user-photo">
-        <!-- TODO: Decision to be taken on providing this feature -->
-        <img src="assets/images/user_placeholder.png" alt="app-user-photo">
-      </div>
-      <span class="app-user-name mb-05">
+        <div class="app-user">
+            <div class="app-user-photo">
+                <!-- TODO: Decision to be taken on providing this feature -->
+                <img src="assets/images/user_placeholder.png" alt="app-user-photo">
+            </div>
+            <span class="app-user-name mb-05">
         {{ username }}
       </span>
-      <div class="app-user-controls">
-        <button class="xs-button" mat-icon-button matTooltip="Settings" [routerLink]="['/settings']">
+            <div class="app-user-controls">
+                <button class="xs-button" mat-icon-button [matTooltip]="'label.anchor.settings' | translate" [routerLink]="['/settings']">
           <fa-icon icon="cog"></fa-icon>
         </button>
-        <button class="xs-button" mat-icon-button matTooltip="Sign Out" (click)="logout()">
+                <button class="xs-button" mat-icon-button [matTooltip]="'label.anchor.logout' | translate" (click)="logout()">
           <fa-icon icon="sign-out-alt"></fa-icon>
         </button>
-      </div>
-    </div>
+            </div>
+        </div>
 
-    <div class="app-sidenav">
+        <div class="app-sidenav">
 
-      <div class="mt-1 mb-1 nav-item-sep">
-        <mat-divider></mat-divider>
-        <span class="text-muted icon-menu-title">Frequently Accessed</span>
-      </div>
-      <div class="icon-menu">
-        <div class="icon-menu-item" *ngFor="let activity of mappedActivities">
-          <button mat-raised-button [matTooltip]="activity.toolTip" [routerLink]="[activity.path]">
+            <div class="mt-1 mb-1 nav-item-sep">
+                <mat-divider></mat-divider>
+                <span class="text-muted icon-menu-title">{{ "label.anchor.frequentlyaccessed" | translate }}</span>
+            </div>
+            <div class="icon-menu">
+                <div class="icon-menu-item" *ngFor="let activity of mappedActivities">
+                    <button mat-raised-button [matTooltip]="activity.toolTip | translate" [routerLink]="[activity.path]">
             <fa-icon [icon]="activity.icon" size="lg"></fa-icon>
           </button>
+                </div>
+            </div>
+
+            <div class="nav-item-sep">
+                <mat-divider></mat-divider>
+                <span class="text-muted">{{ "label.anchor.mainitems" | translate }}</span>
+            </div>
+
+            <mat-nav-list>
+                <mat-list-item [routerLink]="['/dashboard']" [matTooltip]="'label.anchor.dashboard' | translate">
+                    <mat-icon matListIcon>
+                        <fa-icon icon="tachometer-alt" size="sm"></fa-icon>
+                    </mat-icon>
+                    <a matLine>{{ "label.anchor.dashboard" | translate }}</a>
+                </mat-list-item>
+                <mat-list-item [routerLink]="['/navigation']" [matTooltip]="'label.anchor.navigation' | translate">
+                    <mat-icon matListIcon>
+                        <fa-icon icon="location-arrow" size="sm"></fa-icon>
+                    </mat-icon>
+                    <a matLine>{{ "label.anchor.navigation" | translate }}</a>
+                </mat-list-item>
+                <mat-list-item [routerLink]="['/checker-inbox-and-tasks/checker-inbox']" [matTooltip]="'label.anchor.tasks' | translate">
+                    <mat-icon matListIcon>
+                        <i class="fa fa-check"></i>
+                    </mat-icon>
+                    <a matLine>{{ "label.anchor.tasks" | translate }}</a>
+                </mat-list-item>
+                <mat-list-item [routerLink]="['/collections/individual-collection-sheet']" [matTooltip]="'label.anchor.individualcollectionsheet' | translate">
+                    <mat-icon matListIcon>
+                        <i class="fa fa-tasks "></i>
+                    </mat-icon>
+                    <a matLine>{{ "label.anchor.individualcollectionsheet" | translate }}</a>
+                </mat-list-item>
+                <mat-list-item [routerLink]="['/notifications']" [matTooltip]="'label.heading.notification' | translate">
+                    <mat-icon matListIcon>
+                        <fa-icon icon="bell" size="sm"></fa-icon>
+                    </mat-icon>
+                    <a matLine>{{ "label.heading.notification" | translate }}</a>
+                </mat-list-item>
+                <mat-list-item [routerLink]="['/accounting/journal-entries/frequent-postings']" [matTooltip]="'label.heading.frequentposting' | translate">
+                    <mat-icon matListIcon>
+                        <fa-icon icon="sync" size="sm"></fa-icon>
+                    </mat-icon>
+                    <a matLine>{{ "label.heading.frequentposting" | translate }}</a>
+                </mat-list-item>
+                <mat-list-item [routerLink]="['/accounting/journal-entries/create']" [matTooltip]="'label.heading.addjournalentry' | translate">
+                    <mat-icon matListIcon>
+                        <fa-icon icon="plus" size="sm"></fa-icon>
+                    </mat-icon>
+                    <a matLine>{{ "label.heading.addjournalentry" | translate }}</a>
+                </mat-list-item>
+                <mat-list-item [routerLink]="['/accounting/chart-of-accounts']" [matTooltip]="'label.heading.chartofaccounts' | translate">
+                    <mat-icon matListIcon>
+                        <fa-icon icon="sitemap" size="sm"></fa-icon>
+                    </mat-icon>
+                    <a matLine>{{ "label.heading.chartofaccounts" | translate }}</a>
+                </mat-list-item>
+                <mat-list-item (click)="showKeyboardShortcuts()" [matTooltip]="'label.heading.keyboarshortcuts' | translate">
+                    <mat-icon matListIcon>
+                        <fa-icon icon="keyboard" size="sm"></fa-icon>
+                    </mat-icon>
+                    <a matLine>{{ "label.heading.keyboarshortcuts" | translate }}</a>
+                </mat-list-item>
+                <mat-list-item [matTooltip]="'label.heading.help' | translate">
+                    <mat-icon matListIcon (click)="help()">
+                        <fa-icon icon="question-circle" size="sm"></fa-icon>
+                    </mat-icon>
+                    <a matLine>{{ "label.heading.help" | translate }}</a>
+                </mat-list-item>
+            </mat-nav-list>
+
         </div>
-      </div>
-
-      <div class="nav-item-sep">
-        <mat-divider></mat-divider>
-        <span class="text-muted">Main Items</span>
-      </div>
-
-      <mat-nav-list>
-        <mat-list-item [routerLink]="['/dashboard']" matTooltip="Dashboard">
-          <mat-icon matListIcon >
-            <fa-icon icon="tachometer-alt" size="sm"></fa-icon>
-          </mat-icon>
-          <a matLine>Dashboard</a>
-        </mat-list-item>
-        <mat-list-item [routerLink]="['/navigation']" matTooltip="Navigation">
-          <mat-icon matListIcon>
-            <fa-icon icon="location-arrow" size="sm"></fa-icon>
-          </mat-icon>
-          <a matLine>Navigation</a>
-        </mat-list-item>
-        <mat-list-item [routerLink]="['/checker-inbox-and-tasks/checker-inbox']" matTooltip="Checker Inbox and Tasks">
-          <mat-icon matListIcon>
-            <i class="fa fa-check" ></i>
-          </mat-icon>
-          <a matLine>Checker Inbox and Tasks</a>
-        </mat-list-item>
-        <mat-list-item [routerLink]="['/collections/individual-collection-sheet']" matTooltip="Individual Collection Sheet">
-          <mat-icon matListIcon>
-            <i class="fa fa-tasks "></i>
-          </mat-icon>
-          <a matLine>Individual Collection Sheet</a>
-        </mat-list-item>
-        <mat-list-item [routerLink]="['/notifications']" matTooltip="Notifications">
-          <mat-icon matListIcon>
-            <fa-icon icon="bell" size="sm"></fa-icon>
-          </mat-icon>
-          <a matLine>Notifications</a>
-        </mat-list-item>
-        <mat-list-item [routerLink]="['/accounting/journal-entries/frequent-postings']" matTooltip="Frequent Postings">
-          <mat-icon matListIcon>
-            <fa-icon icon="sync" size="sm"></fa-icon>
-          </mat-icon>
-          <a matLine>Frequent Postings</a>
-        </mat-list-item>
-        <mat-list-item [routerLink]="['/accounting/journal-entries/create']" matTooltip="Create Journal Entry">
-          <mat-icon matListIcon>
-            <fa-icon icon="plus" size="sm"></fa-icon>
-          </mat-icon>
-          <a matLine>Create Journal Entry</a>
-        </mat-list-item>
-        <mat-list-item [routerLink]="['/accounting/chart-of-accounts']" matTooltip="Chart Of Accounts">
-          <mat-icon matListIcon>
-            <fa-icon icon="sitemap" size="sm"></fa-icon>
-          </mat-icon>
-          <a matLine>Chart of Accounts</a>
-        </mat-list-item>
-        <mat-list-item (click)="showKeyboardShortcuts()" matTooltip="Keyboard Shortcuts">
-          <mat-icon matListIcon>
-            <fa-icon icon="keyboard" size="sm"></fa-icon>
-          </mat-icon>
-          <a matLine>Keyboard Shortcuts</a>
-        </mat-list-item>
-        <mat-list-item matTooltip="Help">
-          <mat-icon matListIcon (click)="help()">
-            <fa-icon icon="question-circle" size="sm"></fa-icon>
-          </mat-icon>
-          <a matLine>Help</a>
-        </mat-list-item>
-      </mat-nav-list>
 
     </div>
-
-  </div>
 
 </div>

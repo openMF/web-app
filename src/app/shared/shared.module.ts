@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 /** Custom Components */
@@ -26,6 +27,10 @@ import { ServerSelectorComponent } from './server-selector/server-selector.compo
 import { IconsModule } from './icons.module';
 import { MaterialModule } from './material.module';
 
+/** Translation Imports */
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
 /**
  * Shared Module
  *
@@ -36,7 +41,16 @@ import { MaterialModule } from './material.module';
     CommonModule,
     IconsModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => {
+          return new TranslateHttpLoader(http, `${ window.location.protocol }//${ window.location.host }/assets/translations/`, '.json');
+        },
+        deps: [HttpClient]
+      }
+    }),
   ],
   declarations: [
     FormfieldComponent,

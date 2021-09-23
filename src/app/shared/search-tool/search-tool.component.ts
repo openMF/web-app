@@ -35,27 +35,27 @@ export class SearchToolComponent {
   /** Resource Options */
   resourceOptions: any[] = [
     {
-      name: 'All',
+      name: 'label.search.scope.all',
       value: 'clients,clientIdentifiers,groups,savings,shares,loans'
     },
     {
-      name: 'Clients',
+      name: 'label.search.scope.clients.and.clientIdentifiers',
       value: 'clients,clientIdentifiers'
     },
     {
-      name: 'Groups',
+      name: 'label.search.scope.groups.and.centers',
       value: 'groups'
     },
     {
-      name: 'Savings',
+      name: 'label.search.scope.savings',
       value: 'savings'
     },
     {
-      name: 'Shares',
+      name: 'label.search.scope.shares',
       value: 'shares'
     },
     {
-      name: 'Loans',
+      name: 'label.input.adhoc.search.loans',
       value: 'loans'
     },
   ];
