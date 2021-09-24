@@ -76,7 +76,7 @@ export class CreateCashierComponent implements OnInit {
       'endDate': this.datePipe.transform(endDate, dateFormat)
     });
     const createCashierForm = this.createCashierForm.value;
-    createCashierForm.locale = this.settingsService.language.code;
+    createCashierForm.locale = this.settingsService.language;
     createCashierForm.dateFormat = dateFormat;
     this.organizationService.createCashier(this.cashierTemplate.tellerId, createCashierForm).subscribe((response: any) => {
       this.router.navigate(['../'], {relativeTo: this.route});

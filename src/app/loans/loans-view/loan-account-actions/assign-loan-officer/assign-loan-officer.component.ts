@@ -67,7 +67,7 @@ export class AssignLoanOfficerComponent implements OnInit {
       assignmentDate: this.datePipe.transform(assignmentDate, dateFormat)
     });
     const assignForm = this.assignOfficerForm.value;
-    assignForm.locale = this.settingsService.language.code;
+    assignForm.locale = this.settingsService.language;
     assignForm.dateFormat = dateFormat;
     assignForm.fromLoanOfficerId = this.dataObject.loanOfficerId || '';
 

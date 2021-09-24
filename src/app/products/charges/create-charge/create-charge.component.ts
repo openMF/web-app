@@ -219,7 +219,7 @@ export class CreateChargeComponent implements OnInit {
     });
     const charge = this.chargeForm.getRawValue();
     // TODO: Update once language and date settings are setup
-    charge.locale = this.settingsService.language.code;
+    charge.locale = this.settingsService.language;
     charge.monthDayFormat = monthDayFormat;
     delete charge.addFeeFrequency;
     if (!charge.taxGroupId) {

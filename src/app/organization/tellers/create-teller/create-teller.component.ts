@@ -86,7 +86,7 @@ export class CreateTellerComponent implements OnInit {
       endDate: this.datePipe.transform(prevEndDate, dateFormat)
     });
     const teller = this.tellerForm.value;
-    teller.locale = this.settingsService.language.code;
+    teller.locale = this.settingsService.language;
     teller.dateFormat = dateFormat;
     this.organizationService.createTeller(teller).subscribe((response: any) => {
       this.router.navigate(['../', response.resourceId], { relativeTo: this.route });

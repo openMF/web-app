@@ -76,7 +76,7 @@ export class EditOfficeComponent implements OnInit {
       openingDate: this.datepipe.transform(openedOn, dateFormat)
     });
     const office = this.officeForm.value;
-    office.locale = this.settingsService.language.code;
+    office.locale = this.settingsService.language;
     office.dateFormat = dateFormat;
     this.organizationService.updateOffice(this.officeData.id, office).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });

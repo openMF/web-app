@@ -119,7 +119,7 @@ export class BulkLoanReassignmnetComponent implements OnInit {
       assignmentDate: this.datePipe.transform(assignmentDate, dateFormat)
     });
     const bulkForm = this.bulkLoanForm.value;
-    bulkForm.locale = this.settingsService.language.code;
+    bulkForm.locale = this.settingsService.language;
     bulkForm.dateFormat = dateFormat;
     bulkForm.loans = this.loans;
     this.organizationSevice.createLoanReassignment(bulkForm).subscribe((response: any) => {

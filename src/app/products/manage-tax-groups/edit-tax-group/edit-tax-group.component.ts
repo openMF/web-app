@@ -197,7 +197,7 @@ export class EditTaxGroupComponent implements OnInit {
    * if successful redirects to Tax Groups.
    */
   submit() {
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const dateFormat = this.settingsService.dateFormat;
     const taxGroup = {
       ...this.taxGroupForm.value,

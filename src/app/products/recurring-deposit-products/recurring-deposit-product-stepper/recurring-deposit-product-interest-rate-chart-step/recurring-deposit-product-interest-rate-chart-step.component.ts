@@ -365,7 +365,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
   get recurringDepositProductInterestRateChart() {
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const recurringDepositProductInterestRateChart = this.recurringDepositProductInterestRateChartForm.value;
     for (const chart of recurringDepositProductInterestRateChart.charts) {
       chart.dateFormat = dateFormat;

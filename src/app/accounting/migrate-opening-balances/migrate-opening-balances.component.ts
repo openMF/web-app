@@ -136,7 +136,7 @@ export class MigrateOpeningBalancesComponent implements OnInit {
   submit() {
     const openingBalances = this.openingBalancesForm.value;
     // TODO: Update once language and date settings are setup
-    openingBalances.locale = this.settingsService.language.code;
+    openingBalances.locale = this.settingsService.language;
     openingBalances.dateFormat = this.settingsService.dateFormat;
     if (openingBalances.transactionDate instanceof Date) {
       let day = openingBalances.transactionDate.getDate();

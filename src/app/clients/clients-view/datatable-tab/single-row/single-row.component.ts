@@ -43,7 +43,7 @@ export class SingleRowComponent implements OnInit {
 
   add() {
     let dataTableEntryObject: any = {
-      locale: this.settingsService.language.code
+      locale: this.settingsService.language
     };
     const dateTransformColumns: string[] = [];
     const columns = this.dataObject.columnHeaders.filter((column: any) => {
@@ -73,7 +73,7 @@ export class SingleRowComponent implements OnInit {
 
   edit() {
     let dataTableEntryObject: any = {
-      locale: this.settingsService.language.code
+      locale: this.settingsService.language
     };
     const dateTransformColumns: string[] = [];
     const columns = this.dataObject.columnHeaders.filter((column: any) => {

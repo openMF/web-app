@@ -75,7 +75,7 @@ export class SettleCashComponent implements OnInit {
     });
     const settleCashForm = this.settleCashForm.value;
     settleCashForm.dateFormat = dateFormat;
-    settleCashForm.locale = this.settingsService.language.code;
+    settleCashForm.locale = this.settingsService.language;
     this.organizationService.settleCash(this.cashierData.tellerId, this.cashierData.cashierId, settleCashForm).subscribe((response: any) => {
       this.router.navigate(['../'], {relativeTo: this.route});
     });

@@ -78,7 +78,7 @@ export class AllocateCashComponent implements OnInit {
     });
     const allocateCashForm = this.allocateCashForm.value;
     allocateCashForm.dateFormat = dateFormat;
-    allocateCashForm.locale = this.settingsService.language.code;
+    allocateCashForm.locale = this.settingsService.language;
     this.organizationService.allocateCash(this.cashierData.tellerId, this.cashierData.cashierId, allocateCashForm).subscribe((response: any) => {
       this.router.navigate(['../'], {relativeTo: this.route});
     });

@@ -90,7 +90,7 @@ export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
    * if successful redirects to group.
    */
   submit() {
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const data = {
       ...this.transferClientsForm.value,
       destinationGroupId: this.transferClientsForm.get('destinationGroupId').value.id,

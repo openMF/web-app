@@ -182,7 +182,7 @@ export class EditLoanProvisioningCriteriaComponent implements OnInit {
    * Edits the loan provisioning criteria.
    */
   submit() {
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const loanProvisioningCriteria = {
       ...this.provisioningCriteriaForm.value,
       loanProducts: this.provisioningCriteriaForm.get('loanProducts').value.map((product: any) => ({

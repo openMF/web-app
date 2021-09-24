@@ -84,7 +84,7 @@ export class AddFamilyMemberComponent implements OnInit {
       dateOfBirth: this.datePipe.transform(prevDateOfBirth, dateFormat)
     });
     const familyMemberData = this.addFamilyMemberForm.value;
-    familyMemberData.locale = this.settingsService.language.code;
+    familyMemberData.locale = this.settingsService.language;
     familyMemberData.dateFormat = dateFormat;
     this.clientsService.addFamilyMember(this.clientId, familyMemberData).subscribe(res => {
       this.router.navigate(['../'], { relativeTo: this.route });

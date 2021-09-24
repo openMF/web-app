@@ -146,7 +146,7 @@ export class ClientGeneralStepComponent implements OnInit {
   get clientGeneralDetails() {
     const generalDetails = this.createClientForm.value;
     const dateFormat = this.settingsService.dateFormat;
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     // TODO: Update once language and date settings are setup
     for (const key in generalDetails) {
       if (generalDetails[key] === '' || key === 'addSavings') {

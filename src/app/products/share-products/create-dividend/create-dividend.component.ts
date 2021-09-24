@@ -75,7 +75,7 @@ export class CreateDividendComponent implements OnInit {
       'dividendPeriodEndDate': this.datePipe.transform(endDate, dateFormat)
     });
     const dividendForm = this.createDividendForm.value;
-    dividendForm.locale = this.settingsService.language.code;
+    dividendForm.locale = this.settingsService.language;
     dividendForm.dateFormat = dateFormat;
     this.productService.createDividend(this.shareProductData.id, dividendForm).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });

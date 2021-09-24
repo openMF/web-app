@@ -84,7 +84,7 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
    * @param {Date} date Premature Close Date
    */
   calculatePrematureAmount(date: Date) {
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const dateFormat = this.settingsService.dateFormat;
     const data = {
       closedOnDate: this.datePipe.transform(date, dateFormat),
@@ -125,7 +125,7 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
    */
   submit() {
     this.isSubmitted = true;
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const dateFormat = this.settingsService.dateFormat;
     const prevClosedDate: Date = this.prematureCloseAccountForm.value.closedOnDate;
     this.prematureCloseAccountForm.patchValue({

@@ -53,7 +53,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
 
   add() {
     let dataTableEntryObject: any = {
-      locale: this.settingsService.language.code
+      locale: this.settingsService.language
     };
     const dateTransformColumns: string[] = [];
     const columns = this.dataObject.columnHeaders.filter((column: any) => {

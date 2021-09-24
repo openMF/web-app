@@ -68,7 +68,7 @@ export class CreateClosureComponent implements OnInit {
   submit() {
     const accountingClosure = this.accountingClosureForm.value;
     // TODO: Update once language and date settings are setup
-    accountingClosure.locale = this.settingsService.language.code;
+    accountingClosure.locale = this.settingsService.language;
     accountingClosure.dateFormat = this.settingsService.dateFormat;
     if (accountingClosure.closingDate instanceof Date) {
       let day = accountingClosure.closingDate.getDate();

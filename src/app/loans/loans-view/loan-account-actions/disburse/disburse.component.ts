@@ -108,7 +108,7 @@ export class DisburseComponent implements OnInit {
       actualDisbursementDate: this.datePipe.transform(prevActualDisbursementDate, dateFormat)
     });
     const disbursementLoanData = this.disbursementLoanForm.value;
-    disbursementLoanData.locale = this.settingsService.language.code;
+    disbursementLoanData.locale = this.settingsService.language;
     disbursementLoanData.dateFormat = dateFormat;
     this.loanService.loanActionButtons(this.loanId, 'disburse', disbursementLoanData )
       .subscribe((response: any) => {

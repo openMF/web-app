@@ -136,7 +136,7 @@ export class CreateJournalEntryComponent implements OnInit {
   submit() {
     const journalEntry = this.journalEntryForm.value;
     // TODO: Update once language and date settings are setup
-    journalEntry.locale = this.settingsService.language.code;
+    journalEntry.locale = this.settingsService.language;
     journalEntry.dateFormat = this.settingsService.dateFormat;
     if (journalEntry.transactionDate instanceof Date) {
       let day = journalEntry.transactionDate.getDate();

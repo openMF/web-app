@@ -59,7 +59,7 @@ export class PeriodicAccrualsComponent implements OnInit {
   submit() {
     const periodicAccruals = this.periodicAccrualsForm.value;
     // TODO: Update once language and date settings are setup
-    periodicAccruals.locale = this.settingsService.language.code;
+    periodicAccruals.locale = this.settingsService.language;
     periodicAccruals.dateFormat = this.settingsService.dateFormat;
     if (periodicAccruals.tillDate instanceof Date) {
       let day = periodicAccruals.tillDate.getDate();

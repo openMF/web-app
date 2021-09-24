@@ -114,7 +114,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
       transactionDate: this.datePipe.transform(prevTransactionDate, dateFormat)
     });
     const transactionData = this.savingAccountTransactionForm.value;
-    transactionData.locale = this.settingsService.language.code;
+    transactionData.locale = this.settingsService.language;
     transactionData.dateFormat = dateFormat;
     this.savingsService.executeSavingsAccountTransactionsCommand(this.savingAccountId, this.transactionCommand, transactionData).subscribe(res => {
       this.router.navigate(['../../'], { relativeTo: this.route });

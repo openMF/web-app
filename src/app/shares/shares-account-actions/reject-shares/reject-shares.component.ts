@@ -87,7 +87,7 @@ export class RejectSharesComponent implements OnInit {
     });
     rejectSharesDialogRef.afterClosed().subscribe((response: any) => {
       if (response.reject) {
-        const locale = this.settingsService.language.code;
+        const locale = this.settingsService.language;
         const dateFormat = this.settingsService.dateFormat;
         const data = {
           requestedShares: [{id}],

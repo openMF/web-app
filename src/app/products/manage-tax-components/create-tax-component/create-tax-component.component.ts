@@ -122,7 +122,7 @@ export class CreateTaxComponentComponent implements OnInit {
       startDate: this.datePipe.transform(prevStartDate, dateFormat)
     });
     const taxComponent = this.taxComponentForm.value;
-    taxComponent.locale = this.settingsService.language.code;
+    taxComponent.locale = this.settingsService.language;
     taxComponent.dateFormat = dateFormat;
     this.productsService.createTaxComponent(taxComponent).subscribe((response: any) => {
       this.router.navigate(['../', response.resourceId], { relativeTo: this.route });

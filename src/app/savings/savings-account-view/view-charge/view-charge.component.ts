@@ -85,7 +85,7 @@ export class ViewChargeComponent {
     const payChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
     payChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        const locale = this.settingsService.language.code;
+        const locale = this.settingsService.language;
         const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
           ...response.data.value,
@@ -152,7 +152,7 @@ export class ViewChargeComponent {
     const editChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
     editChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        const locale = this.settingsService.language.code;
+        const locale = this.settingsService.language;
         const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
           ...response.data.value,

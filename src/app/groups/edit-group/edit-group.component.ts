@@ -105,7 +105,7 @@ export class EditGroupComponent implements OnInit {
       activationDate: activationDate && this.datePipe.transform(activationDate, dateFormat)
     });
     const group = this.editGroupForm.value;
-    group.locale = this.settingsService.language.code;
+    group.locale = this.settingsService.language;
     group.dateFormat = dateFormat;
     this.groupService.updateGroup(group, this.groupData.id).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });

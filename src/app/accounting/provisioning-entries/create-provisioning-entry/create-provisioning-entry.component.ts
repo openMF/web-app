@@ -60,7 +60,7 @@ export class CreateProvisioningEntryComponent implements OnInit {
   submit() {
     const provisioningEntry = this.provisioningEntryForm.value;
     // TODO: Update once language and date settings are setup
-    provisioningEntry.locale = this.settingsService.language.code;
+    provisioningEntry.locale = this.settingsService.language;
     provisioningEntry.dateFormat = this.settingsService.dateFormat;
     if (provisioningEntry.date instanceof Date) {
       let day = provisioningEntry.date.getDate();

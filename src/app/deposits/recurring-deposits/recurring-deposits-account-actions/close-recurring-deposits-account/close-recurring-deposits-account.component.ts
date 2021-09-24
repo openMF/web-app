@@ -101,7 +101,7 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
   submit() {
     const closedOnDate = this.closeRecurringDepositForm.value.closedOnDate;
     const dateFormat = this.settingsService.dateFormat;
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     this.closeRecurringDepositForm.patchValue({
       closedOnDate: this.datePipe.transform(closedOnDate, dateFormat)
     });

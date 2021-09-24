@@ -72,7 +72,7 @@ export class ForeclosureComponent implements OnInit {
     const data = {
       command: 'foreclosure',
       dateFormat: this.settingsService.dateFormat,
-      locale: this.settingsService.language.code,
+      locale: this.settingsService.language,
       transactionDate: transactionDateFormatted
     };
     this.loanService.getForeclosureData(this.loanId, data)
@@ -115,7 +115,7 @@ export class ForeclosureComponent implements OnInit {
     });
     const formData = {
       transactionDate: this.foreclosureForm.value.transactionDate,
-      locale: this.settingsService.language.code,
+      locale: this.settingsService.language,
       dateFormat: dateFormat,
       note: this.foreclosureForm.value.note
     };

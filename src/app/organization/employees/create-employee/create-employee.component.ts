@@ -80,7 +80,7 @@ export class CreateEmployeeComponent implements OnInit {
       joiningDate: this.datePipe.transform(prevJoiningDate, dateFormat)
     });
     const employee = this.employeeForm.value;
-    employee.locale = this.settingsService.language.code;
+    employee.locale = this.settingsService.language;
     employee.dateFormat = dateFormat;
     this.organizationService.createEmployee(employee).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });

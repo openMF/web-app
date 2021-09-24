@@ -67,7 +67,7 @@ export class ApproveSavingsAccountComponent implements OnInit {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const dateFormat = this.settingsService.dateFormat;
     const prevApprovedOnDate: Date = this.approveSavingsAccountForm.value.approvedOnDate;
     this.approveSavingsAccountForm.patchValue({

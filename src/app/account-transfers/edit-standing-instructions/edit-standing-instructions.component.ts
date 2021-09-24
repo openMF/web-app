@@ -141,7 +141,7 @@ export class EditStandingInstructionsComponent implements OnInit {
    */
   submit() {
     const dateFormat = this.settingsService.dateFormat;
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const standingInstructionData = {
       amount: this.editStandingInstructionsForm.value.amount,
       dateFormat,

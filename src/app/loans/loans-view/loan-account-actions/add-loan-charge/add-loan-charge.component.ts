@@ -105,7 +105,7 @@ export class AddLoanChargeComponent implements OnInit {
       dueDate: this.datePipe.transform(prevDueDate, dateFormat)
     });
     const loanCharge = this.loanChargeForm.value;
-    loanCharge.locale = this.settingsService.language.code;
+    loanCharge.locale = this.settingsService.language;
     loanCharge.dateFormat = dateFormat;
     this.loansService.createLoanCharge(this.loanId, 'charges', loanCharge).subscribe(res => {
       this.router.navigate(['../../general'], { relativeTo: this.route });

@@ -143,7 +143,7 @@ export class ViewCampaignComponent implements OnInit {
     const closeCampaignDialogRef = this.dialog.open(FormDialogComponent, { data });
     closeCampaignDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        const locale = this.settingsService.language.code;
+        const locale = this.settingsService.language;
         const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
           closureDate: this.datePipe.transform(response.data.value.closureDate, dateFormat),
@@ -178,7 +178,7 @@ export class ViewCampaignComponent implements OnInit {
     const activateCampaignDialogRef = this.dialog.open(FormDialogComponent, { data });
     activateCampaignDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        const locale = this.settingsService.language.code;
+        const locale = this.settingsService.language;
         const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
           activationDate: this.datePipe.transform(response.data.value.activationDate, dateFormat),
@@ -213,7 +213,7 @@ export class ViewCampaignComponent implements OnInit {
     const reactivateCampaignDialogRef = this.dialog.open(FormDialogComponent, { data });
     reactivateCampaignDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        const locale = this.settingsService.language.code;
+        const locale = this.settingsService.language;
         const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
           activationDate: this.datePipe.transform(response.data.value.activationDate, dateFormat),
@@ -267,7 +267,7 @@ export class ViewCampaignComponent implements OnInit {
     });
     const SMS = this.smsForm.value;
     SMS.id = this.smsCampaignData.id;
-    SMS.locale = this.settingsService.language.code;
+    SMS.locale = this.settingsService.language;
     SMS.dateFormat = dateFormat;
     SMS.status = this.status;
     this.organizationService.getMessagebyStatus(SMS).subscribe((response: any) => {

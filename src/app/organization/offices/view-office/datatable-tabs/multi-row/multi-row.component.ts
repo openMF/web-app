@@ -88,7 +88,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
    * Adds a new row to the given multi row data table.
    */
   add() {
-    let dataTableEntryObject: any = { locale: this.settingsService.language.code };
+    let dataTableEntryObject: any = { locale: this.settingsService.language };
     const dateTransformColumns: string[] = [];
     const columns = this.dataObject.columnHeaders.filter((column: any) => {
       return ((column.columnName !== 'id') && (column.columnName !== 'office_id'));

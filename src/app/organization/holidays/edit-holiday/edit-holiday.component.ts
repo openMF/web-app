@@ -116,7 +116,7 @@ export class EditHolidayComponent implements OnInit {
       });
     }
     const holidayForm = this.holidayForm.value;
-    holidayForm.locale = this.settings.language.code;
+    holidayForm.locale = this.settings.language;
     holidayForm.dateFormat = dateFormat;
     this.organizatioService.updateHoliday(this.holidayData.id, holidayForm).subscribe(response => {
       /** TODO Add Redirects to ViewMakerCheckerTask page. */

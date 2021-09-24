@@ -67,7 +67,7 @@ export class SingleRowComponent implements OnInit {
    * Creates a new instance of the given single row data table.
    */
   add() {
-    let dataTableEntryObject: any = { locale: this.settingsService.language.code };
+    let dataTableEntryObject: any = { locale: this.settingsService.language };
     const dateTransformColumns: string[] = [];
     const columns = this.dataObject.columnHeaders.filter((column: any) => {
       return ((column.columnName !== 'id') && (column.columnName !== 'center_id'));
@@ -97,7 +97,7 @@ export class SingleRowComponent implements OnInit {
    * Edits the current instance of single row data table.
    */
   edit() {
-    let dataTableEntryObject: any = { locale: this.settingsService.language.code };
+    let dataTableEntryObject: any = { locale: this.settingsService.language };
     const dateTransformColumns: string[] = [];
     const columns = this.dataObject.columnHeaders.filter((column: any) => {
       return ((column.columnName !== 'id') && (column.columnName !== 'center_id'));

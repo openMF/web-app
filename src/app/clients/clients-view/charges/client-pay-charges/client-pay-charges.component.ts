@@ -70,7 +70,7 @@ export class ClientPayChargesComponent implements OnInit {
       transactionDate: this.datePipe.transform(transactionDate, dateFormat)
     });
     const transactions = this.transactionForm.value;
-    transactions.locale = this.settingsService.language.code;
+    transactions.locale = this.settingsService.language;
     transactions.dateFormat = dateFormat;
     this.clientsService.payClientCharge(this.transactionData.clientId, this.transactionData.id, transactions).subscribe(() => {
       this.router.navigate(['../', 'general']);

@@ -84,7 +84,7 @@ export class EditEmployeeComponent implements OnInit {
       joiningDate: this.datePipe.transform(prevJoiningDate, dateFormat)
     });
     const employee = this.editEmployeeForm.value;
-    employee.locale = this.settingsService.language.code;
+    employee.locale = this.settingsService.language;
     employee.dateFormat = dateFormat;
     this.organizationService.updateEmployee(this.employeeData.id, employee).subscribe((response: any) => {
       this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });

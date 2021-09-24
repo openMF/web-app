@@ -77,7 +77,7 @@ export class ApproveLoanComponent implements OnInit {
    * Submits Approve form.
    */
   submit() {
-    const local = this.settingsService.language.code;
+    const local = this.settingsService.language;
     const dateFormat = this.settingsService.dateFormat;
     const approvedOnDate = this.approveLoanForm.value.approvedOnDate;
     const expectedDisbursementDate = this.approveLoanForm.value.expectedDisbursementDate;

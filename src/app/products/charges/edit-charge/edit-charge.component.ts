@@ -139,7 +139,7 @@ export class EditChargeComponent implements OnInit {
    */
   submit() {
     const charges = this.chargeForm.value;
-    charges.locale = this.settingsService.language.code;
+    charges.locale = this.settingsService.language;
     charges.chargePaymentMode = this.chargeData.chargePaymentMode.id;
     this.productsService.updateCharge(this.chargeData.id.toString(), charges)
       .subscribe((response: any) => {

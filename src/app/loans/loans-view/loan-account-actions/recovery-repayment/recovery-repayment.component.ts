@@ -108,7 +108,7 @@ export class RecoveryRepaymentComponent implements OnInit {
       transactionDate: this.datePipe.transform(prevTransactionDate, dateFormat)
     });
     const recoveryRepaymentLoanData = this.recoveryRepaymentLoanForm.value;
-    recoveryRepaymentLoanData.locale = this.settingsService.language.code;
+    recoveryRepaymentLoanData.locale = this.settingsService.language;
     recoveryRepaymentLoanData.dateFormat = dateFormat;
     this.loanService.submitLoanActionButton(this.loanId, recoveryRepaymentLoanData, 'recoverypayment')
       .subscribe((response: any) => {

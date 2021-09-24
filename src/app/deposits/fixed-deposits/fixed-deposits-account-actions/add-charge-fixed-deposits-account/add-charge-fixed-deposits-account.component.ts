@@ -115,7 +115,7 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
    */
   submit() {
     const savingsCharge = this.fixedDepositsChargeForm.value;
-    savingsCharge.locale = this.settingsService.language.code;
+    savingsCharge.locale = this.settingsService.language;
     if (!savingsCharge.feeInterval) {
       savingsCharge.feeInterval = this.chargeDetails.feeInterval;
     }

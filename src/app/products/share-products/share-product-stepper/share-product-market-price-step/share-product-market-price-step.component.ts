@@ -127,7 +127,7 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
   get shareProductMarketPrice() {
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const marketPricePeriods = [];
     for (const marketPricePeriod of this.marketPricePeriods.value) {
       marketPricePeriods.push({

@@ -71,7 +71,7 @@ export class WriteOffPageComponent implements OnInit {
     const loanId = this.route.parent.snapshot.params['loanId'];
     const writeOffForm = this.writeOffForm.value;
     delete writeOffForm.amount;
-    writeOffForm.locale = this.settingsService.language.code;
+    writeOffForm.locale = this.settingsService.language;
     writeOffForm.dateFormat = dateFormat;
     this.loanService.submitLoanActionButton(loanId, writeOffForm, 'writeoff').subscribe((response: any) => {
       this.router.navigate(['../../../general'], {relativeTo: this.route});

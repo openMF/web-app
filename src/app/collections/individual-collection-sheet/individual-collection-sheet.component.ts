@@ -281,7 +281,7 @@ export class IndividualCollectionSheetComponent implements OnInit {
    */
   previewCollectionSheet() {
     // TODO: Update once language and date settings are setup
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const dateFormat = this.settingsService.dateFormat;
     const collectionSheet = {
       ...this.collectionSheetForm.value,
@@ -309,7 +309,7 @@ export class IndividualCollectionSheetComponent implements OnInit {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const dateFormat = this.settingsService.dateFormat;
     this.bulkDisbursementTransactionsData['bulkRepaymentTransactions'] = this.bulkRepaymentTransactions;
     this.bulkDisbursementTransactionsData['bulkSavingsDueTransactions'] = this.bulkSavingsDueTransactions;

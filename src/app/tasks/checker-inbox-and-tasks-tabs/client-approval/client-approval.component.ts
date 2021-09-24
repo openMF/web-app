@@ -112,7 +112,7 @@ export class ClientApprovalComponent {
   bulkClientApproval(submittedData: any) {
     const dateFormat = this.settingsService.dateFormat;
     const activationDate = this.datePipe.transform(submittedData.value.actDate, dateFormat);
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const formData = {
       dateFormat,
       activationDate,

@@ -120,7 +120,7 @@ export class EditGroupMeetingComponent implements OnInit {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const dateFormat = this.settingsService.dateFormat;
     const title = `groups_${this.groupId}_CollectionMeeting`;
     const typeId = '1';

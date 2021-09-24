@@ -107,7 +107,7 @@ export class MakeRepaymentComponent implements OnInit {
       transactionDate: this.datePipe.transform(prevTransactionDate, dateFormat)
     });
     const repaymentLoanData = this.repaymentLoanForm.value;
-    repaymentLoanData.locale = this.settingsService.language.code;
+    repaymentLoanData.locale = this.settingsService.language;
     repaymentLoanData.dateFormat = dateFormat;
     this.loanService.submitLoanActionButton(this.loanId, repaymentLoanData, 'repayment')
       .subscribe((response: any) => {

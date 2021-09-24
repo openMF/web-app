@@ -120,7 +120,7 @@ export class PrepayLoanComponent implements OnInit {
       transactionDate: this.datePipe.transform(prevTransactionDate, dateFormat)
     });
     const prepayLoanData = this.prepayLoanForm.value;
-    prepayLoanData.locale = this.settingsService.language.code;
+    prepayLoanData.locale = this.settingsService.language;
     prepayLoanData.dateFormat = dateFormat;
     this.loanService.submitLoanActionButton(this.loanId, prepayLoanData, 'repayment')
       .subscribe((response: any) => {

@@ -173,7 +173,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    */
   submit() {
     const dateFormat = this.settingsService.dateFormat;
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const makeAccountTransferData = {
       ... this.makeAccountTransferForm.value,
       transferDate: this.datePipe.transform(this.makeAccountTransferForm.value.transferDate, dateFormat),

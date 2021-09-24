@@ -113,7 +113,7 @@ export class EditShareProductComponent implements OnInit {
     const shareProduct = {
       ...this.shareProduct,
       chargesSelected: this.shareProduct.chargesSelected.map((charge: any) => ({ id: charge.id })),
-      locale: this.settingsService.language.code // locale required for digitsAfterDecimal
+      locale: this.settingsService.language // locale required for digitsAfterDecimal
     };
     this.productsService.updateShareProduct(this.shareProductAndTemplate.id, shareProduct)
       .subscribe((response: any) => {

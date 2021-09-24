@@ -213,7 +213,7 @@ export class CreateStandingInstructionsComponent implements OnInit {
    */
   submit() {
     const dateFormat = this.settingsService.dateFormat;
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const standingInstructionData = {
       ... this.createStandingInstructionsForm.value,
       dateFormat,

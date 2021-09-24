@@ -68,7 +68,7 @@ export class StandingInstructionsTabComponent implements OnInit {
     const clientId = this.savingsData.clientId;
     const clientName = this.savingsData.clientName;
     const accountId = this.savingsData.id;
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const dateFormat = this.settingsService.dateFormat;
     this.savingsService.getStandingInstructions(clientId, clientName, accountId, locale, dateFormat).subscribe((response: any) => {
       this.instructionsData = response.pageItems;

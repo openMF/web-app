@@ -104,7 +104,7 @@ export class CreateRecurringDepositProductComponent implements OnInit {
     const recurringDepositProduct = {
       ...this.recurringDepositProduct,
       charges: this.recurringDepositProduct.charges.map((charge: any) => ({ id: charge.id })),
-      locale: this.settingsService.language.code // locale required for depositAmount
+      locale: this.settingsService.language // locale required for depositAmount
     };
     if (!recurringDepositProduct.description) {
       recurringDepositProduct.description = '';

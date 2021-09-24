@@ -106,7 +106,7 @@ export class WorkingDaysComponent implements OnInit {
   submit() {
     const workingDays = this.workingDaysForm.value;
     // TODO: Update once language and date settings are setup
-    workingDays.locale = this.settingsService.language.code;
+    workingDays.locale = this.settingsService.language;
     let recurrence = recurrenceDefaultValue;
     for (let i = 0; i < this.weekDays.length; i++) {
       if (workingDays.recurrence[i]) {

@@ -106,7 +106,7 @@ export class EditSavingsAccountComponent {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const dateFormat = this.settingsService.dateFormat;
     const monthDayFormat = 'dd MMMM';
     const savingsAccount = {

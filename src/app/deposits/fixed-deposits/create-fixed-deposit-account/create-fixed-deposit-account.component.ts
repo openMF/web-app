@@ -121,7 +121,7 @@ export class CreateFixedDepositAccountComponent {
    * Submits the fixed deposit form and creates a new fixed deposit account
    */
   submit() {
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const dateFormat = this.settingsService.dateFormat;
     const monthDayFormat = 'dd MMMM';
     const fixedDepositAccount = {

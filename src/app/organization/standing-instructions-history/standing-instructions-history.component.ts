@@ -108,7 +108,7 @@ export class StandingInstructionsHistoryComponent implements OnInit {
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
     const instruction = this.instructionForm.value;
-    instruction.locale = this.settingsService.language.code;
+    instruction.locale = this.settingsService.language;
     instruction.dateFormat = dateFormat;
     instruction.fromDate = this.datePipe.transform(instruction.fromDate, dateFormat);
     instruction.toDate = this.datePipe.transform(instruction.toDate, dateFormat);

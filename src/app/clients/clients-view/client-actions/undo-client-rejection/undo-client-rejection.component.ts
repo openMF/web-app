@@ -65,7 +65,7 @@ export class UndoClientRejectionComponent implements OnInit {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const dateFormat = this.settingsService.dateFormat;
     const prevReopenedDate: Date = this.undoClientRejectionForm.value.reopenedDate;
     this.undoClientRejectionForm.patchValue({

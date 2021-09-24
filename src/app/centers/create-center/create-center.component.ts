@@ -142,7 +142,7 @@ export class CreateCenterComponent implements OnInit {
         activationDate: this.datePipe.transform(prevActivationDate, dateFormat)
       });
       const center = this.centerForm.value;
-      center.locale = this.settingsService.language.code;
+      center.locale = this.settingsService.language;
       center.dateFormat = dateFormat;
       center.groupMembers = [];
       this.groupMembers.forEach((group: any) => center.groupMembers.push(group.id));

@@ -96,7 +96,7 @@ export class CreateSavingProductComponent implements OnInit {
     const savingProduct = {
       ...this.savingProduct,
       charges: this.savingProduct.charges.map((charge: any) => ({ id: charge.id })),
-      locale: this.settingsService.language.code // locale required for nominalAnnualInterestRate
+      locale: this.settingsService.language // locale required for nominalAnnualInterestRate
     };
     delete savingProduct.advancedAccountingRules;
     this.productsService.createSavingProduct(savingProduct)

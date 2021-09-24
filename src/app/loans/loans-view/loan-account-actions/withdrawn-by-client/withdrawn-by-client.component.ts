@@ -72,7 +72,7 @@ export class WithdrawnByClientComponent implements OnInit {
       withdrawnOnDate: this.datePipe.transform(prevTransactionDate, dateFormat)
     });
     const WithdrawnByClientLoanData = this.withdrawnByClientLoanForm.value;
-    WithdrawnByClientLoanData.locale = this.settingsService.language.code;
+    WithdrawnByClientLoanData.locale = this.settingsService.language;
     WithdrawnByClientLoanData.dateFormat = dateFormat;
     this.loanService.loanActionButtons(this.loanId, 'withdrawnByApplicant', WithdrawnByClientLoanData)
       .subscribe((response: any) => {

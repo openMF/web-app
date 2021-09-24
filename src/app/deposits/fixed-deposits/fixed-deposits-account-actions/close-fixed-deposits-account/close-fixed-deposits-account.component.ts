@@ -96,7 +96,7 @@ export class CloseFixedDepositsAccountComponent implements OnInit {
    * if successful redirects to the fd account.
    */
   submit() {
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const dateFormat = this.settingsService.dateFormat;
     const prevClosedDate: Date = this.closeOnMaturityAccountForm.value.closedOnDate;
     this.closeOnMaturityAccountForm.patchValue({

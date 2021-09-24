@@ -363,7 +363,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
 
   get fixedDepositProductInterestRateChart() {
     // TODO: Update once language and date settings are setup
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const dateFormat = this.settingsService.dateFormat;
     const fixedDepositProductInterestRateChart = this.fixedDepositProductInterestRateChartForm.value;
     for (const chart of fixedDepositProductInterestRateChart.charts) {

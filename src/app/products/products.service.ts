@@ -112,7 +112,7 @@ export class ProductsService {
   getDividendData(shareProductId: any, dividendId: any): Observable<any> {
     const httpParams = new HttpParams().set('dateFormat', this.settingsService.dateFormat)
                                        .set('limit', '10')
-                                       .set('locale', this.settingsService.language.code)
+                                       .set('locale', this.settingsService.language)
                                        .set('offset', '0');
     return this.http.get(`/shareproduct/${shareProductId}/dividend/${dividendId}`, { params: httpParams });
   }

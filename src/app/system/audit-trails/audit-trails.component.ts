@@ -95,7 +95,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
     },
     {
       type: 'locale',
-      value: this.settingsService.language.code
+      value: this.settingsService.language
     }
   ];
   /** User form control. */

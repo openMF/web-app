@@ -107,7 +107,7 @@ export class ListStandingInstructionsComponent implements OnInit {
    */
   getStandingInstructions() {
     const dateFormat = this.settingsService.dateFormat;
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const searchData = {
       clientId : this.standingIntructionsTemplateData.fromClient.id || this.fromClientId.value,
       clientName: this.standingIntructionsTemplateData.fromClient.displayName || this.clientNameControl.value,

@@ -53,7 +53,7 @@ export class ViewTransactionComponent {
     const undoTransactionAccountDialogRef = this.dialog.open(RecurringDepositConfirmationDialogComponent, { data: { heading: 'Undo Transaction', dialogContext: 'Are you sure you want to undo this transaction ?' } });
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        const locale = this.settingsService.language.code;
+        const locale = this.settingsService.language;
         const dateFormat = this.settingsService.dateFormat;
         const data = {
           transactionDate: this.datePipe.transform(this.transactionData.date && new Date(this.transactionData.date), dateFormat),

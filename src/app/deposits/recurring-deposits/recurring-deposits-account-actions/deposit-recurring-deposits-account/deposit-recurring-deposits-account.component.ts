@@ -96,7 +96,7 @@ export class DepositRecurringDepositsAccountComponent implements OnInit {
   submit() {
     const transactionDate = this.depositRecurringDepositForm.value.transactionDate;
     const dateFormat = this.settingsService.dateFormat;
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     this.depositRecurringDepositForm.patchValue({
       transactionDate: this.datePipe.transform(transactionDate, dateFormat)
     });

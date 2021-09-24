@@ -98,7 +98,7 @@ export class CreateLoansAccountComponent implements OnInit {
    * Submits Data to create loan account
    */
   submit() {
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const dateFormat = this.settingsService.dateFormat;
     const loanType = 'individual';
     const loansAccountData = {

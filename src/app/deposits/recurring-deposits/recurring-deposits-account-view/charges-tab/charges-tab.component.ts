@@ -105,7 +105,7 @@ export class ChargesTabComponent implements OnInit {
     const payChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
     payChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        const locale = this.settingsService.language.code;
+        const locale = this.settingsService.language;
         const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
           ...response.data.value,

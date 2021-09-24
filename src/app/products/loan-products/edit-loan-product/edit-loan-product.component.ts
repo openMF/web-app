@@ -106,7 +106,7 @@ export class EditLoanProductComponent implements OnInit {
       ...this.loanProduct,
       charges: this.loanProduct.charges.map((charge: any) => ({ id: charge.id })),
       dateFormat,
-      locale: this.settingsService.language.code
+      locale: this.settingsService.language
     };
     delete loanProduct.allowAttributeConfiguration;
     delete loanProduct.advancedAccountingRules;

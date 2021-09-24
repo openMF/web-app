@@ -115,7 +115,7 @@ export class EditTransactionComponent implements OnInit {
       transactionDate: this.datePipe.transform(prevTransactionDate, dateFormat)
     });
     const transactionData = this.editTransactionForm.value;
-    transactionData.locale = this.settingsService.language.code;
+    transactionData.locale = this.settingsService.language;
     transactionData.dateFormat = dateFormat;
     this.savingsService.executeSavingsAccountTransactionsCommand(this.savingAccountId, 'modify', transactionData, this.transactionTemplateData.id)
       .subscribe(res => {

@@ -87,7 +87,7 @@ export class ApproveSharesComponent implements OnInit {
     });
     approveSharesDialogRef.afterClosed().subscribe((response: any) => {
       if (response.approve) {
-        const locale = this.settingsService.language.code;
+        const locale = this.settingsService.language;
         const dateFormat = this.settingsService.dateFormat;
         const data = {
           requestedShares: [{id}],

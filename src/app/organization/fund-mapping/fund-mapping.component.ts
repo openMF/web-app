@@ -149,7 +149,7 @@ export class FundMappingComponent implements OnInit {
   submit() {
     this.isCollapsed = true;
     // TODO: Update once language and date settings are setup
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const dateFormat = this.settingsService.dateFormat;
     this.fundMappingForm.patchValue({
       'loanFromDate': this.datePipe.transform(this.fundMappingForm.value.loanFromDate, dateFormat),

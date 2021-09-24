@@ -74,7 +74,7 @@ export class CreateClientComponent {
    * Submits the create client form.
    */
   submit() {
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const dateFormat = this.settingsService.dateFormat;
     // TODO: Update once language and date settings are setup
     const clientData = {

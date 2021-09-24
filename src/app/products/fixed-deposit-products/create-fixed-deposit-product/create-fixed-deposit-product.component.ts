@@ -104,7 +104,7 @@ export class CreateFixedDepositProductComponent implements OnInit {
     const fixedDepositProduct = {
       ...this.fixedDepositProduct,
       charges: this.fixedDepositProduct.charges.map((charge: any) => ({ id: charge.id })),
-      locale: this.settingsService.language.code // locale required for depositAmount
+      locale: this.settingsService.language // locale required for depositAmount
     };
     delete fixedDepositProduct.advancedAccountingRules;
     this.productsService.createFixedDepositProduct(fixedDepositProduct)

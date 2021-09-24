@@ -80,7 +80,7 @@ export class EditCashierComponent implements OnInit {
       'endDate': this.datePipe.transform(endDate, dateFormat)
     });
     const editCashierForm = this.editCashierForm.value;
-    editCashierForm.locale = this.settingsService.language.code;
+    editCashierForm.locale = this.settingsService.language;
     editCashierForm.dateFormat = dateFormat;
     editCashierForm.staffId = this.cashierData.data.staffId;
     this.organizationService.updateCashier(this.cashierData.data.tellerId, this.cashierData.data.id, editCashierForm).subscribe((response: any) => {

@@ -77,7 +77,7 @@ export class EditCenterComponent implements OnInit {
    * if successful redirects to the center.
    */
   submit() {
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const dateFormat = this.settingsService.dateFormat;
     if (this.centerData.status.value === 'Pending') {
       const prevactivationDate: Date = this.editCenterForm.value.activationDate;

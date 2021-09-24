@@ -68,7 +68,7 @@ export class RejectLoanComponent implements OnInit {
       rejectedOnDate: this.datePipe.transform(rejectedOnDate, dateFormat)
     });
     const rejectForm = this.rejectLoanForm.value;
-    rejectForm.locale = this.settingsService.language.code;
+    rejectForm.locale = this.settingsService.language;
     rejectForm.dateFormat = dateFormat;
     this.loanService.loanActionButtons(this.loanId, 'reject', rejectForm).subscribe((response: any) => {
       this.router.navigate(['../../general'], { relativeTo: this.route });

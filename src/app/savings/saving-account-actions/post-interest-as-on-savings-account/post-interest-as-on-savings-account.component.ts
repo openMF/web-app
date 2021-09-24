@@ -66,7 +66,7 @@ export class PostInterestAsOnSavingsAccountComponent implements OnInit {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const dateFormat = this.settingsService.dateFormat;
     const prevTransactionDate: Date = this.postInterestSavingsAccountForm.value.transactionDate;
     this.postInterestSavingsAccountForm.patchValue({

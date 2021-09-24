@@ -153,7 +153,7 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
     const prevdob: Date = this.newGuarantorForm.value.dob;
     const guarantorTypeId: number = this.newGuarantorForm.value.existingClient ? this.dataObject.guarantorTypeOptions[0].id : this.dataObject.guarantorTypeOptions[2].id;
     // TODO: Update once language and date settings are setup
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const dateFormat = this.settingsService.dateFormat;
     const newGuarantorData = {
       ... this.newGuarantorForm.value,

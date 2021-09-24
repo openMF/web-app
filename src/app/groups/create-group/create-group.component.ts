@@ -158,7 +158,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
       activationDate: this.datePipe.transform(activationDate, dateFormat)
     });
     const group = this.groupForm.value;
-    group.locale = this.settingsService.language.code;
+    group.locale = this.settingsService.language;
     group.dateFormat = dateFormat;
     group.clientMembers = [];
     this.clientMembers.forEach((client: any) => group.clientMembers.push(client.id));

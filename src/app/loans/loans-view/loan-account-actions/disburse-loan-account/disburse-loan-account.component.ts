@@ -72,7 +72,7 @@ export class DisburseLoanAccountComponent implements OnInit {
     });
     const loanId = this.route.parent.snapshot.params['loanId'];
     const disbursementForm = this.disbursementForm.value;
-    disbursementForm.locale = this.settingsService.language.code;
+    disbursementForm.locale = this.settingsService.language;
     disbursementForm.dateFormat = dateFormat;
     this.loanService.loanActionButtons(loanId, 'disbursetosavings', disbursementForm).subscribe((response: any) => {
       this.router.navigate(['../../general'], {relativeTo: this.route});

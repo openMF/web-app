@@ -71,7 +71,7 @@ export class StandingInstructionsTabComponent implements OnInit {
     const clientId = this.fixedDepositsData.clientId;
     const clientName = this.fixedDepositsData.clientName;
     const accountId = this.fixedDepositsData.id;
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const dateFormat = this.settingsService.dateFormat;
     this.fixedDepositsService.getStandingInstructions(clientId, clientName, accountId, locale, dateFormat).subscribe((response: any) => {
       this.instructionsData = response.pageItems;

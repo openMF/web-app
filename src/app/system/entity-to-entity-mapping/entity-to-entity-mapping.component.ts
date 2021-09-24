@@ -326,7 +326,7 @@ export class EntityToEntityMappingComponent implements OnInit {
     });
     const newMappingData = addMappingForm.value;
     newMappingData.dateFormat = dateFormat;
-    newMappingData.locale = this.settingsService.language.code;
+    newMappingData.locale = this.settingsService.language;
     this.systemService.createMapping(this.relId, newMappingData).subscribe((response: any) => {
       this.showFilteredData();
     });
@@ -348,7 +348,7 @@ export class EntityToEntityMappingComponent implements OnInit {
     });
     const newMappingData = editMappingForm.value;
     newMappingData.dateFormat = dateFormat;
-    newMappingData.locale = this.settingsService.language.code;
+    newMappingData.locale = this.settingsService.language;
     this.systemService.editMapping(this.mapIdToEdit, newMappingData).subscribe((response: any) => {
       this.showFilteredData();
     });

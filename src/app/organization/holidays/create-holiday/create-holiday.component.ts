@@ -87,7 +87,7 @@ export class CreateHolidayComponent implements OnInit {
    */
   submit() {
     const dateFormat = this.settings.dateFormat;
-    const locale = this.settings.language.code;
+    const locale = this.settings.language;
     this.holidayForm.patchValue({
       'fromDate': this.datePipe.transform(this.holidayForm.value.fromDate, dateFormat),
       'toDate': this.datePipe.transform(this.holidayForm.value.toDate, dateFormat),

@@ -75,7 +75,7 @@ export class CreateOfficeComponent implements OnInit {
       openingDate: this.datePipe.transform(prevOpeningDate, dateFormat)
     });
     const office = this.officeForm.value;
-    office.locale = this.settingsService.language.code;
+    office.locale = this.settingsService.language;
     office.dateFormat = dateFormat;
     this.organizationService.createOffice(office).subscribe(response => {
       this.router.navigate(['../'], { relativeTo: this.route });

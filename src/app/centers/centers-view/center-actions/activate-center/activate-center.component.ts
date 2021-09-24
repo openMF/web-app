@@ -66,7 +66,7 @@ export class ActivateCenterComponent implements OnInit {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const dateFormat = this.settingsService.dateFormat;
     const prevactivationDate: Date = this.activateCenterForm.value.activationDate;
     this.activateCenterForm.patchValue({

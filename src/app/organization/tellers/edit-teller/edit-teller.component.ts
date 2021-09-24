@@ -98,7 +98,7 @@ export class EditTellerComponent implements OnInit {
       endDate: this.datePipe.transform(prevEndDate, dateFormat)
     });
     const teller = this.tellerForm.value;
-    teller.locale = this.settingsService.language.code;
+    teller.locale = this.settingsService.language;
     teller.officeId = this.tellerData.officeId;
     teller.dateFormat = dateFormat;
     this.organizationService.updateTeller(this.tellerData.id, teller).subscribe((response: any) => {

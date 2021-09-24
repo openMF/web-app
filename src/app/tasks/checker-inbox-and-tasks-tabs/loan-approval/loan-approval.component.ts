@@ -133,7 +133,7 @@ export class LoanApprovalComponent {
   bulkLoanApproval() {
     const dateFormat = this.settingsService.dateFormat;
     const approvedOnDate = this.datePipe.transform(new Date(), dateFormat);
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const formData = {
       dateFormat,
       approvedOnDate,

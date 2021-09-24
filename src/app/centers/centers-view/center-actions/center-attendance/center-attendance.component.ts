@@ -122,7 +122,7 @@ export class CenterAttendanceComponent implements OnInit {
    */
   submit() {
     // TODO: Update once language and date settings are setup
-    const locale = this.settingsService.language.code;
+    const locale = this.settingsService.language;
     const dateFormat = this.settingsService.dateFormat;
     const prevMeetingDate: Date = new Date(this.meetingDate.value);
     this.meetingDate.patchValue(this.datePipe.transform(prevMeetingDate, dateFormat));

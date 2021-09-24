@@ -78,7 +78,7 @@ export class LoanRescheduleComponent implements OnInit {
       submittedOnDate: this.datePipe.transform(submittedOnDate, dateFormat)
     });
     const rescheduleForm = this.rescheduleLoanForm.value;
-    rescheduleForm.locale = this.settingsService.language.code;
+    rescheduleForm.locale = this.settingsService.language;
     rescheduleForm.dateFormat = dateFormat;
     rescheduleForm.loanId = this.loanId;
     this.loanService.submitRescheduleData(rescheduleForm).subscribe((response: any) => {

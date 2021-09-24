@@ -69,7 +69,7 @@ export class CloseAsRescheduledComponent implements OnInit {
       transactionDate: this.datePipe.transform(transactionDate, dateFormat)
     });
     const closeForm = this.closeLoanForm.value;
-    closeForm.locale = this.settingsService.language.code;
+    closeForm.locale = this.settingsService.language;
     closeForm.dateFormat = dateFormat;
     this.loanService.submitLoanActionButton(this.loanId, closeForm, 'close-rescheduled')
       .subscribe((response: any) => {

@@ -114,7 +114,7 @@ export class AddClientChargeComponent implements OnInit {
    */
   submit() {
     const clientCharge = this.clientChargeForm.value;
-    clientCharge.locale = this.settingsService.language.code;
+    clientCharge.locale = this.settingsService.language;
     if (!clientCharge.feeInterval) {
       clientCharge.feeInterval = this.chargeDetails.feeInterval;
     }
