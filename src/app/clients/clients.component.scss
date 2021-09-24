@@ -1,18 +1,22 @@
 .container {
-  .action-button {
-    margin-left: auto;
-  }
-  .search-button {
-    min-width: 30px;
-    margin: 4px;
-  }
+    .action-button {
+        margin-left: auto;
+    }
+    .search-button {
+        min-width: 30px;
+        margin: 4px;
+    }
+}
+
+.table-container {
+    overflow-x: auto;
 }
 
 table {
-  tr.select-row:hover {
-    cursor: pointer;
-  }
-  tr:nth-child(odd).td{
-    color : black;
-  }
+    tr.select-row:hover {
+        cursor: pointer;
+    }
+    tr:nth-child(odd).td {
+        color: black;
+    }
 }
