@@ -754,7 +754,7 @@ export class OrganizationService {
   getImportTemplate(urlSuffix: string, officeId: any, staffId: any, legalFormType: string): Observable<any> {
     let httpParams = new HttpParams()
       .set('tenantIdentifier', 'default')
-      .set('locale', this.settingsService.language.code)
+      .set('locale', this.settingsService.language)
       .set('dateFormat', this.settingsService.dateFormat);
     if (officeId) {
       httpParams = httpParams.set('officeId', officeId.toString());
@@ -792,7 +792,7 @@ export class OrganizationService {
     }
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('locale', this.settingsService.language.code);
+    formData.append('locale', this.settingsService.language);
     formData.append('dateFormat', this.settingsService.dateFormat);
     return this.http.post(`${urlSuffix}/uploadtemplate`, formData, { params: httpParams });
   }

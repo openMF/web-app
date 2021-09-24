@@ -57,7 +57,7 @@ export class SettingsService {
    * Returns language setting
    */
   get language() {
-    return JSON.parse(localStorage.getItem('mifosXLanguage'));
+    return localStorage.getItem('mifosXLanguage');
   }
 
   /**
