@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 /** Custom Modules */
 import { ClientsRoutingModule } from './clients-routing.module';
@@ -59,6 +60,10 @@ import { ClientFamilyMemberDialogComponent } from './client-stepper/client-famil
 import { CaptureImageDialogComponent } from './clients-view/custom-dialogs/capture-image-dialog/capture-image-dialog.component';
 import { CreateSelfServiceUserComponent } from './clients-view/client-actions/create-self-service-user/create-self-service-user.component';
 
+/** Translation Imports */
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
 
 /**
  * Clients Module
@@ -70,7 +75,16 @@ import { CreateSelfServiceUserComponent } from './clients-view/client-actions/cr
     SharedModule,
     ClientsRoutingModule,
     PipesModule,
-    DirectivesModule
+    DirectivesModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => {
+          return new TranslateHttpLoader(http, `${ window.location.protocol }//${ window.location.host }/assets/translations/`, '.json');
+        },
+        deps: [HttpClient]
+      }
+    }),
   ],
   declarations: [
     ClientsComponent,

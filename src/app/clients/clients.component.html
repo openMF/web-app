@@ -56,7 +56,7 @@
             <!--Gender column-->
             <ng-container matColumnDef="gender">
                 <th mat-header-cell *matHeaderCellDef> {{ 'label.input.gender' | translate }} </th>
-                <td mat-cell *matCellDef="let client"> {{ client.gender.name }} </td>
+                <td mat-cell *matCellDef="let client"> {{ client.gender.name | translate }} </td>
             </ng-container>
 
             <!-- Color Column -->

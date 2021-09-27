@@ -1,5 +1,6 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 /** Custom Modules */
 import { SharedModule } from '../shared/shared.module';
@@ -70,6 +71,10 @@ import { StandingInstructionsHistoryComponent } from './standing-instructions-hi
 import { FundMappingComponent } from './fund-mapping/fund-mapping.component';
 import { CreateHolidayComponent } from './holidays/create-holiday/create-holiday.component';
 
+/** Translation Imports */
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
 /**
  * Organization Module
  *
@@ -80,7 +85,16 @@ import { CreateHolidayComponent } from './holidays/create-holiday/create-holiday
     SharedModule,
     PipesModule,
     DirectivesModule,
-    OrganizationRoutingModule
+    OrganizationRoutingModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => {
+          return new TranslateHttpLoader(http, `${ window.location.protocol }//${ window.location.host }/assets/translations/`, '.json');
+        },
+        deps: [HttpClient]
+      }
+    }),
   ],
   declarations: [
     OrganizationComponent,

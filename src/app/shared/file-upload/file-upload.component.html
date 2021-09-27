@@ -1,14 +1,14 @@
 <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2%">
 
-  <mat-form-field [fxFlex]="flex || '83%'">
-    <input matInput [readonly]="true" [value]="fileName || ''" placeholder="No file selected">
-  </mat-form-field>
+    <mat-form-field [fxFlex]="flex || '83%'">
+        <input matInput [readonly]="true" [value]="fileName || ''" placeholder="{{ 'label.nofileselected' | translate }}">
+    </mat-form-field>
 
-  <span fxFlex="10%" fxFlexAlign="center">
+    <span fxFlex="10%" fxFlexAlign="center">
     <button mat-button (click)="uploadFile.click()">
       <fa-icon icon="folder-open" size="lg"></fa-icon>
       &nbsp;&nbsp;
-      Browse
+      {{ 'label.button.browse' | translate }}
     </button>
   </span>
 
