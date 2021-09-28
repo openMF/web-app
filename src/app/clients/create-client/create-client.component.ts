@@ -75,12 +75,14 @@ export class CreateClientComponent {
    */
   submit() {
     const locale = this.settingsService.language;
+    const splitLocale = locale.split('-');
+    const sendLocale = splitLocale[0];
     const dateFormat = this.settingsService.dateFormat;
     // TODO: Update once language and date settings are setup
     const clientData = {
       ...this.client,
       dateFormat,
-      locale
+      locale: sendLocale
     };
     this.clientsService.createClient(clientData).subscribe((response: any) => {
       this.router.navigate(['../', response.resourceId], { relativeTo: this.route });

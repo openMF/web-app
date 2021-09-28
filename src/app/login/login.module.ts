@@ -1,5 +1,6 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 /** Custom Modules */
 import { SharedModule } from '../shared/shared.module';
@@ -11,6 +12,10 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { TwoFactorAuthenticationComponent } from './two-factor-authentication/two-factor-authentication.component';
 
+/** Translation Imports */
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
 /**
  * Login Module
  *
@@ -19,7 +24,16 @@ import { TwoFactorAuthenticationComponent } from './two-factor-authentication/tw
 @NgModule({
   imports: [
     SharedModule,
-    LoginRoutingModule
+    LoginRoutingModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => {
+          return new TranslateHttpLoader(http, `${ window.location.protocol }//${ window.location.host }/assets/translations/`, '.json');
+        },
+        deps: [HttpClient]
+      }
+    }),
   ],
   declarations: [
     LoginComponent,

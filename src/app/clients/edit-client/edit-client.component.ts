@@ -155,6 +155,8 @@ export class EditClientComponent implements OnInit {
    */
   submit() {
     const locale = this.settingsService.language;
+    const splitLocale = locale.split('-');
+    const sendLocale = splitLocale[0];
     const dateFormat = this.settingsService.dateFormat;
     // TODO: Update once language and date settings are setup
     const editClientFormValue: any = this.editClientForm.getRawValue();
@@ -164,7 +166,7 @@ export class EditClientComponent implements OnInit {
       submittedOnDate: editClientFormValue.submittedOnDate && this.datePipe.transform(editClientFormValue.submittedOnDate, dateFormat),
       activationDate: this.datePipe.transform(editClientFormValue.activationDate, dateFormat),
       dateFormat,
-      locale
+      locale: sendLocale
     };
     delete clientData.officeId;
     if (editClientFormValue.clientNonPersonDetails) {
