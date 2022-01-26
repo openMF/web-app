@@ -12,8 +12,8 @@
   "license": "MPL-2.0",
   "scripts": {
     "ng": "ng",
-    "build": "npm run env -s && ng build --prod --output-hashing=none",
-    "build:prod": "node --max-old-space-size=16384 ./node_modules/@angular/cli/bin/ng build --prod --output-hashing=none --base-href=/web-app/",
+    "build": "npm run env -s && ng build --configuration production --output-hashing=none",
+    "build:prod": "node --max-old-space-size=16384 ./node_modules/@angular/cli/bin/ng build --configuration production --output-hashing=none --base-href=/web-app/",
     "start": "npm run env -s && ng serve --aot --proxy-config proxy.conf.js",
     "serve:sw": "npm run build -s && npx http-server ./dist -p 4200",
     "lint": "ng lint && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc",
@@ -26,18 +26,18 @@
     "postinstall": "ngcc"
   },
   "dependencies": {
-    "@angular/animations": "11.2.14",
+    "@angular/animations": "12.2.15",
     "@angular/cdk": "11.2.13",
-    "@angular/common": "11.2.14",
-    "@angular/compiler": "11.2.14",
-    "@angular/core": "11.2.14",
-    "@angular/forms": "11.2.14",
-    "@angular/localize": "11.2.14",
+    "@angular/common": "12.2.15",
+    "@angular/compiler": "12.2.15",
+    "@angular/core": "12.2.15",
+    "@angular/forms": "12.2.15",
+    "@angular/localize": "12.2.15",
     "@angular/material": "11.2.13",
-    "@angular/platform-browser": "11.2.14",
-    "@angular/platform-browser-dynamic": "11.2.14",
-    "@angular/router": "11.2.14",
-    "@angular/service-worker": "11.2.14",
+    "@angular/platform-browser": "12.2.15",
+    "@angular/platform-browser-dynamic": "12.2.15",
+    "@angular/router": "12.2.15",
+    "@angular/service-worker": "12.2.15",
     "@ckeditor/ckeditor5-angular": "1.2.3",
     "@ckeditor/ckeditor5-build-classic": "21.0.0",
     "@fortawesome/fontawesome-svg-core": "1.2.18",
@@ -49,13 +49,13 @@
     "lodash": "4.17.21",
     "rxjs": "6.6.2",
     "tslib": "^2.0.0",
-    "zone.js": "0.10.3"
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "0.1102.18",
-    "@angular/cli": "11.2.18",
-    "@angular/compiler-cli": "11.2.14",
-    "@angular/language-service": "11.2.14",
+    "@angular-devkit/build-angular": "12.2.15",
+    "@angular/cli": "12.2.15",
+    "@angular/compiler-cli": "12.2.15",
+    "@angular/language-service": "12.2.15",
     "@biesbjerg/ngx-translate-extract": "2.3.4",
     "@ngx-rocket/scripts": "3.0.3",
     "@types/jasmine": "~3.6.0",
@@ -81,7 +81,7 @@
     "stylelint-scss": "3.6.1",
     "ts-node": "8.2.0",
     "tslint": "~6.1.0",
-    "typescript": "4.0.8"
+    "typescript": "4.3.5"
   },
   "repository": {
     "type": "git",
