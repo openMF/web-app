@@ -59,7 +59,7 @@ export class ThemeStorageService {
     if (theme.isDefault) {
       this.themeManagerService.removeTheme();
     } else {
-      this.themeManagerService.setTheme(`theme/${theme.href}`);
+      this.themeManagerService.setTheme(`${theme.href}`);
     }
     this.storeTheme(theme);
   }
