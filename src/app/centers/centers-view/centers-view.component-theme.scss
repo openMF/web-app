@@ -1,4 +1,4 @@
-@import "~@angular/material/theming";
+@use '~@angular/material' as mat;
 
 @mixin centers-view-component-theme($theme) {
   $primary: map-get($theme, primary);
@@ -6,7 +6,7 @@
   mifosx-centers-view {
     .center-card {
       .header {
-        background-color: mat-color($primary, 500);
+        background-color: mat.get-color-from-palette($primary, 500);
       }
     }
   }
