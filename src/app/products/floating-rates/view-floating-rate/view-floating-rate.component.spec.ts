@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ViewFloatingRateComponent } from './view-floating-rate.component';
 
@@ -6,7 +6,7 @@ describe('ViewFloatingRateComponent', () => {
   let component: ViewFloatingRateComponent;
   let fixture: ComponentFixture<ViewFloatingRateComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ViewFloatingRateComponent ]
     })

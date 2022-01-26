@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { EntityDataTableChecksComponent } from './entity-data-table-checks.component';
 
@@ -6,7 +6,7 @@ describe('EntityDataTableChecksComponent', () => {
   let component: EntityDataTableChecksComponent;
   let fixture: ComponentFixture<EntityDataTableChecksComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ EntityDataTableChecksComponent ]
     })

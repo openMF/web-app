@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ViewBulkImportComponent } from './view-bulk-import.component';
 
@@ -6,7 +6,7 @@ describe('ViewBulkImportComponent', () => {
   let component: ViewBulkImportComponent;
   let fixture: ComponentFixture<ViewBulkImportComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ViewBulkImportComponent ]
     })

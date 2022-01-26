@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { IndividualCollectionSheetComponent } from './individual-collection-sheet.component';
 
@@ -6,7 +6,7 @@ describe('IndividualCollectionSheetComponent', () => {
   let component: IndividualCollectionSheetComponent;
   let fixture: ComponentFixture<IndividualCollectionSheetComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ IndividualCollectionSheetComponent ]
     })

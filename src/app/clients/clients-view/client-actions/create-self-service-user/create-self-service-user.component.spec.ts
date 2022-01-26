@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CreateSelfServiceUserComponent } from './create-self-service-user.component';
 
@@ -6,7 +6,7 @@ describe('CreateSelfServiceUserComponent', () => {
   let component: CreateSelfServiceUserComponent;
   let fixture: ComponentFixture<CreateSelfServiceUserComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ CreateSelfServiceUserComponent ]
     })

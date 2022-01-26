@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { OverdueChargesTabComponent } from './overdue-charges-tab.component';
 
@@ -6,7 +6,7 @@ describe('OverdueChargesTabComponent', () => {
   let component: OverdueChargesTabComponent;
   let fixture: ComponentFixture<OverdueChargesTabComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ OverdueChargesTabComponent ]
     })

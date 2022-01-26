@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { UndoDisbursalComponent } from './undo-disbursal.component';
 
@@ -6,7 +6,7 @@ describe('UndoDisbursalComponent', () => {
   let component: UndoDisbursalComponent;
   let fixture: ComponentFixture<UndoDisbursalComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ UndoDisbursalComponent ]
     })
