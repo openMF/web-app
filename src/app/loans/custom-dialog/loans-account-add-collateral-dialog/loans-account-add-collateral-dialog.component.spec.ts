@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { LoansAccountAddCollateralDialogComponent } from './loans-account-add-collateral-dialog.component';
 
@@ -6,7 +6,7 @@ describe('LoansAccountAddCollateralDialogComponent', () => {
   let component: LoansAccountAddCollateralDialogComponent;
   let fixture: ComponentFixture<LoansAccountAddCollateralDialogComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ LoansAccountAddCollateralDialogComponent ]
     })

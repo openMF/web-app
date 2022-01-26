@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CloseSharesAccountComponent } from './close-shares-account.component';
 
@@ -6,7 +6,7 @@ describe('CloseSharesAccountComponent', () => {
   let component: CloseSharesAccountComponent;
   let fixture: ComponentFixture<CloseSharesAccountComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ CloseSharesAccountComponent ]
     })

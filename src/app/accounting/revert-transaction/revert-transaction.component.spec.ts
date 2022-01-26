@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RevertTransactionComponent } from './revert-transaction.component';
 
@@ -6,7 +6,7 @@ describe('RevertTransactionComponent', () => {
   let component: RevertTransactionComponent;
   let fixture: ComponentFixture<RevertTransactionComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RevertTransactionComponent ]
     })

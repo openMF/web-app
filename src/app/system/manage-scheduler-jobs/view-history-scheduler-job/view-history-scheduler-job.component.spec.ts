@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ViewHistorySchedulerJobComponent } from './view-history-scheduler-job.component';
 
@@ -6,7 +6,7 @@ describe('ViewHistorySchedulerJobComponent', () => {
   let component: ViewHistorySchedulerJobComponent;
   let fixture: ComponentFixture<ViewHistorySchedulerJobComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ViewHistorySchedulerJobComponent ]
     })

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CalculateInterestDialogComponent } from './calculate-interest-dialog.component';
 
@@ -6,7 +6,7 @@ describe('CalculateInterestDialogComponent', () => {
   let component: CalculateInterestDialogComponent;
   let fixture: ComponentFixture<CalculateInterestDialogComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ CalculateInterestDialogComponent ]
     })

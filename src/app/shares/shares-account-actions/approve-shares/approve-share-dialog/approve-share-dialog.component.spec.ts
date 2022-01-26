@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ApproveShareDialogComponent } from './approve-share-dialog.component';
 
@@ -6,7 +6,7 @@ describe('ApproveShareDialogComponent', () => {
   let component: ApproveShareDialogComponent;
   let fixture: ComponentFixture<ApproveShareDialogComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ApproveShareDialogComponent ]
     })

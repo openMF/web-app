@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ClientAddressStepComponent } from './client-address-step.component';
 
@@ -6,7 +6,7 @@ describe('ClientAddressStepComponent', () => {
   let component: ClientAddressStepComponent;
   let fixture: ComponentFixture<ClientAddressStepComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ClientAddressStepComponent ]
     })

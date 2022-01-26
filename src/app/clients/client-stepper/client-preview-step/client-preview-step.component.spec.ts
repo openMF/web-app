@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ClientPreviewStepComponent } from './client-preview-step.component';
 
@@ -6,7 +6,7 @@ describe('ClientPreviewStepComponent', () => {
   let component: ClientPreviewStepComponent;
   let fixture: ComponentFixture<ClientPreviewStepComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ClientPreviewStepComponent ]
     })

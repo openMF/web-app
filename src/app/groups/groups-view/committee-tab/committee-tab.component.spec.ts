@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CommitteeTabComponent } from './committee-tab.component';
 
@@ -6,7 +6,7 @@ describe('CommitteeTabComponent', () => {
   let component: CommitteeTabComponent;
   let fixture: ComponentFixture<CommitteeTabComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ CommitteeTabComponent ]
     })

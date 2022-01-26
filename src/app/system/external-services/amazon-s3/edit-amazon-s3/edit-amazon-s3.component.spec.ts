@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { EditAmazonS3Component } from './edit-amazon-s3.component';
 
@@ -6,7 +6,7 @@ describe('EditAmazonS3Component', () => {
   let component: EditAmazonS3Component;
   let fixture: ComponentFixture<EditAmazonS3Component>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ EditAmazonS3Component ]
     })

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ShareProductAccountingStepComponent } from './share-product-accounting-step.component';
 
@@ -6,7 +6,7 @@ describe('ShareProductAccountingStepComponent', () => {
   let component: ShareProductAccountingStepComponent;
   let fixture: ComponentFixture<ShareProductAccountingStepComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ShareProductAccountingStepComponent ]
     })

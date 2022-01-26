@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RejectClientTransferComponent } from './reject-client-transfer.component';
 
@@ -6,7 +6,7 @@ describe('RejectClientTransferComponent', () => {
   let component: RejectClientTransferComponent;
   let fixture: ComponentFixture<RejectClientTransferComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RejectClientTransferComponent ]
     })

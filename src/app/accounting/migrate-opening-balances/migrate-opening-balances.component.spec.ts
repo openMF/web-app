@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { MigrateOpeningBalancesComponent } from './migrate-opening-balances.component';
 
@@ -6,7 +6,7 @@ describe('MigrateOpeningBalancesComponent', () => {
   let component: MigrateOpeningBalancesComponent;
   let fixture: ComponentFixture<MigrateOpeningBalancesComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ MigrateOpeningBalancesComponent ]
     })

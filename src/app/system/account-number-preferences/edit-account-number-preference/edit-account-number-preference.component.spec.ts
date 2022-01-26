@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { EditAccountNumberPreferenceComponent } from './edit-account-number-preference.component';
 
@@ -6,7 +6,7 @@ describe('EditAccountNumberPreferenceComponent', () => {
   let component: EditAccountNumberPreferenceComponent;
   let fixture: ComponentFixture<EditAccountNumberPreferenceComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ EditAccountNumberPreferenceComponent ]
     })

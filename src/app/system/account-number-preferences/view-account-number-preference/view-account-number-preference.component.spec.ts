@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ViewAccountNumberPreferenceComponent } from './view-account-number-preference.component';
 
@@ -6,7 +6,7 @@ describe('ViewAccountNumberPreferenceComponent', () => {
   let component: ViewAccountNumberPreferenceComponent;
   let fixture: ComponentFixture<ViewAccountNumberPreferenceComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ViewAccountNumberPreferenceComponent ]
     })

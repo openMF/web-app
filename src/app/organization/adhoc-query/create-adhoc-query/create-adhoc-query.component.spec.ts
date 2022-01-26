@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CreateAdhocQueryComponent } from './create-adhoc-query.component';
 
@@ -6,7 +6,7 @@ describe('CreateAdhocQueryComponent', () => {
   let component: CreateAdhocQueryComponent;
   let fixture: ComponentFixture<CreateAdhocQueryComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ CreateAdhocQueryComponent ]
     })

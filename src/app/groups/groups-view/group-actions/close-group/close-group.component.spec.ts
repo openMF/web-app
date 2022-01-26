@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CloseGroupComponent } from './close-group.component';
 
@@ -6,7 +6,7 @@ describe('CloseGroupComponent', () => {
   let component: CloseGroupComponent;
   let fixture: ComponentFixture<CloseGroupComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ CloseGroupComponent ]
     })
