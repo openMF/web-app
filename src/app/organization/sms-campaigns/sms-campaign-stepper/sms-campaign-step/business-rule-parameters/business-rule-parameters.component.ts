@@ -138,9 +138,9 @@ export class BusinessRuleParametersComponent implements OnChanges {
 
   /**
    * Formats user response and readies it for utilization by run report function.
-   * @param {any} response Object containing formcontrol values.
+   * @param {string} response Object containing formcontrol values.
    */
-  formatUserResponse(response: any, forHeaders: boolean) {
+  formatUserResponse(response: string, forHeaders: boolean) {
     const formattedResponse: any = {};
     let newKey: string;
     for (const [key, value] of Object.entries(response)) {

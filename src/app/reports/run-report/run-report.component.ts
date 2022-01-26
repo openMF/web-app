@@ -171,9 +171,9 @@ export class RunReportComponent implements OnInit {
 
   /**
    * Formats user response and readies it for utilization by run report function.
-   * @param {any} response Object containing formcontrol values.
+   * @param {string} response Object containing formcontrol values.
    */
-  formatUserResponse(response: any) {
+  formatUserResponse(response: string) {
     const formattedResponse: any = {};
     let newKey: string;
     for (const [key, value] of Object.entries(response)) {
