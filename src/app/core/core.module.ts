@@ -38,6 +38,9 @@ import { SidenavComponent } from './shell/sidenav/sidenav.component';
 import { ToolbarComponent } from './shell/toolbar/toolbar.component';
 import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
 import { ContentComponent } from './shell/content/content.component';
+import { InjectionToken } from '@angular/core';
+import { APP_BASE_HREF, LocationStrategy } from '@angular/common';
+
 
 /**
  * Core Module
@@ -51,10 +54,10 @@ import { ContentComponent } from './shell/content/content.component';
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (http: HttpClient) => {
-          return new TranslateHttpLoader(http, `${ window.location.protocol }//${ window.location.host }/assets/translations/`, '.json');
+        useFactory: (http: HttpClient, locationStrategy: LocationStrategy) => {
+          return new TranslateHttpLoader(http, `${ window.location.protocol }//${ window.location.host }${locationStrategy.getBaseHref()}/assets/translations/`, '.json');
         },
-        deps: [HttpClient]
+        deps: [HttpClient, LocationStrategy]
       }
     }),
     RouterModule
