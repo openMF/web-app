@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1648479741862,
+  "timestamp": 1648479813994,
   "index": "/web-app/index.html",
   "assetGroups": [
     {
@@ -34,7 +34,6 @@
         "/web-app/assets/images/MifosX_logoSmall.png",
         "/web-app/assets/images/center_placeholder.png",
         "/web-app/assets/images/cover_image.jpg",
-        "/web-app/assets/images/cover_image_resized.webp",
         "/web-app/assets/images/fd_account_placeholder.png",
         "/web-app/assets/images/group_placeholder.png",
         "/web-app/assets/images/loans_account_placeholder.png",
@@ -82,7 +81,6 @@
     "/web-app/assets/images/MifosX_logoSmall.png": "ebd340185b4888fdbe26b364303d2c072412b46e",
     "/web-app/assets/images/center_placeholder.png": "95a8b8a2c3bccacfabe57fac31207267582e11d8",
     "/web-app/assets/images/cover_image.jpg": "51773ede81be7a39c6c7a742b4f59ff0e916af48",
-    "/web-app/assets/images/cover_image_resized.webp": "996601207b2fd11267f648d4c98bc140c93bc1ea",
     "/web-app/assets/images/fd_account_placeholder.png": "d2b4153d5741d39c54a3bcf84a67b107f90a549b",
     "/web-app/assets/images/group_placeholder.png": "7d6a1438614f689418612fe9ad0b68dba8e9e459",
     "/web-app/assets/images/loans_account_placeholder.png": "820bf5136bccdf48786241106a9e990ec3a6a352",
@@ -117,7 +115,7 @@
     "/web-app/common.js": "a050732a86c7f6a22a00e7d36a730095d2b47710",
     "/web-app/favicon.ico": "31d1d887b9dec1f49614f289d6855f5ffa7c0902",
     "/web-app/index.html": "455bd76aa005f9eb8bee88696b774844cc8fda2d",
-    "/web-app/main.js": "8e140a23e2391d686e1d143418372fd1b1f7635a",
+    "/web-app/main.js": "5ed31b41530343b122c993795cfbace76f621574",
     "/web-app/polyfills-es5.js": "34d3bb02851d834ef1b39c6a4e888f868116c3bf",
     "/web-app/polyfills.js": "3ac51116a418c3e4f1b94df8fa7e9f5903c7fcc1",
     "/web-app/runtime.js": "63538fb89430e8954344b4a9feb642849a87ccec",
