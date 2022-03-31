@@ -27,6 +27,7 @@ export class SettingsService {
    * @param {any} language Language.
    */
   setLanguage(language: { name: string, code: string }) {
+    console.log("Language: " + language);
     localStorage.setItem('mifosXLanguage', JSON.stringify(language));
   }
 
@@ -57,7 +58,7 @@ export class SettingsService {
    * Returns language setting
    */
   get language() {
-    return JSON.parse(localStorage.getItem('mifosXLanguage'));
+    return { code: localStorage.getItem('mifosXLanguage') };
   }
 
   /**
