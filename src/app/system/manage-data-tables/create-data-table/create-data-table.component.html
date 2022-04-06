@@ -16,8 +16,8 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="40%">
-            <mat-label>Application Table Name</mat-label>
+          <mat-form-field fxFlex="20%">
+            <mat-label>Entity Type</mat-label>
             <mat-select required formControlName="apptableName">
               <mat-option *ngFor="let appTable of appTableData" [value]="appTable.value">
                 {{ appTable.displayValue }}
@@ -26,6 +26,15 @@
             <mat-error *ngIf="dataTableForm.controls.apptableName.hasError('required')">
               Application Table Name is <strong>required</strong>
             </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="20%" *ngIf="showEntitySubType">
+            <mat-label>Entity SubType</mat-label>
+            <mat-select formControlName="entitySubType">
+              <mat-option *ngFor="let entitySubType of entitySubTypeData" [value]="entitySubType.value">
+                {{ entitySubType.displayValue }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
 
           <div fxFlex="14%" class="multi-row-wrapper">

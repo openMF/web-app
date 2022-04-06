@@ -47,7 +47,7 @@ export class SingleRowComponent implements OnInit {
     };
     const dateTransformColumns: string[] = [];
     const columns = this.dataObject.columnHeaders.filter((column: any) => {
-      return ((column.columnName !== 'id') && (column.columnName !== 'client_id'));
+      return ((column.columnName !== 'id') && (column.columnName !== 'client_id') && (column.columnName !== 'created_at') && (column.columnName !== 'updated_at'));
     });
     const formfields: FormfieldBase[] = this.getFormfields(columns, dateTransformColumns, dataTableEntryObject);
     const data = {
@@ -77,7 +77,7 @@ export class SingleRowComponent implements OnInit {
     };
     const dateTransformColumns: string[] = [];
     const columns = this.dataObject.columnHeaders.filter((column: any) => {
-      return ((column.columnName !== 'id') && (column.columnName !== 'client_id'));
+      return ((column.columnName !== 'id') && (column.columnName !== 'client_id') && (column.columnName !== 'created_at') && (column.columnName !== 'updated_at'));
     });
     let formfields: FormfieldBase[] = this.getFormfields(columns, dateTransformColumns, dataTableEntryObject);
     formfields = formfields.map((formfield: FormfieldBase, index: number) => {
