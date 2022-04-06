@@ -1,0 +1,36 @@
+name: Publish Image in Docker Hub 
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+  
+    runs-on: ubuntu-latest
+    env:
+        DOCKER_ORGANIZATION: ${{secrets.DOCKER_ORGANIZATION}}
+        WEB_APP_VERSION: ${{secrets.WEB_APP_LATEST_STABLE_VERSION}}
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Docker Hub Login
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: |
+        echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
+
+    - name: Build the Docker image
+      run: docker build -t web-app:latest .
+      
+    - name: Docker Hub Prepare
+      run: docker image tag web-app $DOCKER_ORGANIZATION/web-app:$WEB_APP_VERSION
+
+    - name: Docker Hub Push  
+      run: docker image push $DOCKER_ORGANIZATION/web-app:$WEB_APP_VERSION
+     
