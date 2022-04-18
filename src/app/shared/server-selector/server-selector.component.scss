@@ -1,0 +1,26 @@
+.actions {
+    display: inline-block;
+}
+
+.rg {
+    float: right;
+}
+
+.ml {
+    margin-left: 10px;
+}
+
+
+/* .pba {
+    width: 80%;
+    left: 10%;
+    margin: 12px;
+} */
+
+.sticky {
+    position: sticky;
+    z-index: 1; // appear above mat-option
+    top: 0; // fix at the top
+    background-color: white; // don't see mat-option when scrolling
+    box-shadow: 1px -2px 10px 0px grey; // shadow at the bottom
+}
