@@ -1,0 +1,67 @@
+{
+  "APP_NAME": "MifosX",
+  "LANGUAGES": {
+    "en_US": "English",
+    "es_MX": "Spanish",
+    "fr_FR": "French"
+  },
+  "PAGINATOR": {
+    "ITEMS_PER_PAGE": "Elements",
+    "NEXT_PAGE": "Next",
+    "PREVIOUS_PAGE": "Previous",
+    "OF_LABEL": "of"
+  },
+  "Server": "Server",
+  "Language": "Language",
+  "Welcome": "Welcome!",
+  "About": "About",
+  "Home": "Home",
+  "Logged in as": "Logged in as",
+  "Accounting": "Accounting",
+  "Reports": "Reports",
+  "Admin": "Admin",
+  "Self Service": "Self Service",
+  "Institution": "Institution",
+  "labels": {
+    "login": {
+      "Username": "Username",
+      "Password": "Password",
+      "Login": "Login",
+      "Logout": "Logout",
+      "Forgot Password?": "Forgot Password?",
+      "Remember me": "Remember me",
+      "Resources": "Resources",
+      "Community": "Community",
+      "Contribute": "Contribute",
+      "menus": {
+        "User Manual": "User Manual",
+        "Functional Specifications": "Functional Specifications",
+        "Developer Zone": "Developer Zone",
+        "User Group": "User Group",
+        "Developer Group": "Developer Group",
+        "IRC": "IRC",
+        "Key Design Principles": "Key Design Principles",
+        "Working with Code": "Working with Code",
+        "Donate": "Donate"
+      }
+    },
+    "footer": {
+      "Version": "Version",
+      "is up to date": "is up to date"
+    },
+    "buttons": {
+      "Add": "Add"
+    },
+    "config": {
+      "Add new server": "Add new server"
+    },
+    "msg": {
+      "is required": "is required"
+    },
+    "errors": {
+      "login": {
+        "Username or password incorrect.": "Username or password incorrect"
+      }
+    }
+  }
+}

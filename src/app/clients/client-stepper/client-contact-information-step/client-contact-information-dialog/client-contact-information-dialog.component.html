@@ -1,0 +1,47 @@
+<h1 mat-dialog-title>{{ data.context }} Contact Information</h1>
+
+<form [formGroup]="contactInformationForm">
+
+  <div fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutAlign="start center" fxLayoutGap="2%">
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Contact Type</mat-label>
+      <mat-select formControlName="contactTypeId">
+        <mat-option *ngFor="let contactType of data.options" [value]="contactType.id">
+          {{ contactType.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="contactInformationForm.controls.contactTypeId.hasError('required')">
+        Contact Type is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Value</mat-label>
+      <input formControlName="contactKey" required matInput />
+      <mat-error *ngIf="contactInformationForm.controls.contactKey.hasError('required')">
+        Contact Value is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option *ngFor="let status of statusOptions" [value]="status.value">
+          {{ status.value }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="contactInformationForm.controls.status.hasError('required')">
+        Contact Type is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-checkbox formControlName="currentContact" labelPosition="before" fxFlex="48%">Is current Contact?</mat-checkbox>
+  </div>
+
+  <mat-dialog-actions align="center">
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" [disabled]="!contactInformationForm.valid" [mat-dialog-close]="{ member: contactInformation }">Confirm</button>
+  </mat-dialog-actions>
+
+</form>

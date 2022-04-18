@@ -4,15 +4,13 @@ import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
 
 /** Translation Imports */
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule } from '@ngx-translate/core';
 
 /** Custom Services */
 import { AuthenticationService } from './authentication/authentication.service';
 import { HttpService } from './http/http.service';
 import { HttpCacheService } from './http/http-cache.service';
 import { ProgressBarService } from './progress-bar/progress-bar.service';
-import { I18nService } from './i18n/i18n.service';
 
 /** Custom Guards */
 import { AuthenticationGuard } from './authentication/authentication.guard';
@@ -38,8 +36,6 @@ import { SidenavComponent } from './shell/sidenav/sidenav.component';
 import { ToolbarComponent } from './shell/toolbar/toolbar.component';
 import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
 import { ContentComponent } from './shell/content/content.component';
-import { InjectionToken } from '@angular/core';
-import { APP_BASE_HREF, LocationStrategy } from '@angular/common';
 
 
 /**
@@ -51,15 +47,7 @@ import { APP_BASE_HREF, LocationStrategy } from '@angular/common';
   imports: [
     SharedModule,
     HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (http: HttpClient, locationStrategy: LocationStrategy) => {
-          return new TranslateHttpLoader(http, `${ window.location.protocol }//${ window.location.host }${locationStrategy.getBaseHref()}/assets/translations/`, '.json');
-        },
-        deps: [HttpClient, LocationStrategy]
-      }
-    }),
+    TranslateModule,
     RouterModule
   ],
   declarations: [
@@ -81,7 +69,6 @@ import { APP_BASE_HREF, LocationStrategy } from '@angular/common';
       useClass: AuthenticationInterceptor,
       multi: true
     },
-    I18nService,
     HttpCacheService,
     ApiPrefixInterceptor,
     ErrorHandlerInterceptor,

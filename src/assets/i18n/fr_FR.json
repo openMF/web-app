@@ -1,0 +1,67 @@
+{
+  "APP_NAME": "MifosX",
+  "LANGUAGES": {
+    "en_US": "Anglais",
+    "es_MX": "Espagnol",
+    "fr_FR": "Français"
+  },
+  "PAGINATOR": {
+    "ITEMS_PER_PAGE": "Articles",
+    "NEXT_PAGE": "Suivant",
+    "PREVIOUS_PAGE": "Précédent",
+    "OF_LABEL": "de"
+  },
+  "Server": "Serveur",
+  "Language": "Langue",
+  "Welcome": "Bienvenue",
+  "About": "A propos",
+  "Home": "Accueil",
+  "Logged in as": "Connecté en tant que",
+  "Accounting": "Comptabilité",
+  "Reports": "Rapports",
+  "Admin": "Admin",
+  "Self Service": "En libre service",
+  "Institution": "Institution",
+  "labels": {
+    "login": {
+      "Username": "Identifiant",
+      "Password": "Mot de passe",
+      "Login": "Connexion",
+      "Logout": "Déconnexion",
+      "Forgot Password?": "Mot de passe oublié?",
+      "Remember me": "Souviens-toi de moi",
+      "Resources": "Ressources",
+      "Community": "Communauté",
+      "Contribute": "Contribuer",
+      "menus": {
+        "User Manual": "Manuel de l'Utilisateur",
+        "Functional Specifications": "Spécifications fonctionnelles",
+        "Developer Zone": "Espace développeur",
+        "User Group": "Groupe d'utilisateurs",
+        "Developer Group": "Groupe de développeurs",
+        "IRC": "IRC",
+        "Key Design Principles": "Principes de conception",
+        "Working with Code": "Travailler avec du code",
+        "Donate": "Donner"
+      }
+    },
+    "footer": {
+      "Version": "Version",
+      "is up to date": "est à jour"
+    },
+    "buttons": {
+      "Add": "Ajouter"
+    },
+    "config": {
+      "Add new server": "Ajouter un nouveau serveur"
+    },
+    "msg": {
+      "is required": "requis"
+    }
+  },
+  "errors": {
+    "login": {
+      "Username or password incorrect.": "Identifiant ou mot de passe incorrect"
+    }
+  }
+}

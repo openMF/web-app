@@ -1,0 +1,53 @@
+<div class="mat-typography">
+
+  <h3>Contact Information</h3>
+
+  <div fxLayout="row" fxLayoutAlign="flex-end" class="m-b-20">
+    <button mat-raised-button color="primary" (click)="addContactInformation()">
+      <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Add
+    </button>
+  </div>
+
+  <mat-accordion>
+
+    <mat-expansion-panel *ngFor="let contact of clientContactInformation;index as i" class="contact-information">
+
+      <mat-expansion-panel-header>
+
+        <mat-panel-title>
+          {{ contact.contactKey }}
+        </mat-panel-title>
+
+      </mat-expansion-panel-header>
+
+      <mat-divider></mat-divider>
+
+      <div class="contact-information-actions" fxLayout="row" fxLayoutAlign="flex-end">
+        <button mat-button color="warn" (click)="deleteContactInformation(contact.contactKey,i)">
+          <fa-icon icon="trash"></fa-icon>
+        </button>
+      </div>
+
+      <p>
+        Value : {{ contact.contactKey }}<br />
+        Contact Type : {{ contact.contactTypeId | find:clientTemplate.familyMemberOptions.relationshipIdOptions:'id':'name' }}<br />
+        Status : {{ contact.status }}<br />
+        Is Current Contact? : {{ contact.currentContact ? 'Yes' : 'No' }}<br />
+      </p>
+
+    </mat-expansion-panel>
+
+  </mat-accordion>
+
+  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+    <button mat-raised-button matStepperPrevious>
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+      Previous
+    </button>
+    <button mat-raised-button matStepperNext>
+      Next&nbsp;&nbsp;
+      <fa-icon icon="arrow-right"></fa-icon>
+    </button>
+  </div>
+
+</div>

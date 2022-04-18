@@ -226,6 +226,26 @@ export class ClientsService {
     return this.http.get(`/client_identifiers/${documentId}/documents`);
   }
 
+  getClientContactInformationTemplate(clientId: string) {
+    return this.http.get(`/clients/${clientId}/contactinformation/template`);
+  }
+
+  getClientContactInformation(clientId: string) {
+    return this.http.get(`/clients/${clientId}/contactinformation`);
+  }
+
+  addClientContactInformation(clientId: string, contactData: any) {
+    return this.http.post(`/clients/${clientId}/contactinformation`, contactData);
+  }
+
+  editClientContactInformation(clientId: string, contactId: string, contactData: any) {
+    return this.http.put(`/clients/${clientId}/contactinformation/${contactId}`, contactData);
+  }
+
+  deleteClientContactInformation(clientId: string, contactId: string) {
+    return this.http.delete(`/clients/${clientId}/contactinformation/${contactId}`);
+  }
+
   downloadClientIdentificationDocument(parentEntityId: string, documentId: string) {
     return this.http.get(`/client_identifiers/${parentEntityId}/documents/${documentId}/attachment`, { responseType: 'blob' });
   }

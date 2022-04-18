@@ -39,7 +39,7 @@
             Id: {{clientViewData.externalId}} | Staff:{{clientViewData.staffName || 'Unassigned'}}<br />
             Activation Date :
             {{(clientViewData.activationDate)?(clientViewData.activationDate|date) :'Not Activated'}}<br />
-            Member Of : 
+            Member Of :
             <span *ngFor="let group of clientViewData.groups">
               <a>{{group.name}}</a>&nbsp;
             </span>
@@ -58,7 +58,7 @@
         <button mat-raised-button [routerLink]="['edit']">
           <i class="fa fa-edit"></i>Edit</button>
       </span>
-      
+
       <button mat-raised-button [matMenuTriggerFor]="Applications">
         <i class="fa fa-file"></i>Applications</button>
       <mat-menu #Applications="matMenu">
@@ -84,7 +84,7 @@
         <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item (click)="doAction('Accept Transfer')">Accept Transfer</button></span>
         <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item (click)="doAction('Reject Transfer')">Reject transfer</button></span>
       </mat-menu>
-      
+
       <span *ngIf="!clientViewData.staffId">
         <button mat-raised-button (click)="doAction('Assign Staff')">
           <i class="fa fa-user"></i>Assign Staff</button>
@@ -130,6 +130,10 @@
       <a mat-tab-link [routerLink]="['./identities']" routerLinkActive #identities="routerLinkActive"
         [active]="identities.isActive" *mifosxHasPermission="'READ_CLIENTIDENTIFIER'">
         Identities
+      </a>
+      <a mat-tab-link [routerLink]="['./contactinformation']" routerLinkActive #contactInformation="routerLinkActive"
+        [active]="contactInformation.isActive" *mifosxHasPermission="'READ_CLIENTCONTACTINFORMATION'">
+        Contact Information
       </a>
       <a mat-tab-link [routerLink]="['./documents']" routerLinkActive #documents="routerLinkActive"
         [active]="documents.isActive" *mifosxHasPermission="'READ_DOCUMENT'">

@@ -8,6 +8,7 @@ import { ClientsService } from '../clients.service';
 /** Custom Components */
 import { ClientGeneralStepComponent } from '../client-stepper/client-general-step/client-general-step.component';
 import { ClientFamilyMembersStepComponent } from '../client-stepper/client-family-members-step/client-family-members-step.component';
+import { ClientContactInformationStepComponent } from '../client-stepper/client-contact-information-step/client-contact-information-step.component';
 import { ClientAddressStepComponent } from '../client-stepper/client-address-step/client-address-step.component';
 
 /** Custom Services */
@@ -26,6 +27,8 @@ export class CreateClientComponent {
 
   /** Client General Step */
   @ViewChild(ClientGeneralStepComponent, { static: true }) clientGeneralStep: ClientGeneralStepComponent;
+  /** Client Contact Information */
+  @ViewChild(ClientContactInformationStepComponent, { static: true }) clientContactInformationStep: ClientContactInformationStepComponent;
   /** Client Family Members Step */
   @ViewChild(ClientFamilyMembersStepComponent, { static: true }) clientFamilyMembersStep: ClientFamilyMembersStepComponent;
   /** Client Address Step */
@@ -67,7 +70,8 @@ export class CreateClientComponent {
     return {
       ...this.clientGeneralStep.clientGeneralDetails,
       ...this.clientFamilyMembersStep.familyMembers,
-      ...this.clientAddressStep.address
+      ...this.clientAddressStep.address,
+      ...this.clientContactInformationStep.contacts
     };
   }
   /**

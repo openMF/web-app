@@ -1,8 +1,8 @@
 /** Angular Imports */
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, Injector, NgModule } from '@angular/core';
 import { BrowserModule, HammerModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 /** Environment Configuration */
@@ -40,6 +40,13 @@ import { TasksModule } from './tasks/tasks.module';
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
 
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { HttpLoaderFactory } from './translation-config';
+import { DatePipe } from '@angular/common';
+import { HttpService } from './core/http/http.service';
+
+import { AppConfig } from './app.config';
+
 /**
  * App Module
  *
@@ -74,9 +81,29 @@ import { AppRoutingModule } from './app-routing.module';
     CollectionsModule,
     TasksModule,
     AppRoutingModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [ HttpClient ]
+      }
+    }),
   ],
+  exports: [TranslateModule],
   declarations: [WebAppComponent, NotFoundComponent],
-  providers: [],
+  providers: [AppConfig,
+    DatePipe,
+    HttpService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initConfig,
+      deps: [ AppConfig, TranslateService, Injector ],
+      multi: true
+    }],
   bootstrap: [WebAppComponent]
 })
 export class AppModule { }
+
+export function initConfig(config: AppConfig) {
+  return () => config.load();
+}

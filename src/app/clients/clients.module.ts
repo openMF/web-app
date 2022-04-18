@@ -16,6 +16,7 @@ import { FamilyMembersTabComponent } from './clients-view/family-members-tab/fam
 import { AddFamilyMemberComponent } from './clients-view/family-members-tab/add-family-member/add-family-member.component';
 import { EditFamilyMemberComponent } from './clients-view/family-members-tab/edit-family-member/edit-family-member.component';
 import { IdentitiesTabComponent } from './clients-view/identities-tab/identities-tab.component';
+import { ContactInformationTabComponent } from './clients-view/contactinformation-tab/contactinformation-tab.component';
 import { UploadDocumentDialogComponent } from './clients-view/custom-dialogs/upload-document-dialog/upload-document-dialog.component';
 import { NotesTabComponent } from './clients-view/notes-tab/notes-tab.component';
 import { EditNotesDialogComponent } from './clients-view/custom-dialogs/edit-notes-dialog/edit-notes-dialog.component';
@@ -52,10 +53,12 @@ import { ClientScreenReportsComponent } from './clients-view/client-actions/clie
 import { EditClientComponent } from './edit-client/edit-client.component';
 import { CreateClientComponent } from './create-client/create-client.component';
 import { ClientGeneralStepComponent } from './client-stepper/client-general-step/client-general-step.component';
+import { ClientContactInformationStepComponent } from './client-stepper/client-contact-information-step/client-contact-information-step.component';
 import { ClientFamilyMembersStepComponent } from './client-stepper/client-family-members-step/client-family-members-step.component';
 import { ClientPreviewStepComponent } from './client-stepper/client-preview-step/client-preview-step.component';
 import { ClientAddressStepComponent } from './client-stepper/client-address-step/client-address-step.component';
 import { ClientFamilyMemberDialogComponent } from './client-stepper/client-family-members-step/client-family-member-dialog/client-family-member-dialog.component';
+import { ClientContactInformationDialogComponent } from './client-stepper/client-contact-information-step/client-contact-information-dialog/client-contact-information-dialog.component';
 import { CaptureImageDialogComponent } from './clients-view/custom-dialogs/capture-image-dialog/capture-image-dialog.component';
 import { CreateSelfServiceUserComponent } from './clients-view/client-actions/create-self-service-user/create-self-service-user.component';
 
@@ -80,6 +83,7 @@ import { CreateSelfServiceUserComponent } from './clients-view/client-actions/cr
     AddFamilyMemberComponent,
     EditFamilyMemberComponent,
     IdentitiesTabComponent,
+    ContactInformationTabComponent,
     UploadDocumentDialogComponent,
     NotesTabComponent,
     EditNotesDialogComponent,
@@ -116,10 +120,12 @@ import { CreateSelfServiceUserComponent } from './clients-view/client-actions/cr
     EditClientComponent,
     CreateClientComponent,
     ClientGeneralStepComponent,
+    ClientContactInformationStepComponent,
     ClientFamilyMembersStepComponent,
     ClientPreviewStepComponent,
     ClientAddressStepComponent,
     ClientFamilyMemberDialogComponent,
+    ClientContactInformationDialogComponent,
     CaptureImageDialogComponent,
     CreateSelfServiceUserComponent
   ],

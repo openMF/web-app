@@ -42,16 +42,16 @@
     "@ckeditor/ckeditor5-angular": "1.2.3",
     "@ckeditor/ckeditor5-build-classic": "21.0.0",
     "@fortawesome/angular-fontawesome": "0.6.1",
-    "@fortawesome/fontawesome-svg-core": "1.2.18",
+    "@fortawesome/fontawesome-svg-core": "^1.2.27",
     "@fortawesome/free-solid-svg-icons": "5.8.2",
     "@ngx-translate/core": "11.0.1",
-    "@ngx-translate/http-loader": "^6.0.0",
+    "@ngx-translate/http-loader": "^5.0.0",
     "chart.js": "3.0.0-alpha",
     "core-js": "2.5.0",
     "lodash": "4.17.21",
     "rxjs": "6.6.2",
     "tslib": "1.10.0",
-    "zone.js": "0.10.2"
+    "zone.js": "~0.10.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.901.12",

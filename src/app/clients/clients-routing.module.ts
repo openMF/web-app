@@ -15,6 +15,7 @@ import { FamilyMembersTabComponent } from './clients-view/family-members-tab/fam
 import { AddFamilyMemberComponent } from './clients-view/family-members-tab/add-family-member/add-family-member.component';
 import { EditFamilyMemberComponent } from './clients-view/family-members-tab/edit-family-member/edit-family-member.component';
 import { IdentitiesTabComponent } from './clients-view/identities-tab/identities-tab.component';
+import { ContactInformationTabComponent } from './clients-view/contactinformation-tab/contactinformation-tab.component';
 import { NotesTabComponent } from './clients-view/notes-tab/notes-tab.component';
 import { DocumentsTabComponent } from './clients-view/documents-tab/documents-tab.component';
 import { DatatableTabComponent } from './clients-view/datatable-tab/datatable-tab.component';
@@ -35,6 +36,8 @@ import { ClientFamilyMembersResolver } from './common-resolvers/client-family-me
 import { ClientFamilyMemberResolver } from './common-resolvers/client-family-member.resolver';
 import { ClientTemplateResolver } from './common-resolvers/client-template.resolver';
 import { ClientIdentitiesResolver } from './common-resolvers/client-identities.resolver';
+import { ClientContactInformationResolver } from './common-resolvers/client-contactinformation.resolver';
+import { ClientContactInformationTemplateResolver } from './common-resolvers/client-contactinformation-template.resolver';
 import { ClientNotesResolver } from './common-resolvers/client-notes.resolver';
 import { ClientDocumentsResolver } from './common-resolvers/client-document.resolver';
 import { ClientDatatablesResolver } from './common-resolvers/client-datatables.resolver';
@@ -84,7 +87,7 @@ const routes: Routes = [
             resolve: {
               clientAccountsData: ClientAccountsResolver,
               clientChargesData: ClientChargesResolver,
-              clientSummary: ClientSummaryResolver
+              // clientSummary: ClientSummaryResolver
             }
           },
           {
@@ -139,6 +142,16 @@ const routes: Routes = [
               clientIdentifierTemplate: ClientIdentifierTemplateResolver
             }
           },
+          {
+            path: 'contactinformation',
+            component: ContactInformationTabComponent,
+            data: { title: extract('contactinformation'), breadcrumb: 'Contact Information', routeParamBreadcrumb: false },
+            resolve: {
+              clientContactInformation: ClientContactInformationResolver,
+              clientContactInformationTemplate: ClientContactInformationTemplateResolver
+            }
+          },
+
           {
             path: 'documents',
             component: DocumentsTabComponent,
@@ -272,6 +285,8 @@ const routes: Routes = [
     ClientFamilyMemberResolver,
     ClientTemplateResolver,
     ClientIdentitiesResolver,
+    ClientContactInformationResolver,
+    ClientContactInformationTemplateResolver,
     ClientNotesResolver,
     ClientDocumentsResolver,
     ClientDatatablesResolver,

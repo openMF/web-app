@@ -1,9 +1,13 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
+import { SettingsService } from 'app/settings/settings.service';
+
+/** Environment Configuration */
+import { environment } from 'environments/environment';
 
 /** Custom Services */
-import { I18nService } from '../../core/i18n/i18n.service';
 
 /**
  * Language selector component.
@@ -17,17 +21,17 @@ import { I18nService } from '../../core/i18n/i18n.service';
   styleUrls: ['./language-selector.component.scss']
 })
 export class LanguageSelectorComponent implements OnInit {
-
+  langSelected = environment.defaultLanguage;
   /** Language selector form control. */
   languageSelector = new FormControl();
 
   /**
    * Sets the language of the application in the selector on initial setup.
-   * @param {I18nService} i18nService Internationalization Service.
+   * @param {TranslateService} translate Internationalization Service.
    */
-  constructor(private i18nService: I18nService) {
+  constructor(private translate: TranslateService,
+    private settingsService: SettingsService) {
     this.languageSelector.setValue(this.currentLanguage);
-    this.languageSelector.valueChanges.subscribe( language => this.setLanguage(language) );
   }
 
   ngOnInit() {
@@ -37,8 +41,9 @@ export class LanguageSelectorComponent implements OnInit {
    * Sets a new language to be used by the application.
    * @param {string} language New language.
    */
-  setLanguage(language: string) {
-    this.i18nService.language = language;
+  setLanguage() {
+    this.translate.use(this.languageSelector.value);
+    this.settingsService.setLanguage({ name: "", code: this.languageSelector.value });
   }
 
   /**
@@ -46,7 +51,7 @@ export class LanguageSelectorComponent implements OnInit {
    * @returns {string} Current language.
    */
   get currentLanguage(): string {
-    return this.i18nService.language;
+    return this.translate.currentLang;
   }
 
   /**
@@ -54,7 +59,7 @@ export class LanguageSelectorComponent implements OnInit {
    * @return {string[]} Supported languages.
    */
   get languages(): string[] {
-    return this.i18nService.supportedLanguages;
+    return this.translate.getLangs();
   }
 
 }

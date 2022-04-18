@@ -32,6 +32,14 @@
 
     <mat-step>
 
+      <ng-template matStepLabel>CONTACT DETAILS</ng-template>
+
+      <mifosx-client-contact-information-step [clientTemplate]="clientTemplate"></mifosx-client-contact-information-step>
+
+    </mat-step>
+
+    <mat-step>
+
       <ng-template matStepLabel>FAMILY MEMBERS</ng-template>
 
       <mifosx-client-family-members-step [clientTemplate]="clientTemplate"></mifosx-client-family-members-step>
@@ -42,7 +50,7 @@
 
       <ng-template matStepLabel>ADDRESS</ng-template>
 
-      <mifosx-client-address-step 
+      <mifosx-client-address-step
         [clientTemplate]="clientTemplate"
         [clientAddressFieldConfig]="clientAddressFieldConfig"
       >
