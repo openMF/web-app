@@ -30,6 +30,13 @@ export class SettingsService {
     localStorage.setItem('mifosXLanguage', JSON.stringify(language));
   }
 
+  setDefaultLanguage() {
+    this.setLanguage({
+      name: environment.defaultLanguage,
+      code: environment.defaultLanguage.substring(0, 2)
+    });
+  }
+
   /**
    * Sets server URL setting throughout the app.
    * @param {string} url URL
@@ -57,6 +64,9 @@ export class SettingsService {
    * Returns language setting
    */
   get language() {
+    if (!localStorage.getItem('mifosXLanguage')) {
+      this.setDefaultLanguage();
+    }
     return JSON.parse(localStorage.getItem('mifosXLanguage'));
   }
 

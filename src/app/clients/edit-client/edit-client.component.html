@@ -84,9 +84,21 @@
             <input matInput formControlName="externalId">
           </mat-form-field>
 
+          <mat-checkbox *ngIf="editClientForm.value.legalFormId === 1" fxFlex="48%" labelPosition="before" formControlName="isStaff" class="margin-v">
+            Is staff?
+          </mat-checkbox>
+
           <mat-form-field fxFlex="48%">
             <mat-label>Mobile No</mat-label>
-            <input matInput formControlName="mobileNo">
+            <input matInput type="number" formControlName="mobileNo">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Email Address</mat-label>
+            <input matInput formControlName="emailAddress">
+            <mat-error *ngIf="editClientForm.controls.emailAddress.errors?.email">
+              Email not valid
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
@@ -109,20 +121,20 @@
 
           <mat-form-field fxFlex="48%">
             <mat-label>Submitted On</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker" formControlName="submittedOnDate">
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker" formControlName="submittedOnDate" required>
             <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #submittedOnDatePicker></mat-datepicker>
+            <mat-error *ngIf="editClientForm.controls.submittedOnDate.hasError('required')">
+              Submitted Date is <strong>required</strong>
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
             <mat-label>Activated On</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="activatedOnDatePicker" required
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="activatedOnDatePicker"
               formControlName="activationDate">
             <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #activatedOnDatePicker></mat-datepicker>
-            <mat-error *ngIf="editClientForm.controls.activationDate.hasError('required')">
-              Activation Date is <strong>required</strong>
-            </mat-error>
           </mat-form-field>
 
           <mat-form-field *ngIf="editClientForm.value.legalFormId === 1" fxFlex="48%">
@@ -134,10 +146,6 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-checkbox *ngIf="editClientForm.value.legalFormId === 1" fxFlex="48%" labelPosition="before" formControlName="isStaff" class="margin-v">
-            Is staff?
-          </mat-checkbox>
-
           <div fxFlex="100%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" formGroupName="clientNonPersonDetails"
             *ngIf="editClientForm.contains('clientNonPersonDetails')">
 
@@ -147,12 +155,12 @@
               <mat-datepicker-toggle matSuffix [for]="incorpValidityTillDateDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #incorpValidityTillDateDatePicker></mat-datepicker>
             </mat-form-field>
-  
+
             <mat-form-field fxFlex="48%">
               <mat-label>Incorporation No</mat-label>
               <input matInput formControlName="incorpNumber">
             </mat-form-field>
-  
+
             <mat-form-field fxFlex="48%">
               <mat-label>Main Business Line</mat-label>
               <mat-select formControlName="mainBusinessLineId">
@@ -161,7 +169,7 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-  
+
             <mat-form-field fxFlex="48%">
               <mat-label>Constitution</mat-label>
               <mat-select formControlName="constitutionId">
@@ -170,7 +178,7 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-  
+
             <mat-form-field fxFlex="98%">
               <mat-label>Remarks</mat-label>
               <textarea matInput formControlName="remarks"></textarea>

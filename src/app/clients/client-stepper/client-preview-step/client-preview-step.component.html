@@ -40,6 +40,11 @@
     <span fxFlex="60%">{{ client.mobileNo }}</span>
   </div>
 
+  <div fxFlexFill *ngIf="client.emailAddress">
+    <span fxFlex="40%">Email Address</span>
+    <span fxFlex="60%">{{ client.emailAddress }}</span>
+  </div>
+
   <div fxFlexFill *ngIf="client.clientTypeId">
     <span fxFlex="40%">Client Type</span>
     <span fxFlex="60%">{{ client.clientTypeId | find:clientTemplate.clientTypeOptions:'id':'name' }}</span>
@@ -76,7 +81,7 @@
       <span fxFlex="40%">Gender</span>
       <span fxFlex="60%">{{ client.genderId | find:clientTemplate.genderOptions:'id':'name' }}</span>
     </div>
-  
+
     <div fxFlexFill>
       <span fxFlex="40%">Is Staff?</span>
       <span fxFlex="60%">{{ client.isStaff ? 'Yes' : 'No' }}</span>
@@ -90,22 +95,22 @@
       <span fxFlex="40%">Incorporation Validity Till Date</span>
       <span fxFlex="60%">{{ client.clientNonPersonDetails.incorpValidityTillDate | date }}</span>
     </div>
-  
+
     <div fxFlexFill>
       <span fxFlex="40%">Incorportation Number</span>
       <span fxFlex="60%">{{ client.clientNonPersonDetails.incorpNumber || 'Not Provided' }}</span>
     </div>
-  
+
     <div fxFlexFill *ngIf="client.clientNonPersonDetails.mainBusinessLineId">
       <span fxFlex="40%">Main Business Line</span>
       <span fxFlex="60%">{{ client.clientNonPersonDetails.mainBusinessLineId | find:clientTemplate.clientNonPersonMainBusinessLineOptions:'id':'name' }}</span>
     </div>
-  
+
     <div fxFlexFill *ngIf="client.clientNonPersonDetails.constitutionId">
       <span fxFlex="40%">Constitution</span>
       <span fxFlex="60%">{{ client.clientNonPersonDetails.constitutionId | find:clientTemplate.clientNonPersonConstitutionOptions:'id':'name'}}</span>
     </div>
-  
+
     <div fxFlexFill>
       <span fxFlex="40%">Remarks</span>
       <span fxFlex="60%">{{ client.clientNonPersonDetails.remarks || 'N/A' }}</span>
@@ -153,7 +158,7 @@
 
       </mat-expansion-panel>
 
-    </mat-accordion>    
+    </mat-accordion>
 
   </div>
 
@@ -166,21 +171,21 @@
     <mat-accordion fxFlexFill class="m-t-5">
 
       <mat-expansion-panel *ngFor="let address of client.address" class="address">
-  
+
         <mat-expansion-panel-header>
-  
+
           <mat-panel-title>
             {{ getSelectedValue('addressTypeIdOptions',address.addressTypeId)?.name }}
           </mat-panel-title>
-  
+
           <mat-panel-description>
             {{address.relationship}}
           </mat-panel-description>
-  
+
         </mat-expansion-panel-header>
-  
+
         <mat-divider></mat-divider>
-  
+
         <p>
           <span *ngIf="isFieldEnabled('street')">Street : {{address.street}}<br /></span>
           <span *ngIf="isFieldEnabled('addressLine1')">Address Line 1 : {{address.addressLine1}}<br /></span>
@@ -195,9 +200,9 @@
           <span *ngIf="isFieldEnabled('postalCode')">Postal Code : {{address.postalCode}}<br /></span>
           <span *ngIf="isFieldEnabled('isActive')">Active Status : {{address.isActive}}<br /></span>
         </p>
-  
+
       </mat-expansion-panel>
-  
+
     </mat-accordion>
 
   </div>

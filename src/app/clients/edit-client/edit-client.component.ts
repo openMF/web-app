@@ -79,6 +79,7 @@ export class EditClientComponent implements OnInit {
       'isStaff': this.clientDataAndTemplate.isStaff,
       'active': this.clientDataAndTemplate.active,
       'mobileNo': this.clientDataAndTemplate.mobileNo,
+      'emailAddress': this.clientDataAndTemplate.emailAddress,
       'dateOfBirth': this.clientDataAndTemplate.dateOfBirth && new Date(this.clientDataAndTemplate.dateOfBirth),
       'clientTypeId': this.clientDataAndTemplate.clientType && this.clientDataAndTemplate.clientType.id,
       'clientClassificationId': this.clientDataAndTemplate.clientClassification && this.clientDataAndTemplate.clientClassification.id,
@@ -101,11 +102,12 @@ export class EditClientComponent implements OnInit {
       'externalId': [''],
       'genderId': [''],
       'mobileNo': [''],
+      'emailAddress': ['', Validators.email],
       'dateOfBirth': [''],
       'clientTypeId': [''],
       'clientClassificationId': [''],
-      'submittedOnDate': [''],
-      'activationDate': ['', Validators.required]
+      'submittedOnDate': ['', Validators.required],
+      'activationDate': ['']
     });
   }
 
