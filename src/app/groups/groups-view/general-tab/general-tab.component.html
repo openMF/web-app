@@ -56,7 +56,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="clientMemberColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: clientMemberColumns;" [routerLink]="['/clients', row.id, 'general']" class="select-row"></tr>
+      <tr mat-row *matRowDef="let row; columns: clientMemberColumns;" [routerLink]="['/clients', row.id, 'loans-accounts', 'create']" class="select-row"></tr>
 
     </table>
 
