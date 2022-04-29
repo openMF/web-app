@@ -83,8 +83,7 @@ const routes: Routes = [
             data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false },
             resolve: {
               clientAccountsData: ClientAccountsResolver,
-              clientChargesData: ClientChargesResolver,
-              clientSummary: ClientSummaryResolver
+              clientChargesData: ClientChargesResolver
             }
           },
           {

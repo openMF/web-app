@@ -85,11 +85,6 @@
       <input matInput formControlName="externalId">
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
-      <mat-label>Mobile No</mat-label>
-      <input matInput type="number" formControlName="mobileNo">
-    </mat-form-field>
-
     <mat-form-field *ngIf="createClientForm.value.legalFormId === 1" fxFlex="48%">
       <mat-label>Gender</mat-label>
       <mat-select formControlName="genderId">
@@ -102,6 +97,19 @@
     <mat-checkbox *ngIf="createClientForm.value.legalFormId === 1" fxFlex="48%" labelPosition="before" formControlName="isStaff" class="margin-v">
       Is staff?
     </mat-checkbox>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Mobile No</mat-label>
+      <input matInput type="number" formControlName="mobileNo">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Email Address</mat-label>
+      <input matInput formControlName="emailAddress">
+      <mat-error *ngIf="createClientForm.controls.emailAddress.errors?.email">
+        Email not valid
+      </mat-error>
+    </mat-form-field>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Client Type</mat-label>

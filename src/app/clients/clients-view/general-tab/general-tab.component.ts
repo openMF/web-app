@@ -73,7 +73,7 @@ export class GeneralTabComponent {
       this.loanAccounts = data.clientAccountsData.loanAccounts;
       this.shareAccounts = data.clientAccountsData.shareAccounts;
       this.upcomingCharges = data.clientChargesData.pageItems;
-      this.clientSummary = data.clientSummary[0];
+      this.clientSummary = data.clientSummary ? data.clientSummary[0] : [];
       this.clientid = this.route.parent.snapshot.params['clientId'];
   });
   }

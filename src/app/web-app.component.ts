@@ -16,7 +16,6 @@ import { environment } from 'environments/environment';
 
 /** Custom Services */
 import { Logger } from './core/logger/logger.service';
-import { I18nService } from './core/i18n/i18n.service';
 import { ThemeStorageService } from './shared/theme-picker/theme-storage.service';
 import { AlertService } from './core/alert/alert.service';
 import { AuthenticationService } from './core/authentication/authentication.service';
@@ -56,7 +55,6 @@ export class WebAppComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private titleService: Title,
               private translateService: TranslateService,
-              private i18nService: I18nService,
               private themeStorageService: ThemeStorageService,
               public snackBar: MatSnackBar,
               private alertService: AlertService,
@@ -84,7 +82,8 @@ export class WebAppComponent implements OnInit {
     log.debug('init');
 
     // Setup translations
-    this.i18nService.init(environment.defaultLanguage, environment.supportedLanguages);
+    this.translateService.addLangs(environment.supportedLanguages);
+    this.translateService.use(environment.defaultLanguage);
 
     // Change page title on navigation or language change, based on route data
     const onNavigationEnd = this.router.events.pipe(filter(event => event instanceof NavigationEnd));
@@ -138,10 +137,7 @@ export class WebAppComponent implements OnInit {
 
     // initialize language and date format if they are null.
     if (!localStorage.getItem('mifosXLanguage')) {
-      this.settingsService.setLanguage({
-        name: 'English',
-        code: 'en'
-      });
+      this.settingsService.setDefaultLanguage();
     }
     if (!localStorage.getItem('mifosXDateFormat')) {
       this.settingsService.setDateFormat('dd MMMM yyyy');
