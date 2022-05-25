@@ -28,8 +28,8 @@ export class LoanActionButtonResolver implements Resolve<Object> {
         const loanActionButton = route.paramMap.get('action');
         if (loanActionButton === 'Assign Loan Officer' || loanActionButton === 'Change Loan Officer') {
             return this.loansService.getLoanTemplate(loanId);
-        // } else if (loanActionButton === 'make-repayment') {
-        //     return this.loansService.getLoanActionTemplate(loanId, 'repayment');
+        } else if (loanActionButton === 'Make Repayment') {
+            return this.loansService.getLoanActionTemplate(loanId, 'repayment');
         } else if (loanActionButton === 'Waive Interest') {
             return this.loansService.getLoanActionTemplate(loanId, 'waiveinterest');
         } else if (loanActionButton === 'Write Off') {
