@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1650883653110,
+  "timestamp": 1653511926559,
   "index": "/web-app/index.html",
   "assetGroups": [
     {
@@ -77,7 +77,7 @@
     "/web-app/17.js": "be070366afa1d1f3270bcc2078c36cd357f87d42",
     "/web-app/2.js": "25809a09bde86a53b8c7d6d3f024976158e09b14",
     "/web-app/3.js": "3d6d2f746909380788bb9123b289f4429d00bb09",
-    "/web-app/4.js": "6c69164d74ef3eebb08a9c3b1b5748d1558dff4f",
+    "/web-app/4.js": "a3cc84c5afe9803755942c084b42d06d8dc885e2",
     "/web-app/assets/images/MifosX_logo.png": "fc66de5965e6054007a0e0c9e68f24f1ee250c21",
     "/web-app/assets/images/MifosX_logoSmall.png": "ebd340185b4888fdbe26b364303d2c072412b46e",
     "/web-app/assets/images/center_placeholder.png": "95a8b8a2c3bccacfabe57fac31207267582e11d8",
@@ -117,7 +117,7 @@
     "/web-app/common.js": "a050732a86c7f6a22a00e7d36a730095d2b47710",
     "/web-app/favicon.ico": "31d1d887b9dec1f49614f289d6855f5ffa7c0902",
     "/web-app/index.html": "455bd76aa005f9eb8bee88696b774844cc8fda2d",
-    "/web-app/main.js": "a53df5c524b4132e8d4a84f6dace07f19f722254",
+    "/web-app/main.js": "cd29d54b9cc6e9098ed6f544d21424343da876d6",
     "/web-app/polyfills-es5.js": "34d3bb02851d834ef1b39c6a4e888f868116c3bf",
     "/web-app/polyfills.js": "3ac51116a418c3e4f1b94df8fa7e9f5903c7fcc1",
     "/web-app/runtime.js": "63538fb89430e8954344b4a9feb642849a87ccec",
