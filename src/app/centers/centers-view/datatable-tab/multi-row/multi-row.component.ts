@@ -91,7 +91,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
     let dataTableEntryObject: any = { locale: this.settingsService.language.code };
     const dateTransformColumns: string[] = [];
     const columns = this.dataObject.columnHeaders.filter((column: any) => {
-      return ((column.columnName !== 'id') && (column.columnName !== 'center_id'));
+      return ((column.columnName !== 'id') && (column.columnName !== 'center_id') && (column.columnName !== 'created_at') && (column.columnName !== 'updated_at'));
     });
     const formfields: FormfieldBase[] = columns.map((column: any) => {
       switch (column.columnDisplayType) {

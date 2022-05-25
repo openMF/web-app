@@ -11,7 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SystemService } from '../../system.service';
 
 /** Data Imports */
-import { appTableData } from '../app-table-data';
+import { appTableData, entitySubTypeData } from '../app-table-data';
 
 /** Custom Components */
 import { ColumnDialogComponent } from '../column-dialog/column-dialog.component';
@@ -31,6 +31,8 @@ export class CreateDataTableComponent implements OnInit {
   dataTableForm: FormGroup;
   /** Application Table Data */
   appTableData = appTableData;
+  entitySubTypeData = entitySubTypeData;
+  showEntitySubType: boolean;
   /** Column Data */
   columnData: any[] = [];
   /** Data passed to dialog. */
@@ -84,6 +86,9 @@ export class CreateDataTableComponent implements OnInit {
   ngOnInit() {
     this.createDataTableForm();
     this.setColumns();
+    this.dataTableForm.controls.apptableName.valueChanges.subscribe((value: any) => {
+      this.showEntitySubType = (value === 'm_client');
+    });
   }
 
   /**
@@ -102,7 +107,8 @@ export class CreateDataTableComponent implements OnInit {
     this.dataTableForm = this.formBuilder.group({
       'datatableName': ['', Validators.required],
       'apptableName': ['', Validators.required],
-      'multiRow': ['']
+      'multiRow': [false],
+      'entitySubType': ['']
     });
   }
 
