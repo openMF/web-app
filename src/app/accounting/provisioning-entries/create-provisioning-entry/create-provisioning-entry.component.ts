@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 /** Custom Services */
 import { AccountingService } from '../../accounting.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 /**
  * Create provisioning entry component.
  */
@@ -33,6 +34,7 @@ export class CreateProvisioningEntryComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private accountingService: AccountingService,
               private settingsService: SettingsService,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router) { }
 
@@ -63,16 +65,7 @@ export class CreateProvisioningEntryComponent implements OnInit {
     provisioningEntry.locale = this.settingsService.language.code;
     provisioningEntry.dateFormat = this.settingsService.dateFormat;
     if (provisioningEntry.date instanceof Date) {
-      let day = provisioningEntry.date.getDate();
-      let month = provisioningEntry.date.getMonth() + 1;
-      const year = provisioningEntry.date.getFullYear();
-      if (day < 10) {
-        day = `0${day}`;
-      }
-      if (month < 10) {
-        month = `0${month}`;
-      }
-      provisioningEntry.date = `${year}-${month}-${day}`;
+      provisioningEntry.date = this.dateUtils.getDate(provisioningEntry.date);
     }
     this.accountingService.createProvisioningEntry(provisioningEntry)
       .subscribe((response: any) => {

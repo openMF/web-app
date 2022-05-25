@@ -14,6 +14,7 @@ import { AccountingService } from '../accounting.service';
 import { SettingsService } from 'app/settings/settings.service';
 /** Custom Data Source */
 import { JournalEntriesDataSource } from './journal-entry.datasource';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Search journal entry component.
@@ -88,11 +89,11 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
     },
     {
       type: 'fromDate',
-      value: this.getDate(new Date(new Date().setMonth(new Date().getMonth() - 1)))
+      value: this.dateUtils.getDate(new Date(new Date().setMonth(new Date().getMonth() - 1)))
     },
     {
       type: 'toDate',
-      value: this.getDate(new Date())
+      value: this.dateUtils.getDate(new Date())
     },
     {
       type: 'dateFormat',
@@ -117,6 +118,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    */
   constructor(private accountingService: AccountingService,
               private settingsService: SettingsService,
+              private dateUtils: Dates,
               private route: ActivatedRoute) {
     this.route.data.subscribe((data: {
         offices: any,
@@ -179,7 +181,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
-          this.applyFilter(this.getDate(filterValue), 'fromDate');
+          this.applyFilter(this.dateUtils.getDate(filterValue), 'fromDate');
         })
       )
       .subscribe();
@@ -189,7 +191,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
-          this.applyFilter(this.getDate(filterValue), 'toDate');
+          this.applyFilter(this.dateUtils.getDate(filterValue), 'toDate');
         })
       )
       .subscribe();
@@ -292,25 +294,4 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
     this.dataSource = new JournalEntriesDataSource(this.accountingService);
     this.dataSource.getJournalEntries(this.filterJournalEntriesBy, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
   }
-
-  /**
-   * Gets the date from the passed timestamp.
-   *
-   * TODO: Update once language and date settings are setup.
-   *
-   * @param {any} timestamp Timestam from which date is to be extracted.
-   */
-  private getDate(timestamp: any) {
-    let day = timestamp.getDate();
-    let month = timestamp.getMonth() + 1;
-    const year = timestamp.getFullYear();
-    if (day < 10) {
-      day = `0${day}`;
-    }
-    if (month < 10) {
-      month = `0${month}`;
-    }
-    return `${year}-${month}-${day}`;
-  }
-
 }

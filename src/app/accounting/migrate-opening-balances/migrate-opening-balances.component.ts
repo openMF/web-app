@@ -8,6 +8,7 @@ import { AccountingService } from '../accounting.service';
 import { SettingsService } from 'app/settings/settings.service';
 /** Custom Validators */
 import { onlyOneOfTheFieldsIsRequiredValidator } from './only-one-of-the-fields-is-required.validator';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Migrate opening balances component.
@@ -47,6 +48,7 @@ export class MigrateOpeningBalancesComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private accountingService: AccountingService,
               private settingsService: SettingsService,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router) {
     this.route.data.subscribe((data: {
@@ -139,16 +141,7 @@ export class MigrateOpeningBalancesComponent implements OnInit {
     openingBalances.locale = this.settingsService.language.code;
     openingBalances.dateFormat = this.settingsService.dateFormat;
     if (openingBalances.transactionDate instanceof Date) {
-      let day = openingBalances.transactionDate.getDate();
-      let month = openingBalances.transactionDate.getMonth() + 1;
-      const year = openingBalances.transactionDate.getFullYear();
-      if (day < 10) {
-        day = `0${day}`;
-      }
-      if (month < 10) {
-        month = `0${month}`;
-      }
-      openingBalances.transactionDate = `${year}-${month}-${day}`;
+      openingBalances.transactionDate = this.dateUtils.getDate(openingBalances.transactionDate);
     }
     openingBalances.debits = [];
     openingBalances.credits = [];

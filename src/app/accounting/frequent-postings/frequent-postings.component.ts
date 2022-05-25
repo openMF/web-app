@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 /** Custom Services */
 import { AccountingService } from '../accounting.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 /**
  * Frequent Postings component.
  */
@@ -50,6 +51,7 @@ export class FrequentPostingsComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private accountingService: AccountingService,
               private settingsService: SettingsService,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router) {
     this.route.data.subscribe((data: {
@@ -170,16 +172,7 @@ export class FrequentPostingsComponent implements OnInit {
     journalEntry.locale = this.settingsService.language.code;
     journalEntry.dateFormat = this.settingsService.dateFormat;
     if (journalEntry.transactionDate instanceof Date) {
-      let day = journalEntry.transactionDate.getDate();
-      let month = journalEntry.transactionDate.getMonth() + 1;
-      const year = journalEntry.transactionDate.getFullYear();
-      if (day < 10) {
-        day = `0${day}`;
-      }
-      if (month < 10) {
-        month = `0${month}`;
-      }
-      journalEntry.transactionDate = `${year}-${month}-${day}`;
+      journalEntry.transactionDate = this.dateUtils.getDate(journalEntry.transactionDate);
     }
     this.accountingService.createJournalEntry(journalEntry).subscribe(response => {
       this.router.navigate(['../transactions/view', response.transactionId], { relativeTo: this.route });
