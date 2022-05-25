@@ -2,11 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { LoansService } from '../../../loans.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Create Add Loan Charge component.
@@ -54,7 +54,7 @@ export class AddLoanChargeComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private loansService: LoansService,
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { actionButtonData: any }) => {
@@ -102,7 +102,7 @@ export class AddLoanChargeComponent implements OnInit {
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
     this.loanChargeForm.patchValue({
-      dueDate: this.datePipe.transform(prevDueDate, dateFormat)
+      dueDate: this.dateUtils.formatDate(prevDueDate, dateFormat)
     });
     const loanCharge = this.loanChargeForm.value;
     loanCharge.locale = this.settingsService.language.code;

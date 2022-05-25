@@ -2,11 +2,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Service. */
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Disburse To Savings component.
@@ -32,14 +32,13 @@ export class DisburseLoanAccountComponent implements OnInit {
    * @param {FormBuilder} formBuilder FormBuilder.
    * @param {ActivatedRoute} route ActivatedRoute.
    * @param {Router} router Router.
-   * @param {DatePipe} datePipe DatePipe.
    * @param {LoansService} loanService Loan Service.
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private loanService: LoansService,
               private settingsService: SettingsService) { }
 
@@ -68,7 +67,7 @@ export class DisburseLoanAccountComponent implements OnInit {
     const actualDisbursementDate = this.disbursementForm.value.actualDisbursementDate;
     const dateFormat = this.settingsService.dateFormat;
     this.disbursementForm.patchValue({
-      actualDisbursementDate: this.datePipe.transform(actualDisbursementDate, dateFormat)
+      actualDisbursementDate: this.dateUtils.formatDate(actualDisbursementDate, dateFormat)
     });
     const loanId = this.route.parent.snapshot.params['loanId'];
     const disbursementForm = this.disbursementForm.value;

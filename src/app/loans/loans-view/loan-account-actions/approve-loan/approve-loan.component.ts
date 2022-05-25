@@ -2,8 +2,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { distinctUntilChanged } from 'rxjs/operators';
-import { DatePipe } from '@angular/common';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services. */
 import { LoansService } from 'app/loans/loans.service';
@@ -41,7 +40,7 @@ export class ApproveLoanComponent implements OnInit {
    */
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private loanService: LoansService,
     private router: Router,
     private settingsService: SettingsService) {
@@ -77,18 +76,18 @@ export class ApproveLoanComponent implements OnInit {
    * Submits Approve form.
    */
   submit() {
-    const local = this.settingsService.language.code;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const approvedOnDate = this.approveLoanForm.value.approvedOnDate;
     const expectedDisbursementDate = this.approveLoanForm.value.expectedDisbursementDate;
     this.approveLoanForm.patchValue({
-      approvedOnDate: this.datePipe.transform(approvedOnDate, dateFormat),
-      expectedDisbursementDate: this.datePipe.transform(expectedDisbursementDate, dateFormat)
+      approvedOnDate: this.dateUtils.formatDate(approvedOnDate, dateFormat),
+      expectedDisbursementDate: this.dateUtils.formatDate(expectedDisbursementDate, dateFormat)
     });
     const approveLoanFormData = {
       ... this.approveLoanForm.value,
       dateFormat,
-      local
+      locale
     };
     this.loanService.loanActionButtons(this.loanId, 'approve', approveLoanFormData).subscribe((response: any) => {
       this.router.navigate(['../../general'], { relativeTo: this.route });

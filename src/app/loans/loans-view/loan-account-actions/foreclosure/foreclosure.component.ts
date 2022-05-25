@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoansService } from 'app/loans/loans.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 @Component({
   selector: 'mifosx-foreclosure',
@@ -36,7 +36,7 @@ export class ForeclosureComponent implements OnInit {
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private settingsService: SettingsService) {
       this.loanId = this.route.parent.snapshot.params['loanId'];
     }
@@ -68,7 +68,7 @@ export class ForeclosureComponent implements OnInit {
 
   retrieveLoanForeclosureTemplate(val: any) {
     const dateFormat = this.settingsService.dateFormat;
-    const transactionDateFormatted = this.datePipe.transform(val, dateFormat);
+    const transactionDateFormatted = this.dateUtils.formatDate(val, dateFormat);
     const data = {
       command: 'foreclosure',
       dateFormat: this.settingsService.dateFormat,
@@ -111,7 +111,7 @@ export class ForeclosureComponent implements OnInit {
     const transactionDate = this.foreclosureForm.value.transactionDate;
     const dateFormat = this.settingsService.dateFormat;
     this.foreclosureForm.patchValue({
-      transactionDate: this.datePipe.transform(transactionDate, dateFormat)
+      transactionDate: this.dateUtils.formatDate(transactionDate, dateFormat)
     });
     const formData = {
       transactionDate: this.foreclosureForm.value.transactionDate,

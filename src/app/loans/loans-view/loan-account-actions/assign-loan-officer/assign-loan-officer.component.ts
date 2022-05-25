@@ -1,12 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
-import { MatDialog } from '@angular/material/dialog';
 import { LoansService } from 'app/loans/loans.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 @Component({
   selector: 'mifosx-assign-loan-officer',
@@ -37,7 +36,7 @@ export class AssignLoanOfficerComponent implements OnInit {
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private settingsService: SettingsService) {
       this.loanId = this.route.parent.snapshot.params['loanId'];
     }
@@ -64,7 +63,7 @@ export class AssignLoanOfficerComponent implements OnInit {
     const assignmentDate = this.assignOfficerForm.value.assignmentDate;
     const dateFormat = this.settingsService.dateFormat;
     this.assignOfficerForm.patchValue({
-      assignmentDate: this.datePipe.transform(assignmentDate, dateFormat)
+      assignmentDate: this.dateUtils.formatDate(assignmentDate, dateFormat)
     });
     const assignForm = this.assignOfficerForm.value;
     assignForm.locale = this.settingsService.language.code;

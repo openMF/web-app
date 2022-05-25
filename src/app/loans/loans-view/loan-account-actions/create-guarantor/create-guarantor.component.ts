@@ -5,9 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
-import { DatePipe } from '@angular/common';
 import { ClientsService } from 'app/clients/clients.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Create Guarantor Action
@@ -42,14 +42,13 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
    * @param {LoansService} loanService Loan Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
-   * @param {DatePipe} datePipe Date Pipe.
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private clientsService: ClientsService,
     private settingsService: SettingsService) {
     this.loanId = this.route.parent.snapshot.params['loanId'];
@@ -164,7 +163,7 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
     if (this.newGuarantorForm.value.existingClient) {
       newGuarantorData['entityId'] = this.newGuarantorForm.controls.name.value.id;
     } else {
-      newGuarantorData['dob'] = this.datePipe.transform(prevdob, dateFormat),
+      newGuarantorData['dob'] = this.dateUtils.formatDate(prevdob, dateFormat),
       newGuarantorData['dateFormat'] = dateFormat;
     }
 
