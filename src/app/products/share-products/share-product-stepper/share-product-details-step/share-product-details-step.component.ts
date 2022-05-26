@@ -30,7 +30,7 @@ export class ShareProductDetailsStepComponent implements OnInit {
     this.shareProductDetailsForm = this.formBuilder.group({
       'name': ['', Validators.required],
       'shortName': ['', Validators.required],
-      'description': ['']
+      'description': ['', Validators.required]
     });
   }
 
