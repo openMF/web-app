@@ -72,8 +72,7 @@ export class MakeRepaymentComponent implements OnInit {
   setRepaymentLoanDetails() {
     this.paymentTypes = this.dataObject.paymentTypeOptions;
     this.repaymentLoanForm.patchValue({
-      transactionAmount: this.dataObject.amount,
-      transactionDate: new Date(this.dataObject.date)
+      transactionAmount: this.dataObject.amount
     });
   }
 
@@ -102,15 +101,13 @@ export class MakeRepaymentComponent implements OnInit {
     const prevTransactionDate: Date = this.repaymentLoanForm.value.transactionDate;
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
-    this.repaymentLoanForm.patchValue({
-      transactionDate: this.dateUtils.formatDate(prevTransactionDate, dateFormat)
-    });
     const repaymentLoanData = this.repaymentLoanForm.value;
+    repaymentLoanData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
     repaymentLoanData.locale = this.settingsService.language.code;
     repaymentLoanData.dateFormat = dateFormat;
     this.loanService.submitLoanActionButton(this.loanId, repaymentLoanData, 'repayment')
       .subscribe((response: any) => {
-        this.router.navigate(['../../../general'], { relativeTo: this.route });
+        this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });
   }
 
