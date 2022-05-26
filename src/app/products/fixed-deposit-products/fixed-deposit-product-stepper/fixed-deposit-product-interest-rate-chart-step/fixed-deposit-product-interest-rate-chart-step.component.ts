@@ -80,7 +80,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     this.clientClassificationData = this.fixedDepositProductsTemplate.chartTemplate.clientClassificationOptions;
     this.incentiveTypeData = this.fixedDepositProductsTemplate.chartTemplate.incentiveTypeOptions;
 
-    if (!(this.fixedDepositProductsTemplate === undefined) && this.fixedDepositProductsTemplate.id) {
+    if (!(this.fixedDepositProductsTemplate === undefined)) {
       this.assignFormData();
     }
   }
