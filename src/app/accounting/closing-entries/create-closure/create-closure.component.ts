@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 /** Custom Services */
 import { AccountingService } from '../../accounting.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 /**
  * Create closure component.
  */
@@ -36,6 +37,7 @@ export class CreateClosureComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private accountingService: AccountingService,
               private settingsService: SettingsService,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router) {
     this.route.data.subscribe((data: { offices: any }) => {
@@ -70,17 +72,8 @@ export class CreateClosureComponent implements OnInit {
     // TODO: Update once language and date settings are setup
     accountingClosure.locale = this.settingsService.language.code;
     accountingClosure.dateFormat = this.settingsService.dateFormat;
-    if (accountingClosure.closingDate instanceof Date) {
-      let day = accountingClosure.closingDate.getDate();
-      let month = accountingClosure.closingDate.getMonth() + 1;
-      const year = accountingClosure.closingDate.getFullYear();
-      if (day < 10) {
-        day = `0${day}`;
-      }
-      if (month < 10) {
-        month = `0${month}`;
-      }
-      accountingClosure.closingDate = `${year}-${month}-${day}`;
+    if (accountingClosure.closingDate) {
+      accountingClosure.closingDate = this.dateUtils.getDate(accountingClosure.closingDate);
     }
     this.accountingService.createAccountingClosure(accountingClosure).subscribe((response: any) => {
       this.router.navigate(['../view', response.resourceId], { relativeTo: this.route });

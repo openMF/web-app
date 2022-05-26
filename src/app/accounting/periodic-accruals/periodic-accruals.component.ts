@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 /** Custom Services */
 import { AccountingService } from '../accounting.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 /**
  * Periodic accruals component.
  */
@@ -33,6 +34,7 @@ export class PeriodicAccrualsComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private accountingService: AccountingService,
               private settingsService: SettingsService,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router) { }
 
@@ -62,16 +64,7 @@ export class PeriodicAccrualsComponent implements OnInit {
     periodicAccruals.locale = this.settingsService.language.code;
     periodicAccruals.dateFormat = this.settingsService.dateFormat;
     if (periodicAccruals.tillDate instanceof Date) {
-      let day = periodicAccruals.tillDate.getDate();
-      let month = periodicAccruals.tillDate.getMonth() + 1;
-      const year = periodicAccruals.tillDate.getFullYear();
-      if (day < 10) {
-        day = `0${day}`;
-      }
-      if (month < 10) {
-        month = `0${month}`;
-      }
-      periodicAccruals.tillDate = `${year}-${month}-${day}`;
+      periodicAccruals.tillDate = this.dateUtils.getDate(periodicAccruals.tillDate);
     }
     this.accountingService.executePeriodicAccruals(periodicAccruals).subscribe(() => {
       this.router.navigate(['../'], { relativeTo: this.route });

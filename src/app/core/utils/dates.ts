@@ -14,4 +14,9 @@ export class Dates {
     const dateFormat = this.settingsService.dateFormat;
     return this.datePipe.transform(timestamp, dateFormat);
   }
+
+  public formatDate(timestamp: any, dateFormat: string) {
+    return this.datePipe.transform(timestamp, dateFormat);
+  }
+
 }
