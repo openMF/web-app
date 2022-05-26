@@ -113,7 +113,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         if (repaymentFrequencyType === 2) {
           repaymentFrequencyNthDayType.setValidators([Validators.required]);
           repaymentFrequencyDayOfWeekType.setValidators([Validators.required]);
-        }else{
+        } else {
           repaymentFrequencyNthDayType.setValidators(null);
           repaymentFrequencyDayOfWeekType.setValidators(null);
         }
