@@ -119,9 +119,6 @@ MIT
 @angular/router
 MIT
 
-@angular/service-worker
-MIT
-
 @ckeditor/ckeditor5-angular
 GPL-2.0-or-later
 Software License Agreement
