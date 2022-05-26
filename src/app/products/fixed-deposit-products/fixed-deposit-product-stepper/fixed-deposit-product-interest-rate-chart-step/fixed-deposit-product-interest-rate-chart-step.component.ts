@@ -105,7 +105,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
       if (!this.chartsDetail[i]) {
         return;
       }
-      
+
       // Iterate for every chartSlab in chart
       this.chartsDetail[i].chartSlabs.forEach((chartSlabDetail: any, j: number) => {
 
