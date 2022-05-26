@@ -88,10 +88,12 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
   assignFormData() {
     this.addChart();
     const isChartArray = Array.isArray(this.fixedDepositProductsTemplate.activeChart);
-    if (!isChartArray) {
-      this.chartDetailData.push(this.fixedDepositProductsTemplate.activeChart);
-    } else {
-      this.chartDetailData = this.fixedDepositProductsTemplate.activeChart;
+    if (this.fixedDepositProductsTemplate.activeChart) {
+      if (!isChartArray) {
+        this.chartDetailData.push(this.fixedDepositProductsTemplate.activeChart);
+      } else {
+        this.chartDetailData = this.fixedDepositProductsTemplate.activeChart;
+      }
     }
 
     // Build the array of Objects from the retrived value
@@ -100,6 +102,10 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     // Iterates for every chart in charts
     this.charts.controls.forEach((chartDetailControl: FormGroup, i: number) => {
 
+      if (!this.chartsDetail[i]) {
+        return;
+      }
+      
       // Iterate for every chartSlab in chart
       this.chartsDetail[i].chartSlabs.forEach((chartSlabDetail: any, j: number) => {
 
