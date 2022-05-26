@@ -5,8 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
-import { DatePipe } from '@angular/common';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Loan Recovery Repayment Action
@@ -37,14 +37,13 @@ export class RecoveryRepaymentComponent implements OnInit {
    * @param {LoansService} loanService Loan Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
-   * @param {DatePipe} datePipe Date Pipe.
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private settingsService: SettingsService) {
     this.loanId = this.route.parent.snapshot.params['loanId'];
   }
@@ -105,7 +104,7 @@ export class RecoveryRepaymentComponent implements OnInit {
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
     this.recoveryRepaymentLoanForm.patchValue({
-      transactionDate: this.datePipe.transform(prevTransactionDate, dateFormat)
+      transactionDate: this.dateUtils.formatDate(prevTransactionDate, dateFormat)
     });
     const recoveryRepaymentLoanData = this.recoveryRepaymentLoanForm.value;
     recoveryRepaymentLoanData.locale = this.settingsService.language.code;

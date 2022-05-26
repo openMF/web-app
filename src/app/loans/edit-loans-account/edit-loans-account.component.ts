@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
 import { LoansService } from '../loans.service';
 import { LoansAccountDetailsStepComponent } from '../loans-account-stepper/loans-account-details-step/loans-account-details-step.component';
 import { LoansAccountTermsStepComponent } from '../loans-account-stepper/loans-account-terms-step/loans-account-terms-step.component';
@@ -8,6 +7,7 @@ import { LoansAccountChargesStepComponent } from '../loans-account-stepper/loans
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Edit Loans
@@ -41,7 +41,7 @@ export class EditLoansAccountComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private loansService: LoansService,
     private settingsService: SettingsService
   ) {
@@ -110,17 +110,17 @@ export class EditLoansAccountComponent implements OnInit {
       charges: this.loansAccount.charges.map((charge: any) => ({
         chargeId: charge.id,
         amount: charge.amount,
-        dueDate: charge.dueDate && this.datePipe.transform(charge.dueDate, dateFormat),
+        dueDate: charge.dueDate && this.dateUtils.formatDate(charge.dueDate, dateFormat),
       })),
       collateral: this.loansAccount.collateral.map((collateralEle: any) => ({
         type: collateralEle.type,
         value: collateralEle.value,
         description: collateralEle.description
       })),
-      interestChargedFromDate: this.datePipe.transform(this.loansAccount.interestChargedFromDate, dateFormat),
-      repaymentsStartingFromDate: this.datePipe.transform(this.loansAccount.repaymentsStartingFromDate, dateFormat),
-      submittedOnDate: this.datePipe.transform(this.loansAccount.submittedOnDate, dateFormat),
-      expectedDisbursementDate: this.datePipe.transform(this.loansAccount.expectedDisbursementDate, dateFormat),
+      interestChargedFromDate: this.dateUtils.formatDate(this.loansAccount.interestChargedFromDate, dateFormat),
+      repaymentsStartingFromDate: this.dateUtils.formatDate(this.loansAccount.repaymentsStartingFromDate, dateFormat),
+      submittedOnDate: this.dateUtils.formatDate(this.loansAccount.submittedOnDate, dateFormat),
+      expectedDisbursementDate: this.dateUtils.formatDate(this.loansAccount.expectedDisbursementDate, dateFormat),
       dateFormat,
       locale,
       loanType
@@ -132,11 +132,15 @@ export class EditLoansAccountComponent implements OnInit {
     }
 
     if (loansAccountData.recalculationRestFrequencyDate) {
-      loansAccountData.recalculationRestFrequencyDate = this.datePipe.transform(this.loansAccount.recalculationRestFrequencyDate, dateFormat);
+      loansAccountData.recalculationRestFrequencyDate = this.dateUtils.formatDate(this.loansAccount.recalculationRestFrequencyDate, dateFormat);
     }
 
-    if (loansAccountData.recalculationCompoundingFrequencyDate) {
-      loansAccountData.recalculationCompoundingFrequencyDate = this.datePipe.transform(this.loansAccount.recalculationCompoundingFrequencyDate, dateFormat);
+    if (this.loansAccountProductTemplate.isInterestRecalculationEnabled) {
+      if (loansAccountData.recalculationCompoundingFrequencyDate !== null) {
+        loansAccountData.recalculationCompoundingFrequencyDate = this.dateUtils.formatDate(this.loansAccount.recalculationCompoundingFrequencyDate, dateFormat);
+      }
+    } else {
+      delete loansAccountData.recalculationCompoundingFrequencyDate;
     }
 
     if (loansAccountData.interestCalculationPeriodType === 0) {

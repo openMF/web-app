@@ -5,8 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
-import { DatePipe } from '@angular/common';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Loan Make Repayment Component
@@ -37,14 +37,13 @@ export class MakeRepaymentComponent implements OnInit {
    * @param {LoansService} loanService Loan Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
-   * @param {DatePipe} datePipe Date Pipe.
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private settingsService: SettingsService) {
       this.loanId = this.route.parent.snapshot.params['loanId'];
     }
@@ -104,7 +103,7 @@ export class MakeRepaymentComponent implements OnInit {
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
     this.repaymentLoanForm.patchValue({
-      transactionDate: this.datePipe.transform(prevTransactionDate, dateFormat)
+      transactionDate: this.dateUtils.formatDate(prevTransactionDate, dateFormat)
     });
     const repaymentLoanData = this.repaymentLoanForm.value;
     repaymentLoanData.locale = this.settingsService.language.code;

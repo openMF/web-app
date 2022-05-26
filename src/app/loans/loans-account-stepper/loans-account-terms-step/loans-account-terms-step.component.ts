@@ -91,6 +91,12 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
           'repaymentsStartingFromDate': this.loansAccountTemplate.expectedFirstRepaymentOnDate && new Date(this.loansAccountTemplate.expectedFirstRepaymentOnDate)
         });
       }
+
+      if (this.loansAccountTemplate.isInterestRecalculationEnabled) {
+        this.loansAccountTermsForm.patchValue({
+          'recalculationCompoundingFrequencyDate': ''
+        });
+      }
     }
     this.createloansAccountTermsForm();
     this.setCustomValidators();
@@ -126,8 +132,8 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       'numberOfRepayments': ['', Validators.required],
       'repaymentEvery': ['', Validators.required],
       'repaymentFrequencyType': ['', Validators.required],
-      'repaymentFrequencyNthDayType': ['', Validators.required],
-      'repaymentFrequencyDayOfWeekType': ['', Validators.required],
+      'repaymentFrequencyNthDayType': [''],
+      'repaymentFrequencyDayOfWeekType': [''],
       'repaymentsStartingFromDate': [''],
       'interestChargedFromDate': [''],
       'interestRatePerPeriod': [''],
@@ -147,8 +153,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       'loanIdToClose': [''],
       'fixedEmiAmount': [''],
       'isTopup': [''],
-      'maxOutstandingLoanBalance': [''],
-      'recalculationCompoundingFrequencyDate': ['']
+      'maxOutstandingLoanBalance': ['']
     });
   }
 

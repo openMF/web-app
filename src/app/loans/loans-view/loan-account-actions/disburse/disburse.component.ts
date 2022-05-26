@@ -5,8 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
-import { DatePipe } from '@angular/common';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Disburse Loan Option
@@ -37,14 +37,13 @@ export class DisburseComponent implements OnInit {
    * @param {LoansService} loanService Loan Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
-   * @param {DatePipe} datePipe Date Pipe.
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private settingsService: SettingsService) {
     this.loanId = this.route.parent.snapshot.params['loanId'];
   }
@@ -105,7 +104,7 @@ export class DisburseComponent implements OnInit {
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
     this.disbursementLoanForm.patchValue({
-      actualDisbursementDate: this.datePipe.transform(prevActualDisbursementDate, dateFormat)
+      actualDisbursementDate: this.dateUtils.formatDate(prevActualDisbursementDate, dateFormat)
     });
     const disbursementLoanData = this.disbursementLoanForm.value;
     disbursementLoanData.locale = this.settingsService.language.code;
