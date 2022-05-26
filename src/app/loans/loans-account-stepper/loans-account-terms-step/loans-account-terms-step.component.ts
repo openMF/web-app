@@ -92,6 +92,29 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         });
       }
     }
+    this.createloansAccountTermsForm();
+    this.setCustomValidators();
+  }
+
+  /** Custom Validators for the form */
+  setCustomValidators() {
+    const repaymentFrequencyNthDayType = this.loansAccountTermsForm.get('repaymentFrequencyNthDayType');
+    const repaymentFrequencyDayOfWeekType = this.loansAccountTermsForm.get('repaymentFrequencyDayOfWeekType');
+
+    this.loansAccountTermsForm.get('repaymentFrequencyType').valueChanges
+      .subscribe(repaymentFrequencyType => {
+
+        if (repaymentFrequencyType === 2) {
+          repaymentFrequencyNthDayType.setValidators([Validators.required]);
+          repaymentFrequencyDayOfWeekType.setValidators([Validators.required]);
+        }else{
+          repaymentFrequencyNthDayType.setValidators(null);
+          repaymentFrequencyDayOfWeekType.setValidators(null);
+        }
+
+        repaymentFrequencyNthDayType.updateValueAndValidity();
+        repaymentFrequencyDayOfWeekType.updateValueAndValidity();
+      });
   }
 
   /** Create Loans Account Terms Form */

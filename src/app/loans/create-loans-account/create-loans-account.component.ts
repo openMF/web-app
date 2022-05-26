@@ -132,8 +132,8 @@ export class CreateLoansAccountComponent implements OnInit {
       loansAccountData.recalculationRestFrequencyDate = this.datePipe.transform(this.loansAccount.recalculationRestFrequencyDate, dateFormat);
     }
 
-    if (loansAccountData.recalculationCompoundingFrequencyDate) {
-      loansAccountData.recalculationCompoundingFrequencyDate = this.datePipe.transform(this.loansAccount.recalculationCompoundingFrequencyDate, dateFormat);
+    if (!loansAccountData.recalculationCompoundingFrequencyDate) {
+      delete loansAccountData.recalculationCompoundingFrequencyDate;
     }
 
     if (loansAccountData.interestCalculationPeriodType === 0) {
