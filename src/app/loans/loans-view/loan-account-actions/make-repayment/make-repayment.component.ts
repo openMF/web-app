@@ -55,7 +55,7 @@ export class MakeRepaymentComponent implements OnInit {
    */
   ngOnInit() {
     this.createRepaymentLoanForm();
-    // this.setRepaymentLoanDetails();
+    this.setRepaymentLoanDetails();
   }
 
   /**
