@@ -80,7 +80,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
     this.clientClassificationData = this.recurringDepositProductsTemplate.chartTemplate.clientClassificationOptions;
     this.incentiveTypeData = this.recurringDepositProductsTemplate.chartTemplate.incentiveTypeOptions;
 
-    if (!(this.recurringDepositProductsTemplate === undefined) && this.recurringDepositProductsTemplate.id) {
+    if (!(this.recurringDepositProductsTemplate === undefined)) {
       this.assignFormData();
     }
   }
@@ -89,10 +89,12 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
   assignFormData() {
     this.addChart();
     const isChartArray = Array.isArray(this.recurringDepositProductsTemplate.activeChart);
-    if (!isChartArray) {
-      this.chartDetailData.push(this.recurringDepositProductsTemplate.activeChart);
-    } else {
-      this.chartDetailData = this.recurringDepositProductsTemplate.activeChart;
+    if (this.fixedDepositProductsTemplate.activeChart) {
+      if (!isChartArray) {
+        this.chartDetailData.push(this.recurringDepositProductsTemplate.activeChart);
+      } else {
+        this.chartDetailData = this.recurringDepositProductsTemplate.activeChart;
+      }
     }
 
     // Build the array of Objects from the retrived value
@@ -100,6 +102,10 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
 
     // Iterates for every chart in charts
     this.charts.controls.forEach((chartDetailControl: FormGroup, i: number) => {
+
+      if (!chartDetails[i]) {
+        return;
+      }
 
       // Iterate for every chartSlab in chart
       this.chartsDetail[i].chartSlabs.forEach((chartSlabDetail: any, j: number) => {
