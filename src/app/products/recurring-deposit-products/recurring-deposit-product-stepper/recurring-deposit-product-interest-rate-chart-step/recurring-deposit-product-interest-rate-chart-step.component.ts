@@ -89,7 +89,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
   assignFormData() {
     this.addChart();
     const isChartArray = Array.isArray(this.recurringDepositProductsTemplate.activeChart);
-    if (this.fixedDepositProductsTemplate.activeChart) {
+    if (this.recurringDepositProductsTemplate.activeChart) {
       if (!isChartArray) {
         this.chartDetailData.push(this.recurringDepositProductsTemplate.activeChart);
       } else {
@@ -103,7 +103,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
     // Iterates for every chart in charts
     this.charts.controls.forEach((chartDetailControl: FormGroup, i: number) => {
 
-      if (!chartDetails[i]) {
+      if (!chartsDetail[i]) {
         return;
       }
 
