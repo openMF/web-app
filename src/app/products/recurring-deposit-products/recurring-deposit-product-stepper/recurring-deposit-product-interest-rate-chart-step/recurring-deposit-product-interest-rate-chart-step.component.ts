@@ -103,7 +103,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
     // Iterates for every chart in charts
     this.charts.controls.forEach((chartDetailControl: FormGroup, i: number) => {
 
-      if (!chartsDetail[i]) {
+      if (!this.chartsDetail[i]) {
         return;
       }
 
