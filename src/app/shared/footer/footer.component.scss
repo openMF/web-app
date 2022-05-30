@@ -1,4 +1,8 @@
 #footer {
+  height: 70px; // for this example, can be anything
+  margin-top: -70px; // exact same value as the height
+  text-align: center;
+
   .divider {
     margin: 2.5rem 1rem 0.5rem;
     width: 4rem;
