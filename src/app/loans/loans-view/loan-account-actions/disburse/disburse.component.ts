@@ -100,13 +100,11 @@ export class DisburseComponent implements OnInit {
 
   /** Submits the disbursement form */
   submit() {
-    const prevActualDisbursementDate: Date = this.disbursementLoanForm.value.actualDisbursementDate;
+    const prevTransactionDate: Date = this.disbursementLoanForm.value.actualDisbursementDate;
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
-    this.disbursementLoanForm.patchValue({
-      actualDisbursementDate: this.dateUtils.formatDate(prevActualDisbursementDate, dateFormat)
-    });
     const disbursementLoanData = this.disbursementLoanForm.value;
+    disbursementLoanData.actualDisbursementDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
     disbursementLoanData.locale = this.settingsService.language.code;
     disbursementLoanData.dateFormat = dateFormat;
     this.loanService.loanActionButtons(this.loanId, 'disburse', disbursementLoanData )

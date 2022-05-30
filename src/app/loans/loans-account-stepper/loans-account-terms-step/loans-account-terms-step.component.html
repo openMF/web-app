@@ -252,19 +252,6 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-
-      <mat-form-field fxFlex="48%"
-        *ngIf="loansAccountProductTemplate.isInterestRecalculationEnabled && loansAccountProductTemplate.interestRecalculationData.interestRecalculationCompoundingType.id != 0 && loansAccountProductTemplate.interestRecalculationData.recalculationCompoundingFrequencyType.id != 1">
-        <mat-label>Frequency Date for recalculation</mat-label>
-        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="recalculationCompoundingFrequencyDatePicker"
-          formControlName="recalculationCompoundingFrequencyDate">
-        <mat-datepicker-toggle matSuffix [for]="recalculationCompoundingFrequencyDatePicker"></mat-datepicker-toggle>
-        <mat-datepicker #recalculationCompoundingFrequencyDatePicker></mat-datepicker>
-        <mat-error *ngIf="loansAccountTermsForm.controls.recalculationCompoundingFrequencyDate.hasError('required')">
-          Frequency Data for recalculation is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-
     </ng-container>
 
     <mat-divider fxFlex="98%"></mat-divider>

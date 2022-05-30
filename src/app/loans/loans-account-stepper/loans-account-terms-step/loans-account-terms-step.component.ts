@@ -91,12 +91,6 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
           'repaymentsStartingFromDate': this.loansAccountTemplate.expectedFirstRepaymentOnDate && new Date(this.loansAccountTemplate.expectedFirstRepaymentOnDate)
         });
       }
-
-      if (this.loansAccountTemplate.isInterestRecalculationEnabled) {
-        this.loansAccountTermsForm.patchValue({
-          'recalculationCompoundingFrequencyDate': ''
-        });
-      }
     }
     this.createloansAccountTermsForm();
     this.setCustomValidators();
@@ -106,21 +100,6 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   setCustomValidators() {
     const repaymentFrequencyNthDayType = this.loansAccountTermsForm.get('repaymentFrequencyNthDayType');
     const repaymentFrequencyDayOfWeekType = this.loansAccountTermsForm.get('repaymentFrequencyDayOfWeekType');
-
-    this.loansAccountTermsForm.get('repaymentFrequencyType').valueChanges
-      .subscribe(repaymentFrequencyType => {
-
-        if (repaymentFrequencyType === 2) {
-          repaymentFrequencyNthDayType.setValidators([Validators.required]);
-          repaymentFrequencyDayOfWeekType.setValidators([Validators.required]);
-        } else {
-          repaymentFrequencyNthDayType.setValidators(null);
-          repaymentFrequencyDayOfWeekType.setValidators(null);
-        }
-
-        repaymentFrequencyNthDayType.updateValueAndValidity();
-        repaymentFrequencyDayOfWeekType.updateValueAndValidity();
-      });
   }
 
   /** Create Loans Account Terms Form */

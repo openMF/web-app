@@ -1,2 +1,5 @@
-mifosx-content { min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -30px; }
-#push { height:30px;}
+mifosx-content {
+  min-height: calc(100vh - 100px);;
+  margin: 0 auto -30px;
+  overflow-y: auto;
+}
