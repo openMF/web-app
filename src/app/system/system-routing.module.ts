@@ -413,9 +413,7 @@ const routes: Routes = [
           {
             path: '',
             component: ManageSchedulerJobsComponent,
-            resolve: {
-              jobsScheduler: ManageSchedulerJobsResolver
-            },
+            resolve: {},
           },
           {
             path: ':id',

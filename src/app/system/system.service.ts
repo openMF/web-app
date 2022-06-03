@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SystemService {
+  emptyPayload: any = {};
 
   /**
    * @param {HttpClient} http Http Client to send requests.
@@ -257,8 +258,25 @@ export class SystemService {
    * @param {any} Job Job to be updated.
    * @returns {Observable<any>}
    */
-  updateScheduler(jobId: string, job: any): Observable<any> {
+  runCommandOnScheduler(command: string): Observable<any> {
+    return this.http.post(`/scheduler?command=` + command, this.emptyPayload);
+  }
+
+  /**
+   * @param {string} jobId Job ID of Job to be updated.
+   * @param {any} Job Job to be updated.
+   * @returns {Observable<any>}
+   */
+   updateScheduler(jobId: string, job: any): Observable<any> {
     return this.http.put(`/jobs/${jobId}`, job);
+  }
+
+  /**
+   * @param jobId Job Id to be edited
+   * @returns {Observable<any>} Fetches Scheduler Job.
+   */
+   runSelectedJob(jobId: string): Observable<any> {
+    return this.http.post(`/jobs/${jobId}?command=executeJob`, this.emptyPayload);
   }
 
   /*

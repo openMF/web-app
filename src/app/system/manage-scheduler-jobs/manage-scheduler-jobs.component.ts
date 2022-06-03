@@ -3,11 +3,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 
 /** rxjs Imports */
 import { of } from 'rxjs';
+import { SystemService } from '../system.service';
 
 /**
  * Manage scheduler jobs component.
@@ -29,6 +29,10 @@ export class ManageSchedulerJobsComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   /** Initialize Selection */
   selection = new SelectionModel<any>(true, []);
+  /** Scheduler Status */
+  schedulerActive = false;
+  /** Jobs counter */
+  jobsCounter: any = 0;
 
   /** Paginator for table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -39,12 +43,7 @@ export class ManageSchedulerJobsComponent implements OnInit {
    * Retrieves the scheduler jobs data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { jobsScheduler: any }) => {
-      this.jobData = data.jobsScheduler[0];
-      this.schedulerData = data.jobsScheduler[1];
-    });
-  }
+  constructor(private systemService: SystemService) {}
 
   /**
    * Filters data in manage scheduler jobs table based on passed value.
@@ -59,8 +58,7 @@ export class ManageSchedulerJobsComponent implements OnInit {
    */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
+    return numSelected === this.jobsCounter;
   }
 
   /**
@@ -77,24 +75,61 @@ export class ManageSchedulerJobsComponent implements OnInit {
    */
   ngOnInit() {
     this.setJobs();
-    this.dataSource.sortingDataAccessor = (item, property) => {
-      switch (property) {
-        case 'previousRunStatus': return item.lastRunHistory.status;
-        case 'errorLog': return item.lastRunHistory.status;
-        case 'previousRunTime': return new Date(item.lastRunHistory.jobRunStartTime);
-        case 'nextRunTime': return new Date(item.nextRunTime);
-        default: return item[property];
-      }
-    };
+    this.getScheduler();
   }
 
   /**
    * Initializes the data source, paginator and sorter for manage scheduler jobs table.
    */
   setJobs() {
-    this.dataSource = new MatTableDataSource(this.jobData);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.systemService.getJobs()
+    .subscribe((jobData: any) => {
+      this.dataSource = new MatTableDataSource(jobData);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.jobsCounter = jobData.length;
+      this.selection.clear();
+      this.dataSource.sortingDataAccessor = (item, property) => {
+        switch (property) {
+          case 'previousRunStatus': return item.lastRunHistory.status;
+          case 'errorLog': return item.lastRunHistory.status;
+          case 'previousRunTime': return new Date(item.lastRunHistory.jobRunStartTime);
+          case 'nextRunTime': return new Date(item.nextRunTime);
+          default: return item[property];
+        }
+      };
+    });
   }
 
+  getScheduler() {
+    this.systemService.getScheduler()
+    .subscribe((schedulerData: any) => {
+      this.schedulerData = schedulerData;
+      this.schedulerActive = this.schedulerData.active;
+    });
+  }
+
+  suspendScheduler(): void {
+    this.systemService.runCommandOnScheduler('stop')
+    .subscribe(() => {
+      this.getScheduler();
+    });
+  }
+
+  activateScheduler(): void {
+    this.systemService.runCommandOnScheduler('start')
+    .subscribe(() => {
+      this.getScheduler();
+    });
+  }
+
+  runSelectedJobs(): void {
+    this.selection.selected.forEach((job) => {
+      this.systemService.runSelectedJob(job.jobId);
+    });
+  }
+
+  refresh(): void {
+    this.setJobs();
+  }
 }
