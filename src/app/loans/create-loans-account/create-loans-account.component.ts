@@ -33,6 +33,8 @@ export class CreateLoansAccountComponent implements OnInit {
   loansAccountProductTemplate: any;
   /** Collateral Options */
   collateralOptions: any;
+  /** Multi Disburse Loan */
+  multiDisburseLoan: any;
 
   /**
    * Sets loans account create form.
@@ -65,6 +67,12 @@ export class CreateLoansAccountComponent implements OnInit {
     this.loansService.getLoansCollateralTemplateResource(this.loansAccountProductTemplate.loanProductId).subscribe((response: any) => {
       this.collateralOptions = response.loanCollateralOptions;
     });
+    const clientId = this.loansAccountTemplate.clientId;
+    const productId= this.loansAccountProductTemplate.loanProductId
+    this.loansService.getLoansAccountTemplateResource(clientId, productId).subscribe((response: any) => {
+      this.multiDisburseLoan = response.multiDisburseLoan;
+    });
+    
   }
 
   /** Get Loans Account Details Form Data */
@@ -113,6 +121,10 @@ export class CreateLoansAccountComponent implements OnInit {
         type: collateralEle.type,
         value: collateralEle.value,
         description: collateralEle.description
+      })), 
+      disbursementData:this.loansAccount.disbursementData.map((item: any) => ({
+        expectedDisbursementDate: this.dateUtils.formatDate(item.expectedDisbursementDate, dateFormat),
+        principal: item.principal
       })),
       interestChargedFromDate: this.dateUtils.formatDate(this.loansAccount.interestChargedFromDate, dateFormat),
       repaymentsStartingFromDate: this.dateUtils.formatDate(this.loansAccount.repaymentsStartingFromDate, dateFormat),
@@ -145,6 +157,9 @@ export class CreateLoansAccountComponent implements OnInit {
     }
     if (!(loansAccountData.isFloatingInterestRate === false)) {
       delete loansAccountData.isFloatingInterestRate;
+    }
+    if (!(this.multiDisburseLoan)) {
+      delete loansAccountData.disbursementData;
     }
 
     this.loansService.createLoansAccount(loansAccountData).subscribe((response: any) => {

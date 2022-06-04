@@ -325,6 +325,53 @@
       <span fxFlex="60%">{{ loansAccountProductTemplate?.interestRecalculationData.recalculationRestFrequencyInterval}}</span>
     </div>
 
+    <ng-container *ngIf="multiDisburseLoan">
+      <mat-divider fxFlex="98%"></mat-divider>
+      <h4 fxFlex="98%" class="mat-h4">Loan Tranche Details</h4>
+      <mat-form-field fxFlex="48%">
+        <mat-label>Maximum allowed outstanding balance</mat-label>
+        <input matInput required formControlName="loanTermFrequency">
+      </mat-form-field>
+      <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column" formArrayName="disbursementData"
+          *ngFor="let item of disbursementData.controls; let i = index;">
+
+          <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroupName]="i">
+
+            <mat-form-field fxFlex="48%">
+              <mat-label>Expected disbursement on</mat-label>
+              <input matInput [required] ="multiDisburseLoan" [min]="minDate" [matDatepicker]="expectedDisbursementDatePicker"
+                formControlName="expectedDisbursementDate">
+              <mat-datepicker-toggle matSuffix [for]="expectedDisbursementDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #expectedDisbursementDatePicker></mat-datepicker>
+              <mat-error *ngIf="disbursementData.at(i).controls.expectedDisbursementDate.hasError('required')">
+                Expected disbursement on is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="43%">
+              <mat-label>Principal</mat-label>
+              <input type="number" matInput [required]="multiDisburseLoan" formControlName="principal">
+              <mat-error *ngIf="disbursementData.at(i).controls.principal.hasError('required')">
+                Principal is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <span fxFlex>
+              <button *ngIf="i !== 0" type="button" mat-icon-button (click)="removeDisbursementDataEntry(disbursementData, i)">
+                <fa-icon icon="minus-circle" size="lg"></fa-icon>
+              </button>
+              <button *ngIf="i === 0" type="button" mat-icon-button color="primary" (click)="addDisbursementDataEntry(disbursementData)">
+                <fa-icon icon="plus-circle" size="lg"></fa-icon>
+              </button>
+            </span>
+
+          </div>
+
+        </div>
+
+
+    </ng-container>
+
     <ng-container
       *ngIf="loansAccountProductTemplate?.isInterestRecalculationEnabled  && loansAccountProductTemplate?.interestRecalculationData.interestRecalculationCompoundingType.id != 0">
 
