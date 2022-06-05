@@ -147,6 +147,16 @@
               </mat-error>
             </mat-form-field>
 
+            <mat-form-field fxFlex="48%">
+              <mat-label>Minimum Charge Cap</mat-label>
+              <input matInput formControlName="minCap">
+            </mat-form-field>
+
+            <mat-form-field fxFlex="48%">
+              <mat-label>Maximum Charge Cap</mat-label>
+              <input matInput formControlName="maxCap">
+            </mat-form-field>
+
             <div fxFlex="48%" fxLayout="row" fxLayoutGap="2%" fxLayout.lt-md="column">
               <div fxFlex="50%" class="active-wrapper">
                 <mat-checkbox labelPosition="before" formControlName="active">

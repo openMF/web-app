@@ -81,7 +81,9 @@ export class CreateChargeComponent implements OnInit {
       'amount': ['', [Validators.required, Validators.pattern('^\\s*(?=.*[1-9])\\d*(?:\\.\\d+)?\\s*$')]],
       'active': [false],
       'penalty': [false],
-      'taxGroupId': ['']
+      'taxGroupId': [''],
+      'minCap': [''],
+      'maxCap': ['']
     });
   }
 
@@ -224,6 +226,12 @@ export class CreateChargeComponent implements OnInit {
     delete charge.addFeeFrequency;
     if (!charge.taxGroupId) {
       delete charge.taxGroupId;
+    }
+    if (!charge.minCap) {
+      delete charge.minCap;
+    }
+    if (!charge.maxCap) {
+      delete charge.maxCap;
     }
     this.productsService.createCharge(charge).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
