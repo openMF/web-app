@@ -17,7 +17,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   @Input() loansAccountProductTemplate: any;
   /** Loans Account Template */
   @Input() loansAccountTemplate: any;
-  /**Is Multi Disburse Loan  */
+  /** Is Multi Disburse Loan  */
   @Input() multiDisburseLoan: any;
 
   /** Minimum date allowed. */
@@ -171,13 +171,13 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
     });
   }
 
-    /**
+  /**
    * Gets the Disbursement Data form array.
    * @returns {FormArray} Disbursement Data form array.
    */
-     get disbursementData(): FormArray {
-      return this.loansAccountTermsForm.get('disbursementData') as FormArray;
-    }
+    get disbursementData(): FormArray {
+    return this.loansAccountTermsForm.get('disbursementData') as FormArray;
+  }
 
   /**
    * Adds the Disbursement Data entry form to given Disbursement Data entry form array.
