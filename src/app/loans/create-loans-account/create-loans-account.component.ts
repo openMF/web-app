@@ -68,11 +68,10 @@ export class CreateLoansAccountComponent implements OnInit {
       this.collateralOptions = response.loanCollateralOptions;
     });
     const clientId = this.loansAccountTemplate.clientId;
-    const productId= this.loansAccountProductTemplate.loanProductId
+    const productId = this.loansAccountProductTemplate.loanProductId;
     this.loansService.getLoansAccountTemplateResource(clientId, productId).subscribe((response: any) => {
       this.multiDisburseLoan = response.multiDisburseLoan;
     });
-    
   }
 
   /** Get Loans Account Details Form Data */
@@ -121,8 +120,8 @@ export class CreateLoansAccountComponent implements OnInit {
         type: collateralEle.type,
         value: collateralEle.value,
         description: collateralEle.description
-      })), 
-      disbursementData:this.loansAccount.disbursementData.map((item: any) => ({
+      })),
+      disbursementData: this.loansAccount.disbursementData.map((item: any) => ({
         expectedDisbursementDate: this.dateUtils.formatDate(item.expectedDisbursementDate, dateFormat),
         principal: item.principal
       })),
