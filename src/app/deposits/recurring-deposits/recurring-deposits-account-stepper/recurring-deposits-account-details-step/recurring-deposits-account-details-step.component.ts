@@ -4,7 +4,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../../recurring-deposits.service';
-import { DatePipe } from '@angular/common';
 
 /**
  * Recurring Deposits Account Details Step
@@ -41,8 +40,7 @@ export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
    * @param {RecurringDepositsService} recurringDepositsService Recurring Deposits Service.
    */
   constructor(private formBuilder: FormBuilder,
-    private recurringDepositsService: RecurringDepositsService,
-    private datePipe: DatePipe) {
+    private recurringDepositsService: RecurringDepositsService) {
     this.createRecurringDepositsAccountDetailsForm();
   }
 

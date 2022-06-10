@@ -39,7 +39,7 @@ export class ClientTrendsBarComponent implements OnInit {
    * Fetches offices data from `resolve`
    * @param {HomeService} homeService Home Service
    * @param {ActivatedRoute} route Activated Route
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {DatePipe} datePipe Date Utils
    */
   constructor(private homeService: HomeService,
               private route: ActivatedRoute,

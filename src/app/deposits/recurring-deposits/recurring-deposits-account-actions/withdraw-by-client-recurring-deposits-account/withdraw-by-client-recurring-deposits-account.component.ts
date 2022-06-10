@@ -1,8 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
 import { RecurringDepositsService } from 'app/deposits/recurring-deposits/recurring-deposits.service';
@@ -29,14 +29,14 @@ export class WithdrawByClientRecurringDepositsAccountComponent implements OnInit
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {RecurringDepositsService} recurringDepositsService Recurring Deposits Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
     private recurringDepositsService: RecurringDepositsService,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
     private settingsService: SettingsService, ) {
@@ -65,15 +65,15 @@ export class WithdrawByClientRecurringDepositsAccountComponent implements OnInit
    * if successful redirects to the recurring deposit account.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const withdrawRecurringDepositsAccountFormData = this.withdrawRecurringDepositsAccountForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevWithdrawnOnDate: Date = this.withdrawRecurringDepositsAccountForm.value.withdrawnOnDate;
-    this.withdrawRecurringDepositsAccountForm.patchValue({
-      withdrawnOnDate: this.datePipe.transform(prevWithdrawnOnDate, dateFormat),
-    });
+    if (withdrawRecurringDepositsAccountFormData.withdrawnOnDate instanceof Date) {
+      withdrawRecurringDepositsAccountFormData.withdrawnOnDate = this.dateUtils.formatDate(prevWithdrawnOnDate, dateFormat);
+    }
     const data = {
-      ...this.withdrawRecurringDepositsAccountForm.value,
+      ...withdrawRecurringDepositsAccountFormData,
       dateFormat,
       locale
     };

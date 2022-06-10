@@ -1,11 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { CentersService } from 'app/centers/centers.service';
+import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 
 /**
@@ -38,14 +38,14 @@ export class EditCenterMeetingScheduleComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {CentersService} centersService Shares Service
    * @param {SettingsService} settingsService Settings Service.
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
   constructor(private formBuilder: FormBuilder,
               private centersService: CentersService,
               private settingsService: SettingsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router) {
     this.route.data.subscribe((data: { centersActionData: any }) => {
@@ -74,18 +74,20 @@ export class EditCenterMeetingScheduleComponent implements OnInit {
    * Submits the form and updates the meeting.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const centerEditMeetingScheduleFormData = this.centerEditMeetingScheduleForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const reschedulebasedOnMeetingDates = true;
     const prevOldDate: Date = new Date(this.centerEditMeetingScheduleForm.value.presentMeetingDate);
+    if (centerEditMeetingScheduleFormData.startDate instanceof Date) {
+      centerEditMeetingScheduleFormData.presentMeetingDate = this.dateUtils.formatDate(prevOldDate, dateFormat);
+    }
     const prevNewDate: Date = this.centerEditMeetingScheduleForm.value.newMeetingDate;
-    this.centerEditMeetingScheduleForm.patchValue({
-      'presentMeetingDate': this.datePipe.transform(prevOldDate, dateFormat),
-      'newMeetingDate': this.datePipe.transform(prevNewDate, dateFormat)
-    });
+    if (centerEditMeetingScheduleFormData.newMeetingDate instanceof Date) {
+      centerEditMeetingScheduleFormData.newMeetingDate = this.dateUtils.formatDate(prevNewDate, dateFormat);
+    }
     const data = {
-      ...this.centerEditMeetingScheduleForm.value,
+      ...centerEditMeetingScheduleFormData,
       reschedulebasedOnMeetingDates,
       dateFormat,
       locale

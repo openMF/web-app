@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
+import { Dates } from 'app/core/utils/dates';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Undo Client Transfer Component
@@ -31,6 +33,8 @@ export class UndoClientTransferComponent implements OnInit {
    */
   constructor(private formBuilder: FormBuilder,
               private clientsService: ClientsService,
+              private settingsService: SettingsService,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
@@ -61,8 +65,17 @@ export class UndoClientTransferComponent implements OnInit {
    * if successful redirects to the client.
    */
   submit() {
+    const undoClientTransferFormData = this.undoClientTransferForm.value;
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
+    const prevTransferDate: Date = this.undoClientTransferForm.value.transferDate;
+    if (undoClientTransferFormData.transferDate instanceof Date) {
+      undoClientTransferFormData.transferDate = this.dateUtils.formatDate(prevTransferDate, dateFormat);
+    }
     const data = {
-      ...this.undoClientTransferForm.value,
+      ...undoClientTransferFormData,
+      dateFormat,
+      locale
     };
     this.clientsService.executeClientCommand(this.clientId, 'withdrawTransfer', data).subscribe(() => {
       this.router.navigate(['../../'], { relativeTo: this.route });

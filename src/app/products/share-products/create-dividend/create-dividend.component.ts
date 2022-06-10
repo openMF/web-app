@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services. */
 import { ProductsService } from 'app/products/products.service';
@@ -32,14 +32,14 @@ export class CreateDividendComponent implements OnInit {
    * Get Share Product data from `Resolver`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {DatePipe} datePipe Date Pipe to format date.
+   * @param {Dates} dateUtils Date Utils to format date.
    * @param {ProductsService} productsService Products Service.
    * @param {Router} router Router.
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private productService: ProductsService,
               private router: Router,
               private settingsService: SettingsService) {
@@ -67,17 +67,23 @@ export class CreateDividendComponent implements OnInit {
    * Submits Create Dividend form.
    */
   submit() {
+    const createDividendFormData = this.createDividendForm.value;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const startDate = this.createDividendForm.value.dividendPeriodStartDate;
-    const endDate = this.createDividendForm.value.dividendPeriodEndDate;
-    this.createDividendForm.patchValue({
-      'dividendPeriodStartDate': this.datePipe.transform(startDate, dateFormat),
-      'dividendPeriodEndDate': this.datePipe.transform(endDate, dateFormat)
-    });
-    const dividendForm = this.createDividendForm.value;
-    dividendForm.locale = this.settingsService.language.code;
-    dividendForm.dateFormat = dateFormat;
-    this.productService.createDividend(this.shareProductData.id, dividendForm).subscribe((response: any) => {
+    const prevStartDate: Date = this.createDividendForm.value.dividendPeriodStartDate;
+    const prevEndDate: Date = this.createDividendForm.value.dividendPeriodEndDate;
+    if (createDividendFormData.dividendPeriodStartDate instanceof Date) {
+      createDividendFormData.dividendPeriodStartDate = this.dateUtils.formatDate(prevStartDate, dateFormat);
+    }
+    if (createDividendFormData.dividendPeriodEndDate instanceof Date) {
+      createDividendFormData.dividendPeriodEndDate = this.dateUtils.formatDate(prevEndDate, dateFormat);
+    }
+    const data = {
+      ...createDividendFormData,
+      dateFormat,
+      locale
+    };
+    this.productService.createDividend(this.shareProductData.id, data).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

@@ -48,7 +48,7 @@ export class CenterAttendanceComponent implements OnInit {
   /**
    * Retrieves the center members data from `resolve`.
    * @param {ActivatedRoute} route Route
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {DatePipe} datePipe Date Utils
    * @param {Router} router Router
    * @param {CentersService} centersService Centers Service
    * @param {SettingsService} settingsService Settings Service.

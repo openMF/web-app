@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -13,6 +12,7 @@ import { SettingsService } from 'app/settings/settings.service';
 
 /** Dialog Components */
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
+import { Dates } from 'app/core/utils/dates';
 
 @Component({
   selector: 'mifosx-checker-inbox',
@@ -46,7 +46,7 @@ export class CheckerInboxComponent implements OnInit {
    * Retrieves the maker checker data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Dialog} dialog MatDialog.
-   * @param {DatePipe} datePipe Date Pipe.
+   * @param {Dates} dateUtils Date Utils.
    * @param {router} router Router.
    * @param {SettingsService} settingsService Settings Service.
    * @param {TasksService} tasksService Tasks Service.
@@ -54,7 +54,7 @@ export class CheckerInboxComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute,
     private dialog: MatDialog,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private router: Router,
     private tasksService: TasksService,
     private settingsService: SettingsService,
@@ -91,8 +91,8 @@ export class CheckerInboxComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const makerCheckerSearchParams = {
       ...this.makerCheckerSearchForm.value,
-      makerDateTimeFrom: this.datePipe.transform(this.makerCheckerSearchForm.value.makerDateTimeFrom, dateFormat),
-      makerDateTimeto: this.datePipe.transform(this.makerCheckerSearchForm.value.makerDateTimeto, dateFormat)
+      makerDateTimeFrom: this.dateUtils.formatDate(this.makerCheckerSearchForm.value.makerDateTimeFrom, dateFormat),
+      makerDateTimeto: this.dateUtils.formatDate(this.makerCheckerSearchForm.value.makerDateTimeto, dateFormat)
     };
     this.tasksService.getMakerCheckerData(makerCheckerSearchParams).subscribe((response: any) => {
       this.searchData = response;

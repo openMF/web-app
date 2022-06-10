@@ -1,8 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
@@ -30,14 +30,14 @@ export class ActivateSavingsAccountComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {SavingsService} savingsService Savings Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
   constructor(private formBuilder: FormBuilder,
               private savingsService: SavingsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
@@ -65,15 +65,15 @@ export class ActivateSavingsAccountComponent implements OnInit {
    * if successful redirects to the saving account.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const activateSavingsAccountFormData = this.activateSavingsAccountForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevActivatedOnDate: Date = this.activateSavingsAccountForm.value.activatedOnDate;
-    this.activateSavingsAccountForm.patchValue({
-      activatedOnDate: this.datePipe.transform(prevActivatedOnDate, dateFormat),
-    });
+    if (activateSavingsAccountFormData.activatedOnDate instanceof Date) {
+      activateSavingsAccountFormData.activatedOnDate = this.dateUtils.formatDate(prevActivatedOnDate, dateFormat);
+    }
     const data = {
-      ...this.activateSavingsAccountForm.value,
+      ...activateSavingsAccountFormData,
       dateFormat,
       locale
     };

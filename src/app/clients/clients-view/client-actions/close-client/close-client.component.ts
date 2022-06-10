@@ -1,11 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
+import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 
 /**
@@ -32,14 +32,14 @@ export class CloseClientComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {ClientsService} clientsService Clients Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {DatePipe} datePipe Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
   constructor(private formBuilder: FormBuilder,
               private clientsService: ClientsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
@@ -67,15 +67,15 @@ export class CloseClientComponent implements OnInit {
    * Submits the form and closes the client.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const closeClientFormData = this.closeClientForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevClosedDate: Date = this.closeClientForm.value.closureDate;
-    this.closeClientForm.patchValue({
-      closureDate: this.datePipe.transform(prevClosedDate, dateFormat),
-    });
+    if (closeClientFormData.closureDate instanceof Date) {
+      closeClientFormData.closureDate = this.dateUtils.formatDate(prevClosedDate, dateFormat);
+    }
     const data = {
-      ...this.closeClientForm.value,
+      ...closeClientFormData,
       dateFormat,
       locale
     };

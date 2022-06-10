@@ -1,8 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
@@ -30,14 +30,14 @@ export class WithdrawByClientSavingsAccountComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {SavingsService} savingsService Savings Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
   constructor(private formBuilder: FormBuilder,
               private savingsService: SavingsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
@@ -66,15 +66,15 @@ export class WithdrawByClientSavingsAccountComponent implements OnInit {
    * if successful redirects to the saving account.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const withdrawSavingsAccountFormData = this.withdrawSavingsAccountForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevWithdrawnOnDate: Date = this.withdrawSavingsAccountForm.value.withdrawnOnDate;
-    this.withdrawSavingsAccountForm.patchValue({
-      withdrawnOnDate: this.datePipe.transform(prevWithdrawnOnDate, dateFormat),
-    });
+    if (withdrawSavingsAccountFormData.withdrawnOnDate instanceof Date) {
+      withdrawSavingsAccountFormData.withdrawnOnDate = this.dateUtils.formatDate(prevWithdrawnOnDate, dateFormat);
+    }
     const data = {
-      ...this.withdrawSavingsAccountForm.value,
+      ...withdrawSavingsAccountFormData,
       dateFormat,
       locale
     };

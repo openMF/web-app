@@ -23,7 +23,7 @@
 
             <mat-form-field>
               <mat-label>Amount</mat-label>
-              <input type=number required matInput formControlName="amount" />
+              <input type="number" required matInput formControlName="amount" />
               <mat-error *ngIf="fixedDepositsChargeForm.controls.amount.hasError('required')">
                 Amount is <strong>required</strong>
               </mat-error>

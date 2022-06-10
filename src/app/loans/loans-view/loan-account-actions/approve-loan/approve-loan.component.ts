@@ -33,7 +33,7 @@ export class ApproveLoanComponent implements OnInit {
    * Retrieve data from `Resolver`.
    * @param formBuilder Form Builder.
    * @param route Activated Route.
-   * @param datePipe Date Pipe.
+   * @param datePipe Date Utils.
    * @param loanService Loan Service.
    * @param router Router.
    * @param {SettingsService} settingsService Settings Service
@@ -76,20 +76,23 @@ export class ApproveLoanComponent implements OnInit {
    * Submits Approve form.
    */
   submit() {
+    const approveLoanFormData = this.approveLoanForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const approvedOnDate = this.approveLoanForm.value.approvedOnDate;
     const expectedDisbursementDate = this.approveLoanForm.value.expectedDisbursementDate;
-    this.approveLoanForm.patchValue({
-      approvedOnDate: this.dateUtils.formatDate(approvedOnDate, dateFormat),
-      expectedDisbursementDate: this.dateUtils.formatDate(expectedDisbursementDate, dateFormat)
-    });
-    const approveLoanFormData = {
-      ... this.approveLoanForm.value,
+    if (approveLoanFormData.approvedOnDate instanceof Date) {
+      approveLoanFormData.approvedOnDate = this.dateUtils.formatDate(approvedOnDate, dateFormat);
+    }
+    if (approveLoanFormData.expectedDisbursementDate instanceof Date) {
+      approveLoanFormData.expectedDisbursementDate = this.dateUtils.formatDate(expectedDisbursementDate, dateFormat);
+    }
+    const data = {
+      ...approveLoanFormData,
       dateFormat,
       locale
     };
-    this.loanService.loanActionButtons(this.loanId, 'approve', approveLoanFormData).subscribe((response: any) => {
+    this.loanService.loanActionButtons(this.loanId, 'approve', data).subscribe((response: any) => {
       this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }

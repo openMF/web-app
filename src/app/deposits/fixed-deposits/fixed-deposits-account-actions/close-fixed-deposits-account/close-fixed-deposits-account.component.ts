@@ -1,12 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { FixedDepositsService } from '../../fixed-deposits.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Close On Maturity Fixed Deposits Account Component
@@ -37,14 +37,14 @@ export class CloseFixedDepositsAccountComponent implements OnInit {
    * Fetches close action data from `resolve`
    * @param {FormBuilder} formBuilder Form Builder
    * @param {FixedDepositsService} fixedDepositsService Fixed Deposits Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
               private fixedDepositsService: FixedDepositsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
@@ -96,14 +96,15 @@ export class CloseFixedDepositsAccountComponent implements OnInit {
    * if successful redirects to the fd account.
    */
   submit() {
+    const closeOnMaturityAccountFormData = this.closeOnMaturityAccountForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevClosedDate: Date = this.closeOnMaturityAccountForm.value.closedOnDate;
-    this.closeOnMaturityAccountForm.patchValue({
-      closedOnDate: this.datePipe.transform(prevClosedDate, dateFormat),
-    });
+    if (closeOnMaturityAccountFormData.closedOnDate instanceof Date) {
+      closeOnMaturityAccountFormData.closedOnDate = this.dateUtils.formatDate(prevClosedDate, dateFormat);
+    }
     const data = {
-      ...this.closeOnMaturityAccountForm.value,
+      ...closeOnMaturityAccountFormData,
       dateFormat,
       locale
     };

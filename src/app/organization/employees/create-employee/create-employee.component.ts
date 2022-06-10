@@ -2,11 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Create employee component.
@@ -34,14 +34,14 @@ export class CreateEmployeeComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
-   * @param {DatePipe} datePipe Date Pipe to format date.
+   * @param {Dates} dateUtils Date Utils to format date.
    */
   constructor(private formBuilder: FormBuilder,
               private organizationService: OrganizationService,
               private settingsService: SettingsService,
               private route: ActivatedRoute,
               private router: Router,
-              private datePipe: DatePipe) {
+              private dateUtils: Dates) {
     this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
@@ -73,16 +73,19 @@ export class CreateEmployeeComponent implements OnInit {
    * if successful redirects to employees.
    */
   submit() {
-    const prevJoiningDate: Date = this.employeeForm.value.joiningDate;
-    // TODO: Update once language and date settings are setup
+    const employeeFormData = this.employeeForm.value;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    this.employeeForm.patchValue({
-      joiningDate: this.datePipe.transform(prevJoiningDate, dateFormat)
-    });
-    const employee = this.employeeForm.value;
-    employee.locale = this.settingsService.language.code;
-    employee.dateFormat = dateFormat;
-    this.organizationService.createEmployee(employee).subscribe((response: any) => {
+    const prevJoiningDate: Date = this.employeeForm.value.joiningDate;
+    if (employeeFormData.joiningDate instanceof Date) {
+      employeeFormData.joiningDate = this.dateUtils.formatDate(prevJoiningDate, dateFormat);
+    }
+    const data = {
+      ...employeeFormData,
+      dateFormat,
+      locale
+    };
+    this.organizationService.createEmployee(data).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

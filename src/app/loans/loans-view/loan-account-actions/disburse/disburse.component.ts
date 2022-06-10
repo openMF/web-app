@@ -100,16 +100,19 @@ export class DisburseComponent implements OnInit {
 
   /** Submits the disbursement form */
   submit() {
-    const prevActualDisbursementDate: Date = this.disbursementLoanForm.value.actualDisbursementDate;
-    // TODO: Update once language and date settings are setup
+    const disbursementLoanFormData = this.disbursementLoanForm.value;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    this.disbursementLoanForm.patchValue({
-      actualDisbursementDate: this.dateUtils.formatDate(prevActualDisbursementDate, dateFormat)
-    });
-    const disbursementLoanData = this.disbursementLoanForm.value;
-    disbursementLoanData.locale = this.settingsService.language.code;
-    disbursementLoanData.dateFormat = dateFormat;
-    this.loanService.loanActionButtons(this.loanId, 'disburse', disbursementLoanData )
+    const prevActualDisbursementDate: Date = this.disbursementLoanForm.value.actualDisbursementDate;
+    if (disbursementLoanFormData.actualDisbursementDate instanceof Date) {
+      disbursementLoanFormData.actualDisbursementDate = this.dateUtils.formatDate(prevActualDisbursementDate, dateFormat);
+    }
+    const data = {
+      ...disbursementLoanFormData,
+      dateFormat,
+      locale
+    };
+    this.loanService.loanActionButtons(this.loanId, 'disburse', data )
       .subscribe((response: any) => {
         this.router.navigate(['../../general'], { relativeTo: this.route });
       });

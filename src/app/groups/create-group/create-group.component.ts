@@ -2,12 +2,12 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { GroupsService } from '../groups.service';
 import { ClientsService } from '../../clients/clients.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Create Group component.
@@ -43,7 +43,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    * @param {Router} router Router for navigation.
    * @param {ClientsService} clientsService CentersService.
    * @param {GroupsService} groupService GroupsService.
-   * @param {DatePipe} datePipe Date Pipe to format date.
+   * @param {Dates} dateUtils Date Utils to format date.
    * @param {SettingsService} settingsService SettingsService
    */
   constructor(private formBuilder: FormBuilder,
@@ -51,7 +51,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
               private router: Router,
               private clientsService: ClientsService,
               private groupService: GroupsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private settingsService: SettingsService) {
     this.route.data.subscribe( (data: {offices: any} ) => {
       this.officeData = data.offices;
@@ -149,20 +149,25 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    * if successful redirects to groups.
    */
   submit() {
+    const groupFormData = this.groupForm.value;
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const submittedOnDate: Date = this.groupForm.value.submittedOnDate;
     const activationDate: Date = this.groupForm.value.activationDate;
-    // TODO: Update once language and date settings are setup
-    const dateFormat = this.settingsService.dateFormat;
-    this.groupForm.patchValue({
-      submittedOnDate: this.datePipe.transform(submittedOnDate, dateFormat),
-      activationDate: this.datePipe.transform(activationDate, dateFormat)
-    });
-    const group = this.groupForm.value;
-    group.locale = this.settingsService.language.code;
-    group.dateFormat = dateFormat;
-    group.clientMembers = [];
-    this.clientMembers.forEach((client: any) => group.clientMembers.push(client.id));
-    this.groupService.createGroup(group).subscribe((response: any) => {
+    if (groupFormData.submittedOnDate instanceof Date) {
+      groupFormData.submittedOnDate = this.dateUtils.formatDate(submittedOnDate, dateFormat);
+    }
+    if (groupFormData.activationDate instanceof Date) {
+      groupFormData.activationDate = this.dateUtils.formatDate(activationDate, dateFormat);
+    }
+    const data = {
+      ...groupFormData,
+      dateFormat,
+      locale
+    };
+    data.clientMembers = [];
+    this.clientMembers.forEach((client: any) => data.clientMembers.push(client.id));
+    this.groupService.createGroup(data).subscribe((response: any) => {
       this.router.navigate(['../groups']);
     });
   }

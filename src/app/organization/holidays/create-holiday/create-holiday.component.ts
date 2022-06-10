@@ -2,7 +2,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services. */
 import { OrganizationService } from 'app/organization/organization.service';
@@ -34,13 +34,13 @@ export class CreateHolidayComponent implements OnInit {
    * Get offices and holiday template from `Resolver`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {DatePipe} datePipe Date Pipe.
+   * @param {Dates} dateUtils Date Utils.
    * @param {OrganizationService} organizationService Organization Service.
    * @param {Router} router Router.
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private organizationService: OrganizationService,
               private settings: SettingsService,
               private router: Router ) {
@@ -86,23 +86,27 @@ export class CreateHolidayComponent implements OnInit {
    * Submits the create holiday Form.
    */
   submit() {
+    const holidayFormData = this.holidayForm.value;
     const dateFormat = this.settings.dateFormat;
     const locale = this.settings.language.code;
-    this.holidayForm.patchValue({
-      'fromDate': this.datePipe.transform(this.holidayForm.value.fromDate, dateFormat),
-      'toDate': this.datePipe.transform(this.holidayForm.value.toDate, dateFormat),
-    });
-    if (this.holidayForm.contains('repaymentsRescheduledTo')) {
-      this.holidayForm.patchValue({
-        'repaymentsRescheduledTo': this.datePipe.transform(this.holidayForm.value.repaymentsRescheduledTo, dateFormat)
-      });
+    const prevFromDate: Date = this.holidayForm.value.fromDate;
+    const prevToDate: Date = this.holidayForm.value.toDate;
+    if (holidayFormData.closureDate instanceof Date) {
+      holidayFormData.fromDate = this.dateUtils.formatDate(prevFromDate, dateFormat);
     }
-    const holiday = {
-      ...this.holidayForm.value,
+    if (holidayFormData.closureDate instanceof Date) {
+      holidayFormData.toDate = this.dateUtils.formatDate(prevToDate, dateFormat);
+    }
+    if (this.holidayForm.contains('repaymentsRescheduledTo')) {
+      const prevRepaymentsRescheduledTo: Date = this.holidayForm.value.repaymentsRescheduledTo;
+      holidayFormData.repaymentsRescheduledTo = this.dateUtils.formatDate(prevRepaymentsRescheduledTo, dateFormat);
+    }
+    const data = {
+      ...holidayFormData,
       dateFormat,
       locale
     };
-    this.organizationService.createHoliday(holiday).subscribe((response: any) => {
+    this.organizationService.createHoliday(data).subscribe((response: any) => {
       this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
     });
   }

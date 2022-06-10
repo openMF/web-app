@@ -34,7 +34,7 @@
 
           <mat-form-field>
             <mat-label>Transaction Amount</mat-label>
-            <input matInput type="number" required formControlName="approvedLoanAmount" required>
+            <input matInput type="number" required formControlName="approvedLoanAmount">
             <mat-error *ngIf="approveLoanForm.controls.approvedLoanAmount.hasError('required')">
               Transaction Amount is <strong>required</strong>
             </mat-error>

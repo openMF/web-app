@@ -1,11 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
+import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 
 /**
@@ -32,14 +32,14 @@ export class RejectClientComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {ClientsService} clientsService Clients Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
   constructor(private formBuilder: FormBuilder,
               private clientsService: ClientsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
@@ -67,15 +67,15 @@ export class RejectClientComponent implements OnInit {
    * Submits the form and rejects the client.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const rejectClientFormData = this.rejectClientForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevRejectedDate: Date = this.rejectClientForm.value.rejectionDate;
-    this.rejectClientForm.patchValue({
-      rejectionDate: this.datePipe.transform(prevRejectedDate, dateFormat),
-    });
+    if (rejectClientFormData.rejectionDate instanceof Date) {
+      rejectClientFormData.rejectionDate = this.dateUtils.formatDate(prevRejectedDate, dateFormat);
+    }
     const data = {
-      ...this.rejectClientForm.value,
+      ...rejectClientFormData,
       dateFormat,
       locale
     };

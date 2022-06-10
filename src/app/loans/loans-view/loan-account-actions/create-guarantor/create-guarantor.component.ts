@@ -149,28 +149,31 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
 
   /** Submits the new guarantor details form */
   submit() {
-    const prevdob: Date = this.newGuarantorForm.value.dob;
-    const guarantorTypeId: number = this.newGuarantorForm.value.existingClient ? this.dataObject.guarantorTypeOptions[0].id : this.dataObject.guarantorTypeOptions[2].id;
-    // TODO: Update once language and date settings are setup
+    const newGuarantorFormData = this.newGuarantorForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const newGuarantorData = {
-      ... this.newGuarantorForm.value,
+
+    const prevdob: Date = this.newGuarantorForm.value.dob;
+    const guarantorTypeId: number = this.newGuarantorForm.value.existingClient ? this.dataObject.guarantorTypeOptions[0].id : this.dataObject.guarantorTypeOptions[2].id;
+    const data = {
+      ...newGuarantorFormData,
       locale,
+      dateFormat,
       guarantorTypeId
     };
 
     if (this.newGuarantorForm.value.existingClient) {
-      newGuarantorData['entityId'] = this.newGuarantorForm.controls.name.value.id;
+      data['entityId'] = this.newGuarantorForm.controls.name.value.id;
     } else {
-      newGuarantorData['dob'] = this.dateUtils.formatDate(prevdob, dateFormat),
-      newGuarantorData['dateFormat'] = dateFormat;
+      if (newGuarantorFormData.dob instanceof Date) {
+        data['dob'] = this.dateUtils.formatDate(prevdob, dateFormat);
+      }
     }
 
-    delete newGuarantorData.existingClient;
-    delete newGuarantorData.name;
+    delete data.existingClient;
+    delete data.name;
 
-    this.loanService.createNewGuarantor(this.loanId, newGuarantorData)
+    this.loanService.createNewGuarantor(this.loanId, data)
       .subscribe((response: any) => {
         this.router.navigate(['../../general'], { relativeTo: this.route });
       });

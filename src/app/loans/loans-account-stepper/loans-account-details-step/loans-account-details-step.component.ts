@@ -4,7 +4,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services */
 import { LoansService } from '../../loans.service';
-import { DatePipe } from '@angular/common';
 
 /**
  * Loans Account Details Step
@@ -46,8 +45,7 @@ export class LoansAccountDetailsStepComponent implements OnInit {
    * @param {LoansService} loansService Loans Service.
    */
   constructor(private formBuilder: FormBuilder,
-    private loansService: LoansService,
-    private datePipe: DatePipe) {
+    private loansService: LoansService) {
     this.createLoansAccountDetailsForm();
   }
 

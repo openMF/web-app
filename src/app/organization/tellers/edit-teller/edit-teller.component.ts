@@ -2,11 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Create teller component.
@@ -39,14 +39,14 @@ export class EditTellerComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
-   * @param {DatePipe} datePipe Date Pipe to format date.
+   * @param {Dates} dateUtils Date Utils to format date.
    */
   constructor(private formBuilder: FormBuilder,
               private organizationService: OrganizationService,
               private settingsService: SettingsService,
               private route: ActivatedRoute,
               private router: Router,
-              private datePipe: DatePipe) {
+              private dateUtils: Dates) {
     this.route.data.subscribe((data: { teller: any, offices: any }) => {
       this.tellerData = data.teller;
       this.officeData = data.offices;
@@ -89,19 +89,24 @@ export class EditTellerComponent implements OnInit {
    * if successful redirects to tellers.
    */
   submit() {
+    const tellerFormData = this.tellerForm.value;
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const prevStartDate: Date = this.tellerForm.value.startDate;
     const prevEndDate: Date = this.tellerForm.value.endDate;
-    // TODO: Update once language and date settings are setup
-    const dateFormat = this.settingsService.dateFormat;
-    this.tellerForm.patchValue({
-      startDate: this.datePipe.transform(prevStartDate, dateFormat),
-      endDate: this.datePipe.transform(prevEndDate, dateFormat)
-    });
-    const teller = this.tellerForm.value;
-    teller.locale = this.settingsService.language.code;
-    teller.officeId = this.tellerData.officeId;
-    teller.dateFormat = dateFormat;
-    this.organizationService.updateTeller(this.tellerData.id, teller).subscribe((response: any) => {
+    if (tellerFormData.startDate instanceof Date) {
+      tellerFormData.startDate = this.dateUtils.formatDate(prevStartDate, dateFormat);
+    }
+    if (tellerFormData.endDate instanceof Date) {
+      tellerFormData.endDate = this.dateUtils.formatDate(prevEndDate, dateFormat);
+    }
+    const data = {
+      ...tellerFormData,
+      officeId: this.tellerData.officeId,
+      dateFormat,
+      locale
+    };
+    this.organizationService.updateTeller(this.tellerData.id, data).subscribe((response: any) => {
       this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
     });
   }

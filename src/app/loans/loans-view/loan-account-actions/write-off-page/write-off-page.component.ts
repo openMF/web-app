@@ -2,7 +2,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services. */
 import { LoansService } from 'app/loans/loans.service';
@@ -33,14 +33,14 @@ export class WriteOffPageComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route Activated Route.
    * @param {LoansService} loanService Loan Service.
-   * @param {DatePipe} datePipe Date Pipe.
+   * @param {Dates} dateUtils Date Utils.
    * @param {Router} router Router.
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private loanService: LoansService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private router: Router,
               private settingsService: SettingsService) { }
 
@@ -63,17 +63,21 @@ export class WriteOffPageComponent implements OnInit {
    * Submits write off form.
    */
   submit() {
-    const transactionDate = this.writeOffForm.value.transactionDate;
+    const writeOffFormData = this.writeOffForm.value;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    this.writeOffForm.patchValue({
-      transactionDate: this.datePipe.transform(transactionDate, dateFormat)
-    });
+    const prevTransactionDate = this.writeOffForm.value.transactionDate;
+    if (writeOffFormData.transactionDate instanceof Date) {
+      writeOffFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+    }
+    const data = {
+      ...writeOffFormData,
+      dateFormat,
+      locale
+    };
     const loanId = this.route.parent.snapshot.params['loanId'];
-    const writeOffForm = this.writeOffForm.value;
-    delete writeOffForm.amount;
-    writeOffForm.locale = this.settingsService.language.code;
-    writeOffForm.dateFormat = dateFormat;
-    this.loanService.submitLoanActionButton(loanId, writeOffForm, 'writeoff').subscribe((response: any) => {
+    delete data.amount;
+    this.loanService.submitLoanActionButton(loanId, data, 'writeoff').subscribe((response: any) => {
       this.router.navigate(['../../../general'], {relativeTo: this.route});
     });
   }

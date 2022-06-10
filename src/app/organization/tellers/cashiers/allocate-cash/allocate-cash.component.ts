@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services. */
 import { OrganizationService } from 'app/organization/organization.service';
@@ -31,14 +31,14 @@ export class AllocateCashComponent implements OnInit {
    * Get cashier data from `Resolver`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route ActivateRoute.
-   * @param {DatePipe} datePipe Date Pipe.
+   * @param {Dates} dateUtils Date Utils.
    * @param {OrganizationService} organizationService Organization Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {Router} router Router.
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private organizationService: OrganizationService,
               private settingsService: SettingsService,
               private router: Router) {
@@ -59,7 +59,7 @@ export class AllocateCashComponent implements OnInit {
       'office': [{value: this.cashierData.officeName, disabled: true}],
       'tellerName': [{value: this.cashierData.tellerName, disabled: true}],
       'cashier': [{value: this.cashierData.cashierName, disabled: true}],
-      'assignmentPeriod': [{value: this.datePipe.transform(this.cashierData.startDate, 'dd MMMM yyyy') + ' - ' + this.datePipe.transform(this.cashierData.endDate, 'dd MMMM yyyy'), disabled: true}],
+      'assignmentPeriod': [{value: this.dateUtils.formatDate(this.cashierData.startDate, 'dd MMMM yyyy') + ' - ' + this.dateUtils.formatDate(this.cashierData.endDate, 'dd MMMM yyyy'), disabled: true}],
       'txnDate': [new Date(), Validators.required],
       'currencyCode': ['', Validators.required],
       'txnAmount': ['', Validators.required],
@@ -71,15 +71,19 @@ export class AllocateCashComponent implements OnInit {
    * Submits Allocate Cash form.
    */
   submit() {
+    const allocateCashFormData = this.allocateCashForm.value;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const txnDate = this.allocateCashForm.value.txnDate;
-    this.allocateCashForm.patchValue({
-      txnDate: this.datePipe.transform(txnDate, dateFormat)
-    });
-    const allocateCashForm = this.allocateCashForm.value;
-    allocateCashForm.dateFormat = dateFormat;
-    allocateCashForm.locale = this.settingsService.language.code;
-    this.organizationService.allocateCash(this.cashierData.tellerId, this.cashierData.cashierId, allocateCashForm).subscribe((response: any) => {
+    if (allocateCashFormData.closureDate instanceof Date) {
+      allocateCashFormData.txnDate = this.dateUtils.formatDate(txnDate, dateFormat);
+    }
+    const data = {
+      ...allocateCashFormData,
+      dateFormat,
+      locale
+    };
+    this.organizationService.allocateCash(this.cashierData.tellerId, this.cashierData.cashierId, data).subscribe((response: any) => {
       this.router.navigate(['../'], {relativeTo: this.route});
     });
   }

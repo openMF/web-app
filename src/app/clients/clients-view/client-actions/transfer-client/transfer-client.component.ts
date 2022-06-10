@@ -1,11 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
+import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 
 /**
@@ -32,14 +32,14 @@ export class TransferClientComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {ClientsService} clientsService Clients Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
   constructor(private formBuilder: FormBuilder,
               private clientsService: ClientsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
@@ -68,15 +68,15 @@ export class TransferClientComponent implements OnInit {
    * Submits the form and transfers the client.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const transferClientFormData = this.transferClientForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const prevClosedDate: Date = this.transferClientForm.value.transferDate;
-    this.transferClientForm.patchValue({
-      transferDate: this.datePipe.transform(prevClosedDate, dateFormat),
-    });
+    const prevTransferDate: Date = this.transferClientForm.value.transferDate;
+    if (transferClientFormData.transferDate instanceof Date) {
+      transferClientFormData.transferDate = this.dateUtils.formatDate(prevTransferDate, dateFormat);
+    }
     const data = {
-      ...this.transferClientForm.value,
+      ...transferClientFormData,
       dateFormat,
       locale
     };

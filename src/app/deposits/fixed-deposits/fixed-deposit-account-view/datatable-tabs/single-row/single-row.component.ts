@@ -41,7 +41,7 @@ export class SingleRowComponent implements OnInit {
   /**
    * Fetches savings account Id from parent route params.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {DatePipe} datePipe Date Pipe.
+   * @param {DatePipe} datePipe Date Utils.
    * @param {SavingsService} savingsService Savingss Service.
    * @param {MatDialog} dialog Mat Dialog.
    * @param {SettingsService} settingsService Settings Service.
@@ -151,7 +151,7 @@ export class SingleRowComponent implements OnInit {
   /**
    * Maps API response to data table form fields.
    * @param {any} columns Data Table Columns.
-   * @param {string[]} dateTransformColumns Columns transformed with date pipe.
+   * @param {string[]} dateTransformColumns Columns transformed with Date Utils.
    * @param {any} dataTableEntryObject Additional data table details.
    */
   getFormfields(columns: any, dateTransformColumns: string[], dataTableEntryObject: any) {

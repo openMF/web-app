@@ -1,12 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../../recurring-deposits.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Premature Close Recurring Deposits Account Component
@@ -31,14 +31,14 @@ export class PrematureCloseRecurringDepositAccountComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {RecurringDepositsService} recurringDepositsService Recurring Deposits Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
     private recurringDepositsService: RecurringDepositsService,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
     private settingsService: SettingsService, ) {
@@ -66,15 +66,15 @@ export class PrematureCloseRecurringDepositAccountComponent implements OnInit {
    * if successful redirects to the recurring deposit account.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const prematureCloseRecurringDepositsAccountFormData = this.prematureCloseRecurringDepositsAccountForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevClosedOnDate: Date = this.prematureCloseRecurringDepositsAccountForm.value.closedOnDate;
-    this.prematureCloseRecurringDepositsAccountForm.patchValue({
-      closedOnDate: this.datePipe.transform(prevClosedOnDate, dateFormat),
-    });
+    if (prematureCloseRecurringDepositsAccountFormData.closedOnDate instanceof Date) {
+      prematureCloseRecurringDepositsAccountFormData.closedOnDate = this.dateUtils.formatDate(prevClosedOnDate, dateFormat);
+    }
     const data = {
-      ...this.prematureCloseRecurringDepositsAccountForm.value,
+      ...prematureCloseRecurringDepositsAccountFormData,
       dateFormat,
       locale
     };

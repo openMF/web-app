@@ -2,11 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Edit Client Component
@@ -51,14 +51,14 @@ export class EditClientComponent implements OnInit {
    * @param {ActivatedRoute} route ActivatedRoute
    * @param {Router} router Router
    * @param {ClientsService} clientsService Clients Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private clientsService: ClientsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { clientDataAndTemplate: any }) => {
       this.clientDataAndTemplate = data.clientDataAndTemplate;
@@ -158,13 +158,12 @@ export class EditClientComponent implements OnInit {
   submit() {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    // TODO: Update once language and date settings are setup
     const editClientFormValue: any = this.editClientForm.getRawValue();
     const clientData = {
       ...editClientFormValue,
-      dateOfBirth: editClientFormValue.dateOfBirth && this.datePipe.transform(editClientFormValue.dateOfBirth, dateFormat),
-      submittedOnDate: editClientFormValue.submittedOnDate && this.datePipe.transform(editClientFormValue.submittedOnDate, dateFormat),
-      activationDate: this.datePipe.transform(editClientFormValue.activationDate, dateFormat),
+      dateOfBirth: editClientFormValue.dateOfBirth && this.dateUtils.formatDate(editClientFormValue.dateOfBirth, dateFormat),
+      submittedOnDate: editClientFormValue.submittedOnDate && this.dateUtils.formatDate(editClientFormValue.submittedOnDate, dateFormat),
+      activationDate: this.dateUtils.formatDate(editClientFormValue.activationDate, dateFormat),
       dateFormat,
       locale
     };
@@ -172,7 +171,7 @@ export class EditClientComponent implements OnInit {
     if (editClientFormValue.clientNonPersonDetails) {
       clientData.clientNonPersonDetails = {
         ...editClientFormValue.clientNonPersonDetails,
-        incorpValidityTillDate: editClientFormValue.clientNonPersonDetails.incorpValidityTillDate && this.datePipe.transform(editClientFormValue.clientNonPersonDetails.incorpValidityTillDate, dateFormat),
+        incorpValidityTillDate: editClientFormValue.clientNonPersonDetails.incorpValidityTillDate && this.dateUtils.formatDate(editClientFormValue.clientNonPersonDetails.incorpValidityTillDate, dateFormat),
         dateFormat,
         locale
       };

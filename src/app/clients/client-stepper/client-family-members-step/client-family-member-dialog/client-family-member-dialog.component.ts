@@ -2,10 +2,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Client Family Members Dialog
@@ -28,13 +28,13 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
   /**
    * @param {MatDialogRef} dialogRef Client Family Member Dialog Reference
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {any} data Dialog Data
    * @param {SettingsService} settingsService Setting service
    */
   constructor(public dialogRef: MatDialogRef<ClientFamilyMemberDialogComponent>,
               private formBuilder: FormBuilder,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private settingsService: SettingsService) { }
 
@@ -80,11 +80,14 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
    * Returns Formatted Family Member
    */
   get familyMember() {
+    const familyMemberFormData = this.familyMemberForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    // TODO: Update once language and date settings are setup
+    if (familyMemberFormData.dateOfBirth instanceof Date) {
+      familyMemberFormData.dateOfBirth = this.dateUtils.formatDate(familyMemberFormData.dateOfBirth, dateFormat);
+    }
     const familyMember = {
-      ...this.familyMemberForm.value,
+      ...familyMemberFormData,
       dateFormat,
       locale
     };
@@ -92,9 +95,6 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
       if (familyMember[key] === '' || familyMember[key] === undefined) {
         delete familyMember[key];
       }
-    }
-    if (familyMember.dateOfBirth) {
-      familyMember.dateOfBirth = this.datePipe.transform(familyMember.dateOfBirth, dateFormat);
     }
     return familyMember;
   }

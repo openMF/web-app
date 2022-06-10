@@ -1,12 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../../recurring-deposits.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Deposits Recurring Deposits Account Component
@@ -40,14 +40,14 @@ export class DepositRecurringDepositsAccountComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private recurringDepositsService: RecurringDepositsService,
     private settingsService: SettingsService
   ) {
@@ -94,14 +94,15 @@ export class DepositRecurringDepositsAccountComponent implements OnInit {
    * Submits the deposits recurring deposit form
    */
   submit() {
-    const transactionDate = this.depositRecurringDepositForm.value.transactionDate;
+    const depositRecurringDepositFormData = this.depositRecurringDepositForm.value;
     const dateFormat = this.settingsService.dateFormat;
     const locale = this.settingsService.language.code;
-    this.depositRecurringDepositForm.patchValue({
-      transactionDate: this.datePipe.transform(transactionDate, dateFormat)
-    });
+    const prevTransactionDate = this.depositRecurringDepositForm.value.transactionDate;
+    if (depositRecurringDepositFormData.transactionDate instanceof Date) {
+      depositRecurringDepositFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+    }
     const data = {
-      ...this.depositRecurringDepositForm.value,
+      ...depositRecurringDepositFormData,
       dateFormat,
       locale
     };

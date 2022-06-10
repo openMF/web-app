@@ -1,8 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
@@ -39,14 +39,14 @@ export class AttachGroupMeetingComponent implements OnInit {
    * Fetches Calendar Template from `resolve`
    * @param {FormBuilder} formBuilder Form Builder
    * @param {GroupsService} groupsService Shares Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService SettingsService
    */
   constructor(private formBuilder: FormBuilder,
               private groupsService: GroupsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
@@ -114,17 +114,17 @@ export class AttachGroupMeetingComponent implements OnInit {
    * Submits the form and attatches the meeting.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const groupMeetingFormData = this.groupMeetingForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const title = `groups_${this.groupId}_CollectionMeeting`;
     const typeId = '1';
     const prevStartDate: Date = this.groupMeetingForm.value.startDate;
-    this.groupMeetingForm.patchValue({
-      startDate: this.datePipe.transform(prevStartDate, dateFormat),
-    });
+    if (groupMeetingFormData.startDate instanceof Date) {
+      groupMeetingFormData.startDate = this.dateUtils.formatDate(prevStartDate, dateFormat);
+    }
     const data = {
-      ...this.groupMeetingForm.value,
+      ...groupMeetingFormData,
       title,
       typeId,
       dateFormat,

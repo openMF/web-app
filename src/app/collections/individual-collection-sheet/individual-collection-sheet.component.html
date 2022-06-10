@@ -28,7 +28,7 @@
       <mat-form-field fxFlex="98%">
         <mat-label>Repayment date</mat-label>
         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDatePicker" required
-          formControlName="transactionDate" required>
+          formControlName="transactionDate">
         <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDatePicker></mat-datepicker>
         <mat-error *ngIf="collectionSheetForm.controls.transactionDate.hasError('required')">
@@ -58,7 +58,7 @@
 
 </mat-card>
 
-<div class="showCollectionSheet">
+<div class="showcollectionsheet">
 
   <div class="container" *ngIf="isCollapsed">
 

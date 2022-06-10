@@ -1,11 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { CentersService } from 'app/centers/centers.service';
+import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 
 /**
@@ -33,14 +33,14 @@ export class CloseCenterComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {CentersService} centersService Shares Service
    * @param {SettingsService} settingsService Settings Service.
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
   constructor(private formBuilder: FormBuilder,
               private centersService: CentersService,
               private settingsService: SettingsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router) {
     this.route.data.subscribe((data: { centeractionData: any }) => {
@@ -67,15 +67,15 @@ export class CloseCenterComponent implements OnInit {
    * Submits the form and closes the center.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const closeCenterFormData = this.closeCenterForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevClosedDate: Date = this.closeCenterForm.value.closureDate;
-    this.closeCenterForm.patchValue({
-      closureDate: this.datePipe.transform(prevClosedDate, dateFormat),
-    });
+    if (closeCenterFormData.closureDate instanceof Date) {
+      closeCenterFormData.closureDate = this.dateUtils.formatDate(prevClosedDate, dateFormat);
+    }
     const data = {
-      ...this.closeCenterForm.value,
+      ...closeCenterFormData,
       dateFormat,
       locale
     };

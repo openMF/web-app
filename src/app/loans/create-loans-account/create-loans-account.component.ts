@@ -40,7 +40,7 @@ export class CreateLoansAccountComponent implements OnInit {
    * Sets loans account create form.
    * @param {route} ActivatedRoute Activated Route.
    * @param {router} Router Router.
-   * @param {datePipe} DatePipe Date Pipe
+   * @param {datePipe} DatePipe Date Utils
    * @param {loansService} LoansService Loans Service
    * @param {SettingsService} settingsService Settings Service
    */

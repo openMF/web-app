@@ -1,8 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
@@ -37,14 +37,14 @@ export class EditGroupMeetingScheduleComponent implements OnInit {
    * Fetches Calendar Template from `resolve`
    * @param {FormBuilder} formBuilder Form Builder
    * @param {GroupsService} groupsService Shares Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService SettingsService
    */
   constructor(private formBuilder: FormBuilder,
               private groupsService: GroupsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
@@ -74,18 +74,20 @@ export class EditGroupMeetingScheduleComponent implements OnInit {
    * Submits the form and updates the meeting.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const groupEditMeetingScheduleFormData = this.groupEditMeetingScheduleForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const reschedulebasedOnMeetingDates = true;
     const prevOldDate: Date = new Date(this.groupEditMeetingScheduleForm.value.presentMeetingDate);
     const prevNewDate: Date = this.groupEditMeetingScheduleForm.value.newMeetingDate;
-    this.groupEditMeetingScheduleForm.patchValue({
-      'presentMeetingDate': this.datePipe.transform(prevOldDate, dateFormat),
-      'newMeetingDate': this.datePipe.transform(prevNewDate, dateFormat)
-    });
+    if (groupEditMeetingScheduleFormData.presentMeetingDate instanceof Date) {
+      groupEditMeetingScheduleFormData.presentMeetingDate = this.dateUtils.formatDate(prevOldDate, dateFormat);
+    }
+    if (groupEditMeetingScheduleFormData.newMeetingDate instanceof Date) {
+      groupEditMeetingScheduleFormData.newMeetingDate = this.dateUtils.formatDate(prevNewDate, dateFormat);
+    }
     const data = {
-      ...this.groupEditMeetingScheduleForm.value,
+      ...groupEditMeetingScheduleFormData,
       reschedulebasedOnMeetingDates,
       dateFormat,
       locale

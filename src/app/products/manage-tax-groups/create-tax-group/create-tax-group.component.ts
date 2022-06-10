@@ -48,7 +48,7 @@ export class CreateTaxGroupComponent implements OnInit {
    * @param {ProductsService} productsService Products Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
-   * @param {DatePipe} datePipe Date Pipe to format date.
+   * @param {DatePipe} datePipe Date Utils to format date.
    * @param {MatDialog} dialog Dialog reference.
    * @param {SettingsService} settingsService Settings Service.
    */

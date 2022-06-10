@@ -60,17 +60,20 @@ export class AssignLoanOfficerComponent implements OnInit {
   }
 
   submit() {
-    const assignmentDate = this.assignOfficerForm.value.assignmentDate;
+    const assignOfficerFormData = this.assignOfficerForm.value;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    this.assignOfficerForm.patchValue({
-      assignmentDate: this.dateUtils.formatDate(assignmentDate, dateFormat)
-    });
-    const assignForm = this.assignOfficerForm.value;
-    assignForm.locale = this.settingsService.language.code;
-    assignForm.dateFormat = dateFormat;
-    assignForm.fromLoanOfficerId = this.dataObject.loanOfficerId || '';
-
-    this.loanService.loanActionButtons(this.loanId, 'assignLoanOfficer', assignForm)
+    const assignmentDate = this.assignOfficerForm.value.assignmentDate;
+    if (assignOfficerFormData.assignmentDate instanceof Date) {
+      assignOfficerFormData.assignmentDate = this.dateUtils.formatDate(assignmentDate, dateFormat);
+    }
+    const data = {
+      ...assignOfficerFormData,
+      dateFormat,
+      locale
+    };
+    data.fromLoanOfficerId = this.dataObject.loanOfficerId || '';
+    this.loanService.loanActionButtons(this.loanId, 'assignLoanOfficer', data)
       .subscribe((response: any) => {
         this.router.navigate([`../../general`], { relativeTo: this.route });
     });

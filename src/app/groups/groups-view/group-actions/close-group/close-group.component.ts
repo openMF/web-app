@@ -1,8 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
@@ -32,14 +32,14 @@ export class CloseGroupComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {GroupsService} groupsService Shares Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService SettingsService
    */
   constructor(private formBuilder: FormBuilder,
               private groupsService: GroupsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
@@ -67,15 +67,15 @@ export class CloseGroupComponent implements OnInit {
    * Submits the form and closes the group.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const closeGroupFormData = this.closeGroupForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevClosedDate: Date = this.closeGroupForm.value.closureDate;
-    this.closeGroupForm.patchValue({
-      closureDate: this.datePipe.transform(prevClosedDate, dateFormat),
-    });
+    if (closeGroupFormData.closureDate instanceof Date) {
+      closeGroupFormData.closureDate = this.dateUtils.formatDate(prevClosedDate, dateFormat);
+    }
     const data = {
-      ...this.closeGroupForm.value,
+      ...closeGroupFormData,
       dateFormat,
       locale
     };

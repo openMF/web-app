@@ -2,11 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { ClientsService } from '../../../clients.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Edit Family Member Component
@@ -31,14 +31,14 @@ export class EditFamilyMemberComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {DatePipe} datePipe DatePipe
+   * @param {Dates} dateUtils DatePipe
    * @param {Router} router Router
    * @param {ActivatedRoute} route Route
    * @param {ClientsService} clientsService Clients Service
    * @param {SettingsService} settingsService Setting service
    */
   constructor(private formBuilder: FormBuilder,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private router: Router,
               private route: ActivatedRoute,
               private clientsService: ClientsService,
@@ -69,7 +69,7 @@ export class EditFamilyMemberComponent implements OnInit {
       'genderId': [familyMember.genderId, Validators.required],
       'professionId': [familyMember.professionId],
       'maritalStatusId': [familyMember.maritalStatusId],
-      'dateOfBirth': [this.datePipe.transform(familyMember.dateOfBirth, 'yyyy-MM-dd'), Validators.required]
+      'dateOfBirth': [this.dateUtils.formatDate(familyMember.dateOfBirth, 'yyyy-MM-dd'), Validators.required]
     });
   }
 
@@ -77,16 +77,19 @@ export class EditFamilyMemberComponent implements OnInit {
    * Submits the form and updates the client family member.
    */
   submit() {
-    const prevDateOfBirth: Date = this.editFamilyMemberForm.value.dateOfBirth;
-    // TODO: Update once language and date settings are setup
+    const editFamilyMemberFormData = this.editFamilyMemberForm.value;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    this.editFamilyMemberForm.patchValue({
-      dateOfBirth: this.datePipe.transform(prevDateOfBirth, dateFormat)
-    });
-    const familyMemberData = this.editFamilyMemberForm.value;
-    familyMemberData.locale = this.settingsService.language.code;
-    familyMemberData.dateFormat = dateFormat;
-    this.clientsService.editFamilyMember(this.familyMemberDetails.clientId, this.familyMemberDetails.id, familyMemberData).subscribe(res => {
+    const prevDateOfBirth: Date = this.editFamilyMemberForm.value.dateOfBirth;
+    if (editFamilyMemberFormData.dateOfBirth instanceof Date) {
+      editFamilyMemberFormData.dateOfBirth = this.dateUtils.formatDate(prevDateOfBirth, dateFormat);
+    }
+    const data = {
+      ...editFamilyMemberFormData,
+      dateFormat,
+      locale
+    };
+    this.clientsService.editFamilyMember(this.familyMemberDetails.clientId, this.familyMemberDetails.id, data).subscribe(res => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }

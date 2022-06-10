@@ -44,7 +44,7 @@ export class LoanApprovalComponent {
    * Retrieves the offices and loans data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Dialog} dialog MatDialog.
-   * @param {DatePipe} datePipe Date Pipe.
+   * @param {DatePipe} datePipe Date Utils.
    * @param {router} router Router.
    * @param {SettingsService} settingsService Settings Service.
    * @param {TasksService} tasksService Tasks Service.

@@ -3,7 +3,6 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 /** Custom Services */
-import { DatePipe } from '@angular/common';
 
 /**
  * Recurring Deposits Account Settings Step
@@ -36,8 +35,7 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
   /**
    * @param {FormBuilder} formBuilder Form Builder
    */
-  constructor(private formBuilder: FormBuilder,
-    private datePipe: DatePipe) {
+  constructor(private formBuilder: FormBuilder) {
     this.createRecurringDepositAccountSettingsForm();
     this.buildDependencies();
   }

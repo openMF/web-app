@@ -2,11 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { GroupsService } from '../groups.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Edit Group component.
@@ -37,14 +37,14 @@ export class EditGroupComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {GroupsService} groupService GroupsService.
-   * @param {DatePipe} datePipe Date Pipe to format date.
+   * @param {Dates} dateUtils Date Utils to format date.
    * @param {SettingsService} settingsService SettingsService
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private groupService: GroupsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private settingsService: SettingsService) {
     this.route.data.subscribe( (data: { groupAndTemplateData: any, groupViewData: any } ) => {
       this.staffData = data.groupAndTemplateData.staffOptions;
@@ -96,18 +96,23 @@ export class EditGroupComponent implements OnInit {
    * if successful redirects to groups.
    */
   submit() {
+    const editGroupFormData = this.editGroupForm.value;
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const submittedOnDate: Date = this.editGroupForm.value.submittedOnDate;
     const activationDate: Date = this.editGroupForm.value.activationDate;
-    // TODO: Update once language and date settings are setup
-    const dateFormat = this.settingsService.dateFormat;
-    this.editGroupForm.patchValue({
-      submittedOnDate: this.datePipe.transform(submittedOnDate, dateFormat),
-      activationDate: activationDate && this.datePipe.transform(activationDate, dateFormat)
-    });
-    const group = this.editGroupForm.value;
-    group.locale = this.settingsService.language.code;
-    group.dateFormat = dateFormat;
-    this.groupService.updateGroup(group, this.groupData.id).subscribe((response: any) => {
+    if (editGroupFormData.submittedOnDate instanceof Date) {
+      editGroupFormData.submittedOnDate = this.dateUtils.formatDate(submittedOnDate, dateFormat);
+    }
+    if (editGroupFormData.activationDate instanceof Date) {
+      editGroupFormData.activationDate = this.dateUtils.formatDate(activationDate, dateFormat);
+    }
+    const data = {
+      ...editGroupFormData,
+      dateFormat,
+      locale
+    };
+    this.groupService.updateGroup(data, this.groupData.id).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

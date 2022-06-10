@@ -2,12 +2,12 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { AccountTransfersService } from '../account-transfers.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { ClientsService } from 'app/clients/clients.service';
+import { Dates } from 'app/core/utils/dates';
 
 
 /**
@@ -51,7 +51,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {Router} router Router
    * @param {AccountTransfersService} accountTransfersService Account Transfers Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {SettingsService} settingsService Settings Service
    * @param {ClientsService} clientsService Clients Service
    */
@@ -59,7 +59,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private accountTransfersService: AccountTransfersService,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private settingsService: SettingsService,
     private clientsService: ClientsService) {
     this.route.data.subscribe((data: { accountTransferTemplate: any }) => {
@@ -176,7 +176,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
     const locale = this.settingsService.language.code;
     const makeAccountTransferData = {
       ... this.makeAccountTransferForm.value,
-      transferDate: this.datePipe.transform(this.makeAccountTransferForm.value.transferDate, dateFormat),
+      transferDate: this.dateUtils.formatDate(this.makeAccountTransferForm.value.transferDate, dateFormat),
       dateFormat,
       locale,
       toClientId: this.makeAccountTransferForm.controls.toClientId.value.id,

@@ -4,7 +4,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 
 /** Custom Data Source */
 import { AuditTrailsDataSource } from './audit-trail.datasource';
@@ -16,6 +15,7 @@ import { SettingsService } from 'app/settings/settings.service';
 /** rxjs Imports */
 import { merge } from 'rxjs';
 import { tap, debounceTime, distinctUntilChanged, startWith, map } from 'rxjs/operators';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Audit Trails Component.
@@ -131,7 +131,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    */
   constructor(private route: ActivatedRoute,
               private systemService: SystemService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { auditTrailSearchTemplate: any }) => {
       this.auditTrailSearchTemplateData = data.auditTrailSearchTemplate;
@@ -391,7 +391,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
     this.systemService.getAuditTrails(this.filterAuditTrailsBy, this.sort.active ? this.sort.active : '', this.sort.direction, 0, -1).subscribe((response: any) => {
       if (response !== undefined) {
         let csv = response.pageItems.map((row: any) => headerCode.map(fieldName => (fieldName === 'madeOnDate' || fieldName === 'checkedOnDate') && (JSON.stringify(row[fieldName], replacer) !== '""')
-          ? this.datePipe.transform(JSON.stringify(row[fieldName], replacer), dateFormat)
+          ? this.dateUtils.formatDate(JSON.stringify(row[fieldName], replacer), dateFormat)
           : JSON.stringify(row[fieldName], replacer)));
         csv.unshift(`data:text/csv;charset=utf-8,${header.join()}`);
         csv = csv.join('\r\n');
@@ -414,7 +414,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    */
   private getDate(timestamp: any) {
     const dateFormat = this.settingsService.dateFormat;
-    return this.datePipe.transform(timestamp, dateFormat);
+    return this.dateUtils.formatDate(timestamp, dateFormat);
   }
 
 }

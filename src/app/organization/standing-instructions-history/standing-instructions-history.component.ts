@@ -5,11 +5,11 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { OrganizationService } from '../organization.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * View Standing Instructions History Component.
@@ -49,14 +49,14 @@ export class StandingInstructionsHistoryComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
-   * @param {DatePipe} datePipe Date Pipe to format date.
+   * @param {Dates} dateUtils Date Utils to format date.
    */
   constructor(private formBuilder: FormBuilder,
               private organizationService: OrganizationService,
               private settingsService: SettingsService,
               private router: Router,
               private route: ActivatedRoute,
-              private datePipe: DatePipe) {
+              private dateUtils: Dates) {
     this.route.data.subscribe((data: { standingInstructionsTemplate: any }) => {
       this.standingInstructionsTemplate = data.standingInstructionsTemplate;
     });
@@ -105,14 +105,23 @@ export class StandingInstructionsHistoryComponent implements OnInit {
    */
   search() {
     this.isCollapsed = true;
-    // TODO: Update once language and date settings are setup
+    const instructionFormData = this.instructionForm.value;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const instruction = this.instructionForm.value;
-    instruction.locale = this.settingsService.language.code;
-    instruction.dateFormat = dateFormat;
-    instruction.fromDate = this.datePipe.transform(instruction.fromDate, dateFormat);
-    instruction.toDate = this.datePipe.transform(instruction.toDate, dateFormat);
-    this.organizationService.getStandingInstructions(instruction).subscribe((response: any) => {
+    const prevFromDate: Date = this.instructionForm.value.fromDate;
+    const prevToDate: Date = this.instructionForm.value.toDate;
+    if (instructionFormData.fromDate instanceof Date) {
+      instructionFormData.fromDate = this.dateUtils.formatDate(prevFromDate, dateFormat);
+    }
+    if (instructionFormData.toDate instanceof Date) {
+      instructionFormData.toDate = this.dateUtils.formatDate(prevToDate, dateFormat);
+    }
+    const data = {
+      ...instructionFormData,
+      dateFormat,
+      locale
+    };
+    this.organizationService.getStandingInstructions(data).subscribe((response: any) => {
       this.setInstructions(response.pageItems);
     });
   }

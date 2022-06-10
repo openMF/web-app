@@ -1,8 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
@@ -30,14 +30,14 @@ export class ActivateGroupComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {groupsService} groupsService Groups Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService SettingsService
    */
   constructor(private formBuilder: FormBuilder,
               private groupsService: GroupsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
@@ -62,15 +62,15 @@ export class ActivateGroupComponent implements OnInit {
    * if successful redirects to the group.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const activateGroupFormData = this.activateGroupForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevactivationDate: Date = this.activateGroupForm.value.activationDate;
-    this.activateGroupForm.patchValue({
-      activationDate: this.datePipe.transform(prevactivationDate, dateFormat),
-    });
+    if (activateGroupFormData.activationDate instanceof Date) {
+      activateGroupFormData.activationDate = this.dateUtils.formatDate(prevactivationDate, dateFormat);
+    }
     const data = {
-      ...this.activateGroupForm.value,
+      ...activateGroupFormData,
       dateFormat,
       locale
     };

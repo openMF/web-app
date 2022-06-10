@@ -1,11 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { CentersService } from 'app/centers/centers.service';
+import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 
 /**
@@ -42,14 +42,14 @@ export class EditCenterMeetingComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {CentersService} centersService Shares Service
    * @param {SettingsService} settingsService Settings Service.
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
   constructor(private formBuilder: FormBuilder,
               private centersService: CentersService,
               private settingsService: SettingsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router) {
     this.route.data.subscribe((data: { centersActionData: any }) => {
@@ -119,17 +119,17 @@ export class EditCenterMeetingComponent implements OnInit {
    * Submits the form and updates the meeting.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const centerEditMeetingFormData = this.centerEditMeetingForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const title = `centers_${this.centerId}_CollectionMeeting`;
     const typeId = '1';
     const prevStartDate: Date = this.centerEditMeetingForm.value.startDate;
-    this.centerEditMeetingForm.patchValue({
-      startDate: this.datePipe.transform(prevStartDate, dateFormat),
-    });
+    if (centerEditMeetingFormData.startDate instanceof Date) {
+      centerEditMeetingFormData.startDate = this.dateUtils.formatDate(prevStartDate, dateFormat);
+    }
     const data = {
-      ...this.centerEditMeetingForm.value,
+      ...centerEditMeetingFormData,
       repeating: true,
       title,
       typeId,

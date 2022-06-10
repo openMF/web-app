@@ -30,7 +30,7 @@
 
             <mat-form-field class="m-t-20" *ngIf="closeSavingsAccountForm.controls['amount']">
               <mat-label>Transaction Amount</mat-label>
-              <input type=number required matInput formControlName="amount"/>
+              <input type="number" required matInput formControlName="amount"/>
             </mat-form-field>
 
             <mat-form-field *ngIf="closeSavingsAccountForm.controls['paymentTypeId']">
@@ -49,27 +49,27 @@
                 <fa-icon [icon]="!addPaymentDetailsFlag ? 'plus-circle' : 'minus-circle'" size="lg"></fa-icon>
               </button>
             </div>
-    
+
             <mat-form-field *ngIf="closeSavingsAccountForm.controls['accountNumber']">
               <mat-label>Account Number</mat-label>
               <input type="number" formControlName="accountNumber" matInput />
             </mat-form-field>
-    
+
             <mat-form-field *ngIf="closeSavingsAccountForm.controls['checkNumber']">
               <mat-label>Cheque</mat-label>
               <input type="number" formControlName="checkNumber" matInput />
             </mat-form-field>
-    
+
             <mat-form-field *ngIf="closeSavingsAccountForm.controls['routingCode']">
               <mat-label>Routing Code</mat-label>
               <input formControlName="routingCode" matInput />
             </mat-form-field>
-    
+
             <mat-form-field *ngIf="closeSavingsAccountForm.controls['receiptNumber']">
               <mat-label>Receipt Number</mat-label>
               <input formControlName="receiptNumber" matInput />
             </mat-form-field>
-    
+
             <mat-form-field *ngIf="closeSavingsAccountForm.controls['bankNumber']">
               <mat-label>Bank</mat-label>
               <input formControlName="bankNumber" matInput />

@@ -1,12 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { FixedDepositsService } from '../../fixed-deposits.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Premature Close Fixed Deposits Account Component
@@ -37,14 +37,14 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {FixedDepositsService} fixedDepositsService Fixed Deposits Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
     private fixedDepositsService: FixedDepositsService,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
     private settingsService: SettingsService) {
@@ -87,7 +87,7 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const data = {
-      closedOnDate: this.datePipe.transform(date, dateFormat),
+      closedOnDate: this.dateUtils.formatDate(date, dateFormat),
       dateFormat,
       locale
     };
@@ -124,15 +124,16 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
    * if successful redirects to the fd account.
    */
   submit() {
+    const prematureCloseAccountFormData = this.prematureCloseAccountForm.value;
     this.isSubmitted = true;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevClosedDate: Date = this.prematureCloseAccountForm.value.closedOnDate;
-    this.prematureCloseAccountForm.patchValue({
-      closedOnDate: this.datePipe.transform(prevClosedDate, dateFormat),
-    });
+    if (prematureCloseAccountFormData.closedOnDate instanceof Date) {
+      prematureCloseAccountFormData.closedOnDate = this.dateUtils.formatDate(prevClosedDate, dateFormat);
+    }
     const data = {
-      ...this.prematureCloseAccountForm.value,
+      ...prematureCloseAccountFormData,
       dateFormat,
       locale
     };
