@@ -40,7 +40,7 @@ export class SingleRowComponent implements OnInit {
   /**
    * Fetches group Id from parent route params.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {DatePipe} datePipe Date Pipe.
+   * @param {DatePipe} datePipe Date Utils.
    * @param {GroupsService} groupsService Groups Service.
    * @param {MatDialog} dialog Mat Dialog.
    * @param {SettingsService} settingsService SettingsService
@@ -150,7 +150,7 @@ export class SingleRowComponent implements OnInit {
   /**
    * Maps API response to data table form fields.
    * @param {any} columns Data Table Columns.
-   * @param {string[]} dateTransformColumns Columns transformed with date pipe.
+   * @param {string[]} dateTransformColumns Columns transformed with Date Utils.
    * @param {any} dataTableEntryObject Additional data table details.
    */
   getFormfields(columns: any, dateTransformColumns: string[], dataTableEntryObject: any) {

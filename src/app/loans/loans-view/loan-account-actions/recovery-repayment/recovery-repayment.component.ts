@@ -100,16 +100,19 @@ export class RecoveryRepaymentComponent implements OnInit {
 
   /** Submits the recovery payment form */
   submit() {
-    const prevTransactionDate: Date = this.recoveryRepaymentLoanForm.value.transactionDate;
-    // TODO: Update once language and date settings are setup
+    const recoveryRepaymentLoanFormData = this.recoveryRepaymentLoanForm.value;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    this.recoveryRepaymentLoanForm.patchValue({
-      transactionDate: this.dateUtils.formatDate(prevTransactionDate, dateFormat)
-    });
-    const recoveryRepaymentLoanData = this.recoveryRepaymentLoanForm.value;
-    recoveryRepaymentLoanData.locale = this.settingsService.language.code;
-    recoveryRepaymentLoanData.dateFormat = dateFormat;
-    this.loanService.submitLoanActionButton(this.loanId, recoveryRepaymentLoanData, 'recoverypayment')
+    const prevTransactionDate: Date = this.recoveryRepaymentLoanForm.value.transactionDate;
+    if (recoveryRepaymentLoanFormData.transactionDate instanceof Date) {
+      recoveryRepaymentLoanFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+    }
+    const data = {
+      ...recoveryRepaymentLoanFormData,
+      dateFormat,
+      locale
+    };
+    this.loanService.submitLoanActionButton(this.loanId, data, 'recoverypayment')
       .subscribe((response: any) => {
         this.router.navigate(['../../general'], { relativeTo: this.route });
       });

@@ -13,8 +13,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./foreclosure.component.scss']
 })
 export class ForeclosureComponent implements OnInit {
-
-
   loanId: any;
   foreclosureForm: FormGroup;
   /** Minimum Date allowed. */
@@ -23,7 +21,6 @@ export class ForeclosureComponent implements OnInit {
   maxDate = new Date();
   foreclosuredata: any;
   paymentTypes: any;
-
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -108,19 +105,20 @@ export class ForeclosureComponent implements OnInit {
   }
 
   submit() {
-    const transactionDate = this.foreclosureForm.value.transactionDate;
+    const foreclosureFormData = this.foreclosureForm.value;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    this.foreclosureForm.patchValue({
-      transactionDate: this.dateUtils.formatDate(transactionDate, dateFormat)
-    });
-    const formData = {
-      transactionDate: this.foreclosureForm.value.transactionDate,
-      locale: this.settingsService.language.code,
-      dateFormat: dateFormat,
-      note: this.foreclosureForm.value.note
+    const prevTransactionDate = this.foreclosureForm.value.transactionDate;
+    if (foreclosureFormData.transactionDate instanceof Date) {
+      foreclosureFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+    }
+    const data = {
+      ...foreclosureFormData,
+      dateFormat,
+      locale
     };
 
-    this.loanService.loanForclosureData(this.loanId, formData)
+    this.loanService.loanForclosureData(this.loanId, data)
       .subscribe((response: any) => {
         this.router.navigate([`../../general`], { relativeTo: this.route });
       });

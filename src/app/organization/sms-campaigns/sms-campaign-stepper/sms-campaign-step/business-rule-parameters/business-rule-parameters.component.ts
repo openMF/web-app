@@ -1,7 +1,6 @@
 /** Angular Imports */
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { ReportsService } from 'app/reports/reports.service';
@@ -10,6 +9,7 @@ import { SettingsService } from 'app/settings/settings.service';
 /** Custom Models */
 import { ReportParameter } from 'app/reports/common-models/report-parameter.model';
 import { SelectOption } from 'app/reports/common-models/select-option.model';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Business Rule Parameters Component.
@@ -41,11 +41,11 @@ export class BusinessRuleParametersComponent implements OnChanges {
   /**
    * @param {ReportsService} reportsService Reports Service.
    * @param {SettingsService} settingsService Settings Service.
-   * @param {DatePipe} datePipe Date Pipe.
+   * @param {Dates} dateUtils Date Utils.
    */
   constructor(private reportsService: ReportsService,
               private settingsService: SettingsService,
-              private datePipe: DatePipe) { }
+              private dateUtils: Dates) { }
 
   ngOnChanges() {
     if (this.paramData) {
@@ -156,7 +156,7 @@ export class BusinessRuleParametersComponent implements OnChanges {
           break;
         case 'date':
           const dateFormat = this.settingsService.dateFormat;
-          formattedResponse[newKey] = this.datePipe.transform(value, dateFormat);
+          formattedResponse[newKey] = this.dateUtils.formatDate(value, dateFormat);
           break;
         case 'none':
           formattedResponse[newKey] = value;

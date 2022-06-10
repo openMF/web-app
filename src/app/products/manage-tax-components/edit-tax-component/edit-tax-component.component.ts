@@ -2,11 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { ProductsService } from '../../products.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Edit tax component.
@@ -31,14 +31,14 @@ export class EditTaxComponentComponent implements OnInit {
    * @param {ProductsService} productsService Products Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
-   * @param {DatePipe} datePipe Date Pipe to format date.
+   * @param {Dates} dateUtils Date Utils to format date.
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor(private formBuilder: FormBuilder,
               private productsService: ProductsService,
               private route: ActivatedRoute,
               private router: Router,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { taxComponent: any }) => {
       this.taxComponentData = data.taxComponent;
@@ -70,16 +70,19 @@ export class EditTaxComponentComponent implements OnInit {
    * if successfull redirects to tax component.
    */
   submit() {
-    const prevStartDate: Date = this.taxComponentForm.value.startDate;
-    // TODO: Update once language and date settings are setup
+    const taxComponentFormData = this.taxComponentForm.value;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    this.taxComponentForm.patchValue({
-      startDate: this.datePipe.transform(prevStartDate, dateFormat)
-    });
-    const taxComponent = this.taxComponentForm.value;
-    taxComponent.locale = this.settingsService.language.code;
-    taxComponent.dateFormat = dateFormat;
-    this.productsService.updateTaxComponent(this.taxComponentData.id, taxComponent).subscribe((response: any) => {
+    const prevStartDate: Date = this.taxComponentForm.value.startDate;
+    if (taxComponentFormData.startDate instanceof Date) {
+      taxComponentFormData.startDate = this.dateUtils.formatDate(prevStartDate, dateFormat);
+    }
+    const data = {
+      ...taxComponentFormData,
+      dateFormat,
+      locale
+    };
+    this.productsService.updateTaxComponent(this.taxComponentData.id, data).subscribe((response: any) => {
       this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
     });
   }

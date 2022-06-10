@@ -2,11 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services. */
 import { OrganizationService } from '../organization.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Bulk Loan Reassignment component.
@@ -49,7 +49,7 @@ export class BulkLoanReassignmnetComponent implements OnInit {
               private route: ActivatedRoute,
               private organizationSevice: OrganizationService,
               private settingsService: SettingsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private router: Router) {
     this.route.data.subscribe((data: { offices: any} ) => {
       this.offices = data.offices;
@@ -113,16 +113,20 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    * Submits bulk loan reassignment form.
    */
   submit() {
+    const bulkLoanFormData = this.bulkLoanForm.value;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const assignmentDate = this.bulkLoanForm.value.assignmentDate;
-    this.bulkLoanForm.patchValue({
-      assignmentDate: this.datePipe.transform(assignmentDate, dateFormat)
-    });
-    const bulkForm = this.bulkLoanForm.value;
-    bulkForm.locale = this.settingsService.language.code;
-    bulkForm.dateFormat = dateFormat;
-    bulkForm.loans = this.loans;
-    this.organizationSevice.createLoanReassignment(bulkForm).subscribe((response: any) => {
+    const prevAssignmentDate = this.bulkLoanForm.value.assignmentDate;
+    if (bulkLoanFormData.assignmentDate instanceof Date) {
+      bulkLoanFormData.assignmentDate = this.dateUtils.formatDate(prevAssignmentDate, dateFormat);
+    }
+    const data = {
+      ...bulkLoanFormData,
+      dateFormat,
+      locale
+    };
+    data.loans = this.loans;
+    this.organizationSevice.createLoanReassignment(data).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

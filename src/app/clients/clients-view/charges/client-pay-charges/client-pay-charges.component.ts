@@ -2,10 +2,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services. */
 import { ClientsService } from 'app/clients/clients.service';
+import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 
 /**
@@ -38,7 +38,7 @@ export class ClientPayChargesComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { transactionData: any }) => {
@@ -64,15 +64,19 @@ export class ClientPayChargesComponent implements OnInit {
    * Submits Transaction form.
    */
   submit() {
-    const transactionDate = this.transactionForm.value.transactionDate;
-    const dateFormat = 'yyyy-MM-dd';
-    this.transactionForm.patchValue({
-      transactionDate: this.datePipe.transform(transactionDate, dateFormat)
-    });
-    const transactions = this.transactionForm.value;
-    transactions.locale = this.settingsService.language.code;
-    transactions.dateFormat = dateFormat;
-    this.clientsService.payClientCharge(this.transactionData.clientId, this.transactionData.id, transactions).subscribe(() => {
+    const transactionFormData = this.transactionForm.value;
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
+    const prevTransactionDate = this.transactionForm.value.transactionDate;
+    if (transactionFormData.transactionDate instanceof Date) {
+      transactionFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+    }
+    const data = {
+      ...transactionFormData,
+      dateFormat,
+      locale
+    };
+    this.clientsService.payClientCharge(this.transactionData.clientId, this.transactionData.id, data).subscribe(() => {
       this.router.navigate(['../', 'general']);
     });
   }

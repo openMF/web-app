@@ -1,8 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
@@ -34,14 +34,14 @@ export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {SavingsService} savingsService Savings Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
   constructor(private formBuilder: FormBuilder,
               private savingsService: SavingsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
@@ -87,15 +87,15 @@ export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {
    * if successful redirects to the saving account.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const applyAnnualFeesFormData = this.applyAnnualFeesForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevApprovedOnDate: Date = this.applyAnnualFeesForm.value.dueDate;
-    this.applyAnnualFeesForm.patchValue({
-      dueDate: this.datePipe.transform(prevApprovedOnDate, dateFormat),
-    });
+    if (applyAnnualFeesFormData.dueDate instanceof Date) {
+      applyAnnualFeesFormData.dueDate = this.dateUtils.formatDate(prevApprovedOnDate, dateFormat);
+    }
     const data = {
-      ...this.applyAnnualFeesForm.value,
+      ...applyAnnualFeesFormData,
       dateFormat,
       locale
     };

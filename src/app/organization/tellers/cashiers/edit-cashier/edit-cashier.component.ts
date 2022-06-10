@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services. */
 import { OrganizationService } from 'app/organization/organization.service';
@@ -34,14 +34,14 @@ export class EditCashierComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router.
-   * @param {DatePipe} datePipe Date Pipe.
+   * @param {Dates} dateUtils Date Utils.
    * @param {OrganizationService} organizationService Organization Service.
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private organizationService: OrganizationService,
               private settingsService: SettingsService ) {
     this.route.data.subscribe((data: { cashier: any, cashierTemplate: any }) => {
@@ -72,18 +72,24 @@ export class EditCashierComponent implements OnInit {
    * Submits edit cashier form.
    */
   submit() {
+    const editCashierFormData = this.editCashierForm.value;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const startDate = this.editCashierForm.value.startDate;
-    const endDate = this.editCashierForm.value.endDate;
-    this.editCashierForm.patchValue({
-      'startDate': this.datePipe.transform(startDate, dateFormat),
-      'endDate': this.datePipe.transform(endDate, dateFormat)
-    });
-    const editCashierForm = this.editCashierForm.value;
-    editCashierForm.locale = this.settingsService.language.code;
-    editCashierForm.dateFormat = dateFormat;
-    editCashierForm.staffId = this.cashierData.data.staffId;
-    this.organizationService.updateCashier(this.cashierData.data.tellerId, this.cashierData.data.id, editCashierForm).subscribe((response: any) => {
+    const prevStartDate: Date = this.editCashierForm.value.startDate;
+    const prevEndDate: Date = this.editCashierForm.value.endDate;
+    if (editCashierFormData.startDate instanceof Date) {
+      editCashierFormData.startDate = this.dateUtils.formatDate(prevStartDate, dateFormat);
+    }
+    if (editCashierFormData.endDate instanceof Date) {
+      editCashierFormData.endDate = this.dateUtils.formatDate(prevEndDate, dateFormat);
+    }
+    const data = {
+      ...editCashierFormData,
+      staffId: this.cashierData.data.staffId,
+      dateFormat,
+      locale
+    };
+    this.organizationService.updateCashier(this.cashierData.data.tellerId, this.cashierData.data.id, data).subscribe((response: any) => {
       this.router.navigate(['../'], {relativeTo: this.route});
     });
   }

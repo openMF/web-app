@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
 import { RecurringDepositsService } from 'app/deposits/recurring-deposits/recurring-deposits.service';
@@ -44,14 +44,14 @@ export class EditTransactionComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {RecurringDepositsService} recurringDepositsService Recurring Deposits Service.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {DatePipe} datePipe DatePipe.
+   * @param {Dates} dateUtils Date Utils.
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private recurringDepositsService: RecurringDepositsService,
     private settingsService: SettingsService, ) {
     this.route.data.subscribe((data: { recurringDepositsAccountTransactionTemplate: any }) => {
@@ -108,16 +108,19 @@ export class EditTransactionComponent implements OnInit {
    * Submit the transaction details.
    */
   submit() {
-    const prevTransactionDate: Date = this.editTransactionForm.value.transactionDate;
-    // TODO: Update once language and date settings are setup
+    const editTransactionFormData = this.editTransactionForm.value;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    this.editTransactionForm.patchValue({
-      transactionDate: this.datePipe.transform(prevTransactionDate, dateFormat)
-    });
-    const transactionData = this.editTransactionForm.value;
-    transactionData.locale = this.settingsService.language.code;
-    transactionData.dateFormat = dateFormat;
-    this.recurringDepositsService.executeRecurringDepositsAccountTransactionsCommand(this.recurringDepositAccountId, 'modify', transactionData, this.transactionTemplateData.id)
+    const prevTransactionDate: Date = this.editTransactionForm.value.transactionDate;
+    if (editTransactionFormData.transactionDate instanceof Date) {
+      editTransactionFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+    }
+    const data = {
+      ...editTransactionFormData,
+      dateFormat,
+      locale
+    };
+    this.recurringDepositsService.executeRecurringDepositsAccountTransactionsCommand(this.recurringDepositAccountId, 'modify', data, this.transactionTemplateData.id)
       .subscribe(res => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

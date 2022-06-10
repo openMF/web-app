@@ -2,11 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { CentersService } from '../centers.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Edit Center component.
@@ -36,14 +36,14 @@ export class EditCenterComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {CentersService} centerService CentersService.
    * @param {GroupsService} groupService GroupsService.
-   * @param {DatePipe} datePipe Date Pipe to format date.
+   * @param {Dates} dateUtils Date Utils to format date.
    */
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private centersService: CentersService,
     private settingsService: SettingsService,
-    private datePipe: DatePipe) {
+    private dateUtils: Dates) {
     this.route.data.subscribe((data: { centerData: any }) => {
       this.centerData = data.centerData;
       this.staffs = this.centerData.staffOptions;
@@ -77,16 +77,17 @@ export class EditCenterComponent implements OnInit {
    * if successful redirects to the center.
    */
   submit() {
+    const editCenterFormData = this.editCenterForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     if (this.centerData.status.value === 'Pending') {
       const prevactivationDate: Date = this.editCenterForm.value.activationDate;
-      this.editCenterForm.patchValue({
-        activationDate: this.datePipe.transform(prevactivationDate, dateFormat),
-      });
+      if (editCenterFormData.activationDate instanceof Date) {
+        editCenterFormData.activationDate = this.dateUtils.formatDate(prevactivationDate, dateFormat);
+      }
     }
     const data = {
-      ...this.editCenterForm.value,
+      ...editCenterFormData,
       name: this.centerData.name,
       dateFormat,
       locale

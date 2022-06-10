@@ -54,7 +54,7 @@ export class EditFloatingRateComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ProductsService} productsService Product Service.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {DatePipe} datePipe Date Pipe.
+   * @param {DatePipe} datePipe Date Utils.
    * @param {MatDialog} dialog Dialog reference.
    * @param {SettingsService} settingsService Settings Service.
    */

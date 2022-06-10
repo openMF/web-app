@@ -44,7 +44,7 @@ export class GroupAttendanceComponent implements OnInit {
   /**
    * Retrieves the group members data from `resolve`.
    * @param {ActivatedRoute} route Route
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {DatePipe} datePipe Date Utils
    * @param {Router} router Router
    * @param {GroupsService} groupsService Groups Service
    * @param {MatDialog} dialog Mat Dialog

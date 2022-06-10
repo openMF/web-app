@@ -1,8 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
@@ -34,14 +34,14 @@ export class SavingsAccountAssignStaffComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {SavingsService} savingsService Savings Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
   constructor(private formBuilder: FormBuilder,
               private savingsService: SavingsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
@@ -74,15 +74,15 @@ export class SavingsAccountAssignStaffComponent implements OnInit {
    * if successful redirects to the saving account.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const savingsAssignStaffFormData = this.savingsAssignStaffForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevAssignmentDate: Date = this.savingsAssignStaffForm.value.assignmentDate;
-    this.savingsAssignStaffForm.patchValue({
-      assignmentDate: this.datePipe.transform(prevAssignmentDate, dateFormat),
-    });
+    if (savingsAssignStaffFormData.assignmentDate instanceof Date) {
+      savingsAssignStaffFormData.assignmentDate = this.dateUtils.formatDate(prevAssignmentDate, dateFormat);
+    }
     const data = {
-      ...this.savingsAssignStaffForm.value,
+      ...savingsAssignStaffFormData,
       fromSavingsOfficerId: '',
       dateFormat,
       locale

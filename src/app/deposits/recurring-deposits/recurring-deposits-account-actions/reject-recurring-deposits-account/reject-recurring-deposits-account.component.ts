@@ -1,12 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../../recurring-deposits.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 
 /**
@@ -31,14 +31,14 @@ export class RejectRecurringDepositsAccountComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {RecurringDepositsService} recurringDepositsService Recurring Deposits Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
     private recurringDepositsService: RecurringDepositsService,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
     private settingsService: SettingsService) {
@@ -67,15 +67,15 @@ export class RejectRecurringDepositsAccountComponent implements OnInit {
    * if successful redirects to the recurring deposit account.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const rejectRecurringDepositsAccountFormData = this.rejectRecurringDepositsAccountForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevRejectedOnDate: Date = this.rejectRecurringDepositsAccountForm.value.rejectedOnDate;
-    this.rejectRecurringDepositsAccountForm.patchValue({
-      rejectedOnDate: this.datePipe.transform(prevRejectedOnDate, dateFormat),
-    });
+    if (rejectRecurringDepositsAccountFormData.rejectedOnDate instanceof Date) {
+      rejectRecurringDepositsAccountFormData.rejectedOnDate = this.dateUtils.formatDate(prevRejectedOnDate, dateFormat);
+    }
     const data = {
-      ...this.rejectRecurringDepositsAccountForm.value,
+      ...rejectRecurringDepositsAccountFormData,
       dateFormat,
       locale
     };

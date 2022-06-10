@@ -63,15 +63,19 @@ export class CloseAsRescheduledComponent implements OnInit {
    * if successful redirects to view created close.
    */
   submit() {
-    const transactionDate = this.closeLoanForm.value.transactionDate;
+    const closeLoanFormData = this.closeLoanForm.value;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    this.closeLoanForm.patchValue({
-      transactionDate: this.dateUtils.formatDate(transactionDate, dateFormat)
-    });
-    const closeForm = this.closeLoanForm.value;
-    closeForm.locale = this.settingsService.language.code;
-    closeForm.dateFormat = dateFormat;
-    this.loanService.submitLoanActionButton(this.loanId, closeForm, 'close-rescheduled')
+    const transactionDate = this.closeLoanForm.value.transactionDate;
+    if (closeLoanFormData.transactionDate instanceof Date) {
+      closeLoanFormData.transactionDate = this.dateUtils.formatDate(transactionDate, dateFormat);
+    }
+    const data = {
+      ...closeLoanFormData,
+      dateFormat,
+      locale
+    };
+    this.loanService.submitLoanActionButton(this.loanId, data, 'close-rescheduled')
       .subscribe((response: any) => {
         this.router.navigate(['../../general'], { relativeTo: this.route });
     });

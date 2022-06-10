@@ -1,8 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
@@ -30,14 +30,14 @@ export class ApproveSavingsAccountComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {SavingsService} savingsService Savings Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
   constructor(private formBuilder: FormBuilder,
               private savingsService: SavingsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
@@ -66,15 +66,15 @@ export class ApproveSavingsAccountComponent implements OnInit {
    * if successful redirects to the saving account.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const approveSavingsAccountFormData = this.approveSavingsAccountForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevApprovedOnDate: Date = this.approveSavingsAccountForm.value.approvedOnDate;
-    this.approveSavingsAccountForm.patchValue({
-      approvedOnDate: this.datePipe.transform(prevApprovedOnDate, dateFormat),
-    });
+    if (approveSavingsAccountFormData.approvedOnDate instanceof Date) {
+      approveSavingsAccountFormData.approvedOnDate = this.dateUtils.formatDate(prevApprovedOnDate, dateFormat);
+    }
     const data = {
-      ...this.approveSavingsAccountForm.value,
+      ...approveSavingsAccountFormData,
       dateFormat,
       locale
     };

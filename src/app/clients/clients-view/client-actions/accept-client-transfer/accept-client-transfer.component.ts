@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
+import { Dates } from 'app/core/utils/dates';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Accept Client Transfer Component
@@ -26,11 +28,15 @@ export class AcceptClientTransferComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {ClientsService} clientsService Clients Service
+   * @param {SettingsService} settingsService Settings Service.
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
   constructor(private formBuilder: FormBuilder,
               private clientsService: ClientsService,
+              private settingsService: SettingsService,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
@@ -61,8 +67,17 @@ export class AcceptClientTransferComponent implements OnInit {
    * if successful redirects to the client.
    */
   submit() {
+    const acceptClientTransferFormData = this.acceptClientTransferForm.value;
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
+    const prevTransferDate: Date = this.acceptClientTransferForm.value.transferDate;
+    if (acceptClientTransferFormData.transferDate instanceof Date) {
+      acceptClientTransferFormData.transferDate = this.dateUtils.formatDate(prevTransferDate, dateFormat);
+    }
     const data = {
-      ...this.acceptClientTransferForm.value,
+      ...acceptClientTransferFormData,
+      dateFormat,
+      locale
     };
     this.clientsService.executeClientCommand(this.clientId, 'acceptTransfer', data).subscribe(() => {
       this.router.navigate(['../../'], { relativeTo: this.route });

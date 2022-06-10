@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
@@ -47,11 +47,11 @@ export class ClientGeneralStepComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {SettingsService} settingsService Setting service
    */
   constructor(private formBuilder: FormBuilder,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private settingsService: SettingsService) {
     this.setClientForm();
   }
@@ -148,26 +148,25 @@ export class ClientGeneralStepComponent implements OnInit {
     const generalDetails = this.createClientForm.value;
     const dateFormat = this.settingsService.dateFormat;
     const locale = this.settingsService.language.code;
-    // TODO: Update once language and date settings are setup
     for (const key in generalDetails) {
       if (generalDetails[key] === '' || key === 'addSavings') {
         delete generalDetails[key];
       }
     }
-    if (generalDetails.submittedOnDate) {
-      generalDetails.submittedOnDate = this.datePipe.transform(generalDetails.submittedOnDate, dateFormat);
+    if (generalDetails.submittedOnDate instanceof Date) {
+      generalDetails.submittedOnDate = this.dateUtils.formatDate(generalDetails.submittedOnDate, dateFormat);
     }
-    if (generalDetails.activationDate) {
-      generalDetails.activationDate = this.datePipe.transform(generalDetails.activationDate, dateFormat);
+    if (generalDetails.activationDate instanceof Date) {
+      generalDetails.activationDate = this.dateUtils.formatDate(generalDetails.activationDate, dateFormat);
     }
-    if (generalDetails.dateOfBirth) {
-      generalDetails.dateOfBirth = this.datePipe.transform(generalDetails.dateOfBirth, dateFormat);
+    if (generalDetails.dateOfBirth instanceof Date) {
+      generalDetails.dateOfBirth = this.dateUtils.formatDate(generalDetails.dateOfBirth, dateFormat);
     }
 
     if (generalDetails.clientNonPersonDetails && generalDetails.clientNonPersonDetails.incorpValidityTillDate) {
       generalDetails.clientNonPersonDetails = {
         ...generalDetails.clientNonPersonDetails,
-        incorpValidityTillDate: this.datePipe.transform(generalDetails.dateOfBirth, dateFormat),
+        incorpValidityTillDate: this.dateUtils.formatDate(generalDetails.dateOfBirth, dateFormat),
         dateFormat,
         locale
       };

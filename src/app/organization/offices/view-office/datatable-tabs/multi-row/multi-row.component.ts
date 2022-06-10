@@ -50,7 +50,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
   /**
    * Fetches office Id from parent route params.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {DatePipe} datePipe Date Pipe.
+   * @param {DatePipe} datePipe Date Utils.
    * @param {OrganizationService} organizationService Organization Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {MatDialog} dialog Mat Dialog.

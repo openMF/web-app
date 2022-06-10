@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services. */
 import { OrganizationService } from 'app/organization/organization.service';
@@ -32,14 +32,14 @@ export class CreateCashierComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router.
-   * @param {DatePipe} datePipe Date Pipe.
+   * @param {Dates} dateUtils Date Utils.
    * @param {OrganizationService} organizationService Organization Service.
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private organizationService: OrganizationService,
               private settingsService: SettingsService ) {
     this.route.data.subscribe((data: { cashierTemplate: any }) => {
@@ -68,17 +68,23 @@ export class CreateCashierComponent implements OnInit {
    * Submits Create cashier form.
    */
   submit() {
+    const createCashierFormData = this.createCashierForm.value;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const startDate = this.createCashierForm.value.startDate;
-    const endDate = this.createCashierForm.value.endDate;
-    this.createCashierForm.patchValue({
-      'startDate': this.datePipe.transform(startDate, dateFormat),
-      'endDate': this.datePipe.transform(endDate, dateFormat)
-    });
-    const createCashierForm = this.createCashierForm.value;
-    createCashierForm.locale = this.settingsService.language.code;
-    createCashierForm.dateFormat = dateFormat;
-    this.organizationService.createCashier(this.cashierTemplate.tellerId, createCashierForm).subscribe((response: any) => {
+    const prevStartDate: Date = this.createCashierForm.value.startDate;
+    const prevEndDate: Date = this.createCashierForm.value.endDate;
+    if (createCashierFormData.startDate instanceof Date) {
+      createCashierFormData.startDate = this.dateUtils.formatDate(prevStartDate, dateFormat);
+    }
+    if (createCashierFormData.endDate instanceof Date) {
+      createCashierFormData.endDate = this.dateUtils.formatDate(prevEndDate, dateFormat);
+    }
+    const data = {
+      ...createCashierFormData,
+      dateFormat,
+      locale
+    };
+    this.organizationService.createCashier(this.cashierTemplate.tellerId, data).subscribe((response: any) => {
       this.router.navigate(['../'], {relativeTo: this.route});
     });
   }

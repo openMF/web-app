@@ -2,11 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { SavingsService } from '../../savings.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Add Savings Charge component.
@@ -36,14 +36,14 @@ export class AddChargeSavingsAccountComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {SavingsService} savingsService Savings Service
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private savingsService: SavingsService,
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
@@ -122,14 +122,14 @@ export class AddChargeSavingsAccountComponent implements OnInit {
         savingsCharge.monthDayFormat = monthDayFormat;
         if (savingsCharge.feeOnMonthDay) {
           const prevDate = this.savingsChargeForm.value.feeOnMonthDay;
-          savingsCharge.feeOnMonthDay = this.datePipe.transform(prevDate, monthDayFormat);
+          savingsCharge.feeOnMonthDay = this.dateUtils.formatDate(prevDate, monthDayFormat);
         }
       } else {
         const dateFormat = this.settingsService.dateFormat;
         savingsCharge.dateFormat = dateFormat;
         if (savingsCharge.dueDate) {
           const prevDate = this.savingsChargeForm.value.dueDate;
-          savingsCharge.dueDate = this.datePipe.transform(prevDate, dateFormat);
+          savingsCharge.dueDate = this.dateUtils.formatDate(prevDate, dateFormat);
         }
       }
     }

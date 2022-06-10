@@ -37,7 +37,7 @@ export class CreateCampaignComponent {
    * @param {Router} router Router
    * @param {OrganizationService} organizationService Organization Service
    * @param {SettingsService} settingsService Settings Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {DatePipe} datePipe Date Utils
    */
   constructor(private route: ActivatedRoute,
               private router: Router,

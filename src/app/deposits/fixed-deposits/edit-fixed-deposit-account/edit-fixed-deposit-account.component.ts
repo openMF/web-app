@@ -44,7 +44,7 @@ export class EditFixedDepositAccountComponent {
    * Fetches FD account template from `resolve`
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {DatePipe} datePipe Date Utils
    * @param {FixedDepositsService} fixedDepositsService Fixed Deposits Service
    * @param {SettingsService} settingsService Settings Service
    */

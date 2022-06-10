@@ -1,7 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
@@ -17,6 +16,7 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 @Component({
   selector: 'mifosx-fixed-deposit-product-interest-rate-chart-step',
@@ -59,13 +59,13 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
   /**
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {MatDialog} dialog Dialog reference.
-   * @param {DatePipe} datePipe Date Pipe.
+   * @param {Dates} dateUtils Date Utils.
    * @param {SettingsService} settingsService Settings Service.
    */
 
   constructor(private formBuilder: FormBuilder,
               public dialog: MatDialog,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private settingsService: SettingsService) {
     this.createFixedDepositProductInterestRateChartForm();
   }
@@ -375,8 +375,8 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     for (const chart of fixedDepositProductInterestRateChart.charts) {
       chart.dateFormat = dateFormat;
       chart.locale = locale;
-      chart.fromDate = this.datePipe.transform(chart.fromDate, dateFormat) || '';
-      chart.endDate = this.datePipe.transform(chart.endDate, dateFormat) || '';
+      chart.fromDate = this.dateUtils.formatDate(chart.fromDate, dateFormat) || '';
+      chart.endDate = this.dateUtils.formatDate(chart.endDate, dateFormat) || '';
       if (chart.endDate === '') {
         delete chart.endDate;
       }

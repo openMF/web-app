@@ -1,11 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
+import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 
 /**
@@ -30,13 +30,13 @@ export class UndoClientRejectionComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {clientsService} clientsService Cliens Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
   constructor(private formBuilder: FormBuilder,
               private clientsService: ClientsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
@@ -64,15 +64,15 @@ export class UndoClientRejectionComponent implements OnInit {
    * if successful redirects to the client.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const undoClientRejectionFormData = this.undoClientRejectionForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevReopenedDate: Date = this.undoClientRejectionForm.value.reopenedDate;
-    this.undoClientRejectionForm.patchValue({
-      reopenedDate: this.datePipe.transform(prevReopenedDate, dateFormat),
-    });
+    if (undoClientRejectionFormData.reopenedDate instanceof Date) {
+      undoClientRejectionFormData.reopenedDate = this.dateUtils.formatDate(prevReopenedDate, dateFormat);
+    }
     const data = {
-      ...this.undoClientRejectionForm.value,
+      ...undoClientRejectionFormData,
       dateFormat,
       locale
     };

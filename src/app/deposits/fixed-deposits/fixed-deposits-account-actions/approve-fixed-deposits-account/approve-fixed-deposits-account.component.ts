@@ -1,8 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
 import { FixedDepositsService } from 'app/deposits/fixed-deposits/fixed-deposits.service';
@@ -30,14 +30,14 @@ export class ApproveFixedDepositsAccountComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {FixedDepositsService} fixedDepositsService Fixed Deposits Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
               private fixedDepositsService: FixedDepositsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
@@ -66,14 +66,15 @@ export class ApproveFixedDepositsAccountComponent implements OnInit {
    * if successful redirects to the fixed deposit account.
    */
   submit() {
+    const approveFixedDepositsAccountFormData = this.approveFixedDepositsAccountForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevApprovedOnDate: Date = this.approveFixedDepositsAccountForm.value.approvedOnDate;
-    this.approveFixedDepositsAccountForm.patchValue({
-      approvedOnDate: this.datePipe.transform(prevApprovedOnDate, dateFormat),
-    });
+    if (approveFixedDepositsAccountFormData.approvedOnDate instanceof Date) {
+      approveFixedDepositsAccountFormData.approvedOnDate = this.dateUtils.formatDate(prevApprovedOnDate, dateFormat);
+    }
     const data = {
-      ...this.approveFixedDepositsAccountForm.value,
+      ...approveFixedDepositsAccountFormData,
       dateFormat,
       locale
     };

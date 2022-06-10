@@ -98,14 +98,19 @@ export class MakeRepaymentComponent implements OnInit {
 
   /** Submits the repayment form */
   submit() {
-    const prevTransactionDate: Date = this.repaymentLoanForm.value.transactionDate;
-    // TODO: Update once language and date settings are setup
+    const repaymentLoanFormData = this.repaymentLoanForm.value;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const repaymentLoanData = this.repaymentLoanForm.value;
-    repaymentLoanData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
-    repaymentLoanData.locale = this.settingsService.language.code;
-    repaymentLoanData.dateFormat = dateFormat;
-    this.loanService.submitLoanActionButton(this.loanId, repaymentLoanData, 'repayment')
+    const prevTransactionDate: Date = this.repaymentLoanForm.value.transactionDate;
+    if (repaymentLoanFormData.transactionDate instanceof Date) {
+      repaymentLoanFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+    }
+    const data = {
+      ...repaymentLoanFormData,
+      dateFormat,
+      locale
+    };
+    this.loanService.submitLoanActionButton(this.loanId, data, 'repayment')
       .subscribe((response: any) => {
         this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });

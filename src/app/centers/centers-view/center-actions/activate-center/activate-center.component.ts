@@ -1,11 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { CentersService } from 'app/centers/centers.service';
+import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 
 /**
@@ -31,14 +31,14 @@ export class ActivateCenterComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {centersService} CentersService Shares Service
    * @param {SettingsService} settingsService Settings Service.
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
   constructor(private formBuilder: FormBuilder,
               private centersService: CentersService,
               private settingsService: SettingsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router) {
     this.centerId = this.route.parent.snapshot.params['centerId'];
@@ -65,15 +65,15 @@ export class ActivateCenterComponent implements OnInit {
    * if successful redirects to the center.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const activateCenterData = this.activateCenterForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevactivationDate: Date = this.activateCenterForm.value.activationDate;
-    this.activateCenterForm.patchValue({
-      activationDate: this.datePipe.transform(prevactivationDate, dateFormat),
-    });
+    if (activateCenterData.activationDate instanceof Date) {
+      activateCenterData.activationDate = this.dateUtils.formatDate(prevactivationDate, dateFormat);
+    }
     const data = {
-      ...this.activateCenterForm.value,
+      ...activateCenterData,
       dateFormat,
       locale
     };

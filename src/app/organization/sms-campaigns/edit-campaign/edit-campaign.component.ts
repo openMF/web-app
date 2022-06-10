@@ -34,7 +34,7 @@ export class EditCampaignComponent {
    * Fetches campaign template from `resolve`
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {DatePipe} datePipe Date Utils
    * @param {OrganizationService} organizationService Organiztion Service
    * @param {SettingsService} settingsService Settings Service
    */

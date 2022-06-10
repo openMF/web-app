@@ -23,7 +23,7 @@
             </mat-form-field>
 
             <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient"
-              (optionSelected)='clientSelected($event.option.value)'>
+              (optionSelected)="clientSelected($event.option.value)">
               <mat-option *ngFor="let client of clientsData" [value]="client">
                 {{ client.displayName }}
               </mat-option>
@@ -51,7 +51,7 @@
 
               <mat-form-field>
                 <mat-label>Amount</mat-label>
-                <input type="number" matInput required formControlName="amount" required>
+                <input type="number" matInput required formControlName="amount">
               </mat-form-field>
 
             </ng-container>
@@ -71,7 +71,7 @@
 
             <mat-form-field>
               <mat-label>First Name</mat-label>
-              <input matInput required formControlName="firstname" required>
+              <input matInput required formControlName="firstname">
               <mat-error *ngIf="newGuarantorForm.controls.firstname.hasError('required')">
                 First Name <strong>is required</strong>
               </mat-error>
@@ -79,7 +79,7 @@
 
             <mat-form-field>
               <mat-label>Last Name</mat-label>
-              <input matInput required formControlName="lastname" required>
+              <input matInput required formControlName="lastname">
               <mat-error *ngIf="newGuarantorForm.controls.lastname.hasError('required')">
                 Last Name <strong>is required</strong>
               </mat-error>

@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
 import { OrganizationService } from 'app/organization/organization.service';
@@ -35,14 +35,14 @@ export class EditOfficeComponent implements OnInit {
      * @param {ActivatedRoute} route Activated Route.
      * @param {Router} router Router for navigation.
      * @param {MatDialog} dialog Dialog reference.
-     * @param {DatePipe} datepipe Convert Date.
+     * @param {Dates} dateUtils Date Utils
      */
     constructor(private organizationService: OrganizationService,
                 private settingsService: SettingsService,
                 private formBuilder: FormBuilder,
                 private route: ActivatedRoute,
                 private router: Router,
-                private datepipe: DatePipe) {
+                private dateUtils: Dates) {
       this.route.data.subscribe((data: { officeTemplate: any }) => {
         this.officeData = data.officeTemplate;
       });
@@ -70,15 +70,19 @@ export class EditOfficeComponent implements OnInit {
    * Submits the edit office form.
    */
   submit() {
-    const openedOn: Date = this.officeForm.value.openingDate;
+    const officeFormData = this.officeForm.value;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    this.officeForm.patchValue({
-      openingDate: this.datepipe.transform(openedOn, dateFormat)
-    });
-    const office = this.officeForm.value;
-    office.locale = this.settingsService.language.code;
-    office.dateFormat = dateFormat;
-    this.organizationService.updateOffice(this.officeData.id, office).subscribe((response: any) => {
+    const prevOpenedOn: Date = this.officeForm.value.openingDate;
+    if (officeFormData.openingDate instanceof Date) {
+      officeFormData.openingDate = this.dateUtils.formatDate(prevOpenedOn, dateFormat);
+    }
+    const data = {
+      ...officeFormData,
+      dateFormat,
+      locale
+    };
+    this.organizationService.updateOffice(this.officeData.id, data).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

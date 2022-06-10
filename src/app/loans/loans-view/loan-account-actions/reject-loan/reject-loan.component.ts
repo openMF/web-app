@@ -61,15 +61,19 @@ export class RejectLoanComponent implements OnInit {
    * Submit Reject Loan form.
    */
   submit() {
-    const rejectedOnDate = this.rejectLoanForm.value.rejectedOnDate;
+    const rejectLoanFormData = this.rejectLoanForm.value;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    this.rejectLoanForm.patchValue({
-      rejectedOnDate: this.dateUtils.formatDate(rejectedOnDate, dateFormat)
-    });
-    const rejectForm = this.rejectLoanForm.value;
-    rejectForm.locale = this.settingsService.language.code;
-    rejectForm.dateFormat = dateFormat;
-    this.loanService.loanActionButtons(this.loanId, 'reject', rejectForm).subscribe((response: any) => {
+    const prevRejectedOnDate = this.rejectLoanForm.value.rejectedOnDate;
+    if (rejectLoanFormData.rejectedOnDate instanceof Date) {
+      rejectLoanFormData.rejectedOnDate = this.dateUtils.formatDate(prevRejectedOnDate, dateFormat);
+    }
+    const data = {
+      ...rejectLoanFormData,
+      dateFormat,
+      locale
+    };
+    this.loanService.loanActionButtons(this.loanId, 'reject', data).subscribe((response: any) => {
       this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }

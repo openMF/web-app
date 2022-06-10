@@ -2,10 +2,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
+import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 
 /**
@@ -36,7 +36,7 @@ export class AddClientChargeComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {DatePipe} datePipe Date Utils
    * @param {ClientsService} clientsService Clients Service
    * @param {SettingsService} settingsService Setting service
    */
@@ -44,7 +44,7 @@ export class AddClientChargeComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private clientsService: ClientsService,
     private settingsService: SettingsService
   ) {
@@ -124,14 +124,14 @@ export class AddClientChargeComponent implements OnInit {
         clientCharge.monthDayFormat = monthDayFormat;
         if (clientCharge.feeOnMonthDay) {
           const prevDate = this.clientChargeForm.value.feeOnMonthDay;
-          clientCharge.feeOnMonthDay = this.datePipe.transform(prevDate, monthDayFormat);
+          clientCharge.feeOnMonthDay = this.dateUtils.formatDate(prevDate, monthDayFormat);
         }
       } else {
         const dateFormat = this.settingsService.dateFormat;
         clientCharge.dateFormat = dateFormat;
         if (clientCharge.dueDate) {
           const prevDate = this.clientChargeForm.value.dueDate;
-          clientCharge.dueDate = this.datePipe.transform(prevDate, dateFormat);
+          clientCharge.dueDate = this.dateUtils.formatDate(prevDate, dateFormat);
         }
       }
     }

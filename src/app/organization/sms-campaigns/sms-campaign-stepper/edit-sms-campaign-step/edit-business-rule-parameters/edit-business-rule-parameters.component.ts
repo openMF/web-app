@@ -1,7 +1,6 @@
 /** Angular Imports */
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 
 /** Rxjs Imports */
 import { distinctUntilChanged } from 'rxjs/operators';
@@ -13,6 +12,7 @@ import { SettingsService } from 'app/settings/settings.service';
 /** Custom Models */
 import { ReportParameter } from 'app/reports/common-models/report-parameter.model';
 import { SelectOption } from 'app/reports/common-models/select-option.model';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Edit Business Rule Parameters.
@@ -47,7 +47,7 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
    */
   constructor(private reportsService: ReportsService,
               private settingsService: SettingsService,
-              private datePipe: DatePipe) { }
+              private dateUtils: Dates) { }
 
   ngOnChanges() {
     if (this.paramData) {
@@ -78,7 +78,7 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
               break;
             case 'date':
               const dateFormat = this.settingsService.dateFormat;
-              const newControlValue = this.datePipe.transform(controlValue, dateFormat);
+              const newControlValue = this.dateUtils.formatDate(controlValue, dateFormat);
               this.ReportForm.get(param.name).patchValue(newControlValue);
               break;
           }

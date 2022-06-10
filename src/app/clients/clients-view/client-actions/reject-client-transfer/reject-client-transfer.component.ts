@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
+import { Dates } from 'app/core/utils/dates';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Reject Client Transfer Component
@@ -31,6 +33,8 @@ export class RejectClientTransferComponent implements OnInit {
    */
   constructor(private formBuilder: FormBuilder,
               private clientsService: ClientsService,
+              private settingsService: SettingsService,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
@@ -58,8 +62,17 @@ export class RejectClientTransferComponent implements OnInit {
    * if successful redirects to the client.
    */
   submit() {
+    const rejectClientTransferFormData = this.rejectClientTransferForm.value;
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
+    const prevTransferDate: Date = this.rejectClientTransferForm.value.transferDate;
+    if (rejectClientTransferFormData.transferDate instanceof Date) {
+      rejectClientTransferFormData.transferDate = this.dateUtils.formatDate(prevTransferDate, dateFormat);
+    }
     const data = {
-      ...this.rejectClientTransferForm.value,
+      ...rejectClientTransferFormData,
+      dateFormat,
+      locale
     };
     this.clientsService.executeClientCommand(this.clientId, 'rejectTransfer', data).subscribe(() => {
       this.router.navigate(['../../'], { relativeTo: this.route });

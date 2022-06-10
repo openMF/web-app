@@ -2,7 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { ReportsService } from '../reports.service';
@@ -11,6 +10,7 @@ import { SettingsService } from 'app/settings/settings.service';
 /** Custom Models */
 import { ReportParameter } from '../common-models/report-parameter.model';
 import { SelectOption } from '../common-models/select-option.model';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Run report component.
@@ -57,12 +57,12 @@ export class RunReportComponent implements OnInit {
    * @param {ActivatedRoute} route ActivatedRoute.
    * @param {ReportsService} reportsService ReportsService
    * @param {SettingsService} settingsService Settings Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    */
   constructor(private route: ActivatedRoute,
               private reportsService: ReportsService,
                private settingsService: SettingsService,
-              private datePipe: DatePipe) {
+              private dateUtils: Dates) {
     this.report.name = this.route.snapshot.params['name'];
     this.route.queryParams.subscribe((queryParams: { type: any, id: any }) => {
       this.report.type = queryParams.type;
@@ -193,7 +193,7 @@ export class RunReportComponent implements OnInit {
           break;
         case 'date':
           const dateFormat = this.settingsService.dateFormat;
-          formattedResponse[newKey] = this.datePipe.transform(value, dateFormat);
+          formattedResponse[newKey] = this.dateUtils.formatDate(value, dateFormat);
           break;
         case 'none':
           formattedResponse[newKey] = value;

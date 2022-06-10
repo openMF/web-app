@@ -1,12 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../../recurring-deposits.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Activate Recurring Deposits Account Component
@@ -30,14 +30,14 @@ export class ActivateRecurringDepositsAccountComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {recurringDepositsService} recurringDepositsService Recurring Deposits Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SavingsService} savingsService Savings Service
    */
   constructor(private formBuilder: FormBuilder,
     private recurringDepositsService: RecurringDepositsService,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
     private settingsService: SettingsService) {
@@ -65,15 +65,15 @@ export class ActivateRecurringDepositsAccountComponent implements OnInit {
    * if successful redirects to the recurring deposit account.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const activateRecurringDepositsAccountFormData = this.activateRecurringDepositsAccountForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevActivatedOnDate: Date = this.activateRecurringDepositsAccountForm.value.activatedOnDate;
-    this.activateRecurringDepositsAccountForm.patchValue({
-      activatedOnDate: this.datePipe.transform(prevActivatedOnDate, dateFormat),
-    });
+    if (activateRecurringDepositsAccountFormData.activatedOnDate instanceof Date) {
+      activateRecurringDepositsAccountFormData.activatedOnDate = this.dateUtils.formatDate(prevActivatedOnDate, dateFormat);
+    }
     const data = {
-      ...this.activateRecurringDepositsAccountForm.value,
+      ...activateRecurringDepositsAccountFormData,
       dateFormat,
       locale
     };

@@ -64,16 +64,19 @@ export class WithdrawnByClientComponent implements OnInit {
 
   /** Submits the withdraw by appplicant form */
   submit() {
-    const prevTransactionDate: Date = this.withdrawnByClientLoanForm.value.withdrawnOnDate;
-    // TODO: Update once language and date settings are setup
+    const withdrawnByClientLoanFormData = this.withdrawnByClientLoanForm.value;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    this.withdrawnByClientLoanForm.patchValue({
-      withdrawnOnDate: this.dateUtils.formatDate(prevTransactionDate, dateFormat)
-    });
-    const WithdrawnByClientLoanData = this.withdrawnByClientLoanForm.value;
-    WithdrawnByClientLoanData.locale = this.settingsService.language.code;
-    WithdrawnByClientLoanData.dateFormat = dateFormat;
-    this.loanService.loanActionButtons(this.loanId, 'withdrawnByApplicant', WithdrawnByClientLoanData)
+    const prevTransactionDate: Date = this.withdrawnByClientLoanForm.value.withdrawnOnDate;
+    if (withdrawnByClientLoanFormData.withdrawnOnDate instanceof Date) {
+      withdrawnByClientLoanFormData.withdrawnOnDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+    }
+    const data = {
+      ...withdrawnByClientLoanFormData,
+      dateFormat,
+      locale
+    };
+    this.loanService.loanActionButtons(this.loanId, 'withdrawnByApplicant', data)
       .subscribe((response: any) => {
         this.router.navigate(['../../../general'], { relativeTo: this.route });
       });

@@ -2,11 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { AccountTransfersService } from '../account-transfers.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Create Standing Instructions
@@ -70,14 +70,14 @@ export class CreateStandingInstructionsComponent implements OnInit {
    * @param {Router} router Router
    * @param {AccountTransfersService} accountTransfersService Account Transfers Service
    * @param {SettingsService} settingsService Settings Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    */
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private accountTransfersService: AccountTransfersService,
     private settingsService: SettingsService,
-    private datePipe: DatePipe) {
+    private dateUtils: Dates) {
     this.route.data.subscribe((data: { standingIntructionsTemplate: any }) => {
       this.standingIntructionsTemplate = data.standingIntructionsTemplate;
       this.setParams();
@@ -221,9 +221,9 @@ export class CreateStandingInstructionsComponent implements OnInit {
       monthDayFormat: 'dd MMMM',
       fromClientId: this.clientId,
       fromOfficeId: this.officeId,
-      validFrom: this.datePipe.transform(this.createStandingInstructionsForm.value.validFrom, dateFormat),
-      validTill: this.datePipe.transform(this.createStandingInstructionsForm.value.validTill, dateFormat),
-      recurrenceOnMonthDay: this.datePipe.transform(this.createStandingInstructionsForm.value.recurrenceOnMonthDay, 'dd MMMM'),
+      validFrom: this.dateUtils.formatDate(this.createStandingInstructionsForm.value.validFrom, dateFormat),
+      validTill: this.dateUtils.formatDate(this.createStandingInstructionsForm.value.validTill, dateFormat),
+      recurrenceOnMonthDay: this.dateUtils.formatDate(this.createStandingInstructionsForm.value.recurrenceOnMonthDay, 'dd MMMM'),
     };
     delete standingInstructionData['destination'];
     delete standingInstructionData['applicant'];

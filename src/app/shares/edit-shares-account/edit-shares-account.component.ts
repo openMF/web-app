@@ -38,7 +38,7 @@ export class EditSharesAccountComponent {
    * Fetches shares account template from `resolve`
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {DatePipe} datePipe Date Utils
    * @param {SharesService} sharesService Shares Service
    * @param {SettingsService} settingsService Settings Service
    */

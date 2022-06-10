@@ -1,11 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
+import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 
 /**
@@ -30,14 +30,14 @@ export class ReactivateClientComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {clientsService} clientsService Clients Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
   constructor(private formBuilder: FormBuilder,
               private clientsService: ClientsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
@@ -65,15 +65,15 @@ export class ReactivateClientComponent implements OnInit {
    * if successful redirects to the client.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const reactivateClientFormData = this.reactivateClientForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevReactivationDate: Date = this.reactivateClientForm.value.reactivationDate;
-    this.reactivateClientForm.patchValue({
-      reactivationDate: this.datePipe.transform(prevReactivationDate, dateFormat),
-    });
+    if (reactivateClientFormData.closureDate instanceof Date) {
+      reactivateClientFormData.reactivationDate = this.dateUtils.formatDate(prevReactivationDate, dateFormat);
+    }
     const data = {
-      ...this.reactivateClientForm.value,
+      ...reactivateClientFormData,
       dateFormat,
       locale
     };

@@ -2,11 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { AccountTransfersService } from '../account-transfers.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Edit Standing Instructions
@@ -48,14 +48,14 @@ export class EditStandingInstructionsComponent implements OnInit {
    * @param {Router} router Router
    * @param {AccountTransfersService} accountTransfersService Account Transfers Service
    * @param {SettingsService} settingsService Settings Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    */
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private accountTransfersService: AccountTransfersService,
     private settingsService: SettingsService,
-    private datePipe: DatePipe) {
+    private dateUtils: Dates) {
     this.route.data.subscribe((data: { standingInstructionsDataAndTemplate: any }) => {
       this.standingInstructionsData = data.standingInstructionsDataAndTemplate;
       this.standingInstructionsId = data.standingInstructionsDataAndTemplate.id;
@@ -151,11 +151,11 @@ export class EditStandingInstructionsComponent implements OnInit {
       priority: this.editStandingInstructionsForm.value.priority,
       recurrenceFrequency:	this.editStandingInstructionsForm.value.recurrenceFrequency,
       recurrenceInterval:	this.editStandingInstructionsForm.value.recurrenceInterval,
-      recurrenceOnMonthDay: this.datePipe.transform(this.editStandingInstructionsForm.value.recurrenceOnMonthDay, 'dd MMMM'),
+      recurrenceOnMonthDay: this.dateUtils.formatDate(this.editStandingInstructionsForm.value.recurrenceOnMonthDay, 'dd MMMM'),
       recurrenceType:	this.editStandingInstructionsForm.value.recurrenceType,
       status:	this.editStandingInstructionsForm.value.status,
-      validFrom: this.datePipe.transform(this.editStandingInstructionsForm.value.validFrom, dateFormat),
-      validTill: this.datePipe.transform(this.editStandingInstructionsForm.value.validTill, dateFormat)
+      validFrom: this.dateUtils.formatDate(this.editStandingInstructionsForm.value.validFrom, dateFormat),
+      validTill: this.dateUtils.formatDate(this.editStandingInstructionsForm.value.validTill, dateFormat)
     };
     this.accountTransfersService.updateStandingInstructionsData(this.standingInstructionsId, standingInstructionData).subscribe((response: any) => {
       this.router.navigate(['../view'], { relativeTo: this.route });

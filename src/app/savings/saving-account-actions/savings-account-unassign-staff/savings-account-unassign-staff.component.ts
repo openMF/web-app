@@ -1,8 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
@@ -30,14 +30,14 @@ export class SavingsAccountUnassignStaffComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {SavingsService} savingsService Savings Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
   constructor(private formBuilder: FormBuilder,
               private savingsService: SavingsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
@@ -65,15 +65,15 @@ export class SavingsAccountUnassignStaffComponent implements OnInit {
    * if successful redirects to the saving account.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const savingsUnassignStaffFormData = this.savingsUnassignStaffForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevUnassignmentDate: Date = this.savingsUnassignStaffForm.value.unassignedDate;
-    this.savingsUnassignStaffForm.patchValue({
-      unassignedDate: this.datePipe.transform(prevUnassignmentDate, dateFormat),
-    });
+    if (savingsUnassignStaffFormData.unassignedDate instanceof Date) {
+      savingsUnassignStaffFormData.unassignedDate = this.dateUtils.formatDate(prevUnassignmentDate, dateFormat);
+    }
     const data = {
-      ...this.savingsUnassignStaffForm.value,
+      ...savingsUnassignStaffFormData,
       dateFormat,
       locale
     };

@@ -2,12 +2,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
-import { DatePipe } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 
 /** Custom Services */
 import { ReportsService } from '../reports.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * XBRL Report Component
@@ -47,7 +47,7 @@ export class XBRLReportComponent implements OnInit {
   constructor(private reportService: ReportsService,
               private formBuilder: FormBuilder,
               private settingsService: SettingsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private sanitizer: DomSanitizer) {}
 
  /**
@@ -88,16 +88,17 @@ export class XBRLReportComponent implements OnInit {
    * Fetches XML Response, parses it and initializes mat-table with parsed data.
    */
   runreport() {
-    const startDate: Date = this.xbrlForm.value.startDate;
-    const endDate: Date = this.xbrlForm.value.endDate;
-    // TODO: Update once language and date settings are setup
+    const xbrlFormData = this.xbrlForm.value;
+    const prevStartDate: Date = this.xbrlForm.value.startDate;
+    const prevEndDate: Date = this.xbrlForm.value.endDate;
     const dateFormat = this.settingsService.dateFormat;
-    this.xbrlForm.patchValue({
-      startDate: this.datePipe.transform(startDate, dateFormat),
-      endDate: this.datePipe.transform(endDate, dateFormat)
-    });
-    const dates = this.xbrlForm.value;
-    this.reportService.getMixReport(dates).subscribe((response: any) => {
+    if (xbrlFormData.startDate instanceof Date) {
+      xbrlFormData.startDate = this.dateUtils.formatDate(prevStartDate, dateFormat);
+    }
+    if (xbrlFormData.endDate instanceof Date) {
+      xbrlFormData.endDate = this.dateUtils.formatDate(prevEndDate, dateFormat);
+    }
+    this.reportService.getMixReport(xbrlFormData).subscribe((response: any) => {
       this.rawXml = response;
       this.buildXMLTable(response);
       this.dataSource = new MatTableDataSource(this.xmlData);

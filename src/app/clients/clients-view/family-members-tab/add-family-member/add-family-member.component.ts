@@ -2,11 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { ClientsService } from '../../../clients.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Add Family Member Component
@@ -31,14 +31,14 @@ export class AddFamilyMemberComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder FormBuilder
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {DatePipe} datePipe Date Utils
    * @param {Router} router Router
    * @param {Route} route Route
    * @param {ClientsService} clientsService Clients Service
    * @param {SettingsService} settingsService Setting service
    */
   constructor(private formBuilder: FormBuilder,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private router: Router,
               private route: ActivatedRoute,
               private clientsService: ClientsService,
@@ -77,16 +77,19 @@ export class AddFamilyMemberComponent implements OnInit {
    * Submits the form and adds the family member
    */
   submit() {
-    const prevDateOfBirth: Date = this.addFamilyMemberForm.value.dateOfBirth;
-    // TODO: Update once language and date settings are setup
+    const addFamilyMemberFormData = this.addFamilyMemberForm.value;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    this.addFamilyMemberForm.patchValue({
-      dateOfBirth: this.datePipe.transform(prevDateOfBirth, dateFormat)
-    });
-    const familyMemberData = this.addFamilyMemberForm.value;
-    familyMemberData.locale = this.settingsService.language.code;
-    familyMemberData.dateFormat = dateFormat;
-    this.clientsService.addFamilyMember(this.clientId, familyMemberData).subscribe(res => {
+    const prevDateOfBirth: Date = this.addFamilyMemberForm.value.dateOfBirth;
+    if (addFamilyMemberFormData.dateOfBirth instanceof Date) {
+      addFamilyMemberFormData.dateOfBirth = this.dateUtils.formatDate(prevDateOfBirth, dateFormat);
+    }
+    const data = {
+      ...addFamilyMemberFormData,
+      dateFormat,
+      locale
+    };
+    this.clientsService.addFamilyMember(this.clientId, data).subscribe(res => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

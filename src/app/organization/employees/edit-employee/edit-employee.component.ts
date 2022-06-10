@@ -2,11 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Edit Employee Component.
@@ -36,14 +36,14 @@ export class EditEmployeeComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
-   * @param {DatePipe} datePipe Date Pipe to format date.
+   * @param {Dates} dateUtils Date Utils to format date.
    */
   constructor(private formBuilder: FormBuilder,
               private organizationService: OrganizationService,
               private settingsService: SettingsService,
               private route: ActivatedRoute,
               private router: Router,
-              private datePipe: DatePipe) {
+              private dateUtils: Dates) {
     this.route.data.subscribe((data: { employee: any, offices: any  }) => {
       this.employeeData = data.employee;
       this.officeData = data.employee.allowedOffices;
@@ -77,16 +77,19 @@ export class EditEmployeeComponent implements OnInit {
    * if successful redirects to the employee edited.
    */
   submit() {
-    const prevJoiningDate: Date = this.editEmployeeForm.value.joiningDate;
-    // TODO: Update once language and date settings are setup
+    const editEmployeeFormData = this.editEmployeeForm.value;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    this.editEmployeeForm.patchValue({
-      joiningDate: this.datePipe.transform(prevJoiningDate, dateFormat)
-    });
-    const employee = this.editEmployeeForm.value;
-    employee.locale = this.settingsService.language.code;
-    employee.dateFormat = dateFormat;
-    this.organizationService.updateEmployee(this.employeeData.id, employee).subscribe((response: any) => {
+    const prevJoiningDate: Date = this.editEmployeeForm.value.joiningDate;
+    if (editEmployeeFormData.joiningDate instanceof Date) {
+      editEmployeeFormData.joiningDate = this.dateUtils.formatDate(prevJoiningDate, dateFormat);
+    }
+    const data = {
+      ...editEmployeeFormData,
+      dateFormat,
+      locale
+    };
+    this.organizationService.updateEmployee(this.employeeData.id, data).subscribe((response: any) => {
       this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
     });
   }

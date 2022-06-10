@@ -2,11 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { ProductsService } from '../../products.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Create charge component.
@@ -43,14 +43,14 @@ export class CreateChargeComponent implements OnInit {
    * @param {ProductsService} productsService Products Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
-   * @param {DatePipe} datePipe Date Pipe to format date.
+   * @param {Dates} dateUtils Date Utils to format date.
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
               private productsService: ProductsService,
               private route: ActivatedRoute,
               private router: Router,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { chargesTemplate: any }) => {
       this.chargesTemplateData = data.chargesTemplate;
@@ -214,26 +214,30 @@ export class CreateChargeComponent implements OnInit {
    * if successful redirects to charges.
    */
   submit() {
+    const chargeFormData = this.chargeForm.value;
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const prevFeeOnMonthDay: Date = this.chargeForm.value.feeOnMonthDay;
     const monthDayFormat = 'dd MMM';
-    this.chargeForm.patchValue({
-      feeOnMonthDay: this.datePipe.transform(prevFeeOnMonthDay, monthDayFormat)
-    });
-    const charge = this.chargeForm.getRawValue();
-    // TODO: Update once language and date settings are setup
-    charge.locale = this.settingsService.language.code;
-    charge.monthDayFormat = monthDayFormat;
-    delete charge.addFeeFrequency;
-    if (!charge.taxGroupId) {
-      delete charge.taxGroupId;
+    if (chargeFormData.feeOnMonthDay instanceof Date) {
+      chargeFormData.feeOnMonthDay = this.dateUtils.formatDate(prevFeeOnMonthDay, monthDayFormat);
     }
-    if (!charge.minCap) {
-      delete charge.minCap;
+    const data = {
+      ...chargeFormData,
+      monthDayFormat,
+      locale
+    };
+    delete data.addFeeFrequency;
+    if (!data.taxGroupId) {
+      delete data.taxGroupId;
     }
-    if (!charge.maxCap) {
-      delete charge.maxCap;
+    if (!data.minCap) {
+      delete data.minCap;
     }
-    this.productsService.createCharge(charge).subscribe((response: any) => {
+    if (!data.maxCap) {
+      delete data.maxCap;
+    }
+    this.productsService.createCharge(data).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

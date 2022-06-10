@@ -1,12 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../../recurring-deposits.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Approve Recurring Deposits Account Component
@@ -30,14 +30,14 @@ export class ApproveRecurringDepositsAccountComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {RecurringDepositsService} recurringDepositsService Recurring Deposits Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
     private recurringDepositsService: RecurringDepositsService,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
     private settingsService: SettingsService) {
@@ -66,15 +66,15 @@ export class ApproveRecurringDepositsAccountComponent implements OnInit {
    * if successful redirects to the recurring deposit account.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const approveRecurringDepositsAccountFormData = this.approveRecurringDepositsAccountForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevApprovedOnDate: Date = this.approveRecurringDepositsAccountForm.value.approvedOnDate;
-    this.approveRecurringDepositsAccountForm.patchValue({
-      approvedOnDate: this.datePipe.transform(prevApprovedOnDate, dateFormat),
-    });
+    if (approveRecurringDepositsAccountFormData.approvedOnDate instanceof Date) {
+      approveRecurringDepositsAccountFormData.approvedOnDate = this.dateUtils.formatDate(prevApprovedOnDate, dateFormat);
+    }
     const data = {
-      ...this.approveRecurringDepositsAccountForm.value,
+      ...approveRecurringDepositsAccountFormData,
       dateFormat,
       locale
     };

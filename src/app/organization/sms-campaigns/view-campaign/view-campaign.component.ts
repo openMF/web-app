@@ -4,7 +4,6 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Dialogs */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -17,6 +16,7 @@ import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicke
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * View SMS Campaign Component
@@ -76,7 +76,7 @@ export class ViewCampaignComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {MatDialog} dialog Mat Dialog
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {Dates} dateUtils Date Utils
    * @param {OrganizationService} organizationService Organization Service
    * @param {SettingsService} settingsService Setting Service
    */
@@ -84,7 +84,7 @@ export class ViewCampaignComponent implements OnInit {
               private route: ActivatedRoute,
               public dialog: MatDialog,
               private formBuilder: FormBuilder,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private organizationService: OrganizationService,
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { smsCampaign: any }) => {
@@ -146,7 +146,7 @@ export class ViewCampaignComponent implements OnInit {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
-          closureDate: this.datePipe.transform(response.data.value.closureDate, dateFormat),
+          closureDate: this.dateUtils.formatDate(response.data.value.closureDate, dateFormat),
           dateFormat,
           locale
         };
@@ -181,7 +181,7 @@ export class ViewCampaignComponent implements OnInit {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
-          activationDate: this.datePipe.transform(response.data.value.activationDate, dateFormat),
+          activationDate: this.dateUtils.formatDate(response.data.value.activationDate, dateFormat),
           dateFormat,
           locale
         };
@@ -216,7 +216,7 @@ export class ViewCampaignComponent implements OnInit {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
-          activationDate: this.datePipe.transform(response.data.value.activationDate, dateFormat),
+          activationDate: this.dateUtils.formatDate(response.data.value.activationDate, dateFormat),
           dateFormat,
           locale
         };
@@ -257,20 +257,25 @@ export class ViewCampaignComponent implements OnInit {
    * Retrives messages by status.
    */
   search() {
+    const smsFormData = this.smsForm.value;
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
     const prevFromDate: Date = this.smsForm.value.fromDate;
     const prevToDate: Date = this.smsForm.value.toDate;
-    // TODO: Update once language and date settings are setup
-    const dateFormat = this.settingsService.dateFormat;
-    this.smsForm.patchValue({
-      fromDate: this.datePipe.transform(prevFromDate, dateFormat),
-      toDate: this.datePipe.transform(prevToDate, dateFormat)
-    });
-    const SMS = this.smsForm.value;
-    SMS.id = this.smsCampaignData.id;
-    SMS.locale = this.settingsService.language.code;
-    SMS.dateFormat = dateFormat;
-    SMS.status = this.status;
-    this.organizationService.getMessagebyStatus(SMS).subscribe((response: any) => {
+    if (smsFormData.fromDate instanceof Date) {
+      smsFormData.fromDate = this.dateUtils.formatDate(prevFromDate, dateFormat);
+    }
+    if (smsFormData.toDate instanceof Date) {
+      smsFormData.toDate = this.dateUtils.formatDate(prevToDate, dateFormat);
+    }
+    const data = {
+      ...smsFormData,
+      id: this.smsCampaignData.id,
+      status: this.status,
+      dateFormat,
+      locale
+    };
+    this.organizationService.getMessagebyStatus(data).subscribe((response: any) => {
       this.dataSource.data = response.pageItems;
       this.messageTableRef.renderRows();
     });

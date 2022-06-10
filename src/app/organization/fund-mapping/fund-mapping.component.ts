@@ -5,11 +5,11 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { OrganizationService } from '../organization.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Fund Mapping Component.
@@ -48,13 +48,13 @@ export class FundMappingComponent implements OnInit {
    * @param {OrganizationService} organizationService Organization Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {Router} router Router for navigation.
-   * @param {DatePipe} datePipe Date Pipe to format date.
+   * @param {Dates} dateUtils Date Utils to format date.
    */
   constructor(private formBuilder: FormBuilder,
               private organizationService: OrganizationService,
               private settingsService: SettingsService,
               private route: ActivatedRoute,
-              private datePipe: DatePipe) {
+              private dateUtils: Dates) {
     this.route.data.subscribe((data: { advanceSearchTemplate: any }) => {
       this.advanceSearchTemplate = data.advanceSearchTemplate;
     });
@@ -148,20 +148,24 @@ export class FundMappingComponent implements OnInit {
    */
   submit() {
     this.isCollapsed = true;
-    // TODO: Update once language and date settings are setup
+    const fundMappingFormData = this.fundMappingForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    this.fundMappingForm.patchValue({
-      'loanFromDate': this.datePipe.transform(this.fundMappingForm.value.loanFromDate, dateFormat),
-      'loanToDate': this.datePipe.transform(this.fundMappingForm.value.loanToDate, dateFormat)
-    });
-    const fundMapping = {
-      ...this.fundMappingForm.value,
+    const prevLoanFromDate: Date = this.fundMappingForm.value.loanFromDate;
+    const prevLoanToDate: Date = this.fundMappingForm.value.loanToDate;
+    if (fundMappingFormData.loanFromDate instanceof Date) {
+      fundMappingFormData.loanFromDate = this.dateUtils.formatDate(prevLoanFromDate, dateFormat);
+    }
+    if (fundMappingFormData.loanToDate instanceof Date) {
+      fundMappingFormData.loanToDate = this.dateUtils.formatDate(prevLoanToDate, dateFormat);
+    }
+    const data = {
+      ...fundMappingFormData,
       entities: ['loans'],
       dateFormat,
       locale
     };
-    this.organizationService.retrieveAdvanceSearchResults(fundMapping).subscribe((response: any) => {
+    this.organizationService.retrieveAdvanceSearchResults(data).subscribe((response: any) => {
       this.setLoans(response);
     });
   }

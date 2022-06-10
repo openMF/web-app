@@ -1,11 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
+import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 
 /**
@@ -30,14 +30,14 @@ export class ActivateClientComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {clientsService} clientsService Cliens Service
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {DatePipe} datePipe Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
               private clientsService: ClientsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
@@ -65,15 +65,15 @@ export class ActivateClientComponent implements OnInit {
    * if successful redirects to the client.
    */
   submit() {
-    // TODO: Update once language and date settings are setup
+    const activateClientFormData = this.activateClientForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevActivationDate: Date = this.activateClientForm.value.activationDate;
-    this.activateClientForm.patchValue({
-      activationDate: this.datePipe.transform(prevActivationDate, dateFormat),
-    });
+    if (activateClientFormData.activationDate instanceof Date) {
+      activateClientFormData.activationDate = this.dateUtils.formatDate(prevActivationDate, dateFormat);
+    }
     const data = {
-      ...this.activateClientForm.value,
+      ...activateClientFormData,
       dateFormat,
       locale
     };

@@ -66,21 +66,28 @@ export class LoanRescheduleComponent implements OnInit {
   }
 
   submit() {
-    const rescheduleFromDate = this.rescheduleLoanForm.value.rescheduleFromDate;
-    const adjustedDueDate = this.rescheduleLoanForm.value.adjustedDueDate;
-    const submittedOnDate = this.rescheduleLoanForm.value.submittedOnDate;
+    const rescheduleLoanFormData = this.rescheduleLoanForm.value;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-
-    this.rescheduleLoanForm.patchValue({
-      rescheduleFromDate: this.dateUtils.formatDate(rescheduleFromDate, dateFormat),
-      adjustedDueDate: this.dateUtils.formatDate(adjustedDueDate, dateFormat),
-      submittedOnDate: this.dateUtils.formatDate(submittedOnDate, dateFormat)
-    });
-    const rescheduleForm = this.rescheduleLoanForm.value;
-    rescheduleForm.locale = this.settingsService.language.code;
-    rescheduleForm.dateFormat = dateFormat;
-    rescheduleForm.loanId = this.loanId;
-    this.loanService.submitRescheduleData(rescheduleForm).subscribe((response: any) => {
+    const prevRescheduleFromDate = this.rescheduleLoanForm.value.rescheduleFromDate;
+    const prevAdjustedDueDate = this.rescheduleLoanForm.value.adjustedDueDate;
+    const prevSubmittedOnDate = this.rescheduleLoanForm.value.submittedOnDate;
+    if (rescheduleLoanFormData.rescheduleFromDate instanceof Date) {
+      rescheduleLoanFormData.rescheduleFromDate = this.dateUtils.formatDate(prevRescheduleFromDate, dateFormat);
+    }
+    if (rescheduleLoanFormData.rescheduleFromDate instanceof Date) {
+      rescheduleLoanFormData.adjustedDueDate = this.dateUtils.formatDate(prevAdjustedDueDate, dateFormat);
+    }
+    if (rescheduleLoanFormData.rescheduleFromDate instanceof Date) {
+      rescheduleLoanFormData.submittedOnDate = this.dateUtils.formatDate(prevSubmittedOnDate, dateFormat);
+    }
+    const data = {
+      ...rescheduleLoanFormData,
+      dateFormat,
+      locale
+    };
+    data.loanId = this.loanId;
+    this.loanService.submitRescheduleData(data).subscribe((response: any) => {
 
       // TODO: needs to be updated
       // mentioned in Community App:

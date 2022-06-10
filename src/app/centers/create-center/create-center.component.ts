@@ -2,12 +2,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
 import { CentersService } from '../centers.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Create Center component.
@@ -44,16 +44,16 @@ export class CreateCenterComponent implements OnInit {
    * @param {CentersService} centerService CentersService.
    * @param {SettingsService} settingsService Settings Service.
    * @param {GroupsService} groupService GroupsService.
-   * @param {DatePipe} datePipe Date Pipe to format date.
+   * @param {Dates} dateUtils Date Utils to format date.
    */
   constructor(private formBuilder: FormBuilder,
-              private route: ActivatedRoute,
-              private router: Router,
-              private centerService: CentersService,
-              private settingsService: SettingsService,
-              private groupService: GroupsService,
-              private datePipe: DatePipe) {
-    this.route.data.subscribe( (data: { offices: any }) => {
+    private route: ActivatedRoute,
+    private router: Router,
+    private centerService: CentersService,
+    private settingsService: SettingsService,
+    private groupService: GroupsService,
+    private dateUtils: Dates) {
+    this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
   }
@@ -85,8 +85,8 @@ export class CreateCenterComponent implements OnInit {
    * Adds form control Activation Date if active.
    */
   buildDependencies() {
-    this.centerForm.get('officeId').valueChanges.subscribe( (option: any) => {
-      this.groupService.getGroupsByOfficeId(option).subscribe( (data: any) => {
+    this.centerForm.get('officeId').valueChanges.subscribe((option: any) => {
+      this.groupService.getGroupsByOfficeId(option).subscribe((data: any) => {
         this.groupsData = data;
         if (!this.groupsData.length) {
           this.groupChoice.disable();
@@ -94,7 +94,7 @@ export class CreateCenterComponent implements OnInit {
           this.groupChoice.enable();
         }
       });
-      this.centerService.getStaff(option).subscribe( (data: any) => {
+      this.centerService.getStaff(option).subscribe((data: any) => {
         this.staffData = data['staffOptions'];
         if (this.staffData === undefined) {
           this.centerForm.controls['staffId'].disable();
@@ -103,7 +103,7 @@ export class CreateCenterComponent implements OnInit {
         }
       });
     });
-    this.centerForm.get('active').valueChanges.subscribe( (bool: boolean) => {
+    this.centerForm.get('active').valueChanges.subscribe((bool: boolean) => {
       if (bool) {
         this.centerForm.addControl('activationDate', new FormControl('', Validators.required));
       } else {
@@ -133,22 +133,27 @@ export class CreateCenterComponent implements OnInit {
    * if successful redirects to centers.
    */
   submit() {
-      const prevSubmittedOnDate: Date = this.centerForm.value.submittedOnDate;
-      const prevActivationDate: Date = this.centerForm.value.activationDate;
-      // TODO: Update once language and date settings are setup
-      const dateFormat = this.settingsService.dateFormat;
-      this.centerForm.patchValue({
-        submittedOnDate: this.datePipe.transform(prevSubmittedOnDate, dateFormat),
-        activationDate: this.datePipe.transform(prevActivationDate, dateFormat)
-      });
-      const center = this.centerForm.value;
-      center.locale = this.settingsService.language.code;
-      center.dateFormat = dateFormat;
-      center.groupMembers = [];
-      this.groupMembers.forEach((group: any) => center.groupMembers.push(group.id));
-      this.centerService.createCenter(center).subscribe((response: any) => {
-        this.router.navigate(['../centers']);
-      });
+    const centerFormData = this.centerForm.value;
+    const prevSubmittedOnDate: Date = this.centerForm.value.submittedOnDate;
+    const prevActivationDate: Date = this.centerForm.value.activationDate;
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
+    if (centerFormData.submittedOnDate instanceof Date) {
+      centerFormData.submittedOnDate = this.dateUtils.formatDate(prevSubmittedOnDate, dateFormat);
     }
+    if (centerFormData.activationDate instanceof Date) {
+      centerFormData.activationDate = this.dateUtils.formatDate(prevActivationDate, dateFormat);
+    }
+    const data = {
+      ...centerFormData,
+      dateFormat,
+      locale
+    };
+    data.groupMembers = [];
+    this.groupMembers.forEach((group: any) => data.groupMembers.push(group.id));
+    this.centerService.createCenter(data).subscribe((response: any) => {
+      this.router.navigate(['../centers']);
+    });
+  }
 
 }

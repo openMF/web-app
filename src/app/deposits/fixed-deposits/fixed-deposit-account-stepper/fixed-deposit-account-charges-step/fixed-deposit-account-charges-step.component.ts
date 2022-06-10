@@ -45,7 +45,7 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
 
   /**
    * @param {MatDialog} dialog Mat Dialog
-   * @param {DatePipe} datePipe Date Pipe
+   * @param {DatePipe} datePipe Date Utils
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(public dialog: MatDialog,
