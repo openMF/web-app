@@ -10,7 +10,7 @@
 
           <mat-form-field>
             <mat-label>Reschedule from Installment On</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="rescheduleDatePicker" required
+            <input matInput [min]="minDate" [matDatepicker]="rescheduleDatePicker" required
               formControlName="rescheduleFromDate">
             <mat-datepicker-toggle matSuffix [for]="rescheduleDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #rescheduleDatePicker></mat-datepicker>
@@ -52,7 +52,7 @@
           <ng-container *ngIf="changeRepaymentDate.value">
             <mat-form-field>
               <mat-label>Installment Rescheduled to</mat-label>
-              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="installmentrescheduledDatePicker"
+              <input matInput [min]="minDate" [matDatepicker]="installmentrescheduledDatePicker"
                 formControlName="adjustedDueDate">
               <mat-datepicker-toggle matSuffix [for]="installmentrescheduledDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #installmentrescheduledDatePicker></mat-datepicker>
