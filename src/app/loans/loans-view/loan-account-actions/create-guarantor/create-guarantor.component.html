@@ -85,7 +85,7 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field>
+            <mat-form-field (click)="dobDatePicker.open()">
               <mat-label>Date Of Birth</mat-label>
               <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dobDatePicker" formControlName="dob">
               <mat-datepicker-toggle matSuffix [for]="dobDatePicker"></mat-datepicker-toggle>

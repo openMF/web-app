@@ -41,7 +41,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field fxFlex="48%" (click)="submitPicker.open()">
       <mat-label>Submitted on</mat-label>
       <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submitPicker" required
         formControlName="submittedOnDate">
@@ -52,7 +52,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field fxFlex="48%" (click)="disbursementPicker.open()">
       <mat-label>Disbursement on</mat-label>
       <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="disbursementPicker" required
         formControlName="expectedDisbursementDate">

@@ -6,7 +6,7 @@
 
       <mat-card-content fxLayout="column">
 
-        <mat-form-field>
+        <mat-form-field (click)="dueDatePicker.open()">
           <mat-label>Transaction Date</mat-label>
           <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dueDatePicker"
             formControlName="transactionDate" required>

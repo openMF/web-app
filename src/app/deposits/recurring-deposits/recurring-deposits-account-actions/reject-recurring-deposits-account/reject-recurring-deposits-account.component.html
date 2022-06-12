@@ -8,7 +8,7 @@
 
         <div fxLayout="column">
 
-          <mat-form-field>
+          <mat-form-field (click)="rejectedOnDatePicker.open()">
             <mat-label>Rejected On Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="rejectedOnDatePicker" required
               formControlName="rejectedOnDate">

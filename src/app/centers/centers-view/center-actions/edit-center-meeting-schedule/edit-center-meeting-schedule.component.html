@@ -20,7 +20,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field (click)="newMeetingDatePicker.open()">
           <mat-label>Revised Meeting Date</mat-label>
           <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="newMeetingDatePicker" required formControlName="newMeetingDate">
           <mat-datepicker-toggle matSuffix [for]="newMeetingDatePicker"></mat-datepicker-toggle>

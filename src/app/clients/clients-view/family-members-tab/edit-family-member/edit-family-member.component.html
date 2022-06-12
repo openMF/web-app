@@ -85,7 +85,7 @@
       </mat-form-field>
 
 
-      <mat-form-field fxFlex>
+      <mat-form-field fxFlex (click)="dueDatePicker.open()">
         <mat-label>Date Of Birth</mat-label>
         <input formControlName="dateOfBirth" matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dueDatePicker"
           required>

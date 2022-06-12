@@ -20,7 +20,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field (click)="assignOnDatePicker.open()">
             <mat-label>Assignment Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="assignOnDatePicker" required
               formControlName="assignmentDate">

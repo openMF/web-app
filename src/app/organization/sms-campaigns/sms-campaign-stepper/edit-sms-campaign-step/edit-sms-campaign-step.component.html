@@ -35,7 +35,7 @@
       is Notification?
     </mat-checkbox>
 
-    <mat-form-field fxFlex="48%" *ngIf="smsCampaignDetailsForm.controls.recurrenceStartDate">
+    <mat-form-field fxFlex="48%" *ngIf="smsCampaignDetailsForm.controls.recurrenceStartDate" (click)="recurrenceStartDatePicker.open()">
       <mat-label>Schedule Date</mat-label>
       <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="recurrenceStartDatePicker"
         formControlName="recurrenceStartDate" required>

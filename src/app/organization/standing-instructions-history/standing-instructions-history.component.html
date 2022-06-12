@@ -41,14 +41,14 @@
             <input matInput formControlName="fromAccountId">
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field (click)="fromDatePicker.open()">
             <mat-label>From Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" formControlName="fromDate" [matDatepicker]="fromDatePicker">
             <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #fromDatePicker></mat-datepicker>
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field (click)="toDatePicker.open()">
             <mat-label>To Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" formControlName="toDate" [matDatepicker]="toDatePicker">
             <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>

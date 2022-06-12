@@ -104,7 +104,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="98%">
+          <mat-form-field fxFlex="98%"  (click)="transferDatePicker.open()">
             <mat-label>Transaction Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transferDatePicker" required
               formControlName="transferDate">

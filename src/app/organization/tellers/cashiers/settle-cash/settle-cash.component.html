@@ -28,7 +28,7 @@
             <input matInput formControlName="assignmentPeriod">
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field fxFlex="48%" (click)="cashDatePicker.open()">
             <mat-label>Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="cashDatePicker" required formControlName="txnDate">
             <mat-datepicker-toggle matSuffix [for]="cashDatePicker"></mat-datepicker-toggle>

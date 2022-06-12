@@ -25,7 +25,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field fxFlex="98%">
+      <mat-form-field fxFlex="98%" (click)="transactionDatePicker.open()">
         <mat-label>Repayment date</mat-label>
         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDatePicker" required
           formControlName="transactionDate">

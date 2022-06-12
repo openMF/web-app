@@ -37,7 +37,7 @@
             <input matInput formControlName="chargeTime" />
           </mat-form-field>
 
-          <mat-form-field *ngIf="loanChargeForm.controls['dueDate']">
+          <mat-form-field *ngIf="loanChargeForm.controls['dueDate']" (click)="dueDatePicker.open()">
             <mat-label>Due On</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dueDatePicker" required
               formControlName="dueDate">

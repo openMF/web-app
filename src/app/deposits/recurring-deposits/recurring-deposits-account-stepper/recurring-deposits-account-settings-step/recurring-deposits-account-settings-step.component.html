@@ -63,7 +63,7 @@
     </mat-checkbox>
 
     <ng-container *ngIf="!recurringDepositAccountSettingsForm.value.isCalendarInherited">
-      <mat-form-field fxFlex="48%">
+      <mat-form-field fxFlex="48%" (click)="expectedFirstDepositOnDatePicker.open()">
         <mat-label>Deposit Start Date</mat-label>
         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="expectedFirstDepositOnDatePicker"
           formControlName="expectedFirstDepositOnDate" required>

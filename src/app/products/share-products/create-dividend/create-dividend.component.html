@@ -8,7 +8,7 @@
 
         <div fxLayout="column">
 
-          <mat-form-field>
+          <mat-form-field (click)="startDatePicker.open()">
             <mat-label>Dividend Period Start Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="startDatePicker" required formControlName="dividendPeriodStartDate">
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
@@ -18,7 +18,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field (click)="endDatePicker.open()">
             <mat-label>Dividend Period End Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="endDatePicker" required formControlName="dividendPeriodEndDate">
             <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>

@@ -8,7 +8,7 @@
 
         <div fxLayout="column">
 
-          <mat-form-field fxFlex>
+          <mat-form-field fxFlex (click)="datePicker.open()">
             <mat-label>Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="datePicker" required formControlName="date">
             <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>

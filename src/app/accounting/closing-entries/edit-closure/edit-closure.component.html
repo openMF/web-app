@@ -17,7 +17,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field (click)="closingDatePicker.open()">
             <mat-label>Closing Date</mat-label>
             <input matInput [matDatepicker]="closingDatePicker" required formControlName="closingDate">
             <mat-datepicker-toggle matSuffix [for]="closingDatePicker"></mat-datepicker-toggle>

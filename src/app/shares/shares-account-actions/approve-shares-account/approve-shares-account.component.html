@@ -8,7 +8,7 @@
 
         <div fxLayout="column">
 
-          <mat-form-field>
+          <mat-form-field (click)="approvedDatePicker.open()">
             <mat-label>Approved On Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="approvedDatePicker" required formControlName="approvedDate">
             <mat-datepicker-toggle matSuffix [for]="approvedDatePicker"></mat-datepicker-toggle>

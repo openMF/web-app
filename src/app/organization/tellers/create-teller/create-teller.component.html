@@ -36,7 +36,7 @@
             <textarea matInput formControlName="description"></textarea>
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field (click)="startDatePicker.open()">
             <mat-label>Start Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="startDatePicker" required formControlName="startDate">
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
@@ -46,7 +46,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field (click)="endDatePicker.open()">
             <mat-label>End Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="endDatePicker" formControlName="endDate">
             <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>

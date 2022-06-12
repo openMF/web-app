@@ -6,7 +6,7 @@
 
       <mat-card-content>
 
-          <mat-form-field fxFlex>
+          <mat-form-field fxFlex (click)="reactivationDatePicker.open()">
             <mat-label>Re Activation On Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="reactivationDatePicker" required formControlName="reactivationDate">
             <mat-datepicker-toggle matSuffix [for]="reactivationDatePicker"></mat-datepicker-toggle>

@@ -113,7 +113,7 @@
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field fxFlex="48%">
+            <mat-form-field fxFlex="48%" (click)="dateOfBirthDatePicker.open()">
               <mat-label>Date of Birth</mat-label>
               <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dateOfBirthDatePicker">
               <mat-datepicker-toggle matSuffix [for]="dateOfBirthDatePicker"></mat-datepicker-toggle>

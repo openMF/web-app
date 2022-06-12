@@ -8,7 +8,7 @@
 
         <div fxLayout="column">
 
-          <mat-form-field>
+          <mat-form-field (click)="interestDatePicker.open()">
             <mat-label>Interest waived on</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="interestDatePicker" required
               formControlName="transactionDate">

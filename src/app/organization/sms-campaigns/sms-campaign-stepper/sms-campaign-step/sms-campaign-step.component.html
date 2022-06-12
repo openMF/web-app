@@ -37,7 +37,7 @@
     </mat-checkbox>
 
     <mat-form-field fxFlex="48%"
-      *ngIf="smsCampaignDetailsForm.contains('recurrenceStartDate')">
+      *ngIf="smsCampaignDetailsForm.contains('recurrenceStartDate')" (click)="recurrenceStartDatePicker.open()">
       <mat-label>Schedule Date</mat-label>
       <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="recurrenceStartDatePicker" 
         formControlName="recurrenceStartDate" required>

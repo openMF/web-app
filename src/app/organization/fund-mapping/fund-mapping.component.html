@@ -44,7 +44,7 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field fxFlex="31%">
+      <mat-form-field fxFlex="31%" (click)="fromDatePicker.open()">
         <mat-label>From Date</mat-label>
         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fromDatePicker" 
           required formControlName="loanFromDate" required>
@@ -55,7 +55,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field fxFlex="31%">
+      <mat-form-field fxFlex="31%" (click)="toDatePicker.open()">
         <mat-label>To Date</mat-label>
         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="toDatePicker" 
           required formControlName="loanToDate" required>

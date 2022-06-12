@@ -8,7 +8,7 @@
 
         <div fxLayout="column">
 
-          <mat-form-field>
+          <mat-form-field (click)="approvedDatePicker.open()">
             <mat-label>Approved On</mat-label>
             <input matInput [min]="minDate" [matDatepicker]="approvedDatePicker" required
               formControlName="approvedOnDate">
@@ -19,7 +19,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field (click)="disbursementDatePicker.open()">
             <mat-label>Expected disbursement on</mat-label>
             <input matInput [min]="minDate" [matDatepicker]="disbursementDatePicker"
               formControlName="expectedDisbursementDate">

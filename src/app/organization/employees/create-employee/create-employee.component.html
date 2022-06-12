@@ -51,7 +51,7 @@
             <input matInput formControlName="mobileNo">
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field (click)="joiningDatePicker.open()">
             <mat-label>Joining Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="joiningDatePicker" required formControlName="joiningDate">
             <mat-datepicker-toggle matSuffix [for]="joiningDatePicker"></mat-datepicker-toggle>

@@ -8,7 +8,7 @@
 
         <div fxLayout="column">
 
-          <mat-form-field>
+          <mat-form-field (click)="closureDatePicker.open()">
             <mat-label>Closed On Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closureDatePicker" required formControlName="closureDate">
             <mat-datepicker-toggle matSuffix [for]="closureDatePicker"></mat-datepicker-toggle>

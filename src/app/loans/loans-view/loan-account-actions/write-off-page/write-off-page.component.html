@@ -8,7 +8,7 @@
 
         <div fxLayout="column">
 
-          <mat-form-field>
+          <mat-form-field (click)="writeOffDatePicker.open()">
             <mat-label>Write off on</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="writeOffDatePicker" required
               formControlName="transactionDate">

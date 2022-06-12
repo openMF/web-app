@@ -73,7 +73,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field fxFlex="48%" (click)="dateOfBirthDatePicker.open()">
       <mat-label>{{ createClientForm.value.legalFormId === 1 ? 'Date of Birth' : 'Incorporation Date' }}</mat-label>
       <input matInput [max]="maxDate" [matDatepicker]="dateOfBirthDatePicker" formControlName="dateOfBirth">
       <mat-datepicker-toggle matSuffix [for]="dateOfBirthDatePicker"></mat-datepicker-toggle>
@@ -129,7 +129,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field fxFlex="48%" (click)="submittedOnDatePicker.open()">
       <mat-label>Submitted On</mat-label>
       <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker" formControlName="submittedOnDate">
       <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
@@ -140,7 +140,7 @@
       Active?
     </mat-checkbox>
 
-    <mat-form-field *ngIf="createClientForm.contains('activationDate')" fxFlex="48%">
+    <mat-form-field *ngIf="createClientForm.contains('activationDate')" fxFlex="48%" (click)="activatedOnDatePicker.open()">
       <mat-label>Activation Date</mat-label>
       <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="activatedOnDatePicker" required
         formControlName="activationDate">
@@ -170,7 +170,7 @@
     <div fxFlex="100%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" formGroupName="clientNonPersonDetails"
       *ngIf="createClientForm.contains('clientNonPersonDetails')">
 
-      <mat-form-field fxFlex="48%">
+      <mat-form-field fxFlex="48%" (click)="incorpValidityTillDateDatePicker.open()">
         <mat-label>Incorporation Validity Till Date</mat-label>
         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="incorpValidityTillDateDatePicker" formControlName="incorpValidityTillDate">
         <mat-datepicker-toggle matSuffix [for]="incorpValidityTillDateDatePicker"></mat-datepicker-toggle>
