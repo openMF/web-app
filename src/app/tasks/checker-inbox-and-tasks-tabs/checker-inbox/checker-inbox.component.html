@@ -23,7 +23,7 @@
 
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-      <mat-form-field fxFlex="31%">
+      <mat-form-field fxFlex="31%" (click)="makerDateTimeFromPicker.open()">
         <mat-label>From Date</mat-label>
         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="makerDateTimeFromPicker"
           formControlName="makerDateTimeFrom">
@@ -31,7 +31,7 @@
         <mat-datepicker #makerDateTimeFromPicker></mat-datepicker>
       </mat-form-field>
 
-      <mat-form-field fxFlex="31%">
+      <mat-form-field fxFlex="31%" (click)="makerDateTimetoPicker.open()">
         <mat-label>To Date</mat-label>
         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="makerDateTimetoPicker"
           formControlName="makerDateTimeto">

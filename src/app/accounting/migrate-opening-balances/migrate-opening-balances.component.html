@@ -41,7 +41,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field fxFlex="48%" (click)="openingBalancesDatePicker.open()">
             <mat-label>Opening Balances Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="openingBalancesDatePicker" required formControlName="transactionDate">
             <mat-datepicker-toggle matSuffix [for]="openingBalancesDatePicker"></mat-datepicker-toggle>

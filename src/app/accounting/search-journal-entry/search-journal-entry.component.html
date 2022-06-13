@@ -19,14 +19,14 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlex="31%">
+  <mat-form-field fxFlex="31%" (click)="transactionDateFromPicker.open()">
     <mat-label>Transaction Date From</mat-label>
     <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDateFromPicker" [formControl]="transactionDateFrom">
     <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
     <mat-datepicker #transactionDateFromPicker></mat-datepicker>
   </mat-form-field>
 
-  <mat-form-field fxFlex="31%">
+  <mat-form-field fxFlex="31%" (click)="transactionDateToPicker.open()">
     <mat-label>Transaction Date To</mat-label>
     <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDateToPicker" [formControl]="transactionDateTo">
     <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>

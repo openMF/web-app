@@ -8,7 +8,7 @@
 
         <div fxLayout="column">
 
-          <mat-form-field>
+          <mat-form-field (click)="transactionsDatePicker.open()">
             <mat-label>Transaction Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionsDatePicker" required
               formControlName="transactionDate">

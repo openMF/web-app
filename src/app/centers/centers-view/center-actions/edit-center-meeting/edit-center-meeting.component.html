@@ -51,7 +51,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field class="m-b-5">
+        <mat-form-field class="m-b-5" (click)="startDatePicker.open()">
           <mat-label>Above Changes are Effective from</mat-label>
           <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="startDatePicker" required formControlName="startDate">
           <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>

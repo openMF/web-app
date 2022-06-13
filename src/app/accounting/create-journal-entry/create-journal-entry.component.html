@@ -113,7 +113,7 @@
             <input matInput formControlName="referenceNumber">
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field fxFlex="48%" (click)="transactionDatePicker.open()">
             <mat-label>Transaction Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDatePicker" required formControlName="transactionDate">
             <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>

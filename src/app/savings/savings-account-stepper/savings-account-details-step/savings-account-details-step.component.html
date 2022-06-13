@@ -14,7 +14,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field fxFlex="48%" (click)="submittedOnDatePicker.open()">
       <mat-label>Submitted On</mat-label>
       <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker" 
         formControlName="submittedOnDate" required>

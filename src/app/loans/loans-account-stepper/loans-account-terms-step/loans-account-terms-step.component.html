@@ -40,7 +40,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field fxFlex="48%">
+      <mat-form-field fxFlex="48%" (click)="repaymentsPicker.open()">
         <mat-label>First repayment on</mat-label>
         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="repaymentsPicker"
           formControlName="repaymentsStartingFromDate">
@@ -92,7 +92,7 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field fxFlex="48%">
+      <mat-form-field fxFlex="48%" (click)="interestPicker.open()">
         <mat-label>Interest charged from</mat-label>
         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="interestPicker"
           formControlName="interestChargedFromDate">
@@ -253,7 +253,7 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field fxFlex="48%"
+      <mat-form-field fxFlex="48%" (click)="recalculationCompoundingFrequencyDatePicker.open()"
         *ngIf="loansAccountProductTemplate.isInterestRecalculationEnabled && loansAccountProductTemplate.interestRecalculationData.interestRecalculationCompoundingType.id != 0 && loansAccountProductTemplate.interestRecalculationData.recalculationCompoundingFrequencyType.id != 1">
         <mat-label>Frequency Date for recalculation</mat-label>
         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="recalculationCompoundingFrequencyDatePicker"
@@ -337,7 +337,7 @@
 
           <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroupName]="i">
 
-            <mat-form-field fxFlex="48%">
+            <mat-form-field fxFlex="48%" (click)="expectedDisbursementDatePicker.open()">
               <mat-label>Expected disbursement on</mat-label>
               <input matInput [required] ="multiDisburseLoan" [min]="minDate" [matDatepicker]="expectedDisbursementDatePicker"
                 formControlName="expectedDisbursementDate">

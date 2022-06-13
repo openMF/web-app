@@ -34,7 +34,7 @@
             <input matInput formControlName="creditAccount">
           </mat-form-field> 
         
-          <mat-form-field>
+          <mat-form-field (click)="startDatePicker.open()">
             <mat-label>Start Date</mat-label>
             <input matInput [min]="minDate" [matDatepicker]="startDatePicker" required formControlName="startDate">
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>

@@ -8,7 +8,7 @@
 
         <div fxLayout="row">
 
-          <mat-form-field fxFlex>
+          <mat-form-field fxFlex (click)="tillDatePicker.open()">
             <mat-label>Accrue Till Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="tillDatePicker" required formControlName="tillDate">
             <mat-datepicker-toggle matSuffix [for]="tillDatePicker"></mat-datepicker-toggle>

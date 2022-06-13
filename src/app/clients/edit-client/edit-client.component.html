@@ -67,7 +67,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field fxFlex="48%" (click)="dateOfBirthDatePicker.open()">
             <mat-label>{{ editClientForm.value.legalFormId === 1 ? 'Date of Birth' : 'Incorporation Date' }}</mat-label>
             <input matInput [max]="maxDate" [matDatepicker]="dateOfBirthDatePicker" formControlName="dateOfBirth">
             <mat-datepicker-toggle matSuffix [for]="dateOfBirthDatePicker"></mat-datepicker-toggle>
@@ -119,7 +119,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field fxFlex="48%" (click)="submittedOnDatePicker.open()">
             <mat-label>Submitted On</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker" formControlName="submittedOnDate" required>
             <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
@@ -129,7 +129,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field fxFlex="48%" (click)="activatedOnDatePicker.open()">
             <mat-label>Activated On</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="activatedOnDatePicker"
               formControlName="activationDate">
@@ -149,7 +149,7 @@
           <div fxFlex="100%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" formGroupName="clientNonPersonDetails"
             *ngIf="editClientForm.contains('clientNonPersonDetails')">
 
-            <mat-form-field fxFlex="48%">
+            <mat-form-field fxFlex="48%" (click)="incorpValidityTillDateDatePicker.open()">
               <mat-label>Incorporation Validity Till Date</mat-label>
               <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="incorpValidityTillDateDatePicker" formControlName="incorpValidityTillDate">
               <mat-datepicker-toggle matSuffix [for]="incorpValidityTillDateDatePicker"></mat-datepicker-toggle>

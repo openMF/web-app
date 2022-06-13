@@ -17,8 +17,8 @@
                 {{param.label}} is <strong>required</strong>
               </mat-error>
             </mat-form-field>
-
-            <mat-form-field fxFlex *ngSwitchCase="'date'">
+    
+            <mat-form-field fxFlex *ngSwitchCase="'date'" (click)="runReportDatePicker.open()">
               <mat-label>{{param.label}}</mat-label>
               <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="runReportDatePicker" required
                 [formControlName]="param.name">

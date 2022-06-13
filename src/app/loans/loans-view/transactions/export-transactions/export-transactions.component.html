@@ -2,7 +2,7 @@
 
   <div fxLayout="row" fxLayoutGap="3%" fxLayoutAlign="center">
 
-    <mat-form-field fxFlex="30%">
+    <mat-form-field fxFlex="30%" (click)="fromDatePicker.open()">
       <mat-label>From Date</mat-label>
       <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fromDatePicker" required formControlName="fromDate">
       <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
@@ -12,7 +12,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="30%">
+    <mat-form-field fxFlex="30%" (click)="toDatePicker.open()">
       <mat-label>To Date</mat-label>
       <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="toDatePicker" required formControlName="toDate">
       <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>

@@ -6,7 +6,7 @@
 
       <mat-card-content>
 
-        <mat-form-field fxFlex>
+        <mat-form-field fxFlex (click)="unassignedDatePicker.open()">
           <mat-label>Unassignment Date</mat-label>
           <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="unassignedDatePicker" required formControlName="unassignedDate">
           <mat-datepicker-toggle matSuffix [for]="unassignedDatePicker"></mat-datepicker-toggle>

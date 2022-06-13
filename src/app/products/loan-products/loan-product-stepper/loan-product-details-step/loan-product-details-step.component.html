@@ -31,14 +31,14 @@
       Include in Customer Loan Counter
     </mat-checkbox>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field fxFlex="48%" (click)="startDatePicker.open()">
       <mat-label>Start Date</mat-label>
       <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="startDatePicker" formControlName="startDate">
       <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #startDatePicker></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field fxFlex="48%" (click)="closeDatePicker.open()">
       <mat-label>Close Date</mat-label>
       <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closeDatePicker" formControlName="closeDate">
       <mat-datepicker-toggle matSuffix [for]="closeDatePicker"></mat-datepicker-toggle>

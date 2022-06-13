@@ -28,7 +28,7 @@
           <input matInput formControlName="name" required>
         </mat-form-field>
 
-        <mat-form-field fxFlex="31%">
+        <mat-form-field fxFlex="31%" (click)="validFromDatePicker.open()">
           <mat-label>Valid from Date</mat-label>
           <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="validFromDatePicker" formControlName="fromDate" required>
           <mat-datepicker-toggle matSuffix [for]="validFromDatePicker"></mat-datepicker-toggle>
@@ -38,7 +38,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex="31%">
+        <mat-form-field fxFlex="31%" (click)="endDatePicker.open()">
           <mat-label>End Date</mat-label>
           <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="endDatePicker" formControlName="endDate">
           <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>

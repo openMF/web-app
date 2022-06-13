@@ -48,7 +48,7 @@
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field *ngIf="recurringDepositsChargeForm.contains('dueDate')">
+            <mat-form-field *ngIf="recurringDepositsChargeForm.contains('dueDate')" (click)="dueDatePicker.open()">
               <mat-label>Due for collection on</mat-label>
               <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dueDatePicker" required
                 formControlName="dueDate">
@@ -59,7 +59,7 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field *ngIf="recurringDepositsChargeForm.contains('feeOnMonthDay')">
+            <mat-form-field *ngIf="recurringDepositsChargeForm.contains('feeOnMonthDay')" (click)="feeOnMonthDayPicker.open()">
               <mat-label>Due On</mat-label>
               <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="feeOnMonthDayPicker" required
                 formControlName="feeOnMonthDay">

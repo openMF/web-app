@@ -17,7 +17,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field (click)="assignmentDatePicker.open()">
             <mat-label>Assignment Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="assignmentDatePicker" required formControlName="assignmentDate">
             <mat-datepicker-toggle matSuffix [for]="assignmentDatePicker"></mat-datepicker-toggle>

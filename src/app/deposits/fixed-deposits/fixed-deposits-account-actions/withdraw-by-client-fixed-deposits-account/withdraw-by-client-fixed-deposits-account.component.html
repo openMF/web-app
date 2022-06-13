@@ -8,7 +8,7 @@
 
         <div fxLayout="column">
 
-          <mat-form-field>
+          <mat-form-field (click)="withdrawnOnDatePicker.open()">
             <mat-label>Withdrawn On Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="withdrawnOnDatePicker" required formControlName="withdrawnOnDate">
             <mat-datepicker-toggle matSuffix [for]="withdrawnOnDatePicker"></mat-datepicker-toggle>

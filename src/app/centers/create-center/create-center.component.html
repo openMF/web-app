@@ -44,7 +44,7 @@
             Active
           </mat-checkbox>
 
-          <mat-form-field *ngIf="this.centerForm.controls.active.value">
+          <mat-form-field *ngIf="this.centerForm.controls.active.value" (click)="activationDatePicker.open()">
             <mat-label>Activation Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="activationDatePicker" required formControlName="activationDate">
             <mat-datepicker-toggle matSuffix [for]="activationDatePicker"></mat-datepicker-toggle>
@@ -59,7 +59,7 @@
             <input matInput formControlName="externalId">
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field (click)="submittedOnDatePicker.open()">
             <mat-label>Submitted on</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker" required formControlName="submittedOnDate">
             <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>

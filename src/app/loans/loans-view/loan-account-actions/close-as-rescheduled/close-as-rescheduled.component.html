@@ -8,7 +8,7 @@
 
         <div fxLayout="column">
 
-          <mat-form-field>
+          <mat-form-field (click)="closedDatePicker.open()">
             <mat-label>Closed On</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closedDatePicker" required
               formControlName="transactionDate">

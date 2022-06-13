@@ -6,7 +6,7 @@
 
       <mat-card-content>
 
-          <mat-form-field fxFlex>
+          <mat-form-field fxFlex (click)="activationDatePicker.open()">
             <mat-label>Activated On Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="activationDatePicker" required formControlName="activationDate">
             <mat-datepicker-toggle matSuffix [for]="activationDatePicker"></mat-datepicker-toggle>

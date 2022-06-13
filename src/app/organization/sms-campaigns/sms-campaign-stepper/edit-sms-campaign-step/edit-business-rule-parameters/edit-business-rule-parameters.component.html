@@ -20,7 +20,7 @@
             </mat-error>
           </mat-form-field>
   
-          <mat-form-field fxFlex="48%" *ngSwitchCase="'date'">
+          <mat-form-field fxFlex="48%" *ngSwitchCase="'date'" (click)="runReportDatePicker.open()">
             <mat-label>{{param.label}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="runReportDatePicker" required
               [formControlName]="param.name">

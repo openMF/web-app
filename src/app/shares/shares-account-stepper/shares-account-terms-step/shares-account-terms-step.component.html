@@ -42,7 +42,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field fxFlex="48%" (click)="applicationDatePicker.open()">
       <mat-label>Application Date</mat-label>
       <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="applicationDatePicker" 
         formControlName="applicationDate" required>

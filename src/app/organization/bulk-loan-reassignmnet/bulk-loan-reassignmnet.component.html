@@ -21,7 +21,7 @@
 
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field fxFlex="48%" (click)="assignmentDatePicker.open()">
             <mat-label>Assignment Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="assignmentDatePicker" required formControlName="assignmentDate">
             <mat-datepicker-toggle matSuffix [for]="assignmentDatePicker"></mat-datepicker-toggle>

@@ -6,7 +6,7 @@
 
     <div fxLayout="column">
 
-      <mat-form-field>
+      <mat-form-field (click)="fromDatePicker.open()">
         <mat-label>From Date</mat-label>
         <input required matInput formControlName="fromDate" [min]="minDate" [matDatepicker]="fromDatePicker">
         <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>

@@ -89,14 +89,14 @@
 
               <div fxLayout="row" fxLayoutGap="3%" fxLayoutAlign="center">
 
-                <mat-form-field>
+                <mat-form-field (click)="fromDatePicker.open()">
                   <mat-label>From Date</mat-label>
                   <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fromDatePicker" formControlName="fromDate">
                   <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
                   <mat-datepicker #fromDatePicker></mat-datepicker>
                 </mat-form-field>
 
-                <mat-form-field>
+                <mat-form-field (click)="toDatePicker.open()">
                   <mat-label>To Date</mat-label>
                   <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="toDatePicker" formControlName="toDate">
                   <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>

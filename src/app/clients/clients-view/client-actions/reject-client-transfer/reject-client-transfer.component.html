@@ -6,7 +6,7 @@
 
       <mat-card-content fxLayout="column">
 
-        <mat-form-field>
+        <mat-form-field (click)="transferDatePicker.open()">
           <mat-label>Transfer Date</mat-label>
           <input matInput [matDatepicker]="transferDatePicker" required formControlName="transferDate">
           <mat-datepicker-toggle matSuffix [for]="transferDatePicker"></mat-datepicker-toggle>

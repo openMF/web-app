@@ -97,7 +97,7 @@
             <input matInput formControlName="amount">
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field fxFlex="48%" (click)="validFromDatePicker.open()">
             <mat-label>Validity From</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="validFromDatePicker" required
               formControlName="validFrom">
@@ -108,7 +108,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field fxFlex="48%" (click)="validTillDatePicker.open()">
             <mat-label>Validity To</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="validTillDatePicker" required
               formControlName="validTill">
@@ -146,7 +146,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field fxFlex="48%" (click)="recurrenceOnMonthDayDatePicker.open()">
             <mat-label>On Month Day</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="recurrenceOnMonthDayDatePicker"
               formControlName="recurrenceOnMonthDay">

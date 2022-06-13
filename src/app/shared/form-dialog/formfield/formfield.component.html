@@ -24,7 +24,7 @@
 
   </div>
 
-  <mat-form-field fxFlexFill *ngIf="formfield.controlType==='datepicker'">
+  <mat-form-field fxFlexFill *ngIf="formfield.controlType==='datepicker'" (click)="datePicker.open()">
     <mat-label>{{ formfield.label }}</mat-label>
     <input matInput [matDatepicker]="datePicker" [min]="formfield.minDate" [max]="formfield.maxDate"  
       [formControlName]="formfield.controlName" [required]="formfield.required">

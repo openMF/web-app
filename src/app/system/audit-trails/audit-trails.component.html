@@ -41,21 +41,21 @@
     <input matInput [formControl]="checker" [matAutocomplete]="checkerAutocomplete">
   </mat-form-field>
 
-  <mat-form-field fxFlex="48%">
+  <mat-form-field fxFlex="48%" (click)="fromDatePicker.open()">
     <mat-label>Maker From Date</mat-label>
     <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fromDatePicker" [formControl]="fromDate">
     <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
     <mat-datepicker #fromDatePicker></mat-datepicker>
   </mat-form-field>
 
-  <mat-form-field fxFlex="48%">
+  <mat-form-field fxFlex="48%" (click)="toDatePicker.open()">
     <mat-label>Maker To Date</mat-label>
     <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="toDatePicker" [formControl]="toDate">
     <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
     <mat-datepicker #toDatePicker></mat-datepicker>
   </mat-form-field>
 
-  <mat-form-field fxFlex="48%">
+  <mat-form-field fxFlex="48%" (click)="checkedFromDatePicker.open()">
     <mat-label>Checker From Date</mat-label>
     <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="checkedFromDatePicker"
       [formControl]="checkedFromDate">
@@ -63,7 +63,7 @@
     <mat-datepicker #checkedFromDatePicker></mat-datepicker>
   </mat-form-field>
 
-  <mat-form-field fxFlex="48%">
+  <mat-form-field fxFlex="48%" (click)="checkedToDatePicker.open()">
     <mat-label>Checked To Date</mat-label>
     <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="checkedToDatePicker" [formControl]="checkedToDate">
     <mat-datepicker-toggle matSuffix [for]="checkedToDatePicker"></mat-datepicker-toggle>

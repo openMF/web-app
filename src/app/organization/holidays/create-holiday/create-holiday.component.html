@@ -16,7 +16,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field (click)="fromDatePicker.open()">
             <mat-label>From Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fromDatePicker" required formControlName="fromDate">
             <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
@@ -26,7 +26,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field (click)="toDatePicker.open()">
             <mat-label>To Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="toDatePicker" required formControlName="toDate">
             <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
@@ -48,7 +48,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field *ngIf="holidayForm.contains('repaymentsRescheduledTo')">
+          <mat-form-field *ngIf="holidayForm.contains('repaymentsRescheduledTo')" (click)="repaymentDatePicker.open()">
             <mat-label>Repayment scheduled to</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="repaymentDatePicker" required formControlName="repaymentsRescheduledTo">
             <mat-datepicker-toggle matSuffix [for]="repaymentDatePicker"></mat-datepicker-toggle>

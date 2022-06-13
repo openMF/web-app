@@ -8,7 +8,7 @@
 
         <div fxLayout="column">
 
-          <mat-form-field>
+          <mat-form-field (click)="actualDisbursementDatePicker.open()">
             <mat-label>Disbursed On</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="actualDisbursementDatePicker" required
               formControlName="actualDisbursementDate">
