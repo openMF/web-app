@@ -32,11 +32,15 @@ export class ClientsDataSource implements DataSource<any> {
    * @param {number} pageIndex Page number.
    * @param {number} limit Number of clients within the page.
    */
-  getClients(orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true) {
+  getClients(orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, showClosedAccounts: boolean = true) {
     this.clientsSubject.next([]);
     this.clientsService.getClients(orderBy, sortOrder, pageIndex * limit, limit)
       .subscribe((clients: any) => {
-        clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => client.active)) : (clients.pageItems.filter((client: any) => !client.active));
+        if (showClosedAccounts) {
+          clients.pageItems = clients.pageItems;
+        } else {
+          clients.pageItems = clients.pageItems.filter((client: any) => client.status.value !== 'Closed');
+        }
         this.recordsSubject.next(clients.totalFilteredRecords);
         this.clientsSubject.next(clients.pageItems);
       });
@@ -64,11 +68,15 @@ export class ClientsDataSource implements DataSource<any> {
    * @param {number} pageIndex Page number.
    * @param {number} limit Number of clients within the page.
    */
-  filterClients(filter: string, orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true) {
+  filterClients(filter: string, orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, showClosedAccounts: boolean = true) {
     this.clientsSubject.next([]);
     this.clientsService.getClients(orderBy, sortOrder, pageIndex * limit, limit)
       .subscribe((clients: any) => {
-        clients.pageItems = clients.pageItems.filter((client: any) => client.active === clientActive && client.displayName.toLowerCase().includes(filter));
+        if (showClosedAccounts) {
+          clients.pageItems = clients.pageItems.filter((client: any) => client.displayName.toLowerCase().includes(filter));
+        } else {
+          clients.pageItems = clients.pageItems.filter((client: any) => client.status.value !== 'Closed' && client.displayName.toLowerCase().includes(filter));
+        }
         this.recordsSubject.next(clients.totalFilteredRecords);
         this.clientsSubject.next(clients.pageItems);
       });
