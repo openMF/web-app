@@ -36,6 +36,7 @@ export class ClientsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.getClients();
   }
+
   ngAfterViewInit() {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     merge(this.sort.sortChange, this.paginator.page, this.showClosedAccounts.change)
@@ -54,9 +55,9 @@ export class ClientsComponent implements OnInit, AfterViewInit {
     }
 
     if (this.searchValue !== '') {
-    this.applyFilter(this.searchValue);
+      this.applyFilter(this.searchValue);
     } else {
-    this.dataSource.getClients(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
+      this.dataSource.getClients(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, this.showClosedAccounts.checked);
     }
   }
 
@@ -65,16 +66,16 @@ export class ClientsComponent implements OnInit, AfterViewInit {
    */
   getClients() {
     this.dataSource = new ClientsDataSource(this.clientsService);
-    this.dataSource.getClients(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
+    this.dataSource.getClients(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, this.showClosedAccounts.checked);
   }
 
   /**
    * Filter Client Data
    * @param {string} filterValue Value to filter data.
    */
-  applyFilter(filterValue: string= '') {
+  applyFilter(filterValue: string = '') {
     this.searchValue = filterValue;
-    this.dataSource.filterClients(filterValue.trim().toLowerCase(), this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
+    this.dataSource.filterClients(filterValue.trim().toLowerCase(), this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, this.showClosedAccounts.checked);
   }
 
 }
