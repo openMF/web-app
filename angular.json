@@ -31,6 +31,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/font-awesome/css/font-awesome.css",
               "src/main.scss",
               {"inject":false,
                 "input": "src/theme/deeppurple-amber.scss",
@@ -57,7 +58,11 @@
                 "bundleName": "theme/pictonblue-yellowgreen"
 }
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "@ckeditor/ckeditor5-build-classic"
+            ]
           },
           "configurations": {
             "production": {
