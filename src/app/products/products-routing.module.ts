@@ -128,13 +128,13 @@ const routes: Routes = [
             {
               path: ':id',
               data: { title: extract('View Loan Product'), routeParamBreadcrumb: 'id' },
+              resolve: {
+                loanProduct: LoanProductResolver
+              },
               children: [
                 {
                   path: '',
                   component: ViewLoanProductComponent,
-                  resolve: {
-                    loanProduct: LoanProductResolver
-                  },
                 },
                 {
                   path: 'edit',
@@ -170,13 +170,13 @@ const routes: Routes = [
             {
               path: ':id',
               data: { title: extract('View Saving Product'), routeParamBreadcrumb: 'id' },
+              resolve: {
+                savingProduct: SavingProductResolver
+              },
               children: [
                 {
                   path: '',
                   component: ViewSavingProductComponent,
-                  resolve: {
-                    savingProduct: SavingProductResolver
-                  }
                 },
                 {
                   path: 'edit',
@@ -212,13 +212,13 @@ const routes: Routes = [
             {
               path: ':id',
               data: { title: extract('View Share Product'), routeParamBreadcrumb: 'id' },
+              resolve: {
+                shareProduct: ShareProductResolver
+              },
               children: [
                 {
                   path: '',
                   component: ViewShareProductComponent,
-                  resolve: {
-                    shareProduct: ShareProductResolver
-                  },
                 },
                 {
                   path: 'edit',
@@ -291,13 +291,13 @@ const routes: Routes = [
                 {
                   path: ':id',
                   data: { title: extract('View Tax Component'), routeParamBreadcrumb: 'id' },
+                  resolve: {
+                    taxComponent: TaxComponentResolver
+                  },
                   children: [
                     {
                       path: '',
                       component: ViewTaxComponentComponent,
-                      resolve: {
-                        taxComponent: TaxComponentResolver
-                      }
                     },
                     {
                       path: 'edit',
@@ -333,13 +333,13 @@ const routes: Routes = [
                 {
                   path: ':id',
                   data: { title: extract('View Tax Group'), routeParamBreadcrumb: 'id' },
+                  resolve: {
+                    taxGroup: TaxGroupResolver
+                  },
                   children: [
                     {
                       path: '',
                       component: ViewTaxGroupComponent,
-                      resolve: {
-                        taxGroup: TaxGroupResolver
-                      }
                     },
                     {
                       path: 'edit',
@@ -377,12 +377,14 @@ const routes: Routes = [
             {
               path: ':id',
               data: { title: extract('View Recurring Deposit Product'), routeParamBreadcrumb: 'id' },
+              resolve: {
+                recurringDepositProduct: RecurringDepositProductResolver
+              },
               children: [
                 {
                   path: '',
                   component: ViewRecurringDepositProductComponent,
                   resolve: {
-                    recurringDepositProduct: RecurringDepositProductResolver,
                     recurringDepositProductsTemplate: RecurringDepositProductsTemplateResolver
                   }
                 },
@@ -420,12 +422,14 @@ const routes: Routes = [
             {
               path: ':id',
               data: { title: extract('View Fixed Deposit Product'), routeParamBreadcrumb: 'id' },
+              resolve: {
+                fixedDepositProduct: FixedDepositProductResolver,
+              },
               children: [
                 {
                   path: '',
                   component: ViewFixedDepositProductComponent,
                   resolve: {
-                    fixedDepositProduct: FixedDepositProductResolver,
                     fixedDepositProductsTemplate: FixedDepositProductsTemplateResolver
                   }
                 },
@@ -463,13 +467,13 @@ const routes: Routes = [
             {
               path: ':id',
               data: { title: extract('View Product Mix'), routeParamBreadcrumb: 'id'},
+              resolve: {
+                productMix: ViewProductMixResolver
+              },
               children: [
                 {
                   path: '',
                   component: ViewProductMixComponent,
-                  resolve: {
-                    productMix: ViewProductMixResolver
-                  }
                 },
                 {
                   path: 'edit',
@@ -502,13 +506,13 @@ const routes: Routes = [
             {
               path: ':id',
               data: { title: extract('View Floating Rate'), routeParamBreadcrumb: 'id' },
+              resolve: {
+                floatingRate: FloatingRateResolver
+              },
               children: [
                 {
                   path: '',
                   component: ViewFloatingRateComponent,
-                  resolve: {
-                    floatingRate: FloatingRateResolver
-                  }
                 },
                 {
                   path: 'edit',
@@ -544,13 +548,13 @@ const routes: Routes = [
             {
               path: ':id',
               data: { title: extract('View Charges'), routeParamBreadcrumb: 'id' },
+              resolve: {
+                charge: ChargeResolver
+              },
               children: [
                 {
                   path: '',
                   component: ViewChargeComponent,
-                  resolve: {
-                    charge: ChargeResolver
-                  }
                 },
                 {
                   path: 'edit',

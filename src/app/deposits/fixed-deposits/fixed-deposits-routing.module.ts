@@ -42,12 +42,14 @@ const routes: Routes = [
       {
         path: ':fixedDepositAccountId',
         data: { title: extract('Fixed Deposit Account View'), routeParamBreadcrumb: 'fixedDepositAccountId' },
+        resolve: {
+          fixedDepositsAccountData: FixedDepositsAccountViewResolver,
+        },
         children: [
           {
             path: '',
             component: FixedDepositAccountViewComponent,
             resolve: {
-              fixedDepositsAccountData: FixedDepositsAccountViewResolver,
               savingsDatatables: SavingsDatatablesResolver
             },
             children: [

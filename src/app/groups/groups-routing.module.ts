@@ -53,12 +53,14 @@ const routes: Routes = [
         {
           path: ':groupId',
           data: { title: extract('View Group'), routeParamBreadcrumb: 'groupId' },
+          resolve: {
+            groupViewData: GroupViewResolver
+          },
           children: [
             {
               path: '',
               component: GroupsViewComponent,
               resolve: {
-                groupViewData: GroupViewResolver,
                 groupDatatables: GroupDatatablesResolver
               },
               children: [
