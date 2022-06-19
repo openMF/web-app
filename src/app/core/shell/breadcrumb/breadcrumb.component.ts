@@ -105,35 +105,35 @@ export class BreadcrumbComponent implements OnInit {
             } else if (route.snapshot.data.hasOwnProperty(routeParamBreadcrumb) && route.snapshot.paramMap.get(route.snapshot.data[routeParamBreadcrumb])) {
               breadcrumbLabel = route.snapshot.paramMap.get(route.snapshot.data[routeParamBreadcrumb]);
               const routeData: Data = route.snapshot.data;
-              if (routeData.breadcrumb == "Clients") {
-                breadcrumbLabel=routeData.clientViewData.displayName;
-              } else if (routeData.breadcrumb == "Groups") {
+              if (routeData.breadcrumb === 'Clients') {
+                breadcrumbLabel = routeData.clientViewData.displayName;
+              } else if (routeData.breadcrumb === 'Groups') {
                 breadcrumbLabel = routeData.groupViewData.name;
-              } else if (routeData.breadcrumb == "Centers") {
+              } else if (routeData.breadcrumb === 'Centers') {
                 breadcrumbLabel = routeData.centerViewData.name;
-              } else if (routeData.breadcrumb == "Loans") {
-                breadcrumbLabel = routeData.loanDetailsData.loanProductName + "(" + routeData.loanDetailsData.accountNo + ")";
-              } else if (routeData.breadcrumb == "Savings") {
-                breadcrumbLabel = routeData.savingsAccountData.savingsProductName + "(" + routeData.savingsAccountData.accountNo + ")";
-              } else if (routeData.breadcrumb == "Fixed Deposits") {
-                breadcrumbLabel = routeData.fixedDepositsAccountData.depositProductName + "(" + routeData.fixedDepositsAccountData.accountNo + ")";
-              } else if (routeData.breadcrumb == "Loan Products") {
+              } else if (routeData.breadcrumb === 'Loans') {
+                breadcrumbLabel = routeData.loanDetailsData.loanProductName + '(' + routeData.loanDetailsData.accountNo + ')';
+              } else if (routeData.breadcrumb === 'Savings') {
+                breadcrumbLabel = routeData.savingsAccountData.savingsProductName + '(' + routeData.savingsAccountData.accountNo + ')';
+              } else if (routeData.breadcrumb === 'Fixed Deposits') {
+                breadcrumbLabel = routeData.fixedDepositsAccountData.depositProductName + '(' + routeData.fixedDepositsAccountData.accountNo + ')';
+              } else if (routeData.breadcrumb === 'Loan Products') {
                 breadcrumbLabel = routeData.loanProduct.name;
-              } else if (routeData.breadcrumb == "Charges") {
+              } else if (routeData.breadcrumb === 'Charges') {
                 breadcrumbLabel = routeData.charge.name;
-              } else if (routeData.breadcrumb == "Saving Products") {
+              } else if (routeData.breadcrumb === 'Saving Products') {
                 breadcrumbLabel = routeData.savingProduct.name;
-              } else if (routeData.breadcrumb == "Share Products") {
+              } else if (routeData.breadcrumb === 'Share Products') {
                 breadcrumbLabel = routeData.shareProduct.name;
-              } else if (routeData.breadcrumb == "Fixed Deposit Products") {
+              } else if (routeData.breadcrumb === 'Fixed Deposit Products') {
                 breadcrumbLabel = routeData.fixedDepositProduct.name;
-              } else if (routeData.breadcrumb == "Recurring Deposit Products") {
+              } else if (routeData.breadcrumb === 'Recurring Deposit Products') {
                 breadcrumbLabel = routeData.recurringDepositProduct.name;
-              } else if (routeData.breadcrumb == "Floating Rates") {
+              } else if (routeData.breadcrumb === 'Floating Rates') {
                 breadcrumbLabel = routeData.floatingRate.name;
-              } else if (routeData.breadcrumb == "Tax Components") {
+              } else if (routeData.breadcrumb === 'Tax Components') {
                 breadcrumbLabel = routeData.taxComponent.name;
-              } else if (routeData.breadcrumb == "Tax Groups") {
+              } else if (routeData.breadcrumb === 'Tax Groups') {
                 breadcrumbLabel = routeData.taxGroup.name;
               } 
             } else if (route.snapshot.data.hasOwnProperty(routeDataBreadcrumb)) {
