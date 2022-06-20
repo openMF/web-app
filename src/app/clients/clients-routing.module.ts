@@ -176,6 +176,9 @@ const routes: Routes = [
       {
         path: ':clientId',
         data: { title: extract('Clients View'), routeParamBreadcrumb: 'clientId' },
+        resolve: {
+          clientViewData: ClientViewResolver
+        },
         children: [
           {
             path: 'edit',

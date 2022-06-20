@@ -49,12 +49,14 @@ const routes: Routes = [
       {
         path: ':savingAccountId',
         data: { title: extract('Saving Account View'), routeParamBreadcrumb: 'savingAccountId' },
+        resolve: {
+          savingsAccountData: SavingsAccountViewResolver
+        },
         children: [
           {
             path: '',
             component: SavingsAccountViewComponent,
             resolve: {
-              savingsAccountData: SavingsAccountViewResolver,
               savingsDatatables: SavingsDatatablesResolver
             },
             children: [
