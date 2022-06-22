@@ -360,7 +360,7 @@ const routes: Routes = [
     {
       path: 'journal-entry',
       data: {title: extract('Journal Entries'), breadcrumb: 'Journal Entries' },
-      children:[
+      children: [
         {
           path: 'view/:id',
           component: ViewTransactionComponent,
