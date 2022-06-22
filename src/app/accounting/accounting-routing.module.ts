@@ -356,6 +356,20 @@ const routes: Routes = [
           ]
         }
       ]
+    },
+    {
+      path:'journal-entry',
+      data:{title:extract('Journal Entries'), breadcrumb:'Journal Entries'},
+      children:[
+        {
+          path: 'view/:id',
+          component: ViewTransactionComponent,
+          data: { title: extract('View Transaction'), routeParamBreadcrumb: 'id' },
+          resolve: {
+            transaction: TransactionResolver
+          }
+        }
+      ]
     }
   ])
 ];
