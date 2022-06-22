@@ -134,7 +134,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       'numberOfRepayments': ['', Validators.required],
       'repaymentEvery': ['', Validators.required],
       'repaymentFrequencyType': ['', Validators.required],
-      'disbursementData': this.formBuilder.array([this.createDisbursementDataForm()]),
+      'disbursementData': this.formBuilder.array([]),
       'repaymentFrequencyNthDayType': [''],
       'repaymentFrequencyDayOfWeekType': [''],
       'repaymentsStartingFromDate': [''],
