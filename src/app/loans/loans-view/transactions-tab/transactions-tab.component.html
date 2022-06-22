@@ -70,7 +70,7 @@
             <i class="fa fa-file-text"></i>
           </button>
           <button class="account-action-button" mat-raised-button color="primary" matTooltip="View Journal Entries" matTooltipPosition="left"
-            (click)="routeEdit($event)" >
+            (click)="routeEdit($event)" [routerLink]="['/','journal-entry', 'view', 'L'+transaction.id ]">
             <i class="fa fa-arrow-circle-right"></i>
           </button>
         </td>
