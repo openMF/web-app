@@ -113,7 +113,7 @@
             <ng-container matColumnDef="fromDate">
               <th mat-header-cell *matHeaderCellDef> From Date </th>
               <td mat-cell *matCellDef="let marketPrice">
-                {{ marketPrice.fromDate | date }}
+                {{ marketPrice.fromDate  | dateFormat }}
               </td>
             </ng-container>
 

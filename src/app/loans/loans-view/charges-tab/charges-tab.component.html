@@ -22,7 +22,7 @@
 
       <ng-container matColumnDef="dueasof">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Due as of </th>
-        <td mat-cell *matCellDef="let charge"> {{ charge.dueDate| date }} </td>
+        <td mat-cell *matCellDef="let charge"> {{ charge.dueDate | dateFormat }} </td>
       </ng-container>
 
       <ng-container matColumnDef="calculationtype">

@@ -90,7 +90,7 @@
 
         <div fxFlexFill>
           <span fxFlex="40%">Validity:</span>
-          <span fxFlex="60%">{{ standingInstructionsData.validFrom | date }} - {{ standingInstructionsData.validTill | date }}</span>
+          <span fxFlex="60%">{{ standingInstructionsData.validFrom  | dateFormat }} - {{ standingInstructionsData.validTill  | dateFormat }}</span>
         </div>
 
         <div fxFlexFill>
@@ -110,7 +110,7 @@
 
         <div fxFlexFill>
           <span fxFlex="40%">On Month Day:</span>
-          <span fxFlex="60%">{{ standingInstructionsData.recurrenceOnMonthDay | date }}</span>
+          <span fxFlex="60%">{{ standingInstructionsData.recurrenceOnMonthDay  | dateFormat }}</span>
         </div>
 
       </div>

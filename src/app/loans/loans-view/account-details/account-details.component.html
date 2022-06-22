@@ -73,22 +73,22 @@
 
         <div fxFlexFill>
             <span fxFlex="50%"> Submitted on</span>
-            <span fxFlex="50%"> {{loanDetails.timeline.submittedOnDate | date }} </span>
+            <span fxFlex="50%"> {{loanDetails.timeline.submittedOnDate  | dateFormat }} </span>
         </div>
 
         <div fxFlexFill>
             <span fxFlex="50%"> Approved on</span>
-            <span fxFlex="50%"> {{loanDetails.timeline.approvedOnDate | date }} </span>
+            <span fxFlex="50%"> {{loanDetails.timeline.approvedOnDate  | dateFormat }} </span>
         </div>
 
         <div fxFlexFill>
             <span fxFlex="50%"> Disbursed on</span>
-            <span fxFlex="50%"> {{loanDetails.timeline.actualDisbursementDate | date }} </span>
+            <span fxFlex="50%"> {{loanDetails.timeline.actualDisbursementDate  | dateFormat }} </span>
         </div>
 
         <div fxFlexFill>
             <span fxFlex="50%"> Matures on</span>
-            <span fxFlex="50%"> {{loanDetails.timeline.expectedMaturityDate | date }} </span>
+            <span fxFlex="50%"> {{loanDetails.timeline.expectedMaturityDate  | dateFormat }} </span>
         </div>
 
         <div fxFlexFill *ngIf="loanDetails.canDefineInstallmentAmount">

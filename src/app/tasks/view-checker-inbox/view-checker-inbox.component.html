@@ -58,7 +58,7 @@
 
         <div fxFlexFill>
           <span fxFlex="40%">Date:</span>
-          <span fxFlex="60%">{{ checkerInboxDetail.madeOnDate | date}}</span>
+          <span fxFlex="60%">{{ checkerInboxDetail.madeOnDate  | dateFormat}}</span>
         </div>
 
         <div fxFlexFill *ngIf="checkerInboxDetail.officeName">

@@ -29,7 +29,7 @@
           </div>
   
           <div fxFlex="50%">
-            {{ groupData.activationDate | date }}
+            {{ groupData.activationDate  | dateFormat }}
           </div>
 
           <div fxFlex="50%" class="mat-body-strong">
@@ -53,7 +53,7 @@
           </div>
   
           <div fxFlex="50%" *ngIf="groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.nextTenRecurringDates[0]">
-            {{ groupData.collectionMeetingCalendar.nextTenRecurringDates[0] | date }}
+            {{ groupData.collectionMeetingCalendar.nextTenRecurringDates[0]  | dateFormat }}
           </div>
 
           <div fxFlex="50%" class="mat-body-strong" *ngIf="groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.humanReadable">

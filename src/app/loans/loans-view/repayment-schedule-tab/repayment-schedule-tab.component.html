@@ -16,13 +16,13 @@
 
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef> Date </th>
-      <td mat-cell *matCellDef="let ele"> {{ ele.dueDate | date}} </td>
+      <td mat-cell *matCellDef="let ele"> {{ ele.dueDate  | dateFormat}} </td>
       <td mat-footer-cell *matFooterCellDef>  </td>
     </ng-container>
 
     <ng-container matColumnDef="paiddate">
       <th mat-header-cell *matHeaderCellDef> Paid Date </th>
-      <td mat-cell *matCellDef="let ele"> {{ ele.obligationsMetOnDate | date}} </td>
+      <td mat-cell *matCellDef="let ele"> {{ ele.obligationsMetOnDate  | dateFormat}} </td>
       <td mat-footer-cell *matFooterCellDef>  </td>
     </ng-container>
 

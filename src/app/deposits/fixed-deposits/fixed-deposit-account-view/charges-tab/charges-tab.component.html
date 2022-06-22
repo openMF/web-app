@@ -31,12 +31,12 @@
 
       <ng-container matColumnDef="dueAsOf">
         <th mat-header-cell *matHeaderCellDef> Due As Of </th>
-        <td mat-cell *matCellDef="let charge"> {{ charge.dueDate | date }} </td>
+        <td mat-cell *matCellDef="let charge"> {{ charge.dueDate  | dateFormat }} </td>
       </ng-container>
 
       <ng-container matColumnDef="repeatsOn">
         <th mat-header-cell *matHeaderCellDef> Repeats On </th>
-        <td mat-cell *matCellDef="let charge"> {{charge.feeOnMonthDay ? ([2000].concat(charge.feeOnMonthDay) | date: 'dd MMMM') : 'Unassigned'}} </td>
+        <td mat-cell *matCellDef="let charge"> {{charge.feeOnMonthDay ? ([2000].concat(charge.feeOnMonthDay)  | dateFormat: 'dd MMMM') : 'Unassigned'}} </td>
       </ng-container>
 
       <ng-container matColumnDef="calculationType">

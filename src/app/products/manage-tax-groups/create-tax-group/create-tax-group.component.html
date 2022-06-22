@@ -35,7 +35,7 @@
 
             <ng-container matColumnDef="startDate">
               <th mat-header-cell *matHeaderCellDef> Start Date </th>
-              <td mat-cell *matCellDef="let taxComponent"> {{ taxComponent.startDate | date }}
+              <td mat-cell *matCellDef="let taxComponent"> {{ taxComponent.startDate  | dateFormat }}
               </td>
             </ng-container>
 

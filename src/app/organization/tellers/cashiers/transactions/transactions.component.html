@@ -85,7 +85,7 @@
 
         <ng-container matColumnDef="date">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-          <td mat-cell *matCellDef="let transaction"> {{ transaction.txnDate | date }} </td>
+          <td mat-cell *matCellDef="let transaction"> {{ transaction.txnDate  | dateFormat }} </td>
         </ng-container>
   
         <ng-container matColumnDef="transactions">

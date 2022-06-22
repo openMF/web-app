@@ -46,7 +46,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ tellerData.startDate | date }}
+          {{ tellerData.startDate  | dateFormat }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="tellerData.endDate">
@@ -54,7 +54,7 @@
         </div>
 
         <div fxFlex="50%" *ngIf="tellerData.endDate">
-          {{ tellerData.endDate | date }}
+          {{ tellerData.endDate  | dateFormat }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">

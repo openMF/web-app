@@ -54,7 +54,7 @@
           </div>
           <div class="mat-row">
             <div class="mat-cell">Activation Date</div>
-            <div class="mat-cell">{{(transferClientsForm.get('destinationGroupId').value.activationDate | date) || 'Not Activated'}}</div>
+            <div class="mat-cell">{{(transferClientsForm.get('destinationGroupId').value.activationDate  | dateFormat) || 'Not Activated'}}</div>
           </div>
           <div class="mat-row">
             <div class="mat-cell">Staff</div>

@@ -152,12 +152,12 @@
       
             <div fxFlexFill>
               <span fxFlex="40%">Valid from Date:</span>
-              <span fxFlex="60%">{{ recurringDepositProduct.activeChart.fromDate | date }}</span>
+              <span fxFlex="60%">{{ recurringDepositProduct.activeChart.fromDate  | dateFormat }}</span>
             </div>
       
             <div fxFlexFill *ngIf="recurringDepositProduct.activeChart.endDate">
               <span fxFlex="40%">End Date:</span>
-              <span fxFlex="60%">{{ recurringDepositProduct.activeChart.endDate | date }}</span>
+              <span fxFlex="60%">{{ recurringDepositProduct.activeChart.endDate  | dateFormat }}</span>
             </div>
       
             <div fxFlexFill *ngIf="recurringDepositProduct.activeChart.description">

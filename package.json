@@ -49,6 +49,7 @@
     "chart.js": "3.0.0-alpha",
     "core-js": "2.5.0",
     "lodash": "4.17.21",
+    "moment": "^2.29.3",
     "rxjs": "6.6.2",
     "tslib": "1.10.0",
     "zone.js": "0.10.2"

@@ -17,7 +17,7 @@
       <h3 matLine>{{loanNote.note}} </h3>
       <p matLine>
         <span>Created by: {{loanNote.createdByUsername}}</span><br />
-        <span>Date: {{loanNote.createdOn | date}}</span>
+        <span>Date: {{loanNote.createdOn  | dateFormat}}</span>
       </p>
       <div fxLayout="row" fxLayoutAlign="flex-start">
         <button mat-button color="primary" (click)="editNote(loanNote.id,loanNote.note,i)">

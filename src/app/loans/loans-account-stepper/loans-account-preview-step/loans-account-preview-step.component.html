@@ -28,12 +28,12 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Submitted on:</span>
-    <span fxFlex="60%">{{ loansAccount.submittedOnDate | date }}</span>
+    <span fxFlex="60%">{{ loansAccount.submittedOnDate  | dateFormat }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">Disbursement on:</span>
-    <span fxFlex="60%">{{ loansAccount.expectedDisbursementDate | date }}</span>
+    <span fxFlex="60%">{{ loansAccount.expectedDisbursementDate  | dateFormat }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loansAccount.externalId">
@@ -71,12 +71,12 @@
 
   <div fxFlexFill *ngIf="loansAccount.repaymentsStartingFromDate">
     <span fxFlex="40%">First repayment on:</span>
-    <span fxFlex="60%">{{ loansAccount.repaymentsStartingFromDate | date }}</span>
+    <span fxFlex="60%">{{ loansAccount.repaymentsStartingFromDate  | dateFormat }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loansAccount.interestChargedFromDate">
     <span fxFlex="40%">Interest charged from:</span>
-    <span fxFlex="60%">{{ loansAccount.interestChargedFromDate | date }}</span>
+    <span fxFlex="60%">{{ loansAccount.interestChargedFromDate  | dateFormat }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loansAccount.interestRatePerPeriod">
@@ -204,10 +204,10 @@
         <td mat-cell *matCellDef="let charge">
           <span
             *ngIf="charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee'">
-            {{(charge.dueDate | date) || 'Unassigned'}}
+            {{(charge.dueDate  | dateFormat) || 'Unassigned'}}
           </span>
           <span *ngIf="charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'">
-            {{(charge.feeOnMonthDay | date) || 'Unassigned'}}
+            {{(charge.feeOnMonthDay  | dateFormat) || 'Unassigned'}}
           </span>
           <span
             *ngIf="!(charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'

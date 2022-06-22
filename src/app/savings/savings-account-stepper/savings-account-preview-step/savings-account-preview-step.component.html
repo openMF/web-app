@@ -11,7 +11,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Submitted On</span>
-    <span fxFlex="60%">{{ savingsAccount.submittedOnDate | date }}</span>
+    <span fxFlex="60%">{{ savingsAccount.submittedOnDate  | dateFormat }}</span>
   </div>
 
   <div fxFlexFill>
@@ -146,10 +146,10 @@
         <th mat-header-cell *matHeaderCellDef> Date </th>
         <td mat-cell *matCellDef="let charge">
           <span *ngIf="charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee'">
-            {{(charge.dueDate | date) || 'Unassigned'}}
+            {{(charge.dueDate  | dateFormat) || 'Unassigned'}}
           </span>
           <span *ngIf="charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'">
-            {{(charge.feeOnMonthDay | date) || 'Unassigned'}}
+            {{(charge.feeOnMonthDay  | dateFormat) || 'Unassigned'}}
           </span>
           <span 
             *ngIf="!(charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'

@@ -99,12 +99,12 @@
 
         <ng-container matColumnDef="importTime">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Import Time </th>
-          <td mat-cell *matCellDef="let import"> {{ import.importTime | date }} </td>
+          <td mat-cell *matCellDef="let import"> {{ import.importTime  | dateFormat }} </td>
         </ng-container>
 
         <ng-container matColumnDef="endTime">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> End Time </th>
-          <td mat-cell *matCellDef="let import"> {{ import.endTime | date }} </td>
+          <td mat-cell *matCellDef="let import"> {{ import.endTime  | dateFormat }} </td>
         </ng-container>
 
         <ng-container matColumnDef="completed">

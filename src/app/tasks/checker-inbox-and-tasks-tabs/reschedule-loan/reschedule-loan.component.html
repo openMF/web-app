@@ -46,7 +46,7 @@
 
     <ng-container matColumnDef="rescheduleForm">
       <th mat-header-cell *matHeaderCellDef> Reschedule Form </th>
-      <td mat-cell *matCellDef="let loan"> {{loan.rescheduleFromDate | date}} </td>
+      <td mat-cell *matCellDef="let loan"> {{loan.rescheduleFromDate  | dateFormat}} </td>
     </ng-container>
 
     <ng-container matColumnDef="rescheduleReason">

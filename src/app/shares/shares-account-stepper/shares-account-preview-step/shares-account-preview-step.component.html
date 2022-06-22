@@ -11,7 +11,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Submitted On</span>
-    <span fxFlex="60%">{{ sharesAccount.submittedDate | date }}</span>
+    <span fxFlex="60%">{{ sharesAccount.submittedDate  | dateFormat }}</span>
   </div>
 
   <div fxFlexFill>
@@ -65,7 +65,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Application Date</span>
-    <span fxFlex="60%">{{ sharesAccount.applicationDate | date }}</span>
+    <span fxFlex="60%">{{ sharesAccount.applicationDate  | dateFormat }}</span>
   </div>
 
   <div fxFlexFill>

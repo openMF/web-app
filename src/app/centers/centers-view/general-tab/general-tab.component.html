@@ -23,7 +23,7 @@
     <h3>Groups</h3>
 
     <table mat-table [dataSource]="groupResourceData" matSort>
-  
+
       <ng-container matColumnDef="Account No">
         <th mat-header-cell *matHeaderCellDef> Account Number </th>
         <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" matTooltip="{{ element.status.value }}"
@@ -43,42 +43,42 @@
 
       <ng-container matColumnDef="Submitted On">
         <th mat-header-cell *matHeaderCellDef> Submitted On </th>
-        <td mat-cell *matCellDef="let element"> {{element.timeline.submittedOnDate|date}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.timeline.submittedOnDate  | dateFormat}} </td>
       </ng-container>
-  
+
       <tr mat-header-row *matHeaderRowDef="groupsColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: groupsColumns;" [routerLink]="['/groups', row.id, 'general']"></tr>
-  
+
     </table>
 
   </ng-container>
-  
+
   <!-- savings overview table -->
   <ng-container *ngIf="!(savingsAccountData === undefined)">
 
     <ng-container *ngIf="savingsAccountData.length > 0">
 
       <h3>Savings Account Overview</h3>
-  
+
       <table mat-table [dataSource]="savingsAccountData" matSort>
-  
+
         <ng-container matColumnDef="Account No">
           <th mat-header-cell *matHeaderCellDef> Account No </th>
           <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" matTooltip="{{ element.status.value }}"
               [ngClass]="element.status.code|statusLookup"></i>
             {{element.accountNo}} </td>
         </ng-container>
-  
+
         <ng-container matColumnDef="Products">
           <th mat-header-cell *matHeaderCellDef> Products </th>
           <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
         </ng-container>
-    
+
         <ng-container matColumnDef="Balance">
           <th mat-header-cell *matHeaderCellDef> Balance</th>
           <td mat-cell *matCellDef="let element"> {{element.accountBalance}} </td>
         </ng-container>
-    
+
         <ng-container matColumnDef="Actions">
           <th mat-header-cell *matHeaderCellDef> Actions </th>
           <td mat-cell *matCellDef="let element">
@@ -118,13 +118,13 @@
             </ng-container>
           </td>
         </ng-container>
-    
+
         <tr mat-header-row *matHeaderRowDef="savingsAccountColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: savingsAccountColumns;" [routerLink]="['../', 'savings-accounts', row.id, 'transactions']"></tr>
       </table>
-  
+
     </ng-container>
 
-  </ng-container> 
+  </ng-container>
 
 </div>

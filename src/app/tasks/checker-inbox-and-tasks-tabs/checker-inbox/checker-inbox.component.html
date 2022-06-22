@@ -90,7 +90,7 @@
 
     <ng-container matColumnDef="madeOnDate">
       <th mat-header-cell *matHeaderCellDef> Made on Date </th>
-      <td mat-cell *matCellDef="let makerChecker"> {{ makerChecker.madeOnDate | date }} </td>
+      <td mat-cell *matCellDef="let makerChecker"> {{ makerChecker.madeOnDate  | dateFormat }} </td>
     </ng-container>
 
     <ng-container matColumnDef="status">

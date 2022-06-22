@@ -37,17 +37,17 @@
 
       <ng-container matColumnDef="fromDate">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </th>
-        <td mat-cell *matCellDef="let holidays"> {{ holidays.fromDate | date }} </td>
+        <td mat-cell *matCellDef="let holidays"> {{ holidays.fromDate  | dateFormat }} </td>
       </ng-container>
 
       <ng-container matColumnDef="toDate">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> End Date </th>
-        <td mat-cell *matCellDef="let holidays"> {{ holidays.toDate | date }} </td>
+        <td mat-cell *matCellDef="let holidays"> {{ holidays.toDate  | dateFormat }} </td>
       </ng-container>
 
       <ng-container matColumnDef="repaymentsRescheduledTo">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Repayments Scheduled To </th>
-        <td mat-cell *matCellDef="let holidays"> {{ holidays.reschedulingType === 1 ? 'Next Repayment Date' : holidays.repaymentsRescheduledTo | date }} </td>
+        <td mat-cell *matCellDef="let holidays"> {{ holidays.reschedulingType === 1 ? 'Next Repayment Date' : holidays.repaymentsRescheduledTo  | dateFormat }} </td>
       </ng-container>
 
       <ng-container matColumnDef="status">
