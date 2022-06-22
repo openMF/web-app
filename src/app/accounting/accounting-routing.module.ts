@@ -358,8 +358,8 @@ const routes: Routes = [
       ]
     },
     {
-      path:'journal-entry',
-      data:{title:extract('Journal Entries'), breadcrumb:'Journal Entries'},
+      path: 'journal-entry',
+      data: {title: extract('Journal Entries'), breadcrumb: 'Journal Entries' },
       children:[
         {
           path: 'view/:id',
