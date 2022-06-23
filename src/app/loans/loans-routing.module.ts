@@ -69,6 +69,7 @@ const routes: Routes = [
           path: '',
           component: LoansViewComponent,
           resolve: {
+            loanDetailsData: LoanDetailsResolver,
             loanDatatables: LoanDatatablesResolver,
           },
           children: [

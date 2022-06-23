@@ -57,6 +57,7 @@ const routes: Routes = [
             path: '',
             component: SavingsAccountViewComponent,
             resolve: {
+              savingsAccountData: SavingsAccountViewResolver,
               savingsDatatables: SavingsDatatablesResolver
             },
             children: [

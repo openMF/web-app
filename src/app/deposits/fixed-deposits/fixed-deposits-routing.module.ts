@@ -50,6 +50,7 @@ const routes: Routes = [
             path: '',
             component: FixedDepositAccountViewComponent,
             resolve: {
+              fixedDepositsAccountData: FixedDepositsAccountViewResolver,
               savingsDatatables: SavingsDatatablesResolver
             },
             children: [

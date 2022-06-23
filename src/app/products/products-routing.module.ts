@@ -135,6 +135,9 @@ const routes: Routes = [
                 {
                   path: '',
                   component: ViewLoanProductComponent,
+                  resolve: {
+                    loanProduct: LoanProductResolver
+                  }
                 },
                 {
                   path: 'edit',
@@ -177,6 +180,9 @@ const routes: Routes = [
                 {
                   path: '',
                   component: ViewSavingProductComponent,
+                  resolve: {
+                    savingProduct: SavingProductResolver
+                  }
                 },
                 {
                   path: 'edit',
@@ -219,6 +225,9 @@ const routes: Routes = [
                 {
                   path: '',
                   component: ViewShareProductComponent,
+                  resolve: {
+                    shareProduct: ShareProductResolver
+                  },
                 },
                 {
                   path: 'edit',
@@ -298,6 +307,9 @@ const routes: Routes = [
                     {
                       path: '',
                       component: ViewTaxComponentComponent,
+                      resolve: {
+                        taxComponent: TaxComponentResolver
+                      },
                     },
                     {
                       path: 'edit',
@@ -340,6 +352,9 @@ const routes: Routes = [
                     {
                       path: '',
                       component: ViewTaxGroupComponent,
+                      resolve: {
+                        taxGroup: TaxGroupResolver
+                      },
                     },
                     {
                       path: 'edit',
@@ -385,6 +400,7 @@ const routes: Routes = [
                   path: '',
                   component: ViewRecurringDepositProductComponent,
                   resolve: {
+                    recurringDepositProduct: RecurringDepositProductResolver,
                     recurringDepositProductsTemplate: RecurringDepositProductsTemplateResolver
                   }
                 },
@@ -430,6 +446,7 @@ const routes: Routes = [
                   path: '',
                   component: ViewFixedDepositProductComponent,
                   resolve: {
+                    fixedDepositProduct: FixedDepositProductResolver,
                     fixedDepositProductsTemplate: FixedDepositProductsTemplateResolver
                   }
                 },
@@ -474,6 +491,9 @@ const routes: Routes = [
                 {
                   path: '',
                   component: ViewProductMixComponent,
+                  resolve: {
+                    productMix: ViewProductMixResolver
+                  },
                 },
                 {
                   path: 'edit',
@@ -513,6 +533,9 @@ const routes: Routes = [
                 {
                   path: '',
                   component: ViewFloatingRateComponent,
+                  resolve: {
+                    floatingRate: FloatingRateResolver
+                  },
                 },
                 {
                   path: 'edit',
@@ -555,6 +578,9 @@ const routes: Routes = [
                 {
                   path: '',
                   component: ViewChargeComponent,
+                  resolve: {
+                    charge: ChargeResolver
+                  },
                 },
                 {
                   path: 'edit',
