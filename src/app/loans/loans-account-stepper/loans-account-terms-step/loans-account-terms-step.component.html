@@ -332,6 +332,12 @@
         <mat-label>Maximum allowed outstanding balance</mat-label>
         <input matInput required formControlName="loanTermFrequency">
       </mat-form-field>
+      <span fxFlex>
+        <button type="button" mat-icon-button color="primary" (click)="addDisbursementDataEntry(disbursementData)">
+          <fa-icon icon="plus-circle" size="lg"></fa-icon>
+        </button>
+      </span>
+
       <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column" formArrayName="disbursementData"
           *ngFor="let item of disbursementData.controls; let i = index;">
 
@@ -357,11 +363,8 @@
             </mat-form-field>
 
             <span fxFlex>
-              <button *ngIf="i !== 0" type="button" mat-icon-button (click)="removeDisbursementDataEntry(disbursementData, i)">
+              <button type="button" mat-icon-button (click)="removeDisbursementDataEntry(disbursementData, i)">
                 <fa-icon icon="minus-circle" size="lg"></fa-icon>
-              </button>
-              <button *ngIf="i === 0" type="button" mat-icon-button color="primary" (click)="addDisbursementDataEntry(disbursementData)">
-                <fa-icon icon="plus-circle" size="lg"></fa-icon>
               </button>
             </span>
 
