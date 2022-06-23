@@ -59,6 +59,7 @@ const routes: Routes = [
               path: '',
               component: CentersViewComponent,
               resolve: {
+                centerViewData: CenterViewResolver,
                 centerDatatables: CenterDatatablesResolver
               },
               children: [
