@@ -63,7 +63,7 @@
               </mat-list-item>
 
               <mat-list-item>
-                Submitted on : {{ smsCampaignData.smsCampaignTimeLine.submittedOnDate | date }}
+                Submitted on : {{ smsCampaignData.smsCampaignTimeLine.submittedOnDate  | dateFormat }}
               </mat-list-item>
 
               <mat-list-item *ngIf="smsCampaignData.recurrence">

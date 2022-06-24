@@ -24,7 +24,7 @@
     </div>
 
     <div fxFlex="50%">
-      {{ officeData.openingDate | date }}
+      {{ officeData.openingDate  | dateFormat }}
     </div>
 
     <div fxFlex="50%" class="mat-body-strong" *ngIf="officeData.parentName">

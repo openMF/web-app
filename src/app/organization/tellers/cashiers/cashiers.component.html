@@ -22,7 +22,7 @@
 
       <ng-container matColumnDef="period">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Period </th>
-        <td mat-cell *matCellDef="let cashier"> {{ cashier.startDate | date }} - {{ cashier.endDate | date }}</td>
+        <td mat-cell *matCellDef="let cashier"> {{ cashier.startDate  | dateFormat }} - {{ cashier.endDate  | dateFormat }}</td>
       </ng-container>
 
       <ng-container matColumnDef="staffName">

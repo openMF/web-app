@@ -26,7 +26,7 @@
       <h3 matLine>{{clientNote.note}} </h3>
       <p matLine>
         <span>Created by: {{clientNote.createdByUsername}}</span><br />
-        <span>Date: {{clientNote.createdOn | date}}</span>
+        <span>Date: {{clientNote.createdOn  | dateFormat}}</span>
       </p>
       <div fxLayout="row" fxLayoutAlign="flex-start">
         <button mat-button color="primary" (click)="editNote(clientNote.id,clientNote.note,i)" *mifosxHasPermission="'CREATE_CLIENTNOTE'">

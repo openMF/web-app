@@ -61,7 +61,7 @@
           </div>
 
           <div fxFlex="50%">
-            {{ auditTrailData.madeOnDate | date }}
+            {{ auditTrailData.madeOnDate  | dateFormat }}
           </div>
 
           <div fxFlex="50%" class="mat-body-strong" *ngIf="auditTrailData.officeName">

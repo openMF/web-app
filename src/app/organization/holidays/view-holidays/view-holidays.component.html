@@ -36,7 +36,7 @@
                 </div>
 
                 <div fxFlex="50%">
-                    {{ holidayData.fromDate | date }}
+                    {{ holidayData.fromDate  | dateFormat }}
                 </div>
 
                 <div fxFlex="50%" class="header">
@@ -44,7 +44,7 @@
                 </div>
 
                 <div fxFlex="50%">
-                    {{ holidayData.toDate | date }}
+                    {{ holidayData.toDate  | dateFormat }}
                 </div>
 
                 <div fxFlex="50%" class="header">
@@ -52,7 +52,7 @@
                 </div>
 
                 <div fxFlex="50%" *ngIf="holidayData.repaymentsRescheduledTo !== undefined && holidayData.repaymentsRescheduledTo !== null">
-                    {{ holidayData.repaymentsRescheduledTo | date }}
+                    {{ holidayData.repaymentsRescheduledTo  | dateFormat }}
                 </div>
 
                 <div fxFlex="50%" *ngIf="holidayData.repaymentsRescheduledTo === undefined || holidayData.repaymentsRescheduledTo === null">

@@ -22,9 +22,9 @@
           <p>
             Group #: {{groupViewData.id}} | Center Name: {{groupViewData.centerName}} | Staff: {{groupViewData.staffName || 'Unassigned'}}<br/>
             Office Name: {{groupViewData.officeName}}<br/>
-            Activation Date : {{(groupViewData.activationDate)?(groupViewData.activationDate|date) :'Not Activated'}}<br/>
+            Activation Date : {{(groupViewData.activationDate)?(groupViewData.activationDate  | dateFormat) :'Not Activated'}}<br/>
             <span *ngIf="!groupViewData.active">
-             Closure Date: {{groupViewData.timeline.closedOnDate | date}}
+             Closure Date: {{groupViewData.timeline.closedOnDate  | dateFormat}}
             </span>
           </p>
         </mat-card-subtitle>
@@ -33,7 +33,7 @@
       <div class="group-meeting" fxLayoutAlign="start start">
         <div *ngIf="groupViewData.collectionMeetingCalendar; else unassigned">
           <p>
-             Next Meeting on: {{groupViewData.collectionMeetingCalendar?.nextTenRecurringDates[0] | date}}   
+             Next Meeting on: {{groupViewData.collectionMeetingCalendar?.nextTenRecurringDates[0]  | dateFormat}}
              <i class="fa fa-edit" *ngIf="editMeeting" (click)="doAction('Edit Meeting')"></i><br/>
              Meeting Frequency: {{groupViewData.collectionMeetingCalendar?.frequency.value | lowercase}}
           </p>
@@ -41,7 +41,7 @@
         <ng-template #unassigned>
           <div>
             <p>
-              Next Meeting on: Unassigned   
+              Next Meeting on: Unassigned
               <i class="fa fa-calendar"></i><br/>
               Meeting Frequency: N/A
           </p>

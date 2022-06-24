@@ -28,7 +28,7 @@
                   Staff: {{centerViewData.staffName}} <br/>
                 </span>
                 Activation Date :
-                {{(centerViewData.activationDate)?(centerViewData.activationDate|date) :'Not Activated'}}<br />
+                {{(centerViewData.activationDate)?(centerViewData.activationDate  | dateFormat) :'Not Activated'}}<br />
               </p>
             </div>
           </div>
@@ -38,7 +38,7 @@
       <div class="center-meeting" fxLayoutAlign="start start">
         <div *ngIf="centerViewData.collectionMeetingCalendar; else unassigned">
           <p>
-             Next Meeting on: {{centerViewData.collectionMeetingCalendar?.nextTenRecurringDates[0] | date}}
+             Next Meeting on: {{centerViewData.collectionMeetingCalendar?.nextTenRecurringDates[0]  | dateFormat}}
              <span *ngIf="editMeeting">
               <i class="fa fa-edit" (click)="doAction('Edit Meeting')" *mifosxHasPermission="'UPDATE_MEETING'"></i><br />
              </span>

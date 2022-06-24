@@ -64,11 +64,11 @@
             <tbody>
               <tr>
                 <td>Activated On</td>
-                <td>{{fixedDepositsAccountData.timeline.activatedOnDate ? (fixedDepositsAccountData.timeline.activatedOnDate | date) : 'Not Activated'}}</td>
+                <td>{{fixedDepositsAccountData.timeline.activatedOnDate ? (fixedDepositsAccountData.timeline.activatedOnDate  | dateFormat) : 'Not Activated'}}</td>
               </tr>
               <tr *ngIf="fixedDepositsAccountData.timeline.closedOnDate">
                 <td>Closed On</td>
-                <td>{{fixedDepositsAccountData.timeline.closedOnDate | date}}</td>
+                <td>{{fixedDepositsAccountData.timeline.closedOnDate  | dateFormat}}</td>
               </tr>
               <tr>
                 <td>Field Officer</td>
@@ -76,7 +76,7 @@
               </tr>
               <tr>
                 <td>Maturity Date</td>
-                <td>{{fixedDepositsAccountData.maturityDate ? (fixedDepositsAccountData.maturityDate | date) : 'N/A'}}</td>
+                <td>{{fixedDepositsAccountData.maturityDate ? (fixedDepositsAccountData.maturityDate  | dateFormat) : 'N/A'}}</td>
               </tr>
               <tr>
                 <td>Deposit Period</td>

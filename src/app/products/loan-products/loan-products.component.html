@@ -30,7 +30,7 @@
 
       <ng-container matColumnDef="closeDate">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Expiry Date </th>
-        <td mat-cell *matCellDef="let loanProduct"> {{ loanProduct.closeDate | date }} </td>
+        <td mat-cell *matCellDef="let loanProduct"> {{ loanProduct.closeDate  | dateFormat }} </td>
       </ng-container>
 
       <ng-container matColumnDef="status">

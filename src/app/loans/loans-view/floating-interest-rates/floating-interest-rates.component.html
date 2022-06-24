@@ -4,7 +4,7 @@
 
     <ng-container matColumnDef="fromDate">
       <th mat-header-cell *matHeaderCellDef> From Date </th>
-      <td mat-cell *matCellDef="let ele"> {{ ele.fromDate | date}} </td>
+      <td mat-cell *matCellDef="let ele"> {{ ele.fromDate  | dateFormat}} </td>
     </ng-container>
 
     <ng-container matColumnDef="interestRate">

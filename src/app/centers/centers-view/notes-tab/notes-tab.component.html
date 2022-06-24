@@ -17,7 +17,7 @@
       <h3 matLine>{{centerNote.note}} </h3>
       <p matLine>
         <span>Created by: {{centerNote.createdByUsername}}</span><br />
-        <span>Date: {{centerNote.createdOn | date}}</span>
+        <span>Date: {{centerNote.createdOn  | dateFormat}}</span>
       </p>
       <div fxLayout="row" fxLayoutAlign="flex-start">
         <button mat-button color="primary" (click)="editNote(centerNote.id,centerNote.note,i)">

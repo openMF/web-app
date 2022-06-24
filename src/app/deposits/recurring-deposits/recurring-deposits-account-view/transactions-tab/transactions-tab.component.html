@@ -11,7 +11,7 @@
 
       <ng-container matColumnDef="transactionDate">
         <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="{'strike': transaction.reversed}"> {{ transaction.date | date }} </td>
+        <td mat-cell *matCellDef="let transaction" [ngClass]="{'strike': transaction.reversed}"> {{ transaction.date  | dateFormat }} </td>
       </ng-container>
 
       <ng-container matColumnDef="transactionType">

@@ -125,12 +125,12 @@
 
       <div fxFlexFill>
         <span fxFlex="40%">Valid from Date:</span>
-        <span fxFlex="60%">{{ chart.fromDate | date }}</span>
+        <span fxFlex="60%">{{ chart.fromDate  | dateFormat }}</span>
       </div>
 
       <div fxFlexFill *ngIf="chart.endDate">
         <span fxFlex="40%">End Date:</span>
-        <span fxFlex="60%">{{ chart.endDate | date }}</span>
+        <span fxFlex="60%">{{ chart.endDate  | dateFormat }}</span>
       </div>
 
       <div fxFlexFill *ngIf="chart.description">

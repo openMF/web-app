@@ -4,7 +4,7 @@
 
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-      <td mat-cell *matCellDef="let ele"> {{ ele.dueDate | date}} </td>
+      <td mat-cell *matCellDef="let ele"> {{ ele.dueDate  | dateFormat}} </td>
       <td mat-footer-cell *matFooterCellDef> <b> Total</b> </td>
     </ng-container>
 

@@ -38,12 +38,12 @@
 
         <div fxFlexFill *ngIf="loanProduct.startDate">
           <span fxFlex="40%">Start Date:</span>
-          <span fxFlex="60%">{{ loanProduct.startDate | date }}</span>
+          <span fxFlex="60%">{{ loanProduct.startDate  | dateFormat }}</span>
         </div>
 
         <div fxFlexFill *ngIf="loanProduct.closeDate">
           <span fxFlex="40%">Close Date:</span>
-          <span fxFlex="60%">{{ loanProduct.closeDate | date }}</span>
+          <span fxFlex="60%">{{ loanProduct.closeDate  | dateFormat }}</span>
         </div>
 
         <div fxFlexFill *ngIf="loanProduct.description">

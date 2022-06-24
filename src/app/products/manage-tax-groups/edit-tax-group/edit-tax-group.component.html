@@ -35,13 +35,13 @@
 
             <ng-container matColumnDef="startDate">
               <th mat-header-cell *matHeaderCellDef> Start Date </th>
-              <td mat-cell *matCellDef="let taxComponent"> {{ taxComponent.startDate | date }}
+              <td mat-cell *matCellDef="let taxComponent"> {{ taxComponent.startDate  | dateFormat }}
               </td>
             </ng-container>
 
             <ng-container matColumnDef="endDate">
               <th mat-header-cell *matHeaderCellDef> End Date </th>
-              <td mat-cell *matCellDef="let taxComponent"> {{ taxComponent.endDate ? (taxComponent.endDate | date) : '' }}
+              <td mat-cell *matCellDef="let taxComponent"> {{ taxComponent.endDate ? (taxComponent.endDate  | dateFormat) : '' }}
               </td>
             </ng-container>
 

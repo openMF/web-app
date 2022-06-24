@@ -6,7 +6,7 @@
       <p>
         # of Repayments :{{loanDetails?.numberOfRepayments}}
       <p>
-        Maturity Date :{{loanDetails?.timeline.expectedMaturityDate | date}}
+        Maturity Date :{{loanDetails?.timeline.expectedMaturityDate  | dateFormat}}
       </p>
     </div>
   </ng-container>
@@ -71,7 +71,7 @@
         <th mat-header-cell *matHeaderCellDef> Value </th>
         <td mat-cell *matCellDef="let ele"> 
           <ng-container *ngIf="ele.key === 'Disbursement Date'" >
-            <span *ngIf="loanDetails.timeline.actualDisbursementDate"> {{loanDetails.timeline.actualDisbursementDate | date}} </span>
+            <span *ngIf="loanDetails.timeline.actualDisbursementDate"> {{loanDetails.timeline.actualDisbursementDate  | dateFormat}} </span>
             <span *ngIf="!loanDetails.timeline.actualDisbursementDate"> Not Available </span>
           </ng-container>
 
@@ -126,7 +126,7 @@
         <th mat-header-cell *matHeaderCellDef> Value </th>
         <td mat-cell *matCellDef="let ele"> 
           <ng-container *ngIf="ele.key === 'Disbursement Date'" >
-            <span *ngIf="loanDetails.timeline.actualDisbursementDate"> {{loanDetails.timeline.actualDisbursementDate | date}} </span>
+            <span *ngIf="loanDetails.timeline.actualDisbursementDate"> {{loanDetails.timeline.actualDisbursementDate  | dateFormat}} </span>
             <span *ngIf="!loanDetails.timeline.actualDisbursementDate"> Not Available </span>
           </ng-container>
 

@@ -31,7 +31,7 @@
 
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-        <td mat-cell *matCellDef="let survey"> {{ survey.date | date }} </td>
+        <td mat-cell *matCellDef="let survey"> {{ survey.date  | dateFormat }} </td>
       </ng-container>
 
       <ng-container matColumnDef="score">

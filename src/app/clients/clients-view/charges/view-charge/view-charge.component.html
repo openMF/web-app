@@ -48,7 +48,7 @@
 
             <tr>
               <td> Due as of </td>
-              <td> {{ chargeData.dueDate | date }} </td>
+              <td> {{ chargeData.dueDate  | dateFormat }} </td>
             </tr>
 
             <tr>
@@ -99,7 +99,7 @@
         </ng-container>
         <ng-container matColumnDef="transactionDate">
           <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
-          <td mat-cell *matCellDef="let element" [ngClass]="{'strikeoff':element.reversed}"> {{element.date | date}} </td>
+          <td mat-cell *matCellDef="let element" [ngClass]="{'strikeoff':element.reversed}"> {{element.date  | dateFormat}} </td>
         </ng-container>
     
         <ng-container matColumnDef="amount">

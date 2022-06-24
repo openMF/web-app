@@ -10,7 +10,7 @@
 
       <ng-container matColumnDef="transactionDate">
         <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
-        <td mat-cell *matCellDef="let dividend"> {{dividend.postedDate | date}} </td>
+        <td mat-cell *matCellDef="let dividend"> {{dividend.postedDate  | dateFormat}} </td>
       </ng-container>
 
       <ng-container matColumnDef="amount">

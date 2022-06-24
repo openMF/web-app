@@ -46,7 +46,7 @@
           Marital Status : {{ member.maritalStatusId | find:clientTemplate.familyMemberOptions.maritalStatusIdOptions:'id':'name' }}<br />
           Gender : {{ member.genderId | find:clientTemplate.familyMemberOptions.genderIdOptions:'id':'name' }}<br />
           Profession : {{member.professionId | find:clientTemplate.familyMemberOptions.professionIdOptions:'id':'name' }}<br />
-          Date Of Birth : {{member.dateOfBirth | date}}<br />
+          Date Of Birth : {{member.dateOfBirth  | dateFormat}}<br />
         </p>
 
       </mat-expansion-panel>

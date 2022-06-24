@@ -72,17 +72,17 @@
             </tr>
             <tr>
               <td>Activation date</td>
-              <td>{{recurringDepositsAccountData.timeline.activatedOnDate | date}}</td>
+              <td>{{recurringDepositsAccountData.timeline.activatedOnDate  | dateFormat}}</td>
             </tr>
             <tr>
               <td>Maturity Date</td>
-              <td><span>{{recurringDepositsAccountData.maturityDate | date}}</span></td>
+              <td><span>{{recurringDepositsAccountData.maturityDate  | dateFormat}}</span></td>
             </tr>
             <tr
               *ngIf="recurringDepositsAccountData.timeline.closedOnDate || recurringDepositsAccountData.summary.totalWitddrawals">
               <td *ngIf="recurringDepositsAccountData.timeline.closedOnDate">
                 Closed on Date</td>
-              <td><span>{{recurringDepositsAccountData.timeline.closedOnDate | date}}</span></td>
+              <td><span>{{recurringDepositsAccountData.timeline.closedOnDate  | dateFormat}}</span></td>
             </tr>
             <tr>
               <td>Period</td>
@@ -165,10 +165,10 @@
             <tr>
               <td>Date of Deposit</td>
               <td>
-                <span *ngIf="!recurringDepositsAccountData.expectedFirstDepositOnDate">{{recurringDepositsAccountData.timeline.activatedOnDate | date}}
+                <span *ngIf="!recurringDepositsAccountData.expectedFirstDepositOnDate">{{recurringDepositsAccountData.timeline.activatedOnDate  | dateFormat}}
                   <span *ngIf="!recurringDepositsAccountData.timeline.activatedOnDate">Not Activated</span>
                 </span>
-                <span *ngIf="recurringDepositsAccountData.expectedFirstDepositOnDate" >{{recurringDepositsAccountData.expectedFirstDepositOnDate | date}}
+                <span *ngIf="recurringDepositsAccountData.expectedFirstDepositOnDate" >{{recurringDepositsAccountData.expectedFirstDepositOnDate  | dateFormat}}
                   <span *ngIf="!recurringDepositsAccountData.expectedFirstDepositOnDate">Not Activated</span>
                 </span>
               </td>
@@ -181,7 +181,7 @@
             </tr>
             <tr *ngIf="recurringDepositsAccountData.maturityDate">
               <td>Maturity Date</td>
-              <td><span>{{recurringDepositsAccountData.maturityDate | date}}</span></td>
+              <td><span>{{recurringDepositsAccountData.maturityDate  | dateFormat}}</span></td>
             </tr>
             <tr>
               <td>Total Deposits </td>
@@ -255,7 +255,7 @@
             <tr *ngIf="recurringDepositsAccountData.timeline.closedOnDate">
               <td> Closed on Date </td>
               <td>
-                {{ recurringDepositsAccountData.timeline.closedOnDate | date }}
+                {{ recurringDepositsAccountData.timeline.closedOnDate  | dateFormat }}
             </tr>
             <tr>
               <td> Deposits Frequency </td>

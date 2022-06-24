@@ -55,7 +55,7 @@
 
           <ng-container matColumnDef="fromDate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> From Date </th>
-            <td mat-cell *matCellDef="let floatingRate"> {{ floatingRate.fromDate | date : 'dd MMMM yyyy' }} </td>
+            <td mat-cell *matCellDef="let floatingRate"> {{ floatingRate.fromDate  | dateFormat : 'dd MMMM yyyy' }} </td>
           </ng-container>
 
           <ng-container matColumnDef="interestRate">
