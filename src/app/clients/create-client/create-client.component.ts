@@ -44,9 +44,9 @@ export class CreateClientComponent {
    * @param {SettingsService} settingsService Setting service
    */
   constructor(private route: ActivatedRoute,
-              private router: Router,
-              private clientsService: ClientsService,
-              private settingsService: SettingsService) {
+    private router: Router,
+    private clientsService: ClientsService,
+    private settingsService: SettingsService) {
     this.route.data.subscribe((data: { clientTemplate: any, clientAddressFieldConfig: any }) => {
       this.clientTemplate = data.clientTemplate;
       this.clientAddressFieldConfig = data.clientAddressFieldConfig;
@@ -64,11 +64,18 @@ export class CreateClientComponent {
    * Retrieves the client object
    */
   get client() {
-    return {
-      ...this.clientGeneralStep.clientGeneralDetails,
-      ...this.clientFamilyMembersStep.familyMembers,
-      ...this.clientAddressStep.address
-    };
+    if (this.clientTemplate.isAddressEnabled) {
+      return {
+        ...this.clientGeneralStep.clientGeneralDetails,
+        ...this.clientFamilyMembersStep.familyMembers,
+        ...this.clientAddressStep.address
+      };
+    } else {
+      return {
+        ...this.clientGeneralStep.clientGeneralDetails,
+        ...this.clientFamilyMembersStep.familyMembers
+      };
+    }
   }
   /**
    * Submits the create client form.

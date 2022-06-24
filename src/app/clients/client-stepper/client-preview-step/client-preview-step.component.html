@@ -162,7 +162,7 @@
 
   </div>
 
-  <div fxFlexFill *ngIf="client.address.length" fxLayout="row wrap" fxLayout.lt-md="column">
+  <div fxFlexFill *ngIf="clientTemplate.isAddressEnabled && client.address.length" fxLayout="row wrap" fxLayout.lt-md="column">
 
     <h3 class="mat-h3" fxFlexFill>Address</h3>
 
