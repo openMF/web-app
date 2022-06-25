@@ -1,7 +1,6 @@
 /** Angular Imports */
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { FixedDepositsService } from '../fixed-deposits.service';
@@ -13,6 +12,7 @@ import { FixedDepositAccountCurrencyStepComponent } from '../fixed-deposit-accou
 import { FixedDepositAccountTermsStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-terms-step/fixed-deposit-account-terms-step.component';
 import { FixedDepositAccountSettingsStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-settings-step/fixed-deposit-account-settings-step.component';
 import { FixedDepositAccountChargesStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-charges-step/fixed-deposit-account-charges-step.component';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Edit Fixed Deposit Account Component
@@ -44,13 +44,13 @@ export class EditFixedDepositAccountComponent {
    * Fetches FD account template from `resolve`
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
-   * @param {DatePipe} datePipe Date Utils
+   * @param {Dates} dateUtils Date Utils
    * @param {FixedDepositsService} fixedDepositsService Fixed Deposits Service
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private fixedDepositsService: FixedDepositsService,
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { fixedDepositsAccountAndTemplate: any }) => {
@@ -136,11 +136,11 @@ export class EditFixedDepositAccountComponent {
       charges: this.fixedDepositAccount.charges.map((charge: any) => ({
         chargeId: charge.id,
         amount: charge.amount,
-        dueDate: charge.dueDate && this.datePipe.transform(charge.dueDate, dateFormat),
-        feeOnMonthDay: charge.feeOnMonthDay && this.datePipe.transform([2000].concat(charge.feeOnMonthDay), monthDayFormat),
+        dueDate: charge.dueDate && this.dateUtils.formatDate(charge.dueDate, dateFormat),
+        feeOnMonthDay: charge.feeOnMonthDay && this.dateUtils.formatDate([2000].concat(charge.feeOnMonthDay), monthDayFormat),
         feeInterval: charge.feeInterval
       })),
-      submittedOnDate: this.datePipe.transform(this.fixedDepositAccount.submittedOnDate, dateFormat),
+      submittedOnDate: this.dateUtils.formatDate(this.fixedDepositAccount.submittedOnDate, dateFormat),
       charts: [{chartSlabs: this.fixedDepositsAccountProductTemplate.accountChart.chartSlabs}],
       dateFormat,
       monthDayFormat,
