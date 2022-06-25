@@ -38,11 +38,11 @@
 
     </mat-step>
 
-    <mat-step>
+    <mat-step *ngIf="clientTemplate.isAddressEnabled">
 
       <ng-template matStepLabel>ADDRESS</ng-template>
 
-      <mifosx-client-address-step 
+      <mifosx-client-address-step
         [clientTemplate]="clientTemplate"
         [clientAddressFieldConfig]="clientAddressFieldConfig"
       >
