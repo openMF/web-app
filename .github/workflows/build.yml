@@ -1,6 +1,6 @@
 name: build-run
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
@@ -13,7 +13,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    name: Run Lint and Deploy 
+    name: Run Lint and Deploy
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -21,14 +21,15 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Use Node.js 14
+      - name: Use Node.js 16
         uses: actions/setup-node@v1
         with:
           # no support for lts as of now with github actions.
           # issue link : https://github.com/actions/setup-node/issues/26
-          node-version: '14'
+          # lts/gallium node v16.15.1 (npm v8.11.0)
+          node-version: '16.15.1'
       - name: Angular CLI install
-        run : npm install -g --silent @angular/cli@9.1.12
+        run : npm install -g --silent @angular/cli@11.2.14
 
       - name: Npm install
         run: npm install
@@ -48,6 +49,6 @@ jobs:
           FOLDER: dist/web-app
           #without preserve it only builds if you have untracked files
           PRESERVE: true
-          # github user name and email shows up in the logs, 
-          # so it would be better to make it silent. 
-          SILENT: true 
+          # github user name and email shows up in the logs,
+          # so it would be better to make it silent.
+          SILENT: true
