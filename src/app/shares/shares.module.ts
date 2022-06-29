@@ -1,6 +1,5 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
-import { DatePipe } from '@angular/common';
 
 /** Custom Modules */
 import { SharesRoutingModule } from './shares-routing.module';
@@ -66,6 +65,6 @@ import { RejectShareDialogComponent } from './shares-account-actions/reject-shar
     RejectSharesComponent,
     RejectShareDialogComponent
   ],
-  providers: [DatePipe]
+  providers: [ ]
 })
 export class SharesModule { }

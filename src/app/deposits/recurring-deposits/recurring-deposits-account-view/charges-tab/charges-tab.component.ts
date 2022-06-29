@@ -3,7 +3,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
@@ -18,6 +17,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Charges Tab Component
@@ -61,7 +61,7 @@ export class ChargesTabComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute,
               private savingsService: SavingsService,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private router: Router,
               public dialog: MatDialog,
               private settingsService: SettingsService, ) {
@@ -109,7 +109,7 @@ export class ChargesTabComponent implements OnInit {
         const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
           ...response.data.value,
-          dueDate: this.datePipe.transform(response.data.value.dueDate, dateFormat),
+          dueDate: this.dateUtils.formatDate(response.data.value.dueDate, dateFormat),
           dateFormat,
           locale
         };

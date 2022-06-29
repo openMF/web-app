@@ -1,7 +1,6 @@
 /** Angular Imports */
 import { Component, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Components */
 import { SharesAccountDetailsStepComponent } from '../shares-account-stepper/shares-account-details-step/shares-account-details-step.component';
@@ -11,6 +10,7 @@ import { SharesAccountChargesStepComponent } from '../shares-account-stepper/sha
 /** Custom Services */
 import { SharesService } from '../shares.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Edit Shares Account Component
@@ -38,13 +38,13 @@ export class EditSharesAccountComponent {
    * Fetches shares account template from `resolve`
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
-   * @param {DatePipe} datePipe Date Utils
+   * @param {Dates} dateUtils Date Utils
    * @param {SharesService} sharesService Shares Service
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private sharesService: SharesService,
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { sharesAccountAndTemplate: any }) => {
@@ -111,8 +111,8 @@ export class EditSharesAccountComponent {
       ...this.sharesAccount,
       clientId: this.sharesAccountAndTemplate.clientId,
       charges: this.sharesAccount.charges.map((charge: any) => ({ chargeId: charge.chargeId, amount: charge.amount })),
-      applicationDate: this.datePipe.transform(this.sharesAccount.applicationDate, dateFormat),
-      submittedDate: this.datePipe.transform(this.sharesAccount.submittedDate, dateFormat),
+      applicationDate: this.dateUtils.formatDate(this.sharesAccount.applicationDate, dateFormat),
+      submittedDate: this.dateUtils.formatDate(this.sharesAccount.submittedDate, dateFormat),
       unitPrice: this.sharesAccountTermsForm.get('unitPrice').value,
       dateFormat,
       locale

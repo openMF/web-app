@@ -1,6 +1,5 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
-import { DatePipe } from '@angular/common';
 
 /** Custom Modules */
 import { SavingsRoutingModule } from './savings-routing.module';
@@ -99,6 +98,6 @@ import { ApplyAnnualFeesSavingsAccountComponent } from './saving-account-actions
     EditTransactionComponent,
     ApplyAnnualFeesSavingsAccountComponent
   ],
-  providers: [DatePipe]
+  providers: [ ]
 })
 export class SavingsModule {}

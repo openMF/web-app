@@ -1,7 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
 import { ClientsService } from 'app/clients/clients.service';
 
 /**
@@ -26,7 +25,6 @@ export class ViewChargeComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private date: DatePipe,
               private clientService: ClientsService) {
     this.route.data.subscribe((data: { clientChargeData: any }) => {
       this.chargeData = data.clientChargeData;

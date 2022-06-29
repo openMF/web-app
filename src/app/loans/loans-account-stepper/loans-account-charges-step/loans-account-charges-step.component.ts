@@ -9,11 +9,11 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 import { LoansAccountAddCollateralDialogComponent } from 'app/loans/custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
 
 /** Custom Services */
-import { DatePipe } from '@angular/common';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Recurring Deposit Account Charges Step
@@ -54,11 +54,11 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   /**
    * Loans Account Charges Form Step
    * @param {dialog} MatDialog Mat Dialog
-   * @param {datePipe} DatePipe DatePipe
+   * @param {Dates} dateUtils Date Utils
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(public dialog: MatDialog,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private settingsService: SettingsService) {
   }
 
@@ -143,7 +143,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
       if (response.data) {
         let newCharge: any;
         const dateFormat = this.settingsService.dateFormat;
-        const date = this.datePipe.transform(response.data.value.date, dateFormat);
+        const date = this.dateUtils.formatDate(response.data.value.date, dateFormat);
         switch (charge.chargeTimeType.value) {
           case 'Specified due date':
           case 'Weekly Fee':

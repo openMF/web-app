@@ -2,7 +2,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
@@ -17,6 +16,7 @@ import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/conf
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * View Charge Component.
@@ -39,12 +39,12 @@ export class ViewChargeComponent {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
-   * @param {DatePipe} datePipe DatePipe.
+   * @param {Dates} dateUtils Date Utils.
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private loansService: LoansService,
               private route: ActivatedRoute,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private router: Router,
               public dialog: MatDialog,
               private settingsService: SettingsService) {
@@ -86,7 +86,7 @@ export class ViewChargeComponent {
         const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
           ...response.data.value,
-          dueDate: this.datePipe.transform(response.data.value.dueDate, dateFormat),
+          dueDate: this.dateUtils.formatDate(response.data.value.dueDate, dateFormat),
           dateFormat,
           locale
         };

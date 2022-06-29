@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
 import { OrganizationService } from 'app/organization/organization.service';
@@ -34,13 +34,13 @@ export class EditCampaignComponent {
    * Fetches campaign template from `resolve`
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
-   * @param {DatePipe} datePipe Date Utils
+   * @param {Dates} dateUtils Date Utils
    * @param {OrganizationService} organizationService Organiztion Service
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private organizationService: OrganizationService,
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { smsCampaign: any, smsCampaignTemplate: any }) => {
@@ -87,7 +87,7 @@ export class EditCampaignComponent {
       locale
     };
     if (this.smsCampaign.triggerType.id === 2) {
-      smsCampaign.recurrenceStartDate = this.datePipe.transform(new Date(this.smsCampaign.recurrenceStartDate), dateTimeFormat);
+      smsCampaign.recurrenceStartDate = this.dateUtils.formatDate(new Date(this.smsCampaign.recurrenceStartDate), dateTimeFormat);
     }
     this.organizationService.updateSmsCampaign(smsCampaign, this.smsCampaign.id).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });

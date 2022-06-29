@@ -2,7 +2,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -15,6 +14,7 @@ import { SettingsService } from 'app/settings/settings.service';
 /** Custom Components */
 import { FloatingRatePeriodDialogComponent } from '../floating-rate-period-dialog/floating-rate-period-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Edit Floating Rate Component.
@@ -54,7 +54,7 @@ export class EditFloatingRateComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ProductsService} productsService Product Service.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {DatePipe} datePipe Date Utils.
+   * @param {Dates} dateUtils Date Utils.
    * @param {MatDialog} dialog Dialog reference.
    * @param {SettingsService} settingsService Settings Service.
    */
@@ -62,7 +62,7 @@ export class EditFloatingRateComponent implements OnInit {
               private formBuilder: FormBuilder,
               private productsService: ProductsService,
               private route: ActivatedRoute,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private dialog: MatDialog,
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { floatingRate: any }) => {
@@ -109,7 +109,7 @@ export class EditFloatingRateComponent implements OnInit {
     floatingRatePeriodDialogRef.afterClosed().subscribe((response: any) => {
       if (response) {
         this.floatingRatePeriodsData.push({
-          fromDate: this.datePipe.transform(response.fromDate, this.dateFormat),
+          fromDate: this.dateUtils.formatDate(response.fromDate, this.dateFormat),
           interestRate: response.interestRate,
           isDifferentialToBaseLendingRate: response.isDifferentialToBaseLendingRate,
           locale: this.settingsService.language.code,
@@ -136,7 +136,7 @@ export class EditFloatingRateComponent implements OnInit {
     editFloatingRatePeriodDialogRef.afterClosed().subscribe((response: any) => {
       if (response) {
         this.floatingRatePeriodsData[this.floatingRatePeriodsData.indexOf(ratePeriod)] = {
-          fromDate: this.datePipe.transform(response.fromDate, this.dateFormat),
+          fromDate: this.dateUtils.formatDate(response.fromDate, this.dateFormat),
           interestRate: response.interestRate,
           isDifferentialToBaseLendingRate: response.isDifferentialToBaseLendingRate,
           locale: this.settingsService.language.code,
@@ -179,7 +179,7 @@ export class EditFloatingRateComponent implements OnInit {
       floatingRatePeriod.isActive = undefined;
       floatingRatePeriod.locale = this.settingsService.language.code;
       floatingRatePeriod.dateFormat = this.dateFormat;
-      floatingRatePeriod.fromDate = this.datePipe.transform(floatingRatePeriod.fromDate, this.dateFormat);
+      floatingRatePeriod.fromDate = this.dateUtils.formatDate(floatingRatePeriod.fromDate, this.dateFormat);
     });
     this.floatingRateForm.value.ratePeriods = this.floatingRatePeriodsData.length > 0 ? this.floatingRatePeriodsData : undefined;
     this.productsService.updateFloatingRate(this.route.snapshot.paramMap.get('id'), this.floatingRateForm.value)

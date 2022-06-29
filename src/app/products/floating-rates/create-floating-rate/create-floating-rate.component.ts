@@ -2,7 +2,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -15,6 +14,7 @@ import { SettingsService } from 'app/settings/settings.service';
 /** Custom Components */
 import { FloatingRatePeriodDialogComponent } from '../floating-rate-period-dialog/floating-rate-period-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Create Floating Rate Component.
@@ -49,7 +49,7 @@ export class CreateFloatingRateComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ProductsService} productsService Product Service.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {DatePipe} datePipe Date Utils.
+   * @param {Dates} dateUtils Date Utils.
    * @param {MatDialog} dialog Dialog reference.
    * @param {SettingsService} settingsService Settings Service.
    */
@@ -57,7 +57,7 @@ export class CreateFloatingRateComponent implements OnInit {
               private formBuilder: FormBuilder,
               private productsService: ProductsService,
               private route: ActivatedRoute,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private dialog: MatDialog,
               private settingsService: SettingsService) { }
 
@@ -111,7 +111,7 @@ export class CreateFloatingRateComponent implements OnInit {
     floatingRatePeriodDialogRef.afterClosed().subscribe((response: any) => {
       if (response) {
         this.floatingRatePeriodsData.push({
-          fromDate: this.datePipe.transform(response.fromDate, this.dateFormat),
+          fromDate: this.dateUtils.formatDate(response.fromDate, this.dateFormat),
           interestRate: response.interestRate,
           isDifferentialToBaseLendingRate: response.isDifferentialToBaseLendingRate,
           locale: this.settingsService.language.code,
@@ -137,7 +137,7 @@ export class CreateFloatingRateComponent implements OnInit {
     editFloatingRatePeriodDialogRef.afterClosed().subscribe((response: any) => {
       if (response) {
         this.floatingRatePeriodsData[this.floatingRatePeriodsData.indexOf(ratePeriod)] = {
-          fromDate: this.datePipe.transform(response.fromDate, this.dateFormat),
+          fromDate: this.dateUtils.formatDate(response.fromDate, this.dateFormat),
           interestRate: response.interestRate,
           isDifferentialToBaseLendingRate: response.isDifferentialToBaseLendingRate,
           locale: this.settingsService.language.code,

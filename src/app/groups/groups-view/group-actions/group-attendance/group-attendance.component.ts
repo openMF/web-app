@@ -1,7 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 
@@ -15,6 +14,7 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 /** Custom Models */
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Group Attendance component.
@@ -44,14 +44,14 @@ export class GroupAttendanceComponent implements OnInit {
   /**
    * Retrieves the group members data from `resolve`.
    * @param {ActivatedRoute} route Route
-   * @param {DatePipe} datePipe Date Utils
+   * @param {Dates} dateUtils Date Utils
    * @param {Router} router Router
    * @param {GroupsService} groupsService Groups Service
    * @param {MatDialog} dialog Mat Dialog
    * @param {SettingsService} settingsService SettingsService
    */
   constructor(private route: ActivatedRoute,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private router: Router,
               private groupsService: GroupsService,
               public dialog: MatDialog,
@@ -119,9 +119,8 @@ export class GroupAttendanceComponent implements OnInit {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevMeetingDate: Date = new Date(this.meetingDate.value);
-    this.meetingDate.patchValue(this.datePipe.transform(prevMeetingDate, dateFormat));
     const data = {
-      meetingDate: this.meetingDate.value,
+      meetingDate: this.dateUtils.formatDate(prevMeetingDate, dateFormat),
       calendarId: this.groupData.collectionMeetingCalendar.id,
       clientsAttendance: this.dataSource,
       dateFormat,

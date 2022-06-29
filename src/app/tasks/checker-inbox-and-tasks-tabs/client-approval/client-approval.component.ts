@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as _ from 'lodash';
-import { DatePipe } from '@angular/common';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -15,6 +14,7 @@ import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicke
 /** Custom Services */
 import { TasksService } from '../../tasks.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 @Component({
   selector: 'mifosx-client-approval',
@@ -40,14 +40,14 @@ export class ClientApprovalComponent {
    * Retrieves the grouped client data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Dialog} dialog MatDialog.
-   * @param {DatePipe} datePipe Date Utils.
+   * @param {Dates} dateUtils Date Utils.
    * @param {router} router Router.
    * @param {SettingsService} settingsService Settings Service.
    * @param {TasksService} tasksService Tasks Service.
    */
   constructor(private route: ActivatedRoute,
     private dialog: MatDialog,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private router: Router,
     private settingsService: SettingsService,
     private tasksService: TasksService) {
@@ -111,7 +111,7 @@ export class ClientApprovalComponent {
 
   bulkClientApproval(submittedData: any) {
     const dateFormat = this.settingsService.dateFormat;
-    const activationDate = this.datePipe.transform(submittedData.value.actDate, dateFormat);
+    const activationDate = this.dateUtils.formatDate(submittedData.value.actDate, dateFormat);
     const locale = this.settingsService.language.code;
     const formData = {
       dateFormat,

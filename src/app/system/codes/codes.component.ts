@@ -46,7 +46,6 @@ export class CodesComponent implements OnInit {
    */
   setCodes() {
     this.dataSource = new MatTableDataSource(this.codesData);
-    console.log(this.codesData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }

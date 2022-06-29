@@ -6,7 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 /** Environment Configuration */
-import { environment } from 'environments/environment';
 
 /** Main Component */
 import { WebAppComponent } from './web-app.component';
@@ -39,6 +38,7 @@ import { TasksModule } from './tasks/tasks.module';
 
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
+import { DatePipe } from '@angular/common';
 
 /**
  * App Module
@@ -74,7 +74,7 @@ import { AppRoutingModule } from './app-routing.module';
     AppRoutingModule,
   ],
   declarations: [WebAppComponent, NotFoundComponent],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [WebAppComponent]
 })
 export class AppModule { }
