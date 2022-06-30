@@ -7,18 +7,24 @@ import * as moment from 'moment';
 })
 export class DateFormatPipe implements PipeTransform {
 
-  defaultDateFormat: string;
-
   constructor(private settingsService: SettingsService) {
-    this.defaultDateFormat = this.settingsService.dateFormat;
-    this.defaultDateFormat = this.defaultDateFormat.replace('dd', 'DD');
   }
 
-  transform(value: Date | moment.Moment, dateFormat: string): any {
-    if (dateFormat == null) {
-      return moment(value).format(this.defaultDateFormat);
+  transform(value: any, dateFormat: string): any {
+    const defaultDateFormat = this.settingsService.dateFormat.replace('dd', 'DD');
+    if (typeof value === 'undefined') {
+      return '';
     }
-    return moment(value).format(dateFormat);
+    let dateVal;
+    if (value instanceof Array) {
+      dateVal = moment(value.join('-'), 'YYYY-MM-DD');
+    } else {
+      dateVal = moment(value);
+    }
+    if (dateFormat == null) {
+      return dateVal.format(defaultDateFormat);
+    }
+    return dateVal.format(dateFormat);
   }
 
 }
