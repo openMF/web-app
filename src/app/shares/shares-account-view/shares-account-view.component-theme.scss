@@ -1,15 +1,15 @@
-@import "~@angular/material/theming";
+@use '~@angular/material' as mat;
 
 @mixin shares-account-view-component-theme($theme) {
   $primary: map-get($theme, primary);
   mifosx-shares-account-view {
     .shares-account-card {
       .header {
-        background-color: mat-color($primary, 500);
+        background-color: mat.get-color-from-palette($primary, 500);
       }
       .table-headers {
-        background-color: mat-color($primary, 500);
-        color: mat-contrast($primary, 500);
+        background-color: mat.get-color-from-palette($primary, 500);
+        color: mat.get-contrast-color-from-palette($primary, 500);
       }
     }
   } 
