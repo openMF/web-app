@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { DatePipe } from '@angular/common';
 
 /** Custom Modules */
 import { SharedModule } from 'app/shared/shared.module';
@@ -35,6 +34,6 @@ import { ViewCheckerInboxComponent } from './view-checker-inbox/view-checker-inb
     RescheduleLoanComponent,
     ViewCheckerInboxComponent
   ],
-  providers: [DatePipe]
+  providers: [ ]
 })
 export class TasksModule { }

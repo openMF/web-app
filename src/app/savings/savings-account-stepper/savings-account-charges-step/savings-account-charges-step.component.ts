@@ -2,7 +2,6 @@
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 
 /** Custom Dialogs */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -11,6 +10,7 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Savings Account Charges Step
@@ -44,7 +44,7 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
    * @param {MatDialog} dialog Mat Dialog
    */
   constructor(public dialog: MatDialog,
-              private datePipe: DatePipe) {}
+              private dateUtils: Dates) {}
 
    ngOnInit() {
     this.currencyCode.valueChanges.subscribe(() => {
@@ -127,7 +127,7 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
       if (response.data) {
         let newCharge: any;
         const dateFormat = 'dd MMMM yyyy';
-        const date = this.datePipe.transform(response.data.value.date, dateFormat);
+        const date = this.dateUtils.formatDate(response.data.value.date, dateFormat);
         switch (charge.chargeTimeType.value) {
           case 'Specified due date':
           case 'Weekly Fee':

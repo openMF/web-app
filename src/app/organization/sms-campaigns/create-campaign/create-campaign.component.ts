@@ -1,7 +1,6 @@
 /** Angular Imports */
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Components */
 import { SmsCampaignStepComponent } from '../sms-campaign-stepper/sms-campaign-step/sms-campaign-step.component';
@@ -10,6 +9,7 @@ import { CampaignMessageStepComponent } from '../sms-campaign-stepper/campaign-m
 /** Custom Services */
 import { OrganizationService } from 'app/organization/organization.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Create SMS Campaign Component
@@ -37,13 +37,13 @@ export class CreateCampaignComponent {
    * @param {Router} router Router
    * @param {OrganizationService} organizationService Organization Service
    * @param {SettingsService} settingsService Settings Service
-   * @param {DatePipe} datePipe Date Utils
+   * @param {Dates} dateUtils Date Utils
    */
   constructor(private route: ActivatedRoute,
               private router: Router,
               private organizationService: OrganizationService,
               private settingsService: SettingsService,
-              private datePipe: DatePipe) {
+              private dateUtils: Dates) {
     this.route.data.subscribe((data: { smsCampaignTemplate: any }) => {
       this.smsCampaignTemplate = data.smsCampaignTemplate;
     });
@@ -85,14 +85,14 @@ export class CreateCampaignComponent {
     const smsCampaign = {
       ...this.smsCampaign,
       campaignType: this.smsCampaign.isNotification ? 2 : 1,
-      submittedOnDate: this.datePipe.transform(new Date(), dateFormat),
+      submittedOnDate: this.dateUtils.formatDate(new Date(), dateFormat),
       dateTimeFormat,
       dateFormat,
       locale
     };
     if (this.smsCampaign.triggerType === 2) {
       const prevRecurrenceDate: Date = smsCampaign.recurrenceStartDate;
-      smsCampaign.recurrenceStartDate = this.datePipe.transform(prevRecurrenceDate, dateTimeFormat);
+      smsCampaign.recurrenceStartDate = this.dateUtils.formatDate(prevRecurrenceDate, dateTimeFormat);
     }
     this.organizationService.createSmsCampaign(smsCampaign).subscribe((response: any) => {
       this.router.navigate(['../', response.resourceId], { relativeTo: this.route });

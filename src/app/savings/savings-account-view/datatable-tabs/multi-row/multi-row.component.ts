@@ -3,7 +3,6 @@ import { Component, OnChanges, OnInit, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { DatePipe } from '@angular/common';
 
 /** Custom Dialogs */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -19,6 +18,7 @@ import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicke
 
 /** Custom Services */
 import { SavingsService } from '../../../savings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Savings Account Multi Row Data Tables
@@ -50,13 +50,13 @@ export class MultiRowComponent implements OnInit, OnChanges {
   /**
    * Fetches savings account Id from parent route params.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {DatePipe} datePipe Date Utils.
+   * @param {Dates} dateUtils Date Utils.
    * @param {SavingsService} savingsService Savingss Service.
    * @param {MatDialog} dialog Mat Dialog.
    * @param {SettingsService} settingsService Setting service
    */
   constructor(private route: ActivatedRoute,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private savingsService: SavingsService,
               private dialog: MatDialog,
               private settingsService: SettingsService) {
@@ -151,7 +151,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
     addDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         dateTransformColumns.forEach((column) => {
-          response.data.value[column] = this.datePipe.transform(response.data.value[column], dataTableEntryObject.dateFormat);
+          response.data.value[column] = this.dateUtils.formatDate(response.data.value[column], dataTableEntryObject.dateFormat);
         });
         dataTableEntryObject = { ...response.data.value, ...dataTableEntryObject };
         this.savingsService.addSavingsDatatableEntry(this.savingAccountId, this.datatableName, dataTableEntryObject).subscribe(() => {

@@ -1,6 +1,5 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
-import { DatePipe } from '@angular/common';
 
 /** Custom Modules */
 import { AccountTransfersRoutingModule } from './account-transfers-routing.module';
@@ -32,6 +31,6 @@ import { ViewAccountTransferComponent } from './view-account-transfer/view-accou
     ListTransactionsComponent,
     ViewAccountTransferComponent
   ],
-  providers: [DatePipe]
+  providers: [ ]
 })
 export class AccountTransfersModule { }

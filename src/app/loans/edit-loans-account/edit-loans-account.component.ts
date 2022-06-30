@@ -35,7 +35,7 @@ export class EditLoansAccountComponent implements OnInit {
    * Sets loans account edit form.
    * @param {route} ActivatedRoute Activated Route.
    * @param {router} Router Router.
-   * @param {datePipe} DatePipe Date Utils
+   * @param {Dates} dateUtils Date Utils
    * @param {loansService} LoansService Loans Service
    * @param {SettingsService} settingsService Settings Service
    */

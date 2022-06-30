@@ -2,7 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
-import { DatePipe } from '@angular/common';
 import * as _ from 'lodash';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,6 +12,7 @@ import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/conf
 /** Custom Services */
 import { TasksService } from '../../tasks.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 @Component({
   selector: 'mifosx-reschedule-loan',
@@ -36,14 +36,14 @@ export class RescheduleLoanComponent implements OnInit {
    * Retrieves the reschedule loan data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Dialog} dialog MatDialog.
-   * @param {DatePipe} datePipe Date Utils.
+   * @param {Dates} dateUtils Date Utils.
    * @param {router} router Router.
    * @param {SettingsService} settingsService Settings Service.
    * @param {TasksService} tasksService Tasks Service.
    */
   constructor(private route: ActivatedRoute,
     private dialog: MatDialog,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private router: Router,
     private settingsService: SettingsService,
     private tasksService: TasksService) {
@@ -92,7 +92,7 @@ export class RescheduleLoanComponent implements OnInit {
 
   bulkLoanRescheduleApproval() {
     const dateFormat = this.settingsService.dateFormat;
-    const approvedOnDate = this.datePipe.transform(new Date(), dateFormat);
+    const approvedOnDate = this.dateUtils.formatDate(new Date(), dateFormat);
     const locale = this.settingsService.language.code;
     const formData = {
       dateFormat,

@@ -5,7 +5,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
@@ -20,6 +19,7 @@ import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/conf
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
+import { Dates } from 'app/core/utils/dates';
 
 @Component({
   selector: 'mifosx-charges-tab',
@@ -51,7 +51,7 @@ export class ChargesTabComponent implements OnInit {
    */
   constructor(private loansService: LoansService,
               private route: ActivatedRoute,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private router: Router,
               public dialog: MatDialog,
               private settingsService: SettingsService) {
@@ -111,7 +111,7 @@ export class ChargesTabComponent implements OnInit {
         const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
           ...response.data.value,
-          dueDate: this.datePipe.transform(response.data.value.dueDate, dateFormat),
+          dueDate: this.dateUtils.formatDate(response.data.value.dueDate, dateFormat),
           dateFormat,
           locale
         };

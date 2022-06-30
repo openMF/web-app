@@ -2,7 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -15,6 +14,7 @@ import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Create Tax Group component.
@@ -48,7 +48,7 @@ export class CreateTaxGroupComponent implements OnInit {
    * @param {ProductsService} productsService Products Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
-   * @param {DatePipe} datePipe Date Utils to format date.
+   * @param {Dates} dateUtils Date Utils to format date.
    * @param {MatDialog} dialog Dialog reference.
    * @param {SettingsService} settingsService Settings Service.
    */
@@ -56,7 +56,7 @@ export class CreateTaxGroupComponent implements OnInit {
               private productsService: ProductsService,
               private route: ActivatedRoute,
               private router: Router,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               public dialog: MatDialog,
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { taxGroupTemplate: any }) => {
@@ -176,7 +176,7 @@ export class CreateTaxGroupComponent implements OnInit {
       locale
     };
     for (const taxComponent of taxGroup.taxComponents) {
-      taxComponent.startDate = this.datePipe.transform(taxComponent.startDate, dateFormat) || '';
+      taxComponent.startDate = this.dateUtils.formatDate(taxComponent.startDate, dateFormat) || '';
     }
     this.productsService.createTaxGroup(taxGroup).subscribe((response: any) => {
       this.router.navigate(['../', response.resourceId], { relativeTo: this.route });

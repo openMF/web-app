@@ -1,6 +1,5 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { DirectivesModule } from '../directives/directives.module';
 
 /** Custom Modules */
@@ -129,6 +128,6 @@ import { LoanAccountLoadDocumentsDialogComponent } from './custom-dialog/loan-ac
     ViewRecieptComponent,
     ExportTransactionsComponent
   ],
-  providers: [DatePipe],
+  providers: [ ],
 })
 export class LoansModule {}

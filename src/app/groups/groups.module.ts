@@ -1,6 +1,5 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
-import { DatePipe } from '@angular/common';
 
 /** Custom Modules */
 import { GroupsRoutingModule } from './groups-routing.module';
@@ -70,6 +69,6 @@ import { GroupTransferClientsComponent } from './groups-view/group-actions/group
     EditGroupMeetingScheduleComponent,
     GroupTransferClientsComponent
   ],
-  providers: [DatePipe]
+  providers: [ ]
 })
 export class GroupsModule { }

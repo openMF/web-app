@@ -1,7 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 
@@ -15,6 +14,7 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 /** Custom Models */
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Center Attendance component.
@@ -48,14 +48,14 @@ export class CenterAttendanceComponent implements OnInit {
   /**
    * Retrieves the center members data from `resolve`.
    * @param {ActivatedRoute} route Route
-   * @param {DatePipe} datePipe Date Utils
+   * @param {Dates} dateUtils Date Utils
    * @param {Router} router Router
    * @param {CentersService} centersService Centers Service
    * @param {SettingsService} settingsService Settings Service.
    * @param {MatDialog} dialog Mat Dialog
    */
   constructor(private route: ActivatedRoute,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private router: Router,
               private centersService: CentersService,
               private settingsService: SettingsService,
@@ -125,9 +125,8 @@ export class CenterAttendanceComponent implements OnInit {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevMeetingDate: Date = new Date(this.meetingDate.value);
-    this.meetingDate.patchValue(this.datePipe.transform(prevMeetingDate, dateFormat));
     const data = {
-      meetingDate: this.meetingDate.value,
+      meetingDate: this.dateUtils.formatDate(this.meetingDate.value, dateFormat),
       calendarId: this.centerData.collectionMeetingCalendar.id,
       clientsAttendance: this.dataSource,
       dateFormat,

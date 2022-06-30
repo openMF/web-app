@@ -8,11 +8,11 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 
 /** Custom Services */
-import { DatePipe } from '@angular/common';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Recurring Deposit Account Charges Step
@@ -41,7 +41,7 @@ export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnC
   isChargesPatched = false;
 
   constructor(public dialog: MatDialog,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private settingsService: SettingsService, ) {
   }
 
@@ -126,7 +126,7 @@ export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnC
       if (response.data) {
         let newCharge: any;
         const dateFormat = this.settingsService.dateFormat;
-        const date = this.datePipe.transform(response.data.value.date, dateFormat);
+        const date = this.dateUtils.formatDate(response.data.value.date, dateFormat);
         switch (charge.chargeTimeType.value) {
           case 'Specified due date':
           case 'Weekly Fee':

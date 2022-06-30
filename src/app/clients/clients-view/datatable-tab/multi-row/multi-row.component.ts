@@ -6,7 +6,6 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { CheckboxBase } from 'app/shared/form-dialog/formfield/model/checkbox-base';
-import { DatePipe } from '@angular/common';
 
 /** Custom Components */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -15,6 +14,7 @@ import { DeleteDialogComponent } from '../../../../shared/delete-dialog/delete-d
 /** Custom Services */
 import { ClientsService } from '../../../clients.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 @Component({
   selector: 'mifosx-multi-row',
@@ -31,7 +31,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
   showDeleteBotton: boolean;
 
   constructor(private route: ActivatedRoute,
-    private datePipe: DatePipe,
+    private dateUtils: Dates,
     private clientsService: ClientsService,
     private dialog: MatDialog,
     private settingsService: SettingsService) {
@@ -118,7 +118,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
       if (response.data) {
         // format Dates
         dateTransformColumns.forEach((column) => {
-          response.data.value[column] = this.datePipe.transform(response.data.value[column], dataTableEntryObject.dateFormat);
+          response.data.value[column] = this.dateUtils.formatDate(response.data.value[column], dataTableEntryObject.dateFormat);
         });
         dataTableEntryObject = { ...response.data.value, ...dataTableEntryObject };
         this.clientsService.addClientDatatableEntry(this.clientId, this.datatableName, dataTableEntryObject).subscribe(() => {

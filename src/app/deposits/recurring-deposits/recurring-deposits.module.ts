@@ -1,6 +1,5 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
-import { DatePipe } from '@angular/common';
 
 /** Custom Modules */
 import { RecurringDepositsRoutingModule } from './recurring-deposits-routing.module';
@@ -86,6 +85,6 @@ import { RecurringDepositConfirmationDialogComponent } from './recurring-deposit
     ViewTransactionComponent,
     EditTransactionComponent
   ],
-  providers: [DatePipe]
+  providers: [ ]
 })
 export class RecurringDepositsModule {}

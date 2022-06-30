@@ -1,6 +1,5 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -13,6 +12,7 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 @Component({
   selector: 'mifosx-share-product-market-price-step',
@@ -30,14 +30,13 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {DatePipe} datePipe Date Utils to format date.
-   * @param {DatePipe} datePipe Date Utils to format date.
+   * @param {Dates} dateUtils Date Utils to format date.
    * @param {SettingsService} settingsService Settings Service
    */
 
   constructor(private formBuilder: FormBuilder,
               public dialog: MatDialog,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private settingsService: SettingsService) {
     this.createShareProductMarketPriceForm();
   }
@@ -132,7 +131,7 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
     for (const marketPricePeriod of this.marketPricePeriods.value) {
       marketPricePeriods.push({
         ...marketPricePeriod,
-        fromDate: this.datePipe.transform(marketPricePeriod.fromDate, dateFormat),
+        fromDate: this.dateUtils.formatDate(marketPricePeriod.fromDate, dateFormat),
         dateFormat,
         locale
       });

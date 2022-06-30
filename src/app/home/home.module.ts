@@ -1,6 +1,5 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
-import { DatePipe } from '@angular/common';
 
 /** Custom Modules */
 import { SharedModule } from '../shared/shared.module';
@@ -32,8 +31,6 @@ import { ClientTrendsBarComponent } from './dashboard/client-trends-bar/client-t
     AmountDisbursedPieComponent,
     ClientTrendsBarComponent
   ],
-  providers: [
-    DatePipe
-  ]
+  providers: [ ]
 })
 export class HomeModule { }

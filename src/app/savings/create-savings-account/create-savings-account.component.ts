@@ -1,7 +1,6 @@
 /** Angular Imports */
 import { Component, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** Custom Components */
 import { SavingsAccountDetailsStepComponent } from '../savings-account-stepper/savings-account-details-step/savings-account-details-step.component';
@@ -11,6 +10,7 @@ import { SavingsAccountChargesStepComponent } from '../savings-account-stepper/s
 /** Custom Services */
 import { SavingsService } from '../savings.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Create Savings Account Component
@@ -38,13 +38,13 @@ export class CreateSavingsAccountComponent {
    * Fetches savings account template from `resolve`
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
-   * @param {DatePipe} datePipe Date Utils
+   * @param {Dates} dateUtils Date Utils
    * @param {SavingsService} savingsService Savings Service
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private savingsService: SavingsService,
               private settingsService: SettingsService
               ) {
@@ -113,7 +113,7 @@ export class CreateSavingsAccountComponent {
         feeOnMonthDay: charge.feeOnMonthDay,
         feeInterval: charge.feeInterval
       })),
-      submittedOnDate: this.datePipe.transform(this.savingsAccount.submittedOnDate, dateFormat),
+      submittedOnDate: this.dateUtils.formatDate(this.savingsAccount.submittedOnDate, dateFormat),
       dateFormat,
       monthDayFormat,
       locale

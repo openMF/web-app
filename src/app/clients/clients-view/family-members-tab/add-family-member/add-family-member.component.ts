@@ -31,7 +31,7 @@ export class AddFamilyMemberComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder FormBuilder
-   * @param {DatePipe} datePipe Date Utils
+   * @param {Dates} dateUtils Date Utils
    * @param {Router} router Router
    * @param {Route} route Route
    * @param {ClientsService} clientsService Clients Service

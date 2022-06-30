@@ -2,7 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 /** rxjs Imports */
 import { merge, forkJoin } from 'rxjs';
@@ -13,6 +12,7 @@ import { HomeService } from '../../home.service';
 
 /** Charting Imports */
 import Chart from 'chart.js';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Client Trends Bar Chart Component.
@@ -39,11 +39,11 @@ export class ClientTrendsBarComponent implements OnInit {
    * Fetches offices data from `resolve`
    * @param {HomeService} homeService Home Service
    * @param {ActivatedRoute} route Activated Route
-   * @param {DatePipe} datePipe Date Utils
+   * @param {Dates} dateUtils Date Utils
    */
   constructor(private homeService: HomeService,
               private route: ActivatedRoute,
-              private datePipe: DatePipe) {
+              private dateUtils: Dates) {
     this.route.data.subscribe( (data: { offices: any }) => {
       this.officeData = data.offices;
     });
@@ -120,7 +120,7 @@ export class ClientTrendsBarComponent implements OnInit {
       case 'Day':
         while (labelsArray.length < 12) {
           date.setDate(date.getDate() - 1);
-          const transformedDate = this.datePipe.transform(date, 'd/M');
+          const transformedDate = this.dateUtils.formatDate(date, 'd/M');
           labelsArray.push(transformedDate);
         }
         break;
@@ -138,7 +138,7 @@ export class ClientTrendsBarComponent implements OnInit {
         break;
       case 'Month':
         while (labelsArray.length < 12) {
-          const transformedDate = this.datePipe.transform(date, 'MMMM');
+          const transformedDate = this.dateUtils.formatDate(date, 'MMMM');
           labelsArray.push(transformedDate);
           date.setMonth(date.getMonth() - 1);
         }
@@ -160,7 +160,7 @@ export class ClientTrendsBarComponent implements OnInit {
       case 'Day':
         labels.forEach((label: any) => {
           const day = response.find((entry: any) => {
-            const transformedDate = this.datePipe.transform(entry.days, 'd/M');
+            const transformedDate = this.dateUtils.formatDate(entry.days, 'd/M');
             return transformedDate === label;
           });
           counts = this.updateCount(day, counts, type);

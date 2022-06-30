@@ -2,7 +2,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { DatePipe } from '@angular/common';
 
 /** Custom Components */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -18,6 +17,7 @@ import { CheckboxBase } from 'app/shared/form-dialog/formfield/model/checkbox-ba
 /** Custom Services */
 import { OrganizationService } from '../../../../organization.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Offices Single Row Data Tables
@@ -40,13 +40,13 @@ export class SingleRowComponent implements OnInit {
   /**
    * Fetches office Id from parent route params.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {DatePipe} datePipe Date Utils.
+   * @param {Dates} dateUtils Date Utils.
    * @param {OrganizationService} organizationService Organization Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {MatDialog} dialog Mat Dialog.
    */
   constructor(private route: ActivatedRoute,
-              private datePipe: DatePipe,
+              private dateUtils: Dates,
               private dialog: MatDialog,
               private organizationService: OrganizationService,
               private settingsService: SettingsService ) {
@@ -81,7 +81,7 @@ export class SingleRowComponent implements OnInit {
     addDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         dateTransformColumns.forEach((column) => {
-          response.data.value[column] = this.datePipe.transform(response.data.value[column], dataTableEntryObject.dateFormat);
+          response.data.value[column] = this.dateUtils.formatDate(response.data.value[column], dataTableEntryObject.dateFormat);
         });
         dataTableEntryObject = { ...response.data.value, ...dataTableEntryObject };
         this.organizationService.addOfficeDatatableEntry(this.officeId, this.datatableName, dataTableEntryObject).subscribe(() => {
@@ -116,7 +116,7 @@ export class SingleRowComponent implements OnInit {
     editDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         dateTransformColumns.forEach((column) => {
-          response.data.value[column] = this.datePipe.transform(response.data.value[column], dataTableEntryObject.dateFormat);
+          response.data.value[column] = this.dateUtils.formatDate(response.data.value[column], dataTableEntryObject.dateFormat);
         });
         dataTableEntryObject = { ...response.data.value, ...dataTableEntryObject };
         this.organizationService.editOfficeDatatableEntry(this.officeId, this.datatableName, dataTableEntryObject).subscribe(() => {

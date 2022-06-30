@@ -31,7 +31,7 @@ export class EditFamilyMemberComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {Dates} dateUtils DatePipe
+   * @param {Dates} dateUtils Date Utils
    * @param {Router} router Router
    * @param {ActivatedRoute} route Route
    * @param {ClientsService} clientsService Clients Service

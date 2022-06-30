@@ -2,7 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../recurring-deposits.service';
@@ -44,7 +43,6 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private datePipe: DatePipe,
               private recurringDepositsService: RecurringDepositsService,
               private savingsService: SavingsService,
               public dialog: MatDialog) {

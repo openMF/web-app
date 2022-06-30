@@ -1,6 +1,5 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
-import { DatePipe } from '@angular/common';
 
 /** Custom Modules */
 import { ClientsRoutingModule } from './clients-routing.module';
@@ -123,7 +122,7 @@ import { CreateSelfServiceUserComponent } from './clients-view/client-actions/cr
     CaptureImageDialogComponent,
     CreateSelfServiceUserComponent
   ],
-  providers: [DatePipe]
+  providers: [ ]
 
 })
 export class ClientsModule { }

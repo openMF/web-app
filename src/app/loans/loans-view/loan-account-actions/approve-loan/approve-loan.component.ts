@@ -33,7 +33,7 @@ export class ApproveLoanComponent implements OnInit {
    * Retrieve data from `Resolver`.
    * @param formBuilder Form Builder.
    * @param route Activated Route.
-   * @param datePipe Date Utils.
+   * @param dateUtils Date Utils.
    * @param loanService Loan Service.
    * @param router Router.
    * @param {SettingsService} settingsService Settings Service

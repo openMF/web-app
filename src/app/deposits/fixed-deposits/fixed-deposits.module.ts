@@ -1,6 +1,5 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
-import { DatePipe } from '@angular/common';
 
 /** Custom Modules */
 import { SharedModule } from 'app/shared/shared.module';
@@ -88,6 +87,6 @@ import { EditFixedDepositAccountComponent } from './edit-fixed-deposit-account/e
     DirectivesModule,
     FixedDepositsRoutingModule
   ],
-  providers: [DatePipe]
+  providers: [ ]
 })
 export class FixedDepositsModule { }
