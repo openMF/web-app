@@ -1,4 +1,4 @@
-@import "~@angular/material/theming";
+@use '~@angular/material' as mat;
 
 @mixin dashboard-component-theme($theme) {
   $primary: map-get($theme, primary);
@@ -7,8 +7,8 @@
     
     .recent-activities, .frequent-activities {
       .header {
-        background-color: mat-color($primary, 500);
-        color: mat-contrast($primary, 500);
+        background-color: mat.get-color-from-palette($primary, 500);
+        color: mat.get-contrast-color-from-palette($primary, 500);
       }
     }
 
@@ -17,16 +17,16 @@
     mifosx-client-trends-bar  {
       .card {
         .header {
-          background-color: mat-color($primary, 500);
-          color: mat-contrast($primary, 500);
+          background-color: mat.get-color-from-palette($primary, 500);
+          color: mat.get-contrast-color-from-palette($primary, 500);
           mat-label,
           .mat-select-value,
           .mat-select-arrow {
-            color: mat-contrast($primary, 500);
+            color: mat.get-contrast-color-from-palette($primary, 500);
           }
           .mat-form-field-underline,
           .mat-form-field-ripple {
-            background-color: mat-contrast($primary, 500);
+            background-color: mat.get-contrast-color-from-palette($primary, 500);
           }
         }
       }
