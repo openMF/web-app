@@ -230,6 +230,15 @@ export class SystemService {
     return this.http.get(`/surveys/${surveyId}?template=true`);
   }
 
+  /**
+   * @param {string} surveyId Survey ID.
+   * @param {any} survey Survey Data.
+   * @returns {Observable<any>}
+   */
+  editSurvey(surveyId: string, survey: any): Observable<any> {
+    return this.http.put(`/surveys/${surveyId}`, survey);
+  }
+
 
   /**
    * @returns {Observable<any>} Fetches Jobs.
@@ -272,8 +281,8 @@ export class SystemService {
   }
 
   /**
-   * @param jobId Job Id to be edited
-   * @returns {Observable<any>} Fetches Scheduler Job.
+   * @param {string} jobId Job Id on which jobs to run
+   * @returns {Observable<any>}
    */
    runSelectedJob(jobId: string): Observable<any> {
     return this.http.post(`/jobs/${jobId}?command=executeJob`, this.emptyPayload);
