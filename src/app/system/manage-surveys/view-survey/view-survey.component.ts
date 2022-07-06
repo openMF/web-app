@@ -40,7 +40,7 @@ export class ViewSurveyComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  
+
   /** Go to edit survey page. */
   onEdit() {
     this.router.navigate(['./edit'], { relativeTo: this.route });
