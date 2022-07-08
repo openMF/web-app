@@ -329,6 +329,21 @@ export class SystemService {
   }
 
   /**
+   * @returns {Observable<any>} Business Date data.
+   */
+   getBusinessDates(): Observable<any> {
+    return this.http.get('/businessdate');
+  }
+
+  /**
+   * @param {any} dateData Business Date data to be updated.
+   * @returns {Observable<any>}
+   */
+   updateBusinessDate(dateData: any): Observable<any> {
+    return this.http.post(`/businessdate`, dateData);
+  }
+
+  /**
    * @returns {Observable<any>} Configurations data.
    */
   getConfigurations(): Observable<any> {

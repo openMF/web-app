@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { SystemService } from '../../../system.service';
 
 /**
  * Edit Configuration Component
