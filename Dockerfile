@@ -6,15 +6,14 @@ ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
 COPY package.json /usr/src/app/package.json
 
-RUN npm install -g @angular/cli@12.2.17
-
+RUN npm install --location=global @angular/cli@12.2.17
 
 RUN npm install
-
 
 COPY . .
 
 RUN ng build --prod
+
 
 FROM nginx:1.19.3
 

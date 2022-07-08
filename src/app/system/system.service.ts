@@ -275,8 +275,8 @@ export class SystemService {
    * @param jobId Job Id to be edited
    * @returns {Observable<any>} Fetches Scheduler Job.
    */
-   runSelectedJob(jobId: string): Observable<any> {
-    return this.http.post(`/jobs/${jobId}?command=executeJob`, this.emptyPayload);
+   runSelectedJob(jobId: string): Promise<any> {
+    return this.http.post(`/jobs/${jobId}?command=executeJob`, this.emptyPayload).toPromise();
   }
 
   /*
