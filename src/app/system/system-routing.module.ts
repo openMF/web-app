@@ -26,8 +26,6 @@ import { ManageSurveysComponent } from './manage-surveys/manage-surveys.componen
 import { CreateSurveyComponent } from './manage-surveys/create-survey/create-survey.component';
 import { ViewSurveyComponent } from './manage-surveys/view-survey/view-survey.component';
 import { ManageSchedulerJobsComponent } from './manage-scheduler-jobs/manage-scheduler-jobs.component';
-import { GlobalConfigurationsComponent } from './global-configurations/global-configurations.component';
-import { EditConfigurationComponent } from './global-configurations/edit-configuration/edit-configuration.component';
 import { AmazonS3Component } from './external-services/amazon-s3/amazon-s3.component';
 import { EmailComponent } from './external-services/email/email.component';
 import { SMSComponent } from './external-services/sms/sms.component';
@@ -62,8 +60,7 @@ import { HooksTemplateResolver } from './manage-hooks/hooks-template.resolver';
 import { RolesAndPermissionsResolver } from './roles-and-permissions/roles-and-permissions.resolver';
 import { ManageSurveysResolver } from './manage-surveys/manage-surveys.resolver';
 import { ManageSchedulerJobsResolver } from './manage-scheduler-jobs/manage-scheduler-jobs.resolver';
-import { GlobalConfigurationsResolver } from './global-configurations/global-configurations.resolver';
-import { GlobalConfigurationResolver } from './global-configurations/global-configuration.resolver';
+import { GlobalConfigurationsResolver } from './configurations/global-configurations-tab/global-configurations.resolver';
 import { AmazonS3ConfigurationResolver } from './external-services/amazon-s3/amazon-s3.resolver';
 import { EmailConfigurationResolver } from './external-services/email/email.resolver';
 import { SMSConfigurationResolver } from './external-services/sms/sms.resolver';
@@ -87,6 +84,8 @@ import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-t
 import { MakerCheckerTasksResolver } from './configure-maker-checker-tasks/configure-maker-checker-tasks.resolver';
 import { ViewHistorySchedulerJobComponent } from './manage-scheduler-jobs/view-history-scheduler-job/view-history-scheduler-job.component';
 import { ViewHistorySchedulerJobsResolver } from './manage-scheduler-jobs/view-history-scheduler-job/view-history-scheduler-job.resolver';
+import { ConfigurationsComponent } from './configurations/configurations.component';
+import { GlobalConfigurationResolver } from './configurations/global-configurations-tab/global-configuration.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -94,25 +93,25 @@ const routes: Routes = [
       path: 'system',
       data: { title: extract('System'), breadcrumb: 'System' },
       children: [
-      {
-        path: '',
-        component: SystemComponent
-      },
-      {
-        path: 'codes',
-        data: { title: extract('View Codes'), breadcrumb: 'Codes' },
-        children: [
-          {
-            path: '',
-            component: CodesComponent,
-            resolve: {
-              codes: CodesResolver
-            }
-          },
-          {
-            path: 'create',
-            component: CreateCodeComponent,
-            data: { title: extract('Create Code'), breadcrumb: 'Create' }
+        {
+          path: '',
+          component: SystemComponent
+        },
+        {
+          path: 'codes',
+          data: { title: extract('View Codes'), breadcrumb: 'Codes' },
+          children: [
+            {
+              path: '',
+              component: CodesComponent,
+              resolve: {
+                codes: CodesResolver
+              }
+            },
+            {
+              path: 'create',
+              component: CreateCodeComponent,
+              data: { title: extract('Create Code'), breadcrumb: 'Create' }
             },
             {
               path: ':id',
@@ -135,19 +134,19 @@ const routes: Routes = [
                   }
                 }
               ]
-          }
-        ],
+            }
+          ],
 
-      },
-      {
-        path: 'entity-to-entity-mapping',
-        component: EntityToEntityMappingComponent,
-        data: { title: extract('Entity to Entity Mapping'), breadcrumb: 'Entity to Entity Mapping' },
-        resolve: {
-          entityMappings: EntityToEntityMappingResolver
-        }
-      },
-      {
+        },
+        {
+          path: 'entity-to-entity-mapping',
+          component: EntityToEntityMappingComponent,
+          data: { title: extract('Entity to Entity Mapping'), breadcrumb: 'Entity to Entity Mapping' },
+          resolve: {
+            entityMappings: EntityToEntityMappingResolver
+          }
+        },
+        {
           path: 'external-services',
           data: { title: extract('External Services'), breadcrumb: 'External Services' },
           children: [
@@ -169,7 +168,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditAmazonS3Component,
-                  data: {title: extract('Edit Amazon S3 Configuration'), breadcrumb: 'Edit'},
+                  data: { title: extract('Edit Amazon S3 Configuration'), breadcrumb: 'Edit' },
                   resolve: {
                     amazonS3Configuration: AmazonS3ConfigurationResolver
                   }
@@ -243,7 +242,7 @@ const routes: Routes = [
         },
         {
           path: 'data-tables',
-          data: { title:  extract('Manage Data Tables'), breadcrumb: 'Manage Data Tables' },
+          data: { title: extract('Manage Data Tables'), breadcrumb: 'Manage Data Tables' },
           children: [
             {
               path: '',
@@ -255,14 +254,14 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateDataTableComponent,
-              data: { title: extract('Create Data Table'), breadcrumb: 'Create'},
+              data: { title: extract('Create Data Table'), breadcrumb: 'Create' },
               resolve: {
                 columnCodes: CodesResolver
               }
             },
             {
               path: ':datatableName',
-              data: { title: extract('View Data Table'), routeParamBreadcrumb: 'datatableName'},
+              data: { title: extract('View Data Table'), routeParamBreadcrumb: 'datatableName' },
               children: [
                 {
                   path: '',
@@ -274,7 +273,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditDataTableComponent,
-                  data: { title: extract('Edit Data table'), breadcrumb: 'Edit', routeParamBreadcrumb: false},
+                  data: { title: extract('Edit Data table'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     dataTable: DataTableResolver,
                     columnCodes: CodesResolver
@@ -283,10 +282,10 @@ const routes: Routes = [
               ]
             }
           ],
-      },
-      {
+        },
+        {
           path: 'hooks',
-          data: { title:  extract('Manage Hooks'), breadcrumb: 'Manage Hooks' },
+          data: { title: extract('Manage Hooks'), breadcrumb: 'Manage Hooks' },
           children: [
             {
               path: '',
@@ -326,10 +325,10 @@ const routes: Routes = [
               ]
             }
           ]
-      },
-      {
+        },
+        {
           path: 'roles-and-permissions',
-          data: { title:  extract('Roles and Permissions'), breadcrumb: 'Roles and Permissions' },
+          data: { title: extract('Roles and Permissions'), breadcrumb: 'Roles and Permissions' },
           children: [
             {
               path: '',
@@ -355,117 +354,101 @@ const routes: Routes = [
                     roledetails: ViewRoleResolver,
                   }
                 },
-              {
-                path: 'edit',
-                component: EditRoleComponent,
-                data: { title: extract('Edit Role'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
-                resolve: {
-                  role: ViewRoleResolver,
+                {
+                  path: 'edit',
+                  component: EditRoleComponent,
+                  data: { title: extract('Edit Role'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    role: ViewRoleResolver,
+                  }
                 }
-              }
-            ]
-          }
-        ]
-      },
-      {
-        path: 'configure-mc-tasks',
-        data: { title: extract('Configure Maker Checker Tasks'), breadcrumb: 'Configure Maker Checker Tasks' },
-        component: ConfigureMakerCheckerTasksComponent,
-        resolve: {
-              permissions: MakerCheckerTasksResolver
+              ]
+            }
+          ]
+        },
+        {
+          path: 'configure-mc-tasks',
+          data: { title: extract('Configure Maker Checker Tasks'), breadcrumb: 'Configure Maker Checker Tasks' },
+          component: ConfigureMakerCheckerTasksComponent,
+          resolve: {
+            permissions: MakerCheckerTasksResolver
           }
         },
-      {
-        path: 'surveys',
-        data: { title:  extract('Manage Surveys'), breadcrumb: 'Manage Surveys' },
-        children: [
-          {
-            path: '',
-            component: ManageSurveysComponent,
-            resolve: {
-              surveys: ManageSurveysResolver
-            }
-          },
-          {
-            path: 'create',
-            component: CreateSurveyComponent,
-            data: { title:  extract('Create Survey'), breadcrumb: 'Create' },
-          },
-          {
-            path: ':id',
-            data: {title: extract('View Survey'), routeParamBreadcrumb: 'id'},
-            children: [
-              {
-                path: '',
-                component: ViewSurveyComponent,
-                resolve: {
-                  survey: SurveyResolver
-                }
+        {
+          path: 'surveys',
+          data: { title: extract('Manage Surveys'), breadcrumb: 'Manage Surveys' },
+          children: [
+            {
+              path: '',
+              component: ManageSurveysComponent,
+              resolve: {
+                surveys: ManageSurveysResolver
               }
-            ]
-          }
-        ]
-      },
-      {
-        path: 'scheduler-jobs',
-        data: { title:  extract('Manage Scheduler Jobs'), breadcrumb: 'Manage Scheduler Jobs' },
-        children: [
-          {
-            path: '',
-            component: ManageSchedulerJobsComponent,
-            resolve: {},
-          },
-          {
-            path: ':id',
-            data: { title: extract('View Scheduler Job'), routeParamBreadcrumb: 'id' },
-            children: [
-              {
-                path: '',
-                component: ViewSchedulerJobComponent,
-                resolve: {
-                  selectedJob: ViewSchedulerJobResolver
+            },
+            {
+              path: 'create',
+              component: CreateSurveyComponent,
+              data: { title: extract('Create Survey'), breadcrumb: 'Create' },
+            },
+            {
+              path: ':id',
+              data: { title: extract('View Survey'), routeParamBreadcrumb: 'id' },
+              children: [
+                {
+                  path: '',
+                  component: ViewSurveyComponent,
+                  resolve: {
+                    survey: SurveyResolver
+                  }
                 }
-              },
-              {
-                path: 'edit',
-                component: EditSchedulerJobComponent,
-                data: { title: extract('Edit Scheduler Job'), routeParamBreadcrumb: false, breadcrumb: 'Edit' },
-                resolve: {
-                  jobSelected: ManageSchedulerJobResolver
-                }
-              },
-              {
-                path: 'viewhistory',
-                component: ViewHistorySchedulerJobComponent,
-                data: { title: extract('Scheduler Job History'), breadcrumb: 'View History' },
-                resolve: {
-                  jobsSchedulerHistory: ViewHistorySchedulerJobsResolver
+              ]
+            }
+          ]
+        },
+        {
+          path: 'scheduler-jobs',
+          data: { title: extract('Manage Scheduler Jobs'), breadcrumb: 'Manage Scheduler Jobs' },
+          children: [
+            {
+              path: '',
+              component: ManageSchedulerJobsComponent,
+              resolve: {},
+            },
+            {
+              path: ':id',
+              data: { title: extract('View Scheduler Job'), routeParamBreadcrumb: 'id' },
+              children: [
+                {
+                  path: '',
+                  component: ViewSchedulerJobComponent,
+                  resolve: {
+                    selectedJob: ViewSchedulerJobResolver
+                  }
                 },
-              }
-            ]
-          }
-        ],
-      },
-      {
-        path: 'global-configurations',
-        data: { title: extract('Global Configurations'), breadcrumb: 'Global Configurations' },
-        children: [
-          {
-            path: '',
-            component: GlobalConfigurationsComponent,
-            resolve: {
-              configurations: GlobalConfigurationsResolver
+                {
+                  path: 'edit',
+                  component: EditSchedulerJobComponent,
+                  data: { title: extract('Edit Scheduler Job'), routeParamBreadcrumb: false, breadcrumb: 'Edit' },
+                  resolve: {
+                    jobSelected: ManageSchedulerJobResolver
+                  }
+                },
+                {
+                  path: 'viewhistory',
+                  component: ViewHistorySchedulerJobComponent,
+                  data: { title: extract('Scheduler Job History'), breadcrumb: 'View History' },
+                  resolve: {
+                    jobsSchedulerHistory: ViewHistorySchedulerJobsResolver
+                  },
+                }
+              ]
             }
-          },
-          {
-            path: ':id/edit',
-            component: EditConfigurationComponent,
-            data: { title: extract('Edit Configuration'), breadcrumb: 'Edit' },
-            resolve: {
-              configuration: GlobalConfigurationResolver
-            }
-          }
-        ],
+          ],
+        },
+        {
+          path: 'configurations',
+          component: ConfigurationsComponent,
+          data: { title: extract('Configurations'), breadcrumb: 'Configurations' }
         },
         {
           path: 'account-number-preferences',
@@ -565,12 +548,12 @@ const routes: Routes = [
               }
             },
             {
-             path: ':id',
-             component: ViewAuditComponent,
-             data: { title: extract('View Audit'), routeParamBreadcrumb: 'id' },
-             resolve: {
-               auditTrail: AuditTrailResolver
-             }
+              path: ':id',
+              component: ViewAuditComponent,
+              data: { title: extract('View Audit'), routeParamBreadcrumb: 'id' },
+              resolve: {
+                auditTrail: AuditTrailResolver
+              }
             }
           ]
         }

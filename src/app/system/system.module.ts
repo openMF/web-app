@@ -23,8 +23,7 @@ import { ManageSurveysComponent } from './manage-surveys/manage-surveys.componen
 import { ViewSurveyComponent } from './manage-surveys/view-survey/view-survey.component';
 import { CreateSurveyComponent } from './manage-surveys/create-survey/create-survey.component';
 import { ManageSchedulerJobsComponent } from './manage-scheduler-jobs/manage-scheduler-jobs.component';
-import { GlobalConfigurationsComponent } from './global-configurations/global-configurations.component';
-import { EditConfigurationComponent } from './global-configurations/edit-configuration/edit-configuration.component';
+import { EditConfigurationComponent } from './configurations/global-configurations-tab/edit-configuration/edit-configuration.component';
 import { AmazonS3Component } from './external-services/amazon-s3/amazon-s3.component';
 import { EmailComponent } from './external-services/email/email.component';
 import { SMSComponent } from './external-services/sms/sms.component';
@@ -60,6 +59,9 @@ import { AddEventDialogComponent } from './manage-hooks/add-event-dialog/add-eve
 import { ViewSchedulerJobComponent } from './manage-scheduler-jobs/view-scheduler-job/view-scheduler-job.component';
 import { EditSchedulerJobComponent } from './manage-scheduler-jobs/edit-scheduler-job/edit-scheduler-job.component';
 import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-tasks/configure-maker-checker-tasks.component';
+import { BusinessDateTabComponent } from './configurations/business-date-tab/business-date-tab.component';
+import { ConfigurationsComponent } from './configurations/configurations.component';
+import { GlobalConfigurationsTabComponent } from './configurations/global-configurations-tab/global-configurations-tab.component';
 
 @NgModule({
   imports: [
@@ -83,7 +85,6 @@ import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-t
     RolesAndPermissionsComponent,
     ManageSurveysComponent,
     ManageSchedulerJobsComponent,
-    GlobalConfigurationsComponent,
     EditConfigurationComponent,
     AmazonS3Component,
     EmailComponent,
@@ -119,7 +120,10 @@ import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-t
     CreateSurveyComponent,
     EditSchedulerJobComponent,
     ViewHistorySchedulerJobComponent,
-    ViewSurveyComponent
+    ViewSurveyComponent,
+    BusinessDateTabComponent,
+    ConfigurationsComponent,
+    GlobalConfigurationsTabComponent
   ],
 })
 export class SystemModule { }
