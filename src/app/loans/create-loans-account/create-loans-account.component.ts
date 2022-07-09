@@ -67,7 +67,7 @@ export class CreateLoansAccountComponent implements OnInit {
     this.loansService.getLoansCollateralTemplateResource(this.loansAccountProductTemplate.loanProductId).subscribe((response: any) => {
       this.collateralOptions = response.loanCollateralOptions;
     });
-    const entityId = (this.loansAccountTemplate.clientId)? this.loansAccountTemplate.clientId : this.loansAccountTemplate.group.id;
+    const entityId = (this.loansAccountTemplate.clientId) ? this.loansAccountTemplate.clientId : this.loansAccountTemplate.group.id;
     const isGroup = (this.loansAccountTemplate.clientId) ? false : true;
     const productId = this.loansAccountProductTemplate.loanProductId;
     this.loansService.getLoansAccountTemplateResource(entityId, isGroup, productId).subscribe((response: any) => {

@@ -88,7 +88,7 @@ export class LoansAccountDetailsStepComponent implements OnInit {
    * Fetches loans account product template on productId value changes
    */
   buildDependencies() {
-    const entityId = (this.loansAccountTemplate.clientId)? this.loansAccountTemplate.clientId : this.loansAccountTemplate.group.id;
+    const entityId = (this.loansAccountTemplate.clientId) ? this.loansAccountTemplate.clientId : this.loansAccountTemplate.group.id;
     const isGroup = (this.loansAccountTemplate.clientId) ? false : true;
     this.loansAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
       this.loansService.getLoansAccountTemplateResource(entityId, isGroup, productId).subscribe((response: any) => {
