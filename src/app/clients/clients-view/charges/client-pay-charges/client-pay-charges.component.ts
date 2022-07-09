@@ -77,7 +77,7 @@ export class ClientPayChargesComponent implements OnInit {
       locale
     };
     this.clientsService.payClientCharge(this.transactionData.clientId, this.transactionData.id, data).subscribe(() => {
-      this.router.navigate(['../', 'general']);
+      this.router.navigate(['../../..','general'], { relativeTo: this.route });
     });
   }
 

@@ -5,7 +5,7 @@
     <form [formGroup]="transactionForm" (ngSubmit)="submit()">
 
       <div fxLayout="column">
-  
+
         <mat-form-field>
           <mat-label> Amount </mat-label>
           <input matInput required autofocus formControlName="amount">
@@ -13,7 +13,7 @@
             Amount <strong>is required</strong>
           </mat-error>
         </mat-form-field>
-  
+
         <mat-form-field (click)="transactionDatePicker.open()">
           <mat-label> Transaction date </mat-label>
           <input matInput [min]="minDate" [matDatepicker]="transactionDatePicker" required formControlName="transactionDate">
@@ -23,14 +23,14 @@
             Transaction date <strong>is required</strong>
           </mat-error>
         </mat-form-field>
-  
+
       </div>
-  
+
       <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../','general']">Cancel</button>
+        <button type="button" mat-raised-button [routerLink]="['../../..','general']">Cancel</button>
         <button mat-raised-button color="primary" [disabled]="!transactionForm.valid">Submit</button>
       </div>
-  
+
     </form>
 
   </mat-card>
