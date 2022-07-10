@@ -3,7 +3,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { AlertService } from 'app/core/alert/alert.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Services */
 import { SystemService } from '../../system.service';
@@ -33,7 +34,7 @@ export class GlobalConfigurationsTabComponent implements OnInit {
    * @param {SystemService} systemService System Service.
    * @param {Router} router Router for navigation.
    */
-  constructor(private route: ActivatedRoute,
+  constructor(private alertService: AlertService,
               private systemService: SystemService) {
       this.configurationData = this.systemService.getConfigurations();
   }
@@ -73,6 +74,10 @@ export class GlobalConfigurationsTabComponent implements OnInit {
     this.systemService.updateConfiguration(configuration.id, { enabled: !configuration.enabled })
       .subscribe((response: any) => {
         configuration.enabled = response.changes.enabled;
+        if (configuration.name === SettingsService.businessDateConfigName) {
+          const msg = configuration.enabled ? 'enabled' : 'disabled';
+          this.alertService.alert({type: SettingsService.businessDateType + ' Set Config', message: msg});
+        }
       });
   }
 }

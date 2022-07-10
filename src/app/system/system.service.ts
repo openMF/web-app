@@ -331,8 +331,15 @@ export class SystemService {
   /**
    * @returns {Observable<any>} Business Date data.
    */
-   getBusinessDates(): Observable<any> {
+  getBusinessDates(): Observable<any> {
     return this.http.get('/businessdate');
+  }
+
+  /**
+   * @returns {Observable<any>} Business Date data using a type BUSINESS_DATE / COB_DATE.
+   */
+   getBusinessDate(dateType: string): Observable<any> {
+    return this.http.get(`/businessdate/${dateType}`);
   }
 
   /**
@@ -356,6 +363,14 @@ export class SystemService {
    */
   getConfiguration(configurationId: string): Observable<any> {
     return this.http.get(`/configurations/${configurationId}`);
+  }
+
+  /**
+   * @param {string} configurationId Configuration ID of configuration.
+   * @returns {Observable<any>} Configuration.
+   */
+   getConfigurationByName(configurationName: string): Observable<any> {
+    return this.http.get(`/configurations/name/${configurationName}`);
   }
 
   /**

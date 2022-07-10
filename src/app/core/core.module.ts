@@ -51,15 +51,7 @@ import { APP_BASE_HREF, LocationStrategy } from '@angular/common';
   imports: [
     SharedModule,
     HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (http: HttpClient, locationStrategy: LocationStrategy) => {
-          return new TranslateHttpLoader(http, `${ window.location.protocol }//${ window.location.host }${locationStrategy.getBaseHref()}/assets/translations/`, '.json');
-        },
-        deps: [HttpClient, LocationStrategy]
-      }
-    }),
+    TranslateModule.forRoot(),
     RouterModule
   ],
   declarations: [

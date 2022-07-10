@@ -25,6 +25,7 @@ import { ServerSelectorComponent } from './server-selector/server-selector.compo
 /** Custom Modules */
 import { IconsModule } from './icons.module';
 import { MaterialModule } from './material.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 /**
  * Shared Module
@@ -36,7 +37,8 @@ import { MaterialModule } from './material.module';
     CommonModule,
     IconsModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule.forRoot(),
   ],
   declarations: [
     FormfieldComponent,

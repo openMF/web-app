@@ -26,34 +26,42 @@ export class ServerSelectorComponent implements OnInit {
   /** Server Setting */
   serverSelector =  new FormControl('');
 
+  /** Server list to show */
+  existMoreThanOneServer = false;
+
   /**
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private settingsService: SettingsService, public dialog: MatDialog, private formBuilder: FormBuilder) { }
+  constructor(private settingsService: SettingsService,
+    public dialog: MatDialog,
+    private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.servers = this.settingsService.servers;
-    this.serverSelector.patchValue(this.settingsService.server);
-    this.buildDependencies();
-    this.form = this.formBuilder.group({
-      'url': ['', [Validators.required]],
-    });
+    this.existMoreThanOneServer = (this.servers && this.servers.length > 1);
+    if (!this.existMoreThanOneServer) {
+      this.settingsService.setServer(this.servers[0]);
+    } else {
+      this.existMoreThanOneServer = true;
+      this.serverSelector.patchValue(this.settingsService.server);
+      this.form = this.formBuilder.group({
+        'url': ['', [Validators.required]],
+      });
+    }
   }
 
   /**
-   * Subscribe to value changes.
+   * Set backend server from the list
    */
-  buildDependencies() {
-    this.serverSelector.valueChanges.subscribe((url: string) => {
-      this.settingsService.setServer(url);
-      window.location.reload(); // refreshes the environment.ts.
-    });
+  setServer(): void {
+    this.settingsService.setServer(this.serverSelector.value);
   }
 
+
   /**
-   * Set new server.
+   * Add new server to the list.
    */
-  setNewServer() {
+  addNewServer(): void {
     let servers;
     this.settingsService.setServer(this.form.value.url);
     servers = this.settingsService.servers;
