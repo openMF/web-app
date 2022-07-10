@@ -94,6 +94,59 @@ docker run -d -p 4200:80 openmf/web-app:latest
 
 Access the webapp on http://localhost:4200 in your browser.
 
+### Docker compose
+It is possible to do a 'one-touch' installation of Mifos X Web App using containers (AKA "Docker").
+Fineract now packs the mifos community-app web UI in it's docker deploy.
+
+As Prerequisites, you must have `docker` and `docker-compose` installed on your machine; see
+[Docker Install](https://docs.docker.com/install/) and
+[Docker Compose Install](https://docs.docker.com/compose/install/).
+
+Now to run a new MifosX Web App instance you can simply:
+
+1. `git clone https://github.com/openMF/web-app.git ; cd web-app`
+1. for windows, use `git clone https://github.com/openMF/web-app.git --config core.autocrlf=input ; cd web-app`
+1. `docker-compose up -d`
+1. Access the webapp on http://localhost:4200 in your browser.
+
+You can also setup different confiurations for the MifosX Web App using environment variables:
+
+1. Use environment variables (best choice if you run with Docker Compose):
+
+Fineract backend settings
+```
+FINERACT_API_URLS
+```
+Value to set a Fineract server list (environments) to be used, Default value:
+```
+https://dev.mifos.io,https://demo.mifos.io,https://qa.mifos.io,https://staging.mifos.io,https://mobile.mifos.io,https://demo.fineract.dev,https://localhost:8443
+```
+
+```
+FINERACT_API_URL
+```
+Default value used from the Fineract server list. Default value:
+```
+https://localhost:8443
+```
+
+```
+FINERACT_PLATFORM_TENANT_IDENTIFIER
+```
+Fineract Tenant identifier to be used, It must be aligned with the Fineract `tenants` table. Default value:
+```
+default
+```
+
+Setting for Languages (i18n) still under development
+```
+MIFOS_DEFAULT_LANGUAGE=en-US
+```
+```
+MIFOS_SUPPORTED_LANGUAGES=en-US,fr-FR
+```
+
+For more information look the env.sample file in the root directory of the project
 
 ## Want to help? [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/openMF/web-app/issues)
 

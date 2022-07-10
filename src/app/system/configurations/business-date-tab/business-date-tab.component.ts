@@ -3,8 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ActivatedRoute } from '@angular/router';
+import { Alert } from 'app/core/alert/alert.model';
+import { AlertService } from 'app/core/alert/alert.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
+import { Subscription } from 'rxjs';
 
 /** Custom Services */
 import { SystemService } from '../../system.service';
@@ -15,10 +18,8 @@ import { SystemService } from '../../system.service';
   styleUrls: ['./business-date-tab.component.scss']
 })
 export class BusinessDateTabComponent implements OnInit {
-
-  configurationName = 'enable_business_date';
-  businessDateType = 'BUSINESS_DATE';
-  cobDateType = 'COB_DATE';
+  /** Subscription to alerts. */
+  alert$: Subscription;
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -30,8 +31,6 @@ export class BusinessDateTabComponent implements OnInit {
   cobDate = new Date();
   /** business Date form. */
   businessDateForm: FormGroup;
-  /** Configuration data. */
-  configurations: any;
   /** Business data. */
   businessDateData: any;
 
@@ -42,17 +41,29 @@ export class BusinessDateTabComponent implements OnInit {
 
   /**
    * Retrieves the configurations data from `resolve`.
-   * @param {ActivatedRoute} route Activated Route.
    * @param {SystemService} systemService System Service.
-   * @param {Router} router Router for navigation.
+   * @param {SettingsService} settingsService Settings Service.
+   * @param {FormBuilder} formBuilder Form Builder.
+   * @param {Dates} dateUtils Date Utils.
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
     private systemService: SystemService,
     private settingsService: SettingsService,
     private formBuilder: FormBuilder,
-    private dateUtils: Dates) {}
+    private dateUtils: Dates,
+    private alertService: AlertService) {}
 
   ngOnInit(): void {
+    this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
+      const alertType = alertEvent.type;
+      if (alertType === SettingsService.businessDateType + ' Set Config') {
+        this.isBusinessDateEnabled = (alertEvent.message === 'enabled') ? true : false;
+        if (this.isBusinessDateEnabled) {
+          this.setBusinessDates();
+          this.createBusinessDateForm();
+        }
+      }
+    });
     this.userDateFormat = this.settingsService.dateFormat;
     this.getConfigurations();
     this.createBusinessDateForm();
@@ -61,31 +72,26 @@ export class BusinessDateTabComponent implements OnInit {
   /**
    * Get the Configuration and the Business Date data
    */
-  getConfigurations(): void {
-    this.systemService.getConfigurations()
+   getConfigurations(): void {
+    this.systemService.getConfigurationByName(SettingsService.businessDateConfigName)
     .subscribe((configurationData: any) => {
-      this.configurations = configurationData.globalConfiguration;
-      this.validateBusinessDateStatus();
+      this.isBusinessDateEnabled = configurationData.enabled;
       if (this.isBusinessDateEnabled) {
-        this.systemService.getBusinessDates()
-        .subscribe((businessDateData: any) => {
-          this.businessDateData = businessDateData;
-          this.setBusinessDates();
-        });
+        this.setBusinessDates();
       }
     });
   }
 
-  /**
-   * Set the Business Date and COB Date.
-   */
-  setBusinessDates() {
-    this.businessDateData.forEach((data: any) => {
-      if (data.type === this.businessDateType) {
-        this.businessDate = new Date(data.date);
-      } else {
-        this.cobDate = new Date(data.date);
-      }
+  setBusinessDates(): void {
+    this.systemService.getBusinessDates()
+    .subscribe((businessDateData: any) => {
+      businessDateData.forEach((data: any) => {
+        if (data.type === SettingsService.businessDateType) {
+          this.businessDate = new Date(data.date);
+        } else {
+          this.cobDate = new Date(data.date);
+        }
+      });
     });
   }
 
@@ -96,18 +102,6 @@ export class BusinessDateTabComponent implements OnInit {
     this.businessDateForm = this.formBuilder.group({
       'businessDate': [new Date(), Validators.required],
       'cobDate': [new Date(), Validators.required],
-    });
-  }
-
-  /**
-   * Validate If the enable_business_date configuration is enabled or disabled.
-   */
-  validateBusinessDateStatus(): void {
-    this.isBusinessDateEnabled = false;
-    this.configurations.forEach((config: any) => {
-      if (config.name === this.configurationName) {
-        this.isBusinessDateEnabled = config.enabled;
-      }
     });
   }
 
@@ -123,9 +117,9 @@ export class BusinessDateTabComponent implements OnInit {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevBusinessDate: Date = this.businessDateForm.value.businessDate;
-    let dateType = this.businessDateType;
+    let dateType = SettingsService.businessDateType;
     if (this.dateIndex === 1) {
-      dateType = this.cobDateType;
+      dateType = SettingsService.cobDateType;
     }
     const data = {
       date: this.dateUtils.formatDate(prevBusinessDate, dateFormat),
