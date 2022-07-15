@@ -67,9 +67,10 @@ export class CreateLoansAccountComponent implements OnInit {
     this.loansService.getLoansCollateralTemplateResource(this.loansAccountProductTemplate.loanProductId).subscribe((response: any) => {
       this.collateralOptions = response.loanCollateralOptions;
     });
-    const clientId = this.loansAccountTemplate.clientId;
+    const entityId = (this.loansAccountTemplate.clientId) ? this.loansAccountTemplate.clientId : this.loansAccountTemplate.group.id;
+    const isGroup = (this.loansAccountTemplate.clientId) ? false : true;
     const productId = this.loansAccountProductTemplate.loanProductId;
-    this.loansService.getLoansAccountTemplateResource(clientId, productId).subscribe((response: any) => {
+    this.loansService.getLoansAccountTemplateResource(entityId, isGroup, productId).subscribe((response: any) => {
       this.multiDisburseLoan = response.multiDisburseLoan;
     });
   }
@@ -107,10 +108,8 @@ export class CreateLoansAccountComponent implements OnInit {
   submit() {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const loanType = 'individual';
     const loansAccountData = {
       ...this.loansAccount,
-      clientId: this.loansAccountTemplate.clientId,
       charges: this.loansAccount.charges.map((charge: any) => ({
         chargeId: charge.id,
         amount: charge.amount,
@@ -131,8 +130,14 @@ export class CreateLoansAccountComponent implements OnInit {
       expectedDisbursementDate: this.dateUtils.formatDate(this.loansAccount.expectedDisbursementDate, dateFormat),
       dateFormat,
       locale,
-      loanType
     };
+    if (this.loansAccountTemplate.clientId) {
+      loansAccountData.clientId = this.loansAccountTemplate.clientId;
+      loansAccountData.loanType = 'individual';
+    } else {
+      loansAccountData.groupId = this.loansAccountTemplate.group.id;
+      loansAccountData.loanType = 'group';
+    }
 
     if (loansAccountData.syncRepaymentsWithMeeting) {
       loansAccountData.calendarId = this.loansAccountProductTemplate.calendarOptions[0].id;

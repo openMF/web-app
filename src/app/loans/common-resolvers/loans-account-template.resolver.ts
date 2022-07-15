@@ -23,7 +23,8 @@ export class LoansAccountTemplateResolver implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const clientId = route.parent.parent.paramMap.get('clientId');
-        return this.loansService.getLoansAccountTemplateResource(clientId);
+        const entityId = route.parent.parent.paramMap.get('clientId') || route.parent.parent.paramMap.get('groupId');
+        const isGroup = (route.parent.parent.paramMap.get('groupId')) ? true : false;
+        return this.loansService.getLoansAccountTemplateResource(entityId, isGroup);
     }
 }
