@@ -93,12 +93,6 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
           'repaymentsStartingFromDate': this.loansAccountTemplate.expectedFirstRepaymentOnDate && new Date(this.loansAccountTemplate.expectedFirstRepaymentOnDate)
         });
       }
-
-      if (this.loansAccountTemplate.isInterestRecalculationEnabled) {
-        this.loansAccountTermsForm.patchValue({
-          'recalculationCompoundingFrequencyDate': ''
-        });
-      }
     }
     this.createloansAccountTermsForm();
     this.setCustomValidators();

@@ -400,10 +400,6 @@
             <div fxFlexFill *ngIf="loanProduct.interestRecalculationData.recalculationCompoundingFrequencyType.id !== 1" fxLayout="row wrap" fxLayout.lt-md="column">
               <span fxFlex="40%">Frequency Interval for compounding:</span>
               <span fxFlex="60%">{{ loanProduct.interestRecalculationData.recalculationCompoundingFrequencyInterval }}</span>
-              <div fxFlexFill *ngIf="loanProduct.recalculationCompoundingFrequencyDate">
-                <span fxFlex="40%">Compounding Frequency Date:</span>
-                <span fxFlex="60%">{{ loanProduct.interestRecalculationData.recalculationCompoundingFrequencyDate }}</span>
-              </div>
             </div>
           </div>
           <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
