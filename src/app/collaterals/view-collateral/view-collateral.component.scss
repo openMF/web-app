@@ -1,0 +1,36 @@
+.client-collateral-card {
+    margin: 0 auto;
+    max-width: 80rem;
+    width: 90%;
+    padding: 0;
+}
+.tab-container {
+    padding: 1%;
+    margin: 1%;
+    h3 {
+      margin:1% auto;
+    }
+    .group-details-container {
+      border: 1px solid;
+      padding: 1%;
+    }
+    .action-button{
+      margin-left: auto;
+    }
+    table {
+      width: 100%;
+      .account-action-button{
+        min-width: 26px;
+        padding: 0 6px;
+        margin: 4px;
+        line-height: 25px;
+      }
+      tr.select-row:hover {
+        cursor: pointer;
+      }
+    }
+    i:hover {
+      cursor: pointer;
+    }
+  }
+  

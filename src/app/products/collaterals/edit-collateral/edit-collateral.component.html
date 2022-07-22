@@ -1,0 +1,76 @@
+<div class="container">
+
+    <mat-card>
+
+        <form [formGroup]="collateralForm" (ngSubmit)="submit()">
+
+            <mat-card-content>
+
+                <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+                    <mat-form-field fxFlex="48%">
+                        <mat-label>Name</mat-label>
+                        <input matInput required autoFocus formControlName="name">
+                        <mat-error *ngIf="collateralForm.controls.name.hasError('required')">
+                            Name is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="48%">
+                        <mat-label>Type/Quality</mat-label>
+                        <input matInput required autoFocus formControlName="quality">
+                        <mat-error *ngIf="collateralForm.controls.quality.hasError('required')">
+                            Type/Quality is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="48%">
+                        <mat-label>Unit Type</mat-label>
+                        <input matInput required autoFocus formControlName="unitType">
+                        <mat-error *ngIf="collateralForm.controls.unitType.hasError('required')">
+                            Unit Type is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="48%">
+                        <mat-label>Base Price</mat-label>
+                        <input matInput required autoFocus formControlName="basePrice">
+                        <mat-error *ngIf="collateralForm.controls.basePrice.hasError('required')">
+                            Base Price is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="48%">
+                        <mat-label>Percentage To Base</mat-label>
+                        <input matInput required autoFocus formControlName="pctToBase">
+                        <mat-error *ngIf="collateralForm.controls.pctToBase.hasError('required')">
+                            Percentage to Base is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="48%">
+                        <mat-label>Currency</mat-label>
+                        <mat-select required formControlName="currency">
+                            <mat-option *ngFor="let currency of collateralTemplateData" [value]="currency.code">
+                                {{ currency.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="collateralForm.controls.currency.hasError('required')">
+                            Currency is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+
+            </mat-card-content>
+            
+            <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+                <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+                <button mat-raised-button color="primary" [disabled]="!collateralForm.valid" *mifosxHasPermission="'UPDATE_CHARGE'">Submit</button> 
+            </mat-card-actions>
+
+        </form>
+
+    </mat-card>
+
+</div>

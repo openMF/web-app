@@ -50,6 +50,10 @@ import { ViewDividendComponent } from './share-products/view-dividend/view-divid
 import { CreateTaxGroupComponent } from './manage-tax-groups/create-tax-group/create-tax-group.component';
 import { EditTaxGroupComponent } from './manage-tax-groups/edit-tax-group/edit-tax-group.component';
 import { CreateProductMixComponent } from './products-mix/create-product-mix/create-product-mix.component';
+import { CollateralsComponent } from './collaterals/collaterals.component';
+import { CreateCollateralComponent } from './collaterals/create-collateral/create-collateral.component';
+import { EditCollateralComponent } from './collaterals/edit-collateral/edit-collateral.component';
+import { ViewCollateralComponent } from './collaterals/view-collateral/view-collateral.component';
 
 /** Custom Resolvers */
 import { LoanProductsResolver } from './loan-products/loan-products.resolver';
@@ -94,6 +98,9 @@ import { EditProductMixComponent } from './products-mix/edit-product-mix/edit-pr
 import { ChargesTemplateAndResolver } from './charges/charges-template-and-resolver';
 import { EditFixedDepositProductComponent } from './fixed-deposit-products/edit-fixed-deposit-product/edit-fixed-deposit-product.component';
 import { FixedDepositProductAndTemplateResolver } from './fixed-deposit-products/edit-fixed-deposit-product/fixed-deposit-product-and-template.resolver';
+import { CollateralResolver } from './collaterals/collateral.resolver';
+import { CollateralsResolver } from './collaterals/collaterals.resolver';
+import { CollateralTemplateResolver } from './collaterals/collaterals-template.resolver';
 
 /** Products Routes */
 const routes: Routes = [
@@ -593,6 +600,52 @@ const routes: Routes = [
               ]
             },
           ]
+        },
+        {
+          path: 'collaterals',
+          data: { title: extract('Collaterals'), breadcrumb: 'Collaterals' },
+          children: [
+            {
+              path: 'create',
+              component: CreateCollateralComponent,
+              data: { title: extract('Create Collateral'), breadcrumb: 'Create Collateral' },
+              resolve: {
+                collateralTemplate: CollateralTemplateResolver
+              }
+            },
+            {
+              path: '',
+              component: CollateralsComponent,
+              resolve: {
+                collaterals: CollateralsResolver
+              }
+            },
+            {
+              path: ':id',
+              data: { title: extract('View Collateral'), routeParamBreadcrumb: 'id' },
+              resolve: {
+                collateral: CollateralResolver
+              },
+              children: [
+                {
+                  path: '',
+                  component: ViewCollateralComponent,
+                  resolve: {
+                    collateral: CollateralResolver
+                  },
+                },
+                {
+                  path: 'edit',
+                  component: EditCollateralComponent,
+                  data: { title: extract('Edit Collateral'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    collateralTemplate: CollateralTemplateResolver,
+                    collateral: CollateralResolver
+                  }
+                },
+              ]
+            },
+          ]
         }
       ]
     }
@@ -647,7 +700,10 @@ const routes: Routes = [
     EditTaxGroupResolver,
     ProductsMixTemplateResolver,
     FixedDepositProductAndTemplateResolver,
-    FloatingRatesResolver
+    FloatingRatesResolver,
+    CollateralResolver,
+    CollateralsResolver,
+    CollateralTemplateResolver
   ]
 })
 export class ProductsRoutingModule { }

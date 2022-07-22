@@ -135,18 +135,23 @@
   <table mat-table class="mat-elevation-z1" [dataSource]="collateralDataSource">
 
     <ng-container matColumnDef="type">
-      <th mat-header-cell *matHeaderCellDef> Type </th>
+      <th mat-header-cell *matHeaderCellDef> Name </th>
       <td mat-cell *matCellDef="let ele"> {{ ele.type.name }} </td>
     </ng-container>
 
     <ng-container matColumnDef="value">
-      <th mat-header-cell *matHeaderCellDef> Value </th>
+      <th mat-header-cell *matHeaderCellDef> Quantity </th>
       <td mat-cell *matCellDef="let ele"> {{ ele.value }} </td>
     </ng-container>
 
-    <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef> Description </th>
-      <td mat-cell *matCellDef="let ele"> {{ ele.description }} </td>
+    <ng-container matColumnDef="totalValue">
+      <th mat-header-cell *matHeaderCellDef> Total Value </th>
+      <td mat-cell *matCellDef="let ele"> {{ ele.type.basePrice*ele.value }} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="totalCollateralValue">
+      <th mat-header-cell *matHeaderCellDef> Total Collateral Value </th>
+      <td mat-cell *matCellDef="let ele"> {{ ele.type.pctToBase*ele.type.basePrice*ele.value/100 }} </td>
     </ng-container>
 
     <ng-container matColumnDef="action">
@@ -169,7 +174,7 @@
     <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
     Previous
   </button>
-  <button mat-raised-button matStepperNext [disabled]="!loansAccountFormValid">
+  <button mat-raised-button matStepperNext [disabled]="!isCollateralSufficient">
     Next&nbsp;&nbsp;
     <fa-icon icon="arrow-right"></fa-icon>
   </button>

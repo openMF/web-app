@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 /** Custom Services */
 import { LoansService } from '../loans.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { ClientsService } from 'app/clients/clients.service';
 
 /** Step Components */
 import { LoansAccountDetailsStepComponent } from '../loans-account-stepper/loans-account-details-step/loans-account-details-step.component';
@@ -35,6 +36,8 @@ export class CreateLoansAccountComponent implements OnInit {
   collateralOptions: any;
   /** Multi Disburse Loan */
   multiDisburseLoan: any;
+  /** Principal Amount */
+  principal: any;
 
   /**
    * Sets loans account create form.
@@ -43,12 +46,14 @@ export class CreateLoansAccountComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils
    * @param {loansService} LoansService Loans Service
    * @param {SettingsService} settingsService Settings Service
+   * @param {ClientsService} clientService Client Service
    */
   constructor(private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
     private loansService: LoansService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private clientService: ClientsService
   ) {
     this.route.data.subscribe((data: { loansAccountTemplate: any }) => {
       this.loansAccountTemplate = data.loansAccountTemplate;
@@ -64,8 +69,9 @@ export class CreateLoansAccountComponent implements OnInit {
    */
   setTemplate($event: any) {
     this.loansAccountProductTemplate = $event;
-    this.loansService.getLoansCollateralTemplateResource(this.loansAccountProductTemplate.loanProductId).subscribe((response: any) => {
-      this.collateralOptions = response.loanCollateralOptions;
+    const clientId = this.loansAccountTemplate.clientId;
+    this.clientService.getCollateralTemplate(clientId).subscribe((response: any) => {
+      this.collateralOptions = response;
     });
     const entityId = (this.loansAccountTemplate.clientId) ? this.loansAccountTemplate.clientId : this.loansAccountTemplate.group.id;
     const isGroup = (this.loansAccountTemplate.clientId) ? false : true;
@@ -89,8 +95,14 @@ export class CreateLoansAccountComponent implements OnInit {
   get loansAccountFormValid() {
     return (
       this.loansAccountDetailsForm.valid &&
-      this.loansAccountTermsForm.valid
+      this.loansAccountTermsForm.valid &&
+      this.loansAccountChargesStep.loansAccountCharges.isValid
     );
+  }
+
+  /** Gets principal Amount */
+  get loanPrincipal() {
+    return this.loansAccountTermsStep.loansAccountTermsForm.value.principal;
   }
 
   /** Retrieves Data of all forms except Currency to submit the data */
@@ -116,9 +128,8 @@ export class CreateLoansAccountComponent implements OnInit {
         dueDate: charge.dueDate && this.dateUtils.formatDate(charge.dueDate, dateFormat),
       })),
       collateral: this.loansAccount.collateral.map((collateralEle: any) => ({
-        type: collateralEle.type,
-        value: collateralEle.value,
-        description: collateralEle.description
+        clientCollateralId: collateralEle.type.collateralId,
+        quantity: collateralEle.value,
       })),
       disbursementData: this.loansAccount.disbursementData.map((item: any) => ({
         expectedDisbursementDate: this.dateUtils.formatDate(item.expectedDisbursementDate, dateFormat),
@@ -157,6 +168,7 @@ export class CreateLoansAccountComponent implements OnInit {
     if (!(this.multiDisburseLoan)) {
       delete loansAccountData.disbursementData;
     }
+    delete loansAccountData.isValid;
 
     this.loansService.createLoansAccount(loansAccountData).subscribe((response: any) => {
       this.router.navigate(['../', response.resourceId], { relativeTo: this.route });

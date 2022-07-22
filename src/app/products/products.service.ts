@@ -415,4 +415,51 @@ export class ProductsService {
     return this.http.put(`/recurringdepositproducts/${recurringDepositProductId}`, recurringDepositProduct);
   }
 
+  /**
+   * @returns {Observable<any>} Collateral data.
+   */
+  getCollaterals(): Observable<any> {
+    return this.http.get('/collateral-management');
+  }
+
+  /**
+   * @returns {Observable<any>} Collateral Template.
+   */
+  getCollateralTemplate(): Observable<any> {
+    return this.http.get('/collateral-management/template');
+  }
+
+  /**
+   * @param {string} collateralId Collateral ID of Collateral.
+   * @returns {Observable<any>} Collateral.
+   */
+  getCollateral(collateralId: string, template: boolean = false): Observable<any> {
+    const httpParams = new HttpParams().set('template', template.toString());
+    return this.http.get(`/collateral-management/${collateralId}`, { params: httpParams });
+  }
+
+  /**
+   * @param collateralId Collateral Id to be updated.
+   * @param collateral  Collateral Data to be updated.
+   */
+  updateCollateral(collateralId: string, collateral: any): Observable<any> {
+    return this.http.put(`/collateral-management/${collateralId}`, collateral);
+  }
+
+  /**
+   * @param {string} collateralId  Collateral ID of Collateral to be deleted.
+   * @returns {Observable<any>}
+   */
+  deleteCollateral(collateralId: string): Observable<any> {
+    return this.http.delete(`/collateral-management/${collateralId}`);
+  }
+
+  /**
+   * @param {any} collateral Collateral to be created.
+   * @returns {Observable<any>}
+   */
+  createCollateral(collateral: any): Observable<any> {
+    return this.http.post('/collateral-management', collateral);
+  }
+
 }

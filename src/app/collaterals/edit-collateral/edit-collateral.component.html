@@ -1,0 +1,51 @@
+<div class="container">
+
+    <mat-card>
+
+        <form [formGroup]="clientCollateralForm" (ngSubmit)="submit()">
+
+            <mat-card-content>
+
+                <div fxLayout="column">
+                    
+                    <div fxLayout="column">
+
+                        <mat-form-field>
+                            <mat-label>Name</mat-label>
+                            <input matInput required formControlName="name">
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Quantity</mat-label>
+                            <input matInput required formControlName="quantity">
+                            <mat-error *ngIf="clientCollateralForm.controls.quantity.hasError('required')">
+                                Quantity is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Total</mat-label>
+                            <input matInput required formControlName="total">
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Total Collateral Value</mat-label>
+                            <input matInput required formControlName="totalCollateral">
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+
+            </mat-card-content>
+
+            <mat-card-actions fxLayoutGap="5px" fxLayout="row" fsLayout.xs="column" fxLayoutAlign="center">
+                <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+                <button mat-raised-button color="primary" [disabled]="!clientCollateralForm.valid">Submit</button> 
+            </mat-card-actions>
+
+        </form>
+    
+    </mat-card>
+
+</div>

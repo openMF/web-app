@@ -29,6 +29,8 @@ export class GeneralTabComponent {
   closedSharesColumns: string[] = ['Account No', 'Share Account', 'Approved Shares', 'Pending For Approval Shares', 'Closed Date'];
   /** Upcoming Charges Columns */
   upcomingChargesColumns: string[] = ['Name', 'Due as of', 'Due', 'Paid', 'Waived', 'Outstanding', 'Actions'];
+  /** Collaterals Column */
+  collateralsColumns: string[] = ['ID', 'Name', 'Quantity', 'Total Value', 'Total Collateral Value'];
 
   /** Client Account Data */
   clientAccountData: any;
@@ -42,6 +44,8 @@ export class GeneralTabComponent {
   upcomingCharges: any;
   /** Client Summary Data */
   clientSummary: any;
+  /** Collaterals Data */
+  collaterals: any;
 
   /** Show Closed Loan Accounts */
   showClosedLoanAccounts = false;
@@ -67,12 +71,13 @@ export class GeneralTabComponent {
     private clientService: ClientsService,
     private router: Router
   ) {
-    this.route.data.subscribe((data: { clientAccountsData: any, clientChargesData: any, clientSummary: any }) => {
+    this.route.data.subscribe((data: { clientAccountsData: any, clientChargesData: any, clientSummary: any, clientCollateralData: any }) => {
       this.clientAccountData = data.clientAccountsData;
       this.savingAccounts = data.clientAccountsData.savingsAccounts;
       this.loanAccounts = data.clientAccountsData.loanAccounts;
       this.shareAccounts = data.clientAccountsData.shareAccounts;
       this.upcomingCharges = data.clientChargesData.pageItems;
+      this.collaterals = data.clientCollateralData;
       this.clientSummary = data.clientSummary ? data.clientSummary[0] : [];
       this.clientid = this.route.parent.snapshot.params['clientId'];
   });

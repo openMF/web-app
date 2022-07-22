@@ -31,8 +31,10 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   @Input() loansAccountTemplate: any;
   // @Input() loansAccountFormValid: LoansAccountFormValid
   @Input() loansAccountFormValid: boolean;
-  // @Input collateralOptionsL Collateral Options
+  // @Input collateralOptions: Collateral Options
   @Input() collateralOptions: any;
+  // @Input loanPrincipal: Loan Principle
+  @Input() loanPrincipal: any;
 
   /** Charges Data */
   chargeData: any;
@@ -47,9 +49,13 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   /** Columns to be displayed in overdue charges table. */
   overdueChargesDisplayedColumns: string[] = ['name', 'type', 'amount', 'collectedon'];
   /** Columns to be displayed in collateral table. */
-  loanCollateralDisplayedColumns: string[] = ['type', 'value', 'description', 'action'];
+  loanCollateralDisplayedColumns: string[] = ['type', 'value', 'totalValue', 'totalCollateralValue', 'action'];
   /** Component is pristine if there has been no changes by user interaction */
   pristine = true;
+  /** Check if value of collateral added  is more than principal amount */
+  isCollateralSufficient = false;
+  /** Total value of all collateral added to a loan */
+  totalCollateralValue: any = 0;
 
   /**
    * Loans Account Charges Form Step
@@ -207,33 +213,53 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
     });
   }
 
-  // TODO: Needs to be completed
+  /**
+   * Add a Collateral to the loan
+   */
   addCollateral() {
     const addCollateralDialogRef = this.dialog.open(LoansAccountAddCollateralDialogComponent, {
       data: { collateralOptions: this.collateralOptions }
     });
+    console.log(this.collateralOptions);
     addCollateralDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.addCollateralForm) {
+      console.log(this.loanPrincipal);
+      if (response.data) {
         const collateralData = {
-          type: response.addCollateralForm.value.type,
-          value: response.addCollateralForm.value.value,
-          description: response.addCollateralForm.value.description
+          type: response.data.value.collateral,
+          value: response.data.value.quantity,
         };
-        this.collateralDataSource = this.collateralDataSource.concat(collateralData);
 
+        this.totalCollateralValue += collateralData.type.pctToBase * collateralData.type.basePrice * collateralData.value / 100;
+        this.collateralDataSource = this.collateralDataSource.concat(collateralData);
+        this.collateralOptions = this.collateralOptions.filter( (user: any) => user.collateralId !== response.data.value.collateral.collateralId);
+        if (this.loanPrincipal < this.totalCollateralValue) {
+          this.isCollateralSufficient = true;
+        } else {
+          this.isCollateralSufficient = false;
+        }
       }
     });
   }
-
+  /**
+   * Delete a added collateral from loan
+   * @param id ID od the collateral to be deleted
+   */
   deleteCollateral(id: any) {
     const deleteCollateralDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `collateral` }
     });
     deleteCollateralDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.collateralDataSource.splice(this.collateralDataSource.indexOf(id), 1);
+        const removed: any = this.collateralDataSource.splice(id, 1);
+        this.collateralOptions = this.collateralOptions.concat(removed[0].type);
+        this.totalCollateralValue -= removed[0].type.pctToBase * removed[0].type.basePrice * removed[0].value / 100;
         this.collateralDataSource = this.collateralDataSource.concat([]);
         this.pristine = false;
+        if (this.loanPrincipal < this.totalCollateralValue) {
+          this.isCollateralSufficient = true;
+        } else {
+          this.isCollateralSufficient = false;
+        }
       }
     });
   }
@@ -244,7 +270,8 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   get loansAccountCharges() {
     return {
       charges: this.chargesDataSource,
-      collateral: this.collateralDataSource
+      collateral: this.collateralDataSource,
+      isValid: this.isCollateralSufficient
     };
   }
 

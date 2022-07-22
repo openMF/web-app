@@ -11,7 +11,7 @@ export class LoanCollateralTabComponent implements OnInit {
   /** Loan Details */
   loanDetails: any;
   /** Columns to be displayed in collateral table. */
-  displayedColumns: string[] = ['type', 'value', 'description'];
+  displayedColumns: string[] = ['id', 'quantity', 'total', 'totalCollateral'];
 
   /**
    * Retrieves the loans data from `resolve`.

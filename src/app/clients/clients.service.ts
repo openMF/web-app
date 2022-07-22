@@ -363,4 +363,18 @@ export class ClientsService {
     return this.http.post(`/users`, userData);
   }
 
+  /**
+   * @param clientId Client ID.
+   * @param collateralData Collateral Data
+   */
+  createClientCollateral(clientId: any, collateralData: any) {
+    return this.http.post(`/clients/${clientId}/collaterals`, collateralData);
+  }
+
+  /**
+   * @param clientId Client ID.
+   */
+  getCollateralTemplate(clientId: any) {
+    return this.http.get(`/clients/${clientId}/collaterals/template`);
+  }
 }
