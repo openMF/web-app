@@ -347,6 +347,11 @@
   </div>
 
   <div fxFlexFill>
+    <span fxFlex="40%">Delinquency Bucket:</span>
+    <span fxFlex="60%">{{ loanProduct.delinquencyBucketId ? 'Yes' : 'No' }}</span>
+  </div>
+
+  <div fxFlexFill>
     <span fxFlex="40%">Account moves out of NPA only after all arrears have been cleared:</span>
     <span fxFlex="60%">{{ loanProduct.accountMovesOutOfNPAOnlyOnArrearsCompletion ? 'Yes' : 'No' }}</span>
   </div>

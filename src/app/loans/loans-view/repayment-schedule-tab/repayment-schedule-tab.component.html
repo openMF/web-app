@@ -1,5 +1,9 @@
 <div class="container">
 
+  <ng-container *ngIf="loanDetails.delinquencyRange">
+    <h3>Loan Account Classification : {{loanDetails?.delinquencyRange.classification}}</h3>
+  </ng-container>
+
   <table mat-table [dataSource]="repaymentScheduleDetails.periods">
 
     <ng-container matColumnDef="number">
@@ -29,7 +33,7 @@
     <ng-container matColumnDef="check">
       <th mat-header-cell *matHeaderCellDef> &nbsp; </th>
       <td mat-cell *matCellDef="let ele">
-        <span *ngIf="ele.obligationsMetOnDate"> <i class='fa fa-check'></i> </span> 
+        <span *ngIf="ele.obligationsMetOnDate"> <i class='fa fa-check'></i> </span>
       </td>
       <td mat-footer-cell *matFooterCellDef> </td>
     </ng-container>

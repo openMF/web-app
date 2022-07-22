@@ -300,6 +300,86 @@ export class ProductsService {
   }
 
   /**
+   * @returns {Observable<any>} Delinquency Range data
+   */
+  getDelinquencyRanges(): Observable<any> {
+    return this.http.get('/delinquency/ranges');
+  }
+
+  /**
+   * @param {any} delinquencyRateId Delinquency Range Id.
+   * @returns {Observable<any>} Delinquency Range data.
+   */
+   getDelinquencyRange(delinquencyRateId: any): Observable<any> {
+    return this.http.get(`/delinquency/ranges/${delinquencyRateId}`);
+  }
+
+  /**
+   * @param {any} payload Delinquency Range data
+   * @returns {Observable<any>} Delinquency Range Resource Id
+   */
+   createDelinquencyRange(payload: any): Observable<any> {
+    return this.http.post('/delinquency/ranges', payload);
+  }
+
+  /**
+   * @param {any} delinquencyRateId Delinquency Range ID
+   * @param {any} payload Delinquency Range data
+   * @returns {Observable<any>} Changes in the Delinquency Range
+   */
+  updateDelinquencyRange(delinquencyRateId: any, payload: any): Observable<any> {
+    return this.http.put(`/delinquency/ranges/${delinquencyRateId}`, payload);
+  }
+
+  /**
+   * @param {any} delinquencyRateId Delinquency Range ID
+   * @returns {Observable<any>} Changes in the Delinquency Range
+   */
+  deleteDelinquencyRange(delinquencyRateId: any): Observable<any> {
+    return this.http.delete(`/delinquency/ranges/${delinquencyRateId}`);
+  }
+
+  /**
+   * @returns {Observable<any>} Delinquency Bucket data
+   */
+  getDelinquencyBuckets(): Observable<any> {
+    return this.http.get('/delinquency/buckets');
+  }
+
+  /**
+   * @param {any} delinquencyBucketId Delinquency Bucket Id.
+   * @returns {Observable<any>} Delinquency Bucket data.
+   */
+  getDelinquencyBucket(delinquencyBucketId: any): Observable<any> {
+    return this.http.get(`/delinquency/buckets/${delinquencyBucketId}`);
+  }
+
+  /**
+   * @param {any} payload Delinquency Bucket data
+   * @returns {Observable<any>} Delinquency Bucket Resource Id
+   */
+  createDelinquencyBucket(payload: any): Observable<any> {
+    return this.http.post('/delinquency/buckets', payload);
+  }
+
+  /**
+   * @param {any} delinquencyBucketId Delinquency Bucket ID
+   * @param {any} payload Delinquency Bucket data
+   * @returns {Observable<any>} Changes in the Delinquency Bucket
+   */
+  updateDelinquencyBucket(delinquencyBucketId: any, payload: any): Observable<any> {
+    return this.http.put(`/delinquency/buckets/${delinquencyBucketId}`, payload);
+  }
+
+  /**
+   * @param {any} delinquencyBucketId Delinquency Bucket ID
+   * @returns {Observable<any>} Changes in the Delinquency Bucket
+   */
+  deleteDelinquencyBucket(delinquencyBucketId: any): Observable<any> {
+    return this.http.delete(`/delinquency/buckets/${delinquencyBucketId}`);
+  }
+
+  /**
    * @returns {Observable<any>} Product mixes data
    */
   getProductMixes(): Observable<any> {

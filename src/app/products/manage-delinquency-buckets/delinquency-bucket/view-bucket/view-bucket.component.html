@@ -1,0 +1,62 @@
+<div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="2%">
+  <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_DELINQUENCY_BUCKET'">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit
+  </button>
+  <button mat-raised-button color="warn" (click)="deleteDelinquencyBucket()" *mifosxHasPermission="'DELETE_DELINQUENCY_BUCKET'">
+    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+    Delete
+  </button>
+</div>
+
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" class="content">
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Name
+        </div>
+
+        <div fxFlex="50%">
+          {{ delinquencyBucketData.name }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Classification Name
+        </div>
+
+        <div fxFlex="25%" class="mat-body-strong">
+          Days From
+        </div>
+
+        <div fxFlex="25%" class="mat-body-strong">
+          Days Till
+        </div>
+      </div>
+
+
+      <div fxLayout="row wrap" class="content" *ngFor="let range of delinquencyBucketData.ranges">
+
+        <div fxFlex="50%">
+          {{ range.classification }}
+        </div>
+
+        <div fxFlex="25%">
+          {{ range.minimumAgeDays }}
+        </div>
+
+        <div fxFlex="25%">
+          {{ range.maximumAgeDays }}
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>
