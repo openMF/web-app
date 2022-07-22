@@ -1,5 +1,7 @@
 <div fxLayout="column" id="footer" class="m-b-20">
   <mat-divider fxFlexAlign="center" class="divider"></mat-divider>
-  <p fxFlexAlign="center" class="footer-content">Version {{ version }}</p>
-  <p fxFlexAlign="center" class="footer-content">Mifos X is up to date</p>
+  <p fxFlexAlign="center" class="footer-content">Version <b>{{ version }}</b> - <b>{{ hash }}</b></p>
+  <p fxFlexAlign="center" class="footer-content" *ngIf="isBusinessDateDefined">Current Business Date: <b>{{ businessDate | date: 'EEEE, MMMM dd, y' }}</b></p>
+  <mat-divider fxFlexAlign="center" class="divider"></mat-divider>
+  <p fxFlexAlign="center" class="footer-content">Mifos X by Mifos</p>
 </div>

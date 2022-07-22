@@ -151,6 +151,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
         fromDate: chartData.fromDate ? new Date(chartData.fromDate) : '',
         isPrimaryGroupingByAmount: chartData.isPrimaryGroupingByAmount,
         name: chartData.name,
+        description: chartData.description,
         chartSlabs: this.getChartSlabsData(chartData)
       };
       this.chartsDetail.push(chart);
@@ -228,7 +229,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
       'fromDate': ['', Validators.required],
       'endDate': [''],
       'isPrimaryGroupingByAmount': [false],
-      'chartSlabs': this.formBuilder.array([])
+      'chartSlabs': this.formBuilder.array([], Validators.required)
     });
   }
 

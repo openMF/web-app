@@ -284,8 +284,8 @@ export class SystemService {
    * @param {string} jobId Job Id on which jobs to run
    * @returns {Observable<any>}
    */
-   runSelectedJob(jobId: string): Observable<any> {
-    return this.http.post(`/jobs/${jobId}?command=executeJob`, this.emptyPayload);
+   runSelectedJob(jobId: string): Promise<any> {
+    return this.http.post(`/jobs/${jobId}?command=executeJob`, this.emptyPayload).toPromise();
   }
 
   /*
@@ -338,6 +338,28 @@ export class SystemService {
   }
 
   /**
+   * @returns {Observable<any>} Business Date data.
+   */
+  getBusinessDates(): Observable<any> {
+    return this.http.get('/businessdate');
+  }
+
+  /**
+   * @returns {Observable<any>} Business Date data using a type BUSINESS_DATE / COB_DATE.
+   */
+   getBusinessDate(dateType: string): Observable<any> {
+    return this.http.get(`/businessdate/${dateType}`);
+  }
+
+  /**
+   * @param {any} dateData Business Date data to be updated.
+   * @returns {Observable<any>}
+   */
+   updateBusinessDate(dateData: any): Observable<any> {
+    return this.http.post(`/businessdate`, dateData);
+  }
+
+  /**
    * @returns {Observable<any>} Configurations data.
    */
   getConfigurations(): Observable<any> {
@@ -350,6 +372,14 @@ export class SystemService {
    */
   getConfiguration(configurationId: string): Observable<any> {
     return this.http.get(`/configurations/${configurationId}`);
+  }
+
+  /**
+   * @param {string} configurationId Configuration ID of configuration.
+   * @returns {Observable<any>} Configuration.
+   */
+   getConfigurationByName(configurationName: string): Observable<any> {
+    return this.http.get(`/configurations/name/${configurationName}`);
   }
 
   /**

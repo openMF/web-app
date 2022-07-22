@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 /** Environment Configuration */
@@ -38,7 +38,9 @@ import { TasksModule } from './tasks/tasks.module';
 
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
-import { DatePipe } from '@angular/common';
+import { DatePipe, LocationStrategy } from '@angular/common';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 /**
  * App Module
@@ -47,6 +49,15 @@ import { DatePipe } from '@angular/common';
  */
 @NgModule({
   imports: [
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient, locationStrategy: LocationStrategy) => {
+          return new TranslateHttpLoader(http, `${ window.location.protocol }//${ window.location.host }${locationStrategy.getBaseHref()}/assets/translations/`, '.json');
+        },
+        deps: [HttpClient, LocationStrategy]
+      }
+    }),
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,

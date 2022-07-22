@@ -21,27 +21,18 @@
       <ng-container matColumnDef="enabled">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
         <td mat-cell *matCellDef="let configuration">
-          <div [className]="configuration.enabled ? 'enabled' : 'disabled'">
-            <fa-icon icon="circle" size="lg" matTooltip="{{ configuration.enabled ? 'Enabled' : 'Disabled' }}" matTooltipPosition="right"></fa-icon>
-          </div>
+          <mat-slide-toggle [(ngModel)]="configuration.enabled" name="{{configuration.name}}" (click)="toggleStatus(configuration)">
+            <div [className]="configuration.enabled ? 'enabled' : 'disabled'">
+              <span *ngIf="configuration.enabled">Enabled</span>
+              <span *ngIf="!configuration.enabled">Disabled</span>
+            </div>
+          </mat-slide-toggle>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="value">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Value </th>
         <td mat-cell *matCellDef="let configuration"> {{ configuration.value }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef> Action </th>
-        <td mat-cell *matCellDef="let configuration">
-          <button mat-button *ngIf="!configuration.enabled" color="accent" (click)="toggleStatus(configuration)">
-            <fa-icon icon="lock-open"></fa-icon>&nbsp;&nbsp;Enable
-          </button>
-          <button mat-button *ngIf="configuration.enabled" color="warn" (click)="toggleStatus(configuration)">
-            <fa-icon icon="lock"></fa-icon>&nbsp;&nbsp;Disable
-          </button>
-        </td>
       </ng-container>
 
       <ng-container matColumnDef="edit">

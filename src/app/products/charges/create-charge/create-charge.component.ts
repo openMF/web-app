@@ -156,7 +156,6 @@ export class CreateChargeComponent implements OnInit {
           this.chargeForm.removeControl('chargePaymentMode');
           this.chargeForm.removeControl('incomeAccountId');
           this.chargeForm.get('penalty').setValue(false);
-          this.chargeForm.get('penalty').disable();
           break;
       }
       this.chargeForm.get('chargeCalculationType').reset();
@@ -181,7 +180,6 @@ export class CreateChargeComponent implements OnInit {
           break;
         case 9: // Overdue Fee
           this.chargeForm.get('penalty').setValue(true);
-          this.chargeForm.get('penalty').disable();
           this.chargeForm.addControl('addFeeFrequency', new FormControl(false));
           this.chargeForm.get('addFeeFrequency').valueChanges.subscribe((addFeeFrequency) => {
             if (addFeeFrequency) {
@@ -216,7 +214,6 @@ export class CreateChargeComponent implements OnInit {
   submit() {
     const chargeFormData = this.chargeForm.value;
     const locale = this.settingsService.language.code;
-    const dateFormat = this.settingsService.dateFormat;
     const prevFeeOnMonthDay: Date = this.chargeForm.value.feeOnMonthDay;
     const monthDayFormat = 'dd MMM';
     if (chargeFormData.feeOnMonthDay instanceof Date) {

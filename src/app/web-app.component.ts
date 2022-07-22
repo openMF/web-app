@@ -49,6 +49,7 @@ export class WebAppComponent implements OnInit {
    * @param {ThemeStorageService} themeStorageService Theme Storage Service.
    * @param {MatSnackBar} snackBar Material Snackbar for notifications.
    * @param {AlertService} alertService Alert Service.
+   * @param {SettingsService} settingsService Settings Service.
    * @param {AuthenticationService} authenticationService Authentication service.
    */
   constructor(private router: Router,
@@ -82,7 +83,7 @@ export class WebAppComponent implements OnInit {
     log.debug('init');
 
     // Setup translations
-    this.translateService.addLangs(environment.supportedLanguages);
+    this.translateService.addLangs(environment.supportedLanguages.split(','));
     this.translateService.use(environment.defaultLanguage);
 
     // Change page title on navigation or language change, based on route data
@@ -142,17 +143,8 @@ export class WebAppComponent implements OnInit {
     if (!localStorage.getItem('mifosXDateFormat')) {
       this.settingsService.setDateFormat('dd MMMM yyyy');
     }
-    if (!localStorage.getItem('mifosXServers')) {
-      this.settingsService.setServers([
-        'https://dev.mifos.io',
-        'https://demo.mifos.io',
-        'https://qa.mifos.io',
-        'https://staging.mifos.io',
-        'https://mobile.mifos.io',
-        'https://demo.fineract.dev',
-        'https://localhost:8443'
-      ]);
-    }
+    // Set the server list from the env var FINERACT_API_URLS
+    this.settingsService.setServers(environment.baseApiUrls.split(','));
   }
 
   logout() {

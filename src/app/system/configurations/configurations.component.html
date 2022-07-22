@@ -1,0 +1,13 @@
+<mat-card class="configurations-card">
+  <mat-card-content>
+    <mat-tab-group #tabGroup mat-align-tabs="center">
+      <mat-tab label="Global Configurations">
+        <mifosx-global-configurations-tab></mifosx-global-configurations-tab>
+      </mat-tab>
+      <mat-tab label="Business Date" *ngIf="isBusinessDateEnabled">
+        <mifosx-business-date-tab></mifosx-business-date-tab>
+      </mat-tab>
+    </mat-tab-group>
+
+  </mat-card-content>
+</mat-card>

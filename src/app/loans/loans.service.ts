@@ -268,12 +268,14 @@ export class LoansService {
    * @param {any} clientId Client ID
    * @param {any} productId Product ID
    */
-  getLoansAccountTemplateResource(clientId: any, productId?: any): Observable<any> {
+  getLoansAccountTemplateResource(entityId: any, isGroup: boolean, productId?: any): Observable<any> {
     let httpParams = new HttpParams().set('activeOnly', 'true')
-                                      .set('clientId', clientId)
-                                      .set('staffInSelectedOfficeOnly', 'true')
-                                      .set('templateType', 'individual');
+                                      .set('staffInSelectedOfficeOnly', 'true');
     httpParams = productId ? httpParams.set('productId', productId) : httpParams;
+    httpParams = isGroup ? httpParams.set('groupId', entityId)
+                                      .set('templateType', 'group') :
+                                      httpParams.set('clientId', entityId)
+                                      .set('templateType', 'individual');
     return this.http.get('/loans/template', { params: httpParams });
   }
 
