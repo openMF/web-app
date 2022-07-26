@@ -23,6 +23,7 @@ export class LoanProductTermsStepComponent implements OnInit {
   valueConditionTypeData: any;
   floatingRateData: any;
   interestRateFrequencyTypeData: any;
+  overAppliedCalculationTypeData: any;
   repaymentFrequencyTypeData: any;
 
   displayedColumns: string[] = ['valueConditionType', 'borrowerCycleNumber', 'minValue', 'defaultValue', 'maxValue', 'actions'];
@@ -38,6 +39,7 @@ export class LoanProductTermsStepComponent implements OnInit {
     this.floatingRateData = this.loanProductsTemplate.floatingRateOptions;
     this.interestRateFrequencyTypeData = this.loanProductsTemplate.interestRateFrequencyTypeOptions;
     this.repaymentFrequencyTypeData = this.loanProductsTemplate.repaymentFrequencyTypeOptions;
+    this.overAppliedCalculationTypeData = [{id: 'percentage', value: 'Percentage'}, {id: 'flat', value: 'Fixed Amount'}];
 
     this.loanProductTermsForm.patchValue({
       'minPrincipal': this.loanProductsTemplate.minPrincipal,
@@ -54,6 +56,7 @@ export class LoanProductTermsStepComponent implements OnInit {
       'floatingRatesId': this.loanProductsTemplate.floatingRateId,
       'interestRateDifferential': this.loanProductsTemplate.interestRateDifferential,
       'isFloatingInterestRateCalculationAllowed': this.loanProductsTemplate.isFloatingInterestRateCalculationAllowed,
+      'allowApprovedDisbursedAmountsOverApplied': this.loanProductsTemplate.allowApprovedDisbursedAmountsOverApplied,
       'minDifferentialLendingRate': this.loanProductsTemplate.minDifferentialLendingRate,
       'defaultDifferentialLendingRate': this.loanProductsTemplate.defaultDifferentialLendingRate,
       'maxDifferentialLendingRate': this.loanProductsTemplate.maxDifferentialLendingRate,
@@ -62,6 +65,13 @@ export class LoanProductTermsStepComponent implements OnInit {
       'repaymentFrequencyType': this.loanProductsTemplate.repaymentFrequencyType.id,
       'minimumDaysBetweenDisbursalAndFirstRepayment': this.loanProductsTemplate.minimumDaysBetweenDisbursalAndFirstRepayment
     });
+
+    if (this.loanProductsTemplate.allowApprovedDisbursedAmountsOverApplied) {
+      this.loanProductTermsForm.patchValue({
+        'overAppliedCalculationType': this.loanProductsTemplate.overAppliedCalculationType,
+        'overAppliedNumber': this.loanProductsTemplate.overAppliedNumber,
+      });
+    }
 
     this.loanProductTermsForm.setControl('principalVariationsForBorrowerCycle',
       this.formBuilder.array(this.loanProductsTemplate.principalVariationsForBorrowerCycle.map((variation: any) => ({ ...variation, valueConditionType: variation.valueConditionType.id }))));
@@ -81,6 +91,7 @@ export class LoanProductTermsStepComponent implements OnInit {
       'numberOfRepayments': ['', Validators.required],
       'maxNumberOfRepayments': [''],
       'isLinkedToFloatingInterestRates': [false],
+      'allowApprovedDisbursedAmountsOverApplied': [false],
       'minInterestRatePerPeriod': [''],
       'interestRatePerPeriod': ['', Validators.required],
       'maxInterestRatePerPeriod': [''],
@@ -92,6 +103,20 @@ export class LoanProductTermsStepComponent implements OnInit {
   }
 
   setConditionalControls() {
+    this.loanProductTermsForm.get('allowApprovedDisbursedAmountsOverApplied').valueChanges
+      .subscribe(allowApprovedDisbursedAmountsOverApplied => {
+        if (allowApprovedDisbursedAmountsOverApplied) {
+          this.loanProductTermsForm.addControl('overAppliedCalculationType', new FormControl(''));
+          this.loanProductTermsForm.addControl('overAppliedNumber', new FormControl(''));
+          this.loanProductTermsForm.addControl('disallowExpectedDisbursements', new FormControl('true'));
+        } else {
+          this.loanProductTermsForm.removeControl('overAppliedCalculationType');
+          this.loanProductTermsForm.removeControl('overAppliedNumber');
+          this.loanProductTermsForm.removeControl('disallowExpectedDisbursements');
+        }
+      }
+    );
+
     this.loanProductTermsForm.get('isLinkedToFloatingInterestRates').valueChanges
       .subscribe(isLinkedToFloatingInterestRates => {
         if (isLinkedToFloatingInterestRates) {
