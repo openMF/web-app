@@ -11,7 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SystemService } from '../../system.service';
 
 /** Data Imports */
-import { appTableData } from '../app-table-data';
+import { appTableData, entitySubTypeData } from '../app-table-data';
 
 /** Custom Components */
 import { ColumnDialogComponent } from '../column-dialog/column-dialog.component';
@@ -31,6 +31,8 @@ export class EditDataTableComponent implements OnInit {
   dataTableForm: FormGroup;
   /** Data Table Data. */
   dataTableData: any;
+  entitySubTypeData = entitySubTypeData;
+  showEntitySubType: boolean;
   /** Column Data. */
   columnData: any[];
   /** Application Table Data. */
@@ -40,10 +42,14 @@ export class EditDataTableComponent implements OnInit {
   /** Data Table Changes Data. */
   dataTableChangesData: {
     apptableName: string,
+    entitySubType: string,
     dropColumns?: { name: string }[],
     changeColumns: { name: string, newName?: string, code?: string, newCode?: string, mandatory: boolean, length?: number }[],
     addColumns?: { name?: string, type?: string, code?: string, mandatory?: boolean, length?: number }[]
-  } = { apptableName: '', changeColumns: [], addColumns: [], dropColumns: [] };
+  } = {
+    apptableName: '', changeColumns: [], addColumns: [], dropColumns: [],
+    entitySubType: ''
+  };
   /** Data passed to dialog. */
   dataForDialog: {
     columnName: string,
@@ -86,6 +92,9 @@ export class EditDataTableComponent implements OnInit {
               private dialog: MatDialog) {
     this.route.data.subscribe((data: { dataTable: any, columnCodes: any }) => {
       this.dataTableData = data.dataTable;
+      this.dataTableData.columnHeaderData.forEach((item: any) => {
+        item.system = ['created_at', 'updated_at'].includes(item.columnName);
+      });
       this.columnData = this.dataTableData.columnHeaderData;
       this.dataForDialog.columnCodes = data.columnCodes;
     });
@@ -98,6 +107,9 @@ export class EditDataTableComponent implements OnInit {
     this.initData();
     this.createDataTableForm();
     this.setColumns();
+    this.dataTableForm.controls.apptableName.valueChanges.subscribe((value: any) => {
+      this.showEntitySubType = (value === 'm_client');
+    });
   }
 
   /**
@@ -115,10 +127,12 @@ export class EditDataTableComponent implements OnInit {
   initData() {
     this.columnData.shift();
     this.dataTableChangesData.apptableName = this.dataTableData.applicationTableName;
+    this.dataTableChangesData.entitySubType = this.dataTableData.entitySubType;
     for (let index = 0; index < this.columnData.length; index++) {
       this.columnData[index].columnDisplayType = this.getColumnType(this.columnData[index].columnDisplayType);
       this.columnData[index].type = 'existing';
     }
+    this.showEntitySubType = (this.dataTableData.applicationTableName === 'm_client');
   }
 
   /**
@@ -127,7 +141,8 @@ export class EditDataTableComponent implements OnInit {
   createDataTableForm() {
     this.dataTableForm = this.formBuilder.group({
       'datatableName': [{ value: this.dataTableData.registeredTableName, disabled: true }, Validators.required],
-      'apptableName': [this.dataTableData.applicationTableName, Validators.required]
+      'apptableName': [{ value: this.dataTableData.applicationTableName, disabled: true }, Validators.required],
+      'entitySubType': [{ value: this.dataTableData.entitySubType, disabled: true }]
     });
   }
 
