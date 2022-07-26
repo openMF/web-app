@@ -51,6 +51,8 @@ export class RunReportComponent implements OnInit {
   hideChart = true;
    /** Toggles Pentaho output */
   hidePentaho = true;
+  /** Report uses dates */
+  reportUsesDates = false;
 
   /**
    * Fetches report specifications from route params and retrieves report parameters data from `resolve`.
@@ -194,6 +196,7 @@ export class RunReportComponent implements OnInit {
         case 'date':
           const dateFormat = this.settingsService.dateFormat;
           formattedResponse[newKey] = this.dateUtils.formatDate(value, dateFormat);
+          this.reportUsesDates = true;
           break;
         case 'none':
           formattedResponse[newKey] = value;
@@ -208,9 +211,19 @@ export class RunReportComponent implements OnInit {
    */
   run() {
     this.isCollapsed = true;
-    const userResponse = this.formatUserResponse(this.reportForm.value);
+    const userResponseValues = this.formatUserResponse(this.reportForm.value);
+    let formData = {
+      ...userResponseValues,
+    };
+    if (this.reportUsesDates) {
+      formData = {
+        ...userResponseValues,
+        locale: this.settingsService.language.code,
+        dateFormat: this.settingsService.dateFormat
+      };
+    }
     this.dataObject = {
-      formData: userResponse,
+      formData: formData,
       report: this.report,
       decimalChoice: this.decimalChoice.value
     };
