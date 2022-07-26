@@ -42,7 +42,7 @@
 
       <mat-form-field fxFlex="48%" (click)="repaymentsPicker.open()">
         <mat-label>First repayment on</mat-label>
-        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="repaymentsPicker"
+        <input matInput [min]="minDate" [matDatepicker]="repaymentsPicker"
           formControlName="repaymentsStartingFromDate">
         <mat-datepicker-toggle matSuffix [for]="repaymentsPicker"></mat-datepicker-toggle>
         <mat-datepicker #repaymentsPicker></mat-datepicker>
@@ -94,7 +94,7 @@
 
       <mat-form-field fxFlex="48%" (click)="interestPicker.open()">
         <mat-label>Interest charged from</mat-label>
-        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="interestPicker"
+        <input matInput [min]="minDate" [matDatepicker]="interestPicker"
           formControlName="interestChargedFromDate">
         <mat-datepicker-toggle matSuffix [for]="interestPicker"></mat-datepicker-toggle>
         <mat-datepicker #interestPicker></mat-datepicker>
