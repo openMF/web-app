@@ -25,6 +25,7 @@ import { AddRoleComponent } from './roles-and-permissions/add-role/add-role.comp
 import { ManageSurveysComponent } from './manage-surveys/manage-surveys.component';
 import { CreateSurveyComponent } from './manage-surveys/create-survey/create-survey.component';
 import { ViewSurveyComponent } from './manage-surveys/view-survey/view-survey.component';
+import { EditSurveyComponent } from './manage-surveys/edit-survey/edit-survey.component';
 import { ManageSchedulerJobsComponent } from './manage-scheduler-jobs/manage-scheduler-jobs.component';
 import { AmazonS3Component } from './external-services/amazon-s3/amazon-s3.component';
 import { EmailComponent } from './external-services/email/email.component';
@@ -397,6 +398,14 @@ const routes: Routes = [
                 {
                   path: '',
                   component: ViewSurveyComponent,
+                  resolve: {
+                    survey: SurveyResolver
+                  }
+                },
+                {
+                  path: 'edit',
+                  component: EditSurveyComponent,
+                  data: { title: extract('Edit Survey'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     survey: SurveyResolver
                   }

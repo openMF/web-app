@@ -59,6 +59,7 @@ import { AddEventDialogComponent } from './manage-hooks/add-event-dialog/add-eve
 import { ViewSchedulerJobComponent } from './manage-scheduler-jobs/view-scheduler-job/view-scheduler-job.component';
 import { EditSchedulerJobComponent } from './manage-scheduler-jobs/edit-scheduler-job/edit-scheduler-job.component';
 import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-tasks/configure-maker-checker-tasks.component';
+import { EditSurveyComponent } from './manage-surveys/edit-survey/edit-survey.component';
 import { BusinessDateTabComponent } from './configurations/business-date-tab/business-date-tab.component';
 import { ConfigurationsComponent } from './configurations/configurations.component';
 import { GlobalConfigurationsTabComponent } from './configurations/global-configurations-tab/global-configurations-tab.component';
@@ -121,6 +122,7 @@ import { GlobalConfigurationsTabComponent } from './configurations/global-config
     EditSchedulerJobComponent,
     ViewHistorySchedulerJobComponent,
     ViewSurveyComponent,
+    EditSurveyComponent,
     BusinessDateTabComponent,
     ConfigurationsComponent,
     GlobalConfigurationsTabComponent
