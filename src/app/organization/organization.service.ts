@@ -94,7 +94,7 @@ export class OrganizationService {
   getOfficerTemplate(officerId: string, officeId: string): Observable<any> {
     const httpParams = new HttpParams()
       .set('fromLoanOfficerId', officerId.toString())
-      .set('officeId', officerId.toString());
+      .set('officeId', officeId.toString());
     return this.http.get('/loans/loanreassignment/template', { params: httpParams });
   }
 
