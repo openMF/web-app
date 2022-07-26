@@ -22,6 +22,24 @@
       <input type="number" matInput formControlName="maxPrincipal">
     </mat-form-field>
 
+    <mat-checkbox fxFlex="31%" labelPosition="before" formControlName="allowApprovedDisbursedAmountsOverApplied">
+      Allow approval / disbursal above loan applied amount?
+    </mat-checkbox>
+
+    <mat-form-field fxFlex="31%" *ngIf="loanProductTermsForm.value.allowApprovedDisbursedAmountsOverApplied">
+      <mat-label>Over Amount Calculation Type</mat-label>
+      <mat-select formControlName="overAppliedCalculationType" required>
+        <mat-option *ngFor="let overAppliedCalculationType of overAppliedCalculationTypeData" [value]="overAppliedCalculationType.id">
+          {{ overAppliedCalculationType.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="31%" *ngIf="loanProductTermsForm.value.allowApprovedDisbursedAmountsOverApplied">
+      <mat-label>Over Amount</mat-label>
+      <input type="number" matInput formControlName="overAppliedNumber" required>
+    </mat-form-field>
+
     <h4 fxFlex="98%" class="mat-h4">Number of repayments</h4>
 
     <mat-form-field fxFlex="31%">

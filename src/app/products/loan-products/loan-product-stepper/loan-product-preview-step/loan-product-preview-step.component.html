@@ -72,6 +72,17 @@
   </div>
 
   <div fxFlexFill>
+    <span fxFlex="40%">Allow Approved / Disbursed Amounts Over Applied:</span>
+    <span fxFlex="60%">{{ loanProduct.allowApprovedDisbursedAmountsOverApplied ? 'Yes' : 'No' }}</span>
+  </div>
+
+  <div fxFlexFill *ngIf="loanProduct.allowApprovedDisbursedAmountsOverApplied">
+    <span fxFlex="40%">Over Applied:</span>
+    <span fxFlex="60%" *ngIf="loanProduct.overAppliedCalculationType === 'percentage'">{{ loanProduct.overAppliedNumber }} %</span>
+    <span fxFlex="60%" *ngIf="loanProduct.overAppliedCalculationType === 'flat'">{{ loanProduct.overAppliedNumber }} {{ loanProduct.currencyCode }}</span>
+</div>
+
+  <div fxFlexFill>
     <span fxFlex="40%">Number of Repayments:</span>
     <span fxFlex="60%">{{ loanProduct.numberOfRepayments + ' (Min: ' + (loanProduct.minNumberOfRepayments ? loanProduct.minNumberOfRepayments : loanProduct.numberOfRepayments) + ', Max: ' + (loanProduct.maxNumberOfRepayments ? loanProduct.maxNumberOfRepayments : loanProduct.numberOfRepayments) + ')' }}</span>
   </div>
