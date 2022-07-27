@@ -61,6 +61,7 @@ export class FundMappingComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createFundMappingForm();
     this.buildDependencies();
   }

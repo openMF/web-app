@@ -100,6 +100,7 @@ export class IndividualCollectionSheetComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     if (localStorage.getItem('Success')) {
       localStorage.removeItem('Success');
       this.Success = true;

@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { Component, OnChanges, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Savings Account Terms Step
@@ -36,8 +37,10 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
+   * @param {SettingsService} settingsService Setting service
    */
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,
+    private settingsService: SettingsService) {
     this.createSavingsAccountTermsForm();
     this.buildDependencies();
   }
@@ -55,6 +58,7 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     if (this.savingsAccountTemplate) {
       this.savingsAccountTermsForm.patchValue({
         'nominalAnnualInterestRate': this.savingsAccountTemplate.nominalAnnualInterestRate,

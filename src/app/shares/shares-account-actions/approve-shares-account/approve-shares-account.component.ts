@@ -48,6 +48,7 @@ export class ApproveSharesAccountComponent implements OnInit {
    * Creates the approve shares form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createApproveSharesAccountForm();
   }
 

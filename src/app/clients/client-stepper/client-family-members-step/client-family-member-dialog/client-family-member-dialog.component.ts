@@ -39,6 +39,7 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
               private settingsService: SettingsService) { }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createFamilyMemberForm();
     if (this.data.context === 'Edit') {
       this.familyMemberForm.patchValue({

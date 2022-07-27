@@ -58,6 +58,7 @@ export class PrepayLoanComponent implements OnInit {
    * and initialize with the required values
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createprepayLoanForm();
     this.setPrepayLoanDetails();
   }

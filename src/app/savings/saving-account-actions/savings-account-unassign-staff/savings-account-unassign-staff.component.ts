@@ -48,6 +48,7 @@ export class SavingsAccountUnassignStaffComponent implements OnInit {
    * Creates the savings account unassign staff form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createSavingsUnassignStaffForm();
   }
 

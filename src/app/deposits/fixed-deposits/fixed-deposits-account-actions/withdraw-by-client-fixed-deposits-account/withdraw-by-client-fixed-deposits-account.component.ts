@@ -48,6 +48,7 @@ export class WithdrawByClientFixedDepositsAccountComponent implements OnInit {
    * Creates the withdraw fixed deposits form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createWithdrawFixedDepositsAccountForm();
   }
 

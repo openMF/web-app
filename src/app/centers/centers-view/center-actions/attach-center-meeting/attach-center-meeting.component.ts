@@ -59,6 +59,7 @@ export class AttachCenterMeetingComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createCenterMeetingForm();
     this.buildDependencies();
   }

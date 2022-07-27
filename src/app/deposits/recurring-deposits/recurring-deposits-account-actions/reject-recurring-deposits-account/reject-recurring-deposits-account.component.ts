@@ -49,6 +49,7 @@ export class RejectRecurringDepositsAccountComponent implements OnInit {
    * Creates the reject recurring deposits form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createRejectRecurringDepositsAccountForm();
   }
 

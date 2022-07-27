@@ -1,5 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Edit self service user component.
@@ -24,9 +25,13 @@ export class EditUserComponent implements OnInit {
   /** Maximum date of birth of user allowed. */
   maxDate = new Date();
 
-  constructor() { }
+  /**
+   * @param {SettingsService} settingsService Settings Service
+   */
+   constructor(private settingsService: SettingsService) { }
 
-  ngOnInit() {
-  }
+   ngOnInit() {
+     this.maxDate = this.settingsService.businessDate;
+   }
 
 }

@@ -48,6 +48,7 @@ export class ApproveFixedDepositsAccountComponent implements OnInit {
    * Creates the approve fixed deposits form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createApproveFixedDepositsAccountForm();
   }
 

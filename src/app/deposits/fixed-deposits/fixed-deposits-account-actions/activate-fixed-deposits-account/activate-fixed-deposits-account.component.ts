@@ -49,6 +49,7 @@ export class ActivateFixedDepositsAccountComponent implements OnInit {
    * Creates the activate fixed deposits form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createActivateFixedDepositsAccountForm();
   }
 

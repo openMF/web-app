@@ -48,6 +48,7 @@ export class ApproveRecurringDepositsAccountComponent implements OnInit {
    * Creates the approve recurring deposits form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createApproveRecurringDepositsAccountForm();
   }
 

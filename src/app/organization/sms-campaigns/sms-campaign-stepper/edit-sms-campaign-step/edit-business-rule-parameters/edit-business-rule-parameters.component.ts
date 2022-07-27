@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnChanges, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 
 /** Rxjs Imports */
@@ -22,7 +22,7 @@ import { Dates } from 'app/core/utils/dates';
   templateUrl: './edit-business-rule-parameters.component.html',
   styleUrls: ['./edit-business-rule-parameters.component.scss']
 })
-export class EditBusinessRuleParametersComponent implements OnChanges {
+export class EditBusinessRuleParametersComponent implements OnInit, OnChanges {
 
   /** Run Report Parameters Data */
   @Input() paramData: any;
@@ -44,10 +44,15 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
 
   /**
    * @param {ReportsService} reportsService Reports Service
+   * @param {SettingsService} settingsService Settings Service.
    */
   constructor(private reportsService: ReportsService,
               private settingsService: SettingsService,
               private dateUtils: Dates) { }
+
+  ngOnInit(): void {
+    this.maxDate = this.settingsService.businessDate;
+  }
 
   ngOnChanges() {
     if (this.paramData) {

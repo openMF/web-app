@@ -24,6 +24,7 @@ import { SettingsService } from './settings/settings.service';
 /** Custom Items */
 import { Alert } from './core/alert/alert.model';
 import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
+import { Dates } from './core/utils/dates';
 
 /** Initialize Logger */
 const log = new Logger('MifosX');
@@ -51,6 +52,7 @@ export class WebAppComponent implements OnInit {
    * @param {AlertService} alertService Alert Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {AuthenticationService} authenticationService Authentication service.
+   * @param {Dates} dateUtils Dates service.
    */
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -60,7 +62,8 @@ export class WebAppComponent implements OnInit {
               public snackBar: MatSnackBar,
               private alertService: AlertService,
               private settingsService: SettingsService,
-              private authenticationService: AuthenticationService) { }
+              private authenticationService: AuthenticationService,
+              private dateUtils: Dates) { }
 
   /**
    * Initial Setup:
@@ -143,6 +146,8 @@ export class WebAppComponent implements OnInit {
     if (!localStorage.getItem('mifosXDateFormat')) {
       this.settingsService.setDateFormat('dd MMMM yyyy');
     }
+    // Set default max date picker as Today
+    this.settingsService.setBusinessDate(this.dateUtils.formatDate(new Date(), SettingsService.businessDateFormat));
     // Set the server list from the env var FINERACT_API_URLS
     this.settingsService.setServers(environment.baseApiUrls.split(','));
   }

@@ -48,6 +48,7 @@ export class ActivateCenterComponent implements OnInit {
    * Creates the activate center form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createActivateCenterForm();
   }
 

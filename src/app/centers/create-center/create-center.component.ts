@@ -62,6 +62,7 @@ export class CreateCenterComponent implements OnInit {
    * Creates and sets the center form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createCenterForm();
   }
 

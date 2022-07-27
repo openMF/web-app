@@ -55,6 +55,7 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
    * Creates the premature close fd account form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createPrematureCloseAccountForm();
     this.buildDependencies();
   }

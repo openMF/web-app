@@ -49,6 +49,7 @@ export class EditOfficeComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createOfficeForm();
   }
 

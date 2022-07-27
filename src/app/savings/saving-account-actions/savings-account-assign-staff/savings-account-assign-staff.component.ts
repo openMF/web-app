@@ -55,6 +55,7 @@ export class SavingsAccountAssignStaffComponent implements OnInit {
    * Creates the savings account assign staff form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.fieldOfficerData = this.savingsAccountData.fieldOfficerOptions;
     this.createSavingsAssignStaffForm();
   }

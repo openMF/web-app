@@ -62,6 +62,7 @@ export class EditCenterMeetingComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createEditCenterMeetingForm();
     this.buildDependencies();
   }

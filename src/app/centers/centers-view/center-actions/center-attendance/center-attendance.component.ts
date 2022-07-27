@@ -70,6 +70,7 @@ export class CenterAttendanceComponent implements OnInit {
    * Sets the members table.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     if (this.membersData !== undefined && this.membersData !== null) {
       this.dataSource = this.membersData.map((member: any) => ({ clientId: member.id, attendanceType: 1 }));
     }

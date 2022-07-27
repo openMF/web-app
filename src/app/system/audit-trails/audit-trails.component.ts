@@ -128,6 +128,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * Retrieves the audit trail search template data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    * @param {SystemService} systemService System Service.
+   * @param {Dates} dateUtils Dates utils
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private route: ActivatedRoute,
               private systemService: SystemService,
@@ -142,6 +144,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * Sets filtered users, actions and entities for autocomplete and audit trails table.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.setFilteredUsers();
     this.setFilteredActions();
     this.setFilteredEntities();

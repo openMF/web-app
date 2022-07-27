@@ -42,6 +42,7 @@ export class PeriodicAccrualsComponent implements OnInit {
    * Creates periodic accruals form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createPeriodicAccrualsForm();
   }
 

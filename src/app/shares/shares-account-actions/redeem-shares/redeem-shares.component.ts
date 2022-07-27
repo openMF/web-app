@@ -56,6 +56,7 @@ export class RedeemSharesComponent implements OnInit {
    * in clients view upon using a common resolver.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createRedeemSharesAccountForm();
     this.redeemSharesForm.get('unitPrice').patchValue(this.sharesAccountData.currentMarketPrice || '');
   }

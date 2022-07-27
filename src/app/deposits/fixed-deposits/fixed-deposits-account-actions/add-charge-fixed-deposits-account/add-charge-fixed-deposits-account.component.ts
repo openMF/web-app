@@ -59,6 +59,7 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
    * Creates the Fixed Deposits Charge form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createFixedDepositsChargeForm();
     this.buildDependencies();
   }

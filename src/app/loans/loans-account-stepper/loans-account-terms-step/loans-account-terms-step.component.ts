@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Create Loans Account Terms Step
@@ -46,12 +46,10 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   /**
    * Create Loans Account Terms Form
    * @param formBuilder FormBuilder
-   * @param route Route
-   * @param router Router
+   * @param {SettingsService} settingsService SettingsService
    */
   constructor(private formBuilder: FormBuilder,
-              private route: ActivatedRoute,
-              private router: Router) {
+      private settingsService: SettingsService) {
     this.createloansAccountTermsForm();
   }
   /**
@@ -87,6 +85,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     if (this.loansAccountTemplate) {
       if (this.loansAccountTemplate.loanProductId) {
         this.loansAccountTermsForm.patchValue({

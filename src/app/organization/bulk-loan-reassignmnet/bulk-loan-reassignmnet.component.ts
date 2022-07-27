@@ -57,6 +57,7 @@ export class BulkLoanReassignmnetComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.setBulkLoanForm();
   }
 

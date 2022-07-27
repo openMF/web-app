@@ -51,6 +51,7 @@ export class CreateEmployeeComponent implements OnInit {
    * Creates the employee form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createEmployeeForm();
   }
 

@@ -54,8 +54,12 @@ export class CreateChargeComponent implements OnInit {
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { chargesTemplate: any }) => {
       this.chargesTemplateData = data.chargesTemplate;
-      this.incomeAndLiabilityAccountData = data.chargesTemplate.incomeOrLiabilityAccountOptions.incomeAccountOptions
-        .concat(data.chargesTemplate.incomeOrLiabilityAccountOptions.liabilityAccountOptions);
+      if (data.chargesTemplate.incomeOrLiabilityAccountOptions.liabilityAccountOptions) {
+        this.incomeAndLiabilityAccountData = data.chargesTemplate.incomeOrLiabilityAccountOptions.incomeAccountOptions
+          .concat(data.chargesTemplate.incomeOrLiabilityAccountOptions.liabilityAccountOptions);
+      } else {
+        this.incomeAndLiabilityAccountData = data.chargesTemplate.incomeOrLiabilityAccountOptions.incomeAccountOptions;
+      }
     });
   }
 

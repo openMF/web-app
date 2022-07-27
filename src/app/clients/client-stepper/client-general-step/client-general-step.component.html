@@ -136,13 +136,15 @@
       <mat-datepicker #submittedOnDatePicker></mat-datepicker>
     </mat-form-field>
 
+    <br />
+
     <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="active" class="margin-v">
       Active?
     </mat-checkbox>
 
     <mat-form-field *ngIf="createClientForm.contains('activationDate')" fxFlex="48%" (click)="activatedOnDatePicker.open()">
       <mat-label>Activation Date</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="activatedOnDatePicker" required
+      <input matInput [min]="minDate" [max]="createClientForm.value.submittedOnDate" [matDatepicker]="activatedOnDatePicker" required
         formControlName="activationDate">
       <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #activatedOnDatePicker></mat-datepicker>

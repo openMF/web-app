@@ -66,6 +66,7 @@ export class EditClientComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createEditClientForm();
     this.setOptions();
     this.buildDependencies();

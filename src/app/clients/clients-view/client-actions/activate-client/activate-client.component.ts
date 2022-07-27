@@ -48,6 +48,7 @@ export class ActivateClientComponent implements OnInit {
    * Creates the activate client form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createActivateClientForm();
   }
 

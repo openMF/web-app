@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Services */
 import { SharesService } from 'app/shares/shares.service';
@@ -34,13 +35,16 @@ export class SharesAccountDetailsStepComponent implements OnInit {
    * Sets share account details form.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {SharesService} sharesService Shares Service.
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
-              private sharesService: SharesService) {
+              private sharesService: SharesService,
+              private settingsService: SettingsService) {
     this.createSharesAccountDetailsForm();
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.buildDependencies();
     if (this.sharesAccountTemplate) {
       this.productData = this.sharesAccountTemplate.productOptions;

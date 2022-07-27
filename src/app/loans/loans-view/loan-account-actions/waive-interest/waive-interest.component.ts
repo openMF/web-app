@@ -42,6 +42,7 @@ export class WaiveInterestComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.setLoanInterestForm();
   }
 

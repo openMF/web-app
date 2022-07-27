@@ -48,6 +48,7 @@ export class ApproveSavingsAccountComponent implements OnInit {
    * Creates the approve savings form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createApproveSavingsAccountForm();
   }
 

@@ -57,6 +57,7 @@ export class EditGroupComponent implements OnInit {
    * Creates and sets the edit group form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createEditGroupForm();
     this.editGroupForm.patchValue({
       'name': this.groupData.name,

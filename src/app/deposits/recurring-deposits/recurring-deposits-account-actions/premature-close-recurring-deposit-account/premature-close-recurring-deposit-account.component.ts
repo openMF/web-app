@@ -49,6 +49,7 @@ export class PrematureCloseRecurringDepositAccountComponent implements OnInit {
    * Creates the premature close recurring deposits form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createprematureCloseRecurringDepositsAccountForm();
   }
 

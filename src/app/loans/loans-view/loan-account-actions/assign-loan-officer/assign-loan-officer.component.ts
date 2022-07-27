@@ -45,6 +45,7 @@ export class AssignLoanOfficerComponent implements OnInit {
    * Creates the assign officer form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createassignOfficerForm();
     this.loanOfficers = this.dataObject.loanOfficerOptions;
   }

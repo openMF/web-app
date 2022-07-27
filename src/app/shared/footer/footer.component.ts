@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Alert } from 'app/core/alert/alert.model';
 import { AlertService } from 'app/core/alert/alert.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
+import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { SystemService } from 'app/system/system.service';
 
@@ -34,8 +35,10 @@ export class FooterComponent implements OnInit, OnDestroy {
   timer: any;
 
   constructor(private systemService: SystemService,
+    private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
-    private alertService: AlertService) { }
+    private alertService: AlertService,
+    private dateUtils: Dates) { }
 
   ngOnInit() {
     this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
@@ -64,11 +67,12 @@ export class FooterComponent implements OnInit, OnDestroy {
   /**
    * Get the Configuration for Business Date
    */
-   getConfigurations(): void {
+  getConfigurations(): void {
     if (this.authenticationService.isAuthenticated()) {
       this.systemService.getConfigurationByName(SettingsService.businessDateConfigName)
       .subscribe((configurationData: any) => {
         this.isBusinessDateEnabled = configurationData.enabled;
+        this.settingsService.setBusinessDateConfig(configurationData.enabled);
         if (this.isBusinessDateEnabled) {
           this.setBusinessDate();
           this.timer = setTimeout(() => { this.getConfigurations(); }, 60000);
@@ -84,6 +88,7 @@ export class FooterComponent implements OnInit, OnDestroy {
     this.systemService.getBusinessDate(SettingsService.businessDateType)
     .subscribe((data: any) => {
       this.businessDate = new Date(data.date);
+      this.settingsService.setBusinessDate(this.dateUtils.formatDate(this.businessDate, SettingsService.businessDateFormat));
       this.isBusinessDateDefined = true;
     });
   }

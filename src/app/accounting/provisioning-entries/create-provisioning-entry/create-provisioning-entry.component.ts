@@ -42,6 +42,7 @@ export class CreateProvisioningEntryComponent implements OnInit {
    * Creates the provisioning entry form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createProvisioningEntryForm();
   }
 

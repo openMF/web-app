@@ -1,6 +1,5 @@
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { SettingsService } from 'app/settings/settings.service';
 import * as moment from 'moment';
 
 @Injectable({
@@ -8,12 +7,10 @@ import * as moment from 'moment';
 })
 export class Dates {
 
-  constructor(private settingsService: SettingsService,
-      private datePipe: DatePipe) {}
+  constructor(private datePipe: DatePipe) {}
 
   public getDate(timestamp: any): string {
-    const dateFormat = this.settingsService.dateFormat;
-    return this.datePipe.transform(timestamp, dateFormat);
+    return this.datePipe.transform(timestamp, 'YYYY-MM-DD');
   }
 
   public formatDate(timestamp: any, dateFormat: string): string {
@@ -26,5 +23,9 @@ export class Dates {
     } else {
       return moment(value).toDate();
     }
+  }
+
+  public convertToDate(value: any, format: string): Date {
+    return moment(value).toDate();
   }
 }

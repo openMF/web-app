@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Recurring Deposits Terms Step
@@ -32,8 +33,10 @@ export class RecurringDepositsAccountTermsStepComponent implements OnInit, OnCha
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
+   * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,
+    private settingsService: SettingsService) {
     this.createRecurringDepositsAccountTermsForm();
   }
 
@@ -44,6 +47,7 @@ export class RecurringDepositsAccountTermsStepComponent implements OnInit, OnCha
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     if (this.recurringDepositsAccountTemplate.interestCompoundingPeriodType) {
       this.recurringDepositAccountTermsForm.patchValue({
         'interestCompoundingPeriodType': this.recurringDepositsAccountTemplate.interestCompoundingPeriodType.id,

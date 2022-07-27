@@ -48,6 +48,7 @@ export class ActivateSharesAccountComponent implements OnInit {
    * Creates the activate shares form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createActivateSharesAccountForm();
   }
 

@@ -64,6 +64,7 @@ export class MigrateOpeningBalancesComponent implements OnInit {
    * Creates the opening balances form. (initially retrieves gl accounts on the basis of specified office)
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createOpeningBalancesForm();
   }
 

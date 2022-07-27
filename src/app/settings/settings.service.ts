@@ -14,6 +14,7 @@ import { environment } from '../../environments/environment';
 })
 export class SettingsService {
 
+  public static businessDateFormat = 'yyyy-MM-dd';
   public static businessDateConfigName = 'enable_business_date';
   public static businessDateType = 'BUSINESS_DATE';
   public static cobDateType = 'COB_DATE';
@@ -61,6 +62,22 @@ export class SettingsService {
   }
 
   /**
+   * Sets server Date setting for max datepicker, default today
+   * @param {string} date
+   */
+  setBusinessDate(date: string) {
+    localStorage.setItem('mifosXServerDate', date);
+  }
+
+  /**
+   * Sets server Date config is enabled
+   * @param {string} enabled
+   */
+   setBusinessDateConfig(enabled: string) {
+    localStorage.setItem('mifosXServerBusinessDateEnabled', enabled);
+  }
+
+  /**
    * Returns date format setting.
    */
   get dateFormat() {
@@ -102,6 +119,20 @@ export class SettingsService {
   }
 
   /**
+   * Returns current Business date server
+   */
+   get businessDate(): Date {
+    return this.dateUtils.convertToDate(localStorage.getItem('mifosXServerDate'), SettingsService.businessDateFormat);
+  }
+
+  /**
+   * Returns current Business date Config if it's enabled
+   */
+   get businessDateConfig(): any {
+    return localStorage.getItem('mifosXServerBusinessDateEnabled');
+  }
+
+  /**
    * Validate If the enable_business_date configuration is enabled or disabled.
    */
    validateBusinessDateStatus(configurations: any) {
@@ -119,11 +150,11 @@ export class SettingsService {
     businessDateData.some((data: any) => {
       if (data.type === dateType) {
         const dateVal = new Date(data.date);
+        this.setBusinessDate(this.dateUtils.formatDate(dateVal, SettingsService.businessDateFormat));
         this.alertService.alert({ type: dateType + ' Set',
           message: this.dateUtils.formatDate(dateVal, this.dateFormat())});
         return;
       }
     });
   }
-
 }

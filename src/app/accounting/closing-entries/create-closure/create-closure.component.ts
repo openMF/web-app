@@ -49,6 +49,7 @@ export class CreateClosureComponent implements OnInit {
    * Creates the accounting closure form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createAccountingClosureForm();
   }
 

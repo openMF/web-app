@@ -48,6 +48,7 @@ export class RejectSharesAccountComponent implements OnInit {
    * Creates the reject shares form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createRejectSharesAccountForm();
   }
 

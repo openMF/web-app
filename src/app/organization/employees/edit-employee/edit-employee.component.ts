@@ -54,6 +54,7 @@ export class EditEmployeeComponent implements OnInit {
    * Creates the edit employee form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createEditEmployeeForm();
   }
 

@@ -44,6 +44,7 @@ export class RejectLoanComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.setRejectLoanForm();
   }
 

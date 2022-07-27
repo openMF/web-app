@@ -56,6 +56,7 @@ export class ApplySharesComponent implements OnInit {
    * in clients view upon using a common resolver.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createApplySharesAccountForm();
     this.applySharesForm.get('unitPrice').patchValue(this.sharesAccountData.currentMarketPrice || '');
   }

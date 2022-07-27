@@ -46,6 +46,7 @@ export class LoansAccountCloseComponent implements OnInit {
    * Creates the close form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createCloseForm();
   }
 

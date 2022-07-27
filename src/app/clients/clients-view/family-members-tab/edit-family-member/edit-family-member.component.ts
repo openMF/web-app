@@ -50,6 +50,7 @@ export class EditFamilyMemberComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createEditFamilyMemberForm(this.familyMemberDetails);
   }
 
