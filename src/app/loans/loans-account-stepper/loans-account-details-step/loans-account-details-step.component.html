@@ -54,7 +54,7 @@
 
     <mat-form-field fxFlex="48%" (click)="disbursementPicker.open()">
       <mat-label>Disbursement on</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="disbursementPicker" required
+      <input matInput [min]="loansAccountDetailsForm.value.submittedOnDate" [max]="maxDate" [matDatepicker]="disbursementPicker" required
         formControlName="expectedDisbursementDate">
       <mat-datepicker-toggle matSuffix [for]="disbursementPicker"></mat-datepicker-toggle>
       <mat-datepicker #disbursementPicker></mat-datepicker>
