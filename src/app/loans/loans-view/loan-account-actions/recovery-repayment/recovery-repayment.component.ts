@@ -53,6 +53,7 @@ export class RecoveryRepaymentComponent implements OnInit {
    * and initialize with the required values
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createRecoveryRepaymentLoanForm();
     this.setRecoveryRepaymentLoanDetails();
   }

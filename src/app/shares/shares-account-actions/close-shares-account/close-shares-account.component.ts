@@ -48,6 +48,7 @@ export class CloseSharesAccountComponent implements OnInit {
    * Creates the close shares form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createCloseSharesAccountForm();
   }
 

@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Services */
 import { FixedDepositsService } from '../../fixed-deposits.service';
@@ -38,13 +39,16 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
    * Sets fixed deposits account details form.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {FixedDepositsService} fixedDepositsService Fixed Deposits Service.
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
-              private fixedDepositsService: FixedDepositsService) {
+              private fixedDepositsService: FixedDepositsService,
+              private settingsService: SettingsService) {
     this.createFixedDepositsAccountDetailsForm();
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.buildDependencies();
     if (this.fixedDepositsAccountTemplate) {
       this.productData = this.fixedDepositsAccountTemplate.productOptions;

@@ -46,6 +46,7 @@ export class LoanRescheduleComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.codes = this.dataObject.rescheduleReasons;
     this.setRescheduleLoanForm();
   }

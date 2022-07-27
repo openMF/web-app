@@ -55,6 +55,7 @@ export class CreateTellerComponent implements OnInit {
    * Creates the teller form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createTellerForm();
   }
 

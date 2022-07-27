@@ -48,6 +48,7 @@ export class ActivateRecurringDepositsAccountComponent implements OnInit {
    * Creates the activate recurring deposits form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createActivateRecurringDepositsAccountForm();
   }
 

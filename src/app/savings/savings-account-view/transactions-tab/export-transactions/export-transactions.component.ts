@@ -54,6 +54,7 @@ export class ExportTransactionsComponent implements OnInit {
 
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createTransactionsReportForm();
   }
 

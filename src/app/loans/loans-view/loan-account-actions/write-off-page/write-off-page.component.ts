@@ -45,6 +45,7 @@ export class WriteOffPageComponent implements OnInit {
               private settingsService: SettingsService) { }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.setWriteOffForm();
   }
 

@@ -49,6 +49,7 @@ export class CreateDividendComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.setDividendForm();
   }
 

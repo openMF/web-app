@@ -71,6 +71,7 @@ export class FrequentPostingsComponent implements OnInit {
    * Creates the frequent postings form and sets the affected gl entry form array.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createFrequentPostingsForm();
     this.setAffectedGLEntryForm();
   }

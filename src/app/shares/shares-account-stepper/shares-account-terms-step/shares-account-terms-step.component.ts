@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { Component, OnChanges, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Shares Account Terms Step
@@ -34,8 +35,10 @@ export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
+   * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,
+    private settingsService: SettingsService) {
     this.createSharesAccountTermsForm();
   }
 
@@ -59,6 +62,7 @@ export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     if (this.sharesAccountTemplate) {
       this.sharesAccountTermsForm.patchValue({
         'requestedShares': this.sharesAccountTemplate.summary.totalPendingForApprovalShares,

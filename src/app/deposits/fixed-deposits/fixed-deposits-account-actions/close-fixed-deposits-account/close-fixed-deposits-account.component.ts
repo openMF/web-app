@@ -60,6 +60,7 @@ export class CloseFixedDepositsAccountComponent implements OnInit {
    * Creates the close on maturity fd account form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createCloseOnMaturityAccountForm();
     this.addTransferDetails();
   }

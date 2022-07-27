@@ -92,8 +92,8 @@ export class ViewCampaignComponent implements OnInit {
     });
   }
 
-
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createSMSForm();
   }
 

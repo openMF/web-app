@@ -58,6 +58,7 @@ export class EditHolidayComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.setEditForm();
     if (!this.isActiveHoliday) {
       this.getReschedulingType();

@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Savings Account Details Step
@@ -38,13 +39,16 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
    * Sets share account details form.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {SavingsService} savingsService Savings Service.
+   * @param {SettingsService} settingsService Setting service
    */
   constructor(private formBuilder: FormBuilder,
-              private savingsService: SavingsService) {
+              private savingsService: SavingsService,
+              private settingsService: SettingsService) {
     this.createSavingsAccountDetailsForm();
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.buildDependencies();
     if (this.savingsAccountTemplate) {
       this.productData = this.savingsAccountTemplate.productOptions;

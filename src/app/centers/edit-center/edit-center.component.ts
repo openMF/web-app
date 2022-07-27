@@ -54,6 +54,7 @@ export class EditCenterComponent implements OnInit {
    * Creates the edit center form.
    */
   ngOnInit(): void {
+    this.maxDate = this.settingsService.businessDate;
     this.createEditCenterForm();
   }
 

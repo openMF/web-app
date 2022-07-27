@@ -48,6 +48,7 @@ export class ActivateSavingsAccountComponent implements OnInit {
    * Creates the activate savings form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createActivateSavingsAccountForm();
   }
 

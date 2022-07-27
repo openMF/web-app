@@ -63,6 +63,7 @@ export class StandingInstructionsHistoryComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createInstructionForm();
     this.buildDependencies();
   }

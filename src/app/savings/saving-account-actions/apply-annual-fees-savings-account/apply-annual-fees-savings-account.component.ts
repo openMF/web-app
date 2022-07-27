@@ -55,6 +55,7 @@ export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {
    * Creates the apply annual fees form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createApplyAnnualFeesForm();
     this.applyCharge();
   }

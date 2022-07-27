@@ -50,6 +50,7 @@ export class CloseCenterComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createCloseCenterForm();
   }
 

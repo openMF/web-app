@@ -63,6 +63,7 @@ export class CreateJournalEntryComponent implements OnInit {
    * Creates the journal entry form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createJournalEntryForm();
   }
 

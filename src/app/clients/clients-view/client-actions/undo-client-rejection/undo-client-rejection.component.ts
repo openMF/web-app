@@ -47,6 +47,7 @@ export class UndoClientRejectionComponent implements OnInit {
    * Creates the undo client rejection form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createUndoClientRejectionForm();
   }
 

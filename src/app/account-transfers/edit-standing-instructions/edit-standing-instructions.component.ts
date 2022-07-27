@@ -70,6 +70,7 @@ export class EditStandingInstructionsComponent implements OnInit {
    * Creates and sets the edit standing instructions form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createEditStandingInstructionsForm();
     const presentDate = new Date();
     const n = presentDate.getFullYear();

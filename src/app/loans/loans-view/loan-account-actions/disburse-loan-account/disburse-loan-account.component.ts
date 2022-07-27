@@ -43,6 +43,7 @@ export class DisburseLoanAccountComponent implements OnInit {
               private settingsService: SettingsService) { }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.setDisbursementToSavingsForm();
   }
 

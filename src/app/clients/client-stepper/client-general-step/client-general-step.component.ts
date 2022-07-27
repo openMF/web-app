@@ -57,6 +57,7 @@ export class ClientGeneralStepComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.setOptions();
     this.buildDependencies();
   }

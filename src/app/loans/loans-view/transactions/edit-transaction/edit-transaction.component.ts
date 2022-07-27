@@ -65,6 +65,7 @@ export class EditTransactionComponent implements OnInit {
    * Creates the Loan account transaction form when component loads.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createEditTransactionForm();
     this.editTransactionForm.patchValue({
       'transactionDate': this.transactionTemplateData.date && new Date(this.transactionTemplateData.date),

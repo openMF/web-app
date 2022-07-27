@@ -45,6 +45,7 @@ export class ActivateGroupComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createActivateGroupForm();
   }
 

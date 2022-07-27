@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators} from '@angular/forms';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Fixed Deposits Terms Step
@@ -36,8 +37,10 @@ export class FixedDepositAccountTermsStepComponent implements OnInit, OnChanges 
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
+   * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,
+    private settingsService: SettingsService) {
     this.createFixedDepositsAccountTermsForm();
   }
 
@@ -48,6 +51,7 @@ export class FixedDepositAccountTermsStepComponent implements OnInit, OnChanges 
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     if (this.fixedDepositsAccountTemplate.interestCompoundingPeriodType) {
       this.fixedDepositAccountTermsForm.patchValue({
         'interestCompoundingPeriodType': this.fixedDepositsAccountTemplate.interestCompoundingPeriodType.id,

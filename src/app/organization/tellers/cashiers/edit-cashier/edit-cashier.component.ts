@@ -52,6 +52,7 @@ export class EditCashierComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.setEditChargeForm();
   }
 

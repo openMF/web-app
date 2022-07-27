@@ -55,6 +55,7 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createNewGuarantorForm();
     this.setNewGuarantorDetailsForm();
     this.buildDependencies();

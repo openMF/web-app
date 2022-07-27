@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Services */
 import { LoansService } from '../../loans.service';
@@ -43,13 +44,16 @@ export class LoansAccountDetailsStepComponent implements OnInit {
    * Sets loans account details form.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {LoansService} loansService Loans Service.
+   * @param {SettingsService} settingsService SettingsService
    */
   constructor(private formBuilder: FormBuilder,
-    private loansService: LoansService) {
+    private loansService: LoansService,
+    private settingsService: SettingsService) {
     this.createLoansAccountDetailsForm();
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.buildDependencies();
     if (this.loansAccountTemplate) {
       this.productData = this.loansAccountTemplate.productOptions;

@@ -62,6 +62,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    * Creates and sets the group form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createGroupForm();
   }
 

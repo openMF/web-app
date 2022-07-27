@@ -50,6 +50,7 @@ export class CloseGroupComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createCloseGroupForm();
   }
 

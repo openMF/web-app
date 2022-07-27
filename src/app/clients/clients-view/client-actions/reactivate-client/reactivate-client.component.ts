@@ -48,6 +48,7 @@ export class ReactivateClientComponent implements OnInit {
    * Creates the reactivate client form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createReactivateClientForm();
   }
 

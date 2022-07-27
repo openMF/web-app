@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Create self service user component.
@@ -31,9 +32,13 @@ export class CreateUserComponent implements OnInit {
   /** Maximum date of birth of user allowed. */
   maxDate = new Date();
 
-  constructor() { }
+  /**
+   * @param {SettingsService} settingsService Settings Service
+   */
+  constructor(private settingsService: SettingsService) { }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
   }
 
 }

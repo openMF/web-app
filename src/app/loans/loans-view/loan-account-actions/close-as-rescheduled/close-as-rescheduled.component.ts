@@ -45,6 +45,7 @@ export class CloseAsRescheduledComponent implements OnInit {
    * Creates the close form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createCloseForm();
   }
 

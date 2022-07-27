@@ -48,6 +48,7 @@ export class RejectFixedDepositsAccountComponent implements OnInit {
    * Creates the reject fixed deposits form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createRejectFixedDepositsAccountForm();
   }
 

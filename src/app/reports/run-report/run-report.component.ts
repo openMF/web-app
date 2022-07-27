@@ -79,6 +79,7 @@ export class RunReportComponent implements OnInit {
    * Creates and sets the run report form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createRunReportForm();
   }
 

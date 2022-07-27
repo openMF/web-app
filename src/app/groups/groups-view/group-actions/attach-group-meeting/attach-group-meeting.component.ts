@@ -59,6 +59,7 @@ export class AttachGroupMeetingComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createGroupMeetingForm();
     this.buildDependencies();
   }

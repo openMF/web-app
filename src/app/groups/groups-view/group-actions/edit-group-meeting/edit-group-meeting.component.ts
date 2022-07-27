@@ -62,6 +62,7 @@ export class EditGroupMeetingComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createEditGroupMeetingForm();
     this.buildDependencies();
   }

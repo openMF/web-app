@@ -50,6 +50,7 @@ export class TransferClientComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createTransferClientForm();
   }
 

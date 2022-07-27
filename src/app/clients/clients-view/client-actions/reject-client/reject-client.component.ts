@@ -50,6 +50,7 @@ export class RejectClientComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createRejectClientForm();
   }
 

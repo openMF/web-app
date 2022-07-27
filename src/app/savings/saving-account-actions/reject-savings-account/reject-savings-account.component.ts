@@ -48,6 +48,7 @@ export class RejectSavingsAccountComponent implements OnInit {
    * Creates the reject savings form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createRejectSavingsAccountForm();
   }
 

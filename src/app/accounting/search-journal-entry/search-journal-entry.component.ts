@@ -133,6 +133,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    * Sets filtered offices and gl accounts for autocomplete and journal entries table.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.setFilteredOffices();
     this.setFilteredGlAccounts();
     this.getJournalEntries();

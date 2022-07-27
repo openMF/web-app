@@ -7,6 +7,7 @@ import { ReportsService } from 'app/reports/reports.service';
 
 /** Custom Models */
 import { ReportParameter } from 'app/reports/common-models/report-parameter.model';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Edit SMS Campaign step.
@@ -46,9 +47,11 @@ export class EditSmsCampaignStepComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {ReportsService} reportService Reports Service
+   * @param {SettingsService} settingsService Settings Service.
    */
   constructor(private formBuilder: FormBuilder,
-              private reportService: ReportsService) {
+              private reportService: ReportsService,
+              private settingsService: SettingsService) {
     this.createSMSCampaignDetailsForm();
   }
 
@@ -66,6 +69,7 @@ export class EditSmsCampaignStepComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.triggerTypes = this.smsCampaignTemplate.triggerTypeOptions;
     this.smsProviders = this.smsCampaignTemplate.smsProviderOptions;
     this.businessRules = this.smsCampaignTemplate.businessRulesOptions;

@@ -45,6 +45,7 @@ export class SettleCashComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.setCashierForm();
   }
 

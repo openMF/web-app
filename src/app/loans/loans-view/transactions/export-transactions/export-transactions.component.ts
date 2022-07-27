@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 /** Custom Services */
 import { ReportsService } from 'app/reports/reports.service';
 import { Dates } from 'app/core/utils/dates';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Export Client Loans Transactions Component
@@ -38,19 +39,21 @@ export class ExportTransactionsComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
+   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private sanitizer: DomSanitizer,
               private reportsService: ReportsService,
               private formBuilder: FormBuilder,
               private dateUtils: Dates,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private settingsService: SettingsService) {
     this.route.parent.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loansAccountId = data.loanDetailsData.accountNo;
     });
   }
 
-
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createTransactionsReportForm();
   }
 

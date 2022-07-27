@@ -54,6 +54,7 @@ export class XBRLReportComponent implements OnInit {
   * Creates the XBRL form.
   */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createXbrlForm();
   }
 

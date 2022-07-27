@@ -48,6 +48,7 @@ export class AllocateCashComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.setCashierForm();
   }
 

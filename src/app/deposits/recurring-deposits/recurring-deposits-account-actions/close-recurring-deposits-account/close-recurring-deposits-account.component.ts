@@ -67,6 +67,7 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createcloseRecurringDepositForm();
   }
 

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnChanges, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 
 /** Custom Services */
@@ -19,7 +19,7 @@ import { Dates } from 'app/core/utils/dates';
   templateUrl: './business-rule-parameters.component.html',
   styleUrls: ['./business-rule-parameters.component.scss']
 })
-export class BusinessRuleParametersComponent implements OnChanges {
+export class BusinessRuleParametersComponent implements OnInit, OnChanges {
 
   /** Run Report Parameters Data */
   @Input() paramData: any;
@@ -46,6 +46,10 @@ export class BusinessRuleParametersComponent implements OnChanges {
   constructor(private reportsService: ReportsService,
               private settingsService: SettingsService,
               private dateUtils: Dates) { }
+
+  ngOnInit(): void {
+    this.maxDate = this.settingsService.businessDate;
+  }
 
   ngOnChanges() {
     if (this.paramData) {

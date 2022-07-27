@@ -58,6 +58,7 @@ export class CloseSavingsAccountComponent implements OnInit {
    * Creates the close savings form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createCloseSavingsAccountForm();
     this.buildDependencies();
   }

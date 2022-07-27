@@ -56,6 +56,7 @@ export class AddChargeSavingsAccountComponent implements OnInit {
    * Creates the Savings Charge form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createSavingsChargeForm();
     this.buildDependencies();
   }
