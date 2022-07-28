@@ -1,0 +1,26 @@
+# https://github.com/marketplace/actions/close-stale-issues
+# https://github.com/actions/stale/blob/master/action.yml
+# https://github.com/actions/stale
+name: Mark stale issues and pull requests
+on:
+  schedule:
+  - cron: "0 0 * * *"
+permissions:
+  contents: read
+
+jobs:
+  stale:
+    permissions:
+      issues: write  # for actions/stale to close stale issues
+      pull-requests: write  # for actions/stale to close stale PRs
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/stale@9c1b1c6e115ca2af09755448e0dbba24e5061cc8 # tag=v5
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        # stale-issue-message: 'Stale issue message'
+        # stale-issue-label: 'no-issue-activity'
+        stale-pr-message: 'This pull request seems to be stale.  Are you still planning to work on it?  We will automatically close it in 30 days.'
+        stale-pr-label: 'stale'
+        days-before-stale: 30
+        days-before-close: 30
