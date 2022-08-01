@@ -7,4 +7,5 @@ export interface OAuth2Token {
   refresh_token: string;
   expires_in: number;
   scope: string;
+  username?:string;
 }

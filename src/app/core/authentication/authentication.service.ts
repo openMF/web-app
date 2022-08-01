@@ -153,9 +153,10 @@ export class AuthenticationService {
     let accessToken = tokenResponse.access_token
     const httpParams = new HttpParams().set('access_token', tokenResponse.access_token)
     this.refreshTokenOnExpiry(tokenResponse.expires_in)
-    let email = 'testtingwork@gmail.com/username'
+
+    let userName = `${tokenResponse.username}/username`
     this.http
-      .get('/users/' + email, { params: httpParams })
+      .get('/users/' + userName, { params: httpParams })
       //this.http.get('/usersdetails', { params: httpParams })
       .subscribe((credentials: Credentials) => {
         credentials.accessToken = accessToken
