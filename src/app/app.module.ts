@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -41,6 +41,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { DatePipe, LocationStrategy } from '@angular/common';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { KeycloakService } from 'keycloak-angular';
+import { initializer } from './core/init/keycloak-init.factory';
+import { AuthenticationService } from './core/authentication/authentication.service';
+import { FormsModule } from '@angular/forms';
 
 /**
  * App Module
@@ -61,6 +65,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FormsModule,
     CoreModule,
     HomeModule,
     LoginModule,
@@ -84,8 +89,14 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     TasksModule,
     AppRoutingModule,
   ],
-  declarations: [WebAppComponent, NotFoundComponent],
-  providers: [DatePipe],
+  declarations: [WebAppComponent,NotFoundComponent],
+  providers: [DatePipe,KeycloakService,
+    { 
+      provide: APP_INITIALIZER, 
+      useFactory: initializer, 
+      deps: [ KeycloakService,AuthenticationService ], 
+      multi: true
+    }],
   bootstrap: [WebAppComponent]
 })
 export class AppModule { }

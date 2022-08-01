@@ -1,7 +1,8 @@
 /** Angular Imports */
+import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { AlertService } from 'app/core/alert/alert.service';
-import { Dates } from 'app/core/utils/dates';
+// import { Dates } from 'app/core/utils/dates';
 
 /** Environment Imports */
 import { environment } from '../../environments/environment';
@@ -19,7 +20,7 @@ export class SettingsService {
   public static cobDateType = 'COB_DATE';
 
   constructor(private alertService: AlertService,
-    private dateUtils: Dates) { }
+    private dateUtils: DatePipe) { }
 
   /**
    * Sets date format setting throughout the app.
@@ -119,8 +120,9 @@ export class SettingsService {
     businessDateData.some((data: any) => {
       if (data.type === dateType) {
         const dateVal = new Date(data.date);
+        let message= this.dateUtils.transform(dateVal, this.dateFormat());
         this.alertService.alert({ type: dateType + ' Set',
-          message: this.dateUtils.formatDate(dateVal, this.dateFormat())});
+          message: message});
         return;
       }
     });

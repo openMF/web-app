@@ -26,7 +26,7 @@ import { Alert } from './core/alert/alert.model';
 import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
 
 /** Initialize Logger */
-const log = new Logger('MifosX');
+//const log = new Logger('MifosX');
 
 /**
  * Main web app component.
@@ -80,7 +80,7 @@ export class WebAppComponent implements OnInit {
     if (environment.production) {
       Logger.enableProductionMode();
     }
-    log.debug('init');
+    //log.debug('init');
 
     // Setup translations
     this.translateService.addLangs(environment.supportedLanguages.split(','));

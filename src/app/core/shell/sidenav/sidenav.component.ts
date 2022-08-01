@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 
 /** Custom Components */
 import { KeyboardShortcutsDialogComponent } from 'app/shared/keyboard-shortcuts-dialog/keyboard-shortcuts-dialog.component';
+import { KeycloakService } from 'keycloak-angular';
 
 /** Custom Services */
 import { AuthenticationService } from '../../authentication/authentication.service';
@@ -41,7 +42,8 @@ export class SidenavComponent implements OnInit {
    */
   constructor(private router: Router,
               public dialog: MatDialog,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private keyCloakService:KeycloakService) {
     this.userActivity = JSON.parse(localStorage.getItem('mifosXLocation'));
   }
 
@@ -50,7 +52,12 @@ export class SidenavComponent implements OnInit {
    */
   ngOnInit() {
     const credentials = this.authenticationService.getCredentials();
-    this.username = credentials.username;
+    if(credentials){
+    this.username = credentials.username;  
+    }
+    else{
+    this.username=this.keyCloakService.getUsername()
+    }
     this.setMappedAcitivites();
   }
 

@@ -9,6 +9,7 @@ import { activities } from './activities';
 
 /** Custom Services */
 import { AuthenticationService } from '../core/authentication/authentication.service';
+import { KeycloakService } from 'keycloak-angular';
 
 /**
  * Home component.
@@ -35,7 +36,7 @@ export class HomeComponent implements OnInit {
    * @param {AuthenticationService} authenticationService Authentication Service.
    * @param {FormBuilder} formBuilder Form Builder.
    */
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(private authenticationService: AuthenticationService,private keyCloakService:KeycloakService) { }
 
   /**
    * Sets the username of the authenticated user.
@@ -43,7 +44,12 @@ export class HomeComponent implements OnInit {
    */
   ngOnInit() {
     const credentials = this.authenticationService.getCredentials();
-    this.username = credentials.username;
+    if(credentials){
+    this.username = credentials.username;  
+    }
+    else{
+    this.username=this.keyCloakService.getUsername()
+    }
     this.setFilteredActivities();
   }
 
