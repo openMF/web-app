@@ -52,7 +52,7 @@
             <mat-label>Parent</mat-label>
             <mat-select formControlName="parentId">
               <mat-option *ngFor="let parent of parentData" [value]="parent.id">
-                {{ parent.name }}
+                ({{ parent.glCode }}) {{ parent.name }}
               </mat-option>
             </mat-select>
           </mat-form-field>

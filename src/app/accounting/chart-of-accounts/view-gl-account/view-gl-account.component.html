@@ -58,7 +58,9 @@
         </div>
 
         <div fxFlex="50%" *ngIf="glAccount.parent">
-          {{ glAccount.parent.name }}
+          <a class="tab-link" [routerLink]="['/accounting/chart-of-accounts/gl-accounts/view/' + glAccount.parent.id]">
+            ({{ glAccount.parent.glCode }}) {{ glAccount.parent.name }}
+          </a>
         </div>
 
         <div fxFlex="50%" class="header" *ngIf="glAccount.tagId.id">
@@ -82,7 +84,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ glAccount.manualEntriesAllowed }}
+          {{ glAccount.manualEntriesAllowed ? 'Yes' : 'No' }}
         </div>
 
         <div fxFlex="50%" class="header" *ngIf="glAccount.description">

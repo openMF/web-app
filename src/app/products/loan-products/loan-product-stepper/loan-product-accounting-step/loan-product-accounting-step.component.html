@@ -12,13 +12,13 @@
 
     <div *ngIf="loanProductAccountingForm.value.accountingRule >= 2 && loanProductAccountingForm.value.accountingRule <= 4" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-      <h4 fxFlex="98%" class="mat-h4">Assets</h4>
+      <h4 fxFlex="98%" class="mat-h4">Assets / Liability</h4>
 
       <mat-form-field fxFlex="48%">
         <mat-label>Fund source</mat-label>
         <mat-select formControlName="fundSourceAccountId" required>
-          <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
-            {{ assetAccount.name }}
+          <mat-option *ngFor="let assetAndLiabilityAccount of assetAndLiabilityAccountData" [value]="assetAndLiabilityAccount.id">
+            ({{ assetAndLiabilityAccount.glCode }}) {{ assetAndLiabilityAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -26,11 +26,13 @@
         </mat-error>
       </mat-form-field>
 
+      <h4 fxFlex="98%" class="mat-h4">Assets</h4>
+
       <mat-form-field fxFlex="48%">
         <mat-label>Loan portfolio</mat-label>
         <mat-select formControlName="loanPortfolioAccountId" required>
           <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
-            {{ assetAccount.name }}
+            ({{ assetAccount.glCode }}) {{ assetAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -44,7 +46,7 @@
           <mat-label>Interest Receivable</mat-label>
           <mat-select formControlName="receivableInterestAccountId" required>
             <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
-              {{ assetAccount.name }}
+              ({{ assetAccount.glCode }}) {{ assetAccount.name }}
             </mat-option>
           </mat-select>
           <mat-error>
@@ -56,7 +58,7 @@
           <mat-label>Fees Receivable</mat-label>
           <mat-select formControlName="receivableFeeAccountId" required>
             <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
-              {{ assetAccount.name }}
+              ({{ assetAccount.glCode }}) {{ assetAccount.name }}
             </mat-option>
           </mat-select>
           <mat-error>
@@ -68,7 +70,7 @@
           <mat-label>Penalties Receivable</mat-label>
           <mat-select formControlName="receivablePenaltyAccountId" required>
             <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
-              {{ assetAccount.name }}
+              ({{ assetAccount.glCode }}) {{ assetAccount.name }}
             </mat-option>
           </mat-select>
           <mat-error>
@@ -82,7 +84,7 @@
         <mat-label>Transfer in suspense</mat-label>
         <mat-select formControlName="transfersInSuspenseAccountId" required>
           <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
-            {{ assetAccount.name }}
+            ({{ assetAccount.glCode }}) {{ assetAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -98,7 +100,7 @@
         <mat-label>Income from Interest</mat-label>
         <mat-select formControlName="interestOnLoanAccountId" required>
           <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            {{ incomeAccount.name }}
+            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -110,7 +112,7 @@
         <mat-label>Income from fees</mat-label>
         <mat-select formControlName="incomeFromFeeAccountId" required>
           <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            {{ incomeAccount.name }}
+            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -122,7 +124,7 @@
         <mat-label>Income from penalties</mat-label>
         <mat-select formControlName="incomeFromPenaltyAccountId" required>
           <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            {{ incomeAccount.name }}
+            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -134,7 +136,7 @@
         <mat-label>Income from Recovery Repayments</mat-label>
         <mat-select formControlName="incomeFromRecoveryAccountId" required>
           <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            {{ incomeAccount.name }}
+            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -150,11 +152,23 @@
         <mat-label>Losses written off</mat-label>
         <mat-select formControlName="writeOffAccountId" required>
           <mat-option *ngFor="let expenseAccount of expenseAccountData" [value]="expenseAccount.id">
-            {{ expenseAccount.name }}
+            ({{ expenseAccount.glCode }}) {{ expenseAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
           Losses written off is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="48%">
+        <mat-label>Goodwill credit</mat-label>
+        <mat-select formControlName="goodwillCreditAccountId" required>
+          <mat-option *ngFor="let expenseAccount of expenseAccountData" [value]="expenseAccount.id">
+            ({{ expenseAccount.glCode }}) {{ expenseAccount.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          Goodwill credit is <strong>required</strong>
         </mat-error>
       </mat-form-field>
 
@@ -166,7 +180,7 @@
         <mat-label>Over payment liability</mat-label>
         <mat-select formControlName="overpaymentLiabilityAccountId" required>
           <mat-option *ngFor="let liabilityAccount of liabilityAccountData" [value]="liabilityAccount.id">
-            {{ liabilityAccount.name }}
+            ({{ liabilityAccount.glCode }}) {{ liabilityAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
