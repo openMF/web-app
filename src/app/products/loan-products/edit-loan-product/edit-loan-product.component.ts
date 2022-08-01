@@ -44,6 +44,9 @@ export class EditLoanProductComponent implements OnInit {
               private router: Router) {
     this.route.data.subscribe((data: { loanProductAndTemplate: any }) => {
       this.loanProductAndTemplate = data.loanProductAndTemplate;
+      const assetAccountData = this.loanProductAndTemplate.accountingMappingOptions.assetAccountOptions || [];
+      const liabilityAccountData = this.loanProductAndTemplate.accountingMappingOptions.liabilityAccountOptions || [];
+      this.loanProductAndTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions = assetAccountData.concat(liabilityAccountData);
     });
   }
 

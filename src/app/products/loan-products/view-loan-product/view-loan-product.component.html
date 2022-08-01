@@ -601,50 +601,57 @@
 
         <div fxFlexFill *ngIf="loanProduct.accountingRule.id >= 2 && loanProduct.accountingRule.id <= 4" fxLayout="row wrap" fxLayout.lt-md="column">
 
-          <h4 fxFlexFill class="mat-h4">Assets</h4>
+          <h4 fxFlexFill class="mat-h4">Assets / Liabilities</h4>
 
           <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
             <span fxFlex="40%">Fund source:</span>
-            <span fxFlex="60%">{{ loanProduct.accountingMappings.fundSourceAccount.name }}</span>
+            <span fxFlex="60%">({{loanProduct.accountingMappings.fundSourceAccount.glCode}}) {{ loanProduct.accountingMappings.fundSourceAccount.name }}</span>
+          </div>
+
+          <h4 fxFlexFill class="mat-h4">Assets</h4>
+
+          <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
             <span fxFlex="40%">Loan portfolio:</span>
-            <span fxFlex="60%">{{ loanProduct.accountingMappings.loanPortfolioAccount.name }}</span>
+            <span fxFlex="60%">({{loanProduct.accountingMappings.loanPortfolioAccount.glCode}}) {{ loanProduct.accountingMappings.loanPortfolioAccount.name }}</span>
             <div fxFlexFill *ngIf="loanProduct.accountingRule.id === 3 || loanProduct.accountingRule.id === 4" fxLayout="row wrap" fxLayout.lt-md="column">
               <span fxFlex="40%">Interest Receivable:</span>
-              <span fxFlex="60%">{{ loanProduct.accountingMappings.receivableInterestAccount.name }}</span>
+              <span fxFlex="60%">({{loanProduct.accountingMappings.receivableInterestAccount.glCode}}) {{ loanProduct.accountingMappings.receivableInterestAccount.name }}</span>
               <span fxFlex="40%">Fees Receivable:</span>
-              <span fxFlex="60%">{{ loanProduct.accountingMappings.receivableInterestAccount.name }}</span>
+              <span fxFlex="60%">({{loanProduct.accountingMappings.receivableInterestAccount.glCode}}) {{ loanProduct.accountingMappings.receivableInterestAccount.name }}</span>
               <span fxFlex="40%">Penalties Receivable:</span>
-              <span fxFlex="60%">{{ loanProduct.accountingMappings.receivablePenaltyAccount.name }}</span>
+              <span fxFlex="60%">({{loanProduct.accountingMappings.receivablePenaltyAccount.glCode}}) {{ loanProduct.accountingMappings.receivablePenaltyAccount.name }}</span>
             </div>
             <span fxFlex="40%">Transfer in suspense:</span>
-            <span fxFlex="60%">{{ loanProduct.accountingMappings.transfersInSuspenseAccount.name }}</span>
+            <span fxFlex="60%">({{loanProduct.accountingMappings.transfersInSuspenseAccount.glCode}}) {{ loanProduct.accountingMappings.transfersInSuspenseAccount.name }}</span>
           </div>
 
           <h4 fxFlexFill class="mat-h4">Income</h4>
 
           <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
             <span fxFlex="40%">Income from Interest:</span>
-            <span fxFlex="60%">{{ loanProduct.accountingMappings.interestOnLoanAccount.name }}</span>
+            <span fxFlex="60%">({{loanProduct.accountingMappings.interestOnLoanAccount.glCode}}) {{ loanProduct.accountingMappings.interestOnLoanAccount.name }}</span>
             <span fxFlex="40%">Income from fees:</span>
-            <span fxFlex="60%">{{ loanProduct.accountingMappings.incomeFromFeeAccount.name }}</span>
+            <span fxFlex="60%">({{loanProduct.accountingMappings.incomeFromFeeAccount.glCode}}) {{ loanProduct.accountingMappings.incomeFromFeeAccount.name }}</span>
             <span fxFlex="40%">Income from penalties:</span>
-            <span fxFlex="60%">{{ loanProduct.accountingMappings.incomeFromPenaltyAccount.name }}</span>
+            <span fxFlex="60%">({{loanProduct.accountingMappings.incomeFromPenaltyAccount.glCode}}) {{ loanProduct.accountingMappings.incomeFromPenaltyAccount.name }}</span>
             <span fxFlex="40%">Income from Recovery Repayments:</span>
-            <span fxFlex="60%">{{ loanProduct.accountingMappings.incomeFromRecoveryAccount.name }}</span>
+            <span fxFlex="60%">({{loanProduct.accountingMappings.incomeFromRecoveryAccount.glCode}}) {{ loanProduct.accountingMappings.incomeFromRecoveryAccount.name }}</span>
           </div>
 
           <h4 fxFlexFill class="mat-h4">Expenses</h4>
 
-          <div fxFlexFill>
+          <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
             <span fxFlex="40%">Losses written off:</span>
-            <span fxFlex="60%">{{ loanProduct.accountingMappings.writeOffAccount.name }}</span>
+            <span fxFlex="60%">({{loanProduct.accountingMappings.writeOffAccount.glCode}}) {{ loanProduct.accountingMappings.writeOffAccount.name }}</span>
+            <span fxFlex="40%">Goodwill credit:</span>
+            <span fxFlex="60%">({{loanProduct.accountingMappings.goodwillCreditAccount.glCode}}) {{ loanProduct.accountingMappings.goodwillCreditAccount.name }}</span>
           </div>
 
           <h4 fxFlexFill class="mat-h4">Liabilities</h4>
 
-          <div fxFlexFill>
+          <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
             <span fxFlex="40%">Over payment liability:</span>
-            <span fxFlex="60%">{{ loanProduct.accountingMappings.overpaymentLiabilityAccount.name }}</span>
+            <span fxFlex="60%">({{loanProduct.accountingMappings.overpaymentLiabilityAccount.glCode}}) {{ loanProduct.accountingMappings.overpaymentLiabilityAccount.name }}</span>
           </div>
 
           <div *ngIf="loanProduct.paymentChannelToFundSourceMappings?.length || loanProduct.feeToIncomeAccountMappings?.length || loanProduct.penaltyToIncomeAccountMappings?.length" fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">

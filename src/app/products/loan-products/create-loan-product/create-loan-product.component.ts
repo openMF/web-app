@@ -44,6 +44,9 @@ export class CreateLoanProductComponent implements OnInit {
               private router: Router) {
     this.route.data.subscribe((data: { loanProductsTemplate: any }) => {
       this.loanProductsTemplate = data.loanProductsTemplate;
+      const assetAccountData = this.loanProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
+      const liabilityAccountData = this.loanProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
+      this.loanProductsTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions = assetAccountData.concat(liabilityAccountData);
     });
   }
 

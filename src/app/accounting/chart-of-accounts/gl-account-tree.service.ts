@@ -84,7 +84,9 @@ export class GlAccountTreeService {
           glAccountTree[0].children[4].children.push(glAccounts[glAccount.id]);
         }
       } else {
-        glAccounts[glAccount.parentId].children.push(glAccounts[glAccount.id]);
+        if (glAccounts[glAccount.parentId]) {
+          glAccounts[glAccount.parentId].children.push(glAccounts[glAccount.id]);
+        }
       }
     }
 
