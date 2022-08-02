@@ -7,6 +7,9 @@ import * as moment from 'moment';
 })
 export class Dates {
 
+  public static DEFAULT_DATEFORMAT = 'yyyy-MM-dd';
+  public static DEFAULT_DATETIMEFORMAT = 'yyyy-MM-dd HH:mm';
+
   constructor(private datePipe: DatePipe) {}
 
   public getDate(timestamp: any): string {

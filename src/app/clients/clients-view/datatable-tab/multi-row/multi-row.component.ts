@@ -3,9 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
-import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
-import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
-import { CheckboxBase } from 'app/shared/form-dialog/formfield/model/checkbox-base';
 
 /** Custom Components */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -15,6 +12,7 @@ import { DeleteDialogComponent } from '../../../../shared/delete-dialog/delete-d
 import { ClientsService } from '../../../clients.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { Datatables } from 'app/core/utils/datatables';
 
 @Component({
   selector: 'mifosx-multi-row',
@@ -30,11 +28,21 @@ export class MultiRowComponent implements OnInit, OnChanges {
   clientId: string;
   showDeleteBotton: boolean;
 
+  /**
+   * Fetches Client Id from parent route params.
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {Dates} dateUtils Date Utils.
+   * @param {ClientsService} clientsService Clients Service.
+   * @param {MatDialog} dialog Dialog Service.
+   * @param {SettingsService} settingsService Settings Service
+   * @param {Datatables} datatables Datatable utils
+   */
   constructor(private route: ActivatedRoute,
     private dateUtils: Dates,
     private clientsService: ClientsService,
     private dialog: MatDialog,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService,
+    private datatables: Datatables) {
     this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
   }
 
@@ -43,6 +51,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
       this.datatableName = routeParams.datatableName;
     });
   }
+
   ngOnChanges() {
     this.datatableColumns = this.dataObject.columnHeaders.map((columnHeader: any) => {
       return columnHeader.columnName;
@@ -59,56 +68,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
     const columns = this.dataObject.columnHeaders.filter((column: any) => {
       return ((column.columnName !== 'id') && (column.columnName !== 'client_id') && (column.columnName !== 'created_at') && (column.columnName !== 'updated_at'));
     });
-    const formfields: FormfieldBase[] = columns.map((column: any) => {
-      switch (column.columnDisplayType) {
-        case 'INTEGER':
-        case 'STRING':
-        case 'DECIMAL':
-        case 'TEXT': return new InputBase({
-          controlName: column.columnName,
-          label: column.columnName,
-          value: '',
-          type: (column.columnDisplayType === 'INTEGER' || column.columnDisplayType === 'DECIMAL') ? 'number' : 'text',
-          required: (column.isColumnNullable) ? false : true
-        });
-        case 'BOOLEAN': return new CheckboxBase({
-          controlName: column.columnName,
-          label: column.columnName,
-          value: '',
-          type: 'checkbox',
-          required: (column.isColumnNullable) ? false : true
-        });
-        case 'CODELOOKUP': return new SelectBase({
-          controlName: column.columnName,
-          label: column.columnName,
-          value: '',
-          options: { label: 'value', value: 'id', data: column.columnValues },
-          required: (column.isColumnNullable) ? false : true
-        });
-        case 'DATE': {
-          dateTransformColumns.push(column.columnName);
-          dataTableEntryObject.dateFormat = 'yyyy-MM-dd';
-          return new InputBase({
-            controlName: column.columnName,
-            label: column.columnName,
-            value: '',
-            type: 'date',
-            required: (column.isColumnNullable) ? false : true
-          });
-        }
-        case 'DATETIME': {
-          dateTransformColumns.push(column.columnName);
-          dataTableEntryObject.dateFormat = 'yyyy-MM-dd HH:mm';
-          return new InputBase({
-            controlName: column.columnName,
-            label: column.columnName,
-            value: '',
-            type: 'datetime-local',
-            required: (column.isColumnNullable) ? false : true
-          });
-        }
-      }
-    });
+    const formfields: FormfieldBase[] = this.datatables.getFormfields(columns, dateTransformColumns, dataTableEntryObject);
     const data = {
       title: 'Add ' + this.datatableName,
       formfields: formfields
