@@ -19,6 +19,7 @@ import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicke
 /** Custom Services */
 import { SavingsService } from '../../../savings.service';
 import { Dates } from 'app/core/utils/dates';
+import { Datatables } from 'app/core/utils/datatables';
 
 /**
  * Savings Account Multi Row Data Tables
@@ -54,12 +55,14 @@ export class MultiRowComponent implements OnInit, OnChanges {
    * @param {SavingsService} savingsService Savingss Service.
    * @param {MatDialog} dialog Mat Dialog.
    * @param {SettingsService} settingsService Setting service
+   * @param {Datatables} datatables Datatable utils
    */
   constructor(private route: ActivatedRoute,
               private dateUtils: Dates,
               private savingsService: SavingsService,
               private dialog: MatDialog,
-              private settingsService: SettingsService) {
+              private settingsService: SettingsService,
+              private datatables: Datatables) {
     this.savingAccountId = this.route.parent.parent.snapshot.paramMap.get('savingAccountId');
   }
 
@@ -93,56 +96,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
     const columns = this.dataObject.columnHeaders.filter((column: any) => {
       return ((column.columnName !== 'id') && (column.columnName !== 'savings_account_id'));
     });
-    const formfields: FormfieldBase[] = columns.map((column: any) => {
-      switch (column.columnDisplayType) {
-        case 'INTEGER':
-        case 'STRING':
-        case 'DECIMAL':
-        case 'TEXT': return new InputBase({
-          controlName: column.columnName,
-          label: column.columnName,
-          value: '',
-          type: (column.columnDisplayType === 'INTEGER' || column.columnDisplayType === 'DECIMAL') ? 'number' : 'text',
-          required: (column.isColumnNullable) ? false : true
-        });
-        case 'BOOLEAN': return new CheckboxBase({
-          controlName: column.columnName,
-          label: column.columnName,
-          value: '',
-          type: 'checkbox',
-          required: (column.isColumnNullable) ? false : true
-        });
-        case 'CODELOOKUP': return new SelectBase({
-          controlName: column.columnName,
-          label: column.columnName,
-          value: '',
-          options: { label: 'value', value: 'id', data: column.columnValues },
-          required: (column.isColumnNullable) ? false : true
-        });
-        case 'DATE': {
-          dateTransformColumns.push(column.columnName);
-          dataTableEntryObject.dateFormat = this.settingsService.dateFormat;
-          return new DatepickerBase({
-            controlName: column.columnName,
-            label: column.columnName,
-            value: '',
-            type: 'date',
-            required: (column.isColumnNullable) ? false : true
-          });
-        }
-        case 'DATETIME': {
-          dateTransformColumns.push(column.columnName);
-          dataTableEntryObject.dateFormat = 'yyyy-MM-dd HH:mm';
-          return new DatepickerBase({
-            controlName: column.columnName,
-            label: column.columnName,
-            value: '',
-            type: 'datetime-local',
-            required: (column.isColumnNullable) ? false : true
-          });
-        }
-      }
-    });
+    const formfields: FormfieldBase[] = this.datatables.getFormfields(columns, dateTransformColumns, dataTableEntryObject);
     const data = {
       title: 'Add ' + this.datatableName,
       formfields: formfields
