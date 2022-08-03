@@ -26,6 +26,7 @@ import { ServerSelectorComponent } from './server-selector/server-selector.compo
 import { IconsModule } from './icons.module';
 import { MaterialModule } from './material.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { OfficeTreeViewComponent } from './office-tree-view/office-tree-view.component';
 
 /**
  * Shared Module
@@ -57,7 +58,8 @@ import { TranslateModule } from '@ngx-translate/core';
     ErrorDialogComponent,
     NotificationsTrayComponent,
     SearchToolComponent,
-    ServerSelectorComponent
+    ServerSelectorComponent,
+    OfficeTreeViewComponent
   ],
   exports: [
     FileUploadComponent,
@@ -73,6 +75,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    OfficeTreeViewComponent
   ]
 })
 export class SharedModule { }

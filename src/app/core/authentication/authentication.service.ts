@@ -93,7 +93,7 @@ export class AuthenticationService {
             }
             this.getUserDetails(context)
           })
-        } 
+        }
       })
     }
   }
@@ -118,7 +118,7 @@ export class AuthenticationService {
       return this.http
         .disableApiPrefix()
         .post(
-          `https://loans.qa.oneacrefund.org/auth/realms/OneAcreFund/protocol/openid-connect/token`,
+          `https://loans.test.oneacrefund.org/auth/realms/OneAcreFund/protocol/openid-connect/token`,
           {},
           { params: httpParams }
         )
@@ -249,14 +249,15 @@ export class AuthenticationService {
    * @returns {Observable<boolean>} True if the user was logged out successfully.
    */
   logout (): Observable<boolean> {
-    const twoFactorToken = JSON.parse(this.storage.getItem(this.twoFactorAuthenticationTokenStorageKey))
-    if (twoFactorToken) {
-      this.http.post('/twofactor/invalidate', { token: twoFactorToken.token }).subscribe()
-      this.authenticationInterceptor.removeTwoFactorAuthorization()
-    }
-    this.authenticationInterceptor.removeAuthorization()
-    this.setCredentials()
-    return of(true)
+    this.keyCloak.isLoggedIn().then(isLoggedIn => {
+      if (isLoggedIn && this.isAuthenticated()==true) {
+        this.authenticationInterceptor.removeAuthorization()
+        this.setCredentials()
+        this.keyCloak.logout('http://localhost:4200')       
+      }else
+      return of(false)
+    })
+    return of(false)
   }
 
   /**

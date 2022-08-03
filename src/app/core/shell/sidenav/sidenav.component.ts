@@ -65,8 +65,8 @@ export class SidenavComponent implements OnInit {
    * Logs out the authenticated user and redirects to login page.
    */
   logout() {
-    this.authenticationService.logout()
-      .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+    this.authenticationService.logout();
+      //.subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }
 
   /**
