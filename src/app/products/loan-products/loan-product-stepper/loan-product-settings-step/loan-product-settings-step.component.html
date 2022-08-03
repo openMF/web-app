@@ -367,12 +367,11 @@
 
     <h3 fxFlex="23%" class="mat-h3">Loan Tranche Details</h3>
 
-    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="multiDisburseLoan"  class="margin-b">
+    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="multiDisburseLoan" class="margin-b">
       Enable Multiple Disbursals
     </mat-checkbox>
 
     <div *ngIf="loanProductSettingsForm.value.multiDisburseLoan" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
       <mat-form-field fxFlex="48%">
         <mat-label>Maximum Tranche count</mat-label>
         <input type="number" matInput formControlName="maxTrancheCount" required>
@@ -386,6 +385,9 @@
         <input type="number" matInput formControlName="outstandingLoanBalance">
       </mat-form-field>
 
+      <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="disallowExpectedDisbursements" class="margin-v">
+        Disallow Expected Disbursements
+      </mat-checkbox>
     </div>
 
     <mat-divider fxFlex="98%"></mat-divider>
