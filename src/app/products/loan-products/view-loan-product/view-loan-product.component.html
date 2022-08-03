@@ -474,6 +474,10 @@
             <span fxFlex="40%">Maximum allowed outstanding balance:</span>
             <span fxFlex="60%">{{ loanProduct.outstandingLoanBalance }}</span>
           </div>
+          <div fxFlexFill>
+            <span fxFlex="40%">Disallow Expected Disbursements:</span>
+            <span fxFlex="60%">{{ loanProduct.disallowExpectedDisbursements ? 'Yes' : 'No' }}</span>
+          </div>
         </div>
 
         <h3 class="mat-h3" fxFlexFill>Configurable Terms and Settings</h3>
