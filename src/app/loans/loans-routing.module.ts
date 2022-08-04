@@ -231,7 +231,7 @@ const routes: Routes = [
         {
           path: 'actions/:action',
           component: LoanAccountActionsComponent,
-          data: { title: extract('Loan Account Actions'), routeParamBreadcrumb: 'action' },
+          data: { title: extract('Loan Account Actions'), breadcrumb: 'action', routeParamBreadcrumb: 'action' },
           resolve: {
             actionButtonData: LoanActionButtonResolver
           }

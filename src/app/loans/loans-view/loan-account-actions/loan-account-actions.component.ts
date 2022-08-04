@@ -34,7 +34,12 @@ export class LoanAccountActionsComponent {
             'Undo Disbursal': boolean,
             'Loan Screen Reports': boolean,
             'Approve': boolean,
-            'Add Loan Charge': boolean } = {
+            'Add Loan Charge': boolean,
+            'Goodwill Credit': boolean,
+            'Merchant Issued Refund': boolean,
+            'Payout Refund': boolean,
+            'Credit Balance Refund': boolean
+         } = {
               'Close': false,
               'Undo Approval': false,
               'Write Off':  false,
@@ -56,7 +61,12 @@ export class LoanAccountActionsComponent {
               'Undo Disbursal':  false,
               'Loan Screen Reports':  false,
               'Approve':  false,
-              'Add Loan Charge':  false };
+              'Add Loan Charge':  false,
+              'Goodwill Credit': false,
+              'Merchant Issued Refund': false,
+              'Payout Refund': false,
+              'Credit Balance Refund': false
+          };
 
   actionButtonData: any;
   actionName: any;

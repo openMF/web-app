@@ -30,8 +30,16 @@ export class LoanActionButtonResolver implements Resolve<Object> {
             return this.loansService.getLoanTemplate(loanId);
         } else if (loanActionButton === 'Make Repayment') {
             return this.loansService.getLoanActionTemplate(loanId, 'repayment');
+        } else if (loanActionButton === 'Goodwill Credit') {
+          return this.loansService.getLoanActionTemplate(loanId, 'goodwillCredit');
+        } else if (loanActionButton === 'Payout Refund') {
+          return this.loansService.getLoanActionTemplate(loanId, 'payoutRefund');
+        } else if (loanActionButton === 'Merchant Issued Refund') {
+          return this.loansService.getLoanActionTemplate(loanId, 'merchantIssuedRefund');
+        } else if (loanActionButton === 'Credit Balance Refund') {
+          return this.loansService.getLoanActionTemplate(loanId, 'creditBalanceRefund');
         } else if (loanActionButton === 'Waive Interest') {
-            return this.loansService.getLoanActionTemplate(loanId, 'waiveinterest');
+          return this.loansService.getLoanActionTemplate(loanId, 'waiveinterest');
         } else if (loanActionButton === 'Write Off') {
             return this.loansService.getLoanActionTemplate(loanId, 'writeoff');
         } else if (loanActionButton === 'Close') {

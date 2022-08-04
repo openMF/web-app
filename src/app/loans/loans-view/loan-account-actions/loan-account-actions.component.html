@@ -4,6 +4,10 @@
 <mifosx-foreclosure *ngIf="actions['Foreclosure']"></mifosx-foreclosure>
 <mifosx-prepay-loan [dataObject]="actionButtonData" *ngIf="actions['Prepay Loan']"></mifosx-prepay-loan>
 <mifosx-make-repayment [dataObject]="actionButtonData" *ngIf="actions['Make Repayment']"></mifosx-make-repayment>
+<mifosx-make-repayment [dataObject]="actionButtonData" *ngIf="actions['Goodwill Credit']"></mifosx-make-repayment>
+<mifosx-make-repayment [dataObject]="actionButtonData" *ngIf="actions['Payout Refund']"></mifosx-make-repayment>
+<mifosx-make-repayment [dataObject]="actionButtonData" *ngIf="actions['Merchant Issued Refund']"></mifosx-make-repayment>
+<mifosx-loan-credit-balance-refund [dataObject]="actionButtonData" *ngIf="actions['Credit Balance Refund']"></mifosx-loan-credit-balance-refund>
 <mifosx-waive-interest [dataObject]="actionButtonData" *ngIf="actions['Waive Interest']"></mifosx-waive-interest>
 <mifosx-write-off-page [dataObject]="actionButtonData" *ngIf="actions['Write Off']"></mifosx-write-off-page>
 <mifosx-close-as-rescheduled [dataObject]="actionButtonData" *ngIf="actions['Close (as Rescheduled)']"></mifosx-close-as-rescheduled>
