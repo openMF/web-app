@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 /** rxjs Imports */
 import { merge } from 'rxjs';
@@ -65,8 +65,12 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
   transactionDateTo = new FormControl(new Date());
   /** Transaction ID form control. */
   transactionId = new FormControl();
+  /** Submitted on date from form control. */
+  submittedOnDateFrom = new FormControl();
+  /** Submitted on date to form control. */
+  submittedOnDateTo = new FormControl();
   /** Columns to be displayed in journal entries table. */
-  displayedColumns: string[] = ['id', 'officeName', 'transactionId', 'transactionDate', 'glAccountType', 'createdByUserName', 'glAccountCode', 'glAccountName', 'debit', 'credit'];
+  displayedColumns: string[] = ['id', 'officeName', 'transactionId', 'transactionDate', 'glAccountType', 'createdByUserName', 'submittedOnDate', 'glAccountCode', 'glAccountName', 'debit', 'credit'];
   /** Data source for journal entries table. */
   dataSource: JournalEntriesDataSource;
   /** Journal entries filter. */
@@ -89,11 +93,19 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
     },
     {
       type: 'fromDate',
-      value: this.dateUtils.getDate(new Date(new Date().setMonth(new Date().getMonth() - 1)))
+      value: this.dateUtils.formatDate(new Date(new Date().setMonth(new Date().getMonth() - 1)), this.settingsService.dateFormat)
     },
     {
       type: 'toDate',
-      value: this.dateUtils.getDate(new Date())
+      value: this.dateUtils.formatDate(new Date(), this.settingsService.dateFormat)
+    },
+    {
+      type: 'submittedOnDateFrom',
+      value: ''
+    },
+    {
+      type: 'submittedOnDateTo',
+      value: ''
     },
     {
       type: 'dateFormat',
@@ -182,7 +194,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
-          this.applyFilter(this.dateUtils.getDate(filterValue), 'fromDate');
+          this.applyFilter(this.dateUtils.formatDate(filterValue, this.settingsService.dateFormat), 'fromDate');
         })
       )
       .subscribe();
@@ -192,7 +204,27 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
-          this.applyFilter(this.dateUtils.getDate(filterValue), 'toDate');
+          this.applyFilter(this.dateUtils.formatDate(filterValue, this.settingsService.dateFormat), 'toDate');
+        })
+      )
+      .subscribe();
+
+      this.submittedOnDateFrom.valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap((filterValue) => {
+          this.applyFilter(this.dateUtils.formatDate(filterValue, this.settingsService.dateFormat), 'submittedOnDateFrom');
+        })
+      )
+      .subscribe();
+
+    this.submittedOnDateTo.valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap((filterValue) => {
+          this.applyFilter(this.dateUtils.formatDate(filterValue, this.settingsService.dateFormat), 'submittedOnDateTo');
         })
       )
       .subscribe();

@@ -173,7 +173,7 @@ export class FrequentPostingsComponent implements OnInit {
     journalEntry.locale = this.settingsService.language.code;
     journalEntry.dateFormat = this.settingsService.dateFormat;
     if (journalEntry.transactionDate instanceof Date) {
-      journalEntry.transactionDate = this.dateUtils.getDate(journalEntry.transactionDate);
+      journalEntry.transactionDate = this.dateUtils.formatDate(journalEntry.transactionDate, this.settingsService.dateFormat);
     }
     this.accountingService.createJournalEntry(journalEntry).subscribe(response => {
       this.router.navigate(['../transactions/view', response.transactionId], { relativeTo: this.route });

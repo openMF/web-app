@@ -32,11 +32,11 @@ export class PeriodicAccrualsComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor(private formBuilder: FormBuilder,
-              private accountingService: AccountingService,
-              private settingsService: SettingsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router) { }
+    private accountingService: AccountingService,
+    private settingsService: SettingsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   /**
    * Creates periodic accruals form.
@@ -65,7 +65,7 @@ export class PeriodicAccrualsComponent implements OnInit {
     periodicAccruals.locale = this.settingsService.language.code;
     periodicAccruals.dateFormat = this.settingsService.dateFormat;
     if (periodicAccruals.tillDate instanceof Date) {
-      periodicAccruals.tillDate = this.dateUtils.getDate(periodicAccruals.tillDate);
+      periodicAccruals.tillDate = this.dateUtils.formatDate(periodicAccruals.tillDate, this.settingsService.dateFormat);
     }
     this.accountingService.executePeriodicAccruals(periodicAccruals).subscribe(() => {
       this.router.navigate(['../'], { relativeTo: this.route });

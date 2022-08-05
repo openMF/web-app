@@ -35,11 +35,11 @@ export class CreateClosureComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor(private formBuilder: FormBuilder,
-              private accountingService: AccountingService,
-              private settingsService: SettingsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router) {
+    private accountingService: AccountingService,
+    private settingsService: SettingsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router) {
     this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
@@ -74,7 +74,7 @@ export class CreateClosureComponent implements OnInit {
     accountingClosure.locale = this.settingsService.language.code;
     accountingClosure.dateFormat = this.settingsService.dateFormat;
     if (accountingClosure.closingDate) {
-      accountingClosure.closingDate = this.dateUtils.getDate(accountingClosure.closingDate);
+      accountingClosure.closingDate = this.dateUtils.formatDate(accountingClosure.closingDate, this.settingsService.dateFormat);
     }
     this.accountingService.createAccountingClosure(accountingClosure).subscribe((response: any) => {
       this.router.navigate(['../view', response.resourceId], { relativeTo: this.route });
