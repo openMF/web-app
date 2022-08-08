@@ -46,18 +46,18 @@ export class MigrateOpeningBalancesComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor(private formBuilder: FormBuilder,
-              private accountingService: AccountingService,
-              private settingsService: SettingsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router) {
+    private accountingService: AccountingService,
+    private settingsService: SettingsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router) {
     this.route.data.subscribe((data: {
-        offices: any,
-        currencies: any
-      }) => {
-        this.officeData = data.offices;
-        this.currencyData = data.currencies.selectedCurrencyOptions;
-      });
+      offices: any,
+      currencies: any
+    }) => {
+      this.officeData = data.offices;
+      this.currencyData = data.currencies.selectedCurrencyOptions;
+    });
   }
 
   /**
@@ -111,13 +111,13 @@ export class MigrateOpeningBalancesComponent implements OnInit {
 
         openingBalancesData.glAccounts = openingBalancesData.assetAccountOpeningBalances
           .concat(openingBalancesData.liabityAccountOpeningBalances,
-                  openingBalancesData.equityAccountOpeningBalances,
-                  openingBalancesData.incomeAccountOpeningBalances,
-                  openingBalancesData.expenseAccountOpeningBalances);
+            openingBalancesData.equityAccountOpeningBalances,
+            openingBalancesData.incomeAccountOpeningBalances,
+            openingBalancesData.expenseAccountOpeningBalances);
 
         openingBalancesData.glAccounts.forEach((glAccount: any) => {
-            entry.push(this.createGLAccountEntryForm(glAccount));
-          });
+          entry.push(this.createGLAccountEntryForm(glAccount));
+        });
 
         this.openingBalancesData = openingBalancesData;
 
@@ -142,7 +142,7 @@ export class MigrateOpeningBalancesComponent implements OnInit {
     openingBalances.locale = this.settingsService.language.code;
     openingBalances.dateFormat = this.settingsService.dateFormat;
     if (openingBalances.transactionDate instanceof Date) {
-      openingBalances.transactionDate = this.dateUtils.getDate(openingBalances.transactionDate);
+      openingBalances.transactionDate = this.dateUtils.formatDate(openingBalances.transactionDate, this.settingsService.dateFormat);
     }
     openingBalances.debits = [];
     openingBalances.credits = [];

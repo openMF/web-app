@@ -41,22 +41,22 @@ export class CreateJournalEntryComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor(private formBuilder: FormBuilder,
-              private accountingService: AccountingService,
-              private settingsService: SettingsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router) {
+    private accountingService: AccountingService,
+    private settingsService: SettingsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router) {
     this.route.data.subscribe((data: {
-        offices: any,
-        currencies: any,
-        paymentTypes: any,
-        glAccounts: any
-      }) => {
-        this.officeData = data.offices;
-        this.currencyData = data.currencies.selectedCurrencyOptions;
-        this.paymentTypeData = data.paymentTypes;
-        this.glAccountData = data.glAccounts;
-      });
+      offices: any,
+      currencies: any,
+      paymentTypes: any,
+      glAccounts: any
+    }) => {
+      this.officeData = data.offices;
+      this.currencyData = data.currencies.selectedCurrencyOptions;
+      this.paymentTypeData = data.paymentTypes;
+      this.glAccountData = data.glAccounts;
+    });
   }
 
   /**
@@ -142,7 +142,7 @@ export class CreateJournalEntryComponent implements OnInit {
     journalEntry.locale = this.settingsService.language.code;
     journalEntry.dateFormat = this.settingsService.dateFormat;
     if (journalEntry.transactionDate) {
-      journalEntry.transactionDate = this.dateUtils.getDate(journalEntry.transactionDate);
+      journalEntry.transactionDate = this.dateUtils.formatDate(journalEntry.transactionDate, this.settingsService.dateFormat);
     }
     this.accountingService.createJournalEntry(journalEntry).subscribe(response => {
       this.router.navigate(['../transactions/view', response.transactionId], { relativeTo: this.route });

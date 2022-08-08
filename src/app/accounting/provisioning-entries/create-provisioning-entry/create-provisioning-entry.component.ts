@@ -32,11 +32,11 @@ export class CreateProvisioningEntryComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor(private formBuilder: FormBuilder,
-              private accountingService: AccountingService,
-              private settingsService: SettingsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router) { }
+    private accountingService: AccountingService,
+    private settingsService: SettingsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   /**
    * Creates the provisioning entry form.
@@ -66,7 +66,7 @@ export class CreateProvisioningEntryComponent implements OnInit {
     provisioningEntry.locale = this.settingsService.language.code;
     provisioningEntry.dateFormat = this.settingsService.dateFormat;
     if (provisioningEntry.date instanceof Date) {
-      provisioningEntry.date = this.dateUtils.getDate(provisioningEntry.date);
+      provisioningEntry.date = this.dateUtils.formatDate(provisioningEntry.date, this.settingsService.dateFormat);
     }
     this.accountingService.createProvisioningEntry(provisioningEntry)
       .subscribe((response: any) => {
