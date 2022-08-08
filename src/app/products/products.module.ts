@@ -93,6 +93,10 @@ import { CreateProductMixComponent } from './products-mix/create-product-mix/cre
 import { EditProductMixComponent } from './products-mix/edit-product-mix/edit-product-mix.component';
 import { CreateChargeComponent } from './charges/create-charge/create-charge.component';
 import { EditFixedDepositProductComponent } from './fixed-deposit-products/edit-fixed-deposit-product/edit-fixed-deposit-product.component';
+import { CollateralsComponent } from './collaterals/collaterals.component';
+import { CreateCollateralComponent } from './collaterals/create-collateral/create-collateral.component';
+import { EditCollateralComponent } from './collaterals/edit-collateral/edit-collateral.component';
+import { ViewCollateralComponent } from './collaterals/view-collateral/view-collateral.component';
 
 /**
  * Products Module
@@ -193,7 +197,11 @@ import { EditFixedDepositProductComponent } from './fixed-deposit-products/edit-
     EditProductMixComponent,
     ManageTaxGroupsComponent,
     CreateChargeComponent,
-    EditFixedDepositProductComponent
+    EditFixedDepositProductComponent,
+    CollateralsComponent,
+    CreateCollateralComponent,
+    EditCollateralComponent,
+    ViewCollateralComponent
   ],
   providers: [ ]
 })

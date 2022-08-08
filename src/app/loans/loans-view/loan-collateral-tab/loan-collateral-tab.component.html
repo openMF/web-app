@@ -2,19 +2,24 @@
 
   <table mat-table [dataSource]="loanDetails.collateral">
 
-    <ng-container matColumnDef="type">
-      <th mat-header-cell *matHeaderCellDef> Type </th>
-      <td mat-cell *matCellDef="let ele"> {{ ele.type.name }} </td>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let ele"> {{ ele.clientCollateralId }} </td>
     </ng-container>
 
-    <ng-container matColumnDef="value">
-      <th mat-header-cell *matHeaderCellDef> Value </th>
-      <td mat-cell *matCellDef="let ele"> {{ ele.value }} </td>
+    <ng-container matColumnDef="quantity">
+      <th mat-header-cell *matHeaderCellDef> Quantity </th>
+      <td mat-cell *matCellDef="let ele"> {{ ele.quantity }} </td>
     </ng-container>
 
-    <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef> Description </th>
-      <td mat-cell *matCellDef="let ele"> {{ ele.description }} </td>
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef> Total Value </th>
+      <td mat-cell *matCellDef="let ele"> {{ ele.total }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="totalCollateral">
+      <th mat-header-cell *matHeaderCellDef> Total Collateral Value </th>
+      <td mat-cell *matCellDef="let ele"> {{ ele.totalCollateral }} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

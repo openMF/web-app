@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
+import { ProductsService } from 'app/products/products.service';
 
 /**
  * Client Actions data resolver.
@@ -16,8 +17,10 @@ export class ClientActionsResolver implements Resolve<Object> {
 
   /**
    * @param {ClientsService} clientsService Clients service.
+   * @param {ProductsService} productsService Products Service
    */
-  constructor(private clientsService: ClientsService) { }
+  constructor(private clientsService: ClientsService,
+    private productsService: ProductsService) { }
 
   /**
    * Returns the clients actions data.
@@ -42,6 +45,8 @@ export class ClientActionsResolver implements Resolve<Object> {
         return this.clientsService.getOffices();
       case 'Add Charge':
         return this.clientsService.getClientChargeTemplate(clientId);
+      case 'Create Collateral':
+        return this.productsService.getCollaterals();
       case 'Client Screen Reports':
         return this.clientsService.getClientReportTemplates();
       case 'Assign Staff':

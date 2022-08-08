@@ -1,0 +1,71 @@
+<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+    <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CHARGE'">
+      <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+      Edit
+    </button>
+    <button mat-raised-button color="warn" (click)="deleteCollateral()" *mifosxHasPermission="'DELETE_CHARGE'">
+      <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+      Delete
+    </button>
+  </div>
+  
+<mat-card class="client-collateral-card">
+
+    <mat-card-content class="content">\
+
+        <div class="tab-container mat-typography">
+
+            <h3>Client Collateral Details</h3>
+          
+            <div fxLayout="row" fxLayoutGap="32px" class="group-details-container m-b-30">
+              <p>
+                Name: {{ clientCollateralData.name }}<br/>
+                Quantity: {{ clientCollateralData.quantity }}<br/>
+                Total Value: {{ clientCollateralData.total }}<br/>
+                Total Collateral Value: {{ clientCollateralData.totalCollateral }}<br/>
+              </p>
+              
+            </div>
+        
+
+            <h3>Transaction Details</h3>
+
+            <table mat-table [dataSource]="clientCollateralData.loanTransactionData"
+            class="mat-elevation-z1 m-b-30">
+
+            <ng-container matColumnDef="ID">
+                <th mat-header-cell *matHeaderCellDef> ID </th>
+                <td mat-cell *matCellDef="let element">
+                {{element.loanId}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Last Repayment">
+                <th mat-header-cell *matHeaderCellDef>Last Repayment</th>
+                <td mat-cell *matCellDef="let element"> {{element.lastRepayment}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Remaining Amount">
+                <th mat-header-cell *matHeaderCellDef> Remaining Amount </th>
+                <td mat-cell *matCellDef="let element"> {{element.remainingAmount}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Last Repayment Date">
+                <th mat-header-cell *matHeaderCellDef> Last Repayment Date </th>
+                <td mat-cell *matCellDef="let element"> {{element.lastRepaymentDate | dateFormat}} </td>
+
+            </ng-container>
+
+            <!-- <tr mat-header-row *matHeaderRowDef="clientMemberColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: clientMemberColumns;" [routerLink]="['/clients', row.id, 'loans-accounts', 'create']" class="select-row"></tr> -->
+            <tr mat-header-row *matHeaderRowDef="collateralColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: collateralColumns;"></tr>
+      
+            </table>
+
+        </div>
+
+
+    </mat-card-content>
+        
+</mat-card>

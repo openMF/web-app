@@ -600,4 +600,53 @@
 
   </table>
 
+  <!-- Collateral Data Table -->
+  <div class="heading-content">
+    <div fxLayout="column" fxFlex="50%">
+      <div class="heading-name">
+        <h3>Collateral Data</h3>
+      </div>
+    </div>
+    <div fxLayout="column" fxFlex="50%">
+      <div fxLayout="row" fxLayoutAlign="flex-end">
+        <button mat-raised-button class="f-right" color="primary" disabled>
+          View Collaterals
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <table mat-table [dataSource]="collaterals">
+    
+    <ng-container matColumnDef="ID">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let element">{{ element.collateralId }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Quantity">
+      <th mat-header-cell *matHeaderCellDef>Quantity</th>
+      <td mat-cell *matCellDef="let element">{{ element.quantity }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Total Value">
+      <th mat-header-cell *matHeaderCellDef>Total Value</th>
+      <td mat-cell *matCellDef="let element">{{ element.basePrice*element.quantity }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Total Collateral Value">
+      <th mat-header-cell *matHeaderCellDef>Total Collateral Value</th>
+      <td mat-cell *matCellDef="let element">{{ element.pctToBase*element.basePrice*element.quantity/100 }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="collateralsColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: collateralsColumns;"
+      [routerLink]="['../', 'client-collateral', row.collateralId]"></tr>
+
+  </table>
+
 </div>
