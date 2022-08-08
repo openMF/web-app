@@ -26,6 +26,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
   interestRecalculationNthDayTypeData: any;
   interestRecalculationDayOfWeekTypeData: any;
   interestRecalculationOnDayTypeData: any;
+  delinquencyBucketData: any;
 
   constructor(private formBuilder: FormBuilder) {
     this.createLoanProductSettingsForm();
@@ -54,6 +55,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
     this.interestRecalculationNthDayTypeData.push({ 'id': -2, 'code': 'onDay', 'value': 'on day' });
     this.interestRecalculationDayOfWeekTypeData = this.loanProductsTemplate.interestRecalculationDayOfWeekTypeOptions;
     this.interestRecalculationOnDayTypeData = Array.from({ length: 28 }, (_, index) => index + 1);
+    this.delinquencyBucketData = this.loanProductsTemplate.delinquencyBucketOptions;
 
     this.loanProductSettingsForm.patchValue({
       'amortizationType': this.loanProductsTemplate.amortizationType.id,
@@ -82,7 +84,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'holdGuaranteeFunds': this.loanProductsTemplate.holdGuaranteeFunds,
       'multiDisburseLoan': this.loanProductsTemplate.multiDisburseLoan,
       'maxTrancheCount': this.loanProductsTemplate.maxTrancheCount,
-      'outstandingLoanBalance': this.loanProductsTemplate.outstandingLoanBalance
+      'outstandingLoanBalance': this.loanProductsTemplate.outstandingLoanBalance,
+      'delinquencyBucketId': this.loanProductsTemplate.delinquencyBucket.id
     });
 
     if (this.loanProductsTemplate.isInterestRecalculationEnabled) {
@@ -170,7 +173,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
         'repaymentEvery': [true],
         'graceOnPrincipalAndInterestPayment': [true],
         'graceOnArrearsAgeing': [true]
-      })
+      }),
+      'delinquencyBucketId': ['']
     });
   }
 

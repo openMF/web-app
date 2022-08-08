@@ -101,6 +101,17 @@ import { FixedDepositProductAndTemplateResolver } from './fixed-deposit-products
 import { CollateralResolver } from './collaterals/collateral.resolver';
 import { CollateralsResolver } from './collaterals/collaterals.resolver';
 import { CollateralTemplateResolver } from './collaterals/collaterals-template.resolver';
+import { ManageDelinquencyBucketsComponent } from './manage-delinquency-buckets/manage-delinquency-buckets.component';
+import { DelinquencyBucketComponent } from './manage-delinquency-buckets/delinquency-bucket/delinquency-bucket.component';
+import { DelinquencyRangeComponent } from './manage-delinquency-buckets/delinquency-range/delinquency-range.component';
+import { DelinquencyBucketComponentsResolver } from './manage-delinquency-buckets/delinquency-bucket/delinquency-bucket.component.resolver';
+import { DelinquencyRangeComponentsResolver } from './manage-delinquency-buckets/delinquency-range/delinquency-range.component.resolver';
+import { ViewRangeComponent } from './manage-delinquency-buckets/delinquency-range/view-range/view-range.component';
+import { EditRangeComponent } from './manage-delinquency-buckets/delinquency-range/edit-range/edit-range.component';
+import { CreateRangeComponent } from './manage-delinquency-buckets/delinquency-range/create-range/create-range.component';
+import { CreateBucketComponent } from './manage-delinquency-buckets/delinquency-bucket/create-bucket/create-bucket.component';
+import { EditBucketComponent } from './manage-delinquency-buckets/delinquency-bucket/edit-bucket/edit-bucket.component';
+import { ViewBucketComponent } from './manage-delinquency-buckets/delinquency-bucket/view-bucket/view-bucket.component';
 
 /** Products Routes */
 const routes: Routes = [
@@ -369,6 +380,104 @@ const routes: Routes = [
                       component: EditTaxGroupComponent,
                       resolve: {
                         taxGroup: EditTaxGroupResolver
+                      }
+                    },
+                  ]
+                }
+              ]
+            },
+          ]
+        },
+        {
+          path: 'delinquency-bucket-configurations',
+          data: { title:  extract('Manage Delinquency Bucket Configurations'), breadcrumb: 'Manage Delinquency Bucket Configurations' },
+          children: [
+            {
+              path: '',
+              component: ManageDelinquencyBucketsComponent,
+            },
+            {
+              path: 'ranges',
+              data: { title: extract('Manage Delinquency Ranges'), breadcrumb: 'Delinquency Ranges'},
+              children: [
+                {
+                  path: '',
+                  component: DelinquencyRangeComponent,
+                  resolve: {
+                    delinquencyRanges: DelinquencyRangeComponentsResolver
+                  }
+                },
+                {
+                  path: 'create',
+                  component: CreateRangeComponent,
+                  data: { title: extract('Create Delinquency Range'), breadcrumb: 'Create' }
+                },
+                {
+                  path: ':rangeId',
+                  data: { title: extract('View Delinquency Range'), routeParamBreadcrumb: 'id' },
+                  resolve: {
+                    delinquencyRange: DelinquencyRangeComponentsResolver
+                  },
+                  children: [
+                    {
+                      path: '',
+                      component: ViewRangeComponent,
+                      resolve: {
+                        delinquencyRange: DelinquencyRangeComponentsResolver
+                      },
+                    },
+                    {
+                      path: 'edit',
+                      data: { title: extract('Edit Delinquency Range'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                      component: EditRangeComponent,
+                      resolve: {
+                        delinquencyRange: DelinquencyRangeComponentsResolver
+                      }
+                    },
+                  ]
+                }
+              ]
+            },
+            {
+              path: 'buckets',
+              data: { title: extract('Manage Delinquency Bucket'), breadcrumb: 'Delinquency Buckets'},
+              children: [
+                {
+                  path: '',
+                  component: DelinquencyBucketComponent,
+                  resolve: {
+                    delinquencyBuckets: DelinquencyBucketComponentsResolver
+                  }
+                },
+                {
+                  path: 'create',
+                  component: CreateBucketComponent,
+                  data: { title: extract('Create Delinquency Bucket'), breadcrumb: 'Create' },
+                  resolve: {
+                    delinquencyRanges: DelinquencyRangeComponentsResolver
+                  }
+                },
+                {
+                  path: ':bucketId',
+                  data: { title: extract('View Delinquency Bucket'), routeParamBreadcrumb: 'id' },
+                  resolve: {
+                    delinquencyBucket: DelinquencyBucketComponentsResolver
+                  },
+                  children: [
+                    {
+                      path: '',
+                      component: ViewBucketComponent,
+                      resolve: {
+                        delinquencyBucket: DelinquencyBucketComponentsResolver
+                      },
+                    },
+                    {
+                      path: 'edit',
+                      data: { title: extract('Edit Delinquency Bucket'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                      component: EditBucketComponent,
+                      resolve: {
+                        delinquencyBucket: DelinquencyBucketComponentsResolver,
+                        delinquencyRanges: DelinquencyRangeComponentsResolver
                       }
                     },
                   ]
@@ -703,7 +812,9 @@ const routes: Routes = [
     FloatingRatesResolver,
     CollateralResolver,
     CollateralsResolver,
-    CollateralTemplateResolver
+    CollateralTemplateResolver,
+    DelinquencyRangeComponentsResolver,
+    DelinquencyBucketComponentsResolver
   ]
 })
 export class ProductsRoutingModule { }

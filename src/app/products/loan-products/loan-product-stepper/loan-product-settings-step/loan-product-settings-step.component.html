@@ -72,6 +72,15 @@
       <input type="number" matInput formControlName="graceOnInterestPayment">
     </mat-form-field>
 
+    <mat-form-field fxFlex="48%">
+      <mat-label>Delinquency Bucket</mat-label>
+      <mat-select formControlName="delinquencyBucketId">
+        <mat-option *ngFor="let delinquencyBucket of delinquencyBucketData" [value]="delinquencyBucket.id">
+          {{ delinquencyBucket.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
     <mat-divider fxFlex="98%"></mat-divider>
 
     <mat-form-field fxFlex="48%">

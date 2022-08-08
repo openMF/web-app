@@ -1,0 +1,43 @@
+<div class="container">
+
+  <mat-card>
+
+    <div fxLayout="row" fxLayout.lt-md="column">
+
+      <div fxFlex="50%">
+
+        <mat-nav-list>
+
+          <mat-list-item [routerLink]="['ranges']" *mifosxHasPermission="'READ_DELINQUENCY_RANGE'">
+            <mat-icon matListIcon>
+              <fa-icon icon="building" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Manage Delinquency Ranges</h4>
+            <p matLine>Define delinquency day ranges</p>
+          </mat-list-item>
+
+        </mat-nav-list>
+
+      </div>
+
+      <div fxFlex="50%">
+
+        <mat-nav-list>
+
+          <mat-list-item [routerLink]="['buckets']" *mifosxHasPermission="'READ_DELINQUENCY_BUCKET'">
+            <mat-icon matListIcon>
+              <fa-icon icon="building" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Manage Delinquency Buckets</h4>
+            <p matLine>Define delinquency bucket as set of ranges</p>
+          </mat-list-item>
+
+        </mat-nav-list>
+
+      </div>
+
+    </div>
+
+  </mat-card>
+
+</div>

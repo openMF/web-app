@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class RepaymentScheduleTabComponent implements OnInit {
 
+  loanDetails: any;
   /** Loan Repayment Schedule Details Data */
   repaymentScheduleDetails: any;
   /** Stores if there is any waived amount */
@@ -21,6 +22,7 @@ export class RepaymentScheduleTabComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute) {
     this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
+      this.loanDetails = data.loanDetailsData;
       this.repaymentScheduleDetails = data.loanDetailsData.repaymentSchedule;
     });
   }

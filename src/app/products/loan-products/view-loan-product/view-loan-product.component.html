@@ -506,6 +506,8 @@
           <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.graceOnPrincipalAndInterestPayment ? 'Yes' : 'No' }}</span>
           <span fxFlex="40%">Number of days a loan may be overdue before moving into arrears:</span>
           <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.graceOnArrearsAgeing ? 'Yes' : 'No' }}</span>
+          <span fxFlex="40%">Delinquency Bucket:</span>
+          <span fxFlex="60%">{{ loanProduct.delinquencyBucket.id ? 'Yes' : 'No' }}</span>
         </div>
 
         <div fxFlexFill *ngIf="loanProduct.charges.length" fxLayout="row wrap" fxLayout.lt-md="column">

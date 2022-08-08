@@ -97,6 +97,15 @@ import { CollateralsComponent } from './collaterals/collaterals.component';
 import { CreateCollateralComponent } from './collaterals/create-collateral/create-collateral.component';
 import { EditCollateralComponent } from './collaterals/edit-collateral/edit-collateral.component';
 import { ViewCollateralComponent } from './collaterals/view-collateral/view-collateral.component';
+import { ManageDelinquencyBucketsComponent } from './manage-delinquency-buckets/manage-delinquency-buckets.component';
+import { DelinquencyBucketComponent } from './manage-delinquency-buckets/delinquency-bucket/delinquency-bucket.component';
+import { DelinquencyRangeComponent } from './manage-delinquency-buckets/delinquency-range/delinquency-range.component';
+import { CreateRangeComponent } from './manage-delinquency-buckets/delinquency-range/create-range/create-range.component';
+import { ViewRangeComponent } from './manage-delinquency-buckets/delinquency-range/view-range/view-range.component';
+import { EditRangeComponent } from './manage-delinquency-buckets/delinquency-range/edit-range/edit-range.component';
+import { ViewBucketComponent } from './manage-delinquency-buckets/delinquency-bucket/view-bucket/view-bucket.component';
+import { CreateBucketComponent } from './manage-delinquency-buckets/delinquency-bucket/create-bucket/create-bucket.component';
+import { EditBucketComponent } from './manage-delinquency-buckets/delinquency-bucket/edit-bucket/edit-bucket.component';
 
 /**
  * Products Module
@@ -201,7 +210,16 @@ import { ViewCollateralComponent } from './collaterals/view-collateral/view-coll
     CollateralsComponent,
     CreateCollateralComponent,
     EditCollateralComponent,
-    ViewCollateralComponent
+    ViewCollateralComponent,
+    ManageDelinquencyBucketsComponent,
+    DelinquencyBucketComponent,
+    DelinquencyRangeComponent,
+    CreateRangeComponent,
+    ViewRangeComponent,
+    EditRangeComponent,
+    ViewBucketComponent,
+    CreateBucketComponent,
+    EditBucketComponent
   ],
   providers: [ ]
 })
