@@ -40,14 +40,14 @@
 
   <mat-form-field fxFlex="31%" (click)="submittedOnDateFromPicker.open()">
     <mat-label>Submitted on Date From</mat-label>
-    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDateFromPicker" [formControl]="submittedOnDateFrom">
+    <input matInput [max]="submittedOnDateTo.value" [matDatepicker]="submittedOnDateFromPicker" [formControl]="submittedOnDateFrom">
     <mat-datepicker-toggle matSuffix [for]="submittedOnDateFromPicker"></mat-datepicker-toggle>
     <mat-datepicker #submittedOnDateFromPicker></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field fxFlex="31%" (click)="submittedOnDateToPicker.open()">
     <mat-label>Submitted on Date To</mat-label>
-    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDateToPicker" [formControl]="submittedOnDateTo">
+    <input matInput [min]="submittedOnDateFrom.value"  [matDatepicker]="submittedOnDateToPicker" [formControl]="submittedOnDateTo">
     <mat-datepicker-toggle matSuffix [for]="submittedOnDateToPicker"></mat-datepicker-toggle>
     <mat-datepicker #submittedOnDateToPicker></mat-datepicker>
   </mat-form-field>
