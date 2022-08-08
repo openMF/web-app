@@ -6,6 +6,11 @@ export class LoansAccountButtonConfiguration {
         taskPermissionName?: string,
     }[];
 
+    optionPaymentArray: {
+      name: string,
+      taskPermissionName?: string,
+    }[];
+
     buttonsArray: {
         name: string,
         icon: string,
@@ -24,6 +29,10 @@ export class LoansAccountButtonConfiguration {
     get options() {
         return this.optionArray;
     }
+
+    get optionsPayment() {
+      return this.optionPaymentArray;
+  }
 
     setButtons(status: string) {
         switch (status) {
@@ -48,7 +57,7 @@ export class LoansAccountButtonConfiguration {
                         name: 'Undo Disbursal',
                         icon: 'fa fa-undo',
                         taskPermissionName: 'DISBURSALUNDO_LOAN',
-                    },
+                    }
                 ];
                 break;
             case 'Submitted and pending approval':
@@ -101,6 +110,11 @@ export class LoansAccountButtonConfiguration {
                         icon: 'fa fa-exchange',
                         taskPermissionName: 'CREATE_ACCOUNTTRANSFER',
                     },
+                    {
+                        name: 'Credit Balance Refund',
+                        icon: 'fa fa-dollar',
+                        taskPermissionName: 'CREATE_CREDIT_BALANCE_REFUND',
+                    }
                 ];
                 break;
             case 'Closed (written off)':
@@ -110,6 +124,25 @@ export class LoansAccountButtonConfiguration {
                         icon: 'fa fa-briefcase',
                         taskPermissionName: 'RECOVERYPAYMENT_LOAN',
                     },
+                ];
+                break;
+            case 'Closed (obligations met)':
+                this.buttonsArray = [
+                  {
+                    name: 'Goodwill Credit',
+                    icon: 'fa fa-dollar',
+                    taskPermissionName: 'CREATE_GOODWILL_TRANSACTION',
+                  },
+                  {
+                      name: 'Payout Refund',
+                      icon: 'fa fa-dollar',
+                      taskPermissionName: 'CREATE_PAYOUT_REFUND',
+                  },
+                  {
+                      name: 'Merchant Issued Refund',
+                      icon: 'fa fa-dollar',
+                      taskPermissionName: 'CREATE_MERCHANT_ISSUED_REFUND',
+                  }
                 ];
                 break;
             default:
@@ -158,6 +191,20 @@ export class LoansAccountButtonConfiguration {
                         taskPermissionName: 'RECOVERGUARANTEES_LOAN',
                     },
                 ];
+                this.optionPaymentArray = [
+                    {
+                        name: 'Goodwill Credit',
+                        taskPermissionName: 'CREATE_GOODWILL_TRANSACTION',
+                    },
+                    {
+                        name: 'Payout Refund',
+                        taskPermissionName: 'CREATE_PAYOUT_REFUND',
+                    },
+                    {
+                        name: 'Merchant Issued Refund',
+                        taskPermissionName: 'CREATE_MERCHANT_ISSUED_REFUND',
+                    }
+                ];
                 break;
             case 'Submitted and pending approval':
                 this.optionArray = [
@@ -186,6 +233,7 @@ export class LoansAccountButtonConfiguration {
                         taskPermissionName: 'READ_LOAN',
                     },
                 ];
+                this.optionPaymentArray = [];
                 break;
             case 'Approved':
                 this.optionArray = [
@@ -206,9 +254,11 @@ export class LoansAccountButtonConfiguration {
                         taskPermissionName: 'READ_LOAN',
                     },
                 ];
+                this.optionPaymentArray = [];
                 break;
             default:
                 this.optionArray = [];
+                this.optionPaymentArray = [];
         }
     }
 

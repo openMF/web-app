@@ -111,7 +111,8 @@ export class MakeRepaymentComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.loanService.submitLoanActionButton(this.loanId, data, 'repayment')
+    const command = this.dataObject.type.code.split('.')[1];
+    this.loanService.submitLoanActionButton(this.loanId, data, command)
       .subscribe((response: any) => {
         this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });
