@@ -125,7 +125,7 @@ export class EditLoansAccountComponent implements OnInit {
       locale,
       loanType
     };
-
+    delete loansAccountData.isValid;
     if (loansAccountData.syncRepaymentsWithMeeting) {
       loansAccountData.calendarId = this.loansAccountProductTemplate.calendarOptions[0].id;
       delete loansAccountData.syncRepaymentsWithMeeting;
@@ -141,7 +141,6 @@ export class EditLoansAccountComponent implements OnInit {
     if (!(loansAccountData.isFloatingInterestRate === false)) {
       delete loansAccountData.isFloatingInterestRate;
     }
-
     this.loansService.updateLoansAccount(this.loanId, loansAccountData).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
