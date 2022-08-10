@@ -320,7 +320,7 @@
         <mat-label>Maximum allowed outstanding balance</mat-label>
         <input matInput required formControlName="loanTermFrequency">
       </mat-form-field>
-      <span fxFlex>
+      <span fxFlex *ngIf="!loansAccountProductTemplate?.product.disallowExpectedDisbursements">
         <button type="button" mat-icon-button color="primary" (click)="addDisbursementDataEntry(disbursementData)">
           <fa-icon icon="plus-circle" size="lg"></fa-icon>
         </button>
