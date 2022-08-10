@@ -95,8 +95,7 @@ export class CreateLoansAccountComponent implements OnInit {
   get loansAccountFormValid() {
     return (
       this.loansAccountDetailsForm.valid &&
-      this.loansAccountTermsForm.valid &&
-      this.loansAccountChargesStep.loansAccountCharges.isValid
+      this.loansAccountTermsForm.valid
     );
   }
 
