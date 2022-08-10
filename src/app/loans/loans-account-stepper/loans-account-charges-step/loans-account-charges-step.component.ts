@@ -69,7 +69,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    if ( this.loansAccountTemplate.charges) {
+    if (this.loansAccountTemplate.charges) {
       this.chargesDataSource = this.loansAccountTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
     }
   }
@@ -231,7 +231,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
 
         this.totalCollateralValue += collateralData.type.pctToBase * collateralData.type.basePrice * collateralData.value / 100;
         this.collateralDataSource = this.collateralDataSource.concat(collateralData);
-        this.collateralOptions = this.collateralOptions.filter( (user: any) => user.collateralId !== response.data.value.collateral.collateralId);
+        this.collateralOptions = this.collateralOptions.filter((user: any) => user.collateralId !== response.data.value.collateral.collateralId);
         if (this.loanPrincipal < this.totalCollateralValue) {
           this.isCollateralSufficient = true;
         } else {
@@ -270,8 +270,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   get loansAccountCharges() {
     return {
       charges: this.chargesDataSource,
-      collateral: this.collateralDataSource,
-      isValid: this.isCollateralSufficient
+      collateral: this.collateralDataSource
     };
   }
 
