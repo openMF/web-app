@@ -1,9 +1,5 @@
 <div class="container">
 
-  <ng-container *ngIf="loanDetails.delinquencyRange">
-    <h3>Loan Account Classification : {{loanDetails?.delinquencyRange.classification}}</h3>
-  </ng-container>
-
   <table mat-table [dataSource]="repaymentScheduleDetails.periods">
 
     <ng-container matColumnDef="number">
