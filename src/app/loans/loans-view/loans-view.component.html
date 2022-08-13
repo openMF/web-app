@@ -23,6 +23,9 @@
                 <br />
                 <span *ngIf="loanDetailsData.clientName"> Client Name: {{loanDetailsData.clientName}} </span> <br />
                 <span *ngIf="loanDetailsData.group"> Group Name: {{loanDetailsData.group.name}} </span>
+                <span *ngIf="loanDetailsData.delinquencyRange">
+                  Loan Account Classification : {{loanDetailsData?.delinquencyRange.classification}}
+                </span>
               </h3>
             </div>
 

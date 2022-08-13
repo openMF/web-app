@@ -74,7 +74,8 @@ export class TransactionsTabComponent implements OnInit {
    */
   showTransactions(transactionsData: any) {
     if (transactionsData.type.id === 2 || transactionsData.type.id === 4 || transactionsData.type.id === 1
-      || transactionsData.type.id === 21 || transactionsData.type.id === 22 || transactionsData.type.id === 23) {
+      || transactionsData.type.id === 20 || transactionsData.type.id === 21 || transactionsData.type.id === 22
+      || transactionsData.type.id === 23) {
       this.router.navigate([transactionsData.id], { relativeTo: this.route });
     }
   }
