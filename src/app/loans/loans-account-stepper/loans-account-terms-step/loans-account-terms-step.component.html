@@ -318,7 +318,7 @@
       <h4 fxFlex="98%" class="mat-h4">Loan Tranche Details</h4>
       <mat-form-field fxFlex="48%">
         <mat-label>Maximum allowed outstanding balance</mat-label>
-        <input matInput required formControlName="loanTermFrequency">
+        <input matInput required formControlName="maxOutstandingLoanBalance">
       </mat-form-field>
       <span fxFlex *ngIf="!loansAccountProductTemplate?.product.disallowExpectedDisbursements">
         <button type="button" mat-icon-button color="primary" (click)="addDisbursementDataEntry(disbursementData)">
