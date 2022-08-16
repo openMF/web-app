@@ -36,7 +36,8 @@
       <ng-template matStepLabel>TERMS</ng-template>
 
       <mifosx-loans-account-terms-step [loansAccountProductTemplate]="loansAccountProductTemplate"
-      [loansAccountTemplate] = "loansAccountTemplate" [multiDisburseLoan] = "multiDisburseLoan">
+      [loansAccountTemplate] = "loansAccountTemplate" [multiDisburseLoan] = "multiDisburseLoan" [collateralOptions]="collateralOptions"
+      [loansAccountFormValid]="loansAccountFormValid" [loanPrincipal]="loanPrincipal">
       </mifosx-loans-account-terms-step>
 
     </mat-step>
@@ -46,8 +47,8 @@
       <ng-template matStepLabel>CHARGES</ng-template>
 
       <mifosx-loans-account-charges-step [loansAccountProductTemplate]="loansAccountProductTemplate"
-        [loansAccountTemplate]="loansAccountTemplate" [collateralOptions]="collateralOptions"
-        [loansAccountFormValid]="loansAccountFormValid" [loanPrincipal]="loanPrincipal">
+        [loansAccountTemplate]="loansAccountTemplate"
+        [loansAccountFormValid]="loansAccountFormValid">
       </mifosx-loans-account-charges-step>
 
     </mat-step>

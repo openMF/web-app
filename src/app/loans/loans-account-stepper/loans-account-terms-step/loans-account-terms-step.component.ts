@@ -1,7 +1,10 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { LoansAccountAddCollateralDialogComponent } from 'app/loans/custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
 import { SettingsService } from 'app/settings/settings.service';
+import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 /**
  * Create Loans Account Terms Step
@@ -19,6 +22,12 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   @Input() loansAccountTemplate: any;
   /** Is Multi Disburse Loan  */
   @Input() multiDisburseLoan: any;
+  // @Input() loansAccountFormValid: LoansAccountFormValid
+  @Input() loansAccountFormValid: boolean;
+  // @Input collateralOptions: Collateral Options
+  @Input() collateralOptions: any;
+  // @Input loanPrincipal: Loan Principle
+  @Input() loanPrincipal: any;
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -43,13 +52,25 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   /** Client Active Loan Data */
   clientActiveLoanData: any;
 
+  /** Check if value of collateral added  is more than principal amount */
+  isCollateralSufficient = false;
+  /** Total value of all collateral added to a loan */
+  totalCollateralValue: any = 0;
+  /** Collateral Data Source */
+  collateralDataSource: {}[] = [];
+  /** Columns to be displayed in collateral table. */
+  loanCollateralDisplayedColumns: string[] = ['type', 'value', 'totalValue', 'totalCollateralValue', 'action'];
+  /** Component is pristine if there has been no changes by user interaction */
+  pristine = true;
+
   /**
    * Create Loans Account Terms Form
    * @param formBuilder FormBuilder
    * @param {SettingsService} settingsService SettingsService
    */
   constructor(private formBuilder: FormBuilder,
-      private settingsService: SettingsService) {
+      private settingsService: SettingsService,
+      public dialog: MatDialog) {
     this.createloansAccountTermsForm();
   }
   /**
@@ -190,6 +211,56 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   }
 
   /**
+   * Add a Collateral to the loan
+   */
+    addCollateral() {
+    const addCollateralDialogRef = this.dialog.open(LoansAccountAddCollateralDialogComponent, {
+      data: { collateralOptions: this.collateralOptions }
+    });
+    console.log(this.collateralOptions);
+    addCollateralDialogRef.afterClosed().subscribe((response: any) => {
+      console.log(this.loanPrincipal);
+      if (response.data) {
+        const collateralData = {
+          type: response.data.value.collateral,
+          value: response.data.value.quantity,
+        };
+        this.totalCollateralValue += collateralData.type.pctToBase * collateralData.type.basePrice * collateralData.value / 100;
+        this.collateralDataSource = this.collateralDataSource.concat(collateralData);
+        this.collateralOptions = this.collateralOptions.filter((user: any) => user.collateralId !== response.data.value.collateral.collateralId);
+        if (this.loanPrincipal < this.totalCollateralValue) {
+          this.isCollateralSufficient = true;
+        } else {
+          this.isCollateralSufficient = false;
+        }
+      }
+    });
+  }
+  /**
+   * Delete a added collateral from loan
+   * @param id ID od the collateral to be deleted
+   */
+  deleteCollateral(id: any) {
+    const deleteCollateralDialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { deleteContext: `collateral` }
+    });
+    deleteCollateralDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.delete) {
+        const removed: any = this.collateralDataSource.splice(id, 1);
+        this.collateralOptions = this.collateralOptions.concat(removed[0].type);
+        this.totalCollateralValue -= removed[0].type.pctToBase * removed[0].type.basePrice * removed[0].value / 100;
+        this.collateralDataSource = this.collateralDataSource.concat([]);
+        this.pristine = false;
+        if (this.loanPrincipal < this.totalCollateralValue) {
+          this.isCollateralSufficient = true;
+        } else {
+          this.isCollateralSufficient = false;
+        }
+      }
+    });
+  }
+
+  /**
    * Sets all select dropdown options.
    */
   setOptions() {
@@ -208,6 +279,12 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
    */
   get loansAccountTerms() {
     return this.loansAccountTermsForm.value;
+  }
+
+  get loanCollateral() {
+    return {
+      collateral: this.collateralDataSource
+    };
   }
 
 }
