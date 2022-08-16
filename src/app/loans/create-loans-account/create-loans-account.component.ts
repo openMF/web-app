@@ -110,6 +110,7 @@ export class CreateLoansAccountComponent implements OnInit {
       ...this.loansAccountDetailsStep.loansAccountDetails,
       ...this.loansAccountTermsStep.loansAccountTerms,
       ...this.loansAccountChargesStep.loansAccountCharges,
+      ...this.loansAccountTermsStep.loanCollateral
     };
   }
 
