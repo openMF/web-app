@@ -53,8 +53,8 @@ export class GeneralTabComponent implements OnInit {
         'property': 'Principal',
         'original': this.loanDetails.summary.principalDisbursed,
         'paid': this.loanDetails.summary.principalPaid,
-        'waived': this.loanDetails.summary.principalWrittenOff,
-        'writtenOff': this.loanDetails.summary.principalOutstanding,
+        'waived': this.loanDetails.summary.principalWaived || 0,
+        'writtenOff': this.loanDetails.summary.principalWrittenOff,
         'outstanding': this.loanDetails.summary.principalOutstanding,
         'overdue': this.loanDetails.summary.principalOverdue,
 
