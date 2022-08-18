@@ -93,8 +93,10 @@ export class EditBucketComponent implements OnInit {
     const rangeDialogRef = this.dialog.open(FormDialogComponent, { data });
     rangeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        const item = response.data.value;
-        item.id = item.rangeId;
+        const itemSelected = response.data.value;
+        const item = this.delinquencyRangesData.filter((range: any) => {
+          return (range.id === itemSelected.rangeId);
+        });
         this.rangesDataSource = this.rangesDataSource.concat(item);
         this.delinquencyRangesIds.push(item.id);
         this.dataWasChanged = true;
