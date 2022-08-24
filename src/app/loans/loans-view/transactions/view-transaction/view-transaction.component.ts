@@ -44,7 +44,7 @@ export class ViewTransactionComponent {
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { loansAccountTransaction: any }) => {
       this.transactionData = data.loansAccountTransaction;
-      this.allowEdition = !(this.transactionData.type.id === 20 || this.transactionData.type.id === 21 || this.transactionData.type.id === 22
+      this.allowEdition = !this.transactionData.manuallyReversed && !(this.transactionData.type.id === 20 || this.transactionData.type.id === 21 || this.transactionData.type.id === 22
         || this.transactionData.type.id === 23);
     });
   }
