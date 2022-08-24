@@ -5,6 +5,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - BUILD_ENVIRONMENT_OPTIONS="--configuration production"
+        - BUILDER_IMAGE=node:16-alpine
+        - NGINX_IMAGE=nginx:1.19.3
+        - NPM_REGISTRY_URL=https://registry.npmjs.org/
+        - PUPPETEER_DOWNLOAD_HOST_ARG=https://storage.googleapis.com
+        - PUPPETEER_CHROMIUM_REVISION_ARG=1011831
     ports:
       - '4200:80'
     environment:
