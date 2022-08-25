@@ -45,6 +45,8 @@ import { ViewRecieptComponent } from './savings-account-view/transactions/view-r
 import { ExportTransactionsComponent } from './savings-account-view/transactions-tab/export-transactions/export-transactions.component';
 import { EditTransactionComponent } from './savings-account-view/transactions/edit-transaction/edit-transaction.component';
 import { ApplyAnnualFeesSavingsAccountComponent } from './saving-account-actions/apply-annual-fees-savings-account/apply-annual-fees-savings-account.component';
+import { GsimAccountComponent } from './gsim-account/gsim-account.component';
+import { CreateGsimAccountComponent } from './gsim-account/create-gsim-account/create-gsim-account.component';
 
 
 /**
@@ -96,7 +98,9 @@ import { ApplyAnnualFeesSavingsAccountComponent } from './saving-account-actions
     ViewRecieptComponent,
     ExportTransactionsComponent,
     EditTransactionComponent,
-    ApplyAnnualFeesSavingsAccountComponent
+    ApplyAnnualFeesSavingsAccountComponent,
+    GsimAccountComponent,
+    CreateGsimAccountComponent
   ],
   providers: [ ]
 })

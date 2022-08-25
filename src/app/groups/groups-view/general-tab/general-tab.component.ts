@@ -18,6 +18,10 @@ export class GeneralTabComponent {
   loanAccounts: any;
   /** Group's savings accounts data */
   savingAccounts: any;
+  /** GSIM Accounts */
+  gsimAccounts: any;
+  /** GLIM Accounts */
+  glimAccounts: any;
   /** Group Summary */
   groupSummary: any;
   /** Group's Client Members */
@@ -32,6 +36,10 @@ export class GeneralTabComponent {
   openSavingsColumns: string[] = ['Account No', 'Saving Account', 'Last Active', 'Balance', 'Actions'];
   /** Columns to be displayed for closed accounts table */
   closedSavingsColumns: string[] = ['Account No', 'Saving Account', 'Closed Date'];
+  /** Columns to be displayed for GSIM Accounts Table */
+  gsimAccountsColumns: string[] = ['GSIM Id', 'Account Number', 'Product', 'Balance', 'Status'];
+  /** Columns to be displayed for GLIM Accounts Table */
+  glimAccountsColumns: string[] = ['GLIM Id', 'Account Number', 'Product', 'Original Loan', 'Status'];
   /** Boolean for toggling loan accounts table */
   showClosedLoanAccounts = false;
   /** Boolean for toggling savings accounts table */
@@ -42,7 +50,9 @@ export class GeneralTabComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { groupAccountsData: any, groupClientMembers: any, groupSummary: any }) => {
+    this.route.data.subscribe((data: { groupAccountsData: any, groupClientMembers: any, groupSummary: any, glimData: any, gsimData: any }) => {
+      this.glimAccounts = data.glimData;
+      this.gsimAccounts = data.gsimData;
       this.groupAccountData = data.groupAccountsData;
       this.savingAccounts = data.groupAccountsData.savingsAccounts;
       this.loanAccounts = data.groupAccountsData.loanAccounts;

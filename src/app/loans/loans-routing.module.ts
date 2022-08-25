@@ -29,6 +29,8 @@ import { ViewTransactionComponent } from './loans-view/transactions/view-transac
 import { EditTransactionComponent } from './loans-view/transactions/edit-transaction/edit-transaction.component';
 import { ViewRecieptComponent } from './loans-view/transactions/view-reciept/view-reciept.component';
 import { ExportTransactionsComponent } from './loans-view/transactions/export-transactions/export-transactions.component';
+import { GlimAccountComponent } from './glim-account/glim-account.component';
+import { CreateGlimAccountComponent } from './glim-account/create-glim-account/create-glim-account.component';
 
 /** Custom Resolvers */
 import { LoanDetailsResolver } from './common-resolvers/loan-details.resolver';
@@ -43,6 +45,12 @@ import { LoansAccountChargeResolver } from './common-resolvers/loans-account-cha
 import { LoansAccountTransactionResolver } from './common-resolvers/loans-account-transaction.resolver';
 import { LoansTransactionRecieptResolver } from './common-resolvers/loans-transaction-reciept.resolver';
 import { LoansAccountTransactionTemplateResolver } from './common-resolvers/loans-account-transaction-template.resolver';
+import { SavingsAccountViewResolver } from 'app/savings/common-resolvers/savings-account-view.resolver';
+import { GroupAccountsResolver } from 'app/groups/common-resolvers/group-account.resolver';
+import { GLIMViewResolver } from './glim-account/glim-account-view.resolver';
+import { GSIMAccountsResolver } from 'app/groups/common-resolvers/gsim-account-resolver';
+import { GLIMLoanTemplateResolver } from './common-resolvers/glim-loan-template.resolver';
+import { GroupViewResolver } from 'app/groups/common-resolvers/group-view.resolver';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -249,6 +257,30 @@ const routes: Routes = [
           }
         },
       ]
+    },
+    {
+      path: 'glim-account',
+      children: [
+        {
+          path: 'create',
+          data: { title: extract('Create GLIM Application'), breadcrumb: 'Create GLIM Application'},
+          component: CreateGlimAccountComponent,
+          resolve: {
+            loansAccountTemplate: GLIMLoanTemplateResolver,
+            gsimData: GSIMAccountsResolver,
+            groupsData: GroupViewResolver,
+          },
+        },
+        {
+          path: ':glimId',
+          data: { title: extract('GSIM Account View'), routeParamBreadcrumb: 'savingAccountId'},
+          component: GlimAccountComponent,
+          resolve: {
+            glimData: GLIMViewResolver,
+            groupsData: GroupAccountsResolver
+          },
+        }
+      ]
     }]
   },
 ];
@@ -268,7 +300,12 @@ const routes: Routes = [
     LoansAccountChargeResolver,
     LoansAccountTransactionResolver,
     LoansAccountTransactionTemplateResolver,
-    LoansTransactionRecieptResolver
+    LoansTransactionRecieptResolver,
+    SavingsAccountViewResolver,
+    GroupAccountsResolver,
+    GLIMViewResolver,
+    GSIMAccountsResolver,
+    GLIMLoanTemplateResolver
   ]
 })
 

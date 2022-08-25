@@ -1,0 +1,66 @@
+<div class="tab-container mat-typography">
+
+    <div style="margin-top: 5px;">
+  
+      <h2> GSIM Account Overview</h2>
+  
+      <table mat-table [dataSource]="dataSource">
+  
+        <ng-container matColumnDef="clientDetails">
+          <th mat-header-cell *matHeaderCellDef> Client Details </th>
+          <td mat-cell *matCellDef="let element">
+            {{element.displayName}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="savingsAccount">
+          <th mat-header-cell *matHeaderCellDef> Saving Account </th>
+          <td mat-cell *matCellDef="let element"><i class="fa fa-stop" [ngClass]="element.status.code|statusLookup" [matTooltip]="element.status.value"></i> {{element.accountNo}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="products">
+          <th mat-header-cell *matHeaderCellDef> Products </th>
+          <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="balance">
+          <th mat-header-cell *matHeaderCellDef> Balance </th>
+          <td mat-cell *matCellDef="let element" >  </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="Actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let element">
+            <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary"
+              (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Deposit']">
+              <i class="fa fa-arrow-up" matTooltip="Deposit"></i>
+            </button>
+            <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary"
+              (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Withdrawal']">
+              <i class="fa fa-arrow-down" matTooltip="Withdraw"></i>
+            </button>
+            <button *ngIf="element.status.submittedAndPendingApproval" class="account-action-button" mat-raised-button color="primary"
+              (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Approve']">
+              <i class="fa fa-check" matTooltip="Approve"></i>
+            </button>
+            <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
+              class="account-action-button" mat-raised-button color="primary"
+              (click)="routeEdit($event)" [routerLink]="['../../../','savings-accounts', element.id, 'actions', 'Undo Approval']">
+              <i class="fa fa-undo" matTooltip="Undo Approval"></i>
+            </button>
+            <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
+              class="account-action-button" mat-raised-button color="primary"
+              (click)="routeEdit($event)" [routerLink]="['../../', element.id, 'actions', 'Activate']">
+              <i class="fa fa-check-circle" matTooltip="Activate"></i>
+            </button>
+          </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row  [routerLink]="['../../', row.id, 'transactions']" *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+      </table>
+  
+      <mat-paginator [pageSizeOptions]="[10, 20, 25]" showFirstLastButtons></mat-paginator>
+  
+  </div>
+  

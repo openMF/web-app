@@ -312,4 +312,20 @@ export class GroupsService {
     return this.http.get('/groups/template', { params: httpParams });
   }
 
+  /**
+   * @param groupId Group Id of group to get data for.
+   * @returns {Observable<any>} Group GLIM Accounts data.
+   */
+   getGLIMAccountsData(groupId: string): Observable<any> {
+    return this.http.get(`/groups/${groupId}/glimaccounts`);
+  }
+
+  /**
+   * @param groupId Group Id of group to get data for.
+   * @returns {Observable<any>} Group GSIM Accounts data.
+   */
+   getGSIMAccountsData(groupId: string): Observable<any> {
+    return this.http.get(`/groups/${groupId}/gsimaccounts`);
+  }
+
 }

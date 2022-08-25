@@ -19,6 +19,8 @@ import { ViewChargeComponent } from './savings-account-view/view-charge/view-cha
 import { ViewRecieptComponent } from './savings-account-view/transactions/view-reciept/view-reciept.component';
 import { ExportTransactionsComponent } from './savings-account-view/transactions-tab/export-transactions/export-transactions.component';
 import { EditTransactionComponent } from './savings-account-view/transactions/edit-transaction/edit-transaction.component';
+import { CreateGsimAccountComponent } from './gsim-account/create-gsim-account/create-gsim-account.component';
+import { GsimAccountComponent } from './gsim-account/gsim-account.component';
 
 /** Custom Resolvers */
 import { SavingsAccountViewResolver } from './common-resolvers/savings-account-view.resolver';
@@ -31,7 +33,10 @@ import { SavingsAccountChargeResolver } from './common-resolvers/savings-account
 import { SavingsAccountActionsResolver } from './common-resolvers/savings-account-actions.resolver';
 import { SavingsTransactionRecieptResolver } from './common-resolvers/savings-transaction-reciept.resolver';
 import { SavingsAccountTransactionTemplateResolver } from './common-resolvers/savings-account-transaction-template.resolver';
-
+import { GSIMAccountsResolver } from 'app/groups/common-resolvers/gsim-account-resolver';
+import { GroupAccountsResolver } from 'app/groups/common-resolvers/group-account.resolver';
+import { GSIMViewResolver } from './gsim-account/gsim-account.resolver';
+import { GroupViewResolver } from 'app/groups/common-resolvers/group-view.resolver';
 /** Savings Routes */
 const routes: Routes = [
   {
@@ -184,6 +189,35 @@ const routes: Routes = [
             loadChildren: () => import('../account-transfers/account-transfers.module').then(m => m.AccountTransfersModule)
           }
         ]
+      },
+      {
+        path: 'gsim-account',
+        children: [
+          {
+            path: 'create',
+            data: { title: extract('Create GSIM Application'), breadcrumb: 'Create GSIM Application'},
+            component: CreateGsimAccountComponent,
+            resolve: {
+              groupsData: GroupViewResolver,
+              savingsAccountTemplate: SavingsAccountTemplateResolver
+            },
+          },
+          {
+            path: ':savingAccountId',
+            data: { title: extract('GSIM Account View'), routeParamBreadcrumb: 'savingAccountId'},
+            children: [
+              {
+                path: '',
+                component: GsimAccountComponent,
+                resolve: {
+                  gsimData: GSIMViewResolver,
+                  savingAccountData: SavingsAccountViewResolver,
+                  groupsData: GroupAccountsResolver
+                },
+              },
+            ]
+          },
+        ]
       }
     ]
   },
@@ -201,6 +235,9 @@ const routes: Routes = [
               SavingsAccountChargeResolver,
               SavingsAccountActionsResolver,
               SavingsTransactionRecieptResolver,
-              SavingsAccountTransactionTemplateResolver]
+              SavingsAccountTransactionTemplateResolver,
+              GSIMAccountsResolver,
+              GroupAccountsResolver,
+              GSIMViewResolver]
 })
 export class SavingsRoutingModule {}
