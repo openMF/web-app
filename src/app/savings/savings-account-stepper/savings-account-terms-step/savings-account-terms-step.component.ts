@@ -51,7 +51,20 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
         'currencyCode': this.savingsAccountProductTemplate.currency.code,
         'decimal': this.savingsAccountProductTemplate.currency.decimalPlaces,
         'currencyMultiple': this.savingsAccountProductTemplate.currency.inMultiplesOf,
-        'minBalanceForInterestCalculation': this.savingsAccountProductTemplate.minBalanceForInterestCalculation
+        'minBalanceForInterestCalculation': this.savingsAccountProductTemplate.minBalanceForInterestCalculation,
+        'nominalAnnualInterestRate': this.savingsAccountProductTemplate.nominalAnnualInterestRate,
+        'interestCompoundingPeriodType': this.savingsAccountProductTemplate.interestCompoundingPeriodType.id,
+        'interestPostingPeriodType': this.savingsAccountProductTemplate.interestPostingPeriodType.id,
+        'interestCalculationType': this.savingsAccountProductTemplate.interestCalculationType.id,
+        'interestCalculationDaysInYearType': this.savingsAccountProductTemplate.interestCalculationDaysInYearType.id,
+        'minRequiredOpeningBalance': this.savingsAccountProductTemplate.minRequiredOpeningBalance,
+        'allowOverdraft': this.savingsAccountProductTemplate.allowOverdraft,
+        'overdraftLimit': this.savingsAccountProductTemplate.overdraftLimit,
+        'enforceMinRequiredBalance': this.savingsAccountProductTemplate.enforceMinRequiredBalance,
+        'minOverdraftForInterestCalculation': this.savingsAccountProductTemplate.minOverdraftForInterestCalculation,
+        'nominalAnnualInterestRateOverdraft': this.savingsAccountProductTemplate.nominalAnnualInterestRateOverdraft,
+        'minRequiredBalance': this.savingsAccountProductTemplate.minRequiredBalance,
+        'withdrawalFeeForTransfers': this.savingsAccountProductTemplate.withdrawalFeeForTransfers
       });
       this.setOptions();
     }

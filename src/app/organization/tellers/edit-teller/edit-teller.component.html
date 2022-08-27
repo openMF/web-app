@@ -17,7 +17,7 @@
             <mat-error *ngIf="tellerForm.controls.name.hasError('pattern')">
               Teller Name <strong>cannot</strong> begin with a special character or number
             </mat-error>
-          </mat-form-field>		
+          </mat-form-field>
 
           <mat-form-field>
             <mat-label>Office</mat-label>
@@ -26,8 +26,8 @@
                 {{ office.name }}
               </mat-option>
             </mat-select>
-          </mat-form-field>   
-                
+          </mat-form-field>
+
           <mat-form-field>
             <mat-label>Description</mat-label>
             <input matInput formControlName="description">
@@ -35,7 +35,8 @@
 
           <mat-form-field (click)="startDatePicker.open()">
             <mat-label>Start Date</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="startDatePicker" required formControlName="startDate">
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="startDatePicker" required
+              formControlName="startDate">
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
             <mat-error *ngIf="tellerForm.controls.startDate.hasError('required')">
@@ -45,7 +46,7 @@
 
           <mat-form-field (click)="endDatePicker.open()">
             <mat-label>End Date</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="endDatePicker" formControlName="endDate">
+            <input matInput [min]="tellerForm.value.startDate" [max]="maxDate" [matDatepicker]="endDatePicker" formControlName="endDate">
             <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #endDatePicker></mat-datepicker>
           </mat-form-field>
@@ -68,7 +69,8 @@
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
         <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!tellerForm.valid" *mifosxHasPermission="'UPDATE_TELLER'">Submit</button>
+        <button mat-raised-button color="primary" [disabled]="!tellerForm.valid"
+          *mifosxHasPermission="'UPDATE_TELLER'">Submit</button>
       </mat-card-actions>
 
     </form>

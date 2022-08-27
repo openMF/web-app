@@ -70,7 +70,7 @@ export class ReactivateClientComponent implements OnInit {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevReactivationDate: Date = this.reactivateClientForm.value.reactivationDate;
-    if (reactivateClientFormData.closureDate instanceof Date) {
+    if (reactivateClientFormData.reactivationDate instanceof Date) {
       reactivateClientFormData.reactivationDate = this.dateUtils.formatDate(prevReactivationDate, dateFormat);
     }
     const data = {

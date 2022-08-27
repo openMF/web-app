@@ -53,8 +53,7 @@
 
           <mat-form-field fxFlex="48%" (click)="toDatePicker.open()">
             <mat-label>To</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="toDatePicker" required formControlName="endDate">
-            <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+            <input matInput [min]="editCashierForm.value.startDate" [max]="maxDate" [matDatepicker]="toDatePicker" required formControlName="endDate">            <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #toDatePicker></mat-datepicker>
             <mat-error *ngIf="editCashierForm.controls.endDate.hasError('required')">
               To Date <strong>is required</strong>

@@ -96,7 +96,7 @@ export class EditClientComponent implements OnInit {
     this.editClientForm = this.formBuilder.group({
       'officeId': [{ value: '', disabled: true }],
       'staffId': [''],
-      'legalFormId': [''],
+      'legalFormId': [{ value: '', disabled: true }],
       'isStaff': [false],
       'active': [false],
       'accountNo': [{ value: '', disabled: true }],
@@ -143,7 +143,7 @@ export class EditClientComponent implements OnInit {
         this.editClientForm.removeControl('lastname');
         this.editClientForm.addControl('fullname', new FormControl(this.clientDataAndTemplate.fullname, Validators.required));
         this.editClientForm.addControl('clientNonPersonDetails', this.formBuilder.group({
-          'constitutionId': [this.clientDataAndTemplate.clientNonPersonDetails.constitution && this.clientDataAndTemplate.clientNonPersonDetails.constitution.id],
+          'constitutionId': [this.clientDataAndTemplate.clientNonPersonDetails.constitution && this.clientDataAndTemplate.clientNonPersonDetails.constitution.id, Validators.required],
           'incorpValidityTillDate': [this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate && new Date(this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate)],
           'incorpNumber': [this.clientDataAndTemplate.clientNonPersonDetails.incorpNumber],
           'mainBusinessLineId': [this.clientDataAndTemplate.clientNonPersonDetails.mainBusinessLine && this.clientDataAndTemplate.clientNonPersonDetails.mainBusinessLine.id],

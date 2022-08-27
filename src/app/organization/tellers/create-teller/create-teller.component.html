@@ -17,7 +17,7 @@
             <mat-error *ngIf="tellerForm.controls.name.hasError('pattern')">
               Teller Name <strong>cannot</strong> begin with a special character or number
             </mat-error>
-          </mat-form-field>		
+          </mat-form-field>
 
           <mat-form-field>
             <mat-label>Office</mat-label>
@@ -48,7 +48,7 @@
 
           <mat-form-field (click)="endDatePicker.open()">
             <mat-label>End Date</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="endDatePicker" formControlName="endDate">
+            <input matInput [min]="tellerForm.value.startDate" [max]="maxDate" [matDatepicker]="endDatePicker" formControlName="endDate">
             <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #endDatePicker></mat-datepicker>
           </mat-form-field>

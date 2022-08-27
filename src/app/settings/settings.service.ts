@@ -18,6 +18,7 @@ export class SettingsService {
   public static businessDateConfigName = 'enable_business_date';
   public static businessDateType = 'BUSINESS_DATE';
   public static cobDateType = 'COB_DATE';
+  maxAllowedDate = new Date(2100, 0, 1);
 
   constructor(private alertService: AlertService,
     private dateUtils: Dates) { }
@@ -73,7 +74,7 @@ export class SettingsService {
    * Sets server Date config is enabled
    * @param {string} enabled
    */
-   setBusinessDateConfig(enabled: string) {
+  setBusinessDateConfig(enabled: string) {
     localStorage.setItem('mifosXServerBusinessDateEnabled', enabled);
   }
 
@@ -121,21 +122,28 @@ export class SettingsService {
   /**
    * Returns current Business date server
    */
-   get businessDate(): Date {
+  get businessDate(): Date {
     return this.dateUtils.convertToDate(localStorage.getItem('mifosXServerDate'), SettingsService.businessDateFormat);
   }
 
   /**
    * Returns current Business date Config if it's enabled
    */
-   get businessDateConfig(): any {
+  get businessDateConfig(): any {
     return localStorage.getItem('mifosXServerBusinessDateEnabled');
+  }
+
+  /**
+   * Returns max Future date
+   */
+  get maxFutureDate(): Date {
+    return this.maxAllowedDate;
   }
 
   /**
    * Validate If the enable_business_date configuration is enabled or disabled.
    */
-   validateBusinessDateStatus(configurations: any) {
+  validateBusinessDateStatus(configurations: any) {
     configurations.some((config: any) => {
       if (config.name === SettingsService.businessDateConfigName) {
         return config.enabled;
