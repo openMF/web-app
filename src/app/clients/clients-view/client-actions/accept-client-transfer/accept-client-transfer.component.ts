@@ -68,7 +68,6 @@ export class AcceptClientTransferComponent implements OnInit {
    */
   submit() {
     const acceptClientTransferFormData = this.acceptClientTransferForm.value;
-    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevTransferDate: Date = this.acceptClientTransferForm.value.transferDate;
     if (acceptClientTransferFormData.transferDate instanceof Date) {
@@ -76,8 +75,6 @@ export class AcceptClientTransferComponent implements OnInit {
     }
     const data = {
       ...acceptClientTransferFormData,
-      dateFormat,
-      locale
     };
     this.clientsService.executeClientCommand(this.clientId, 'acceptTransfer', data).subscribe(() => {
       this.router.navigate(['../../'], { relativeTo: this.route });

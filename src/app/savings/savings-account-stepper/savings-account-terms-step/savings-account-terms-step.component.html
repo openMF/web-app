@@ -13,6 +13,11 @@
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
+      <mat-label>Currency in multiples of</mat-label>
+      <input type="number" matInput formControlName="currencyMultiple" >
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
       <mat-label>Nominal Annual Interest Rate</mat-label>
       <input type="number" matInput formControlName="nominalAnnualInterestRate" required>
       <mat-error>
@@ -30,11 +35,6 @@
       <mat-error>
         Interest Compounding Period is <strong>required</strong>
       </mat-error>
-    </mat-form-field>
-
-    <mat-form-field fxFlex="48%">
-      <mat-label>Currency in multiples of</mat-label>
-      <input type="number" matInput formControlName="currencyMultiple" >
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">

@@ -48,7 +48,7 @@ export class CreateCashierComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.maxDate = this.settingsService.businessDate;
+    this.maxDate = this.settingsService.maxFutureDate;
     this.setCreateCashierForm();
   }
 

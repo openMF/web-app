@@ -117,7 +117,7 @@ export class ClientGeneralStepComponent implements OnInit {
         this.createClientForm.removeControl('lastname');
         this.createClientForm.addControl('fullname', new FormControl('', [Validators.required, Validators.pattern('(^[A-z]).*')]));
         this.createClientForm.addControl('clientNonPersonDetails', this.formBuilder.group({
-          'constitutionId': [''],
+          'constitutionId': ['', Validators.required],
           'incorpValidityTillDate': [''],
           'incorpNumber': [''],
           'mainBusinessLineId': [''],

@@ -67,7 +67,7 @@ export class EditTellerComponent implements OnInit {
    * Creates the Edit teller form.
    */
   ngOnInit() {
-    this.maxDate = this.settingsService.businessDate;
+    this.maxDate = this.settingsService.maxFutureDate;
     this.createEditTellerForm();
   }
 

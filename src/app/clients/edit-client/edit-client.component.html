@@ -21,15 +21,6 @@
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Staff</mat-label>
-            <mat-select formControlName="staffId">
-              <mat-option *ngFor="let staff of staffOptions" [value]="staff.id">
-                {{ staff.displayName }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field fxFlex="48%">
             <mat-label>Legal Form</mat-label>
             <mat-select formControlName="legalFormId">
               <mat-option *ngFor="let legalForm of legalFormOptions" [value]="legalForm.id">
@@ -38,8 +29,22 @@
             </mat-select>
           </mat-form-field>
 
+          <mat-form-field fxFlex="48%">
+            <mat-label>Account No</mat-label>
+            <input matInput formControlName="accountNo">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Staff</mat-label>
+            <mat-select formControlName="staffId">
+              <mat-option *ngFor="let staff of staffOptions" [value]="staff.id">
+                {{ staff.displayName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
           <mat-form-field *ngIf="editClientForm.contains('fullname')" fxFlex="48%">
-            <mat-label>Name</mat-label>
+            <mat-label>{{ editClientForm.value.legalFormId === 1 ? 'Name' : 'Entity Name' }}</mat-label>
             <input matInput required formControlName="fullname">
             <mat-error *ngIf="editClientForm.controls.fullname.hasError('required')">
               Client name is <strong>required</strong>
@@ -74,10 +79,44 @@
             <mat-datepicker #dateOfBirthDatePicker></mat-datepicker>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
-            <mat-label>Account No</mat-label>
-            <input matInput formControlName="accountNo">
-          </mat-form-field>
+          <div fxFlex="100%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" formGroupName="clientNonPersonDetails"
+            *ngIf="editClientForm.contains('clientNonPersonDetails')">
+
+            <mat-form-field fxFlex="48%">
+              <mat-label>Constitution</mat-label>
+              <mat-select formControlName="constitutionId" required>
+                <mat-option *ngFor="let constitution of constitutionOptions" [value]="constitution.id">
+                  {{ constitution.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="48%">
+              <mat-label>Main Business Line</mat-label>
+              <mat-select formControlName="mainBusinessLineId">
+                <mat-option *ngFor="let business of businessLineOptions" [value]="business.id">
+                  {{ business.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="48%" (click)="incorpValidityTillDateDatePicker.open()">
+              <mat-label>Incorporation Validity Till Date</mat-label>
+              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="incorpValidityTillDateDatePicker" formControlName="incorpValidityTillDate">
+              <mat-datepicker-toggle matSuffix [for]="incorpValidityTillDateDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #incorpValidityTillDateDatePicker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="48%">
+              <mat-label>Incorporation No</mat-label>
+              <input matInput formControlName="incorpNumber">
+            </mat-form-field>
+
+            <mat-form-field fxFlex="98%">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput formControlName="remarks"></textarea>
+            </mat-form-field>
+          </div>
 
           <mat-form-field fxFlex="48%">
             <mat-label>External Id</mat-label>
@@ -131,7 +170,7 @@
 
           <mat-form-field fxFlex="48%" (click)="activatedOnDatePicker.open()">
             <mat-label>Activated On</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="activatedOnDatePicker"
+            <input matInput [min]="editClientForm.value.submittedOnDate" [max]="maxDate" [matDatepicker]="activatedOnDatePicker"
               formControlName="activationDate">
             <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #activatedOnDatePicker></mat-datepicker>
@@ -145,46 +184,6 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-
-          <div fxFlex="100%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" formGroupName="clientNonPersonDetails"
-            *ngIf="editClientForm.contains('clientNonPersonDetails')">
-
-            <mat-form-field fxFlex="48%" (click)="incorpValidityTillDateDatePicker.open()">
-              <mat-label>Incorporation Validity Till Date</mat-label>
-              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="incorpValidityTillDateDatePicker" formControlName="incorpValidityTillDate">
-              <mat-datepicker-toggle matSuffix [for]="incorpValidityTillDateDatePicker"></mat-datepicker-toggle>
-              <mat-datepicker #incorpValidityTillDateDatePicker></mat-datepicker>
-            </mat-form-field>
-
-            <mat-form-field fxFlex="48%">
-              <mat-label>Incorporation No</mat-label>
-              <input matInput formControlName="incorpNumber">
-            </mat-form-field>
-
-            <mat-form-field fxFlex="48%">
-              <mat-label>Main Business Line</mat-label>
-              <mat-select formControlName="mainBusinessLineId">
-                <mat-option *ngFor="let business of businessLineOptions" [value]="business.id">
-                  {{ business.name }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <mat-form-field fxFlex="48%">
-              <mat-label>Constitution</mat-label>
-              <mat-select formControlName="constitutionId">
-                <mat-option *ngFor="let constitution of constitutionOptions" [value]="constitution.id">
-                  {{ constitution.name }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <mat-form-field fxFlex="98%">
-              <mat-label>Remarks</mat-label>
-              <textarea matInput formControlName="remarks"></textarea>
-            </mat-form-field>
-
-          </div>
 
         </div>
 
