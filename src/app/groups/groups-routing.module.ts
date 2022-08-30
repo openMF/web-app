@@ -30,6 +30,8 @@ import { GroupDatatablesResolver } from './common-resolvers/group-datatables.res
 import { GroupDatatableResolver } from './common-resolvers/group-datatable.resolver';
 import { GroupDataAndTemplateResolver } from './common-resolvers/group-data-and-template.resolver';
 import { GroupActionsResolver } from './common-resolvers/group-actions.resolver';
+import { GLIMAccountsResolver } from './common-resolvers/glim-account-resolver';
+import { GSIMAccountsResolver } from './common-resolvers/gsim-account-resolver';
 
 /** Groups Routes */
 const routes: Routes = [
@@ -71,7 +73,9 @@ const routes: Routes = [
                   data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false },
                   resolve: {
                     groupAccountsData: GroupAccountsResolver,
-                    groupSummary: GroupSummaryResolver
+                    groupSummary: GroupSummaryResolver,
+                    gsimData: GSIMAccountsResolver,
+                    glimData: GLIMAccountsResolver
                   }
                 },
                 {
@@ -166,6 +170,8 @@ const routes: Routes = [
               GroupDatatablesResolver,
               GroupDatatableResolver,
               GroupDataAndTemplateResolver,
-              GroupActionsResolver]
+              GroupActionsResolver,
+              GSIMAccountsResolver,
+              GLIMAccountsResolver]
 })
 export class GroupsRoutingModule { }

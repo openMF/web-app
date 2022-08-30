@@ -269,4 +269,21 @@ export class SavingsService {
     return this.http.delete(`/savingsaccounts/${accountId}/charges/${chargeId}`);
   }
 
+  /**
+   * @param savingAccountId GSIM Account Id of account to get data for.
+   * @returns {Observable<any>} Savings data.
+   */
+   getGSIMAccountData(savingAccountId: string, groupId: string): Observable<any> {
+    const httpParams = new HttpParams().set('parentGSIMAccountNo', savingAccountId );
+    return this.http.get(`/groups/${groupId}/gsimaccounts`, { params: httpParams });
+  }
+
+  /**
+   * @param {any} gsimData GSIM Account Data
+   * @returns {Observable<any>}
+   */
+  createGsimAcccount(gsimData: any): Observable<any> {
+    return this.http.post(`/savingsaccounts/gsim`, gsimData);
+  }
+
 }

@@ -1,35 +1,27 @@
-/** Angular Imports */
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
-
-/** Custom Dialogs */
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { Dates } from 'app/core/utils/dates';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
-
-/** Custom Models */
+import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
-import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
-import { Dates } from 'app/core/utils/dates';
-import { MatTableDataSource } from '@angular/material/table';
 
-/**
- * Savings Account Charges Step
- */
 @Component({
-  selector: 'mifosx-savings-account-charges-step',
-  templateUrl: './savings-account-charges-step.component.html',
-  styleUrls: ['./savings-account-charges-step.component.scss']
+  selector: 'mifosx-glim-charges-step',
+  templateUrl: './glim-charges-step.component.html',
+  styleUrls: ['./glim-charges-step.component.scss']
 })
-export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
+export class GlimChargesStepComponent implements OnInit, OnChanges {
 
   /** Savings Account Product Template */
-  @Input() savingsAccountProductTemplate: any;
+  @Input() loansAccountProductTemplate: any;
   /** Savings Account Template */
-  @Input() savingsAccountTemplate: any;
+  @Input() loansAccountTemplate: any;
   /** Currency Code */
-  @Input() currencyCode: FormControl;
-  /** active Client Members in case of GSIM Account */
+  // @Input() currencyCode: FormControl;
+  // /** active Client Members in case of GLIM Account */
   @Input() activeClientMembers?: any;
 
   /** Charge Data */
@@ -49,8 +41,7 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
   /** Loan Purpose Options */
   loanPurposeOptions: string[] = [];
   /** Table Displayed Columns */
-  displayedColumn: string[] = ['check', 'id', 'name'];
-
+  displayedColumn: string[] = ['check', 'id', 'name', 'purpose', 'amount'];
 
   /**
    * @param {MatDialog} dialog Mat Dialog
@@ -59,21 +50,12 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
               private dateUtils: Dates) {}
 
    ngOnInit() {
-    if (this.savingsAccountTemplate) {
-      if (!this.isChargesPatched && this.savingsAccountTemplate.charges) {
-        this.chargesDataSource = this.savingsAccountProductTemplate.charges.map((charge: any) => ({...charge, id: charge.chargeId})) || [];
-        this.isChargesPatched = true;
-      } else {
-        this.chargesDataSource = [];
-      }
-      this.dataSource = new MatTableDataSource<any>(this.activeClientMembers);
-    }
+    this.dataSource = new MatTableDataSource<any>(this.activeClientMembers);
    }
 
    ngOnChanges() {
-    if (this.savingsAccountProductTemplate) {
-      this.chargeData = this.savingsAccountProductTemplate.chargeOptions;
-      this.chargesDataSource = this.savingsAccountProductTemplate.charges.map((charge: any) => ({...charge, id: charge.chargeId})) || [];
+    if (this.loansAccountProductTemplate) {
+      this.chargeData = this.loansAccountProductTemplate.chargeOptions;
     }
    }
 
@@ -199,9 +181,9 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
   }
 
   /**
-   * Returns savings account charges
+   * Returns loan account charges
    */
-  get savingsAccountCharges() {
+  get loansAccountCharges() {
     return { charges: this.chargesDataSource };
   }
 

@@ -440,4 +440,22 @@ export class LoansService {
     return this.http.post(`/loans/${accountId}/transactions`, data, { params: httpParams });
   }
 
+  /**
+   * @param glimId GLIM Id of account to get data for.
+   * @returns {Observable<any>} GLIM Account data.
+   */
+   getGLIMAccountData(glimId: string, groupId: string): Observable<any> {
+    return this.http.get(`/loans/glimAccount/${glimId}`);
+  }
+
+  getGLIMLoanAccountTemplate(groupId: any): Observable<any> {
+    const httpParams = new HttpParams().set('groupId', groupId)
+                                        .set('lendingStrategy', '300')
+                                        .set('templateType', 'jlgbulk');
+  return this.http.get('/loans/template', { params: httpParams });
+  }
+  createGlimAccount(glimAccount: any): Observable<any> {
+    return this.http.post('/batches?enclosingTransaction=true', glimAccount);
+  }
+
 }

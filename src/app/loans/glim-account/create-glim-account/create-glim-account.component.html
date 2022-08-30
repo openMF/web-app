@@ -1,0 +1,68 @@
+<div class="container">
+
+  <mat-horizontal-stepper class="mat-elevation-z8" labelPosition="bottom" #loansAccountStepper>
+    <ng-template matStepperIcon="number">
+      <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="edit">
+      <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="done">
+      <fa-icon icon="check" size="sm"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="error">
+      <fa-icon icon="exclamation-triangle" size="lg"></fa-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="preview">
+      <fa-icon icon="eye" size="sm"></fa-icon>
+    </ng-template>
+
+    <mat-step [stepControl]="loansAccountDetailsForm">
+
+      <ng-template matStepLabel>DETAILS</ng-template>
+
+      <mifosx-glim-details-step [loansAccountTemplate]="loansAccountTemplate"
+        (loansAccountProductTemplate)="setTemplate($event)" [gsimData]="gsimData">
+      </mifosx-glim-details-step>
+
+    </mat-step>
+
+    <mat-step [stepControl]="loansAccountTermsForm">
+
+      <ng-template matStepLabel>TERMS</ng-template>
+
+      <mifosx-glim-terms-step [loansAccountProductTemplate]="loansAccountProductTemplate"
+      [loansAccountTemplate] = "loansAccountTemplate">
+      </mifosx-glim-terms-step>
+
+    </mat-step>
+
+    <mat-step>
+
+      <ng-template matStepLabel>CHARGES</ng-template>
+
+      <mifosx-glim-charges-step [loansAccountProductTemplate]="loansAccountProductTemplate"
+        [loansAccountTemplate]="loansAccountTemplate"
+          [activeClientMembers]="activeClientMembers"
+        >
+      </mifosx-glim-charges-step>
+
+    </mat-step>
+
+    <mat-step state="preview" *ngIf="loansAccountFormValid" completed>
+
+      <ng-template matStepLabel>PREVIEW</ng-template>
+
+      <mifosx-loans-account-preview-step [loansAccountTemplate]="loansAccountTemplate"
+        [loansAccountProductTemplate]="loansAccountProductTemplate" [loansAccount]="loansAccount" (submit)="submit()">
+      </mifosx-loans-account-preview-step>
+
+    </mat-step>
+
+  </mat-horizontal-stepper>
+
+</div>

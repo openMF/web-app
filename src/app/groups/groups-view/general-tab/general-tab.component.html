@@ -193,6 +193,96 @@
 
   </div>
 
+  <div *ngIf="gsimAccounts">
+
+    <div fxLayout="row" fxLayoutAlign="start" class="table-header">
+      <div class="m-b-10">
+        <h3>GSIM Account Overview</h3>
+      </div>
+    </div>
+
+    <!-- GSIM Accounts Table -->
+    <table mat-table [dataSource]="gsimAccounts"
+      class="mat-elevation-z1 m-b-30">
+
+      <ng-container matColumnDef="GSIM Id">
+        <th mat-header-cell *matHeaderCellDef> GSIM Id </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.gsimId}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Account Number">
+        <th mat-header-cell *matHeaderCellDef> Account Number </th>
+        <td mat-cell *matCellDef="let element"> {{element.accountNumber}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Product">
+        <th mat-header-cell *matHeaderCellDef> Product </th>
+        <td mat-cell *matCellDef="let element"> {{element.childGSIMAccounts[0].productName}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="Balance">
+        <th mat-header-cell *matHeaderCellDef> Balance </th>
+        <td mat-cell *matCellDef="let element"> {{element.parentBalance}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element"> {{element.savingsStatus}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="gsimAccountsColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: gsimAccountsColumns;" [routerLink]="['../', 'savings-accounts', 'gsim-account', row.accountNumber]"></tr>
+
+    </table>
+
+  </div>
+
+  <div *ngIf="glimAccounts">
+
+    <div fxLayout="row" fxLayoutAlign="start" class="table-header">
+      <div class="m-b-10">
+        <h3>GLIM Loans Account Overview</h3>
+      </div>
+    </div>
+
+    <!-- GLIM Loans Accounts Table -->
+    <table mat-table [dataSource]="glimAccounts"
+      class="mat-elevation-z1 m-b-30">
+
+      <ng-container matColumnDef="GLIM Id">
+        <th mat-header-cell *matHeaderCellDef> GLIM Id </th>
+        <td mat-cell *matCellDef="let element"> 
+          {{element.glimId}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Account Number">
+        <th mat-header-cell *matHeaderCellDef> Account Number </th>
+        <td mat-cell *matCellDef="let element"> {{element.accountNumber}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Product">
+        <th mat-header-cell *matHeaderCellDef> Product </th>
+        <td mat-cell *matCellDef="let element"> {{element.childGLIMAccounts[0].productName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Original Loan">
+        <th mat-header-cell *matHeaderCellDef> Original Loan </th>
+        <td mat-cell *matCellDef="let element"> {{element.parentPrincipalAmount}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element">{{element.loanStatus}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="glimAccountsColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: glimAccountsColumns;" [routerLink]="['../', 'loans-accounts', 'glim-account', row.glimId]"></tr>
+
+    </table>
+
+  </div>
+
   <div *ngIf="savingAccounts">
 
     <div fxLayout="row" fxLayoutAlign="start" class="table-header">
