@@ -5,7 +5,7 @@
       <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;Edit
     </button>
 
-    <button mat-raised-button color="warn" (click)="undoTransaction()">
+    <button mat-raised-button color="warn" (click)="undoTransaction()" *ngIf="allowUndo">
       <fa-icon icon="undo"></fa-icon>&nbsp;&nbsp;Undo
     </button>
   </span>

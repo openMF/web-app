@@ -26,6 +26,8 @@ export class ViewTransactionComponent {
   transactionData: any;
   /** Is Editable */
   allowEdition = true;
+   /** Is Undoable */
+   allowUndo = true;
 
   /**
    * Retrieves the Transaction data from `resolve`.
@@ -46,6 +48,7 @@ export class ViewTransactionComponent {
       this.transactionData = data.loansAccountTransaction;
       this.allowEdition = !this.transactionData.manuallyReversed && !(this.transactionData.type.id === 20 || this.transactionData.type.id === 21 || this.transactionData.type.id === 22
         || this.transactionData.type.id === 23);
+      this.allowUndo = !this.transactionData.manuallyReversed;
     });
   }
 
