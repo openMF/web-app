@@ -68,7 +68,6 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
       }
       this.dataSource = new MatTableDataSource<any>(this.activeClientMembers);
     }
-     
    }
 
    ngOnChanges() {
