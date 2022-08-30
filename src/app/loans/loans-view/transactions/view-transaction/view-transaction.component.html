@@ -4,8 +4,8 @@
     <button mat-raised-button color="primary" [routerLink]="'edit'" *ngIf="allowEdition">
       <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;Edit
     </button>
-  
-    <button mat-raised-button color="warn" *ngIf="allowEdition" (click)="undoTransaction()">
+
+    <button mat-raised-button color="warn" (click)="undoTransaction()">
       <fa-icon icon="undo"></fa-icon>&nbsp;&nbsp;Undo
     </button>
   </span>

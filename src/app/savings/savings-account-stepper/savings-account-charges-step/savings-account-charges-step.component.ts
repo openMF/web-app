@@ -47,19 +47,20 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
               private dateUtils: Dates) {}
 
    ngOnInit() {
-    this.currencyCode.valueChanges.subscribe(() => {
+    if (this.savingsAccountTemplate) {
       if (!this.isChargesPatched && this.savingsAccountTemplate.charges) {
-        this.chargesDataSource = this.savingsAccountTemplate.charges.map((charge: any) => ({...charge, id: charge.chargeId})) || [];
+        this.chargesDataSource = this.savingsAccountProductTemplate.charges.map((charge: any) => ({...charge, id: charge.chargeId})) || [];
         this.isChargesPatched = true;
       } else {
         this.chargesDataSource = [];
       }
-    });
+    }
    }
 
    ngOnChanges() {
     if (this.savingsAccountProductTemplate) {
       this.chargeData = this.savingsAccountProductTemplate.chargeOptions;
+      this.chargesDataSource = this.savingsAccountProductTemplate.charges.map((charge: any) => ({...charge, id: charge.chargeId})) || [];
     }
    }
 
