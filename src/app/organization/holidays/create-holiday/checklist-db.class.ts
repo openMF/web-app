@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { TodoItemNode } from './todo-item.class';
+import { OfficeItemNode } from './office-item.class';
 
 @Injectable({
     providedIn: 'root'
@@ -9,8 +9,8 @@ export class ChecklistDatabase {
 
 
     // rxjs functionality to update DOM via subscribe
-    dataChange = new BehaviorSubject<TodoItemNode[]>([]);
-    get data(): TodoItemNode[] {
+    dataChange = new BehaviorSubject<OfficeItemNode[]>([]);
+    get data(): OfficeItemNode[] {
         return this.dataChange.value;
     }
     TREE_DATA = {};
@@ -25,11 +25,11 @@ export class ChecklistDatabase {
         this.dataChange.next(data);
     }
 
-    // builds hierarchical tree of TodoItemNodes
-    buildFileTree(obj: { [key: string]: any }, level: number): TodoItemNode[] {
-        return Object.keys(obj).reduce<TodoItemNode[]>((accumulator, key) => {
+    // builds hierarchical tree of officeItemNodes
+    buildFileTree(obj: { [key: string]: any }, level: number): OfficeItemNode[] {
+        return Object.keys(obj).reduce<OfficeItemNode[]>((accumulator, key) => {
             const value = obj[key];
-            const node = new TodoItemNode();
+            const node = new OfficeItemNode();
             node.item = key;
 
             if (value != null) {

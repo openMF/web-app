@@ -63,19 +63,6 @@
             <input matInput formControlName="description">
           </mat-form-field>   
           
-          <!-- TODO: Replace multi-select by custom angular material tree -->
-          <!-- <mat-form-field>
-            <mat-label>Applicable Offices</mat-label>
-            <mat-select required formControlName="offices" multiple>
-              <mat-option *ngFor="let office of officesData" [value]="{ officeId: office.id }">
-                {{ office.name }} 
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="holidayForm.controls.offices.hasError('required')">
-              Offices is <strong>required</strong>
-            </mat-error>
-          </mat-form-field> -->
-
           <label>Select applicable offices</label>
 
           <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
@@ -83,7 +70,7 @@
               <button mat-icon-button disabled></button>
               <mat-checkbox class="checklist-leaf-node"
                             [checked]="checklistSelection.isSelected(node)"
-                            (change)="todoLeafItemSelectionToggle(node);">{{officesDict[node.item].name}}</mat-checkbox>
+                            (change)="officeLeafItemSelectionToggle(node);">{{officesDict[node.item].name}}</mat-checkbox>
             </mat-tree-node>
 
             <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
@@ -94,7 +81,7 @@
                 </mat-icon>
               </button>
               <mat-checkbox [checked]="descendantsAllSelected(node)"
-                            (change)="todoItemSelectionToggle(node)">{{ officesDict[node.item].name }}</mat-checkbox>
+                            (change)="officeItemSelectionToggle(node)">{{ officesDict[node.item].name }}</mat-checkbox>
             </mat-tree-node>
           </mat-tree>
 

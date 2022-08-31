@@ -72,8 +72,8 @@ import { CreateHolidayComponent } from './holidays/create-holiday/create-holiday
 
 
 /** Custom Service */
-import { TodoItemNode } from './holidays/create-holiday/todo-item.class';
-import { TodoItemFlatNode } from './holidays/create-holiday/todo-flat-item.class';
+import { OfficeItemNode } from './holidays/create-holiday/office-item.class';
+import { OfficeItemFlatNode } from './holidays/create-holiday/office-flat-item.class';
 import { ChecklistDatabase } from './holidays/create-holiday/checklist-db.class';
 import { CreateHoliday } from './holidays/create-holiday/create-holiday.service';
 
@@ -156,8 +156,8 @@ import { CreateHoliday } from './holidays/create-holiday/create-holiday.service'
   providers: [
     CreateHoliday,
     ChecklistDatabase,
-    TodoItemFlatNode,
-    TodoItemNode
+    OfficeItemFlatNode,
+    OfficeItemNode
   ]
 })
 export class OrganizationModule { }

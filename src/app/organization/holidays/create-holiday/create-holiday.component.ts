@@ -10,14 +10,13 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 /** Custom Services. */
 import { OrganizationService } from 'app/organization/organization.service';
 import { SettingsService } from 'app/settings/settings.service';
-import { TodoItemNode } from './todo-item.class';
-import { TodoItemFlatNode } from './todo-flat-item.class';
+import { OfficeItemNode } from './office-item.class';
+import { OfficeItemFlatNode } from './office-flat-item.class';
 import { ChecklistDatabase } from './checklist-db.class';
 import { CreateHoliday } from './create-holiday.service';
 
 /**
  * Create Holiday component.
- * TODO: Develop a custom angular checkbox tree and replace offices select.
  */
 @Component({
   selector: 'mifosx-create-holiday',
@@ -44,25 +43,25 @@ export class CreateHolidayComponent implements OnInit {
   // Angular Material Tree Configuration start ------------
 
   /** Map from flat node to nested node. This helps us finding the nested node to be modified */
-  flatNodeMap = new Map<TodoItemFlatNode, TodoItemNode>();
+  flatNodeMap = new Map<OfficeItemFlatNode, OfficeItemNode>();
 
   /** Map from nested node to flattened node. This helps us to keep the same object for selection */
-  nestedNodeMap = new Map<TodoItemNode, TodoItemFlatNode>();
+  nestedNodeMap = new Map<OfficeItemNode, OfficeItemFlatNode>();
 
   /** A selected parent node to be inserted */
-  selectedParent: TodoItemFlatNode | null = null;
+  selectedParent: OfficeItemFlatNode | null = null;
 
   /** The new item's name */
   newItemName = '';
 
-  treeControl: FlatTreeControl<TodoItemFlatNode>;
+  treeControl: FlatTreeControl<OfficeItemFlatNode>;
 
-  treeFlattener: MatTreeFlattener<TodoItemNode, TodoItemFlatNode>;
+  treeFlattener: MatTreeFlattener<OfficeItemNode, OfficeItemFlatNode>;
 
-  dataSource: MatTreeFlatDataSource<TodoItemNode, TodoItemFlatNode>;
+  dataSource: MatTreeFlatDataSource<OfficeItemNode, OfficeItemFlatNode>;
 
   /** The selection for checklist */
-  checklistSelection = new SelectionModel<TodoItemFlatNode>(true /* multiple */);
+  checklistSelection = new SelectionModel<OfficeItemFlatNode>(true /* multiple */);
 
   // Angular Material Tree Configuration end ------------
 
@@ -91,7 +90,7 @@ export class CreateHolidayComponent implements OnInit {
       _database.initialize(this.officesTrie);
     });
     this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel, this.isExpandable, this.getChildren);
-    this.treeControl = new FlatTreeControl<TodoItemFlatNode>(this.getLevel, this.isExpandable);
+    this.treeControl = new FlatTreeControl<OfficeItemFlatNode>(this.getLevel, this.isExpandable);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
     // Listens for changes in CheckListDatabase
@@ -139,22 +138,22 @@ export class CreateHolidayComponent implements OnInit {
 
   // angular material tree config start ----------------------
 
-  getLevel = (node: TodoItemFlatNode) => node.level;
+  getLevel = (node: OfficeItemFlatNode) => node.level;
 
-  isExpandable = (node: TodoItemFlatNode) => node.expandable;
+  isExpandable = (node: OfficeItemFlatNode) => node.expandable;
 
-  getChildren = (node: TodoItemNode): TodoItemNode[] => node.children;
+  getChildren = (node: OfficeItemNode): OfficeItemNode[] => node.children;
 
-  hasChild = (_: number, _nodeData: TodoItemFlatNode) => _nodeData.expandable;
+  hasChild = (_: number, _nodeData: OfficeItemFlatNode) => _nodeData.expandable;
 
-  hasNoContent = (_: number, _nodeData: TodoItemFlatNode) => _nodeData.item === '';
+  hasNoContent = (_: number, _nodeData: OfficeItemFlatNode) => _nodeData.item === '';
 
   /**
    * Transformer to convert nested node to flat node. Record the nodes in maps for later use.
    */
-  transformer = (node: TodoItemNode, level: number) => {
+  transformer = (node: OfficeItemNode, level: number) => {
     const existingNode = this.nestedNodeMap.get(node);
-    const flatNode = existingNode && existingNode.item === node.item ? existingNode : new TodoItemFlatNode();
+    const flatNode = existingNode && existingNode.item === node.item ? existingNode : new OfficeItemFlatNode();
     flatNode.item = node.item;
     flatNode.level = level;
     flatNode.expandable = !!node.children?.length;
@@ -164,12 +163,12 @@ export class CreateHolidayComponent implements OnInit {
   }
 
   /** Whether all the descendants of the node are selected. */
-  descendantsAllSelected(node: TodoItemFlatNode): boolean {
+  descendantsAllSelected(node: OfficeItemFlatNode): boolean {
     return this.checklistSelection.isSelected(node);
   }
 
   /** Whether part of the descendants are selected */
-  descendantsPartiallySelected(node: TodoItemFlatNode): boolean {
+  descendantsPartiallySelected(node: OfficeItemFlatNode): boolean {
     const descendants = this.treeControl.getDescendants(node);
     const result = descendants.some((child) => this.checklistSelection.isSelected(child));
     return result && !this.descendantsAllSelected(node);
@@ -182,7 +181,7 @@ export class CreateHolidayComponent implements OnInit {
   }
 
   /** Toggle the to-do item selection. Select/deselect all the descendants node */
-  todoItemSelectionToggle(node: TodoItemFlatNode): void {
+  officeItemSelectionToggle(node: OfficeItemFlatNode): void {
     this.checklistSelection.toggle(node);
     const descendants = this.treeControl.getDescendants(node);
     this.checklistSelection.isSelected(node)
@@ -195,14 +194,14 @@ export class CreateHolidayComponent implements OnInit {
   }
 
   /** Toggle a leaf to-do item selection. Check all the parents to see if they changed */
-  todoLeafItemSelectionToggle(node: TodoItemFlatNode): void {
+  officeLeafItemSelectionToggle(node: OfficeItemFlatNode): void {
     this.checklistSelection.toggle(node);
     this.setSelectedOffices();
   }
 
   /* Checks all the parents when a leaf node is selected/unselected */
-  checkAllParentsSelection(node: TodoItemFlatNode): void {
-    let parent: TodoItemFlatNode | null = this.getParentNode(node);
+  checkAllParentsSelection(node: OfficeItemFlatNode): void {
+    let parent: OfficeItemFlatNode | null = this.getParentNode(node);
     while (parent) {
       this.checkRootNodeSelection(parent);
       parent = this.getParentNode(parent);
@@ -210,7 +209,7 @@ export class CreateHolidayComponent implements OnInit {
   }
 
   /** Check root node checked state and change it accordingly */
-  checkRootNodeSelection(node: TodoItemFlatNode): void {
+  checkRootNodeSelection(node: OfficeItemFlatNode): void {
     const nodeSelected = this.checklistSelection.isSelected(node);
     const descendants = this.treeControl.getDescendants(node);
     const descAllSelected =
@@ -226,7 +225,7 @@ export class CreateHolidayComponent implements OnInit {
   }
 
   /* Get the parent node of a node */
-  getParentNode(node: TodoItemFlatNode): TodoItemFlatNode | null {
+  getParentNode(node: OfficeItemFlatNode): OfficeItemFlatNode | null {
     const currentLevel = this.getLevel(node);
 
     if (currentLevel < 1) {
