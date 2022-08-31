@@ -43,8 +43,16 @@
             <input matInput formControlName="externalId">
           </mat-form-field>
 
-        </div>
+          <div floatLabel="always" appearance="outline" class="full-width radio-container mb-1">
+            <mat-label class="ou-label">Is the OU a country</mat-label>                   
+            <input disabled class="custom-radio"  (change)="change_country(true)" formControlName="country" type="radio"  [value]="true" name="country" [checked]="officeForm.controls.country?.value">
+            <input disabled  class="custom-radio"  (change)="change_country(false)" formControlName="country" type="radio" [value]="false" name="country" [checked]="!officeForm.controls.country?.value">
+          </div>
 
+        </div>
+        <div fxLayout="column" *ngIf="showHierarchy">
+          <mifosx-office-hierarchy #officeHierarchy [treeDataSource]="treeDataSource"></mifosx-office-hierarchy>
+        </div>
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">

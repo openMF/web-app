@@ -27,6 +27,7 @@ import { IconsModule } from './icons.module';
 import { MaterialModule } from './material.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { OfficeTreeViewComponent } from './office-tree-view/office-tree-view.component';
+import { OfficeHierarchyComponent } from './office-hierarchy/office-hierarchy.component';
 
 /**
  * Shared Module
@@ -59,7 +60,8 @@ import { OfficeTreeViewComponent } from './office-tree-view/office-tree-view.com
     NotificationsTrayComponent,
     SearchToolComponent,
     ServerSelectorComponent,
-    OfficeTreeViewComponent
+    OfficeTreeViewComponent,
+    OfficeHierarchyComponent
   ],
   exports: [
     FileUploadComponent,
@@ -75,7 +77,8 @@ import { OfficeTreeViewComponent } from './office-tree-view/office-tree-view.com
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    OfficeTreeViewComponent
+    OfficeTreeViewComponent,
+    OfficeHierarchyComponent
   ]
 })
 export class SharedModule { }

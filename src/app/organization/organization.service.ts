@@ -126,12 +126,29 @@ export class OrganizationService {
   }
 
   /**
+   * @param {any} office Office to be created.
+   * @returns {Observable<any>}
+   */
+   createOfficeHierarchy(office: any): Observable<any> {
+    return this.http.post('/countries', office);
+  }
+
+  /**
    * @param {any} office Office to be updated.
    * @param {string} officeId Office Id
    * @returns {Observable<any>}
    */
   updateOffice(officeId: string, office: any): Observable<any> {
     return this.http.put(`/offices/${officeId}`, office);
+  }
+
+  /**
+   * @param {any} office Office to be updated.
+   * @param {string} officeId Office Id
+   * @returns {Observable<any>}
+   */
+   updateOfficeHierarchy(officeId: string, office: any): Observable<any> {
+    return this.http.put(`/countries/${officeId}`, office);
   }
 
   /**

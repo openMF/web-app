@@ -1,0 +1,52 @@
+<div class="mat-card mat-focus-indicator">
+    <div class="col-8">
+        <h3>Country Hierarchy</h3>
+    </div>
+  <div class="col-4">
+    <button type="button" (click)="hasData=true" class="lh-30 mat-raised-button mat-primary mat-focus-indicator mat-raised-button mat-primary pull-right">
+        Add New
+       </button>
+  </div>
+    
+    
+      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" #tree *ngIf="hasData">
+        <!-- /////// delete the first <mat-tree-node> -->
+      
+        <mat-tree-node
+          *matTreeNodeDef="let node; when: hasNoContent"
+          matTreeNodePadding
+        >
+          <button type="button" mat-icon-button disabled></button>
+          <mat-form-field>
+            <mat-label>Enter Level Name</mat-label>
+            <input matInput #itemValue />
+          </mat-form-field>
+          <button type="button" mat-button (click)="saveNode(node, itemValue.value)" class="lh-30 mat-raised-button mat-primary mat-focus-indicator mat-raised-button mat-primary">Add Level</button>
+        </mat-tree-node>
+      
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+          <button type="button"
+            mat-icon-button
+            matTreeNodeToggle
+            [attr.aria-label]="'Toggle ' + node.levelName"
+            *ngIf="node.hasChild"
+          >
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+          </button>
+      
+          <!-- //////////// add this line to make space for removed button -->
+          <div *ngIf="!node.hasChild" class="pad"></div>
+      
+          
+          <input matInput type="text" value="{{node.levelName}}">
+          <button type="button" mat-icon-button title="Add new Level" (click)="addNewItem(node)" *ngIf="!node.hasChild">
+            <mat-icon>add</mat-icon>
+          </button>
+          <button type="button" mat-icon-button title="Remove Level" (click)="removeItem(node)" *ngIf="!node.hasChild && node.level>0">
+            <mat-icon>remove</mat-icon>
+          </button>
+        </mat-tree-node>
+      </mat-tree>
+</div>

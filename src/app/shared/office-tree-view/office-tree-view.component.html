@@ -6,7 +6,10 @@
   <mat-tree #officeTree [dataSource]="dataSource" [treeControl]="treeControl">
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
       <button mat-icon-button disabled></button>
-    <btn class="normal"></btn> ( ) {{node.name}}
+    <btn class="normal"></btn> ( ) {{node.name}} 
+    <btn class="add-office" title="Add Office" (click)="createOffice(node.id)">
+      <i class="fa fa-plus"></i>
+    </btn>
     </mat-tree-node>
     <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
       <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
@@ -14,7 +17,10 @@
           {{treeControl.isExpanded(node) ? 'remove_circle_outline' : 'add_circle_outline'}}
         </mat-icon>
       </button>
-      ( ) {{node.name}}
+      ( ) {{node.name}}  
+      <btn class="add-office" title="Add Office" (click)="createOffice(node.id)">
+        <i class="fa fa-plus"></i>
+      </btn>
     </mat-tree-node>
   </mat-tree>
 </div>
