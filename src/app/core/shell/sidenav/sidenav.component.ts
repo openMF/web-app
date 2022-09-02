@@ -1,5 +1,6 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, TemplateRef, ElementRef , ViewChild,
+         AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
@@ -8,6 +9,8 @@ import { KeyboardShortcutsDialogComponent } from 'app/shared/keyboard-shortcuts-
 
 /** Custom Services */
 import { AuthenticationService } from '../../authentication/authentication.service';
+import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
+import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
 
 /** Custom Imports */
 import { frequentActivities } from './frequent-activities';
@@ -20,7 +23,7 @@ import { frequentActivities } from './frequent-activities';
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss']
 })
-export class SidenavComponent implements OnInit {
+export class SidenavComponent implements OnInit, AfterViewInit {
 
   /** True if sidenav is in collapsed state. */
   @Input() sidenavCollapsed: boolean;
@@ -34,14 +37,28 @@ export class SidenavComponent implements OnInit {
   /** Collection of possible frequent activities */
   frequentActivities: any[] = frequentActivities;
 
+  /* Refernce of logo */
+  @ViewChild('logo') logo: ElementRef<any>;
+  /* Template for popover on logo */
+  @ViewChild('templateLogo') templateLogo: TemplateRef<any>;
+  /* Refernce of chart of accounts */
+  @ViewChild('chartOfAccounts') chartOfAccounts: ElementRef<any>;
+  /* Template for popover on chart of accounts */
+  @ViewChild('templateChartOfAccounts') templateChartOfAccounts: TemplateRef<any>;
+
+
   /**
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Mat Dialog
    * @param {AuthenticationService} authenticationService Authentication Service.
+   * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
+   * @param {PopoverService} popoverService PopoverService.
    */
   constructor(private router: Router,
               public dialog: MatDialog,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private configurationWizardService: ConfigurationWizardService,
+              private popoverService: PopoverService) {
     this.userActivity = JSON.parse(localStorage.getItem('mifosXLocation'));
   }
 
@@ -140,4 +157,54 @@ export class SidenavComponent implements OnInit {
     }
   }
 
+  /**
+   * Popover function
+   * @param template TemplateRef<any>.
+   * @param target HTMLElement | ElementRef<any>.
+   * @param position String.
+   * @param backdrop Boolean.
+   */
+  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+    setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
+  }
+
+  /**
+   * To show popovers
+   */
+  ngAfterViewInit() {
+    if (this.configurationWizardService.showSideNav === true) {
+      setTimeout(() => {
+          this.showPopover(this.templateLogo, this.logo.nativeElement, 'bottom', true);
+      });
+    }
+    if (this.configurationWizardService.showSideNavChartofAccounts === true) {
+      setTimeout(() => {
+          this.showPopover(this.templateChartOfAccounts, this.chartOfAccounts.nativeElement, 'top', true);
+      });
+    }
+  }
+
+  /**
+   * Next Step (Breadcrumbs) Configuration Wizard.
+   */
+  nextStep() {
+    this.configurationWizardService.showSideNav = false;
+    this.configurationWizardService.showSideNavChartofAccounts = false;
+    this.configurationWizardService.showBreadcrumbs = true;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate(['/home']);
+  }
+
+  /**
+   * Previous Step (Toolbar) Configuration Wizard.
+   */
+  previousStep() {
+    this.configurationWizardService.showSideNav = false;
+    this.configurationWizardService.showSideNavChartofAccounts = false;
+    this.configurationWizardService.showToolbarAdmin = true;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate(['/home']);
+  }
 }

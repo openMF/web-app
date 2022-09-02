@@ -1,20 +1,22 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+<div #buttonCreateShareProduct class="in-block">
   <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_SHAREPRODUCT'">
     <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
     Create Share Product
   </button>
 </div>
+</div>
 
 <div class="container">
 
-  <div fxLayout="row">
+  <div #filter fxLayout="row">
     <mat-form-field fxFlex>
       <mat-label>Filter</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)">
     </mat-form-field>
   </div>
 
-  <div class="mat-elevation-z8">
+  <div #shareProductsTable class="mat-elevation-z8">
 
     <table mat-table [dataSource]="dataSource" matSort>
 
@@ -43,3 +45,31 @@
   </div>
 
 </div>
+
+<ng-template #templateButtonCreateShareProduct let-popover="popover">
+  <h2>Create share product</h2>
+  <p class="mw300">This option allows you to create new share product.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateFilter let-popover="popover">
+  <h4>Search bar to filter share products.</h4>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonCreateShareProduct,buttonCreateShareProduct , 'bottom', true)">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateShareProductsTable,shareProductsTable, 'top', true)">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateShareProductsTable let-popover="popover">
+  <h4 class="mw300">List of share products in the organization. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/129531946/Share+products" target="_blank">Share Products</a></h4>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
+  </div>
+</ng-template>

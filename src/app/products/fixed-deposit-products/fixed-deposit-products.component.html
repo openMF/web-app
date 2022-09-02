@@ -1,20 +1,22 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+<div #buttonCreateFixedProduct class="in-block">
   <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_FIXEDDEPOSITPRODUCT'">
     <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
     Create Fixed Deposit Product
   </button>
 </div>
+</div>
 
 <div class="container">
 
-  <div fxLayout="row" fxLayoutGap="20px">
+  <div #filter fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
       <mat-label>Filter</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)">
     </mat-form-field>
   </div>
 
-  <div class="mat-elevation-z8">
+  <div #fixedProductsTable class="mat-elevation-z8">
 
     <table mat-table [dataSource]="dataSource" matSort>
 
@@ -38,3 +40,31 @@
   </div>
 
 </div>
+
+<ng-template #templateButtonCreateFixedProduct let-popover="popover">
+  <h2>Create fixed deposit product</h2>
+  <p class="mw300">This option allows you to create new fixed deposit product.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateFilter let-popover="popover">
+  <h4>Search bar to filter fixed deposit products.</h4>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonCreateFixedProduct,buttonCreateFixedProduct , 'bottom', true)">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFixedProductsTable,fixedProductsTable, 'top', true)">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateFixedProductsTable let-popover="popover">
+  <h4 class="mw300">List of fixed deposit products in the organization. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102629544/Fixed+Deposit+Products" target="_blank">Fixed Deposit Products</a></h4>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
+  </div>
+</ng-template>

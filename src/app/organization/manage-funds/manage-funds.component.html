@@ -2,7 +2,7 @@
 
   <mat-card>
 
-    <div>
+    <div #fundFormRef>
 
       <form #formRef="ngForm" [formGroup]="fundForm" fxLayout="row" fxLayoutAlign="start baseline" fxLayoutGap="20px"
         (ngSubmit)="addFund()" *mifosxHasPermission="'CREATE_FUND'">
@@ -14,9 +14,11 @@
             </mat-error>
         </mat-form-field>
 
-        <button mat-raised-button fxFlex color="primary" [disabled]="!fundForm.valid">
-          <fa-icon icon="plus"></fa-icon>
-        </button>
+        <div #buttonAddFund fxFlex>
+          <button mat-raised-button color="primary" [disabled]="!fundForm.valid">
+            <fa-icon icon="plus"></fa-icon>
+          </button>
+        </div>
 
       </form>
 
@@ -41,3 +43,15 @@
   </mat-card>
 
 </div>
+
+<ng-template #templateFundFormRef let-popover="popover">
+  <h2>Manage Funds</h2>
+  <p class="mw300">This form will be used to add fund. If you would like to add fund click on add funds button and fill the fund name then click on + button else click Next or Back. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141736/Manage+Funds" target="_blank">Manage Funds</a></p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="primary" (click)="popover.close();">Add Funds</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
+  </div>
+</ng-template>
+

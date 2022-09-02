@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , TemplateRef, ElementRef , ViewChild, AfterViewInit} from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd, Data } from '@angular/router';
 
 /** rxjs Imports */
@@ -7,6 +7,10 @@ import { filter } from 'rxjs/operators';
 
 /** Custom Model */
 import { Breadcrumb } from './breadcrumb.model';
+
+/** Custom Services */
+import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
+import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
 
 /**
  * Route data property to generate breadcrumb using a static string.
@@ -45,18 +49,26 @@ const routeAddBreadcrumbLink = 'addBreadcrumbLink';
   templateUrl: './breadcrumb.component.html',
   styleUrls: ['./breadcrumb.component.scss']
 })
-export class BreadcrumbComponent implements OnInit {
+export class BreadcrumbComponent implements OnInit, AfterViewInit {
 
   /** Array of breadcrumbs. */
   breadcrumbs: Breadcrumb[];
+  /* Reference of breadcrumb */
+  @ViewChild('breadcrumb') breadcrumb: ElementRef<any>;
+  /* Template for popover on breadcrumb */
+  @ViewChild('templateBreadcrumb') templateBreadcrumb: TemplateRef<any>;
 
   /**
    * Generates the breadcrumbs.
    * @param {ActivatedRoute} activatedRoute Activated Route.
    * @param {Router} router Router for navigation.
+   * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
+   * @param {PopoverService} popoverService PopoverService.
    */
   constructor(private activatedRoute: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private configurationWizardService: ConfigurationWizardService,
+              private popoverService: PopoverService) {
     this.generateBreadcrumbs();
   }
 
@@ -158,6 +170,50 @@ export class BreadcrumbComponent implements OnInit {
         });
       }
     });
+  }
+
+  /**
+   * Popover function
+   * @param template TemplateRef<any>.
+   * @param target HTMLElement | ElementRef<any>.
+   * @param position String.
+   * @param backdrop Boolean.
+   */
+  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+    setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
+  }
+
+  /**
+   * To show popover.
+   */
+  ngAfterViewInit() {
+    if (this.configurationWizardService.showBreadcrumbs === true) {
+    setTimeout(() => {
+        this.showPopover(this.templateBreadcrumb, this.breadcrumb.nativeElement, 'bottom', true);
+      });
+    }
+  }
+
+  /**
+   * Next Step (Home) Configuration Wizard.
+   */
+  nextStep() {
+    this.configurationWizardService.showBreadcrumbs = false;
+    this.configurationWizardService.showHome = true;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate(['/home']);
+  }
+
+  /**
+   * Previous Step (SideNavBar) Configuration Wizard.
+   */
+  previousStep() {
+    this.configurationWizardService.showBreadcrumbs = false;
+    this.configurationWizardService.showSideNavChartofAccounts = true;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate(['/home']);
   }
 
 }

@@ -96,7 +96,8 @@ import {
   faFolderOpen,
   faIdBadge,
   faAddressCard,
-  faKeyboard
+  faKeyboard,
+  faInfo
 } from '@fortawesome/free-solid-svg-icons';
 
 /**
@@ -203,7 +204,8 @@ export class IconsModule {
       faFolderOpen,
       faIdBadge,
       faAddressCard,
-      faKeyboard
+      faKeyboard,
+      faInfo
     );
   }
 

@@ -1,9 +1,11 @@
 <div fxLayput="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
 
-  <button mat-raised-button color="primary" [routerLink]="['/dashboard']">
-    <fa-icon icon="tachometer-alt"></fa-icon>&nbsp;&nbsp;
-    Dashboard
-  </button>
+  <div #buttonDashboard class="in-block">
+    <button mat-raised-button color="primary" [routerLink]="['/dashboard']">
+      <fa-icon icon="tachometer-alt"></fa-icon>&nbsp;&nbsp;
+      Dashboard
+    </button>
+  </div>
 
 </div>
 
@@ -17,7 +19,7 @@
       </mat-card-title>
     </mat-card-header>
 
-    <mat-card-content>
+    <mat-card-content #searchActivity>
         
       <div fxLayout="column">
         <mat-form-field>
@@ -39,3 +41,23 @@
   </mat-card>
 
 </div>
+
+<ng-template #templateButtonDashboard let-popover="popover">
+  <h2>Dashboard</h2>
+  <p class="mw300">This will navigate the user to the dashboard component.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateSearchActivity, searchActivity,'bottom',true)">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateSearchActivity let-popover="popover">
+  <h2>Search Activity</h2>
+  <p class="mw300">This will navigate the user to the searched activity.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonDashboard, buttonDashboard,'bottom',true)">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
+  </div>
+</ng-template>

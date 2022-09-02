@@ -40,7 +40,7 @@
             <mat-label>Repayment Scheduling Type</mat-label>
             <mat-select required formControlName="reschedulingType">
               <mat-option *ngFor="let repayments of holidayData.repaymentSchedulingTypes" [value]="repayments.id">
-                {{ repayments.value }} 
+                {{ repayments.value }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="holidayForm.controls.reschedulingType.hasError('required')">

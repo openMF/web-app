@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Configuration Wizard</h2>
+
+<mat-dialog-content>
+
+<h3 class="mw600"> You have created {{stepName}} successfully. Please select from the options below to proceed furthur.</h3>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-raised-button color="warn"  [mat-dialog-close]="{ step: 1 }">Close Configuration Wizard</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="{ step: 2 }">Create more {{stepName}}</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="{ step: 3 }">Go to next step</button>
+</mat-dialog-actions>

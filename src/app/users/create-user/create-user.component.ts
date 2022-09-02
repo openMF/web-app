@@ -1,13 +1,20 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef , ViewChild,
+         AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
 import { UsersService } from '../users.service';
+import { PopoverService } from '../../configuration-wizard/popover/popover.service';
+import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
 
 /** Custom Validators */
 import { confirmPasswordValidator } from '../../login/reset-password/confirm-password.validator';
+
+/** Custom Dialog Component */
+import { ContinueSetupDialogComponent } from '../../configuration-wizard/continue-setup-dialog/continue-setup-dialog.component';
 
 /**
  * Create user component.
@@ -17,7 +24,7 @@ import { confirmPasswordValidator } from '../../login/reset-password/confirm-pas
   templateUrl: './create-user.component.html',
   styleUrls: ['./create-user.component.scss']
 })
-export class CreateUserComponent implements OnInit {
+export class CreateUserComponent implements OnInit, AfterViewInit {
 
   /** User form. */
   userForm: FormGroup;
@@ -28,17 +35,27 @@ export class CreateUserComponent implements OnInit {
   /** Staff data. */
   staffData: any;
 
+  /* Reference of create user form */
+  @ViewChild('userFormRef') userFormRef: ElementRef<any>;
+  /* Template for popover on create user form */
+  @ViewChild('templateUserFormRef') templateUserFormRef: TemplateRef<any>;
+
   /**
    * Retrieves the offices and roles data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {UsersService} UsersService Users Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
+   * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
+   * @param {PopoverService} popoverService PopoverService.
    */
   constructor(private formBuilder: FormBuilder,
               private usersService: UsersService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private popoverService: PopoverService,
+              private configurationWizardService: ConfigurationWizardService,
+              public dialog: MatDialog) {
     this.route.data.subscribe((data: {
         usersTemplate: any
       }) => {
@@ -110,8 +127,78 @@ export class CreateUserComponent implements OnInit {
   submit() {
     const user = this.userForm.value;
     this.usersService.createUser(user).subscribe((response: any) => {
-      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+      if (this.configurationWizardService.showUsersForm === true) {
+        this.configurationWizardService.showUsersForm = false;
+        this.openDialog();
+      } else {
+        this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+      }
     });
   }
 
+  /**
+   * Popover function
+   * @param template TemplateRef<any>.
+   * @param target HTMLElement | ElementRef<any>.
+   * @param position String.
+   * @param backdrop Boolean.
+   */
+  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+    setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
+  }
+
+  /**
+   * To show popover.
+   */
+  ngAfterViewInit() {
+    if (this.configurationWizardService.showUsersForm === true) {
+    setTimeout(() => {
+        this.showPopover(this.templateUserFormRef, this.userFormRef.nativeElement, 'top', true);
+    });
+    }
+  }
+
+  /**
+   * Next Step (Maker Checker Tasks System Page) Configuration Wizard.
+   */
+  nextStep() {
+    this.configurationWizardService.showUsersForm = false;
+    this.configurationWizardService.showMakerCheckerTable = true;
+    this.router.navigate(['/system']);
+  }
+
+  /**
+   * Previous Step (Users page) Configuration Wizard.
+   */
+  previousStep() {
+    this.configurationWizardService.showUsersForm = false;
+    this.configurationWizardService.showUsersList = true;
+    this.router.navigate(['/users']);
+  }
+
+  /**
+   * Opens dialog if the user wants to create more users.
+   */
+  openDialog() {
+    const continueSetupDialogRef = this.dialog.open(ContinueSetupDialogComponent, {
+      data: {
+        stepName: 'user'
+      },
+    });
+    continueSetupDialogRef.afterClosed().subscribe((response: { step: number }) => {
+      if (response.step === 1) {
+          this.configurationWizardService.showUsersForm = false;
+          this.router.navigate(['../'], { relativeTo: this.route });
+        } else if (response.step === 2) {
+          this.configurationWizardService.showUsersForm = true;
+          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+          this.router.onSameUrlNavigation = 'reload';
+          this.router.navigate(['/organization/users/create']);
+        } else if (response.step === 3) {
+          this.configurationWizardService.showUsersForm = false;
+          this.configurationWizardService.showMakerCheckerTable = true;
+          this.router.navigate(['/system']);
+        }
+    });
+  }
 }

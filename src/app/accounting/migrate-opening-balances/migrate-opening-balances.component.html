@@ -7,7 +7,7 @@
 
       <mat-card-content>
 
-        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+        <div #searchFormRef fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
           <mat-form-field fxFlex="88%">
             <mat-label>Office</mat-label>
@@ -21,7 +21,9 @@
             </mat-error>
           </mat-form-field>
 
-          <button mat-button type="button" color="primary" fxFlex="8%" (click)="retrieveOpeningBalances()">Retrieve</button>
+          <div>
+            <button mat-button type="button" color="primary" fxFlex="8%" (click)="retrieveOpeningBalances()">Retrieve</button>
+          </div>
 
         </div>
 
@@ -124,3 +126,13 @@
   </mat-card>
 
 </div>
+
+<ng-template #templateSearchFormRef let-popover="popover">
+  <h2>Migrate opening balances (Office-wise)</h2>
+  <p class="mw300">This form will be used to migrate opening balances. To know more click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/90243328/Migrate+opening+balances+Office-wise" target="_blank">Migrate opening balances (Office-wise)</a></p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="primary" (click)="popover.close();popover.close();previousStep();">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();popover.close();nextStep();">Next</button>
+  </div>
+</ng-template>

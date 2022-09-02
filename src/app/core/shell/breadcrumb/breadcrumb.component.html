@@ -1,6 +1,6 @@
 <nav class="breadcrumb-wrapper">
   <ul class="breadcrumb">
-    <span class="breadcrumb-title">{{ breadcrumbs[breadcrumbs.length-1].label }}</span>
+    <span #breadcrumb class="breadcrumb-title">{{ breadcrumbs[breadcrumbs.length-1].label }}</span>
     <span *ngIf="breadcrumbs.length-1 !== 0" class="separator">
       <li *ngFor="let breadcrumb of breadcrumbs; let last = last" class="breadcrumb-label">
         <span *ngIf="!last" class="breadcrumb-link">
@@ -12,3 +12,13 @@
     </span>
   </ul>
 </nav>
+
+<ng-template #templateBreadcrumb let-popover="popover">
+  <h2>Breadcrumbs</h2>
+  <p class="mw300">This will show the user's current location in the app.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
+  </div>
+</ng-template>

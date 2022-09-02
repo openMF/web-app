@@ -1,20 +1,22 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+<div #buttonCreateLoanProduct class="in-block">
   <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_LOANPRODUCT'">
     <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
     Create Loan Product
   </button>
+  </div>
 </div>
 
 <div class="container">
 
-  <div fxLayout="row">
+  <div #filter fxLayout="row">
     <mat-form-field fxFlex>
       <mat-label>Filter</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)">
     </mat-form-field>
   </div>
 
-  <div class="mat-elevation-z8">
+  <div #loanProductsTable class="mat-elevation-z8">
 
     <table mat-table [dataSource]="dataSource" matSort>
 
@@ -52,3 +54,31 @@
   </div>
 
 </div>
+
+<ng-template #templateButtonCreateLoanProduct let-popover="popover">
+  <h2>Create loan product</h2>
+  <p class="mw300">This option allows you to create new loan product.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateFilter let-popover="popover">
+  <h4>Search bar to filter loan products.</h4>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonCreateLoanProduct,buttonCreateLoanProduct, 'bottom', true)">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateLoanProductsTable,loanProductsTable, 'top', true)">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateLoanProductsTable let-popover="popover">
+  <h4 class="mw300">List of loan products in the organization. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102039585/Loan+Products" target="_blank">Loan Products</a></h4>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
+  </div>
+</ng-template>
