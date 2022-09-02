@@ -64,10 +64,13 @@ export class SavingProductAccountingStepComponent implements OnInit {
           'incomeFromFeeAccountId': this.savingProductsTemplate.accountingMappings.incomeFromFeeAccount.id,
           'incomeFromPenaltyAccountId': this.savingProductsTemplate.accountingMappings.incomeFromPenaltyAccount.id,
           'incomeFromInterestId': this.savingProductsTemplate.accountingMappings.incomeFromInterest.id,
-          'escheatLiabilityId': this.savingProductsTemplate.accountingMappings.escheatLiabilityAccount.id,
           'advancedAccountingRules': (this.savingProductsTemplate.paymentChannelToFundSourceMappings || this.savingProductsTemplate.feeToIncomeAccountMappings || this.savingProductsTemplate.penaltyToIncomeAccountMappings) ? true : false
         });
-
+      if (this.isDormancyTrackingActive.value) {
+        this.savingProductAccountingForm.patchValue({
+          'escheatLiabilityId': this.savingProductsTemplate.accountingMappings.escheatLiabilityAccount.id,
+        });
+      }
         this.savingProductAccountingForm.setControl('paymentChannelToFundSourceMappings',
           this.formBuilder.array((this.savingProductsTemplate.paymentChannelToFundSourceMappings || []).map((paymentFundSource: any) =>
           ({ paymentTypeId: paymentFundSource.paymentType.id, fundSourceAccountId: paymentFundSource.fundSourceAccount.id }))));
