@@ -96,6 +96,9 @@
       Next&nbsp;&nbsp;
       <fa-icon icon="arrow-right"></fa-icon>
     </button>
+    <button mat-raised-button *ngIf="loanId" [routerLink]="['../', 'general']">
+      Cancel
+    </button>
   </div>
 
 </form>

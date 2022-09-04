@@ -71,6 +71,7 @@ import { LoansAccountViewGuarantorDetailsDialogComponent } from './custom-dialog
 import { LoansAccountAddCollateralDialogComponent } from './custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
 import { LoanAccountLoadDocumentsDialogComponent } from './custom-dialog/loan-account-load-documents-dialog/loan-account-load-documents-dialog.component';
 import { LoanCreditBalanceRefundComponent } from './loans-view/loan-account-actions/loan-credit-balance-refund/loan-credit-balance-refund.component';
+import { LoanDelinquencyTagsTabComponent } from './loans-view/loan-delinquency-tags-tab/loan-delinquency-tags-tab.component';
 
 /**
  * Loans Module
@@ -140,7 +141,8 @@ import { LoanCreditBalanceRefundComponent } from './loans-view/loan-account-acti
     GlimDetailsStepComponent,
     GlimChargesStepComponent,
     GlimTermsStepComponent,
-    GlimPreviewStepComponent
+    GlimPreviewStepComponent,
+    LoanDelinquencyTagsTabComponent
   ],
   providers: [ ],
 })

@@ -100,6 +100,12 @@
           Transactions
         </a>
       </ng-container>
+      <ng-container>
+        <a mat-tab-link [routerLink]="['./delinquencytags']" routerLinkActive #delinquencytags="routerLinkActive"
+          [active]="delinquencytags.isActive">
+          Delinquency Tags
+        </a>
+      </ng-container>
       <ng-container *ngIf="loanDetailsData.collateral">
         <a mat-tab-link [routerLink]="['./loan-collateral']" routerLinkActive #loanCollateralDetails="routerLinkActive"
           [active]="loanCollateralDetails.isActive">

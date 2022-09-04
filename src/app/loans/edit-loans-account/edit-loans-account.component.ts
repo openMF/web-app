@@ -78,11 +78,12 @@ export class EditLoansAccountComponent implements OnInit {
   /** Checks wheter all the forms in different steps are valid and not pristine */
   get loansAccountFormValidAndNotPristine() {
     return (
-      this.loansAccountDetailsForm.valid &&
-      this.loansAccountTermsForm.valid &&
+      (this.loansAccountDetailsForm.valid &&
+      this.loansAccountTermsForm.valid) &&
       (
         !this.loansAccountDetailsForm.pristine ||
         !this.loansAccountTermsForm.pristine ||
+        !this.loansAccountTermsStep.pristine ||
         !this.loansAccountChargesStep.pristine
       )
     );
@@ -94,6 +95,8 @@ export class EditLoansAccountComponent implements OnInit {
       ...this.loansAccountDetailsStep.loansAccountDetails,
       ...this.loansAccountTermsStep.loansAccountTerms,
       ...this.loansAccountChargesStep.loansAccountCharges,
+      ...this.loansAccountTermsStep.loanCollateral,
+      ...this.loansAccountTermsStep.disbursementData
     };
   }
 
@@ -116,6 +119,10 @@ export class EditLoansAccountComponent implements OnInit {
         type: collateralEle.type,
         value: collateralEle.value,
         description: collateralEle.description
+      })),
+      disbursementData: this.loansAccount.disbursementData.map((item: any) => ({
+        expectedDisbursementDate: this.dateUtils.formatDate(item.expectedDisbursementDate, dateFormat),
+        principal: item.principal
       })),
       interestChargedFromDate: this.dateUtils.formatDate(this.loansAccount.interestChargedFromDate, dateFormat),
       repaymentsStartingFromDate: this.dateUtils.formatDate(this.loansAccount.repaymentsStartingFromDate, dateFormat),
@@ -141,6 +148,8 @@ export class EditLoansAccountComponent implements OnInit {
     if (!(loansAccountData.isFloatingInterestRate === false)) {
       delete loansAccountData.isFloatingInterestRate;
     }
+    loansAccountData.principal = loansAccountData.principalAmount;
+    delete loansAccountData.principalAmount;
     this.loansService.updateLoansAccount(this.loanId, loansAccountData).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });

@@ -55,10 +55,10 @@
       <td mat-cell *matCellDef="let charge">
         <span
           *ngIf="charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee'">
-          {{(charge.dueDate  | dateFormat) || 'Unassigned'}}
+          {{(charge.dueDate | dateFormat) || 'Unassigned'}}
         </span>
         <span *ngIf="charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'">
-          {{(charge.feeOnMonthDay  | dateFormat) || 'Unassigned'}}
+          {{(charge.feeOnMonthDay | dateFormat) || 'Unassigned'}}
         </span>
         <span
           *ngIf="!(charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'
@@ -126,5 +126,8 @@
   <button mat-raised-button matStepperNext [disabled]="!loansAccountFormValid">
     Next&nbsp;&nbsp;
     <fa-icon icon="arrow-right"></fa-icon>
+  </button>
+  <button mat-raised-button *ngIf="loanId" [routerLink]="['../', 'general']">
+    Cancel
   </button>
 </div>

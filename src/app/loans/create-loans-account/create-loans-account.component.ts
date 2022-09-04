@@ -110,7 +110,8 @@ export class CreateLoansAccountComponent implements OnInit {
       ...this.loansAccountDetailsStep.loansAccountDetails,
       ...this.loansAccountTermsStep.loansAccountTerms,
       ...this.loansAccountChargesStep.loansAccountCharges,
-      ...this.loansAccountTermsStep.loanCollateral
+      ...this.loansAccountTermsStep.loanCollateral,
+      ...this.loansAccountTermsStep.disbursementData
     };
   }
 
@@ -169,9 +170,11 @@ export class CreateLoansAccountComponent implements OnInit {
       delete loansAccountData.disbursementData;
     }
     delete loansAccountData.isValid;
+    loansAccountData.principal = loansAccountData.principalAmount;
+    delete loansAccountData.principalAmount;
 
     this.loansService.createLoansAccount(loansAccountData).subscribe((response: any) => {
-      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+      this.router.navigate(['../', response.resourceId, 'general'], { relativeTo: this.route });
     });
   }
 

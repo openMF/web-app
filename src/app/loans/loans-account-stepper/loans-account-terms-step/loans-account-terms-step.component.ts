@@ -2,9 +2,14 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoansAccountAddCollateralDialogComponent } from 'app/loans/custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
 import { SettingsService } from 'app/settings/settings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
+import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
+import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
+import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 
 /**
  * Create Loans Account Terms Step
@@ -20,8 +25,10 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   @Input() loansAccountProductTemplate: any;
   /** Loans Account Template */
   @Input() loansAccountTemplate: any;
+  loansAccountTermsData: any;
+
   /** Is Multi Disburse Loan  */
-  @Input() multiDisburseLoan: any;
+  multiDisburseLoan: any;
   // @Input() loansAccountFormValid: LoansAccountFormValid
   @Input() loansAccountFormValid: boolean;
   // @Input collateralOptions: Collateral Options
@@ -51,6 +58,9 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   transactionProcessingStrategyData: any;
   /** Client Active Loan Data */
   clientActiveLoanData: any;
+  /** Multi Disbursement Data */
+  disbursementDataSource: {}[] = [];
+  currencyDisplaySymbol = '$';
 
   /** Check if value of collateral added  is more than principal amount */
   isCollateralSufficient = false;
@@ -60,8 +70,16 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   collateralDataSource: {}[] = [];
   /** Columns to be displayed in collateral table. */
   loanCollateralDisplayedColumns: string[] = ['type', 'value', 'totalValue', 'totalCollateralValue', 'action'];
+  /** Disbursement Data Displayed Columns */
+  disbursementDisplayedColumns: string[] = ['expectedDisbursementDate', 'principal', 'actions'];
+  /** Multi Disbursement Control */
+  totalMultiDisbursed: any = 0;
+  isMultiDisbursedCompleted = false;
+
   /** Component is pristine if there has been no changes by user interaction */
   pristine = true;
+
+  loanId: any = null;
 
   /**
    * Create Loans Account Terms Form
@@ -69,53 +87,131 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
    * @param {SettingsService} settingsService SettingsService
    */
   constructor(private formBuilder: FormBuilder,
-      private settingsService: SettingsService,
-      public dialog: MatDialog) {
-    this.createloansAccountTermsForm();
+    private settingsService: SettingsService,
+    private route: ActivatedRoute,
+    public dialog: MatDialog) {
+      this.loanId = this.route.snapshot.params['loanId'];
+      this.createloansAccountTermsForm();
   }
   /**
    * Executes on change of input values
    */
   ngOnChanges() {
     if (this.loansAccountProductTemplate) {
+      this.loansAccountTermsData = this.loansAccountProductTemplate;
+      this.currencyDisplaySymbol = this.loansAccountTermsData.currency.displaySymbol;
+      if (this.loanId != null && this.loansAccountTemplate.accountNo) {
+        this.loansAccountTermsData = this.loansAccountTemplate;
+      }
+
       this.loansAccountTermsForm.patchValue({
-        'principal': this.loansAccountProductTemplate.principal,
-        'loanTermFrequency': this.loansAccountProductTemplate.termFrequency,
-        'loanTermFrequencyType': this.loansAccountProductTemplate.termPeriodFrequencyType.id,
-        'numberOfRepayments': this.loansAccountProductTemplate.numberOfRepayments,
-        'repaymentEvery': this.loansAccountProductTemplate.repaymentEvery,
-        'repaymentFrequencyType': this.loansAccountProductTemplate.repaymentFrequencyType.id,
-        'interestRatePerPeriod': this.loansAccountProductTemplate.interestRatePerPeriod,
-        'amortizationType': this.loansAccountProductTemplate.amortizationType.id,
-        'isEqualAmortization': this.loansAccountProductTemplate.isEqualAmortization,
-        'interestType': this.loansAccountProductTemplate.interestType.id,
-        'isFloatingInterestRate': this.loansAccountProductTemplate.isLoanProductLinkedToFloatingRate ? false : '',
-        'interestCalculationPeriodType': this.loansAccountProductTemplate.interestCalculationPeriodType.id,
-        'allowPartialPeriodInterestCalcualtion': this.loansAccountProductTemplate.allowPartialPeriodInterestCalcualtion,
-        'inArrearsTolerance': this.loansAccountProductTemplate.inArrearsTolerance,
-        'graceOnPrincipalPayment': this.loansAccountProductTemplate.graceOnPrincipalPayment,
-        'graceOnInterestPayment': this.loansAccountProductTemplate.graceOnInterestPayment,
-        'graceOnArrearsAgeing': this.loansAccountProductTemplate.graceOnArrearsAgeing,
-        'transactionProcessingStrategyId': this.loansAccountProductTemplate.transactionProcessingStrategyId,
-        'graceOnInterestCharged': this.loansAccountProductTemplate.graceOnInterestCharged,
-        'fixedEmiAmount': this.loansAccountProductTemplate.fixedEmiAmount,
-        'maxOutstandingLoanBalance': this.loansAccountProductTemplate.maxOutstandingLoanBalance
+        'principalAmount': this.loansAccountTermsData.principal,
+        'loanTermFrequency': this.loansAccountTermsData.termFrequency,
+        'loanTermFrequencyType': this.loansAccountTermsData.termPeriodFrequencyType.id,
+        'numberOfRepayments': this.loansAccountTermsData.numberOfRepayments,
+        'repaymentEvery': this.loansAccountTermsData.repaymentEvery,
+        'repaymentFrequencyType': this.loansAccountTermsData.repaymentFrequencyType.id,
+        'interestRatePerPeriod': this.loansAccountTermsData.interestRatePerPeriod,
+        'amortizationType': this.loansAccountTermsData.amortizationType.id,
+        'isEqualAmortization': this.loansAccountTermsData.isEqualAmortization,
+        'interestType': this.loansAccountTermsData.interestType.id,
+        'isFloatingInterestRate': this.loansAccountTermsData.isLoanProductLinkedToFloatingRate ? false : '',
+        'interestCalculationPeriodType': this.loansAccountTermsData.interestCalculationPeriodType.id,
+        'allowPartialPeriodInterestCalcualtion': this.loansAccountTermsData.allowPartialPeriodInterestCalcualtion,
+        'inArrearsTolerance': this.loansAccountTermsData.inArrearsTolerance,
+        'graceOnPrincipalPayment': this.loansAccountTermsData.graceOnPrincipalPayment,
+        'graceOnInterestPayment': this.loansAccountTermsData.graceOnInterestPayment,
+        'graceOnArrearsAgeing': this.loansAccountTermsData.graceOnArrearsAgeing,
+        'transactionProcessingStrategyId': this.loansAccountTermsData.transactionProcessingStrategyId,
+        'graceOnInterestCharged': this.loansAccountTermsData.graceOnInterestCharged,
+        'fixedEmiAmount': this.loansAccountTermsData.fixedEmiAmount,
+        'maxOutstandingLoanBalance': this.loansAccountTermsData.maxOutstandingLoanBalance
       });
+
+      this.multiDisburseLoan = this.loansAccountTermsData.multiDisburseLoan;
+      if (this.loansAccountTermsData.disbursementDetails) {
+        this.disbursementDataSource = this.loansAccountTermsData.disbursementDetails;
+        this.totalMultiDisbursed = 0;
+        this.disbursementDataSource.forEach((item: any) => {
+          this.totalMultiDisbursed += item.principal;
+        });
+      }
+
+      this.collateralDataSource = this.loansAccountTermsData.collateral || [];
+
+      const allowAttributeOverrides = this.loansAccountTermsData.product.allowAttributeOverrides;
+      if (!allowAttributeOverrides.repaymentEvery) {
+        this.loansAccountTermsForm.controls.repaymentEvery.disable();
+        this.loansAccountTermsForm.controls.repaymentFrequencyType.disable();
+      }
+      if (!allowAttributeOverrides.interestType) {
+        this.loansAccountTermsForm.controls.interestType.disable();
+      }
+      if (!allowAttributeOverrides.amortizationType) {
+        this.loansAccountTermsForm.controls.amortizationType.disable();
+      }
+      if (!allowAttributeOverrides.interestCalculationPeriodType) {
+        this.loansAccountTermsForm.controls.interestCalculationPeriodType.disable();
+        this.loansAccountTermsForm.controls.allowPartialPeriodInterestCalcualtion.disable();
+      }
+      if (!allowAttributeOverrides.inArrearsTolerance) {
+        this.loansAccountTermsForm.controls.inArrearsTolerance.disable();
+      }
+      if (!allowAttributeOverrides.transactionProcessingStrategyId) {
+        this.loansAccountTermsForm.controls.transactionProcessingStrategyId.disable();
+      }
+      if (!allowAttributeOverrides.graceOnPrincipalAndInterestPayment) {
+        this.loansAccountTermsForm.controls.graceOnPrincipalPayment.disable();
+      }
+      if (!allowAttributeOverrides.graceOnPrincipalAndInterestPayment) {
+        this.loansAccountTermsForm.controls.graceOnInterestPayment.disable();
+      }
+      if (!allowAttributeOverrides.graceOnArrearsAgeing) {
+        this.loansAccountTermsForm.controls.graceOnArrearsAgeing.disable();
+      }
       this.setOptions();
     }
   }
 
   ngOnInit() {
-    this.maxDate = this.settingsService.businessDate;
-    if (this.loansAccountTemplate) {
-      if (this.loansAccountTemplate.loanProductId) {
+    this.maxDate = this.settingsService.maxFutureDate;
+    this.loansAccountTermsData = this.loansAccountProductTemplate;
+    if (this.loanId != null && this.loansAccountTemplate.accountNo) {
+      this.loansAccountTermsData = this.loansAccountTemplate;
+    }
+
+    if (this.loansAccountTermsData) {
+      if (this.loansAccountTermsData.loanProductId) {
         this.loansAccountTermsForm.patchValue({
-          'repaymentsStartingFromDate': this.loansAccountTemplate.expectedFirstRepaymentOnDate && new Date(this.loansAccountTemplate.expectedFirstRepaymentOnDate)
+          'repaymentsStartingFromDate': this.loansAccountTermsData.expectedFirstRepaymentOnDate && new Date(this.loansAccountTermsData.expectedFirstRepaymentOnDate)
         });
       }
+      this.loansAccountTermsForm.patchValue({
+        'principalAmount': this.loansAccountTermsData.principal,
+        'loanTermFrequency': this.loansAccountTermsData.termFrequency,
+        'loanTermFrequencyType': this.loansAccountTermsData.termPeriodFrequencyType.id,
+        'numberOfRepayments': this.loansAccountTermsData.numberOfRepayments,
+        'repaymentEvery': this.loansAccountTermsData.repaymentEvery,
+        'repaymentFrequencyType': this.loansAccountTermsData.repaymentFrequencyType.id,
+        'interestRatePerPeriod': this.loansAccountTermsData.interestRatePerPeriod,
+        'amortizationType': this.loansAccountTermsData.amortizationType.id,
+        'isEqualAmortization': this.loansAccountTermsData.isEqualAmortization,
+        'interestType': this.loansAccountTermsData.interestType.id,
+        'isFloatingInterestRate': this.loansAccountTermsData.isLoanProductLinkedToFloatingRate ? false : '',
+        'interestCalculationPeriodType': this.loansAccountTermsData.interestCalculationPeriodType.id,
+        'allowPartialPeriodInterestCalcualtion': this.loansAccountTermsData.allowPartialPeriodInterestCalcualtion,
+        'inArrearsTolerance': this.loansAccountTermsData.inArrearsTolerance,
+        'graceOnPrincipalPayment': this.loansAccountTermsData.graceOnPrincipalPayment,
+        'graceOnInterestPayment': this.loansAccountTermsData.graceOnInterestPayment,
+        'graceOnArrearsAgeing': this.loansAccountTermsData.graceOnArrearsAgeing,
+        'transactionProcessingStrategyId': this.loansAccountTermsData.transactionProcessingStrategyId,
+        'graceOnInterestCharged': this.loansAccountTermsData.graceOnInterestCharged,
+        'fixedEmiAmount': this.loansAccountTermsData.fixedEmiAmount,
+        'maxOutstandingLoanBalance': this.loansAccountTermsData.maxOutstandingLoanBalance
+      });
     }
     this.createloansAccountTermsForm();
-    this.setCustomValidators();
+    // this.setCustomValidators();
   }
 
   /** Custom Validators for the form */
@@ -142,20 +238,18 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   /** Create Loans Account Terms Form */
   createloansAccountTermsForm() {
     this.loansAccountTermsForm = this.formBuilder.group({
-      'principal': ['', Validators.required],
+      'principalAmount': ['', Validators.required],
       'loanTermFrequency': ['', Validators.required],
       'loanTermFrequencyType': ['', Validators.required],
       'numberOfRepayments': ['', Validators.required],
       'repaymentEvery': ['', Validators.required],
       'repaymentFrequencyType': ['', Validators.required],
-      'disbursementData': this.formBuilder.array([]),
       'repaymentFrequencyNthDayType': [''],
       'repaymentFrequencyDayOfWeekType': [''],
       'repaymentsStartingFromDate': [''],
       'interestChargedFromDate': [''],
       'interestRatePerPeriod': [''],
       'interestType': [''],
-      // 'interestRateDifferential': [''],
       'isFloatingInterestRate': [''],
       'isEqualAmortization': [''],
       'amortizationType': ['', Validators.required],
@@ -175,51 +269,87 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   }
 
   /**
-   * Creates the Disbursement Data form.
-   * @returns {FormGroup} Disbursement Data form.
+   * Gets the Disbursement Data array.
+   * @returns {Array} Disbursement Data array.
    */
-  createDisbursementDataForm(): FormGroup {
-    return this.formBuilder.group({
-      'expectedDisbursementDate': [new Date()],
-      'principal': ['']
+  get disbursementData() {
+    return {
+      disbursementData: this.disbursementDataSource
+    };
+  }
+
+  /**
+   * Adds the Disbursement Data entry form to given Disbursement Data entry.
+   */
+  addDisbursementDataEntry() {
+    const currentPrincipalAmount = this.loansAccountTermsForm.get('principalAmount').value;
+    const formfields: FormfieldBase[] = [
+      new DatepickerBase({
+        controlName: 'expectedDisbursementDate',
+        label: 'Expected Disbursement Date',
+        value: new Date() || '',
+        type: 'datetime-local',
+        minDate: this.minDate,
+        maxDate: this.maxDate,
+        required: true,
+        order: 1
+      }),
+      new InputBase({
+        controlName: 'principal',
+        label: 'Principal',
+        value: (currentPrincipalAmount - this.totalMultiDisbursed),
+        type: 'number',
+        required: true,
+        order: 2
+      })
+    ];
+    const data = {
+      title: 'Add Disbursement Details',
+      layout: { addButtonText: 'Add' },
+      formfields: formfields
+    };
+    const disbursementDialogRef = this.dialog.open(FormDialogComponent, { data });
+    disbursementDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.data) {
+        const principal = response.data.value.principal * 1;
+        if ((this.totalMultiDisbursed + principal) <= currentPrincipalAmount) {
+          this.disbursementDataSource = this.disbursementDataSource.concat(response.data.value);
+          this.totalMultiDisbursed += principal;
+          this.isMultiDisbursedCompleted = (this.totalMultiDisbursed === currentPrincipalAmount);
+          this.pristine = false;
+        }
+      }
     });
   }
 
   /**
-   * Gets the Disbursement Data form array.
-   * @returns {FormArray} Disbursement Data form array.
-   */
-    get disbursementData(): FormArray {
-    return this.loansAccountTermsForm.get('disbursementData') as FormArray;
-  }
-
-  /**
-   * Adds the Disbursement Data entry form to given Disbursement Data entry form array.
-   * @param {FormArray} disbursementDataFormArray Given affected gl entry form array (debit/credit).
-   */
-   addDisbursementDataEntry(disbursementDataFormArray: FormArray) {
-    disbursementDataFormArray.push(this.createDisbursementDataForm());
-  }
-
-  /**
    * Removes the Disbursement Data entry form from given Disbursement Data entry form array at given index.
-   * @param {FormArray} disbursementDataFormArray Given Disbursement Data entry form array.
    * @param {number} index Array index from where Disbursement Data entry form needs to be removed.
    */
-   removeDisbursementDataEntry(disbursementDataFormArray: FormArray, index: number) {
-    disbursementDataFormArray.removeAt(index);
+  removeDisbursementDataEntry(index: number) {
+    const currentPrincipalAmount = this.loansAccountTermsForm.get('principalAmount').value;
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { deleteContext: `this` }
+    });
+    dialogRef.afterClosed().subscribe((response: any) => {
+      if (response.delete) {
+        const principal = this.disbursementDataSource[index]['principal'] * 1;
+        this.disbursementDataSource.splice(index, 1);
+        this.disbursementDataSource = this.disbursementDataSource.concat([]);
+        this.totalMultiDisbursed -= principal;
+        this.isMultiDisbursedCompleted = (this.totalMultiDisbursed === currentPrincipalAmount);
+      }
+    });
   }
 
   /**
    * Add a Collateral to the loan
    */
-    addCollateral() {
+  addCollateral() {
     const addCollateralDialogRef = this.dialog.open(LoansAccountAddCollateralDialogComponent, {
       data: { collateralOptions: this.collateralOptions }
     });
-    console.log(this.collateralOptions);
     addCollateralDialogRef.afterClosed().subscribe((response: any) => {
-      console.log(this.loanPrincipal);
       if (response.data) {
         const collateralData = {
           type: response.data.value.collateral,

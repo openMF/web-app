@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Services */
@@ -38,6 +39,8 @@ export class LoansAccountDetailsStepComponent implements OnInit {
   /** Loans Account Details Form */
   loansAccountDetailsForm: FormGroup;
 
+  loanId: any = null;
+
   /** Loans Account Template with product data  */
   @Output() loansAccountProductTemplate = new EventEmitter();
   /**
@@ -48,12 +51,14 @@ export class LoansAccountDetailsStepComponent implements OnInit {
    */
   constructor(private formBuilder: FormBuilder,
     private loansService: LoansService,
+    private route: ActivatedRoute,
     private settingsService: SettingsService) {
+    this.loanId = this.route.snapshot.params['loanId'];
     this.createLoansAccountDetailsForm();
   }
 
   ngOnInit() {
-    this.maxDate = this.settingsService.businessDate;
+    this.maxDate = this.settingsService.maxFutureDate;
     this.buildDependencies();
     if (this.loansAccountTemplate) {
       this.productData = this.loansAccountTemplate.productOptions;
