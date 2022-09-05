@@ -51,6 +51,8 @@ import { GLIMViewResolver } from './glim-account/glim-account-view.resolver';
 import { GSIMAccountsResolver } from 'app/groups/common-resolvers/gsim-account-resolver';
 import { GLIMLoanTemplateResolver } from './common-resolvers/glim-loan-template.resolver';
 import { GroupViewResolver } from 'app/groups/common-resolvers/group-view.resolver';
+import { LoanDelinquencyTagsResolver } from './common-resolvers/loan-delinquency-tags.resolver';
+import { LoanDelinquencyTagsTabComponent } from './loans-view/loan-delinquency-tags-tab/loan-delinquency-tags-tab.component';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -114,6 +116,19 @@ const routes: Routes = [
                   path: 'export',
                   component: ExportTransactionsComponent
                 }
+              ]
+            },
+            {
+              path: 'delinquencytags',
+              data: { title: extract('Loans Delinquency Tags'), breadcrumb: 'Delinquency Tags', routeParamBreadcrumb: false },
+              resolve: {
+                loanDelinquencyTagsData: LoanDelinquencyTagsResolver
+              },
+              children: [
+                {
+                  path: '',
+                  component: LoanDelinquencyTagsTabComponent
+                },
               ]
             },
             {
@@ -250,7 +265,7 @@ const routes: Routes = [
         },
         {
           path: 'edit-loans-account',
-          data: { title: extract('Edit Loans Account'), breadcrumb: 'Edit Loans Account', routeParamBreadcrumb: 'Edit' },
+          data: { title: extract('Modify Loans Account'), breadcrumb: 'Modify Loans Account', routeParamBreadcrumb: 'Edit' },
           component: EditLoansAccountComponent,
           resolve: {
             loansAccountAndTemplate: LoansAccountAndTemplateResolver
@@ -293,6 +308,7 @@ const routes: Routes = [
     LoanNotesResolver,
     LoanDatatablesResolver,
     LoanDatatableResolver,
+    LoanDelinquencyTagsResolver,
     LoanActionButtonResolver,
     LoansAccountTemplateResolver,
     LoanDocumentsResolver,

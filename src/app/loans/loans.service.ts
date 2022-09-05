@@ -47,15 +47,19 @@ export class LoansService {
     return this.http.delete(`/loans/${loanId}`);
   }
 
+  getDelinquencyTags(loanId: string): Observable<any> {
+    return this.http.get(`/loans/${loanId}/delinquencytags`);
+  }
+
   /**
    * Returns the loan template data with specific condition
    * @param loanId Loan Id
    */
   getLoanTemplate(loanId: string): Observable<any> {
     const httpParams = new HttpParams()
-                      .set('fields', 'id,loanOfficerId,loanOfficerOptions')
-                      .set('staffInSelectedOfficeOnly', 'true')
-                      .set('template', 'true');
+      .set('fields', 'id,loanOfficerId,loanOfficerOptions')
+      .set('staffInSelectedOfficeOnly', 'true')
+      .set('template', 'true');
     return this.http.get(`/loans/${loanId}`, { params: httpParams });
   }
 
@@ -102,7 +106,7 @@ export class LoansService {
     const httpParams = new HttpParams()
       .set('associations', 'all')
       .set('exclude', 'guarantors,futureSchedule');
-    return this.http.get(`/loans/${loanId}`, {params: httpParams});
+    return this.http.get(`/loans/${loanId}`, { params: httpParams });
   }
 
   getApproveAssociationsDetails(loanId: any) {
@@ -156,13 +160,13 @@ export class LoansService {
    */
   submitLoanActionButton(loanId: string, data: any, command: any) {
     const httpParams = new HttpParams().set('command', command);
-    return this.http.post(`/loans/${loanId}/transactions`, data, {params: httpParams});
+    return this.http.post(`/loans/${loanId}/transactions`, data, { params: httpParams });
   }
 
   getLoanScreenReportsData(): Observable<any> {
     const httpParams = new HttpParams().set('entityId', '1')
-                                       .set('typeId', '0');
-    return this.http.get(`/templates`, {params: httpParams});
+      .set('typeId', '0');
+    return this.http.get(`/templates`, { params: httpParams });
   }
 
   /**
@@ -222,19 +226,19 @@ export class LoansService {
    */
   loanActionButtons(loanId: any, command: any, data?: any): Observable<any> {
     const httpParams = new HttpParams().set('command', command);
-    return this.http.post(`/loans/${loanId}`, data, {params: httpParams});
+    return this.http.post(`/loans/${loanId}`, data, { params: httpParams });
   }
 
   /**
    * @param {string|number} loanId Loan Id.
    * @param {any} foreclosuredata ForeClosure Data
    */
-  getForeclosureData(loanId: string|number, foreclosuredata: any) {
+  getForeclosureData(loanId: string | number, foreclosuredata: any) {
     const httpParams = new HttpParams().set('command', foreclosuredata.command)
-                                       .set('dateFormat', foreclosuredata.dateFormat)
-                                       .set('locale', foreclosuredata.locale)
-                                       .set('transactionDate', foreclosuredata.transactionDate);
-    return this.http.get(`/loans/${loanId}/transactions/template`, {params: httpParams});
+      .set('dateFormat', foreclosuredata.dateFormat)
+      .set('locale', foreclosuredata.locale)
+      .set('transactionDate', foreclosuredata.transactionDate);
+    return this.http.get(`/loans/${loanId}/transactions/template`, { params: httpParams });
 
   }
 
@@ -244,7 +248,7 @@ export class LoansService {
    */
   loanForclosureData(loanId: any, data: any) {
     const httpParams = new HttpParams().set('command', 'foreclosure');
-    return this.http.post(`/loans/${loanId}/transactions`, data, {params: httpParams});
+    return this.http.post(`/loans/${loanId}/transactions`, data, { params: httpParams });
   }
 
   /**
@@ -260,7 +264,7 @@ export class LoansService {
    */
   submitRescheduleData(data: any) {
     const httpParams = new HttpParams().set('command', 'reschedule');
-    return this.http.post('/rescheduleloans', data, {params: httpParams});
+    return this.http.post('/rescheduleloans', data, { params: httpParams });
   }
 
   /**
@@ -270,19 +274,19 @@ export class LoansService {
    */
   getLoansAccountTemplateResource(entityId: any, isGroup: boolean, productId?: any): Observable<any> {
     let httpParams = new HttpParams().set('activeOnly', 'true')
-                                      .set('staffInSelectedOfficeOnly', 'true');
+      .set('staffInSelectedOfficeOnly', 'true');
     httpParams = productId ? httpParams.set('productId', productId) : httpParams;
     httpParams = isGroup ? httpParams.set('groupId', entityId)
-                                      .set('templateType', 'group') :
-                                      httpParams.set('clientId', entityId)
-                                      .set('templateType', 'individual');
+      .set('templateType', 'group') :
+      httpParams.set('clientId', entityId)
+        .set('templateType', 'individual');
     return this.http.get('/loans/template', { params: httpParams });
   }
 
   getLoansAccountAndTemplateResource(loanId: any): Observable<any> {
     const httpParams = new HttpParams().set('associations', 'charges,collateral,meeting,multiDisburseDetails')
-                                       .set('staffInSelectedOfficeOnly', 'true')
-                                       .set('template', 'true');
+      .set('staffInSelectedOfficeOnly', 'true')
+      .set('template', 'true');
     return this.http.get(`/loans/${loanId}`, { params: httpParams });
   }
 
@@ -292,8 +296,8 @@ export class LoansService {
    */
   getLoansCollateralTemplateResource(productId: any): Observable<any> {
     const httpParams = new HttpParams().set('fields', 'id, loanCollateralOptions')
-                                  .set('productId', productId)
-                                  .set('templateType', 'collateral');
+      .set('productId', productId)
+      .set('templateType', 'collateral');
     return this.http.get('/loans/template', { params: httpParams });
   }
 
@@ -346,7 +350,7 @@ export class LoansService {
 
   getTemplateData(templateId: any, loanId: any): Observable<any> {
     const httpParams = new HttpParams().set('loanId', loanId);
-    return this.http.post(`/templates/${templateId}`, {}, { params: httpParams, responseType: 'text'});
+    return this.http.post(`/templates/${templateId}`, {}, { params: httpParams, responseType: 'text' });
   }
 
   /**
@@ -444,16 +448,17 @@ export class LoansService {
    * @param glimId GLIM Id of account to get data for.
    * @returns {Observable<any>} GLIM Account data.
    */
-   getGLIMAccountData(glimId: string, groupId: string): Observable<any> {
+  getGLIMAccountData(glimId: string, groupId: string): Observable<any> {
     return this.http.get(`/loans/glimAccount/${glimId}`);
   }
 
   getGLIMLoanAccountTemplate(groupId: any): Observable<any> {
     const httpParams = new HttpParams().set('groupId', groupId)
-                                        .set('lendingStrategy', '300')
-                                        .set('templateType', 'jlgbulk');
-  return this.http.get('/loans/template', { params: httpParams });
+      .set('lendingStrategy', '300')
+      .set('templateType', 'jlgbulk');
+    return this.http.get('/loans/template', { params: httpParams });
   }
+
   createGlimAccount(glimAccount: any): Observable<any> {
     return this.http.post('/batches?enclosingTransaction=true', glimAccount);
   }

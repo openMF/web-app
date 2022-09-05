@@ -14,6 +14,7 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { ActivatedRoute } from '@angular/router';
 
 /**
  * Recurring Deposit Account Charges Step
@@ -50,6 +51,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   isCollateralSufficient = false;
   /** Total value of all collateral added to a loan */
   totalCollateralValue: any = 0;
+  loanId: any = null;
 
   /**
    * Loans Account Charges Form Step
@@ -59,7 +61,9 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
    */
   constructor(public dialog: MatDialog,
     private dateUtils: Dates,
+    private route: ActivatedRoute,
     private settingsService: SettingsService) {
+    this.loanId = this.route.snapshot.params['loanId'];
   }
 
   ngOnInit() {
