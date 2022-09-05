@@ -1,0 +1,32 @@
+---
+# Configuration file for Mega-Linter
+# See all available variables at https://megalinter.github.io/latest/configuration/ and in linters documentation
+
+APPLY_FIXES: none # all, none, or list of linter keys
+VALIDATE_ALL_CODEBASE: false
+DEFAULT_BRANCH: develop
+
+# If you use ENABLE_LINTERS variable, all other linters will be disabled by default
+ENABLE_LINTERS:
+  # See https://megalinter.github.io/descriptors/css_scss_lint/
+  - CSS_SCSS_LINT
+  # See https://megalinter.github.io/descriptors/markdown_markdownlint/
+  - MARKDOWN_MARKDOWNLINT
+  # See https://megalinter.github.io/descriptors/yaml_yamllint/
+  - YAML_YAMLLINT
+  # See https://megalinter.github.io/descriptors/dockerfile_hadolint/
+  - DOCKERFILE_HADOLINT
+  - JSON_PRETTIER
+  - HTML_HTMLHINT
+  - TYPESCRIPT_STANDARD
+
+# DISABLE:
+#   - COPYPASTE # Uncomment to enable checks of abusive copy-pastes
+#   - SPELL # Uncomment to enable checks of spelling mistakes # - SPELL # Uncomment to disable checks of spelling mistakes
+
+SHOW_ELAPSED_TIME: true
+FILEIO_REPORTER: false
+# Custom Linter configutations
+
+PRINT_ALPACA: false
+CSS_SCSS_LINT_DISABLE_ERRORS: true

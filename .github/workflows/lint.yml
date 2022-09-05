@@ -1,0 +1,37 @@
+---
+name: Lint with Mega-linter
+
+'on':
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+
+      # This is a hack to use a non-standard image for the lint step
+      # - name: Use custom linter image
+      #   run: |
+      #     docker pull nvuillam/mega-linter-java:alpha
+      #     docker images | grep mega-linter
+      #     echo Tagging...
+      #     docker tag nvuillam/mega-linter-java:alpha nvuillam/mega-linter-java:v4
+      #     docker images | grep mega-linter
+
+      - name: Mega-Linter
+        uses: megalinter/megalinter@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PRINT_ALPACA: "false"
+          # LOG_LEVEL: DEBUG
