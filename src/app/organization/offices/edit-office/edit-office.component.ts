@@ -29,6 +29,8 @@ export class EditOfficeComponent implements OnInit {
   maxDate = new Date();
   treeDataSource: OfficeHierarchy[] = []
   showHierarchy:boolean=false;
+  allowedParents:any;
+
     /**
      * Retrieves the charge data from `resolve`.
      * @param {ProductsService} organizationService Organization Service.
@@ -47,6 +49,7 @@ export class EditOfficeComponent implements OnInit {
                 private dateUtils: Dates) {
       this.route.data.subscribe((data: { officeTemplate: any }) => {
         this.officeData = data.officeTemplate;
+        this.allowedParents=data.officeTemplate?.allowedParents?.filter(x=>x.status==true);
       });
     }
 

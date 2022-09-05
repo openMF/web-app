@@ -69,6 +69,7 @@ import { EditLoanProvisioningCriteriaComponent } from './loan-provisioning-crite
 import { StandingInstructionsHistoryComponent } from './standing-instructions-history/standing-instructions-history.component';
 import { FundMappingComponent } from './fund-mapping/fund-mapping.component';
 import { CreateHolidayComponent } from './holidays/create-holiday/create-holiday.component';
+import { CombineOfficeComponent } from './offices/combine-office/combine-office.component';
 
 /**
  * Organization Module
@@ -144,6 +145,7 @@ import { CreateHolidayComponent } from './holidays/create-holiday/create-holiday
     StandingInstructionsHistoryComponent,
     FundMappingComponent,
     CreateHolidayComponent,
+    CombineOfficeComponent,
   ]
 })
 export class OrganizationModule { }

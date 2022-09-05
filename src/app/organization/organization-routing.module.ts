@@ -102,6 +102,7 @@ import { LoanProvisioningCriteriaTemplateResolver } from './loan-provisioning-cr
 import { LoanProvisioningCriteriaAndTemplateResolver } from './loan-provisioning-criteria/common-resolvers/loan-provisioning-criteria-and-template.resolver';
 import { StandingInstructionsTemplateResolver } from './standing-instructions-history/standing-instructions-template.resolver';
 import { AdvanceSearchTemplateResolver } from './fund-mapping/advance-search-template.resolver';
+import { CombineOfficeComponent } from './offices/combine-office/combine-office.component';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -176,6 +177,14 @@ const routes: Routes = [
               }
             },
             {
+              path: 'combine',
+              component: CombineOfficeComponent,
+              data: { title: extract('Combine Office'), breadcrumb: 'Combine Office' },
+              resolve: {
+                offices: OfficesResolver,
+              }
+            },
+            {
               path: ':id',
               data: { title: extract('View Office'), routeResolveBreadcrumb: ['office', 'name'] },
               component: ViewOfficeComponent,
@@ -218,7 +227,7 @@ const routes: Routes = [
                 }
               ]
             }
-
+            
           ]
         },
         {

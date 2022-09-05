@@ -10,7 +10,10 @@
     <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
     Create Office
   </button>
-
+  <button mat-raised-button color="primary" [routerLink]="['combine']" *mifosxHasPermission="'CREATE_OFFICE'">
+    <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+    Combine Office
+  </button>
   <button mat-raised-button color="primary" *mifosxHasPermission="'CREATE_OFFICE'" [routerLink]="['/organization', 'bulk-import', 'Offices']">
     <fa-icon icon="upload"></fa-icon>&nbsp;&nbsp;
     Import Offices

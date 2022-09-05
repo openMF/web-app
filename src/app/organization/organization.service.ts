@@ -151,6 +151,22 @@ export class OrganizationService {
     return this.http.put(`/countries/${officeId}`, office);
   }
 
+   /**
+   * @param officeId Office Id of office to get data for.
+   * @returns {Observable<any>}
+   */
+    fetchByHierarchyLevel(officeId: number): Observable<any> {
+      return this.http.get(`/offices/fetchByHierarchyLevel?level=LOWER&officeId=${officeId}`);
+    }
+
+    /**
+   * @param {any} merge Offices
+   * @returns {Observable<any>}
+   */
+ mergeOffice(office: any): Observable<any> {
+    return this.http.post('/offices/mergeOffice', office);
+  }
+
   /**
    * @returns {Observable<any>}
    */
@@ -159,12 +175,14 @@ export class OrganizationService {
     return this.http.get(`/datatables`, { params: httpParams });
   }
 
+ 
+
   /**
    * @param officeId Office Id of office to get datatable for.
    * @param datatableName Data table name.
    * @returns {Observable<any>}
    */
-  getOfficeDatatable(officeId: string, datatableName: string): Observable<any> {
+   getOfficeDatatable(officeId: string, datatableName: string): Observable<any> {
     const httpParams = new HttpParams().set('genericResultSet', 'true');
     return this.http.get(`/datatables/${datatableName}/${officeId}`, { params: httpParams });
   }

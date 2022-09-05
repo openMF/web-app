@@ -46,7 +46,7 @@ export class CreateOfficeComponent implements OnInit {
     private dateUtils: Dates
   ) {
     this.route.data.subscribe((data: { offices: any }) => {
-      this.officeData = data.offices
+      this.officeData = data.offices?.filter(x=>x.status==true);
     })
     this.parentId = this.router.getCurrentNavigation().extras?.state?.id
   }

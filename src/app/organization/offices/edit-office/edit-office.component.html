@@ -19,7 +19,7 @@
           <mat-form-field *ngIf="officeForm.contains('parentId')">
             <mat-label>Parent Office</mat-label>
             <mat-select required formControlName="parentId">
-              <mat-option *ngFor="let office of officeData.allowedParents" [value]="office.id">
+              <mat-option *ngFor="let office of allowedParents" [value]="office.id">
                 {{ office.name }}
               </mat-option>
             </mat-select>
