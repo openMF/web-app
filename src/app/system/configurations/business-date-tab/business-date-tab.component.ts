@@ -88,8 +88,14 @@ export class BusinessDateTabComponent implements OnInit {
       businessDateData.forEach((data: any) => {
         if (data.type === SettingsService.businessDateType) {
           this.businessDate = new Date(data.date);
+          this.businessDateForm.patchValue({
+            businessDate: this.businessDate
+          });
         } else {
           this.cobDate = new Date(data.date);
+          this.businessDateForm.patchValue({
+            cobDate: this.cobDate
+          });
         }
       });
     });

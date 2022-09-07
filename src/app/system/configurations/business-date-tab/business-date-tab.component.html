@@ -44,7 +44,7 @@
                     Submit
                   </button>
                 </span>
-                <button mat-button *ngIf="isEditInProgress" (click)="editInProgressToggle(0)">
+                <button mat-button *ngIf="isEditInProgress && (dateIndex == 0)" (click)="editInProgressToggle(0)">
                   Cancel
                 </button>
                 <button type="button" color="primary" *ngIf="!isEditInProgress" mat-icon-button matTooltip="Edit the Business Date"
@@ -80,7 +80,7 @@
                     Submit
                   </button>
                 </span>
-                <button mat-button *ngIf="isEditInProgress" (click)="editInProgressToggle(1)">
+                <button mat-button *ngIf="isEditInProgress && (dateIndex == 1)" (click)="editInProgressToggle(1)">
                   Cancel
                 </button>
                 <button type="button" color="primary" *ngIf="!isEditInProgress" mat-icon-button matTooltip="Edit the COB Date"
