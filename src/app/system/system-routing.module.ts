@@ -87,6 +87,7 @@ import { ViewHistorySchedulerJobComponent } from './manage-scheduler-jobs/view-h
 import { ViewHistorySchedulerJobsResolver } from './manage-scheduler-jobs/view-history-scheduler-job/view-history-scheduler-job.resolver';
 import { ConfigurationsComponent } from './configurations/configurations.component';
 import { GlobalConfigurationResolver } from './configurations/global-configurations-tab/global-configuration.resolver';
+import { EditConfigurationComponent } from './configurations/global-configurations-tab/edit-configuration/edit-configuration.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -456,8 +457,22 @@ const routes: Routes = [
         },
         {
           path: 'configurations',
-          component: ConfigurationsComponent,
-          data: { title: extract('Configurations'), breadcrumb: 'Configurations' }
+          data: { title: extract('Configurations'), breadcrumb: 'Configurations' },
+          children: [
+            {
+              path: '',
+              component: ConfigurationsComponent,
+              resolve: {}
+            },
+            {
+              path: ':id/edit',
+              data: { title: extract('Edit Configuration'), routeParamBreadcrumb: 'id' },
+              component: EditConfigurationComponent,
+              resolve: {
+                configuration: GlobalConfigurationResolver
+              }
+            }
+          ]
         },
         {
           path: 'account-number-preferences',
