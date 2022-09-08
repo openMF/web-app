@@ -1,0 +1,62 @@
+<div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+  <mat-form-field fxFlex="31%">
+    <mat-label>Job Name</mat-label>
+    <mat-select [formControl]="jobName" (selectionChange)="getWorkflowJobSteps($event.value)">
+      <mat-option *ngFor="let job of jobNameOptions" [value]="job">
+        {{ job }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="action-button" fxLayoutGap="25px" *ngIf="jobStepsData.length > 0">
+    <button mat-raised-button color="primary">
+      <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Link Job Step
+    </button>
+  </div>
+
+  <div class="mat-elevation-z8 container" *ngIf="jobStepsData.length > 0">
+
+    <table mat-table [dataSource]="jobStepsData" #table cdkDropList [cdkDropListData]="jobStepsData"
+      (cdkDropListDropped)="dropTable($event)">
+
+      <ng-container matColumnDef="stepName">
+        <th mat-header-cell *matHeaderCellDef> Step Name </th>
+        <td mat-cell *matCellDef="let jobStep"> {{ jobStep.stepName }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="stepOrder">
+        <th mat-header-cell *matHeaderCellDef> Order </th>
+        <td mat-cell *matCellDef="let jobStep"> {{ jobStep.order }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let row; let rowIndex = index">
+          <button type="button" mat-icon-button color="warn" (click)="removeJobStep(rowIndex)" matTooltip="Delete"
+            matTooltipPosition="left">
+            <fa-icon icon="trash"></fa-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row cdkDrag [cdkDragData]="row" *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <div *ngIf="stepOrderHasChanged" fxLayout="row" class="container margin-t space-top" fxLayout.xs="column"
+    fxLayoutAlign="center" fxLayoutGap="2%">
+    <button mat-raised-button [routerLink]="['../']">
+      Cancel
+    </button>
+    <button mat-raised-button color="primary" (click)="saveChanges()">
+      Apply Changes
+    </button>
+  </div>
+
+  <div class="container space-top" *ngIf="jobStepsData.length > 0 && !stepOrderHasChanged">
+    <mifosx-workflow-diagram [jobStepsData]="jobStepsData"></mifosx-workflow-diagram>
+  </div>
+
+</div>

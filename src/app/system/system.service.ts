@@ -248,6 +248,27 @@ export class SystemService {
   }
 
   /**
+   * @returns {Observable<any>} Fetches Jobs.
+   */
+  getWorkflowJobNames(): Observable<any> {
+    return this.http.get('/jobs/names');
+  }
+
+  /**
+   * @returns {Observable<any>} Fetches Jobs.
+   */
+  getWorkflowJobSteps(jobName: String): Observable<any> {
+    return this.http.get(`/jobs/${jobName}/steps`);
+  }
+
+  /**
+   * @returns {Observable<any>} Fetches Jobs.
+   */
+  putWorkflowJobSteps(jobName: String, payload: any): Observable<any> {
+    return this.http.put(`/jobs/${jobName}/steps`, payload);
+  }
+
+  /**
    * @returns {Observable<any>} Fetches Scheduler.
    */
   getScheduler(): Observable<any> {

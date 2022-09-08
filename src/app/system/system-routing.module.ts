@@ -26,7 +26,6 @@ import { ManageSurveysComponent } from './manage-surveys/manage-surveys.componen
 import { CreateSurveyComponent } from './manage-surveys/create-survey/create-survey.component';
 import { ViewSurveyComponent } from './manage-surveys/view-survey/view-survey.component';
 import { EditSurveyComponent } from './manage-surveys/edit-survey/edit-survey.component';
-import { ManageSchedulerJobsComponent } from './manage-scheduler-jobs/manage-scheduler-jobs.component';
 import { AmazonS3Component } from './external-services/amazon-s3/amazon-s3.component';
 import { EmailComponent } from './external-services/email/email.component';
 import { SMSComponent } from './external-services/sms/sms.component';
@@ -60,7 +59,6 @@ import { HookResolver } from './manage-hooks/view-hook/hook.resolver';
 import { HooksTemplateResolver } from './manage-hooks/hooks-template.resolver';
 import { RolesAndPermissionsResolver } from './roles-and-permissions/roles-and-permissions.resolver';
 import { ManageSurveysResolver } from './manage-surveys/manage-surveys.resolver';
-import { ManageSchedulerJobsResolver } from './manage-scheduler-jobs/manage-scheduler-jobs.resolver';
 import { GlobalConfigurationsResolver } from './configurations/global-configurations-tab/global-configurations.resolver';
 import { AmazonS3ConfigurationResolver } from './external-services/amazon-s3/amazon-s3.resolver';
 import { EmailConfigurationResolver } from './external-services/email/email.resolver';
@@ -75,19 +73,20 @@ import { ReportsResolver } from './manage-reports/reports.resolver';
 import { ReportResolver } from './manage-reports/report.resolver';
 import { SurveyResolver } from './manage-surveys/survey.resolver';
 import { ReportTemplateResolver } from './manage-reports/report-template.resolver';
-import { ViewSchedulerJobComponent } from './manage-scheduler-jobs/view-scheduler-job/view-scheduler-job.component';
-import { ViewSchedulerJobResolver } from './manage-scheduler-jobs/view-scheduler-job/view-scheduler-job.resolver';
-import { EditSchedulerJobComponent } from './manage-scheduler-jobs/edit-scheduler-job/edit-scheduler-job.component';
-import { ManageSchedulerJobResolver } from './manage-scheduler-jobs/manage-scheduler-job.resolver';
+import { ViewSchedulerJobComponent } from './manage-jobs/scheduler-jobs/view-scheduler-job/view-scheduler-job.component';
+import { ViewSchedulerJobResolver } from './manage-jobs/scheduler-jobs/view-scheduler-job/view-scheduler-job.resolver';
+import { EditSchedulerJobComponent } from './manage-jobs/scheduler-jobs/edit-scheduler-job/edit-scheduler-job.component';
+import { ManageSchedulerJobResolver } from './manage-jobs/scheduler-jobs/manage-scheduler-job.resolver';
 import { ViewRoleResolver } from './roles-and-permissions/view-role/view-role.resolver';
 import { EntityToEntityMappingResolver } from './entity-to-entity-mapping/entity-to-entity-mapping.resolver';
 import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-tasks/configure-maker-checker-tasks.component';
 import { MakerCheckerTasksResolver } from './configure-maker-checker-tasks/configure-maker-checker-tasks.resolver';
-import { ViewHistorySchedulerJobComponent } from './manage-scheduler-jobs/view-history-scheduler-job/view-history-scheduler-job.component';
-import { ViewHistorySchedulerJobsResolver } from './manage-scheduler-jobs/view-history-scheduler-job/view-history-scheduler-job.resolver';
+import { ViewHistorySchedulerJobComponent } from './manage-jobs/scheduler-jobs/view-history-scheduler-job/view-history-scheduler-job.component';
+import { ViewHistorySchedulerJobsResolver } from './manage-jobs/scheduler-jobs/view-history-scheduler-job/view-history-scheduler-job.resolver';
 import { ConfigurationsComponent } from './configurations/configurations.component';
 import { GlobalConfigurationResolver } from './configurations/global-configurations-tab/global-configuration.resolver';
 import { EditConfigurationComponent } from './configurations/global-configurations-tab/edit-configuration/edit-configuration.component';
+import { ManageJobsComponent } from './manage-jobs/manage-jobs.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -416,12 +415,12 @@ const routes: Routes = [
           ]
         },
         {
-          path: 'scheduler-jobs',
-          data: { title: extract('Manage Scheduler Jobs'), breadcrumb: 'Manage Scheduler Jobs' },
+          path: 'manage-jobs',
+          data: { title: extract('Manage Scheduler and COB Jobs'), breadcrumb: 'Manage Scheduler and COB Jobs' },
           children: [
             {
               path: '',
-              component: ManageSchedulerJobsComponent,
+              component: ManageJobsComponent,
               resolve: {},
             },
             {
@@ -601,7 +600,6 @@ const routes: Routes = [
     RolesAndPermissionsResolver,
     ManageSurveysResolver,
     SurveyResolver,
-    ManageSchedulerJobsResolver,
     GlobalConfigurationsResolver,
     GlobalConfigurationResolver,
     AmazonS3ConfigurationResolver,

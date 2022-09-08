@@ -1,0 +1,37 @@
+<ngx-graph [view]="diagramSize" [links]="links" [nodes]="nodes" [curve]="curve" [layout]="layout"
+  [nodeHeight]="100" [layoutSettings]="layoutSettings" [enableZoom]="true" [center$]="center$">
+  <ng-template #defsTemplate>
+    <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4" orient="auto">
+      <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
+    </svg:marker>
+  </ng-template>
+
+  <ng-template #nodeTemplate let-node>
+    <svg:g class="node" xmlns="http://www.w3.org/2000/xhtml" width="150" height="100">
+      <svg:foreignObject width="150" height="100">
+        <xhtml:div class="card-container" xmlns="http://www.w3.org/1999/xhtml">
+          <label class="name">{{ node.data.name }}</label>
+          <label>{{ node.data.order }}</label>
+        </xhtml:div>
+      </svg:foreignObject>
+    </svg:g>
+  </ng-template>
+
+  <ng-template #linkTemplate let-link>
+    <svg:g class="edge">
+      <svg:path class="line" stroke-width="2" marker-end="url(#arrow)"></svg:path>
+      <svg:text class="edge-label" text-anchor="middle">
+        <textPath class="text-path" [attr.href]="'#' + link.id" [style.dominant-baseline]="link.dominantBaseline"
+          startOffset="50%">
+          {{ link.label }}
+        </textPath>
+      </svg:text>
+    </svg:g>
+    <svg:g class="link-midpoint" *ngIf="link.midPoint"
+      [attr.transform]="'translate(' + link.midPoint.x + ',' + link.midPoint.y + ')'">
+      <ellipse rx="30" ry="10" />
+      <svg:text alignment-baseline="central">{{ link.data.linkText }}</svg:text>
+    </svg:g>
+  </ng-template>
+
+</ngx-graph>

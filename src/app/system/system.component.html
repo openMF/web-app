@@ -88,27 +88,22 @@
             <p matLine>Audit logs of all the activities, such as create client, disburse loans etc</p>
           </mat-list-item>
 
-          <div #manageReports>
-            <mat-list-item [routerLink]="['reports']">
-              <mat-icon matListIcon>
-                <fa-icon icon="file-word" size="sm"></fa-icon>
-              </mat-icon>
-              <h4 matLine>Manage Reports</h4>
-              <p matLine>Add new report and classify reports</p>
-            </mat-list-item>
-          </div>
+          <mat-list-item [routerLink]="['reports']">
+            <mat-icon matListIcon>
+              <fa-icon icon="file-word" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Manage Reports</h4>
+            <p matLine>Add new report and classify reports</p>
+          </mat-list-item>
 
-          <div #schedulerJobs>
-            <mat-list-item [routerLink]="['scheduler-jobs']">
-              <mat-icon matListIcon>
-                <fa-icon icon="clock" size="sm"></fa-icon>
-              </mat-icon>
-              <h4 matLine>Scheduler Jobs</h4>
-              <p matLine>Schedule a job, modify or delete jobs</p>
-            </mat-list-item>
-          </div>
+          <mat-list-item [routerLink]="['manage-jobs']">
+            <mat-icon matListIcon>
+              <fa-icon icon="clock" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Manage Jobs</h4>
+            <p matLine>Manage Schedule and Workflow jobs, modify jobs or view history and logs</p>
+          </mat-list-item>
 
-        <div #configurations>
           <mat-list-item [routerLink]="['configurations']">
             <mat-icon matListIcon>
               <fa-icon icon="cogs" size="sm"></fa-icon>
@@ -116,8 +111,6 @@
             <h4 matLine>Configurations</h4>
             <p matLine>Global configurations, Cache and Business Date settings</p>
           </mat-list-item>
-        </div>
-
 
           <mat-list-item [routerLink]="['account-number-preferences']">
             <mat-icon matListIcon>

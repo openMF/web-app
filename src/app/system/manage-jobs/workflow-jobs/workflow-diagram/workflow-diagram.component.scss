@@ -1,0 +1,40 @@
+:host ::ng-deep {
+  display: block;
+  height: inherit;
+  width: inherit;
+
+  .card-container {
+    height: 100;
+    min-width: 150;
+    display: block;
+    fill: #d7dada;
+    border: #000;
+
+    .name {
+      font-size: 12px;
+    }
+
+    label {
+      display: block;
+      text-align: center;
+      font-size: 20px;
+      margin-top: 4px;
+      margin-bottom: 8px;
+    }
+  }
+
+  .link-midpoint {
+    ellipse {
+      fill: white;
+      stroke: black;
+      stroke-width: 1;
+    }
+
+    text {
+      stroke: transparent;
+      fill: black;
+      text-anchor: middle;
+      font-size: 8px;
+    }
+  }
+}

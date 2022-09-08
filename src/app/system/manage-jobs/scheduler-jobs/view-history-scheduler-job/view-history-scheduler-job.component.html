@@ -17,6 +17,16 @@
         <td mat-cell *matCellDef="let jobHistoryData"> {{ jobHistoryData.version }} </td>
       </ng-container>
 
+      <ng-container matColumnDef="run_start_time">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Start time </th>
+        <td mat-cell *matCellDef="let jobHistoryData">{{ jobHistoryData.jobRunStartTime | datetimeFormat }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="run_end_time">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> End time </th>
+        <td mat-cell *matCellDef="let jobHistoryData">{{ jobHistoryData.jobRunEndTime | datetimeFormat }}</td>
+      </ng-container>
+
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
         <td mat-cell *matCellDef="let jobHistoryData">

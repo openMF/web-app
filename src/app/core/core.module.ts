@@ -5,7 +5,6 @@ import { RouteReuseStrategy, RouterModule } from '@angular/router';
 
 /** Translation Imports */
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 /** Custom Services */
 import { AuthenticationService } from './authentication/authentication.service';
@@ -38,8 +37,6 @@ import { SidenavComponent } from './shell/sidenav/sidenav.component';
 import { ToolbarComponent } from './shell/toolbar/toolbar.component';
 import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
 import { ContentComponent } from './shell/content/content.component';
-import { InjectionToken } from '@angular/core';
-import { APP_BASE_HREF, LocationStrategy } from '@angular/common';
 
 
 /**

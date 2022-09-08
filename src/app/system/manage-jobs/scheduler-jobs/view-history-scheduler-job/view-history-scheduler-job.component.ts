@@ -17,7 +17,7 @@ export class ViewHistorySchedulerJobComponent implements OnInit {
   /** Job History data. */
   jobHistoryData: any;
   /** Columns to be displayed in Scheduler Job History. */
-  displayedColumns: string[] = ['version', 'run_start_time', 'status', 'run_type', 'error_log'];
+  displayedColumns: string[] = ['version', 'run_start_time', 'run_end_time', 'status', 'run_type', 'error_log'];
   /** Data source for Scheduler Job History table. */
   dataSource: MatTableDataSource<any>;
 

@@ -3,16 +3,16 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../system.service';
+import { SystemService } from '../../../system.service';
 
 /**
- * Edit Scheduler Job data resolver.
+ * Selected Scheduler Jobs data resolver.
  */
 @Injectable()
-export class ManageSchedulerJobResolver implements Resolve<Object> {
+export class ViewSchedulerJobResolver implements Resolve<Object> {
 
   /**
    * @param {SystemService} systemService System service.
@@ -20,7 +20,7 @@ export class ManageSchedulerJobResolver implements Resolve<Object> {
   constructor(private systemService: SystemService) {}
 
   /**
-   * Returns the edit scheduler jobs data.
+   * Returns the selected scheduler job data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
