@@ -75,7 +75,7 @@
     "cypress": "^10.7.0",
     "git-describe": "^4.1.1",
     "hads": "^3.0.3",
-    "htmlhint": "0.11.0",
+    "htmlhint": "1.1.4",
     "https-proxy-agent": "2.2.1",
     "jasmine-core": "^4.2.0",
     "jasmine-spec-reporter": "~5.0.0",
