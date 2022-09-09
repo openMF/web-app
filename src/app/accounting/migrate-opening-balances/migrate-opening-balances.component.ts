@@ -1,11 +1,14 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { AccountingService } from '../accounting.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { PopoverService } from '../../configuration-wizard/popover/popover.service';
+import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
+
 /** Custom Validators */
 import { onlyOneOfTheFieldsIsRequiredValidator } from './only-one-of-the-fields-is-required.validator';
 import { Dates } from 'app/core/utils/dates';
@@ -18,7 +21,7 @@ import { Dates } from 'app/core/utils/dates';
   templateUrl: './migrate-opening-balances.component.html',
   styleUrls: ['./migrate-opening-balances.component.scss']
 })
-export class MigrateOpeningBalancesComponent implements OnInit {
+export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
 
   /** Minimum opening balances date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -37,6 +40,11 @@ export class MigrateOpeningBalancesComponent implements OnInit {
   /** Sum total of credits. */
   creditsSum = 0;
 
+  /* Reference of search form */
+  @ViewChild('searchFormRef') searchFormRef: ElementRef<any>;
+  /* Template for popover on search form */
+  @ViewChild('templateSearchFormRef') templateSearchFormRef: TemplateRef<any>;
+
   /**
    * Retrieves the offices and currencies from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -44,13 +52,17 @@ export class MigrateOpeningBalancesComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
+   * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
+   * @param {PopoverService} popoverService PopoverService.
    */
   constructor(private formBuilder: FormBuilder,
     private accountingService: AccountingService,
     private settingsService: SettingsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService) {
     this.route.data.subscribe((data: {
       offices: any,
       currencies: any
@@ -158,6 +170,44 @@ export class MigrateOpeningBalancesComponent implements OnInit {
     this.accountingService.defineOpeningBalances(openingBalances).subscribe((response: any) => {
       this.router.navigate(['/accounting/journal-entries/transactions/view', response.transactionId]);
     });
+  }
+
+  /**
+   * Popover function
+   * @param template TemplateRef<any>.
+   * @param target HTMLElement | ElementRef<any>.
+   * @param position String.
+   * @param backdrop Boolean.
+   */
+  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+    setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
+  }
+
+  /**
+   * To show popover.
+   */
+  ngAfterViewInit() {
+    if (this.configurationWizardService.showMigrateOpeningBalances === true) {
+      setTimeout(() => {
+        this.showPopover(this.templateSearchFormRef, this.searchFormRef.nativeElement, 'bottom', true);
+      });
+    }
+  }
+
+  /**
+   * Next Step (Closing Entries Accounting Page) Configuration Wizard.
+   */
+  nextStep() {
+    this.configurationWizardService.showMigrateOpeningBalances = false;
+    this.configurationWizardService.showClosingEntries = true;
+    this.router.navigate(['/accounting']);
+  }
+
+  /**
+   * Previous Step (Migrate Opening Balances Accounting Page) Configuration Wizard.
+   */
+  previousStep() {
+    this.router.navigate(['/accounting']);
   }
 
 }

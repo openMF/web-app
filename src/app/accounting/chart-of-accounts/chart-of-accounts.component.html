@@ -1,30 +1,34 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
-  <mat-button-toggle-group [formControl]="viewGroup">
-    <mat-button-toggle value="listView">
-      <fa-icon icon="list"></fa-icon>
-    </mat-button-toggle>
-    <mat-button-toggle value="treeView">
-      <fa-icon icon="sitemap"></fa-icon>
-    </mat-button-toggle>
-  </mat-button-toggle-group>
-  <button mat-raised-button color="primary" [routerLink]="['gl-accounts/create']" *mifosxHasPermission="'CREATE_GLACCOUNT'">
-    <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
-    Add Account
-  </button>
+  <div #buttonTreeView>
+    <mat-button-toggle-group [formControl]="viewGroup">
+      <mat-button-toggle value="listView">
+        <fa-icon icon="list"></fa-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="treeView">
+        <fa-icon icon="sitemap"></fa-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <div #buttonAddAccount>
+    <button mat-raised-button color="primary" [routerLink]="['gl-accounts/create']" *mifosxHasPermission="'CREATE_GLACCOUNT'">
+      <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+      Add Account
+    </button>
+  </div>
 </div>
 
 <!-- List View -->
 
 <div class="container" [hidden]="viewGroup.value !== 'listView'">
 
-  <div fxLayout="row" fxLayoutGap="20px">
+  <div #filter fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
       <mat-label>Filter</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)">
     </mat-form-field>
   </div>
 
-  <div class="mat-elevation-z8">
+  <div #accountsTable class="mat-elevation-z8">
 
     <table mat-table [dataSource]="tableDataSource" matSort>
 
@@ -194,3 +198,41 @@
   </div>
 
 </div>
+
+<ng-template #templateButtonTreeView let-popover="popover">
+  <h2>Tree View</h2>
+  <p class="mw300">There is an alternative way to view your accounts - using the Tree View.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep();">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover( templateButtonAddAccount, buttonAddAccount, 'bottom', true);">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateButtonAddAccount let-popover="popover">
+  <h2>Add Account</h2>
+  <p class="mw300">This option allows you to create new GL accounts.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonTreeView, buttonTreeView , 'bottom', true);">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true);">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateFilter let-popover="popover">
+  <h4>Search bar to filter GL accounts.</h4>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover( templateButtonAddAccount, buttonAddAccount, 'bottom', true);">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateAccountsTable, accountsTable, 'top', true);">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateAccountsTable let-popover="popover">
+  <h4 class="mw300">List of chart of all the accounts being used by your organization.</h4>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true);">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
+  </div>
+</ng-template>

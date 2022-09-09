@@ -221,6 +221,9 @@ import { EditBucketComponent } from './manage-delinquency-buckets/delinquency-bu
     CreateBucketComponent,
     EditBucketComponent
   ],
-  providers: [ ]
+  entryComponents: [
+    DepositProductIncentiveFormDialogComponent,
+    FloatingRatePeriodDialogComponent
+  ],
 })
 export class ProductsModule { }

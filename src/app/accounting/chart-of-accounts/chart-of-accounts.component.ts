@@ -1,12 +1,12 @@
 /** Angular Imports */
-import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** rxjs Imports */
 import { of } from 'rxjs';
@@ -16,6 +16,8 @@ import { GLAccountNode } from './gl-account-node.model';
 
 /** Custom Services */
 import { GlAccountTreeService } from './gl-account-tree.service';
+import { PopoverService } from '../../configuration-wizard/popover/popover.service';
+import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
 
 /**
  * Chart of accounts component.
@@ -47,13 +49,28 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
   /** Sorter for chart of accounts table. */
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
+  /* Reference of Tree View Button */
+  @ViewChild('buttonTreeView') buttonTreeView: ElementRef<any>;
+  /* Template for popover on tree view button */
+  @ViewChild('templateButtonTreeView') templateButtonTreeView: TemplateRef<any>;
+  /* Reference of Accounts Table */
+  @ViewChild('accountsTable') accountsTable: ElementRef<any>;
+  /* Template for popover on accounts table */
+  @ViewChild('templateAccountsTable') templateAccountsTable: TemplateRef<any>;
+
   /**
    * Retrieves the gl accounts data from `resolve` and initializes(generates) gl accounts tree.
    * @param {GlAccountTreeService} glAccountTreeService GL Account tree service.
    * @param {ActivatedRoute} route Activated Route.
+   * @param {Router} router Router.
+   * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
+   * @param {PopoverService} popoverService PopoverService.
    */
   constructor(private glAccountTreeService: GlAccountTreeService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router: Router,
+              private configurationWizardService: ConfigurationWizardService,
+              private popoverService: PopoverService) {
     this.route.data.subscribe((data: { chartOfAccounts: any }) => {
       this.glAccountData = data.chartOfAccounts;
       glAccountTreeService.initialize(this.glAccountData);
@@ -87,6 +104,17 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
       }
     };
     this.tableDataSource.sort = this.sort;
+    if (this.configurationWizardService.showChartofAccountsPage === true) {
+      setTimeout(() => {
+        this.showPopover(this.templateButtonTreeView, this.buttonTreeView.nativeElement, 'bottom', true);
+      });
+    }
+
+    if (this.configurationWizardService.showChartofAccountsList === true) {
+      setTimeout(() => {
+        this.showPopover(this.templateAccountsTable, this.accountsTable.nativeElement, 'top', true);
+      });
+    }
   }
 
   /**
@@ -119,4 +147,34 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
    */
   private _getChildren = (node: GLAccountNode) => of(node.children);
 
+  /**
+   * Popover function
+   * @param template TemplateRef<any>.
+   * @param target HTMLElement | ElementRef<any>.
+   * @param position String.
+   * @param backdrop Boolean.
+   */
+  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+    setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
+  }
+
+  /**
+   * Next Step (Create Charts of Accounts Page) Configuration Wizard.
+   */
+  nextStep() {
+    this.configurationWizardService.showChartofAccountsPage = false;
+    this.configurationWizardService.showChartofAccountsList = false;
+    this.configurationWizardService.showChartofAccountsForm = true;
+    this.router.navigate(['/accounting/chart-of-accounts/gl-accounts/create']);
+  }
+
+  /**
+   * Previous Step (Charts of Accounts Accounting Page) Configuration Wizard.
+   */
+  previousStep() {
+    this.configurationWizardService.showChartofAccountsPage = false;
+    this.configurationWizardService.showChartofAccountsList = false;
+    this.configurationWizardService.showChartofAccounts = true;
+    this.router.navigate(['/accounting']);
+  }
 }

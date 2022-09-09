@@ -1,11 +1,13 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
-  <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_GLCLOSURE'">
-    <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
-    Create Closure
-  </button>
+  <div #buttonCreateClosure>
+    <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_GLCLOSURE'">
+      <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+      Create Closure
+    </button>
+  </div>
 </div>
 
-<div class="container" fxLayout="row">
+<div #filter class="container" fxLayout="row">
   <mat-form-field fxFlex>
     <mat-label>Office Name</mat-label>
     <input matInput [formControl]="officeName" [matAutocomplete]="officeNameAutocomplete">
@@ -21,7 +23,7 @@
 
 <div class="container">
 
-  <div class="mat-elevation-z8">
+  <div #closuresTable class="mat-elevation-z8">
 
     <table mat-table [dataSource]="dataSource" matSort>
 
@@ -55,3 +57,31 @@
   </div>
 
 </div>
+
+<ng-template #templateButtonCreateClosure let-popover="popover">
+  <h2>Create Closure</h2>
+  <p class="mw300">This option allows you to create new closure.</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep();">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true);">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateFilter let-popover="popover">
+  <h4>Search bar to filter closures by office.</h4>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonCreateClosure, buttonCreateClosure, 'bottom', true);">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateClosuresTable,closuresTable, 'top', true);">Next</button>
+  </div>
+</ng-template>
+
+<ng-template #templateClosuresTable let-popover="popover">
+  <h4>List of closures. To know more click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895316/Closing+Entries" target="_blank">Closing Entries</a></h4>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true);">Back</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
+  </div>
+</ng-template>
