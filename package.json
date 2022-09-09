@@ -60,7 +60,7 @@
     "zone.js": "0.11.6"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "12.2.17",
+    "@angular-devkit/build-angular": "14.2.2",
     "@angular/cli": "12.2.17",
     "@angular/compiler-cli": "12.2.16",
     "@angular/language-service": "12.2.16",
@@ -75,7 +75,7 @@
     "cypress": "^10.7.0",
     "git-describe": "^4.1.1",
     "hads": "^3.0.3",
-    "htmlhint": "0.11.0",
+    "htmlhint": "1.1.4",
     "https-proxy-agent": "2.2.1",
     "jasmine-core": "^4.2.0",
     "jasmine-spec-reporter": "~5.0.0",
@@ -89,7 +89,7 @@
     "karma-junit-reporter": "1.2.0",
     "protractor": "~7.0.0",
     "puppeteer": "^15.3.2",
-    "stylelint": "10.0.1",
+    "stylelint": "14.11.0",
     "stylelint-config-recommended-scss": "3.3.0",
     "stylelint-config-standard": "18.3.0",
     "stylelint-scss": "3.6.1",
