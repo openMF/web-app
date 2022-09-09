@@ -112,12 +112,12 @@
     </ng-container>
 
     <ng-container matColumnDef="processingResult">
-      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
       <td mat-cell *matCellDef="let auditTrail"> {{ auditTrail.processingResult }} </td>
     </ng-container>
 
     <ng-container matColumnDef="maker">
-      <th mat-header-cell *matHeaderCellDef> Made By </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header > Made By </th>
       <td mat-cell *matCellDef="let auditTrail"> {{ auditTrail.maker }} </td>
     </ng-container>
 
@@ -142,7 +142,7 @@
     </ng-container>
 
     <ng-container matColumnDef="checker">
-      <th mat-header-cell *matHeaderCellDef> Checker </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header > Checker </th>
       <td mat-cell *matCellDef="let auditTrail"> {{ auditTrail.checker  }} </td>
     </ng-container>
 
