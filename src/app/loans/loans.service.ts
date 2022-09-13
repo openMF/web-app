@@ -239,7 +239,6 @@ export class LoansService {
       .set('locale', foreclosuredata.locale)
       .set('transactionDate', foreclosuredata.transactionDate);
     return this.http.get(`/loans/${loanId}/transactions/template`, { params: httpParams });
-
   }
 
   /**
@@ -249,6 +248,14 @@ export class LoansService {
   loanForclosureData(loanId: any, data: any) {
     const httpParams = new HttpParams().set('command', 'foreclosure');
     return this.http.post(`/loans/${loanId}/transactions`, data, { params: httpParams });
+  }
+
+  /**
+   * @param {string|number} loanId Loan Id
+   * @param {any} data Data
+   */
+  editDisbursements(loanId: any, data: any) {
+    return this.http.put(`/loans/${loanId}/disbursements/editDisbursements`, data);
   }
 
   /**
