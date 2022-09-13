@@ -9,14 +9,14 @@ import { MatDialog } from '@angular/material/dialog';
 
 /** rxjs Imports */
 import { of } from 'rxjs';
-import { SystemService } from '../system.service';
+import { SystemService } from '../../system.service';
 
 /** Custom Services */
-import { PopoverService } from '../../configuration-wizard/popover/popover.service';
-import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
+import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
+import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
 
 /** Custom Dialog Component */
-import { NextStepDialogComponent } from '../../configuration-wizard/next-step-dialog/next-step-dialog.component';
+import { NextStepDialogComponent } from '../../../configuration-wizard/next-step-dialog/next-step-dialog.component';
 
 /**
  * Manage scheduler jobs component.

@@ -1,0 +1,27 @@
+.container-card {
+  margin: 0 auto;
+  max-width: 80rem;
+  width: 90%;
+  padding: 0;
+  padding-bottom: 50px;
+  min-height: 500px;
+  .header {
+    padding: 1%;
+    .header-title-group {
+      .client-card-title {
+        margin-top: 1.4rem;
+        color: white;
+        width: 90%;
+        p {
+          color: white;
+        }
+      }
+    }
+  }
+  .navigation-tabs {
+    overflow: auto;
+  }
+  i:hover {
+    cursor: pointer;
+  }
+}

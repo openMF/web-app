@@ -6,13 +6,13 @@ import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, forkJoin } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { SystemService } from '../../../system.service';
 
 /**
- * Selected Scheduler Jobs data resolver.
+ * View History Scheduler Jobs data resolver.
  */
 @Injectable()
-export class ViewSchedulerJobResolver implements Resolve<Object> {
+export class ViewHistorySchedulerJobsResolver implements Resolve<Object> {
 
   /**
    * @param {SystemService} systemService System service.
@@ -20,12 +20,12 @@ export class ViewSchedulerJobResolver implements Resolve<Object> {
   constructor(private systemService: SystemService) {}
 
   /**
-   * Returns the selected scheduler job data.
+   * Returns the Scheduler Jobs History data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const jobId = route.paramMap.get('id');
-    return this.systemService.getSelectedJob(jobId);
+    return this.systemService.getHistoryScheduler(jobId);
   }
 
 }

@@ -22,7 +22,6 @@ import { AddRoleComponent } from './roles-and-permissions/add-role/add-role.comp
 import { ManageSurveysComponent } from './manage-surveys/manage-surveys.component';
 import { ViewSurveyComponent } from './manage-surveys/view-survey/view-survey.component';
 import { CreateSurveyComponent } from './manage-surveys/create-survey/create-survey.component';
-import { ManageSchedulerJobsComponent } from './manage-scheduler-jobs/manage-scheduler-jobs.component';
 import { EditConfigurationComponent } from './configurations/global-configurations-tab/edit-configuration/edit-configuration.component';
 import { AmazonS3Component } from './external-services/amazon-s3/amazon-s3.component';
 import { EmailComponent } from './external-services/email/email.component';
@@ -45,7 +44,7 @@ import { EditReportComponent } from './manage-reports/edit-report/edit-report.co
 import { AuditTrailsComponent } from './audit-trails/audit-trails.component';
 import { ViewAuditComponent } from './audit-trails/view-audit/view-audit.component';
 import { ColumnDialogComponent } from './manage-data-tables/column-dialog/column-dialog.component';
-import { ViewHistorySchedulerJobComponent } from './manage-scheduler-jobs/view-history-scheduler-job/view-history-scheduler-job.component';
+import { ViewHistorySchedulerJobComponent } from './manage-jobs/scheduler-jobs/view-history-scheduler-job/view-history-scheduler-job.component';
 import { EditHookComponent } from './manage-hooks/edit-hook/edit-hook.component';
 import { ViewHookComponent } from './manage-hooks/view-hook/view-hook.component';
 import { CreateHookComponent } from './manage-hooks/create-hook/create-hook.component';
@@ -56,19 +55,29 @@ import { EntityToEntityMappingComponent } from './entity-to-entity-mapping/entit
 /** Dialog Component Imports */
 import { ReportParameterDialogComponent } from './manage-reports/report-parameter-dialog/report-parameter-dialog.component';
 import { AddEventDialogComponent } from './manage-hooks/add-event-dialog/add-event-dialog.component';
-import { ViewSchedulerJobComponent } from './manage-scheduler-jobs/view-scheduler-job/view-scheduler-job.component';
-import { EditSchedulerJobComponent } from './manage-scheduler-jobs/edit-scheduler-job/edit-scheduler-job.component';
+import { ViewSchedulerJobComponent } from './manage-jobs/scheduler-jobs/view-scheduler-job/view-scheduler-job.component';
+import { EditSchedulerJobComponent } from './manage-jobs/scheduler-jobs/edit-scheduler-job/edit-scheduler-job.component';
 import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-tasks/configure-maker-checker-tasks.component';
 import { EditSurveyComponent } from './manage-surveys/edit-survey/edit-survey.component';
 import { BusinessDateTabComponent } from './configurations/business-date-tab/business-date-tab.component';
 import { ConfigurationsComponent } from './configurations/configurations.component';
 import { GlobalConfigurationsTabComponent } from './configurations/global-configurations-tab/global-configurations-tab.component';
+import { ManageJobsComponent } from './manage-jobs/manage-jobs.component';
+import { ManageSchedulerJobsComponent } from './manage-jobs/scheduler-jobs/manage-scheduler-jobs.component';
+import { WorkflowDiagramComponent } from './manage-jobs/workflow-jobs/workflow-diagram/workflow-diagram.component';
+import { NgxGraphModule } from '@swimlane/ngx-graph';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { WorkflowJobsComponent } from './manage-jobs/workflow-jobs/workflow-jobs.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   imports: [
     SystemRoutingModule,
     SharedModule,
     PipesModule,
+    NgxGraphModule,
+    BrowserAnimationsModule,
+    DragDropModule,
     DirectivesModule
   ],
   declarations: [
@@ -85,7 +94,6 @@ import { GlobalConfigurationsTabComponent } from './configurations/global-config
     ManageHooksComponent,
     RolesAndPermissionsComponent,
     ManageSurveysComponent,
-    ManageSchedulerJobsComponent,
     EditConfigurationComponent,
     AmazonS3Component,
     EmailComponent,
@@ -125,7 +133,11 @@ import { GlobalConfigurationsTabComponent } from './configurations/global-config
     EditSurveyComponent,
     BusinessDateTabComponent,
     ConfigurationsComponent,
-    GlobalConfigurationsTabComponent
+    GlobalConfigurationsTabComponent,
+    ManageJobsComponent,
+    ManageSchedulerJobsComponent,
+    WorkflowJobsComponent,
+    WorkflowDiagramComponent
   ],
 })
 export class SystemModule { }
