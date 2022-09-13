@@ -29,6 +29,7 @@ export class LoanTrancheDetailsComponent implements OnInit {
   maxDate = new Date(2100, 0, 1);
   disbursementDataSource: {}[] = [];
   totalMultiDisbursed: number = null;
+  disallowExpectedDisbursements = false;
   pristine = true;
 
   /**
@@ -43,6 +44,7 @@ export class LoanTrancheDetailsComponent implements OnInit {
     this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loanId = data.loanDetailsData.id;
       this.loanDetails = data.loanDetailsData;
+      this.disallowExpectedDisbursements = this.loanDetails.disallowExpectedDisbursements || false;
       this.disbursementDataSource = data.loanDetailsData.disbursementDetails;
       this.currentPrincipalAmount = this.loanDetails.approvedPrincipal;
     });
@@ -60,7 +62,8 @@ export class LoanTrancheDetailsComponent implements OnInit {
       this.status === 'Overpaid' ||
       this.status === 'Closed (rescheduled)' ||
       this.status === 'Closed (written off)' ||
-      this.status === 'Submitted and pending approval'
+      this.status === 'Submitted and pending approval' ||
+      this.disallowExpectedDisbursements
     ) {
       this.return = false;
     }
@@ -68,6 +71,21 @@ export class LoanTrancheDetailsComponent implements OnInit {
     this.calculateTotalDisbursedAmount();
 
     if (this.totalMultiDisbursed === this.currentPrincipalAmount || this.return === false) {
+      return false;
+    }
+
+    return true;
+  }
+
+  showActionsTrancheButtons() {
+    if (
+      this.status === 'Closed (obligations met)' ||
+      this.status === 'Overpaid' ||
+      this.status === 'Closed (rescheduled)' ||
+      this.status === 'Closed (written off)' ||
+      this.status === 'Submitted and pending approval' ||
+      this.disallowExpectedDisbursements
+    ) {
       return false;
     }
 

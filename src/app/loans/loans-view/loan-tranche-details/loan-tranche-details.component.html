@@ -47,12 +47,12 @@
         </span>
         <button type="button" mat-icon-button color="primary"
           (click)="editDisbursementDataEntry(rowIndex)" matTooltip="Edit"
-          matTooltipPosition="left" *ngIf="!ele.actualDisbursementDate">
+          matTooltipPosition="left" *ngIf="!ele.actualDisbursementDate && showActionsTrancheButtons()">
           <fa-icon icon="edit"></fa-icon>
         </button>
         <button type="button" mat-icon-button color="warn"
           (click)="removeDisbursementDataEntry(rowIndex)" matTooltip="Delete"
-          matTooltipPosition="left" *ngIf="!ele.actualDisbursementDate">
+          matTooltipPosition="left" *ngIf="!ele.actualDisbursementDate && showActionsTrancheButtons()">
           <fa-icon icon="trash"></fa-icon>
         </button>
       </td>
