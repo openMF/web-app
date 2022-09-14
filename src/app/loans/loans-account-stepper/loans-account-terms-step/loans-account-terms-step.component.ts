@@ -214,6 +214,10 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
     // this.setCustomValidators();
   }
 
+  allowAddDisbursementDetails() {
+    return (this.multiDisburseLoan && !this.loansAccountTermsData.disallowExpectedDisbursements);
+  }
+
   /** Custom Validators for the form */
   setCustomValidators() {
     const repaymentFrequencyNthDayType = this.loansAccountTermsForm.get('repaymentFrequencyNthDayType');

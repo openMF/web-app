@@ -317,6 +317,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
         } else {
           this.loanProductSettingsForm.removeControl('maxTrancheCount');
           this.loanProductSettingsForm.removeControl('outstandingLoanBalance');
+          this.loanProductSettingsForm.patchValue({'disallowExpectedDisbursements': false});
         }
       });
 
