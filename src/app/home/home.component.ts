@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
    * @param {AuthenticationService} authenticationService Authentication Service.
    * @param {FormBuilder} formBuilder Form Builder.
    */
-  constructor(private authenticationService: AuthenticationService,private keyCloakService:KeycloakService) { }
+  constructor(private authenticationService: AuthenticationService, private keyCloakService: KeycloakService) { }
 
   /**
    * Sets the username of the authenticated user.
@@ -44,11 +44,10 @@ export class HomeComponent implements OnInit {
    */
   ngOnInit() {
     const credentials = this.authenticationService.getCredentials();
-    if(credentials){
-    this.username = credentials.username;  
-    }
-    else{
-    this.username=this.keyCloakService.getUsername()
+    if (credentials) {
+    this.username = credentials.username;
+    } else {
+    this.username = this.keyCloakService.getUsername();
     }
     this.setFilteredActivities();
   }

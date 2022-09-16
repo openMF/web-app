@@ -14,13 +14,11 @@ const log = new Logger('AuthenticationGuard');
  */
 @Injectable()
 export class AuthenticationGuard implements CanActivate {
-
   /**
    * @param {Router} router Router for navigation.
    * @param {AuthenticationService} authenticationService Authentication Service.
    */
-  constructor(private router: Router,
-              private authenticationService: AuthenticationService) { }
+  constructor(private router: Router, private authenticationService: AuthenticationService) {}
 
   /**
    * Ensures route access is authorized only when user is authenticated, otherwise redirects to login.
@@ -32,10 +30,9 @@ export class AuthenticationGuard implements CanActivate {
       return true;
     }
     log.debug('User not authenticated, redirecting to login...');
-     this.authenticationService.logout().subscribe(res=>{
+    this.authenticationService.logout().subscribe((res) => {
       return res;
-     })
-     return true;
+    });
+    return true;
   }
-
 }

@@ -12,14 +12,13 @@ import { SettingsService } from 'app/settings/settings.service';
  * Organization service.
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OrganizationService {
-
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-  constructor(private http: HttpClient, private settingsService: SettingsService) { }
+  constructor(private http: HttpClient, private settingsService: SettingsService) {}
 
   /**
    * @returns {Observable<any>} Loan Provisioning Criteria data
@@ -121,6 +120,15 @@ export class OrganizationService {
    * @param {any} office Office to be created.
    * @returns {Observable<any>}
    */
+   searchOfficeTreeHierarchy(includeRootOffice: boolean, OAfCode: string ): Observable<any> {
+    return this.http.get(`/offices/search?includeRootOffice=${includeRootOffice}&officeHierarchyTypeCode=${OAfCode}`);
+  }
+
+
+  /**
+   * @param {any} office Office to be created.
+   * @returns {Observable<any>}
+   */
   createOffice(office: any): Observable<any> {
     return this.http.post('/offices', office);
   }
@@ -129,7 +137,7 @@ export class OrganizationService {
    * @param {any} office Office to be created.
    * @returns {Observable<any>}
    */
-   createOfficeHierarchy(office: any): Observable<any> {
+  createOfficeHierarchy(office: any): Observable<any> {
     return this.http.post('/countries', office);
   }
 
@@ -147,24 +155,32 @@ export class OrganizationService {
    * @param {string} officeId Office Id
    * @returns {Observable<any>}
    */
-   updateOfficeHierarchy(officeId: string, office: any): Observable<any> {
+  updateOfficeHierarchy(officeId: string, office: any): Observable<any> {
     return this.http.put(`/countries/${officeId}`, office);
   }
 
-   /**
+  /**
    * @param officeId Office Id of office to get data for.
    * @returns {Observable<any>}
    */
-    fetchByHierarchyLevel(officeId: number): Observable<any> {
-      return this.http.get(`/offices/fetchByHierarchyLevel?level=LOWER&officeId=${officeId}`);
-    }
+  fetchByHierarchyLevel(officeId: number, level: string): Observable<any> {
+    return this.http.get(`/offices/fetchByHierarchyLevel?level=${level}&officeId=${officeId}`);
+  }
 
-    /**
+  /**
    * @param {any} merge Offices
    * @returns {Observable<any>}
    */
- mergeOffice(office: any): Observable<any> {
+  mergeOffice(office: any): Observable<any> {
     return this.http.post('/offices/mergeOffice', office);
+  }
+
+  /**
+   * @param {any} split Offices
+   * @returns {Observable<any>}
+   */
+  splitOffice(office: any): Observable<any> {
+    return this.http.post('/offices/splitOffice', office);
   }
 
   /**
@@ -175,14 +191,12 @@ export class OrganizationService {
     return this.http.get(`/datatables`, { params: httpParams });
   }
 
- 
-
   /**
    * @param officeId Office Id of office to get datatable for.
    * @param datatableName Data table name.
    * @returns {Observable<any>}
    */
-   getOfficeDatatable(officeId: string, datatableName: string): Observable<any> {
+  getOfficeDatatable(officeId: string, datatableName: string): Observable<any> {
     const httpParams = new HttpParams().set('genericResultSet', 'true');
     return this.http.get(`/datatables/${datatableName}/${officeId}`, { params: httpParams });
   }
@@ -575,9 +589,7 @@ export class OrganizationService {
    * @returns {Observable<any>} Entity Data Table Checks data.
    */
   getEntityDataTableChecks(offset: number = 0, limit: number = -1): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('offset', offset.toString())
-      .set('limit', limit.toString());
+    const httpParams = new HttpParams().set('offset', offset.toString()).set('limit', limit.toString());
     return this.http.get('/entityDatatableChecks', { params: httpParams });
   }
 
@@ -624,8 +636,7 @@ export class OrganizationService {
    * @returns {Observable<any>} Holidays data.
    */
   getHolidays(officeId: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('officeId', officeId.toString());
+    const httpParams = new HttpParams().set('officeId', officeId.toString());
     return this.http.get('/holidays', { params: httpParams });
   }
 
@@ -680,8 +691,7 @@ export class OrganizationService {
    * @returns {Observable<any>} Resource Id.
    */
   activateHoliday(holidayId: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('command', 'activate');
+    const httpParams = new HttpParams().set('command', 'activate');
     return this.http.post(`/holidays/${holidayId}`, null, { params: httpParams });
   }
 
@@ -730,8 +740,7 @@ export class OrganizationService {
    * @returns {Observable<any>} Staff data.
    */
   getStaff(officeId: any): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('officeId', officeId.toString());
+    const httpParams = new HttpParams().set('officeId', officeId.toString());
     return this.http.get('/staff', { params: httpParams });
   }
 
@@ -800,7 +809,11 @@ export class OrganizationService {
     if (legalFormType.length) {
       httpParams = httpParams.set('legalFormType', legalFormType);
     }
-    return this.http.get(`${urlSuffix}/downloadtemplate`, { params: httpParams, responseType: 'arraybuffer', observe: 'response' });
+    return this.http.get(`${urlSuffix}/downloadtemplate`, {
+      params: httpParams,
+      responseType: 'arraybuffer',
+      observe: 'response',
+    });
   }
 
   /**
@@ -808,10 +821,12 @@ export class OrganizationService {
    * @returns {Observable<any>} Import Document
    */
   getImportDocument(id: any): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('importDocumentId', id)
-      .set('tenantIdentifier', 'default');
-    return this.http.get('/imports/downloadOutputTemplate', { params: httpParams, responseType: 'arraybuffer', observe: 'response' });
+    const httpParams = new HttpParams().set('importDocumentId', id).set('tenantIdentifier', 'default');
+    return this.http.get('/imports/downloadOutputTemplate', {
+      params: httpParams,
+      responseType: 'arraybuffer',
+      observe: 'response',
+    });
   }
 
   /**
@@ -831,5 +846,4 @@ export class OrganizationService {
     formData.append('dateFormat', this.settingsService.dateFormat);
     return this.http.post(`${urlSuffix}/uploadtemplate`, formData, { params: httpParams });
   }
-
 }

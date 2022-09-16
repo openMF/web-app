@@ -43,7 +43,7 @@ export class SidenavComponent implements OnInit {
   constructor(private router: Router,
               public dialog: MatDialog,
               private authenticationService: AuthenticationService,
-              private keyCloakService:KeycloakService) {
+              private keyCloakService: KeycloakService) {
     this.userActivity = JSON.parse(localStorage.getItem('mifosXLocation'));
   }
 
@@ -52,11 +52,10 @@ export class SidenavComponent implements OnInit {
    */
   ngOnInit() {
     const credentials = this.authenticationService.getCredentials();
-    if(credentials){
-    this.username = credentials.username;  
-    }
-    else{
-    this.username=this.keyCloakService.getUsername()
+    if (credentials) {
+    this.username = credentials.username;
+    } else {
+    this.username = this.keyCloakService.getUsername();
     }
     this.setMappedAcitivites();
   }
@@ -66,7 +65,7 @@ export class SidenavComponent implements OnInit {
    */
   logout() {
     this.authenticationService.logout();
-      //.subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+      // .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }
 
   /**

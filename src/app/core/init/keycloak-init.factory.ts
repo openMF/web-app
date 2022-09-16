@@ -1,9 +1,9 @@
-import { environment } from 'environments/environment'
-import { KeycloakService } from 'keycloak-angular'
-import { AuthenticationService } from '../authentication/authentication.service'
-import { OAuth2Token } from '../authentication/o-auth2-token.model'
+import { environment } from 'environments/environment';
+import { KeycloakService } from 'keycloak-angular';
+import { AuthenticationService } from '../authentication/authentication.service';
+import { OAuth2Token } from '../authentication/o-auth2-token.model';
 export function initializer (keycloak: KeycloakService, authService: AuthenticationService): () => Promise<any> {
-  let service = authService
+  const service = authService;
   return (): Promise<any> => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -27,27 +27,26 @@ export function initializer (keycloak: KeycloakService, authService: Authenticat
           })
           .then(response => {
             keycloak.isLoggedIn().then(isLoggedIn => {
-              let isAuthenticated=service.isAuthenticated();
+              const isAuthenticated = service.isAuthenticated();
               if (isLoggedIn && !isAuthenticated) {
                   keycloak.getToken().then(token => {
-                    let context: OAuth2Token = {
+                    const context: OAuth2Token = {
                       scope: 'openid email profile',
                       token_type: 'Bearer',
                       access_token: token,
                       expires_in: 12955743,
                       refresh_token: token,
-                      username:keycloak.getUsername()
-                    }
-                    service.getUserDetails(context)
-                  })
+                      username: keycloak.getUsername()
+                    };
+                    service.getUserDetails(context);
+                  });
               }
-              resolve(isLoggedIn)
-            })
-          })
-        resolve
+              resolve(isLoggedIn);
+            });
+          });
       } catch (error) {
-        reject(error)
+        reject(error);
       }
-    })
-  }
+    });
+  };
 }

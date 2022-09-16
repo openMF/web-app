@@ -7,7 +7,11 @@
       <mat-card-content>
 
         <div fxLayout="column">
-
+          <div floatLabel="always" appearance="outline" class="full-width radio-container mb-1">
+            <mat-label class="ou-label">Is the OU a country</mat-label>
+            <input disabled class="custom-radio"  (change)="change_country(true)" formControlName="country" type="radio"  [value]="true" name="country" [checked]="officeForm.controls.country?.value">
+            <input disabled  class="custom-radio"  (change)="change_country(false)" formControlName="country" type="radio" [value]="false" name="country" [checked]="!officeForm.controls.country?.value">
+          </div>
           <mat-form-field>
             <mat-label>Offices</mat-label>
             <input matInput required formControlName="name">
@@ -18,9 +22,13 @@
 
           <mat-form-field *ngIf="officeForm.contains('parentId')">
             <mat-label>Parent Office</mat-label>
-            <mat-select required formControlName="parentId">
-              <mat-option *ngFor="let office of allowedParents" [value]="office.id">
-                {{ office.name }}
+            <mat-select placeholder="Search" #parentOffice required formControlName="parentId" >
+              <mat-select-filter *ngIf="parentOffice.focused" [array]="allowedParents" (filteredReturn)="allowedParentsSliced=$event"
+                [displayMember]="'name'">
+              </mat-select-filter>
+              <mat-option *ngFor="let office of allowedParents" [value]="office.id"
+                [class.hide]="!isFiltered(office)">
+                {{office.name}}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="officeForm.controls.parentId.hasError('required')">
@@ -42,13 +50,6 @@
             <mat-label>External ID</mat-label>
             <input matInput formControlName="externalId">
           </mat-form-field>
-
-          <div floatLabel="always" appearance="outline" class="full-width radio-container mb-1">
-            <mat-label class="ou-label">Is the OU a country</mat-label>                   
-            <input disabled class="custom-radio"  (change)="change_country(true)" formControlName="country" type="radio"  [value]="true" name="country" [checked]="officeForm.controls.country?.value">
-            <input disabled  class="custom-radio"  (change)="change_country(false)" formControlName="country" type="radio" [value]="false" name="country" [checked]="!officeForm.controls.country?.value">
-          </div>
-
         </div>
         <div fxLayout="column" *ngIf="showHierarchy">
           <mifosx-office-hierarchy #officeHierarchy [treeDataSource]="treeDataSource"></mifosx-office-hierarchy>

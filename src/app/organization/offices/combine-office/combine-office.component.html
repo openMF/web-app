@@ -4,13 +4,16 @@
         <form [formGroup]="combineOfficeForm" (ngSubmit)="submit()">
 
             <mat-card-content>
-      
               <div fxLayout="column">
                 <mat-form-field>
                   <mat-label>Parent Office</mat-label>
-                  <mat-select required formControlName="parentId" (selectionChange)="fetchByHierarchyLevelByOfficeId($event)">
-                    <mat-option *ngFor="let office of officeData" [value]="office.id">
-                      {{ office.name }}
+                  <mat-select placeholder="Search" #parentOffice required formControlName="parentId" (selectionChange)="fetchByHierarchyLevelByOfficeId($event)">
+                    <mat-select-filter *ngIf="parentOffice.focused" [array]="officeData" (filteredReturn)="officeDataSliced=$event"
+                      [displayMember]="'name'">
+                    </mat-select-filter>
+                    <mat-option *ngFor="let office of officeData" [value]="office.id"
+                      [class.hide]="!isFiltered(office,0)">
+                      {{office.name}}
                     </mat-option>
                   </mat-select>
                   <mat-error *ngIf="combineOfficeForm.controls.parentId.hasError('required')">
@@ -21,9 +24,13 @@
                 <mat-form-field>
 
                     <mat-label>Source Office</mat-label>
-                    <mat-select required formControlName="mergingOfficeIds" multiple>
-                      <mat-option *ngFor="let office of sourceOfficeData" [value]="office.id">
-                        {{ office.name }}
+                    <mat-select placeholder="Search" #sourceOffice multiple required formControlName="mergingOfficeIds" >
+                      <mat-select-filter *ngIf="sourceOffice.focused" [array]="sourceOfficeData" (filteredReturn)="sourceOfficeDataSliced=$event"
+                        [displayMember]="'name'">
+                      </mat-select-filter>
+                      <mat-option *ngFor="let office of sourceOfficeData" [value]="office.id"
+                        [class.hide]="!isFiltered(office,1)">
+                        {{office.name}}
                       </mat-option>
                     </mat-select>
                     <mat-error *ngIf="combineOfficeForm.controls.mergingOfficeIds.hasError('required')">
@@ -47,22 +54,21 @@
                     Opening Date is <strong>required</strong>
                   </mat-error>
                 </mat-form-field>
-      
+
                 <mat-form-field>
                   <mat-label>External ID</mat-label>
                   <input matInput formControlName="externalId">
                 </mat-form-field>
               </div>
-              
+
             </mat-card-content>
-      
+
             <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
               <button type="button" mat-raised-button [routerLink]="['/organization/offices']">Cancel</button>
               <button mat-raised-button color="primary" [disabled]="!combineOfficeForm.valid" *mifosxHasPermission="'CREATE_OFFICE'">Submit</button>
             </mat-card-actions>
-      
+
           </form>
     </mat-card>
-  
+
   </div>
-  

@@ -70,6 +70,7 @@ import { StandingInstructionsHistoryComponent } from './standing-instructions-hi
 import { FundMappingComponent } from './fund-mapping/fund-mapping.component';
 import { CreateHolidayComponent } from './holidays/create-holiday/create-holiday.component';
 import { CombineOfficeComponent } from './offices/combine-office/combine-office.component';
+import { SplitOfficeComponent } from './offices/split-office/split-office.component';
 
 /**
  * Organization Module
@@ -146,6 +147,7 @@ import { CombineOfficeComponent } from './offices/combine-office/combine-office.
     FundMappingComponent,
     CreateHolidayComponent,
     CombineOfficeComponent,
+    SplitOfficeComponent,
   ]
 })
 export class OrganizationModule { }

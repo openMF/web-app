@@ -89,12 +89,12 @@ import { FormsModule } from '@angular/forms';
     TasksModule,
     AppRoutingModule,
   ],
-  declarations: [WebAppComponent,NotFoundComponent],
-  providers: [DatePipe,KeycloakService,
-    { 
-      provide: APP_INITIALIZER, 
-      useFactory: initializer, 
-      deps: [ KeycloakService,AuthenticationService ], 
+  declarations: [WebAppComponent, NotFoundComponent],
+  providers: [DatePipe, KeycloakService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializer,
+      deps: [ KeycloakService, AuthenticationService ],
       multi: true
     }],
   bootstrap: [WebAppComponent]

@@ -120,7 +120,7 @@ export class SettingsService {
     businessDateData.some((data: any) => {
       if (data.type === dateType) {
         const dateVal = new Date(data.date);
-        let message= this.dateUtils.transform(dateVal, this.dateFormat());
+        const message = this.dateUtils.transform(dateVal, this.dateFormat());
         this.alertService.alert({ type: dateType + ' Set',
           message: message});
         return;

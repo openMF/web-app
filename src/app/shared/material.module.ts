@@ -38,6 +38,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
+import { MatSelectFilterModule } from 'mat-select-filter';
 
 /**
  * Material Module
@@ -82,7 +83,8 @@ import { MatTreeModule } from '@angular/material/tree';
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatSelectFilterModule
   ],
   providers: [
     {

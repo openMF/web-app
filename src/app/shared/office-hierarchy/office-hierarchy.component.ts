@@ -1,12 +1,12 @@
 import {SelectionModel} from '@angular/cdk/collections';
 import {FlatTreeControl} from '@angular/cdk/tree';
-import {Component, Injectable, ViewChild,OnInit, Input} from '@angular/core';
+import {Component, Injectable, ViewChild, OnInit, Input} from '@angular/core';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import {BehaviorSubject} from 'rxjs';
 import { OfficeHierarchyFlatNode, OfficeHierarchy } from '../office-tree-view/office-tree-node';
 
-let iseditMode=false;
-let TREE_DATA = {
+let iseditMode = false;
+const TREE_DATA = {
   '': {
   }
 };
@@ -27,8 +27,9 @@ export class ChecklistDatabase {
     const data = this.buildFileTree(TREE_DATA, 0);
 
     // Notify the change.
-    if(!iseditMode)
+    if (!iseditMode) {
     this.dataChange.next(data);
+    }
   }
 
   /**
@@ -54,16 +55,16 @@ export class ChecklistDatabase {
   }
 
   /** Add an item to to-do list */
-insertItem(parent: OfficeHierarchy, name: string) {  
-    if (!parent.descendant) parent.descendant=[];
-    parent.descendant.push({ levelName: name,hierarchyType:'OAF',children:[],collapsed:true,root:true,selected:"selected",parentId:null,descendant:[] } as OfficeHierarchy);
+insertItem(parent?: OfficeHierarchy, name?: string) {
+    if (!parent.descendant) { parent.descendant = []; }
+    parent.descendant.push({ levelName: name, hierarchyType: 'OAF', children: [], collapsed: true, root: true, selected: 'selected', parentId: null, descendant: [] } as OfficeHierarchy);
     this.dataChange.next(this.data);
 }
-deleteItem(){
-    this.dataChange.next(this.data);  
+deleteItem() {
+    this.dataChange.next(this.data);
 }
 
-  updateItem(node: OfficeHierarchy, name: string) {    
+  updateItem(node: OfficeHierarchy, name: string) {
     node.levelName = name;
     this.dataChange.next(this.data);
   }
@@ -76,17 +77,19 @@ deleteItem(){
   providers: [ChecklistDatabase]
 })
 export class OfficeHierarchyComponent implements OnInit {
-  hasData:boolean=false;
-  @Input() treeDataSource:OfficeHierarchy[]=[]
-  
-  ngOnInit(): void {    
-    if(this.treeDataSource && this.treeDataSource.length>0){
-      this.dataSource.data=this.treeDataSource
-      this.hasData=true
-      iseditMode=true
-      this._database.dataChange.next(this.treeDataSource)
-    }
+
+  constructor(private _database: ChecklistDatabase) {
+    this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel,
+      this.isExpandable, this.getChildren);
+    this.treeControl = new FlatTreeControl<OfficeHierarchyFlatNode>(this.getLevel, this.isExpandable);
+    this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+    _database.dataChange.subscribe(data => {
+      this.dataSource.data = data;
+    });
   }
+  hasData = false;
+  @Input() treeDataSource: OfficeHierarchy[] = [];
 
   flatNodeMap = new Map<OfficeHierarchyFlatNode, OfficeHierarchy>();
 
@@ -110,15 +113,13 @@ export class OfficeHierarchyComponent implements OnInit {
   /** The selection for checklist */
   checklistSelection = new SelectionModel<OfficeHierarchyFlatNode>(true /* multiple */);
 
-  constructor(private _database: ChecklistDatabase) {
-    this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel,
-      this.isExpandable, this.getChildren);
-    this.treeControl = new FlatTreeControl<OfficeHierarchyFlatNode>(this.getLevel, this.isExpandable);
-    this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-
-    _database.dataChange.subscribe(data => {
-      this.dataSource.data = data;
-    });
+  ngOnInit(): void {
+    if (this.treeDataSource && this.treeDataSource.length > 0) {
+      this.dataSource.data = this.treeDataSource;
+      this.hasData = true;
+      iseditMode = true;
+      this._database.dataChange.next(this.treeDataSource);
+    }
   }
 
   getLevel = (node: OfficeHierarchyFlatNode) => node.level;
@@ -135,8 +136,8 @@ export class OfficeHierarchyComponent implements OnInit {
    * Transformer to convert nested node to flat node. Record the nodes in maps for later use.
    */
   transformer = (node: OfficeHierarchy, level: number) => {
-    if(node.children && node.children.length>0){
-      node.descendant=node.children; 
+    if (node.children && node.children.length > 0) {
+      node.descendant = node.children;
     }
     const existingNode = this.nestedNodeMap.get(node);
     const flatNode = existingNode && existingNode.levelName === node.levelName
@@ -145,7 +146,7 @@ export class OfficeHierarchyComponent implements OnInit {
     flatNode.levelName = node.levelName;
     flatNode.level = level;
     flatNode.expandable = true;                   // edit this to true to make it always expandable
-    flatNode.hasChild = !!node.descendant && node.descendant.length>0;  // add this line. this property will help 
+    flatNode.hasChild = !!node.descendant && node.descendant.length > 0;  // add this line. this property will help
                                               // us to hide the expand button in a node
     this.flatNodeMap.set(flatNode, node);
     this.nestedNodeMap.set(node, flatNode);
@@ -153,6 +154,7 @@ export class OfficeHierarchyComponent implements OnInit {
   }
 
   /** Whether all the descendants of the node are selected. */
+
   descendantsAllSelected(node: OfficeHierarchyFlatNode): boolean {
     const descendants = this.treeControl.getDescendants(node);
     const descAllSelected = descendants.length > 0 && descendants.every(child => {
@@ -232,53 +234,47 @@ export class OfficeHierarchyComponent implements OnInit {
 
   /** Select the category so we can insert the new item. */
   addNewItem(node: OfficeHierarchyFlatNode) {
-    if(node.level<2){
+    if (node.level < 2) {
     const parentNode = this.flatNodeMap.get(node);
-    this._database.insertItem(parentNode!, '');
+    this._database.insertItem(parentNode, '');
     this.treeControl.expand(node);
-    }
-    else{
-      alert("You can't add more than three levels")
+    } else {
+      alert('You can\'t add more than three levels');
     }
   }
-  removeItem(node:OfficeHierarchyFlatNode){
-    let parentNode = this.flatNodeMap.get(node);
-    let flatNode = this.dataSource.data[0]?.children;
-    if(flatNode && flatNode?.length>0){
+  removeItem(node: OfficeHierarchyFlatNode) {
+    const parentNode = this.flatNodeMap.get(node);
+    const flatNode = this.dataSource.data[0]?.children;
+    if (flatNode && flatNode?.length > 0) {
     for (let i = flatNode.length - 1; i >= 0; i--) {
       if (flatNode[i].levelName === node.levelName) {
 
         if (parentNode.children) {
-          //if you want to warn user
-        }   
+          // if you want to warn user
+        }
         this._database.dataChange.value[0].children.splice(i, 1);
         this.flatNodeMap.delete(node);
-        this._database.deleteItem()   
+        this._database.deleteItem();
       }
     }
-  }
-  else{
-    if(node.level==0){
-      return
-    }else{
+  } else {
+    if (node.level === 0) {
+      return;
+    } else {
     this._database.dataChange.value[0]?.children?.splice(0, 1);
-    this._database.dataChange.value[0].descendant=null;
+    this._database.dataChange.value[0].descendant = null;
         this.flatNodeMap.delete(node);
-        this._database.deleteItem()   
+        this._database.deleteItem();
     }
   }
   }
 
   /** Save the node to database */
   saveNode(node: OfficeHierarchyFlatNode, itemValue: string) {
-    
+
     const nestedNode = this.flatNodeMap.get(node);
-    this._database.updateItem(nestedNode!, itemValue);
+    this._database.updateItem(nestedNode, itemValue);
     this.treeControl.expand(node);
     this.tree.treeControl.expandAll();
-  }
-
-  ngAfterViewInit() {
-    this.tree?.treeControl.expandAll();
   }
 }

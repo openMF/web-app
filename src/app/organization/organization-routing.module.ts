@@ -103,6 +103,7 @@ import { LoanProvisioningCriteriaAndTemplateResolver } from './loan-provisioning
 import { StandingInstructionsTemplateResolver } from './standing-instructions-history/standing-instructions-template.resolver';
 import { AdvanceSearchTemplateResolver } from './fund-mapping/advance-search-template.resolver';
 import { CombineOfficeComponent } from './offices/combine-office/combine-office.component';
+import { SplitOfficeComponent } from './offices/split-office/split-office.component';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -185,6 +186,14 @@ const routes: Routes = [
               }
             },
             {
+              path: 'split',
+              component: SplitOfficeComponent,
+              data: { title: extract('Split Office'), breadcrumb: 'Split Office' },
+              resolve: {
+                offices: OfficesResolver,
+              }
+            },
+            {
               path: ':id',
               data: { title: extract('View Office'), routeResolveBreadcrumb: ['office', 'name'] },
               component: ViewOfficeComponent,
@@ -227,7 +236,7 @@ const routes: Routes = [
                 }
               ]
             }
-            
+
           ]
         },
         {
