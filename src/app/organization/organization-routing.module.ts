@@ -76,7 +76,6 @@ import { AdhocQueryResolver } from './adhoc-query/common-resolvers/adhoc-query.r
 import { TellersResolver } from './tellers/common-resolvers/tellers.resolver';
 import { TellerResolver } from './tellers/common-resolvers/teller.resolver';
 import { PaymentTypesResolver } from './payment-types/payment-types.resolver';
-import { PaymentTypeResolver } from './payment-types/payment-type.resolver';
 import { PasswordPreferencesTemplateResolver } from './password-preferences/password-preferences-template.resolver';
 import { EntityDataTableChecksResolver } from './entity-data-table-checks/entity-data-table-checks.resolver';
 import { WorkingDaysResolver } from './working-days/working-days.resolver';
@@ -518,7 +517,7 @@ const routes: Routes = [
                   component: EditPaymentTypeComponent,
                   data: { title: extract('Edit Payment Type'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
-                    paymentType: PaymentTypeResolver
+                    paymentType: PaymentTypesResolver
                   }
                 }
               ]
@@ -669,7 +668,6 @@ const routes: Routes = [
     TellersResolver,
     TellerResolver,
     PaymentTypesResolver,
-    PaymentTypeResolver,
     PasswordPreferencesTemplateResolver,
     EntityDataTableChecksResolver,
     WorkingDaysResolver,
