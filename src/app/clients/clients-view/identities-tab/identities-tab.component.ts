@@ -34,7 +34,7 @@ export class IdentitiesTabComponent {
   /** Client Id */
   clientId: string;
   /** Identities Columns */
-  identitiesColumns: string[] = ['id', 'description', 'type', 'documents', 'status', 'actions'];
+  identitiesColumns: string[] = ['id', 'description', 'type', 'documentKey', 'documents', 'status', 'actions'];
 
   /** Identifiers Table */
   @ViewChild('identifiersTable', { static: true }) identifiersTable: MatTable<Element>;

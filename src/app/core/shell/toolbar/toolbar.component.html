@@ -13,31 +13,31 @@
 
     <a #institution mat-tab-link class="tab-link" [matMenuTriggerFor]="institutionMenu" #institutionMenuTrigger="matMenuTrigger">
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
-      {{ 'Institution' | translate }}
+      {{ 'labels.menus.Institution' | translate }}
     </a>
 
     <span fxHide.lt-lg="true">
 
       <a #accounting mat-tab-link class="tab-link" [routerLink]="['/accounting']">
         <fa-icon class="mr-05" icon="money-bill-alt" size="lg"></fa-icon>
-        {{ 'Accounting' | translate }}
+        {{ 'labels.menus.Accounting' | translate }}
       </a>
       <a #reports mat-tab-link class="tab-link" [matMenuTriggerFor]="reportsMenu" #reportsMenuTrigger="matMenuTrigger" >
         <fa-icon class="mr-05" icon="chart-bar" size="lg"></fa-icon>
-        {{ 'Reports' | translate }}
+        {{ 'labels.menus.Reports' | translate }}
       </a>
       <a #admin mat-tab-link class="tab-link" [matMenuTriggerFor]="adminMenu" #adminMenuTrigger="matMenuTrigger">
         <fa-icon class="mr-05" icon="shield-alt" size="lg"></fa-icon>
-        {{ 'Admin' | translate }}
+        {{ 'labels.menus.Admin' | translate }}
       </a>
       <a #selfService mat-tab-link class="tab-link" [matMenuTriggerFor]="selfServiceMenu" #selfServiceMenuTrigger="matMenuTrigger">
         <fa-icon class="mr-05" icon="users" size="lg"></fa-icon>
-        {{ 'Self Service' | translate }}
+        {{ 'labels.menus.Self Service' | translate }}
       </a>
 
       <a #configWizard mat-tab-link class="tab-link" (click)="openDialog()">
         <fa-icon class="mr-05" icon="info" size="lg"></fa-icon>
-        Configuration Wizard
+        {{ 'labels.menus.Configuration Wizard' | translate }}
       </a>
 
     </span>
@@ -57,7 +57,7 @@
   <div #themePicker>
     <mifosx-theme-picker fxHide.lt-md></mifosx-theme-picker>
   </div>
-  
+
   <div #notifications>
     <mifosx-notifications-tray fxHide.lt-md></mifosx-notifications-tray>
   </div>
@@ -70,40 +70,40 @@
 </mat-toolbar>
 
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item routerLink="/clients">Clients</button>
-  <button mat-menu-item routerLink="/groups">Groups</button>
-  <button mat-menu-item routerLink="/centers">Centers</button>
+  <button mat-menu-item routerLink="/clients">{{ 'labels.menus.Clients' | translate }}</button>
+  <button mat-menu-item routerLink="/groups">{{ 'labels.menus.Groups' | translate }}</button>
+  <button mat-menu-item routerLink="/centers">{{ 'labels.menus.Centers' | translate }}</button>
   <span fxHide.lg>
-    <button mat-menu-item [routerLink]="['/accounting']">Accounting</button>
-    <button mat-menu-item [matMenuTriggerFor]="reportsMenu">Reports</button>
-    <button mat-menu-item [matMenuTriggerFor]="adminMenu">Admin</button>
-    <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">Self Service</button>
+    <button mat-menu-item [routerLink]="['/accounting']">{{ 'labels.menus.Accounting' | translate }}</button>
+    <button mat-menu-item [matMenuTriggerFor]="reportsMenu">{{ 'labels.menus.Reports' | translate }}</button>
+    <button mat-menu-item [matMenuTriggerFor]="adminMenu">{{ 'labels.menus.Admin' | translate }}</button>
+    <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">{{ 'labels.menus.Self Service' | translate }}</button>
   </span>
 </mat-menu>
 
 <!-- Toolbar Menus -->
 <mat-menu #reportsMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [routerLink]="['/reports']">All</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Client']">Clients</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Loan']">Loans</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Savings']">Savings</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Fund']">Funds</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Accounting']">Accounting</button>
-  <button mat-menu-item [routerLink]="['/xbrl']">XBRL</button>
+  <button mat-menu-item [routerLink]="['/reports']">{{ 'labels.menus.All' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Client']">{{ 'labels.menus.Clients' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Loan']">{{ 'labels.menus.Loans' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Savings']">{{ 'labels.menus.Savings' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Fund']">{{ 'labels.menus.Funds' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Accounting']">{{ 'labels.menus.Accounting' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/xbrl']">{{ 'labels.menus.XBRL' | translate }}</button>
 </mat-menu>
 
 <mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [routerLink]="['/users']">Users</button>
-  <button mat-menu-item [routerLink]="['/organization']">Organization</button>
-  <button mat-menu-item [routerLink]="['/system']">System</button>
-  <button mat-menu-item [routerLink]="['/products']">Products</button>
-  <button mat-menu-item [routerLink]="['/templates']">Templates</button>
+  <button mat-menu-item [routerLink]="['/users']">{{ 'labels.menus.Users' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/organization']">{{ 'labels.menus.Organization' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/system']">{{ 'labels.menus.System' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/products']">{{ 'labels.menus.Products' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/templates']">{{ 'labels.menus.Templates' | translate }}</button>
 </mat-menu>
 
 <mat-menu #selfServiceMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [routerLink]="['/self-service/users']">User Management</button>
-  <button mat-menu-item [routerLink]="['/self-service/app-configuration']">App Configuration</button>
-  <button mat-menu-item [routerLink]="['/self-service/task-management']">Task Management</button>
+  <button mat-menu-item [routerLink]="['/self-service/users']">{{ 'labels.menus.User Management' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/self-service/app-configuration']">{{ 'labels.menus.App Configuration' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/self-service/task-management']">{{ 'labels.menus.Task Management' | translate }}</button>
 </mat-menu>
 
 <!-- Application User Help Menu -->
@@ -112,31 +112,31 @@
     <mat-icon matListIcon>
       <fa-icon icon="question-circle" size="sm"></fa-icon>
     </mat-icon>
-    <span>Help</span>
+    <span>{{ 'labels.menus.Help' | translate }}</span>
   </button>
   <button mat-menu-item [routerLink]="['/profile']">
     <mat-icon>
       <fa-icon icon="user" size="sm"></fa-icon>
     </mat-icon>
-    <span>Profile</span>
+    <span>{{ 'labels.menus.Profile' | translate }}</span>
   </button>
   <button mat-menu-item [routerLink]="['/settings']">
     <mat-icon>
       <fa-icon icon="cog" size="sm"></fa-icon>
     </mat-icon>
-    <span>Settings</span>
+    <span>{{ 'labels.menus.Settings' | translate }}</span>
   </button>
   <button mat-menu-item (click)="logout()" id="logout">
     <mat-icon>
       <fa-icon icon="sign-out-alt" size="sm"></fa-icon>
     </mat-icon>
-    <span>Sign Out</span>
+    <span>{{ 'labels.menus.Sign Out' | translate }}</span>
   </button>
 </mat-menu>
 
 
 <ng-template #templateInstitution let-popover="popover">
-  <h2>Institution</h2>
+  <h2>{{ 'labels.menus.Institution' | translate }}</h2>
   <p class="mw300">This button will be used for individual accounts, groups and centers</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
@@ -145,7 +145,7 @@
 </ng-template>
 
 <ng-template #templateAccounting let-popover="popover">
-  <h2>Accounting</h2>
+  <h2>{{ 'labels.menus.Accounting' | translate }}</h2>
   <p class="mw300">This button opens the menu to access the system tools required by the accounting department.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
@@ -155,7 +155,7 @@
 </ng-template>
 
 <ng-template #templateReports let-popover="popover">
-  <h2>Reports</h2>
+  <h2>{{ 'labels.menus.Reports' | translate }}</h2>
   <p class="mw300">Dropdown provides access to all types of system reports including the defualt reports provided by the Mifos and system reports that will be developed by the organization.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
@@ -165,7 +165,7 @@
 </ng-template>
 
 <ng-template #templateAdmin let-popover="popover">
-  <h2>Admin</h2>
+  <h2>{{ 'labels.menus.Admin' | translate }}</h2>
   <p class="mw300">This is where the system is setup according to your organization including users, organization, products and templates.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
@@ -175,7 +175,7 @@
 </ng-template>
 
 <ng-template #templateSelfService let-popover="popover">
-  <h2>Self Service</h2>
+  <h2>{{ 'labels.menus.Self Service' | translate }}</h2>
   <p class="mw300">Dropdown provides access to self service user administrative portal, app configuration and task management.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
@@ -185,7 +185,7 @@
 </ng-template>
 
 <ng-template #templateConfigWizard let-popover="popover">
-  <h2>Configuration Wizard</h2>
+  <h2>{{ 'labels.menus.Configuration Wizard' | translate }}</h2>
   <p class="mw300">This buttons opens up the configuration wizard to help the user in initial setup and application tour.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
@@ -195,7 +195,7 @@
 </ng-template>
 
 <ng-template #templateGlobalSearch let-popover="popover">
-  <h2>Global Search</h2>
+  <h2>{{ 'labels.menus.Global Search' | translate }}</h2>
   <p class="mw300">This will allow the user to quickly navigate the system selecting entity while searching makes the navigation more robust.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
@@ -205,7 +205,7 @@
 </ng-template>
 
 <ng-template #templateLanguageSelector let-popover="popover">
-  <h2>Language Selector</h2>
+  <h2>{{ 'labels.menus.Language Selector' | translate }}</h2>
   <p class="mw300">Organization can select a language here from the available languages here.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
@@ -215,7 +215,7 @@
 </ng-template>
 
 <ng-template #templateThemePicker let-popover="popover">
-  <h2>Theme Picker</h2>
+  <h2>{{ 'labels.menus.Theme Picker' | translate }}</h2>
   <p class="mw300">This will be used to choose a theme as per organization will.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
@@ -225,7 +225,7 @@
 </ng-template>
 
 <ng-template #templateNotifications let-popover="popover">
-  <h2>Notifications</h2>
+  <h2>{{ 'labels.menus.Notifications' | translate }}</h2>
   <p class="mw300">This shows all the notifications.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
@@ -235,7 +235,7 @@
 </ng-template>
 
 <ng-template #templateAppMenu let-popover="popover">
-  <h2>Application Menu</h2>
+  <h2>{{ 'labels.menus.Application Menu' | translate }}</h2>
   <p class="mw300">This will have logged in user settings and sign out button.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>

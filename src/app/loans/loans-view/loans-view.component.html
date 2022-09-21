@@ -29,7 +29,7 @@
               </h3>
             </div>
 
-            <div *ngIf="loanDetailsData.summary" class="loansOverview mat-typography" fxFlex="50%">
+            <div *ngIf="loanDetailsData.summary" class="loans-overview mat-typography" fxFlex="50%">
               <h3> Loan Account OverView </h3>
               <span>Current Balance: {{loanDetailsData.currency.displaySymbol}}
                 {{loanDetailsData.summary.totalOutstanding | number}}</span><br>
@@ -47,7 +47,7 @@
 
       <ng-container *ngFor="let item of buttonConfig.singleButtons" class="loan-span">
         <button mat-raised-button *mifosxHasPermission="item.taskPermissionName" (click)="loanAction(item.name)">
-          <i class="{{item.icon}}"></i> {{item.name}} </button>
+          <i ng-class="{{item.icon}}"></i> {{item.name}} </button>
       </ng-container>
 
       <ng-container *ngIf="buttonConfig.optionsPayment.length" class="loan-span">

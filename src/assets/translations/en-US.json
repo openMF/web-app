@@ -1,22 +1,116 @@
 {
-  "APP_NAME": "MifosX",
-  "About": "About",
-  "Home": "Home",
+  "APP_NAME": "Mifos X",
   "Logged in as": "Logged in as",
-  "Login": "Login",
-  "Logout": "Logout",
-  "Password": "Password",
-  "Password is required": "Password is required",
-  "Username": "Username",
-  "Username is required": "Username is required",
-  "Username or password incorrect.": "Username or password incorrect",
   "Remember me": "Remember me",
-  "Version": "Version",
-  "Accounting": "Accounting",
-  "Reports": "Reports",
-  "Admin": "Admin",
-  "Self Service": "Self Service",
-  "Institution": "Institution",
-  "Language": "Language",
-  "Server": "Server"
+  "languages": {
+    "en-US": "English",
+    "fr-FR": "French",
+    "es-MX": "Spanish"
+  },
+  "labels": {
+    "breadcrumbs": {
+      "Home": "Home"
+    },
+    "buttons": {
+      "Dashboard": "Dashboard",
+      "Add": "Add",
+      "Back": "Back",
+      "Close": "Close",
+      "Next": "Next",
+      "Login": "Login"
+    },
+    "commons": {
+      "is required": "is required"
+    },
+    "inputs": {
+      "Language": "Language",
+      "Server": "Server",
+      "Url": "Url",
+      "Login": "Login",
+      "Logout": "Logout",
+      "Username": "Username",
+      "Password": "Password",
+      "Remember me": "Remember me"
+    },
+    "links": {
+      "Contribute": "Contribute",
+      "Resources": "Resources",
+      "Community": "Community",
+      "User Manual": "User Manual",
+      "Functional Specifications": "Functional Specifications",
+      "Developer Zone": "Developer Zone",
+      "User Group": "User Group",
+      "Developer Group": "Developer Group",
+      "IRC": "IRC",
+      "Key Design Principles": "Key Design Principles",
+      "Working with Code": "Working with Code",
+      "Donate": "Donate",
+      "Forgot Password?": "Forgot Password?"
+    },
+    "menus": {
+      "Institution": "Institution",
+      "Accounting": "Accounting",
+      "Breadcrumbs": "Breadcrumbs",
+      "Reports": "Reports",
+      "Admin": "Admin",
+      "Self Service": "Self Service",
+      "Configuration Wizard": "Configuration Wizard",
+      "Clients": "Clients",
+      "Groups": "Groups",
+      "Centers": "Centers",
+      "All": "All",
+      "Loans": "Loans",
+      "Savings": "Savings",
+      "Funds": "Funds",
+      "XBRL": "XBRL",
+      "Users": "Users",
+      "Organization": "Organization",
+      "System": "System",
+      "Products": "Products",
+      "Templates": "Templates",
+      "User Management": "User Management",
+      "App Configuration": "App Configuration",
+      "Task Management": "Task Management",
+      "Help": "Help",
+      "Profile": "Profile",
+      "Settings": "Settings",
+      "Sign Out": "Sign Out",
+      "Global Search": "Global Search",
+      "Language Selector": "Language Selector",
+      "Theme Picker": "Theme Picker",
+      "Application Menu": "Application Menu",
+      "User Panel": "User Panel",
+      "Frequently Accessed": "Frequently Accessed",
+      "Dashboard": "Dashboard",
+      "Navigation": "Navigation",
+      "Frequent Postings": "Frequent Postings",
+      "Create Journal Entry": "Create Journal Entry",
+      "Chart of Accounts": "Chart of Accounts",
+      "Notifications": "Notifications",
+      "Main Items": "Main Items",
+      "Checker Inbox and Tasks": "Checker Inbox and Tasks",
+      "Individual Collection Sheet": "Individual Collection Sheet",
+      "Keyboard Shortcuts": "Keyboard Shortcuts"
+    },
+    "placeholders": {
+      "Add new server": "Add new server",
+      "Search Activity": "Search Activity"
+    },
+    "texts": {
+      "Welcome": "Welcome",
+      "Version": "Version",
+      "by": "by"
+    }
+  },
+  "errors": {
+    "inputs": {
+      "Password is required": "Password is required",
+      "Username is required": "Username is required",
+      "Username or password incorrect.": "Username or password incorrect"
+    }
+  },
+  "tooltips": {
+    "Settings": "Settings",
+    "Sign Out": "Sign Out"
+  }
 }
