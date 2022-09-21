@@ -1,0 +1,116 @@
+{
+  "APP_NAME": "Mifos X",
+  "Logged in as": "Logged in as",
+  "Remember me": "Remember me",
+  "languages": {
+    "en-US": "Ingles",
+    "fr-FR": "Frances",
+    "es-MX": "Español"
+  },
+  "labels": {
+    "breadcrumbs": {
+      "Home": "Inicio"
+    },
+    "buttons": {
+      "Dashboard": "Gráficos",
+      "Add": "Agregar",
+      "Back": "Previo",
+      "Close": "Cerrar",
+      "Next": "Siguiente",
+      "Login": "Inciar Sesiòn"
+    },
+    "commons": {
+      "is required": "es requerido"
+    },
+    "inputs": {
+      "Language": "Lenguaje",
+      "Server": "Servidor",
+      "Url": "Url",
+      "Login": "Inciar Sesiòn",
+      "Logout": "Salir",
+      "Username": "Nombre de usuario",
+      "Password": "Contraseña",
+      "Remember me": "Recordarme"
+    },
+    "links": {
+      "Contribute": "Contribuir",
+      "Resources": "Recursos",
+      "Community": "Comunidad",
+      "User Manual": "Manual de Usuario",
+      "Functional Specifications": "Especificación Funcional",
+      "Developer Zone": "Zona de Desarrollo",
+      "User Group": "Grupo de Usuarios",
+      "Developer Group": "Grupo de Desarrollo",
+      "IRC": "IRC",
+      "Key Design Principles": "Principios de Diseño",
+      "Working with Code": "Código",
+      "Donate": "Donar",
+      "Forgot Password?": "Recuperar Contraseña"
+    },
+    "menus": {
+      "Institution": "Institución",
+      "Accounting": "Contabilidad",
+      "Breadcrumbs": "",
+      "Reports": "Reportes",
+      "Admin": "Administrador",
+      "Self Service": "Auto Servicio",
+      "Configuration Wizard": "Configuration Wizard",
+      "Clients": "Clientes",
+      "Groups": "Grupos",
+      "Centers": "Centros",
+      "All": "Todo",
+      "Loans": "Créditos",
+      "Savings": "Ahorros",
+      "Funds": "Fondos",
+      "XBRL": "XBRL",
+      "Users": "Usuarios",
+      "Organization": "Organización",
+      "System": "Sistema",
+      "Products": "Productos",
+      "Templates": "Plantillas",
+      "User Management": "Admin. de Usuarios",
+      "App Configuration": "Configuración Aplicación",
+      "Task Management": "Admin. de Tareas",
+      "Help": "Ayuda",
+      "Profile": "Perfil",
+      "Settings": "Configuración",
+      "Sign Out": "Cerrar Sesión",
+      "Global Search": "Búsqueda",
+      "Language Selector": "Seleccionador de Idioma",
+      "Theme Picker": "Seleccionador de Tema",
+      "Application Menu": "Menu de Aplicación",
+      "User Panel": "Panel de Usuario",
+      "Frequently Accessed": "Accessos Frecuentes",
+      "Dashboard": "Gráficos",
+      "Navigation": "Navegación",
+      "Frequent Postings": "Asientos Frecuentes",
+      "Create Journal Entry": "Crear Entrada Manual",
+      "Chart of Accounts": "Cuentas Contables",
+      "Notifications": "Notificaciones",
+      "Main Items": "Principales",
+      "Checker Inbox and Tasks": "Panel de Tareas",
+      "Individual Collection Sheet": "Hoja de colección",
+      "Keyboard Shortcuts": "Accesos"
+    },
+    "placeholders": {
+      "Add new server": "Agregar nuevo servidor",
+      "Search Activity": "Buscar Actividad"
+    },
+    "texts": {
+      "Welcome": "Bienvenido",
+      "Version": "Versión",
+      "by": "por"
+    }
+  },
+  "errors": {
+    "inputs": {
+      "Password is required": "La Contraseña es requerida",
+      "Username is required": "Nombre de Usuario es requerida",
+      "Username or password incorrect.": "Nombre de Usuario o Contraseá son incorrectas"
+    }
+  },
+  "tooltips": {
+    "Settings": "Configuración",
+    "Sign Out": "Cerrar Sesión"
+  }
+}
