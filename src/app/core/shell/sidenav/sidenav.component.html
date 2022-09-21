@@ -8,7 +8,7 @@
     <!-- TODO: Allow customization by organization -->
     <div class="app-brand" [routerLink]="['/home']">
       <img src="assets/images/MifosX_logo.png" alt="app-logo" class="app-logo">
-      <span #logo class="app-logo-text text-muted">Mifos</span>
+      <span #logo class="app-logo-text text-muted">{{ 'APP_NAME' | translate }}</span>
     </div>
 
     <div class="app-user">
@@ -20,10 +20,10 @@
         {{ username }}
       </span>
       <div #userPanel class="app-user-controls">
-        <button class="xs-button" mat-icon-button matTooltip="Settings" [routerLink]="['/settings']">
+        <button class="xs-button" mat-icon-button matTooltip="{{ 'tooltips.Settings' | translate }}" [routerLink]="['/settings']">
           <fa-icon icon="cog"></fa-icon>
         </button>
-        <button class="xs-button" mat-icon-button matTooltip="Sign Out" (click)="logout()">
+        <button class="xs-button" mat-icon-button matTooltip="{{ 'tooltips.Sign Out' | translate }}" (click)="logout()">
           <fa-icon icon="sign-out-alt"></fa-icon>
         </button>
       </div>
@@ -34,7 +34,7 @@
       <div #frequentlyAccessed>
       <div class="mt-1 mb-1 nav-item-sep">
         <mat-divider></mat-divider>
-        <span class="text-muted icon-menu-title">Frequently Accessed</span>
+        <span class="text-muted icon-menu-title">{{ 'labels.menus.Frequently Accessed' | translate }}</span>
       </div>
       </div>
       <div class="icon-menu">
@@ -47,7 +47,7 @@
 
       <div class="nav-item-sep">
         <mat-divider></mat-divider>
-        <span class="text-muted">Main Items</span>
+        <span class="text-muted">{{ 'labels.menus.Main Items' | translate }}</span>
       </div>
 
       <mat-nav-list>
@@ -55,61 +55,61 @@
           <mat-icon matListIcon >
             <fa-icon icon="tachometer-alt" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine #dashboard>Dashboard</a>
+          <a matLine #dashboard>{{ 'labels.menus.Dashboard' | translate }}</a>
         </mat-list-item>
         <mat-list-item [routerLink]="['/navigation']" matTooltip="Navigation">
           <mat-icon matListIcon>
             <fa-icon icon="location-arrow" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine #navigation>Navigation</a>
+          <a matLine #navigation>{{ 'labels.menus.Navigation' | translate }}</a>
         </mat-list-item>
         <mat-list-item [routerLink]="['/checker-inbox-and-tasks/checker-inbox']" matTooltip="Checker Inbox and Tasks">
           <mat-icon matListIcon>
             <i class="fa fa-check" ></i>
           </mat-icon>
-          <a matLine>Checker Inbox and Tasks</a>
+          <a matLine>{{ 'labels.menus.Checker Inbox and Tasks' | translate }}</a>
         </mat-list-item>
         <mat-list-item [routerLink]="['/collections/individual-collection-sheet']" matTooltip="Individual Collection Sheet">
           <mat-icon matListIcon>
             <i class="fa fa-tasks "></i>
           </mat-icon>
-          <a matLine>Individual Collection Sheet</a>
+          <a matLine>{{ 'labels.menus.Individual Collection Sheet' | translate }}</a>
         </mat-list-item>
         <mat-list-item [routerLink]="['/notifications']" matTooltip="Notifications">
           <mat-icon matListIcon>
             <fa-icon icon="bell" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine>Notifications</a>
+          <a matLine>{{ 'labels.menus.Notifications' | translate }}</a>
         </mat-list-item>
         <mat-list-item [routerLink]="['/accounting/journal-entries/frequent-postings']" matTooltip="Frequent Postings">
           <mat-icon matListIcon>
             <fa-icon icon="sync" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine #frequentPostings>Frequent Postings</a>
+          <a matLine #frequentPostings>{{ 'labels.menus.Frequent Postings' | translate }}</a>
         </mat-list-item>
         <mat-list-item [routerLink]="['/accounting/journal-entries/create']" matTooltip="Create Journal Entry">
           <mat-icon matListIcon>
             <fa-icon icon="plus" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine #createJournalEntry>Create Journal Entry</a>
+          <a matLine #createJournalEntry>{{ 'labels.menus.Create Journal Entry' | translate }}</a>
         </mat-list-item>
         <mat-list-item [routerLink]="['/accounting/chart-of-accounts']" matTooltip="Chart Of Accounts">
           <mat-icon matListIcon>
             <fa-icon icon="sitemap" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine #chartOfAccounts>Chart of Accounts</a>
+          <a matLine #chartOfAccounts>{{ 'labels.menus.Chart of Accounts' | translate }}</a>
         </mat-list-item>
         <mat-list-item (click)="showKeyboardShortcuts()" matTooltip="Keyboard Shortcuts">
           <mat-icon matListIcon>
             <fa-icon icon="keyboard" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine>Keyboard Shortcuts</a>
+          <a matLine>{{ 'labels.menus.Keyboard Shortcuts' | translate }}</a>
         </mat-list-item>
         <mat-list-item matTooltip="Help">
           <mat-icon matListIcon (click)="help()">
             <fa-icon icon="question-circle" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine>Help</a>
+          <a matLine>{{ 'labels.menus.Help' | translate }}</a>
         </mat-list-item>
       </mat-nav-list>
 
@@ -130,7 +130,7 @@
 </ng-template>
 
 <ng-template #templateUserPanel let-popover="popover">
-  <h2>User Panel</h2>
+  <h2>{{ 'labels.menus.User Panel' | translate }}</h2>
   <p class="mw300">This section contains user name, user photograph, user settings and sign out button.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
@@ -140,7 +140,7 @@
 </ng-template>
 
 <ng-template #templateFrequentlyAccessed let-popover="popover">
-  <h2>Frequently Accessed</h2>
+  <h2>{{ 'labels.menus.Frequently Accessed' | translate }}</h2>
   <p class="mw300">This contains shortcut to the frequently accessed components.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
@@ -150,7 +150,7 @@
 </ng-template>
 
 <ng-template #templateDashboard let-popover="popover">
-  <h2>Dashboard</h2>
+  <h2>{{ 'labels.menus.Dashboard' | translate }}</h2>
   <p class="mw300">This will navigate the user to dashboard component.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
@@ -160,7 +160,7 @@
 </ng-template>
 
 <ng-template #templateNavigation let-popover="popover">
-  <h2>Navigation</h2>
+  <h2>{{ 'labels.menus.Navigation' | translate }}</h2>
   <p class="mw300">This will navigate the user to entity navigation screen.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
@@ -170,7 +170,7 @@
 </ng-template>
 
 <ng-template #templateFrequentPostings let-popover="popover">
-  <h2>Frequent Postings</h2>
+  <h2>{{ 'labels.menus.Frequent Postings' | translate }}</h2>
   <p class="mw300">Shortcut to Journal entry screen with accouting rules in place</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
@@ -180,7 +180,7 @@
 </ng-template>
 
 <ng-template #templateCreateJournalEntry let-popover="popover">
-  <h2>Create Journal Entry</h2>
+  <h2>{{ 'labels.menus.Create Journal Entry' | translate }}</h2>
   <p class="mw300">Shortcut to the create journal entry screen.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
@@ -190,7 +190,7 @@
 </ng-template>
 
 <ng-template #templateChartOfAccounts let-popover="popover">
-  <h2>Chart of Accounts</h2>
+  <h2>{{ 'labels.menus.Chart of Accounts' | translate }}</h2>
   <p class="mw300">Shortcut to chart of accounts screen to add/modify the ledger accounts.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>

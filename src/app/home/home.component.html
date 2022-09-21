@@ -3,7 +3,7 @@
   <div #buttonDashboard class="in-block">
     <button mat-raised-button color="primary" [routerLink]="['/dashboard']">
       <fa-icon icon="tachometer-alt"></fa-icon>&nbsp;&nbsp;
-      Dashboard
+      {{ 'labels.buttons.Dashboard' | translate }}
     </button>
   </div>
 
@@ -15,15 +15,15 @@
 
     <mat-card-header>
       <mat-card-title class="title">
-        Welcome, {{ username }}!
+        {{ 'labels.texts.Welcome' | translate }}, {{ username }}!
       </mat-card-title>
     </mat-card-header>
 
     <mat-card-content #searchActivity>
-        
+
       <div fxLayout="column">
         <mat-form-field>
-          <mat-label>Search Activity</mat-label>
+          <mat-label>{{ 'labels.placeholders.Search Activity' | translate }}</mat-label>
           <input matInput [matAutocomplete]="activitySearch" [formControl]="searchText">
         </mat-form-field>
       </div>

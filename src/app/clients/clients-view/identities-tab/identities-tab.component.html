@@ -13,14 +13,19 @@
           <td mat-cell *matCellDef="let identity">{{identity.id}}</td>
         </ng-container>
 
-        <ng-container matColumnDef="description">
-          <th mat-header-cell *matHeaderCellDef> Description </th>
-          <td mat-cell *matCellDef="let identity"> {{identity.description}} </td>
-        </ng-container>
-
         <ng-container matColumnDef="type">
           <th mat-header-cell *matHeaderCellDef> type </th>
           <td mat-cell *matCellDef="let identity"> {{identity.documentType.name}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="documentKey">
+          <th mat-header-cell *matHeaderCellDef> Key </th>
+          <td mat-cell *matCellDef="let identity"> {{identity.documentKey}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> Description </th>
+          <td mat-cell *matCellDef="let identity"> {{identity.description}} </td>
         </ng-container>
 
         <ng-container matColumnDef="documents">
@@ -44,7 +49,7 @@
           <th mat-header-cell *matHeaderCellDef> Actions </th>
           <td mat-cell *matCellDef="let identity; let i = index">
             <button class="identity-action-button" mat-raised-button color="primary" (click)="uploadDocument(i,identity.id)" *mifosxHasPermission="'CREATE_DOCUMENT'">
-              <fa-icon icon="cloud-upload-alt"></fa-icon>
+              <fa-icon icon="eye"></fa-icon>
             </button>
             <button class="identity-action-button" mat-raised-button color="warn" (click)="deleteIdentifier(identity.clientId,identity.id,i)" *mifosxHasPermission="'DELETE_CLIENTIDENTIFIER'">
               <fa-icon icon="times"></fa-icon>

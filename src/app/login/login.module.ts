@@ -10,6 +10,7 @@ import { LoginComponent } from './login.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { TwoFactorAuthenticationComponent } from './two-factor-authentication/two-factor-authentication.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 /**
  * Login Module
@@ -19,7 +20,8 @@ import { TwoFactorAuthenticationComponent } from './two-factor-authentication/tw
 @NgModule({
   imports: [
     SharedModule,
-    LoginRoutingModule
+    LoginRoutingModule,
+    TranslateModule.forRoot()
   ],
   declarations: [
     LoginComponent,
