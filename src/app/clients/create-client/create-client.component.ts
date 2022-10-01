@@ -90,7 +90,8 @@ export class CreateClientComponent {
       locale
     };
     this.clientsService.createClient(clientData).subscribe((response: any) => {
-      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+      const url = `/clients/${response.clientId}/loans-accounts/create`
+      this.router.navigate([url], { relativeTo: this.route });
     });
   }
 
