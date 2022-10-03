@@ -73,6 +73,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    TranslateModule
   ]
 })
 export class SharedModule { }

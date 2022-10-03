@@ -488,6 +488,13 @@ export class OrganizationService {
   }
 
   /**
+   * @returns {Observable<any>} Payment Types data
+   */
+   getPaymentTypesWithCode(): Observable<any> {
+    return this.http.get('/paymenttypes?onlyWithCode=true');
+  }
+
+  /**
    * @param {any} paymentType Payment type to be created.
    * @returns {Observable<any>}
    */

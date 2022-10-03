@@ -6,9 +6,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 
-/** rxjs Imports */
-import { of } from 'rxjs';
-
 /** Custom Services */
 import { OrganizationService } from '../organization.service';
 
@@ -28,7 +25,7 @@ export class PaymentTypesComponent implements OnInit {
   /** Payment Types data. */
   paymentTypesData: any;
   /** Columns to be displayed in payment types table. */
-  displayedColumns: string[] = ['name', 'description', 'isCashPayment', 'position', 'actions'];
+  displayedColumns: string[] = ['name', 'description', 'codeName', 'isSystemDefined', 'isCashPayment', 'position', 'actions'];
   /** Data source for payment types table. */
   dataSource: MatTableDataSource<any>;
 

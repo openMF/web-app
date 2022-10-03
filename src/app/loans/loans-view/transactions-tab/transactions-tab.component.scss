@@ -1,3 +1,5 @@
+@import "assets/styles/helper";
+
 .container {
   padding-bottom: 2%;
 
@@ -24,5 +26,10 @@
       text-decoration: line-through;
       color: red;
     }
+    .linked {
+      text-decoration: line-through;
+      color: $status-approved;
+    }
   }
 }
+

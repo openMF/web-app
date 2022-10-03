@@ -80,6 +80,16 @@ export class TransactionsTabComponent implements OnInit {
     }
   }
 
+  loanTransactionColor(loanTransaction: any): string {
+    if (loanTransaction.manuallyReversed) {
+      return 'strike';
+    }
+    if (loanTransaction.transactionRelations && loanTransaction.transactionRelations.length > 0) {
+      return 'linked';
+    }
+    return '';
+  }
+
   /**
    * Stops the propagation to view pages.
    * @param $event Mouse Event

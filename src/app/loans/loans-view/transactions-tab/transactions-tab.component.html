@@ -13,58 +13,58 @@
   <table mat-table [dataSource]="showTransactionsData">
 
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> Date </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="{'strike': transaction.manuallyReversed}"> {{ transaction.id }} </td>
+        <th mat-header-cell *matHeaderCellDef> Id </th>
+        <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.id }} </td>
       </ng-container>
 
       <ng-container matColumnDef="office">
         <th mat-header-cell *matHeaderCellDef> Office </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="{'strike': transaction.manuallyReversed}"> {{ transaction.officeName }} </td>
+        <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.officeName }} </td>
       </ng-container>
 
       <ng-container matColumnDef="transactionDate">
         <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="{'strike': transaction.manuallyReversed}"> {{ transaction.date  | dateFormat }} </td>
+        <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.date  | dateFormat }} </td>
       </ng-container>
 
       <ng-container matColumnDef="transactionType">
         <th mat-header-cell *matHeaderCellDef> Transaction Type </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="{'strike': transaction.manuallyReversed}"> {{ transaction.type.value  }} </td>
+        <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.type.value  }} </td>
       </ng-container>
 
       <ng-container matColumnDef="amount">
         <th mat-header-cell *matHeaderCellDef> Amount </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="{'strike': transaction.manuallyReversed}"> {{ transaction.amount | number }} </td>
+        <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.amount | number }} </td>
       </ng-container>
 
       <ng-container matColumnDef="principal">
         <th mat-header-cell *matHeaderCellDef> Breakdown </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="{'strike': transaction.manuallyReversed}"> {{ transaction.principalPortion | number }} </td>
+        <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.principalPortion | number }} </td>
       </ng-container>
 
       <ng-container matColumnDef="interest">
         <th mat-header-cell *matHeaderCellDef> </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="{'strike': transaction.manuallyReversed}"> {{ transaction.interestPortion | number }} </td>
+        <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.interestPortion | number }} </td>
       </ng-container>
 
       <ng-container matColumnDef="fee">
         <th mat-header-cell *matHeaderCellDef>  </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="{'strike': transaction.manuallyReversed}"> {{ transaction.feeChargesPortion | number }} </td>
+        <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.feeChargesPortion | number }} </td>
       </ng-container>
 
       <ng-container matColumnDef="penalties">
         <th mat-header-cell *matHeaderCellDef>  </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="{'strike': transaction.manuallyReversed}"> {{ transaction.penaltyChargesPortion | number }} </td>
+        <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.penaltyChargesPortion | number }} </td>
       </ng-container>
 
       <ng-container matColumnDef="loanBalance">
         <th mat-header-cell *matHeaderCellDef> Loan Balance </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="{'strike': transaction.manuallyReversed}"> {{ transaction.outstandingLoanBalance | number }} </td>
+        <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.outstandingLoanBalance | number }} </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="{'strike': transaction.manuallyReversed}">
+        <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)">
           <button class="account-action-button" *ngIf="!transaction.manuallyReversed" mat-raised-button color="primary" (click)="routeEdit($event)"
             [routerLink]="[transaction.id, 'reciept']" matTooltip="View Receipts">
             <i class="fa fa-file-text"></i>
