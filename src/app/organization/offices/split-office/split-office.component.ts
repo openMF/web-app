@@ -54,7 +54,7 @@ export class SplitOfficeComponent implements OnInit {
   ngOnInit(): void {
     this.createSplitOfficeForm();
   }
-  public isFiltered(office, type: number) {
+  public isFiltered(office: any, type: number) {
     if (type === 0) {
     return this.splitOfficesSliced.find(item => item.id === office.id);
     } else if (type === 1) {
@@ -93,8 +93,13 @@ export class SplitOfficeComponent implements OnInit {
 
   filterSelectedChildOffices()  {
     const allChildOfficeData = this.splitOffices.filter((x) => x.parentId === this.splitOfficeForm.value.splitId);
-    this.firstchildOfficeData = (!this.splitOfficeForm.value.secondOfficeChildIds || this.splitOfficeForm.value.secondOfficeChildIds?.length === 0) ? allChildOfficeData : allChildOfficeData.filter(el => !this.splitOfficeForm.value.secondOfficeChildIds?.includes(el.id));
-    this.secondchildOfficeData = (!this.splitOfficeForm.value.firstOfficeChildIds || this.splitOfficeForm.value.firstOfficeChildIds?.length === 0) ? allChildOfficeData : allChildOfficeData.filter(el => !this.splitOfficeForm.value.firstOfficeChildIds?.includes(el.id));
+    this.firstchildOfficeData = (!this.splitOfficeForm.value.secondOfficeChildIds
+      || this.splitOfficeForm.value.secondOfficeChildIds?.length === 0)
+      ? allChildOfficeData : allChildOfficeData.filter(el => !this.splitOfficeForm.value.secondOfficeChildIds?.includes(el.id));
+    this.secondchildOfficeData = (!this.splitOfficeForm.value.firstOfficeChildIds ||
+      this.splitOfficeForm.value.firstOfficeChildIds?.length === 0)
+      ? allChildOfficeData : allChildOfficeData
+      .filter(el => !this.splitOfficeForm.value.firstOfficeChildIds?.includes(el.id));
     this.secondChildOfficeSliced = this.secondchildOfficeData;
     this.firstChildOfficeSliced = this.firstchildOfficeData;
 }

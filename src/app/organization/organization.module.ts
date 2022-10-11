@@ -71,6 +71,10 @@ import { FundMappingComponent } from './fund-mapping/fund-mapping.component';
 import { CreateHolidayComponent } from './holidays/create-holiday/create-holiday.component';
 import { CombineOfficeComponent } from './offices/combine-office/combine-office.component';
 import { SplitOfficeComponent } from './offices/split-office/split-office.component';
+import { RuralOutletComponent } from './rural-outlet/rural-outlet.component';
+import { CreateOutletComponent } from './rural-outlet/create-outlet/create-outlet.component';
+import { ViewOutletComponent } from './rural-outlet/view-outlet/view-outlet.component';
+import { EditOutletComponent } from './rural-outlet/edit-outlet/edit-outlet.component';
 
 /**
  * Organization Module
@@ -148,6 +152,10 @@ import { SplitOfficeComponent } from './offices/split-office/split-office.compon
     CreateHolidayComponent,
     CombineOfficeComponent,
     SplitOfficeComponent,
+    RuralOutletComponent,
+    CreateOutletComponent,
+    ViewOutletComponent,
+    EditOutletComponent,
   ]
 })
 export class OrganizationModule { }

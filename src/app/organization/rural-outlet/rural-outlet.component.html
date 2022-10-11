@@ -1,0 +1,62 @@
+
+
+  <div class="container">
+
+    <div fxLayoutAlign="flex-end" class="action-button m-b-20">
+      <span>
+        <button mat-raised-button color="primary" [routerLink]="['create']">
+          <fa-icon icon="plus"></fa-icon> Create Outlet
+        </button>
+      </span>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field fxFlex>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event.target.value)">
+      </mat-form-field>
+    </div>
+
+    <div class="mat-elevation-z8">
+
+      <table mat-table [dataSource]="dataSource" matSort>
+        <caption class="display-none">Rural Outlet</caption>
+        <ng-container matColumnDef="name">
+
+
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Office Name </th>
+          <td mat-cell *matCellDef="let offices"> {{ offices.name }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="externalId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> External ID </th>
+          <td mat-cell *matCellDef="let offices"> {{ offices.externalId }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="openingDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Opened On </th>
+          <td mat-cell *matCellDef="let offices"> {{ offices.openingDate  | dateFormat }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let offices" (click)="$event.stopPropagation()">
+            <button type="button" mat-raised-button color="warn" *ngIf="offices.status===true" (click)="deactivateOutlet(offices.id,false)">
+              <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;Deactivate
+            </button>
+            <button type="button" mat-raised-button color="primary" *ngIf="offices.status===false" (click)="deactivateOutlet(offices.id,true)">
+              <em class="fa fa-unlock-alt"></em>&nbsp;&nbsp;Activate           
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row" [routerLink]="[row.id]"></tr>
+
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+    </div>
+
+  </div>

@@ -1,0 +1,32 @@
+.container-fluid .tree-button {
+    margin-top: 5px;
+    margin-left: 5px;
+}
+.mat-tree-node {
+    min-height: 25px !important;
+}
+.material-icons-outlined{
+    font-size:17px
+}
+.mat-icon-button i, .mat-icon-button .mat-icon {
+    line-height: 24px;
+}
+.mat-icon-button{
+    line-height: 24px !important;
+    height: 25px !important;
+}
+.normal {
+    padding: 7px 7px;
+    margin-right: 3px;
+    color: deepskyblue;
+    background: deepskyblue;
+    border-radius: 50%;
+}
+.mat-tree{
+    margin-top: 10px;
+}
+.add-office{
+    margin-left: 8px;
+    color: #0076b9;
+    cursor: pointer;
+}

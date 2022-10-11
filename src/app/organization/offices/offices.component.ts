@@ -75,15 +75,15 @@ export class OfficesComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  flatToHierarchy (flat) {
+  flatToHierarchy ( flat: any ) {
     const roots = []; // offices without parent
     // make them accessible by id on this map
     const all = {};
-    flat.forEach(function (item) {
+    flat.forEach(function (item: any) {
       all[item.id] = item;
     });
     // connect childrens to its parent, and split roots apart
-    Object.keys(all).forEach(function (id) {
+    Object.keys(all).forEach(function (id: any) {
       const item = all[id];
       if (!item.parentId || item.parentId === null) {
         const displayName = [item.levelName, item.name]

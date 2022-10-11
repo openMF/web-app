@@ -62,8 +62,8 @@ export class EditOfficeComponent implements OnInit {
     this.createOfficeForm();
   }
 
-  public isFiltered(office) {
-    return this.allowedParentsSliced.find(item => item.id === office.id);
+  public isFiltered( office: any ) {
+    return this.allowedParentsSliced.find((item: { id: any; }) => item.id === office.id);
 
   }
   convertArrayToObject (hierarchyData: any) {

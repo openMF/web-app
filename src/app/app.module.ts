@@ -45,6 +45,7 @@ import { KeycloakService } from 'keycloak-angular';
 import { initializer } from './core/init/keycloak-init.factory';
 import { AuthenticationService } from './core/authentication/authentication.service';
 import { FormsModule } from '@angular/forms';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 /**
  * App Module
@@ -96,7 +97,8 @@ import { FormsModule } from '@angular/forms';
       useFactory: initializer,
       deps: [ KeycloakService, AuthenticationService ],
       multi: true
-    }],
+    },
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
   bootstrap: [WebAppComponent]
 })
 export class AppModule { }

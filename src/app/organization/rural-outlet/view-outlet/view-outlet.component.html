@@ -1,0 +1,42 @@
+<div class="tab-container mat-typography">
+  <div class="container">
+    <mat-card>
+      <div *ngIf="errMsg">Unable to delete outlet</div>
+      <div fxLayoutAlign="flex-end" class="action-button m-b-20">
+        <span class="mr-1">
+          <button mat-raised-button color="primary" [routerLink]="['edit']">
+            <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;Edit Rural Outlet
+          </button>
+        </span>
+        <span>
+          <button mat-raised-button color="warn" (click)="deleteRuralOutlet()">
+            <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;Delete Rural Outlet
+          </button>
+        </span>
+      </div>
+
+      <mat-list-item>
+        Parent Office : {{ retailOutletData?.name }}
+      </mat-list-item>
+
+      <mat-list-item>
+        Opened On : {{ retailOutletData?.openingDate ? (retailOutletData?.openingDate | dateFormat) : 'Unassigned' }}
+      </mat-list-item>
+
+      <mat-list-item>
+        External Id : {{ retailOutletData?.externalId ? retailOutletData?.externalId : 'Unassigned' }}
+      </mat-list-item>
+
+      <mat-list-item class="assignedoffices">
+          <div fxLayout="row" fxLayoutGap="10">
+            <div fxFlex="10%">
+              <p>Assigned Office :</p>
+            </div>
+            <div fxFlex="90%">
+              {{officeList}}
+              </div>
+        </div>
+      </mat-list-item>
+    </mat-card>
+  </div>
+</div>

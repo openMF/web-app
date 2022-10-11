@@ -15,7 +15,13 @@
             <h4 matLine>Manage Offices</h4>
             <p matLine>Add new office or modify or deactivate office or modify hierarchy</p>
           </mat-list-item>
-
+          <mat-list-item [routerLink]="['rural-outlet']" *mifosxHasPermission="'READ_OUTLET'">
+            <mat-icon matListIcon>
+              <fa-icon icon="calendar-alt" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Manage Rural Retail Outlet</h4>
+            <p matLine>Manage rural retail outlet</p>
+          </mat-list-item>
           <mat-list-item [routerLink]="['holidays']" *mifosxHasPermission="'READ_HOLIDAY'">
             <mat-icon matListIcon>
               <fa-icon icon="calendar-alt" size="sm"></fa-icon>

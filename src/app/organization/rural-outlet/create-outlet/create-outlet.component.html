@@ -1,0 +1,60 @@
+<div class="container">
+  <mat-card>
+    <form [formGroup]="outletForm" (ngSubmit)="submit()">
+      <mat-card-content>
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Country</mat-label>
+            <mat-select placeholder="Search" #country required formControlName="countryId" (selectionChange)="search($event)">
+              <mat-select-filter *ngIf="country.focused" [array]="listCountries" (filteredReturn)="listCountriesSliced=$event"
+                [displayMember]="'name'">
+              </mat-select-filter>
+              <mat-option *ngFor="let country of listCountries" [value]="country.id"
+                [class.hide]="!isFiltered(country)">
+                {{country.name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="outletForm.controls.countryId.hasError('required')">
+              Country is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput required formControlName="name">
+            <mat-error *ngIf="outletForm.controls.name.hasError('required')">
+              Outlet name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field (click)="openedOnDatePicker.open()">
+            <mat-label>Opened On</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" formControlName="openingDate" required [matDatepicker]="openedOnDatePicker">
+            <mat-datepicker-toggle matSuffix [for]="openedOnDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #openedOnDatePicker></mat-datepicker>
+            <mat-error *ngIf="outletForm.controls.openingDate.hasError('required')">
+              Opening Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>External Id</mat-label>
+            <input matInput formControlName="externalId">
+
+          </mat-form-field>
+
+          <div class="">
+            Assigned Offices:
+            <mifosx-country-tree-view *ngIf="treeDataSource.length>0" [treeDataSource]="treeDataSource"
+              (checkedOffices)="getCheckedOffices($event)"></mifosx-country-tree-view>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary">Submit</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+
+</div>

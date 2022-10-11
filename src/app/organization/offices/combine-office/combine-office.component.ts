@@ -41,7 +41,7 @@ export class CombineOfficeComponent implements OnInit {
   ngOnInit(): void {
     this.createCombineOfficeForm();
   }
-  public isFiltered(office, type: number) {
+  public isFiltered(office: any, type: number) {
     if (type === 0) {
     return this.officeDataSliced.find(item => item.id === office.id);
     } else {

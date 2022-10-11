@@ -3,6 +3,7 @@ export class OfficeTreeNode {
     id: number;
     levelName?: string;
     children?: OfficeTreeNode[];
+    checked:boolean;
     constructor() {
 
     }
@@ -14,6 +15,7 @@ export class OfficeFlatNode {
     level: number;
     id: number;
     hasChild: boolean;
+    checked: boolean;
   }
 
   export class OfficeHierarchy {

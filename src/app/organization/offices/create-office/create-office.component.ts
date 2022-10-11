@@ -61,7 +61,7 @@ export class CreateOfficeComponent implements OnInit {
   ngOnInit () {
     this.createofficeForm();
   }
-  public isFiltered(office) {
+  public isFiltered(office: any) {
     return this.officeDataSliced.find(item => item.id === office.id);
   }
   /**
