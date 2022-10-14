@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild,AfterViewInit } from "@angular/core";
-import { FlatTreeControl } from "@angular/cdk/tree";
-import { MatTreeFlatDataSource, MatTreeFlattener } from "@angular/material/tree";
-import { Router } from "@angular/router";
-import { OfficeFlatNode, OfficeTreeNode } from "../office-tree-view/office-tree-node";
-import { SelectionModel } from "@angular/cdk/collections";
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, AfterViewInit } from '@angular/core';
+import { FlatTreeControl } from '@angular/cdk/tree';
+import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { Router } from '@angular/router';
+import { OfficeFlatNode, OfficeTreeNode } from '../office-tree-view/office-tree-node';
+import { SelectionModel } from '@angular/cdk/collections';
 
 const _transformer = (node: OfficeTreeNode, level: number) => {
   return {
@@ -11,7 +11,7 @@ const _transformer = (node: OfficeTreeNode, level: number) => {
     name: node.name,
     level: level,
     id: node.id,
-    checked:node.checked
+    checked: node.checked
   };
 };
 
@@ -23,17 +23,17 @@ const treeFlattener = new MatTreeFlattener(
 );
 
 @Component({
-  selector: "mifosx-country-tree-view",
-  templateUrl: "./country-tree-view.component.html",
-  styleUrls: ["./country-tree-view.component.scss"],
+  selector: 'mifosx-country-tree-view',
+  templateUrl: './country-tree-view.component.html',
+  styleUrls: ['./country-tree-view.component.scss'],
 })
-export class CountryTreeViewComponent implements OnInit,AfterViewInit {
+export class CountryTreeViewComponent implements OnInit, AfterViewInit {
   constructor(private router: Router) {}
 
   @Input() treeDataSource: OfficeTreeNode[] = [];
   @Output() checkedOffices = new EventEmitter<any>();
 
-  @ViewChild("officeTree") officeTree!: any;
+  @ViewChild('officeTree') officeTree!: any;
   treeControl = new FlatTreeControl<OfficeFlatNode>(
     (node) => node.level,
     (node) => node.expandable
@@ -53,10 +53,10 @@ export class CountryTreeViewComponent implements OnInit,AfterViewInit {
 
   ngAfterViewInit() {
     for (let i = 0; i < this.treeControl.dataNodes.length; i++) {
-      if (this.treeControl.dataNodes[i].checked===true) {
+      if (this.treeControl.dataNodes[i].checked === true) {
         this.todoItemSelectionToggle(this.treeControl.dataNodes[i]);
         this.checklistSelection.select(this.treeControl.dataNodes[i]);
-        this.treeControl.expand(this.treeControl.dataNodes[i])
+        this.treeControl.expand(this.treeControl.dataNodes[i]);
       }
     }
 

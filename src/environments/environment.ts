@@ -24,15 +24,15 @@ export const environment = {
   oauth: {
     enabled: true,  // For connecting to Mifos X using OAuth2 Authentication change the value to true
     serverUrl: 'https://accounts.test.oneacrefund.org/auth',
-    realm:'OneAcreFund',
-    client_id:'fineract',
-    redirectUri:'http://localhost:4200/home'
+    realm: 'OneAcreFund',
+    client_id: 'fineract',
+    redirectUri: 'http://localhost:4200/home'
   },
   defaultLanguage: window['env']['defaultLanguage'] || 'en-US',
   supportedLanguages: window['env']['supportedLanguages'] || 'en-US,fr-FR'
-  
+
 };
 
 // Server URL
 environment.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}${environment.apiVersion}`;
-//environment.oauth.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}`;
+// environment.oauth.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}`;

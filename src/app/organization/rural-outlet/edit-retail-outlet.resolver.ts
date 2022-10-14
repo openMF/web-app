@@ -11,7 +11,7 @@ import { OrganizationService } from '../organization.service';
   providedIn: 'root'
 })
 export class EditRetailOutletResolver implements Resolve<object> {
-  constructor(private organizationService: OrganizationService,private route:ActivatedRoute) {}
+  constructor(private organizationService: OrganizationService, private route: ActivatedRoute) {}
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const retailOutletId  = route.paramMap.get('id');
     return this.organizationService.getRuralOutletByOutletId(retailOutletId);

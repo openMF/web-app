@@ -86,6 +86,8 @@ import { ViewHistorySchedulerJobComponent } from './manage-scheduler-jobs/view-h
 import { ViewHistorySchedulerJobsResolver } from './manage-scheduler-jobs/view-history-scheduler-job/view-history-scheduler-job.resolver';
 import { ConfigurationsComponent } from './configurations/configurations.component';
 import { GlobalConfigurationResolver } from './configurations/global-configurations-tab/global-configuration.resolver';
+import { EditConfigurationComponent } from './configurations/global-configurations-tab/edit-configuration/edit-configuration.component';
+import { CloneConfigurationComponent } from './configurations/global-configurations-tab/clone-configuration/clone-configuration.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -447,8 +449,29 @@ const routes: Routes = [
         },
         {
           path: 'configurations',
-          component: ConfigurationsComponent,
-          data: { title: extract('Configurations'), breadcrumb: 'Configurations' }
+          data: { title: extract('Configurations'), breadcrumb: 'Configurations' },
+          children: [
+            {
+              path: '',
+              component: ConfigurationsComponent
+            },
+            {
+              path: ':id/edit',
+              component: EditConfigurationComponent,
+              data: { title: extract('Edit Configuration'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+              resolve: {
+                configuration: GlobalConfigurationResolver
+              }
+            },
+            {
+              path: ':id/clone-config',
+              component: CloneConfigurationComponent,
+              data: { title: extract('Clone Configuration'), breadcrumb: 'Clone', routeParamBreadcrumb: false },
+              resolve: {
+                configuration: GlobalConfigurationResolver
+              }
+            }
+          ]
         },
         {
           path: 'account-number-preferences',

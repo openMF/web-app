@@ -54,9 +54,9 @@ export class RuralOutletComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  deactivateOutlet(outletId: any,status:boolean) {
-    const outlet=this.outletData.filter(x=>x.id===outletId);
-    if(!status){
+  deactivateOutlet(outletId: any, status: boolean) {
+    const outlet = this.outletData.filter(x => x.id === outletId);
+    if (!status) {
     const disableOutletDialogRef = this.dialog.open(DisableDialogComponent, {
       data: { disableContext: `rural outlet : ${outlet[0]?.name}` }
     });
@@ -67,8 +67,7 @@ export class RuralOutletComponent implements OnInit {
         });
       }
     });
-  }
-  else{
+  } else {
     const enableletDialogRef = this.dialog.open(EnableDialogComponent, {
       data: { enableContext: `rural outlet : ${outlet[0]?.name}` }
     });

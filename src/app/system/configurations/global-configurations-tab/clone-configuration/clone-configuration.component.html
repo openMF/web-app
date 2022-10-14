@@ -1,0 +1,41 @@
+<div class="container space">
+    <mat-card>
+      <mat-card-header fxLayout="column" class="header">
+        <h1>Clone Configuration</h1>
+        <hr>
+      </mat-card-header>
+      <form [formGroup]="configurationForm" (ngSubmit)="submit()">
+        <mat-card-content>
+          <div fxLayout="column">
+            <mat-form-field>
+              <mat-label>Value</mat-label>
+              <input type="number" matInput required formControlName="value">
+              <mat-error *ngIf="configurationForm.controls.value.hasError('required')">
+                Value is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Country</mat-label>
+                <mat-select placeholder="Search" #country required formControlName="countryId">
+                  <mat-select-filter *ngIf="country.focused" [array]="listCountries" (filteredReturn)="listCountriesSliced=$event"
+                    [displayMember]="'name'">
+                  </mat-select-filter>
+                  <mat-option *ngFor="let country of listCountries" [value]="country.id"
+                    [class.hide]="!isFiltered(country)">
+                    {{country.name}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="configurationForm.controls.countryId.hasError('required')">
+                  Country is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+          </div>
+        </mat-card-content>
+        <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+          <button type="button" mat-raised-button [routerLink]="['../../']"> Cancel </button>
+          <button mat-raised-button color="primary" [disabled]="configurationForm.pristine || !configurationForm.valid">
+            Submit </button>
+        </mat-card-actions>
+      </form>
+    </mat-card>
+  </div>

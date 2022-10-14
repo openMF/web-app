@@ -19,7 +19,7 @@ export class GlobalConfigurationsTabComponent implements OnInit {
   /** Configuration data. */
   configurationData: any;
   /** Columns to be displayed in configurations table. */
-  displayedColumns: string[] = ['name', 'enabled', 'value', 'edit'];
+  displayedColumns: string[] = ['name', 'country', 'enabled', 'value', 'actions'];
   /** Data source for configurations table. */
   dataSource: MatTableDataSource<any>;
 
@@ -71,7 +71,7 @@ export class GlobalConfigurationsTabComponent implements OnInit {
    * Enables/Disables respective configuration
    */
   toggleStatus(configuration: any) {
-    this.systemService.updateConfiguration(configuration.id, { enabled: !configuration.enabled })
+    this.systemService.updateConfiguration(configuration.id, { enabled: !configuration.enabled }, '')
       .subscribe((response: any) => {
         configuration.enabled = response.changes.enabled;
         if (configuration.name === SettingsService.businessDateConfigName) {

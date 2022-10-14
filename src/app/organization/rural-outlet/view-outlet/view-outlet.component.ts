@@ -17,7 +17,7 @@ export class ViewOutletComponent  {
   errMsg: string = undefined;
   constructor(private organizationService: OrganizationService,
     private route: ActivatedRoute, private dialog: MatDialog, private router: Router,
-    private alertService:AlertService) {
+    private alertService: AlertService) {
     const outletId = +this.route.snapshot.paramMap.get('id');
     this.getRuralOutlet(outletId);
   }
@@ -39,11 +39,11 @@ export class ViewOutletComponent  {
         this.organizationService.deleteOutlet(outletId)
           .subscribe(() => {
             this.router.navigate(['../'], { relativeTo: this.route });
-          } ,error => {
-            console.log(error)
+          } , error => {
+            console.log(error);
             this.alertService.alert({ type: 'Deletion Error', message: 'Error while deleting rural outlet. Please try again.' });
-          })
+          });
       }
-    })
+    });
   }
 }

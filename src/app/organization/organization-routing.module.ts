@@ -266,7 +266,7 @@ const routes: Routes = [
             },
             {
               path: ':id',
-              data: { title: extract('View Rural Outlet'), routeParamBreadcrumb: 'id',routeResolveBreadcrumb: ['offices', 'name'] },
+              data: { title: extract('View Rural Outlet'), routeParamBreadcrumb: 'id', routeResolveBreadcrumb: ['offices', 'name'] },
               component: ViewOutletComponent,
               resolve: {
                 offices: EditRetailOutletResolver

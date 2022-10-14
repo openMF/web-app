@@ -378,8 +378,16 @@ export class SystemService {
    * @param {any} configuration Configuration to be updated.
    * @returns {Observable<any>}
    */
-  updateConfiguration(configurationId: string, configuration: any): Observable<any> {
+  updateConfiguration(configurationId: string, configuration: any, resourceType: any): Observable<any> {
+    if (resourceType) {
+    return this.http.put(`/configurations/${configurationId}?resourceType=${resourceType}`, configuration);
+    } else {
     return this.http.put(`/configurations/${configurationId}`, configuration);
+    }
+  }
+
+  cloneConfiguration(id: any, configuration: any) {
+    return this.http.post(`/configurations/clone?id=${id}&resourceType=configurations`, configuration);
   }
 
   /**

@@ -3,7 +3,7 @@ export class OfficeTreeNode {
     id: number;
     levelName?: string;
     children?: OfficeTreeNode[];
-    checked:boolean;
+    checked: boolean;
     constructor() {
 
     }

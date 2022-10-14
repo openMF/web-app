@@ -60,7 +60,7 @@ export class EditConfigurationComponent implements OnInit {
    */
   submit() {
     this.systemService
-      .updateConfiguration(this.configuration.id, this.configurationForm.value)
+      .updateConfiguration(this.configuration.id, this.configurationForm.value, 'configurations')
       .subscribe((response: any) => {
         this.router.navigate(['../../'], { relativeTo: this.route });
       });

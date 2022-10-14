@@ -1,38 +1,33 @@
 <div class="container space">
-
   <mat-card>
-
+    <mat-card-header fxLayout="column" class="header">
+      <h1>Edit Configuration</h1>
+      <hr />
+    </mat-card-header>
     <form [formGroup]="configurationForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field>
             <mat-label>Configuration Name</mat-label>
-            <input matInput required formControlName="name">
+            <input matInput required formControlName="name" />
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>Configuration Value</mat-label>
-            <input matInput required type="number" formControlName="value">
+            <input matInput required type="number" formControlName="value" />
             <mat-error *ngIf="configurationForm.controls.value.hasError('required')">
               Configuration Value is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']"> Cancel </button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
         <button mat-raised-button color="primary" [disabled]="configurationForm.pristine || !configurationForm.valid">
-          Submit </button>
+          Submit
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>
