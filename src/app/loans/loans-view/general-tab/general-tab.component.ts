@@ -16,6 +16,7 @@ export class GeneralTabComponent implements OnInit {
   loanSummaryTableData: {
     'property': string,
     'original': string,
+    'adjustment': string,
     'paid': string,
     'waived': string,
     'writtenOff': string,
@@ -34,6 +35,14 @@ export class GeneralTabComponent implements OnInit {
   constructor(private route: ActivatedRoute) {
     this.route.parent.data.subscribe((data: { loanDetailsData: any, }) => {
       this.loanDetails = data.loanDetailsData;
+      if (this.loanDetails.transactions) {
+        this.loanDetails.transactions.some((transaction: any) => {
+          if (transaction.type.code === 'loanTransactionType.chargeback') {
+            this.loanSummaryColumns = ['Empty', 'Original', 'Adjustments', 'Paid', 'Waived', 'Written Off', 'Outstanding', 'Over Due'];
+            return;
+          }
+        });
+      }
     });
   }
 
@@ -52,6 +61,7 @@ export class GeneralTabComponent implements OnInit {
       {
         'property': 'Principal',
         'original': this.loanDetails.summary.principalDisbursed,
+        'adjustment': this.loanDetails.summary.principalAdjustments || 0,
         'paid': this.loanDetails.summary.principalPaid,
         'waived': this.loanDetails.summary.principalWaived || 0,
         'writtenOff': this.loanDetails.summary.principalWrittenOff,
@@ -62,6 +72,7 @@ export class GeneralTabComponent implements OnInit {
     {
         'property': 'Interest',
         'original': this.loanDetails.summary.interestCharged,
+        'adjustment': '0',
         'paid': this.loanDetails.summary.interestPaid,
         'waived': this.loanDetails.summary.interestWaived,
         'writtenOff': this.loanDetails.summary.interestWrittenOff,
@@ -71,6 +82,7 @@ export class GeneralTabComponent implements OnInit {
     {
         'property': 'Fees',
         'original': this.loanDetails.summary.feeChargesCharged,
+        'adjustment': '0',
         'paid': this.loanDetails.summary.feeChargesPaid,
         'waived': this.loanDetails.summary.feeChargesWaived,
         'writtenOff': this.loanDetails.summary.feeChargesWrittenOff,
@@ -80,6 +92,7 @@ export class GeneralTabComponent implements OnInit {
     {
         'property': 'Penalties',
         'original': this.loanDetails.summary.penaltyChargesCharged,
+        'adjustment': '0',
         'paid': this.loanDetails.summary.penaltyChargesPaid,
         'waived': this.loanDetails.summary.penaltyChargesWaived,
         'writtenOff': this.loanDetails.summary.penaltyChargesWrittenOff,
@@ -89,6 +102,7 @@ export class GeneralTabComponent implements OnInit {
     {
         'property': 'Total',
         'original': this.loanDetails.summary.totalExpectedRepayment,
+        'adjustment': this.loanDetails.summary.principalAdjustments || 0,
         'paid': this.loanDetails.summary.totalRepayment,
         'waived': this.loanDetails.summary.totalWaived,
         'writtenOff': this.loanDetails.summary.totalWrittenOff,
