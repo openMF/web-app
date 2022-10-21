@@ -23,7 +23,9 @@ export class CreateOutletComponent implements OnInit {
     private route: ActivatedRoute,
     private settingsService: SettingsService,
     private dateUtils: Dates
-  ) {}
+  ) {
+    this.getCountries();
+  }
 
   listCountries: any = [];
   listCountriesSliced: any = [];
@@ -33,7 +35,6 @@ export class CreateOutletComponent implements OnInit {
   @ViewChild(CountryTreeViewComponent) countryTreeComponent: CountryTreeViewComponent;
 
   ngOnInit(): void {
-    this.getCountries();
     this.outletForm = this.formBuilder.group({
       countryId: [null, Validators.required],
       name: ['', Validators.required],

@@ -151,6 +151,10 @@ export class ProductsService {
     return this.http.get('/charges');
   }
 
+  getCountries (): Observable<any> {
+    return this.http.get('/countries');
+  }
+
   getChargesTemplate(): Observable<any> {
     return this.http.get('/charges/template');
   }

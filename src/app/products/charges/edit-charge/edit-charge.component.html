@@ -17,8 +17,24 @@
             </mat-select>
           </mat-form-field>
 
+          <mat-form-field fxFlex="48%">
+            <mat-label>Country</mat-label>
+            <mat-select placeholder="Search" #country required formControlName="country">
+              <mat-select-filter *ngIf="country.focused" [array]="countries" (filteredReturn)="countriesDataSliced=$event"
+                [displayMember]="'name'">
+              </mat-select-filter>
+              <mat-option *ngFor="let country of countries" [value]="country.id"
+                [class.hide]="!isFiltered(country)">
+                {{country.name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="chargeForm.controls.country.hasError('required')">
+              Country is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
         </div>
-        
+
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" style="margin-top:10px;">
 
           <mat-form-field fxFlex="48%">
@@ -28,7 +44,7 @@
               Name <strong>is required</strong>
             </mat-error>
           </mat-form-field>
-        
+
           <mat-form-field fxFlex="48%">
             <mat-label>Currency</mat-label>
             <mat-select required formControlName="currencyCode">
@@ -41,20 +57,20 @@
             </mat-error>
 
           </mat-form-field>
-        
+
           <mat-form-field fxFlex="48%">
             <mat-label>Charge time type</mat-label>
-            <mat-select required formControlName="chargeTimeType">
-              <mat-option *ngFor="let chargeTime of chargeTimeTypeOptions" [value]="chargeTime.id">
+            <mat-select required formControlName="chargeTimeType" (selectionChange)="this.showPenalty=!this.showPenalty;">
+              <mat-option *ngFor="let chargeTime of chargeTimeTypeOptions" [value]="chargeTime.id" >
                 {{ chargeTime.value }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="chargeForm.controls.chargeTimeType.hasError('required')">
               Charge Time Type is <strong>required</strong>
             </mat-error>
-        
+
           </mat-form-field>
-        
+
           <mat-form-field fxFlex="48%">
             <mat-label>Charge calculation</mat-label>
             <mat-select required formControlName="chargeCalculationType">
@@ -67,26 +83,14 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%" *ngIf="chargePaymentMode">
-            <mat-label>Charge Payment By</mat-label>
-            <mat-select required formControlName="chargePaymentMode">
-              <mat-option *ngFor="let chargePaymentMode of chargeData.chargePaymetModeOptions" [value]="chargePaymentMode.id">
-                {{ chargePaymentMode.value }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="chargeForm.controls.chargePaymentMode.hasError('required')">
-              Charge Payment Mode is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        
-          <mat-form-field fxFlex="48%">
+                    <mat-form-field fxFlex="48%">
             <mat-label>Amount</mat-label>
             <input matInput required autofocus type="text" formControlName="amount">
             <mat-error *ngIf="chargeForm.controls.amount.hasError('required')">
               Amount <strong>is required</strong>
             </mat-error>
           </mat-form-field>
-        
+
           <mat-form-field fxFlex="48%" *ngIf="showGLAccount">
             <mat-label>Income from charge</mat-label>
             <mat-select required formControlName="incomeAccountId">
@@ -98,48 +102,6 @@
               Income from charge is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-        
-          <mat-form-field fxFlex="48%">
-            <mat-label>Tax Group</mat-label>
-            <mat-select *ngIf="chargeData.taxGroup" required formControlName="taxGroupId">
-              <mat-option *ngFor="let taxGroup of chargeData.taxGroupOptions" [value]="taxGroup.id">
-                {{ taxGroup.name }}
-              </mat-option>
-            </mat-select>
-
-            <mat-select *ngIf="!chargeData.taxGroup" required formControlName="taxGroupId">
-              <mat-option value="?">
-                Select Option
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <div fxFlex="48%" class="password-never-expires-wrapper" *ngIf="addFeeFrequency" style="padding-top: 10px;">
-            <mat-checkbox labelPosition="before" (change)="getFeeFrequency($event.checked)">
-              Add Fee Frequency
-            </mat-checkbox>
-          </div>
-
-          <mat-form-field fxFlex="48%" *ngIf="addFeeFrequency && showFeeOptions">
-            <mat-label>Charge Frequency</mat-label>
-            <mat-select required formControlName="feeFrequency">
-              <mat-option *ngFor="let chargeFrequency of chargeData.feeFrequencyOptions" [value]="chargeFrequency.id">
-                {{ chargeFrequency.value }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="chargeForm.controls.feeFrequency.hasError('required')">
-              Fee Frequency is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field fxFlex="48%" *ngIf="addFeeFrequency && showFeeOptions">
-            <mat-label>Frequency Interval</mat-label>
-            <input matInput required autofocus type="text" formControlName="feeInterval" required>
-            <mat-error *ngIf="chargeForm.controls.feeInterval.hasError('required')">
-              Amount <strong>is required</strong>
-            </mat-error>
-          </mat-form-field>
-
 
         </div>
 
@@ -149,7 +111,7 @@
               Active
             </mat-checkbox>
           </div>
-        
+
           <div fxFlex="48%" class="send-password-to-email-wrapper" *ngIf="showPenalty">
             <mat-checkbox labelPosition="before" formControlName="penalty">
               Is Penalty

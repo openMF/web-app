@@ -36,14 +36,13 @@ export class EditChargeComponent implements OnInit {
   chargeCalculationTypeOptions: any;
   /** Show Penalty. */
   showPenalty = true;
-  /** Add Fee Frequency. */
-  addFeeFrequency = true;
   /** Show GL Accounts. */
   showGLAccount = false;
-  /** Charge Payment Mode. */
-  chargePaymentMode = false;
   /** Show Fee Options. */
   showFeeOptions = false;
+
+  countries: any = [];
+  countriesDataSliced: any = [];
 
   /**
    * Retrieves the charge data from `resolve`.
@@ -60,10 +59,12 @@ export class EditChargeComponent implements OnInit {
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { chargesTemplate: any }) => {
       this.chargeData = data.chargesTemplate;
+      this.getCountries();
     });
   }
 
   ngOnInit() {
+
     this.editChargeForm();
   }
 
@@ -72,6 +73,7 @@ export class EditChargeComponent implements OnInit {
    */
   editChargeForm() {
     this.chargeForm = this.formBuilder.group({
+      'country': [{value: this.chargeData.countryId, disabled: true}, Validators.required],
       'name': [this.chargeData.name, Validators.required],
       'chargeAppliesTo': [{ value: this.chargeData.chargeAppliesTo.id, disabled: true }, Validators.required],
       'currencyCode': [this.chargeData.currency.code, Validators.required],
@@ -85,31 +87,29 @@ export class EditChargeComponent implements OnInit {
       case 'Loan': {
         this.chargeTimeTypeOptions = this.chargeData.loanChargeTimeTypeOptions;
         this.chargeCalculationTypeOptions = this.chargeData.loanChargeCalculationTypeOptions;
-        this.addFeeFrequency = true;
-        this.chargePaymentMode = true;
-        this.chargeForm.addControl('chargePaymentMode', this.formBuilder.control(this.chargeData.chargePaymentMode.id, Validators.required));
         break;
       }
       case 'Savings': {
         this.chargeTimeTypeOptions = this.chargeData.savingsChargeTimeTypeOptions;
         this.chargeCalculationTypeOptions = this.chargeData.savingsChargeCalculationTypeOptions;
-        this.addFeeFrequency = false;
         break;
       }
-      case 'Shares': {
-        this.chargeTimeTypeOptions = this.chargeData.shareChargeTimeTypeOptions;
-        this.chargeCalculationTypeOptions = this.chargeData.shareChargeCalculationTypeOptions;
-        this.addFeeFrequency = false;
-        this.showGLAccount = false;
-        this.showPenalty = false;
-        break;
-      }
+
       default: {
         this.chargeCalculationTypeOptions = this.chargeData.clientChargeCalculationTypeOptions;
         this.chargeTimeTypeOptions = this.chargeData.clientChargeTimeTypeOptions;
         this.showGLAccount = true;
-        this.addFeeFrequency = false;
         this.chargeForm.addControl('incomeAccountId', this.formBuilder.control(this.chargeData.incomeOrLiabilityAccount.id, Validators.required));
+        break;
+      }
+    }
+    switch (this.chargeData.chargeTimeType.value) {
+      case 'Disbursement': {
+        this.showPenalty = false;
+        break;
+      }
+      default: {
+        this.showPenalty = false;
         break;
       }
     }
@@ -146,5 +146,21 @@ export class EditChargeComponent implements OnInit {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }
+
+  /**
+   * get list of countries
+   */
+
+  getCountries() {
+      this.productsService.getCountries().subscribe((response: any) => {
+          this.countries = response;
+          this.countriesDataSliced = response;
+      });
+  }
+
+  public isFiltered(country: any) {
+    return this.countriesDataSliced.find(item => item.id === country.id);
+  }
+
 
 }

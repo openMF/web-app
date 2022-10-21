@@ -18,6 +18,8 @@ import { Dates } from 'app/core/utils/dates';
 })
 export class CreateChargeComponent implements OnInit {
 
+  /** Selected Data. */
+  chargeData: any;
   /** Charge form. */
   chargeForm: FormGroup;
   /** Charges template data. */
@@ -36,6 +38,14 @@ export class CreateChargeComponent implements OnInit {
   repeatEveryLabel: string;
   /** Currency decimal places */
   currencyDecimalPlaces: number;
+  /** Show Penalty. */
+  showPenalty = true;
+
+
+
+  countries: any = [];
+  countriesDataSliced: any = [];
+
 
   /**
    * Retrieves the charges template data and income and liability account data from `resolve`.
@@ -54,9 +64,8 @@ export class CreateChargeComponent implements OnInit {
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { chargesTemplate: any }) => {
       this.chargesTemplateData = data.chargesTemplate;
-      this.incomeAndLiabilityAccountData = data.chargesTemplate.incomeOrLiabilityAccountOptions.incomeAccountOptions
-        .concat(data.chargesTemplate.incomeOrLiabilityAccountOptions.liabilityAccountOptions);
     });
+    this.getCountries();
   }
 
   /**
@@ -64,8 +73,6 @@ export class CreateChargeComponent implements OnInit {
    */
   ngOnInit() {
     this.createChargeForm();
-    this.setChargeForm();
-    this.setConditionalControls();
   }
 
   /**
@@ -73,139 +80,19 @@ export class CreateChargeComponent implements OnInit {
    */
   createChargeForm() {
     this.chargeForm = this.formBuilder.group({
-      'chargeAppliesTo': ['', Validators.required],
+      'country' : ['', Validators.required],
+      'chargeAppliesTo': [1],
       'name': ['', Validators.required],
       'currencyCode': ['', Validators.required],
       'chargeTimeType': ['', Validators.required],
       'chargeCalculationType': ['', Validators.required],
-      'amount': ['', [Validators.required, Validators.pattern('^\\s*(?=.*[1-9])\\d*(?:\\.\\d+)?\\s*$')]],
+      'amount': ['', Validators.required],
       'active': [false],
-      'penalty': [false],
-      'taxGroupId': [''],
-      'minCap': [''],
-      'maxCap': ['']
+      'penalty': [false]
     });
   }
 
-  /**
-   * Sets the charge calculation type and charge time type data
-   */
-  setChargeForm() {
-    this.chargeForm.get('chargeAppliesTo').valueChanges.subscribe((chargeAppliesTo) => {
-      switch (chargeAppliesTo) {
-        case 1:
-          this.chargeCalculationTypeData = this.chargesTemplateData.loanChargeCalculationTypeOptions;
-          this.chargeTimeTypeData = this.chargesTemplateData.loanChargeTimeTypeOptions;
-          break;
-        case 2:
-          this.chargeCalculationTypeData = this.chargesTemplateData.savingsChargeCalculationTypeOptions;
-          this.chargeTimeTypeData = this.chargesTemplateData.savingsChargeTimeTypeOptions;
-          break;
-        case 3:
-          this.chargeCalculationTypeData = this.chargesTemplateData.clientChargeCalculationTypeOptions;
-          this.chargeTimeTypeData = this.chargesTemplateData.clientChargeTimeTypeOptions;
-          break;
-        case 4:
-          this.chargeCalculationTypeData = this.chargesTemplateData.shareChargeCalculationTypeOptions;
-          this.chargeTimeTypeData = this.chargesTemplateData.shareChargeTimeTypeOptions;
-          break;
-      }
-    });
-  }
 
-  /**
-   * @returns {any} Filtered charge calculation type data.
-   */
-  filteredChargeCalculationType(): any {
-    return this.chargeCalculationTypeData.filter((chargeCalculationType: any) => {
-      if (this.chargeForm.get('chargeTimeType').value === 12 && (chargeCalculationType.id === 3 || chargeCalculationType.id === 4)) {
-        return false;
-      }
-      if (this.chargeForm.get('chargeTimeType').value !== 12 && chargeCalculationType.id === 5) {
-        return false;
-      }
-      if (this.chargeForm.get('chargeAppliesTo').value === 2) {
-        if (!(this.chargeForm.get('chargeTimeType').value === 5 || this.chargeForm.get('chargeTimeType').value === 16) && chargeCalculationType.id === 2) {
-          return false;
-        }
-      }
-      return true;
-    });
-  }
-
-  /**
-   * Sets the conditional controls of the user form
-   */
-  setConditionalControls() {
-    this.chargeForm.get('chargeAppliesTo').valueChanges.subscribe((chargeAppliesTo) => {
-      this.chargeForm.get('penalty').enable();
-      switch (chargeAppliesTo) {
-        case 1: // Loan
-          this.chargeForm.addControl('chargePaymentMode', new FormControl('', Validators.required));
-          this.chargeForm.removeControl('incomeAccountId');
-          break;
-        case 2: // Savings
-          this.chargeForm.removeControl('chargePaymentMode');
-          this.chargeForm.removeControl('incomeAccountId');
-          break;
-        case 3: // Client
-          this.chargeForm.removeControl('chargePaymentMode');
-          this.chargeForm.addControl('incomeAccountId', new FormControl(''));
-          break;
-        case 4: // Shares
-          this.chargeForm.removeControl('chargePaymentMode');
-          this.chargeForm.removeControl('incomeAccountId');
-          this.chargeForm.get('penalty').setValue(false);
-          break;
-      }
-      this.chargeForm.get('chargeCalculationType').reset();
-      this.chargeForm.get('chargeTimeType').reset();
-    });
-    this.chargeForm.get('chargeTimeType').valueChanges.subscribe((chargeTimeType) => {
-      this.chargeForm.removeControl('feeFrequency');
-      this.chargeForm.removeControl('feeInterval');
-      this.chargeForm.removeControl('feeOnMonthDay');
-      this.chargeForm.removeControl('addFeeFrequency');
-      if (this.chargeForm.get('chargeAppliesTo').value !== 4) {
-        this.chargeForm.get('penalty').enable();
-      }
-      switch (chargeTimeType) {
-        case 6: // Annual Fee
-          this.chargeForm.addControl('feeOnMonthDay', new FormControl('', Validators.required));
-          break;
-        case 7: // Monthly Fee
-          this.chargeForm.addControl('feeOnMonthDay', new FormControl(''));
-          this.chargeForm.addControl('feeInterval', new FormControl('', [Validators.required, Validators.min(1), Validators.max(12), Validators.pattern('^[1-9]\\d*$')]));
-          this.repeatEveryLabel = 'Months';
-          break;
-        case 9: // Overdue Fee
-          this.chargeForm.get('penalty').setValue(true);
-          this.chargeForm.addControl('addFeeFrequency', new FormControl(false));
-          this.chargeForm.get('addFeeFrequency').valueChanges.subscribe((addFeeFrequency) => {
-            if (addFeeFrequency) {
-              this.chargeForm.addControl('feeFrequency', new FormControl('', Validators.required));
-              this.chargeForm.addControl('feeInterval', new FormControl('', [Validators.required, Validators.pattern('^[1-9]\\d*$')]));
-            } else {
-              this.chargeForm.removeControl('feeFrequency');
-              this.chargeForm.removeControl('feeInterval');
-            }
-          });
-          break;
-        case 11: // Weekly Fee
-          this.chargeForm.addControl('feeInterval', new FormControl('', [Validators.required, Validators.pattern('^[1-9]\\d*$')]));
-          this.repeatEveryLabel = 'Weeks';
-          break;
-      }
-    });
-    this.chargeForm.get('currencyCode').valueChanges.subscribe((currencyCode) => {
-      this.currencyDecimalPlaces = this.chargesTemplateData.currencyOptions.find((currency: any) => currency.code === currencyCode).decimalPlaces;
-      if (this.currencyDecimalPlaces === 0) {
-        this.chargeForm.get('amount').setValidators([Validators.required, Validators.pattern('^[1-9]\\d*$')]);
-      } else {
-        this.chargeForm.get('amount').setValidators([Validators.required, Validators.pattern(`^\\s*(?=.*[1-9])\\d*(\\.\\d{1,${this.currencyDecimalPlaces}})?\\s*$`)]);
-      }
-    });
-  }
 
   /**
    * Submits the charge form and creates charge,
@@ -239,4 +126,14 @@ export class CreateChargeComponent implements OnInit {
     });
   }
 
+  getCountries() {
+    this.productsService.getCountries().subscribe((response: any) => {
+        this.countries = response;
+        this.countriesDataSliced = response;
+    });
+}
+
+isFiltered(country: any) {
+  return this.countriesDataSliced.find(item => item.id === country.id);
+}
 }

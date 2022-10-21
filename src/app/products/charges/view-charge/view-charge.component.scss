@@ -1,6 +1,6 @@
 .container {
-  max-width: 50rem;
-  
+  max-width: 70rem;
+
   .content {
     div {
       margin: 1rem 0;
@@ -10,6 +10,9 @@
   td.mat-body-strong{
     padding: 5px;
   }
+  td:first-child {
+    width: 35%;
+}
   .mat-header{
     display:block;
     margin-bottom: 3rem;
