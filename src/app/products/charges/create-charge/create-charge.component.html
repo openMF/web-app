@@ -88,7 +88,7 @@
                 </mat-checkbox>
               </div>
 
-              <div fxFlex="50%" class="penalty-wrapper" *ngIf="chargeForm.controls.chargeTimeType.value !=1">
+              <div fxFlex="50%" class="penalty-wrapper" *ngIf="showPenalty">
                 <mat-checkbox labelPosition="before" formControlName="penalty">
                   Is Penalty
                 </mat-checkbox>

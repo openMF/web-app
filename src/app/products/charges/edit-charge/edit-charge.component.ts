@@ -109,7 +109,7 @@ export class EditChargeComponent implements OnInit {
         break;
       }
       default: {
-        this.showPenalty = false;
+        this.showPenalty = true;
         break;
       }
     }

@@ -39,7 +39,7 @@ export class CreateChargeComponent implements OnInit {
   /** Currency decimal places */
   currencyDecimalPlaces: number;
   /** Show Penalty. */
-  showPenalty = true;
+  showPenalty = false;
 
 
 
