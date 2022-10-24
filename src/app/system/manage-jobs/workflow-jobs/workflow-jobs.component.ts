@@ -4,6 +4,9 @@ import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
+import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
+import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { SystemService } from 'app/system/system.service';
 import { JobStep } from './workflow-diagram/workflow-diagram.component';
 
@@ -17,6 +20,7 @@ export class WorkflowJobsComponent implements OnInit {
 
   jobNameOptions: any = [];
   jobStepsData: any = [];
+  jobAvailableStepsData: any = [];
   jobStepsDataBase: any = [];
   jobStepName: String = null;
 
@@ -75,6 +79,56 @@ export class WorkflowJobsComponent implements OnInit {
         this.stepOrderHasChanged = true;
       }
     });
+  }
+
+  /**
+   * Add Job Step to Workflow
+   */
+  addJobStep() {
+    if (this.jobStepName != null) {
+      const jobDatas = this.jobStepName.split('_');
+      this.jobAvailableStepsData = [];
+      this.systemService.getAvailablesJobSteps(jobDatas[0]).toPromise()
+      .then(jobData => {
+        this.jobAvailableStepsData = jobData.availableBusinessSteps.sort(function (a: any, b: any) {
+          return a.stepName - b.stepName;
+        });
+
+        const tmpStepsNames: any = [];
+        this.jobStepsData.forEach((step: any) => {
+          return tmpStepsNames.push(step.stepName);
+        });
+
+        if (this.jobAvailableStepsData.length > 0) {
+          this.jobAvailableStepsData = this.jobAvailableStepsData.filter((item: any) => {
+            return (tmpStepsNames.indexOf(item.stepName) < 0);
+          });
+        }
+
+        if (this.jobAvailableStepsData.length > 0) {
+          const frmFields: FormfieldBase[] = [
+            new SelectBase({
+              controlName: 'stepName',
+              label: 'Step',
+              options: { label: 'stepDescription', value: 'stepName', data: this.jobAvailableStepsData },
+              order: 1
+            })
+          ];
+          const data = {
+            title: 'Add Job Step to Workflow',
+            layout: { addButtonText: 'Add' },
+            formfields: frmFields
+          };
+          const stepDialogRef = this.dialog.open(FormDialogComponent, { data });
+          stepDialogRef.afterClosed().subscribe((response: any) => {
+            if (response.data) {
+              this.jobStepsData = this.jobStepsData.concat(response.data.value);
+              this.stepOrderHasChanged = true;
+            }
+          });
+        }
+      });
+    }
   }
 
   saveChanges() {
