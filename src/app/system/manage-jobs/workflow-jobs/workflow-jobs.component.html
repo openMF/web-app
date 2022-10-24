@@ -10,7 +10,7 @@
   </mat-form-field>
 
   <div class="action-button" fxLayoutGap="25px" *ngIf="jobStepsData.length > 0">
-    <button mat-raised-button color="primary">
+    <button mat-raised-button color="primary" (click)="addJobStep()">
       <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Link Job Step
     </button>
   </div>

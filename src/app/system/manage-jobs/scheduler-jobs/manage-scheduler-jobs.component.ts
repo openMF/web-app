@@ -72,8 +72,10 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
               private configurationWizardService: ConfigurationWizardService,
               private popoverService: PopoverService) {
     this.route.data.subscribe((data: { jobsScheduler: any }) => {
-      this.jobData = data.jobsScheduler[0];
-      this.schedulerData = data.jobsScheduler[1];
+      if (data.jobsScheduler) {
+        this.jobData = data.jobsScheduler[0];
+        this.schedulerData = data.jobsScheduler[1];
+      }
     });
   }
 

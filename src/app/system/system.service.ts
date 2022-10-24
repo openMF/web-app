@@ -262,10 +262,17 @@ export class SystemService {
   }
 
   /**
-   * @returns {Observable<any>} Fetches Jobs.
+   * @returns {Observable<any>} Updates Jobs.
    */
   putWorkflowJobSteps(jobName: String, payload: any): Observable<any> {
     return this.http.put(`/jobs/${jobName}/steps`, payload);
+  }
+
+  /**
+   * @returns {Observable<any>} Fetches Steps.
+   */
+  getAvailablesJobSteps(jobCategory: String): Observable<any> {
+    return this.http.get(`/jobs/${jobCategory}/available-steps`);
   }
 
   /**
