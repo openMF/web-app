@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -135,5 +135,13 @@ export class CreateChargeComponent implements OnInit {
 
 isFiltered(country: any) {
   return this.countriesDataSliced.find(item => item.id === country.id);
+}
+showHidepenalty(){
+  if(this.chargeData.chargeTimeType.value==="Disbursement"){
+    this.showPenalty=false;
+  }
+  if(this.chargeData.chargeTimeType.value==="Overdue Fees"){
+    this.showPenalty=true;
+  }
 }
 }

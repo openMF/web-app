@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card>
     <mat-card-header class="mat-header">
-      <b style="float: left;">{{chargeData.name}}</b>
+      <strong style="float: left;">{{chargeData.name}}</strong>
       <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CHARGE'">
         <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp; Edit
       </button>
@@ -11,6 +11,14 @@
     </mat-card-header>
     <mat-card-content>
       <table>
+        <caption class="display-none">Rural Outlet</caption>
+        <thead>
+          <tr>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
         <tr>
           <td class="mat-body-strong">Charge Type</td>
           <td class="mat-body-strong">{{ chargeData.penalty === true ? 'Penalty' : 'Charge' }}</td>
@@ -61,6 +69,7 @@
           <td class="mat-body-strong">Tax Group</td>
           <td class="mat-body-strong">{{ chargeData.taxGroup.name }}</td>
         </tr>
+      </tbody>
       </table>
     </mat-card-content>
   </mat-card>

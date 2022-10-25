@@ -108,29 +108,14 @@ export class EditChargeComponent implements OnInit {
         this.showPenalty = false;
         break;
       }
-      default: {
+      case 'Overdue Fees': {
         this.showPenalty = true;
         break;
       }
-    }
-    if (this.chargeData.taxGroup) {
-      this.chargeForm.addControl('taxGroupId', this.formBuilder.control({ value: this.chargeData.taxGroup.id, disabled: true }, Validators.required));
-    } else {
-      this.chargeForm.addControl('taxGroupId', this.formBuilder.control({ value: '?', disabled: true }));
-    }
-  }
-
-  /**
-   * Get Add Fee Frequency value.
-   */
-  getFeeFrequency(isChecked: boolean) {
-    this.showFeeOptions = isChecked;
-    if (isChecked) {
-      this.chargeForm.addControl('feeInterval', this.formBuilder.control('', Validators.required));
-      this.chargeForm.addControl('feeFrequency', this.formBuilder.control('', Validators.required));
-    } else {
-      this.chargeForm.removeControl('feeInterval');
-      this.chargeForm.removeControl('feeFrequency');
+      default: {
+        this.showPenalty = false;
+        break;
+      }
     }
   }
 
@@ -161,6 +146,4 @@ export class EditChargeComponent implements OnInit {
   public isFiltered(country: any) {
     return this.countriesDataSliced.find(item => item.id === country.id);
   }
-
-
 }
