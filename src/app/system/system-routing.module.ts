@@ -87,6 +87,8 @@ import { ConfigurationsComponent } from './configurations/configurations.compone
 import { GlobalConfigurationResolver } from './configurations/global-configurations-tab/global-configuration.resolver';
 import { EditConfigurationComponent } from './configurations/global-configurations-tab/edit-configuration/edit-configuration.component';
 import { ManageJobsComponent } from './manage-jobs/manage-jobs.component';
+import { ManageExternalEventsComponent } from './manage-external-events/manage-external-events.component';
+import { ManageExternalEventsResolver } from './manage-external-events/manage-external-events.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -137,7 +139,19 @@ const routes: Routes = [
               ]
             }
           ],
-
+        },
+        {
+          path: 'external-events',
+          data: { title: extract('Manage External Events'), breadcrumb: 'Manage External Events' },
+          children: [
+            {
+              path: '',
+              component: ManageExternalEventsComponent,
+              resolve: {
+                events: ManageExternalEventsResolver
+              }
+            },
+          ]
         },
         {
           path: 'entity-to-entity-mapping',

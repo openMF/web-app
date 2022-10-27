@@ -663,5 +663,18 @@ export class SystemService {
     return this.http.put('/permissions', data, { params: httpParams });
   }
 
+  /**
+   * @returns {Observable<any>}
+   */
+  getExternalEventConfiguration(): Observable<any> {
+    return this.http.get('/externalevents/configuration');
+  }
+
+  /**
+   * @returns {Observable<any>}
+   */
+   putExternalEventConfiguration(payload: any): Observable<any> {
+    return this.http.put('/externalevents/configuration', payload);
+  }
 
 }

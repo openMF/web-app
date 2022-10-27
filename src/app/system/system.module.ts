@@ -69,6 +69,7 @@ import { NgxGraphModule } from '@swimlane/ngx-graph';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WorkflowJobsComponent } from './manage-jobs/workflow-jobs/workflow-jobs.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ManageExternalEventsComponent } from './manage-external-events/manage-external-events.component';
 
 @NgModule({
   imports: [
@@ -137,7 +138,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     ManageJobsComponent,
     ManageSchedulerJobsComponent,
     WorkflowJobsComponent,
-    WorkflowDiagramComponent
+    WorkflowDiagramComponent,
+    ManageExternalEventsComponent
   ],
 })
 export class SystemModule { }
