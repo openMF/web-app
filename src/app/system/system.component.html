@@ -72,6 +72,14 @@
             <p matLine>Manage your Services</p>
           </mat-list-item>
 
+          <mat-list-item [routerLink]="['external-events']"  *mifosxHasPermission="'READ_EXTERNAL_EVENT_CONFIGURATION'">
+            <mat-icon matListIcon>
+              <fa-icon icon="anchor" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Manage External Events</h4>
+            <p matLine>External Events configuration, to enable or disable the event publication</p>
+          </mat-list-item>
+
         </mat-nav-list>
 
       </div>
