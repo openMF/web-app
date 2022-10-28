@@ -90,7 +90,7 @@ export class ViewChargeComponent {
           dateFormat,
           locale
         };
-        this.loansService.executeLoansAccountChargesCommand(this.chargeData.accountId, 'paycharge', dataObject, this.chargeData.id)
+        this.loansService.executeLoansAccountChargesCommand(this.chargeData.loanId, 'paycharge', dataObject, this.chargeData.id)
           .subscribe(() => {
             this.reload();
           });
@@ -105,7 +105,7 @@ export class ViewChargeComponent {
     const waiveChargeDialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { heading: 'Waive Charge', dialogContext: `Are you sure you want to waive charge with id: ${this.chargeData.id}`, type: 'Basic' } });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.loansService.executeLoansAccountChargesCommand(this.chargeData.accountId, 'waive', {}, this.chargeData.id)
+        this.loansService.executeLoansAccountChargesCommand(this.chargeData.loanId, 'waive', {}, this.chargeData.id)
           .subscribe(() => {
             this.reload();
           });

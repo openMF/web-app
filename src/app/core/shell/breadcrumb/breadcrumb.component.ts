@@ -133,7 +133,7 @@ export class BreadcrumbComponent implements OnInit, AfterViewInit {
               } else if (routeData.breadcrumb === 'Loan Products') {
                 breadcrumbLabel = routeData.loanProduct.name;
               } else if (routeData.breadcrumb === 'Charges') {
-                breadcrumbLabel = routeData.charge.name;
+                breadcrumbLabel = routeData.loansAccountCharge.name;
               } else if (routeData.breadcrumb === 'Saving Products') {
                 breadcrumbLabel = routeData.savingProduct.name;
               } else if (routeData.breadcrumb === 'Share Products') {
