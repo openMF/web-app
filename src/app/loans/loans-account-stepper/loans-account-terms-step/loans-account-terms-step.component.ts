@@ -10,6 +10,7 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
+import { any } from 'cypress/types/bluebird';
 
 /**
  * Create Loans Account Terms Step
@@ -54,13 +55,13 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   amortizationTypeData: any;
   /** Interest Calculation Period Type Data */
   interestCalculationPeriodTypeData: any;
-  /** Transaction Processing Strategy Data */
-  transactionProcessingStrategyData: any;
   /** Client Active Loan Data */
   clientActiveLoanData: any;
   /** Multi Disbursement Data */
   disbursementDataSource: {}[] = [];
   currencyDisplaySymbol = '$';
+  /** Loan Transaction strategies */
+  transactionProcessingStrategyOptions: any = [];
 
   /** Check if value of collateral added  is more than principal amount */
   isCollateralSufficient = false;
@@ -122,10 +123,10 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         'graceOnPrincipalPayment': this.loansAccountTermsData.graceOnPrincipalPayment,
         'graceOnInterestPayment': this.loansAccountTermsData.graceOnInterestPayment,
         'graceOnArrearsAgeing': this.loansAccountTermsData.graceOnArrearsAgeing,
-        'transactionProcessingStrategyId': this.loansAccountTermsData.transactionProcessingStrategyId,
         'graceOnInterestCharged': this.loansAccountTermsData.graceOnInterestCharged,
         'fixedEmiAmount': this.loansAccountTermsData.fixedEmiAmount,
-        'maxOutstandingLoanBalance': this.loansAccountTermsData.maxOutstandingLoanBalance
+        'maxOutstandingLoanBalance': this.loansAccountTermsData.maxOutstandingLoanBalance,
+        'transactionProcessingStrategyCode': this.loansAccountTermsData.transactionProcessingStrategyCode
       });
 
       this.multiDisburseLoan = this.loansAccountTermsData.multiDisburseLoan;
@@ -157,8 +158,8 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       if (!allowAttributeOverrides.inArrearsTolerance) {
         this.loansAccountTermsForm.controls.inArrearsTolerance.disable();
       }
-      if (!allowAttributeOverrides.transactionProcessingStrategyId) {
-        this.loansAccountTermsForm.controls.transactionProcessingStrategyId.disable();
+      if (!allowAttributeOverrides.transactionProcessingStrategyCode) {
+        this.loansAccountTermsForm.controls.transactionProcessingStrategyCode.disable();
       }
       if (!allowAttributeOverrides.graceOnPrincipalAndInterestPayment) {
         this.loansAccountTermsForm.controls.graceOnPrincipalPayment.disable();
@@ -204,10 +205,10 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         'graceOnPrincipalPayment': this.loansAccountTermsData.graceOnPrincipalPayment,
         'graceOnInterestPayment': this.loansAccountTermsData.graceOnInterestPayment,
         'graceOnArrearsAgeing': this.loansAccountTermsData.graceOnArrearsAgeing,
-        'transactionProcessingStrategyId': this.loansAccountTermsData.transactionProcessingStrategyId,
         'graceOnInterestCharged': this.loansAccountTermsData.graceOnInterestCharged,
         'fixedEmiAmount': this.loansAccountTermsData.fixedEmiAmount,
-        'maxOutstandingLoanBalance': this.loansAccountTermsData.maxOutstandingLoanBalance
+        'maxOutstandingLoanBalance': this.loansAccountTermsData.maxOutstandingLoanBalance,
+        'transactionProcessingStrategyCode': this.loansAccountTermsData.transactionProcessingStrategyCode
       });
     }
     this.createloansAccountTermsForm();
@@ -261,14 +262,14 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       'allowPartialPeriodInterestCalcualtion': [''],
       'inArrearsTolerance': [''],
       'graceOnInterestCharged': [''],
-      'transactionProcessingStrategyId': ['', Validators.required],
       'graceOnPrincipalPayment': [''],
       'graceOnInterestPayment': [''],
       'graceOnArrearsAgeing': [''],
       'loanIdToClose': [''],
       'fixedEmiAmount': [''],
       'isTopup': [''],
-      'maxOutstandingLoanBalance': ['']
+      'maxOutstandingLoanBalance': [''],
+      'transactionProcessingStrategyCode': ['', Validators.required]
     });
   }
 
@@ -404,8 +405,8 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
     this.interestTypeData = this.loansAccountProductTemplate.interestTypeOptions;
     this.amortizationTypeData = this.loansAccountProductTemplate.amortizationTypeOptions;
     this.interestCalculationPeriodTypeData = this.loansAccountProductTemplate.interestCalculationPeriodTypeOptions;
-    this.transactionProcessingStrategyData = this.loansAccountProductTemplate.transactionProcessingStrategyOptions;
     this.clientActiveLoanData = this.loansAccountProductTemplate.clientActiveLoanOptions;
+    this.transactionProcessingStrategyOptions = this.loansAccountProductTemplate.transactionProcessingStrategyOptions;
   }
 
   /**
