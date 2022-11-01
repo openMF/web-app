@@ -1,130 +1,82 @@
-<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
-  <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CHARGE'">
-    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
-    Edit
-  </button>
-  <button mat-raised-button color="warn" (click)="deleteCharge()" *mifosxHasPermission="'DELETE_CHARGE'">
-    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
-    Delete
-  </button>
-</div>
-
 <div class="container">
-
   <mat-card>
-
+    <mat-card-header class="mat-header">
+      <strong style="float: left;">{{chargeData.name}}</strong>
+      <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CHARGE'">
+        <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp; Edit
+      </button>
+      <button mat-raised-button color="warn" (click)="deleteCharge()" *mifosxHasPermission="'DELETE_CHARGE'">
+        <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp; Delete
+      </button>
+    </mat-card-header>
     <mat-card-content>
-
-      <div fxLayout="row wrap" class="content">
-        
-        <div fxFlex="50%" class="mat-body-strong">
-          Charge Name
-        </div>
-          
-        <div fxFlex="50%">
-          {{ chargeData.name }}
-        </div>
-
-        <div fxFlex="50%" class="mat-body-strong">
-          Charge Type
-        </div>
-          
-        <div fxFlex="50%">
-          {{ chargeData.penalty === true ? 'Penalty' : 'Charge' }}
-        </div>
-
-        <div fxFlex="50%" class="mat-body-strong">
-          Currency
-        </div>
-
-        <div fxFlex="50%">
-          {{ chargeData.currency.name }}
-        </div>
-
-        <div fxFlex="50%" class="mat-body-strong">
-          Amount
-        </div>
-
-        <div fxFlex="50%">
-          {{ chargeData.amount }}
-        </div>
-
-        <div fxFlex="50%" class="mat-body-strong">
-          Charge Time Type
-        </div>
-
-        <div fxFlex="50%">
-          {{ chargeData.chargeTimeType.value }}
-        </div>
-
-        <div fxFlex="50%" class="mat-body-strong">
-          Charge Applies to
-        </div>
-
-        <div fxFlex="50%">
-          {{ chargeData.chargeAppliesTo.value }}
-        </div>
-
-        <div fxFlex="50%" class="mat-body-strong">
-          Charge Calculation Type
-        </div>
-
-        <div fxFlex="50%">
-          {{ chargeData.chargeCalculationType.value }}
-        </div>
-
-        <div fxFlex="50%" class="mat-body-strong">
-          Charge Payment Mode
-        </div>
-
-        <div fxFlex="50%">
-          {{ chargeData.chargePaymentMode.value }}
-        </div>
-
-        <div fxFlex="50%" class="mat-body-strong">
-          Active
-        </div>
-
-        <div fxFlex="50%">
-          {{ chargeData.active === true ? 'Yes' : 'No' }}
-        </div>
-
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeFrequency">
-          Fee Frequency
-        </div>
-
-        <div fxFlex="50%" *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeFrequency && chargeData.feeFrequency">
-          {{ chargeData.feeFrequency.value }}
-        </div>
-
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeInterval">
-          Frequency Interval
-        </div>
-
-        <div fxFlex="50%" *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeInterval">
-          {{ chargeData.feeInterval }}
-        </div>
-
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.incomeOrLiabilityAccount">
-          Income from Charges
-        </div>
-
-        <div fxFlex="50%" *ngIf="chargeData.incomeOrLiabilityAccount">
-          {{ chargeData.incomeOrLiabilityAccount.name + ' (' + chargeData.incomeOrLiabilityAccount.glCode + ')' }}
-        </div>
-
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.taxGroup">
-          Tax Group
-        </div>
-
-        <div fxFlex="50%" *ngIf="chargeData.taxGroup">
-          {{ chargeData.taxGroup.name }}
-        </div>
-
-      </div>
-
+      <table>
+        <caption class="display-none">
+          Rural Outlet
+        </caption>
+        <thead>
+          <tr>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mat-body-strong">Charge Type</td>
+            <td class="mat-body-strong">{{ chargeData.penalty === true ? 'Penalty' : 'Charge' }}</td>
+          </tr>
+          <tr>
+            <td class="mat-body-strong">Country</td>
+            <td class="mat-body-strong">{{ chargeData.countryName}}</td>
+          </tr>
+          <tr>
+            <td class="mat-body-strong">Currency</td>
+            <td class="mat-body-strong">{{ chargeData.currency.name }}</td>
+          </tr>
+          <tr>
+            <td class="mat-body-strong">Amount</td>
+            <td class="mat-body-strong">{{ chargeData.amount }}</td>
+          </tr>
+          <tr>
+            <td class="mat-body-strong">Charge Time Type</td>
+            <td class="mat-body-strong">{{ chargeData.chargeTimeType.value }}</td>
+          </tr>
+          <tr>
+            <td class="mat-body-strong">Charge Applies To</td>
+            <td class="mat-body-strong">{{ chargeData.chargeAppliesTo.value }}</td>
+          </tr>
+          <tr>
+            <td class="mat-body-strong">Charge Calculation Type</td>
+            <td class="mat-body-strong">{{ chargeData.chargeCalculationType.value }}</td>
+          </tr>
+          <tr>
+            <td class="mat-body-strong">Charge Payment Mode</td>
+            <td class="mat-body-strong">{{ chargeData.chargePaymentMode.value }}</td>
+          </tr>
+          <tr>
+            <td class="mat-body-strong">Active</td>
+            <td class="mat-body-strong">{{ chargeData.active === true ? 'Yes' : 'No' }}</td>
+          </tr>
+          <tr *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeFrequency">
+            <td class="mat-body-strong">Fee Frequency</td>
+            <td class="mat-body-strong">{{ chargeData.feeFrequency.value}}</td>
+          </tr>
+          <tr *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeInterval">
+            <td class="mat-body-strong">Frequency Interval</td>
+            <td class="mat-body-strong">{{ chargeData.feeInterval}}</td>
+          </tr>
+          <tr *ngIf="chargeData.incomeOrLiabilityAccount">
+            <td class="mat-body-strong">Income from Charges</td>
+            <td class="mat-body-strong">
+              {{ chargeData.incomeOrLiabilityAccount.name + ' (' + chargeData.incomeOrLiabilityAccount.glCode + ')' }}
+            </td>
+          </tr>
+          <tr *ngIf="chargeData.taxGroup">
+            <td class="mat-body-strong">Tax Group</td>
+            <td class="mat-body-strong">{{ chargeData.taxGroup.name }}</td>
+          </tr>
+        </tbody>
+      </table>
     </mat-card-content>
-
   </mat-card>
-
 </div>

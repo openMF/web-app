@@ -1,10 +1,27 @@
 .container {
-  max-width: 37rem;
-  
+  max-width: 70rem;
+
   .content {
     div {
       margin: 1rem 0;
       word-wrap: break-word;
     }
+  }
+  td.mat-body-strong{
+    padding: 5px;
+  }
+  td:first-child {
+    width: 35%;
+}
+  .mat-header{
+    display:block;
+    margin-bottom: 3rem;
+    button{
+      float: right;
+      margin-right: 3px;
+    }
+  }
+  .display-none{
+    display: none !important;
   }
 }

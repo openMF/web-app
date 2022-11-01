@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { ActivatedRoute, Router } from '@angular/router'
-import { OrganizationService } from 'app/organization/organization.service'
-import { SystemService } from 'app/system/system.service'
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { OrganizationService } from 'app/organization/organization.service';
+import { SystemService } from 'app/system/system.service';
 
 @Component({
   selector: 'mifosx-clone-configuration',
@@ -11,13 +11,13 @@ import { SystemService } from 'app/system/system.service'
 })
 export class CloneConfigurationComponent implements OnInit {
   /** Global Configuration form. */
-  configurationForm: FormGroup
+  configurationForm: FormGroup;
   /** Configuration. */
-  configuration: any
+  configuration: any;
 
-  listCountries: any = []
-  listCountriesSliced: any = []
-  configId: number
+  listCountries: any = [];
+  listCountriesSliced: any = [];
+  configId: number;
   /**
    * Retrieves the configuration data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -33,17 +33,17 @@ export class CloneConfigurationComponent implements OnInit {
     private organizationService: OrganizationService
   ) {
     this.route.data.subscribe((data: { configuration: any }) => {
-      this.configuration = data.configuration
-      this.configId = this.configuration?.id
-    })
-    this.getCountries()
+      this.configuration = data.configuration;
+      this.configId = this.configuration?.id;
+    });
+    this.getCountries();
   }
 
   /**
    * Creates and sets the configuration form.
    */
   ngOnInit () {
-    this.createConfigurationForm()
+    this.createConfigurationForm();
   }
 
   /**
@@ -54,21 +54,19 @@ export class CloneConfigurationComponent implements OnInit {
       value: ['', Validators.required],
       countryId: [null, Validators.required],
       globalConfigId: [this.configId]
-    })
+    });
   }
 
   getCountries () {
     this.organizationService.getCountries().subscribe(res => {
-      this.listCountries = res
-      this.listCountriesSliced = this.listCountries
-    })
+      this.listCountries = res;
+      this.listCountriesSliced = this.listCountries;
+    });
   }
 
-    /**
-   * filters the dropdown based on the search criteria
-   */
+    /*** filters the dropdown based on the search criteria */
   public isFiltered (country: any) {
-    return this.listCountriesSliced.find(item => item.id === country.id)
+    return this.listCountriesSliced.find(item => item.id === country.id);
   }
   /**
    * Submits the global configuration form and updates global configuration,
@@ -78,7 +76,7 @@ export class CloneConfigurationComponent implements OnInit {
     this.systemService
       .cloneConfiguration(this.configuration.id, this.configurationForm.value)
       .subscribe((response: any) => {
-        this.router.navigate(['../../'], { relativeTo: this.route })
-      })
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

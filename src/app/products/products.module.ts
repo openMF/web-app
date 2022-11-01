@@ -70,7 +70,6 @@ import { EditFloatingRateComponent } from './floating-rates/edit-floating-rate/e
 import { FloatingRatePeriodDialogComponent } from './floating-rates/floating-rate-period-dialog/floating-rate-period-dialog.component';
 import { CreateTaxComponentComponent } from './manage-tax-components/create-tax-component/create-tax-component.component';
 import { EditTaxComponentComponent } from './manage-tax-components/edit-tax-component/edit-tax-component.component';
-import { EditChargeComponent } from './charges/edit-charge/edit-charge.component';
 import { ViewTaxGroupComponent } from './manage-tax-groups/view-tax-group/view-tax-group.component';
 import { ShareProductsDividendsComponent } from './share-products/dividends-share-product/dividends.components';
 import { ViewRecurringDepositProductComponent } from './recurring-deposit-products/view-recurring-deposit-product/view-recurring-deposit-product.component';
@@ -169,7 +168,6 @@ import { EditFixedDepositProductComponent } from './fixed-deposit-products/edit-
     ViewTaxComponentComponent,
     CreateTaxComponentComponent,
     EditTaxComponentComponent,
-    EditChargeComponent,
     ViewTaxGroupComponent,
     ShareProductsDividendsComponent,
     DepositProductIncentiveFormDialogComponent,

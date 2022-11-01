@@ -30,12 +30,13 @@ export class EditOutletComponent implements OnInit {
     this.organizationService.getRuralOutletByOutletId(outletId).subscribe((res: any) => {
       this.retailOutletData = res;
       this.search(res.countryId);
+
       this.createOutletForm();
+      this.getCountries();
     });
   }
 
   ngOnInit(): void {
-    this.getCountries();
     this.outletForm = this.formBuilder.group({
       countryId: '',
       name: ['', Validators.required],
