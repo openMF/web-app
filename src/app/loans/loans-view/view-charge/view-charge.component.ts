@@ -172,8 +172,8 @@ export class ViewChargeComponent {
    */
   private reload() {
     const clientId = this.loansAccountData.clientId;
-    const url: string = this.router.url.replace(`/${this.chargeData.id}`, '');
-    this.router.navigateByUrl(`/clients/${clientId}/loansaccounts`, {skipLocationChange: true})
+    const url: string = this.router.url;
+    this.router.navigateByUrl(`/clients/${clientId}/loans-accounts`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
 
