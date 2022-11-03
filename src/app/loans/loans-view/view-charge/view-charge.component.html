@@ -37,7 +37,7 @@
         <div fxFlex="50%">
           {{ chargeData.name }}
         </div>
-        
+
         <div fxFlex="50%" class="mat-body-strong">
           Charge Type
         </div>
@@ -77,7 +77,7 @@
         <div fxFlex="50%">
           {{ chargeData.chargeCalculationType.value }}
         </div>
-        
+
         <div fxFlex="50%" class="mat-body-strong">
           Due
         </div>
@@ -112,6 +112,9 @@
 
       </div>
 
+      <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column">
+        <button type="button" mat-raised-button color="primary" [routerLink]="['../']">{{ 'Back' | translate }}</button>
+      </div>
     </mat-card-content>
 
   </mat-card>
