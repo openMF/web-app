@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -9,10 +9,10 @@ import { ClientsService } from '../clients.service';
 import { ClientGeneralStepComponent } from '../client-stepper/client-general-step/client-general-step.component';
 import { ClientFamilyMembersStepComponent } from '../client-stepper/client-family-members-step/client-family-members-step.component';
 import { ClientAddressStepComponent } from '../client-stepper/client-address-step/client-address-step.component';
+import { ClientDatatableStepComponent } from '../client-stepper/client-datatable-step/client-datatable-step.component';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
-
 
 /**
  * Create Client Component.
@@ -30,6 +30,8 @@ export class CreateClientComponent {
   @ViewChild(ClientFamilyMembersStepComponent, { static: true }) clientFamilyMembersStep: ClientFamilyMembersStepComponent;
   /** Client Address Step */
   @ViewChild(ClientAddressStepComponent, { static: true }) clientAddressStep: ClientAddressStepComponent;
+  /** Get handle on dtclient tags in the template */
+  @ViewChildren('dtclient') clientDatatables: QueryList<ClientDatatableStepComponent>;
 
   /** Client Template */
   clientTemplate: any;
@@ -77,6 +79,21 @@ export class CreateClientComponent {
       };
     }
   }
+
+  areFormvalids(): boolean {
+    let areValids = this.clientGeneralForm.valid;
+    if (this.clientTemplate.isAddressEnabled) {
+      areValids = areValids && (this.clientAddressStep.address.address.length > 0);
+    }
+    if (this.clientTemplate.datatables && this.clientTemplate.datatables.length > 0 && this.clientDatatables) {
+      this.clientDatatables.forEach((clientDatatable: ClientDatatableStepComponent) => {
+        areValids = areValids && clientDatatable.datatableForm.valid;
+      });
+    }
+
+    return areValids;
+  }
+
   /**
    * Submits the create client form.
    */
@@ -89,6 +106,15 @@ export class CreateClientComponent {
       dateFormat,
       locale
     };
+
+    if (this.clientTemplate.datatables && this.clientTemplate.datatables.length > 0) {
+      const datatables: any[] = [];
+      this.clientDatatables.forEach((clientDatatable: ClientDatatableStepComponent) => {
+        datatables.push(clientDatatable.payload);
+      });
+      clientData['datatables'] = datatables;
+    }
+
     this.clientsService.createClient(clientData).subscribe((response: any) => {
       this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
     });

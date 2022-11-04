@@ -58,6 +58,7 @@ import { ClientFamilyMemberDialogComponent } from './client-stepper/client-famil
 import { CaptureImageDialogComponent } from './clients-view/custom-dialogs/capture-image-dialog/capture-image-dialog.component';
 import { CreateSelfServiceUserComponent } from './clients-view/client-actions/create-self-service-user/create-self-service-user.component';
 import { AddClientCollateralComponent } from './clients-view/client-actions/add-client-collateral/add-client-collateral.component';
+import { ClientDatatableStepComponent } from './client-stepper/client-datatable-step/client-datatable-step.component';
 
 
 /**
@@ -122,7 +123,8 @@ import { AddClientCollateralComponent } from './clients-view/client-actions/add-
     ClientFamilyMemberDialogComponent,
     CaptureImageDialogComponent,
     CreateSelfServiceUserComponent,
-    AddClientCollateralComponent
+    AddClientCollateralComponent,
+    ClientDatatableStepComponent
   ],
   providers: [ ]
 
