@@ -11,9 +11,29 @@
       <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;Delete All
     </button>
   </div>
-  <mat-list role="list" *ngIf="dataObject.data[0]">
-    <mat-list-item role="listitem" *ngFor="let columnHeader of dataObject.columnHeaders;let i = index">
-      {{columnHeader.columnName}} : {{dataObject.data[0].row[i]}}
-    </mat-list-item>
-  </mat-list>
+  <ng-container>
+
+    <div *ngFor="let columnHeader of dataObject.columnHeaders;let i = index" class="table-data">
+
+      <div fxFlex="45%" class="mat-body-strong left">
+        {{columnHeader.columnName}}
+      </div>
+
+      <div fxFlex="45%" [ngSwitch]="columnHeader.columnDisplayType" class="right">
+        <span *ngSwitchCase="'DATE'">
+          {{dataObject.data[0].row[i] | dateFormat}}
+        </span>
+        <span *ngSwitchCase="'DATETIME'">
+          {{dataObject.data[0].row[i] | datetimeFormat}}
+        </span>
+        <span *ngSwitchCase="'INTEGER' || 'DECIMAL'">
+          {{dataObject.data[0].row[i] | number}}
+        </span>
+        <span *ngSwitchDefault>
+          {{dataObject.data[0].row[i]}}
+        </span>
+      </div>
+    </div>
+  </ng-container>
+
 </div>

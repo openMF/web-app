@@ -50,7 +50,15 @@
 
     </mat-step>
 
-    <mat-step *ngIf="clientGeneralForm.valid" completed>
+    <mat-step *ngFor="let datatable of clientTemplate.datatables">
+
+      <ng-template matStepLabel>{{datatable.registeredTableName}}</ng-template>
+
+      <mifosx-client-datatable-step [datatableData]="datatable" #dtclient></mifosx-client-datatable-step>
+
+    </mat-step>
+
+    <mat-step *ngIf="areFormvalids()" completed>
 
       <ng-template matStepLabel>PREVIEW</ng-template>
 
