@@ -39,7 +39,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
         if (isLinkedToFloatingInterestRates) {
           this.loanProductSettingsForm.get('isInterestRecalculationEnabled').setValue(true);
         }
-    });
+      });
 
     this.amortizationTypeData = this.loanProductsTemplate.amortizationTypeOptions;
     this.interestTypeData = this.loanProductsTemplate.interestTypeOptions;
@@ -63,7 +63,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'isEqualAmortization': this.loanProductsTemplate.isEqualAmortization,
       'interestCalculationPeriodType': this.loanProductsTemplate.interestCalculationPeriodType.id,
       'allowPartialPeriodInterestCalcualtion': this.loanProductsTemplate.allowPartialPeriodInterestCalcualtion,
-      'transactionProcessingStrategyId': this.loanProductsTemplate.transactionProcessingStrategyId || this.transactionProcessingStrategyData[0].id,
+      'transactionProcessingStrategyCode': this.loanProductsTemplate.transactionProcessingStrategyCode || this.transactionProcessingStrategyData[0].code,
       'graceOnPrincipalPayment': this.loanProductsTemplate.graceOnPrincipalPayment,
       'graceOnInterestPayment': this.loanProductsTemplate.graceOnInterestPayment,
       'graceOnInterestCharged': this.loanProductsTemplate.graceOnInterestCharged,
@@ -102,7 +102,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
           -2 : this.loanProductsTemplate.interestRecalculationData.recalculationRestFrequencyNthDay && this.loanProductsTemplate.interestRecalculationData.recalculationRestFrequencyNthDay.id,
         'recalculationCompoundingFrequencyNthDayType': this.loanProductsTemplate.interestRecalculationData.interestRecalculationCompoundingType.id && this.loanProductsTemplate.interestRecalculationData.recalculationCompoundingFrequencyType.id === 4
           && this.loanProductsTemplate.interestRecalculationData.recalculationCompoundingFrequencyOnDay ? -2 : this.loanProductsTemplate.interestRecalculationData.recalculationCompoundingFrequencyNthDay
-          && this.loanProductsTemplate.interestRecalculationData.recalculationCompoundingFrequencyNthDay.id,
+        && this.loanProductsTemplate.interestRecalculationData.recalculationCompoundingFrequencyNthDay.id,
         'recalculationCompoundingFrequencyDayOfWeekType': this.loanProductsTemplate.interestRecalculationData.interestRecalculationCompoundingType.id && ((this.loanProductsTemplate.interestRecalculationData.recalculationCompoundingFrequencyType.id
           === 4 && !this.loanProductsTemplate.interestRecalculationData.recalculationCompoundingFrequencyOnDay) || this.loanProductsTemplate.interestRecalculationData.recalculationCompoundingFrequencyType.id === 3)
           && this.loanProductsTemplate.interestRecalculationData.recalculationCompoundingFrequencyWeekday && this.loanProductsTemplate.interestRecalculationData.recalculationCompoundingFrequencyWeekday.id,
@@ -128,7 +128,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
         'allowAttributeOverrides': {
           'amortizationType': this.loanProductsTemplate.allowAttributeOverrides.amortizationType,
           'interestType': this.loanProductsTemplate.allowAttributeOverrides.interestType,
-          'transactionProcessingStrategyId': this.loanProductsTemplate.allowAttributeOverrides.transactionProcessingStrategyId,
+          'transactionProcessingStrategyCode': this.loanProductsTemplate.allowAttributeOverrides.transactionProcessingStrategyCode,
           'interestCalculationPeriodType': this.loanProductsTemplate.allowAttributeOverrides.interestCalculationPeriodType,
           'inArrearsTolerance': this.loanProductsTemplate.allowAttributeOverrides.inArrearsTolerance,
           'repaymentEvery': this.loanProductsTemplate.allowAttributeOverrides.repaymentEvery,
@@ -145,7 +145,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'interestType': ['', Validators.required],
       'isEqualAmortization': [false],
       'interestCalculationPeriodType': ['', Validators.required],
-      'transactionProcessingStrategyId': ['', Validators.required],
+      'transactionProcessingStrategyCode': ['', Validators.required],
       'graceOnPrincipalPayment': [''],
       'graceOnInterestPayment': [''],
       'graceOnInterestCharged': [''],
@@ -167,7 +167,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'allowAttributeOverrides': this.formBuilder.group({
         'amortizationType': [true],
         'interestType': [true],
-        'transactionProcessingStrategyId': [true],
+        'transactionProcessingStrategyCode': [true],
         'interestCalculationPeriodType': [true],
         'inArrearsTolerance': [true],
         'repaymentEvery': [true],
@@ -317,7 +317,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
         } else {
           this.loanProductSettingsForm.removeControl('maxTrancheCount');
           this.loanProductSettingsForm.removeControl('outstandingLoanBalance');
-          this.loanProductSettingsForm.patchValue({'disallowExpectedDisbursements': false});
+          this.loanProductSettingsForm.patchValue({ 'disallowExpectedDisbursements': false });
         }
       });
 
@@ -327,7 +327,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
           allowAttributeOverrides.patchValue({
             'amortizationType': true,
             'interestType': true,
-            'transactionProcessingStrategyId': true,
+            'transactionProcessingStrategyCode': true,
             'interestCalculationPeriodType': true,
             'inArrearsTolerance': true,
             'repaymentEvery': true,
@@ -338,7 +338,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
           allowAttributeOverrides.patchValue({
             'amortizationType': false,
             'interestType': false,
-            'transactionProcessingStrategyId': false,
+            'transactionProcessingStrategyCode': false,
             'interestCalculationPeriodType': false,
             'inArrearsTolerance': false,
             'repaymentEvery': false,
