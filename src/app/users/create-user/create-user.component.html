@@ -115,6 +115,16 @@
             </mat-error>
           </mat-form-field>
 
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>BVN</mat-label>
+            <input matInput required formControlName="bvn">
+            <mat-error *ngIf="userForm.controls.bvn.hasError('required')">
+              BVN is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+
         </div>
 
       </mat-card-content>
