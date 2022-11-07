@@ -21,6 +21,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 
 /** Custom Dialog Component */
 import { ContinueSetupDialogComponent } from '../../../configuration-wizard/continue-setup-dialog/continue-setup-dialog.component';
+import { DatatableColumn } from '../datatable-column.model';
 
 /**
  * Create Data Table Component.
@@ -39,20 +40,12 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
   entitySubTypeData = entitySubTypeData;
   showEntitySubType: boolean;
   /** Column Data */
-  columnData: any[] = [];
+  columnData: DatatableColumn[] = [];
   /** Data passed to dialog. */
-  dataForDialog: {
-    columnName: string,
-    columnDisplayType: string,
-    isColumnPrimaryKey: boolean,
-    columnLength: string,
-    columnCode: string,
-    columnCodes: any,
-    type: string
-  } = {
+  dataForDialog: DatatableColumn = {
       columnName: undefined,
       columnDisplayType: undefined,
-      isColumnPrimaryKey: undefined,
+      isColumnNullable: undefined,
       columnLength: undefined,
       columnCode: undefined,
       columnCodes: undefined,
@@ -132,7 +125,6 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
   addColumn() {
     this.dataForDialog.columnName = undefined;
     this.dataForDialog.columnDisplayType = undefined;
-    this.dataForDialog.isColumnPrimaryKey = false;
     this.dataForDialog.columnLength = undefined;
     this.dataForDialog.columnCode = undefined;
     this.dataForDialog.type = 'new';
@@ -142,11 +134,12 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
     addColumnDialogRef.afterClosed().subscribe((response: any) => {
       if (response !== '') {
         this.columnData.push({
-          name: response.name,
-          type: response.type,
-          mandatory: response.mandatory,
-          length: response.length,
-          code: response.code
+          columnName: response.name,
+          columnDisplayType: response.type,
+          isColumnNullable: !response.mandatory,
+          columnLength: response.length,
+          columnCode: response.code,
+          type: 'new'
         });
         this.dataSource.connect().next(this.columnData);
       }
@@ -160,7 +153,6 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
   editColumn(column: any) {
     this.dataForDialog.columnName = column.name;
     this.dataForDialog.columnDisplayType = column.type;
-    this.dataForDialog.isColumnPrimaryKey = column.mandatory;
     this.dataForDialog.columnLength = column.length;
     this.dataForDialog.columnCode = column.code;
     this.dataForDialog.type = 'new';
@@ -169,12 +161,13 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
     });
     editColumnDialogRef.afterClosed().subscribe((response: any) => {
       if (response !== '') {
-        this.columnData[this.columnData.findIndex(newColumn => newColumn.name === column.name)] = {
-          name: response.name,
-          type: response.type,
-          mandatory: response.mandatory,
-          length: response.length,
-          code: response.code
+        this.columnData[this.columnData.findIndex(newColumn => newColumn.columnName === column.name)] = {
+          columnName: response.name,
+          columnDisplayType: response.type,
+          isColumnNullable: !response.mandatory,
+          columnLength: response.length,
+          columnCode: response.code,
+          type: 'existing'
         };
         this.dataSource.connect().next(this.columnData);
       }
@@ -202,7 +195,17 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
    * if successful redirects to view created data table.
    */
   submit() {
-    this.dataTableForm.value.columns = this.columnData;
+    const columns: any = [];
+    this.columnData.forEach((column: DatatableColumn) => {
+      columns.push({
+        name: column.columnName,
+        type: column.columnDisplayType,
+        code: column.columnCode,
+        length: column.columnLength,
+        mandatory: !column.isColumnNullable,
+      });
+    });
+    this.dataTableForm.value.columns = columns;
     this.systemService.createDataTable(this.dataTableForm.value).subscribe((response: any) => {
       if (this.configurationWizardService.showDatatablesForm === true) {
           this.configurationWizardService.showDatatablesForm = false;
@@ -279,5 +282,3 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
     });
   }
 }
-
-

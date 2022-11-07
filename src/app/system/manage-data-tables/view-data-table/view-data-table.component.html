@@ -40,7 +40,7 @@
 
         <ng-container matColumnDef="columnName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Field Name </th>
-            <td mat-cell *matCellDef="let dataTableColumn"> {{ dataTableColumn.columnName }} </td>
+            <td mat-cell *matCellDef="let dataTableColumn"> {{ dataTableColumn.columnName }}</td>
         </ng-container>
 
         <ng-container matColumnDef="columnDisplayType">
@@ -58,13 +58,13 @@
             <td mat-cell *matCellDef="let dataTable"> {{ dataTable.columnCode }} </td>
         </ng-container>
 
-        <ng-container matColumnDef="isColumnPrimaryKey">
+        <ng-container matColumnDef="isColumnNullable">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Mandatory </th>
-            <td mat-cell *matCellDef="let dataTable">
-                <fa-icon *ngIf="dataTable.isColumnPrimaryKey" icon="check-circle" size="lg" class="column-primary-key"
+            <td mat-cell *matCellDef="let dataTable" class="left">
+                <fa-icon *ngIf="!dataTable.isColumnNullable" icon="check-circle" size="lg" class="column-mandatory"
                     matTooltip="Yes" matTooltipPosition="right"></fa-icon>
-                <fa-icon *ngIf="!dataTable.isColumnPrimaryKey" icon="times-circle" size="lg"
-                    class="not-column-primary-key" matTooltip="No" matTooltipPosition="right"></fa-icon>
+                <fa-icon *ngIf="dataTable.isColumnNullable" icon="times-circle" size="lg"
+                    class="not-column-mandatory" matTooltip="No" matTooltipPosition="right"></fa-icon>
             </td>
         </ng-container>
 
