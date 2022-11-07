@@ -83,9 +83,11 @@ export class ViewTransactionComponent implements OnInit {
           this.allowChargeback = this.transactionData.type.repayment && !this.isFullRelated;
         }
       }
-      if (!this.allowChargeback || this.existTransactionRelations) {
-        this.allowUndo = false;
+      if (!this.allowChargeback) {
         this.allowEdition = false;
+      }
+      if (this.existTransactionRelations) {
+        this.allowUndo = false;
       }
     });
     this.clientId = this.route.snapshot.params['clientId'];
