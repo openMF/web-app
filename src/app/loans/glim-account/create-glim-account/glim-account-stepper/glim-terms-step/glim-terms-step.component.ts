@@ -61,7 +61,7 @@ export class GlimTermsStepComponent implements OnInit, OnChanges {
         'interestRatePerPeriod': this.loansAccountProductTemplate.interestRatePerPeriod,
         'interestType': this.loansAccountProductTemplate.interestType.id,
         'interestCalculationPeriodType': this.loansAccountProductTemplate.interestCalculationPeriodType.id,
-        'transactionProcessingStrategyId': this.loansAccountProductTemplate.transactionProcessingStrategyId,
+        'transactionProcessingStrategyCode': this.loansAccountProductTemplate.transactionProcessingStrategyCode,
       });
       this.setOptions();
     }
@@ -117,7 +117,7 @@ export class GlimTermsStepComponent implements OnInit, OnChanges {
       'interestRatePerPeriod': [''],
       'interestType': [''],
       'interestCalculationPeriodType': [''],
-      'transactionProcessingStrategyId': ['']
+      'transactionProcessingStrategyCode': ['']
     });
   }
 

@@ -126,7 +126,7 @@
   <div fxFlexFill>
     <span fxFlex="40%">Repayment strategy: </span>
     <span
-      fxFlex="60%">{{ loansAccount.transactionProcessingStrategyId | find:loansAccountTemplate.transactionProcessingStrategyOptions:'id':'name' }}</span>
+      fxFlex="60%">{{ loansAccount.transactionProcessingStrategyCode | find:loansAccountTemplate.transactionProcessingStrategyOptions:'code':'name' }}</span>
   </div>
 
   <h3 class="mat-h3" fxFlexFill>Moratorium</h3>
