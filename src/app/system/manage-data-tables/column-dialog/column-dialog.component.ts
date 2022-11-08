@@ -37,7 +37,7 @@ export class ColumnDialogComponent implements OnInit {
     this.columnForm = this.formBuilder.group({
       'name': [this.data ? this.data.columnName : '', Validators.required],
       'type': [{ value: this.data ? (this.data.columnDisplayType === '' ? '' : this.getColumnType(this.data.columnDisplayType)) : '', disabled: this.data.type === 'existing' }, Validators.required],
-      'mandatory': [{ value: this.data ? this.data.isColumnPrimaryKey : false, disabled: this.data.type === 'existing' }],
+      'mandatory': [{ value: this.data.isColumnNullable, disabled: this.data.type === 'existing' }],
       'length': [{ value: this.data ? +this.data.columnLength : '', disabled: this.getColumnType(this.data.columnDisplayType) !== 'String' || this.data.type === 'existing' }, Validators.required],
       'code': [{ value: this.data ? this.data.columnCode : '', disabled: this.getColumnType(this.data.columnDisplayType) !== 'Dropdown' || this.data.type === 'existing' }, Validators.required]
     });

@@ -16,6 +16,7 @@ import { appTableData, entitySubTypeData } from '../app-table-data';
 /** Custom Components */
 import { ColumnDialogComponent } from '../column-dialog/column-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { DatatableColumn } from '../datatable-column.model';
 
 /**
  * Edit Data Table Component.
@@ -34,7 +35,7 @@ export class EditDataTableComponent implements OnInit {
   entitySubTypeData = entitySubTypeData;
   showEntitySubType: boolean;
   /** Column Data. */
-  columnData: any[];
+  columnData: DatatableColumn[];
   /** Application Table Data. */
   appTableData = appTableData;
   /** Boolean to check if form is edited or not. */
@@ -51,18 +52,10 @@ export class EditDataTableComponent implements OnInit {
     entitySubType: ''
   };
   /** Data passed to dialog. */
-  dataForDialog: {
-    columnName: string,
-    columnDisplayType: string,
-    isColumnPrimaryKey: boolean,
-    columnLength: string,
-    columnCode: string,
-    columnCodes: any,
-    type: string
-  } = {
+  dataForDialog: DatatableColumn = {
       columnName: undefined,
       columnDisplayType: undefined,
-      isColumnPrimaryKey: undefined,
+      isColumnNullable: undefined,
       columnLength: undefined,
       columnCode: undefined,
       columnCodes: undefined,
@@ -152,7 +145,7 @@ export class EditDataTableComponent implements OnInit {
   addColumn() {
     this.dataForDialog.columnName = undefined;
     this.dataForDialog.columnDisplayType = undefined;
-    this.dataForDialog.isColumnPrimaryKey = false;
+    this.dataForDialog.isColumnNullable = false;
     this.dataForDialog.columnLength = undefined;
     this.dataForDialog.columnCode = undefined;
     this.dataForDialog.type = 'new';
@@ -162,22 +155,33 @@ export class EditDataTableComponent implements OnInit {
     addColumnDialogRef.afterClosed().subscribe((response: any) => {
       if (response !== '') {
         this.isFormEdited = true;
-        this.dataTableChangesData.addColumns.push({
-          name: response.name,
-          type: response.type,
-          mandatory: response.mandatory,
-          length: response.length,
-          code: response.code
-        });
-        this.columnData.push({
+        const newColumn: DatatableColumn = {
           columnName: response.name,
           columnDisplayType: response.type,
-          isColumnPrimaryKey: response.mandatory,
+          isColumnNullable: !response.mandatory,
           columnLength: response.length,
           columnCode: response.code,
           type: 'new'
+        };
+        let alreadyExist = false;
+        this.columnData.forEach((column: DatatableColumn) => {
+          if ((newColumn.columnName === column.columnName) || (newColumn.columnName === column.columnName
+            && newColumn.columnDisplayType === column.columnDisplayType
+            && newColumn.isColumnNullable === column.isColumnNullable)) {
+              alreadyExist = true;
+            }
         });
-        this.dataSource.connect().next(this.columnData);
+        if (!alreadyExist) {
+          this.dataTableChangesData.addColumns.push({
+            name: response.name,
+            type: response.type,
+            mandatory: response.mandatory,
+            length: response.length,
+            code: response.code
+          });
+          this.columnData.push(newColumn);
+          this.dataSource.connect().next(this.columnData);
+        }
       }
     });
   }
@@ -189,7 +193,7 @@ export class EditDataTableComponent implements OnInit {
   editColumn(column: any) {
     this.dataForDialog.columnName = column.columnName;
     this.dataForDialog.columnDisplayType = column.columnDisplayType;
-    this.dataForDialog.isColumnPrimaryKey = column.isColumnPrimaryKey;
+    this.dataForDialog.isColumnNullable = !column.isColumnNullable;
     this.dataForDialog.columnLength = column.columnLength;
     this.dataForDialog.columnCode = column.columnCode;
     this.dataForDialog.type = column.type;
@@ -203,7 +207,7 @@ export class EditDataTableComponent implements OnInit {
           this.dataTableChangesData.addColumns[this.dataTableChangesData.addColumns
             .findIndex(newColumn => newColumn.name === column.columnName
                                     && newColumn.type === column.columnDisplayType
-                                    && newColumn.mandatory === column.isColumnPrimaryKey)] = {
+                                    && newColumn.mandatory === column.isColumnNullable)] = {
             name: response.name,
             type: response.type,
             code: response.code,
@@ -213,7 +217,7 @@ export class EditDataTableComponent implements OnInit {
           this.columnData[this.columnData.indexOf(column)] = {
             columnName: response.name,
             columnDisplayType: response.type,
-            isColumnPrimaryKey: response.mandatory,
+            isColumnNullable: !response.mandatory,
             columnLength: response.length,
             columnCode: response.code,
             type: 'new'
@@ -222,7 +226,7 @@ export class EditDataTableComponent implements OnInit {
           this.columnData[this.columnData.indexOf(column)] = {
             columnName: response.name,
             columnDisplayType: column.columnDisplayType,
-            isColumnPrimaryKey: column.isColumnPrimaryKey,
+            isColumnNullable: column.isColumnNullable,
             columnLength: column.columnLength,
             columnCode: column.columnCode,
             type: 'existing'
@@ -275,7 +279,7 @@ export class EditDataTableComponent implements OnInit {
           this.dataTableChangesData.addColumns.splice(this.dataTableChangesData.addColumns
             .findIndex(newColumn => newColumn.name === column.columnName
                                     && newColumn.type === column.columnDisplayType
-                                    && newColumn.mandatory === column.isColumnPrimaryKey), 1);
+                                    && newColumn.mandatory === column.isColumnNullable), 1);
         }
       }
     });
