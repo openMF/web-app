@@ -71,11 +71,18 @@ export class TransactionsTabComponent implements OnInit {
   /**
    * Show Transactions Details
    * @param transactionsData Transactions Data
+   * DISBURSEMENT:1
+   * REPAYMENT:2
+   * WAIVE_INTEREST:4
+   * WAIVE_CHARGES:9
+   * ACCRUAL:10
+   * CREDIT_BALANCE_REFUND:20
+   * MERCHANT_ISSUED_REFUND:21
+   * PAYOUT_REFUND:22
+   * GOODWILL_CREDIT:23
    */
   showTransactions(transactionsData: any) {
-    if (transactionsData.type.id === 2 || transactionsData.type.id === 4 || transactionsData.type.id === 1
-      || transactionsData.type.id === 20 || transactionsData.type.id === 21 || transactionsData.type.id === 22
-      || transactionsData.type.id === 23) {
+    if ([1, 2, 4, 9, 20, 21, 22, 23].includes(transactionsData.type.id)) {
       this.router.navigate([transactionsData.id], { relativeTo: this.route });
     }
   }
