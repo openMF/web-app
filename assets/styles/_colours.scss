@@ -74,3 +74,13 @@ $status-matured: #ff4000;
 $state-done: #00ce00;
 $status-transfer-progress:#FF4000;
 $status-transfer-hold:#DF0101;
+
+.column-mandatory {
+  color: $status-active;
+  text-align: center;
+}
+
+.not-column-mandatory {
+  color: $status-inactive;
+  text-align: center;
+}
