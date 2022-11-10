@@ -1,0 +1,29 @@
+.tab-container {
+  padding: 1%;
+  margin: 1%;
+
+  .mat-raised-button.mat-success {
+    color: #fff;
+    background-color: #32cd32;
+  }
+  .mat-raised-button.mat-reject {
+    color: #fff;
+    background-color: #ffa726;
+  }
+  #search-button {
+    height: 2.5rem;
+    margin-top: 1rem;
+  }
+  .view-details{
+    cursor: pointer;
+  }
+  table {
+    tr.select-row:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.error-log {
+  color: #ffa726;
+}

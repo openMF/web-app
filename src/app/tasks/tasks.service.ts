@@ -69,6 +69,14 @@ export class TasksService {
   }
 
   /**
+   * Get Loans Locked Data using pages and limit
+   */
+  getAllLoansLocked(page: number, limit: number): Observable<any> {
+    const httpParams = new HttpParams().set('page', page).set('limit', limit);
+    return this.http.get('/loans/locked', { params: httpParams });
+  }
+
+  /**
    * Get Pending Rescheduled Loans
    */
   getPendingRescheduleLoans(): Observable<any> {

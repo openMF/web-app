@@ -269,6 +269,13 @@ export class SystemService {
   }
 
   /**
+   * @returns {Observable<any>} Updates Jobs.
+   */
+  runInlineCOB(jobName: String, payload: any): Observable<any> {
+    return this.http.post(`/jobs/${jobName}/inline`, payload);
+  }
+
+  /**
    * @returns {Observable<any>} Fetches Steps.
    */
   getAvailablesJobSteps(jobCategory: String): Observable<any> {

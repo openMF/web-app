@@ -25,6 +25,10 @@
           [active]="rescheduleLoan.isActive" *mifosxHasPermission="'RESCHEDULE_LOAN'">
           Reschedule Loan
         </a>
+        <a mat-tab-link [routerLink]="['./loan-locked']" routerLinkActive #loanLocked="routerLinkActive"
+          [active]="loanLocked.isActive">
+          Loan Locked
+        </a>
       </nav>
 
       <router-outlet></router-outlet>
