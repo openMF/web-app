@@ -33,6 +33,9 @@ export class CreateClientComponent {
   /** Get handle on dtclient tags in the template */
   @ViewChildren('dtclient') clientDatatables: QueryList<ClientDatatableStepComponent>;
 
+  datatables: any = [];
+  legalFormType = 1;
+
   /** Client Template */
   clientTemplate: any;
   /** Client Address Field Config */
@@ -52,6 +55,7 @@ export class CreateClientComponent {
     this.route.data.subscribe((data: { clientTemplate: any, clientAddressFieldConfig: any }) => {
       this.clientTemplate = data.clientTemplate;
       this.clientAddressFieldConfig = data.clientAddressFieldConfig;
+      this.setDatatables();
     });
   }
 
@@ -92,6 +96,24 @@ export class CreateClientComponent {
     }
 
     return areValids;
+  }
+
+  setDatatables(): void {
+    this.datatables = [];
+    let legalFormTypeVal = 'Person';
+    if (this.legalFormType === 2) {
+      legalFormTypeVal = 'Entity';
+    }
+    this.clientTemplate.datatables.forEach((datatable: any) => {
+      if (datatable.entitySubType === legalFormTypeVal) {
+        this.datatables.push(datatable);
+      }
+    });
+  }
+
+  legalFormChange(eventData: { legalForm: number }) {
+    this.legalFormType = eventData.legalForm;
+    this.setDatatables();
   }
 
   /**
