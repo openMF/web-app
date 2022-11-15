@@ -1,0 +1,55 @@
+<div class="container">
+    <mat-card>
+        <form [formGroup]="currencyForm" (ngSubmit)="submit()">
+            <mat-card-content>
+                <div fxLayout="column">
+                  <mat-form-field fxFlex="48%">
+                    <mat-label>Country</mat-label>
+                    <mat-select placeholder="Search" #countryId required formControlName="countryId">
+                      <mat-select-filter
+                        *ngIf="countryId.focused"
+                        [array]="countries"
+                        (filteredReturn)="countriesDataSliced=$event"
+                        [displayMember]="'name'"
+                      >
+                      </mat-select-filter>
+                      <mat-option *ngFor="let country of countries" [value]="country.id" [class.hide]="!isFiltered(country)">
+                        {{country.name}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="currencyForm.controls.countryId.hasError('required')">
+                      Country is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field fxFlex="48%">
+                    <mat-label>Currency Name</mat-label>
+                    <mat-select placeholder="Search" #currencyCode required formControlName="currencyCode">
+                      <mat-select-filter
+                        *ngIf="currencyCode.focused"
+                        [array]="currencyTemplateData.currencyOptions"
+                        (filteredReturn)="currencyDataSliced=$event"
+                        [displayMember]="'name'"
+                      >
+                      </mat-select-filter>
+                      <mat-option *ngFor="let currency of currencyTemplateData.currencyOptions" [value]="currency.code" [class.hide]="!isCurrencyFiltered(currency)">
+                        {{currency.name}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="currencyForm.controls.currencyCode.hasError('required')">
+                      Currency Name is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                      <mat-checkbox labelPosition="before" formControlName="active">
+                        Active
+                      </mat-checkbox>
+                </div>
+            </mat-card-content>
+            <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+                <button type="button" mat-raised-button [routerLink]="['../']" >Cancel</button>
+                <button mat-raised-button color="primary" [disabled]="!currencyForm.valid" *mifosxHasPermission="'UPDATE_CURRENCY'">
+                  Submit
+                </button>
+              </mat-card-actions>
+        </form>
+    </mat-card>
+</div>

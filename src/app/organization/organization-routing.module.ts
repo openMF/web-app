@@ -110,6 +110,7 @@ import { RuralOutletComponent } from './rural-outlet/rural-outlet.component';
 import { EditOutletComponent } from './rural-outlet/edit-outlet/edit-outlet.component';
 import { CreateOutletComponent } from './rural-outlet/create-outlet/create-outlet.component';
 import { EditRetailOutletResolver } from './rural-outlet/edit-retail-outlet.resolver';
+import { CreateCurrenciesComponent } from './currencies/create-currencies/create-currencies.component';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -333,18 +334,26 @@ const routes: Routes = [
         {
           path: 'currencies',
           data: { title: extract('Currency Configuration'), breadcrumb: 'Currency Configuration' },
-          resolve: {
-            currencies: CurrenciesResolver
-          },
           children: [
             {
               path: '',
               component: CurrenciesComponent,
+              resolve: {
+                currencies: CurrenciesResolver
+              }
             },
             {
               path: 'manage',
               data: { title: extract('Manage Currencies'), breadcrumb: 'Manage Currencies' },
               component: ManageCurrenciesComponent
+            },
+            {
+              path: 'create',
+              component: CreateCurrenciesComponent,
+              data: { title: extract('Create Currency'), breadcrumb: 'Create Currency' },
+              resolve: {
+                currencies: CurrenciesResolver
+              }
             }
           ]
         },

@@ -3,10 +3,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DisableDialogComponent } from 'app/shared/disable-dialog/disable-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 /** rxjs Imports */
 import { of } from 'rxjs';
+import { OrganizationService } from '../organization.service';
+import { EnableDialogComponent } from 'app/shared/enable-dialog/enable-dialog.component';
 
 /**
  * Currencies component.
@@ -21,7 +25,7 @@ export class CurrenciesComponent implements OnInit {
   /** Currencies data. */
   currenciesData: any;
   /** Columns to be displayed in currencies table. */
-  displayedColumns: string[] = ['name', 'code'];
+  displayedColumns: string[] = ['name', 'code', 'country', 'actions'];
   /** Data source for currencies table. */
   dataSource: MatTableDataSource<any>;
 
@@ -34,7 +38,8 @@ export class CurrenciesComponent implements OnInit {
    * Retrieves the currencies data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private dialog: MatDialog,
+    private organizationService: OrganizationService, private router: Router ) {
     this.route.data.subscribe(( data: { currencies: any }) => {
       this.currenciesData = data.currencies.selectedCurrencyOptions;
     });
@@ -62,6 +67,34 @@ export class CurrenciesComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.currenciesData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  deactivateCurrency(currencyId: any, status: boolean, currencyCode: any) {
+    const currency = this.currenciesData.filter(x => x.currencyId === currencyId);
+    console.log(currency);
+    if (!status) {
+    const disableOutletDialogRef = this.dialog.open(DisableDialogComponent, {
+      data: { disableContext: currency[0]?.name }
+    });
+    disableOutletDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.disable) {
+        this.organizationService.deactivatCurrency(currencyId, status).subscribe(() => {
+          this.router.navigate(['../'], { relativeTo: this.route });
+        });
+      }
+    });
+  } else {
+    const enableletDialogRef = this.dialog.open(EnableDialogComponent, {
+      data: { enableContext: currency[0]?.name }
+    });
+    enableletDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.enable) {
+        this.organizationService.deactivatCurrency(currencyId, status).subscribe(() => {
+          this.router.navigate(['../'], { relativeTo: this.route });
+        });
+      }
+    });
+  }
   }
 
 }

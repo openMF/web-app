@@ -1,5 +1,5 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
-  <button mat-raised-button color="primary" [routerLink]="'manage'" *mifosxHasPermission="'UPDATE_CURRENCY'">
+  <button mat-raised-button color="primary" [routerLink]="'create'" *mifosxHasPermission="'UPDATE_CURRENCY'">
     <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
     Add/Edit
   </button>
@@ -26,6 +26,23 @@
       <ng-container matColumnDef="code">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Currency Code </th>
         <td mat-cell *matCellDef="let currency"> {{ currency.code }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Country </th>
+        <td mat-cell *matCellDef="let currency"> {{ currency.countryName }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let currency">
+          <button type="button" mat-raised-button color="warn" *ngIf="currency.active===true" (click)="deactivateCurrency(currency.currencyId,false, currency.code)">
+            <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;Deactivate
+          </button>
+          <button type="button" mat-raised-button color="primary" *ngIf="currency.active===false" (click)="deactivateCurrency(currency.currencyId,true, currency.code)">
+            <em class="fa fa-unlock-alt"></em>&nbsp;&nbsp;Activate
+          </button>
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

@@ -75,6 +75,7 @@ import { RuralOutletComponent } from './rural-outlet/rural-outlet.component';
 import { CreateOutletComponent } from './rural-outlet/create-outlet/create-outlet.component';
 import { ViewOutletComponent } from './rural-outlet/view-outlet/view-outlet.component';
 import { EditOutletComponent } from './rural-outlet/edit-outlet/edit-outlet.component';
+import { CreateCurrenciesComponent } from './currencies/create-currencies/create-currencies.component';
 
 /**
  * Organization Module
@@ -156,6 +157,7 @@ import { EditOutletComponent } from './rural-outlet/edit-outlet/edit-outlet.comp
     CreateOutletComponent,
     ViewOutletComponent,
     EditOutletComponent,
+    CreateCurrenciesComponent,
   ]
 })
 export class OrganizationModule { }

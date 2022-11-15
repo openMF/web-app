@@ -294,6 +294,14 @@ export class OrganizationService {
     return this.http.get('/currencies');
   }
 
+  createCurrencies (currencies: any[]): Observable<any> {
+    return this.http.post('/currencies', currencies );
+  }
+
+  deactivatCurrency(id: any, status: any): Observable<any> {
+    return this.http.put(`/currencies/${id}`, {active: status});
+  }
+
   /**
    * @param {any[]} currencies
    * @returns {Observable<any>} Currencies data
