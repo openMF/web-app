@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Dates } from 'app/core/utils/dates';
 
@@ -15,6 +15,8 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./client-general-step.component.scss']
 })
 export class ClientGeneralStepComponent implements OnInit {
+
+  @Output() legalFormChangeEvent = new EventEmitter<{ legalForm: number }>();
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -104,7 +106,8 @@ export class ClientGeneralStepComponent implements OnInit {
    * Adds controls conditionally.
    */
   buildDependencies() {
-    this.createClientForm.get('legalFormId').valueChanges.subscribe((legalFormId: any) => {
+    this.createClientForm.get('legalFormId').valueChanges.subscribe((legalFormId: number) => {
+      this.legalFormChangeEvent.emit({ legalForm: legalFormId });
       if (legalFormId === 1) {
         this.createClientForm.removeControl('fullname');
         this.createClientForm.removeControl('clientNonPersonDetails');
