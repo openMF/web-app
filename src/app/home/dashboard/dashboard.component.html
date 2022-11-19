@@ -13,8 +13,7 @@
 
         <mat-card-content>
           <mat-action-list class="list">
-            <button mat-list-item *ngFor="let activity of recentActivities"
-            [routerLink]="activity"> {{ activity | urlToString }} </button>
+            <button mat-list-item *ngFor="let activity of recentActivities" (click)="navigatetoActivity(activity)"> {{ activity | urlToString }} </button>
           </mat-action-list>
         </mat-card-content>
 
