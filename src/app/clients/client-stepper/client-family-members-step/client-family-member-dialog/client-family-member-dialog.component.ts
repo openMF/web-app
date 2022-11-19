@@ -67,7 +67,7 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
       'middleName': [''],
       'lastName': ['', Validators.required],
       'qualification': [''],
-      'age': [''],
+      'age': ['', Validators.required, Validators.min(0)],
       'isDependent': [''],
       'relationshipId': ['', Validators.required],
       'genderId': [''],
