@@ -1,10 +1,10 @@
 {
   "APP_NAME": "Mifos X",
-  "Logged in as": "Logged in as",
-  "Remember me": "Remember me",
+  "Logged in as": "Sesión activa como",
+  "Remember me": "Recordarme",
   "languages": {
-    "en-US": "Ingles",
-    "fr-FR": "Frances",
+    "en-US": "Inglés",
+    "fr-FR": "Francés",
     "es-MX": "Español"
   },
   "labels": {
@@ -12,12 +12,12 @@
       "Home": "Inicio"
     },
     "buttons": {
-      "Dashboard": "Gráficos",
+      "Dashboard": "Tableros",
       "Add": "Agregar",
-      "Back": "Previo",
+      "Back": "Anterior",
       "Close": "Cerrar",
       "Next": "Siguiente",
-      "Login": "Inciar Sesiòn"
+      "Login": "Inciar Sesión"
     },
     "commons": {
       "is required": "es requerido"
@@ -26,9 +26,9 @@
       "Language": "Lenguaje",
       "Server": "Servidor",
       "Url": "Url",
-      "Login": "Inciar Sesiòn",
+      "Login": "Inciar Sesión",
       "Logout": "Salir",
-      "Username": "Nombre de usuario",
+      "Username": "Nombre de Usuario",
       "Password": "Contraseña",
       "Remember me": "Recordarme"
     },
@@ -50,11 +50,11 @@
     "menus": {
       "Institution": "Institución",
       "Accounting": "Contabilidad",
-      "Breadcrumbs": "",
+      "Breadcrumbs": "Navegación",
       "Reports": "Reportes",
       "Admin": "Administrador",
       "Self Service": "Auto Servicio",
-      "Configuration Wizard": "Configuration Wizard",
+      "Configuration Wizard": "Asistente de Configuración",
       "Clients": "Clientes",
       "Groups": "Grupos",
       "Centers": "Centros",
@@ -68,9 +68,9 @@
       "System": "Sistema",
       "Products": "Productos",
       "Templates": "Plantillas",
-      "User Management": "Admin. de Usuarios",
-      "App Configuration": "Configuración Aplicación",
-      "Task Management": "Admin. de Tareas",
+      "User Management": "Administración de Usuarios",
+      "App Configuration": "Configuración de Aplicación",
+      "Task Management": "Administración de Tareas",
       "Help": "Ayuda",
       "Profile": "Perfil",
       "Settings": "Configuración",
@@ -78,7 +78,7 @@
       "Global Search": "Búsqueda",
       "Language Selector": "Seleccionador de Idioma",
       "Theme Picker": "Seleccionador de Tema",
-      "Application Menu": "Menu de Aplicación",
+      "Application Menu": "Menú de Aplicación",
       "User Panel": "Panel de Usuario",
       "Frequently Accessed": "Accessos Frecuentes",
       "Dashboard": "Gráficos",
@@ -87,10 +87,10 @@
       "Create Journal Entry": "Crear Entrada Manual",
       "Chart of Accounts": "Cuentas Contables",
       "Notifications": "Notificaciones",
-      "Main Items": "Principales",
+      "Main Items": "Elementos principales",
       "Checker Inbox and Tasks": "Panel de Tareas",
-      "Individual Collection Sheet": "Hoja de colección",
-      "Keyboard Shortcuts": "Accesos"
+      "Individual Collection Sheet": "Hoja de Cobro Individual",
+      "Keyboard Shortcuts": "Accesos Rapidos"
     },
     "placeholders": {
       "Add new server": "Agregar nuevo servidor",
@@ -106,7 +106,7 @@
     "inputs": {
       "Password is required": "La Contraseña es requerida",
       "Username is required": "Nombre de Usuario es requerida",
-      "Username or password incorrect.": "Nombre de Usuario o Contraseá son incorrectas"
+      "Username or password incorrect.": "Nombre de Usuario ó Contraseña son incorrectas"
     }
   },
   "tooltips": {
