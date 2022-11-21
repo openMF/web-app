@@ -1,0 +1,33 @@
+{
+  "name": "cypress-tests",
+  "version": "1.0.0",
+  "description": "Cypress E2E automation",
+  "main": "index.js",
+  "scripts": {
+    "electron-test": "cypress run",
+    "postelectron-test": "jrm ./results/combined-report.xml \"./results/results-*.xml\"",
+    "script-electron": "npm run electron-test || npm run postelectron-test",
+    "chrome-test": "cypress run --browser chrome --headless",
+    "postchrome-test": "jrm ./results/combined-report.xml \"./results/results-*.xml\"",
+    "script-chrome": "npm run chrome-test || npm run postchrome-test",
+    "firefox-test": "cypress run --browser firefox --headless",
+    "postfirefox-test": "jrm ./results/combined-report.xml \"./results/results-*.xml\"",
+    "script-firefox": "npm run firefox-test || npm run postfirefox-test"
+  },
+  "author": "DevOps Automation Team",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^11.1.0",
+    "cypress-failed-log": "^2.10.0",
+    "cypress-file-upload": "^5.0.8",
+    "cypress-fill-command": "^1.0.2",
+    "cypress-keycloak-commands": "^1.2.0",
+    "@cypress/xpath": "^2.0.3",
+    "faker": "^5.5.3",
+    "junit-report-merger": "^4.0.0"
+  },
+  "dependencies": {
+    "cypress-real-events": "^1.7.1",
+    "junit-report-builder": "^3.0.1"
+  }
+}

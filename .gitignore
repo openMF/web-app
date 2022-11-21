@@ -48,6 +48,7 @@ testem.log
 /typings
 /reports
 /src/translations/template.*
+/tests/frontend/node_modules
 
 # System Files
 .DS_Store
