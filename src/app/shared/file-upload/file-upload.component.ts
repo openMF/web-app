@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 /**
  * Custom file upload component based on angular material.
@@ -9,14 +9,22 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.scss']
 })
-export class FileUploadComponent {
+export class FileUploadComponent implements OnInit {
 
   /** Form field flex dimension */
   @Input() flex: any;
+  @Input() acceptFilter: string;
+
   /** Selected file name */
   fileName: File;
 
   constructor() { }
+
+  ngOnInit() {
+    if (!this.acceptFilter) {
+      this.acceptFilter = '.xls,.xlsx,.pdf,.doc,.docx,.png,.jpeg,.jpg';
+    }
+  }
 
   /**
    * Sets the file name.
