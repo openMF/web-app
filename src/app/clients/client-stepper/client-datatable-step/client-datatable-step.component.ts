@@ -67,6 +67,10 @@ export class ClientDatatableStepComponent implements OnInit {
     return this.isColumnType(columnType, 'STRING');
   }
 
+  isText(columnType: string) {
+    return this.isColumnType(columnType, 'TEXT');
+  }
+
   isColumnType(columnType: string, expectedType: string) {
     return (columnType === expectedType);
   }
