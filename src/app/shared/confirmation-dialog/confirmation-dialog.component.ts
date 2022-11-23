@@ -30,7 +30,7 @@ export class ConfirmationDialogComponent implements OnInit {
         this.color = 'primary';
         break;
       case 'Mild':
-        this.color = 'accent';
+        this.color = 'primary';
         break;
       case 'Strong':
         this.color = 'warn';

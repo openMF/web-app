@@ -19,6 +19,9 @@
         <input matInput *ngIf="isString(datatableInput.columnDisplayType)"
         formControlName="{{datatableInput.controlName}}">
 
+        <textarea matInput *ngIf="isText(datatableInput.columnDisplayType)"
+        formControlName="{{datatableInput.controlName}}"></textarea>
+
         <span *ngIf="isDate(datatableInput.columnDisplayType)" (click)="datePicker.open()">
           <input matInput [matDatepicker]="datePicker" formControlName="{{datatableInput.controlName}}" class="date-picker">
           <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
