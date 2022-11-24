@@ -32,7 +32,7 @@ export class ChangePasswordDialogComponent implements OnInit {
   /** Change Password form */
   createChangePasswordForm() {
     this.changePasswordForm = this.formBuilder.group({
-      'password': ['', [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}$'), Validators.maxLength(50), Validators.minLength(8)]],
+      'password': ['', [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*[#$@$!%*?&])[A-Za-z\d#$@$!%*?&].{8,}$'), Validators.maxLength(50), Validators.minLength(8)]],
       'repeatPassword': ['', [Validators.required, this.confirmPassword('password')]]
     });
   }
