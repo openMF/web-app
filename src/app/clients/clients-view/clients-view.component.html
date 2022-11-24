@@ -37,8 +37,7 @@
           <p>
             Client #:{{clientViewData.accountNo}} | External
             Id: {{clientViewData.externalId}} | Staff:{{clientViewData.staffName || 'Unassigned'}}<br />
-            Activation Date :
-            {{(clientViewData.activation)?(clientViewData.activationDate | dateFormat) :'Not Activated'}}<br />
+            Activation Date : {{(clientViewData.activationDate | dateFormat)  || 'Not Activated'}}<br />
             Member Of :
             <span *ngFor="let group of clientViewData.groups">
               <a>{{group.name}}</a>&nbsp;
