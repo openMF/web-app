@@ -53,6 +53,16 @@
 
     </mat-step>
 
+    <mat-step state="repayment" *ngIf="loansAccountFormValid" completed>
+
+      <ng-template matStepLabel>REPAYMENT SCHEDULE</ng-template>
+
+      <mifosx-loans-account-schedule-step [loansAccountTemplate]="loansAccountTemplate"
+        [loansAccountProductTemplate]="loansAccountProductTemplate" [loansAccount]="loansAccount">
+      </mifosx-loans-account-schedule-step>
+
+    </mat-step>
+
     <mat-step state="preview" *ngIf="loansAccountFormValid" completed>
 
       <ng-template matStepLabel>PREVIEW</ng-template>

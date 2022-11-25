@@ -14,7 +14,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field fxFlex="48%" *ngIf="loanProductSelected">
       <mat-label>Loan officer</mat-label>
       <mat-select formControlName="loanOfficerId">
         <mat-option *ngFor="let loanOfficer of loanOfficerOptions" [value]="loanOfficer.id">
@@ -22,6 +22,9 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+  </div>
+
+  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" *ngIf="loanProductSelected">
 
     <mat-form-field fxFlex="48%">
       <mat-label>Loan purpose</mat-label>
@@ -84,7 +87,6 @@
     <mat-checkbox fxFlex="48%" formControlName="createStandingInstructionAtDisbursement">
       <p>Create standing instructions at disbursement</p>
     </mat-checkbox>
-
   </div>
 
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">

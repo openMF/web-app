@@ -10,7 +10,6 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
-import { any } from 'cypress/types/bluebird';
 
 /**
  * Create Loans Account Terms Step

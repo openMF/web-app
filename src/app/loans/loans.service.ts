@@ -4,6 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Loans service.
@@ -12,7 +13,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class LoansService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private dateUtils: Dates) { }
   /**
    * @param {string} loanId loanId of the loan.
    * @returns {Observable<any>}
@@ -468,6 +470,75 @@ export class LoansService {
 
   createGlimAccount(glimAccount: any): Observable<any> {
     return this.http.post('/batches?enclosingTransaction=true', glimAccount);
+  }
+
+  calculateLoanSchedule(payload: any): Observable<any> {
+    return this.http.post('/loans?command=calculateLoanSchedule', payload);
+  }
+
+  /**
+   * @param loansAccount Loan account data used for the request
+   * @param loansAccountTemplate Loan account template for getting product default values
+   * @param calendarOptions Calendar options
+   * @param locale String to send to backend
+   * @param dateFormat String with date format to manage dates
+   * @returns Object with Loan Account payload data.
+   */
+  buildLoanRequestPayload(loansAccount: any, loansAccountTemplate: any, calendarOptions: any, locale: string, dateFormat: string): any {
+    const loansAccountData = {
+      ...loansAccount,
+      charges: loansAccount.charges.map((charge: any) => ({
+        chargeId: charge.id,
+        amount: charge.amount,
+        dueDate: charge.dueDate && this.dateUtils.formatDate(charge.dueDate, dateFormat),
+      })),
+      collateral: loansAccount.collateral.map((collateralEle: any) => ({
+        clientCollateralId: collateralEle.type.collateralId,
+        quantity: collateralEle.value,
+      })),
+      disbursementData: loansAccount.disbursementData.map((item: any) => ({
+        expectedDisbursementDate: this.dateUtils.formatDate(item.expectedDisbursementDate, dateFormat),
+        principal: item.principal
+      })),
+      interestChargedFromDate: this.dateUtils.formatDate(loansAccount.interestChargedFromDate, dateFormat),
+      repaymentsStartingFromDate: this.dateUtils.formatDate(loansAccount.repaymentsStartingFromDate, dateFormat),
+      submittedOnDate: this.dateUtils.formatDate(loansAccount.submittedOnDate, dateFormat),
+      expectedDisbursementDate: this.dateUtils.formatDate(loansAccount.expectedDisbursementDate, dateFormat),
+      dateFormat,
+      locale,
+    };
+    if (loansAccountTemplate.clientId) {
+      loansAccountData.clientId = loansAccountTemplate.clientId;
+      loansAccountData.loanType = 'individual';
+    } else {
+      loansAccountData.groupId = loansAccountTemplate.group.id;
+      loansAccountData.loanType = 'group';
+    }
+
+    if (loansAccountData.syncRepaymentsWithMeeting) {
+      loansAccountData.calendarId = calendarOptions[0].id;
+      delete loansAccountData.syncRepaymentsWithMeeting;
+    }
+
+    if (loansAccountData.recalculationRestFrequencyDate) {
+      loansAccountData.recalculationRestFrequencyDate = this.dateUtils.formatDate(loansAccount.recalculationRestFrequencyDate, dateFormat);
+    }
+
+    if (loansAccountData.interestCalculationPeriodType === 0) {
+      loansAccountData.allowPartialPeriodInterestCalcualtion = false;
+    }
+    if (!(loansAccountData.isFloatingInterestRate === false)) {
+      delete loansAccountData.isFloatingInterestRate;
+    }
+    if (!(loansAccountData.multiDisburseLoan)) {
+      delete loansAccountData.disbursementData;
+    }
+    delete loansAccountData.isValid;
+    loansAccountData.principal = loansAccountData.principalAmount;
+    delete loansAccountData.principalAmount;
+
+    return loansAccountData;
+
   }
 
 }
