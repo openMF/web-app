@@ -11,6 +11,11 @@ import { of } from 'rxjs';
 /** Custom Services */
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
+import { FormControl } from '@angular/forms';
+import { OfficeNode } from './office-node.model';
+import { NestedTreeControl } from '@angular/cdk/tree';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { OfficeTreeService } from './office-tree-service.service';
 
 /**
  * Offices component.
@@ -21,6 +26,8 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
   styleUrls: ['./offices.component.scss']
 })
 export class OfficesComponent implements OnInit, AfterViewInit {
+  /** Button toggle group form control for type of view. (list/tree) */
+  viewGroup = new FormControl('listView');
 
   /** Offices data. */
   officesData: any;
@@ -28,11 +35,20 @@ export class OfficesComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['name', 'externalId', 'parentName', 'openingDate'];
   /** Data source for offices table. */
   dataSource: MatTableDataSource<any>;
+  /** Nested tree control for offices tree. */
+  nestedTreeControl: NestedTreeControl<OfficeNode>;
+  /** Nested tree data source for offices tree. */
+  nestedTreeDataSource: MatTreeNestedDataSource<OfficeNode>;
+  /** Selected Office. */
+  office: OfficeNode;
+  /** Office data tables. */
+  dataTablesData: any;
 
   /** Paginator for offices table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for offices table. */
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+
 
   /* Reference of tree view button */
   @ViewChild('buttonTreeView') buttonTreeView: ElementRef<any>;
@@ -47,16 +63,22 @@ export class OfficesComponent implements OnInit, AfterViewInit {
    * Retrieves the offices data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router.
+   * @param {OfficeTreeService} officeTreeService office tree service.
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor(private route: ActivatedRoute,
-              private router: Router,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) {
-    this.route.data.subscribe(( data: { offices: any }) => {
+    private router: Router,
+    private officeTreeService: OfficeTreeService,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService) {
+    this.route.data.subscribe(( data: { offices: any, officeDataTables: any }) => {
       this.officesData = data.offices;
+      officeTreeService.initialize(this.officesData);
+      this.dataTablesData = data.officeDataTables;
     });
+    this.nestedTreeControl = new NestedTreeControl<OfficeNode>(this.getChildren);
+    this.nestedTreeDataSource = new MatTreeNestedDataSource<OfficeNode>();
   }
 
   /**
@@ -70,8 +92,13 @@ export class OfficesComponent implements OnInit, AfterViewInit {
   /**
    * Sets the offices table.
    */
-  ngOnInit() {
+   ngOnInit() {
     this.setOffices();
+    this.officeTreeService.treeDataChange.subscribe((officeTreeData: OfficeNode[]) => {
+      this.nestedTreeDataSource.data = officeTreeData;
+      this.nestedTreeControl.expand(this.nestedTreeDataSource.data[0]);
+      this.nestedTreeControl.dataNodes = officeTreeData;
+    });
   }
 
   /**
@@ -82,6 +109,35 @@ export class OfficesComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+
+  /**
+   * View selected office.
+   * @param {OfficeNode} office Office to be viewed.
+   */
+   viewOfficeNode(office: OfficeNode) {
+    if (office.id) {
+      this.office = office;
+    } else {
+      delete this.office;
+    }
+  }
+
+  /**
+   * Closes the current view for office
+   */
+  closeOffice() {
+    delete this.office;
+  }
+
+  /**
+   * Checks if selected node in tree has children.
+   */
+  hasNestedChild = (_: number, node: OfficeNode) => node.children.length;
+
+  /**
+   * Gets the children of selected node in tree.
+   */
+  private getChildren = (node: OfficeNode) => of(node.children);
 
   /**
    * Popover function
