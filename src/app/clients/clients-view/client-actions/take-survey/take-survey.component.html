@@ -1,11 +1,11 @@
-<div class="container mat-typography" style="padding-bottom: 20px;">
+<div class="container mat-typography">
 
   <div class="mat-elevation-z2 surveyCont">
 
     <div class="surveySelect" fxLayout="row">
 
       <mat-label class="nameLabel">Survey Name</mat-label>
-      <mat-select class="surveyOption" (selectionChange)="onSurveyChange($event)">
+      <mat-select (selectionChange)="onSurveyChange($event)">
         <mat-option *ngFor="let surveyData of allSurveyData" [value]="surveyData">
           {{surveyData.name}}
         </mat-option>
@@ -52,7 +52,7 @@
 
     </div>
 
-    <button mat-raised-button class="button-cancel" color="danger" [routerLink]="['../']">Cancel</button>
+    <button mat-raised-button class="button-cancel" color="danger" [routerLink]="['../../general']">Cancel</button>
     <button mat-raised-button class="button-submit" color="primary" (click)=submit()>Submit</button>
 
   </div>

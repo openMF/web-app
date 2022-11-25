@@ -192,13 +192,15 @@
 
     <h4 fxFlex="98%" class="mat-h4">Moratorium</h4>
 
-    <mat-checkbox fxFlex="23%" labelPosition="before" formControlName="graceOnPrincipalPayment" class="margin-v">
-      On Principal Payment
-    </mat-checkbox>
+    <mat-form-field fxFlex="48%">
+      <mat-label>Grace on principal payment</mat-label>
+      <input type="number" matInput formControlName="graceOnPrincipalPayment">
+    </mat-form-field>
 
-    <mat-checkbox fxFlex="23%" labelPosition="before" formControlName="graceOnInterestPayment" class="margin-v">
-      On Interest Payment
-    </mat-checkbox>
+    <mat-form-field fxFlex="48%">
+      <mat-label>Grace on interest payment</mat-label>
+      <input type="number" matInput formControlName="graceOnInterestPayment">
+    </mat-form-field>
 
     <mat-checkbox fxFlex="23%" labelPosition="before" formControlName="graceOnArrearsAgeing" class="margin-v">
       On Arreas Aging
