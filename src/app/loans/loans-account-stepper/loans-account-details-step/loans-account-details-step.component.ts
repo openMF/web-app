@@ -41,6 +41,8 @@ export class LoansAccountDetailsStepComponent implements OnInit {
 
   loanId: any = null;
 
+  loanProductSelected = false;
+
   /** Loans Account Template with product data  */
   @Output() loansAccountProductTemplate = new EventEmitter();
   /**
@@ -106,6 +108,7 @@ export class LoansAccountDetailsStepComponent implements OnInit {
         this.loanPurposeOptions = response.loanPurposeOptions;
         this.fundOptions = response.fundOptions;
         this.accountLinkingOptions = response.accountLinkingOptions;
+        this.loanProductSelected = true;
         if (response.createStandingInstructionAtDisbursement) {
           this.loansAccountDetailsForm.get('createStandingInstructionAtDisbursement').patchValue(response.createStandingInstructionAtDisbursement);
         }

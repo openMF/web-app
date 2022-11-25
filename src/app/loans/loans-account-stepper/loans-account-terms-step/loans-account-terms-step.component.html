@@ -163,7 +163,6 @@
       </mat-select>
     </mat-form-field>
 
-    <!-- <mat-checkbox *ngIf="interestCalculationPeriodType != 0" fxFlex="48%" -->
     <mat-checkbox fxFlex="48%" formControlName="allowPartialPeriodInterestCalcualtion">
       <p>Calculate interest for exact days in partial period</p>
     </mat-checkbox>
@@ -192,19 +191,20 @@
 
     <h4 fxFlex="98%" class="mat-h4">Moratorium</h4>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field fxFlex="23%">
       <mat-label>Grace on principal payment</mat-label>
       <input type="number" matInput formControlName="graceOnPrincipalPayment">
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field fxFlex="23%">
       <mat-label>Grace on interest payment</mat-label>
       <input type="number" matInput formControlName="graceOnInterestPayment">
     </mat-form-field>
 
-    <mat-checkbox fxFlex="23%" labelPosition="before" formControlName="graceOnArrearsAgeing" class="margin-v">
-      On Arreas Aging
-    </mat-checkbox>
+    <mat-form-field fxFlex="48%">
+      <mat-label>On arrears ageing</mat-label>
+      <input type="number" matInput formControlName="graceOnArrearsAgeing">
+    </mat-form-field>
 
     <mat-form-field fxFlex="48%" *ngIf="loansAccountTemplate?.canDefineInstallmentAmount">
       <mat-label>Installment Amount</mat-label>
@@ -360,7 +360,6 @@
           </span>
         </span>
       </div>
-
     </ng-container>
 
     <div fxFlexFill
@@ -419,8 +418,8 @@
       <tr mat-header-row *matHeaderRowDef="loanCollateralDisplayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: loanCollateralDisplayedColumns;"></tr>
     </table>
-
   </div>
+
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;

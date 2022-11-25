@@ -34,16 +34,16 @@
       <td mat-footer-cell *matFooterCellDef> </td>
     </ng-container>
 
-    <ng-container matColumnDef="principalDue">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef> Principal Due </th>
-      <td mat-cell class="check r-amount" *matCellDef="let ele"> {{ ele.principalDue | number }} </td>
-      <td mat-footer-cell class="check r-amount" *matFooterCellDef> <b> {{ repaymentScheduleDetails.totalPrincipalExpected | currency }}</b>  </td>
-    </ng-container>
-
     <ng-container matColumnDef="balanceOfLoan">
       <th mat-header-cell class="r-amount" *matHeaderCellDef> Balance Of Loan </th>
       <td mat-cell class="r-amount" *matCellDef="let ele"> {{ ele.principalLoanBalanceOutstanding | number }} </td>
       <td mat-footer-cell class="r-amount" *matFooterCellDef> &nbsp; </td>
+    </ng-container>
+
+    <ng-container matColumnDef="principalDue">
+      <th mat-header-cell class="r-amount" *matHeaderCellDef> Principal Due </th>
+      <td mat-cell class="check r-amount" *matCellDef="let ele"> {{ ele.principalDue | number }} </td>
+      <td mat-footer-cell class="check r-amount" *matFooterCellDef> <b> {{ repaymentScheduleDetails.totalPrincipalExpected | currency }}</b>  </td>
     </ng-container>
 
     <ng-container matColumnDef="interest">

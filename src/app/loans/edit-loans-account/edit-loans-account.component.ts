@@ -60,9 +60,11 @@ export class EditLoansAccountComponent implements OnInit {
    */
   setTemplate($event: any) {
     this.loansAccountProductTemplate = $event;
-    this.loansService.getLoansCollateralTemplateResource(this.loansAccountProductTemplate.loanProductId).subscribe((response: any) => {
-      this.collateralOptions = response.loanCollateralOptions;
-    });
+    if (this.loansAccountProductTemplate.loanProductId) {
+      this.loansService.getLoansCollateralTemplateResource(this.loansAccountProductTemplate.loanProductId).subscribe((response: any) => {
+        this.collateralOptions = response.loanCollateralOptions;
+      });
+    }
   }
 
   /** Get Loans Account Details Form Data */

@@ -121,59 +121,10 @@ export class CreateLoansAccountComponent implements OnInit {
   submit() {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const loansAccountData = {
-      ...this.loansAccount,
-      charges: this.loansAccount.charges.map((charge: any) => ({
-        chargeId: charge.id,
-        amount: charge.amount,
-        dueDate: charge.dueDate && this.dateUtils.formatDate(charge.dueDate, dateFormat),
-      })),
-      collateral: this.loansAccount.collateral.map((collateralEle: any) => ({
-        clientCollateralId: collateralEle.type.collateralId,
-        quantity: collateralEle.value,
-      })),
-      disbursementData: this.loansAccount.disbursementData.map((item: any) => ({
-        expectedDisbursementDate: this.dateUtils.formatDate(item.expectedDisbursementDate, dateFormat),
-        principal: item.principal
-      })),
-      interestChargedFromDate: this.dateUtils.formatDate(this.loansAccount.interestChargedFromDate, dateFormat),
-      repaymentsStartingFromDate: this.dateUtils.formatDate(this.loansAccount.repaymentsStartingFromDate, dateFormat),
-      submittedOnDate: this.dateUtils.formatDate(this.loansAccount.submittedOnDate, dateFormat),
-      expectedDisbursementDate: this.dateUtils.formatDate(this.loansAccount.expectedDisbursementDate, dateFormat),
-      dateFormat,
-      locale,
-    };
-    if (this.loansAccountTemplate.clientId) {
-      loansAccountData.clientId = this.loansAccountTemplate.clientId;
-      loansAccountData.loanType = 'individual';
-    } else {
-      loansAccountData.groupId = this.loansAccountTemplate.group.id;
-      loansAccountData.loanType = 'group';
-    }
+    const payload = this.loansService.buildLoanRequestPayload(this.loansAccount, this.loansAccountTemplate,
+      this.loansAccountProductTemplate.calendarOptions, locale, dateFormat);
 
-    if (loansAccountData.syncRepaymentsWithMeeting) {
-      loansAccountData.calendarId = this.loansAccountProductTemplate.calendarOptions[0].id;
-      delete loansAccountData.syncRepaymentsWithMeeting;
-    }
-
-    if (loansAccountData.recalculationRestFrequencyDate) {
-      loansAccountData.recalculationRestFrequencyDate = this.dateUtils.formatDate(this.loansAccount.recalculationRestFrequencyDate, dateFormat);
-    }
-
-    if (loansAccountData.interestCalculationPeriodType === 0) {
-      loansAccountData.allowPartialPeriodInterestCalcualtion = false;
-    }
-    if (!(loansAccountData.isFloatingInterestRate === false)) {
-      delete loansAccountData.isFloatingInterestRate;
-    }
-    if (!(this.multiDisburseLoan)) {
-      delete loansAccountData.disbursementData;
-    }
-    delete loansAccountData.isValid;
-    loansAccountData.principal = loansAccountData.principalAmount;
-    delete loansAccountData.principalAmount;
-
-    this.loansService.createLoansAccount(loansAccountData).subscribe((response: any) => {
+    this.loansService.createLoansAccount(payload).subscribe((response: any) => {
       this.router.navigate(['../', response.resourceId, 'general'], { relativeTo: this.route });
     });
   }

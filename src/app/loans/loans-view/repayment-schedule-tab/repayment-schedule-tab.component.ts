@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -8,13 +8,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class RepaymentScheduleTabComponent implements OnInit {
 
-  loanDetails: any;
   /** Loan Repayment Schedule Details Data */
-  repaymentScheduleDetails: any;
+  @Input() repaymentScheduleDetails: any = null;
+  loanDetailsDataRepaymentSchedule: any = [];
+
   /** Stores if there is any waived amount */
   isWaived: boolean;
   /** Columns to be displayed in original schedule table. */
-  displayedColumns: string[] = ['number', 'days', 'date', 'paiddate', 'check', 'principalDue', 'balanceOfLoan', 'interest', 'fees', 'penalties', 'due', 'paid', 'inadvance', 'late', 'waived', 'outstanding'];
+  displayedColumns: string[] = ['number', 'days', 'date', 'paiddate', 'check', 'balanceOfLoan', 'principalDue', 'interest', 'fees', 'penalties', 'due', 'paid', 'inadvance', 'late', 'waived', 'outstanding'];
 
   /**
    * Retrieves the loans with associations data from `resolve`.
@@ -22,12 +23,14 @@ export class RepaymentScheduleTabComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute) {
     this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
-      this.loanDetails = data.loanDetailsData;
-      this.repaymentScheduleDetails = data.loanDetailsData.repaymentSchedule;
+      this.loanDetailsDataRepaymentSchedule = data.loanDetailsData.repaymentSchedule;
     });
   }
 
   ngOnInit() {
+    if (this.repaymentScheduleDetails == null) {
+      this.repaymentScheduleDetails = this.loanDetailsDataRepaymentSchedule;
+    }
     this.isWaived = this.repaymentScheduleDetails.totalWaived > 0;
   }
 
