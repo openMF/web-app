@@ -1,5 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 /**
  * Dashboard component.
@@ -21,7 +22,7 @@ export class DashboardComponent implements OnInit {
   /**
    * Gets user activities from local storage.
    */
-  constructor() {
+  constructor(private router: Router) {
     this.userActivity = JSON.parse(localStorage.getItem('mifosXLocation'));
   }
 
@@ -67,4 +68,12 @@ export class DashboardComponent implements OnInit {
     return topEigthFrequentActivities;
   }
 
+  /**
+   * Navigates to the activity
+   */
+  navigatetoActivity(activity:string){
+    this.router.navigateByUrl(activity);
+  }
+
 }
+
