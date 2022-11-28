@@ -64,7 +64,7 @@ export class UserService {
    */
   changePassword(userId: string, passwordObj: any) {
 
-    return this.http.put(`/self/user/${userId}`, passwordObj);
+    return this.http.put(`/users/${userId}`, passwordObj);
   }
 
 }
