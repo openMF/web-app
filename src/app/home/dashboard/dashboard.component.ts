@@ -71,7 +71,7 @@ export class DashboardComponent implements OnInit {
   /**
    * Navigates to the activity
    */
-  navigatetoActivity(activity:string){
+  navigatetoActivity(activity: string) {
     this.router.navigateByUrl(activity);
   }
 
