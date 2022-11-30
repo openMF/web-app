@@ -23,6 +23,7 @@
       "is required": "es requerido"
     },
     "inputs": {
+      "Tenant": "Entidad",
       "Language": "Lenguaje",
       "Server": "Servidor",
       "Url": "Url",
