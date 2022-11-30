@@ -23,7 +23,9 @@
 
       <ng-container matColumnDef="externalId">
         <th mat-header-cell *matHeaderCellDef> External Id </th>
-        <td mat-cell *matCellDef="let entity" class="view-details"> {{entity.entityExternalId | externalIdentifier}} </td>
+        <td mat-cell *matCellDef="let entity" class="view-details">
+          <mifosx-external-identifier externalId="{{entity.entityExternalId}}"></mifosx-external-identifier>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="parentType">

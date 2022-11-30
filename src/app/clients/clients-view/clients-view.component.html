@@ -29,20 +29,23 @@
         <mat-card-title>
           <h3>
             <i class="fa fa-stop" [ngClass]="clientViewData.status.code|statusLookup" [matTooltip]="clientViewData.status.value"></i>
-            Client Name : {{clientViewData.displayName}}
+            <b>Client Name :</b> {{clientViewData.displayName}}
           </h3>
         </mat-card-title>
 
         <mat-card-subtitle>
           <p>
-            Client #:{{clientViewData.accountNo}} | External
-            Id: {{clientViewData.externalId}} | Staff:{{clientViewData.staffName || 'Unassigned'}}<br />
-            Activation Date : {{(clientViewData.activationDate) ? (clientViewData.activationDate | dateFormat) :'Not Activated'}}<br />
-            Member Of :
-            <span *ngFor="let group of clientViewData.groups">
-              <a>{{group.name}}</a>&nbsp;
+            <b>Office :</b> {{clientViewData.officeName}}<br />
+            <b>Client :</b> {{clientViewData.accountNo}}<br />
+            <b>External Id:</b> {{clientViewData.externalId}}<br />
+            <span *ngIf="clientViewData.staffName"><b>Staff :</b> {{clientViewData.staffName || 'Unassigned'}}<br /></span>
+            <span *ngIf="clientViewData.activationDate"><b>Activation Date :</b> {{clientViewData.activationDate | dateFormat}}<br /></span>
+            <span *ngIf="clientViewData.groups.length > 0">
+              Member Of :
+              <span *ngFor="let group of clientViewData.groups">
+                <a>{{group.name}}</a>&nbsp;
+              </span>
             </span>
-            <span *ngIf="!clientViewData.groups">Unassigned</span>
             <br/>
           </p>
         </mat-card-subtitle>

@@ -41,6 +41,10 @@ export class ClientsService {
     return this.http.get('/clients/template');
   }
 
+  getClientWithOfficeTemplate(officeId: number): Observable<any> {
+    return this.http.get(`/clients/template?officeId=${officeId}&staffInSelectedOfficeOnly=true`);
+  }
+
   getClientData(clientId: string) {
     return this.http.get(`/clients/${clientId}`);
   }

@@ -16,7 +16,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Legal Form</mat-label>
-      <mat-select formControlName="legalFormId">
+      <mat-select required formControlName="legalFormId">
         <mat-option *ngFor="let legalForm of legalFormOptions" [value]="legalForm.id">
           {{ legalForm.value }}
         </mat-option>
