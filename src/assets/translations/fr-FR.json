@@ -23,6 +23,7 @@
       "is required": "is required"
     },
     "inputs": {
+      "Tenant": "Tenant",
       "Language": "Language",
       "Server": "Server",
       "Url": "Url",

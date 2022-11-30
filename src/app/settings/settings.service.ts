@@ -64,6 +64,22 @@ export class SettingsService {
   }
 
   /**
+   * Sets Tenant Identifiers list setting throughout the app.
+   * @param {string[]} list List of default tenants
+   */
+  setTenantIdentifiers(list: string[]) {
+    localStorage.setItem('mifosXTenantIdentifiers', JSON.stringify(list));
+  }
+
+  /**
+   * Sets Tenant Identifier setting throughout the app.
+   * @param {string} Tenant Identifier
+   */
+  setTenantIdentifier(tenantIdentifier: string) {
+    localStorage.setItem('mifosXTenantIdentifier', tenantIdentifier);
+  }
+
+  /**
    * Sets server Date setting for max datepicker, default today
    * @param {string} date
    */
@@ -139,6 +155,20 @@ export class SettingsService {
    */
   get maxFutureDate(): Date {
     return this.maxAllowedDate;
+  }
+
+  /**
+   * Returns list of Tenant Identifiers
+   */
+  get tenantIdentifiers(): any {
+    return JSON.parse(localStorage.getItem('mifosXTenantIdentifiers'));
+  }
+
+  /**
+   * Returns Tenant Identifier
+   */
+  get tenantIdentifier(): string {
+    return localStorage.getItem('mifosXTenantIdentifier');
   }
 
   /**

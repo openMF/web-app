@@ -21,6 +21,7 @@ import { NotificationsTrayComponent } from './notifications-tray/notifications-t
 import { SearchToolComponent } from './search-tool/search-tool.component';
 import { KeyboardShortcutsDialogComponent } from './keyboard-shortcuts-dialog/keyboard-shortcuts-dialog.component';
 import { ServerSelectorComponent } from './server-selector/server-selector.component';
+import { TenantSelectorComponent } from './tenant-selector/tenant-selector.component';
 
 /** Custom Modules */
 import { IconsModule } from './icons.module';
@@ -57,7 +58,8 @@ import { TranslateModule } from '@ngx-translate/core';
     ErrorDialogComponent,
     NotificationsTrayComponent,
     SearchToolComponent,
-    ServerSelectorComponent
+    ServerSelectorComponent,
+    TenantSelectorComponent
   ],
   exports: [
     FileUploadComponent,
@@ -73,7 +75,8 @@ import { TranslateModule } from '@ngx-translate/core';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    TenantSelectorComponent
   ]
 })
 export class SharedModule { }

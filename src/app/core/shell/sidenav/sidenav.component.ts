@@ -14,6 +14,7 @@ import { ConfigurationWizardService } from '../../../configuration-wizard/config
 
 /** Custom Imports */
 import { frequentActivities } from './frequent-activities';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Sidenav component.
@@ -51,12 +52,14 @@ export class SidenavComponent implements OnInit, AfterViewInit {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Mat Dialog
    * @param {AuthenticationService} authenticationService Authentication Service.
+   * @param {SettingsService} settingsService Settings Service.
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor(private router: Router,
               public dialog: MatDialog,
               private authenticationService: AuthenticationService,
+              private settingsService: SettingsService,
               private configurationWizardService: ConfigurationWizardService,
               private popoverService: PopoverService) {
     this.userActivity = JSON.parse(localStorage.getItem('mifosXLocation'));
@@ -207,4 +210,12 @@ export class SidenavComponent implements OnInit, AfterViewInit {
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate(['/home']);
   }
+
+  get tenantIdentifier(): string {
+    if (!this.settingsService.tenantIdentifier || this.settingsService.tenantIdentifier === '') {
+      return 'default';
+    }
+    return this.settingsService.tenantIdentifier;
+  }
+
 }
