@@ -133,10 +133,16 @@ https://localhost:8443
 ```
 FINERACT_PLATFORM_TENANT_IDENTIFIER
 ```
-Fineract Tenant identifier to be used, It must be aligned with the Fineract `tenants` table. Default value:
+Fineract Tenant identifier to be used by default, It must be aligned with the Fineract `tenants` table. Default value:
 ```
 default
 ```
+
+```
+FINERACT_PLATFORM_TENANTS_IDENTIFIER
+```
+Fineract Tenant identifier list to be used, Those must be aligned with the Fineract `tenants` table. 
+
 
 Setting for Languages (i18n) still under development
 ```

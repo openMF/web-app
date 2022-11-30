@@ -17,7 +17,7 @@
         <img src="assets/images/user_placeholder.png" alt="app-user-photo">
       </div>
       <span class="app-user-name mb-05">
-        {{ username }}
+        {{ tenantIdentifier }} / {{ username }}
       </span>
       <div #userPanel class="app-user-controls">
         <button class="xs-button" mat-icon-button matTooltip="{{ 'tooltips.Settings' | translate }}" [routerLink]="['/settings']">

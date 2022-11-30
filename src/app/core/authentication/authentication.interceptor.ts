@@ -5,10 +5,11 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/c
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Environment Configuration */
+/** Custom Imports */
 import { environment } from '../../../environments/environment';
+import { SettingsService } from 'app/settings/settings.service';
 
-/** Http request options headers. */
+/** Http request (default) options headers. */
 const httpOptions = {
   headers: {
     'Fineract-Platform-TenantId': environment.fineractPlatformTenantId
@@ -26,12 +27,15 @@ const twoFactorAccessTokenHeader = 'Fineract-Platform-TFA-Token';
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  constructor(private settingsService: SettingsService) {}
 
   /**
    * Intercepts a Http request and sets the request headers.
    */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (this.settingsService.tenantIdentifier) {
+      httpOptions.headers['Fineract-Platform-TenantId'] = this.settingsService.tenantIdentifier;
+    }
     request = request.clone({ setHeaders: httpOptions.headers });
     return next.handle(request);
   }

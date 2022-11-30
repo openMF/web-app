@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { ChangePasswordDialogComponent } from 'app/shared/change-password-dialog/change-password-dialog.component';
 import { UserService } from 'app/self-service/users/user.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Profile Component.
@@ -36,9 +37,10 @@ export class ProfileComponent implements OnInit {
    * @param {MatDialog} dialog Mat Dialog
    */
   constructor(private authenticationService: AuthenticationService,
-              private userService: UserService,
-              private router: Router,
-              public dialog: MatDialog) {
+      private settingsService: SettingsService,
+      private userService: UserService,
+      private router: Router,
+      public dialog: MatDialog) {
     this.profileData = authenticationService.getCredentials();
   }
 
@@ -64,6 +66,10 @@ export class ProfileComponent implements OnInit {
         });
       }
     });
+  }
+
+  get tenantIdentifier(): string {
+    return this.settingsService.tenantIdentifier || 'default';
   }
 
 }

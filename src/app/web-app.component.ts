@@ -150,6 +150,9 @@ export class WebAppComponent implements OnInit {
     this.settingsService.setBusinessDate(this.dateUtils.formatDate(new Date(), SettingsService.businessDateFormat));
     // Set the server list from the env var FINERACT_API_URLS
     this.settingsService.setServers(environment.baseApiUrls.split(','));
+    // Set the Tenant Identifier(s) list from the env var
+    this.settingsService.setTenantIdentifier(environment.fineractPlatformTenantId || 'default');
+    this.settingsService.setTenantIdentifiers(environment.fineractPlatformTenantIds.split(','));
   }
 
   logout() {

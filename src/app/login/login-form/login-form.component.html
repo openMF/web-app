@@ -1,8 +1,8 @@
 <form fxLayout="column" [formGroup]="loginForm" (ngSubmit)="login()" id="login-form">
 
   <mat-form-field fxFlexAlign="center" class="login-input">
-    <span matPrefix>
-      <fa-icon icon="user-circle" size="lg"></fa-icon>&nbsp;&nbsp;
+    <span matPrefix class="m-r-10">
+      <fa-icon icon="user-circle" size="lg"></fa-icon>
     </span>
     <mat-label>{{ 'labels.inputs.Username' | translate }}</mat-label>
     <input matInput type="text" autocomplete="off" formControlName="username">
@@ -12,8 +12,8 @@
   </mat-form-field>
 
   <mat-form-field fxFlexAlign="center" class="login-input">
-    <span matPrefix>
-      <fa-icon icon="lock" size="lg"></fa-icon>&nbsp;&nbsp;
+    <span matPrefix class="m-r-10">
+      <fa-icon icon="lock" size="lg"></fa-icon>
     </span>
     <mat-label>{{ 'labels.inputs.Password' | translate }}</mat-label>
     <input matInput type="{{ passwordInputType }}" formControlName="password">

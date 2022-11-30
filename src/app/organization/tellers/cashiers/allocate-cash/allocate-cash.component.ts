@@ -76,7 +76,7 @@ export class AllocateCashComponent implements OnInit {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const txnDate = this.allocateCashForm.value.txnDate;
-    if (allocateCashFormData.closureDate instanceof Date) {
+    if (allocateCashFormData.txnDate instanceof Date) {
       allocateCashFormData.txnDate = this.dateUtils.formatDate(txnDate, dateFormat);
     }
     const data = {
