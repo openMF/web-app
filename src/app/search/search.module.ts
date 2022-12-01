@@ -7,6 +7,7 @@ import { SearchRoutingModule } from './search-routing.module';
 
 /** Custom Components */
 import { SearchPageComponent } from './search-page/search-page.component';
+import { PipesModule } from 'app/pipes/pipes.module';
 
 /**
  * Search Module
@@ -15,6 +16,7 @@ import { SearchPageComponent } from './search-page/search-page.component';
   declarations: [SearchPageComponent],
   imports: [
     SharedModule,
+    PipesModule,
     SearchRoutingModule
   ]
 })
