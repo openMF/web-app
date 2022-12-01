@@ -1,22 +1,68 @@
 <div class="container">
 
-  <mat-card fxLayout="column" fxLayoutGap="2%">
+  <mat-card fxLayout="column" fxLayoutGap="2%" *ngIf="hasResults">
 
     <mat-error *ngIf="overload">Searched query resulted more than 200 records, showing first 200 records.</mat-error>
 
-    <mat-list>
+    <table mat-table [dataSource]="dataSource">
 
-      <mat-list-item (click)="navigate(entity)" *ngFor="let entity of searchResults">
-        <h3 matLine><span class="link">{{ entity.entityName }}</span> | #{{ entity.entityAccountNo }}</h3>
-        <p matLine>
-          <span>Entity: {{ entity.entityType }} 
-            | {{ ['CLIENT','GROUP', 'CENTER'].includes(entity.entityType) ? 'Office' : 'Client' }}: {{ entity.parentName }}
-          </span>
-        </p>
-      </mat-list-item>
-      
-    </mat-list>
+      <ng-container matColumnDef="entityType">
+        <th mat-header-cell *matHeaderCellDef> Entity Type </th>
+        <td mat-cell *matCellDef="let entity" class="view-details"> {{entity.entityType}} </td>
+      </ng-container>
 
+      <ng-container matColumnDef="entityName">
+        <th mat-header-cell *matHeaderCellDef> Entity Name </th>
+        <td mat-cell *matCellDef="let entity" class="view-details"> {{entity.entityName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="entityAccount">
+        <th mat-header-cell *matHeaderCellDef> Account No </th>
+        <td mat-cell *matCellDef="let entity" class="view-details"> {{entity.entityAccountNo}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="externalId">
+        <th mat-header-cell *matHeaderCellDef> External Id </th>
+        <td mat-cell *matCellDef="let entity" class="view-details"> {{entity.entityExternalId | externalIdentifier}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="parentType">
+        <th mat-header-cell *matHeaderCellDef> Parent Type </th>
+        <td mat-cell *matCellDef="let entity" class="view-details"> {{ ['CLIENT','GROUP', 'CENTER'].includes(entity.entityType) ? 'Office' : 'Client' }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="parentName">
+        <th mat-header-cell *matHeaderCellDef> Parent Name </th>
+        <td mat-cell *matCellDef="let entity" class="view-details"> {{entity.parentName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="details">
+        <th mat-header-cell *matHeaderCellDef> Details </th>
+        <td mat-cell *matCellDef="let entity" class="view-details">
+          <button mat-icon-button matTooltip="View Entity" (click)="navigate(entity)" matTooltipPosition="right">
+            <fa-icon icon="eye" size="lg"></fa-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let entity; columns: displayedColumns;"></tr>
+
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+  </mat-card>
+
+  <mat-card fxLayout="column" fxLayoutGap="2%" *ngIf="!hasResults">
+    <div class="alert">
+
+      <div class="message">
+        <i class="fa fa-exclamation-circle alert-check"></i>
+        No data found
+      </div>
+
+    </div>
   </mat-card>
 
 </div>

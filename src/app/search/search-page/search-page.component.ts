@@ -1,5 +1,7 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /**
@@ -11,11 +13,16 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./search-page.component.scss']
 })
 export class SearchPageComponent {
-
-  /** Search Results */
-  searchResults: any;
   /** Flags if number of search results exceed 200 */
   overload: boolean;
+  /** Datasource for loans disbursal table */
+  dataSource: MatTableDataSource<any>;
+  /** Displayed Columns for serach results */
+  displayedColumns: string[] = ['entityType', 'entityName', 'entityAccount', 'externalId', 'parentType', 'parentName', 'details'];
+  /** Paginator for the table */
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
+  hasResults = false;
 
   /**
    * @param {ActivatedRoute} route Activated Route
@@ -24,10 +31,12 @@ export class SearchPageComponent {
   constructor(private route: ActivatedRoute,
               private router: Router) {
     this.route.data.subscribe(( data: { searchResults: any }) => {
-      this.searchResults = data.searchResults;
-      this.overload = this.searchResults.length > 200 ? true : false;
+      this.dataSource = new MatTableDataSource(data.searchResults);
+      this.dataSource.paginator = this.paginator;
+      this.hasResults = (data.searchResults.length > 0);
+      this.overload = data.searchResults.length > 200 ? true : false;
       if (this.overload) {
-        this.searchResults = this.searchResults.slice(0, 200);
+        this.dataSource = new MatTableDataSource(data.searchResults.slice(0, 200));
       }
     });
   }
@@ -39,7 +48,7 @@ export class SearchPageComponent {
   navigate(entity: any) {
     switch (entity.entityType) {
       case 'CLIENT':
-        this.router.navigate(['clients', entity.entityId]);
+        this.router.navigate(['clients', entity.entityId, 'general']);
         break;
       case 'CENTER':
         this.router.navigate(['centers', entity.entityId]);
@@ -51,10 +60,10 @@ export class SearchPageComponent {
         this.router.navigate(['clients', entity.parentId, 'shares-accounts', entity.entityId]);
         break;
       case 'SAVING':
-        this.router.navigate(['clients', entity.parentId, 'savings-accounts', entity.entityId]);
+        this.router.navigate(['clients', entity.parentId, 'savings-accounts', entity.entityId, 'general']);
         break;
       case 'LOAN':
-        this.router.navigate(['clients', entity.parentId, 'loans-accounts', entity.entityId]);
+        this.router.navigate(['clients', entity.parentId, 'loans-accounts', entity.entityId, 'general']);
         break;
     }
   }
