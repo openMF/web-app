@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
@@ -51,10 +52,12 @@ export class ClientGeneralStepComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {Dates} dateUtils Date Utils
    * @param {SettingsService} settingsService Setting service
+   * @param {ClientsService} clientService Client service
    */
   constructor(private formBuilder: FormBuilder,
               private dateUtils: Dates,
-              private settingsService: SettingsService) {
+              private settingsService: SettingsService,
+              private clientService: ClientsService) {
     this.setClientForm();
   }
 
@@ -71,7 +74,7 @@ export class ClientGeneralStepComponent implements OnInit {
     this.createClientForm = this.formBuilder.group({
       'officeId': ['', Validators.required],
       'staffId': [''],
-      'legalFormId': [''],
+      'legalFormId': ['', Validators.required],
       'isStaff': [false],
       'active': [false],
       'addSavings': [false],
@@ -142,6 +145,11 @@ export class ClientGeneralStepComponent implements OnInit {
       } else {
         this.createClientForm.removeControl('savingsProductId');
       }
+    });
+    this.createClientForm.get('officeId').valueChanges.subscribe((officeId: number) => {
+      this.clientService.getClientWithOfficeTemplate(officeId).subscribe((clientTemplate: any) => {
+        this.staffOptions = clientTemplate.staffOptions;
+      });
     });
   }
 

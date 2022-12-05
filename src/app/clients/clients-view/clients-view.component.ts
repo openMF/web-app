@@ -112,7 +112,6 @@ export class ClientsViewComponent implements OnInit {
     }
   }
 
-
   /**
    * Refetches data for the component
    * TODO: Replace by a custom reload component instead of hard-coded back-routing.

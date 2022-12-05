@@ -34,7 +34,9 @@
       <!-- External ID Column -->
       <ng-container matColumnDef="externalid">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="externalId"> ExternalID </th>
-        <td mat-cell *matCellDef="let row"> {{row.externalId}} </td>
+        <td mat-cell *matCellDef="let row">
+          <mifosx-external-identifier externalId="{{row.externalId}}"></mifosx-external-identifier>
+        </td>
       </ng-container>
 
       <!-- Status Column -->
