@@ -80,5 +80,5 @@ module.exports = (config: any) => {
     ],
 
     reporter: ['progress', 'kjhtml']
-  })
-}
+  });
+};

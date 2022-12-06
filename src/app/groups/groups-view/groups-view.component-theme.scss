@@ -1,4 +1,4 @@
-@use '~@angular/material' as mat;
+@use '@angular/material' as mat;
 
 @mixin groups-view-component-theme($theme) {
   $primary: map-get($theme, primary);
@@ -8,5 +8,5 @@
         background-color: mat.get-color-from-palette($primary, 500);
       }
     }
-  } 
+  }
 }

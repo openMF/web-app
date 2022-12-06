@@ -20,7 +20,7 @@ The latest code is continuously deployed at https://openmf.github.io/web-app/ wh
 
 2. Install [angular-cli](https://github.com/angular/angular-cli) globally.
 ```
-npm install -g @angular/cli@9.1.12
+npm install -g @angular/cli@13.3.10
 ```
 
 3. Clone the project locally into your system.

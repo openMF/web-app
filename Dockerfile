@@ -27,7 +27,7 @@ RUN npm cache clear --force
 RUN npm config set fetch-retry-maxtimeout 120000
 RUN npm config set registry $NPM_REGISTRY_URL --location=global
 
-RUN npm install --location=global @angular/cli@12.2.17
+RUN npm install --location=global @angular/cli@13.3.10
 
 RUN npm install
 
