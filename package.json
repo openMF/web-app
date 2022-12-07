@@ -96,7 +96,7 @@
     "karma-junit-reporter": "1.2.0",
     "protractor": "~7.0.0",
     "puppeteer": "^15.3.2",
-    "stylelint": "10.0.1",
+    "stylelint": "14.16.0",
     "stylelint-config-recommended-scss": "3.3.0",
     "stylelint-config-standard": "18.3.0",
     "stylelint-scss": "3.6.1",
