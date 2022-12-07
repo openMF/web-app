@@ -14,7 +14,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Loan Term</mat-label>
-      <input matInput required formControlName="loanTermFrequency">
+      <input type="number" matInput required formControlName="loanTermFrequency">
       <mat-error *ngIf="loansAccountTermsForm.controls.loanTermFrequency.hasError('required')">
         Loan Term is <strong>required</strong>
       </mat-error>

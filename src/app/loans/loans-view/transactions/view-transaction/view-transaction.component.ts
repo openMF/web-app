@@ -66,17 +66,20 @@ export class ViewTransactionComponent implements OnInit {
               private organizationService: OrganizationService) {
     this.route.data.subscribe((data: { loansAccountTransaction: any }) => {
       this.transactionData = data.loansAccountTransaction;
-      this.allowEdition = !this.transactionData.manuallyReversed && !(this.transactionData.type.id === 20 || this.transactionData.type.id === 21 || this.transactionData.type.id === 22
-        || this.transactionData.type.id === 23);
+      this.allowEdition = !this.transactionData.manuallyReversed && !this.allowTransactionEdition(this.transactionData.type.id);
       this.allowUndo = !this.transactionData.manuallyReversed;
       this.allowChargeback = this.transactionData.type.repayment;
+      let transactionsChargebackRelated = false;
       if (this.transactionData.type.repayment) {
         if (this.transactionData.transactionRelations) {
           this.transactionRelations.data = this.transactionData.transactionRelations;
           this.existTransactionRelations = (this.transactionData.transactionRelations.length > 0);
           let amountRelations = 0;
           this.transactionData.transactionRelations.forEach((relation: any) => {
-            amountRelations += relation.amount;
+            if (relation.relationType === 'CHARGEBACK') {
+              amountRelations += relation.amount;
+              transactionsChargebackRelated = true;
+            }
           });
           this.amountRelationsAllowed = this.transactionData.amount - amountRelations;
           this.isFullRelated =  (this.amountRelationsAllowed === 0);
@@ -86,7 +89,7 @@ export class ViewTransactionComponent implements OnInit {
       if (!this.allowChargeback) {
         this.allowEdition = false;
       }
-      if (this.existTransactionRelations) {
+      if (this.existTransactionRelations && transactionsChargebackRelated) {
         this.allowUndo = false;
       }
     });
@@ -101,6 +104,15 @@ export class ViewTransactionComponent implements OnInit {
         this.paymentTypeOptions = data;
       });
     }
+  }
+
+  /**
+   * Allow edit, undo and chargeback actions
+   */
+  allowTransactionEdition(transactionType: number): boolean {
+    return (transactionType === 20
+      || transactionType === 21 || transactionType === 22
+      || transactionType === 23);
   }
 
   /**

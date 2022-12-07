@@ -33,8 +33,10 @@
               <h3> Loan Account OverView </h3>
               <span>Current Balance: {{loanDetailsData.currency.displaySymbol}}
                 {{loanDetailsData.summary.totalOutstanding | number}}</span><br>
-              <span>Arrears By: {{loanDetailsData.summary.totalOverdue | number}}
+              <span *ngIf="loanDetailsData.inArrears">Arrears By: {{loanDetailsData.summary.totalOverdue | number}}
                 <span *ngIf="!(loanDetailsData.summary.totalOverdue>=0)">Not Provided</span>
+              </span><br>
+              <span *ngIf="loanDetailsData.inArrears">Arrears Since: {{loanDetailsData.summary.overdueSinceDate | dateFormat}}
               </span><br>
             </div>
 

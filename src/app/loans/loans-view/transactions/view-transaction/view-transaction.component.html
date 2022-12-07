@@ -76,6 +76,14 @@
           {{ transactionData.amount | currency:transactionData.currency.code }} {{ transactionData.currency.code }}
         </div>
 
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="transactionData.externalId">
+          {{ 'External Id' | translate }}
+        </div>
+
+        <div fxFlex="50%" *ngIf="transactionData.externalId">
+          {{ transactionData.externalId }}
+        </div>
+
         <mat-divider *ngIf="existTransactionRelations" [inset]="true"></mat-divider>
 
         <div fxFlex="100%" class="mat-body-strong" *ngIf="existTransactionRelations">

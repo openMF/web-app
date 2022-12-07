@@ -20,7 +20,7 @@ export class TransactionsTabComponent implements OnInit {
   /** Stores the status of the loan account */
   status: string;
   /** Columns to be displayed in original schedule table. */
-  displayedColumns: string[] = ['id', 'office', 'transactionDate', 'transactionType', 'amount', 'principal', 'interest', 'fee', 'penalties', 'loanBalance', 'actions'];
+  displayedColumns: string[] = ['id', 'office', 'externalId', 'transactionDate', 'transactionType', 'amount', 'principal', 'interest', 'fee', 'penalties', 'loanBalance', 'actions'];
 
   /**
    * Retrieves the loans with associations data from `resolve`.
