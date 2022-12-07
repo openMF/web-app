@@ -29,13 +29,13 @@ jobs:
           # lts/gallium node v16.15.1 (npm v8.11.0)
           node-version: '16.15.1'
       - name: Angular CLI install
-        run : npm install -g --silent @angular/cli@12.2.17
+        run : npm install -g --silent @angular/cli@13.3.10
 
       - name: Npm install
         run: npm install
 
-      - name: Run lint
-        run : ng lint
+      - name: Run tslint
+        run : npx tslint src/**/*.ts
 
       - name: Run build
         run : npm run build:prod

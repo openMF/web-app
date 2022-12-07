@@ -1,4 +1,4 @@
-@use '~@angular/material' as mat;
+@use '@angular/material' as mat;
 
 @mixin fixed-deposits-account-view-component-theme($theme) {
   $primary: map-get($theme, primary);
@@ -12,5 +12,5 @@
         color: mat.get-contrast-color-from-palette($primary, 500);
       }
     }
-  } 
+  }
 }
