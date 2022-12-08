@@ -26,6 +26,11 @@
         </mat-form-field>
 
         <mat-form-field>
+          <mat-label>External Id</mat-label>
+          <input matInput formControlName="externalId">
+        </mat-form-field>
+
+        <mat-form-field>
           <mat-label>Payment Type</mat-label>
           <mat-select formControlName="paymentTypeId">
             <mat-option *ngFor="let paymentType of paymentTypeOptions" [value]="paymentType.id">

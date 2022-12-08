@@ -21,10 +21,15 @@
 
           <mat-form-field>
             <mat-label>Transaction Amount</mat-label>
-            <input matInput required formControlName="transactionAmount">
+            <input type="number" matInput required formControlName="transactionAmount">
             <mat-error *ngIf="repaymentLoanForm.controls.transactionAmount.hasError('required')">
               Transaction Amount <strong>is required</strong>
             </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>External Id</mat-label>
+            <input matInput formControlName="externalId">
           </mat-form-field>
 
           <mat-form-field>

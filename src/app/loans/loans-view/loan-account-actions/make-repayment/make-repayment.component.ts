@@ -65,6 +65,7 @@ export class MakeRepaymentComponent implements OnInit {
     this.repaymentLoanForm = this.formBuilder.group({
       'transactionDate': [new Date(), Validators.required],
       'transactionAmount': ['', Validators.required],
+      'externalId': '',
       'paymentTypeId': '',
       'note': ''
     });

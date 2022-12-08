@@ -70,6 +70,7 @@ export class EditTransactionComponent implements OnInit {
     this.editTransactionForm.patchValue({
       'transactionDate': this.transactionTemplateData.date && new Date(this.transactionTemplateData.date),
       'transactionAmount': this.transactionTemplateData.amount,
+      'externalId': this.transactionTemplateData.externalId,
       'paymentTypeId': this.transactionTemplateData.paymentTypeId
     });
   }
@@ -81,6 +82,7 @@ export class EditTransactionComponent implements OnInit {
     this.editTransactionForm = this.formBuilder.group({
       'transactionDate': ['', Validators.required],
       'transactionAmount': ['', Validators.required],
+      'externalId': [''],
       'paymentTypeId': [''],
     });
   }

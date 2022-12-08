@@ -124,6 +124,13 @@ export class ViewChargeComponent {
         value: this.chargeData.amount || this.chargeData.amountOrPercentage,
         type: 'number',
         required: true
+      }),
+      new DatepickerBase({
+        controlName: 'dueDate',
+        label: 'Due Date',
+        value: new Date(this.chargeData.dueDate),
+        type: 'date',
+        required: true
       })
     ];
     const data = {
@@ -136,8 +143,11 @@ export class ViewChargeComponent {
       if (response.data) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
+        const dueDate = this.dateUtils.formatDate(response.data.value.dueDate, dateFormat);
+        const amount = response.data.value.amount;
         const dataObject = {
-          ...response.data.value,
+          amount,
+          dueDate,
           dateFormat,
           locale
         };

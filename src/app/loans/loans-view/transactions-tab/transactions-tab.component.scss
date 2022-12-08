@@ -16,7 +16,7 @@
     .account-action-button{
       min-width: 26px;
       padding: 0 0 3px 0;
-      margin: 0 10%;
+      margin: 0 2%;
       line-height: 25px;
     }
     .select-row:hover {
@@ -32,3 +32,6 @@
   }
 }
 
+.td-min-space {
+  min-width: 60px;
+}

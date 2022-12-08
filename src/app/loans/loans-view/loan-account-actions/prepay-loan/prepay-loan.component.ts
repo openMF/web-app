@@ -72,6 +72,7 @@ export class PrepayLoanComponent implements OnInit {
       'transactionAmount': ['', Validators.required],
       'principal': [{value: '', disabled: true}],
       'interestAmount': [{value: '', disabled: true}, Validators.required],
+      'externalId': [''],
       'paymentTypeId': [''],
       'note': ['']
     });

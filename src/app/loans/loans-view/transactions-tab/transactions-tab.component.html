@@ -22,6 +22,13 @@
         <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.officeName }} </td>
       </ng-container>
 
+      <ng-container matColumnDef="externalId">
+        <th mat-header-cell *matHeaderCellDef> External Id </th>
+        <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)">
+          <mifosx-external-identifier externalId="{{transaction.externalId}}"></mifosx-external-identifier>
+        </td>
+      </ng-container>
+
       <ng-container matColumnDef="transactionDate">
         <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
         <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.date  | dateFormat }} </td>
@@ -33,38 +40,38 @@
       </ng-container>
 
       <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef> Amount </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.amount | number }} </td>
+        <th mat-header-cell class="center" *matHeaderCellDef> Amount </th>
+        <td mat-cell class="r-amount td-min-space" *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.amount | number }} </td>
       </ng-container>
 
       <ng-container matColumnDef="principal">
-        <th mat-header-cell *matHeaderCellDef> Breakdown </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.principalPortion | number }} </td>
+        <th mat-header-cell class="center" *matHeaderCellDef> Breakdown </th>
+        <td mat-cell class="r-amount td-min-space" *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.principalPortion | number }} </td>
       </ng-container>
 
       <ng-container matColumnDef="interest">
         <th mat-header-cell *matHeaderCellDef> </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.interestPortion | number }} </td>
+        <td mat-cell class="r-amount td-min-space" *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.interestPortion | number }} </td>
       </ng-container>
 
       <ng-container matColumnDef="fee">
         <th mat-header-cell *matHeaderCellDef>  </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.feeChargesPortion | number }} </td>
+        <td mat-cell class="r-amount td-min-space" *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.feeChargesPortion | number }} </td>
       </ng-container>
 
       <ng-container matColumnDef="penalties">
         <th mat-header-cell *matHeaderCellDef>  </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.penaltyChargesPortion | number }} </td>
+        <td mat-cell class="r-amount td-min-space" *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.penaltyChargesPortion | number }} </td>
       </ng-container>
 
       <ng-container matColumnDef="loanBalance">
-        <th mat-header-cell *matHeaderCellDef> Loan Balance </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.outstandingLoanBalance | number }} </td>
+        <th mat-header-cell class="r-amount" *matHeaderCellDef> Loan Balance </th>
+        <td mat-cell class="r-amount td-min-space" *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.outstandingLoanBalance | number }} </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef> Actions </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)">
+        <th mat-header-cell class="center" *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let transaction" class="center td-min-space">
           <button class="account-action-button" *ngIf="!transaction.manuallyReversed" mat-raised-button color="primary" (click)="routeEdit($event)"
             [routerLink]="[transaction.id, 'reciept']" matTooltip="View Receipts">
             <i class="fa fa-file-text"></i>
@@ -78,27 +85,27 @@
 
     <!-- Sub header -->
     <ng-container matColumnDef="header">
-      <th mat-header-cell *matHeaderCellDef [attr.colspan]="5"> </th>
+      <th mat-header-cell *matHeaderCellDef [attr.colspan]="6"> </th>
     </ng-container>
 
     <ng-container matColumnDef="header-principal">
-      <th mat-header-cell *matHeaderCellDef [attr.colspan]="1"> Principal </th>
+      <th mat-header-cell class="center" *matHeaderCellDef [attr.colspan]="1"> Principal </th>
     </ng-container>
 
     <ng-container matColumnDef="header-interest">
-      <th mat-header-cell *matHeaderCellDef [attr.colspan]="1"> Interest </th>
+      <th mat-header-cell class="center" *matHeaderCellDef [attr.colspan]="1"> Interest </th>
     </ng-container>
 
     <ng-container matColumnDef="header-fees">
-      <th mat-header-cell *matHeaderCellDef [attr.colspan]="1"> Fees </th>
+      <th mat-header-cell class="center" *matHeaderCellDef [attr.colspan]="1"> Fees </th>
     </ng-container>
 
     <ng-container matColumnDef="header-penalties">
-      <th mat-header-cell *matHeaderCellDef [attr.colspan]="1"> Penalties </th>
+      <th mat-header-cell class="center" *matHeaderCellDef [attr.colspan]="1"> Penalties </th>
     </ng-container>
 
     <ng-container matColumnDef="header-action">
-      <th mat-header-cell *matHeaderCellDef [attr.colspan]="2">  </th>
+      <th mat-header-cell *matHeaderCellDef [attr.colspan]="1">  </th>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
