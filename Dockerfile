@@ -28,6 +28,8 @@ FROM nginx:alpine
 
 COPY --from=builder /dist /usr/share/nginx/html
 
+COPY /nginx.conf  /etc/nginx/conf.d/default.conf
+
 EXPOSE 80
 
 # When the container starts, replace the env.js with values from environment variables
