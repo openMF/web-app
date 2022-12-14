@@ -21,7 +21,7 @@ export const environment = {
     serverUrl: 'https://accounts.test.oneacrefund.org',
     realm:'OneAcreFund',
     client_id:'fineract',
-    redirectUri:'http://65.108.247.228:31506/home'
+    redirectUri: window['env']['homeURL'] || 'http://localhost:4200/home'
   },
   defaultLanguage: window['env']['defaultLanguage'] || 'en-US',
   supportedLanguages: window['env']['supportedLanguages'] || 'en-US,fr-FR',
