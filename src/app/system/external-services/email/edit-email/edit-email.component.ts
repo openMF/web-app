@@ -16,6 +16,8 @@ import { SystemService } from 'app/system/system.service';
 })
 export class EditEmailComponent implements OnInit {
 
+  /** Password input field type. */
+  passwordInputType: string;
   /** Email Configuration data */
   emailConfigurationData: any;
   /** Email Configuration Form */
@@ -42,6 +44,7 @@ export class EditEmailComponent implements OnInit {
    */
   ngOnInit() {
     this.setEmailConfigurationForm();
+    this.passwordInputType = 'password';
   }
 
   /**
@@ -53,7 +56,9 @@ export class EditEmailComponent implements OnInit {
       'password': [this.emailConfigurationData[1].value, Validators.required],
       'host': [this.emailConfigurationData[2].value, Validators.required],
       'port': [this.emailConfigurationData[3].value, Validators.required],
-      'useTLS': [this.emailConfigurationData[4].value, Validators.required]
+      'useTLS': [this.emailConfigurationData[4].value, Validators.required],
+      'fromEmail': [this.emailConfigurationData[5].value, Validators.required],
+      'fromName': [this.emailConfigurationData[6].value, Validators.required]
     });
   }
 
