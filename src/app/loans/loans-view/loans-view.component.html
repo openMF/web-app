@@ -26,6 +26,13 @@
                 <span *ngIf="loanDetailsData.delinquencyRange">
                   Loan Account Classification : {{loanDetailsData?.delinquencyRange.classification}}
                 </span>
+                <span *ngIf="loanDetailsData.delinquent && loanDetailsData.delinquent.pastDueDays > 0">
+                  Past Due Days : {{loanDetailsData?.delinquent.pastDueDays | number}}
+                </span>
+                <span *ngIf="loanDetailsData.delinquent && loanDetailsData.delinquent.delinquentDays > 0
+                  && loanDetailsData.delinquent.pastDueDays != loanDetailsData.delinquent.delinquentDays">
+                  Delinquent Days : {{loanDetailsData?.delinquent.delinquentDays}}
+                </span>
               </h3>
             </div>
 
