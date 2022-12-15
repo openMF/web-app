@@ -20,21 +20,20 @@ export class LoanProductCurrencyStepComponent implements OnInit {
 
   ngOnInit() {
     this.currencyData = this.loanProductsTemplate.currencyOptions;
-
     this.loanProductCurrencyForm.patchValue({
       'currencyCode': this.loanProductsTemplate.currency.code || this.currencyData[0].code,
-      'digitsAfterDecimal': this.loanProductsTemplate.installmentAmountInMultiplesOf ? this.loanProductsTemplate.currency.decimalPlaces : 2,
-      'inMultiplesOf': this.loanProductsTemplate.currency.inMultiplesOf,
-      'installmentAmountInMultiplesOf': this.loanProductsTemplate.installmentAmountInMultiplesOf
+      'digitsAfterDecimal': this.loanProductsTemplate.currency.decimalPlaces ? this.loanProductsTemplate.currency.decimalPlaces : 2,
+      'inMultiplesOf': this.loanProductsTemplate.currency.inMultiplesOf ? this.loanProductsTemplate.currency.inMultiplesOf : 1,
+      'installmentAmountInMultiplesOf': this.loanProductsTemplate.installmentAmountInMultiplesOf ? this.loanProductsTemplate.installmentAmountInMultiplesOf : 1
     });
   }
 
   createLoanProductCurrencyForm() {
     this.loanProductCurrencyForm = this.formBuilder.group({
       'currencyCode': ['', Validators.required],
-      'digitsAfterDecimal': ['', Validators.required],
-      'inMultiplesOf': ['', Validators.required],
-      'installmentAmountInMultiplesOf': ['', Validators.required]
+      'digitsAfterDecimal': [2, Validators.required],
+      'inMultiplesOf': [1, Validators.required],
+      'installmentAmountInMultiplesOf': [1, Validators.required]
     });
   }
 

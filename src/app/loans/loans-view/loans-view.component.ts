@@ -48,7 +48,6 @@ export class LoansViewComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.recalculateInterest = this.loanDetailsData.recalculateInterest || true;
     this.status = this.loanDetailsData.status.value;
     this.setConditionalButtons();
@@ -81,13 +80,14 @@ export class LoansViewComponent implements OnInit {
       });
 
     } else if (this.status === 'Active') {
-
-      if (this.loanDetailsData.canDisburse) {
+      if (this.loanDetailsData.canDisburse || this.loanDetailsData.multiDisburseLoan) {
         this.buttonConfig.addButton({
           name: 'Disburse',
           icon: 'fa fa-flag',
           taskPermissionName: 'DISBURSE_LOAN'
         });
+      }
+      if (this.loanDetailsData.canDisburse) {
         this.buttonConfig.addButton({
           name: 'Disburse To Savings',
           icon: 'fa fa-flag',
