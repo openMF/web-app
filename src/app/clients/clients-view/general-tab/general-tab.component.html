@@ -2,15 +2,25 @@
 
   <h3>Performance History</h3>
   <div fxLayout="row" fxLayoutGap="32px" class="performance-history-container">
-    <p>
-      No. Of Loan Cycles :{{clientSummary?.loanCycle}} <br />
-      No. of Active Loans :{{clientSummary?.activeLoans}} <br />
-      Last Loan Amount :{{clientSummary?.lastLoanAmount}} <br />
-    </p>
-    <p>
-      No. of Active Savings :{{clientSummary?.activeSavings}} <br />
-      Total Savings :{{clientSummary?.totalSavings}} <br />
-    </p>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <p>
+              No. Of Loan Cycles :{{clientSummary?.loanCycle}} <br />
+              No. of Active Loans :{{clientSummary?.activeLoans}} <br />
+              Last Loan Amount :{{clientSummary?.lastLoanAmount | number}} <br />
+            </p>
+          </td>
+          <td>
+            <p>
+              No. of Active Savings :{{clientSummary?.activeSavings}} <br />
+              Total Savings :{{clientSummary?.totalSavings | number}} <br />
+            </p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   <!-- Upcoming Charges -->
@@ -43,28 +53,28 @@
     </ng-container>
 
     <ng-container matColumnDef="Due">
-      <th mat-header-cell *matHeaderCellDef> Due </th>
-      <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef> Due </th>
+      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.amount | number}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Paid">
-      <th mat-header-cell *matHeaderCellDef>Paid </th>
-      <td mat-cell *matCellDef="let element"> {{element.amountPaid}} </td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef>Paid </th>
+      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.amountPaid | number}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Waived">
-      <th mat-header-cell *matHeaderCellDef> Waived </th>
-      <td mat-cell *matCellDef="let element"> {{element.amountWaived}} </td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef> Waived </th>
+      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.amountWaived | number}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Outstanding">
-      <th mat-header-cell *matHeaderCellDef> Outstanding </th>
-      <td mat-cell *matCellDef="let element"> {{element.amountOutstanding}} </td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef> Outstanding </th>
+      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.amountOutstanding | number}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
-      <td mat-cell *matCellDef="let element">
+      <th mat-header-cell class="center" *matHeaderCellDef> Actions </th>
+      <td mat-cell class="center" *matCellDef="let element">
         <button class="account-action-button" mat-raised-button color="primary"
           (click)="routeEdit($event)" [routerLink]="['../','charges', element.id, 'pay']" *mifosxHasPermission="'PAY_CLIENTCHARGE'">
           <i class="fa fa-dollar"></i>
@@ -117,25 +127,25 @@
       <td mat-cell *matCellDef="let element"> {{element.originalLoan}} </td>
     </ng-container>
     <ng-container matColumnDef="Loan Balance">
-      <th mat-header-cell *matHeaderCellDef>Loan Balance </th>
-      <td mat-cell *matCellDef="let element"> {{element.loanBalance}} </td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef> Loan Balance </th>
+      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.loanBalance | number}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Amount Paid">
-      <th mat-header-cell *matHeaderCellDef> Amount Paid </th>
-      <td mat-cell *matCellDef="let element"> {{element.amountPaid}} </td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef> Amount Paid </th>
+      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.amountPaid | number}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Type">
-      <th mat-header-cell *matHeaderCellDef> Type </th>
-      <td mat-cell *matCellDef="let element">
+      <th mat-header-cell class="center" *matHeaderCellDef> Type </th>
+      <td mat-cell class="center" *matCellDef="let element">
         <i class="fa fa-large" [ngClass]="(element.loanType.value=== 'Individual')?'fa-user':'fa-group'" matTooltip=" {{ element.loanType.value }}" matTooltipPosition="above"></i>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
-      <td mat-cell *matCellDef="let element">
+      <th mat-header-cell class="center" *matHeaderCellDef> Actions </th>
+      <td mat-cell class="center" *matCellDef="let element">
         <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary" matTooltip="Make Repayment" matTooltipPosition="above"
         (click)="routeEdit($event)" [routerLink]="['../','loans-accounts', element.id, 'actions', 'Make Repayment']">
           <i class="fa fa-dollar"></i>
@@ -192,18 +202,18 @@
     </ng-container>
 
     <ng-container matColumnDef="Loan Balance">
-      <th mat-header-cell *matHeaderCellDef>Loan Balance </th>
-      <td mat-cell *matCellDef="let element"> {{element.loanBalance}} </td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef>Loan Balance </th>
+      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.loanBalance | number}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Amount Paid">
-      <th mat-header-cell *matHeaderCellDef> Amount Paid </th>
-      <td mat-cell *matCellDef="let element"> {{element.accountBalance}} </td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef> Amount Paid </th>
+      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.accountBalance | number}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Type">
-      <th mat-header-cell *matHeaderCellDef> Type </th>
-      <td mat-cell *matCellDef="let element">
+      <th mat-header-cell class="center" *matHeaderCellDef> Type </th>
+      <td mat-cell class="center" *matCellDef="let element">
         <i class="fa fa-large" [ngClass]="(element.loanType.value === 'Individual')?'fa-user':'fa-group'" matTooltip=" {{ element.loanType.value }}" matTooltipPosition="above"></i>
       </td>
     </ng-container>
@@ -254,13 +264,13 @@
     </ng-container>
 
     <ng-container matColumnDef="Balance">
-      <th mat-header-cell *matHeaderCellDef> Balance </th>
-      <td mat-cell *matCellDef="let element"> {{element.accountBalance}} </td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef> Balance </th>
+      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.accountBalance | number}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
-      <td mat-cell *matCellDef="let element">
+      <th mat-header-cell class="center" *matHeaderCellDef> Actions </th>
+      <td mat-cell class="center" *matCellDef="let element">
         <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary"
           (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Deposit']">
           <i class="fa fa-arrow-up"></i>
@@ -352,13 +362,13 @@
     </ng-container>
 
     <ng-container matColumnDef="Balance">
-      <th mat-header-cell *matHeaderCellDef> Balance </th>
-      <td mat-cell *matCellDef="let element"> {{element.accountBalance}} </td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef> Balance </th>
+      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.accountBalance | number}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
-      <td mat-cell *matCellDef="let element">
+      <th mat-header-cell class="center" *matHeaderCellDef> Actions </th>
+      <td mat-cell class="center" *matCellDef="let element">
         <button *ngIf="element.status.submittedAndPendingApproval" class="account-action-button" mat-raised-button
           color="primary" (click)="routeEdit($event)" [routerLink]="['../','fixed-deposits-accounts', element.id, 'actions', 'Approve']">
           <i class="fa fa-check"></i>
@@ -444,13 +454,13 @@
     </ng-container>
 
     <ng-container matColumnDef="Balance">
-      <th mat-header-cell *matHeaderCellDef> Balance </th>
-      <td mat-cell *matCellDef="let element"> {{element.accountBalance}} </td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef> Balance </th>
+      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.accountBalance | number}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
-      <td mat-cell *matCellDef="let element">
+      <th mat-header-cell class="center" *matHeaderCellDef> Actions </th>
+      <td mat-cell class="center" *matCellDef="let element">
         <ng-container *ngIf="element.status.submittedAndPendingApproval">
           <button class="account-action-button" mat-raised-button *mifosxHasPermission="'APPROVE_SAVINGSACCOUNT'"
           [routerLink]="['../','recurringdeposits', element.id, 'actions', 'Approve']" color="primary">
@@ -543,8 +553,8 @@
     </ng-container>
 
     <ng-container matColumnDef="Actions">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
-      <td mat-cell *matCellDef="let element">
+      <th mat-header-cell class="center" *matHeaderCellDef> Actions </th>
+      <td mat-cell class="center" *matCellDef="let element">
         <button *ngIf="element.status.submittedAndPendingApproval" class="account-action-button" mat-raised-button
           color="primary" (click)="routeEdit($event)" [routerLink]="['../','shares-accounts', element.id, 'actions', 'Approve']">
           <i class="fa fa-check"></i>
@@ -617,7 +627,7 @@
   </div>
 
   <table mat-table [dataSource]="collaterals">
-    
+
     <ng-container matColumnDef="ID">
       <th mat-header-cell *matHeaderCellDef>ID</th>
       <td mat-cell *matCellDef="let element">{{ element.collateralId }}</td>
@@ -629,18 +639,18 @@
     </ng-container>
 
     <ng-container matColumnDef="Quantity">
-      <th mat-header-cell *matHeaderCellDef>Quantity</th>
-      <td mat-cell *matCellDef="let element">{{ element.quantity }}</td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef>Quantity</th>
+      <td mat-cell class="r-amount" *matCellDef="let element">{{ element.quantity | number }}</td>
     </ng-container>
 
     <ng-container matColumnDef="Total Value">
-      <th mat-header-cell *matHeaderCellDef>Total Value</th>
-      <td mat-cell *matCellDef="let element">{{ element.basePrice*element.quantity }}</td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef>Total Value</th>
+      <td mat-cell class="r-amount" *matCellDef="let element">{{ element.basePrice*element.quantity | number}}</td>
     </ng-container>
 
     <ng-container matColumnDef="Total Collateral Value">
-      <th mat-header-cell *matHeaderCellDef>Total Collateral Value</th>
-      <td mat-cell *matCellDef="let element">{{ element.pctToBase*element.basePrice*element.quantity/100 }}</td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef>Total Collateral Value</th>
+      <td mat-cell class="r-amount" *matCellDef="let element">{{ element.pctToBase*element.basePrice*element.quantity/100 | number}}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="collateralsColumns"></tr>

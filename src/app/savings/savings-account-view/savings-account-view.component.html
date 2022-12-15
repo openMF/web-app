@@ -23,8 +23,8 @@
           <p>
             Account #: {{savingsAccountData.accountNo}} | {{entityType}} Name: {{savingsAccountData.clientName || savingsAccountData.groupName}}<br/>
             <span *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval">
-              Current Balance: {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.accountBalance}}<br/>
-              Available Balance: {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.availableBalance}}<br/>
+              Current Balances: {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.accountBalance | number}}<br/>
+              Available Balance: {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.availableBalance | number}}<br/>
             </span>
           </p>
         </mat-card-subtitle>
@@ -36,9 +36,9 @@
 
       <ng-container *ngFor="let button of buttonConfig.singleButtons">
         <button mat-raised-button *mifosxHasPermission="button.taskPermissionName" (click)="doAction(button.name)">
-          <i class="{{button.icon}}"></i> {{button.name}}</button>
+          <i ngClass="{{button.icon}}"></i> {{button.name}}</button>
       </ng-container>
-  
+
       <ng-container *ngIf="buttonConfig.options">
         <button mat-raised-button [matMenuTriggerFor]="More">More</button>
         <mat-menu #More="matMenu">
@@ -47,7 +47,7 @@
         </span>
         </mat-menu>
       </ng-container>
-  
+
     </mat-card-actions>
 
   </mat-card-header>
@@ -62,39 +62,39 @@
           <tbody>
             <tr *ngIf="savingsAccountData.summary.totalWithdrawals">
               <td>Total Withdrawls</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalWithdrawals}}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalWithdrawals | number}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.totalWithdrawalFees">
               <td>Withdrawals Fees</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalWithdrawalFees}}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalWithdrawalFees | number}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.totalAnnualFees">
               <td>Annual Fees</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalAnnualFees}}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalAnnualFees | number}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.totalInterestEarned >= 0">
               <td>Interest Earned</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalInterestEarned}}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalInterestEarned | number}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.totalInterestPosted">
               <td>Interest Posted</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalInterestPosted}}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalInterestPosted | number}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.interestNotPosted >= 0">
               <td>Interest Earned Not Posted</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.interestNotPosted}}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.interestNotPosted | number}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.totalOverdraftInterestDerived">
               <td>Interest On Overdraft</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalOverdraftInterestDerived}}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalOverdraftInterestDerived | number}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.interestNotPosted < 0">
               <td>Overdraft Interest Not Posted</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.interestNotPosted}}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.interestNotPosted | number}}</td>
             </tr>
             <tr>
               <td>Nominal Interest Rate</td>
-              <td>{{savingsAccountData.nominalAnnualInterestRate}}%</td>
+              <td>{{savingsAccountData.nominalAnnualInterestRate | number}} %</td>
             </tr>
             <tr>
               <td>Interest Compounding Period</td>
@@ -114,7 +114,7 @@
             </tr>
             <tr *ngIf="savingsAccountData.withdrawalFee">
               <td>Withdrawal Fee</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.withdrawalFee.amount}}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.withdrawalFee.amount | number}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.lastActiveTransactionDate">
               <td>Last Active Transaction Date</td>
@@ -138,27 +138,27 @@
             </tr>
             <tr *ngIf="savingsAccountData.annualFee">
               <td>Annual Fee</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.annualFee.amount}}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.annualFee.amount | number}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.allowOverdraft">
               <td>Over Draft Limit</td>
-              <td>{{savingsAccountData.overdraftLimit}}</td>
+              <td>{{savingsAccountData.overdraftLimit | number}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.allowOverdraft">
               <td>Min Overdraft Required for Interest Calculation</td>
-              <td>{{savingsAccountData.minOverdraftForInterestCalculation}}</td>
+              <td>{{savingsAccountData.minOverdraftForInterestCalculation | number}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.minBalanceForInterestCalculation">
               <td>Min Balance Required for Interest Calculation</td>
-              <td>{{savingsAccountData.minBalanceForInterestCalculation}}</td>
+              <td>{{savingsAccountData.minBalanceForInterestCalculation | number}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.minRequiredBalance">
               <td>Minimum Required Balance</td>
-              <td>{{savingsAccountData.minRequiredBalance}}</td>
+              <td>{{savingsAccountData.minRequiredBalance | number}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.enforceMinRequiredBalance">
               <td>Enforce Minimum Required Balance</td>
-              <td>{{savingsAccountData.enforceMinRequiredBalance}}</td>
+              <td>{{savingsAccountData.enforceMinRequiredBalance | number}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.lastInterestCalculationDate">
               <td>Interest Recalculation Date</td>
@@ -166,7 +166,7 @@
             </tr>
             <tr *ngIf="savingsAccountData.onHoldFunds">
               <td>On Hold Funds</td>
-              <td><a *mifosxHasPermission="'READ_SAVINGSACCOUNT'">{{savingsAccountData.onHoldFunds}}</a></td>
+              <td><a *mifosxHasPermission="'READ_SAVINGSACCOUNT'">{{savingsAccountData.onHoldFunds | number}}</a></td>
             </tr>
             <tr *ngIf="savingsAccountData.withHoldTax">
               <td>Withhold Tax Group</td>
@@ -222,7 +222,7 @@
               </tr>
               <tr>
                 <td>Nominal Interest Rate</td>
-                <td>{{savingsAccountData.nominalAnnualInterestRate}}%</td>
+                <td>{{savingsAccountData.nominalAnnualInterestRate | number}} %</td>
               </tr>
             </tbody>
           </table>
@@ -252,12 +252,13 @@
             <tbody>
               <tr *ngIf="savingsAccountData.summary.totalDeposits">
                 <td>Total Deposits</td>
-                <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalDeposits}}</td>
+                <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalDeposits | number}}</td>
               </tr>
               <tr *ngIf="savingsAccountData.summary.totalInterestEarned >= 0">
                 <td>Total Interest Earned</td>
-                <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalInterestEarned}}</td>
+                <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalInterestEarned | number}}</td>
               </tr>
+            </tbody>
           </table>
         </div>
 
