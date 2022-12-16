@@ -3,7 +3,7 @@
 ###############
 FROM node:16-alpine as builder
 
-RUN apk add --no-cache git=2.37.1-r1
+RUN apk add --no-cache git
 
 WORKDIR /usr/src/app
 
@@ -27,6 +27,8 @@ ng build --configuration production --output-path=/dist
 FROM nginx:alpine
 
 COPY --from=builder /dist /usr/share/nginx/html
+
+COPY /nginx.conf  /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 

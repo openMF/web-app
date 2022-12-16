@@ -13,4 +13,6 @@
   // Language Environment variables
   window["env"]["defaultLanguage"] = '$MIFOS_DEFAULT_LANGUAGE';
   window["env"]["supportedLanguages"] = '$MIFOS_SUPPORTED_LANGUAGES';
+
+  window["env"]["homeURL"] = '$HOST_HOME_URL';
 })(this);

@@ -1,0 +1,38 @@
+trigger:
+  - master
+  - develop
+
+pr:
+  - master
+  - release/*
+  - develop
+
+pool:
+  vmImage: "ubuntu-latest"
+
+steps:
+  - script: |
+      VERSION_TAG=`git describe --abbrev=0 --tags`
+      echo "##vso[task.setvariable variable=VERSION_TAG]$VERSION_TAG"
+      IMAGE_TAGS="$(Build.SourceVersion)"
+      echo "##vso[task.setvariable variable=IMAGE_SEMANTIC_HASH]$IMAGE_TAGS"
+      echo Tags: $IMAGE_TAGS
+      echo "##vso[task.setvariable variable=IMAGE_TAGS]$IMAGE_TAGS"
+      if [[ "$(Build.SourceBranch)" == "refs/heads/master" ]]; then IMAGE_TAGS="$IMAGE_TAGS,latest"; fi;
+      echo Tags: $IMAGE_TAGS
+    displayName: Set tag variables
+  - task: Docker@2
+    displayName: Login to Azure registry
+    inputs:
+      containerRegistry: "azurecr-oaf"
+      command: "login"
+
+  - task: Docker@2
+    displayName: Build and push an image to container registry
+    inputs:
+      command: buildAndPush
+      repository: "oneacrefund/fineract-frontend-v2"
+      dockerfile: "$(System.DefaultWorkingDirectory)/Dockerfile"
+      containerRegistry: "azurecr-oaf"
+      tags: |
+        $(IMAGE_TAGS)
