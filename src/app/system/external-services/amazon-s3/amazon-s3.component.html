@@ -16,7 +16,7 @@
 
     <ng-container matColumnDef="value">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Value </th>
-      <td mat-cell *matCellDef="let configuration"> {{ configuration.value }} </td>
+      <td mat-cell *matCellDef="let configuration"> {{ getConfigurationValue(configuration) }} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

@@ -1,8 +1,8 @@
-<div class="container">
+<div class="container mat-elevation-z8">
 
   <mat-card>
 
-    <div class="viewGuarantors-account-tables" fxLayout="row" fxLayoutGap="2%">
+    <div class="view-guarantors-account-tables" fxLayout="row" fxLayoutGap="2%">
 
       <div fxFlex="49%">
         <table>
@@ -66,9 +66,9 @@
     <div fxFlexFill *ngIf="guarantorDetails" fxLayout="row wrap" fxLayout.lt-md="column">
 
       <!-- guarantors details table -->
-      <div class="headingContent">
+      <div class="heading-content">
         <div fxLayout="column" fxFlex="50%">
-          <div class="headingName">
+          <div class="heading-name">
             <h3>Guarantors Details</h3>
           </div>
         </div>
@@ -82,7 +82,6 @@
 
       <table fxFlexFill mat-table
         [dataSource]="guarantorDetails|accountsFilter:'guarantor':showDeletedGuarantorsAccounts">
-        <!-- <ng-container *ngIf="expression"> -->
         <ng-container matColumnDef="fullname">
           <th mat-header-cell *matHeaderCellDef> Name </th>
           <td mat-cell *matCellDef="let guarantor">
@@ -165,15 +164,13 @@
               </button>
               <span *ngIf="guarantor.status">
                 <button mat-raised-button class="account-action-button" color="warn"
-                  *mifosxHasPermission='"DELETE_GUARANTOR"' (click)="deleteGuarantor(guarantor.id)">
+                  *mifosxHasPermission="'DELETE_GUARANTOR'" (click)="deleteGuarantor(guarantor.id)">
                   <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
                 </button>
               </span>
             </span>
           </td>
         </ng-container>
-        <!-- </ng-container> -->
-
 
         <tr mat-header-row *matHeaderRowDef="guarantorsDisplayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: guarantorsDisplayedColumns"></tr>

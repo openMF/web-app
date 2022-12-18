@@ -64,7 +64,7 @@
 
           <mat-form-field fxFlex="98%">
             <mat-label>SQL</mat-label>
-            <textarea matInput required formControlName="reportSql"></textarea>
+            <textarea matInput required formControlName="reportSql" cdkTextareaAutosize cdkAutosizeMinRows="6"></textarea>
             <mat-error *ngIf="reportForm.controls.reportSql.hasError('required')">
               SQL is <strong>required</strong>
             </mat-error>

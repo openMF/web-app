@@ -32,11 +32,11 @@
           {{ reportData.reportType }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div *ngIf="reportData.reportSubType" fxFlex="50%" class="mat-body-strong">
           Report Subtype:
         </div>
 
-        <div fxFlex="50%">
+        <div *ngIf="reportData.reportSubType" fxFlex="50%">
           {{ reportData.reportSubType }}
         </div>
 
@@ -69,3 +69,5 @@
     </mat-card-content>
 
   </mat-card>
+
+</div>

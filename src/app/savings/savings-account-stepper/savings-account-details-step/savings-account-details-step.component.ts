@@ -32,6 +32,8 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
   /** Savings Account Details Form */
   savingsAccountDetailsForm: FormGroup;
 
+  savingsProductSelected = false;
+
   /** Savings Account Template with product data  */
   @Output() savingsAccountProductTemplate = new EventEmitter();
 
@@ -88,6 +90,7 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
       .subscribe((response: any) => {
         this.savingsAccountProductTemplate.emit(response);
         this.fieldOfficerData = response.fieldOfficerOptions;
+        this.savingsProductSelected = true;
         if (!this.isFieldOfficerPatched && this.savingsAccountTemplate.fieldOfficerId) {
           this.savingsAccountDetailsForm.get('fieldOfficerId').patchValue(this.savingsAccountTemplate.fieldOfficerId);
           this.isFieldOfficerPatched = true;

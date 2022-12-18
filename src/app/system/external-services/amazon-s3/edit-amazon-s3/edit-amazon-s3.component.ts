@@ -20,6 +20,10 @@ export class EditAmazonS3Component implements OnInit {
   amazonS3ConfigurationData: any;
   /** Amazon S3 Configuration Form */
   amazonS3ConfigurationForm: FormGroup;
+  /** Secret Key input field type. */
+  secretKeyInputType: string;
+  /** Access Key field type. */
+  accessKeyInputType: string;
 
   /**
    * Retrieves the Amazon S3 configuration data from `resolve`.
@@ -42,6 +46,8 @@ export class EditAmazonS3Component implements OnInit {
    */
   ngOnInit() {
     this.createAmazonS3ConfigurationForm();
+    this.secretKeyInputType = 'password';
+    this.accessKeyInputType = 'password';
   }
 
   /**
@@ -49,8 +55,8 @@ export class EditAmazonS3Component implements OnInit {
    */
   createAmazonS3ConfigurationForm() {
     this.amazonS3ConfigurationForm = this.formBuilder.group({
-      's3_access_key': [this.amazonS3ConfigurationData[0].value, Validators.required],
       's3_bucket_name': [this.amazonS3ConfigurationData[1].value, Validators.required],
+      's3_access_key': [this.amazonS3ConfigurationData[0].value, Validators.required],
       's3_secret_key': [this.amazonS3ConfigurationData[2].value, Validators.required]
     });
   }

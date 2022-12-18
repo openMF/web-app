@@ -9,14 +9,6 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>S3 Access Key</mat-label>
-            <input matInput required formControlName="s3_access_key">
-            <mat-error *ngIf="amazonS3ConfigurationForm.controls.s3_access_key.hasError('required')">
-              S3 Access Key is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field>
             <mat-label>S3 Bucket Name</mat-label>
             <input matInput required formControlName="s3_bucket_name">
             <mat-error *ngIf="amazonS3ConfigurationForm.controls.s3_bucket_name.hasError('required')">
@@ -25,8 +17,26 @@
           </mat-form-field>
 
           <mat-form-field>
+            <mat-label>S3 Access Key</mat-label>
+            <input matInput required type="{{ accessKeyInputType }}" formControlName="s3_access_key">
+            <button mat-button *ngIf="amazonS3ConfigurationForm.controls.s3_access_key.value" matSuffix mat-icon-button
+              (mousedown)="accessKeyInputType = 'text'" (mouseup)="accessKeyInputType = 'password'">
+              <fa-icon *ngIf="accessKeyInputType === 'password'" icon="eye"></fa-icon>
+              <fa-icon *ngIf="accessKeyInputType === 'text'" icon="eye-slash"></fa-icon>
+            </button>
+            <mat-error *ngIf="amazonS3ConfigurationForm.controls.s3_access_key.hasError('required')">
+              S3 Access Key is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
             <mat-label>S3 Secret Key</mat-label>
-            <input matInput required formControlName="s3_secret_key">
+            <input matInput required type="{{ secretKeyInputType }}" formControlName="s3_secret_key">
+            <button mat-button *ngIf="amazonS3ConfigurationForm.controls.s3_secret_key.value" matSuffix mat-icon-button
+              (mousedown)="secretKeyInputType = 'text'" (mouseup)="secretKeyInputType = 'password'">
+              <fa-icon *ngIf="secretKeyInputType === 'password'" icon="eye"></fa-icon>
+              <fa-icon *ngIf="secretKeyInputType === 'text'" icon="eye-slash"></fa-icon>
+            </button>
             <mat-error *ngIf="amazonS3ConfigurationForm.controls.s3_secret_key.hasError('required')">
               S3 Secret Key is <strong>required</strong>
             </mat-error>

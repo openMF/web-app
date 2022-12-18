@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mat-elevation-z8">
 
   <mat-card>
 
@@ -82,13 +82,13 @@
 
         </div>
 
-        <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
-          <button mat-raised-button color="primary" [disabled]="!recoveryRepaymentLoanForm.valid"
-            *mifosxHasPermission="'REPAYMENT_LOAN'">Submit</button>
-        </mat-card-actions>
-
       </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!recoveryRepaymentLoanForm.valid"
+          *mifosxHasPermission="'REPAYMENT_LOAN'">Submit</button>
+      </mat-card-actions>
 
     </form>
 
