@@ -1,13 +1,13 @@
-<div class="container">
+<div class="container mat-elevation-z8">
 
   <mat-card>
 
     <form [formGroup]="disbursementForm" (ngSubmit)="submit()">
-    
+
       <mat-card-content>
-    
+
         <div fxLayout="column">
-    
+
           <mat-form-field (click)="disbursementDatePicker.open()">
             <mat-label>Disbursement On</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="disbursementDatePicker" required
@@ -18,7 +18,7 @@
               Disbursement Date is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-    
+
           <mat-form-field>
             <mat-label>Transaction amount</mat-label>
             <input matInput required formControlName="transactionAmount">
@@ -26,7 +26,7 @@
               Transaction Amount is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-    
+
           <mat-form-field *ngIf="dataObject.fixedEmiAmount !== null || dataObject.fixedEmiAmount !== undefined">
             <mat-label>Fixed EMI amount</mat-label>
             <input matInput required formControlName="fixedEmiAmount">
@@ -34,22 +34,22 @@
               Fixed EMI Amount is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-    
+
           <mat-form-field>
             <mat-label>Note</mat-label>
             <textarea matInput formControlName="note"></textarea>
           </mat-form-field>
-    
+
         </div>
-    
-        <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
-          <button mat-raised-button color="primary" [disabled]="!disbursementForm.valid"
-            *mifosxHasPermission="'DISBURSETOSAVINGS_LOAN'">Submit</button>
-        </mat-card-actions>
-    
+
       </mat-card-content>
-    
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!disbursementForm.valid"
+          *mifosxHasPermission="'DISBURSETOSAVINGS_LOAN'">Submit</button>
+      </mat-card-actions>
+
     </form>
 
   </mat-card>

@@ -14,9 +14,9 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%" (click)="submittedOnDatePicker.open()">
+    <mat-form-field fxFlex="48%" (click)="submittedOnDatePicker.open()" *ngIf="savingsProductSelected">
       <mat-label>Submitted On</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker" 
+      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker"
         formControlName="submittedOnDate" required>
       <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #submittedOnDatePicker></mat-datepicker>
@@ -25,7 +25,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field fxFlex="48%" *ngIf="savingsProductSelected">
       <mat-label>Field Officer</mat-label>
       <mat-select formControlName="fieldOfficerId">
         <mat-option *ngFor="let officer of fieldOfficerData" [value]="officer.id">
@@ -34,7 +34,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field fxFlex="48%" *ngIf="savingsProductSelected">
       <mat-label>External ID</mat-label>
       <input matInput formControlName="externalId">
     </mat-form-field>

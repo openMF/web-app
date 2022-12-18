@@ -159,6 +159,17 @@ export class BreadcrumbComponent implements OnInit, AfterViewInit {
               url = currentUrl;
             }
           }
+          if (url !== undefined) {
+            if (url.length > 8 && url.search(`/clients/`) > 0 ) {
+              const replaceGeneral = `/general/`;
+              let currentUrlTemp = url.replace(replaceGeneral, `/`);
+              currentUrlTemp = currentUrlTemp.replace(`//`, `/`);
+              currentUrlTemp += `/general`;
+              const replaceDoubleSlash = `/general/general`;
+              currentUrlTemp = currentUrlTemp.replace(replaceDoubleSlash, `/general`);
+              url = currentUrlTemp;
+            }
+          }
 
           const breadcrumb: Breadcrumb = {
             label: breadcrumbLabel,
