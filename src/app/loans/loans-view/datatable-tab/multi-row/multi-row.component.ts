@@ -16,6 +16,9 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { LoansService } from '../../../loans.service';
 import { Dates } from 'app/core/utils/dates';
 import { Datatables } from 'app/core/utils/datatables';
+import { DateFormatPipe } from 'app/pipes/date-format.pipe';
+import { DatetimeFormatPipe } from 'app/pipes/datetime-format.pipe';
+import { DecimalPipe, NumberFormatStyle } from '@angular/common';
 
 /**
  * Loan Multi Row Data Tables
@@ -58,7 +61,10 @@ export class MultiRowComponent implements OnInit, OnChanges {
               private loansService: LoansService,
               private dialog: MatDialog,
               private settingsService: SettingsService,
-              private datatables: Datatables) {
+              private datatables: Datatables,
+              private dateFormat: DateFormatPipe,
+              private dateTimeFormat: DatetimeFormatPipe,
+              private numberFormat: DecimalPipe) {
     this.loanId = this.route.parent.parent.snapshot.paramMap.get('loanId');
   }
 
@@ -132,6 +138,18 @@ export class MultiRowComponent implements OnInit, OnChanges {
         });
       }
     });
+  }
+
+  formatValue(index: number, value: any): any {
+    const columnDisplayType = this.dataObject.columnHeaders[index].columnDisplayType;
+    if (columnDisplayType === 'DATE') {
+      return this.dateFormat.transform(value);
+    } else if (columnDisplayType === 'DATETIME') {
+      return this.dateTimeFormat.transform(value);
+    } else if (columnDisplayType === 'INTEGER' || columnDisplayType === 'DECIMAL') {
+      return this.numberFormat.transform(value);
+    }
+    return value;
   }
 
 }

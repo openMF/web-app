@@ -13,6 +13,9 @@ import { ClientsService } from '../../../clients.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { Datatables } from 'app/core/utils/datatables';
+import { DateFormatPipe } from 'app/pipes/date-format.pipe';
+import { DatetimeFormatPipe } from 'app/pipes/datetime-format.pipe';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'mifosx-multi-row',
@@ -42,7 +45,10 @@ export class MultiRowComponent implements OnInit, OnChanges {
     private clientsService: ClientsService,
     private dialog: MatDialog,
     private settingsService: SettingsService,
-    private datatables: Datatables) {
+    private datatables: Datatables,
+    private dateFormat: DateFormatPipe,
+    private dateTimeFormat: DatetimeFormatPipe,
+    private numberFormat: DecimalPipe) {
     this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
   }
 
@@ -107,6 +113,18 @@ export class MultiRowComponent implements OnInit, OnChanges {
           });
       }
     });
+  }
+
+  formatValue(index: number, value: any): any {
+    const columnDisplayType = this.dataObject.columnHeaders[index].columnDisplayType;
+    if (columnDisplayType === 'DATE') {
+      return this.dateFormat.transform(value);
+    } else if (columnDisplayType === 'DATETIME') {
+      return this.dateTimeFormat.transform(value);
+    } else if (columnDisplayType === 'INTEGER' || columnDisplayType === 'DECIMAL') {
+      return this.numberFormat.transform(value);
+    }
+    return value;
   }
 
 }

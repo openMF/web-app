@@ -1,41 +1,42 @@
 <div class="tab-container mat-typography">
+  <h3>{{datatableName}}</h3>
+  <div fxLayout="row" fxLayoutAlign="flex-end">
+    <button mat-raised-button color="primary" (click)="add()" *ngIf="!dataObject.data[0]">
+      <fa-icon icon="plus" class="m-r-10"></fa-icon>Add
+    </button>
+    <button mat-raised-button color="primary" (click)="edit()" *ngIf="dataObject.data[0]">
+      <fa-icon icon="edit" class="m-r-10"></fa-icon>Edit
+    </button>
+    <button class="delete-button" mat-raised-button color="warn" (click)="delete()" *ngIf="dataObject.data[0]">
+      <fa-icon icon="trash" class="m-r-10"></fa-icon>Delete All
+    </button>
+  </div>
 
-  <div>
+  <mat-divider></mat-divider>
 
-    <div fxLayout="column" fxFlex="50%" class="tableName">
-      <h3>{{datatableName}}</h3>
-    </div>
+  <ng-container *ngIf="dataObject.data.length > 0">
 
-    <div fxLayout="column" fxFlex="50%" >
-      <div fxLayout="row" fxLayoutAlign="flex-end">
-        <span *mifosxHasPermission="'CREATE_' + datatableName">
-          <button mat-raised-button color="primary" (click)="add()" *ngIf="!dataObject.data[0]">
-            <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Add
-          </button>
+    <div *ngFor="let columnHeader of dataObject.columnHeaders;let i = index" class="table-data">
+
+      <div fxFlex="45%" class="mat-body-strong left">
+        {{columnHeader.columnName}}
+      </div>
+
+      <div fxFlex="45%" [ngSwitch]="columnHeader.columnDisplayType" class="right">
+        <span *ngSwitchCase="'DATE'">
+          {{dataObject.data[0].row[i] | dateFormat}}
         </span>
-        <span *mifosxHasPermission="'UPDATE_' + datatableName">
-          <button mat-raised-button color="primary" (click)="edit()" *ngIf="dataObject.data[0]">
-            <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;Edit
-          </button>
+        <span *ngSwitchCase="'DATETIME'">
+          {{dataObject.data[0].row[i] | datetimeFormat}}
         </span>
-        <span *mifosxHasPermission="'DELETE_' + datatableName" class="delete-button">
-          <button mat-raised-button color="warn" (click)="delete()" *ngIf="dataObject.data[0]">
-            <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;Delete
-          </button>
+        <span *ngSwitchCase="'INTEGER' || 'DECIMAL'">
+          {{dataObject.data[0].row[i] | number}}
+        </span>
+        <span *ngSwitchDefault>
+          {{dataObject.data[0].row[i]}}
         </span>
       </div>
     </div>
-
-  </div>
-  
-  <mat-divider></mat-divider>
-
-  <div>
-    <mat-list role="list" *ngIf="dataObject.data[0]">
-      <mat-list-item role="listitem" *ngFor="let columnHeader of dataObject.columnHeaders;let i = index">
-        {{columnHeader.columnName}} : {{dataObject.data[0].row[i]}}
-      </mat-list-item>
-    </mat-list>
-  </div>
+  </ng-container>
 
 </div>

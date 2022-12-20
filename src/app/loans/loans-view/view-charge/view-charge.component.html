@@ -4,14 +4,18 @@
     <fa-icon icon="flag"></fa-icon>&nbsp;&nbsp;
     Edit
   </button>
-  <button mat-raised-button color="accent" *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'" (click)="payCharge()">
-    <fa-icon icon="dollar-sign"></fa-icon>&nbsp;&nbsp;
-    Pay
-  </button>
-  <button mat-raised-button color="primary" *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'" (click)="waiveCharge()">
-    <fa-icon icon="flag"></fa-icon>&nbsp;&nbsp;
-    Waive
-  </button>
+  <span *ngIf="allowPayCharge">
+    <button mat-raised-button color="accent" *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'" (click)="payCharge()">
+      <fa-icon icon="dollar-sign"></fa-icon>&nbsp;&nbsp;
+      Pay
+    </button>
+  </span>
+  <span *ngIf="allowWaive">
+    <button mat-raised-button color="primary" *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'" (click)="waiveCharge()">
+      <fa-icon icon="flag"></fa-icon>&nbsp;&nbsp;
+      Waive
+    </button>
+  </span>
 </div>
 
 <div *ngIf="loansAccountData.status.value === 'Submitted and pending approval'" fxLayout="row" fxLayoutAlign="end"

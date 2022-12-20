@@ -1,29 +1,42 @@
 <div class="tab-container mat-typography">
-
   <h3>{{datatableName}}</h3>
-
   <div fxLayout="row" fxLayoutAlign="flex-end">
-    <span *mifosxHasPermission="'CREATE_' + datatableName">
-      <button mat-raised-button color="primary" (click)="add()" *ngIf="!dataObject.data[0]">
-        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Add
-      </button>
-    </span>
-    <span *mifosxHasPermission="'UPDATE_' + datatableName">
-      <button mat-raised-button color="primary" (click)="edit()" *ngIf="dataObject.data[0]">
-        <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;Edit
-      </button>
-    </span>
-    <span *mifosxHasPermission="'DELETE_' + datatableName" class="delete-button">
-      <button mat-raised-button color="warn" (click)="delete()" *ngIf="dataObject.data[0]">
-        <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;Delete
-      </button>
-    </span>
+    <button mat-raised-button color="primary" (click)="add()" *ngIf="!dataObject.data[0]">
+      <fa-icon icon="plus" class="m-r-10"></fa-icon>Add
+    </button>
+    <button mat-raised-button color="primary" (click)="edit()" *ngIf="dataObject.data[0]">
+      <fa-icon icon="edit" class="m-r-10"></fa-icon>Edit
+    </button>
+    <button class="delete-button" mat-raised-button color="warn" (click)="delete()" *ngIf="dataObject.data[0]">
+      <fa-icon icon="trash" class="m-r-10"></fa-icon>Delete All
+    </button>
   </div>
 
-  <mat-list role="list" *ngIf="dataObject.data[0]">
-    <mat-list-item role="listitem" *ngFor="let columnHeader of dataObject.columnHeaders;let i = index">
-      {{columnHeader.columnName}} : {{dataObject.data[0].row[i]}}
-    </mat-list-item>
-  </mat-list>
+  <mat-divider></mat-divider>
+
+  <ng-container *ngIf="dataObject.data.length > 0">
+
+    <div *ngFor="let columnHeader of dataObject.columnHeaders;let i = index" class="table-data">
+
+      <div fxFlex="45%" class="mat-body-strong left">
+        {{columnHeader.columnName}}
+      </div>
+
+      <div fxFlex="45%" [ngSwitch]="columnHeader.columnDisplayType" class="right">
+        <span *ngSwitchCase="'DATE'">
+          {{dataObject.data[0].row[i] | dateFormat}}
+        </span>
+        <span *ngSwitchCase="'DATETIME'">
+          {{dataObject.data[0].row[i] | datetimeFormat}}
+        </span>
+        <span *ngSwitchCase="'INTEGER' || 'DECIMAL'">
+          {{dataObject.data[0].row[i] | number}}
+        </span>
+        <span *ngSwitchDefault>
+          {{dataObject.data[0].row[i]}}
+        </span>
+      </div>
+    </div>
+  </ng-container>
 
 </div>
