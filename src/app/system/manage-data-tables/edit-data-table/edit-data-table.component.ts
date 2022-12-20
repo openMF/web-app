@@ -45,8 +45,8 @@ export class EditDataTableComponent implements OnInit {
     apptableName: string,
     entitySubType: string,
     dropColumns?: { name: string }[],
-    changeColumns: { name: string, newName?: string, code?: string, newCode?: string, mandatory: boolean, length?: number }[],
-    addColumns?: { name?: string, type?: string, code?: string, mandatory?: boolean, length?: number }[]
+    changeColumns: { name: string, newName?: string, code?: string, newCode?: string, mandatory: boolean, length?: number, unique?: boolean, indexed?: boolean  }[],
+    addColumns?: { name?: string, type?: string, code?: string, mandatory?: boolean, length?: number, unique?: boolean, indexed?: boolean }[]
   } = {
     apptableName: '', changeColumns: [], addColumns: [], dropColumns: [],
     entitySubType: ''
@@ -59,10 +59,12 @@ export class EditDataTableComponent implements OnInit {
       columnLength: undefined,
       columnCode: undefined,
       columnCodes: undefined,
-      type: undefined
+      type: undefined,
+      isColumnUnique: undefined,
+      isColumnIndexed: undefined
     };
   /** Columns to be displayed in columns table. */
-  displayedColumns: string[] = ['name', 'type', 'mandatory', 'length', 'code', 'actions'];
+  displayedColumns: string[] = ['name', 'type', 'mandatory', 'length', 'code', 'unique', 'indexed', 'actions'];
   /** Data source for columns table. */
   dataSource: MatTableDataSource<any>;
   /** Paginator for columns table. */
@@ -146,11 +148,15 @@ export class EditDataTableComponent implements OnInit {
     this.dataForDialog.columnName = undefined;
     this.dataForDialog.columnDisplayType = undefined;
     this.dataForDialog.isColumnNullable = false;
+    this.dataForDialog.isColumnUnique = false;
+    this.dataForDialog.isColumnIndexed = false;
     this.dataForDialog.columnLength = undefined;
     this.dataForDialog.columnCode = undefined;
     this.dataForDialog.type = 'new';
     const addColumnDialogRef = this.dialog.open(ColumnDialogComponent, {
-      data: this.dataForDialog
+      data: this.dataForDialog,
+      height: '450px',
+      width: '400px'
     });
     addColumnDialogRef.afterClosed().subscribe((response: any) => {
       if (response !== '') {
@@ -159,6 +165,8 @@ export class EditDataTableComponent implements OnInit {
           columnName: response.name,
           columnDisplayType: response.type,
           isColumnNullable: !response.mandatory,
+          isColumnUnique: response.unique,
+          isColumnIndexed: response.indexed,
           columnLength: response.length,
           columnCode: response.code,
           type: 'new'
@@ -176,6 +184,8 @@ export class EditDataTableComponent implements OnInit {
             name: response.name,
             type: response.type,
             mandatory: response.mandatory,
+            unique: response.unique,
+            indexed: response.indexed,
             length: response.length,
             code: response.code
           });
@@ -194,11 +204,15 @@ export class EditDataTableComponent implements OnInit {
     this.dataForDialog.columnName = column.columnName;
     this.dataForDialog.columnDisplayType = column.columnDisplayType;
     this.dataForDialog.isColumnNullable = !column.isColumnNullable;
+    this.dataForDialog.isColumnUnique = !column.isColumnUnique;
+    this.dataForDialog.isColumnIndexed = !column.isColumnIndexed;
     this.dataForDialog.columnLength = column.columnLength;
     this.dataForDialog.columnCode = column.columnCode;
     this.dataForDialog.type = column.type;
     const editColumnDialogRef = this.dialog.open(ColumnDialogComponent, {
-      data: this.dataForDialog
+      data: this.dataForDialog,
+      height: '450px',
+      width: '400px'
     });
     editColumnDialogRef.afterClosed().subscribe((response: any) => {
       if (response !== '') {
@@ -218,6 +232,8 @@ export class EditDataTableComponent implements OnInit {
             columnName: response.name,
             columnDisplayType: response.type,
             isColumnNullable: !response.mandatory,
+            isColumnUnique: response.unique,
+            isColumnIndexed: response.indexed,
             columnLength: response.length,
             columnCode: response.code,
             type: 'new'
@@ -227,6 +243,8 @@ export class EditDataTableComponent implements OnInit {
             columnName: response.name,
             columnDisplayType: column.columnDisplayType,
             isColumnNullable: column.isColumnNullable,
+            isColumnUnique: column.unique,
+            isColumnIndexed: column.indexed,
             columnLength: column.columnLength,
             columnCode: column.columnCode,
             type: 'existing'

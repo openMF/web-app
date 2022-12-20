@@ -6,49 +6,65 @@
 
       <div class="profile-image-container">
         <div>
-          <img mat-card-md-image class="profile-image"
-            matTooltip="Savings Account"
+          <img mat-card-md-image class="profile-image" matTooltip="Savings Account"
             [src]="'assets/images/savings_account_placeholder.png'">
         </div>
       </div>
 
       <div class="mat-typography account-card-title">
-        <mat-card-title>
-          <h3>
-            <i class="fa fa-stop" [ngClass]="savingsAccountData.status.code | statusLookup" [matTooltip]="savingsAccountData.status.value"></i>
-              Account Name : {{savingsAccountData.savingsProductName}}
+        <mat-card-title fxLayout="row" fxLayout.lt-md="column">
+          <h3 fxFlex="95%">
+            <i class="fa fa-stop" [ngClass]="savingsAccountData.status.code | statusLookup"
+              [matTooltip]="savingsAccountData.status.value"></i>
+            Savings Product : {{savingsAccountData.savingsProductName}}<span class="m-l-10">({{savingsAccountData.accountNo}})</span>
           </h3>
+          <div fxFlex="5%">
+            <button mat-icon-button [matMenuTriggerFor]="accountMenu" aria-label="Loan account actions"
+              yPosition="below">
+              <mat-icon matListIcon class="actions-menu">
+                <fa-icon icon="bars" size="sm"></fa-icon>
+              </mat-icon>
+            </button>
+          </div>
         </mat-card-title>
         <mat-card-subtitle>
           <p>
-            Account #: {{savingsAccountData.accountNo}} | {{entityType}} Name: {{savingsAccountData.clientName || savingsAccountData.groupName}}<br/>
+            {{entityType}} Name: {{savingsAccountData.clientName || savingsAccountData.groupName}}
+            <span class="m-l-10" *ngIf="savingsAccountData.clientAccountNo">({{savingsAccountData.clientAccountNo}})</span><br />
             <span *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval">
-              Current Balances: {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.accountBalance | number}}<br/>
-              Available Balance: {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.availableBalance | number}}<br/>
+              Current Balances:
+              {{savingsAccountData.currency.displaySymbol}}<span class="m-l-10">{{savingsAccountData.summary.accountBalance |
+              number}}</span><br />
+              Available Balance:
+              {{savingsAccountData.currency.displaySymbol}}<span class="m-l-10">{{savingsAccountData.summary.availableBalance |
+              number}}</span>
             </span>
           </p>
         </mat-card-subtitle>
       </div>
 
+      <mat-menu #accountMenu="matMenu">
+        <ng-container *ngFor="let item of buttonConfig.singleButtons">
+          <button mat-menu-item *mifosxHasPermission="item.taskPermissionName" (click)="doAction(item.name)">
+            <mat-icon matListIcon>
+              <fa-icon icon="{{item.icon}}" size="sm"></fa-icon>
+            </mat-icon>
+            <span> {{item.name}} </span>
+          </button>
+        </ng-container>
+
+        <ng-container *ngIf="buttonConfig.options">
+          <button mat-menu-item [matMenuTriggerFor]="More">More</button>
+          <mat-menu #More="matMenu">
+            <span *ngFor="let option of buttonConfig.options">
+              <button mat-menu-item *mifosxHasPermission="option.taskPermissionName"
+                (click)="doAction(option.name)">{{option.name}}</button>
+            </span>
+          </mat-menu>
+        </ng-container>
+      </mat-menu>
+
     </mat-card-title-group>
-
-    <mat-card-actions class="account-actions">
-
-      <ng-container *ngFor="let button of buttonConfig.singleButtons">
-        <button mat-raised-button *mifosxHasPermission="button.taskPermissionName" (click)="doAction(button.name)">
-          <i ngClass="{{button.icon}}"></i> {{button.name}}</button>
-      </ng-container>
-
-      <ng-container *ngIf="buttonConfig.options">
-        <button mat-raised-button [matMenuTriggerFor]="More">More</button>
-        <mat-menu #More="matMenu">
-        <span *ngFor="let option of buttonConfig.options">
-          <button mat-menu-item *mifosxHasPermission="option.taskPermissionName" (click)="doAction(option.name)">{{option.name}}</button>
-        </span>
-        </mat-menu>
-      </ng-container>
-
-    </mat-card-actions>
 
   </mat-card-header>
 
@@ -56,41 +72,51 @@
 
     <div class="savings-account-tables" fxLayout="row" fxLayoutGap="2%">
 
-      <div fxFlex="49%" *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval; else alternateSummary">
+      <div fxFlex="49%"
+        *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval; else alternateSummary">
         <h4 class="table-headers">Account Summary</h4>
         <table>
           <tbody>
             <tr *ngIf="savingsAccountData.summary.totalWithdrawals">
               <td>Total Withdrawls</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalWithdrawals | number}}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalWithdrawals |
+                number}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.totalWithdrawalFees">
               <td>Withdrawals Fees</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalWithdrawalFees | number}}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalWithdrawalFees |
+                number}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.totalAnnualFees">
               <td>Annual Fees</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalAnnualFees | number}}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalAnnualFees |
+                number}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.totalInterestEarned >= 0">
               <td>Interest Earned</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalInterestEarned | number}}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalInterestEarned |
+                number}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.totalInterestPosted">
               <td>Interest Posted</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalInterestPosted | number}}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalInterestPosted |
+                number}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.interestNotPosted >= 0">
               <td>Interest Earned Not Posted</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.interestNotPosted | number}}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.interestNotPosted |
+                number}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.totalOverdraftInterestDerived">
               <td>Interest On Overdraft</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalOverdraftInterestDerived | number}}</td>
+              <td>
+                {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalOverdraftInterestDerived
+                | number}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.interestNotPosted < 0">
               <td>Overdraft Interest Not Posted</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.interestNotPosted | number}}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.interestNotPosted |
+                number}}</td>
             </tr>
             <tr>
               <td>Nominal Interest Rate</td>
@@ -114,11 +140,12 @@
             </tr>
             <tr *ngIf="savingsAccountData.withdrawalFee">
               <td>Withdrawal Fee</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.withdrawalFee.amount | number}}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.withdrawalFee.amount |
+                number}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.lastActiveTransactionDate">
               <td>Last Active Transaction Date</td>
-              <td>{{savingsAccountData.lastActiveTransactionDate  | dateFormat}}</td>
+              <td>{{savingsAccountData.lastActiveTransactionDate | dateFormat}}</td>
             </tr>
             <tr *ngIf="!(savingsAccountData.subStatus.id === 0)">
               <td>Substatus</td>
@@ -138,7 +165,8 @@
             </tr>
             <tr *ngIf="savingsAccountData.annualFee">
               <td>Annual Fee</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.annualFee.amount | number}}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.annualFee.amount | number}}
+              </td>
             </tr>
             <tr *ngIf="savingsAccountData.allowOverdraft">
               <td>Over Draft Limit</td>
@@ -162,7 +190,7 @@
             </tr>
             <tr *ngIf="savingsAccountData.summary.lastInterestCalculationDate">
               <td>Interest Recalculation Date</td>
-              <td>{{savingsAccountData.summary.lastInterestCalculationDate  | dateFormat}}</td>
+              <td>{{savingsAccountData.summary.lastInterestCalculationDate | dateFormat}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.onHoldFunds">
               <td>On Hold Funds</td>
@@ -177,13 +205,14 @@
       </div>
 
       <ng-template #alternateSummary>
-        <div fxFlex="49%" >
+        <div fxFlex="49%">
           <h4 class="table-headers">Account Summary</h4>
           <table>
             <tbody>
               <tr>
                 <td>Activated On</td>
-                <td>{{savingsAccountData.timeline.activatedOnDate ? (savingsAccountData.timeline.activatedOnDate  | dateFormat) : 'Not Activated'}}</td>
+                <td>{{savingsAccountData.timeline.activatedOnDate ? (savingsAccountData.timeline.activatedOnDate |
+                  dateFormat) : 'Not Activated'}}</td>
               </tr>
               <tr>
                 <td>Currency</td>
@@ -200,13 +229,15 @@
 
       <div fxFlex="49%" fxLayout="column" fxLayoutGap="4%">
 
-        <div *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval; else alternateDetails">
+        <div
+          *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval; else alternateDetails">
           <h4 class="table-headers">Savings Details</h4>
           <table>
             <tbody>
               <tr>
                 <td>Activated On</td>
-                <td>{{savingsAccountData.timeline.activatedOnDate ? (savingsAccountData.timeline.activatedOnDate  | dateFormat) : 'Not Activated'}}</td>
+                <td>{{savingsAccountData.timeline.activatedOnDate ? (savingsAccountData.timeline.activatedOnDate |
+                  dateFormat) : 'Not Activated'}}</td>
               </tr>
               <tr>
                 <td>Field Officer</td>
@@ -252,11 +283,13 @@
             <tbody>
               <tr *ngIf="savingsAccountData.summary.totalDeposits">
                 <td>Total Deposits</td>
-                <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalDeposits | number}}</td>
+                <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalDeposits |
+                  number}}</td>
               </tr>
               <tr *ngIf="savingsAccountData.summary.totalInterestEarned >= 0">
                 <td>Total Interest Earned</td>
-                <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalInterestEarned | number}}</td>
+                <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalInterestEarned
+                  | number}}</td>
               </tr>
             </tbody>
           </table>
@@ -268,23 +301,24 @@
 
     <nav mat-tab-nav-bar class="navigation-tabs">
       <a mat-tab-link [routerLink]="['./transactions']" routerLinkActive #transactions="routerLinkActive"
-      [active]="transactions.isActive">
+        [active]="transactions.isActive">
         Transactions
       </a>
       <a mat-tab-link [routerLink]="['./charges']" routerLinkActive #charges="routerLinkActive"
-      [active]="charges.isActive">
+        [active]="charges.isActive">
         Charges
       </a>
       <ng-container *mifosxHasPermission="'READ_SAVINGSACCOUNTCHARGE'">
-        <a mat-tab-link [routerLink]="['./standing-instructions']" routerLinkActive #standingInstructions="routerLinkActive"
-          [active]="standingInstructions.isActive" *ngIf="savingsAccountData.clientId">
+        <a mat-tab-link [routerLink]="['./standing-instructions']" routerLinkActive
+          #standingInstructions="routerLinkActive" [active]="standingInstructions.isActive"
+          *ngIf="savingsAccountData.clientId">
           Standing Instructions
         </a>
       </ng-container>
       <ng-container *ngFor="let savingsDatatable of savingsDatatables">
         <a mat-tab-link *mifosxHasPermission="'READ_' + savingsDatatable.registeredTableName"
-          [routerLink]="['./datatables',savingsDatatable.registeredTableName]"
-          routerLinkActive #datatable="routerLinkActive" [active]="datatable.isActive">
+          [routerLink]="['./datatables',savingsDatatable.registeredTableName]" routerLinkActive
+          #datatable="routerLinkActive" [active]="datatable.isActive">
           {{savingsDatatable.registeredTableName}}
         </a>
       </ng-container>

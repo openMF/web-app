@@ -73,6 +73,7 @@ import { LoanAccountLoadDocumentsDialogComponent } from './custom-dialog/loan-ac
 import { LoanCreditBalanceRefundComponent } from './loans-view/loan-account-actions/loan-credit-balance-refund/loan-credit-balance-refund.component';
 import { LoanDelinquencyTagsTabComponent } from './loans-view/loan-delinquency-tags-tab/loan-delinquency-tags-tab.component';
 import { LoansAccountScheduleStepComponent } from './loans-account-stepper/loans-account-schedule-step/loans-account-schedule-step.component';
+import { EditRepaymentScheduleComponent } from './loans-view/loan-account-actions/edit-repayment-schedule/edit-repayment-schedule.component';
 
 /**
  * Loans Module
@@ -144,7 +145,8 @@ import { LoansAccountScheduleStepComponent } from './loans-account-stepper/loans
     GlimTermsStepComponent,
     GlimPreviewStepComponent,
     LoanDelinquencyTagsTabComponent,
-    LoansAccountScheduleStepComponent
+    LoansAccountScheduleStepComponent,
+    EditRepaymentScheduleComponent
   ],
   providers: [ ],
 })

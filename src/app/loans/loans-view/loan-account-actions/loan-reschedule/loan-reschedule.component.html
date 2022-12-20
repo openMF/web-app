@@ -92,13 +92,13 @@
 
         </div>
 
-      </mat-card-content>
+        <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+          <button mat-raised-button color="primary" [disabled]="!rescheduleLoanForm.valid"
+            *mifosxHasPermission="'APPROVE_RESCHEDULELOAN'">Submit</button>
+        </mat-card-actions>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!rescheduleLoanForm.valid"
-          *mifosxHasPermission="'APPROVE_RESCHEDULELOAN'">Submit</button>
-      </mat-card-actions>
+      </mat-card-content>
 
     </form>
 

@@ -20,7 +20,8 @@
 <mifosx-disburse [dataObject]="actionButtonData" *ngIf="actions['Disburse']"></mifosx-disburse>
 <mifosx-withdrawn-by-client *ngIf="actions['Withdrawn by Client']"></mifosx-withdrawn-by-client>
 <mifosx-add-collateral [dataObject]="actionButtonData" *ngIf="actions['Add Collateral']"></mifosx-add-collateral>
-<mifosx-undo-disbursal *ngIf="actions['Undo Disbursal']"></mifosx-undo-disbursal>
+<mifosx-undo-disbursal *ngIf="actions['Undo Disbursal'] || actions['Undo Last Disbursal']" [actionName]="actionName"></mifosx-undo-disbursal>
 <mifosx-loan-screen-reports [dataObject]="actionButtonData" *ngIf="actions['Loan Screen Reports']"></mifosx-loan-screen-reports>
 <mifosx-approve-loan *ngIf="actions['Approve']" ></mifosx-approve-loan>
 <mifosx-add-loan-charge *ngIf="actions['Add Loan Charge']"></mifosx-add-loan-charge>
+<mifosx-edit-repayment-schedule *ngIf="actions['Edit Repayment Schedule']"></mifosx-edit-repayment-schedule>

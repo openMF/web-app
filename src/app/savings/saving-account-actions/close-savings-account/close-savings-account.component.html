@@ -43,11 +43,14 @@
               </mat-select>
             </mat-form-field>
 
-            <div fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column" class="m-t-10">
-              <mat-label fxFlexAlign="center">Show Payment Details</mat-label>
-              <button type="button" mat-mini-fab color="primary" (click)="addPaymentDetails()">
-                <fa-icon [icon]="!addPaymentDetailsFlag ? 'plus-circle' : 'minus-circle'" size="lg"></fa-icon>
-              </button>
+            <div fxFlexFill>
+              <span fxFlex="75%" class="expandcollapsebutton m-l-10 m-t-40" (click)="addPaymentDetails()">
+                <mat-slide-toggle [(ngModel)]="showPaymentDetails">
+                  <div [className]="showPaymentDetails ? 'enabled' : 'disabled'">
+                    <span class="m-l-10">Show Payment Details</span>
+                  </div>
+                </mat-slide-toggle>
+              </span>
             </div>
 
             <mat-form-field *ngIf="closeSavingsAccountForm.controls['accountNumber']">
@@ -79,7 +82,7 @@
 
           <mat-form-field>
             <mat-label>Note</mat-label>
-            <textarea matInput formControlName="note"></textarea>
+            <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
           </mat-form-field>
 
         </div>

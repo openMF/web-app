@@ -27,7 +27,7 @@ export class ViewDataTableComponent implements OnInit {
   /** Column Data */
   columnsData: any;
   /** Columns to be displayed in columns table. */
-  displayedColumns: string[] = ['columnName', 'columnDisplayType', 'columnLength', 'columnCode', 'isColumnNullable'];
+  displayedColumns: string[] = ['columnName', 'columnDisplayType', 'columnLength', 'columnCode', 'isColumnNullable', 'isColumnUnique', 'isColumnIndexed'];
   /** Data source for columns table. */
   dataSource: MatTableDataSource<any>;
 

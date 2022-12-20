@@ -27,9 +27,9 @@ export class CreateClientComponent {
   /** Client General Step */
   @ViewChild(ClientGeneralStepComponent, { static: true }) clientGeneralStep: ClientGeneralStepComponent;
   /** Client Family Members Step */
-  @ViewChild(ClientFamilyMembersStepComponent, { static: true }) clientFamilyMembersStep: ClientFamilyMembersStepComponent;
+  @ViewChild('clientFamily') clientFamilyMembersStep: ClientFamilyMembersStepComponent;
   /** Client Address Step */
-  @ViewChild(ClientAddressStepComponent, { static: true }) clientAddressStep: ClientAddressStepComponent;
+  @ViewChild('clientAddress') clientAddressStep: ClientAddressStepComponent;
   /** Get handle on dtclient tags in the template */
   @ViewChildren('dtclient') clientDatatables: QueryList<ClientDatatableStepComponent>;
 
@@ -124,7 +124,6 @@ export class CreateClientComponent {
   submit() {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    // TODO: Update once language and date settings are setup
     const clientData = {
       ...this.client,
       dateFormat,

@@ -135,7 +135,7 @@ export class AddChargeSavingsAccountComponent implements OnInit {
       }
     }
     this.savingsService.createSavingsCharge(this.savingAccountId, 'charges', savingsCharge).subscribe( () => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+      this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });
   }
 

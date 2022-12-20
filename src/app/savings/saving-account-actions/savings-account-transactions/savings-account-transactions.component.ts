@@ -121,7 +121,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
       locale
     };
     this.savingsService.executeSavingsAccountTransactionsCommand(this.savingAccountId, this.transactionCommand, data).subscribe(res => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+      this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });
   }
 }

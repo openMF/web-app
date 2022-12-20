@@ -79,7 +79,7 @@ export class SavingsAccountUnassignStaffComponent implements OnInit {
       locale
     };
     this.savingsService.executeSavingsAccountCommand(this.accountId, 'unassignSavingsOfficer', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+      this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });
   }
 
