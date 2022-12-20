@@ -10,7 +10,7 @@ export class DatetimeFormatPipe implements PipeTransform {
   constructor(private settingsService: SettingsService) {
   }
 
-  transform(value: any, datetimeFormat: string): any {
+  transform(value: any, datetimeFormat?: string): any {
     const defaultDateFormat = this.settingsService.dateFormat.replace('dd', 'DD');
     if (typeof value === 'undefined') {
       return '';

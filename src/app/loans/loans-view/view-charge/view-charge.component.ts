@@ -32,6 +32,8 @@ export class ViewChargeComponent {
   chargeData: any;
   /** Loans Account Data */
   loansAccountData: any;
+  allowPayCharge = true;
+  allowWaive = true;
 
   /**
    * Retrieves the Charge data from `resolve`.
@@ -50,6 +52,8 @@ export class ViewChargeComponent {
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { loansAccountCharge: any, loanDetailsData: any }) => {
       this.chargeData = data.loansAccountCharge;
+      this.allowPayCharge = (this.chargeData.chargeTimeType.code === 'chargeTimeType.instalmentFee');
+      this.allowWaive = !this.chargeData.chargeTimeType.waived;
       this.loansAccountData = data.loanDetailsData;
     });
   }

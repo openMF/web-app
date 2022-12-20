@@ -2,25 +2,25 @@
 
   <div>
 
-    <div fxLayout="column" fxFlex="50%" class="tableName">
+    <div fxLayout="column" fxFlex="50%" class="table-name">
       <h3>{{datatableName}}</h3>
     </div>
 
-    <div fxLayout="column" fxFlex="50%" >
+    <div fxLayout="column" fxFlex="50%">
       <div fxLayout="row" fxLayoutAlign="flex-end">
-        <span *mifosxHasPermission="'CREATE_' + datatableName">
+        <span>
           <button mat-raised-button color="primary" (click)="add()" *ngIf="!dataObject.data[0]">
-            <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Add
+            <fa-icon icon="plus" class="m-r-10"></fa-icon>Add
           </button>
         </span>
-        <span *mifosxHasPermission="'UPDATE_' + datatableName">
+        <span>
           <button mat-raised-button color="primary" (click)="edit()" *ngIf="dataObject.data[0]">
-            <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;Edit
+            <fa-icon icon="edit" class="m-r-10"></fa-icon>Edit
           </button>
         </span>
-        <span *mifosxHasPermission="'DELETE_' + datatableName" class="delete-button">
+        <span class="delete-button">
           <button mat-raised-button color="warn" (click)="delete()" *ngIf="dataObject.data[0]">
-            <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;Delete
+            <fa-icon icon="trash" class="m-r-10"></fa-icon>Delete
           </button>
         </span>
       </div>
@@ -30,12 +30,29 @@
 
   <mat-divider></mat-divider>
 
-  <div>
-    <mat-list role="list" *ngIf="dataObject.data[0]">
-      <mat-list-item role="listitem" *ngFor="let columnHeader of dataObject.columnHeaders;let i = index">
-        {{columnHeader.columnName}} : {{dataObject.data[0].row[i]}}
-      </mat-list-item>
-    </mat-list>
-  </div>
+  <ng-container *ngIf="dataObject.data.length > 0">
+
+    <div *ngFor="let columnHeader of dataObject.columnHeaders;let i = index" class="table-data">
+
+      <div fxFlex="45%" class="mat-body-strong left">
+        {{columnHeader.columnName}}
+      </div>
+
+      <div fxFlex="45%" [ngSwitch]="columnHeader.columnDisplayType" class="right">
+        <span *ngSwitchCase="'DATE'">
+          {{dataObject.data[0].row[i] | dateFormat}}
+        </span>
+        <span *ngSwitchCase="'DATETIME'">
+          {{dataObject.data[0].row[i] | datetimeFormat}}
+        </span>
+        <span *ngSwitchCase="'INTEGER' || 'DECIMAL'">
+          {{dataObject.data[0].row[i] | number}}
+        </span>
+        <span *ngSwitchDefault>
+          {{dataObject.data[0].row[i]}}
+        </span>
+      </div>
+    </div>
+  </ng-container>
 
 </div>
