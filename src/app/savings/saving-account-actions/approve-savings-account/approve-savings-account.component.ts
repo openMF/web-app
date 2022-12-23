@@ -80,7 +80,7 @@ export class ApproveSavingsAccountComponent implements OnInit {
       locale
     };
     this.savingsService.executeSavingsAccountCommand(this.accountId, 'approve', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+      this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });
   }
 

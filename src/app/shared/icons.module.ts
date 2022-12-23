@@ -22,6 +22,7 @@ import {
   faChevronLeft,
   faChevronRight,
   faCircle,
+  faHeartBroken,
   faClock,
   faCloud,
   faCog,
@@ -76,6 +77,7 @@ import {
   faUser,
   faUsers,
   faUserShield,
+  faUserTie,
   faDownload,
   faUpload,
   faCloudDownloadAlt,
@@ -97,7 +99,10 @@ import {
   faIdBadge,
   faAddressCard,
   faKeyboard,
-  faInfo
+  faInfo,
+  faTasks,
+  faCoins,
+  faPiggyBank
 } from '@fortawesome/free-solid-svg-icons';
 
 /**
@@ -130,6 +135,7 @@ export class IconsModule {
       faChevronLeft,
       faChevronRight,
       faCircle,
+      faHeartBroken,
       faClock,
       faCloud,
       faCog,
@@ -184,6 +190,7 @@ export class IconsModule {
       faUser,
       faUsers,
       faUserShield,
+      faUserTie,
       faDownload,
       faUpload,
       faCloudDownloadAlt,
@@ -205,7 +212,10 @@ export class IconsModule {
       faIdBadge,
       faAddressCard,
       faKeyboard,
-      faInfo
+      faInfo,
+      faTasks,
+      faCoins,
+      faPiggyBank
     );
   }
 

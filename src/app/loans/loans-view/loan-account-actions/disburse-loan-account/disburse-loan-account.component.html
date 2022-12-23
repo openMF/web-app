@@ -37,18 +37,18 @@
 
           <mat-form-field>
             <mat-label>Note</mat-label>
-            <textarea matInput formControlName="note"></textarea>
+            <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
           </mat-form-field>
 
         </div>
 
-      </mat-card-content>
+        <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+          <button mat-raised-button color="primary" [disabled]="!disbursementForm.valid"
+            *mifosxHasPermission="'DISBURSETOSAVINGS_LOAN'">Submit</button>
+        </mat-card-actions>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!disbursementForm.valid"
-          *mifosxHasPermission="'DISBURSETOSAVINGS_LOAN'">Submit</button>
-      </mat-card-actions>
+      </mat-card-content>
 
     </form>
 

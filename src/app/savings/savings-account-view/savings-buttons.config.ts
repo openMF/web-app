@@ -30,37 +30,37 @@ export class SavingsButtonsConfiguration {
       case 'Active':
         this.buttonsArray = [
           {
-            name: 'Post Interest As On',
-            icon: 'fa fa-arrow-right',
-            taskPermissionName: 'POSTINTEREST_SAVINGSACCOUNT',
-          },
-          {
             name: 'Deposit',
-            icon: 'fa fa-arrow-up',
+            icon: 'arrow-up',
             taskPermissionName: 'DEPOSIT_SAVINGSACCOUNT'
           },
           {
             name: 'Withdraw',
-            icon: 'fa fa-arrow-down',
+            icon: 'arrow-down',
             taskPermissionName: 'WITHDRAW_SAVINGSACCOUNT'
           },
           {
             name: 'Calculate Interest',
-            icon: 'fa fa-table',
+            icon: 'table',
             taskPermissionName: 'CALCULATEINTEREST_SAVINGSACCOUNT'
-          }
+          },
+          {
+            name: 'Post Interest As On',
+            icon: 'arrow-right',
+            taskPermissionName: 'POSTINTEREST_SAVINGSACCOUNT',
+          },
         ];
         break;
       case 'Submitted and pending approval':
         this.buttonsArray = [
           {
             name: 'Modify Application',
-            icon: 'fa fa-pencil ',
+            icon: 'pen',
             taskPermissionName: 'UPDATE_SAVINGSACCOUNT'
           },
           {
             name: 'Approve',
-            icon: 'fa fa-check',
+            icon: 'check',
             taskPermissionName: 'APPROVE_SAVINGSACCOUNT'
           }
         ];
@@ -69,17 +69,17 @@ export class SavingsButtonsConfiguration {
         this.buttonsArray = [
           {
             name: 'Undo Approval',
-            icon: 'fa fa-undo',
+            icon: 'undo',
             taskPermissionName: 'APPROVALUNDO_SAVINGSACCOUNT'
           },
           {
             name: 'Activate',
-            icon: 'fa fa-check',
+            icon: 'check',
             taskPermissionName: 'ACTIVATE_SAVINGSACCOUNT'
           },
           {
             name: 'Add Charge',
-            icon: 'fa fa-plus',
+            icon: 'plus',
             taskPermissionName: 'CREATE_SAVINGSACCOUNTCHARGE'
           }
         ];

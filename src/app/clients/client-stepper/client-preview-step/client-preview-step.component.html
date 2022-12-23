@@ -162,7 +162,7 @@
 
   </div>
 
-  <div fxFlexFill *ngIf="clientTemplate.isAddressEnabled && client.address.length" fxLayout="row wrap" fxLayout.lt-md="column">
+  <div fxFlexFill *ngIf="clientTemplate.isAddressEnabled && client.address && client.address.length" fxLayout="row wrap" fxLayout.lt-md="column">
 
     <h3 class="mat-h3" fxFlexFill>Address</h3>
 
@@ -175,7 +175,7 @@
         <mat-expansion-panel-header>
 
           <mat-panel-title>
-            {{ getSelectedValue('addressTypeIdOptions',address.addressTypeId)?.name }}
+            {{ getSelectedValue('addressTypeIdOptions', address.addressTypeId)?.name }}
           </mat-panel-title>
 
           <mat-panel-description>
@@ -211,7 +211,7 @@
 
 <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button matStepperPrevious>
-    <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
     Previous
   </button>
   <button mat-raised-button [routerLink]="['../']">

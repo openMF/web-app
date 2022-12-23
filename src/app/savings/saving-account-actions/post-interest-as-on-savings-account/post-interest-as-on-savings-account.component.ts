@@ -80,7 +80,7 @@ export class PostInterestAsOnSavingsAccountComponent implements OnInit {
       locale
     };
     this.savingsService.executeSavingsAccountTransactionsCommand(this.accountId, 'postInterestAsOn', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+      this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });
   }
 

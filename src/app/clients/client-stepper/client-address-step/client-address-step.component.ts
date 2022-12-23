@@ -32,7 +32,9 @@ export class ClientAddressStepComponent {
   /**
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog) {
+    this.clientAddressData = [];
+  }
 
   /**
    * Adds a client address
@@ -42,7 +44,7 @@ export class ClientAddressStepComponent {
       title: 'Add Client Address',
       formfields: this.getAddressFormFields()
     };
-    const addAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
+    const addAddressDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
     addAddressDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const addressData = response.data.value;
@@ -68,7 +70,7 @@ export class ClientAddressStepComponent {
       formfields: this.getAddressFormFields(address),
       layout: { addButtonText: 'Edit' }
     };
-    const editAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
+    const editAddressDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
     editAddressDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const addressData = response.data.value;
@@ -216,7 +218,7 @@ export class ClientAddressStepComponent {
    * Returns the array of client addresses
    */
   get address() {
-    return { address: this.clientAddressData };
+    return { address: this.clientAddressData ? this.clientAddressData : [] };
   }
 
 }

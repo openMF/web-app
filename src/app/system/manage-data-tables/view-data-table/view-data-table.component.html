@@ -1,78 +1,97 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
 
-    <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_DATATABLE'">
-        <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
-        Edit
-    </button>
+  <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_DATATABLE'">
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    Edit
+  </button>
 
-    <button mat-raised-button color="warn" (click)="delete()" *mifosxHasPermission="'DELETE_DATATABLE'">
-        <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
-        Delete
-    </button>
+  <button mat-raised-button color="warn" (click)="delete()" *mifosxHasPermission="'DELETE_DATATABLE'">
+    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+    Delete
+  </button>
 
 </div>
 
 <div class="container m-b-15" fxLayoutAlign="start">
 
-    <mat-card>
+  <mat-card>
 
-        <mat-card-content>
+    <mat-card-content>
 
-            <div fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutGap="12px">
-                <div class="mat-body-strong">
-                    Associated With
-                </div>
-                <div>
-                    {{ dataTableData.applicationTableName }}
-                </div>
+      <div fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutGap="12px">
+        <div class="mat-body-strong">
+          Associated With
+        </div>
+        <div>
+          {{ dataTableData.applicationTableName }}
+        </div>
 
-            </div>
+      </div>
 
-        </mat-card-content>
+    </mat-card-content>
 
-    </mat-card>
+  </mat-card>
 
 </div>
 
 <div class="container mat-elevation-z8">
 
-    <table mat-table [dataSource]="dataSource" matSort>
+  <table mat-table [dataSource]="dataSource" matSort>
 
-        <ng-container matColumnDef="columnName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Field Name </th>
-            <td mat-cell *matCellDef="let dataTableColumn"> {{ dataTableColumn.columnName }}</td>
-        </ng-container>
+    <ng-container matColumnDef="columnName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="center"> Field Name </th>
+      <td mat-cell *matCellDef="let dataTableColumn"> {{ dataTableColumn.columnName }}</td>
+    </ng-container>
 
-        <ng-container matColumnDef="columnDisplayType">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
-            <td mat-cell *matCellDef="let dataTable"> {{ dataTable.columnDisplayType }} </td>
-        </ng-container>
+    <ng-container matColumnDef="columnDisplayType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="center"> Type </th>
+      <td mat-cell *matCellDef="let dataTable"> {{ dataTable.columnDisplayType }} </td>
+    </ng-container>
 
-        <ng-container matColumnDef="columnLength">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Length </th>
-            <td mat-cell *matCellDef="let dataTable"> {{ dataTable.columnLength }} </td>
-        </ng-container>
+    <ng-container matColumnDef="columnLength">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="center"> Length </th>
+      <td mat-cell *matCellDef="let dataTable"> {{ dataTable.columnLength }} </td>
+    </ng-container>
 
-        <ng-container matColumnDef="columnCode">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Code </th>
-            <td mat-cell *matCellDef="let dataTable"> {{ dataTable.columnCode }} </td>
-        </ng-container>
+    <ng-container matColumnDef="columnCode">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="center"> Code </th>
+      <td mat-cell *matCellDef="let dataTable"> {{ dataTable.columnCode }} </td>
+    </ng-container>
 
-        <ng-container matColumnDef="isColumnNullable">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Mandatory </th>
-            <td mat-cell *matCellDef="let dataTable" class="left">
-                <fa-icon *ngIf="!dataTable.isColumnNullable" icon="check-circle" size="lg" class="column-mandatory"
-                    matTooltip="Yes" matTooltipPosition="right"></fa-icon>
-                <fa-icon *ngIf="dataTable.isColumnNullable" icon="times-circle" size="lg"
-                    class="not-column-mandatory" matTooltip="No" matTooltipPosition="right"></fa-icon>
-            </td>
-        </ng-container>
+    <ng-container matColumnDef="isColumnNullable">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="center"> Mandatory </th>
+      <td mat-cell *matCellDef="let dataTable" class="center">
+        <fa-icon *ngIf="!dataTable.isColumnNullable" icon="check-circle" size="lg" class="column-mandatory"
+          matTooltip="Yes" matTooltipPosition="right"></fa-icon>
+        <fa-icon *ngIf="dataTable.isColumnNullable" icon="times-circle" size="lg" class="not-column-mandatory"
+          matTooltip="No" matTooltipPosition="right"></fa-icon>
+      </td>
+    </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <ng-container matColumnDef="isColumnUnique">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="center"> Unique </th>
+      <td mat-cell *matCellDef="let dataTable" class="center">
+        <fa-icon *ngIf="dataTable.isColumnUnique" icon="check-circle" size="lg" class="column-mandatory"
+          matTooltip="Yes" matTooltipPosition="right"></fa-icon>
+        <fa-icon *ngIf="!dataTable.isColumnUnique" icon="times-circle" size="lg" class="not-column-mandatory"
+          matTooltip="No" matTooltipPosition="right"></fa-icon>
+      </td>
+    </ng-container>
 
-    </table>
+    <ng-container matColumnDef="isColumnIndexed">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="center"> Indexed </th>
+      <td mat-cell *matCellDef="let dataTable" class="center">
+        <fa-icon *ngIf="dataTable.isColumnIndexed" icon="check-circle" size="lg" class="column-mandatory"
+          matTooltip="Yes" matTooltipPosition="right"></fa-icon>
+        <fa-icon *ngIf="!dataTable.isColumnIndexed" icon="times-circle" size="lg" class="not-column-mandatory"
+          matTooltip="No" matTooltipPosition="right"></fa-icon>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
 
 </div>

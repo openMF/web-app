@@ -49,7 +49,9 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
       columnLength: undefined,
       columnCode: undefined,
       columnCodes: undefined,
-      type: undefined
+      type: undefined,
+      isColumnUnique: undefined,
+      isColumnIndexed: undefined
     };
   /** Columns to be displayed in columns table. */
   displayedColumns: string[] = ['name', 'type', 'mandatory', 'length', 'code', 'actions'];
@@ -127,9 +129,13 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
     this.dataForDialog.columnDisplayType = undefined;
     this.dataForDialog.columnLength = undefined;
     this.dataForDialog.columnCode = undefined;
+    this.dataForDialog.isColumnUnique = undefined;
+    this.dataForDialog.isColumnIndexed = undefined;
     this.dataForDialog.type = 'new';
     const addColumnDialogRef = this.dialog.open(ColumnDialogComponent, {
-      data: this.dataForDialog
+      data: this.dataForDialog,
+      height: '450px',
+      width: '400px'
     });
     addColumnDialogRef.afterClosed().subscribe((response: any) => {
       if (response !== '') {
@@ -137,6 +143,8 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
           columnName: response.name,
           columnDisplayType: response.type,
           isColumnNullable: !response.mandatory,
+          isColumnUnique: response.unique,
+          isColumnIndexed: response.indexed,
           columnLength: response.length,
           columnCode: response.code,
           type: 'new'
@@ -155,9 +163,13 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
     this.dataForDialog.columnDisplayType = column.type;
     this.dataForDialog.columnLength = column.length;
     this.dataForDialog.columnCode = column.code;
+    this.dataForDialog.isColumnUnique = column.unique;
+    this.dataForDialog.isColumnIndexed = column.indexed;
     this.dataForDialog.type = 'new';
     const editColumnDialogRef = this.dialog.open(ColumnDialogComponent, {
-      data: this.dataForDialog
+      data: this.dataForDialog,
+      height: '450px',
+      width: '400px'
     });
     editColumnDialogRef.afterClosed().subscribe((response: any) => {
       if (response !== '') {
@@ -165,6 +177,8 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
           columnName: response.name,
           columnDisplayType: response.type,
           isColumnNullable: !response.mandatory,
+          isColumnUnique: response.unique,
+          isColumnIndexed: response.indexed,
           columnLength: response.length,
           columnCode: response.code,
           type: 'existing'
@@ -203,6 +217,8 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
         code: column.columnCode,
         length: column.columnLength,
         mandatory: !column.isColumnNullable,
+        unique: column.isColumnUnique,
+        indexed: column.isColumnIndexed
       });
     });
     this.dataTableForm.value.columns = columns;

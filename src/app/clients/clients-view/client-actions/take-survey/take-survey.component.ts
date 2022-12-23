@@ -50,7 +50,7 @@ export class TakeSurveyComponent {
               private authenticationService: AuthenticationService) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.allSurveyData = data.clientActionData;
-      this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
+      this.clientId = this.route.parent.snapshot.params['clientId'];
     });
     /** Retrieves User ID */
     const savedCredentials = this.authenticationService.getCredentials();
@@ -102,21 +102,14 @@ export class TakeSurveyComponent {
    */
   submit() {
     this.formData = {
-      userId: 0,
-      clientId: 0,
-      surveyId: 0,
+      userId: this.userId,
+      clientId: this.clientId,
+      surveyId: this.surveyData.id,
       surveyName: '',
       username: '',
       id: 0,
       scorecardValues: []
     };
-
-    this.formData.userId = this.userId;
-    this.formData.clientId = this.clientId;
-    this.formData.surveyId = this.surveyData.id;
-    this.formData.surveyName = '';
-    this.formData.username = '';
-    this.formData.id = 0;
 
     this.surveyData.questionDatas.forEach((elem: any) => {
       if (elem.answer) {
@@ -129,8 +122,9 @@ export class TakeSurveyComponent {
         this.formData.scorecardValues.push(tmp);
       }
     });
+
     this.clientsService.createNewSurvey(this.surveyData.id, this.formData).subscribe(() => {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
 

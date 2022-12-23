@@ -8,5 +8,7 @@ export interface DatatableColumn {
   columnCode: string;
   columnCodes?: any;
   type: string;
+  isColumnUnique: boolean;
+  isColumnIndexed: boolean;
 
 }

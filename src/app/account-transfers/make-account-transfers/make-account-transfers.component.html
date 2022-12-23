@@ -117,7 +117,7 @@
 
           <mat-form-field fxFlex="98%">
             <mat-label>Description</mat-label>
-            <textarea matInput formControlName="transferDescription"></textarea>
+            <textarea matInput formControlName="transferDescription" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
             <mat-error *ngIf="makeAccountTransferForm.controls.transferDescription.hasError('required')">
               Transfer Description is <strong>required</strong>
             </mat-error>
