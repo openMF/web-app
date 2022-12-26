@@ -1,41 +1,47 @@
 <mat-card class="container">
   <div fxLayout="row" fxLayoutAlign="start center">
-    <div class="search-box">
-      <mat-form-field>
-        <input matInput placeholder="Search by client name" (keyup)="applyFilter($event.target.value)">
+    <div class="search-box m-r-30">
+      <mat-form-field class="search-box">
+        <input matInput placeholder="Search by client name, external Id, mobile" class="search-box" (keydown.enter)="search($event.target.value)">
       </mat-form-field>
-      <mat-checkbox #showClosedAccounts labelPosition="after">Show Closed Accounts
+    </div>
+    <div class="filter-box" *ngIf="existsClientsToFilter">
+      <mat-form-field class="filter-box m-r-30">
+        <input matInput placeholder="Filter by client name or external Id" class="filter-box" (keyup)="applyFilter($event.target.value)">
+      </mat-form-field>
+      <mat-checkbox #showClosedAccounts labelPosition="after" class="m-r-10">Show Closed Accounts
       </mat-checkbox>
     </div>
     <div class="action-button" fxLayoutGap="25px">
       <button mat-raised-button color="primary" [routerLink]="['../', 'organization', 'bulk-import', 'Clients']" *mifosxHasPermission="'CREATE_CLIENT'">
-        <fa-icon icon="download"></fa-icon>&nbsp;&nbsp;Import Client
+        <fa-icon icon="download" class="m-r-10"></fa-icon>Import Client
       </button>
       <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_CLIENT'">
-        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Create Client
+        <fa-icon icon="plus" class="m-r-10"></fa-icon>Create Client
       </button>
     </div>
   </div>
-  <div>
+
+  <div *ngIf="existsClientsToFilter">
     <table mat-table [dataSource]="dataSource" matSort>
 
       <!-- Name Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="displayName"> Name </th>
-        <td mat-cell *matCellDef="let row"> {{row.displayName}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.entityName}} </td>
       </ng-container>
 
       <!-- Account no Column -->
-      <ng-container matColumnDef="clientno">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="accountNo"> Account # </th>
-        <td mat-cell *matCellDef="let row"> {{row.accountNo}} </td>
+      <ng-container matColumnDef="clientNo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="accountNo"> Account No. </th>
+        <td mat-cell *matCellDef="let row"> {{row.entityAccountNo}} </td>
       </ng-container>
 
       <!-- External ID Column -->
-      <ng-container matColumnDef="externalid">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="externalId"> ExternalID </th>
+      <ng-container matColumnDef="externalId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="externalId"> External Id </th>
         <td mat-cell *matCellDef="let row">
-          <mifosx-external-identifier externalId="{{row.externalId}}"></mifosx-external-identifier>
+          <mifosx-external-identifier externalId="{{row.entityExternalId}}"></mifosx-external-identifier>
         </td>
       </ng-container>
 
@@ -43,43 +49,40 @@
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef> Status </th>
         <td mat-cell *matCellDef="let row">
-          <div [ngClass]="row.status.code | statusLookup">
+          <div [ngClass]="row.entityStatus.code | statusLookup">
             <fa-icon icon="stop"></fa-icon>
+            <span class="m-l-10 status">
+              {{ row.entityStatus.value | translate }}
+            </span>
           </div>
         </td>
       </ng-container>
 
-      <!-- Mobile Number Column-->
-      <ng-container matColumnDef="mobileNo">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile Number </th>
-        <td mat-cell *matCellDef="let client"> {{ client.mobileNo }} </td>
-      </ng-container>
-
-      <!--Gender column-->
-      <ng-container matColumnDef="gender">
-        <th mat-header-cell *matHeaderCellDef> Gender </th>
-        <td mat-cell *matCellDef="let client"> {{ client.gender.name }} </td>
-      </ng-container>
-
       <!-- Color Column -->
       <ng-container matColumnDef="office">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="officeName"> OfficeName </th>
-        <td mat-cell *matCellDef="let row"> {{row.officeName}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="officeName"> Office Name </th>
+        <td mat-cell *matCellDef="let row"> {{row.parentName}} </td>
       </ng-container>
 
       <!-- ID Column -->
       <ng-container matColumnDef="staff">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="staffName"> StaffName </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="staffName"> Staff Name </th>
         <td mat-cell *matCellDef="let row"> {{row.staffName}} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="[row.id,'general']" class="select-row">
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="[row.entityId,'general']" class="select-row">
       </tr>
     </table>
 
-    <mat-paginator [length]="dataSource?.records$ | async" [pageSize]="100" [pageSizeOptions]="[10, 25, 50, 100]"
+    <mat-paginator [pageSize]="50" [pageSizeOptions]="[10, 25, 50, 100]"
       showFirstLastButtons></mat-paginator>
   </div>
 
+  <div class="alert" *ngIf="notExistsClientsToFilter">
+    <div class="message">
+      <i class="fa fa-exclamation-circle alert-check"></i>
+      No client was found
+    </div>
+  </div>
 </mat-card>

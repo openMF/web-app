@@ -40,6 +40,11 @@ export class SavingsButtonsConfiguration {
             taskPermissionName: 'WITHDRAW_SAVINGSACCOUNT'
           },
           {
+            name: 'Hold Amount',
+            icon: 'lock',
+            taskPermissionName: 'HOLDAMOUNT_SAVINGSACCOUNT'
+          },
+          {
             name: 'Calculate Interest',
             icon: 'table',
             taskPermissionName: 'CALCULATEINTEREST_SAVINGSACCOUNT'

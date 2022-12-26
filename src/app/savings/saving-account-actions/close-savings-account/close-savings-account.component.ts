@@ -128,7 +128,7 @@ export class CloseSavingsAccountComponent implements OnInit {
       locale
     };
     this.savingsService.executeSavingsAccountCommand(this.accountId, 'close', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+      this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });
   }
 

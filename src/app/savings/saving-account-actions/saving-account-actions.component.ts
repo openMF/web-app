@@ -27,6 +27,9 @@ export class SavingAccountActionsComponent {
     'Unassign Staff': boolean
     'Withdraw By Client': boolean
     'Apply Annual Fees': boolean
+    'Hold Amount': boolean
+    'Block Account': boolean
+    'Unblock Account': boolean
   } = {
     'Approve': false,
     'Reject': false,
@@ -40,7 +43,10 @@ export class SavingAccountActionsComponent {
     'Add Charge': false,
     'Unassign Staff': false,
     'Withdraw By Client': false,
-    'Apply Annual Fees': false
+    'Apply Annual Fees': false,
+    'Hold Amount': false,
+    'Block Account': false,
+    'Unblock Account': false
   };
 
   /**

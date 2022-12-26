@@ -19,6 +19,40 @@
             </mat-error>
           </mat-form-field>
 
+          <div fxLayout="row wrap" class="content">
+            <div fxFlex="50%" class="mat-body-strong">
+              {{ 'Principal' | translate }}
+            </div>
+
+            <div fxFlex="50%" class="r-amount">
+              {{ dataObject.principalPortion | number }}
+            </div>
+
+            <div fxFlex="50%" class="mat-body-strong">
+              {{ 'Interest' | translate }}
+            </div>
+
+            <div fxFlex="50%" class="r-amount">
+              {{ dataObject.interestPortion | number }}
+            </div>
+
+            <div fxFlex="50%" class="mat-body-strong">
+              {{ 'Fees' | translate }}
+            </div>
+
+            <div fxFlex="50%" class="r-amount">
+              {{ dataObject.feeChargesPortion | number }}
+            </div>
+
+            <div fxFlex="50%" class="mat-body-strong">
+              {{ 'Penalties' | translate }}
+            </div>
+
+            <div fxFlex="50%" class="r-amount">
+              {{ dataObject.penaltyChargesPortion | number }}
+            </div>
+          </div>
+
           <mat-form-field>
             <mat-label>Transaction Amount</mat-label>
             <input type="number" matInput required formControlName="transactionAmount">
