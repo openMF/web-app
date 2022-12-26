@@ -26,7 +26,7 @@
       <ng-template matStepLabel>DETAILS</ng-template>
 
       <mifosx-loans-account-details-step [loansAccountTemplate]="loansAccountTemplate"
-        (loansAccountProductTemplate)="setTemplate($event)">
+        (loansAccountProductTemplate)="setTemplate($event)" #loansAccountDetailsForm>
       </mifosx-loans-account-details-step>
 
     </mat-step>
@@ -35,7 +35,7 @@
 
       <ng-template matStepLabel>TERMS</ng-template>
 
-      <mifosx-loans-account-terms-step [loansAccountProductTemplate]="loansAccountProductTemplate"
+      <mifosx-loans-account-terms-step #loanAccountTerms [loansAccountProductTemplate]="loansAccountProductTemplate"
       [loansAccountTemplate] = "loansAccountTemplate" [collateralOptions]="collateralOptions"
       [loansAccountFormValid]="loansAccountFormValid" [loanPrincipal]="loanPrincipal">
       </mifosx-loans-account-terms-step>
@@ -46,7 +46,7 @@
 
       <ng-template matStepLabel>CHARGES</ng-template>
 
-      <mifosx-loans-account-charges-step [loansAccountProductTemplate]="loansAccountProductTemplate"
+      <mifosx-loans-account-charges-step #loanAccountCharges [loansAccountProductTemplate]="loansAccountProductTemplate"
         [loansAccountTemplate]="loansAccountTemplate"
         [loansAccountFormValid]="loansAccountFormValid">
       </mifosx-loans-account-charges-step>
@@ -57,7 +57,7 @@
 
       <ng-template matStepLabel>REPAYMENT SCHEDULE</ng-template>
 
-      <mifosx-loans-account-schedule-step [loansAccountTemplate]="loansAccountTemplate"
+      <mifosx-loans-account-schedule-step #loanAccountSchedule [loansAccountTemplate]="loansAccountTemplate"
         [loansAccountProductTemplate]="loansAccountProductTemplate" [loansAccount]="loansAccount">
       </mifosx-loans-account-schedule-step>
 

@@ -47,6 +47,8 @@ import { EditTransactionComponent } from './savings-account-view/transactions/ed
 import { ApplyAnnualFeesSavingsAccountComponent } from './saving-account-actions/apply-annual-fees-savings-account/apply-annual-fees-savings-account.component';
 import { GsimAccountComponent } from './gsim-account/gsim-account.component';
 import { CreateGsimAccountComponent } from './gsim-account/create-gsim-account/create-gsim-account.component';
+import { ManageSavingsAccountComponent } from './saving-account-actions/manage-savings-account/manage-savings-account.component';
+import { ReleaseAmountDialogComponent } from './savings-account-view/custom-dialogs/release-amount-dialog/release-amount-dialog.component';
 
 
 /**
@@ -100,7 +102,9 @@ import { CreateGsimAccountComponent } from './gsim-account/create-gsim-account/c
     EditTransactionComponent,
     ApplyAnnualFeesSavingsAccountComponent,
     GsimAccountComponent,
-    CreateGsimAccountComponent
+    CreateGsimAccountComponent,
+    ManageSavingsAccountComponent,
+    ReleaseAmountDialogComponent
   ],
   providers: [ ]
 })

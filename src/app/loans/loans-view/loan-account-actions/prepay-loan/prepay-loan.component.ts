@@ -70,8 +70,6 @@ export class PrepayLoanComponent implements OnInit {
     this.prepayLoanForm = this.formBuilder.group({
       'transactionDate': [new Date(), Validators.required],
       'transactionAmount': ['', Validators.required],
-      'principal': [{value: '', disabled: true}],
-      'interestAmount': [{value: '', disabled: true}, Validators.required],
       'externalId': [''],
       'paymentTypeId': [''],
       'note': ['']
@@ -84,9 +82,7 @@ export class PrepayLoanComponent implements OnInit {
   setPrepayLoanDetails() {
     this.paymentTypes = this.dataObject.paymentTypeOptions;
     this.prepayLoanForm.patchValue({
-      transactionAmount: this.dataObject.amount,
-      principal: this.dataObject.principalPortion,
-      interestAmount: this.dataObject.interestPortion,
+      transactionAmount: this.dataObject.amount
     });
   }
 

@@ -6,6 +6,12 @@
     min-width: 30px;
     margin: 4px;
   }
+  .search-box {
+    min-width: 320px;
+  }
+  .filter-box {
+    min-width: 280px;
+  }
 }
 
 table {
@@ -15,4 +21,8 @@ table {
   tr:nth-child(odd).td{
     color : black;
   }
+}
+
+.status {
+  color: black;
 }

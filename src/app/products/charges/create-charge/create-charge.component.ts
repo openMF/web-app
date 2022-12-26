@@ -129,7 +129,8 @@ export class CreateChargeComponent implements OnInit {
         return false;
       }
       if (this.chargeForm.get('chargeAppliesTo').value === 2) {
-        if (!(this.chargeForm.get('chargeTimeType').value === 5 || this.chargeForm.get('chargeTimeType').value === 16) && chargeCalculationType.id === 2) {
+        if (!(this.chargeForm.get('chargeTimeType').value === 5 || this.chargeForm.get('chargeTimeType').value === 16
+          || this.chargeForm.get('chargeTimeType').value === 17) && chargeCalculationType.id === 2) {
           return false;
         }
       }

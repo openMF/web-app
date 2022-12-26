@@ -135,6 +135,9 @@ export class SavingsAccountViewComponent implements OnInit {
       case 'Post Interest As On':
       case 'Assign Staff':
       case 'Add Charge':
+      case 'Hold Amount':
+      case 'Block Account':
+      case 'Unblock Account':
       case 'Unassign Staff':
       case 'Withdraw By Client':
       case 'Apply Annual Fees':
