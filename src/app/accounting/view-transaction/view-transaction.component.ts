@@ -12,6 +12,7 @@ import { AccountingService } from '../accounting.service';
 /** Custom Components */
 import { RevertTransactionComponent } from '../revert-transaction/revert-transaction.component';
 import { ViewJournalEntryComponent } from '../view-journal-entry/view-journal-entry.component';
+import { Location } from '@angular/common';
 
 /**
  * View transaction component.
@@ -48,7 +49,8 @@ export class ViewTransactionComponent implements OnInit {
   constructor(private accountingService: AccountingService,
               private route: ActivatedRoute,
               private router: Router,
-              public dialog: MatDialog) {  }
+              public dialog: MatDialog,
+              private location: Location) {  }
 
   /**
    * Retrieves the transaction data from `resolve` and sets the transaction table.
@@ -106,6 +108,10 @@ export class ViewTransactionComponent implements OnInit {
         this.router.navigate(['../', transactionId], { relativeTo: this.route });
       }
     });
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
 }

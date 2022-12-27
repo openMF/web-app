@@ -1,5 +1,6 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -13,11 +14,25 @@ export class ViewAccountTransferComponent {
   /**
    * Retrieves the view account transfer data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
+   * @param {Location} location Location.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+    private location: Location) {
     this.route.data.subscribe((data: { viewAccountTransferData: any }) => {
       this.viewAccountTransferData = data.viewAccountTransferData;
     });
+  }
+
+  transferToClient(toClient: any): string {
+    return `/#/clients/${toClient.id}`;
+  }
+
+  transferToAccount(toClient: any, toAccount: any): string {
+    return `/#/clients/${toClient.id}/savings-accounts/${toAccount.id}`;
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
 }

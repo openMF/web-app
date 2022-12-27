@@ -10,6 +10,7 @@ export class StatusLookupPipe implements PipeTransform {
       'true': 'status-active',
       'false': 'status-deleted',
       'Active': 'status-active',
+      'Block': 'status-block',
       'charges.StatusType.active.true': 'status-active',
       'loanStatusType.submitted.and.pending.approval': 'status-pending',
       'loanStatusType.approved': 'status-approved',

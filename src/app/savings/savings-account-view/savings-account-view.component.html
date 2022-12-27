@@ -15,7 +15,9 @@
         <mat-card-title fxLayout="row" fxLayout.lt-md="column">
           <h3 fxFlex="95%">
             <i class="fa fa-stop" [ngClass]="savingsAccountData.status.code | statusLookup"
-              [matTooltip]="savingsAccountData.status.value"></i>
+              [matTooltip]="savingsAccountData.status.value" *ngIf="!savingsAccountData.subStatus.block"></i>
+            <i class="fa fa-stop" [ngClass]="savingsAccountData.subStatus.value | statusLookup"
+              [matTooltip]="savingsAccountData.subStatus.value" *ngIf="savingsAccountData.subStatus.block"></i>
             Savings Product : {{savingsAccountData.savingsProductName}}<span class="m-l-10">({{savingsAccountData.accountNo}})</span>
           </h3>
           <div fxFlex="5%">
@@ -53,7 +55,7 @@
           </button>
         </ng-container>
 
-        <ng-container *ngIf="buttonConfig.options">
+        <ng-container *ngIf="buttonConfig.options && !savingsAccountData.subStatus.block">
           <button mat-menu-item [matMenuTriggerFor]="More">More</button>
           <mat-menu #More="matMenu">
             <span *ngFor="let option of buttonConfig.options">

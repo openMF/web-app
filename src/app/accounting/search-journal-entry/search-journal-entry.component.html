@@ -90,7 +90,7 @@
 
     <ng-container matColumnDef="transactionDate">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Date </th>
-      <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.transactionDate }} </td>
+      <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.transactionDate | dateFormat }} </td>
     </ng-container>
 
     <ng-container matColumnDef="glAccountType">
@@ -105,7 +105,7 @@
 
     <ng-container matColumnDef="submittedOnDate">
       <th mat-header-cell *matHeaderCellDef> Submitted on date </th>
-      <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.submittedOnDate }} </td>
+      <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.submittedOnDate | datetimeFormat }} </td>
     </ng-container>
 
     <ng-container matColumnDef="glAccountCode">
@@ -120,12 +120,12 @@
 
     <ng-container matColumnDef="debit">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Debit </th>
-      <td mat-cell *matCellDef="let journalEntry"><span *ngIf="journalEntry.entryType.value === 'DEBIT'"> {{ (journalEntry.currency.displaySymbol || journalEntry.currency.code) + ' ' + journalEntry.amount }} </span></td>
+      <td mat-cell *matCellDef="let journalEntry"><span *ngIf="journalEntry.entryType.value === 'DEBIT'"> {{ (journalEntry.currency.displaySymbol || journalEntry.currency.code) + ' ' + journalEntry.amount | number }} </span></td>
     </ng-container>
 
     <ng-container matColumnDef="credit">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Credit </th>
-      <td mat-cell *matCellDef="let journalEntry"><span *ngIf="journalEntry.entryType.value === 'CREDIT'"> {{ (journalEntry.currency.displaySymbol || journalEntry.currency.code) + ' ' + journalEntry.amount }} </span></td>
+      <td mat-cell *matCellDef="let journalEntry"><span *ngIf="journalEntry.entryType.value === 'CREDIT'"> {{ (journalEntry.currency.displaySymbol || journalEntry.currency.code) + ' ' + journalEntry.amount | number }} </span></td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -133,6 +133,6 @@
 
   </table>
 
-  <mat-paginator [length]="dataSource?.records$ | async" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+  <mat-paginator [length]="dataSource?.records$ | async" [pageSize]="25" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
 
 </div>

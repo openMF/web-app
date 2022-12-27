@@ -21,7 +21,7 @@
 
     <tr>
       <th>Transaction Date</th>
-      <td>{{ data.journalEntry.transactionDate }}</td>
+      <td>{{ data.journalEntry.transactionDate | dateFormat }}</td>
     </tr>
 
     <tr>
@@ -45,8 +45,13 @@
         <span *ngIf="data.journalEntry.entryType.value === 'DEBIT'">Debit</span>
       </th>
       <td>
-        {{ (data.journalEntry.currency.displaySymbol || data.journalEntry.currency.code) + ' ' + data.journalEntry.amount }}
+        {{ data.journalEntry.currency.displaySymbol }} {{ data.journalEntry.amount | number }}
       </td>
+    </tr>
+
+    <tr>
+      <th>Currency</th>
+      <td>({{ data.journalEntry.currency.code }}) {{ data.journalEntry.currency.name }}</td>
     </tr>
 
     <tr *ngIf="data.journalEntry.referenceNumber">
@@ -100,7 +105,7 @@
 
     <tr>
       <th>Submitted on</th>
-      <td>{{ data.journalEntry.submittedOnDate }}</td>
+      <td>{{ data.journalEntry.submittedOnDate | datetimeFormat }}</td>
     </tr>
 
   </table>

@@ -12,7 +12,7 @@
 
         <div fxFlexFill>
           <span fxFlex="40%">Transaction Amount:</span>
-          <span fxFlex="60%">{{ viewAccountTransferData.transferAmount }}</span>
+          <span fxFlex="60%">{{ viewAccountTransferData.currency.displaySymbol }} {{ viewAccountTransferData.transferAmount | number }} ({{ viewAccountTransferData.currency.code }})</span>
         </div>
 
         <div fxFlexFill>
@@ -45,7 +45,7 @@
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">Account #:</span>
+          <span fxFlex="40%">Account No:</span>
           <span fxFlex="60%">{{ viewAccountTransferData.fromAccount.accountNo }}</span>
         </div>
 
@@ -60,7 +60,9 @@
 
         <div fxFlexFill>
           <span fxFlex="40%">Client:</span>
-          <span fxFlex="60%">{{ viewAccountTransferData.toClient.displayName }}</span>
+          <span fxFlex="60%"><a [href]="transferToClient(viewAccountTransferData.toClient)">
+            {{ viewAccountTransferData.toClient.displayName }}</a>
+          </span>
         </div>
 
         <div fxFlexFill>
@@ -69,14 +71,19 @@
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">Account #:</span>
-          <span fxFlex="60%">{{ viewAccountTransferData.toAccount.accountNo }}</span>
+          <span fxFlex="40%">Account No:</span>
+          <span fxFlex="60%"><a [href]="transferToAccount(viewAccountTransferData.toClient, viewAccountTransferData.toAccount)">
+            {{ viewAccountTransferData.toAccount.accountNo }}</a>
+          </span>
         </div>
 
       </div>
 
     </mat-card-content>
 
+    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <button type="button" color="primary" mat-raised-button (click)="goBack()">Back</button>
+    </mat-card-actions>
   </mat-card>
 
 </div>

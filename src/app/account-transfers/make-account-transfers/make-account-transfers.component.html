@@ -22,8 +22,8 @@
 
         <div fxFlexFill>
           <span fxFlex="40%">From Account</span>
-          <span
-            fxFlex="60%">{{ accountTransferTemplateData.fromAccount.productName}}&nbsp;-&nbsp;#{{ accountTransferTemplateData.fromAccount.accountNo }}</span>
+          <span fxFlex="60%">{{ accountTransferTemplateData.fromAccount.productName}}&nbsp;-&nbsp;#{{
+            accountTransferTemplateData.fromAccount.accountNo }}</span>
         </div>
 
         <div fxFlexFill>
@@ -45,6 +45,17 @@
       <form [formGroup]="makeAccountTransferForm">
 
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+          <mat-form-field fxFlex="98%" (click)="transferDatePicker.open()">
+            <mat-label>Transaction Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transferDatePicker" required
+              formControlName="transferDate">
+            <mat-datepicker-toggle matSuffix [for]="transferDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #transferDatePicker></mat-datepicker>
+            <mat-error *ngIf="makeAccountTransferForm.controls.transferDate.hasError('required')">
+              Transactions Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
 
           <mat-form-field fxFlex="98%">
             <mat-label>Office</mat-label>
@@ -104,20 +115,10 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="98%"  (click)="transferDatePicker.open()">
-            <mat-label>Transaction Date</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transferDatePicker" required
-              formControlName="transferDate">
-            <mat-datepicker-toggle matSuffix [for]="transferDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #transferDatePicker></mat-datepicker>
-            <mat-error *ngIf="makeAccountTransferForm.controls.transferDate.hasError('required')">
-              Transactions Date is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-
           <mat-form-field fxFlex="98%">
             <mat-label>Description</mat-label>
-            <textarea matInput formControlName="transferDescription" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+            <textarea matInput formControlName="transferDescription" cdkTextareaAutosize
+              cdkAutosizeMinRows="2"></textarea>
             <mat-error *ngIf="makeAccountTransferForm.controls.transferDescription.hasError('required')">
               Transfer Description is <strong>required</strong>
             </mat-error>
@@ -132,8 +133,8 @@
 
     <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
       <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
-      <button mat-raised-button color="primary" [disabled]="!makeAccountTransferForm.valid" *mifosxHasPermission="'CREATE_ACCOUNTTRANSFER'"
-        (click)="submit()">Submit</button>
+      <button mat-raised-button color="primary" [disabled]="!makeAccountTransferForm.valid"
+        *mifosxHasPermission="'CREATE_ACCOUNTTRANSFER'" (click)="submit()">Submit</button>
     </mat-card-actions>
 
   </mat-card>
