@@ -89,6 +89,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    * Creates and sets the create standing instructions form.
    */
   ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
     this.createMakeAccountTransferForm();
   }
 
@@ -102,7 +103,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
       'toAccountType': ['', Validators.required],
       'toAccountId': ['', Validators.required],
       'transferAmount': [this.accountTransferTemplateData.transferAmount, Validators.required],
-      'transferDate': ['', Validators.required],
+      'transferDate': [this.settingsService.businessDate, Validators.required],
       'transferDescription': ['', Validators.required],
     });
   }
@@ -186,7 +187,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
       fromOfficeId: this.accountTransferTemplateData.fromClient.officeId
     };
     this.accountTransfersService.createAccountTransfer(makeAccountTransferData).subscribe(() => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
+      this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });
   }
 

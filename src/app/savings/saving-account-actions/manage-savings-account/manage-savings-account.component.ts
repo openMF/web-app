@@ -27,10 +27,10 @@ export class ManageSavingsAccountComponent implements OnInit {
 
   transactionType: {
     holdamount: boolean,
-    blockaccount: boolean,
-    unblockaccount: boolean
+    blockaccount: boolean
   } = {
-    holdamount: false, blockaccount: false, unblockaccount: false };
+      holdamount: false, blockaccount: false
+    };
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
@@ -41,12 +41,12 @@ export class ManageSavingsAccountComponent implements OnInit {
    * @param {SettingsService} settingsService Setting service
    */
   constructor(private formBuilder: FormBuilder,
-              private savingsService: SavingsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router,
-              private systemService: SystemService,
-              private settingsService: SettingsService) {
+    private savingsService: SavingsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router,
+    private systemService: SystemService,
+    private settingsService: SettingsService) {
     this.transactionCommand = this.route.snapshot.params['name'].toLowerCase().replaceAll(' ', '');
     this.transactionType[this.transactionCommand] = true;
     this.savingAccountId = this.route.parent.snapshot.params['savingAccountId'];
@@ -83,15 +83,15 @@ export class ManageSavingsAccountComponent implements OnInit {
   }
 
   /**
-   * Creates the post interest savings account form.
+   * Creates the manage savings account form.
    */
   createManageSavingsAccountForm() {
     if (this.transactionType.holdamount) {
-    this.manageSavingsAccountForm = this.formBuilder.group({
-      'reasonForBlock': ['', Validators.required],
-      'transactionDate': ['', Validators.required],
-      'transactionAmount': [0.0, Validators.required]
-    });
+      this.manageSavingsAccountForm = this.formBuilder.group({
+        'reasonForBlock': ['', Validators.required],
+        'transactionDate': ['', Validators.required],
+        'transactionAmount': [0.0, Validators.required]
+      });
     } else {
       this.manageSavingsAccountForm = this.formBuilder.group({
         'reasonForBlock': ['', Validators.required]
@@ -101,7 +101,7 @@ export class ManageSavingsAccountComponent implements OnInit {
 
   submit() {
     let command = '';
-    let payload = { };
+    let payload = {};
 
     if (this.transactionType.holdamount) {
       const manageSavingsAccountFormData = this.manageSavingsAccountForm.value;
@@ -119,7 +119,6 @@ export class ManageSavingsAccountComponent implements OnInit {
       command = 'holdAmount';
 
       this.savingsService.executeSavingsAccountTransactionsCommand(this.savingAccountId, command, payload).subscribe((response: any) => {
-        console.log(response);
         this.router.navigate(['../../transactions'], { relativeTo: this.route });
       });
     } else {
@@ -131,7 +130,6 @@ export class ManageSavingsAccountComponent implements OnInit {
       }
 
       this.savingsService.executeSavingsAccountCommand(this.savingAccountId, command, payload).subscribe((response: any) => {
-        console.log(response);
         this.router.navigate(['../../transactions'], { relativeTo: this.route });
       });
     }

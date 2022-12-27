@@ -16,8 +16,8 @@
 <div class="container">
 
   <mat-card>
-    
-    <mat-card-title> <i class="fa fa-stop" [ngClass]="(!(chargeData.isWaived || chargeData.isPaid))|statusLookup"></i> 
+
+    <mat-card-title> <i class="fa fa-stop" [ngClass]="(!(chargeData.isWaived || chargeData.isPaid))|statusLookup"></i>
       {{ chargeData.name }}
     </mat-card-title>
 
@@ -87,12 +87,12 @@
           <th mat-header-cell *matHeaderCellDef> ID </th>
           <td mat-cell *matCellDef="let element" [ngClass]="{'strikeoff':element.reversed}"> {{element.id}} </td>
         </ng-container>
-    
+
         <ng-container matColumnDef="officeName">
           <th mat-header-cell *matHeaderCellDef> Office Name </th>
           <td mat-cell *matCellDef="let element" [ngClass]="{'strikeoff':element.reversed}"> {{element.officeName }} </td>
         </ng-container>
-    
+
         <ng-container matColumnDef="type">
           <th mat-header-cell *matHeaderCellDef> Type </th>
           <td mat-cell *matCellDef="let element" [ngClass]="{'strikeoff':element.reversed}"> {{element.type.value}} </td>
@@ -101,21 +101,21 @@
           <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
           <td mat-cell *matCellDef="let element" [ngClass]="{'strikeoff':element.reversed}"> {{element.date  | dateFormat}} </td>
         </ng-container>
-    
+
         <ng-container matColumnDef="amount">
           <th mat-header-cell *matHeaderCellDef> Amount </th>
-          <td mat-cell *matCellDef="let element" [ngClass]="{'strikeoff':element.reversed}"> {{element.amount}} </td>
+          <td mat-cell *matCellDef="let element" [ngClass]="{'strikeoff':element.reversed}"> {{element.amount | number }} </td>
         </ng-container>
-    
+
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef> Actions </th>
-          <td mat-cell *matCellDef="let element" [ngClass]="{'strikeoff':element.reversed}"> 
+          <td mat-cell *matCellDef="let element" [ngClass]="{'strikeoff':element.reversed}">
             <button mat-raised-button color="primary" (click)="undoTransaction(element.id)" class="delBtn">
               <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
-            </button> 
+            </button>
           </td>
         </ng-container>
-        
+
         <tr mat-header-row *matHeaderRowDef="viewChargeTableColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: viewChargeTableColumns;"></tr>
       </table>

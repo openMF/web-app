@@ -4,7 +4,6 @@
 
     <h2 mat-title *ngIf="transactionType.holdamount">Hold Amount</h2>
     <h2 mat-title *ngIf="transactionType.blockaccount">Block Savings Account</h2>
-    <h2 mat-title *ngIf="transactionType.unblockaccount">Unblock Savings Account</h2>
 
     <form [formGroup]="manageSavingsAccountForm" (ngSubmit)="submit()">
 

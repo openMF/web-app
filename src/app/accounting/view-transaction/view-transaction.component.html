@@ -1,8 +1,7 @@
 <div fxLayout="row" fxLayoutAlign="end" class="container m-b-20" *ngIf="dataSource?.data[0].manualEntry">
   <button mat-raised-button color="primary" (click)="revertTransaction()" *mifosxHasPermission="'REVERSE_JOURNALENTRY'" [disabled]="dataSource?.data[0].reversed">
     <span *ngIf="!dataSource.data[0].reversed">
-      <fa-icon icon="undo"></fa-icon>&nbsp;&nbsp;
-      Revert Transaction
+      <fa-icon icon="undo" class="m-r-10"></fa-icon>Revert Transaction
     </span>
     <span *ngIf="dataSource.data[0].reversed">Transaction Reverted</span>
   </button>
@@ -29,7 +28,7 @@
           </div>
 
           <div fxFlex="25%" fxFlex.lt-md="50%">
-            {{ dataSource.data[0].transactionDate }}
+            {{ dataSource.data[0].transactionDate | dateFormat }}
           </div>
 
           <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
@@ -45,7 +44,7 @@
           </div>
 
           <div fxFlex="25%" fxFlex.lt-md="50%">
-            {{ dataSource.data[0].submittedOnDate }}
+            {{ dataSource.data[0].submittedOnDate | datetimeFormat }}
           </div>
 
         </div>
@@ -61,33 +60,33 @@
   <table mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Entry ID </th>
+      <th mat-header-cell class="center" *matHeaderCellDef mat-sort-header> Entry ID </th>
       <td mat-cell *matCellDef="let transaction"> {{ transaction.id }} </td>
     </ng-container>
 
     <ng-container matColumnDef="glAccountType">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+      <th mat-header-cell class="center" *matHeaderCellDef mat-sort-header> Type </th>
       <td mat-cell *matCellDef="let transaction"> {{ transaction.glAccountType.value }} </td>
     </ng-container>
 
     <ng-container matColumnDef="glAccountCode">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Account Code </th>
+      <th mat-header-cell class="center" *matHeaderCellDef mat-sort-header> Account Code </th>
       <td mat-cell *matCellDef="let transaction"> {{ transaction.glAccountCode }} </td>
     </ng-container>
 
     <ng-container matColumnDef="glAccountName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Account Name </th>
+      <th mat-header-cell class="center" *matHeaderCellDef mat-sort-header> Account Name </th>
       <td mat-cell *matCellDef="let transaction"> {{ transaction.glAccountName }} </td>
     </ng-container>
 
     <ng-container matColumnDef="debit">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Debit </th>
-      <td mat-cell *matCellDef="let transaction"><span *ngIf="transaction.entryType.value === 'DEBIT'"> {{ (transaction.currency.displaySymbol || transaction.currency.code) + ' ' + transaction.amount }} </span></td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header> Debit </th>
+      <td mat-cell class="r-amount" *matCellDef="let transaction"><span *ngIf="transaction.entryType.value === 'DEBIT'"> {{ (transaction.currency.displaySymbol || transaction.currency.code) + ' ' + transaction.amount }} </span></td>
     </ng-container>
 
     <ng-container matColumnDef="credit">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Credit </th>
-      <td mat-cell *matCellDef="let transaction"><span *ngIf="transaction.entryType.value === 'CREDIT'"> {{ (transaction.currency.displaySymbol || transaction.currency.code) + ' ' + transaction.amount }} </span></td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header> Credit </th>
+      <td mat-cell class="r-amount" *matCellDef="let transaction"><span *ngIf="transaction.entryType.value === 'CREDIT'"> {{ (transaction.currency.displaySymbol || transaction.currency.code) + ' ' + transaction.amount }} </span></td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -97,4 +96,7 @@
 
   <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
 
+  <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button type="button" color="primary" mat-raised-button (click)="goBack()">Back</button>
+  </div>
 </div>
