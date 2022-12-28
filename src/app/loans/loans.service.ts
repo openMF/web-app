@@ -401,7 +401,7 @@ export class LoansService {
   }
 
   /**
-   * @param {string} accountId  Loans Account Id
+   * @param {string} accountId Loans Account Id
    * @param {any} data Charge Data
    * @param {any} chargeId Charge Id
    * @returns {Observable<any>}
@@ -411,12 +411,21 @@ export class LoansService {
   }
 
   /**
-   * @param {string} accountId  Loans Account Id
+   * @param {string} accountId Loans Account Id
    * @param {any} chargeId Charge Id
    * @returns {Observable<any>}
    */
   deleteLoansAccountCharge(accountId: string, chargeId: any): Observable<any> {
     return this.http.delete(`/loans/${accountId}/charges/${chargeId}`);
+  }
+
+  /**
+   * @param {string} loanId Loans Account Id
+   * @param {string} command Schedule command
+   * @returns {Observable<any>}
+   */
+  applyCommandLoanScheduleVariations(loanId: string, command: string, payload: any): Observable<any> {
+    return this.http.post(`/loans/${loanId}/schedule?command=${command}`, payload);
   }
 
   /**

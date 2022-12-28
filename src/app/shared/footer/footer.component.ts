@@ -25,6 +25,7 @@ export class FooterComponent implements OnInit, OnDestroy {
   version: string = environment.version;
   /** Mifos X hash */
   hash: string = environment.hash;
+  server = '';
   /** Business Date */
   businessDate: Date = null;
 
@@ -58,6 +59,7 @@ export class FooterComponent implements OnInit, OnDestroy {
       }
     });
     this.getConfigurations();
+    this.server = this.settingsService.server;
   }
 
   ngOnDestroy() {

@@ -4,10 +4,14 @@
 
     <mat-card-content>
 
-      <mat-form-field fxFlex>
-        <mat-label>Note</mat-label>
-        <textarea matInput [formControl]="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
-      </mat-form-field>
+      <div fxLayout="column">
+
+        <mat-form-field fxFlex>
+          <mat-label>Note</mat-label>
+          <textarea matInput required [formControl]="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+        </mat-form-field>
+
+      </div>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
         <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>

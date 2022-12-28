@@ -74,7 +74,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Delinquency Bucket</mat-label>
-      <mat-select formControlName="delinquencyBucketId">
+      <mat-select formControlName="delinquencyBucketId" required>
         <mat-option *ngFor="let delinquencyBucket of delinquencyBucketData" [value]="delinquencyBucket.id">
           {{ delinquencyBucket.name }}
         </mat-option>
@@ -162,7 +162,10 @@
 
       <mat-form-field fxFlex="48%">
         <mat-label>Maximum gap between Installments</mat-label>
-        <input type="number" matInput formControlName="maximumGap">
+        <input type="number" matInput formControlName="maximumGap" required>
+        <mat-error>
+          Maximum gap between Installments is <strong>required</strong>
+        </mat-error>
       </mat-form-field>
 
     </div>

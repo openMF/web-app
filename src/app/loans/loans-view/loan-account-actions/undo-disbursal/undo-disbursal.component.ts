@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormBuilder } from '@angular/forms';
+import { FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -40,7 +40,7 @@ export class UndoDisbursalComponent implements OnInit {
    * Creates the undo disbursal form.
    */
   ngOnInit() {
-    this.note = this.formBuilder.control('');
+    this.note = this.formBuilder.control('', Validators.required);
   }
 
   /**

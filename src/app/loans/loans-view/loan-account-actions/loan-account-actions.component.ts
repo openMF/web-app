@@ -39,7 +39,8 @@ export class LoanAccountActionsComponent {
             'Goodwill Credit': boolean,
             'Merchant Issued Refund': boolean,
             'Payout Refund': boolean,
-            'Credit Balance Refund': boolean
+            'Credit Balance Refund': boolean,
+            'Edit Repayment Schedule': boolean
          } = {
               'Close': false,
               'Undo Approval': false,
@@ -67,7 +68,8 @@ export class LoanAccountActionsComponent {
               'Goodwill Credit': false,
               'Merchant Issued Refund': false,
               'Payout Refund': false,
-              'Credit Balance Refund': false
+              'Credit Balance Refund': false,
+              'Edit Repayment Schedule': false
           };
 
   actionButtonData: any;

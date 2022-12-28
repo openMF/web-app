@@ -1,3 +1,6 @@
+@import "assets/styles/helper";
+@import "assets/styles/helper";
+
 table {
   width: 100%;
   margin: 3% 0%;
@@ -9,4 +12,8 @@ table {
 
 .check {
   padding-left: 15px;
+}
+
+.amount-changed {
+  color: $status-approved;
 }

@@ -64,7 +64,7 @@ export class EditDataTableComponent implements OnInit {
       isColumnIndexed: undefined
     };
   /** Columns to be displayed in columns table. */
-  displayedColumns: string[] = ['name', 'type', 'mandatory', 'length', 'code', 'unique', 'indexed', 'actions'];
+  displayedColumns: string[] = ['name', 'type', 'length', 'code', 'mandatory', 'unique', 'indexed', 'actions'];
   /** Data source for columns table. */
   dataSource: MatTableDataSource<any>;
   /** Paginator for columns table. */
@@ -204,8 +204,8 @@ export class EditDataTableComponent implements OnInit {
     this.dataForDialog.columnName = column.columnName;
     this.dataForDialog.columnDisplayType = column.columnDisplayType;
     this.dataForDialog.isColumnNullable = !column.isColumnNullable;
-    this.dataForDialog.isColumnUnique = !column.isColumnUnique;
-    this.dataForDialog.isColumnIndexed = !column.isColumnIndexed;
+    this.dataForDialog.isColumnUnique = column.isColumnUnique;
+    this.dataForDialog.isColumnIndexed = column.isColumnIndexed;
     this.dataForDialog.columnLength = column.columnLength;
     this.dataForDialog.columnCode = column.columnCode;
     this.dataForDialog.type = column.type;

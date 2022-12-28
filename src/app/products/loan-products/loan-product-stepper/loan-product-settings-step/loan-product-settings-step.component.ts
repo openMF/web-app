@@ -174,7 +174,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
         'graceOnPrincipalAndInterestPayment': [true],
         'graceOnArrearsAgeing': [true]
       }),
-      'delinquencyBucketId': ['']
+      'delinquencyBucketId': ['', Validators.required]
     });
   }
 
@@ -194,7 +194,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
       .subscribe((allowVariableInstallments: any) => {
         if (allowVariableInstallments) {
           this.loanProductSettingsForm.addControl('minimumGap', new FormControl('', Validators.required));
-          this.loanProductSettingsForm.addControl('maximumGap', new FormControl(''));
+          this.loanProductSettingsForm.addControl('maximumGap', new FormControl('', Validators.required));
         } else {
           this.loanProductSettingsForm.removeControl('minimumGap');
           this.loanProductSettingsForm.removeControl('maximumGap');

@@ -124,10 +124,8 @@ export class ManageSavingsAccountComponent implements OnInit {
     } else {
       payload = {
         ... this.manageSavingsAccountForm.value
-      }
-      if (this.transactionType.blockaccount) {
-        command = 'block';
-      }
+      };
+      command = 'block';
 
       this.savingsService.executeSavingsAccountCommand(this.savingAccountId, command, payload).subscribe((response: any) => {
         this.router.navigate(['../../transactions'], { relativeTo: this.route });
