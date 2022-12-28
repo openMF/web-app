@@ -16,7 +16,7 @@ export class ApiPrefixInterceptor implements HttpInterceptor {
   /**
    * @param {SettingsService} settingsService Settings Service
    */
-   constructor(private settingsService: SettingsService) {}
+  constructor(private settingsService: SettingsService) { }
 
   /**
    * Intercepts a Http request and prefixes it with `serverUrl`.
@@ -25,7 +25,7 @@ export class ApiPrefixInterceptor implements HttpInterceptor {
     /**
      * Ignore URLs that are complete for i18n
      */
-     if (!request.url.includes('http:') && !request.url.includes('https:')) {
+    if (!request.url.includes('http:') && !request.url.includes('https:')) {
       request = request.clone({ url: this.settingsService.serverUrl + request.url });
     }
 

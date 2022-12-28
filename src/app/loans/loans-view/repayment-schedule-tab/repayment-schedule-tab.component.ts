@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -8,6 +8,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class RepaymentScheduleTabComponent implements OnInit {
 
+  /** Loan Repayment Schedule to be Edited */
+  @Input() forEditing = false;
   /** Loan Repayment Schedule Details Data */
   @Input() repaymentScheduleDetails: any = null;
   loanDetailsDataRepaymentSchedule: any = [];
@@ -16,6 +18,11 @@ export class RepaymentScheduleTabComponent implements OnInit {
   isWaived: boolean;
   /** Columns to be displayed in original schedule table. */
   displayedColumns: string[] = ['number', 'days', 'date', 'paiddate', 'check', 'balanceOfLoan', 'principalDue', 'interest', 'fees', 'penalties', 'due', 'paid', 'inadvance', 'late', 'waived', 'outstanding'];
+  /** Columns to be displayed in editable schedule table. */
+  displayedColumnsEdit: string[] = ['number', 'date', 'balanceOfLoan', 'principalDue', 'interest', 'fees', 'due'];
+
+  /** Form functions event */
+  @Output() editPeriod = new EventEmitter();
 
   /**
    * Retrieves the loans with associations data from `resolve`.

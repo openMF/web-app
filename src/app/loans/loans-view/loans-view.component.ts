@@ -53,15 +53,16 @@ export class LoansViewComponent implements OnInit {
   ngOnInit() {
     this.recalculateInterest = this.loanDetailsData.recalculateInterest || true;
     this.status = this.loanDetailsData.status.value;
-    this.setConditionalButtons();
-
-    if (this.loanDetailsData.multiDisburseLoan) {
-      this.loanDetailsData.transactions.forEach((tranaction: any) => {
-        if (tranaction.type.disbursement) {
-          this.disburseTransactionNo++;
-        }
-      });
+    if (this.loanDetailsData.status.active && this.loanDetailsData.multiDisburseLoan) {
+      if (this.loanDetailsData) {
+        this.loanDetailsData.transactions.forEach((transaction: any) => {
+          if (transaction.type.disbursement) {
+            this.disburseTransactionNo++;
+          }
+        });
+      }
     }
+    this.setConditionalButtons();
     if (this.router.url.includes('clients')) {
       this.entityType = 'Client';
     } else if (this.router.url.includes('groups')) {

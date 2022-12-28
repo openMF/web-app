@@ -2,9 +2,20 @@
 
   <mat-card>
     <mat-card-content>
-      <mifosx-loans-account-schedule-step></mifosx-loans-account-schedule-step>
+
+      <div fxLayout="column">
+        <mifosx-repayment-schedule-tab fxFlex="100%"
+          [repaymentScheduleDetails]="repaymentScheduleDetails"
+          [forEditing]="true">
+        </mifosx-repayment-schedule-tab>
+      </div>
+
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
         <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+        <button type="button" (click)="reset()">Reset</button>
+        <button type="button" color="primary" mat-raised-button (click)="applyPattern()">Pattern</button>
+        <button type="button" color="primary" mat-raised-button [disabled]="!wasChanged" (click)="validate()">Validate</button>
+        <button type="button" color="primary" mat-raised-button [disabled]="!wasValidated" (click)="submit()">Submit</button>
       </mat-card-actions>
 
     </mat-card-content>
