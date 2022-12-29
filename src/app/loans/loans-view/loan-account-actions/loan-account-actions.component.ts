@@ -1,6 +1,6 @@
 /** Angular Imports. */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 /**
  * Loan Account Actions component.
@@ -21,7 +21,7 @@ export class LoanAccountActionsComponent {
             'Foreclosure': boolean,
             'Prepay Loan': boolean,
             'Reject': boolean,
-            'Disburse To Savings': boolean,
+            'Disburse to Savings': boolean,
             'Make Repayment': boolean,
             'Waive Interest': boolean,
             'Close (as Rescheduled)': boolean,
@@ -50,7 +50,7 @@ export class LoanAccountActionsComponent {
               'Foreclosure':  false,
               'Prepay Loan':  false,
               'Reject':  false,
-              'Disburse To Savings':  false,
+              'Disburse to Savings':  false,
               'Make Repayment':  false,
               'Waive Interest':  false,
               'Close (as Rescheduled)':  false,
@@ -76,11 +76,9 @@ export class LoanAccountActionsComponent {
   actionName: any;
 
   /**
-   * @param router Router.
    * @param route Activated Route.
    */
-  constructor(private router: Router,
-    private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute) {
       this.route.data.subscribe(( data: { actionButtonData: any }) => {
         this.actionButtonData = data.actionButtonData;
       });

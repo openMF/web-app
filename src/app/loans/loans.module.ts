@@ -43,7 +43,6 @@ import { LoansAccountPreviewStepComponent } from './loans-account-stepper/loans-
 import { RecoveryRepaymentComponent } from './loans-view/loan-account-actions/recovery-repayment/recovery-repayment.component';
 import { ViewGuarantorsComponent } from './loans-view/loan-account-actions/view-guarantors/view-guarantors.component';
 import { CreateGuarantorComponent } from './loans-view/loan-account-actions/create-guarantor/create-guarantor.component';
-import { DisburseLoanAccountComponent } from './loans-view/loan-account-actions/disburse-loan-account/disburse-loan-account.component';
 import { DisburseComponent } from './loans-view/loan-account-actions/disburse/disburse.component';
 import { RejectLoanComponent } from './loans-view/loan-account-actions/reject-loan/reject-loan.component';
 import { WithdrawnByClientComponent } from './loans-view/loan-account-actions/withdrawn-by-client/withdrawn-by-client.component';
@@ -74,6 +73,7 @@ import { LoanCreditBalanceRefundComponent } from './loans-view/loan-account-acti
 import { LoanDelinquencyTagsTabComponent } from './loans-view/loan-delinquency-tags-tab/loan-delinquency-tags-tab.component';
 import { LoansAccountScheduleStepComponent } from './loans-account-stepper/loans-account-schedule-step/loans-account-schedule-step.component';
 import { EditRepaymentScheduleComponent } from './loans-view/loan-account-actions/edit-repayment-schedule/edit-repayment-schedule.component';
+import { DisburseToSavingsAccountComponent } from './loans-view/loan-account-actions/disburse-to-savings-account/disburse-to-savings-account.component';
 
 /**
  * Loans Module
@@ -120,7 +120,6 @@ import { EditRepaymentScheduleComponent } from './loans-view/loan-account-action
     ViewGuarantorsComponent,
     CreateGuarantorComponent,
     LoansAccountViewGuarantorDetailsDialogComponent,
-    DisburseLoanAccountComponent,
     RejectLoanComponent,
     DisburseComponent,
     WithdrawnByClientComponent,
@@ -146,7 +145,8 @@ import { EditRepaymentScheduleComponent } from './loans-view/loan-account-action
     GlimPreviewStepComponent,
     LoanDelinquencyTagsTabComponent,
     LoansAccountScheduleStepComponent,
-    EditRepaymentScheduleComponent
+    EditRepaymentScheduleComponent,
+    DisburseToSavingsAccountComponent
   ],
   providers: [ ],
 })

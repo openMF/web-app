@@ -1,22 +1,16 @@
-/** Angular Imports. */
-import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
-/** Custom Service. */
+import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
-import { Dates } from 'app/core/utils/dates';
 
-/**
- * Disburse To Savings component.
- */
 @Component({
-  selector: 'mifosx-disburse-loan-account',
-  templateUrl: './disburse-loan-account.component.html',
-  styleUrls: ['./disburse-loan-account.component.scss']
+  selector: 'mifosx-disburse-to-savings-account',
+  templateUrl: './disburse-to-savings-account.component.html',
+  styleUrls: ['./disburse-to-savings-account.component.scss']
 })
-export class DisburseLoanAccountComponent implements OnInit {
+export class DisburseToSavingsAccountComponent implements OnInit {
 
   @Input() dataObject: any;
 
@@ -36,11 +30,12 @@ export class DisburseLoanAccountComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
-              private route: ActivatedRoute,
-              private router: Router,
-              private dateUtils: Dates,
-              private loanService: LoansService,
-              private settingsService: SettingsService) { }
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private loanService: LoansService,
+    private settingsService: SettingsService) {
+  }
 
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
@@ -51,12 +46,13 @@ export class DisburseLoanAccountComponent implements OnInit {
    * Set Disbursement Loan form.
    */
   setDisbursementToSavingsForm() {
+    console.log(this.dataObject);
     this.disbursementForm = this.formBuilder.group({
       'actualDisbursementDate': [new Date(), Validators.required],
       'transactionAmount': [this.dataObject.amount, Validators.required],
-      'note': ['', Validators.required]
+      'note': ['']
     });
-    if (this.dataObject.fixedEmiAmount !== null || this.dataObject.fixedEmiAmount !== undefined) {
+    if (this.dataObject.fixedEmiAmount) {
       this.disbursementForm.addControl('fixedEmiAmount', new FormControl(this.dataObject.fixedEmiAmount, [Validators.required]));
     }
   }
@@ -79,7 +75,7 @@ export class DisburseLoanAccountComponent implements OnInit {
     };
     const loanId = this.route.parent.snapshot.params['loanId'];
     this.loanService.loanActionButtons(loanId, 'disbursetosavings', data).subscribe((response: any) => {
-      this.router.navigate(['../../general'], {relativeTo: this.route});
+      this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
 

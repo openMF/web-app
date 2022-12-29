@@ -79,7 +79,7 @@
       <mat-label>Link savings</mat-label>
       <mat-select formControlName="linkAccountId">
         <mat-option *ngFor="let savingaccount of accountLinkingOptions" [value]="savingaccount.id">
-          {{ savingaccount.productName }}
+          ({{ savingaccount.accountNo }}) {{ savingaccount.productName }}
         </mat-option>
       </mat-select>
     </mat-form-field>
