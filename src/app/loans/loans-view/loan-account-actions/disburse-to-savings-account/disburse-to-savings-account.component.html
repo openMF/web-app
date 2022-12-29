@@ -21,18 +21,15 @@
 
           <mat-form-field>
             <mat-label>Transaction amount</mat-label>
-            <input matInput required formControlName="transactionAmount">
+            <input matInput type="number" required formControlName="transactionAmount">
             <mat-error *ngIf="disbursementForm.controls.transactionAmount.hasError('required')">
               Transaction Amount is <strong>required</strong>
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field *ngIf="dataObject.fixedEmiAmount !== null || dataObject.fixedEmiAmount !== undefined">
+          <mat-form-field *ngIf="dataObject.fixedEmiAmount">
             <mat-label>Fixed EMI amount</mat-label>
-            <input matInput required formControlName="fixedEmiAmount">
-            <mat-error *ngIf="disbursementForm.controls.fixedEmiAmount.hasError('required')">
-              Fixed EMI Amount is <strong>required</strong>
-            </mat-error>
+            <input matInput type="number" formControlName="fixedEmiAmount">
           </mat-form-field>
 
           <mat-form-field>
