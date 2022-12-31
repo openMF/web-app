@@ -11,7 +11,7 @@
   </mat-form-field>
 
   <mat-form-field fxFlex="31%">
-    <mat-label>Filter</mat-label>
+    <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
     <mat-select [formControl]="entryTypeFilter" (selectionChange)="applyFilter($event.value, 'manualEntriesOnly')">
       <mat-option *ngFor="let filter of entryTypeFilterData" [value]="filter.value">
         {{ filter.option }}

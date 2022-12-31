@@ -64,7 +64,7 @@
     <div fxLayout="row" fxLayoutGap="2%">
 
       <mat-form-field fxFlex>
-        <mat-label>Filter</mat-label>
+        <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
         <input matInput (keyup)="applyFilter($event.target.value)">
       </mat-form-field>
 
