@@ -178,7 +178,7 @@ const routes: Routes = [
           },
           {
             path: 'actions/:name',
-            data: { title: extract('Savings Account Actions'), breadcrumb: 'name', routeParamBreadcrumb: false },
+            data: { title: extract('Savings Account Actions'), breadcrumb: 'Savings Account Actions', routeParamBreadcrumb: 'name' },
             component: SavingAccountActionsComponent,
             resolve: {
               savingsAccountActionData: SavingsAccountActionsResolver

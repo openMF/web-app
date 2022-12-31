@@ -3,10 +3,10 @@
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="start center">
 
     <mat-form-field fxFlex="31%">
-      <mat-label>Amortization</mat-label>
+      <mat-label>{{ 'labels.inputs.products.loan.Amortization' | translate }}</mat-label>
       <mat-select formControlName="amortizationType" required>
         <mat-option *ngFor="let amortizationType of amortizationTypeData" [value]="amortizationType.id">
-          {{ amortizationType.value }}
+          {{ 'labels.inputs.products.loan.amortizationType.' + amortizationType.value | translate }}
         </mat-option>
       </mat-select>
       <mat-error>
@@ -15,7 +15,7 @@
     </mat-form-field>
 
     <mat-checkbox fxFlex="15%" labelPosition="before" formControlName="isEqualAmortization">
-      Is Equal Amortization?
+      {{ 'labels.inputs.products.loan.Is Equal Amortization?' | translate }}
     </mat-checkbox>
 
     <mat-form-field fxFlex="48%">

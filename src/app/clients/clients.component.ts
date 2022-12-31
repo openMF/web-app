@@ -43,11 +43,13 @@ export class ClientsComponent implements OnInit {
    * Searches server for query and resource.
    */
   search(value: string) {
-    this.searchService.getSearchResults(value, 'clients').subscribe((data: any) => {
-      this.dataSource = new MatTableDataSource(data);
-      this.existsClientsToFilter = (data.length > 0);
-      this.notExistsClientsToFilter = !this.existsClientsToFilter;
-      this.moreClientsToFilter = (data.length > 50);
-    });
+    if (value !== '') {
+      this.searchService.getSearchResults(value, 'clients').subscribe((data: any) => {
+        this.dataSource = new MatTableDataSource(data);
+        this.existsClientsToFilter = (data.length > 0);
+        this.notExistsClientsToFilter = !this.existsClientsToFilter;
+        this.moreClientsToFilter = (data.length > 50);
+      });
+    }
   }
 }

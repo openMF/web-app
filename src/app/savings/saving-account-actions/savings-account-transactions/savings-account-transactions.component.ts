@@ -89,6 +89,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
    */
   addPaymentDetails() {
     this.addPaymentDetailsFlag = !this.addPaymentDetailsFlag;
+    /*
     if (this.addPaymentDetailsFlag) {
       this.savingAccountTransactionForm.addControl('accountNumber', new FormControl(''));
       this.savingAccountTransactionForm.addControl('checkNumber', new FormControl(''));
@@ -102,6 +103,8 @@ export class SavingsAccountTransactionsComponent implements OnInit {
       this.savingAccountTransactionForm.removeControl('receiptNumber');
       this.savingAccountTransactionForm.removeControl('bankNumber');
     }
+
+    */
   }
 
   /**

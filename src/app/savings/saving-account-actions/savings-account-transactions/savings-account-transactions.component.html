@@ -39,7 +39,7 @@
 
         <div fxFlexFill>
           <span fxFlex="75%" class="expandcollapsebutton m-l-10 m-t-40" (click)="addPaymentDetails()">
-            <mat-slide-toggle [(ngModel)]="addPaymentDetailsFlag">
+            <mat-slide-toggle [(ngModel)]="addPaymentDetailsFlag" [ngModelOptions]="{standalone: true}">
               <div [className]="addPaymentDetailsFlag ? 'enabled' : 'disabled'">
                 <span class="m-l-10">Show Payment Details</span>
               </div>
@@ -47,34 +47,34 @@
           </span>
         </div>
 
-        <mat-form-field *ngIf="savingAccountTransactionForm.controls['accountNumber']">
+        <mat-form-field *ngIf="addPaymentDetailsFlag">
           <mat-label>Account Number</mat-label>
           <input type="number" formControlName="accountNumber" matInput />
         </mat-form-field>
 
-        <mat-form-field *ngIf="savingAccountTransactionForm.controls['checkNumber']">
+        <mat-form-field *ngIf="addPaymentDetailsFlag">
           <mat-label>Cheque</mat-label>
           <input type="number" formControlName="checkNumber" matInput />
         </mat-form-field>
 
-        <mat-form-field *ngIf="savingAccountTransactionForm.controls['routingCode']">
+        <mat-form-field *ngIf="addPaymentDetailsFlag">
           <mat-label>Routing Code</mat-label>
           <input formControlName="routingCode" matInput />
         </mat-form-field>
 
-        <mat-form-field *ngIf="savingAccountTransactionForm.controls['receiptNumber']">
+        <mat-form-field *ngIf="addPaymentDetailsFlag">
           <mat-label>Receipt Number</mat-label>
           <input formControlName="receiptNumber" matInput />
         </mat-form-field>
 
-        <mat-form-field *ngIf="savingAccountTransactionForm.controls['bankNumber']">
+        <mat-form-field *ngIf="addPaymentDetailsFlag">
           <mat-label>Bank</mat-label>
           <input formControlName="bankNumber" matInput />
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Notes</mat-label>
-          <textarea formControlName="note" matInput></textarea>
+          <textarea formControlName="note" matInput cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
         </mat-form-field>
 
         <mat-card-actions fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
