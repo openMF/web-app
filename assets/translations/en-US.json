@@ -17,7 +17,8 @@
       "Back": "Back",
       "Close": "Close",
       "Next": "Next",
-      "Login": "Login"
+      "Login": "Login",
+      "Create User": "Create User"
     },
     "commons": {
       "is required": "is required"
@@ -31,7 +32,18 @@
       "Logout": "Logout",
       "Username": "Username",
       "Password": "Password",
-      "Remember me": "Remember me"
+      "Remember me": "Remember me",
+      "Filter": "Filter",
+      "products": {
+        "loan": {
+          "Amortization": "Amortization",
+          "amortizationType": {
+            "Equal installments": "Equal installments",
+            "Equal principal payments": "Equal principal payments"
+          },
+          "Is Equal Amortization?": "Is Equal Amortization?"
+        }
+      }
     },
     "links": {
       "Contribute": "Contribute",

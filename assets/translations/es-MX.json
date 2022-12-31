@@ -17,7 +17,8 @@
       "Back": "Anterior",
       "Close": "Cerrar",
       "Next": "Siguiente",
-      "Login": "Inciar Sesión"
+      "Login": "Inciar Sesión",
+      "Create User": "Crear Usuario"
     },
     "commons": {
       "is required": "es requerido"
@@ -31,7 +32,18 @@
       "Logout": "Salir",
       "Username": "Nombre de Usuario",
       "Password": "Contraseña",
-      "Remember me": "Recordarme"
+      "Remember me": "Recordarme",
+      "Filter": "Filtrar",
+      "products": {
+        "loan": {
+          "Amortization": "Amortización",
+          "amortizationType": {
+            "Equal installments": "Cuotas Iguales",
+            "Equal principal payments": "Pagos de Capital Iguales"
+          }
+        },
+        "Is Equal Amortization?": "¿Es Amortización Igual?"
+      }
     },
     "links": {
       "Contribute": "Contribuir",
