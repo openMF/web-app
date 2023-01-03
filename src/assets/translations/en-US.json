@@ -112,7 +112,8 @@
     "texts": {
       "Welcome": "Welcome",
       "Version": "Version",
-      "by": "by"
+      "by": "by",
+      "Login into Tenant": "Login into Tenant"
     }
   },
   "errors": {
