@@ -29,6 +29,7 @@ export class ClientsComponent implements OnInit {
   constructor(private searchService: SearchService) { }
 
   ngOnInit() {
+    this.getClients('');
   }
 
   /**
@@ -44,12 +45,16 @@ export class ClientsComponent implements OnInit {
    */
   search(value: string) {
     if (value !== '') {
-      this.searchService.getSearchResults(value, 'clients').subscribe((data: any) => {
-        this.dataSource = new MatTableDataSource(data);
-        this.existsClientsToFilter = (data.length > 0);
-        this.notExistsClientsToFilter = !this.existsClientsToFilter;
-        this.moreClientsToFilter = (data.length > 50);
-      });
+      this.getClients(value);
     }
+  }
+
+  private getClients(value: string) {
+    this.searchService.getSearchResults(value, 'clients').subscribe((data: any) => {
+      this.dataSource = new MatTableDataSource(data);
+      this.existsClientsToFilter = (data.length > 0);
+      this.notExistsClientsToFilter = !this.existsClientsToFilter;
+      this.moreClientsToFilter = (data.length > 50);
+    });
   }
 }

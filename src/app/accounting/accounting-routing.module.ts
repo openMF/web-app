@@ -265,7 +265,7 @@ const routes: Routes = [
         },
         {
           path: 'accounting-rules',
-          data: { title: extract('Accounting Rules'), breadcrumb: 'Rules' },
+          data: { title: extract('Accounting Rules'), breadcrumb: 'Accounting Rules' },
           children: [
             {
               path: '',

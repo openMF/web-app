@@ -118,14 +118,19 @@
       <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.glAccountName }} </td>
     </ng-container>
 
+    <ng-container matColumnDef="currency">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Currency </th>
+      <td mat-cell *matCellDef="let journalEntry">{{ journalEntry.currency.code }}</td>
+    </ng-container>
+
     <ng-container matColumnDef="debit">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Debit </th>
-      <td mat-cell *matCellDef="let journalEntry"><span *ngIf="journalEntry.entryType.value === 'DEBIT'"> {{ (journalEntry.currency.displaySymbol || journalEntry.currency.code) + ' ' + journalEntry.amount | number }} </span></td>
+      <td mat-cell *matCellDef="let journalEntry"><span *ngIf="journalEntry.entryType.value === 'DEBIT'"> {{ journalEntry.amount | number }} </span></td>
     </ng-container>
 
     <ng-container matColumnDef="credit">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Credit </th>
-      <td mat-cell *matCellDef="let journalEntry"><span *ngIf="journalEntry.entryType.value === 'CREDIT'"> {{ (journalEntry.currency.displaySymbol || journalEntry.currency.code) + ' ' + journalEntry.amount | number }} </span></td>
+      <td mat-cell *matCellDef="let journalEntry"><span *ngIf="journalEntry.entryType.value === 'CREDIT'"> {{ journalEntry.amount | number }} </span></td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -133,6 +138,6 @@
 
   </table>
 
-  <mat-paginator [length]="dataSource?.records$ | async" [pageSize]="25" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+  <mat-paginator [length]="dataSource?.records$ | async" [pageSize]="50" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
 
 </div>
