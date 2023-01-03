@@ -66,7 +66,7 @@ export class ChargesTabComponent implements OnInit {
     this.status = this.loanDetails.status.value;
     let actionFlag;
     this.chargesData.forEach((element: any) => {
-      if (element.paid || element.waived || element.chargeTimeType.value === 'Disbursement' || this.loanDetails.status.value !== 'Active') {
+      if (element.paid || element.waived || element.chargeTimeType.value === 'Disbursement' || this.status.value !== 'Active') {
         actionFlag = true;
       } else {
         actionFlag = false;
