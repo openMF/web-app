@@ -1,47 +1,47 @@
 <div class="tab-container mat-typography">
 
-    <!-- Documents Table -->
+  <!-- Documents Table -->
 
-    <h3>Documents</h3>
+  <h3>Documents</h3>
 
-    <button mat-raised-button class="f-right" color="primary" (click)="uploadDocument()" *mifosxHasPermission="'CREATE_DOCUMENT'">
-    <fa-icon icon="plus"></fa-icon>
-    &nbsp;&nbsp; Add
+  <button mat-raised-button class="f-right" color="primary" (click)="uploadDocument()"
+    *mifosxHasPermission="'CREATE_DOCUMENT'">
+    <fa-icon icon="plus" class="m-r-10"></fa-icon>Add
   </button>
 
-    <table mat-table #documentsTable [dataSource]="clientDocuments">
+  <table mat-table #documentsTable [dataSource]="clientDocuments" matSort>
 
-        <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let document">
-                {{document.name}} </td>
-        </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let document"> {{document.name}} </td>
+    </ng-container>
 
-        <ng-container matColumnDef="description">
-            <th mat-header-cell *matHeaderCellDef> Description </th>
-            <td mat-cell *matCellDef="let document"> {{document.description}} </td>
-        </ng-container>
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Description </th>
+      <td mat-cell *matCellDef="let document"> {{document.description}} </td>
+    </ng-container>
 
-        <ng-container matColumnDef="fileName">
-            <th mat-header-cell *matHeaderCellDef> File Name </th>
-            <td mat-cell *matCellDef="let document"> {{document.fileName}}
-            </td>
-        </ng-container>
+    <ng-container matColumnDef="fileName">
+      <th mat-header-cell *matHeaderCellDef> File Name </th>
+      <td mat-cell *matCellDef="let document"> {{document.fileName}} </td>
+    </ng-container>
 
-        <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> Actions </th>
-            <td mat-cell *matCellDef="let document; let i = index">
-                <button class="document-action-button" mat-raised-button color="primary" (click)="download(document.parentEntityId,document.id)">
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let document; let i = index">
+        <button class="document-action-button" mat-raised-button color="primary"
+          (click)="download(document.parentEntityId,document.id)">
           <fa-icon icon="cloud-download-alt"></fa-icon>
         </button>
-                <button class="document-action-button" mat-raised-button color="warn" (click)="deleteDocument(document.parentEntityId,document.id,i)">
+        <button class="document-action-button" mat-raised-button color="warn"
+          (click)="deleteDocument(document.parentEntityId,document.id,i)">
           <fa-icon icon="times"></fa-icon>
         </button>
-            </td>
-        </ng-container>
+      </td>
+    </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="documentsColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: documentsColumns;"></tr>
-    </table>
+    <tr mat-header-row *matHeaderRowDef="documentsColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: documentsColumns;"></tr>
+  </table>
 
 </div>
