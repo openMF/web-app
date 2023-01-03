@@ -63,15 +63,8 @@ export class ViewChargeComponent {
    */
   payCharge() {
     const formfields: FormfieldBase[] = [
-      new InputBase({
-        controlName: 'amount',
-        label: 'Amount',
-        value: '',
-        type: 'number',
-        required: true
-      }),
       new DatepickerBase({
-        controlName: 'dueDate',
+        controlName: 'transactionDate',
         label: 'Payment Date',
         value: '',
         type: 'date',
@@ -88,9 +81,9 @@ export class ViewChargeComponent {
       if (response.data) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
+        const prevTransactionDate: Date = response.data.value.transactionDate;
         const dataObject = {
-          ...response.data.value,
-          dueDate: this.dateUtils.formatDate(response.data.value.dueDate, dateFormat),
+          transactionDate: this.dateUtils.formatDate(prevTransactionDate, dateFormat),
           dateFormat,
           locale
         };
