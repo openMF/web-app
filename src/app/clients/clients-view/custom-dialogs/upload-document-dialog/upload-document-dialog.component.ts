@@ -15,6 +15,8 @@ export class UploadDocumentDialogComponent implements OnInit {
   uploadDocumentData: any = [];
   /** Triggers description field */
   documentIdentifier = false;
+  /** Entity Type */
+  entityType: string;
 
   /**
    * @param {MatDialogRef} dialogRef Dialog reference element
@@ -25,6 +27,7 @@ export class UploadDocumentDialogComponent implements OnInit {
               private formBuilder: FormBuilder,
               @Inject(MAT_DIALOG_DATA) public data: any) {
     this.documentIdentifier = data.documentIdentifier;
+    this.entityType = data.entityType;
   }
 
   ngOnInit() {

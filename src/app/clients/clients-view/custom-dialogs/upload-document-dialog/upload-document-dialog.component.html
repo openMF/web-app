@@ -1,26 +1,27 @@
-<h1 mat-dialog-title>Upload Client Documents</h1>
+<h1 mat-dialog-title>Upload {{ entityType }} Documents</h1>
 <div>
-    <form [formGroup]="uploadDocumentForm" fxLayout="column">
+  <form [formGroup]="uploadDocumentForm" fxLayout="column">
 
-        <mat-form-field fxFlex>
-            <mat-label>File Name</mat-label>
-            <input formControlName="fileName" required matInput />
-            <mat-error *ngIf="uploadDocumentForm.controls.fileName.hasError('required')">
-                File Name is <strong>required</strong>
-            </mat-error>
-        </mat-form-field>
+    <mat-form-field fxFlex>
+      <mat-label>File Name</mat-label>
+      <input formControlName="fileName" required matInput />
+      <mat-error *ngIf="uploadDocumentForm.controls.fileName.hasError('required')">
+        File Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
 
-        <mat-form-field fxFlex *ngIf="!documentIdentifier">
-            <mat-label>Description</mat-label>
-            <input formControlName="description" matInput />
-        </mat-form-field>
+    <mat-form-field fxFlex *ngIf="!documentIdentifier">
+      <mat-label>Description</mat-label>
+      <input formControlName="description" matInput />
+    </mat-form-field>
 
-        <mifosx-file-upload flex="60%" (change)="onFileSelect($event)"></mifosx-file-upload>
+    <mifosx-file-upload flex="60%" (change)="onFileSelect($event)"></mifosx-file-upload>
 
-        <mat-dialog-actions align="end">
-            <button mat-raised-button mat-dialog-close>Cancel</button>
-            <button mat-raised-button color="primary" [disabled]="!uploadDocumentForm.valid" [mat-dialog-close]="uploadDocumentForm.value">Confirm</button>
-        </mat-dialog-actions>
+    <mat-dialog-actions align="end">
+      <button mat-raised-button mat-dialog-close>Cancel</button>
+      <button mat-raised-button color="primary" [disabled]="!uploadDocumentForm.valid"
+        [mat-dialog-close]="uploadDocumentForm.value">Confirm</button>
+    </mat-dialog-actions>
 
-    </form>
+  </form>
 </div>

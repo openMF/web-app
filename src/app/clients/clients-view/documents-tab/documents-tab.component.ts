@@ -28,8 +28,6 @@ export class DocumentsTabComponent implements OnInit {
     public dialog: MatDialog) {
     this.route.data.subscribe((data: { clientDocuments: any }) => {
       this.clientDocuments = data.clientDocuments;
-      console.log(this.clientDocuments);
-
     });
     this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
   }
@@ -60,10 +58,9 @@ export class DocumentsTabComponent implements OnInit {
 
   uploadDocument() {
     const uploadDocumentDialogRef = this.dialog.open(UploadDocumentDialogComponent, {
-      data: { documentIdentifier: false }
+      data: { documentIdentifier: false, entityType: 'Client' }
     });
     uploadDocumentDialogRef.afterClosed().subscribe((dialogResponse: any) => {
-      console.log(dialogResponse);
       if (dialogResponse) {
         const formData: FormData = new FormData;
         formData.append('name', dialogResponse.fileName);
@@ -79,7 +76,6 @@ export class DocumentsTabComponent implements OnInit {
             fileName: dialogResponse.file.name
           });
           this.documentsTable.renderRows();
-          console.log('document Uploaded');
         });
       }
     });

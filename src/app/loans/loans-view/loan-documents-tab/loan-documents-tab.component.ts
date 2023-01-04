@@ -11,9 +11,9 @@ import { environment } from 'environments/environment';
 import { LoansService } from 'app/loans/loans.service';
 
 /** Dialog Components */
-import { LoanAccountLoadDocumentsDialogComponent } from 'app/loans/custom-dialog/loan-account-load-documents-dialog/loan-account-load-documents-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { SettingsService } from 'app/settings/settings.service';
+import { UploadDocumentDialogComponent } from 'app/clients/clients-view/custom-dialogs/upload-document-dialog/upload-document-dialog.component';
 
 /**
  * Overdue charges tab component
@@ -24,7 +24,7 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./loan-documents-tab.component.scss']
 })
 export class LoanDocumentsTabComponent implements OnInit {
-  @ViewChild('documentsTable') documentsTable: MatTable<Element>;
+  @ViewChild('documentsTable', { static: true }) documentsTable: MatTable<Element>;
 
   /** Stores the resolved loan documents data */
   loanDocuments: any;
@@ -91,11 +91,26 @@ export class LoanDocumentsTabComponent implements OnInit {
   }
 
   uploadDocument() {
-    const uploadLoanDocumentDialogRef = this.dialog.open(LoanAccountLoadDocumentsDialogComponent);
-    uploadLoanDocumentDialogRef.afterClosed().subscribe((data: any) => {
-      if (data) {
-        this.loansService.loadLoanDocument(this.loanDetailsData.id, data)
-          .subscribe(() => {});
+    const uploadDocumentDialogRef = this.dialog.open(UploadDocumentDialogComponent, {
+      data: { documentIdentifier: false, entityType: 'Loan' }
+    });
+    uploadDocumentDialogRef.afterClosed().subscribe((dialogResponse: any) => {
+      if (dialogResponse) {
+        const formData: FormData = new FormData;
+        formData.append('name', dialogResponse.fileName);
+        formData.append('file', dialogResponse.file);
+        formData.append('description', dialogResponse.description);
+        this.loansService.loadLoanDocument(this.loanDetailsData.id, formData).subscribe((res: any) => {
+          this.loanDocuments.push({
+            id: res.resourceId,
+            parentEntityType: 'loans',
+            parentEntityId: this.loanDetailsData.id,
+            name: dialogResponse.fileName,
+            description: dialogResponse.description,
+            fileName: dialogResponse.file.name
+          });
+          this.documentsTable.renderRows();
+        });
       }
     });
   }

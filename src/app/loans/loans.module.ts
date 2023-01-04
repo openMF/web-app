@@ -68,7 +68,6 @@ import { GlimPreviewStepComponent } from './glim-account/create-glim-account/gli
 /** Dialog Components */
 import { LoansAccountViewGuarantorDetailsDialogComponent } from './custom-dialog/loans-account-view-guarantor-details-dialog/loans-account-view-guarantor-details-dialog.component';
 import { LoansAccountAddCollateralDialogComponent } from './custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
-import { LoanAccountLoadDocumentsDialogComponent } from './custom-dialog/loan-account-load-documents-dialog/loan-account-load-documents-dialog.component';
 import { LoanCreditBalanceRefundComponent } from './loans-view/loan-account-actions/loan-credit-balance-refund/loan-credit-balance-refund.component';
 import { LoanDelinquencyTagsTabComponent } from './loans-view/loan-delinquency-tags-tab/loan-delinquency-tags-tab.component';
 import { LoansAccountScheduleStepComponent } from './loans-account-stepper/loans-account-schedule-step/loans-account-schedule-step.component';
@@ -126,7 +125,6 @@ import { DisburseToSavingsAccountComponent } from './loans-view/loan-account-act
     AddCollateralComponent,
     UndoDisbursalComponent,
     LoanDocumentsTabComponent,
-    LoanAccountLoadDocumentsDialogComponent,
     StandingInstructionsTabComponent,
     EditLoansAccountComponent,
     LoanScreenReportsComponent,
