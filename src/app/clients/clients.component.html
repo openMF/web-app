@@ -27,19 +27,19 @@
 
       <!-- Name Column -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="displayName"> Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="entityName"> Name </th>
         <td mat-cell *matCellDef="let row"> {{row.entityName}} </td>
       </ng-container>
 
       <!-- Account no Column -->
       <ng-container matColumnDef="clientNo">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="accountNo"> Account No. </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="entityAccountNo"> Account No. </th>
         <td mat-cell *matCellDef="let row"> {{row.entityAccountNo}} </td>
       </ng-container>
 
       <!-- External ID Column -->
       <ng-container matColumnDef="externalId">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="externalId"> External Id </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="entityExternalId"> External Id </th>
         <td mat-cell *matCellDef="let row">
           <mifosx-external-identifier externalId="{{row.entityExternalId}}"></mifosx-external-identifier>
         </td>
@@ -47,7 +47,7 @@
 
       <!-- Status Column -->
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="entityStatus.value"> Status </th>
         <td mat-cell *matCellDef="let row">
           <div [ngClass]="row.entityStatus.code | statusLookup">
             <fa-icon icon="stop"></fa-icon>
@@ -75,7 +75,7 @@
       </tr>
     </table>
 
-    <mat-paginator [pageSize]="50" [pageSizeOptions]="[10, 25, 50, 100]"
+    <mat-paginator *ngIf="moreClientsToFilter" [pageSize]="50" [pageSizeOptions]="[10, 25, 50, 100]"
       showFirstLastButtons></mat-paginator>
   </div>
 

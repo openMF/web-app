@@ -286,4 +286,61 @@ export class SavingsService {
     return this.http.post(`/savingsaccounts/gsim`, gsimData);
   }
 
+  /**
+   * @param savingAccountId Savings Id
+   * @returns The notes for particular loan
+   */
+  getSavingsNotes(savingAccountId: string): Observable<any> {
+    return this.http.get(`/savings/${savingAccountId}/notes`);
+  }
+
+  /**
+   * Adds a note to the particular Savings Id
+   * @param savingAccountId Savings ID
+   * @param noteData Note Data to be added
+   * @returns {Observable<any>}
+   */
+  createSavingsNote(savingAccountId: string, noteData: any): Observable<any> {
+    return this.http.post(`/savings/${savingAccountId}/notes`, noteData);
+  }
+
+  /**
+   * Edits the Savings Note
+   * @param savingAccountId Savings ID
+   * @param noteId Note ID
+   * @param noteData Note Data
+   */
+  editSavingsNote(savingAccountId: string, noteId: string, noteData: any) {
+    return this.http.put(`/savings/${savingAccountId}/notes/${noteId}`, noteData);
+  }
+
+  /**
+   * Deletes the particular Note
+   * @param savingAccountId Savings ID
+   * @param noteId Note ID
+   */
+  deleteSavingsNote(savingAccountId: string, noteId: string) {
+    return this.http.delete(`/savings/${savingAccountId}/notes/${noteId}`);
+  }
+
+  /**
+   * @param savingAccountId Savings Account Id of account to get data for.
+   * @returns {Observable<any>} Savings data.
+   */
+  getSavingsDocuments(savingAccountId: any): Observable<any> {
+    return this.http.get(`/savings/${savingAccountId}/documents`);
+  }
+
+  downloadSavingsDocument(parentEntityId: string, documentId: string) {
+    return this.http.get(`/savings/${parentEntityId}/documents/${documentId}/attachment`, { responseType: 'blob' });
+  }
+
+  deleteSavingsDocument(savingAccountId: any, documentId: any): Observable<any> {
+    return this.http.delete(`/savings/${savingAccountId}/documents/${documentId}`);
+  }
+
+  loadSavingsDocument(savingAccountId: any, data: any): Observable<any> {
+    return this.http.post(`/savings/${savingAccountId}/documents`, data);
+  }
+
 }

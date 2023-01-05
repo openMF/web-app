@@ -63,7 +63,7 @@
               <i class="fa fa-trash"></i>
             </button>
           </span>
-            <button class="account-action-button" mat-raised-button color="primary" matTooltip="Pay Charge" *ngIf="charge.chargePayable && status=='Active'"
+            <button class="account-action-button" mat-raised-button color="primary" matTooltip="Pay Charge" *ngIf="charge.chargePayable && !charge.paid && status=='Active'"
                (click)="routeEdit($event); payCharge(charge.id)">
               <i class="fa fa-dollar"></i>
             </button>

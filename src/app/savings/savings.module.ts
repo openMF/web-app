@@ -49,6 +49,8 @@ import { GsimAccountComponent } from './gsim-account/gsim-account.component';
 import { CreateGsimAccountComponent } from './gsim-account/create-gsim-account/create-gsim-account.component';
 import { ManageSavingsAccountComponent } from './saving-account-actions/manage-savings-account/manage-savings-account.component';
 import { ReleaseAmountDialogComponent } from './savings-account-view/custom-dialogs/release-amount-dialog/release-amount-dialog.component';
+import { SavingsDocumentsTabComponent } from './savings-account-view/savings-documents-tab/savings-documents-tab.component';
+import { NotesTabComponent } from './savings-account-view/notes-tab/notes-tab.component';
 
 
 /**
@@ -104,7 +106,9 @@ import { ReleaseAmountDialogComponent } from './savings-account-view/custom-dial
     GsimAccountComponent,
     CreateGsimAccountComponent,
     ManageSavingsAccountComponent,
-    ReleaseAmountDialogComponent
+    ReleaseAmountDialogComponent,
+    SavingsDocumentsTabComponent,
+    NotesTabComponent
   ],
   providers: [ ]
 })

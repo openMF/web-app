@@ -1,0 +1,35 @@
+<div class="tab-container mat-typography">
+
+  <h3>Notes</h3>
+
+  <div>
+    <form #formRef="ngForm" [formGroup]="noteForm" fxLayout="row" fxLayoutAlign="start baseline" fxLayoutGap="20px"
+      (ngSubmit)="addNote()">
+      <mat-form-field fxFlex="calc(90%-20px)">
+        <textarea required formControlName="note" matInput placeholder="Write a note ...." cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+      </mat-form-field>
+      <button mat-raised-button fxFlex color="primary" [disabled]="!noteForm.valid">
+        <fa-icon icon="plus" class="m-r-10"></fa-icon>Add
+      </button>
+    </form>
+  </div>
+
+  <mat-list>
+    <mat-list-item *ngFor="let entityNote of entityNotes; let i=index;">
+      <fa-icon icon="sticky-note" matListIcon></fa-icon>
+      <h3 matLine>{{ entityNote.note }} </h3>
+      <p matLine>
+        <span>Created by: {{entityNote.createdByUsername}}</span><br />
+        <span>Date: {{entityNote.createdOn  | dateFormat}}</span>
+      </p>
+      <div fxLayout="row" fxLayoutAlign="flex-start">
+        <button mat-button color="primary" (click)="editNote(entityNote.id, entityNote.note, i)">
+          <fa-icon icon="edit"></fa-icon>
+        </button>
+        <button mat-button color="warn" (click)="deleteNote(entityNote.id, i)">
+          <fa-icon icon="trash"></fa-icon>
+        </button>
+      </div>
+    </mat-list-item>
+  </mat-list>
+</div>

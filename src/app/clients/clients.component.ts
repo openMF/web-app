@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 
 /** Custom Services */
 import { SearchService } from 'app/search/search.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'mifosx-clients',
@@ -29,7 +30,9 @@ export class ClientsComponent implements OnInit {
   constructor(private searchService: SearchService) { }
 
   ngOnInit() {
-    this.getClients('');
+    if (environment.preloadClients) {
+      this.getClients('');
+    }
   }
 
   /**

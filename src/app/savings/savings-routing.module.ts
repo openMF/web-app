@@ -37,6 +37,11 @@ import { GSIMAccountsResolver } from 'app/groups/common-resolvers/gsim-account-r
 import { GroupAccountsResolver } from 'app/groups/common-resolvers/group-account.resolver';
 import { GSIMViewResolver } from './gsim-account/gsim-account.resolver';
 import { GroupViewResolver } from 'app/groups/common-resolvers/group-view.resolver';
+import { SavingsDocumentsTabComponent } from './savings-account-view/savings-documents-tab/savings-documents-tab.component';
+import { NotesTabComponent } from './savings-account-view/notes-tab/notes-tab.component';
+import { SavingNotesResolver } from './common-resolvers/saving-notes.resolver';
+import { SavingDocumentsResolver } from './common-resolvers/saving-documents.resolver';
+import { DocumentsTabComponent } from 'app/clients/clients-view/documents-tab/documents-tab.component';
 /** Savings Routes */
 const routes: Routes = [
   {
@@ -90,6 +95,22 @@ const routes: Routes = [
                 path: 'standing-instructions',
                 component: StandingInstructionsTabComponent,
                 data: { title: extract('Savings Account SIH'), breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false }
+              },
+              {
+                path: 'notes',
+                component: NotesTabComponent,
+                data: { title: extract('Savings Account Notes'), breadcrumb: 'Notes', routeParamBreadcrumb: false },
+                resolve: {
+                  savingAccountNotes: SavingNotesResolver
+                }
+              },
+              {
+                path: 'documents',
+                component: DocumentsTabComponent,
+                data: { title: extract('Savings Account Documents'), breadcrumb: 'Documents', routeParamBreadcrumb: false },
+                resolve: {
+                  savingAccountDocuments: SavingDocumentsResolver
+                }
               },
               {
                 path: 'datatables',
@@ -183,6 +204,26 @@ const routes: Routes = [
             resolve: {
               savingsAccountActionData: SavingsAccountActionsResolver
             }
+          },
+          {
+            path: 'documents',
+            data: { title: extract('Savings Account Documents'), breadcrumb: 'Documents', routeParamBreadcrumb: false },
+            children: [
+              {
+                path: '',
+                redirectTo: '../documents', pathMatch: 'prefix'
+              },
+            ]
+          },
+          {
+            path: 'notes',
+            data: { title: extract('Savings Account Notes'), breadcrumb: 'Notes', routeParamBreadcrumb: false },
+            children: [
+              {
+                path: '',
+                redirectTo: '../notes', pathMatch: 'prefix'
+              },
+            ]
           },
           {
             path: 'transfer-funds',
