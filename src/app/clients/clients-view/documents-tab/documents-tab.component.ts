@@ -13,7 +13,7 @@ import { ClientsService } from '../../clients.service';
 export class DocumentsTabComponent implements OnInit {
   entityDocuments: any;
   entityId: string;
-  entityType: string = 'clients';
+  entityType = 'clients';
 
   constructor(private route: ActivatedRoute,
     private clientsService: ClientsService,

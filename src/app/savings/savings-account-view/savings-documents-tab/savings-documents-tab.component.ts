@@ -17,7 +17,7 @@ export class SavingsDocumentsTabComponent implements OnInit {
   entityDocuments: any;
   /** Stores the saving Account Id */
   entityId: string;
-  entityType: string = 'savings';
+  entityType = 'savings';
 
   /**
    * Retrieves the savings data from `resolve`.

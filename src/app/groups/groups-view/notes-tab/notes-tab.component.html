@@ -1,39 +1,7 @@
-<div class="tab-container mat-typography">
-
-  <h3>Notes</h3>
-
-  <form #formRef="ngForm" [formGroup]="noteForm" fxLayout="row" fxLayoutAlign="start baseline" fxLayoutGap="20px"
-      (ngSubmit)="addNote()">
-
-    <mat-form-field fxFlex="calc(90%-20px)">
-      <textarea formControlName="note" matInput placeholder="Write a note ...."></textarea>
-    </mat-form-field>
-
-    <button mat-raised-button fxFlex color="primary" *mifosxHasPermission="'CREATE_GROUPNOTE'" [disabled]="!noteForm.valid">
-      <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp; Add
-    </button>
-
-  </form>
-
-  <mat-list>
-
-    <mat-list-item *ngFor="let groupNote of groupNotes; let i=index;">
-      <fa-icon icon="sticky-note" matListIcon></fa-icon>
-      <h3 matLine>{{groupNote.note}} </h3>
-      <p matLine>
-        <span>Created by: {{groupNote.createdByUsername}}</span><br />
-        <span>Date: {{groupNote.createdOn  | dateFormat}}</span>
-      </p>
-      <div fxLayout="row" fxLayoutAlign="flex-start">
-        <button mat-button color="primary" (click)="editNote(groupNote.id,groupNote.note,i)">
-          <fa-icon icon="edit"></fa-icon>
-        </button>
-        <button mat-button color="warn" (click)="deleteNote(groupNote.id,i)">
-          <fa-icon icon="trash"></fa-icon>
-        </button>
-      </div>
-    </mat-list-item>
-    
-  </mat-list>
-
-</div>
+<mifosx-entity-notes-tab [entityId]="entityId"
+  [entityNotes]="entityNotes"
+  [callbackAdd]="addNote"
+  [callbackEdit]="editNote"
+  [callbackDelete]="deleteNote"
+>
+</mifosx-entity-notes-tab>
