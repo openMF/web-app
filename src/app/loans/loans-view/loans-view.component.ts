@@ -54,7 +54,7 @@ export class LoansViewComponent implements OnInit {
     this.recalculateInterest = this.loanDetailsData.recalculateInterest || true;
     this.status = this.loanDetailsData.status.value;
     if (this.loanDetailsData.status.active && this.loanDetailsData.multiDisburseLoan) {
-      if (this.loanDetailsData) {
+      if (this.loanDetailsData && this.loanDetailsData.transactions) {
         this.loanDetailsData.transactions.forEach((transaction: any) => {
           if (transaction.type.disbursement) {
             this.disburseTransactionNo++;

@@ -93,7 +93,7 @@ export class ViewChargeComponent {
           dateFormat,
           locale
         };
-        this.savingsService.executeSavingsAccountChargesCommand(this.chargeData.accountId, 'paycharge', dataObject, this.chargeData.id)
+        this.savingsService.executeSavingsAccountChargesCommand(this.chargeData.accountId, 'pay', dataObject, this.chargeData.id)
           .subscribe(() => {
             this.reload();
           });

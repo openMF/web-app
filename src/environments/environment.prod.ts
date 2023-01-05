@@ -22,7 +22,8 @@ export const environment = {
     serverUrl: ''
   },
   defaultLanguage: window['env']['defaultLanguage'] || 'en-US',
-  supportedLanguages: window['env']['supportedLanguages'] || 'en-US,es-MX,fr-FR'
+  supportedLanguages: window['env']['supportedLanguages'] || 'en-US,es-MX,fr-FR',
+  preloadClients: window['env']['preloadClients'] || true
 };
 
 // Server URL

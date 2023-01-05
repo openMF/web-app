@@ -14,4 +14,6 @@
   // Language Environment variables
   window["env"]["defaultLanguage"] = '$MIFOS_DEFAULT_LANGUAGE';
   window["env"]["supportedLanguages"] = '$MIFOS_SUPPORTED_LANGUAGES';
+
+  window['env']['preloadClients'] = '$MIFOS_PRELOAD_CLIENTS';
 })(this);

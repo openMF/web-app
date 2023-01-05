@@ -52,7 +52,7 @@ export class ViewChargeComponent {
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { loansAccountCharge: any, loanDetailsData: any }) => {
       this.chargeData = data.loansAccountCharge;
-      this.allowPayCharge = (this.chargeData.chargeTimeType.code === 'chargeTimeType.instalmentFee');
+      this.allowPayCharge = (this.chargeData.chargePayable && !this.chargeData.paid);
       this.allowWaive = !this.chargeData.chargeTimeType.waived;
       this.loansAccountData = data.loanDetailsData;
     });
@@ -72,7 +72,7 @@ export class ViewChargeComponent {
       })
     ];
     const data = {
-      title: 'Pay Charge',
+      title: `Pay Charge ${this.chargeData.id}`,
       layout: { addButtonText: 'Confirm' },
       formfields: formfields
     };
@@ -171,6 +171,10 @@ export class ViewChargeComponent {
           });
       }
     });
+  }
+
+  loanChargeColor(): string {
+    return this.chargeData.paid ? 'paid' : 'not-paid';
   }
 
   /**

@@ -73,6 +73,7 @@ import { LoanDelinquencyTagsTabComponent } from './loans-view/loan-delinquency-t
 import { LoansAccountScheduleStepComponent } from './loans-account-stepper/loans-account-schedule-step/loans-account-schedule-step.component';
 import { EditRepaymentScheduleComponent } from './loans-view/loan-account-actions/edit-repayment-schedule/edit-repayment-schedule.component';
 import { DisburseToSavingsAccountComponent } from './loans-view/loan-account-actions/disburse-to-savings-account/disburse-to-savings-account.component';
+import { LoansAccountDatatableStepComponent } from './loans-account-stepper/loans-account-datatable-step/loans-account-datatable-step.component';
 
 /**
  * Loans Module
@@ -144,7 +145,8 @@ import { DisburseToSavingsAccountComponent } from './loans-view/loan-account-act
     LoanDelinquencyTagsTabComponent,
     LoansAccountScheduleStepComponent,
     EditRepaymentScheduleComponent,
-    DisburseToSavingsAccountComponent
+    DisburseToSavingsAccountComponent,
+    LoansAccountDatatableStepComponent
   ],
   providers: [ ],
 })

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -12,6 +12,7 @@ import { LoansAccountDetailsStepComponent } from '../loans-account-stepper/loans
 import { LoansAccountTermsStepComponent } from '../loans-account-stepper/loans-account-terms-step/loans-account-terms-step.component';
 import { LoansAccountChargesStepComponent } from '../loans-account-stepper/loans-account-charges-step/loans-account-charges-step.component';
 import { Dates } from 'app/core/utils/dates';
+import { LoansAccountDatatableStepComponent } from '../loans-account-stepper/loans-account-datatable-step/loans-account-datatable-step.component';
 
 /**
  * Create loans account
@@ -27,6 +28,8 @@ export class CreateLoansAccountComponent implements OnInit {
   @ViewChild(LoansAccountDetailsStepComponent, { static: true }) loansAccountDetailsStep: LoansAccountDetailsStepComponent;
   @ViewChild(LoansAccountTermsStepComponent, { static: true }) loansAccountTermsStep: LoansAccountTermsStepComponent;
   @ViewChild(LoansAccountChargesStepComponent, { static: true }) loansAccountChargesStep: LoansAccountChargesStepComponent;
+  /** Get handle on dtloan tags in the template */
+  @ViewChildren('dtloan') clientDatatables: QueryList<LoansAccountDatatableStepComponent>;
 
   /** Loans Account Template */
   loansAccountTemplate: any;
@@ -38,6 +41,7 @@ export class CreateLoansAccountComponent implements OnInit {
   multiDisburseLoan: any;
   /** Principal Amount */
   principal: any;
+  datatables: any = [];
 
   /**
    * Sets loans account create form.
@@ -79,6 +83,16 @@ export class CreateLoansAccountComponent implements OnInit {
     this.loansService.getLoansAccountTemplateResource(entityId, isGroup, productId).subscribe((response: any) => {
       this.multiDisburseLoan = response.multiDisburseLoan;
     });
+  }
+
+  setDatatables(): void {
+    this.datatables = [];
+
+    if (this.loansAccountTemplate.datatables) {
+      this.loansAccountTemplate.datatables.forEach((datatable: any) => {
+        this.datatables.push(datatable);
+      });
+    }
   }
 
   /** Get Loans Account Details Form Data */
@@ -123,6 +137,14 @@ export class CreateLoansAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const payload = this.loansService.buildLoanRequestPayload(this.loansAccount, this.loansAccountTemplate,
       this.loansAccountProductTemplate.calendarOptions, locale, dateFormat);
+
+    if (this.loansAccountTemplate.datatables && this.loansAccountTemplate.datatables.length > 0) {
+      const datatables: any[] = [];
+      this.loansAccountTemplate.forEach((loanDatatable: LoansAccountDatatableStepComponent) => {
+        datatables.push(loanDatatable.payload);
+      });
+      payload['datatables'] = datatables;
+    }
 
     this.loansService.createLoansAccount(payload).subscribe((response: any) => {
       this.router.navigate(['../', response.resourceId, 'general'], { relativeTo: this.route });

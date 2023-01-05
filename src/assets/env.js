@@ -14,4 +14,6 @@
   // Language Environment variables
   window["env"]["defaultLanguage"] = '';
   window["env"]["supportedLanguages"] = '';
+
+  window['env']['preloadClients'] = '';
 })(this);

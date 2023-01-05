@@ -322,6 +322,10 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}/documents`);
   }
 
+  downloadLoanDocument(parentEntityId: string, documentId: string) {
+    return this.http.get(`/loans/${parentEntityId}/documents/${documentId}/attachment`, { responseType: 'blob' });
+  }
+
   deleteLoanDocument(loanId: any, documentId: any): Observable<any> {
     return this.http.delete(`/loans/${loanId}/documents/${documentId}`);
   }

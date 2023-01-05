@@ -34,10 +34,10 @@
             {{entityType}} Name: {{savingsAccountData.clientName || savingsAccountData.groupName}}
             <span class="m-l-10" *ngIf="savingsAccountData.clientAccountNo">({{savingsAccountData.clientAccountNo}})</span><br />
             <span *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval">
-              Current Balances:
+              Current Balances  :
               {{savingsAccountData.currency.displaySymbol}}<span class="m-l-10">{{savingsAccountData.summary.accountBalance |
               number}}</span><br />
-              Available Balance:
+              Available Balance :
               {{savingsAccountData.currency.displaySymbol}}<span class="m-l-10">{{savingsAccountData.summary.availableBalance |
               number}}</span>
             </span>
@@ -309,6 +309,14 @@
       <a mat-tab-link [routerLink]="['./charges']" routerLinkActive #charges="routerLinkActive"
         [active]="charges.isActive">
         Charges
+      </a>
+      <a mat-tab-link [routerLink]="['./documents']" routerLinkActive #savingsDocuments="routerLinkActive"
+        [active]="savingsDocuments.isActive">
+        Savings Documents
+      </a>
+      <a mat-tab-link *mifosxHasPermission="'READ_SAVINGSNOTE'" [routerLink]="['./notes']" routerLinkActive #notes="routerLinkActive"
+        [active]="notes.isActive">
+        Notes
       </a>
       <ng-container *mifosxHasPermission="'READ_SAVINGSACCOUNTCHARGE'">
         <a mat-tab-link [routerLink]="['./standing-instructions']" routerLinkActive

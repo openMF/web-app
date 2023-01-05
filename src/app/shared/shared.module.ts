@@ -29,6 +29,9 @@ import { MaterialModule } from './material.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ExternalIdentifierComponent } from './external-identifier/external-identifier.component';
 import { PipesModule } from 'app/pipes/pipes.module';
+import { EntityNotesTabComponent } from './tabs/entity-notes-tab/entity-notes-tab.component';
+import { EntityDocumentsTabComponent } from './tabs/entity-documents-tab/entity-documents-tab.component';
+import { DirectivesModule } from 'app/directives/directives.module';
 
 /**
  * Shared Module
@@ -42,7 +45,8 @@ import { PipesModule } from 'app/pipes/pipes.module';
     MaterialModule,
     ReactiveFormsModule,
     TranslateModule.forRoot(),
-    PipesModule
+    PipesModule,
+    DirectivesModule
   ],
   declarations: [
     FormfieldComponent,
@@ -63,7 +67,9 @@ import { PipesModule } from 'app/pipes/pipes.module';
     SearchToolComponent,
     ServerSelectorComponent,
     TenantSelectorComponent,
-    ExternalIdentifierComponent
+    ExternalIdentifierComponent,
+    EntityNotesTabComponent,
+    EntityDocumentsTabComponent
   ],
   exports: [
     FileUploadComponent,
@@ -81,7 +87,9 @@ import { PipesModule } from 'app/pipes/pipes.module';
     ReactiveFormsModule,
     TranslateModule,
     TenantSelectorComponent,
-    ExternalIdentifierComponent
+    ExternalIdentifierComponent,
+    EntityNotesTabComponent,
+    EntityDocumentsTabComponent
   ]
 })
 export class SharedModule { }
