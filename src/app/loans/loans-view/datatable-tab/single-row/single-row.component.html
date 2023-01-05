@@ -1,31 +1,15 @@
 <div class="tab-container mat-typography">
-
-  <div>
-
-    <div fxLayout="column" fxFlex="50%" class="table-name">
-      <h3>{{datatableName}}</h3>
-    </div>
-
-    <div fxLayout="column" fxFlex="50%">
-      <div fxLayout="row" fxLayoutAlign="flex-end">
-        <span>
-          <button mat-raised-button color="primary" (click)="add()" *ngIf="!dataObject.data[0]">
-            <fa-icon icon="plus" class="m-r-10"></fa-icon>Add
-          </button>
-        </span>
-        <span>
-          <button mat-raised-button color="primary" (click)="edit()" *ngIf="dataObject.data[0]">
-            <fa-icon icon="edit" class="m-r-10"></fa-icon>Edit
-          </button>
-        </span>
-        <span class="delete-button">
-          <button mat-raised-button color="warn" (click)="delete()" *ngIf="dataObject.data[0]">
-            <fa-icon icon="trash" class="m-r-10"></fa-icon>Delete
-          </button>
-        </span>
-      </div>
-    </div>
-
+  <h3>{{datatableName}}</h3>
+  <div fxLayout="row" fxLayoutAlign="flex-end">
+    <button mat-raised-button color="primary" (click)="add()" *ngIf="!dataObject.data[0]">
+      <fa-icon icon="plus" class="m-r-10"></fa-icon>Add
+    </button>
+    <button mat-raised-button color="primary" (click)="edit()" *ngIf="dataObject.data[0]">
+      <fa-icon icon="edit" class="m-r-10"></fa-icon>Edit
+    </button>
+    <button class="delete-button" mat-raised-button color="warn" (click)="delete()" *ngIf="dataObject.data[0]">
+      <fa-icon icon="trash" class="m-r-10"></fa-icon>Delete All
+    </button>
   </div>
 
   <mat-divider></mat-divider>

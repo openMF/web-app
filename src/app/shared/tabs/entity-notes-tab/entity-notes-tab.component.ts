@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientsService } from 'app/clients/clients.service';
+import { GroupsService } from 'app/groups/groups.service';
 import { LoansService } from 'app/loans/loans.service';
 import { SavingsService } from 'app/savings/savings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -29,6 +30,7 @@ export class EntityNotesTabComponent implements OnInit {
     private savingsService: SavingsService,
     private loansService: LoansService,
     private clientsService: ClientsService,
+    private groupsService: GroupsService,
     private dialog: MatDialog) { }
 
   ngOnInit() {

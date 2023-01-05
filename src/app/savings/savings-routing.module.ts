@@ -41,7 +41,6 @@ import { SavingsDocumentsTabComponent } from './savings-account-view/savings-doc
 import { NotesTabComponent } from './savings-account-view/notes-tab/notes-tab.component';
 import { SavingNotesResolver } from './common-resolvers/saving-notes.resolver';
 import { SavingDocumentsResolver } from './common-resolvers/saving-documents.resolver';
-import { DocumentsTabComponent } from 'app/clients/clients-view/documents-tab/documents-tab.component';
 /** Savings Routes */
 const routes: Routes = [
   {
@@ -106,10 +105,10 @@ const routes: Routes = [
               },
               {
                 path: 'documents',
-                component: DocumentsTabComponent,
+                component: SavingsDocumentsTabComponent,
                 data: { title: extract('Savings Account Documents'), breadcrumb: 'Documents', routeParamBreadcrumb: false },
                 resolve: {
-                  savingAccountDocuments: SavingDocumentsResolver
+                  savingsDocuments: SavingDocumentsResolver
                 }
               },
               {

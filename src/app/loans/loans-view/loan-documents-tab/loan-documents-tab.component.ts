@@ -21,7 +21,7 @@ export class LoanDocumentsTabComponent implements OnInit {
   entityDocuments: any;
   /** Loan account Id */
   entityId: string;
-  entityType: string = 'loans';
+  entityType = 'loans';
 
   /**
    * Retrieves the loans data from `resolve`.

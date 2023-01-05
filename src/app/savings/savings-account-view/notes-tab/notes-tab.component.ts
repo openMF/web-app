@@ -34,7 +34,7 @@ export class NotesTabComponent implements OnInit {
         id: response.resourceId,
         createdByUsername: this.username,
         createdOn: new Date(),
-        note: noteContent
+        note: noteContent.note
       });
     });
   }
