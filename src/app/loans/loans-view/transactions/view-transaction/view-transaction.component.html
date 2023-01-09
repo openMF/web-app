@@ -2,16 +2,16 @@
   *ngIf="!(transactionData.type.contra)">
   <span *mifosxHasPermission="'ADJUST_LOAN'">
     <button mat-raised-button color="primary" [routerLink]="'edit'" [disabled]="!allowEdition">
-      <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;{{ 'Edit' | translate }}
+      <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'Edit' | translate }}
     </button>
 
     <button mat-raised-button color="warn" (click)="undoTransaction()" [disabled]="!allowUndo">
-      <fa-icon icon="undo"></fa-icon>&nbsp;&nbsp;{{ 'Undo' | translate }}
+      <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'Undo' | translate }}
     </button>
   </span>
   <span *mifosxHasPermission="'CHARGEBACK_LOAN'">
     <button mat-raised-button color="warn" [disabled]="!allowChargeback" (click)="chargebackTransaction()">
-      <fa-icon icon="undo"></fa-icon>&nbsp;&nbsp;{{ 'Chargeback' | translate }}
+      <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'Chargeback' | translate }}
     </button>
   </span>
 </div>

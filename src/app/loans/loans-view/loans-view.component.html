@@ -48,6 +48,9 @@
               <span *ngIf="loanDetailsData.inArrears">Arrears Since: {{loanDetailsData.summary.overdueSinceDate |
                 dateFormat}}
               </span>
+              <span *ngIf="loanDetailsData.totalOverpaid && loanDetailsData.totalOverpaid > 0">
+                Overpaid By: {{loanDetailsData.currency.displaySymbol}} {{loanDetailsData.totalOverpaid | number}}
+              </span>
             </div>
 
             <span fxFlex="auto"></span>

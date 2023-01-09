@@ -127,6 +127,7 @@ export class ViewChargeComponent {
         label: 'Due Date',
         value: new Date(this.chargeData.dueDate),
         type: 'date',
+        maxDate: this.settingsService.maxAllowedDate,
         required: true
       })
     ];

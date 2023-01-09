@@ -26,7 +26,6 @@
         <td mat-cell *matCellDef="let report"> {{ report.reportCategory }} </td>
       </ng-container>
 
-      
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row" [routerLink]="['/reports','run', row.reportName]" [queryParams]="{ type: row.reportType, id: row.id }"></tr>
 

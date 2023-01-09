@@ -46,6 +46,8 @@ export class EditReportComponent implements OnInit {
   /** Boolean to check if report parameters data is changed or not. */
   isReportParametersChanged: Boolean = false;
 
+  reportCategoryTypeOptions: string[] = ['Client', 'Loan', 'Savings', 'Fund', 'Accounting'];
+
   /** Paginator for report parameters table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for report parameters table. */
