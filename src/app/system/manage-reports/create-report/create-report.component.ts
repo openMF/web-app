@@ -46,6 +46,8 @@ export class CreateReportComponent implements OnInit {
   /** Sorter for report parameters table. */
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
+  reportCategoryTypeOptions: string[] = ['Client', 'Loan', 'Savings', 'Fund', 'Accounting'];
+
   /**
    * Retrieves the report template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.

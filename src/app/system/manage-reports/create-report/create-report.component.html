@@ -45,11 +45,16 @@
 
           <mat-form-field fxFlex="40%">
             <mat-label>Report Category</mat-label>
-            <input matInput formControlName="reportCategory">
+            <mat-select formControlName="reportCategory">
+              <mat-option *ngFor="let reportCategoryType of reportCategoryTypeOptions"
+                [value]="reportCategoryType">
+                {{ reportCategoryType }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
 
           <div fxFlex="10%" class="user-report-wrapper">
-            <mat-checkbox class="user-report" labelPosition="before" formControlName="useReport">
+            <mat-checkbox class="user-report" labelPosition="after" formControlName="useReport">
               User Report (UI)
             </mat-checkbox>
           </div>
@@ -80,8 +85,7 @@
           <p fxFlex="20%" class="mat-title">Report Parameters</p>
 
           <button mat-raised-button fxFlex="20%" type="button" color="primary" (click)="addReportParameter()">
-            <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
-            Add Report Parameter
+            <fa-icon icon="plus" class="m-r-10"></fa-icon>Add Report Parameter
           </button>
 
         </div>
