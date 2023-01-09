@@ -24,7 +24,8 @@ export class ClientAddressFieldConfigurationResolver implements Resolve<Object> 
      * @returns {Observable<any>}
      */
     resolve(): Observable<any> {
-        return this.clientsService.getAddressFieldConfiguration();
+        const countryId = JSON.parse(sessionStorage.getItem('mifosXCredentials')).countryId;
+        return this.clientsService.getAddressFieldConfiguration(countryId);
     }
 
 }

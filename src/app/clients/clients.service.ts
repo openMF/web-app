@@ -266,8 +266,8 @@ export class ClientsService {
     return this.http.delete(`/clients/${clientId}/notes/${noteId}`);
   }
 
-  getAddressFieldConfiguration() {
-    return this.http.get(`/fieldconfiguration/ADDRESS`);
+  getAddressFieldConfiguration(countryId: number) {
+    return this.http.get(`/fieldconfiguration/ADDRESS/${countryId}`);
   }
 
   getClientAddressData(clientId: string) {
