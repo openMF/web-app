@@ -268,6 +268,22 @@ export class LoansService {
   }
 
   /**
+   * Returns the Loan Reschedule request
+   */
+  loanRescheduleRequests(loanId: any) {
+    const httpParams = new HttpParams().set('loanId', loanId);
+    return this.http.get('/rescheduleloans', { params: httpParams });
+  }
+
+  /**
+   * Returns the Loan Reschedule request
+   */
+  applyCommandLoanRescheduleRequests(rescheduleId: any, command: string, data: any) {
+    const httpParams = new HttpParams().set('command', command);
+    return this.http.post(`/rescheduleloans/${rescheduleId}`, data, { params: httpParams });
+  }
+
+  /**
    * Submits Reschedule Data
    * @param {any} data Data
    */

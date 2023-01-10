@@ -8,8 +8,12 @@
     </div>
     <div fxFlex="60%">
       <button mat-raised-button color="success" *mifosxHasPermission="'APPROVE_LOANRESCHEDULE'"
-        (click)="approveBulkLoanReschedule()">
-        <fa-icon icon="check"></fa-icon>&nbsp;&nbsp;Approve
+        (click)="bulkLoanReschedule('Approve')">
+        <fa-icon icon="check" class="m-r-10"></fa-icon>Approve
+      </button>
+      <button mat-raised-button color="reject" *mifosxHasPermission="'APPROVE_LOANRESCHEDULE'"
+        (click)="bulkLoanReschedule('Reject')">
+        <fa-icon icon="times" class="m-r-10"></fa-icon>Reject
       </button>
     </div>
   </div>
