@@ -19,11 +19,12 @@
               <h3>
                 <i class="fa fa-stop" matTooltip="{{ loanDetailsData.status.value }}"
                   [ngClass]="loanDetailsData.inArrears?'status-active-overdue':(loanDetailsData.status.code|statusLookup)"></i>
-                  Loan Product: {{loanDetailsData.loanProductName}}<span class="m-l-10">({{loanDetailsData.accountNo}})</span>
+                Loan Product: {{loanDetailsData.loanProductName}}<span
+                  class="m-l-10">({{loanDetailsData.accountNo}})</span>
               </h3>
               <span class="loans-overview">
                 {{entityType}} Name: {{loanDetailsData.clientName ||
-                  loanDetailsData.groupName}}<span class="m-l-10">({{loanDetailsData.clientAccountNo}})</span><br />
+                loanDetailsData.groupName}}<span class="m-l-10">({{loanDetailsData.clientAccountNo}})</span><br />
               </span>
               <span class="loans-overview" *ngIf="loanDetailsData.delinquencyRange">
                 Loan Account Classification : {{loanDetailsData?.delinquencyRange.classification}}<br />
@@ -165,6 +166,10 @@
           Charges
         </a>
       </ng-container>
+      <a mat-tab-link [routerLink]="['./loan-reschedules']" routerLinkActive #loanReschedules="routerLinkActive"
+        [active]="loanReschedules.isActive">
+        Loan Reschedules
+      </a>
       <a mat-tab-link [routerLink]="['./loan-documents']" routerLinkActive #loanDocuments="routerLinkActive"
         [active]="loanDocuments.isActive">
         Loan Documents

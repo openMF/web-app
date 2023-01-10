@@ -79,37 +79,40 @@ export class RescheduleLoanComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 
-  approveBulkLoanReschedule() {
+  bulkLoanReschedule(action: string) {
     const rescheduleLoanDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Reschedule Loan', dialogContext: 'Are you sure you want to Reschedule Loan' }
+      data: { heading: 'Reschedule Loan', dialogContext: 'Are you sure you want to ' + action + ' the Reschedule Loan' }
     });
     rescheduleLoanDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
-        this.bulkLoanRescheduleApproval();
+        this.bulkLoanRescheduleRequest(action.toLowerCase());
       }
     });
   }
 
-  bulkLoanRescheduleApproval() {
+  bulkLoanRescheduleRequest(command: string) {
     const dateFormat = this.settingsService.dateFormat;
-    const approvedOnDate = this.dateUtils.formatDate(new Date(), dateFormat);
+    const transactionDate = this.dateUtils.formatDate(this.settingsService.businessDate, dateFormat);
     const locale = this.settingsService.language.code;
     const formData = {
       dateFormat,
-      approvedOnDate,
       locale
     };
+    if (command === 'approve') {
+      formData['approvedOnDate'] = transactionDate;
+    } else {
+      formData['rejectedOnDate'] = transactionDate;
+    }
     const listSelectedAccounts = this.selection.selected;
     this.batchRequests = [];
     let reqId = 1;
     listSelectedAccounts.forEach((element: any) => {
-      const url = 'rescheduleloans/' + element.id + '?command=approve';
+      const url = 'rescheduleloans/' + element.id + '?command=' + command;
       const bodyData = JSON.stringify(formData);
       const batchData = { requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData };
       this.batchRequests.push(batchData);
     });
     this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
-      console.log(response);
       this.reload();
     });
   }

@@ -1,0 +1,19 @@
+table {
+  width: 100%;
+  .action-button {
+    min-width: 26px;
+    padding: 0 0 3px 0;
+    margin: 0 2%;
+    line-height: 25px;
+  }
+}
+
+.container {
+  padding-top: 1%;
+  padding-bottom: 2%;
+
+  .action-buttons {
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+  }
+}

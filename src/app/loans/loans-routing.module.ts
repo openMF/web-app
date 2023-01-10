@@ -53,6 +53,9 @@ import { GLIMLoanTemplateResolver } from './common-resolvers/glim-loan-template.
 import { GroupViewResolver } from 'app/groups/common-resolvers/group-view.resolver';
 import { LoanDelinquencyTagsResolver } from './common-resolvers/loan-delinquency-tags.resolver';
 import { LoanDelinquencyTagsTabComponent } from './loans-view/loan-delinquency-tags-tab/loan-delinquency-tags-tab.component';
+import { RescheduleLoanComponent } from 'app/tasks/checker-inbox-and-tasks-tabs/reschedule-loan/reschedule-loan.component';
+import { LoanReschedulesResolver } from './common-resolvers/loan-reschedules.resolver';
+import { RescheduleLoanTabComponent } from './loans-view/reschedule-loan-tab/reschedule-loan-tab.component';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -129,6 +132,19 @@ const routes: Routes = [
                   path: '',
                   component: LoanDelinquencyTagsTabComponent
                 },
+              ]
+            },
+            {
+              path: 'loan-reschedules',
+              data: {},
+              resolve: {
+                loanRescheduleData: LoanReschedulesResolver
+              },
+              children: [
+                {
+                  path: '',
+                  component: RescheduleLoanTabComponent
+                }
               ]
             },
             {

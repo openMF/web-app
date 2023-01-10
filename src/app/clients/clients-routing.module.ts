@@ -79,6 +79,11 @@ const routes: Routes = [
         },
         children: [
           {
+            path: '',
+            redirectTo: 'general',
+            pathMatch: 'full'
+          },
+          {
             path: 'general',
             component: GeneralTabComponent,
             data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false },
