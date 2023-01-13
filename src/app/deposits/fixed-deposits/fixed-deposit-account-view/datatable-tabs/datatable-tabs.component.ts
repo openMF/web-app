@@ -11,9 +11,9 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./datatable-tabs.component.scss']
 })
 export class DatatableTabsComponent {
-
+  entityId: string;
   /** Savings Datatable */
-  savingsDatatable: any;
+  entityDatatable: any;
   /** Multi Row Datatable Flag */
   multiRowDatatableFlag: boolean;
 
@@ -22,9 +22,11 @@ export class DatatableTabsComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
+    this.entityId = this.route.parent.parent.snapshot.paramMap.get('fixedDepositAccountId');
+
     this.route.data.subscribe((data: { savingsDatatable: any }) => {
-      this.savingsDatatable = data.savingsDatatable;
-      this.multiRowDatatableFlag = this.savingsDatatable.columnHeaders[0].columnName === 'id' ? true : false;
+      this.entityDatatable = data.savingsDatatable;
+      this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });
   }
 

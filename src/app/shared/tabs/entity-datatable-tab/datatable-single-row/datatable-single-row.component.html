@@ -1,0 +1,43 @@
+<div class="tab-container mat-typography">
+  <h3>{{datatableName}}</h3>
+  <div fxLayout="row" fxLayoutAlign="flex-end" class="m-b-20">
+    <button mat-raised-button color="primary" (click)="add()" *ngIf="!dataObject.data[0]">
+      <fa-icon icon="plus" class="m-r-10"></fa-icon>Add
+    </button>
+    <button mat-raised-button color="primary" (click)="edit()" *ngIf="dataObject.data[0]">
+      <fa-icon icon="edit" class="m-r-10"></fa-icon>Edit
+    </button>
+    <button class="delete-button" mat-raised-button color="warn" (click)="delete()" *ngIf="dataObject.data[0]">
+      <fa-icon icon="trash" class="m-r-10"></fa-icon>Delete
+    </button>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="m-t-10" *ngIf="dataObject.data.length > 0">
+
+    <div fxFlexFill *ngFor="let columnHeader of dataObject.columnHeaders;let i = index" [ngClass}="{{setAttributeClass(columnHeader.columnName)}}" >
+
+      <div fxFlex="45%" class="mat-body-strong left">
+        {{ getInputName(columnHeader.columnName) }}
+      </div>
+
+      <div fxFlex="50%" [ngSwitch]="columnHeader.columnDisplayType" class="right">
+        <span *ngSwitchCase="'DATE'">
+          {{dataObject.data[0].row[i] | dateFormat}}
+        </span>
+        <span *ngSwitchCase="'DATETIME'">
+          {{dataObject.data[0].row[i] | datetimeFormat}}
+        </span>
+        <span *ngSwitchCase="'INTEGER' || 'DECIMAL'">
+          {{dataObject.data[0].row[i] | number}}
+        </span>
+        <span *ngSwitchDefault>
+          {{dataObject.data[0].row[i]}}
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+</div>

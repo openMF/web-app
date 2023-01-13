@@ -28,6 +28,10 @@ export class Dates {
     }
   }
 
+  public parseDatetime(value: any): Date {
+    return moment(value).toDate();
+  }
+
   public convertToDate(value: any, format: string): Date {
     return moment(value).toDate();
   }

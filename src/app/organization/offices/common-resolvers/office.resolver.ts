@@ -24,7 +24,7 @@ export class OfficeResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const officeId = route.paramMap.get('id');
+    const officeId = route.parent.paramMap.get('officeId');
     return this.organizationService.getOffice(officeId);
   }
 

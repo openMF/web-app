@@ -84,8 +84,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'holdGuaranteeFunds': this.loanProductsTemplate.holdGuaranteeFunds,
       'multiDisburseLoan': this.loanProductsTemplate.multiDisburseLoan,
       'maxTrancheCount': this.loanProductsTemplate.maxTrancheCount,
-      'outstandingLoanBalance': this.loanProductsTemplate.outstandingLoanBalance,
-      'delinquencyBucketId': this.loanProductsTemplate.delinquencyBucket.id
+      'outstandingLoanBalance': this.loanProductsTemplate.outstandingLoanBalance
     });
 
     if (this.loanProductsTemplate.isInterestRecalculationEnabled) {

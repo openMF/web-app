@@ -175,38 +175,38 @@ const routes: Routes = [
               }
             },
             {
-              path: ':id',
-              data: { title: extract('View Office'), routeResolveBreadcrumb: ['office', 'name'] },
+              path: ':officeId',
+              data: { title: extract('View Office'), breadcrumb: 'officeId', routeParamBreadcrumb: 'officeId' },
               component: ViewOfficeComponent,
               resolve: {
                  officeDatatables: OfficeDatatablesResolver,
-                 office: OfficeResolver
               },
               children: [
                 {
+                  path: '',
+                  redirectTo: 'general',
+                  pathMatch: 'full'
+                },
+                {
                   path: 'general',
                   component: GeneralTabComponent,
-                  data: { title: extract('General') },
+                  data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false },
+                  resolve: {
+                    office: OfficeResolver
+                  }
                 },
                 {
                   path: 'datatables',
-                  children: [
-                    {
+                  children: [{
                       path: ':datatableName',
                       component: DatatableTabsComponent,
-                      data: { title: extract('View Data Table') },
+                      data: { title: extract('Data Table View'), routeParamBreadcrumb: 'datatableName' },
                       resolve: {
                         officeDatatable: OfficeDatatableResolver
                       }
                     }
                   ]
-                }
-              ]
-            },
-            {
-              path: ':id',
-              data: { title: extract('View Office'), routeParamBreadcrumb: 'id' },
-              children: [
+                },
                 {
                   path: 'edit',
                   component: EditOfficeComponent,
@@ -217,7 +217,6 @@ const routes: Routes = [
                 }
               ]
             }
-
           ]
         },
         {

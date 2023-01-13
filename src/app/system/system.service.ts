@@ -691,4 +691,30 @@ export class SystemService {
     return this.http.put('/externalevents/configuration', payload);
   }
 
+  /** Datatable Entries for Entities */
+  getEntityDatatables(appTable: string) {
+    const httpParams = new HttpParams().set('apptable', appTable);
+    return this.http.get(`/datatables`, { params: httpParams });
+  }
+
+  getEntityDatatable(entityId: string, datatableName: string) {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.get(`/datatables/${datatableName}/${entityId}`, { params: httpParams });
+  }
+
+  addEntityDatatableEntry(entityId: string, datatableName: string, data: any) {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.post(`/datatables/${datatableName}/${entityId}`, data, { params: httpParams });
+  }
+
+  editEntityDatatableEntry(entityId: string, datatableName: string, data: any) {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.put(`/datatables/${datatableName}/${entityId}`, data, { params: httpParams });
+  }
+
+  deleteDatatableContent(entityId: string, datatableName: string) {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.delete(`/datatables/${datatableName}/${entityId}`, { params: httpParams });
+  }
+
 }

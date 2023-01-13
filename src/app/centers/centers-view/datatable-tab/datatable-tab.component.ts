@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -7,21 +7,23 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./datatable-tab.component.scss']
 })
 export class DatatableTabComponent {
+  entityId: string;
+  /** Center Datatable */
+  entityDatatable: any;
+  /** Multi Row Datatable Flag */
+  multiRowDatatableFlag: boolean;
 
-    /** Center Datatable */
-    centerDatatable: any;
-    /** Multi Row Datatable Flag */
-    multiRowDatatableFlag: boolean;
+  /**
+   * Fetches data table data from `resolve`
+   * @param {ActivatedRoute} route Activated Route.
+   */
+  constructor(private route: ActivatedRoute) {
+    this.entityId = this.route.parent.parent.snapshot.paramMap.get('centerId');
 
-    /**
-     * Fetches data table data from `resolve`
-     * @param {ActivatedRoute} route Activated Route.
-     */
-    constructor(private route: ActivatedRoute) {
-      this.route.data.subscribe((data: { centerDatatable: any }) => {
-        this.centerDatatable = data.centerDatatable;
-        this.multiRowDatatableFlag = this.centerDatatable.columnHeaders[0].columnName === 'id' ? true : false;
-      });
-    }
+    this.route.data.subscribe((data: { centerDatatable: any }) => {
+      this.entityDatatable = data.centerDatatable;
+      this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
+    });
+  }
 
 }

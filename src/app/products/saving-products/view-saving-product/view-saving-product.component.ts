@@ -8,15 +8,11 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ViewSavingProductComponent implements OnInit {
 
-  savingProduct: any;
-
-  chargesDisplayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType'];
-  paymentFundSourceDisplayedColumns: string[] = ['paymentTypeId', 'fundSourceAccountId'];
-  feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId'];
+  savingProductDatatables: any = [];
 
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { savingProduct: any }) => {
-      this.savingProduct = data.savingProduct;
+    this.route.data.subscribe((data: { savingProductDatatables: any }) => {
+      this.savingProductDatatables = data.savingProductDatatables;
     });
   }
 

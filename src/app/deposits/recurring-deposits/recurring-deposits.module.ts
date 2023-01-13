@@ -14,8 +14,6 @@ import { TransactionsTabComponent } from './recurring-deposits-account-view/tran
 import { StandingInstructionsTabComponent } from './recurring-deposits-account-view/standing-instructions-tab/standing-instructions-tab.component';
 import { ChargesTabComponent } from './recurring-deposits-account-view/charges-tab/charges-tab.component';
 import { DatatableTabsComponent } from './recurring-deposits-account-view/datatable-tabs/datatable-tabs.component';
-import { MultiRowComponent } from './recurring-deposits-account-view/datatable-tabs/multi-row/multi-row.component';
-import { SingleRowComponent } from './recurring-deposits-account-view/datatable-tabs/single-row/single-row.component';
 import { CreateRecurringDepositsAccountComponent } from './create-recurring-deposits-account/create-recurring-deposits-account.component';
 import { RecurringDepositsAccountDetailsStepComponent } from './recurring-deposits-account-stepper/recurring-deposits-account-details-step/recurring-deposits-account-details-step.component';
 import { RecurringDepositsAccountTermsStepComponent } from './recurring-deposits-account-stepper/recurring-deposits-account-terms-step/recurring-deposits-account-terms-step.component';
@@ -60,8 +58,6 @@ import { RecurringDepositConfirmationDialogComponent } from './recurring-deposit
     StandingInstructionsTabComponent,
     ChargesTabComponent,
     DatatableTabsComponent,
-    MultiRowComponent,
-    SingleRowComponent,
     CreateRecurringDepositsAccountComponent,
     RecurringDepositsAccountDetailsStepComponent,
     RecurringDepositsAccountTermsStepComponent,

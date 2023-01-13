@@ -15,8 +15,6 @@ import { SavingsAccountViewComponent } from './savings-account-view/savings-acco
 import { ChargesTabComponent } from './savings-account-view/charges-tab/charges-tab.component';
 import { StandingInstructionsTabComponent } from './savings-account-view/standing-instructions-tab/standing-instructions-tab.component';
 import { DatatableTabsComponent } from './savings-account-view/datatable-tabs/datatable-tabs.component';
-import { MultiRowComponent } from './savings-account-view/datatable-tabs/multi-row/multi-row.component';
-import { SingleRowComponent } from './savings-account-view/datatable-tabs/single-row/single-row.component';
 import { CreateSavingsAccountComponent } from './create-savings-account/create-savings-account.component';
 import { SavingsAccountDetailsStepComponent } from './savings-account-stepper/savings-account-details-step/savings-account-details-step.component';
 import { SavingsAccountChargesStepComponent } from './savings-account-stepper/savings-account-charges-step/savings-account-charges-step.component';
@@ -73,8 +71,6 @@ import { NotesTabComponent } from './savings-account-view/notes-tab/notes-tab.co
     ChargesTabComponent,
     StandingInstructionsTabComponent,
     DatatableTabsComponent,
-    MultiRowComponent,
-    SingleRowComponent,
     CreateSavingsAccountComponent,
     SavingsAccountDetailsStepComponent,
     SavingsAccountChargesStepComponent,
