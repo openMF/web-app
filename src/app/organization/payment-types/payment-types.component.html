@@ -1,7 +1,7 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
 
   <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_PAYMENTTYPE'">
-    <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="plus" class="m-r-10"></fa-icon>
     Create Payment Type
   </button>
 
@@ -64,10 +64,10 @@
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let paymentType">
           <button mat-button [routerLink]="[paymentType.id, 'edit']" color="primary" *ngIf="!paymentType.isSystemDefined">
-            <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;Edit
+            <fa-icon icon="edit" class="m-r-10"></fa-icon>Edit
           </button>
           <button mat-button (click)="deletePaymentType(paymentType.id)" color="warn" *ngIf="!paymentType.isSystemDefined">
-            <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;Delete
+            <fa-icon icon="trash" class="m-r-10"></fa-icon>Delete
           </button>
         </td>
       </ng-container>

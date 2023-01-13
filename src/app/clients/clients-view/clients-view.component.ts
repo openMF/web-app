@@ -52,6 +52,10 @@ export class ClientsViewComponent implements OnInit {
     );
   }
 
+  isActive(): boolean {
+    return (this.clientViewData.status.value === 'Active');
+  }
+
   /**
    * Performs action button/option action.
    * @param {string} name action name.

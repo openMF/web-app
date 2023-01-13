@@ -156,16 +156,16 @@
             <span *ngIf="!guarantor.guarantorFundingDetails">
               <button mat-raised-button class="account-action-button" color="primary"
                 *mifosxHasPermission="'READ_SAVINGSACCOUNT'" (click)="viewGuarantorDetails(guarantor)">
-                <fa-icon icon="eye"></fa-icon>&nbsp;&nbsp;
+                <fa-icon icon="eye" class="m-r-10"></fa-icon>
               </button>
               <button mat-raised-button class="account-action-button" color="primary"
                 *ngIf="guarantor.status && guarantor.guarantorType.id == 3 && guarantor.id">
-                <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+                <fa-icon icon="edit" class="m-r-10"></fa-icon>
               </button>
               <span *ngIf="guarantor.status">
                 <button mat-raised-button class="account-action-button" color="warn"
                   *mifosxHasPermission="'DELETE_GUARANTOR'" (click)="deleteGuarantor(guarantor.id)">
-                  <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+                  <fa-icon icon="trash" class="m-r-10"></fa-icon>
                 </button>
               </span>
             </span>

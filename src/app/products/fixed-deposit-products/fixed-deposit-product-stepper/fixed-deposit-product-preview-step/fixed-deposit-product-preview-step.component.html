@@ -178,11 +178,11 @@
           <td mat-cell *matCellDef="let chartSlab; let chartSlabIndex = dataIndex">
             <button mat-button color="primary" (click)="expandChartSlabIndex[chartIndex] = expandChartSlabIndex[chartIndex] === chartSlabIndex ? null : chartSlabIndex" [disabled]="chartSlab.incentives.length === 0">
               <span *ngIf="expandChartSlabIndex[chartIndex] !== chartSlabIndex">
-                <fa-icon icon="eye"></fa-icon>&nbsp;&nbsp;
+                <fa-icon icon="eye" class="m-r-10"></fa-icon>
                 View Incentives
               </span>
               <span *ngIf="expandChartSlabIndex[chartIndex] === chartSlabIndex">
-                <fa-icon icon="eye-slash"></fa-icon>&nbsp;&nbsp;
+                <fa-icon icon="eye-slash" class="m-r-10"></fa-icon>
                 Hide Incentives
               </span>
             </button>
@@ -448,7 +448,7 @@
 
 <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button matStepperPrevious>
-    <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
     Previous
   </button>
   <button mat-raised-button [routerLink]="['../']">

@@ -1,10 +1,10 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_FINANCIALACTIVITYACCOUNT'">
-    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="edit" class="m-r-10"></fa-icon>
     Edit
   </button>
   <button mat-raised-button color="warn" (click)="deleteFinancialActivityAccount()" *mifosxHasPermission="'DELETE_FINANCIALACTIVITYACCOUNT'">
-    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="trash" class="m-r-10"></fa-icon>
     Delete
   </button>
 </div>

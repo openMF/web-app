@@ -1,21 +1,21 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" (click)="editRoles(); backupCheckValues();" [disabled]="rolePermissionService.name === 'Super user'">
-    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="edit" class="m-r-10"></fa-icon>
     Edit Role
   </button>
 
   <button *ngIf="!isRoleEnable(rolePermissionService.disabled)" mat-raised-button color="danger" (click)="disableRolesConfirmation()" [disabled]="rolePermissionService.name === 'Super user'">
-    <fa-icon icon="lock"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="lock" class="m-r-10"></fa-icon>
     Disable Role
   </button>
 
   <button *ngIf="isRoleEnable(rolePermissionService.disabled)" mat-raised-button color="primary" (click)="enableRolesConfirmation()" [disabled]="rolePermissionService.name === 'Super user'">
-    <fa-icon icon="lock-open"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="lock-open" class="m-r-10"></fa-icon>
     Enable Role
   </button>
 
   <button mat-raised-button color="warn" (click)="deleteRole()" [disabled]="rolePermissionService.name === 'Super user'">
-    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="trash" class="m-r-10"></fa-icon>
     Delete Role
   </button>
 

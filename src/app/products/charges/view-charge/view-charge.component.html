@@ -1,10 +1,10 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CHARGE'">
-    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="edit" class="m-r-10"></fa-icon>
     Edit
   </button>
   <button mat-raised-button color="warn" (click)="deleteCharge()" *mifosxHasPermission="'DELETE_CHARGE'">
-    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="trash" class="m-r-10"></fa-icon>
     Delete
   </button>
 </div>
@@ -16,11 +16,11 @@
     <mat-card-content>
 
       <div fxLayout="row wrap" class="content">
-        
+
         <div fxFlex="50%" class="mat-body-strong">
           Charge Name
         </div>
-          
+
         <div fxFlex="50%">
           {{ chargeData.name }}
         </div>
@@ -28,7 +28,7 @@
         <div fxFlex="50%" class="mat-body-strong">
           Charge Type
         </div>
-          
+
         <div fxFlex="50%">
           {{ chargeData.penalty === true ? 'Penalty' : 'Charge' }}
         </div>

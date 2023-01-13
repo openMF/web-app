@@ -1,20 +1,20 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px" fxLayout.xs="column">
 
   <button mat-raised-button color="primary" (click)="addCodeValueRow()" *mifosxHasPermission="'CREATE_CODEVALUE'">
-    <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="plus" class="m-r-10"></fa-icon>
     Add Code Value
   </button>
 
   <span *ngIf="!codeData.systemDefined">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CODE'">
-    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="edit" class="m-r-10"></fa-icon>
     Edit Code
   </button>
   </span>
 
   <span *ngIf="!codeData.systemDefined">
     <button mat-raised-button color="warn" (click)="delete()" *mifosxHasPermission="'DELETE_CODEVALUE'">
-      <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+      <fa-icon icon="trash" class="m-r-10"></fa-icon>
       Delete Code
     </button>
   </span>

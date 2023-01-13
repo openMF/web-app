@@ -53,11 +53,11 @@
       <td mat-cell *matCellDef="let chartSlab; let chartSlabIndex = dataIndex">
         <button mat-button color="primary" (click)="expandChartSlabIndex = expandChartSlabIndex === chartSlabIndex ? null : chartSlabIndex">
           <span *ngIf="expandChartSlabIndex !== chartSlabIndex">
-            <fa-icon icon="eye"></fa-icon>&nbsp;&nbsp;
+            <fa-icon icon="eye" class="m-r-10"></fa-icon>
             View Incentives
           </span>
           <span *ngIf="expandChartSlabIndex === chartSlabIndex">
-            <fa-icon icon="eye-slash"></fa-icon>&nbsp;&nbsp;
+            <fa-icon icon="eye-slash" class="m-r-10"></fa-icon>
             Hide Incentives
           </span>
         </button>
@@ -139,7 +139,7 @@
 
 <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button matStepperPrevious>
-    <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
     Previous
   </button>
   <button mat-raised-button matStepperNext>

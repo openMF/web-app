@@ -4,13 +4,13 @@
     <button mat-raised-button color="primary"
       *ngIf="!(transactionData.transactionType.value == 'Transfer' || transactionData.reversed == 'true')"
       [routerLink]="'edit'">
-      <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;Edit
+      <fa-icon icon="edit" class="m-r-10"></fa-icon>Edit
     </button>
   </span>
   <button mat-raised-button color="warn"
     *mifosxHasPermission="'UNDOTRANSACTION_SAVINGSACCOUNT'"
     (click)="undoTransaction()">
-    <fa-icon icon="undo"></fa-icon>&nbsp;&nbsp;Undo
+    <fa-icon icon="undo" class="m-r-10"></fa-icon>Undo
   </button>
 </div>
 

@@ -151,20 +151,20 @@
           <span *ngIf="charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'">
             {{(charge.feeOnMonthDay  | dateFormat) || 'Unassigned'}}
           </span>
-          <span 
+          <span
             *ngIf="!(charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'
               || charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee')">
             N/A
           </span>
         </td>
       </ng-container>
-  
+
       <ng-container matColumnDef="repaymentsEvery">
         <th mat-header-cell *matHeaderCellDef> Repayments Every </th>
         <td mat-cell *matCellDef="let charge">
-          {{ charge.feeInterval || 'Not Provided' }} 
+          {{ charge.feeInterval || 'Not Provided' }}
         </td>
-      </ng-container>  
+      </ng-container>
 
       <ng-container matColumnDef="chargeTimeType">
         <th mat-header-cell *matHeaderCellDef> Collected On </th>
@@ -184,7 +184,7 @@
 
 <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button matStepperPrevious>
-    <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
     Previous
   </button>
   <button mat-raised-button [routerLink]="['../']">

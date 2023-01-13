@@ -1,7 +1,7 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
 
   <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_TELLER'">
-    <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="plus" class="m-r-10"></fa-icon>
     Create Teller
   </button>
 
@@ -35,7 +35,7 @@
         <td mat-cell *matCellDef="let teller">
           <div [className]="teller.status === 'ACTIVE' ? 'true' : 'false'">
             <fa-icon matTooltip="{{ teller.status === 'ACTIVE' ? 'Active' : 'Inactive' }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
-          </div>    
+          </div>
         </td>
       </ng-container>
 
@@ -48,7 +48,7 @@
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let teller" (click)="$event.stopPropagation()">
           <button mat-button color="primary" [routerLink]="[teller.id,'cashiers']">
-            <fa-icon icon="eye"></fa-icon>&nbsp;&nbsp;View Cashiers
+            <fa-icon icon="eye" class="m-r-10"></fa-icon>View Cashiers
           </button>
         </td>
       </ng-container>

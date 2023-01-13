@@ -3,16 +3,16 @@
 <div *ngIf="savingsAccountData.status.value === 'Active' && chargeData.amountOutstanding !== 0"
   fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
     <button mat-raised-button color="accent" *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'" (click)="payCharge()">
-      <fa-icon icon="dollar-sign"></fa-icon>&nbsp;&nbsp;
+      <fa-icon icon="dollar-sign" class="m-r-10"></fa-icon>
       Pay
     </button>
     <button mat-raised-button color="primary" *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'" (click)="waiveCharge()">
-      <fa-icon icon="flag"></fa-icon>&nbsp;&nbsp;
+      <fa-icon icon="flag" class="m-r-10"></fa-icon>
       Waive
     </button>
     <span *ngIf="isRecurringCharge()">
       <button mat-raised-button color="warn" *mifosxHasPermission="'INACTIVATE_SAVINGSACCOUNTCHARGE'" (click)="inactivateCharge()">
-        <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+        <fa-icon icon="trash" class="m-r-10"></fa-icon>
         Inactivate
       </button>
     </span>
@@ -21,11 +21,11 @@
 <div *ngIf="savingsAccountData.status.value === 'Submitted and pending approval'"
   fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
     <button mat-raised-button color="primary" *mifosxHasPermission="'UPDATE_SAVINGSACCOUNTCHARGE'" (click)="editCharge()">
-      <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+      <fa-icon icon="edit" class="m-r-10"></fa-icon>
       Edit
     </button>
     <button mat-raised-button color="warn" *mifosxHasPermission="'DELETE_SAVINGSACCOUNTCHARGE'" (click)="deleteCharge()">
-      <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+      <fa-icon icon="trash" class="m-r-10"></fa-icon>
       Delete
     </button>
 </div>
@@ -45,7 +45,7 @@
         <div fxFlex="50%">
           {{ chargeData.name }}
         </div>
-        
+
         <div fxFlex="50%" class="mat-body-strong">
           Charge Type
         </div>
@@ -85,7 +85,7 @@
         <div fxFlex="50%">
           {{ chargeData.chargeCalculationType.value }}
         </div>
-        
+
         <div fxFlex="50%" class="mat-body-strong">
           Due
         </div>

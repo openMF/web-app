@@ -9,10 +9,10 @@
     </div>
     <div class="action-button" fxLayoutGap="25px">
       <button mat-raised-button color="primary" [routerLink]="['../', 'organization', 'bulk-import', 'Groups']">
-        <fa-icon icon="download"></fa-icon>&nbsp;&nbsp;Import Group
+        <fa-icon icon="download" class="m-r-10"></fa-icon>Import Group
       </button>
       <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_GROUP'">
-        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Create Group
+        <fa-icon icon="plus" class="m-r-10"></fa-icon>Create Group
       </button>
     </div>
   </div>

@@ -1,10 +1,10 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CRITERIA'">
-    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="edit" class="m-r-10"></fa-icon>
     Edit
   </button>
   <button mat-raised-button color="warn" (click)="deleteCriteria()" *mifosxHasPermission="'DELETE_CRITERIA'">
-    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="trash" class="m-r-10"></fa-icon>
     Delete
   </button>
 </div>
@@ -23,7 +23,7 @@
          <div fxFlexFill class="loanProduct">
           <span fxFlex="40%">Loan Product:</span>
           <span fxFlex="60%">{{ loanProducts }}</span>
-        </div> 
+        </div>
 
       </div>
 
@@ -35,12 +35,12 @@
             <th mat-header-cell *matHeaderCellDef> Category </th>
             <td mat-cell *matCellDef="let provisioningData"> {{provisioningData.categoryName}} </td>
           </ng-container>
-      
+
           <ng-container matColumnDef="minAge">
             <th mat-header-cell *matHeaderCellDef> Min Age </th>
             <td mat-cell *matCellDef="let provisioningData"> {{provisioningData.minAge}} </td>
           </ng-container>
-      
+
           <ng-container matColumnDef="maxAge">
             <th mat-header-cell *matHeaderCellDef> Max Age </th>
             <td mat-cell *matCellDef="let provisioningData"> {{provisioningData.maxAge}} </td>
@@ -60,7 +60,7 @@
             <th mat-header-cell *matHeaderCellDef> Expense Account </th>
             <td mat-cell *matCellDef="let provisioningData"> {{provisioningData.expenseName}} </td>
           </ng-container>
-      
+
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>

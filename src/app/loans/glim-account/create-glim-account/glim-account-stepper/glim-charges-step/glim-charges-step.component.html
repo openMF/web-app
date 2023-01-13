@@ -8,47 +8,47 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-  
+
     <div fxFlex="48%" fxFlexAlign="center">
       <button type="button" mat-raised-button color="primary" (click)="addCharge(charge)" [disabled]="!charge.value">
-        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+        <fa-icon icon="plus" class="m-r-10"></fa-icon>
         Add
       </button>
     </div>
-  
+
     <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="chargesDataSource" [hidden]="chargesDataSource.length === 0">
-  
+
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Name </th>
         <td mat-cell *matCellDef="let charge">
           {{ charge.name + ', ' + charge.currency.displaySymbol }}
         </td>
       </ng-container>
-  
+
       <ng-container matColumnDef="chargeCalculationType">
         <th mat-header-cell *matHeaderCellDef> Type </th>
         <td mat-cell *matCellDef="let charge">
           {{ charge.chargeCalculationType.value }}
         </td>
       </ng-container>
-  
+
       <ng-container matColumnDef="amount">
         <th mat-header-cell *matHeaderCellDef> Amount </th>
         <td mat-cell *matCellDef="let charge">
-          {{ charge.amount }} 
+          {{ charge.amount }}
           <button mat-icon-button color="primary" (click)="editChargeAmount(charge)">
             <fa-icon icon="pen"></fa-icon>
           </button>
         </td>
       </ng-container>
-  
+
       <ng-container matColumnDef="chargeTimeType">
         <th mat-header-cell *matHeaderCellDef> Collected On </th>
         <td mat-cell *matCellDef="let charge">
           {{ charge.chargeTimeType.value }}
         </td>
       </ng-container>
-  
+
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef> Date </th>
         <td mat-cell *matCellDef="let charge">
@@ -58,32 +58,32 @@
           <span *ngIf="charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'">
             {{(charge.feeOnMonthDay  | dateFormat) || 'Unassigned'}}
           </span>
-          <span 
+          <span
             *ngIf="!(charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'
               || charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee')">
             N/A
           </span>
           <button mat-icon-button color="primary"
             *ngIf="charge.chargeTimeType.value === 'Weekly Fee' || charge.chargeTimeType.value === 'Annual Fee'
-                    || charge.chargeTimeType.value === 'Specified due date'" 
+                    || charge.chargeTimeType.value === 'Specified due date'"
             (click)="editChargeDate(charge)">
             <fa-icon icon="pen"></fa-icon>
           </button>
         </td>
       </ng-container>
-  
+
       <ng-container matColumnDef="repaymentsEvery">
         <th mat-header-cell *matHeaderCellDef> Repayments Every </th>
         <td mat-cell *matCellDef="let charge">
-          {{ charge.feeInterval || 'Not Provided' }} 
-          <button mat-icon-button color="primary" 
+          {{ charge.feeInterval || 'Not Provided' }}
+          <button mat-icon-button color="primary"
             *ngIf="charge.chargeTimeType.value === 'Weekly Fee' || charge.chargeTimeType.value === 'Monthly Fee'"
             (click)="editChargeFeeInterval(charge)">
             <fa-icon icon="pen"></fa-icon>
           </button>
         </td>
       </ng-container>
-  
+
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let charge">
@@ -92,15 +92,15 @@
           </button>
         </td>
       </ng-container>
-  
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  
+
     </table>
-  
+
     <div fxFlex="98%" *ngIf="activeClientMembers">
       <table fxFlex="98%" mat-table [dataSource]="dataSource">
-  
+
         <!-- Check Column -->
         <ng-container matColumnDef="check">
             <th mat-header-cell *matHeaderCellDef>
@@ -110,13 +110,13 @@
                 <mat-checkbox (change)="toggleSelect()" [(ngModel)]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
-    
+
         <!-- Position Column -->
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef> Client ID </th>
           <td mat-cell *matCellDef="let element"> {{element.id}} </td>
         </ng-container>
-    
+
         <!-- Name Column -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef> Client Name </th>
@@ -147,19 +147,19 @@
             </mat-form-field>
           </td>
         </ng-container>
-    
-    
+
+
         <tr mat-header-row *matHeaderRowDef="displayedColumn"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumn;"></tr>
       </table>
     </div>
-    
-  
+
+
   </div>
-  
+
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious>
-      <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+      <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       Previous
     </button>
     <button mat-raised-button matStepperNext>
@@ -167,4 +167,3 @@
       <fa-icon icon="arrow-right"></fa-icon>
     </button>
   </div>
-  

@@ -8,7 +8,7 @@
     </div>
     <div fxFlex="60%" *ngIf="allowRunInlineJob">
       <button mat-raised-button color="success" *mifosxHasPermission="'EXECUTE_INLINE_JOB'" (click)="runInlineCOB()">
-        <fa-icon icon="play"></fa-icon>&nbsp;&nbsp;{{'Start inline COB' | translate}}
+        <fa-icon icon="play" class="m-r-10"></fa-icon>{{'Start inline COB' | translate}}
       </button>
     </div>
   </div>

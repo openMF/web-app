@@ -2,13 +2,13 @@
 
   <div #buttonImportEmployees>
     <button mat-raised-button color="primary" *mifosxHasPermission="'CREATE_STAFF'" [routerLink]="['/', 'organization', 'bulk-import', 'Employees']">
-    <fa-icon icon="upload"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="upload" class="m-r-10"></fa-icon>
     Import Employees
   </button>
   </div>
   <div #buttonCreateEmployee>
     <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_STAFF'">
-    <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="plus" class="m-r-10"></fa-icon>
     Create Employee
   </button>
   </div>
