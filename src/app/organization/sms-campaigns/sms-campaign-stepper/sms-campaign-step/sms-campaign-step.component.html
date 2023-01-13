@@ -10,7 +10,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%" 
+    <mat-form-field fxFlex="48%"
       *ngIf="!smsCampaignDetailsForm.controls.isNotification.value">
       <mat-label>SMS Provider</mat-label>
       <mat-select formControlName="providerId">
@@ -39,7 +39,7 @@
     <mat-form-field fxFlex="48%"
       *ngIf="smsCampaignDetailsForm.contains('recurrenceStartDate')" (click)="recurrenceStartDatePicker.open()">
       <mat-label>Schedule Date</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="recurrenceStartDatePicker" 
+      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="recurrenceStartDatePicker"
         formControlName="recurrenceStartDate" required>
       <mat-datepicker-toggle matSuffix [for]="recurrenceStartDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #recurrenceStartDatePicker></mat-datepicker>
@@ -109,7 +109,7 @@
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%"
     *ngIf="!smsCampaignDetailsForm.controls.runReportId.value">
     <button mat-raised-button matStepperPrevious disabled>
-      <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+      <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       Previous
     </button>
     <button mat-raised-button matStepperNext>
@@ -118,9 +118,9 @@
     </button>
   </div>
 
-  <mifosx-business-rule-parameters 
+  <mifosx-business-rule-parameters
     *ngIf="smsCampaignDetailsForm.controls.runReportId.value"
-    [paramData]="paramData" 
+    [paramData]="paramData"
     (templateParameters)="passParameters($event)"
   >
   </mifosx-business-rule-parameters>

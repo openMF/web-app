@@ -1,6 +1,6 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
   <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'VIEW_ALL_PROVISIONING_ENTRIES'">
-    <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="plus" class="m-r-10"></fa-icon>
     Create Provisioning Entry
   </button>
 </div>
@@ -39,7 +39,7 @@
         <th mat-header-cell *matHeaderCellDef> View Report </th>
         <td mat-cell *matCellDef="let provisioningEntry">
           <button mat-button color="primary" [routerLink]="['view', provisioningEntry.id]">
-            <fa-icon icon="eye"></fa-icon>&nbsp;&nbsp;View
+            <fa-icon icon="eye" class="m-r-10"></fa-icon>View
           </button>
         </td>
       </ng-container>
@@ -48,7 +48,7 @@
         <th mat-header-cell *matHeaderCellDef> Recreate Provisioning </th>
         <td mat-cell *matCellDef="let provisioningEntry">
           <button mat-button (click)="recreateProvisioning($event, provisioningEntry.id)" [disabled]="provisioningEntry.journalEntry" color="primary">
-            <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;Recreate
+            <fa-icon icon="edit" class="m-r-10"></fa-icon>Recreate
           </button>
         </td>
       </ng-container>
@@ -57,7 +57,7 @@
         <th mat-header-cell *matHeaderCellDef> View Journal Entry </th>
         <td mat-cell *matCellDef="let provisioningEntry">
           <button mat-button (click)="viewJournalEntry($event, provisioningEntry.id)" [disabled]="!provisioningEntry.journalEntry" color="primary">
-            <fa-icon icon="eye"></fa-icon>&nbsp;&nbsp;View
+            <fa-icon icon="eye" class="m-r-10"></fa-icon>View
           </button>
         </td>
       </ng-container>

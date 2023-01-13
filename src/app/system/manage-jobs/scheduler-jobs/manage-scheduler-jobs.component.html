@@ -3,11 +3,11 @@
     <h2 class="no-m">Scheduler Status: {{ schedulerActive ? 'Active' : 'Inactive' }}</h2>
     </div>
     <button mat-raised-button class="suspend">
-      <fa-icon icon="times-circle"></fa-icon>&nbsp;&nbsp;
+      <fa-icon icon="times-circle" class="m-r-10"></fa-icon>
       Suspend
     </button>
     <button mat-raised-button class="activate" (click)="activateScheduler()" *ngIf="!schedulerActive">
-      <fa-icon icon="times-circle"></fa-icon>&nbsp;&nbsp;
+      <fa-icon icon="times-circle" class="m-r-10"></fa-icon>
       Activate
     </button>
 
@@ -24,7 +24,7 @@
 
   <div class="container space-top" fxLayout="row" fxLayoutGap="20px">
     <button mat-raised-button color="primary" (click)="runSelectedJobs()">
-      <fa-icon icon="play"></fa-icon>&nbsp;&nbsp;
+      <fa-icon icon="play" class="m-r-10"></fa-icon>
       Run Selected Jobs
     </button>
   </div>
@@ -108,7 +108,7 @@
 
 <div class="container space-top" fxLayout="row" fxLayoutGap="20px">
   <button mat-raised-button color="primary" (click)="runSelectedJobs()">
-    <fa-icon icon="play"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="play" class="m-r-10"></fa-icon>
     Run Selected Jobs<ng-template #templateSchedulerJobs let-data let-popover="popover">
   <h2>Template</h2>
   <p>This is the template I am trying to use. Is that fine.</p>
@@ -116,7 +116,7 @@
 </ng-template>
   </button>
   <button mat-raised-button color="primary" (click)="refresh()">
-    <fa-icon icon="sync"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="sync" class="m-r-10"></fa-icon>
     Refresh
   </button>
 </div>

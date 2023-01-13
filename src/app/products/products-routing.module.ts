@@ -217,7 +217,6 @@ const routes: Routes = [
             },
             {
               path: ':productId',
-              component: ViewSavingProductComponent,
               data: { title: extract('View Saving Product'), breadcrumb: 'productId', routeParamBreadcrumb: 'productId' },
               resolve: {
                 savingProductDatatables: SavingProductDatatablesResolver
@@ -225,27 +224,34 @@ const routes: Routes = [
               children: [
                 {
                   path: '',
-                  redirectTo: 'general',
-                  pathMatch: 'full'
-                },
-                {
-                  path: 'general',
-                  data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false },
-                  component: SavingProductGeneralTabComponent,
-                  resolve: {
-                    savingProduct: SavingProductResolver
-                  },
-                },
-                {
-                  path: 'datatables',
-                  children: [{
-                    path: ':datatableName',
-                    component: SavingProductDatatableTabComponent,
-                    data: { title: extract('Data Table View'), routeParamBreadcrumb: 'datatableName' },
-                    resolve: {
-                      savingProductDatatable: SavingProductDatatableResolver
+                  component: ViewSavingProductComponent,
+
+                  children: [
+                    {
+                      path: '',
+                      redirectTo: 'general',
+                      pathMatch: 'full'
+                    },
+                    {
+                      path: 'general',
+                      data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false },
+                      component: SavingProductGeneralTabComponent,
+                      resolve: {
+                        savingProduct: SavingProductResolver
+                      },
+                    },
+                    {
+                      path: 'datatables',
+                      children: [{
+                        path: ':datatableName',
+                        component: SavingProductDatatableTabComponent,
+                        data: { title: extract('Data Table View'), routeParamBreadcrumb: 'datatableName' },
+                        resolve: {
+                          savingProductDatatable: SavingProductDatatableResolver
+                        }
+                      }]
                     }
-                  }]
+                  ]
                 },
                 {
                   path: 'edit',
@@ -256,7 +262,7 @@ const routes: Routes = [
                   }
                 }
               ]
-            }
+            },
           ]
         },
         {
@@ -302,7 +308,7 @@ const routes: Routes = [
                 },
                 {
                   path: 'dividends',
-                  data: { title: extract('Share Products Dividends'), breadcrumb: 'Dividends', routeParamBreadcrumb: false},
+                  data: { title: extract('Share Products Dividends'), breadcrumb: 'Dividends', routeParamBreadcrumb: false },
                   children: [
                     {
                       path: '',
@@ -335,7 +341,7 @@ const routes: Routes = [
         },
         {
           path: 'tax-configurations',
-          data: { title:  extract('Manage Tax Configurations'), breadcrumb: 'Manage Tax Configurations' },
+          data: { title: extract('Manage Tax Configurations'), breadcrumb: 'Manage Tax Configurations' },
           children: [
             {
               path: '',
@@ -343,7 +349,7 @@ const routes: Routes = [
             },
             {
               path: 'tax-components',
-              data: { title: extract('Manage Tax Components'), breadcrumb: 'Tax Components'},
+              data: { title: extract('Manage Tax Components'), breadcrumb: 'Tax Components' },
               children: [
                 {
                   path: '',
@@ -376,7 +382,7 @@ const routes: Routes = [
                     },
                     {
                       path: 'edit',
-                      data: { title: extract('Edit Tax Component'), breadcrumb: 'Edit', routeParamBreadcrumb: false  },
+                      data: { title: extract('Edit Tax Component'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
                       component: EditTaxComponentComponent,
                       resolve: {
                         taxComponent: TaxComponentResolver
@@ -388,13 +394,13 @@ const routes: Routes = [
             },
             {
               path: 'tax-groups',
-              data: { title: extract('Manage Tax Groups'), breadcrumb: 'Tax Groups'},
+              data: { title: extract('Manage Tax Groups'), breadcrumb: 'Tax Groups' },
               children: [
                 {
                   path: '',
                   component: ManageTaxGroupsComponent,
                   resolve: {
-                  taxGroups: ManageTaxGroupsResolver
+                    taxGroups: ManageTaxGroupsResolver
                   }
                 },
                 {
@@ -435,7 +441,7 @@ const routes: Routes = [
         },
         {
           path: 'delinquency-bucket-configurations',
-          data: { title:  extract('Manage Delinquency Bucket Configurations'), breadcrumb: 'Manage Delinquency Bucket Configurations' },
+          data: { title: extract('Manage Delinquency Bucket Configurations'), breadcrumb: 'Manage Delinquency Bucket Configurations' },
           children: [
             {
               path: '',
@@ -443,7 +449,7 @@ const routes: Routes = [
             },
             {
               path: 'ranges',
-              data: { title: extract('Manage Delinquency Ranges'), breadcrumb: 'Delinquency Ranges'},
+              data: { title: extract('Manage Delinquency Ranges'), breadcrumb: 'Delinquency Ranges' },
               children: [
                 {
                   path: '',
@@ -485,7 +491,7 @@ const routes: Routes = [
             },
             {
               path: 'buckets',
-              data: { title: extract('Manage Delinquency Bucket'), breadcrumb: 'Delinquency Buckets'},
+              data: { title: extract('Manage Delinquency Bucket'), breadcrumb: 'Delinquency Buckets' },
               children: [
                 {
                   path: '',
@@ -533,7 +539,7 @@ const routes: Routes = [
         },
         {
           path: 'recurring-deposit-products',
-          data: { title:  extract('Recurring Deposit Products'), breadcrumb: 'Recurring Deposit Products' },
+          data: { title: extract('Recurring Deposit Products'), breadcrumb: 'Recurring Deposit Products' },
           children: [
             {
               path: 'create',
@@ -579,7 +585,7 @@ const routes: Routes = [
         },
         {
           path: 'fixed-deposit-products',
-          data: { title:  extract('Fixed Deposit Products'), breadcrumb: 'Fixed Deposit Products' },
+          data: { title: extract('Fixed Deposit Products'), breadcrumb: 'Fixed Deposit Products' },
           children: [
             {
               path: 'create',
@@ -625,7 +631,7 @@ const routes: Routes = [
         },
         {
           path: 'products-mix',
-          data: { title:  extract('Products Mix'), breadcrumb: 'Products Mix' },
+          data: { title: extract('Products Mix'), breadcrumb: 'Products Mix' },
           children: [
             {
               path: 'create',
@@ -644,7 +650,7 @@ const routes: Routes = [
             },
             {
               path: ':id',
-              data: { title: extract('View Product Mix'), routeParamBreadcrumb: 'id'},
+              data: { title: extract('View Product Mix'), routeParamBreadcrumb: 'id' },
               resolve: {
                 productMix: ViewProductMixResolver
               },
@@ -803,7 +809,8 @@ const routes: Routes = [
         }
       ]
     }
-  ])
+  ]
+  )
 ];
 
 /**

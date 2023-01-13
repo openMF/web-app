@@ -1,7 +1,7 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
 
   <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_ENTITY_DATATABLE_CHECK'">
-    <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="plus" class="m-r-10"></fa-icon>
     Create
   </button>
 
@@ -54,7 +54,7 @@
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let entityDataTableCheck">
           <button mat-button (click)="deleteEntityDataTableCheck(entityDataTableCheck.id)" color="warn" *mifosxHasPermission="'DELETE_ENTITY_DATATABLE_CHECK'">
-            <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;Delete
+            <fa-icon icon="trash" class="m-r-10"></fa-icon>Delete
           </button>
         </td>
       </ng-container>

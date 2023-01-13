@@ -44,7 +44,7 @@
 
     <mat-form-field fxFlex="48%" (click)="applicationDatePicker.open()">
       <mat-label>Application Date</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="applicationDatePicker" 
+      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="applicationDatePicker"
         formControlName="applicationDate" required>
       <mat-datepicker-toggle matSuffix [for]="applicationDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #applicationDatePicker></mat-datepicker>
@@ -93,7 +93,7 @@
 
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious disabled>
-      <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+      <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       Previous
     </button>
     <button mat-raised-button matStepperNext>

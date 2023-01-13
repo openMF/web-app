@@ -1,15 +1,15 @@
 <div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="20px">
   <!-- TODO: Update to show only Activate/Inactivate button at a time according to selection in table. -->
   <button mat-raised-button color="accent">
-    <fa-icon icon="lock-open"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="lock-open" class="m-r-10"></fa-icon>
     Activate
   </button>
   <button mat-raised-button color="warn">
-    <fa-icon icon="lock"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="lock" class="m-r-10"></fa-icon>
     Deactivate
   </button>
   <button mat-raised-button color="primary" [routerLink]="['create']">
-    <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="plus" class="m-r-10"></fa-icon>
     Create User
   </button>
 </div>

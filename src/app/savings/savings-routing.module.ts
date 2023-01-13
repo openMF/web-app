@@ -41,6 +41,7 @@ import { SavingsDocumentsTabComponent } from './savings-account-view/savings-doc
 import { NotesTabComponent } from './savings-account-view/notes-tab/notes-tab.component';
 import { SavingNotesResolver } from './common-resolvers/saving-notes.resolver';
 import { SavingDocumentsResolver } from './common-resolvers/saving-documents.resolver';
+
 /** Savings Routes */
 const routes: Routes = [
   {
@@ -58,9 +59,6 @@ const routes: Routes = [
       {
         path: ':savingAccountId',
         data: { title: extract('Saving Account View'), routeParamBreadcrumb: 'savingAccountId' },
-        resolve: {
-          savingsAccountData: SavingsAccountViewResolver
-        },
         children: [
           {
             path: '',
@@ -71,13 +69,17 @@ const routes: Routes = [
             },
             children: [
               {
+                path: '',
+                redirectTo: 'transactions',
+                pathMatch: 'full'
+              },
+              {
                 path: 'transactions',
                 data: { title: extract('Savings Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
                 children: [
                   {
                     path: '',
                     component: TransactionsTabComponent
-
                   },
                   {
                     path: 'export',

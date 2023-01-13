@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['pay']" *mifosxHasPermission="'PAY_CLIENTCHARGE'">
-    <fa-icon icon="dollar-sign"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="dollar-sign" class="m-r-10"></fa-icon>
     Pay
   </button>
   <button mat-raised-button color="primary" (click)="waiveCharge()" *mifosxHasPermission="'WAIVE_CLIENTCHARGE'">
@@ -8,7 +8,7 @@
     Waive Charge
   </button>
   <button mat-raised-button color="primary" (click)="deleteCharge()">
-    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="trash" class="m-r-10"></fa-icon>
     Delete
   </button>
 </div>
@@ -111,7 +111,7 @@
           <th mat-header-cell *matHeaderCellDef> Actions </th>
           <td mat-cell *matCellDef="let element" [ngClass]="{'strikeoff':element.reversed}">
             <button mat-raised-button color="primary" (click)="undoTransaction(element.id)" class="delBtn">
-              <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+              <fa-icon icon="trash" class="m-r-10"></fa-icon>
             </button>
           </td>
         </ng-container>

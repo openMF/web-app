@@ -4,31 +4,31 @@
 
     <span *ngIf="smsCampaignData.campaignStatus.value !== 'active'">
       <button mat-raised-button color="primary" *mifosxHasPermission="'UPDATE_SMSCAMPAIGN'" [routerLink]="['edit']">
-        <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;Edit
+        <fa-icon icon="edit" class="m-r-10"></fa-icon>Edit
       </button>
     </span>
 
     <span *ngIf="smsCampaignData.campaignStatus.value === 'Pending'">
       <button mat-raised-button color="accent" *mifosxHasPermission="'ACTIVATE_SMSCAMPAIGN'" (click)="activateCampaign()">
-        <fa-icon icon="lock-open"></fa-icon>&nbsp;&nbsp;Activate
+        <fa-icon icon="lock-open" class="m-r-10"></fa-icon>Activate
       </button>
     </span>
 
     <span *ngIf="smsCampaignData.campaignStatus.value !== 'closed'">
       <button mat-raised-button color="warn" *mifosxHasPermission="'CLOSE_SMSCAMPAIGN'" (click)="closeCampaign()">
-        <fa-icon icon="times"></fa-icon>&nbsp;&nbsp;Close
+        <fa-icon icon="times" class="m-r-10"></fa-icon>Close
       </button>
     </span>
 
     <span *ngIf="smsCampaignData.campaignStatus.value !== 'Pending' && smsCampaignData.campaignStatus.value !== 'active'">
       <button mat-raised-button color="accent" *mifosxHasPermission="'REACTIVATE_SMSCAMPAIGN'" (click)="reactivateCampaign()">
-        <fa-icon icon="undo"></fa-icon>&nbsp;&nbsp;Reactivate
+        <fa-icon icon="undo" class="m-r-10"></fa-icon>Reactivate
       </button>
     </span>
 
     <span *ngIf="smsCampaignData.campaignStatus.value === 'closed'">
       <button mat-raised-button color="warn" *mifosxHasPermission="'DELETE_SMSCAMPAIGN'" (click)="deleteCampaign()">
-        <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;Delete
+        <fa-icon icon="trash" class="m-r-10"></fa-icon>Delete
       </button>
     </span>
 
@@ -43,7 +43,7 @@
         <mat-tab label="Campaign">
 
           <div class="tab-content mat-typography">
-          
+
             <mat-list>
 
               <mat-list-item>
@@ -56,7 +56,7 @@
 
               <mat-list-item>
                 Status : {{ smsCampaignData.campaignStatus.value }}
-              </mat-list-item>  
+              </mat-list-item>
 
               <mat-list-item>
                 Trigger Type : {{ smsCampaignData.triggerType.value }}
@@ -105,7 +105,7 @@
 
                 <div class="search-button" >
                   <button mat-raised-button color="primary">
-                  <fa-icon icon="search"></fa-icon>&nbsp;&nbsp;Search</button>
+                  <fa-icon icon="search" class="m-r-10"></fa-icon>Search</button>
                 </div>
               </div>
 
@@ -134,7 +134,7 @@
               </ng-container>
 
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>    
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
             </table>
 

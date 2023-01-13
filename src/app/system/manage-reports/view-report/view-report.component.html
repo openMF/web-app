@@ -1,13 +1,13 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
 
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_REPORT'">
-    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="edit" class="m-r-10"></fa-icon>
     Edit
   </button>
 
   <span *ngIf="!reportData.coreReport">
     <button mat-raised-button color="warn" (click)="delete()" *mifosxHasPermission="'DELETE_REPORT'">
-      <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+      <fa-icon icon="trash" class="m-r-10"></fa-icon>
       Delete
     </button>
   </span>

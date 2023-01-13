@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['../', 'edit']">
-    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="edit" class="m-r-10"></fa-icon>
     Edit
   </button>
   <button mat-raised-button color="primary" [routerLink]="['../', 'list-account-transactions']" *mifosxHasPermission="'READ_ACCOUNTTRANSFER'">

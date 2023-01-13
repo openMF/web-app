@@ -19,7 +19,7 @@
               {{param.label}} is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-  
+
           <mat-form-field fxFlex="48%" *ngSwitchCase="'date'" (click)="runReportDatePicker.open()">
             <mat-label>{{param.label}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="runReportDatePicker" required
@@ -30,7 +30,7 @@
               {{param.label}} is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-  
+
           <mat-form-field fxFlex="48%" *ngSwitchCase="'select'">
             <mat-label>{{param.label}}</mat-label>
             <mat-select required [formControlName]="param.name" [compareWith]="compareOptions">
@@ -55,7 +55,7 @@
 
 <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button matStepperPrevious disabled>
-    <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+    <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
     Previous
   </button>
   <button mat-raised-button matStepperNext>
