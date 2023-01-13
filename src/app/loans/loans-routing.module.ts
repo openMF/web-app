@@ -53,7 +53,6 @@ import { GLIMLoanTemplateResolver } from './common-resolvers/glim-loan-template.
 import { GroupViewResolver } from 'app/groups/common-resolvers/group-view.resolver';
 import { LoanDelinquencyTagsResolver } from './common-resolvers/loan-delinquency-tags.resolver';
 import { LoanDelinquencyTagsTabComponent } from './loans-view/loan-delinquency-tags-tab/loan-delinquency-tags-tab.component';
-import { RescheduleLoanComponent } from 'app/tasks/checker-inbox-and-tasks-tabs/reschedule-loan/reschedule-loan.component';
 import { LoanReschedulesResolver } from './common-resolvers/loan-reschedules.resolver';
 import { RescheduleLoanTabComponent } from './loans-view/reschedule-loan-tab/reschedule-loan-tab.component';
 
@@ -72,248 +71,246 @@ const routes: Routes = [
         }
       },
       {
-      path: ':loanId',
-      data: { title: extract('Loan View'), routeParamBreadcrumb: 'loanId' },
-      resolve: {
-        loanDetailsData: LoanDetailsResolver
-      },
-      children: [
-        {
-          path: '',
-          component: LoansViewComponent,
-          resolve: {
-            loanDetailsData: LoanDetailsResolver,
-            loanDatatables: LoanDatatablesResolver,
+        path: ':loanId',
+        component: LoansViewComponent,
+        data: { title: extract('Loan View'), routeParamBreadcrumb: 'loanId' },
+        resolve: {
+          loanDetailsData: LoanDetailsResolver,
+          loanDatatables: LoanDatatablesResolver
+        },
+        children: [
+          {
+            path: '',
+            redirectTo: 'general',
+            pathMatch: 'full'
           },
-          children: [
-            {
-              path: 'general',
-              component: GeneralTabComponent,
-              data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false }
-            },
-            {
-              path: 'accountdetail',
-              component: AccountDetailsComponent,
-              data: { title: extract('Account Detail'), breadcrumb: 'Account Detail', routeParamBreadcrumb: false }
-            },
-            {
-              path: 'original-schedule',
-              component: OriginalScheduleTabComponent,
-              data: { title: extract('Original Schedule'), breadcrumb: 'Original Schedule', routeParamBreadcrumb: false },
-            },
-            {
-              path: 'repayment-schedule',
-              component: RepaymentScheduleTabComponent,
-              data: { title: extract('Repayment Schedule'), breadcrumb: 'Repayment Schedule', routeParamBreadcrumb: false },
-            },
-            {
-              path: 'transactions',
-              data: { title: extract('Loans Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
-              children: [
-                {
-                  path: '',
-                  component: TransactionsTabComponent
+          {
+            path: 'general',
+            component: GeneralTabComponent,
+            data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false }
+          },
+          {
+            path: 'accountdetail',
+            component: AccountDetailsComponent,
+            data: { title: extract('Account Detail'), breadcrumb: 'Account Detail', routeParamBreadcrumb: false }
+          },
+          {
+            path: 'original-schedule',
+            component: OriginalScheduleTabComponent,
+            data: { title: extract('Original Schedule'), breadcrumb: 'Original Schedule', routeParamBreadcrumb: false },
+          },
+          {
+            path: 'repayment-schedule',
+            component: RepaymentScheduleTabComponent,
+            data: { title: extract('Repayment Schedule'), breadcrumb: 'Repayment Schedule', routeParamBreadcrumb: false },
+          },
+          {
+            path: 'transactions',
+            data: { title: extract('Loans Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+            children: [
+              {
+                path: '',
+                component: TransactionsTabComponent
 
-                },
-                {
-                  path: 'export',
-                  component: ExportTransactionsComponent
-                }
-              ]
-            },
-            {
-              path: 'delinquencytags',
-              data: { title: extract('Loans Delinquency Tags'), breadcrumb: 'Delinquency Tags', routeParamBreadcrumb: false },
-              resolve: {
-                loanDelinquencyTagsData: LoanDelinquencyTagsResolver
               },
-              children: [
-                {
-                  path: '',
-                  component: LoanDelinquencyTagsTabComponent
-                },
-              ]
-            },
-            {
-              path: 'loan-reschedules',
-              data: {},
-              resolve: {
-                loanRescheduleData: LoanReschedulesResolver
-              },
-              children: [
-                {
-                  path: '',
-                  component: RescheduleLoanTabComponent
-                }
-              ]
-            },
-            {
-              path: 'loan-collateral',
-              component: LoanCollateralTabComponent,
-              data: { title: extract('Loan Collateral Details'), breadcrumb: 'Loan Collateral Details', routeParamBreadcrumb: false },
-            },
-            {
-              path: 'loan-tranche-details',
-              component: LoanTrancheDetailsComponent,
-              data: { title: extract('Loan Tranche Details'), breadcrumb: 'Loan Tranche Details', routeParamBreadcrumb: false },
-            },
-            {
-              path: 'overdue-charges',
-              component: OverdueChargesTabComponent,
-              data: { title: extract('Overdue Charges'), breadcrumb: 'Overdue Charges', routeParamBreadcrumb: false }
-            },
-            {
-              path: 'floating-interest-rates',
-              component: FloatingInterestRatesComponent,
-              data: { title: extract('Floating Interest Rates'), breadcrumb: 'Floating Interest Rates', routeParamBreadcrumb: false },
-            },
-            {
-              path: 'charges',
-              data: { title: extract('Loans Account Charges'), breadcrumb: 'Charges', routeParamBreadcrumb: false },
-              component: ChargesTabComponent,
-            },
-            {
-              path: 'loan-documents',
-              component: LoanDocumentsTabComponent,
-              data: { title: extract('Loan Documents'), breadcrumb: 'Loan Documents', routeParamBreadcrumb: false },
-              resolve: {
-                loanDocuments: LoanDocumentsResolver
-              },
-            },
-            {
-              path: 'notes',
-              component: NotesTabComponent,
-              data: { title: extract('Notes'), breadcrumb: 'Notes', routeParamBreadcrumb: false },
-              resolve: {
-                loanNotes: LoanNotesResolver
-              },
-            },
-            {
-              path: 'standing-instruction',
-              component: StandingInstructionsTabComponent,
-              data: { title: extract('Standing Instructions'), breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false }
-            },
-            {
-              path: 'datatables',
-              children: [{
-                path: ':datatableName',
-                component: DatatableTabComponent,
-                data: { title: extract('Data Table View'), routeParamBreadcrumb: 'datatableName' },
-                resolve: {
-                  loanDatatable: LoanDatatableResolver
-                }
-              }]
-            },
-          ],
-        },
-        {
-          path: 'transactions',
-          data: { title: extract('Loans Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
-          resolve: {
-            loanDetailsAssociationData: LoanDetailsResolver
-          },
-          children: [
-            {
-              path: '',
-              redirectTo: '../transactions', pathMatch: 'prefix'
-            },
-            {
-              path: ':id',
-              data: { routeParamBreadcrumb: 'id' },
-              children: [
-                {
-                  path: '',
-                  component: ViewTransactionComponent,
-                  resolve: {
-                    loansAccountTransaction: LoansAccountTransactionResolver
-                  }
-                },
-                {
-                  path: 'edit',
-                  component: EditTransactionComponent,
-                  data: { breadcrumb: 'Edit', routeParamBreadcrumb: false },
-                  resolve: {
-                    loansAccountTransactionTemplate: LoansAccountTransactionTemplateResolver
-                  }
-                },
-                {
-                  path: 'reciept',
-                  component: ViewRecieptComponent,
-                  data: { breadcrumb: 'Reciept', routeParamBreadcrumb: false },
-                  resolve: {
-                    loansTransactionReciept: LoansTransactionRecieptResolver
-                  }
-                }
-              ]
-            }
-          ]
-        },
-        {
-          path: 'charges',
-          data: { title: extract('Loans Account Charges'), breadcrumb: 'Charges', routeParamBreadcrumb: false },
-          children: [
-            {
-              path: '',
-              redirectTo: '../charges', pathMatch: 'prefix'
-            },
-            {
-              path: ':id',
-              data: { routeParamBreadcrumb: 'id' },
-              component: ViewChargeComponent,
-              resolve: {
-                loansAccountCharge: LoansAccountChargeResolver,
-                loanDetailsData: LoanDetailsResolver
+              {
+                path: 'export',
+                component: ExportTransactionsComponent
               }
+            ]
+          },
+          {
+            path: 'delinquencytags',
+            data: { title: extract('Loans Delinquency Tags'), breadcrumb: 'Delinquency Tags', routeParamBreadcrumb: false },
+            resolve: {
+              loanDelinquencyTagsData: LoanDelinquencyTagsResolver
+            },
+            children: [
+              {
+                path: '',
+                component: LoanDelinquencyTagsTabComponent
+              },
+            ]
+          },
+          {
+            path: 'loan-reschedules',
+            data: {},
+            resolve: {
+              loanRescheduleData: LoanReschedulesResolver
+            },
+            children: [
+              {
+                path: '',
+                component: RescheduleLoanTabComponent
+              }
+            ]
+          },
+          {
+            path: 'loan-collateral',
+            component: LoanCollateralTabComponent,
+            data: { title: extract('Loan Collateral Details'), breadcrumb: 'Loan Collateral Details', routeParamBreadcrumb: false },
+          },
+          {
+            path: 'loan-tranche-details',
+            component: LoanTrancheDetailsComponent,
+            data: { title: extract('Loan Tranche Details'), breadcrumb: 'Loan Tranche Details', routeParamBreadcrumb: false },
+          },
+          {
+            path: 'overdue-charges',
+            component: OverdueChargesTabComponent,
+            data: { title: extract('Overdue Charges'), breadcrumb: 'Overdue Charges', routeParamBreadcrumb: false }
+          },
+          {
+            path: 'floating-interest-rates',
+            component: FloatingInterestRatesComponent,
+            data: { title: extract('Floating Interest Rates'), breadcrumb: 'Floating Interest Rates', routeParamBreadcrumb: false },
+          },
+          {
+            path: 'charges',
+            data: { title: extract('Loans Account Charges'), breadcrumb: 'Charges', routeParamBreadcrumb: false },
+            component: ChargesTabComponent,
+          },
+          {
+            path: 'loan-documents',
+            component: LoanDocumentsTabComponent,
+            data: { title: extract('Loan Documents'), breadcrumb: 'Loan Documents', routeParamBreadcrumb: false },
+            resolve: {
+              loanDocuments: LoanDocumentsResolver
+            },
+          },
+          {
+            path: 'notes',
+            component: NotesTabComponent,
+            data: { title: extract('Notes'), breadcrumb: 'Notes', routeParamBreadcrumb: false },
+            resolve: {
+              loanNotes: LoanNotesResolver
+            },
+          },
+          {
+            path: 'standing-instruction',
+            component: StandingInstructionsTabComponent,
+            data: { title: extract('Standing Instructions'), breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false }
+          },
+          {
+            path: 'datatables',
+            children: [{
+              path: ':datatableName',
+              component: DatatableTabComponent,
+              data: { title: extract('Data Table View'), routeParamBreadcrumb: 'datatableName' },
+              resolve: {
+                loanDatatable: LoanDatatableResolver
+              }
+            }]
+          },
+        ],
+      },
+      {
+        path: 'transactions',
+        data: { title: extract('Loans Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+        resolve: {
+          loanDetailsAssociationData: LoanDetailsResolver
+        },
+        children: [
+          {
+            path: '',
+            redirectTo: '../transactions', pathMatch: 'prefix'
+          },
+          {
+            path: ':id',
+            data: { routeParamBreadcrumb: 'id' },
+            children: [
+              {
+                path: '',
+                component: ViewTransactionComponent,
+                resolve: {
+                  loansAccountTransaction: LoansAccountTransactionResolver
+                }
+              },
+              {
+                path: 'edit',
+                component: EditTransactionComponent,
+                data: { breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                resolve: {
+                  loansAccountTransactionTemplate: LoansAccountTransactionTemplateResolver
+                }
+              },
+              {
+                path: 'reciept',
+                component: ViewRecieptComponent,
+                data: { breadcrumb: 'Reciept', routeParamBreadcrumb: false },
+                resolve: {
+                  loansTransactionReciept: LoansTransactionRecieptResolver
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        path: 'charges',
+        data: { title: extract('Loans Account Charges'), breadcrumb: 'Charges', routeParamBreadcrumb: false },
+        children: [
+          {
+            path: '',
+            redirectTo: '../charges', pathMatch: 'prefix'
+          },
+          {
+            path: ':id',
+            data: { routeParamBreadcrumb: 'id' },
+            component: ViewChargeComponent,
+            resolve: {
+              loansAccountCharge: LoansAccountChargeResolver,
+              loanDetailsData: LoanDetailsResolver
             }
-          ]
-        },
-        {
-          path: 'actions/:action',
-          component: LoanAccountActionsComponent,
-          data: { title: extract('Loan Account Actions'), breadcrumb: 'action', routeParamBreadcrumb: 'action' },
-          resolve: {
-            actionButtonData: LoanActionButtonResolver
           }
-        },
-        {
-          path: 'transfer-funds',
-          loadChildren: () => import('../account-transfers/account-transfers.module').then(m => m.AccountTransfersModule)
-        },
-        {
-          path: 'edit-loans-account',
-          data: { title: extract('Modify Loans Account'), breadcrumb: 'Modify Loans Account', routeParamBreadcrumb: 'Edit' },
-          component: EditLoansAccountComponent,
-          resolve: {
-            loansAccountAndTemplate: LoansAccountAndTemplateResolver
-          }
-        },
-      ]
-    },
-    {
-      path: 'glim-account',
-      children: [
-        {
-          path: 'create',
-          data: { title: extract('Create GLIM Application'), breadcrumb: 'Create GLIM Application'},
-          component: CreateGlimAccountComponent,
-          resolve: {
-            loansAccountTemplate: GLIMLoanTemplateResolver,
-            gsimData: GSIMAccountsResolver,
-            groupsData: GroupViewResolver,
-          },
-        },
-        {
-          path: ':glimId',
-          data: { title: extract('GSIM Account View'), routeParamBreadcrumb: 'savingAccountId'},
-          component: GlimAccountComponent,
-          resolve: {
-            glimData: GLIMViewResolver,
-            groupsData: GroupAccountsResolver
-          },
+        ]
+      },
+      {
+        path: 'actions/:action',
+        component: LoanAccountActionsComponent,
+        data: { title: extract('Loan Account Actions'), breadcrumb: 'action', routeParamBreadcrumb: 'action' },
+        resolve: {
+          actionButtonData: LoanActionButtonResolver
         }
-      ]
-    }]
+      },
+      {
+        path: 'transfer-funds',
+        loadChildren: () => import('../account-transfers/account-transfers.module').then(m => m.AccountTransfersModule)
+      },
+      {
+        path: 'edit-loans-account',
+        data: { title: extract('Modify Loans Account'), breadcrumb: 'Modify Loans Account', routeParamBreadcrumb: 'Edit' },
+        component: EditLoansAccountComponent,
+        resolve: {
+          loansAccountAndTemplate: LoansAccountAndTemplateResolver
+        }
+      },
+    ]
   },
+  {
+    path: 'glim-account',
+    children: [
+      {
+        path: 'create',
+        data: { title: extract('Create GLIM Application'), breadcrumb: 'Create GLIM Application' },
+        component: CreateGlimAccountComponent,
+        resolve: {
+          loansAccountTemplate: GLIMLoanTemplateResolver,
+          gsimData: GSIMAccountsResolver,
+          groupsData: GroupViewResolver,
+        },
+      },
+      {
+        path: ':glimId',
+        data: { title: extract('GSIM Account View'), routeParamBreadcrumb: 'savingAccountId' },
+        component: GlimAccountComponent,
+        resolve: {
+          glimData: GLIMViewResolver,
+          groupsData: GroupAccountsResolver
+        },
+      }
+    ]
+  }
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],

@@ -1,7 +1,7 @@
 <div [formGroup]="form" fxFlexFill>
 
   <div *ngIf="formfield.controlType==='input' || formfield.controlType==='select'" fxFlexFill>
-    
+
     <mat-form-field fxFlexFill>
 
       <mat-label>{{ formfield.label }}</mat-label>
@@ -26,10 +26,21 @@
 
   <mat-form-field fxFlexFill *ngIf="formfield.controlType==='datepicker'" (click)="datePicker.open()">
     <mat-label>{{ formfield.label }}</mat-label>
-    <input matInput [matDatepicker]="datePicker" [min]="formfield.minDate" [max]="formfield.maxDate"  
+    <input matInput [matDatepicker]="datePicker" [min]="formfield.minDate" [max]="formfield.maxDate"
       [formControlName]="formfield.controlName" [required]="formfield.required">
     <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
     <mat-datepicker #datePicker></mat-datepicker>
+    <mat-error *ngIf="form.controls[formfield.controlName].hasError('required')">
+      {{ formfield.label }} is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field fxFlexFill *ngIf="formfield.controlType==='datetimepicker'" (click)="datePicker.open()">
+    <mat-label>{{ formfield.label }}</mat-label>
+    <input matInput [ngxMatDatetimePicker]="datetimePicker" [min]="formfield.minDate" [max]="formfield.maxDate"
+      [formControlName]="formfield.controlName" [required]="formfield.required">
+    <mat-datepicker-toggle matSuffix [for]="datetimePicker"></mat-datepicker-toggle>
+    <ngx-mat-datetime-picker #datetimePicker [enableMeridian]="true"></ngx-mat-datetime-picker>
     <mat-error *ngIf="form.controls[formfield.controlName].hasError('required')">
       {{ formfield.label }} is <strong>required</strong>
     </mat-error>

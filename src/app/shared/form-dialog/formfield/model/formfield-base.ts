@@ -3,7 +3,7 @@ export class FormfieldBase {
   controlType: string;
   controlName: string;
   label: string;
-  value: string;
+  value: any;
   required: boolean;
   order: number;
 
@@ -11,7 +11,7 @@ export class FormfieldBase {
               controlType?: string,
               controlName?: string,
               label?: string,
-              value?: string,
+              value?: any,
               required?: boolean,
               order?: number
     } = {}) {

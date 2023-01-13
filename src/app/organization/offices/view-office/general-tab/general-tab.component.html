@@ -1,23 +1,42 @@
+
 <div class="tab-container mat-typography">
+  <div fxLayoutAlign="flex-end" class="action-button m-b-20">
+    <span *mifosxHasPermission="'UPDATE_OFFICE'">
+      <button mat-raised-button color="primary" [routerLink]="['edit']">
+        <fa-icon icon="edit" class="m-r-10"></fa-icon>Edit
+      </button>
+    </span>
+  </div>
 
-  <mat-list>
+  <div fxLayout="row wrap" fxLayout.lt-md="column">
 
-    <mat-list-item>
-      Parent Office : {{ officeData.parentName ? officeData.parentName : 'N/A' }}
-    </mat-list-item>
+    <div fxFlex="45%" class="mat-body-strong left">
+      Parent Office
+    </div>
+    <div fxFlex="50%" class="right">
+      {{ officeData.parentName ? officeData.parentName : 'N/A' }}
+    </div>
 
-    <mat-list-item>
-      Opened On : {{ officeData.openingDate ? (officeData.openingDate  | dateFormat) : 'Unassigned' }}
-    </mat-list-item>
+    <div fxFlex="45%" class="mat-body-strong left">
+      Opened On
+    </div>
+    <div fxFlex="50%" class="right">
+      {{ officeData.openingDate ? (officeData.openingDate  | dateFormat) : 'Unassigned' }}
+    </div>
 
-    <mat-list-item>
-      Name Decorated : {{ officeData.nameDecorated ? officeData.nameDecorated : 'Unassigned' }}
-    </mat-list-item>
+    <div fxFlex="45%" class="mat-body-strong left">
+      Name Decorated
+    </div>
+    <div fxFlex="50%" class="right">
+      {{ officeData.nameDecorated ? officeData.nameDecorated : 'Unassigned' }}
+    </div>
 
-    <mat-list-item>
-      External Id : {{ officeData.externalId ? officeData.externalId : 'Unassigned' }}
-    </mat-list-item>
-    
-  </mat-list>
+    <div fxFlex="45%" class="mat-body-strong left">
+      External Id
+    </div>
+    <div fxFlex="50%" class="right">
+      {{ officeData.externalId ? officeData.externalId : 'Unassigned' }}
+    </div>
+  </div>
 
 </div>

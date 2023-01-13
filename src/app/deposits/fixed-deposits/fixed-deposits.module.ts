@@ -14,8 +14,6 @@ import { ChargesTabComponent } from './fixed-deposit-account-view/charges-tab/ch
 import { StandingInstructionsTabComponent } from './fixed-deposit-account-view/standing-instructions-tab/standing-instructions-tab.component';
 import { InterestRateChartTabComponent } from './fixed-deposit-account-view/interest-rate-chart-tab/interest-rate-chart-tab.component';
 import { DatatableTabsComponent } from './fixed-deposit-account-view/datatable-tabs/datatable-tabs.component';
-import { MultiRowComponent } from './fixed-deposit-account-view/datatable-tabs/multi-row/multi-row.component';
-import { SingleRowComponent } from './fixed-deposit-account-view/datatable-tabs/single-row/single-row.component';
 import { FixedDepositsAccountActionsComponent } from './fixed-deposits-account-actions/fixed-deposits-account-actions.component';
 import { ApproveFixedDepositsAccountComponent } from './fixed-deposits-account-actions/approve-fixed-deposits-account/approve-fixed-deposits-account.component';
 import { RejectFixedDepositsAccountComponent } from './fixed-deposits-account-actions/reject-fixed-deposits-account/reject-fixed-deposits-account.component';
@@ -54,8 +52,6 @@ import { EditFixedDepositAccountComponent } from './edit-fixed-deposit-account/e
     StandingInstructionsTabComponent,
     InterestRateChartTabComponent,
     DatatableTabsComponent,
-    MultiRowComponent,
-    SingleRowComponent,
     FixedDepositsAccountActionsComponent,
     ApproveFixedDepositsAccountComponent,
     RejectFixedDepositsAccountComponent,

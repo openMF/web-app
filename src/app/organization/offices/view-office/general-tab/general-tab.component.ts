@@ -20,7 +20,7 @@ export class GeneralTabComponent {
    * @param {ActivatedRoute} route Activated Route
    */
   constructor(private route: ActivatedRoute) {
-    this.route.parent.data.subscribe((data: { office: any }) => {
+    this.route.data.subscribe((data: { office: any }) => {
       this.officeData = data.office;
     });
   }

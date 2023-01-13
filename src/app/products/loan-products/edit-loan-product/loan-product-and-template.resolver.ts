@@ -24,7 +24,7 @@ export class LoanProductAndTemplateResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const loanProductId = route.paramMap.get('id');
+    const loanProductId = route.paramMap.get('productId');
     return this.productsService.getLoanProduct(loanProductId, true);
   }
 

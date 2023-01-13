@@ -1,0 +1,23 @@
+@import "assets/styles/helper";
+
+.tab-container {
+  padding: 1%;
+  margin: 1%;
+  .delete-button {
+      margin-left: 1%;
+  }
+}
+
+.table-name {
+  padding-left: 2%;
+}
+
+.table-data {
+  margin-top: 3px;
+}
+
+.system-defined {
+  margin-top: 3px;
+  color: $concrete !important;
+  font-weight: 100;
+}

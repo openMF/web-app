@@ -24,8 +24,8 @@ export class SavingProductAndTemplateResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const savingProductId = route.paramMap.get('id');
-    return this.productsService.getSavingProduct(savingProductId, true);
+    const productId = route.paramMap.get('productId');
+    return this.productsService.getSavingProduct(productId, true);
   }
 
 }

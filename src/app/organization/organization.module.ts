@@ -39,8 +39,6 @@ import { ViewHolidaysComponent } from './holidays/view-holidays/view-holidays.co
 import { ViewOfficeComponent } from './offices/view-office/view-office.component';
 import { GeneralTabComponent } from './offices/view-office/general-tab/general-tab.component';
 import { DatatableTabsComponent } from './offices/view-office/datatable-tabs/datatable-tabs.component';
-import { SingleRowComponent } from './offices/view-office/datatable-tabs/single-row/single-row.component';
-import { MultiRowComponent } from './offices/view-office/datatable-tabs/multi-row/multi-row.component';
 import { ViewCampaignComponent } from './sms-campaigns/view-campaign/view-campaign.component';
 import { ManageFundsComponent } from './manage-funds/manage-funds.component';
 import { ManageCurrenciesComponent } from './currencies/manage-currencies/manage-currencies.component';
@@ -122,8 +120,6 @@ import { CreateHoliday } from './holidays/create-holiday/create-holiday.service'
     ViewOfficeComponent,
     GeneralTabComponent,
     DatatableTabsComponent,
-    SingleRowComponent,
-    MultiRowComponent,
     ViewCampaignComponent,
     ManageFundsComponent,
     ManageCurrenciesComponent,

@@ -15,8 +15,6 @@ import { NotesTabComponent } from './groups-view/notes-tab/notes-tab.component';
 import { CommitteeTabComponent } from './groups-view/committee-tab/committee-tab.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { DatatableTabsComponent } from './groups-view/datatable-tabs/datatable-tabs.component';
-import { SingleRowComponent } from './groups-view/datatable-tabs/single-row/single-row.component';
-import { MultiRowComponent } from './groups-view/datatable-tabs/multi-row/multi-row.component';
 import { AddRoleComponent } from './groups-view/add-role/add-role.component';
 import { UnassignRoleDialogComponent } from './groups-view/custom-dialogs/unassign-role-dialog/unassign-role-dialog.component';
 import { GroupActionsComponent } from './groups-view/group-actions/group-actions.component';
@@ -52,8 +50,6 @@ import { GroupTransferClientsComponent } from './groups-view/group-actions/group
     CommitteeTabComponent,
     CreateGroupComponent,
     DatatableTabsComponent,
-    SingleRowComponent,
-    MultiRowComponent,
     AddRoleComponent,
     UnassignRoleDialogComponent,
     GroupActionsComponent,

@@ -1,12 +1,10 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { SystemService } from 'app/system/system.service';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
-
-/** Custom Services */
-import { OrganizationService } from '../../organization.service';
 
 /**
  * Office Datatables data resolver.
@@ -15,16 +13,16 @@ import { OrganizationService } from '../../organization.service';
 export class OfficeDatatablesResolver implements Resolve<Object> {
 
   /**
-   * @param {organizationService} OrganizationService Organization service.
+   * @param {SystemService} systemService Products service.
    */
-  constructor(private organizationService: OrganizationService) { }
+  constructor(private systemService: SystemService) { }
 
   /**
-   * Returns the Office's Datatables data.
+   * Returns the loan product data.
    * @returns {Observable<any>}
    */
-  resolve(): Observable<any> {
-    return this.organizationService.getOfficeDatatables();
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    return this.systemService.getEntityDatatables('m_office');
   }
 
 }

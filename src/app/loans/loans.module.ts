@@ -21,8 +21,6 @@ import { LoanAccountActionsComponent } from './loans-view/loan-account-actions/l
 import { LoansAccountCloseComponent } from './loans-view/loan-account-actions/loans-account-close/loans-account-close.component';
 import { TransactionsTabComponent } from './loans-view/transactions-tab/transactions-tab.component';
 import { DatatableTabComponent } from './loans-view/datatable-tab/datatable-tab.component';
-import { MultiRowComponent } from './loans-view/datatable-tab/multi-row/multi-row.component';
-import { SingleRowComponent } from './loans-view/datatable-tab/single-row/single-row.component';
 import { UndoApprovalComponent } from './loans-view/loan-account-actions/undo-approval/undo-approval.component';
 import { AssignLoanOfficerComponent } from './loans-view/loan-account-actions/assign-loan-officer/assign-loan-officer.component';
 import { ForeclosureComponent } from './loans-view/loan-account-actions/foreclosure/foreclosure.component';
@@ -97,8 +95,6 @@ import { RescheduleLoanTabComponent } from './loans-view/reschedule-loan-tab/res
     LoansAccountCloseComponent,
     TransactionsTabComponent,
     DatatableTabComponent,
-    MultiRowComponent,
-    SingleRowComponent,
     UndoApprovalComponent,
     AssignLoanOfficerComponent,
     ForeclosureComponent,

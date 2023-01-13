@@ -54,7 +54,7 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
       isColumnIndexed: undefined
     };
   /** Columns to be displayed in columns table. */
-  displayedColumns: string[] = ['name', 'type', 'mandatory', 'length', 'code', 'actions'];
+  displayedColumns: string[] = ['name', 'type', 'length', 'code', 'mandatory', 'unique', 'indexed', 'actions'];
   /** Data source for columns table. */
   dataSource: MatTableDataSource<any>;
   /** Paginator for columns table. */
@@ -127,6 +127,7 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
   addColumn() {
     this.dataForDialog.columnName = undefined;
     this.dataForDialog.columnDisplayType = undefined;
+    this.dataForDialog.isColumnNullable = undefined;
     this.dataForDialog.columnLength = undefined;
     this.dataForDialog.columnCode = undefined;
     this.dataForDialog.isColumnUnique = undefined;
@@ -159,13 +160,14 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
    * @param {any} column Column.
    */
   editColumn(column: any) {
-    this.dataForDialog.columnName = column.name;
-    this.dataForDialog.columnDisplayType = column.type;
-    this.dataForDialog.columnLength = column.length;
-    this.dataForDialog.columnCode = column.code;
-    this.dataForDialog.isColumnUnique = column.unique;
-    this.dataForDialog.isColumnIndexed = column.indexed;
-    this.dataForDialog.type = 'new';
+    this.dataForDialog.columnName = column.columnName;
+    this.dataForDialog.columnDisplayType = column.columnDisplayType;
+    this.dataForDialog.isColumnNullable = !column.isColumnNullable;
+    this.dataForDialog.isColumnUnique = column.isColumnUnique;
+    this.dataForDialog.isColumnIndexed = column.isColumnIndexed;
+    this.dataForDialog.columnLength = column.columnLength;
+    this.dataForDialog.columnCode = column.columnCode;
+    this.dataForDialog.type = column.type;
     const editColumnDialogRef = this.dialog.open(ColumnDialogComponent, {
       data: this.dataForDialog,
       height: '450px',

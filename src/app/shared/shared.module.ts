@@ -32,6 +32,9 @@ import { PipesModule } from 'app/pipes/pipes.module';
 import { EntityNotesTabComponent } from './tabs/entity-notes-tab/entity-notes-tab.component';
 import { EntityDocumentsTabComponent } from './tabs/entity-documents-tab/entity-documents-tab.component';
 import { DirectivesModule } from 'app/directives/directives.module';
+import { EntityDatatableTabComponent } from './tabs/entity-datatable-tab/entity-datatable-tab.component';
+import { DatatableSingleRowComponent } from './tabs/entity-datatable-tab/datatable-single-row/datatable-single-row.component';
+import { DatatableMultiRowComponent } from './tabs/entity-datatable-tab/datatable-multi-row/datatable-multi-row.component';
 
 /**
  * Shared Module
@@ -69,7 +72,10 @@ import { DirectivesModule } from 'app/directives/directives.module';
     TenantSelectorComponent,
     ExternalIdentifierComponent,
     EntityNotesTabComponent,
-    EntityDocumentsTabComponent
+    EntityDocumentsTabComponent,
+    EntityDatatableTabComponent,
+    DatatableSingleRowComponent,
+    DatatableMultiRowComponent
   ],
   exports: [
     FileUploadComponent,
@@ -89,7 +95,8 @@ import { DirectivesModule } from 'app/directives/directives.module';
     TenantSelectorComponent,
     ExternalIdentifierComponent,
     EntityNotesTabComponent,
-    EntityDocumentsTabComponent
+    EntityDocumentsTabComponent,
+    EntityDatatableTabComponent
   ]
 })
 export class SharedModule { }

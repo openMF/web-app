@@ -542,4 +542,54 @@ export class ProductsService {
     return this.http.post('/collateral-management', collateral);
   }
 
+  /**
+   * @param {string} product Product type.
+   * @returns {Observable<any>}
+   */
+  getProductDatatables(product: string): Observable<any> {
+    const httpParams = new HttpParams().set('apptable', product);
+    return this.http.get(`/datatables`, { params: httpParams });
+  }
+
+  /**
+   * @param {string} productId Product Id.
+   * @returns {Observable<any>}
+   */
+  getProductDatatable(productId: string, datatableName: string) {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.get(`/datatables/${datatableName}/${productId}`, { params: httpParams });
+  }
+
+  /**
+   * @param {string} productId Product Id.
+   * @param {string} datatableName Datatable name
+   * @param {any} data Payload.
+   * @returns {Observable<any>}
+   */
+  addProductDatatableEntry(productId: string, datatableName: string, data: any) {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.post(`/datatables/${datatableName}/${productId}`, data, { params: httpParams });
+  }
+
+  /**
+   * @param {string} productId Product Id.
+   * @param {string} datatableName Datatable name
+   * @param {any} data Payload.
+   * @returns {Observable<any>}
+   */
+  editProductDatatableEntry(productId: string, datatableName: string, data: any) {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.put(`/datatables/${datatableName}/${productId}`, data, { params: httpParams });
+  }
+
+  /**
+   * @param {string} productId Product Id.
+   * @param {string} datatableName Datatable name
+   * @returns {Observable<any>}
+   */
+  deleteDatatableContent(productId: string, datatableName: string) {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.delete(`/datatables/${datatableName}/${productId}`, { params: httpParams });
+  }
+
 }

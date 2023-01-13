@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Components */
@@ -13,6 +13,7 @@ import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { LoanProductDatatableStepComponent } from '../loan-product-stepper/loan-product-datatable-step/loan-product-datatable-step.component';
 
 @Component({
   selector: 'mifosx-create-loan-product',
@@ -27,6 +28,10 @@ export class CreateLoanProductComponent implements OnInit {
   @ViewChild(LoanProductSettingsStepComponent, { static: true }) loanProductSettingsStep: LoanProductSettingsStepComponent;
   @ViewChild(LoanProductChargesStepComponent, { static: true }) loanProductChargesStep: LoanProductChargesStepComponent;
   @ViewChild(LoanProductAccountingStepComponent, { static: true }) loanProductAccountingStep: LoanProductAccountingStepComponent;
+  /** Get handle on dtloanproduct tags in the template */
+  @ViewChildren('dtloanproduct') loanProductDatatables: QueryList<LoanProductDatatableStepComponent>;
+
+  datatables: any = [];
 
   loanProductsTemplate: any;
   accountingRuleData = ['None', 'Cash', 'Accrual (periodic)', 'Accrual (upfront)'];
@@ -42,8 +47,10 @@ export class CreateLoanProductComponent implements OnInit {
               private productsService: ProductsService,
               private settingsService: SettingsService,
               private router: Router) {
-    this.route.data.subscribe((data: { loanProductsTemplate: any }) => {
+    this.route.data.subscribe((data: { loanProductsTemplate: any, loanProductDatatables: any }) => {
       this.loanProductsTemplate = data.loanProductsTemplate;
+      // this.datatables = data.loanProductDatatables;
+      this.datatables = [];
       const assetAccountData = this.loanProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
       const liabilityAccountData = this.loanProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
       this.loanProductsTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions = assetAccountData.concat(liabilityAccountData);
@@ -74,13 +81,21 @@ export class CreateLoanProductComponent implements OnInit {
   }
 
   get loanProductFormValid() {
-    return (
+    let areValids = (
       this.loanProductDetailsForm.valid &&
       this.loanProductCurrencyForm.valid &&
       this.loanProductTermsForm.valid &&
       this.loanProductSettingsForm.valid &&
       this.loanProductAccountingForm.valid
     );
+
+    if (this.datatables.length > 0 && this.loanProductDatatables) {
+      this.loanProductDatatables.forEach((loanProductDatatable: LoanProductDatatableStepComponent) => {
+        areValids = areValids && loanProductDatatable.datatableForm.valid;
+      });
+    }
+
+    return areValids;
   }
 
   get loanProduct() {
@@ -95,7 +110,6 @@ export class CreateLoanProductComponent implements OnInit {
   }
 
   submit() {
-    // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
     const loanProduct = {
       ...this.loanProduct,
@@ -105,6 +119,16 @@ export class CreateLoanProductComponent implements OnInit {
     };
     delete loanProduct.allowAttributeConfiguration;
     delete loanProduct.advancedAccountingRules;
+
+    if (this.datatables.length > 0) {
+      const datatables: any[] = [];
+      this.loanProductDatatables.forEach((loanProductDatatable: LoanProductDatatableStepComponent) => {
+        datatables.push(loanProductDatatable.payload);
+      });
+      loanProduct['datatables'] = datatables;
+    }
+
+
     this.productsService.createLoanProduct(loanProduct)
       .subscribe((response: any) => {
         this.router.navigate(['../', response.resourceId], { relativeTo: this.route });

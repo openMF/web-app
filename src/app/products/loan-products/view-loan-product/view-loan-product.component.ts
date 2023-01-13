@@ -8,21 +8,15 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ViewLoanProductComponent implements OnInit {
 
-  loanProduct: any;
-
-  variationsDisplayedColumns: string[] = ['valueConditionType', 'borrowerCycleNumber', 'minValue', 'defaultValue', 'maxValue'];
-  chargesDisplayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType'];
-  paymentFundSourceDisplayedColumns: string[] = ['paymentTypeId', 'fundSourceAccountId'];
-  feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId'];
+  loanProductDatatables: any = [];
 
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { loanProduct: any }) => {
-      this.loanProduct = data.loanProduct;
+    this.route.data.subscribe((data: { loanProductDatatables: any }) => {
+      this.loanProductDatatables = data.loanProductDatatables;
     });
   }
 
   ngOnInit() {
-    this.loanProduct.allowAttributeConfiguration = Object.values(this.loanProduct.allowAttributeOverrides).some((attribute: boolean) => attribute);
   }
 
 }
