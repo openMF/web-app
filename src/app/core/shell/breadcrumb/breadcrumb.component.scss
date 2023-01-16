@@ -1,6 +1,8 @@
+@import "assets/styles/helper";
+
 .breadcrumb-wrapper {
   margin: 0 auto;
-  max-width: 74rem;
+  max-width: 84rem;
   width: 90%;
   word-wrap: break-word;
 
@@ -17,7 +19,7 @@
 
     .separator::before {
       content: "";
-      border: 1.5px solid #000;
+      border: 1.5px solid $mid-grey;
       margin: 0 0.6rem;
       font-size: 1.25rem;
       font-weight: 400;
@@ -30,7 +32,7 @@
       .breadcrumb-link {
         a {
           text-decoration: none;
-          color: #0275d8;
+          color: $status-approved;
 
           &:hover {
             text-decoration: underline;

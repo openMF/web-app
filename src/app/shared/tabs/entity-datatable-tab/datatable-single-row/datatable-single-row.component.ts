@@ -133,5 +133,4 @@ export class DatatableSingleRowComponent implements OnInit {
   getInputName(attr: string): string {
     return this.datatables.getName(attr);
   }
-
 }

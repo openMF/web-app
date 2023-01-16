@@ -18,6 +18,11 @@
 
 .system-defined {
   margin-top: 3px;
-  color: $concrete !important;
+  color: $status-approved !important;
   font-weight: 100;
+}
+
+.long-text {
+  word-break: break-all;
+  white-space: normal;
 }

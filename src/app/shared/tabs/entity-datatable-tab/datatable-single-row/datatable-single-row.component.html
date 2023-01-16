@@ -16,13 +16,13 @@
 
   <div class="m-t-10" *ngIf="dataObject.data.length > 0">
 
-    <div fxFlexFill *ngFor="let columnHeader of dataObject.columnHeaders;let i = index" [ngClass}="{{setAttributeClass(columnHeader.columnName)}}" >
+    <div fxFlexFill *ngFor="let columnHeader of dataObject.columnHeaders;let i = index" [ngClass]="setAttributeClass(columnHeader.columnName)" >
 
-      <div fxFlex="45%" class="mat-body-strong left">
+      <div fxFlex="40%" class="mat-body-strong left">
         {{ getInputName(columnHeader.columnName) }}
       </div>
 
-      <div fxFlex="50%" [ngSwitch]="columnHeader.columnDisplayType" class="right">
+      <div fxFlex="68%" [ngSwitch]="columnHeader.columnDisplayType" class="right">
         <span *ngSwitchCase="'DATE'">
           {{dataObject.data[0].row[i] | dateFormat}}
         </span>
@@ -31,6 +31,9 @@
         </span>
         <span *ngSwitchCase="'INTEGER' || 'DECIMAL'">
           {{dataObject.data[0].row[i] | number}}
+        </span>
+        <span *ngSwitchCase="'TEXT'" class="long-text">
+          {{dataObject.data[0].row[i]}}
         </span>
         <span *ngSwitchDefault>
           {{dataObject.data[0].row[i]}}
