@@ -67,7 +67,7 @@ export class AddLoanChargeComponent implements OnInit {
    * Creates the Loan Charge form.
    */
   ngOnInit() {
-    this.maxDate = this.settingsService.businessDate;
+    this.maxDate = this.settingsService.maxFutureDate;
     this.createLoanChargeForm();
     this.loanChargeForm.controls.chargeId.valueChanges.subscribe(chargeId => {
       const chargeDetails = this.loanChargeOptions.find(option => {
