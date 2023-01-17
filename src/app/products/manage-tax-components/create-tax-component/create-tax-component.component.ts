@@ -21,7 +21,7 @@ export class CreateTaxComponentComponent implements OnInit {
   /** Minimum start date allowed. */
   minDate = new Date();
   /** Maximum start date allowed. */
-  maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 10));
+  maxDate = new Date();
   /** Tax Component form. */
   taxComponentForm: FormGroup;
   /** Tax Component template data. */
@@ -59,6 +59,8 @@ export class CreateTaxComponentComponent implements OnInit {
    * Creates the tax Component form
    */
   ngOnInit() {
+    this.minDate = this.settingsService.minAllowedDate;
+    this.maxDate = this.settingsService.maxAllowedDate;
     this.createTaxComponentForm();
     this.setConditionalControls();
   }

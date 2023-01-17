@@ -13,9 +13,16 @@
 }
 
 table {
-  width: 100%;
+  width: 98%;
 
   .select-row:hover {
     cursor: pointer;
   }
+}
+
+.action-bar {
+  width: 98%;
+  align-items: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
