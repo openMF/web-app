@@ -67,7 +67,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    if (this.loansAccountTemplate.charges) {
+    if (this.loansAccountTemplate && this.loansAccountTemplate.charges) {
       this.chargesDataSource = this.loansAccountTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
     }
   }
@@ -80,6 +80,9 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
       this.chargeData = this.loansAccountProductTemplate.chargeOptions;
       if (this.loansAccountProductTemplate.overdueCharges) {
         this.overDueChargesDataSource = this.loansAccountProductTemplate.overdueCharges;
+      }
+      if (this.loansAccountProductTemplate.charges) {
+        this.chargesDataSource = this.loansAccountProductTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
       }
     }
   }

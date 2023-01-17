@@ -20,6 +20,8 @@ export class EditTaxComponentComponent implements OnInit {
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
+  /** Maximum start date allowed. */
+  maxDate = new Date();
   /** Tax Component form. */
   taxComponentForm: FormGroup;
   /** Tax Component data. */
@@ -49,6 +51,8 @@ export class EditTaxComponentComponent implements OnInit {
    * Creates the edit tax component form.
    */
   ngOnInit() {
+    this.minDate = this.settingsService.minAllowedDate;
+    this.maxDate = this.settingsService.maxAllowedDate;
     this.editTaxComponent();
   }
 

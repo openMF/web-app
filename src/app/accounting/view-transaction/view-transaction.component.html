@@ -55,7 +55,7 @@
 
 </div>
 
-<div class="mat-elevation-z8 container">
+<div class="mat-elevation-z8 container" fxLayoutAlign="center" fxLayout="row wrap">
 
   <table mat-table [dataSource]="dataSource" matSort>
 
@@ -80,13 +80,13 @@
     </ng-container>
 
     <ng-container matColumnDef="debit">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header> Debit </th>
-      <td mat-cell class="r-amount" *matCellDef="let transaction"><span *ngIf="transaction.entryType.value === 'DEBIT'"> {{ (transaction.currency.displaySymbol || transaction.currency.code) + ' ' + transaction.amount }} </span></td>
+      <th mat-header-cell class="center" *matHeaderCellDef mat-sort-header> Debit </th>
+      <td mat-cell class="r-amount" *matCellDef="let transaction"><span *ngIf="transaction.entryType.value === 'DEBIT'"> {{ (transaction.currency.displaySymbol || transaction.currency.code) }} {{ transaction.amount | number }} </span></td>
     </ng-container>
 
     <ng-container matColumnDef="credit">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header> Credit </th>
-      <td mat-cell class="r-amount" *matCellDef="let transaction"><span *ngIf="transaction.entryType.value === 'CREDIT'"> {{ (transaction.currency.displaySymbol || transaction.currency.code) + ' ' + transaction.amount }} </span></td>
+      <th mat-header-cell class="center" *matHeaderCellDef mat-sort-header> Credit </th>
+      <td mat-cell class="r-amount" *matCellDef="let transaction"><span *ngIf="transaction.entryType.value === 'CREDIT'"> {{ (transaction.currency.displaySymbol || transaction.currency.code) }} {{ transaction.amount | number }} </span></td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -94,9 +94,8 @@
 
   </table>
 
-  <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
-
-  <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column" class="action-bar">
     <button type="button" color="primary" mat-raised-button (click)="goBack()">Back</button>
   </div>
+
 </div>

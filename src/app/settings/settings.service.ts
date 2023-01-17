@@ -18,6 +18,7 @@ export class SettingsService {
   public static businessDateConfigName = 'enable_business_date';
   public static businessDateType = 'BUSINESS_DATE';
   public static cobDateType = 'COB_DATE';
+  minAllowedDate = new Date(1950, 0, 1);
   maxAllowedDate = new Date(2100, 0, 1);
 
   constructor(private alertService: AlertService,
@@ -148,6 +149,13 @@ export class SettingsService {
    */
   get businessDateConfig(): any {
     return localStorage.getItem('mifosXServerBusinessDateEnabled');
+  }
+
+  /**
+   * Returns min Past date
+   */
+  get minPastDate(): Date {
+    return this.minAllowedDate;
   }
 
   /**
