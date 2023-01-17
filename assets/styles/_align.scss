@@ -19,7 +19,7 @@
 
 .r-amount {
   text-align: right !important;
-  padding-right: 5px;
+  padding-right: 5px !important;
 }
 
 .right {
@@ -31,9 +31,9 @@
 }
 
 .amount-plus {
-  color: #000000;
+  color: $black;
 }
 
 .amount-minus {
-  color: #0f36e4;
+  color: $status-approved;
 }
