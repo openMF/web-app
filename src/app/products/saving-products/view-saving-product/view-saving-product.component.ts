@@ -12,7 +12,12 @@ export class ViewSavingProductComponent implements OnInit {
 
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe((data: { savingProductDatatables: any }) => {
-      this.savingProductDatatables = data.savingProductDatatables;
+      this.savingProductDatatables = [];
+      data.savingProductDatatables.forEach((datatable: any) => {
+        if (datatable.entitySubType === 'Savings Product') {
+          this.savingProductDatatables.push(datatable);
+        }
+      });
     });
   }
 

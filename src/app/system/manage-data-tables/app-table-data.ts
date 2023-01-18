@@ -14,3 +14,9 @@ export const entitySubTypeData: { displayValue: string, value: string }[] = [
     { displayValue: 'Person', value: 'Person' },
     { displayValue: 'Entity', value: 'Entity' },
   ];
+
+export const savingsSubTypeData: { displayValue: string, value: string }[] = [
+    { displayValue: 'Savings Product', value: 'Savings Product' },
+    { displayValue: 'Fixed Deposit', value: 'Fixed Deposit' },
+    { displayValue: 'Recurring Deposit', value: 'Recurring Deposit' },
+  ];

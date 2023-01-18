@@ -105,7 +105,7 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
    * Returns savings account form value.
    */
   get savingsAccountDetails() {
-    return this.savingsAccountDetailsForm.value;
+    return this.savingsAccountDetailsForm.getRawValue();
   }
 
 }
