@@ -146,7 +146,7 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
    * Returns savings account terms form value.
    */
   get savingsAccountTerms() {
-    return this.savingsAccountTermsForm.value;
+    return this.savingsAccountTermsForm.getRawValue();
   }
 
 }

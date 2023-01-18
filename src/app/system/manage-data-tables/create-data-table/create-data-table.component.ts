@@ -13,7 +13,7 @@ import { PopoverService } from '../../../configuration-wizard/popover/popover.se
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
 
 /** Data Imports */
-import { appTableData, entitySubTypeData } from '../app-table-data';
+import { appTableData, entitySubTypeData, savingsSubTypeData } from '../app-table-data';
 
 /** Custom Components */
 import { ColumnDialogComponent } from '../column-dialog/column-dialog.component';
@@ -38,7 +38,9 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
   /** Application Table Data */
   appTableData = appTableData;
   entitySubTypeData = entitySubTypeData;
+  savingsSubTypeData = savingsSubTypeData;
   showEntitySubType: boolean;
+  showSavingsSubType: boolean;
   /** Column Data */
   columnData: DatatableColumn[] = [];
   /** Data passed to dialog. */
@@ -97,6 +99,7 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
     this.setColumns();
     this.dataTableForm.controls.apptableName.valueChanges.subscribe((value: any) => {
       this.showEntitySubType = (value === 'm_client');
+      this.showSavingsSubType = (value === 'm_savings_product');
     });
   }
 

@@ -120,7 +120,7 @@ export class LoansAccountDetailsStepComponent implements OnInit {
    * Returns loans account details form value.
    */
   get loansAccountDetails() {
-    return this.loansAccountDetailsForm.value;
+    return this.loansAccountDetailsForm.getRawValue();
   }
 
 }

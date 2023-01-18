@@ -37,6 +37,15 @@
             </mat-select>
           </mat-form-field>
 
+          <mat-form-field fxFlex="20%" *ngIf="showSavingsSubType">
+            <mat-label>Savings SubType</mat-label>
+            <mat-select formControlName="entitySubType">
+              <mat-option *ngFor="let savingsSubType of savingsSubTypeData" [value]="savingsSubType.value">
+                {{ savingsSubType.displayValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
           <div fxFlex="14%" class="multi-row-wrapper">
             <mat-checkbox labelPosition="before" formControlName="multiRow" class="multi-row">Multi Row</mat-checkbox>
           </div>

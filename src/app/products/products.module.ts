@@ -106,7 +106,6 @@ import { EditRangeComponent } from './manage-delinquency-buckets/delinquency-ran
 import { ViewBucketComponent } from './manage-delinquency-buckets/delinquency-bucket/view-bucket/view-bucket.component';
 import { CreateBucketComponent } from './manage-delinquency-buckets/delinquency-bucket/create-bucket/create-bucket.component';
 import { EditBucketComponent } from './manage-delinquency-buckets/delinquency-bucket/edit-bucket/edit-bucket.component';
-import { LoanProductDatatableStepComponent } from './loan-products/loan-product-stepper/loan-product-datatable-step/loan-product-datatable-step.component';
 import { DatatableTabComponent } from './loan-products/view-loan-product/datatable-tab/datatable-tab.component';
 import { GeneralTabComponent } from './loan-products/view-loan-product/general-tab/general-tab.component';
 import { SavingProductGeneralTabComponent } from './saving-products/view-saving-product/saving-product-general-tab/saving-product-general-tab.component';
@@ -225,7 +224,6 @@ import { SavingProductDatatableTabComponent } from './saving-products/view-savin
     ViewBucketComponent,
     CreateBucketComponent,
     EditBucketComponent,
-    LoanProductDatatableStepComponent,
     DatatableTabComponent,
     GeneralTabComponent,
     SavingProductGeneralTabComponent,

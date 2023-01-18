@@ -412,7 +412,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
    * Returns loans account terms form value.
    */
   get loansAccountTerms() {
-    return this.loansAccountTermsForm.value;
+    return this.loansAccountTermsForm.getRawValue();
   }
 
   get loanCollateral() {

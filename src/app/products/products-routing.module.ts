@@ -148,8 +148,7 @@ const routes: Routes = [
               component: CreateLoanProductComponent,
               data: { title: extract('Create Loan Product'), breadcrumb: 'Create' },
               resolve: {
-                loanProductsTemplate: LoanProductsTemplateResolver,
-                loanProductDatatables: LoanProductDatatablesResolver
+                loanProductsTemplate: LoanProductsTemplateResolver
               }
             },
             {
