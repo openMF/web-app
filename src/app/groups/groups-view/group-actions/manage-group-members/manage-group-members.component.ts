@@ -43,7 +43,7 @@ export class ManageGroupMembersComponent implements AfterViewInit {
               public dialog: MatDialog) {
     this.route.data.subscribe((data: { groupActionData: any }) => {
       this.groupData = data.groupActionData;
-      this.clientMembers = data.groupActionData.clientMembers;
+      this.clientMembers = data.groupActionData.clientMembers || [];
     });
   }
 

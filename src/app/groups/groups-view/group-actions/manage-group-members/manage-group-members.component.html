@@ -36,7 +36,7 @@
 
   </mat-card>
 
-  <mat-card fxFlex="40%">
+  <mat-card fxFlex="50%">
 
     <h3 matSubheader>Client Members</h3>
 
@@ -44,12 +44,16 @@
       <div mat-list-item *ngFor="let client of clientMembers index as i">
         <span matLine class="p-t-10">{{client.displayName}}</span>
         <div fxFlex></div>
-        <button mat-icon-button color="warn" (click)="removeClient(i, client)">
+        <button mat-icon-button color="warn" (click)="removeClient(i, client)" matTooltip="Remove Client from Group" matTooltipPosition="left">
           <fa-icon icon="trash"></fa-icon>
         </button>
       </div>
     </mat-nav-list>
 
   </mat-card>
+
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+    <button type="button" mat-raised-button [routerLink]="['../']">Back</button>
+  </div>
 
 </div>

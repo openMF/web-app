@@ -1,0 +1,83 @@
+@import "assets/styles/helper";
+
+.tab-container {
+  padding: 1%;
+  margin: 1%;
+}
+
+.mat-h3 {
+  margin-top: 10px !important;
+  font-weight: 300;
+  color: $status-approved;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-elevation-z1 {
+  margin: 1em 0 1.5em 0;
+}
+
+h2, h3, h4 {
+  margin: 0;
+  font-weight: 500;
+}
+
+span {
+  margin: 0.5em 0;
+}
+
+.margin-t {
+  margin-top: 1em;
+}
+
+.interestCarts {
+  float:right;
+}
+
+table {
+  width: 100%;
+
+  tr.incentives-row {
+    height: 0;
+
+    > td {
+      padding: 0;
+    }
+
+    .incentives {
+      overflow: hidden;
+    }
+
+    .mat-card {
+      border-radius: 0;
+
+      > h4 {
+        font-weight: 500;
+        margin: 0.5em 0 0;
+      }
+    }
+  }
+}
+
+.mat-elevation-z1 {
+  margin: 1em 0 1.5em 0;
+}
+
+h2, h3, h4 {
+  margin: 0;
+  font-weight: 500;
+}
+
+span {
+  margin: 0.5em 0;
+}
+
+mat-divider {
+  margin: 0 0 0.5em 0;
+}
+
+.margin-t {
+  margin-top: 1em;
+}

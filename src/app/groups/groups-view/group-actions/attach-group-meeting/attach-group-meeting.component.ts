@@ -59,7 +59,7 @@ export class AttachGroupMeetingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.maxDate = this.settingsService.businessDate;
+    this.maxDate = this.settingsService.maxFutureDate;
     this.createGroupMeetingForm();
     this.buildDependencies();
   }
@@ -119,7 +119,7 @@ export class AttachGroupMeetingComponent implements OnInit {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const title = `groups_${this.groupId}_CollectionMeeting`;
-    const typeId = '1';
+    const typeId = groupMeetingFormData.repeating ? '1' : '4' ;
     const prevStartDate: Date = this.groupMeetingForm.value.startDate;
     if (groupMeetingFormData.startDate instanceof Date) {
       groupMeetingFormData.startDate = this.dateUtils.formatDate(prevStartDate, dateFormat);

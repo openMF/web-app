@@ -25,7 +25,7 @@ export class GroupActionsResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const actionName = route.paramMap.get('name');
+    const actionName = route.paramMap.get('action');
     const groupId = route.paramMap.get('groupId') || route.parent.parent.paramMap.get('groupId');
     switch (actionName) {
       case 'Attendance':

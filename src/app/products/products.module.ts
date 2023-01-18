@@ -110,6 +110,10 @@ import { DatatableTabComponent } from './loan-products/view-loan-product/datatab
 import { GeneralTabComponent } from './loan-products/view-loan-product/general-tab/general-tab.component';
 import { SavingProductGeneralTabComponent } from './saving-products/view-saving-product/saving-product-general-tab/saving-product-general-tab.component';
 import { SavingProductDatatableTabComponent } from './saving-products/view-saving-product/saving-product-datatable-tab/saving-product-datatable-tab.component';
+import { FixedDepositGeneralTabComponent } from './fixed-deposit-products/view-fixed-deposit-product/fixed-deposit-general-tab/fixed-deposit-general-tab.component';
+import { FixedDepositDatatableTabComponent } from './fixed-deposit-products/view-fixed-deposit-product/fixed-deposit-datatable-tab/fixed-deposit-datatable-tab.component';
+import { RecurringDepositDatatableTabComponent } from './recurring-deposit-products/view-recurring-deposit-product/recurring-deposit-datatable-tab/recurring-deposit-datatable-tab.component';
+import { RecurringDepositGeneralTabComponent } from './recurring-deposit-products/view-recurring-deposit-product/recurring-deposit-general-tab/recurring-deposit-general-tab.component';
 
 /**
  * Products Module
@@ -227,7 +231,11 @@ import { SavingProductDatatableTabComponent } from './saving-products/view-savin
     DatatableTabComponent,
     GeneralTabComponent,
     SavingProductGeneralTabComponent,
-    SavingProductDatatableTabComponent
+    SavingProductDatatableTabComponent,
+    FixedDepositGeneralTabComponent,
+    FixedDepositDatatableTabComponent,
+    RecurringDepositDatatableTabComponent,
+    RecurringDepositGeneralTabComponent
   ],
   entryComponents: [
     DepositProductIncentiveFormDialogComponent,

@@ -74,7 +74,7 @@
           </mat-icon>
           <span>Edit</span>
         </button>
-        <button mat-menu-item *mifosxHasPermission="'CREATE_CLIENT'">
+        <button mat-menu-item *mifosxHasPermission="'CREATE_CLIENT'" (click)="doAction('Manage Members')">
           <mat-icon matListIcon>
             <fa-icon icon="plus" size="sm"></fa-icon>
           </mat-icon>

@@ -40,13 +40,23 @@
             </mat-select>
           </mat-form-field>
 
+          <mat-form-field (click)="submittedOnDatePicker.open()">
+            <mat-label>Submitted on</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker" required formControlName="submittedOnDate">
+            <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #submittedOnDatePicker></mat-datepicker>
+            <mat-error *ngIf="groupForm.controls.submittedOnDate.hasError('required')">
+              Submission Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
           <mat-checkbox labelPosition="before" formControlName="active">
             Active
           </mat-checkbox>
 
-          <mat-form-field *ngIf="this.groupForm.controls.active.value" (click)="activationDatePicker.open()">
+          <mat-form-field *ngIf="groupForm.controls.active.value" (click)="activationDatePicker.open()">
             <mat-label>Activation Date</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="activationDatePicker" required formControlName="activationDate">
+            <input matInput [min]="groupForm.value.submittedOnDate" [max]="maxDate" [matDatepicker]="activationDatePicker" required formControlName="activationDate">
             <mat-datepicker-toggle matSuffix [for]="activationDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #activationDatePicker></mat-datepicker>
             <mat-error *ngIf="groupForm.controls.activationDate.hasError('required')">
@@ -59,21 +69,11 @@
             <input matInput formControlName="externalId">
           </mat-form-field>
 
-          <mat-form-field (click)="submittedOnDatePicker.open()">
-            <mat-label>Submitted on</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker" required formControlName="submittedOnDate">
-            <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #submittedOnDatePicker></mat-datepicker>
-            <mat-error *ngIf="groupForm.controls.submittedOnDate.hasError('required')">
-              Submission Date is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-
           <mat-form-field>
             <mat-label>Add Clients</mat-label>
             <input matInput [formControl]="clientChoice" [matAutocomplete]="clientsAutocomplete">
           </mat-form-field>
-  
+
         </div>
 
         <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">
@@ -108,10 +108,10 @@
           <mat-nav-list *ngIf="clientMembers.length">
             <h3 matSubheader>Selected Clients</h3>
             <div mat-list-item *ngFor="let client of clientMembers index as i">
-              <button mat-icon-button (click)="removeClient(i)">
+              <span matLine>{{client.displayName}}</span>
+              <button mat-icon-button color="warn" (click)="removeClient(i)">
                 <fa-icon icon="trash"></fa-icon>
               </button>
-              <span matLine>{{client.displayName}}</span>
             </div>
           </mat-nav-list>
 

@@ -1,0 +1,494 @@
+
+<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+  <button mat-raised-button color="primary" [routerLink]="['../edit']" *mifosxHasPermission="'UPDATE_SAVINGSPRODUCT'">
+    <fa-icon icon="edit" class="m-r-10"></fa-icon>Edit
+  </button>
+</div>
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" fxLayout.lt-md="column">
+
+        <h2 class="mat-h2" fxFlexFill>{{ fixedDepositProductData.name }}</h2>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <h3 class="mat-h3" fxFlexFill>Details</h3>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Short Name:</span>
+          <span fxFlex="60%">{{ fixedDepositProductData.shortName }}</span>
+        </div>
+
+        <div fxFlexFill *ngIf="fixedDepositProductData.description">
+          <span fxFlex="40%">Description:</span>
+          <span fxFlex="60%">{{ fixedDepositProductData.description }}</span>
+        </div>
+
+        <h3 class="mat-h3" fxFlexFill>Currency</h3>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Currency:</span>
+          <span fxFlex="60%">{{ fixedDepositProductData.currency.name }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Decimal Places:</span>
+          <span fxFlex="60%">{{ fixedDepositProductData.currency.decimalPlaces }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Currency in Multiples Of:</span>
+          <span fxFlex="60%">{{ fixedDepositProductData.currency.inMultiplesOf | number}}</span>
+        </div>
+
+        <h3 class="mat-h3" fxFlexFill>Terms</h3>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Deposit Amount:</span>
+          <span fxFlex="60%">{{ fixedDepositProductData.depositAmount + ' (Min: ' + (fixedDepositProductData.minDepositAmount ? fixedDepositProductData.minDepositAmount : fixedDepositProductData.depositAmount) + ', Max: ' + (fixedDepositProductData.maxDepositAmount ? fixedDepositProductData.maxDepositAmount : fixedDepositProductData.depositAmount) + ')' }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Interest Compounding Period:</span>
+          <span fxFlex="60%">{{ fixedDepositProductData.interestCompoundingPeriodType.value }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Interest Posting Period:</span>
+          <span fxFlex="60%">{{ fixedDepositProductData.interestPostingPeriodType.value }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Interest Calculated Using:</span>
+          <span fxFlex="60%">{{ fixedDepositProductData.interestCalculationType.value }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Days in Years:</span>
+          <span fxFlex="60%">{{ fixedDepositProductData.interestCalculationDaysInYearType.value }}</span>
+        </div>
+
+        <h3 class="mat-h3" fxFlexFill>Settings</h3>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <div fxFlexFill *ngIf="fixedDepositProductData.lockinPeriodFrequency">
+          <span fxFlex="40%">Lock-in Period:</span>
+          <span fxFlex="60%">
+            {{ fixedDepositProductData.lockinPeriodFrequency }} {{ fixedDepositProductData.lockinPeriodFrequencyType.value }}</span>
+        </div>
+
+        <div fxFlexFill *ngIf="fixedDepositProductData.minDepositTerm">
+          <span fxFlex="40%">Minimum Deposit Term:</span>
+          <span fxFlex="60%"
+            *ngIf="fixedDepositProductData.minDepositTerm !== undefined">{{ fixedDepositProductData.minDepositTerm }}
+            &nbsp;
+            {{ fixedDepositProductData.minDepositTermType.value }}</span>
+        </div>
+
+        <div fxFlexFill *ngIf="fixedDepositProductData.maxDepositTerm">
+          <span fxFlex="40%">Maximum Deposit Term:</span>
+          <span fxFlex="60%"
+            *ngIf="fixedDepositProductData.maxDepositTerm !== undefined">{{ fixedDepositProductData.maxDepositTerm }}
+            &nbsp;
+            {{ fixedDepositProductData.maxDepositTermType.value }}</span>
+        </div>
+
+        <div fxFlexFill *ngIf="fixedDepositProductData.inMultiplesOfDepositTerm">
+          <span fxFlex="40%">Deposit Term In multiple of:</span>
+          <span fxFlex="60%">{{ fixedDepositProductData.inMultiplesOfDepositTerm }}
+            -
+            {{ fixedDepositProductData.inMultiplesOfDepositTermType.value }}</span>
+        </div>
+
+        <div fxFlexFill>
+		  <span fxFlex="40%">Apply Penal Interest (less):</span>
+		  <span fxFlex="60%">{{ fixedDepositProductData.preClosurePenalApplicable ? 'Yes' : 'No' }}</span>
+  		</div>
+
+        <div fxFlexFill *ngIf="fixedDepositProductData.preClosurePenalApplicable">
+          <span fxFlex="40%">Penal Interest (%):</span>
+          <span fxFlex="60%">{{fixedDepositProductData.preClosurePenalInterest}} &nbsp; &nbsp; % &nbsp; &nbsp; On
+            &nbsp;&nbsp;
+            {{fixedDepositProductData.preClosurePenalInterestOnType.value}}</span>
+        </div>
+
+        <div fxFlexFill *ngIf="fixedDepositProductData.minBalanceForInterestCalculation">
+          <span fxFlex="40%">Balance Required For Interest Calculation:</span>
+          <span fxFlex="60%">{{ fixedDepositProductData.minBalanceForInterestCalculation | number }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Is withhold tax Applicable:</span>
+          <span fxFlex="60%">{{ fixedDepositProductData.withHoldTax ? 'Yes' : 'No' }}</span>
+        </div>
+
+        <div fxFlexFill *ngIf="fixedDepositProductData.withHoldTax">
+          <span fxFlex="40%">Withhold Tax group:</span>
+          <span fxFlex="60%">{{ fixedDepositProductData.taxGroup.name }}</span>
+        </div>
+
+        <div *ngIf="fixedDepositProductData.activeChart" fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column" >
+
+          <h3 class="mat-h3" fxFlexFill>Interest Rate Chart</h3>
+
+          <mat-divider [inset]="true"></mat-divider>
+
+          <div fxFlexFill  fxLayout="row wrap" fxLayout.lt-md="column">
+
+            <div fxFlexFill *ngIf="fixedDepositProductData.activeChart.name">
+              <span fxFlex="40%">Name:</span>
+              <span fxFlex="60%">{{ fixedDepositProductData.activeChart.name }}</span>
+            </div>
+
+            <div fxFlexFill>
+              <span fxFlex="40%">Valid from Date:</span>
+              <span fxFlex="60%">{{ fixedDepositProductData.activeChart.fromDate  | dateFormat }}</span>
+            </div>
+
+            <div fxFlexFill *ngIf="fixedDepositProductData.activeChart.endDate">
+              <span fxFlex="40%">End Date:</span>
+              <span fxFlex="60%">{{ fixedDepositProductData.activeChart.endDate  | dateFormat }}</span>
+            </div>
+
+            <div fxFlexFill *ngIf="fixedDepositProductData.activeChart.description">
+              <span fxFlex="40%">Description:</span>
+              <span fxFlex="60%">{{ fixedDepositProductData.activeChart.description }}</span>
+            </div>
+
+            <div fxFlexFill>
+              <span fxFlex="40%">Primary Grouping by Amount:</span>
+              <span fxFlex="60%">{{ fixedDepositProductData.activeChart.isPrimaryGroupingByAmount ? 'Yes' : 'No' }}</span>
+            </div>
+
+            <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="fixedDepositProductData.activeChart.chartSlabs" multiTemplateDataRows>
+
+              <ng-container matColumnDef="period">
+                <th mat-header-cell *matHeaderCellDef> Period </th>
+                <td mat-cell *matCellDef="let chartSlab">
+                  <div *ngIf="chartSlab.fromPeriod !== undefined">
+                    {{ chartSlab.fromPeriod }} - {{ chartSlab.toPeriod }} {{ chartSlab.periodType.value }}
+                  </div>
+                  <div *ngIf="chartSlab.fromPeriod == undefined">
+                    &nbsp;
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="amountRange">
+                <th mat-header-cell *matHeaderCellDef> Amount Range </th>
+                <td mat-cell *matCellDef="let chartSlab">
+                  <div *ngIf="chartSlab.amountRangeFrom !== undefined">
+                    {{ chartSlab.amountRangeFrom }} - {{ chartSlab.amountRangeTo }}
+                  </div>
+
+                  <div *ngIf="chartSlab.amountRangeFrom == undefined">
+                    &nbsp;
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="annualInterestRate">
+                <th mat-header-cell *matHeaderCellDef> Interest </th>
+                <td mat-cell *matCellDef="let chartSlab">
+                  {{ chartSlab.annualInterestRate }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef> Description </th>
+                <td mat-cell *matCellDef="let chartSlab">
+                  {{ chartSlab.description }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                <td mat-cell *matCellDef="let chartSlab; let chartSlabIndex = dataIndex">
+                  <button mat-button color="primary" (click)="expandChartSlabIndex = expandChartSlabIndex === chartSlabIndex ? null : chartSlabIndex">
+                    <span *ngIf="expandChartSlabIndex !== chartSlabIndex">
+                      <fa-icon icon="eye" class="m-r-10"></fa-icon>
+                      View Incentives
+                    </span>
+                    <span *ngIf="expandChartSlabIndex === chartSlabIndex">
+                      <fa-icon icon="eye-slash" class="m-r-10"></fa-icon>
+                      Hide Incentives
+                    </span>
+                  </button>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="incentives">
+                <td mat-cell *matCellDef="let chartSlab; let chartSlabIndex = dataIndex" [attr.colspan]="chartSlabsDisplayedColumns.length">
+                  <div fxLayout="row wrap" fxFlexFill class="incentives" [@expandChartSlab]="chartSlabIndex === expandChartSlabIndex? 'expanded' : 'collapsed'">
+                    <mat-card fxLayout="row wrap" fxFlexFill>
+
+                      <h4 class="mat-h4" fxFlex="23%">
+                        Incentives
+                      </h4>
+
+                      <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="chartSlab.incentives">
+
+                        <ng-container matColumnDef="entityType">
+                          <th mat-header-cell *matHeaderCellDef> Entity Type </th>
+                          <td mat-cell *matCellDef="let incentive">
+                            {{ incentive.entityType | find:fixedDepositProductsTemplate.chartTemplate.entityTypeOptions:'id':'value' }}
+                          </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="attributeName">
+                          <th mat-header-cell *matHeaderCellDef> Attribute Name </th>
+                          <td mat-cell *matCellDef="let incentive">
+                            {{ incentive.attributeName | find:fixedDepositProductsTemplate.chartTemplate.attributeNameOptions:'id':'value' }}
+                          </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="conditionType">
+                          <th mat-header-cell *matHeaderCellDef> Condition Type </th>
+                          <td mat-cell *matCellDef="let incentive">
+                            {{ incentive.conditionType | find:fixedDepositProductsTemplate.chartTemplate.conditionTypeOptions:'id':'value' }}
+                          </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="attributeValue">
+                          <th mat-header-cell *matHeaderCellDef> Attribute Value </th>
+                          <td mat-cell *matCellDef="let incentive" [ngSwitch]="incentive.attributeName">
+                            <span *ngSwitchCase="2">{{ incentive.attributeValue | find:fixedDepositProductsTemplate.chartTemplate.genderOptions:'id':'name' }}</span>
+                            <span *ngSwitchCase="3">{{ incentive.attributeValue }}</span>
+                            <span *ngSwitchCase="4">{{ incentive.attributeValue | find:fixedDepositProductsTemplate.chartTemplate.clientTypeOptions:'id':'name' }}</span>
+                            <span *ngSwitchCase="5">{{ incentive.attributeValue | find:fixedDepositProductsTemplate.chartTemplate.clientClassificationOptions:'id':'name' }}</span>
+                          </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="incentiveType">
+                          <th mat-header-cell *matHeaderCellDef> Incentive Type </th>
+                          <td mat-cell *matCellDef="let incentive">
+                            {{ incentive.incentiveType | find:fixedDepositProductsTemplate.chartTemplate.incentiveTypeOptions:'id':'value'}}
+                          </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="amount">
+                          <th mat-header-cell *matHeaderCellDef> Amount </th>
+                          <td mat-cell *matCellDef="let incentive">
+                            {{ incentive.amount }}
+                          </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="incentivesDisplayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: incentivesDisplayedColumns;"></tr>
+
+                      </table>
+
+                    </mat-card>
+                  </div>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="chartSlabsDisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: chartSlabsDisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: chartSlabsIncentivesDisplayedColumns;" class="incentives-row"></tr>
+
+            </table>
+
+          </div>
+
+        </div>
+
+        <div *ngIf="fixedDepositProductData.charges.length" fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
+
+          <h3 class="mat-h3" fxFlexFill>Charges</h3>
+
+          <mat-divider fxFlexFill></mat-divider>
+
+          <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="fixedDepositProductData.charges">
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Name </th>
+              <td mat-cell *matCellDef="let charge">
+                {{ charge.name }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="type">
+              <th mat-header-cell *matHeaderCellDef> Type </th>
+              <td mat-cell *matCellDef="let charge">
+                {{ charge.chargeCalculationType.value }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef> Amount </th>
+              <td mat-cell *matCellDef="let charge">
+                {{ charge.amount | number }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="collectedon">
+              <th mat-header-cell *matHeaderCellDef> Collected On </th>
+              <td mat-cell *matCellDef="let charge">
+                {{ charge.chargeTimeType.value }}
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="chargesDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: chargesDisplayedColumns;"></tr>
+
+          </table>
+
+        </div>
+
+        <h3 class="mat-h3" fxFlexFill>Accounting</h3>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Type:</span>
+          <span fxFlex="60%">{{ fixedDepositProductData.accountingRule.value }}</span>
+        </div>
+
+        <div fxFlexFill *ngIf="fixedDepositProductData.accountingRule.id === 2" fxLayout="row wrap" fxLayout.lt-md="column">
+
+          <h4 fxFlexFill class="mat-h4">Assets</h4>
+
+          <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
+            <span fxFlex="40%">Saving reference:</span>
+            <span fxFlex="60%">{{ fixedDepositProductData.accountingMappings.savingsReferenceAccount.name }}</span>
+          </div>
+
+          <h4 fxFlexFill class="mat-h4">Liabilities</h4>
+
+          <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
+            <span fxFlex="40%">Saving control:</span>
+            <span fxFlex="60%">{{ fixedDepositProductData.accountingMappings.savingsControlAccount.name }}</span>
+            <span fxFlex="40%">Savings transfers in suspense:</span>
+            <span fxFlex="60%">{{ fixedDepositProductData.accountingMappings.transfersInSuspenseAccount.name }}</span>
+          </div>
+
+          <h4 fxFlexFill class="mat-h4">Expenses</h4>
+
+          <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
+            <span fxFlex="40%">Interest on savings:</span>
+            <span fxFlex="60%">{{ fixedDepositProductData.accountingMappings.interestOnSavingsAccount.name }}</span>
+          </div>
+
+          <h4 fxFlexFill class="mat-h4">Income</h4>
+
+          <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
+            <span fxFlex="40%">Income from fees:</span>
+            <span fxFlex="60%">{{ fixedDepositProductData.accountingMappings.incomeFromFeeAccount.name }}</span>
+            <span fxFlex="40%">Income from penalties:</span>
+            <span fxFlex="60%">{{ fixedDepositProductData.accountingMappings.incomeFromPenaltyAccount.name }}</span>
+          </div>
+
+        <div fxFlexFill *ngIf="fixedDepositProductData.advancedAccountingRules && (fixedDepositProductData.paymentChannelToFundSourceMappings?.length || fixedDepositProductData.feeToIncomeAccountMappings?.length || fixedDepositProductData.penaltyToIncomeAccountMappings?.length)" fxLayout="row wrap" fxLayout.lt-md="column">
+
+          <h3 class="mat-h3" fxFlexFill>Advanced Accounting Rules</h3>
+
+          <mat-divider [inset]="true"></mat-divider>
+
+          <hr>
+
+          <div *ngIf="fixedDepositProductData.paymentChannelToFundSourceMappings?.length" fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
+            <h4 class="mat-h4" fxFlexFill>Configure Fund Sources for Payment Channels</h4>
+
+            <table fxFlexFill class="mat-elevation-z1" mat-table
+              [dataSource]="fixedDepositProductData.paymentChannelToFundSourceMappings">
+
+              <ng-container matColumnDef="paymentTypeId">
+                <th mat-header-cell *matHeaderCellDef> Payment Type </th>
+                <td mat-cell *matCellDef="let paymentFundSource">
+                  {{ paymentFundSource.paymentType.name }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="fundSourceAccountId">
+                <th mat-header-cell *matHeaderCellDef> Fund Source </th>
+                <td mat-cell *matCellDef="let paymentFundSource">
+                  {{ paymentFundSource.fundSourceAccount.name }}
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="paymentFundSourceDisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: paymentFundSourceDisplayedColumns;"></tr>
+
+            </table>
+
+          </div>
+
+          <div *ngIf="fixedDepositProductData.feeToIncomeAccountMappings?.length" fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
+
+            <h4 class="mat-h4" fxFlexFill>Fees to Specific Income Accounts</h4>
+
+            <table fxFlexFill class="mat-elevation-z1" mat-table
+              [dataSource]="fixedDepositProductData.feeToIncomeAccountMappings">
+
+              <ng-container matColumnDef="chargeId">
+                <th mat-header-cell *matHeaderCellDef> Fees </th>
+                <td mat-cell *matCellDef="let feesIncome">
+                  {{ feesIncome.charge.name }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="incomeAccountId">
+                <th mat-header-cell *matHeaderCellDef> Income Account </th>
+                <td mat-cell *matCellDef="let feesIncome">
+                  {{ feesIncome.incomeAccount.name }}
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="feesPenaltyIncomeDisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns;"></tr>
+
+            </table>
+
+          </div>
+
+          <div *ngIf="fixedDepositProductData.penaltyToIncomeAccountMappings?.length" fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
+
+            <h4 class="mat-h4" fxFlexFill>Penalties to Specific Income Accounts</h4>
+
+            <table fxFlexFill class="mat-elevation-z1" mat-table
+              [dataSource]="fixedDepositProductData.penaltyToIncomeAccountMappings">
+
+              <ng-container matColumnDef="chargeId">
+                <th mat-header-cell *matHeaderCellDef> Penalty </th>
+                <td mat-cell *matCellDef="let penaltyIncome">
+                  {{ penaltyIncome.charge.name }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="incomeAccountId">
+                <th mat-header-cell *matHeaderCellDef> Income Account </th>
+                <td mat-cell *matCellDef="let penaltyIncome">
+                  {{ penaltyIncome.incomeAccount.name }}
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="feesPenaltyIncomeDisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns;"></tr>
+
+              </table>
+
+            </div>
+
+          </div>
+
+	      </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

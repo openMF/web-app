@@ -2,6 +2,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Floating Rate Period Dialog Component.
@@ -25,6 +26,7 @@ export class FloatingRatePeriodDialogComponent implements OnInit {
    */
   constructor(public dialogRef: MatDialogRef<FloatingRatePeriodDialogComponent>,
               public formBuilder: FormBuilder,
+              private settingsService: SettingsService,
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
@@ -32,7 +34,14 @@ export class FloatingRatePeriodDialogComponent implements OnInit {
    * Creates the floating rate period form.
    */
   ngOnInit() {
-    const rowDisabled: Boolean = this.data ? (new Date(this.data.fromDate) < new Date() ? true : false) : false;
+    this.minDate = this.settingsService.businessDate;
+    let rowDisabled = false;
+    if (this.data && (new Date(this.data.fromDate) < this.minDate)) {
+      rowDisabled = true;
+    }
+    if (this.data.isNew) {
+      rowDisabled = false;
+    }
     this.floatingRatePeriodForm = this.formBuilder.group({
       'fromDate': [{ value: this.data ? new Date(this.data.fromDate) : '', disabled: rowDisabled }, Validators.required],
       'interestRate': [{ value: this.data ? this.data.interestRate : '', disabled: rowDisabled }, Validators.required],
