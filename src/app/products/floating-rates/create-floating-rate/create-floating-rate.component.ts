@@ -106,7 +106,9 @@ export class CreateFloatingRateComponent implements OnInit {
    */
   addFloatingRatePeriod() {
     const floatingRatePeriodDialogRef = this.dialog.open(FloatingRatePeriodDialogComponent, {
-      data: {}
+      data: {
+        fromDate: this.settingsService.businessDate
+      }
     });
     floatingRatePeriodDialogRef.afterClosed().subscribe((response: any) => {
       if (response) {
@@ -131,7 +133,8 @@ export class CreateFloatingRateComponent implements OnInit {
       data: {
         fromDate: ratePeriod.fromDate,
         interestRate: ratePeriod.interestRate,
-        isDifferentialToBaseLendingRate: ratePeriod.isDifferentialToBaseLendingRate
+        isDifferentialToBaseLendingRate: ratePeriod.isDifferentialToBaseLendingRate,
+        isNew: true
       }
     });
     editFloatingRatePeriodDialogRef.afterClosed().subscribe((response: any) => {

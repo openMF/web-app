@@ -87,7 +87,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     this.groupForm = this.formBuilder.group({
       'name': ['', [Validators.required, Validators.pattern('(^[A-z]).*')]],
       'officeId': ['', Validators.required],
-      'submittedOnDate': ['', Validators.required],
+      'submittedOnDate': [this.settingsService.businessDate, Validators.required],
       'staffId': [''],
       'externalId': [''],
       'active': [false],
@@ -169,7 +169,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     data.clientMembers = [];
     this.clientMembers.forEach((client: any) => data.clientMembers.push(client.id));
     this.groupService.createGroup(data).subscribe((response: any) => {
-      this.router.navigate(['../groups']);
+      this.router.navigate(['../groups', response.resourceId, 'general']);
     });
   }
 

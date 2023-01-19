@@ -42,8 +42,8 @@ export class GroupActionsComponent {
   constructor(private route: ActivatedRoute,
               private router: Router) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    const name = this.route.snapshot.params['name'];
-    this.actions[name] = true;
+    const action = this.route.snapshot.params['action'];
+    this.actions[action] = true;
   }
 
 }

@@ -24,8 +24,8 @@ export class FixedDepositProductResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const fixedDepositProductId = route.paramMap.get('id');
-    return this.productsService.getFixedDepositProduct(fixedDepositProductId);
+    const productId = route.parent.paramMap.get('productId');
+    return this.productsService.getFixedDepositProduct(productId);
   }
 
 }

@@ -25,7 +25,7 @@ export class ManageDataTablesComponent implements OnInit, AfterViewInit {
   /** Data table data. */
   dataTableData: any;
   /** Columns to be displayed in manage data tables table. */
-  displayedColumns: string[] = ['registeredTableName', 'applicationTableName'];
+  displayedColumns: string[] = ['registeredTableName', 'applicationTableName', 'entitySubType'];
   /** Data source for manage data tables table. */
   dataSource: MatTableDataSource<any>;
 

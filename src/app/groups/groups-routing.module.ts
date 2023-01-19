@@ -68,6 +68,11 @@ const routes: Routes = [
               },
               children: [
                 {
+                  path: '',
+                  redirectTo: 'general',
+                  pathMatch: 'full'
+                },
+                {
                   path: 'general',
                   component: GeneralTabComponent,
                   data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false },
@@ -133,8 +138,8 @@ const routes: Routes = [
               ]
             },
             {
-              path: 'actions/:name',
-              data: { title: extract('Group Actions'), routeParamBreadcrumb: 'name' },
+              path: 'actions/:action',
+              data: { title: extract('Group Actions'), breadcrumb: 'action', routeParamBreadcrumb: 'action' },
               component: GroupActionsComponent,
               resolve: {
                 groupActionData: GroupActionsResolver

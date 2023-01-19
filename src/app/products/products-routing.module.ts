@@ -120,6 +120,10 @@ import { SavingProductDatatableResolver } from './saving-products/saving-product
 import { SavingProductDatatablesResolver } from './saving-products/saving-product-datatables.resolver';
 import { SavingProductGeneralTabComponent } from './saving-products/view-saving-product/saving-product-general-tab/saving-product-general-tab.component';
 import { SavingProductDatatableTabComponent } from './saving-products/view-saving-product/saving-product-datatable-tab/saving-product-datatable-tab.component';
+import { FixedDepositGeneralTabComponent } from './fixed-deposit-products/view-fixed-deposit-product/fixed-deposit-general-tab/fixed-deposit-general-tab.component';
+import { FixedDepositDatatableTabComponent } from './fixed-deposit-products/view-fixed-deposit-product/fixed-deposit-datatable-tab/fixed-deposit-datatable-tab.component';
+import { RecurringDepositGeneralTabComponent } from './recurring-deposit-products/view-recurring-deposit-product/recurring-deposit-general-tab/recurring-deposit-general-tab.component';
+import { RecurringDepositDatatableTabComponent } from './recurring-deposit-products/view-recurring-deposit-product/recurring-deposit-datatable-tab/recurring-deposit-datatable-tab.component';
 
 /** Products Routes */
 const routes: Routes = [
@@ -556,19 +560,35 @@ const routes: Routes = [
               }
             },
             {
-              path: ':id',
-              data: { title: extract('View Recurring Deposit Product'), routeParamBreadcrumb: 'id' },
+              path: ':productId',
+              data: { title: extract('View Recurring Deposit Product'), breadcrumb: 'productId', routeParamBreadcrumb: 'productId' },
+              component: ViewRecurringDepositProductComponent,
               resolve: {
-                recurringDepositProduct: RecurringDepositProductResolver
+                recurringDepositDatatables: SavingProductDatatablesResolver
               },
               children: [
                 {
                   path: '',
-                  component: ViewRecurringDepositProductComponent,
+                  redirectTo: 'general',
+                  pathMatch: 'full'
+                },
+                {
+                  path: 'general',
+                  component: RecurringDepositGeneralTabComponent,
                   resolve: {
-                    recurringDepositProduct: RecurringDepositProductResolver,
-                    recurringDepositProductsTemplate: RecurringDepositProductsTemplateResolver
+                    recurringDepositProduct: RecurringDepositProductResolver
                   }
+                },
+                {
+                  path: 'datatables',
+                  children: [{
+                    path: ':datatableName',
+                    component: RecurringDepositDatatableTabComponent,
+                    data: { title: extract('Data Table View'), routeParamBreadcrumb: 'datatableName' },
+                    resolve: {
+                      recurringDepositDatatable: SavingProductDatatableResolver
+                    }
+                  }]
                 },
                 {
                   path: 'edit',
@@ -602,19 +622,35 @@ const routes: Routes = [
               },
             },
             {
-              path: ':id',
-              data: { title: extract('View Fixed Deposit Product'), routeParamBreadcrumb: 'id' },
+              path: ':productId',
+              data: { title: extract('View Fixed Deposit Product'), breadcrumb: 'productId', routeParamBreadcrumb: 'productId' },
+              component: ViewFixedDepositProductComponent,
               resolve: {
-                fixedDepositProduct: FixedDepositProductResolver,
+                fixedDepositDatatables: SavingProductDatatablesResolver
               },
               children: [
                 {
                   path: '',
-                  component: ViewFixedDepositProductComponent,
+                  redirectTo: 'general',
+                  pathMatch: 'full'
+                },
+                {
+                  path: 'general',
+                  component: FixedDepositGeneralTabComponent,
                   resolve: {
-                    fixedDepositProduct: FixedDepositProductResolver,
-                    fixedDepositProductsTemplate: FixedDepositProductsTemplateResolver
+                    fixedDepositProduct: FixedDepositProductResolver
                   }
+                },
+                {
+                  path: 'datatables',
+                  children: [{
+                    path: ':datatableName',
+                    component: FixedDepositDatatableTabComponent,
+                    data: { title: extract('Data Table View'), routeParamBreadcrumb: 'datatableName' },
+                    resolve: {
+                      fixedDepositDatatable: SavingProductDatatableResolver
+                    }
+                  }]
                 },
                 {
                   path: 'edit',

@@ -14,19 +14,19 @@ import { ProductsService } from '../../products.service';
 @Injectable()
 export class FixedDepositProductAndTemplateResolver implements Resolve<Object> {
 
-    /**
-     * @param {ProductsService} productsService Products service.
-     */
-    constructor(private productsService: ProductsService) { }
+  /**
+   * @param {ProductsService} productsService Products service.
+   */
+  constructor(private productsService: ProductsService) { }
 
-    /**
-     * Returns the Fixed Deposits Product and Template.
-     * @param {ActivatedRouteSnapshot} route Route Snapshot
-     * @returns {Observable<any>}
-     */
-    resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const fixedDepositProductId = route.paramMap.get('id');
-        return this.productsService.getFixedDepositProductAndTemplate(fixedDepositProductId);
-    }
+  /**
+   * Returns the Fixed Deposits Product and Template.
+   * @param {ActivatedRouteSnapshot} route Route Snapshot
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const productId = route.parent.paramMap.get('productId');
+    return this.productsService.getFixedDepositProductAndTemplate(productId);
+  }
 
 }

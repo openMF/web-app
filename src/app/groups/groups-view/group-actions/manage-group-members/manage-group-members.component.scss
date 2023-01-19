@@ -1,12 +1,12 @@
 .container {
-  max-width: 50rem;
+  max-width: 70rem;
 
   .mat-table {
     display: block;
     font-family: Tahoma, Verdana;
     width: 100%;
   }
-  
+
   .mat-row,
   .mat-header-row {
     display: flex;
@@ -16,14 +16,14 @@
     min-height: 48px;
     padding: 0 24px;
   }
-  
+
   .mat-cell,
   .mat-header-cell {
     flex: 1;
     overflow: hidden;
     word-wrap: break-word;
   }
-  
+
   h3 {
     padding-left: 0;
     margin-bottom: 0;
