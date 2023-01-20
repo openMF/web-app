@@ -1,0 +1,69 @@
+<form [formGroup]="loanProductClientEligibilityForm">
+    <div fxLayout="row wrap" fxFlexFill fxLayoutGap="2%" fxLayout.lt-md="column">
+      <mat-label fxFlex="98%">Previously taken input</mat-label>
+        <mat-checkbox fxFlex="32%" formControlName="previouslyTakenInput">Taken</mat-checkbox>
+        <mat-checkbox fxFlex="32%" formControlName="previouslyNotTakenInput">Not Taken</mat-checkbox>
+    </div>
+    <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+      <mat-label fxFlex="98%">Previously taken credit</mat-label>
+        <mat-checkbox fxFlex="32%" formControlName="previouslyTakenCredit">Taken</mat-checkbox>
+        <mat-checkbox fxFlex="32%" formControlName="previouslyNotTakenCredit">Not Taken</mat-checkbox>
+    </div>
+    <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+      <mat-label fxFlex="98%">Client Previously Defaulted</mat-label>
+      <mat-form-field fxFlex="32%">
+        <input matInput formControlName="previouslyDefaultedFrom">
+      </mat-form-field>
+
+      <span>To</span>
+
+      <mat-form-field fxFlex="32%">
+        <input matInput formControlName="previouslyDefaultedTo">
+      </mat-form-field>
+    </div>
+    <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+      <mat-label fxFlex="98%">Minimum Credit Repaid</mat-label>
+      <mat-form-field fxFlex="32%">
+        <input matInput formControlName="minimumCreditRepaid">
+      </mat-form-field>
+      <mat-form-field fxFlex="32%">
+        <mat-select formControlName="minimumCreditRepaidType">
+          <mat-option *ngFor="let amount of amountCalculationTypeOptions" [value]="amount.code">
+            {{ amount.value }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div *ngIf="loanProductsTemplate?.loanType?.id==2 || loanId==2">
+      <p style="color:red">*Applicable to Group loans only</p>
+      <div fxLayout="row wrap" fxFlexFill fxLayoutGap="2%" fxLayout.lt-md="column">
+        <mat-label fxFlex="98%">Client Group Previously Defaulted</mat-label>
+          <mat-checkbox fxFlex="32%" formControlName="clientGroupPreviouslyDefaulted">Defaulted</mat-checkbox>
+          <mat-checkbox fxFlex="32%" formControlName="clientGroupPreviouslyNotDefaulted">Not Defaulted</mat-checkbox>
+      </div>
+      <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+        <mat-label fxFlex="98%">Minimum Credit Repaid</mat-label>
+        <mat-form-field fxFlex="32%">
+          <input matInput formControlName="minimumGroupCreditRepaid">
+        </mat-form-field>
+        <mat-form-field fxFlex="32%">
+          <mat-select formControlName="minimumGroupCreditRepaidType">
+            <mat-option *ngFor="let amount of amountCalculationTypeOptions" [value]="amount.code">
+              {{ amount.value }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+        <button mat-raised-button matStepperPrevious disabled>
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+          Previous
+        </button>
+        <button mat-raised-button matStepperNext>
+          Next&nbsp;&nbsp;
+          <fa-icon icon="arrow-right"></fa-icon>
+        </button>
+    </div>
+</form>

@@ -9,6 +9,9 @@ import { LoanProductTermsStepComponent } from '../loan-product-stepper/loan-prod
 import { LoanProductSettingsStepComponent } from '../loan-product-stepper/loan-product-settings-step/loan-product-settings-step.component';
 import { LoanProductChargesStepComponent } from '../loan-product-stepper/loan-product-charges-step/loan-product-charges-step.component';
 import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan-product-accounting-step/loan-product-accounting-step.component';
+import { LoanProductOrganizationUnitStepComponent } from '../loan-product-stepper/loan-product-organization-unit-step/loan-product-organization-unit-step.component';
+import { LoanProductClientEligibilityStepComponent } from '../loan-product-stepper/loan-product-client-eligibility-step/loan-product-client-eligibility-step.component';
+import { LoanProductAppsComponent } from '../loan-product-stepper/loan-product-apps/loan-product-apps.component';
 
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
@@ -23,10 +26,13 @@ export class CreateLoanProductComponent implements OnInit {
 
   @ViewChild(LoanProductDetailsStepComponent, { static: true }) loanProductDetailsStep: LoanProductDetailsStepComponent;
   @ViewChild(LoanProductCurrencyStepComponent, { static: true }) loanProductCurrencyStep: LoanProductCurrencyStepComponent;
+  @ViewChild(LoanProductOrganizationUnitStepComponent, { static: true }) loanProductOrganizationStep: LoanProductOrganizationUnitStepComponent;
   @ViewChild(LoanProductTermsStepComponent, { static: true }) loanProductTermsStep: LoanProductTermsStepComponent;
   @ViewChild(LoanProductSettingsStepComponent, { static: true }) loanProductSettingsStep: LoanProductSettingsStepComponent;
   @ViewChild(LoanProductChargesStepComponent, { static: true }) loanProductChargesStep: LoanProductChargesStepComponent;
   @ViewChild(LoanProductAccountingStepComponent, { static: true }) loanProductAccountingStep: LoanProductAccountingStepComponent;
+  @ViewChild(LoanProductClientEligibilityStepComponent, { static: true }) loanProductClientEligibilityStep: LoanProductClientEligibilityStepComponent;
+  @ViewChild(LoanProductAppsComponent, { static: true }) loanProductAppsStep: LoanProductAppsComponent;
 
   loanProductsTemplate: any;
   accountingRuleData = ['None', 'Cash', 'Accrual (periodic)', 'Accrual (upfront)'];
@@ -58,6 +64,10 @@ export class CreateLoanProductComponent implements OnInit {
     return this.loanProductCurrencyStep.loanProductCurrencyForm;
   }
 
+  get loanProductOrganizationForm() {
+    return this.loanProductOrganizationStep.loanProductOrganizationForm;
+  }
+
   get loanProductTermsForm() {
     return this.loanProductTermsStep.loanProductTermsForm;
   }
@@ -70,11 +80,22 @@ export class CreateLoanProductComponent implements OnInit {
     return this.loanProductAccountingStep.loanProductAccountingForm;
   }
 
+  get loanProductClientEligibilityForm() {
+    return this.loanProductClientEligibilityStep?.loanProductClientEligibilityForm;
+  }
+
+  get loanProductAppsForm() {
+    return this.loanProductAppsStep?.loanProductAppsForm;
+  }
+
   get loanProductFormValid() {
     return (
       this.loanProductDetailsForm.valid &&
       this.loanProductCurrencyForm.valid &&
+      this.loanProductOrganizationForm.valid &&
+      this.loanProductAppsForm.valid &&
       this.loanProductTermsForm.valid &&
+      this.loanProductClientEligibilityForm.valid &&
       this.loanProductSettingsForm.valid &&
       this.loanProductAccountingForm.valid
     );
@@ -84,7 +105,10 @@ export class CreateLoanProductComponent implements OnInit {
     return {
       ...this.loanProductDetailsStep.loanProductDetails,
       ...this.loanProductCurrencyStep.loanProductCurrency,
+      ...this.loanProductOrganizationStep.loanProductOrganization,
+      ...this.loanProductAppsStep.loanProductApps,
       ...this.loanProductTermsStep.loanProductTerms,
+      ...this.loanProductClientEligibilityStep.loanProductClientEligibility,
       ...this.loanProductSettingsStep.loanProductSettings,
       ...this.loanProductChargesStep.loanProductCharges,
       ...this.loanProductAccountingStep.loanProductAccounting

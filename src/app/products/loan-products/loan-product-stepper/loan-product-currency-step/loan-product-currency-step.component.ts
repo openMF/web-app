@@ -13,6 +13,7 @@ export class LoanProductCurrencyStepComponent implements OnInit {
   loanProductCurrencyForm: FormGroup;
 
   currencyData: any;
+  currencyDataSliced: any = [];
 
   constructor(private formBuilder: FormBuilder) {
     this.createLoanProductCurrencyForm();
@@ -20,6 +21,7 @@ export class LoanProductCurrencyStepComponent implements OnInit {
 
   ngOnInit() {
     this.currencyData = this.loanProductsTemplate.currencyOptions;
+    this.currencyDataSliced = this.currencyData;
 
     this.loanProductCurrencyForm.patchValue({
       'currencyCode': this.loanProductsTemplate.currency.code || this.currencyData[0].code,
@@ -36,6 +38,10 @@ export class LoanProductCurrencyStepComponent implements OnInit {
       'inMultiplesOf': ['', Validators.required],
       'installmentAmountInMultiplesOf': ['', Validators.required]
     });
+  }
+
+  isCurrencyFiltered(currency: any) {
+    return this.currencyDataSliced.find((item) => item.code === currency.code);
   }
 
   get loanProductCurrency() {

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
@@ -16,12 +16,31 @@ import { SettingsService } from 'app/settings/settings.service';
 })
 export class ProductsService {
 
+  private  loanId$ = new BehaviorSubject<any>(null);
+  private  countryId$ = new BehaviorSubject<any>(null);
+
   /**
    * @param {HttpClient} http Http Client to send requests.
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor(private http: HttpClient,
               private settingsService: SettingsService) { }
+
+  set loanId(val: any) {
+    this.loanId$.next(val);
+  }
+
+  get loanId(): any {
+    return this.loanId$.asObservable();
+  }
+
+  set countryId(val: any) {
+    this.countryId$.next(val);
+  }
+
+  get countryId(): any {
+    return this.countryId$.asObservable();
+  }
 
   /**
    * @returns {Observable<any>} Loan products data
@@ -46,6 +65,15 @@ export class ProductsService {
   updateLoanProduct(loanProductId: string, loanProduct: any): Observable<any> {
     return this.http.put(`/loanproducts/${loanProductId}`, loanProduct);
   }
+
+  getLoanTypes(): Observable<any> {
+    return this.http.get('/loantypes');
+  }
+
+  getChannels(): Observable<any> {
+    return this.http.get('/channels');
+  }
+
 
   /**
    * @returns {Observable<any>} Saving products data

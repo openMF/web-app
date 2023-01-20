@@ -59,8 +59,6 @@ export class CountryTreeViewComponent implements OnInit, AfterViewInit {
         this.treeControl.expand(this.treeControl.dataNodes[i]);
       }
     }
-
-
   }
 
   descendantsAllSelected(node: OfficeFlatNode): boolean {

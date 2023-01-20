@@ -4,8 +4,15 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Currency</mat-label>
-      <mat-select formControlName="currencyCode" required>
-        <mat-option *ngFor="let currency of currencyData" [value]="currency.code">
+      <mat-select formControlName="currencyCode" #currencyCode placeholder="Search" required>
+        <mat-select-filter
+          *ngIf="currencyCode.focused"
+          [array]="currencyData"
+          (filteredReturn)="currencyDataSliced=$event"
+          [displayMember]="'name'"
+          >
+        </mat-select-filter>
+        <mat-option *ngFor="let currency of currencyData" [value]="currency.code" [class.hide]="!isCurrencyFiltered(currency)">
           {{ currency.name }}
         </mat-option>
       </mat-select>

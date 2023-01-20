@@ -45,9 +45,21 @@
       <mat-datepicker #closeDatePicker></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field fxFlex="98%">
+    <mat-form-field fxFlex="48%">
       <mat-label>Description</mat-label>
       <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>Loan Type</mat-label>
+      <mat-select formControlName="loanTypeId">
+        <mat-option *ngFor="let loan of loanTypes" [value]="loan?.id" (click)="selected($event, loan?.id)">
+          {{ loan.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        Loan Type is <strong>required</strong>
+      </mat-error>
     </mat-form-field>
 
   </div>

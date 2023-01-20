@@ -1,0 +1,49 @@
+<h3 class="mat-h3" fxFlexFill>Client Eligibility</h3>
+
+  <mat-divider fxFlexFill></mat-divider>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Previously taken input:</span>
+    <span fxFlex="60%">{{ loanProduct.clientEligibility?.previouslyTakenInput }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Previously not taken input:</span>
+    <span fxFlex="60%">{{ loanProduct.clientEligibility?.previouslyNotTakenInput }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Previously taken credit:</span>
+    <span fxFlex="60%">{{ loanProduct.clientEligibility?.previouslyTakenCredit }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Previously not taken credit:</span>
+    <span fxFlex="60%">{{ loanProduct.clientEligibility?.previouslyNotTakenCredit }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Client Previously Defaulted:</span>
+    <span fxFlex="60%"> {{ loanProduct.clientEligibility?.previouslyDefaultedFrom }} - {{ loanProduct.clientEligibility?.previouslyDefaultedTo }} </span>
+  </div>
+  <div fxFlexFill>
+    <span fxFlex="40%">Minimum Credit Repaid:</span>
+    <span fxFlex="60%"> {{ loanProduct.clientEligibility?.minimumCreditRepaid }} </span>
+  </div>
+
+  <div class="contents" *ngIf="loanProduct.loanType.id == 2">
+    <div fxFlexFill>
+      <span fxFlex="40%">Client Group Previously Defaulted:</span>
+      <span fxFlex="60%">{{ loanProduct.clientEligibility?.clientGroupPreviouslyDefaulted }}</span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="40%">Client Group Previously Not Defaulted:</span>
+      <span fxFlex="60%">{{ loanProduct.clientEligibility?.clientGroupPreviouslyNotDefaulted }}</span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="40%">Minimum Group Credit Repaid:</span>
+      <span fxFlex="60%">{{ loanProduct.clientEligibility?.minimumGroupCreditRepaid }}</span>
+    </div>
+  </div>

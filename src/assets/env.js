@@ -2,9 +2,9 @@
   window["env"] = window["env"] || {};
 
   // BackEnd Environment variables
-  window["env"]["fineractApiUrls"] = 'https://loans.test.oneacrefund.org';
-  window["env"]["fineractApiUrl"]  = 'https://loans.test.oneacrefund.org';
-  
+  window["env"]["fineractApiUrls"] = 'https://accounts.test.oneacrefund.org';
+  window["env"]["fineractApiUrl"]  = 'https://accounts.test.oneacrefund.org';
+
   window["env"]["apiProvider"] = '/fineract-provider/api';
   window["env"]["apiVersion"]  = '/v1';
 

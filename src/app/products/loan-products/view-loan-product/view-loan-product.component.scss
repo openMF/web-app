@@ -6,7 +6,9 @@ table {
   margin: 1em 0 1.5em 0;
 }
 
-h2, h3, h4 {
+h2,
+h3,
+h4 {
   margin: 0;
   font-weight: 500;
 }
@@ -21,4 +23,19 @@ span {
 
 .margin-t {
   margin-top: 1em;
+}
+
+.textalign {
+  float: left;
+}
+
+.contents {
+  display: contents !important;
+  width: 100% !important;
+}
+
+.client {
+  display: contents !important;
+  line-height: 28px !important;
+  width: 100% !important;
 }

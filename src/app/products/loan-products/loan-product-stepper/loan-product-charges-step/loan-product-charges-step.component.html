@@ -3,7 +3,7 @@
   <mat-form-field fxFlex="48%">
     <mat-label>Charge</mat-label>
     <mat-select #charge>
-      <mat-option *ngFor="let charge of chargeData | chargesFilter:chargesDataSource:currencyCode.value:multiDisburseLoan.value" [value]="charge">
+      <mat-option *ngFor="let charge of chargeData" [value]="charge">
         {{ charge.name }}
       </mat-option>
     </mat-select>
@@ -69,7 +69,7 @@
   <mat-form-field fxFlex="48%">
     <mat-label>Overdue Charge</mat-label>
     <mat-select #overdueCharge>
-      <mat-option *ngFor="let overdueCharge of overdueChargeData | chargesFilter:chargesDataSource:currencyCode.value" [value]="overdueCharge">
+      <mat-option *ngFor="let overdueCharge of overdueChargeData" [value]="overdueCharge">
         {{ overdueCharge.name }}
       </mat-option>
     </mat-select>

@@ -38,6 +38,21 @@
 
     </mat-step>
 
+    <mat-step [stepControl]="loanProductOrganizationForm">
+
+      <ng-template matStepLabel>ORGANIZATION UNITS</ng-template>
+
+      <mifosx-loan-product-organization-unit-step [loanProductsTemplate]="loanProductsTemplate"></mifosx-loan-product-organization-unit-step>
+
+    </mat-step>
+
+    <mat-step [stepControl]="loanProductAppsForm">
+
+      <ng-template matStepLabel>APPS</ng-template>
+
+      <mifosx-loan-product-apps [loanProductsTemplate]="loanProductsTemplate"></mifosx-loan-product-apps>
+    </mat-step>
+
     <mat-step [stepControl]="loanProductTermsForm">
 
       <ng-template matStepLabel>TERMS</ng-template>
@@ -45,6 +60,15 @@
       <mifosx-loan-product-terms-step [loanProductsTemplate]="loanProductsTemplate"></mifosx-loan-product-terms-step>
 
     </mat-step>
+
+    <mat-step [stepControl]="loanProductClientEligibilityForm">
+
+      <ng-template matStepLabel>CLIENT ELIGIBILITY</ng-template>
+
+      <mifosx-loan-product-client-eligibility-step [loanProductsTemplate]="loanProductsTemplate"></mifosx-loan-product-client-eligibility-step>
+
+    </mat-step>
+
 
     <mat-step [stepControl]="loanProductSettingsForm">
 
