@@ -89,7 +89,6 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    */
   getFromOfficers(officerId: any) {
     this.toLoanOfficers = this.fromLoanOfficers.filter((officer: any) => officer.id !== officerId );
-    console.log(this.toLoanOfficers);
     this.organizationSevice.getOfficerTemplate(officerId, this.officeTemplate.id).subscribe((response: any) => {
       this.officerTemplate = response;
     });

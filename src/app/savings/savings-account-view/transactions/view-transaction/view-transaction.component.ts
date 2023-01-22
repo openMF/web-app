@@ -46,7 +46,6 @@ export class ViewTransactionComponent {
     this.route.data.subscribe((data: { savingsAccountTransaction: any }) => {
       this.accountId = this.route.parent.snapshot.params['savingAccountId'];
       this.transactionData = data.savingsAccountTransaction;
-      console.log(this.transactionData);
     });
   }
 

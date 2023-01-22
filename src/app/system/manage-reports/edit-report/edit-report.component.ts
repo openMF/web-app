@@ -194,7 +194,6 @@ export class EditReportComponent implements OnInit {
    * if successful redirects to view updated report.
    */
   submit() {
-    console.log(this.reportParametersData);
     if (this.reportData.coreReport) {
       this.reportForm.value.reportParameters = undefined;
     } else {

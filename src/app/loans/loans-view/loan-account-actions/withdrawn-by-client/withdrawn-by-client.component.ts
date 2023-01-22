@@ -79,7 +79,7 @@ export class WithdrawnByClientComponent implements OnInit {
     };
     this.loanService.loanActionButtons(this.loanId, 'withdrawnByApplicant', data)
       .subscribe((response: any) => {
-        this.router.navigate(['../../../general'], { relativeTo: this.route });
+        this.router.navigate(['../../general'], { relativeTo: this.route });
       });
   }
 

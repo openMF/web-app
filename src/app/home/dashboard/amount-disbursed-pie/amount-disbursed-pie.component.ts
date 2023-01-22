@@ -28,7 +28,7 @@ export class AmountDisbursedPieComponent implements OnInit {
    /** Substitute for resolver */
    hideOutput = true;
    /** Shows fallback element */
-   showFallback = false;
+   showFallback = true;
 
   /**
    * Fetches offices data from `resolve`.

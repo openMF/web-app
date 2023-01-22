@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoansService } from 'app/loans/loans.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,6 +13,8 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./foreclosure.component.scss']
 })
 export class ForeclosureComponent implements OnInit {
+  @Input() dataObject: any;
+
   loanId: any;
   foreclosureForm: FormGroup;
   /** Minimum Date allowed. */
@@ -20,7 +22,6 @@ export class ForeclosureComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   foreclosuredata: any;
-  paymentTypes: any;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -46,14 +47,13 @@ export class ForeclosureComponent implements OnInit {
 
   createforeclosureForm() {
     this.foreclosureForm = this.formBuilder.group({
-      'transactionDate': [new Date(), Validators.required],
-      'outstandingPrincipalPortion': [{value: '', disabled: true}],
-      'outstandingInterestPortion': [{value: '', disabled: true}],
-      'outstandingFeeChargesPortion': [{value: '', disabled: true}],
-      'outstandingPenaltyChargesPortion': [{value: '', disabled: true}],
-      'transactionAmount': [{value: '', disabled: true}],
-      'interestAccruedAfterDeath': '',
-      'note': ''
+      'transactionDate': [this.dataObject.date && new Date(this.dataObject.date), Validators.required],
+      'outstandingPrincipalPortion': [{value: this.dataObject.principalPortion || 0, disabled: true}],
+      'outstandingInterestPortion': [{value: this.dataObject.interestPortion || 0, disabled: true}],
+      'outstandingFeeChargesPortion': [{value: this.dataObject.feeChargesPortion || 0, disabled: true}],
+      'outstandingPenaltyChargesPortion': [{value: this.dataObject.penaltyChargesPortion || 0, disabled: true}],
+      'transactionAmount': [{value: this.dataObject.amount, disabled: true}],
+      'note': ['', Validators.required]
     });
   }
 
@@ -82,26 +82,7 @@ export class ForeclosureComponent implements OnInit {
         outstandingInterestPortion: this.foreclosuredata.interestPortion,
         outstandingFeeChargesPortion: this.foreclosuredata.feeChargesPortion,
         outstandingPenaltyChargesPortion: this.foreclosuredata.penaltyChargesPortion,
-        foreClosureChargesPortion: this.foreclosuredata.foreClosureChargesPortion
       });
-      if (this.foreclosuredata.unrecognizedIncomePortion) {
-        this.foreclosureForm.patchValue({
-          interestAccruedAfterDeath: this.foreclosuredata.unrecognizedIncomePortion
-        });
-      }
-      this.calculateTransactionAmount();
-      this.paymentTypes = this.foreclosuredata.paymentTypeOptions;
-    });
-  }
-
-  calculateTransactionAmount() {
-    let transactionAmount = 0;
-    transactionAmount += parseFloat(this.foreclosuredata.principalPortion);
-    transactionAmount += parseFloat(this.foreclosuredata.interestPortion);
-    transactionAmount += parseFloat(this.foreclosuredata.feeChargesPortion);
-    transactionAmount += parseFloat(this.foreclosuredata.penaltyChargesPortion);
-    this.foreclosureForm.patchValue({
-      transactionAmount: transactionAmount
     });
   }
 

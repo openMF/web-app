@@ -5,6 +5,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 import { Dates } from 'app/core/utils/dates';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Loans service.
@@ -14,6 +15,7 @@ import { Dates } from 'app/core/utils/dates';
 })
 export class LoansService {
   constructor(private http: HttpClient,
+    private settingsService: SettingsService,
     private dateUtils: Dates) { }
   /**
    * @param {string} loanId loanId of the loan.
@@ -25,6 +27,15 @@ export class LoansService {
 
   getLoanActionTemplate(loanId: string, command: string): Observable<any> {
     const httpParams = new HttpParams().set('command', command);
+    return this.http.get(`/loans/${loanId}/transactions/template`, { params: httpParams });
+  }
+
+  getLoanForeclosureActionTemplate(loanId: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('command', 'foreclosure')
+      .set('locale', this.settingsService.language.code)
+      .set('dateFormat', this.settingsService.dateFormat)
+      .set('transactionDate', this.dateUtils.formatDate(this.settingsService.businessDate, this.settingsService.dateFormat))
     return this.http.get(`/loans/${loanId}/transactions/template`, { params: httpParams });
   }
 

@@ -46,7 +46,6 @@ export class DisburseToSavingsAccountComponent implements OnInit {
    * Set Disbursement Loan form.
    */
   setDisbursementToSavingsForm() {
-    console.log(this.dataObject);
     this.disbursementForm = this.formBuilder.group({
       'actualDisbursementDate': [new Date(), Validators.required],
       'transactionAmount': [this.dataObject.amount, Validators.required],

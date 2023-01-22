@@ -13,7 +13,7 @@
           <div *ngIf="bulkImport.formFields >= 1">
             <mat-form-field fxFlex>
               <mat-label>Office</mat-label>
-              <mat-select required formControlName="officeId">
+              <mat-select formControlName="officeId">
                 <mat-option *ngFor="let office of officeData" [value]="office.id">
                 {{ office.name }}
                 </mat-option>
@@ -24,7 +24,7 @@
           <div *ngIf="bulkImport.formFields >= 2">
             <mat-form-field fxFlex>
               <mat-label>Staff</mat-label>
-              <mat-select required formControlName="staffId">
+              <mat-select formControlName="staffId">
                 <mat-option *ngFor="let staff of staffData" [value]="staff.id">
                 {{ staff.displayName }}
                 </mat-option>
