@@ -79,7 +79,7 @@ export class WriteOffPageComponent implements OnInit {
     const loanId = this.route.parent.snapshot.params['loanId'];
     delete data.amount;
     this.loanService.submitLoanActionButton(loanId, data, 'writeoff').subscribe((response: any) => {
-      this.router.navigate(['../../../general'], {relativeTo: this.route});
+      this.router.navigate(['../../general'], {relativeTo: this.route});
     });
   }
 

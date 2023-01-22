@@ -35,7 +35,6 @@ export class ViewHistorySchedulerJobComponent implements OnInit {
               private router: Router ) {
     this.route.data.subscribe(( data: { jobsSchedulerHistory: any }) => {
       this.jobHistoryData = data.jobsSchedulerHistory;
-      console.log(this.jobHistoryData);
     });
    }
 

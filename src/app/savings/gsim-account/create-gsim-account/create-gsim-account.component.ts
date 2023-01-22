@@ -143,7 +143,6 @@ export class CreateGsimAccountComponent implements OnInit {
     const requestData = [];
     const memberSelected = this.selectedMembers.selectedMembers;
     for (let index = 0; index < 1; index++) {
-      console.log(index);
       requestData.push(
         this.setData( memberSelected[ index ] ),
       );

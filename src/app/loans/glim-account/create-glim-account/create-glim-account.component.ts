@@ -149,7 +149,6 @@ export class CreateGlimAccountComponent implements OnInit {
     const memberSelected = this.selectedMembers.selectedMembers;
     this.totalLoanAmount();
     for (let index = 0; index < memberSelected.length; index++) {
-      console.log(memberSelected);
       requestData.push({
         requestId: index.toString(),
         method : 'POST',
@@ -167,7 +166,6 @@ export class CreateGlimAccountComponent implements OnInit {
     for (let index = 0; index < memberSelected.length; index++) {
       total += memberSelected[index].principal;
     }
-    console.log(total);
     this.totalLoan = total;
   }
 
@@ -176,7 +174,6 @@ export class CreateGlimAccountComponent implements OnInit {
    */
   submit() {
     const data = this.buildRequestData();
-    console.log(data);
     this.loansService.createGlimAccount(data).subscribe((response: any) => {
       this.router.navigate(['../../../'], { relativeTo: this.route });
     });

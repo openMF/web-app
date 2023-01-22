@@ -39,7 +39,6 @@ export class GsimAccountComponent implements OnInit {
       this.gsimOverviewData = data.gsimData[0].childGSIMAccounts;
       this.savingAccountData = data.savingAccountData;
       this.groupsData = data.groupsData;
-      console.log(data);
     });
   }
 
@@ -52,8 +51,6 @@ export class GsimAccountComponent implements OnInit {
    */
    setLoanClientChargeOverview() {
     this.dataSource = new MatTableDataSource(this.gsimOverviewData);
-    console.log(this.dataSource);
-    console.log(this.gsimOverviewData);
     // this.dataSource.paginator = this.paginator;
   }
 

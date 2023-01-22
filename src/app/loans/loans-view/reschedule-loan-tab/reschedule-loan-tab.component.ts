@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
+import { LoanStatus } from 'app/loans/models/loan-status.nodel';
 import { SettingsService } from 'app/settings/settings.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 
@@ -12,6 +13,7 @@ import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/conf
   styleUrls: ['./reschedule-loan-tab.component.scss']
 })
 export class RescheduleLoanTabComponent implements OnInit {
+  @Input() loanStatus: LoanStatus;
 
   loanRescheduleData: any;
   loanRescheduleDataColumns: string[] = ['id', 'rescheduleFromDate', 'reason', 'status', 'actions'];

@@ -109,7 +109,6 @@ export class LoanDisbursalComponent {
       this.batchRequests.push(batchData);
     });
     this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
-      console.log(response);
       response.forEach((responseEle: any) => {
         if (responseEle.statusCode = '200') {
           approvedAccounts++;

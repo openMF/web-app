@@ -26,7 +26,7 @@ export class HomeService {
     const httpParams = new HttpParams()
         .set('R_officeId', officeId.toString())
         .set('genericResultSet', 'false');
-    return this.http.get('/runreports/Demand_Vs_Collection', { params: httpParams });
+    return this.http.get('/runreports/Demand Vs Collection', { params: httpParams });
   }
 
   /**
@@ -37,7 +37,7 @@ export class HomeService {
     const httpParams = new HttpParams()
         .set('R_officeId', officeId.toString())
         .set('genericResultSet', 'false');
-    return this.http.get('/runreports/Disbursal_Vs_Awaitingdisbursal', { params: httpParams });
+    return this.http.get('/runreports/Disbursal Vs Awaitingdisbursal', { params: httpParams });
   }
 
   /**

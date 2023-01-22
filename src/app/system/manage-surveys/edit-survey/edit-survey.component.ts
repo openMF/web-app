@@ -191,7 +191,6 @@ export class EditSurveyComponent implements OnInit {
   updateSequenceNumber() {
     for (let questionIndex = 0; questionIndex < this.questionDatas.length; questionIndex++) {
       this.questionDatas.at(questionIndex).get('sequenceNo').setValue(questionIndex + 1);
-      console.log(this.questionDatas);
       for (let responseIndex = 0; responseIndex < this.getResponseDatas(questionIndex).length; responseIndex++) {
         this.getResponseDatas(questionIndex).at(responseIndex).get('sequenceNo').setValue(responseIndex + 1);
       }
