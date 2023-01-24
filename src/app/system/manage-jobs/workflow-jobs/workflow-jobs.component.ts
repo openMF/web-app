@@ -37,7 +37,9 @@ export class WorkflowJobsComponent implements OnInit {
   ngOnInit(): void {
     this.systemService.getWorkflowJobNames().toPromise()
     .then(jobNames => {
-      this.jobNameOptions = jobNames;
+      this.jobNameOptions = jobNames.businessJobs.sort(function (a: any, b: any) {
+        return a.stepName - b.stepName;
+      });
     });
   }
 
