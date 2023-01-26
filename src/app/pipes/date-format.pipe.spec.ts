@@ -13,7 +13,8 @@ describe('DateFormatPipe', () => {
   }));
 
   it('create an instance', () => {
-    const pipe = new DateFormatPipe(new SettingsService());
+    //args AlertService and DatePipe
+    const pipe = new DateFormatPipe(new SettingsService(null,null));
     expect(pipe).toBeTruthy();
   });
 });

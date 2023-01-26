@@ -25,6 +25,7 @@
 .settings/
 xcuserdata/
 *.sublime-workspace
+.dccache
 
 # IDE - VSCode
 .vscode/*
@@ -48,6 +49,7 @@ testem.log
 /typings
 /reports
 /src/translations/template.*
+/.scannerwork
 
 # System Files
 .DS_Store
