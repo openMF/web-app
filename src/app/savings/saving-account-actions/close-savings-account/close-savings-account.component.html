@@ -45,7 +45,7 @@
 
             <div fxFlexFill>
               <span fxFlex="75%" class="expandcollapsebutton m-l-10 m-t-40" (click)="addPaymentDetails()">
-                <mat-slide-toggle [(ngModel)]="showPaymentDetails" [ngModelOptions]="{standalone: true}">
+                <mat-slide-toggle>
                   <div [className]="showPaymentDetails ? 'enabled' : 'disabled'">
                     <span class="m-l-10">Show Payment Details</span>
                   </div>

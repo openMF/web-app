@@ -49,7 +49,6 @@ export class LoansViewComponent implements OnInit {
       this.loanDetailsData = data.loanDetailsData;
       this.loanDatatables = data.loanDatatables;
       this.loanStatus = this.loanDetailsData.status;
-      console.log(this.loanStatus);
     });
     this.loanId = this.route.snapshot.params['loanId'];
     this.clientId = this.loanDetailsData.clientId;

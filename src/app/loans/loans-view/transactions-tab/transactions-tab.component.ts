@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {FormControl} from '@angular/forms';
+import { FormControl } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'mifosx-transactions-tab',
@@ -11,8 +14,6 @@ export class TransactionsTabComponent implements OnInit {
 
   /** Loan Details Data */
   transactions: any;
-  /** Show Transactions Data */
-  showTransactionsData: any;
   /** Temporary Transaction Data */
   tempTransaction: any;
   /** Form control to handle accural parameter */
@@ -20,14 +21,18 @@ export class TransactionsTabComponent implements OnInit {
   /** Stores the status of the loan account */
   status: string;
   /** Columns to be displayed in original schedule table. */
-  displayedColumns: string[] = ['id', 'office', 'externalId', 'transactionDate', 'transactionType', 'amount', 'principal', 'interest', 'fee', 'penalties', 'loanBalance', 'actions'];
+  displayedColumns: string[] = ['id', 'office', 'externalId', 'date', 'transactionType', 'amount', 'principal', 'interest', 'fee', 'penalties', 'loanBalance', 'actions'];
+
+  dataSource: MatTableDataSource<any>;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /**
    * Retrieves the loans with associations data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute,
-              private router: Router) {
+    private router: Router) {
     this.route.parent.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.transactions = data.loanDetailsData.transactions;
       this.tempTransaction = data.loanDetailsData.transactions;
@@ -37,12 +42,14 @@ export class TransactionsTabComponent implements OnInit {
 
   ngOnInit() {
     this.hideAccrualsParam = new FormControl(false);
+    this.dataSource = new MatTableDataSource(this.transactions);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
     this.tempTransaction.forEach((element: any) => {
-      if (element.type.accrual) {
+      if (this.isAccrual(element.type)) {
         this.tempTransaction = this.removeItem(this.tempTransaction, element);
       }
     });
-    this.showTransactionsData = this.transactions;
   }
 
   /**
@@ -56,17 +63,21 @@ export class TransactionsTabComponent implements OnInit {
     return false;
   }
 
-  hideAccruals()  {
+  hideAccruals() {
     if (!this.hideAccrualsParam.value) {
-      this.showTransactionsData = this.tempTransaction;
+      this.dataSource = new MatTableDataSource(this.tempTransaction);
     } else {
-      this.showTransactionsData = this.transactions;
+      this.dataSource = new MatTableDataSource(this.transactions);
     }
+  }
+
+  applyFilter(filterValue: string = '') {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   removeItem(arr: any, item: any) {
     return arr.filter((f: any) => f !== item);
-   }
+  }
 
   /**
    * Show Transactions Details
@@ -94,6 +105,9 @@ export class TransactionsTabComponent implements OnInit {
     if (loanTransaction.transactionRelations && loanTransaction.transactionRelations.length > 0) {
       return 'linked';
     }
+    if (this.isAccrual(loanTransaction.type)) {
+      return 'accrual';
+    }
     return '';
   }
 
@@ -103,6 +117,10 @@ export class TransactionsTabComponent implements OnInit {
    */
   routeEdit($event: MouseEvent) {
     $event.stopPropagation();
+  }
+
+  private isAccrual(transactionType: any): boolean  {
+    return (transactionType.accrual || transactionType.code === 'loanTransactionType.overdueCharge');
   }
 
 }

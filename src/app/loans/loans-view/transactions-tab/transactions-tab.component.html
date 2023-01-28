@@ -2,18 +2,18 @@
 
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px" class="transaction-buttons" *ngIf="checkStatus()">
     <mat-checkbox [formControl]="hideAccrualsParam" (click)="hideAccruals()" class="accruals">Hide Accruals</mat-checkbox>
-    <button mat-raised-button color="primary" [routerLink]="['export']">
+    <button mat-raised-button color="primary" class="transaction-button" [routerLink]="['export']">
       Export
     </button>
-    <button mat-raised-button color="primary">
+    <button mat-raised-button color="primary" class="transaction-button">
       View Journal Entries
     </button>
   </div>
 
-  <table mat-table [dataSource]="showTransactionsData">
+  <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> Id </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
         <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.id }} </td>
       </ng-container>
 
@@ -29,8 +29,8 @@
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="transactionDate">
-        <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Date </th>
         <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)"> {{ transaction.date  | dateFormat }} </td>
       </ng-container>
 
@@ -113,5 +113,7 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row" (click)="showTransactions(row)"></tr>
 
   </table>
+
+  <mat-paginator [pageSize]="50" [pageSizeOptions]="[50, 100, 200]" showFirstLastButtons></mat-paginator>
 
 </div>

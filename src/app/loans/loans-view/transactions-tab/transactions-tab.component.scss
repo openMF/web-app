@@ -24,14 +24,25 @@
     }
     .strike {
       text-decoration: line-through;
-      color: red;
+      color: $status-active-overdue;
     }
     .linked {
       color: $status-approved;
+    }
+    .accrual {
+      color: $msg-default;
     }
   }
 }
 
 .td-min-space {
   min-width: 60px;
+}
+
+.filter-box {
+  min-width: 280px;
+}
+
+.transaction-button {
+  min-width: 180px;
 }
