@@ -4,16 +4,20 @@
 
     <mat-card-content>
 
-      <mat-form-field fxFlex>
-        <mat-label>Note</mat-label>
-        <textarea matInput [formControl]="note"></textarea>
-      </mat-form-field>
+      <div fxLayout="column">
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
-        <button mat-raised-button color="primary" (click)="submit()"
-          *mifosxHasPermission="'APPROVALUNDO_LOAN'">Submit</button>
-      </mat-card-actions>
+        <mat-form-field fxFlex>
+          <mat-label>Note</mat-label>
+          <textarea matInput [formControl]="note"></textarea>
+        </mat-form-field>
+
+        <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+          <button mat-raised-button color="primary" (click)="submit()"
+            *mifosxHasPermission="'APPROVALUNDO_LOAN'">Submit</button>
+        </mat-card-actions>
+
+      </div>
 
     </mat-card-content>
 

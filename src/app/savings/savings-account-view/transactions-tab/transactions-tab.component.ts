@@ -1,5 +1,7 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -21,6 +23,8 @@ export class TransactionsTabComponent implements OnInit {
   displayedColumns: string[] = ['id', 'transactionDate', 'transactionType', 'debit', 'credit', 'balance', 'viewReciept'];
   /** Data source for transactions table. */
   dataSource: MatTableDataSource<any>;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /**
    * Retrieves savings account data from `resolve`.
@@ -36,6 +40,8 @@ export class TransactionsTabComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.transactionsData);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   /**

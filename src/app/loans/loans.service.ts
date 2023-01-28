@@ -35,7 +35,7 @@ export class LoansService {
       .set('command', 'foreclosure')
       .set('locale', this.settingsService.language.code)
       .set('dateFormat', this.settingsService.dateFormat)
-      .set('transactionDate', this.dateUtils.formatDate(this.settingsService.businessDate, this.settingsService.dateFormat))
+      .set('transactionDate', this.dateUtils.formatDate(this.settingsService.businessDate, this.settingsService.dateFormat));
     return this.http.get(`/loans/${loanId}/transactions/template`, { params: httpParams });
   }
 

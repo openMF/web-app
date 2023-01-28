@@ -4,10 +4,10 @@
     <h3>Performance History</h3>
     <div fxLayout="row" fxLayoutGap="32px" class="performance-history-container">
       <p>
-        # of Repayments :{{loanDetails?.numberOfRepayments}}
+        Repayments    : {{loanDetails?.numberOfRepayments | number}}
       </p>
       <p>
-        Maturity Date :{{loanDetails?.timeline.expectedMaturityDate  | dateFormat}}
+        Maturity Date : {{loanDetails?.timeline.expectedMaturityDate | dateFormat}}
       </p>
     </div>
   </ng-container>
