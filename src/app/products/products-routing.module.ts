@@ -772,7 +772,7 @@ const routes: Routes = [
             },
             {
               path: ':id',
-              data: { title: extract('View Charges'), routeParamBreadcrumb: 'id' },
+              data: { title: extract('View Charges'), breadcrumb: 'id', routeParamBreadcrumb: 'id' },
               resolve: {
                 charge: ChargeResolver
               },

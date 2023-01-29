@@ -26,21 +26,36 @@
       </ng-container>
 
       <ng-container matColumnDef="chargeAppliesTo">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Charge Applies To </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Applies To </th>
         <td mat-cell *matCellDef="let charge"> {{ charge.chargeAppliesTo.value }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="chargeTimeType">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Time </th>
+        <td mat-cell *matCellDef="let charge"> {{ charge.chargeTimeType.value }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="chargeCalculationType">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Calculation </th>
+        <td mat-cell *matCellDef="let charge"> {{ charge.chargeCalculationType.value }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount </th>
+        <td mat-cell *matCellDef="let charge" class="r-amount"> {{ charge.amount | number }} </td>
       </ng-container>
 
       <ng-container matColumnDef="penalty">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Is Penalty? </th>
-        <td mat-cell *matCellDef="let charge">
+        <td mat-cell *matCellDef="let charge" class="center">
             <fa-icon *ngIf="charge.penalty" icon="check-circle" size="lg" class="ispenalty" matTooltip="Yes" matTooltipPosition="right"></fa-icon>
             <fa-icon *ngIf="!charge.penalty" icon="times-circle" size="lg" class="nopenalty" matTooltip="No" matTooltipPosition="right"></fa-icon>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="active">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-        <td mat-cell *matCellDef="let charge">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Is Active? </th>
+        <td mat-cell *matCellDef="let charge" class="center">
           <div [className]="charge.active === true ? 'true' : 'false'">
             <fa-icon matTooltip="{{ charge.active === true ? 'Active' : 'Inactive' }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
           </div>

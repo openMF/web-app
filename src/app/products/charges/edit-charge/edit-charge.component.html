@@ -18,7 +18,7 @@
           </mat-form-field>
 
         </div>
-        
+
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" style="margin-top:10px;">
 
           <mat-form-field fxFlex="48%">
@@ -28,7 +28,7 @@
               Name <strong>is required</strong>
             </mat-error>
           </mat-form-field>
-        
+
           <mat-form-field fxFlex="48%">
             <mat-label>Currency</mat-label>
             <mat-select required formControlName="currencyCode">
@@ -41,7 +41,7 @@
             </mat-error>
 
           </mat-form-field>
-        
+
           <mat-form-field fxFlex="48%">
             <mat-label>Charge time type</mat-label>
             <mat-select required formControlName="chargeTimeType">
@@ -52,9 +52,9 @@
             <mat-error *ngIf="chargeForm.controls.chargeTimeType.hasError('required')">
               Charge Time Type is <strong>required</strong>
             </mat-error>
-        
+
           </mat-form-field>
-        
+
           <mat-form-field fxFlex="48%">
             <mat-label>Charge calculation</mat-label>
             <mat-select required formControlName="chargeCalculationType">
@@ -78,7 +78,7 @@
               Charge Payment Mode is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-        
+
           <mat-form-field fxFlex="48%">
             <mat-label>Amount</mat-label>
             <input matInput required autofocus type="text" formControlName="amount">
@@ -86,7 +86,7 @@
               Amount <strong>is required</strong>
             </mat-error>
           </mat-form-field>
-        
+
           <mat-form-field fxFlex="48%" *ngIf="showGLAccount">
             <mat-label>Income from charge</mat-label>
             <mat-select required formControlName="incomeAccountId">
@@ -98,7 +98,7 @@
               Income from charge is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-        
+
           <mat-form-field fxFlex="48%">
             <mat-label>Tax Group</mat-label>
             <mat-select *ngIf="chargeData.taxGroup" required formControlName="taxGroupId">
@@ -114,11 +114,19 @@
             </mat-select>
           </mat-form-field>
 
-          <div fxFlex="48%" class="password-never-expires-wrapper" *ngIf="addFeeFrequency" style="padding-top: 10px;">
-            <mat-checkbox labelPosition="before" (change)="getFeeFrequency($event.checked)">
+          <div fxFlex="48%" class="password-never-expires-wrapper checkbox" *ngIf="addFeeFrequency">
+            <mat-checkbox labelPosition="before" [checked]="addFeeFrequency && showFeeOptions" (change)="getFeeFrequency($event.checked)">
               Add Fee Frequency
             </mat-checkbox>
           </div>
+
+          <mat-form-field fxFlex="48%" *ngIf="addFeeFrequency && showFeeOptions">
+            <mat-label>Frequency Interval</mat-label>
+            <input matInput required autofocus type="text" formControlName="feeInterval">
+            <mat-error *ngIf="chargeForm.controls.feeInterval.hasError('required')">
+              Frequency Interval <strong>is required</strong>
+            </mat-error>
+          </mat-form-field>
 
           <mat-form-field fxFlex="48%" *ngIf="addFeeFrequency && showFeeOptions">
             <mat-label>Charge Frequency</mat-label>
@@ -128,18 +136,9 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="chargeForm.controls.feeFrequency.hasError('required')">
-              Fee Frequency is <strong>required</strong>
+              Fee Frequency <strong>is required</strong>
             </mat-error>
           </mat-form-field>
-
-          <mat-form-field fxFlex="48%" *ngIf="addFeeFrequency && showFeeOptions">
-            <mat-label>Frequency Interval</mat-label>
-            <input matInput required autofocus type="text" formControlName="feeInterval" required>
-            <mat-error *ngIf="chargeForm.controls.feeInterval.hasError('required')">
-              Amount <strong>is required</strong>
-            </mat-error>
-          </mat-form-field>
-
 
         </div>
 
@@ -149,7 +148,7 @@
               Active
             </mat-checkbox>
           </div>
-        
+
           <div fxFlex="48%" class="send-password-to-email-wrapper" *ngIf="showPenalty">
             <mat-checkbox labelPosition="before" formControlName="penalty">
               Is Penalty
