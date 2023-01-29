@@ -87,6 +87,17 @@
             </div>
 
             <mat-form-field *ngIf="chargeForm.controls.chargeTimeType.value === 9 && chargeForm.controls.addFeeFrequency.value" fxFlex="48%">
+              <mat-label>Frequency Interval</mat-label>
+              <input matInput required formControlName="feeInterval">
+              <mat-error *ngIf="chargeForm.controls.feeInterval.hasError('required')">
+                Frequency Interval is <strong>required</strong>
+              </mat-error>
+              <mat-error *ngIf="chargeForm.controls.feeInterval.hasError('pattern')">
+                Frequency Interval <strong>must be a positive integer</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="chargeForm.controls.chargeTimeType.value === 9 && chargeForm.controls.addFeeFrequency.value" fxFlex="48%">
               <mat-label>Charge Frequency</mat-label>
               <mat-select required formControlName="feeFrequency">
                 <mat-option *ngFor="let feeFrequency of chargesTemplateData.feeFrequencyOptions" [value]="feeFrequency.id">
@@ -95,17 +106,6 @@
               </mat-select>
               <mat-error *ngIf="chargeForm.controls.feeFrequency.hasError('required')">
                 Charge Frequency is <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field *ngIf="chargeForm.controls.chargeTimeType.value === 9  && chargeForm.controls.addFeeFrequency.value" fxFlex="48%">
-              <mat-label>Frequency Interval</mat-label>
-              <input matInput required formControlName="feeInterval">
-              <mat-error *ngIf="chargeForm.controls.feeInterval.hasError('required')">
-                Frequency Interval is <strong>required</strong>
-              </mat-error>
-              <mat-error *ngIf="chargeForm.controls.feeInterval.hasError('pattern')">
-                Frequency Interval <strong>must be a positive integer</strong>
               </mat-error>
             </mat-form-field>
 
@@ -178,7 +178,7 @@
                   {{ incomeOrLiabilityAccount.name }}
                 </mat-option>
               </mat-select>
-            </mat-form-field>  
+            </mat-form-field>
 
             <mat-form-field fxFlex="48%">
               <mat-label>Tax Group</mat-label>

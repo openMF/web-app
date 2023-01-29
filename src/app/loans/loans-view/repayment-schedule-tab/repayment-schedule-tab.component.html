@@ -10,25 +10,25 @@
 
     <ng-container matColumnDef="days">
       <th mat-header-cell class="center" *matHeaderCellDef> Days </th>
-      <td mat-cell class="center" *matCellDef="let ele"> {{ ele.daysInPeriod }} </td>
+      <td mat-cell class="center" *matCellDef="let ele" [ngClass]="installmentStyle(ele)"> {{ ele.daysInPeriod }} </td>
       <td mat-footer-cell class="center" *matFooterCellDef> <b> Total</b> </td>
     </ng-container>
 
     <ng-container matColumnDef="date">
       <th mat-header-cell class="center" *matHeaderCellDef> Date </th>
-      <td mat-cell class="m-r-5" *matCellDef="let ele"> {{ ele.dueDate  | dateFormat}} </td>
+      <td mat-cell class="m-r-5" *matCellDef="let ele" [ngClass]="installmentStyle(ele)"> {{ ele.dueDate  | dateFormat}} </td>
       <td mat-footer-cell *matFooterCellDef>  </td>
     </ng-container>
 
     <ng-container matColumnDef="paiddate">
       <th mat-header-cell class="center" *matHeaderCellDef> Paid Date </th>
-      <td mat-cell class="center" *matCellDef="let ele"> {{ ele.obligationsMetOnDate  | dateFormat}} </td>
+      <td mat-cell class="center" *matCellDef="let ele" [ngClass]="installmentStyle(ele)"> {{ ele.obligationsMetOnDate  | dateFormat}} </td>
       <td mat-footer-cell *matFooterCellDef>  </td>
     </ng-container>
 
     <ng-container matColumnDef="check">
       <th mat-header-cell *matHeaderCellDef> &nbsp; </th>
-      <td mat-cell class="center" *matCellDef="let ele">
+      <td mat-cell class="center" *matCellDef="let ele" [ngClass]="installmentStyle(ele)">
         <span *ngIf="ele.obligationsMetOnDate"> <i class="fa fa-check"></i> </span>
       </td>
       <td mat-footer-cell *matFooterCellDef> </td>
@@ -36,62 +36,62 @@
 
     <ng-container matColumnDef="balanceOfLoan">
       <th mat-header-cell class="r-amount" *matHeaderCellDef> Balance Of Loan </th>
-      <td mat-cell class="r-amount" *matCellDef="let ele"> {{ ele.principalLoanBalanceOutstanding | number }} </td>
+      <td mat-cell class="r-amount" *matCellDef="let ele" [ngClass]="installmentStyle(ele)"> {{ ele.principalLoanBalanceOutstanding | number }} </td>
       <td mat-footer-cell class="r-amount" *matFooterCellDef> &nbsp; </td>
     </ng-container>
 
     <ng-container matColumnDef="principalDue">
       <th mat-header-cell class="r-amount" *matHeaderCellDef> Principal Due </th>
-      <td mat-cell class="check r-amount" *matCellDef="let ele"> {{ ele.principalDue | number }} </td>
+      <td mat-cell class="check r-amount" *matCellDef="let ele" [ngClass]="installmentStyle(ele)"> {{ ele.principalDue | number }} </td>
       <td mat-footer-cell class="check r-amount" *matFooterCellDef> <b> {{ repaymentScheduleDetails.totalPrincipalExpected | currency }}</b>  </td>
     </ng-container>
 
     <ng-container matColumnDef="interest">
       <th mat-header-cell class="r-amount" *matHeaderCellDef> Interest </th>
-      <td mat-cell class="r-amount" *matCellDef="let ele"> {{ ele.interestOriginalDue | number}} </td>
+      <td mat-cell class="r-amount" *matCellDef="let ele" [ngClass]="installmentStyle(ele)"> {{ ele.interestOriginalDue | number}} </td>
       <td mat-footer-cell class="r-amount" *matFooterCellDef> <b> {{ repaymentScheduleDetails.totalInterestCharged | currency }} </b> </td>
     </ng-container>
 
     <ng-container matColumnDef="fees">
       <th mat-header-cell class="r-amount" *matHeaderCellDef> Fees </th>
-      <td mat-cell class="r-amount" *matCellDef="let ele"> {{ ele.feeChargesDue | number}} </td>
+      <td mat-cell class="r-amount" *matCellDef="let ele" [ngClass]="installmentStyle(ele)"> {{ ele.feeChargesDue | number}} </td>
       <td mat-footer-cell class="r-amount" *matFooterCellDef> <b> {{ repaymentScheduleDetails.totalFeeChargesCharged | currency }} </b> </td>
     </ng-container>
 
     <ng-container matColumnDef="penalties">
       <th mat-header-cell class="r-amount" *matHeaderCellDef> Penalties </th>
-      <td mat-cell class="r-amount" *matCellDef="let ele"> {{ ele.penaltyChargesDue | number}} </td>
+      <td mat-cell class="r-amount" *matCellDef="let ele" [ngClass]="installmentStyle(ele)"> {{ ele.penaltyChargesDue | number}} </td>
       <td mat-footer-cell class="r-amount" *matFooterCellDef> <b> {{ repaymentScheduleDetails.totalPenaltyChargesCharged | currency }} </b> </td>
     </ng-container>
 
     <ng-container matColumnDef="due">
       <th mat-header-cell class="r-amount" *matHeaderCellDef> Due </th>
-      <td mat-cell class="r-amount" *matCellDef="let ele"> {{ ele.totalDueForPeriod | number}} </td>
+      <td mat-cell class="r-amount" *matCellDef="let ele" [ngClass]="installmentStyle(ele)"> {{ ele.totalDueForPeriod | number}} </td>
       <td mat-footer-cell class="r-amount" *matFooterCellDef> <b> {{ repaymentScheduleDetails.totalRepaymentExpected | currency }} </b> </td>
     </ng-container>
 
     <ng-container matColumnDef="paid">
       <th mat-header-cell class="r-amount" *matHeaderCellDef> Paid </th>
-      <td mat-cell class="r-amount" *matCellDef="let ele"> {{ ele.totalPaidForPeriod | number}} </td>
+      <td mat-cell class="r-amount" *matCellDef="let ele" [ngClass]="installmentStyle(ele)"> {{ ele.totalPaidForPeriod | number}} </td>
       <td mat-footer-cell class="r-amount" *matFooterCellDef> <b> {{ repaymentScheduleDetails.totalRepayment | currency }} </b> </td>
     </ng-container>
 
     <ng-container matColumnDef="inadvance">
       <th mat-header-cell class="r-amount" *matHeaderCellDef> In advance </th>
-      <td mat-cell class="r-amount" *matCellDef="let ele"> {{ ele.totalPaidInAdvanceForPeriod | number}} </td>
+      <td mat-cell class="r-amount" *matCellDef="let ele" [ngClass]="installmentStyle(ele)"> {{ ele.totalPaidInAdvanceForPeriod | number}} </td>
       <td mat-footer-cell class="r-amount" *matFooterCellDef> <b> {{ repaymentScheduleDetails.totalPaidInAdvance | currency }} </b> </td>
     </ng-container>
 
     <ng-container matColumnDef="late">
       <th mat-header-cell class="r-amount" *matHeaderCellDef> Late </th>
-      <td mat-cell class="r-amount" *matCellDef="let ele"> {{ ele.totalPaidLateForPeriod | number}} </td>
+      <td mat-cell class="r-amount" *matCellDef="let ele" [ngClass]="installmentStyle(ele)"> {{ ele.totalPaidLateForPeriod | number}} </td>
       <td mat-footer-cell class="r-amount" *matFooterCellDef> <b> {{ repaymentScheduleDetails.totalPaidLate | currency }} </b> </td>
     </ng-container>
 
     <ng-container *ngIf="isWaived">
       <ng-container matColumnDef="waived">
         <th mat-header-cell class="r-amount" *matHeaderCellDef> Waived </th>
-        <td mat-cell class="r-amount" *matCellDef="let ele"> {{ ele.totalWaivedForPeriod | number}} </td>
+        <td mat-cell class="r-amount" *matCellDef="let ele" [ngClass]="installmentStyle(ele)"> {{ ele.totalWaivedForPeriod | number}} </td>
         <td mat-footer-cell class="r-amount" *matFooterCellDef> <b> {{ repaymentScheduleDetails.totalWaived | currency }} </b> </td>
       </ng-container>
     </ng-container>

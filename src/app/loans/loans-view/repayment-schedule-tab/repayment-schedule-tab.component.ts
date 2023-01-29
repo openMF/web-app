@@ -41,4 +41,11 @@ export class RepaymentScheduleTabComponent implements OnInit {
     this.isWaived = this.repaymentScheduleDetails.totalWaived > 0;
   }
 
+  installmentStyle(installment: any): string {
+    if (installment.isAdditional) {
+      return 'additional';
+    }
+    return '';
+  }
+
 }

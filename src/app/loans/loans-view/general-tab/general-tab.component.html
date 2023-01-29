@@ -3,12 +3,24 @@
   <ng-container *ngIf="loanDetails.summary">
     <h3>Performance History</h3>
     <div fxLayout="row" fxLayoutGap="32px" class="performance-history-container">
-      <p>
-        Repayments    : {{loanDetails?.numberOfRepayments | number}}
-      </p>
-      <p>
-        Maturity Date : {{loanDetails?.timeline.expectedMaturityDate | dateFormat}}
-      </p>
+      <table>
+        <tbody>
+          <tr>
+            <td fxFlex="25%">
+              <b>Number of Repayments :</b>
+            </td>
+            <td fxFlex="25%" class="left">
+              {{loanDetails?.numberOfRepayments | number}}
+            </td>
+            <td fxFlex="25%">
+              <b>Maturity Date :</b>
+            </td>
+            <td fxFlex="25%" class="left">
+              {{loanDetails?.timeline.expectedMaturityDate | dateFormat}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </ng-container>
 

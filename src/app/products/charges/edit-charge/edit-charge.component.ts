@@ -71,6 +71,8 @@ export class EditChargeComponent implements OnInit {
    * Edit Charge form.
    */
   editChargeForm() {
+    this.showFeeOptions = (this.chargeData.feeInterval && this.chargeData.feeInterval > 0);
+
     this.chargeForm = this.formBuilder.group({
       'name': [this.chargeData.name, Validators.required],
       'chargeAppliesTo': [{ value: this.chargeData.chargeAppliesTo.id, disabled: true }, Validators.required],
@@ -88,6 +90,13 @@ export class EditChargeComponent implements OnInit {
         this.addFeeFrequency = true;
         this.chargePaymentMode = true;
         this.chargeForm.addControl('chargePaymentMode', this.formBuilder.control(this.chargeData.chargePaymentMode.id, Validators.required));
+        if (this.showFeeOptions) {
+          this.getFeeFrequency(this.showFeeOptions);
+          this.chargeForm.patchValue({
+            'feeInterval': this.chargeData.feeInterval,
+            'feeFrequency': this.chargeData.feeFrequency.id
+          });
+        }
         break;
       }
       case 'Savings': {
