@@ -79,6 +79,25 @@ module.exports = (config: any) => {
       require('@angular-devkit/build-angular/plugins/karma'),
     ],
 
-    reporter: ['progress', 'kjhtml']
+    reporter: ['progress', 'kjhtml'],
+    coverageReporter: {
+      dir: require('path').join(__dirname, '../coverage/mifosx-web-app'),
+      subdir: '.',
+      reporters: [
+        { type: 'html' },
+        { type: 'text-summary' },
+        { type: 'lcov' },
+        { type:'cobertura'},
+      ],
+      check: {
+        global: {
+          //Let the cmd return 0 ... SonarCloud will use its Quality Gate
+          statements: 1,
+          branches: 1,
+          functions: 1,
+          lines: 1
+        }
+      }
+    }
   })
 }

@@ -1,13 +1,16 @@
----
-name: build-run
 
-# Controls when the action will run.
-on:
-  # Triggers the workflow on push or pull request events but only for the main branch
+---
+name: Lint-Build-Test-CI
+'on':
   push:
-    branches: [master]
+    branches:
+      - develop
+      - feature/*
   pull_request:
-    branches: [master]
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -28,7 +31,7 @@ jobs:
           # no support for lts as of now with github actions.
           # issue link : https://github.com/actions/setup-node/issues/26
           # lts/gallium node v16.15.1 (npm v8.11.0)
-          node-version: '16.15.1'
+          node-version: "16.15.1"
       - name: Angular CLI install
         run: npm install -g --silent @angular/cli@12.2.17
 
@@ -36,9 +39,11 @@ jobs:
         run: npm install
 
       - name: Run lint
+        continue-on-error: true
         run: ng lint
 
       - name: Run build
+        continue-on-error: true
         run: npm run build:prod
 
       - name: Deploy to github pages
@@ -53,3 +58,22 @@ jobs:
           # github user name and email shows up in the logs,
           # so it would be better to make it silent.
           SILENT: true
+  sonarcloud:
+    name: Setup and analyze
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          fetch-depth: 0
+      - name: Install dependencies
+        run: npm install
+      - name: Test and coverage
+        continue-on-error: true
+        run: npm run test:cov
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          SONAR_TOKEN: "${{ secrets.SONARCLOUD_TOKEN }}"

@@ -21,6 +21,78 @@ steps:
       if [[ "$(Build.SourceBranch)" == "refs/heads/master" ]]; then IMAGE_TAGS="$IMAGE_TAGS,latest"; fi;
       echo Tags: $IMAGE_TAGS
     displayName: Set tag variables
+
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "16.x"
+    displayName: "Install Node.js"
+    condition: eq(variables['Build.Analyse'], 'true')
+
+  - script: |
+      npm install
+    displayName: "Install Node Packages"
+    workingDirectory: "$(System.DefaultWorkingDirectory)"
+    condition: eq(variables['Build.Analyse'], 'true')
+
+  - task: SonarCloudPrepare@1
+    continueOnError: true
+    condition: eq(variables['Build.Analyse'], 'true')
+    inputs:
+      SonarCloud: "sonar-oaf"
+      organization: "one-acre-fund"
+      scannerMode: "CLI"
+      configMode: "manual"
+      cliProjectKey: "one-acre-fund_fineract-frontend-v2"
+      cliProjectName: "fineract-frontend-v2"
+      cliSources: ./src
+      cliProjectVersion: $VERSION_TAG
+      configFile: $(System.DefaultWorkingDirectory)/sonar-project.properties
+      extraProperties: |
+        sonar.verbose=true
+        #Path to working dir
+        sonar.working.directory=$(System.DefaultWorkingDirectory)
+        #Path to functions dir as base for analysis
+        sonar.projectBaseDir=$(System.DefaultWorkingDirectory)
+        #Path to source files
+        sonar.sources=./src
+        #Path to test files
+        sonar.tests=./src/app
+        sonar.test.inclusions=**/*.spec.ts
+        #Path to report
+        sonar.javascript.lcov.reportPaths=$(System.DefaultWorkingDirectory)/coverage/mifosx-web-app/lcov.info
+
+  - script: |
+      npm run test:ci
+    displayName: "Run Lint and Unit Tests"
+    workingDirectory: "$(System.DefaultWorkingDirectory)"
+    continueOnError: true
+    condition: eq(variables['Build.Analyse'], 'true')
+
+  - script: |
+      npm run test:cov
+    displayName: "Generate Test Coverage Report  "
+    workingDirectory: "$(System.DefaultWorkingDirectory)"
+    continueOnError: true
+    condition: eq(variables['Build.Analyse'], 'true')
+
+  - task: PublishCodeCoverageResults@1
+    continueOnError: true
+    condition: eq(variables['Build.Analyse'], 'true')
+    inputs:
+      codeCoverageTool: Cobertura
+      summaryFileLocation: "$(System.DefaultWorkingDirectory)/**/*coverage.xml"
+      reportDirectory: "$(System.DefaultWorkingDirectory)/coverage/mifosx-web-app"
+
+  - task: SonarCloudAnalyze@1
+    continueOnError: true
+    condition: eq(variables['Build.Analyse'], 'true')
+
+  - task: SonarCloudPublish@1
+    continueOnError: true
+    condition: eq(variables['Build.Analyse'], 'true')
+    inputs:
+      pollingTimeoutSec: "300"
+
   - task: Docker@2
     displayName: Login to Azure registry
     inputs:

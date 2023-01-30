@@ -1,4 +1,4 @@
-import { DataFlattner } from './data-flattner';
+import DataFlattner from './data-flattner';
 
 describe('DataFlattner', () => {
   it('should create an instance', () => {
