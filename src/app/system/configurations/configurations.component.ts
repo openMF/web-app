@@ -26,7 +26,6 @@ export class ConfigurationsComponent implements OnInit {
         this.isBusinessDateEnabled = (alertEvent.message === 'enabled') ? true : false;
       }
     });
-    this.getConfigurations();
   }
 
   /**

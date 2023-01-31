@@ -31,7 +31,7 @@
     <span fxFlex="60%"> {{ loanProduct.clientEligibility?.minimumCreditRepaid }} </span>
   </div>
 
-  <div class="contents" *ngIf="loanProduct.loanType.id == 2">
+  <div class="contents" *ngIf="loanProduct.loanTypeId == 2">
     <div fxFlexFill>
       <span fxFlex="40%">Client Group Previously Defaulted:</span>
       <span fxFlex="60%">{{ loanProduct.clientEligibility?.clientGroupPreviouslyDefaulted }}</span>

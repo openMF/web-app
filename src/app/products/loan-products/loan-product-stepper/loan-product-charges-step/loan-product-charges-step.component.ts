@@ -29,7 +29,7 @@ export class LoanProductChargesStepComponent implements OnInit {
 
   ngOnInit() {
     this.productService.countryId.subscribe((val) => {
-      this.countryId = val;
+      this.countryId = val || this.loanProductsTemplate.countryId;
       this.getCharges(this.countryId);
     });
     this.chargesDataSource = this.chargeData || [];

@@ -65,7 +65,6 @@ export class BusinessDateTabComponent implements OnInit {
       }
     });
     this.userDateFormat = this.settingsService.dateFormat;
-    this.getConfigurations();
     this.createBusinessDateForm();
   }
 

@@ -106,6 +106,7 @@ export class SettingsService {
    * Validate If the enable_business_date configuration is enabled or disabled.
    */
    validateBusinessDateStatus(configurations: any) {
+    debugger
     configurations.some((config: any) => {
       if (config.name === SettingsService.businessDateConfigName) {
         return config.enabled;
