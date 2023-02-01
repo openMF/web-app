@@ -24,38 +24,40 @@
               {{ 'Principal' | translate }}
             </div>
 
-            <div fxFlex="50%" class="r-amount">
-              {{ dataObject.principalPortion | number }}
+            <div fxFlex="50%" class="r-amount right-label">
+              {{ prepayData.principalPortion | number }}
             </div>
 
             <div fxFlex="50%" class="mat-body-strong">
               {{ 'Interest' | translate }}
             </div>
 
-            <div fxFlex="50%" class="r-amount">
-              {{ dataObject.interestPortion | number }}
+            <div fxFlex="50%" class="r-amount right-label">
+              {{ prepayData.interestPortion | number }}
             </div>
 
             <div fxFlex="50%" class="mat-body-strong">
               {{ 'Fees' | translate }}
             </div>
 
-            <div fxFlex="50%" class="r-amount">
-              {{ dataObject.feeChargesPortion | number }}
+            <div fxFlex="50%" class="r-amount right-label">
+              {{ prepayData.feeChargesPortion | number }}
             </div>
 
             <div fxFlex="50%" class="mat-body-strong">
               {{ 'Penalties' | translate }}
             </div>
 
-            <div fxFlex="50%" class="r-amount">
-              {{ dataObject.penaltyChargesPortion | number }}
+            <div fxFlex="50%" class="r-amount right-label">
+              {{ prepayData.penaltyChargesPortion | number }}
             </div>
           </div>
 
-          <mat-form-field>
+          <mat-form-field appearance="fill">
             <mat-label>Transaction Amount</mat-label>
-            <input type="number" matInput required formControlName="transactionAmount">
+            <span matTextSuffix class="m-l-10">{{ prepayData.currency.code }}</span>
+            <span fxFlex="auto"></span>
+            <input type="number" matInput required class="right-input" formControlName="transactionAmount">
             <mat-error *ngIf="prepayLoanForm.controls.transactionAmount.hasError('required')">
               Transaction Amount <strong>is required</strong>
             </mat-error>

@@ -73,14 +73,12 @@ const routes: Routes = [
       {
         path: ':loanId',
         data: { title: extract('Loan View'), routeParamBreadcrumb: 'loanId' },
-        resolve: {
-          loanDetailsData: LoanDetailsResolver
-        },
         children: [
           {
             path: '',
             component: LoansViewComponent,
             resolve: {
+              loanDetailsData: LoanDetailsResolver,
               loanDatatables: LoanDatatablesResolver
             },
             children: [

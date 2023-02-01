@@ -35,7 +35,7 @@ export class ChargesTabComponent implements OnInit {
   /** Status */
   status: any;
   /** Columns to be displayed in charges table. */
-  displayedColumns: string[] = ['name', 'feepenalty', 'paymentdueat', 'dueasof', 'calculationtype', 'due', 'paid', 'waived', 'outstanding', 'actions'];
+  displayedColumns: string[] = ['name', 'feepenalty', 'paymentdueat', 'dueDate', 'calculationtype', 'due', 'paid', 'waived', 'outstanding', 'actions'];
   /** Data source for charges table. */
   dataSource: MatTableDataSource<any>;
 

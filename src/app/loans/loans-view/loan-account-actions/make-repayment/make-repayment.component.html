@@ -24,7 +24,7 @@
               {{ 'Principal' | translate }}
             </div>
 
-            <div fxFlex="50%" class="r-amount">
+            <div fxFlex="50%" class="r-amount right-label">
               {{ dataObject.principalPortion | number }}
             </div>
 
@@ -32,7 +32,7 @@
               {{ 'Interest' | translate }}
             </div>
 
-            <div fxFlex="50%" class="r-amount">
+            <div fxFlex="50%" class="r-amount right-label">
               {{ dataObject.interestPortion | number }}
             </div>
 
@@ -40,7 +40,7 @@
               {{ 'Fees' | translate }}
             </div>
 
-            <div fxFlex="50%" class="r-amount">
+            <div fxFlex="50%" class="r-amount right-label">
               {{ dataObject.feeChargesPortion | number }}
             </div>
 
@@ -48,14 +48,16 @@
               {{ 'Penalties' | translate }}
             </div>
 
-            <div fxFlex="50%" class="r-amount">
+            <div fxFlex="50%" class="r-amount right-label">
               {{ dataObject.penaltyChargesPortion | number }}
             </div>
           </div>
 
-          <mat-form-field>
+          <mat-form-field appearance="fill">
             <mat-label>Transaction Amount</mat-label>
-            <input type="number" matInput required formControlName="transactionAmount">
+            <span matTextSuffix class="m-l-10">{{ dataObject.currency.code }}</span>
+            <span fxFlex="auto"></span>
+            <input type="number" matInput required class="right-input" formControlName="transactionAmount">
             <mat-error *ngIf="repaymentLoanForm.controls.transactionAmount.hasError('required')">
               Transaction Amount <strong>is required</strong>
             </mat-error>
