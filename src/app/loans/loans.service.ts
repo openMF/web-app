@@ -30,6 +30,17 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}/transactions/template`, { params: httpParams });
   }
 
+  getLoanPrepayLoanActionTemplate(loanId: string, transactionDate: string): Observable<any> {
+    if (!transactionDate) {
+      transactionDate = this.dateUtils.formatDate(this.settingsService.businessDate, this.settingsService.dateFormat);
+    }
+    const httpParams = new HttpParams().set('command', 'prepayLoan')
+      .set('transactionDate', transactionDate)
+      .set('locale', this.settingsService.language.code)
+      .set('dateFormat', this.settingsService.dateFormat);
+    return this.http.get(`/loans/${loanId}/transactions/template`, { params: httpParams });
+  }
+
   getLoanForeclosureActionTemplate(loanId: string): Observable<any> {
     const httpParams = new HttpParams()
       .set('command', 'foreclosure')
