@@ -2,7 +2,7 @@
 
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-    <h4 fxFlex="98%" class="mat-h4">Lock-in Period</h4>
+    <h4 fxFlex="98%" class="mat-h4">Lock-in Period <i class='fas fa-question' matTooltip="A period of time during which a fixed deposit account based on this fixed deposit product will be locked-in after it is opened."></i></h4>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Frequency</mat-label>
@@ -18,7 +18,7 @@
       </mat-select>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">Minimum Deposit Term</h4>
+    <h4 fxFlex="98%" class="mat-h4">Minimum Deposit Term<i class='fas fa-question' matTooltip="The minimum length of time the funds must remain in the fixed deposit account to earn the full interest income."></i></h4>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Frequency</mat-label>
@@ -40,7 +40,7 @@
       </mat-error>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">And thereafter, in Multiples of</h4>
+    <h4 fxFlex="98%" class="mat-h4">And thereafter, in Multiples of <i class='fas fa-question-circle' matTooltip="After the minimum deposit term has passed, additional deposit durations may be specified."></i></h4>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Frequency</mat-label>
@@ -56,7 +56,7 @@
       </mat-select>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">Maximum Deposit Term</h4>
+    <h4 fxFlex="98%" class="mat-h4">Maximum Deposit Term <i class='fas fa-question-circle' matTooltip="The maximum length of time funds may be deposited in a fixed deposit account based on this fixed deposit product."></i></h4>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Frequency</mat-label>
@@ -74,7 +74,7 @@
 
     <mat-divider fxFlex="98%"></mat-divider>
 
-    <h4 fxFlex="23%" class="mat-h4">For Pre-mature closure</h4>
+    <h4 fxFlex="23%" class="mat-h4">For Pre-mature closure <i class='fas fa-question-circle' matTooltip="This sections defines an interest penalty for pre-mature closure."></i></h4>
 
     <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="preClosurePenalApplicable" class="margin-v">
       Apply Penal Interest (less)
@@ -96,8 +96,8 @@
 
     <mat-divider fxFlex="98%"></mat-divider>
 
-    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="withHoldTax" class="margin-v">
-      Is Withhold Tax Applicable?
+    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="withHoldTax" class="margin-v" matTooltip="An boolean flag to attach  taxes to interest posting">
+      Is Withhold Tax Applicable? 
     </mat-checkbox>
 
     <mat-form-field fxFlex="48%" *ngIf="fixedDepositProductSettingsForm.value.withHoldTax">
