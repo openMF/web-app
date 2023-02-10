@@ -2,7 +2,7 @@
 
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-    <h4 fxFlex="98%" class="mat-h4">Shares per Client</h4>
+    <h4 fxFlex="98%" class="mat-h4">Shares per Client <i class="fas fa-question" matTooltip="These fields are used to define the minimum, default, maximum shares per customer"></i></h4>
 
     <mat-form-field fxFlex="31%">
       <mat-label>Minimum</mat-label>
@@ -22,7 +22,7 @@
       <input type="number" matInput formControlName="maximumShares">
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">Minimum Active Period</h4>
+    <h4 fxFlex="98%" class="mat-h4">Minimum Active Period <i class="fas fa-question" matTooltip="Minimum active period to consider for dividend calculations"></i></h4>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Frequency</mat-label>
@@ -38,7 +38,7 @@
       </mat-select>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">Lock-in Period</h4>
+    <h4 fxFlex="98%" class="mat-h4">Lock-in Period <i class="fas fa-question" matTooltip="Used to indicate the length of time that a share account of this share product type is locked-in and redeems are not allowed"></i></h4>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Frequency</mat-label>
@@ -54,7 +54,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-checkbox fxFlex="98%" class="margin-v" labelPosition="before" formControlName="allowDividendCalculationForInactiveClients">
+    <mat-checkbox fxFlex="98%" class="margin-v" labelPosition="before" matTooltip="Indicates whether the dividends can be processed even share account of this share product is inactive" formControlName="allowDividendCalculationForInactiveClients">
       Allow dividends for inactive clients
     </mat-checkbox>
 

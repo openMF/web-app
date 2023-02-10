@@ -4,7 +4,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Total Number of Shares</mat-label>
-      <input type="number" matInput formControlName="totalShares" required>
+      <input type="number" matInput matTooltip="Total number of shares that a product is offering" formControlName="totalShares" required>
       <mat-error>
         Total Number of Shares is <strong>required</strong>
       </mat-error>
@@ -12,7 +12,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Shares to be Issued</mat-label>
-      <input type="number" matInput formControlName="sharesIssued" required>
+      <input type="number" matInput matTooltip="Total number of shares that an orgranization wants to issue to it's clients" formControlName="sharesIssued" required>
       <mat-error>
         Shares to be Issued is <strong>required</strong>
       </mat-error>
@@ -20,7 +20,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Nominal/Unit Price</mat-label>
-      <input type="number" matInput formControlName="unitPrice" required>
+      <input type="number" matInput matTooltip="Unit/Nominal Price of each share" formControlName="unitPrice" required>
       <mat-error>
         Nominal Price is <strong>required</strong>
       </mat-error>
@@ -28,7 +28,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Capital Value</mat-label>
-      <input type="number" matInput formControlName="shareCapital" readonly>
+      <input type="number" matInput matTooltip="Total Capital Value" formControlName="shareCapital" readonly>
       <mat-hint>
         Shares to be Issued * Nominal Price (Auto calculated)
       </mat-hint>
