@@ -33,14 +33,14 @@ jobs:
           # lts/gallium node v16.15.1 (npm v8.11.0)
           node-version: "16.15.1"
       - name: Angular CLI install
-        run: npm install -g --silent @angular/cli@12.2.17
+        run : npm install -g --silent @angular/cli@13.3.10
 
       - name: Npm install
         run: npm install
 
-      - name: Run lint
+      - name: Run tslint
         continue-on-error: true
-        run: ng lint
+        run: npx tslint src/**/*.ts
 
       - name: Run build
         continue-on-error: true

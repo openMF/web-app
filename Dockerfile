@@ -13,13 +13,13 @@ COPY ./ /usr/src/app/
 
 RUN npm cache clear --force &&\
 
-npm config set fetch-retry-maxtimeout 120000 &&\
+  npm config set fetch-retry-maxtimeout 120000 &&\
 
-npm install --location=global @angular/cli@12.2.17 &&\
+  npm install --location=global @angular/cli@13.3.10 &&\
 
-npm install &&\
+  npm install &&\
 
-ng build --configuration production --output-path=/dist
+  ng build --configuration production --output-path=/dist
 
 ###############
 ### STAGE 2: Serve app with nginx ###
