@@ -1,0 +1,74 @@
+<div class="container">
+    <mat-card>
+        <form [formGroup]="allocationForm" (ngSubmit)="submit()">
+            <mat-card-content>
+                <div fxLayout="column">
+
+                    <div fxFlex="48%" fxLayout="row" fxLayout.lt-md="column" class="rule-wrapper office-div" *ngIf="officeName">
+                        <mat-label fxFlex="10%">Office</mat-label>
+                        <mat-radio-group fxFlex="50%" fxLayout="row" fxLayoutGap="5%" formControlName="id">
+                            <p>{{officeName}}</p>
+                        </mat-radio-group>
+                    </div>
+
+                    <div fxFlex="48%" fxLayout="row" fxLayout.lt-md="column" class="rule-wrapper">
+                        <mat-label fxFlex="50%">Repayment Allocation</mat-label>
+                        <mat-radio-group fxFlex="50%" fxLayout="row" fxLayoutGap="5%" formControlName="repaymentChoice">
+                            <mat-radio-button value="CLIENT_CHOICE">Client Choice</mat-radio-button>
+                            <mat-radio-button value="SYSTEM_CHOICE">System Choice</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <div fxFlex="48%" fxLayout="row" fxLayout.lt-md="column" class="rule-wrapper"
+                        *ngIf="allocationForm.controls.repaymentChoice.value=='SYSTEM_CHOICE'">
+                        <mat-label fxFlex="50%">System Choice</mat-label>
+                        <mat-radio-group fxFlex="50%" fxLayout="row" fxLayoutGap="5%" formControlName="systemChoice">
+                            <mat-radio-button value="DUE_DATE">Due Date</mat-radio-button>
+                            <mat-radio-button value="LIABILITY">Liability</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <div fxFlex="48%" fxLayout="row" fxLayout.lt-md="column" class="rule-wrapper"
+                        *ngIf="allocationForm.controls.systemChoice.value=='LIABILITY' && allocationForm.controls.repaymentChoice.value=='SYSTEM_CHOICE'">
+                        <mat-label fxFlex="50%">Drag & Reorder Liability Priorities</mat-label>
+                        <div class="options" dragula="liabilityPriorityDragula" [(dragulaModel)]="loanTypeOptionsModel">
+                            <p *ngFor="let option of loanTypeOptions">
+                                {{option.name}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="rule-wrapper country-div" *ngIf="!officeName">
+                        <mat-form-field>
+                            <mat-label>Country</mat-label>
+                            <mat-select placeholder="Search" #country required formControlName="countryId"
+                                (selectionChange)="search($event)">
+                                <mat-select-filter *ngIf="country.focused" [array]="countries"
+                                    (filteredReturn)="countriesDataSliced=$event" [displayMember]="'name'">
+                                </mat-select-filter>
+                                <mat-option *ngFor="let country of countries" [value]="country.id"
+                                    [class.hide]="!isFiltered(country)">
+                                    {{country.name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="allocationForm.controls.countryId.hasError('required')">
+                                Country is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50%" *ngIf="!officeName">
+                        Assign Offices:
+                        <mifosx-country-tree-view *ngIf="treeDataSource?.length>0" [treeDataSource]="treeDataSource"
+                            (checkedOffices)="getCheckedUnits($event)">
+                        </mifosx-country-tree-view>
+                    </div>
+
+                </div>
+            </mat-card-content>
+            <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+                <button type="button" mat-raised-button [routerLink]="!officeName?['../']:['../../']">Cancel</button>
+                <button mat-raised-button color="primary">Submit</button>
+            </mat-card-actions>
+        </form>
+    </mat-card>
+
+</div>

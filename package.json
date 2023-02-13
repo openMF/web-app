@@ -58,6 +58,7 @@
     "lodash": "4.17.21",
     "mat-select-filter": "^2.4.1",
     "moment": "^2.29.4",
+    "ng2-dragula": "^2.1.1",
     "rxjs": "6.6.2",
     "tslib": "^2.0.0",
     "zone.js": "0.11.6"

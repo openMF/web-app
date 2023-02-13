@@ -447,4 +447,24 @@ export class ProductsService {
     return this.http.put(`/recurringdepositproducts/${recurringDepositProductId}`, recurringDepositProduct);
   }
 
+ /**
+   * @returns {Observable<any>} Loan product allocation settings.
+   */
+  getLoanProductAllocationSetting(): Observable<any> {
+    return this.http.get('/loanpaymentallocationsettings');
+  }
+
+  getLoanProductAllocationSettingById(loanProductAllocationId: string, template: boolean = false): Observable<any> {
+    const httpParams = new HttpParams().set('template', template.toString());
+    return this.http.get(`/loanpaymentallocationsettings/${loanProductAllocationId}`, { params: httpParams });
+  }
+  getAllocationTemplate() {
+    return this.http.get('/loanpaymentallocationsettings/template');
+  }
+  createLoanAllocationProduct(loanAllocationProduct: any): Observable<any> {
+    return this.http.post('/loanpaymentallocationsettings', loanAllocationProduct);
+  }
+  updateLoanAllocationProduct(allocationId: any, loanAllocationProduct: any): Observable<any> {
+    return this.http.put(`/loanpaymentallocationsettings/${allocationId}`, loanAllocationProduct);
+  }
 }

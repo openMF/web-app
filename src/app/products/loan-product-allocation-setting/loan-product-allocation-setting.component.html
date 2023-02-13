@@ -1,0 +1,52 @@
+<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+    <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_LOANPAYMENTALLOCATIONSETTING'">
+      <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
+      Create
+    </button>
+  </div>
+
+  <div class="container">
+    <div fxLayout="row">
+      <mat-form-field fxFlex>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event.target.value)">
+      </mat-form-field>
+    </div>
+
+    <div class="mat-elevation-z8">
+
+      <table mat-table [dataSource]="dataSource" matSort>
+        <caption class="display-none">Loan product allocation setting</caption>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Country </th>
+          <td mat-cell *matCellDef="let loanProduct"> {{ loanProduct.name }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ou">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> OU </th>
+          <td mat-cell *matCellDef="let loanProduct"> {{ loanProduct.ou }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="repaymentChoice">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Options </th>
+          <td mat-cell *matCellDef="let loanProduct"> {{ loanProduct.repaymentChoice }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let loanProduct" [routerLink]="['edit',loanProduct.id]">
+              <button type="button" mat-raised-button color="primary">
+                <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;Edit
+              </button>
+            </td>
+          </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"  class="select-row"></tr>
+
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+    </div>
+
+  </div>

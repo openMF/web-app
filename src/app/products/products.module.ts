@@ -96,6 +96,9 @@ import { LoanProductOrganizationUnitStepComponent } from './loan-products/loan-p
 import { LoanProductClientEligibilityStepComponent } from './loan-products/loan-product-stepper/loan-product-client-eligibility-step/loan-product-client-eligibility-step.component';
 import { LoanProductAppsComponent } from './loan-products/loan-product-stepper/loan-product-apps/loan-product-apps.component';
 import { ClientEligbilityComponent } from './loan-products/shared/client-eligbility/client-eligbility.component';
+import { LoanProductAllocationSettingComponent } from './loan-product-allocation-setting/loan-product-allocation-setting.component';
+import { LoanProductAllocationComponent } from './loan-product-allocation-setting/loan-product-allocation/loan-product-allocation.component';
+import { DragulaModule } from 'ng2-dragula';
 
 /**
  * Products Module
@@ -107,7 +110,8 @@ import { ClientEligbilityComponent } from './loan-products/shared/client-eligbil
     SharedModule,
     ProductsRoutingModule,
     PipesModule,
-    DirectivesModule
+    DirectivesModule,
+    DragulaModule
   ],
   declarations: [
     ProductsComponent,
@@ -199,7 +203,9 @@ import { ClientEligbilityComponent } from './loan-products/shared/client-eligbil
     LoanProductOrganizationUnitStepComponent,
     LoanProductClientEligibilityStepComponent,
     LoanProductAppsComponent,
-    ClientEligbilityComponent
+    ClientEligbilityComponent,
+    LoanProductAllocationSettingComponent,
+    LoanProductAllocationComponent
   ],
   providers: [ ]
 })

@@ -1,15 +1,15 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
-import { FormControl } from "@angular/forms";
+import { Component, OnInit, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { FormControl } from '@angular/forms';
 
-import { DeleteDialogComponent } from "app/shared/delete-dialog/delete-dialog.component";
-import { Router } from "@angular/router";
-import { ProductsService } from "app/products/products.service";
+import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { Router } from '@angular/router';
+import { ProductsService } from 'app/products/products.service';
 
 @Component({
-  selector: "mifosx-loan-product-charges-step",
-  templateUrl: "./loan-product-charges-step.component.html",
-  styleUrls: ["./loan-product-charges-step.component.scss"],
+  selector: 'mifosx-loan-product-charges-step',
+  templateUrl: './loan-product-charges-step.component.html',
+  styleUrls: ['./loan-product-charges-step.component.scss'],
 })
 export class LoanProductChargesStepComponent implements OnInit {
   @Input() loanProductsTemplate: any;
@@ -21,7 +21,7 @@ export class LoanProductChargesStepComponent implements OnInit {
   countryId: any;
 
   chargesDataSource: {}[];
-  displayedColumns: string[] = ["name", "chargeCalculationType", "amount", "chargeTimeType", "action"];
+  displayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'action'];
 
   pristine = true;
 
@@ -33,11 +33,11 @@ export class LoanProductChargesStepComponent implements OnInit {
       this.getCharges(this.countryId);
     });
     this.chargesDataSource = this.chargeData || [];
-    if (this.router.url.includes("edit")) {
+    if (this.router.url.includes('edit')) {
       this.chargeData = this.loanProductsTemplate.chargeOptions;
       this.overdueChargeData = this.loanProductsTemplate.penaltyOptions
         ? this.loanProductsTemplate.penaltyOptions.filter(
-            (penalty: any) => penalty.chargeTimeType.code === "chargeTimeType.overdueInstallment"
+            (penalty: any) => penalty.chargeTimeType.code === 'chargeTimeType.overdueInstallment'
           )
         : [];
       this.chargesDataSource = this.loanProductsTemplate.charges || [];
@@ -57,7 +57,7 @@ export class LoanProductChargesStepComponent implements OnInit {
 
   addCharge(charge: any) {
     this.chargesDataSource = this.chargesDataSource.concat([charge.value]);
-    charge.value = "";
+    charge.value = '';
     this.pristine = false;
   }
 

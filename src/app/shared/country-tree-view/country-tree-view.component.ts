@@ -118,6 +118,7 @@ export class CountryTreeViewComponent implements OnInit, AfterViewInit {
     } else if (!nodeSelected && descAllSelected) {
       this.checklistSelection.select(node);
     }
+    this.checkedOffices.emit(this.checklistSelection.selected);
   }
 
   /* Get the parent node of a node */

@@ -12,8 +12,15 @@
             <mat-icon matListIcon>
               <fa-icon icon="briefcase" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Loan Products</h4>
+            <h4 matLine>Loan payment</h4>
             <p matLine>Add new loan product or modify or inactivate loan product</p>
+          </mat-list-item>
+          <mat-list-item [routerLink]="['/loanproductallocationsettings']" *mifosxHasPermission="'READ_LOANPAYMENTALLOCATIONSETTING'">
+            <mat-icon matListIcon>
+              <fa-icon icon="table" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Loan payment allocation setting</h4>
+            <p matLine>Loan payment allocation setting</p>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['saving-products']" *mifosxHasPermission="'READ_SAVINGSPRODUCT'">
@@ -39,7 +46,6 @@
             <h4 matLine>Charges</h4>
             <p matLine>Define charges/penalties for loan products, savings and deposit products</p>
           </mat-list-item>
-
         </mat-nav-list>
 
       </div>
