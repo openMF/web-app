@@ -4,7 +4,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Product Name</mat-label>
-      <input matInput formControlName="name" required>
+      <input matInput formControlName="name" matTooltip="A unique identifier for the share product" required>
       <mat-error>
         Product Name is <strong>required</strong>
       </mat-error>
@@ -12,7 +12,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Short Name</mat-label>
-      <input matInput formControlName="shortName" maxlength="4" required>
+      <input matInput formControlName="shortName" matTooltip="A unique identifier for the share product" maxlength="4" required>
       <mat-error>
         Short Name is <strong>required</strong>
       </mat-error>
@@ -20,7 +20,7 @@
 
     <mat-form-field fxFlex="98%">
       <mat-label>Description</mat-label>
-      <textarea matInput formControlName="description" required></textarea>
+      <textarea matInput formControlName="description" matTooltip="Provides additional information regarding the purpose and characteristics of the share product" required></textarea>
     </mat-form-field>
 
   </div>
