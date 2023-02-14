@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 
 /** Custom Services */
 import { AuthenticationService } from '../../authentication/authentication.service';
+import { OrganizationService } from 'app/organization/organization.service';
 
 /**
  * Toolbar component.
@@ -21,6 +22,24 @@ import { AuthenticationService } from '../../authentication/authentication.servi
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
+
+  /** Eligible permissions to view the country dropdown and an admin menu. */
+  allowedPermissions: any = ["ALL_FUNCTIONS"];
+
+  /** Save the user data from the session storage. */
+  userData: any;
+
+  /** Allow an authorised user to select a country and view an Admin menu. */
+  displayAdminOptions: boolean = false;
+  
+  /** Only active countries. */
+  activeCountries: any = [];
+
+  /** Limit the checks when it has already did. */
+  hasChecked: boolean = false;
+
+  /** Get the selected country name if it is set */
+  selectedCountryName: any;
 
   /** Subscription to breakpoint observer for handset. */
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -42,9 +61,10 @@ export class ToolbarComponent implements OnInit {
    * @param {AuthenticationService} authenticationService Authentication service.
    */
   constructor(private breakpointObserver: BreakpointObserver,
-              private router: Router,
-              private authenticationService: AuthenticationService,
-              private dialog: MatDialog) { }
+    private router: Router,
+    private authenticationService: AuthenticationService,
+    private organizationService: OrganizationService,
+    private dialog: MatDialog) {}
 
   /**
    * Subscribes to breakpoint for handset.
@@ -57,6 +77,39 @@ export class ToolbarComponent implements OnInit {
     });
   }
 
+  ngDoCheck() {
+    this.userData = this.authenticationService.getCredentials();
+    
+    if(!this.hasChecked && this.userData?.permissions.length > 0) {
+      let hasAnyPermission = this.allowedPermissions.filter(item => this.userData.permissions.includes(item)).length > 0;
+      if(hasAnyPermission) {
+        this.getActiveCountries();
+        this.displayAdminOptions = true;
+      }
+      this.hasChecked = true;
+    }
+
+    if(this.displayAdminOptions) {
+      this.selectedCountryName = JSON.parse(sessionStorage.getItem("selectedCountry"))?.name;
+    }
+  }
+  
+  /**
+  * List active countries.
+  */
+  getActiveCountries() {
+    this.organizationService.getCountries().subscribe((response: any) => {
+      this.activeCountries = response?.filter(item => item.status);
+    });
+  }
+
+  /**
+   * Saves the selected country id in the session storage.
+   */
+  saveTheSelectedCountry(country: any) {
+    sessionStorage.setItem('selectedCountry', JSON.stringify({countryId: country.id, name: country.name}));
+  }
+      
   /**
    * Toggles the current state of sidenav.
    */
@@ -77,7 +130,7 @@ export class ToolbarComponent implements OnInit {
    */
   logout() {
     this.authenticationService.logout();
-      // .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+    // .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }
 
   /**
