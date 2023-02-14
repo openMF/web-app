@@ -49,7 +49,7 @@
     "@ngx-translate/core": "13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
     "chart.js": "3.0.0-alpha",
-    "core-js": "2.5.0",
+    "core-js": "2.6.12",
     "font-awesome": "^4.7.0",
     "install": "^0.13.0",
     "intl": "^1.2.5",
