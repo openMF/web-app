@@ -89,7 +89,7 @@
 
     <mat-form-field fxFlex="98%" (click)="dueDatePicker.open()">
       <mat-label>Date Of Birth</mat-label>
-      <input formControlName="dateOfBirth" matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dueDatePicker">
+      <input formControlName="dateOfBirth" matInput [max]="maxDate" [matDatepicker]="dueDatePicker">
       <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #dueDatePicker></mat-datepicker>
       <mat-error *ngIf="familyMemberForm.controls.dateOfBirth.hasError('required')">
