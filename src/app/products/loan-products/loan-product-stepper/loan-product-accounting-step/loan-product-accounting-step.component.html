@@ -144,6 +144,42 @@
         </mat-error>
       </mat-form-field>
 
+      <mat-form-field fxFlex="48%">
+        <mat-label>Income from ChargeOff Interest</mat-label>
+        <mat-select formControlName="incomeFromChargeOffInterestAccountId" required>
+          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
+            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          Income from ChargeOff Interest is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="48%">
+        <mat-label>Income from ChargeOff Fees</mat-label>
+        <mat-select formControlName="incomeFromChargeOffFeesAccountId" required>
+          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
+            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          Income from ChargeOff Fees is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="48%">
+        <mat-label>Income from ChargeOff Penalty</mat-label>
+        <mat-select formControlName="incomeFromChargeOffPenaltyAccountId" required>
+          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
+            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          Income from ChargeOff Penalty is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
       <mat-divider fxFlex="98%"></mat-divider>
 
       <h4 fxFlex="98%" class="mat-h4">Expenses</h4>
@@ -161,7 +197,7 @@
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Goodwill credit</mat-label>
+        <mat-label>Expenses from Goodwill Credit</mat-label>
         <mat-select formControlName="goodwillCreditAccountId" required>
           <mat-option *ngFor="let expenseAccount of expenseAccountData" [value]="expenseAccount.id">
             ({{ expenseAccount.glCode }}) {{ expenseAccount.name }}
@@ -169,6 +205,30 @@
         </mat-select>
         <mat-error>
           Goodwill credit is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="48%">
+        <mat-label>ChargeOff Expense</mat-label>
+        <mat-select formControlName="chargeOffExpenseAccountId" required>
+          <mat-option *ngFor="let expenseAccount of expenseAccountData" [value]="expenseAccount.id">
+            ({{ expenseAccount.glCode }}) {{ expenseAccount.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          ChargeOff Expense is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="48%">
+        <mat-label>ChargeOff Fraud Expense</mat-label>
+        <mat-select formControlName="chargeOffFraudExpenseAccountId" required>
+          <mat-option *ngFor="let expenseAccount of expenseAccountData" [value]="expenseAccount.id">
+            ({{ expenseAccount.glCode }}) {{ expenseAccount.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          ChargeOff Fraud Expense is <strong>required</strong>
         </mat-error>
       </mat-form-field>
 

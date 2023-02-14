@@ -64,7 +64,7 @@ export class DisburseComponent implements OnInit {
    */
   createDisbursementLoanForm() {
     this.disbursementLoanForm = this.formBuilder.group({
-      'actualDisbursementDate': [new Date(), Validators.required],
+      'actualDisbursementDate': [this.settingsService.businessDate, Validators.required],
       'transactionAmount': ['', Validators.required],
       'externalId': '',
       'paymentTypeId': '',

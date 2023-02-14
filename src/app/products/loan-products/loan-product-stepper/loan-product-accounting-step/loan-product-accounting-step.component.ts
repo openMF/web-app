@@ -55,27 +55,33 @@ export class LoanProductAccountingStepComponent implements OnInit {
       'accountingRule': this.loanProductsTemplate.accountingRule.id
     });
 
+    const accountingMappings = this.loanProductsTemplate.accountingMappings;
     switch (this.loanProductsTemplate.accountingRule.id) {
       case 3:
       case 4:
         this.loanProductAccountingForm.patchValue({
-          'receivableInterestAccountId': this.loanProductsTemplate.accountingMappings.receivableInterestAccount.id,
-          'receivableFeeAccountId': this.loanProductsTemplate.accountingMappings.receivableFeeAccount.id,
-          'receivablePenaltyAccountId': this.loanProductsTemplate.accountingMappings.receivablePenaltyAccount.id,
+          'receivableInterestAccountId': accountingMappings.receivableInterestAccount.id,
+          'receivableFeeAccountId': accountingMappings.receivableFeeAccount.id,
+          'receivablePenaltyAccountId': accountingMappings.receivablePenaltyAccount.id,
         });
         /* falls through */
       case 2:
         this.loanProductAccountingForm.patchValue({
-          'fundSourceAccountId': this.loanProductsTemplate.accountingMappings.fundSourceAccount.id,
-          'loanPortfolioAccountId': this.loanProductsTemplate.accountingMappings.loanPortfolioAccount.id,
-          'transfersInSuspenseAccountId': this.loanProductsTemplate.accountingMappings.transfersInSuspenseAccount.id,
-          'interestOnLoanAccountId': this.loanProductsTemplate.accountingMappings.interestOnLoanAccount.id,
-          'incomeFromFeeAccountId': this.loanProductsTemplate.accountingMappings.incomeFromFeeAccount.id,
-          'incomeFromPenaltyAccountId': this.loanProductsTemplate.accountingMappings.incomeFromPenaltyAccount.id,
-          'incomeFromRecoveryAccountId': this.loanProductsTemplate.accountingMappings.incomeFromRecoveryAccount.id,
-          'writeOffAccountId': this.loanProductsTemplate.accountingMappings.writeOffAccount.id,
-          'goodwillCreditAccountId': this.loanProductsTemplate.accountingMappings.goodwillCreditAccount.id,
-          'overpaymentLiabilityAccountId': this.loanProductsTemplate.accountingMappings.overpaymentLiabilityAccount.id,
+          'fundSourceAccountId': accountingMappings.fundSourceAccount.id,
+          'loanPortfolioAccountId': accountingMappings.loanPortfolioAccount.id,
+          'transfersInSuspenseAccountId': accountingMappings.transfersInSuspenseAccount.id,
+          'interestOnLoanAccountId': accountingMappings.interestOnLoanAccount.id,
+          'incomeFromFeeAccountId': accountingMappings.incomeFromFeeAccount.id,
+          'incomeFromPenaltyAccountId': accountingMappings.incomeFromPenaltyAccount.id,
+          'incomeFromRecoveryAccountId': accountingMappings.incomeFromRecoveryAccount.id,
+          'writeOffAccountId': accountingMappings.writeOffAccount.id,
+          'goodwillCreditAccountId': accountingMappings.goodwillCreditAccount.id,
+          'overpaymentLiabilityAccountId': accountingMappings.overpaymentLiabilityAccount.id,
+          'chargeOffFraudExpenseAccountId': accountingMappings.chargeOffFraudExpenseAccount ? accountingMappings.chargeOffFraudExpenseAccount.id : '',
+          'chargeOffExpenseAccountId': accountingMappings.chargeOffExpenseAccount ? accountingMappings.chargeOffExpenseAccount.id : '',
+          'incomeFromChargeOffPenaltyAccountId': accountingMappings.incomeFromChargeOffPenaltyAccount ? accountingMappings.incomeFromChargeOffPenaltyAccount.id : '',
+          'incomeFromChargeOffFeesAccountId': accountingMappings.incomeFromChargeOffFeesAccount ? accountingMappings.incomeFromChargeOffFeesAccount.id : '',
+          'incomeFromChargeOffInterestAccountId': accountingMappings.incomeFromChargeOffInterestAccount ? accountingMappings.incomeFromChargeOffInterestAccount.id : '',
           'advancedAccountingRules': (this.loanProductsTemplate.paymentChannelToFundSourceMappings || this.loanProductsTemplate.feeToIncomeAccountMappings || this.loanProductsTemplate.penaltyToIncomeAccountMappings) ? true : false
         });
 
@@ -112,6 +118,11 @@ export class LoanProductAccountingStepComponent implements OnInit {
           this.loanProductAccountingForm.addControl('goodwillCreditAccountId', new FormControl('', Validators.required));
           this.loanProductAccountingForm.addControl('overpaymentLiabilityAccountId', new FormControl('', Validators.required));
           this.loanProductAccountingForm.addControl('advancedAccountingRules', new FormControl(false));
+          this.loanProductAccountingForm.addControl('chargeOffFraudExpenseAccountId', new FormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('chargeOffExpenseAccountId', new FormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('incomeFromChargeOffPenaltyAccountId', new FormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('incomeFromChargeOffFeesAccountId', new FormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('incomeFromChargeOffInterestAccountId', new FormControl('', Validators.required));
 
           this.loanProductAccountingForm.get('advancedAccountingRules').valueChanges
             .subscribe((advancedAccountingRules: boolean) => {
@@ -137,6 +148,11 @@ export class LoanProductAccountingStepComponent implements OnInit {
           this.loanProductAccountingForm.removeControl('goodwillCreditAccountId');
           this.loanProductAccountingForm.removeControl('overpaymentLiabilityAccountId');
           this.loanProductAccountingForm.removeControl('advancedAccountingRules');
+          this.loanProductAccountingForm.removeControl('chargeOffExpenseAccountId');
+          this.loanProductAccountingForm.removeControl('chargeOffFraudExpenseAccountId');
+          this.loanProductAccountingForm.removeControl('incomeFromChargeOffPenaltyAccountId');
+          this.loanProductAccountingForm.removeControl('incomeFromChargeOffFeesAccountId');
+          this.loanProductAccountingForm.removeControl('incomeFromChargeOffInterestAccountId');
         }
 
         if (accountingRule === 3 || accountingRule === 4) {
