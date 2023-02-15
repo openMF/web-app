@@ -131,8 +131,10 @@ export class PrepayLoanComponent implements OnInit {
     if (prepayLoanFormData.transactionDate instanceof Date) {
       prepayLoanFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
     }
+    const isPrepay = true;
     const data = {
       ...prepayLoanFormData,
+      isPrepay,
       dateFormat,
       locale
     };

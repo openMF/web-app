@@ -69,6 +69,7 @@ export class SavingsAccountViewComponent implements OnInit {
     const status = this.savingsAccountData.status.value;
     this.isActive = (status === 'Active');
     const subStatus = this.savingsAccountData.subStatus;
+    console.log(this.savingsAccountData);
     this.buttonConfig = new SavingsButtonsConfiguration(status, subStatus);
     if (this.savingsAccountData.clientId) {
       this.buttonConfig.addOption({

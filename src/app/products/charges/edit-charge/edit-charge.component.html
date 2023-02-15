@@ -11,7 +11,8 @@
           <mat-form-field fxFlex="48%">
             <mat-label>Charges applies to</mat-label>
             <mat-select required formControlName="chargeAppliesTo">
-              <mat-option *ngFor="let chargeAppliesTo of chargeData.chargeAppliesToOptions" [value]="chargeAppliesTo.id">
+              <mat-option *ngFor="let chargeAppliesTo of chargeData.chargeAppliesToOptions"
+                [value]="chargeAppliesTo.id">
                 {{ chargeAppliesTo.value }}
               </mat-option>
             </mat-select>
@@ -19,7 +20,7 @@
 
         </div>
 
-        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" style="margin-top:10px;">
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" class="row-space">
 
           <mat-form-field fxFlex="48%">
             <mat-label>Name</mat-label>
@@ -70,7 +71,8 @@
           <mat-form-field fxFlex="48%" *ngIf="chargePaymentMode">
             <mat-label>Charge Payment By</mat-label>
             <mat-select required formControlName="chargePaymentMode">
-              <mat-option *ngFor="let chargePaymentMode of chargeData.chargePaymetModeOptions" [value]="chargePaymentMode.id">
+              <mat-option *ngFor="let chargePaymentMode of chargeData.chargePaymetModeOptions"
+                [value]="chargePaymentMode.id">
                 {{ chargePaymentMode.value }}
               </mat-option>
             </mat-select>
@@ -90,7 +92,8 @@
           <mat-form-field fxFlex="48%" *ngIf="showGLAccount">
             <mat-label>Income from charge</mat-label>
             <mat-select required formControlName="incomeAccountId">
-              <mat-option *ngFor="let income of chargeData.incomeOrLiabilityAccountOptions.incomeAccountOptions" [value]="income.id">
+              <mat-option *ngFor="let income of chargeData.incomeOrLiabilityAccountOptions.incomeAccountOptions"
+                [value]="income.id">
                 {{ income.name }}
               </mat-option>
             </mat-select>
@@ -115,7 +118,8 @@
           </mat-form-field>
 
           <div fxFlex="48%" class="password-never-expires-wrapper checkbox" *ngIf="addFeeFrequency">
-            <mat-checkbox labelPosition="before" [checked]="addFeeFrequency && showFeeOptions" (change)="getFeeFrequency($event.checked)">
+            <mat-checkbox labelPosition="after" [checked]="addFeeFrequency && showFeeOptions"
+              (change)="getFeeFrequency($event.checked)">
               Add Fee Frequency
             </mat-checkbox>
           </div>
@@ -140,28 +144,59 @@
             </mat-error>
           </mat-form-field>
 
-        </div>
-
-        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" style="margin-top:10px;">
-          <div fxFlex="48%" class="password-never-expires-wrapper">
-            <mat-checkbox labelPosition="before" formControlName="active">
+          <div fxFlex="48%">
+            <mat-checkbox labelPosition="after" formControlName="active">
               Active
             </mat-checkbox>
           </div>
 
-          <div fxFlex="48%" class="send-password-to-email-wrapper" *ngIf="showPenalty">
-            <mat-checkbox labelPosition="before" formControlName="penalty">
+          <div fxFlex="48%" *ngIf="showPenalty">
+            <mat-checkbox labelPosition="after" formControlName="penalty">
               Is Penalty
             </mat-checkbox>
           </div>
 
+          <div fxFlex="48%" *ngIf="showCapitalized">
+            <mat-checkbox labelPosition="after" formControlName="capitalized">
+              Is Capitalized ?
+            </mat-checkbox>
+          </div>
+
+          <div fxFlex="48%" *ngIf="showCapitalized">
+            <mat-checkbox labelPosition="after" formControlName="collectedAtDisburse">
+              Is Collected At Disburse ?
+            </mat-checkbox>
+          </div>
+
+          <div fxFlex="48%" *ngIf="chargeForm.controls.chargeAppliesTo.value === 1">
+            <mat-checkbox labelPosition="after" formControlName="dueOnPrepay">
+              Due on Prepay
+            </mat-checkbox>
+          </div>
+
+          <div fxFlex="48%" *ngIf="chargeForm.controls.chargeAppliesTo.value === 1">
+            <mat-checkbox labelPosition="after" formControlName="thirdpartyTransfer"
+              (change)="evalThirdParty($event.checked)">
+              Thirdparty Transfer
+            </mat-checkbox>
+          </div>
+
+          <mat-form-field fxFlex="48%" *ngIf="chargeForm.value.thirdpartyTransfer">
+            <mat-label>Debit GLAccount for charge</mat-label>
+            <mat-select required formControlName="incomeAccountId">
+              <mat-option *ngFor="let glAccount of incomeOrAssetAccountOptions" [value]="glAccount.id">
+                ({{ glAccount.glCode }}) {{ glAccount.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
 
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
         <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!chargeForm.valid" *mifosxHasPermission="'UPDATE_CHARGE'">Submit</button>
+        <button mat-raised-button color="primary" [disabled]="!chargeForm.valid"
+          *mifosxHasPermission="'UPDATE_CHARGE'">Submit</button>
       </mat-card-actions>
 
     </form>

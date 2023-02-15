@@ -147,6 +147,8 @@ export class CreateChargeComponent implements OnInit {
       switch (chargeAppliesTo) {
         case 1: // Loan
           this.chargeForm.addControl('chargePaymentMode', new FormControl('', Validators.required));
+          this.chargeForm.addControl('thirdpartyTransfer', new FormControl(false, Validators.required));
+          this.chargeForm.addControl('dueOnPrepay', new FormControl(false, Validators.required));
           this.chargeForm.removeControl('incomeAccountId');
           break;
         case 2: // Savings

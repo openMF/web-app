@@ -89,6 +89,46 @@
           {{ chargeData.active === true ? 'Yes' : 'No' }}
         </div>
 
+        <div fxFlex="50%" class="mat-body-strong">
+          Is Capitalized ?
+        </div>
+
+        <div fxFlex="50%">
+          {{ chargeData.capitalized === true ? 'Yes' : 'No' }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Is Collected At Disburse ?
+        </div>
+
+        <div fxFlex="50%">
+          {{ chargeData.collectedAtDisburse === true ? 'Yes' : 'No' }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Is Included Fee In Outstanding ?
+        </div>
+
+        <div fxFlex="50%">
+          {{ chargeData.includeFeeInOutstanding === true ? 'Yes' : 'No' }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Due on Prepay
+        </div>
+
+        <div fxFlex="50%">
+          {{ chargeData.dueOnPrepay === true ? 'Yes' : 'No' }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Thirdparty Transfer
+        </div>
+
+        <div fxFlex="50%">
+          {{ chargeData.thirdpartyTransfer === true ? 'Yes' : 'No' }}
+        </div>
+
         <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeFrequency">
           Fee Frequency
         </div>

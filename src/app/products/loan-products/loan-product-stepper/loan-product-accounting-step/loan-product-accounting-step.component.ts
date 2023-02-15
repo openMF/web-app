@@ -187,7 +187,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
 
   add(formType: string, formArray: FormArray) {
     const data = { ...this.getData(formType), pristine: false };
-    const dialogRef = this.dialog.open(FormDialogComponent, { data });
+    const dialogRef = this.dialog.open(FormDialogComponent, { data, width: '250 px' });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         formArray.push(response.data);
@@ -198,7 +198,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
 
   edit(formType: string, formArray: FormArray, index: number) {
     const data = { ...this.getData(formType, formArray.at(index).value), layout: { addButtonText: 'Edit' } };
-    const dialogRef = this.dialog.open(FormDialogComponent, { data });
+    const dialogRef = this.dialog.open(FormDialogComponent, { data, width: '100 rem' });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         formArray.at(index).patchValue(response.data.value);
@@ -228,6 +228,10 @@ export class LoanProductAccountingStepComponent implements OnInit {
   }
 
   getPaymentFundSourceFormfields(values?: any) {
+    let accountData: any = [];
+    this.assetAccountData.forEach((account: any) => {
+      accountData.push({id: account.id, name: '(' + account.glCode + ') ' + account.name});
+    });
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'paymentTypeId',
@@ -241,7 +245,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
         controlName: 'fundSourceAccountId',
         label: 'Fund Source',
         value: values ? values.fundSourceAccountId : this.assetAccountData[0].id,
-        options: { label: 'name', value: 'id', data: this.assetAccountData },
+        options: { label: 'name', value: 'id', data: accountData },
         required: true,
         order: 2
       })
@@ -250,6 +254,10 @@ export class LoanProductAccountingStepComponent implements OnInit {
   }
 
   getFeesIncomeFormfields(values?: any) {
+    let accountData: any = [];
+    this.assetAndLiabilityAccountData.forEach((account: any) => {
+      accountData.push({id: account.id, name: '(' + account.glCode + ') ' + account.name});
+    });
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'chargeId',
@@ -262,8 +270,8 @@ export class LoanProductAccountingStepComponent implements OnInit {
       new SelectBase({
         controlName: 'incomeAccountId',
         label: 'Income Account',
-        value: values ? values.incomeAccountId : this.incomeAndLiabilityAccountData[0].id,
-        options: { label: 'name', value: 'id', data: this.incomeAndLiabilityAccountData },
+        value: values ? values.incomeAccountId : this.assetAndLiabilityAccountData[0].id,
+        options: { label: 'name', value: 'id', data: accountData },
         required: true,
         order: 2
       })
@@ -272,6 +280,10 @@ export class LoanProductAccountingStepComponent implements OnInit {
   }
 
   getPenaltyIncomeFormfields(values?: any) {
+    let accountData: any = [];
+    this.incomeAccountData.forEach((account: any) => {
+      accountData.push({id: account.id, name: '(' + account.glCode + ') ' + account.name});
+    });
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'chargeId',
@@ -285,7 +297,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
         controlName: 'incomeAccountId',
         label: 'Income Account',
         value: values ? values.incomeAccountId : this.incomeAccountData[0].id,
-        options: { label: 'name', value: 'id', data: this.incomeAccountData },
+        options: { label: 'name', value: 'id', data: accountData },
         required: true,
         order: 2
       })

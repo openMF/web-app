@@ -46,7 +46,7 @@ export class ViewTransactionComponent implements OnInit {
   amountRelationsAllowed = 0;
 
   clientId: number;
-  loanId: number;
+  loanId: string;
 
   /**
    * Retrieves the Transaction data from `resolve`.
@@ -119,7 +119,11 @@ export class ViewTransactionComponent implements OnInit {
    * Undo the loans transaction
    */
   undoTransaction() {
+<<<<<<< HEAD
     const accountId = this.route.snapshot.params['loanId'];
+=======
+    const accountId = this.loanId;
+>>>>>>> 68687e34 (Custom accounting for loan charges)
     const undoTransactionAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { heading: 'Undo Transaction', dialogContext: `Are you sure you want undo the transaction ${this.transactionData.id}` }
     });
@@ -141,7 +145,11 @@ export class ViewTransactionComponent implements OnInit {
   }
 
   chargebackTransaction() {
+<<<<<<< HEAD
     const accountId = this.route.snapshot.params['loanId'];
+=======
+    const accountId = this.loanId;
+>>>>>>> 68687e34 (Custom accounting for loan charges)
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'paymentTypeId',
