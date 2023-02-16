@@ -1,37 +1,42 @@
 <div class="container">
-
   <div fxLayoutGap="2%" class="m-b-20">
-
     <mat-card fxLayout="column" fxLayoutGap="2%" fxFlex="50%">
+      <h3>
+        <strong>{{ bulkImport.name }} Template</strong>
+      </h3>
 
-      <h3><strong>{{bulkImport.name}} Template</strong></h3>
-  
       <form [formGroup]="bulkImportForm">
-  
         <mat-card-content>
-  
           <div *ngIf="bulkImport.formFields >= 1">
             <mat-form-field fxFlex>
               <mat-label>Office</mat-label>
-              <mat-select required formControlName="officeId">
-                <mat-option *ngFor="let office of officeData" [value]="office.id">
-                {{ office.name }}
+              <mat-select required formControlName="officeId" #office>
+                <mat-select-filter
+                  *ngIf="office.focused"
+                  [array]="officeData"
+                  (filteredReturn)="officeDataSliced = $event"
+                  [displayMember]="'name'"
+                >
+                </mat-select-filter>
+
+                <mat-option *ngFor="let office of officeData" [value]="office.id" [class.hide]="!isFiltered(office)">
+                  {{ office.name }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
           </div>
-  
+
           <div *ngIf="bulkImport.formFields >= 2">
             <mat-form-field fxFlex>
               <mat-label>Staff</mat-label>
               <mat-select required formControlName="staffId">
                 <mat-option *ngFor="let staff of staffData" [value]="staff.id">
-                {{ staff.displayName }}
+                  {{ staff.displayName }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
           </div>
-  
+
           <div *ngIf="bulkImport.formFields === 3">
             <mat-form-field fxFlex>
               <mat-label>Legal Form</mat-label>
@@ -41,26 +46,29 @@
               </mat-select>
             </mat-form-field>
           </div>
-  
         </mat-card-content>
-  
       </form>
-      
+
       <div fxFlex="13%">
-        <button mat-raised-button color="primary" (click)="downloadTemplate()" *mifosxHasPermission="bulkImport.permission">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="downloadTemplate()"
+          *mifosxHasPermission="bulkImport.permission"
+        >
           <i class="fa fa-download"></i>&nbsp;&nbsp;Download
         </button>
       </div>
-  
     </mat-card>
-  
+
     <mat-card fxLayout="column" fxLayoutGap="2%" fxFlex="50%">
-  
-      <h3><strong>{{bulkImport.name}}</strong></h3>
+      <h3>
+        <strong>{{ bulkImport.name }}</strong>
+      </h3>
 
       <h4>Select Excel File</h4>
 
-      <mifosx-file-upload  flex="75%" (change)="onFileSelect($event)"></mifosx-file-upload>
+      <mifosx-file-upload flex="75%" (change)="onFileSelect($event)"></mifosx-file-upload>
 
       <mat-hint *ngIf="bulkImport.name === 'Clients'">Please retain the value Entity/Person in the filename.</mat-hint>
 
@@ -71,80 +79,75 @@
       </div>
 
       <div *ngIf="bulkImport.formFields >= 2" fxFlex class="cover"></div>
-  
     </mat-card>
-
   </div>
 
   <mat-card>
-
     <div>
       <h3 class="documents"><strong>Documents</strong></h3>
     </div>
 
     <div class="m-b-10" fxLayoutAlign="end">
-      <button  mat-raised-button color="primary" (click)="refreshDocuments()">
+      <button mat-raised-button color="primary" (click)="refreshDocuments()">
         <i class="fa fa-repeat"></i>&nbsp;&nbsp;Refresh
       </button>
     </div>
 
     <div class="imports-table mat-elevation-z1">
-
       <table #importsTable mat-table [dataSource]="dataSource" matSort>
-
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-          <td mat-cell *matCellDef="let import"> {{ import.name }} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+          <td mat-cell *matCellDef="let import">{{ import.name }}</td>
         </ng-container>
 
         <ng-container matColumnDef="importTime">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Import Time </th>
-          <td mat-cell *matCellDef="let import"> {{ import.importTime  | dateFormat }} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Import Time</th>
+          <td mat-cell *matCellDef="let import">{{ import.importTime | dateFormat }}</td>
         </ng-container>
 
         <ng-container matColumnDef="endTime">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> End Time </th>
-          <td mat-cell *matCellDef="let import"> {{ import.endTime  | dateFormat }} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>End Time</th>
+          <td mat-cell *matCellDef="let import">{{ import.endTime | dateFormat }}</td>
         </ng-container>
 
         <ng-container matColumnDef="completed">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Completed </th>
-          <td mat-cell *matCellDef="let import"> {{ import.completed }} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Completed</th>
+          <td mat-cell *matCellDef="let import">{{ import.completed }}</td>
         </ng-container>
 
         <ng-container matColumnDef="totalRecords">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Records </th>
-          <td mat-cell *matCellDef="let import"> {{ import.totalRecords }} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Records</th>
+          <td mat-cell *matCellDef="let import">{{ import.totalRecords }}</td>
         </ng-container>
 
         <ng-container matColumnDef="successCount">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Success Count </th>
-          <td mat-cell *matCellDef="let import"> {{ import.successCount }} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Success Count</th>
+          <td mat-cell *matCellDef="let import">{{ import.successCount }}</td>
         </ng-container>
 
         <ng-container matColumnDef="failureCount">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Failure Count </th>
-          <td mat-cell *matCellDef="let import"> {{ import.failureCount }} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Failure Count</th>
+          <td mat-cell *matCellDef="let import">{{ import.failureCount }}</td>
         </ng-container>
 
         <ng-container matColumnDef="download">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Download </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Download</th>
           <td mat-cell *matCellDef="let import">
-            <button mat-icon-button (click)="downloadDocument(import.name, import.importId)" *mifosxHasPermission="'READ_DOCUMENT'">
+            <button
+              mat-icon-button
+              (click)="downloadDocument(import.name, import.importId)"
+              *mifosxHasPermission="'READ_DOCUMENT'"
+            >
               <fa-icon icon="cloud-download-alt"></fa-icon>
             </button>
           </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row"></tr>
-
+        <tr mat-row *matRowDef="let row; columns: displayedColumns" class="select-row"></tr>
       </table>
-
     </div>
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-
   </mat-card>
-  
 </div>

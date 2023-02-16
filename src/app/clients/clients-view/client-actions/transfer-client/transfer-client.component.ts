@@ -1,23 +1,22 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
 
 /** Custom Services */
-import { ClientsService } from 'app/clients/clients.service';
-import { Dates } from 'app/core/utils/dates';
-import { SettingsService } from 'app/settings/settings.service';
+import { ClientsService } from "app/clients/clients.service";
+import { Dates } from "app/core/utils/dates";
+import { SettingsService } from "app/settings/settings.service";
 
 /**
  * Transfer Client Component
  */
 @Component({
-  selector: 'mifosx-transfer-client',
-  templateUrl: './transfer-client.component.html',
-  styleUrls: ['./transfer-client.component.scss']
+  selector: "mifosx-transfer-client",
+  templateUrl: "./transfer-client.component.html",
+  styleUrls: ["./transfer-client.component.scss"],
 })
 export class TransferClientComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -26,6 +25,7 @@ export class TransferClientComponent implements OnInit {
   transferClientForm: FormGroup;
   /** Client Data */
   officeData: any;
+  officeDataSliced: any;
   /** Client Id */
   clientId: any;
 
@@ -37,16 +37,19 @@ export class TransferClientComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private formBuilder: FormBuilder,
-              private clientsService: ClientsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private clientsService: ClientsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.officeData = data.clientActionData;
+      this.officeDataSliced = this.officeData;
     });
-    this.clientId = this.route.parent.snapshot.params['clientId'];
+    this.clientId = this.route.parent.snapshot.params["clientId"];
   }
 
   ngOnInit() {
@@ -58,10 +61,14 @@ export class TransferClientComponent implements OnInit {
    */
   createTransferClientForm() {
     this.transferClientForm = this.formBuilder.group({
-      'destinationOfficeId': ['', Validators.required],
-      'transferDate': ['', Validators.required],
-      'note': ['']
+      destinationOfficeId: ["", Validators.required],
+      transferDate: ["", Validators.required],
+      note: [""],
     });
+  }
+
+  public isFiltered(office: any) {
+    return this.officeDataSliced.find((item) => item.id === office.id);
   }
 
   /**
@@ -78,11 +85,10 @@ export class TransferClientComponent implements OnInit {
     const data = {
       ...transferClientFormData,
       dateFormat,
-      locale
+      locale,
     };
-    this.clientsService.executeClientCommand(this.clientId, 'proposeTransfer', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+    this.clientsService.executeClientCommand(this.clientId, "proposeTransfer", data).subscribe(() => {
+      this.router.navigate(["../../"], { relativeTo: this.route });
     });
   }
-
 }

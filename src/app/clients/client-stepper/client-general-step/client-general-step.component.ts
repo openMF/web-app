@@ -1,21 +1,20 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { Dates } from 'app/core/utils/dates';
+import { Component, OnInit, Input } from "@angular/core";
+import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
+import { Dates } from "app/core/utils/dates";
 
 /** Custom Services */
-import { SettingsService } from 'app/settings/settings.service';
+import { SettingsService } from "app/settings/settings.service";
 
 /**
  * Create Client Component
  */
 @Component({
-  selector: 'mifosx-client-general-step',
-  templateUrl: './client-general-step.component.html',
-  styleUrls: ['./client-general-step.component.scss']
+  selector: "mifosx-client-general-step",
+  templateUrl: "./client-general-step.component.html",
+  styleUrls: ["./client-general-step.component.scss"],
 })
 export class ClientGeneralStepComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -28,6 +27,7 @@ export class ClientGeneralStepComponent implements OnInit {
 
   /** Office Options */
   officeOptions: any;
+  officeOptionsSliced: any;
   /** Staff Options */
   staffOptions: any;
   /** Legal Form Options */
@@ -50,9 +50,7 @@ export class ClientGeneralStepComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private formBuilder: FormBuilder,
-              private dateUtils: Dates,
-              private settingsService: SettingsService) {
+  constructor(private formBuilder: FormBuilder, private dateUtils: Dates, private settingsService: SettingsService) {
     this.setClientForm();
   }
 
@@ -66,21 +64,21 @@ export class ClientGeneralStepComponent implements OnInit {
    */
   setClientForm() {
     this.createClientForm = this.formBuilder.group({
-      'officeId': ['', Validators.required],
-      'staffId': [''],
-      'legalFormId': [''],
-      'isStaff': [false],
-      'active': [false],
-      'addSavings': [false],
-      'accountNo': [''],
-      'externalId': [''],
-      'genderId': [''],
-      'mobileNo': [''],
-      'emailAddress': ['', Validators.email],
-      'dateOfBirth': [''],
-      'clientTypeId': [''],
-      'clientClassificationId': [''],
-      'submittedOnDate': ['']
+      officeId: ["", Validators.required],
+      staffId: [""],
+      legalFormId: [""],
+      isStaff: [false],
+      active: [false],
+      addSavings: [false],
+      accountNo: [""],
+      externalId: [""],
+      genderId: [""],
+      mobileNo: [""],
+      emailAddress: ["", Validators.email],
+      dateOfBirth: [""],
+      clientTypeId: [""],
+      clientClassificationId: [""],
+      submittedOnDate: [""],
     });
   }
 
@@ -89,6 +87,7 @@ export class ClientGeneralStepComponent implements OnInit {
    */
   setOptions() {
     this.officeOptions = this.clientTemplate.officeOptions;
+    this.officeOptionsSliced = this.clientTemplate.officeOptions;
     this.staffOptions = this.clientTemplate.staffOptions;
     this.legalFormOptions = this.clientTemplate.clientLegalFormOptions;
     this.clientTypeOptions = this.clientTemplate.clientTypeOptions;
@@ -100,43 +99,62 @@ export class ClientGeneralStepComponent implements OnInit {
   }
 
   /**
+   * To filter office dropdown list.
+   */
+
+  public isFiltered(office: any) {
+    return this.officeOptionsSliced.find((item) => item.id === office.id);
+  }
+  /**
    * Adds controls conditionally.
    */
   buildDependencies() {
-    this.createClientForm.get('legalFormId').valueChanges.subscribe((legalFormId: any) => {
+    this.createClientForm.get("legalFormId").valueChanges.subscribe((legalFormId: any) => {
       if (legalFormId === 1) {
-        this.createClientForm.removeControl('fullname');
-        this.createClientForm.removeControl('clientNonPersonDetails');
-        this.createClientForm.addControl('firstname', new FormControl('', [Validators.required, Validators.pattern('(^[A-z]).*')]));
-        this.createClientForm.addControl('middlename', new FormControl('', Validators.pattern('(^[A-z]).*')));
-        this.createClientForm.addControl('lastname', new FormControl('', [Validators.required, Validators.pattern('(^[A-z]).*')]));
+        this.createClientForm.removeControl("fullname");
+        this.createClientForm.removeControl("clientNonPersonDetails");
+        this.createClientForm.addControl(
+          "firstname",
+          new FormControl("", [Validators.required, Validators.pattern("(^[A-z]).*")])
+        );
+        this.createClientForm.addControl("middlename", new FormControl("", Validators.pattern("(^[A-z]).*")));
+        this.createClientForm.addControl(
+          "lastname",
+          new FormControl("", [Validators.required, Validators.pattern("(^[A-z]).*")])
+        );
       } else {
-        this.createClientForm.removeControl('firstname');
-        this.createClientForm.removeControl('middlename');
-        this.createClientForm.removeControl('lastname');
-        this.createClientForm.addControl('fullname', new FormControl('', [Validators.required, Validators.pattern('(^[A-z]).*')]));
-        this.createClientForm.addControl('clientNonPersonDetails', this.formBuilder.group({
-          'constitutionId': [''],
-          'incorpValidityTillDate': [''],
-          'incorpNumber': [''],
-          'mainBusinessLineId': [''],
-          'remarks': ['']
-        }));
+        this.createClientForm.removeControl("firstname");
+        this.createClientForm.removeControl("middlename");
+        this.createClientForm.removeControl("lastname");
+        this.createClientForm.addControl(
+          "fullname",
+          new FormControl("", [Validators.required, Validators.pattern("(^[A-z]).*")])
+        );
+        this.createClientForm.addControl(
+          "clientNonPersonDetails",
+          this.formBuilder.group({
+            constitutionId: [""],
+            incorpValidityTillDate: [""],
+            incorpNumber: [""],
+            mainBusinessLineId: [""],
+            remarks: [""],
+          })
+        );
       }
     });
-    this.createClientForm.get('legalFormId').patchValue(1);
-    this.createClientForm.get('active').valueChanges.subscribe((active: boolean) => {
+    this.createClientForm.get("legalFormId").patchValue(1);
+    this.createClientForm.get("active").valueChanges.subscribe((active: boolean) => {
       if (active) {
-        this.createClientForm.addControl('activationDate', new FormControl('', Validators.required));
+        this.createClientForm.addControl("activationDate", new FormControl("", Validators.required));
       } else {
-        this.createClientForm.removeControl('activationDate');
+        this.createClientForm.removeControl("activationDate");
       }
     });
-    this.createClientForm.get('addSavings').valueChanges.subscribe((active: boolean) => {
+    this.createClientForm.get("addSavings").valueChanges.subscribe((active: boolean) => {
       if (active) {
-        this.createClientForm.addControl('savingsProductId', new FormControl('', Validators.required));
+        this.createClientForm.addControl("savingsProductId", new FormControl("", Validators.required));
       } else {
-        this.createClientForm.removeControl('savingsProductId');
+        this.createClientForm.removeControl("savingsProductId");
       }
     });
   }
@@ -149,7 +167,7 @@ export class ClientGeneralStepComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const locale = this.settingsService.language.code;
     for (const key in generalDetails) {
-      if (generalDetails[key] === '' || key === 'addSavings') {
+      if (generalDetails[key] === "" || key === "addSavings") {
         delete generalDetails[key];
       }
     }
@@ -168,10 +186,9 @@ export class ClientGeneralStepComponent implements OnInit {
         ...generalDetails.clientNonPersonDetails,
         incorpValidityTillDate: this.dateUtils.formatDate(generalDetails.dateOfBirth, dateFormat),
         dateFormat,
-        locale
+        locale,
       };
     }
     return generalDetails;
   }
-
 }

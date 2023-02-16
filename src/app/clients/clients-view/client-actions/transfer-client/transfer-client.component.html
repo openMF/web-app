@@ -1,17 +1,20 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="transferClientForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field>
             <mat-label>Office</mat-label>
-            <mat-select required formControlName="destinationOfficeId">
-              <mat-option *ngFor="let office of officeData" [value]="office.id">
+            <mat-select required formControlName="destinationOfficeId" #office>
+              <mat-select-filter
+                *ngIf="office.focused"
+                [array]="officeData"
+                (filteredReturn)="officeDataSliced = $event"
+                [displayMember]="'name'"
+              >
+              </mat-select-filter>
+
+              <mat-option *ngFor="let office of officeData" [value]="office.id" [class.hide]="!isFiltered(office)">
                 {{ office.name }}
               </mat-option>
             </mat-select>
@@ -22,7 +25,14 @@
 
           <mat-form-field (click)="transferDatePicker.open()">
             <mat-label>Transfer Date</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transferDatePicker" required formControlName="transferDate">
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="transferDatePicker"
+              required
+              formControlName="transferDate"
+            />
             <mat-datepicker-toggle matSuffix [for]="transferDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transferDatePicker></mat-datepicker>
             <mat-error *ngIf="transferClientForm.controls.transferDate.hasError('required')">
@@ -34,18 +44,13 @@
             <mat-label>Note</mat-label>
             <textarea matInput formControlName="note"></textarea>
           </mat-form-field>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
         <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
         <button mat-raised-button color="primary" [disabled]="!transferClientForm.valid">Confirm</button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

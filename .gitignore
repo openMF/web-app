@@ -27,6 +27,8 @@
 xcuserdata/
 *.sublime-workspace
 .dccache
+package-lock.json
+/environments/.env.ts
 
 # IDE - VSCode
 .vscode/*

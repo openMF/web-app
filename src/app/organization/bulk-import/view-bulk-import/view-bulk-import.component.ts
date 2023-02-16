@@ -1,27 +1,27 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource, MatTable } from '@angular/material/table';
-import { FormGroup, FormBuilder} from '@angular/forms';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource, MatTable } from "@angular/material/table";
+import { FormGroup, FormBuilder } from "@angular/forms";
 
 /** Custom Imports */
-import { OrganizationService } from '../../organization.service';
-import { BulkImports } from './bulk-imports';
+import { OrganizationService } from "../../organization.service";
+import { BulkImports } from "./bulk-imports";
 
 /**
  * View Bulk Imports Component
  */
 @Component({
-  selector: 'mifosx-view-bulk-import',
-  templateUrl: './view-bulk-import.component.html',
-  styleUrls: ['./view-bulk-import.component.scss']
+  selector: "mifosx-view-bulk-import",
+  templateUrl: "./view-bulk-import.component.html",
+  styleUrls: ["./view-bulk-import.component.scss"],
 })
 export class ViewBulkImportComponent implements OnInit {
-
   /** offices Data */
   officeData: any;
+  officeDataSliced: any;
   /** staff Data */
   staffData: any;
   /** Entity Template */
@@ -37,16 +37,15 @@ export class ViewBulkImportComponent implements OnInit {
   /** Data source for imports table. */
   dataSource = new MatTableDataSource();
   /** Columns to be displayed in imports table. */
-  displayedColumns: string[] =
-  [
-    'name',
-    'importTime',
-    'endTime',
-    'completed',
-    'totalRecords',
-    'successCount',
-    'failureCount',
-    'download'
+  displayedColumns: string[] = [
+    "name",
+    "importTime",
+    "endTime",
+    "completed",
+    "totalRecords",
+    "successCount",
+    "failureCount",
+    "download",
   ];
 
   /** Paginator for imports table. */
@@ -54,7 +53,7 @@ export class ViewBulkImportComponent implements OnInit {
   /** Sorter for imports table. */
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   /** Imports table reference */
-  @ViewChild('importsTable', { static: true }) importsTableRef: MatTable<Element>;
+  @ViewChild("importsTable", { static: true }) importsTableRef: MatTable<Element>;
 
   /**
    * fetches offices and imports data from resolve
@@ -62,13 +61,15 @@ export class ViewBulkImportComponent implements OnInit {
    * @param {FormBuilder} formBuilder FormBuilder
    * @param {OrganizationService} organizationService OrganizationService
    */
-  constructor(private route: ActivatedRoute,
-              private formBuilder: FormBuilder,
-              private organizationService: OrganizationService,
-              ) {
-    this.bulkImport.name = this.route.snapshot.params['import-name'];
-    this.route.data.subscribe( (data: any) => {
+  constructor(
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private organizationService: OrganizationService
+  ) {
+    this.bulkImport.name = this.route.snapshot.params["import-name"];
+    this.route.data.subscribe((data: any) => {
       this.officeData = data.offices;
+      this.officeDataSliced = this.officeData;
       this.importsData = data.imports;
     });
   }
@@ -77,10 +78,17 @@ export class ViewBulkImportComponent implements OnInit {
    * Gets bulk import's properties.
    */
   ngOnInit() {
-    this.bulkImport = this.bulkImportsArray.find( (entry) => entry.name === this.bulkImport.name);
+    this.bulkImport = this.bulkImportsArray.find((entry) => entry.name === this.bulkImport.name);
     this.createBulkImportForm();
     this.buildDependencies();
     this.setImports();
+  }
+
+  /**
+   * Used for filtering office dropdownlist.
+   */
+  public isFiltered(office: any) {
+    return this.officeDataSliced.find((item) => item.id === office.id);
   }
 
   /**
@@ -88,9 +96,9 @@ export class ViewBulkImportComponent implements OnInit {
    */
   createBulkImportForm() {
     this.bulkImportForm = this.formBuilder.group({
-      'officeId': [''],
-      'staffId': [''],
-      'legalForm': [''],
+      officeId: [""],
+      staffId: [""],
+      legalForm: [""],
     });
   }
 
@@ -98,9 +106,9 @@ export class ViewBulkImportComponent implements OnInit {
    * Subscribe to value changes and fetches select options accordingly.
    */
   buildDependencies() {
-    this.bulkImportForm.get('officeId').valueChanges.subscribe((value: any) => {
+    this.bulkImportForm.get("officeId").valueChanges.subscribe((value: any) => {
       if (this.bulkImport.formFields >= 2) {
-         this.organizationService.getStaff(value).subscribe( (data: any) => {
+        this.organizationService.getStaff(value).subscribe((data: any) => {
           this.staffData = data;
         });
       }
@@ -120,24 +128,26 @@ export class ViewBulkImportComponent implements OnInit {
    * Gets bulk import's downloadable template from API.
    */
   downloadTemplate() {
-    const officeId = this.bulkImportForm.get('officeId').value;
-    const staffId = this.bulkImportForm.get('staffId').value;
-    let legalFormType = '';
+    const officeId = this.bulkImportForm.get("officeId").value;
+    const staffId = this.bulkImportForm.get("staffId").value;
+    let legalFormType = "";
     /** Only for Client Bulk Imports */
-    switch (this.bulkImportForm.get('legalForm').value) {
-      case 'Person':
-          legalFormType = 'CLIENTS_PERSON';
+    switch (this.bulkImportForm.get("legalForm").value) {
+      case "Person":
+        legalFormType = "CLIENTS_PERSON";
         break;
-      case 'Entity':
-          legalFormType = 'CLIENTS_ENTTTY';
+      case "Entity":
+        legalFormType = "CLIENTS_ENTTTY";
         break;
     }
-    this.organizationService.getImportTemplate(this.bulkImport.urlSuffix, officeId, staffId, legalFormType).subscribe( (res: any) => {
-      const contentType = res.headers.get('Content-Type');
-      const blob = new Blob([res.body], { type: contentType });
-      const fileOfBlob = new File([blob], 'template.xls', { type: contentType });
-      window.open(window.URL.createObjectURL(fileOfBlob));
-    });
+    this.organizationService
+      .getImportTemplate(this.bulkImport.urlSuffix, officeId, staffId, legalFormType)
+      .subscribe((res: any) => {
+        const contentType = res.headers.get("Content-Type");
+        const blob = new Blob([res.body], { type: contentType });
+        const fileOfBlob = new File([blob], "template.xls", { type: contentType });
+        window.open(window.URL.createObjectURL(fileOfBlob));
+      });
   }
 
   /**
@@ -154,24 +164,26 @@ export class ViewBulkImportComponent implements OnInit {
    * Upload excel file containing bulk import data.
    */
   uploadTemplate() {
-    let legalFormType = '';
+    let legalFormType = "";
     /** Only for Client Bulk Imports */
-    if (this.bulkImport.name === 'Clients') {
-      if (this.template.name.toLowerCase().includes('entity')) {
-        legalFormType = 'CLIENTS_ENTTTY';
-      } else if (this.template.name.toLowerCase().includes('person')) {
-        legalFormType = 'CLIENTS_PERSON';
+    if (this.bulkImport.name === "Clients") {
+      if (this.template.name.toLowerCase().includes("entity")) {
+        legalFormType = "CLIENTS_ENTTTY";
+      } else if (this.template.name.toLowerCase().includes("person")) {
+        legalFormType = "CLIENTS_PERSON";
       }
     }
-    this.organizationService.uploadImportDocument(this.template, this.bulkImport.urlSuffix, legalFormType).subscribe(() => {});
+    this.organizationService
+      .uploadImportDocument(this.template, this.bulkImport.urlSuffix, legalFormType)
+      .subscribe(() => {});
   }
 
   /**
    * Reloads imports data table.
    */
   refreshDocuments() {
-    this.organizationService.getImports(this.bulkImport.entityType).subscribe( (data: any) => {
-      this.dataSource =  new MatTableDataSource(data);
+    this.organizationService.getImports(this.bulkImport.entityType).subscribe((data: any) => {
+      this.dataSource = new MatTableDataSource(data);
       this.importsTableRef.renderRows();
     });
   }
@@ -182,12 +194,11 @@ export class ViewBulkImportComponent implements OnInit {
    * @param {any} id ImportID
    */
   downloadDocument(name: string, id: any) {
-    this.organizationService.getImportDocument(id).subscribe( (res: any) => {
-      const contentType = res.headers.get('Content-Type');
+    this.organizationService.getImportDocument(id).subscribe((res: any) => {
+      const contentType = res.headers.get("Content-Type");
       const blob = new Blob([res.body], { type: contentType });
       const fileOfBlob = new File([blob], name, { type: contentType });
       window.open(window.URL.createObjectURL(fileOfBlob));
     });
   }
-
 }
