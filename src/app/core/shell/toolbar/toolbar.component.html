@@ -9,9 +9,9 @@
     <fa-icon *ngIf="sidenavCollapsed" icon="chevron-right"></fa-icon>
   </button>
 
-  <nav mat-tab-nav-bar backgroundColor="primary" class="ml-1">
+  <nav mat-tab-nav-bar backgroundColor="primary" class="ml-1" *ngIf="hasChecked">
 
-    <a mat-tab-link class="tab-link" [matMenuTriggerFor]="institutionMenu" #institutionMenuTrigger="matMenuTrigger">
+    <a mat-tab-link class="tab-link" [matMenuTriggerFor]="institutionMenu" #institutionMenuTrigger="matMenuTrigger" *ngIf="(selectedCountryName && displayAdminOptions) || !displayAdminOptions">
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       {{ 'Institution' | translate }}
     </a>
@@ -25,7 +25,7 @@
       <mat-label *ngIf="selectedCountryName">{{selectedCountryName}}</mat-label>
     </a>
 
-    <span fxHide.lt-lg="true">
+    <span fxHide.lt-lg="true" *ngIf="(selectedCountryName && displayAdminOptions) || !displayAdminOptions">
 
       <a mat-tab-link class="tab-link" [routerLink]="['/accounting']">
         <fa-icon class="mr-05" icon="money-bill-alt" size="lg"></fa-icon>
