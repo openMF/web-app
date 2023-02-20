@@ -32,9 +32,9 @@
 
       <mat-form-field fxFlex="calc(50% - 25px)">
         <mat-label>Age</mat-label>
-        <input type="number" formControlName="age" required matInput />
+        <input type="number" formControlName="age" required matInput [min]="minAge" />
         <mat-error *ngIf="addFamilyMemberForm.controls.age.hasError('required')">
-          Age is <strong>required</strong>
+          Age is <strong>required and cannot be negative</strong>
         </mat-error>
       </mat-form-field>
 
