@@ -4,7 +4,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Nominal Annual Interest Rate</mat-label>
-      <input type="number" matInput formControlName="nominalAnnualInterestRate" required>
+      <input type="number" matInput matTooltip="The default interest rate set when creating savings accounts" formControlName="nominalAnnualInterestRate" required>
       <mat-error>
         Nominal Annual Interest is <strong>required</strong>
       </mat-error>
@@ -14,7 +14,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Interest Compounding Period</mat-label>
-      <mat-select formControlName="interestCompoundingPeriodType" required>
+      <mat-select formControlName="interestCompoundingPeriodType" matTooltip="The period at which interest rate is compounded" required>
         <mat-option *ngFor="let interestCompoundingPeriodType of interestCompoundingPeriodTypeData" [value]="interestCompoundingPeriodType.id">
           {{ interestCompoundingPeriodType.value }}
         </mat-option>
@@ -26,7 +26,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Interest Posting Period</mat-label>
-      <mat-select formControlName="interestPostingPeriodType" required>
+      <mat-select formControlName="interestPostingPeriodType" matTooltip="The period at which interest rate is posted or credited to a saving account" required>
         <mat-option *ngFor="let interestPostingPeriodType of interestPostingPeriodTypeData" [value]="interestPostingPeriodType.id">
           {{ interestPostingPeriodType.value }}
         </mat-option>
@@ -38,7 +38,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Interest Calculated using</mat-label>
-      <mat-select formControlName="interestCalculationType" required>
+      <mat-select formControlName="interestCalculationType" matTooltip="The method used to calculate interest" required>
         <mat-option *ngFor="let interestCalculationType of interestCalculationTypeData" [value]="interestCalculationType.id">
           {{ interestCalculationType.value }}
         </mat-option>
@@ -50,7 +50,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Days in Year</mat-label>
-      <mat-select formControlName="interestCalculationDaysInYearType" required>
+      <mat-select formControlName="interestCalculationDaysInYearType" matTooltip="The setting for number of days in year to use to calculate interest" required>
         <mat-option *ngFor="let interestCalculationDaysInYearType of interestCalculationDaysInYearTypeData" [value]="interestCalculationDaysInYearType.id">
           {{ interestCalculationDaysInYearType.value }}
         </mat-option>

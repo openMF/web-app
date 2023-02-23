@@ -1,0 +1,10 @@
+<div class="container m-b-20 space-top" fxLayout="row" fxLayoutGap="20px">
+  <div #cobCatchUpStatus>
+    <h2 class="no-m">COB Catch-Up is:<span class="m-l-20 m-r-20">{{ isCatchUpRunning ? 'Running' : 'Inactive' }}</span>
+    </h2>
+  </div>
+  <button mat-raised-button class="activate" (click)="runCatchUp()" *ngIf="!isCatchUpRunning">
+    <fa-icon icon="times-circle" class="m-r-10"></fa-icon>
+    Run Catch-Up
+  </button>
+</div>
