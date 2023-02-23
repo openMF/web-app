@@ -33,6 +33,8 @@ export class SavingsAccountViewComponent implements OnInit {
   /** Entity Type */
   entityType: string;
 
+  isActive = false;
+
   /**
    * Fetches savings account data from `resolve`
    * @param {ActivatedRoute} route Activated Route
@@ -65,6 +67,7 @@ export class SavingsAccountViewComponent implements OnInit {
    */
   setConditionalButtons() {
     const status = this.savingsAccountData.status.value;
+    this.isActive = (status === 'Active');
     const subStatus = this.savingsAccountData.subStatus;
     this.buttonConfig = new SavingsButtonsConfiguration(status, subStatus);
     if (this.savingsAccountData.clientId) {

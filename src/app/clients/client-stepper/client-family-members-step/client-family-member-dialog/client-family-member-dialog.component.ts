@@ -17,7 +17,6 @@ import { Dates } from 'app/core/utils/dates';
 })
 export class ClientFamilyMemberDialogComponent implements OnInit {
 
-  
   /** Maximum Due Date allowed. */
   maxDate = new Date();
 

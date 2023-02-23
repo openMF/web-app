@@ -45,7 +45,7 @@ export class MakeRepaymentComponent implements OnInit {
     private router: Router,
     private dateUtils: Dates,
     private settingsService: SettingsService) {
-      this.loanId = this.route.parent.snapshot.params['loanId'];
+      this.loanId = this.route.snapshot.params['loanId'];
     }
 
   /**
@@ -63,7 +63,7 @@ export class MakeRepaymentComponent implements OnInit {
    */
   createRepaymentLoanForm() {
     this.repaymentLoanForm = this.formBuilder.group({
-      'transactionDate': [new Date(), Validators.required],
+      'transactionDate': [this.settingsService.businessDate, Validators.required],
       'transactionAmount': ['', Validators.required],
       'externalId': '',
       'paymentTypeId': '',
@@ -83,7 +83,6 @@ export class MakeRepaymentComponent implements OnInit {
    */
   addPaymentDetails() {
     this.showPaymentDetails = !this.showPaymentDetails;
-    console.log(this.showPaymentDetails);
     if (this.showPaymentDetails) {
       this.repaymentLoanForm.addControl('accountNumber', new FormControl(''));
       this.repaymentLoanForm.addControl('checkNumber', new FormControl(''));

@@ -59,82 +59,16 @@ const routes: Routes = [
       {
         path: ':savingAccountId',
         data: { title: extract('Saving Account View'), routeParamBreadcrumb: 'savingAccountId' },
+        component: SavingsAccountViewComponent,
+        resolve: {
+          savingsAccountData: SavingsAccountViewResolver,
+          savingsDatatables: SavingsDatatablesResolver
+        },
         children: [
           {
             path: '',
-            component: SavingsAccountViewComponent,
-            resolve: {
-              savingsAccountData: SavingsAccountViewResolver,
-              savingsDatatables: SavingsDatatablesResolver
-            },
-            children: [
-              {
-                path: '',
-                redirectTo: 'transactions',
-                pathMatch: 'full'
-              },
-              {
-                path: 'transactions',
-                data: { title: extract('Savings Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
-                children: [
-                  {
-                    path: '',
-                    component: TransactionsTabComponent
-                  },
-                  {
-                    path: 'export',
-                    component: ExportTransactionsComponent
-                  }
-                ]
-              },
-              {
-                path: 'charges',
-                component: ChargesTabComponent,
-                data: { title: extract('Savings Account Charges'), breadcrumb: 'Charges', routeParamBreadcrumb: false }
-              },
-              {
-                path: 'standing-instructions',
-                component: StandingInstructionsTabComponent,
-                data: { title: extract('Savings Account SIH'), breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false }
-              },
-              {
-                path: 'notes',
-                component: NotesTabComponent,
-                data: { title: extract('Savings Account Notes'), breadcrumb: 'Notes', routeParamBreadcrumb: false },
-                resolve: {
-                  savingAccountNotes: SavingNotesResolver
-                }
-              },
-              {
-                path: 'documents',
-                component: SavingsDocumentsTabComponent,
-                data: { title: extract('Savings Account Documents'), breadcrumb: 'Documents', routeParamBreadcrumb: false },
-                resolve: {
-                  savingsDocuments: SavingDocumentsResolver
-                }
-              },
-              {
-                path: 'datatables',
-                children: [
-                  {
-                    path: ':datatableName',
-                    component: DatatableTabsComponent,
-                    data: { title: extract('View Data Table'), routeParamBreadcrumb: 'datatableName' },
-                    resolve: {
-                      savingsDatatable: SavingsDatatableResolver
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            path: 'edit',
-            data: { title: extract('Edit Savings Account'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
-            component: EditSavingsAccountComponent,
-            resolve: {
-              savingsAccountAndTemplate: SavingsAccountAndTemplateResolver
-            }
+            redirectTo: 'transactions',
+            pathMatch: 'full'
           },
           {
             path: 'transactions',
@@ -142,102 +76,129 @@ const routes: Routes = [
             children: [
               {
                 path: '',
-                redirectTo: '../transactions', pathMatch: 'prefix'
+                component: TransactionsTabComponent
               },
               {
-                path: 'account-transfers',
-                loadChildren: () => import('../account-transfers/account-transfers.module').then(m => m.AccountTransfersModule)
-              },
-              {
-                path: ':id',
-                data: { routeParamBreadcrumb: 'id' },
-                children: [
-                  {
-                    path: '',
-                    component: ViewTransactionComponent,
-                    resolve: {
-                      savingsAccountTransaction: SavingsAccountTransactionResolver
-                    }
-                  },
-                  {
-                    path: 'edit',
-                    component: EditTransactionComponent,
-                    data: { breadcrumb: 'Edit', routeParamBreadcrumb: false },
-                    resolve: {
-                      savingsAccountTransactionTemplate: SavingsAccountTransactionTemplateResolver
-                    }
-                  },
-                  {
-                    path: 'reciept',
-                    component: ViewRecieptComponent,
-                    data: { breadcrumb: 'Reciept', routeParamBreadcrumb: false },
-                    resolve: {
-                      savingsTransactionReciept: SavingsTransactionRecieptResolver
-                    }
-                  }
-                ]
+                path: 'export',
+                component: ExportTransactionsComponent
               }
             ]
           },
           {
             path: 'charges',
-            data: { title: extract('Savings Account Charges'), breadcrumb: 'Charges', routeParamBreadcrumb: false },
-            children: [
-              {
-                path: '',
-                redirectTo: '../charges', pathMatch: 'prefix'
-              },
-              {
-                path: ':id',
-                data: { routeParamBreadcrumb: 'id' },
-                component: ViewChargeComponent,
-                resolve: {
-                  savingsAccountData: SavingsAccountViewResolver,
-                  savingsAccountCharge: SavingsAccountChargeResolver
-                }
-              }
-            ]
+            component: ChargesTabComponent,
+            data: { title: extract('Savings Account Charges'), breadcrumb: 'Charges', routeParamBreadcrumb: false }
           },
           {
-            path: 'actions/:name',
-            data: { title: extract('Savings Account Actions'), breadcrumb: 'Savings Account Actions', routeParamBreadcrumb: 'name' },
-            component: SavingAccountActionsComponent,
+            path: 'standing-instructions',
+            component: StandingInstructionsTabComponent,
+            data: { title: extract('Savings Account SIH'), breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false }
+          },
+          {
+            path: 'notes',
+            component: NotesTabComponent,
+            data: { title: extract('Savings Account Notes'), breadcrumb: 'Notes', routeParamBreadcrumb: false },
             resolve: {
-              savingsAccountActionData: SavingsAccountActionsResolver
+              savingAccountNotes: SavingNotesResolver
             }
           },
           {
             path: 'documents',
+            component: SavingsDocumentsTabComponent,
             data: { title: extract('Savings Account Documents'), breadcrumb: 'Documents', routeParamBreadcrumb: false },
-            children: [
-              {
-                path: '',
-                redirectTo: '../documents', pathMatch: 'prefix'
-              },
-            ]
+            resolve: {
+              savingsDocuments: SavingDocumentsResolver
+            }
           },
           {
-            path: 'notes',
-            data: { title: extract('Savings Account Notes'), breadcrumb: 'Notes', routeParamBreadcrumb: false },
+            path: 'datatables',
             children: [
               {
-                path: '',
-                redirectTo: '../notes', pathMatch: 'prefix'
-              },
+                path: ':datatableName',
+                component: DatatableTabsComponent,
+                data: { title: extract('View Data Table'), routeParamBreadcrumb: 'datatableName' },
+                resolve: {
+                  savingsDatatable: SavingsDatatableResolver
+                }
+              }
             ]
-          },
-          {
-            path: 'transfer-funds',
-            loadChildren: () => import('../account-transfers/account-transfers.module').then(m => m.AccountTransfersModule)
           }
         ]
+      },
+      {
+        path: ':savingAccountId/edit',
+        data: { title: extract('Edit Savings Account'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+        component: EditSavingsAccountComponent,
+        resolve: {
+          savingsAccountAndTemplate: SavingsAccountAndTemplateResolver
+        }
+      },
+      {
+        path: ':savingAccountId/transactions/:id',
+        data: { title: extract('Savings Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+        children: [
+          {
+            path: '',
+            component: ViewTransactionComponent,
+            resolve: {
+              savingsAccountTransaction: SavingsAccountTransactionResolver
+            }
+          },
+          {
+            path: 'edit',
+            component: EditTransactionComponent,
+            data: { breadcrumb: 'Edit', routeParamBreadcrumb: false },
+            resolve: {
+              savingsAccountTransactionTemplate: SavingsAccountTransactionTemplateResolver
+            }
+          },
+          {
+            path: 'reciept',
+            component: ViewRecieptComponent,
+            data: { breadcrumb: 'Reciept', routeParamBreadcrumb: false },
+            resolve: {
+              savingsTransactionReciept: SavingsTransactionRecieptResolver
+            }
+          }
+        ]
+      },
+      {
+        path: ':savingAccountId/charges',
+        data: { title: extract('Savings Account Charges'), breadcrumb: 'Charges', routeParamBreadcrumb: false },
+        children: [
+          {
+            path: '',
+            redirectTo: '../charges', pathMatch: 'prefix'
+          },
+          {
+            path: ':id',
+            data: { routeParamBreadcrumb: 'id' },
+            component: ViewChargeComponent,
+            resolve: {
+              savingsAccountData: SavingsAccountViewResolver,
+              savingsAccountCharge: SavingsAccountChargeResolver
+            }
+          }
+        ]
+      },
+      {
+        path: ':savingAccountId/actions/:name',
+        data: { title: extract('Savings Account Actions'), breadcrumb: 'Savings Account Actions', routeParamBreadcrumb: 'name' },
+        component: SavingAccountActionsComponent,
+        resolve: {
+          savingsAccountActionData: SavingsAccountActionsResolver
+        }
+      },
+      {
+        path: 'transfer-funds',
+        loadChildren: () => import('../account-transfers/account-transfers.module').then(m => m.AccountTransfersModule)
       },
       {
         path: 'gsim-account',
         children: [
           {
             path: 'create',
-            data: { title: extract('Create GSIM Application'), breadcrumb: 'Create GSIM Application'},
+            data: { title: extract('Create GSIM Application'), breadcrumb: 'Create GSIM Application' },
             component: CreateGsimAccountComponent,
             resolve: {
               groupsData: GroupViewResolver,
@@ -246,7 +207,7 @@ const routes: Routes = [
           },
           {
             path: ':savingAccountId',
-            data: { title: extract('GSIM Account View'), routeParamBreadcrumb: 'savingAccountId'},
+            data: { title: extract('GSIM Account View'), routeParamBreadcrumb: 'savingAccountId' },
             children: [
               {
                 path: '',
@@ -269,17 +230,17 @@ const routes: Routes = [
   exports: [RouterModule],
   declarations: [],
   providers: [SavingsAccountViewResolver,
-              SavingsDatatablesResolver,
-              SavingsDatatableResolver,
-              SavingsAccountTemplateResolver,
-              SavingsAccountAndTemplateResolver,
-              SavingsAccountTransactionResolver,
-              SavingsAccountChargeResolver,
-              SavingsAccountActionsResolver,
-              SavingsTransactionRecieptResolver,
-              SavingsAccountTransactionTemplateResolver,
-              GSIMAccountsResolver,
-              GroupAccountsResolver,
-              GSIMViewResolver]
+    SavingsDatatablesResolver,
+    SavingsDatatableResolver,
+    SavingsAccountTemplateResolver,
+    SavingsAccountAndTemplateResolver,
+    SavingsAccountTransactionResolver,
+    SavingsAccountChargeResolver,
+    SavingsAccountActionsResolver,
+    SavingsTransactionRecieptResolver,
+    SavingsAccountTransactionTemplateResolver,
+    GSIMAccountsResolver,
+    GroupAccountsResolver,
+    GSIMViewResolver]
 })
-export class SavingsRoutingModule {}
+export class SavingsRoutingModule { }

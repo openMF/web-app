@@ -22,8 +22,8 @@ export class LoanReschedulesResolver implements Resolve<boolean> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const loanId = route.parent.paramMap.get('loanId');
-        return this.loansService.loanRescheduleRequests(loanId);
+      const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
+      return this.loansService.loanRescheduleRequests(loanId);
     }
 
 }

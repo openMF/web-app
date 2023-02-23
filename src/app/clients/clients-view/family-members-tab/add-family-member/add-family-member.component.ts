@@ -18,7 +18,6 @@ import { Dates } from 'app/core/utils/dates';
 })
 export class AddFamilyMemberComponent implements OnInit {
 
- 
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Add family member form. */

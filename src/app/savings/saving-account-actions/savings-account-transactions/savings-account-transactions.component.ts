@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -17,6 +17,8 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./savings-account-transactions.component.scss']
 })
 export class SavingsAccountTransactionsComponent implements OnInit {
+
+  @Input() currencyCode: string;
 
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -61,7 +63,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
     });
     this.transactionCommand = this.route.snapshot.params['name'].toLowerCase();
     this.transactionType[this.transactionCommand] = true;
-    this.savingAccountId = this.route.parent.snapshot.params['savingAccountId'];
+    this.savingAccountId = this.route.snapshot.params['savingAccountId'];
   }
 
   /**
@@ -77,8 +79,8 @@ export class SavingsAccountTransactionsComponent implements OnInit {
    */
   createSavingAccountTransactionForm() {
     this.savingAccountTransactionForm = this.formBuilder.group({
-      'transactionDate': ['', Validators.required],
-      'transactionAmount': ['', Validators.required],
+      'transactionDate': [this.settingsService.businessDate, Validators.required],
+      'transactionAmount': [0, Validators.required],
       'paymentTypeId': [''],
       'note': ['']
     });
@@ -89,7 +91,6 @@ export class SavingsAccountTransactionsComponent implements OnInit {
    */
   addPaymentDetails() {
     this.addPaymentDetailsFlag = !this.addPaymentDetailsFlag;
-    /*
     if (this.addPaymentDetailsFlag) {
       this.savingAccountTransactionForm.addControl('accountNumber', new FormControl(''));
       this.savingAccountTransactionForm.addControl('checkNumber', new FormControl(''));
@@ -103,8 +104,6 @@ export class SavingsAccountTransactionsComponent implements OnInit {
       this.savingAccountTransactionForm.removeControl('receiptNumber');
       this.savingAccountTransactionForm.removeControl('bankNumber');
     }
-
-    */
   }
 
   /**

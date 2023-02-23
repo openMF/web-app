@@ -48,7 +48,7 @@ export class EditLoansAccountComponent implements OnInit {
     this.route.data.subscribe((data: { loansAccountAndTemplate: any }) => {
       this.loansAccountAndTemplate = data.loansAccountAndTemplate;
     });
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.snapshot.params['loanId'];
   }
 
   ngOnInit() {

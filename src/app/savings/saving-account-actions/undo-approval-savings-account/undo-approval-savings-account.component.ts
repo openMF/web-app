@@ -31,7 +31,7 @@ export class UndoApprovalSavingsAccountComponent implements OnInit {
               private savingsService: SavingsService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.accountId = this.route.parent.snapshot.params['savingAccountId'];
+    this.accountId = this.route.snapshot.params['savingAccountId'];
   }
 
   /**

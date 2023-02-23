@@ -34,7 +34,6 @@ export class ViewSignatureDialogComponent implements OnInit {
     const signature = this.data.documents.find((document: any) => document.name === 'clientSignature') || {};
     this.signatureId = signature.id;
     this.clientId = this.data.id;
-    console.log(this.clientId);
   }
 
   ngOnInit() {

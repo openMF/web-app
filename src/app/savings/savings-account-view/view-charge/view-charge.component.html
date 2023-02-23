@@ -91,7 +91,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.amount }}
+          {{ chargeData.amount | number }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
@@ -99,7 +99,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.amountPaid }}
+          {{ chargeData.amountPaid | number }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
@@ -107,7 +107,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.amountWaived }}
+          {{ chargeData.amountWaived | number }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
@@ -115,11 +115,14 @@
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.amountOutstanding }}
+          {{ chargeData.amountOutstanding | number }}
         </div>
 
       </div>
 
+      <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column">
+        <button type="button" mat-raised-button color="primary" [routerLink]="['../']">{{ 'Back' | translate }}</button>
+      </div>
     </mat-card-content>
 
   </mat-card>
