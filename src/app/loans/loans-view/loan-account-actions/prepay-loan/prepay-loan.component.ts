@@ -52,7 +52,7 @@ export class PrepayLoanComponent implements OnInit {
     private router: Router,
     private dateUtils: Dates,
     private settingsService: SettingsService) {
-      this.loanId = this.route.parent.snapshot.params['loanId'];
+      this.loanId = this.route.snapshot.params['loanId'];
     }
 
   /**
@@ -131,8 +131,10 @@ export class PrepayLoanComponent implements OnInit {
     if (prepayLoanFormData.transactionDate instanceof Date) {
       prepayLoanFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
     }
+    const isPrepay = true;
     const data = {
       ...prepayLoanFormData,
+      isPrepay,
       dateFormat,
       locale
     };

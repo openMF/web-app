@@ -24,8 +24,8 @@ export class LoanDocumentsResolver implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const loanId = route.parent.paramMap.get('loanId');
-        return this.loansService.getLoanDocuments(loanId);
+      const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
+      return this.loansService.getLoanDocuments(loanId);
     }
 
 }

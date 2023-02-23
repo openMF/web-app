@@ -49,7 +49,7 @@ export class ManageSavingsAccountComponent implements OnInit {
     private settingsService: SettingsService) {
     this.transactionCommand = this.route.snapshot.params['name'].toLowerCase().replaceAll(' ', '');
     this.transactionType[this.transactionCommand] = true;
-    this.savingAccountId = this.route.parent.snapshot.params['savingAccountId'];
+    this.savingAccountId = this.route.snapshot.params['savingAccountId'];
   }
 
   /**

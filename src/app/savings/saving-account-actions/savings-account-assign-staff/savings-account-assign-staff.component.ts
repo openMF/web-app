@@ -45,7 +45,7 @@ export class SavingsAccountAssignStaffComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.accountId = this.route.parent.snapshot.params['savingAccountId'];
+    this.accountId = this.route.snapshot.params['savingAccountId'];
     this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
       this.savingsAccountData = data.savingsAccountActionData;
     });

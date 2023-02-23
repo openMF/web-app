@@ -81,7 +81,7 @@
             </mat-form-field>
 
             <div fxFlex="48%" *ngIf="chargeForm.controls.chargeTimeType.value === 9" class="add-fee-frequency-wrapper">
-              <mat-checkbox labelPosition="before" formControlName="addFeeFrequency">
+              <mat-checkbox labelPosition="after" formControlName="addFeeFrequency">
                 Add Fee Frequency
               </mat-checkbox>
             </div>
@@ -157,15 +157,27 @@
               <input matInput formControlName="maxCap">
             </mat-form-field>
 
+            <div fxFlex="48%" *ngIf="chargeForm.controls.chargeAppliesTo.value === 1">
+              <mat-checkbox labelPosition="after" formControlName="thirdpartyTransfer">
+                Thirdparty Transfer
+              </mat-checkbox>
+            </div>
+
+            <div fxFlex="48%" *ngIf="chargeForm.controls.chargeAppliesTo.value === 1">
+              <mat-checkbox labelPosition="after" formControlName="dueOnPrepay">
+                Due on Prepay
+              </mat-checkbox>
+            </div>
+
             <div fxFlex="48%" fxLayout="row" fxLayoutGap="2%" fxLayout.lt-md="column">
               <div fxFlex="50%" class="active-wrapper">
-                <mat-checkbox labelPosition="before" formControlName="active">
+                <mat-checkbox labelPosition="after" formControlName="active">
                   Active
                 </mat-checkbox>
               </div>
 
               <div fxFlex="50%" class="penalty-wrapper">
-                <mat-checkbox labelPosition="before" formControlName="penalty">
+                <mat-checkbox labelPosition="after" formControlName="penalty">
                   Is Penalty
                 </mat-checkbox>
               </div>

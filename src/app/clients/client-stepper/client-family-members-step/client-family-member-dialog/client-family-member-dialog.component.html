@@ -32,12 +32,9 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Age</mat-label>
-      <input type="number" formControlName="age" matInput min="0"/>
+      <input type="number" formControlName="age" matInput [min]="0"/>
       <mat-error *ngIf="familyMemberForm.controls.age.hasError('required')">
-        Age is <strong>required</strong>
-      </mat-error>
-      <mat-error *ngIf="familyMemberForm.controls.age.hasError('min')">
-        Age cannot be <strong>negative</strong>
+        Age is <strong>required and cannot be negative</strong>
       </mat-error>
     </mat-form-field>
 
@@ -57,7 +54,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Gender</mat-label>
-      <mat-select formControlName="genderId">
+      <mat-select formControlName="genderId" required>
         <mat-option *ngFor="let gender of data.options.genderIdOptions" [value]="gender.id">
           {{ gender.name }}
         </mat-option>
@@ -89,7 +86,7 @@
 
     <mat-form-field fxFlex="98%" (click)="dueDatePicker.open()">
       <mat-label>Date Of Birth</mat-label>
-      <input formControlName="dateOfBirth" matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dueDatePicker">
+      <input formControlName="dateOfBirth" matInput [max]="maxDate" [matDatepicker]="dueDatePicker" required>
       <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #dueDatePicker></mat-datepicker>
       <mat-error *ngIf="familyMemberForm.controls.dateOfBirth.hasError('required')">

@@ -23,7 +23,7 @@ export class GLIMLoanTemplateResolver implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const groupId = route.parent.parent.paramMap.get('groupId');
+        const groupId = route.paramMap.get('groupId');
         return this.loansService.getGLIMLoanAccountTemplate(groupId);
     }
 }

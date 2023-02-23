@@ -75,7 +75,7 @@
     <div class="savings-account-tables" fxLayout="row" fxLayoutGap="2%">
 
       <div fxFlex="49%"
-        *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval; else alternateSummary">
+        *ngIf="isActive; else alternateSummary">
         <h4 class="table-headers">Account Summary</h4>
         <table>
           <tbody>
@@ -301,7 +301,7 @@
 
     </div>
 
-    <nav mat-tab-nav-bar class="navigation-tabs">
+    <nav mat-tab-nav-bar class="navigation-tabs" *ngIf="isActive">
       <a mat-tab-link [routerLink]="['./transactions']" routerLinkActive #transactions="routerLinkActive"
         [active]="transactions.isActive">
         Transactions

@@ -19,7 +19,7 @@ export class NotesTabComponent implements OnInit {
     private authenticationService: AuthenticationService) {
     const savedCredentials = this.authenticationService.getCredentials();
     this.username = savedCredentials.username;
-    this.entityId = this.route.parent.snapshot.params['savingAccountId'];
+    this.entityId = this.route.snapshot.params['savingAccountId'];
     this.route.data.subscribe((data: { savingAccountNotes: any }) => {
       this.entityNotes = data.savingAccountNotes;
     });

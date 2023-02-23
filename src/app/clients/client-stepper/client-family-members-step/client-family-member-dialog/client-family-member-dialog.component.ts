@@ -17,8 +17,6 @@ import { Dates } from 'app/core/utils/dates';
 })
 export class ClientFamilyMemberDialogComponent implements OnInit {
 
-  /** Minimum Due Date allowed. */
-  minDate = new Date(2000, 0, 1);
   /** Maximum Due Date allowed. */
   maxDate = new Date();
 
@@ -67,13 +65,13 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
       'middleName': [''],
       'lastName': ['', Validators.required],
       'qualification': [''],
-      'age': ['', Validators.required, Validators.min(0)],
+      'age': ['', Validators.required],
       'isDependent': [''],
       'relationshipId': ['', Validators.required],
-      'genderId': [''],
+      'genderId': ['', Validators.required],
       'professionId': [''],
       'maritalStatusId': [''],
-      'dateOfBirth': ['']
+      'dateOfBirth': ['', Validators.required]
     });
   }
 

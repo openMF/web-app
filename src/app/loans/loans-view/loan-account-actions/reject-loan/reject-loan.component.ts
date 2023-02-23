@@ -40,7 +40,7 @@ export class RejectLoanComponent implements OnInit {
               private loanService: LoansService,
               private dateUtils: Dates,
               private settingsService: SettingsService ) {
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.snapshot.params['loanId'];
   }
 
   ngOnInit() {

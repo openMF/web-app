@@ -11,9 +11,17 @@
     </button>
   </span>
   <span *ngIf="allowWaive">
-    <button mat-raised-button color="primary" *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'" (click)="waiveCharge()">
+    <button mat-raised-button color="primary" *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'"
+      (click)="waiveCharge()">
       <fa-icon icon="flag" class="m-r-10"></fa-icon>
       Waive
+    </button>
+  </span>
+  <span>
+    <button mat-raised-button color="accent" *mifosxHasPermission="'ADJUSTMENT_LOANCHARGE'"
+      (click)="adjustmentCharge()">
+      <fa-icon icon="pen" class="m-r-10"></fa-icon>
+      Adjustment
     </button>
   </span>
 </div>

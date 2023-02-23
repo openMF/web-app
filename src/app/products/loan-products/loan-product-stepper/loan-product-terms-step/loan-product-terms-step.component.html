@@ -2,7 +2,7 @@
 
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-    <h4 fxFlex="98%" class="mat-h4">Principal</h4>
+    <h4 fxFlex="98%" class="mat-h4">Principal <i class="fas fa-question" matTooltip="These fields are used to define the minimum, default, and maximum principal allowed for the loan product."></i></h4>
 
     <mat-form-field fxFlex="31%">
       <mat-label>Minimum</mat-label>
@@ -40,7 +40,7 @@
       <input type="number" matInput formControlName="overAppliedNumber" required>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">Number of repayments</h4>
+    <h4 fxFlex="98%" class="mat-h4">Number of repayments <i class="fas fa-question" matTooltip="These fields are used to define the minimum, default, and maximum number of repayments allowed for the loan product."></i></h4>
 
     <mat-form-field fxFlex="31%">
       <mat-label>Minimum</mat-label>
@@ -70,7 +70,7 @@
 
     <div *ngIf="!loanProductTermsForm.value.isLinkedToFloatingInterestRates" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-      <h4 fxFlex="98%" class="mat-h4">Nominal interest rate</h4>
+      <h4 fxFlex="98%" class="mat-h4">Nominal interest rate <i class="fas fa-question" matTooltip="These fields are used to define the minimum, default, maximum, and period for the nominal interest rate allowed for the loan product. The minimum, default, and maximum nominal interest rates are expressed as percentages."></i></h4>
 
       <mat-form-field fxFlex="23%">
         <mat-label>Minimum</mat-label>
@@ -106,7 +106,7 @@
 
     <div *ngIf="loanProductTermsForm.value.isLinkedToFloatingInterestRates" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="start center">
 
-      <h4 fxFlex="98%" class="mat-h4">Floating interest rate</h4>
+      <h4 fxFlex="98%" class="mat-h4">Floating interest rate <i class="fas fa-question" matTooltip="These fields are used to define the minimum, default, maximum, and period for the floating interest rate allowed for the loan product. The minimum, default, and maximum floating interest rates are expressed as percentages."></i></h4>
 
       <mat-form-field fxFlex="31%">
         <mat-label>Floating Rate</mat-label>
@@ -361,7 +361,7 @@
 
     <mat-divider fxFlex="98%"></mat-divider>
 
-    <h4 fxFlex="98%" class="mat-h4">Repaid every</h4>
+    <h4 fxFlex="98%" class="mat-h4">Repaid every <i class="fas fa-question" matTooltip="These fields are input to calculating the repayment schedule for a loan account and are used to determine when payments are due."></i></h4>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Frequency</mat-label>

@@ -6,12 +6,12 @@
 
     <mat-form-field fxFlex="31%">
       <mat-label>Minimum</mat-label>
-      <input type="number" matInput formControlName="minDepositAmount">
+      <input type="number" matInput formControlName="minDepositAmount" matTooltip="The minimum deposit amount required to open a fixed deposit account based on this fixed deposit product.">
     </mat-form-field>
 
     <mat-form-field fxFlex="31%">
       <mat-label>Default</mat-label>
-      <input type="number" matInput formControlName="depositAmount" required>
+      <input type="number" matInput formControlName="depositAmount" matTooltip="The default deposit amount expected when a fixed deposit account based on this fixed deposit product is opened." required>
       <mat-error>
         Default Deposit Amount is <strong>required</strong>
       </mat-error>
@@ -19,14 +19,15 @@
 
     <mat-form-field fxFlex="31%">
       <mat-label>Maximum</mat-label>
-      <input type="number" matInput formControlName="maxDepositAmount">
+      
+      <input type="number" matInput   formControlName="maxDepositAmount" matTooltip="The maximum deposit amount allowed when a fixed deposit account based on this fixed deposit product is opened.">
     </mat-form-field>
 
     <mat-divider fxFlex="98%"></mat-divider>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Interest Compounding Period</mat-label>
-      <mat-select formControlName="interestCompoundingPeriodType" required>
+      <mat-select formControlName="interestCompoundingPeriodType" matTooltip="The period at which interest rate is compounded." required>
         <mat-option *ngFor="let interestCompoundingPeriodType of interestCompoundingPeriodTypeData" [value]="interestCompoundingPeriodType.id">
           {{ interestCompoundingPeriodType.value }}
         </mat-option>
@@ -38,7 +39,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Interest Posting Period</mat-label>
-      <mat-select formControlName="interestPostingPeriodType" required>
+      <mat-select formControlName="interestPostingPeriodType" matTooltip="The period at which interest rate is posted or credited to a fixed deposit account based on this fixed deposit product." required>
         <mat-option *ngFor="let interestPostingPeriodType of interestPostingPeriodTypeData" [value]="interestPostingPeriodType.id">
           {{ interestPostingPeriodType.value }}
         </mat-option>
@@ -50,7 +51,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Interest Calculated using</mat-label>
-      <mat-select formControlName="interestCalculationType" required>
+      <mat-select formControlName="interestCalculationType" matTooltip="The method used to calculate interest." required>
         <mat-option *ngFor="let interestCalculationType of interestCalculationTypeData" [value]="interestCalculationType.id">
           {{ interestCalculationType.value }}
         </mat-option>
@@ -62,7 +63,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Days in Year</mat-label>
-      <mat-select formControlName="interestCalculationDaysInYearType" required>
+      <mat-select formControlName="interestCalculationDaysInYearType" matTooltip="The setting for number of days in year to use to calculate interest." required>
         <mat-option *ngFor="let interestCalculationDaysInYearType of interestCalculationDaysInYearTypeData" [value]="interestCalculationDaysInYearType.id">
           {{ interestCalculationDaysInYearType.value }}
         </mat-option>

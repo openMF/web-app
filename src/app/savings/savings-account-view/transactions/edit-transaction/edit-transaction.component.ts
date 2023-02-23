@@ -33,7 +33,7 @@ export class EditTransactionComponent implements OnInit {
     position: number
   }[];
   /** Flag to enable payment details fields. */
-  addPaymentDetailsFlag: Boolean = false;
+  showPaymentDetails: Boolean = false;
   /** saving account's Id */
   savingAccountId: string;
   /** Transaction Template */
@@ -58,7 +58,7 @@ export class EditTransactionComponent implements OnInit {
       this.transactionTemplateData = data.savingsAccountTransactionTemplate;
       this.paymentTypeOptions = this.transactionTemplateData.paymentTypeOptions;
     });
-    this.savingAccountId = this.route.parent.snapshot.params['savingAccountId'];
+    this.savingAccountId = this.route.snapshot.params['savingAccountId'];
   }
 
   /**
@@ -89,8 +89,8 @@ export class EditTransactionComponent implements OnInit {
    * Method to add payment detail fields to the UI.
    */
   addPaymentDetails() {
-    this.addPaymentDetailsFlag = !this.addPaymentDetailsFlag;
-    if (this.addPaymentDetailsFlag) {
+    this.showPaymentDetails = !this.showPaymentDetails;
+    if (this.showPaymentDetails) {
       this.editTransactionForm.addControl('accountNumber', new FormControl(''));
       this.editTransactionForm.addControl('checkNumber', new FormControl(''));
       this.editTransactionForm.addControl('routingCode', new FormControl(''));

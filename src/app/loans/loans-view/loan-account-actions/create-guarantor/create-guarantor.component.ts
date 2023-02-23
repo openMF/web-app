@@ -51,7 +51,7 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
     private dateUtils: Dates,
     private clientsService: ClientsService,
     private settingsService: SettingsService) {
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.snapshot.params['loanId'];
   }
 
   ngOnInit() {

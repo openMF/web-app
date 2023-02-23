@@ -42,7 +42,7 @@ export class EditRepaymentScheduleComponent implements OnInit {
     private dialog: MatDialog,
     private dateUtils: Dates,
     private settingsService: SettingsService) {
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.snapshot.params['loanId'];
     this.getRepaymentSchedule();
   }
 

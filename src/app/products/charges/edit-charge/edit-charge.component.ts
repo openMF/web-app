@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -44,6 +44,10 @@ export class EditChargeComponent implements OnInit {
   chargePaymentMode = false;
   /** Show Fee Options. */
   showFeeOptions = false;
+  showCapitalized = false;
+  isCapitalized = false;
+
+  incomeOrAssetAccountOptions: any = [];
 
   /**
    * Retrieves the charge data from `resolve`.
@@ -65,6 +69,10 @@ export class EditChargeComponent implements OnInit {
 
   ngOnInit() {
     this.editChargeForm();
+    this.incomeOrAssetAccountOptions = this.chargeData.assetAccountOptions;
+    this.chargeData.incomeOrLiabilityAccountOptions.incomeAccountOptions.forEach((account: any) => {
+      this.incomeOrAssetAccountOptions.push(account);
+    });
   }
 
   /**
@@ -72,7 +80,6 @@ export class EditChargeComponent implements OnInit {
    */
   editChargeForm() {
     this.showFeeOptions = (this.chargeData.feeInterval && this.chargeData.feeInterval > 0);
-
     this.chargeForm = this.formBuilder.group({
       'name': [this.chargeData.name, Validators.required],
       'chargeAppliesTo': [{ value: this.chargeData.chargeAppliesTo.id, disabled: true }, Validators.required],
@@ -97,6 +104,12 @@ export class EditChargeComponent implements OnInit {
             'feeFrequency': this.chargeData.feeFrequency.id
           });
         }
+        this.chargeForm.addControl('thirdpartyTransfer', new FormControl(this.chargeData.thirdpartyTransfer, Validators.required));
+        this.chargeForm.addControl('dueOnPrepay', new FormControl(this.chargeData.dueOnPrepay, Validators.required));
+        this.evalThirdParty(this.chargeData.thirdpartyTransfer);
+
+        this.showCapitalized = (this.chargeData.chargeAppliesTo.id === 1 && this.chargeData.chargeTimeType.id === 1);
+        this.evalCapitalized(this.showCapitalized);
         break;
       }
       case 'Savings': {
@@ -125,7 +138,33 @@ export class EditChargeComponent implements OnInit {
     if (this.chargeData.taxGroup) {
       this.chargeForm.addControl('taxGroupId', this.formBuilder.control({ value: this.chargeData.taxGroup.id, disabled: true }, Validators.required));
     } else {
-      this.chargeForm.addControl('taxGroupId', this.formBuilder.control({ value: '?', disabled: true }));
+      this.chargeForm.addControl('taxGroupId', this.formBuilder.control({ value: '', disabled: true }));
+    }
+
+    this.chargeForm.get('chargeTimeType').valueChanges.subscribe((chargeTimeType) => {
+      this.showCapitalized = (chargeTimeType == 1);
+      this.evalCapitalized(this.showCapitalized);
+    });
+
+  }
+
+  evalCapitalized(showCapitalized: boolean) {
+    if (showCapitalized) {
+      this.chargeForm.addControl('capitalized', new FormControl(this.chargeData.capitalized ? this.chargeData.capitalized : false));
+      this.chargeForm.addControl('collectedAtDisburse', new FormControl(this.chargeData.collectedAtDisburse ? this.chargeData.collectedAtDisburse : false));
+      this.chargeForm.addControl('includeFeeInOutstanding', new FormControl(this.chargeData.includeFeeInOutstanding ? this.chargeData.includeFeeInOutstanding : false));
+    } else {
+      this.chargeForm.removeControl('capitalized');
+      this.chargeForm.removeControl('collectedAtDisburse');
+      this.chargeForm.removeControl('includeFeeInOutstanding');
+    }
+  }
+
+  evalThirdParty(isThirdParty: boolean) {
+    if (isThirdParty) {
+      this.chargeForm.addControl('incomeAccountId', new FormControl(''));
+    } else {
+      this.chargeForm.removeControl('incomeAccountId');
     }
   }
 
@@ -147,10 +186,17 @@ export class EditChargeComponent implements OnInit {
    * Submits Edit Charge form.
    */
   submit() {
-    const charges = this.chargeForm.value;
-    charges.locale = this.settingsService.language.code;
-    charges.chargePaymentMode = this.chargeData.chargePaymentMode.id;
-    this.productsService.updateCharge(this.chargeData.id.toString(), charges)
+    const chargeData = this.chargeForm.getRawValue();
+    const locale = this.settingsService.language.code;
+    chargeData.chargePaymentMode = this.chargeData.chargePaymentMode.id;
+    if (chargeData.taxGroupId === '') {
+      delete chargeData.taxGroupId;
+    }
+    const data = {
+      ...chargeData,
+      locale
+    };
+    this.productsService.updateCharge(this.chargeData.id.toString(), data)
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

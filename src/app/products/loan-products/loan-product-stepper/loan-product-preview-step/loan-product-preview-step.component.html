@@ -629,6 +629,12 @@
       <span fxFlex="60%">{{ loanProduct.incomeFromPenaltyAccountId | find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
       <span fxFlex="40%">Income from Recovery Repayments:</span>
       <span fxFlex="60%">{{ loanProduct.incomeFromRecoveryAccountId | find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
+      <span fxFlex="40%">Income from ChargeOff Interest:</span>
+      <span fxFlex="60%">{{ loanProduct.incomeFromChargeOffInterestAccountId | find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
+      <span fxFlex="40%">Income from ChargeOff Fees:</span>
+      <span fxFlex="60%">{{ loanProduct.incomeFromChargeOffFeesAccountId | find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
+      <span fxFlex="40%">Income from ChargeOff Penalty:</span>
+      <span fxFlex="60%">{{ loanProduct.incomeFromChargeOffPenaltyAccountId | find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
     </div>
 
     <h4 fxFlexFill class="mat-h4">Expenses</h4>
@@ -636,8 +642,12 @@
     <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
       <span fxFlex="40%">Losses written off:</span>
       <span fxFlex="60%">{{ loanProduct.writeOffAccountId | find:loanProductsTemplate.accountingMappingOptions.expenseAccountOptions:'id':'name' }}</span>
-      <span fxFlex="40%">Goodwill credit:</span>
+      <span fxFlex="40%">Expenses from Goodwill Credit:</span>
       <span fxFlex="60%">{{ loanProduct.goodwillCreditAccountId | find:loanProductsTemplate.accountingMappingOptions.expenseAccountOptions:'id':'name' }}</span>
+      <span fxFlex="40%">ChargeOff Expense:</span>
+      <span fxFlex="60%">{{ loanProduct.chargeOffExpenseAccountId | find:loanProductsTemplate.accountingMappingOptions.expenseAccountOptions:'id':'name' }}</span>
+      <span fxFlex="40%">ChargeOff Fraud Expense:</span>
+      <span fxFlex="60%">{{ loanProduct.chargeOffFraudExpenseAccountId | find:loanProductsTemplate.accountingMappingOptions.expenseAccountOptions:'id':'name' }}</span>
     </div>
 
     <h4 fxFlexFill class="mat-h4">Liabilities</h4>

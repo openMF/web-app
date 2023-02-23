@@ -4,7 +4,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Product Name</mat-label>
-      <input matInput formControlName="name" required>
+      <input matInput formControlName="name" matTooltip="The product name is a unique identifier for the lending product." required>
       <mat-error>
         Product Name is <strong>required</strong>
       </mat-error>
@@ -12,7 +12,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Short Name</mat-label>
-      <input matInput formControlName="shortName" maxlength="4" required>
+      <input matInput formControlName="shortName" maxlength="4" matTooltip="The short name is a unique identifier for the lending product." required>
       <mat-error>
         Short Name is <strong>required</strong>
       </mat-error>
@@ -20,34 +20,34 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Fund</mat-label>
-      <mat-select formControlName="fundId">
+      <mat-select matTooltip="Loan products may be assigned to a fund set up by your financial institution. If available, the fund field can be used for tracking and reporting on groups of loans." formControlName="fundId">
         <mat-option *ngFor="let fund of fundData" [value]="fund.id">
           {{ fund.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
-    <mat-checkbox labelPosition="before" formControlName="includeInBorrowerCycle" fxFlex="48%">
+    <mat-checkbox labelPosition="before" matTooltip="A borrower loan counter (cycle) is used for tracking how many time the client has taken this particular product." formControlName="includeInBorrowerCycle" fxFlex="48%">
       Include in Customer Loan Counter
     </mat-checkbox>
 
     <mat-form-field fxFlex="48%" (click)="startDatePicker.open()">
       <mat-label>Start Date</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="startDatePicker" formControlName="startDate">
+      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="startDatePicker" matTooltip="The date that the loan product will be active and available to clients. If blank, the loan product will be active as soon as it is created." formControlName="startDate">
       <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #startDatePicker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%" (click)="closeDatePicker.open()">
       <mat-label>Close Date</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closeDatePicker" formControlName="closeDate">
+      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closeDatePicker" matTooltip="The date that the loan product will become inactive and unavailable to clients. If blank, the load product will never become inactive." formControlName="closeDate">
       <mat-datepicker-toggle matSuffix [for]="closeDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #closeDatePicker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field fxFlex="98%">
       <mat-label>Description</mat-label>
-      <textarea matInput formControlName="description" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+      <textarea matInput matTooltip="The description is used to provide additional information regarding the purpose and characteristics of the loan product." formControlName="description" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
     </mat-form-field>
 
   </div>

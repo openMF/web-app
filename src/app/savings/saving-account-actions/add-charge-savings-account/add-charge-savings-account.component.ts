@@ -49,7 +49,7 @@ export class AddChargeSavingsAccountComponent implements OnInit {
     this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
       this.savingsChargeOptions = data.savingsAccountActionData.chargeOptions;
     });
-    this.savingAccountId = this.route.parent.snapshot.params['savingAccountId'];
+    this.savingAccountId = this.route.snapshot.params['savingAccountId'];
   }
 
   /**

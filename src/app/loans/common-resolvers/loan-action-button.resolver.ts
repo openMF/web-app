@@ -24,7 +24,7 @@ export class LoanActionButtonResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const loanId = route.parent.paramMap.get('loanId');
+    const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
     const loanActionButton = route.paramMap.get('action');
     if (loanActionButton === 'Assign Loan Officer' || loanActionButton === 'Change Loan Officer') {
       return this.loansService.getLoanTemplate(loanId);

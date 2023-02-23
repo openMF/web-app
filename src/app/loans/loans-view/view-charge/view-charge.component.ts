@@ -178,6 +178,10 @@ export class ViewChargeComponent {
     return this.chargeData.paid ? 'paid' : 'not-paid';
   }
 
+  adjustmentCharge(): void {
+    this.router.navigate(['adjustment'], { relativeTo: this.route});
+  }
+
   /**
    * Refetches data fot the component
    * TODO: Replace by a custom reload component instead of hard-coded back-routing.

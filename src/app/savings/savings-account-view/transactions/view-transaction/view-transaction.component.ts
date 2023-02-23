@@ -44,7 +44,7 @@ export class ViewTransactionComponent {
               public dialog: MatDialog,
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { savingsAccountTransaction: any }) => {
-      this.accountId = this.route.parent.snapshot.params['savingAccountId'];
+      this.accountId = this.route.snapshot.params['savingAccountId'];
       this.transactionData = data.savingsAccountTransaction;
     });
   }
