@@ -1,6 +1,6 @@
-<div class="container m-b-20" fxLayout="row" fxLayoutGap="20px">
+<div class="container m-b-20 space-top" fxLayout="row" fxLayoutGap="20px">
     <div #schedulerStatus>
-    <h2 class="no-m">Scheduler Status: {{ schedulerActive ? 'Active' : 'Inactive' }}</h2>
+    <h2 class="no-m">Scheduler Status:<span class="m-l-20 m-r-20">{{ schedulerActive ? 'Active' : 'Inactive' }}</span></h2>
     </div>
     <button mat-raised-button class="suspend">
       <fa-icon icon="times-circle" class="m-r-10"></fa-icon>

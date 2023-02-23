@@ -717,4 +717,12 @@ export class SystemService {
     return this.http.delete(`/datatables/${datatableName}/${entityId}`, { params: httpParams });
   }
 
+  getCOBCatchUpStatus() {
+    return this.http.get(`/loans/is-catch-up-running`);
+  }
+
+  runCOBCatchUp() {
+    const emptyData = {};
+    return this.http.post(`/loans/catch-up`, emptyData);
+  }
 }
