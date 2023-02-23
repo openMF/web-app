@@ -142,7 +142,7 @@ export class EditChargeComponent implements OnInit {
     }
 
     this.chargeForm.get('chargeTimeType').valueChanges.subscribe((chargeTimeType) => {
-      this.showCapitalized = (chargeTimeType == 1);
+      this.showCapitalized = (chargeTimeType === 1);
       this.evalCapitalized(this.showCapitalized);
     });
 

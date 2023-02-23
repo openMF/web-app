@@ -228,7 +228,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
   }
 
   getPaymentFundSourceFormfields(values?: any) {
-    let accountData: any = [];
+    const accountData: any = [];
     this.assetAccountData.forEach((account: any) => {
       accountData.push({id: account.id, name: '(' + account.glCode + ') ' + account.name});
     });
@@ -254,7 +254,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
   }
 
   getFeesIncomeFormfields(values?: any) {
-    let accountData: any = [];
+    const accountData: any = [];
     this.assetAndLiabilityAccountData.forEach((account: any) => {
       accountData.push({id: account.id, name: '(' + account.glCode + ') ' + account.name});
     });
@@ -280,7 +280,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
   }
 
   getPenaltyIncomeFormfields(values?: any) {
-    let accountData: any = [];
+    const accountData: any = [];
     this.incomeAccountData.forEach((account: any) => {
       accountData.push({id: account.id, name: '(' + account.glCode + ') ' + account.name});
     });
