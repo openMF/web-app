@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { TooltipPosition } from '@angular/material/tooltip';
 
 @Component({
   selector: 'mifosx-saving-product-terms-step',

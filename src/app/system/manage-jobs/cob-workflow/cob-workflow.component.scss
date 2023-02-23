@@ -1,0 +1,33 @@
+.success {
+  color: #32cd32;
+}
+
+.fail {
+  color: #f44366;
+}
+
+.currently-running {
+  color: #32cd32;
+}
+
+.not-currently-running {
+  color: #f44366;
+}
+
+.errorlog {
+  color: #ffa726;
+}
+
+.suspend {
+  background: #32cd32;
+  color: #ffffff;
+}
+
+.activate {
+  background: #f44366;
+  color: #ffffff;
+}
+
+.space-top {
+  margin-top: 30px;
+}

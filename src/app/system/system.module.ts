@@ -70,6 +70,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WorkflowJobsComponent } from './manage-jobs/workflow-jobs/workflow-jobs.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ManageExternalEventsComponent } from './manage-external-events/manage-external-events.component';
+import { CobWorkflowComponent } from './manage-jobs/cob-workflow/cob-workflow.component';
 
 @NgModule({
   imports: [
@@ -139,7 +140,8 @@ import { ManageExternalEventsComponent } from './manage-external-events/manage-e
     ManageSchedulerJobsComponent,
     WorkflowJobsComponent,
     WorkflowDiagramComponent,
-    ManageExternalEventsComponent
+    ManageExternalEventsComponent,
+    CobWorkflowComponent
   ],
 })
 export class SystemModule { }
