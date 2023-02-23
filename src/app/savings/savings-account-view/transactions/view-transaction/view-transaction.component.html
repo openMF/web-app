@@ -51,19 +51,19 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Amount
-        </div>
-
-        <div fxFlex="50%">
-          {{ transactionData.currency.displaySymbol }} {{ transactionData.amount | number }} ({{ transactionData.currency.code }})
-        </div>
-
-        <div fxFlex="50%" class="mat-body-strong">
           Currency
         </div>
 
         <div fxFlex="50%">
           {{ transactionData.currency.name }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Amount
+        </div>
+
+        <div fxFlex="50%">
+          {{ transactionData.amount | currency }} {{ transactionData.currency.code }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">

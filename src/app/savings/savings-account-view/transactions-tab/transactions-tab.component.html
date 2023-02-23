@@ -1,16 +1,16 @@
 <div class="tab-container mat-typography">
 
-  <div fxLayout="row" fxLayoutAlign="start">
-    <div class="m-b-10">
-      <h3>All Transactions</h3>
-    </div>
-    <div class="action-button m-b-20" fxLayout="row" fxLayoutGap="20px" *ngIf="checkStatus()">
-      <button mat-raised-button color="primary" [routerLink]="['/accounting', 'journal-entries']">View Journal Entries</button>
-      <button mat-raised-button color="primary" [routerLink]="['export']">Export</button>
-    </div>
-  </div>
+  <div class="mat-elevation-z1 m-b-25" [hidden]="!accountWithTransactions">
 
-  <div class="mat-elevation-z1 m-b-25">
+    <div fxLayout="row" fxLayoutAlign="start">
+      <div class="m-b-10">
+        <h3>All Transactions</h3>
+      </div>
+      <div class="action-button m-b-20" fxLayout="row" fxLayoutGap="20px" *ngIf="checkStatus()">
+        <button mat-raised-button color="primary" [routerLink]="['/accounting', 'journal-entries']">View Journal Entries</button>
+        <button mat-raised-button color="primary" [routerLink]="['export']">Export</button>
+      </div>
+    </div>
 
     <table mat-table [dataSource]="dataSource" matSort>
 
@@ -62,4 +62,10 @@
 
   </div>
 
+  <div class="alert" [hidden]="accountWithTransactions">
+    <div class="message">
+      <i class="fa fa-exclamation-circle alert-check"></i>
+      No transaction was found
+    </div>
+  </div>
 </div>

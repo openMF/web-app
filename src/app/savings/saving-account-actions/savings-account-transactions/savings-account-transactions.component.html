@@ -20,9 +20,11 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="fill">
           <mat-label>Transaction Amount</mat-label>
-          <input type="number" formControlName="transactionAmount" required matInput />
+          <span matTextSuffix class="m-l-10">{{ currencyCode }}</span>
+          <span fxFlex="auto"></span>
+          <input type="number" class="right-input" formControlName="transactionAmount" required matInput />
           <mat-error *ngIf="savingAccountTransactionForm.controls.transactionAmount.hasError('required')">
             Transaction Amount is <strong>required</strong>
           </mat-error>
@@ -30,7 +32,7 @@
 
         <mat-form-field>
           <mat-label>Payment Type</mat-label>
-          <mat-select formControlName="paymentTypeId">
+          <mat-select required formControlName="paymentTypeId">
             <mat-option *ngFor="let paymentType of paymentTypeOptions" [value]="paymentType.id">
               {{ paymentType.name }}
             </mat-option>

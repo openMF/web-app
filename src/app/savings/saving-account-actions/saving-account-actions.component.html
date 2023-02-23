@@ -7,7 +7,7 @@
 <mifosx-savings-account-unassign-staff *ngIf="actions['Unassign Staff']"></mifosx-savings-account-unassign-staff>
 <mifosx-withdraw-by-client-savings-account *ngIf="actions['Withdraw By Client']"></mifosx-withdraw-by-client-savings-account>
 <mifosx-add-charge-savings-account *ngIf="actions['Add Charge']"></mifosx-add-charge-savings-account>
-<mifosx-savings-transactions *ngIf="actions['Withdrawal'] || actions['Deposit']"></mifosx-savings-transactions>
+<mifosx-savings-transactions [currencyCode]="currencyCode" *ngIf="actions['Withdrawal'] || actions['Deposit']"></mifosx-savings-transactions>
 <mifosx-close-savings-account *ngIf="actions['Close']"></mifosx-close-savings-account>
 <mifosx-apply-annual-fees-savings-account *ngIf="actions['Apply Annual Fees']"></mifosx-apply-annual-fees-savings-account>
 <mifosx-manage-savings-account *ngIf="actions['Hold Amount'] || actions['Block Account']"></mifosx-manage-savings-account>

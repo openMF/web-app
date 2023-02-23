@@ -33,7 +33,7 @@ export class UndoDisbursalComponent implements OnInit {
               private loansService: LoansService,
               private router: Router,
               private route: ActivatedRoute) {
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.snapshot.params['loanId'];
   }
 
   /**

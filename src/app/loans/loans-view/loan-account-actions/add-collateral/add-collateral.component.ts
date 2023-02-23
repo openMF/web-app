@@ -58,7 +58,7 @@ export class AddCollateralComponent implements OnInit {
     this.collateralForm.patchValue({
       'collateralTypeId': collateralTypeId
     });
-    const loanId = this.route.parent.snapshot.params['loanId'];
+    const loanId = this.route.snapshot.params['loanId'];
     const collateralForm = this.collateralForm.value;
     collateralForm.locale = 'en';
     this.loanService.createLoanCollateral(loanId, collateralForm).subscribe((response: any) => {

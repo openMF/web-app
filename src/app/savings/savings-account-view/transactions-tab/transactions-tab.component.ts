@@ -20,11 +20,13 @@ export class TransactionsTabComponent implements OnInit {
   /** Transactions Data */
   transactionsData: any;
   /** Columns to be displayed in transactions table. */
-  displayedColumns: string[] = ['id', 'transactionDate', 'transactionType', 'debit', 'credit', 'balance', 'viewReciept'];
+  displayedColumns: string[] = ['id', 'date', 'transactionType', 'debit', 'credit', 'balance', 'viewReciept'];
   /** Data source for transactions table. */
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+
+  accountWithTransactions = false;
 
   /**
    * Retrieves savings account data from `resolve`.
@@ -40,6 +42,7 @@ export class TransactionsTabComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.transactionsData);
+    this.accountWithTransactions = (this.transactionsData.length > 0);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
