@@ -129,7 +129,7 @@ export class ViewBulkImportComponent implements OnInit {
           legalFormType = 'CLIENTS_PERSON';
         break;
       case 'Entity':
-          legalFormType = 'CLIENTS_ENTTTY';
+          legalFormType = 'CLIENTS_ENTITY';
         break;
     }
     this.organizationService.getImportTemplate(this.bulkImport.urlSuffix, officeId, staffId, legalFormType).subscribe( (res: any) => {
@@ -158,7 +158,7 @@ export class ViewBulkImportComponent implements OnInit {
     /** Only for Client Bulk Imports */
     if (this.bulkImport.name === 'Clients') {
       if (this.template.name.toLowerCase().includes('entity')) {
-        legalFormType = 'CLIENTS_ENTTTY';
+        legalFormType = 'CLIENTS_ENTITY';
       } else if (this.template.name.toLowerCase().includes('person')) {
         legalFormType = 'CLIENTS_PERSON';
       }
