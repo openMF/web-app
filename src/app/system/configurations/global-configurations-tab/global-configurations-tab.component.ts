@@ -22,7 +22,7 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
   /** Configuration data. */
   configurationData: any;
   /** Columns to be displayed in configurations table. */
-  displayedColumns: string[] = ['name', 'enabled', 'value', 'edit'];
+  displayedColumns: string[] = ['name', 'enabled', 'value', 'stringValue', 'dateValue', 'edit'];
   /** Data source for configurations table. */
   dataSource: MatTableDataSource<any>;
 

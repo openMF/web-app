@@ -63,7 +63,7 @@ export class ExportTransactionsComponent implements OnInit {
   createTransactionsReportForm() {
     this.transactionsReportForm = this.formBuilder.group({
       'fromDate': ['', Validators.required],
-      'toDate': ['', Validators.required],
+      'toDate': [this.settingsService.businessDate, Validators.required],
     });
   }
 
@@ -71,13 +71,14 @@ export class ExportTransactionsComponent implements OnInit {
    * Generates client loans transactions report.
    */
   generate() {
+    const dateFormat = this.settingsService.dateFormat;
     const data = {
       'output-type':	'PDF',
-      R_startDate:	this.dateUtils.formatDate(this.transactionsReportForm.value.fromDate, 'yyyy-MM-dd'),
-      R_endDate:	this.dateUtils.formatDate(this.transactionsReportForm.value.toDate, 'yyyy-MM-dd'),
+      R_startDate:	this.dateUtils.formatDate(this.transactionsReportForm.value.fromDate, dateFormat),
+      R_endDate:	this.dateUtils.formatDate(this.transactionsReportForm.value.toDate, dateFormat),
       R_selectLoan:	this.loansAccountId
     };
-    this.reportsService.getPentahoRunReportData('Client Loan Account Schedule', data, 'default', 'en', 'dd MMMM yyyy')
+    this.reportsService.getPentahoRunReportData('Client Loan Account Schedule', data, 'default', 'en', dateFormat)
       .subscribe( (res: any) => {
         const contentType = res.headers.get('Content-Type');
         const file = new Blob([res.body], {type: contentType});
