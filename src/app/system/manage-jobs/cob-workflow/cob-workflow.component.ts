@@ -8,7 +8,7 @@ import { SystemService } from 'app/system/system.service';
 })
 export class CobWorkflowComponent implements OnInit, OnDestroy {
 
-  waitTime: number = 30000;
+  waitTime = 30000;
 
   isCatchUpRunning = false;
   /** Timer to refetch COB Catch-Up status every 5 seconds */
@@ -27,6 +27,9 @@ export class CobWorkflowComponent implements OnInit, OnDestroy {
   getCOBCatchUpStatus(): void {
     this.systemService.getCOBCatchUpStatus().subscribe((response: any) => {
       this.isCatchUpRunning = response.isCatchUpRunning;
+      if (!this.isCatchUpRunning) {
+        this.waitTime = 30000;
+      }
     });
     this.timer = setTimeout(() => { this.getCOBCatchUpStatus(); }, this.waitTime);
   }

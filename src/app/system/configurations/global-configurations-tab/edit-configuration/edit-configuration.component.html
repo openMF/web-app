@@ -14,11 +14,25 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Configuration Value</mat-label>
-            <input matInput required type="number" formControlName="value">
-            <mat-error *ngIf="configurationForm.controls.value.hasError('required')">
-              Configuration Value is <strong>required</strong>
-            </mat-error>
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Number Value</mat-label>
+            <input matInput type="number" formControlName="value">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>String Value</mat-label>
+            <input matInput formControlName="stringValue">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%" (click)="configurationDatePicker.open()">
+            <mat-label>Date Value</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="configurationDatePicker" formControlName="dateValue">
+            <mat-datepicker-toggle matSuffix [for]="configurationDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #configurationDatePicker></mat-datepicker>
           </mat-form-field>
 
         </div>
