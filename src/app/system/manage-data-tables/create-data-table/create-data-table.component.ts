@@ -227,7 +227,11 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
       });
     });
     this.dataTableForm.value.columns = columns;
-    this.systemService.createDataTable(this.dataTableForm.value).subscribe((response: any) => {
+    const payload = this.dataTableForm.value;
+    if (this.dataTableForm.value.entitySubType == null || this.dataTableForm.value.entitySubType === '') {
+      delete payload.entitySubType;
+    }
+    this.systemService.createDataTable(payload).subscribe((response: any) => {
       if (this.configurationWizardService.showDatatablesForm === true) {
           this.configurationWizardService.showDatatablesForm = false;
           this.openDialog();
