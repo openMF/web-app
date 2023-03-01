@@ -68,7 +68,7 @@ export class ViewTransactionComponent implements OnInit {
       this.transactionData = data.loansAccountTransaction;
       this.allowEdition = !this.transactionData.manuallyReversed && !this.allowTransactionEdition(this.transactionData.type.id);
       this.allowUndo = !this.transactionData.manuallyReversed;
-      this.allowChargeback = this.transactionData.type.repayment;
+      this.allowChargeback = this.transactionData.type.repayment && !this.transactionData.manuallyReversed;
       let transactionsChargebackRelated = false;
       if (this.transactionData.type.repayment) {
         if (this.transactionData.transactionRelations) {
