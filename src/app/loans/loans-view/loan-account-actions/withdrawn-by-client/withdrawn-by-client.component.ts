@@ -41,7 +41,7 @@ export class WithdrawnByClientComponent implements OnInit {
     private router: Router,
     private dateUtils: Dates,
     private settingsService: SettingsService) {
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.snapshot.params['loanId'];
   }
 
   /**

@@ -50,7 +50,6 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
       this.savingsAccountTermsForm.patchValue({
         'currencyCode': this.savingsAccountProductTemplate.currency.code,
         'decimal': this.savingsAccountProductTemplate.currency.decimalPlaces,
-        'currencyMultiple': this.savingsAccountProductTemplate.currency.inMultiplesOf,
         'minBalanceForInterestCalculation': this.savingsAccountProductTemplate.minBalanceForInterestCalculation,
         'nominalAnnualInterestRate': this.savingsAccountProductTemplate.nominalAnnualInterestRate,
         'interestCompoundingPeriodType': this.savingsAccountProductTemplate.interestCompoundingPeriodType.id,
@@ -99,7 +98,6 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
       'decimal': [{value: '',  disabled: true}],
       'nominalAnnualInterestRate': ['', Validators.required],
       'interestCompoundingPeriodType': ['', Validators.required],
-      'currencyMultiple': [{value: '', disabled: true}],
       'interestPostingPeriodType': ['', Validators.required],
       'interestCalculationType': ['', Validators.required],
       'interestCalculationDaysInYearType': ['', Validators.required],
@@ -146,7 +144,10 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
    * Returns savings account terms form value.
    */
   get savingsAccountTerms() {
-    return this.savingsAccountTermsForm.getRawValue();
+    const payload = this.savingsAccountTermsForm.getRawValue();
+    delete payload.currencyCode;
+    delete payload.decimal;
+    return payload;
   }
 
 }

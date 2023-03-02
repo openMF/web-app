@@ -60,7 +60,6 @@ export class ChargesTabComponent implements OnInit {
     });
   }
 
-
   ngOnInit() {
     this.chargesData = this.loanDetails.charges;
     this.status = this.loanDetails.status.value;
@@ -76,6 +75,14 @@ export class ChargesTabComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.chargesData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  /**
+   * Asjust the Loan charge.
+   * @param {any} chargeId Charge Id
+   */
+  adjustCharge(chargeId: string) {
+    this.router.navigate([`${chargeId}/adjustment`], { relativeTo: this.route });
   }
 
   /**

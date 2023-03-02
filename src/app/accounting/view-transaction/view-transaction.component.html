@@ -81,12 +81,12 @@
 
     <ng-container matColumnDef="debit">
       <th mat-header-cell class="center" *matHeaderCellDef mat-sort-header> Debit </th>
-      <td mat-cell class="r-amount" *matCellDef="let transaction"><span *ngIf="transaction.entryType.value === 'DEBIT'"> {{ (transaction.currency.displaySymbol || transaction.currency.code) }} {{ transaction.amount | number }} </span></td>
+      <td mat-cell *matCellDef="let transaction"><span *ngIf="transaction.entryType.value === 'DEBIT'"> {{ (transaction.currency.displaySymbol || transaction.currency.code) }} {{ transaction.amount | number }} </span></td>
     </ng-container>
 
     <ng-container matColumnDef="credit">
       <th mat-header-cell class="center" *matHeaderCellDef mat-sort-header> Credit </th>
-      <td mat-cell class="r-amount" *matCellDef="let transaction"><span *ngIf="transaction.entryType.value === 'CREDIT'"> {{ (transaction.currency.displaySymbol || transaction.currency.code) }} {{ transaction.amount | number }} </span></td>
+      <td mat-cell *matCellDef="let transaction"><span *ngIf="transaction.entryType.value === 'CREDIT'"> {{ (transaction.currency.displaySymbol || transaction.currency.code) }} {{ transaction.amount | number }} </span></td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

@@ -73,6 +73,7 @@ import { EditRepaymentScheduleComponent } from './loans-view/loan-account-action
 import { DisburseToSavingsAccountComponent } from './loans-view/loan-account-actions/disburse-to-savings-account/disburse-to-savings-account.component';
 import { LoansAccountDatatableStepComponent } from './loans-account-stepper/loans-account-datatable-step/loans-account-datatable-step.component';
 import { RescheduleLoanTabComponent } from './loans-view/reschedule-loan-tab/reschedule-loan-tab.component';
+import { AdjustLoanChargeComponent } from './loans-view/loan-account-actions/adjust-loan-charge/adjust-loan-charge.component';
 
 /**
  * Loans Module
@@ -144,7 +145,8 @@ import { RescheduleLoanTabComponent } from './loans-view/reschedule-loan-tab/res
     EditRepaymentScheduleComponent,
     DisburseToSavingsAccountComponent,
     LoansAccountDatatableStepComponent,
-    RescheduleLoanTabComponent
+    RescheduleLoanTabComponent,
+    AdjustLoanChargeComponent
   ],
   providers: [ ],
 })

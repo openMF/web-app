@@ -37,7 +37,7 @@ export class ViewGuarantorsComponent implements OnInit {
               public loansService: LoansService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.snapshot.params['loanId'];
   }
 
   ngOnInit() {

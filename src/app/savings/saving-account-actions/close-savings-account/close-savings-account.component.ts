@@ -51,7 +51,7 @@ export class CloseSavingsAccountComponent implements OnInit {
       this.paymentTypeOptions = data.savingsAccountActionData[0].paymentTypeOptions;
       this.transactionAmount = data.savingsAccountActionData[1].summary.accountBalance;
     });
-    this.accountId = this.route.parent.snapshot.params['savingAccountId'];
+    this.accountId = this.route.snapshot.params['savingAccountId'];
   }
 
   /**

@@ -30,7 +30,7 @@ export class SavingsDocumentsTabComponent implements OnInit {
     this.route.data.subscribe((data: { savingsDocuments: any }) => {
       this.setSavingsDocumentsData(data.savingsDocuments);
     });
-    this.entityId = this.route.parent.snapshot.params['savingAccountId'];
+    this.entityId = this.route.snapshot.params['savingAccountId'];
   }
 
   ngOnInit() {

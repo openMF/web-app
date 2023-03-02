@@ -206,16 +206,16 @@ const routes: Routes = [
                       }
                     }
                   ]
-                },
-                {
-                  path: 'edit',
-                  component: EditOfficeComponent,
-                  data: { title: extract('Edit Office'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
-                  resolve: {
-                    officeTemplate: EditOfficeResolver
-                  }
                 }
               ]
+            },
+            {
+              path: ':officeId/edit',
+              component: EditOfficeComponent,
+              data: { title: extract('Edit Office'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+              resolve: {
+                officeTemplate: EditOfficeResolver
+              }
             }
           ]
         },

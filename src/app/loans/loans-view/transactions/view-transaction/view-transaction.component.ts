@@ -68,7 +68,7 @@ export class ViewTransactionComponent implements OnInit {
       this.transactionData = data.loansAccountTransaction;
       this.allowEdition = !this.transactionData.manuallyReversed && !this.allowTransactionEdition(this.transactionData.type.id);
       this.allowUndo = !this.transactionData.manuallyReversed;
-      this.allowChargeback = this.transactionData.type.repayment;
+      this.allowChargeback = this.transactionData.type.repayment && !this.transactionData.manuallyReversed;
       let transactionsChargebackRelated = false;
       if (this.transactionData.type.repayment) {
         if (this.transactionData.transactionRelations) {
@@ -119,7 +119,7 @@ export class ViewTransactionComponent implements OnInit {
    * Undo the loans transaction
    */
   undoTransaction() {
-    const accountId = this.route.parent.parent.parent.snapshot.params['loanId'];
+    const accountId = this.route.snapshot.params['loanId'];
     const undoTransactionAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { heading: 'Undo Transaction', dialogContext: `Are you sure you want undo the transaction ${this.transactionData.id}` }
     });
@@ -141,7 +141,7 @@ export class ViewTransactionComponent implements OnInit {
   }
 
   chargebackTransaction() {
-    const accountId = this.route.parent.parent.parent.snapshot.params['loanId'];
+    const accountId = this.route.snapshot.params['loanId'];
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'paymentTypeId',

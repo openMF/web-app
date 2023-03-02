@@ -4,14 +4,14 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Minimum Opening Balance</mat-label>
-      <input type="number" matInput formControlName="minRequiredOpeningBalance">
+      <input type="number" matInput matTooltip="Sets the minimum deposit amount required to open a saving account of this saving product type" formControlName="minRequiredOpeningBalance">
     </mat-form-field>
 
     <span fxFlex="48%" fxHide.lt-md></span>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Lock-in Period</mat-label>
-      <input type="number" matInput formControlName="lockinPeriodFrequency">
+      <input type="number" matInput matTooltip="Used to indicate the length of time that a savings account of this saving product type is locked-in and withdrawals are not allowed" formControlName="lockinPeriodFrequency">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
@@ -22,25 +22,25 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="withdrawalFeeForTransfers" class="margin-v">
+    <mat-checkbox fxFlex="48%" labelPosition="before" matTooltip="Indicates whether the withdrawal fee should be applied when funds are transferred between accounts" formControlName="withdrawalFeeForTransfers" class="margin-v">
       Apply Withdrawal Fee for Transfers
     </mat-checkbox>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Balance Required for Interest Calculation</mat-label>
-      <input type="number" matInput formControlName="minBalanceForInterestCalculation">
+      <input type="number" matInput matTooltip="Sets the balance required for interest calculation" formControlName="minBalanceForInterestCalculation">
     </mat-form-field>
 
-    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="enforceMinRequiredBalance" class="margin-v">
+    <mat-checkbox fxFlex="48%" labelPosition="before" matTooltip="Indicates whether to enforce a minimum balance" formControlName="enforceMinRequiredBalance" class="margin-v">
       Enforce Minimum Balance
     </mat-checkbox>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Minimum Balance</mat-label>
-      <input type="number" matInput formControlName="minRequiredBalance">
+      <input type="number" matInput matTooltip="Sets the minimum balance allowed for a saving account" formControlName="minRequiredBalance">
     </mat-form-field>
 
-    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="withHoldTax" class="margin-v">
+    <mat-checkbox fxFlex="48%" labelPosition="before" matTooltip="An boolean flag to attach  taxes to interest posting" formControlName="withHoldTax" class="margin-v">
       Is Withhold Tax Applicable?
     </mat-checkbox>
 
@@ -60,7 +60,7 @@
 
     <h3 fxFlex="23%" class="mat-h3">Overdraft</h3>
 
-    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="allowOverdraft" class="margin-b">
+    <mat-checkbox fxFlex="73%" labelPosition="before" matTooltip="Indicates whether saving accounts based on this saving product may have an overdraft" formControlName="allowOverdraft" class="margin-b">
       Is Overdraft Allowed?
     </mat-checkbox>
 
@@ -68,17 +68,17 @@
 
       <mat-form-field fxFlex="31%">
         <mat-label>Minimum Overdraft Required for Interest Calculation</mat-label>
-        <input type="number" matInput formControlName="minOverdraftForInterestCalculation">
+        <input type="number" matInput matTooltip="Sets the overdraft required for interest calculation" formControlName="minOverdraftForInterestCalculation">
       </mat-form-field>
 
       <mat-form-field fxFlex="31%">
         <mat-label>Nominal Annual Interest for Overdraft</mat-label>
-        <input type="number" matInput formControlName="nominalAnnualInterestRateOverdraft">
+        <input type="number" matInput matTooltip="Default interest rate on overdraft" formControlName="nominalAnnualInterestRateOverdraft">
       </mat-form-field>
 
       <mat-form-field fxFlex="31%">
         <mat-label>Maximum Overdraft Amount Limit</mat-label>
-        <input type="number" matInput formControlName="overdraftLimit">
+        <input type="number" matInput matTooltip="Sets the maximum allowed overdraft amount for a saving account that is allowed to have an overdraft" formControlName="overdraftLimit">
       </mat-form-field>
 
     </div>
@@ -87,7 +87,7 @@
 
     <h3 fxFlex="23%" class="mat-h3">Dormancy Tracking</h3>
 
-    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="isDormancyTrackingActive" class="margin-b">
+    <mat-checkbox fxFlex="73%" labelPosition="before" matTooltip="Enables definition and tracking inactive Savings Accounts" formControlName="isDormancyTrackingActive" class="margin-b">
       Enable Dormancy Tracking
     </mat-checkbox>
 
@@ -95,7 +95,7 @@
 
       <mat-form-field fxFlex="31%">
         <mat-label>Number of Days to Inactive sub-status</mat-label>
-        <input type="number" matInput formControlName="daysToInactive" required>
+        <input type="number" matInput matTooltip="Consecutive Number of Days of inactive period to mark an account as Inactive" formControlName="daysToInactive" required>
         <mat-error>
           Number of Days to Inactive sub-status is <strong>required</strong>
         </mat-error>
@@ -103,7 +103,7 @@
 
       <mat-form-field fxFlex="31%">
         <mat-label>Number of Days to Dormant sub-status</mat-label>
-        <input type="number" matInput formControlName="daysToDormancy" required>
+        <input type="number" matInput matTooltip="Consecutive Number of Days of inactive period to mark an account as Dormant" formControlName="daysToDormancy" required>
         <mat-error>
           Number of Days to Dormant sub-status is <strong>required</strong>
         </mat-error>
@@ -111,7 +111,7 @@
 
       <mat-form-field fxFlex="31%">
         <mat-label>Number of Days to Escheat</mat-label>
-        <input type="number" matInput formControlName="daysToEscheat" required>
+        <input type="number" matInput matTooltip="Consecutive Number of Days of inactive period to mark an account as Escheat" formControlName="daysToEscheat" required>
         <mat-error>
           Number of Days to Escheat is <strong>required</strong>
         </mat-error>
