@@ -334,6 +334,11 @@
     <span fxFlex="60%">{{ loanProduct.graceOnInterestPayment }}</span>
   </div>
 
+  <div fxFlexFill>
+    <span fxFlex="40%">Apply December variation:</span>
+    <span fxFlex="60%">{{ loanProduct.useDecemberVariation ? 'Yes' : 'No' }}</span>
+  </div>
+
   <div fxFlexFill *ngIf="loanProduct.graceOnInterestCharged">
     <span fxFlex="40%">Interest free period:</span>
     <span fxFlex="60%">{{ loanProduct.graceOnInterestCharged }}</span>

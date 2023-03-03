@@ -71,7 +71,7 @@ export class PrepayLoanComponent implements OnInit {
    */
   createprepayLoanForm() {
     this.prepayLoanForm = this.formBuilder.group({
-      'transactionDate': [new Date(), Validators.required],
+      'transactionDate': [this.settingsService.businessDate, Validators.required],
       'transactionAmount': ['', Validators.required],
       'externalId': [''],
       'paymentTypeId': [''],

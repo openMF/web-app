@@ -86,6 +86,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'multiDisburseLoan': this.loanProductsTemplate.multiDisburseLoan,
       'maxTrancheCount': this.loanProductsTemplate.maxTrancheCount,
       'outstandingLoanBalance': this.loanProductsTemplate.outstandingLoanBalance,
+      'useDecemberVariation': this.loanProductsTemplate.useDecemberVariation,
     });
 
     if (this.loanProductsTemplate.delinquencyBucket) {
@@ -180,7 +181,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
         'graceOnPrincipalAndInterestPayment': [true],
         'graceOnArrearsAgeing': [true]
       }),
-      'delinquencyBucketId': ['', Validators.required]
+      'delinquencyBucketId': ['', Validators.required],
+      'useDecemberVariation': [false]
     });
   }
 
