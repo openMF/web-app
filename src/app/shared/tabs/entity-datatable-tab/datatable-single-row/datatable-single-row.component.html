@@ -30,7 +30,7 @@
           {{dataObject.data[0].row[i] | datetimeFormat}}
         </span>
         <span *ngSwitchCase="'INTEGER' || 'DECIMAL'">
-          {{dataObject.data[0].row[i] | number}}
+          {{dataObject.data[0].row[i] | formatNumber}}
         </span>
         <span *ngSwitchCase="'TEXT'" class="long-text">
           {{dataObject.data[0].row[i]}}

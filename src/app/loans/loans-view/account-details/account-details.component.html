@@ -93,7 +93,7 @@
 
         <div fxFlexFill *ngIf="loanDetails.canDefineInstallmentAmount">
             <span fxFlex="50%"> Fixed EMI amount</span>
-            <span fxFlex="50%"> {{loanDetails.fixedEmiAmount | number}} </span>
+            <span fxFlex="50%"> {{loanDetails.fixedEmiAmount | formatNumber}} </span>
         </div>
 
         <div fxFlexFill *ngIf="loanDetails.isTopup">
@@ -108,7 +108,7 @@
 
         <div fxFlexFill *ngIf="loanDetails.isTopup">
             <span fxFlex="50%"> Topup closure amount</span>
-            <span fxFlex="50%"> {{loanDetails.topupAmount| number}} </span>
+            <span fxFlex="50%"> {{loanDetails.topupAmount| formatNumber}} </span>
         </div>
 
         <div fxFlexFill>

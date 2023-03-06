@@ -1,6 +1,6 @@
 <mat-card class="container-card">
   <mat-card-content>
-    <mat-tab-group #tabGroup mat-align-tabs="center">
+    <mat-tab-group #tabGroup mat-align-tabs="center" (selectedTabChange)="onJobTabChange($event)">
       <mat-tab label="Scheduler Jobs">
         <mifosx-manage-scheduler-jobs></mifosx-manage-scheduler-jobs>
       </mat-tab>
@@ -8,7 +8,7 @@
         <mifosx-workflow-jobs></mifosx-workflow-jobs>
       </mat-tab>
       <mat-tab label="COB">
-        <mifosx-cob-workflow></mifosx-cob-workflow>
+        <mifosx-cob-workflow [isCatchUpRunning]="isCatchUpRunning"></mifosx-cob-workflow>
       </mat-tab>
     </mat-tab-group>
 

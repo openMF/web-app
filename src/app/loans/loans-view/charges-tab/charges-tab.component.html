@@ -51,7 +51,7 @@
     <ng-container matColumnDef="outstanding">
       <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header> Outstanding </th>
       <td mat-cell class="r-amount" *matCellDef="let charge"> {{ charge.currency.displaySymbol }}{{
-        charge.amountOutstanding| number }} </td>
+        charge.amountOutstanding| formatNumber }} </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">

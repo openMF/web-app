@@ -31,17 +31,17 @@
 
       <ng-container matColumnDef="debit">
         <th mat-header-cell class="r-amount" *matHeaderCellDef> Debit </th>
-        <td mat-cell class="r-amount" *matCellDef="let transaction"> {{ isDebit(transaction.transactionType) ? (transaction.amount | number) : 'N/A'}} </td>
+        <td mat-cell class="r-amount" *matCellDef="let transaction"> {{ isDebit(transaction.transactionType) ? (transaction.amount | formatNumber) : 'N/A'}} </td>
       </ng-container>
 
       <ng-container matColumnDef="credit">
         <th mat-header-cell class="r-amount" *matHeaderCellDef> Credit </th>
-        <td mat-cell class="r-amount" *matCellDef="let transaction"> {{ !isDebit(transaction.transactionType) ? (transaction.amount | number) : 'N/A' }} </td>
+        <td mat-cell class="r-amount" *matCellDef="let transaction"> {{ !isDebit(transaction.transactionType) ? (transaction.amount | formatNumber) : 'N/A' }} </td>
       </ng-container>
 
       <ng-container matColumnDef="balance">
         <th mat-header-cell class="r-amount" *matHeaderCellDef> Balance </th>
-        <td mat-cell class="r-amount" *matCellDef="let transaction"> {{ transaction.runningBalance | number }} </td>
+        <td mat-cell class="r-amount" *matCellDef="let transaction"> {{ transaction.runningBalance | formatNumber }} </td>
       </ng-container>
 
       <ng-container matColumnDef="viewReciept">
