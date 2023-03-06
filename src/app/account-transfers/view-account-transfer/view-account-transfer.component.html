@@ -12,7 +12,7 @@
 
         <div fxFlexFill>
           <span fxFlex="40%">Transaction Amount:</span>
-          <span fxFlex="60%">{{ viewAccountTransferData.currency.displaySymbol }} {{ viewAccountTransferData.transferAmount | number }} ({{ viewAccountTransferData.currency.code }})</span>
+          <span fxFlex="60%">{{ viewAccountTransferData.currency.displaySymbol }} {{ viewAccountTransferData.transferAmount | formatNumber }} ({{ viewAccountTransferData.currency.code }})</span>
         </div>
 
         <div fxFlexFill>

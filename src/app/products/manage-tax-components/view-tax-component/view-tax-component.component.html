@@ -26,7 +26,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ taxComponentData.percentage | number }} %
+          {{ taxComponentData.percentage | formatNumber }} %
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="taxComponentData.debitAccountType">

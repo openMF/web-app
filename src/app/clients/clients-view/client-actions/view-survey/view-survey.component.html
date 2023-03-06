@@ -36,7 +36,7 @@
 
       <ng-container matColumnDef="score">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Score </th>
-        <td mat-cell *matCellDef="let survey"> {{ survey.score | number }} </td>
+        <td mat-cell *matCellDef="let survey"> {{ survey.score | formatNumber }} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

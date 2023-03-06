@@ -42,7 +42,7 @@
 
       <ng-container matColumnDef="amount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount </th>
-        <td mat-cell *matCellDef="let charge" class="r-amount"> {{ charge.amount | number }} </td>
+        <td mat-cell *matCellDef="let charge" class="r-amount"> {{ charge.amount | formatNumber }} </td>
       </ng-container>
 
       <ng-container matColumnDef="penalty">

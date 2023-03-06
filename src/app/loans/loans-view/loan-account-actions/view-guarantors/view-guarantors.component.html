@@ -43,18 +43,18 @@
             <tr>
               <td>Approved Amount</td>
               <td>
-                <span>{{dataObject.approvedPrincipal | number}}</span>
+                <span>{{dataObject.approvedPrincipal | formatNumber}}</span>
               </td>
             </tr>
             <tr>
               <td>Disburse Amount</td>
               <td>
-                <span>{{dataObject.principal | number}}</span>
+                <span>{{dataObject.principal | formatNumber}}</span>
               </td>
             </tr>
             <tr>
               <td>Arrears By</td>
-              <td>{{dataObject.summary.totalOverdue | number}}
+              <td>{{dataObject.summary.totalOverdue | formatNumber}}
                 <span *ngIf="dataObject.summary.totalOverdue < 0">Not Provided</span>
               </td>
             </tr>
