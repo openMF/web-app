@@ -122,19 +122,19 @@
             <tr>
               <td>Maturity Amount</td>
               <td>
-                <span>{{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;{{recurringDepositsAccountData.maturityAmount | number}}</span>
+                <span>{{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;{{recurringDepositsAccountData.maturityAmount | formatNumber}}</span>
               </td>
             </tr>
             <tr>
               <td>Recurring Deposit Amount</td>
               <td>
-                <span>{{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;{{recurringDepositsAccountData?.mandatoryRecommendedDepositAmount | number}}</span>
+                <span>{{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;{{recurringDepositsAccountData?.mandatoryRecommendedDepositAmount | formatNumber}}</span>
               </td>
             </tr>
             <tr>
               <td>Deposits till Date</td>
               <td><span
-                  *ngIf="recurringDepositsAccountData.summary.totalDeposits">{{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;{{recurringDepositsAccountData.summary.totalDeposits | number}}</span>
+                  *ngIf="recurringDepositsAccountData.summary.totalDeposits">{{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;{{recurringDepositsAccountData.summary.totalDeposits | formatNumber}}</span>
                 <span
                   *ngIf="!recurringDepositsAccountData.summary.totalDeposits">{{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;0</span>
               </td>
@@ -142,7 +142,7 @@
             <tr>
               <td>Withdrwals till Date</td>
               <td><span
-                  *ngIf="recurringDepositsAccountData.summary.totalWithdrawals">{{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;{{recurringDepositsAccountData.summary.totalWithdrawals | number}}</span>
+                  *ngIf="recurringDepositsAccountData.summary.totalWithdrawals">{{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;{{recurringDepositsAccountData.summary.totalWithdrawals | formatNumber}}</span>
                 <span
                   *ngIf="!recurringDepositsAccountData.summary.totalWithdrawals">{{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;0</span>
               </td>
@@ -150,7 +150,7 @@
 
             <tr *ngIf="recurringDepositsAccountData.summary.totalInterestEarned >= 0">
               <td >Interest Earned</td>
-              <td><span>{{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;{{recurringDepositsAccountData.summary.totalInterestEarned| number}}</span>
+              <td><span>{{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;{{recurringDepositsAccountData.summary.totalInterestEarned| formatNumber}}</span>
               </td>
             </tr>
 

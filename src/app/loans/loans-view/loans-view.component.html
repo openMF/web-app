@@ -31,26 +31,26 @@
               </span>
               <span class="loans-overview"
                 *ngIf="loanDetailsData.delinquent && loanDetailsData.delinquent.pastDueDays > 0">
-                Past Due Days : {{loanDetailsData?.delinquent.pastDueDays | number}}<br />
+                Past Due Days : {{loanDetailsData?.delinquent.pastDueDays | formatNumber}}<br />
               </span>
               <span class="loans-overview" *ngIf="loanDetailsData.delinquent && loanDetailsData.delinquent.delinquentDays > 0
                 && loanDetailsData.delinquent.pastDueDays != loanDetailsData.delinquent.delinquentDays">
-                Delinquent Days : {{loanDetailsData?.delinquent.delinquentDays | number}}
+                Delinquent Days : {{loanDetailsData?.delinquent.delinquentDays | formatNumber}}
               </span>
             </div>
 
             <div *ngIf="loanDetailsData.summary" class="loans-overview mat-typography" fxFlex="40%">
               <h3> Loan Account OverView </h3>
               <span>Current Balance: {{loanDetailsData.currency.displaySymbol}}
-                {{loanDetailsData.summary.totalOutstanding | number}}</span><br>
-              <span *ngIf="loanDetailsData.inArrears">Arrears By: {{loanDetailsData.summary.totalOverdue | number}}
+                {{loanDetailsData.summary.totalOutstanding | formatNumber}}</span><br>
+              <span *ngIf="loanDetailsData.inArrears">Arrears By: {{loanDetailsData.summary.totalOverdue | formatNumber}}
                 <span *ngIf="!(loanDetailsData.summary.totalOverdue>=0)">Not Provided</span>
               </span><br>
               <span *ngIf="loanDetailsData.inArrears">Arrears Since: {{loanDetailsData.summary.overdueSinceDate |
                 dateFormat}}
               </span>
               <span *ngIf="loanDetailsData.totalOverpaid && loanDetailsData.totalOverpaid > 0">
-                Overpaid By: {{loanDetailsData.currency.displaySymbol}} {{loanDetailsData.totalOverpaid | number}}
+                Overpaid By: {{loanDetailsData.currency.displaySymbol}} {{loanDetailsData.totalOverpaid | formatNumber}}
               </span>
             </div>
 

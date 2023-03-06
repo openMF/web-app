@@ -46,7 +46,7 @@
           </div>
 
           <div fxFlex="25%" fxFlex.lt-md="50%">
-            {{ cashierData.netCash | number }} [{{currencySelector.value}}]
+            {{ cashierData.netCash | formatNumber }} [{{currencySelector.value}}]
           </div>
 
         </div>
@@ -94,23 +94,23 @@
         </ng-container>
 
         <ng-container matColumnDef="allocation">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Allocation ({{cashierData.sumCashAllocation | number}}) </th>
-          <td mat-cell *matCellDef="let transaction"> {{ transaction.txnType.value === "Allocate Cash" ? (transaction.txnAmount | number) : '-' }} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Allocation ({{cashierData.sumCashAllocation | formatNumber}}) </th>
+          <td mat-cell *matCellDef="let transaction"> {{ transaction.txnType.value === "Allocate Cash" ? (transaction.txnAmount | formatNumber) : '-' }} </td>
         </ng-container>
 
         <ng-container matColumnDef="cashIn">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Cash In ({{cashierData.sumInwardCash | number}})  </th>
-          <td mat-cell *matCellDef="let transaction"> {{ transaction.txnType.value === "Cash In" ? (transaction.txnAmount | number) : '-' }} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Cash In ({{cashierData.sumInwardCash | formatNumber}})  </th>
+          <td mat-cell *matCellDef="let transaction"> {{ transaction.txnType.value === "Cash In" ? (transaction.txnAmount | formatNumber) : '-' }} </td>
         </ng-container>
 
         <ng-container matColumnDef="cashOut">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Cash Out ({{cashierData.sumOutwardCash | number}}) </th>
-          <td mat-cell *matCellDef="let transaction"> {{ transaction.txnType.value === "Cash Out" ? (transaction.txnAmount | number) : '-' }} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Cash Out ({{cashierData.sumOutwardCash | formatNumber}}) </th>
+          <td mat-cell *matCellDef="let transaction"> {{ transaction.txnType.value === "Cash Out" ? (transaction.txnAmount | formatNumber) : '-' }} </td>
         </ng-container>
 
         <ng-container matColumnDef="settlement">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Settlement ({{cashierData.sumCashSettlement | number}})</th>
-          <td mat-cell *matCellDef="let transaction"> {{ transaction.txnType.value === "Settle Cash" ? (transaction.txnAmount | number) : '-' }} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Settlement ({{cashierData.sumCashSettlement | formatNumber}})</th>
+          <td mat-cell *matCellDef="let transaction"> {{ transaction.txnType.value === "Settle Cash" ? (transaction.txnAmount | formatNumber) : '-' }} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

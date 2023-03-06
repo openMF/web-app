@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { SystemService } from 'app/system/system.service';
 
 @Component({
@@ -7,10 +7,10 @@ import { SystemService } from 'app/system/system.service';
   styleUrls: ['./cob-workflow.component.scss']
 })
 export class CobWorkflowComponent implements OnInit, OnDestroy {
-
+  /** Wait time between API status calls 30 seg */
   waitTime = 30000;
-
-  isCatchUpRunning = false;
+  /** Process running flag */
+  @Input() isCatchUpRunning = true;
   /** Timer to refetch COB Catch-Up status every 5 seconds */
   timer: any;
 
@@ -18,6 +18,7 @@ export class CobWorkflowComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     setTimeout(() => { this.getCOBCatchUpStatus(); }, this.waitTime);
+    this.getCOBCatchUpStatus();
   }
 
   ngOnDestroy() {

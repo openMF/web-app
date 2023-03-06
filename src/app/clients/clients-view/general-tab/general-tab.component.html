@@ -9,13 +9,13 @@
             <p>
               No. Of Loan Cycles :{{clientSummary?.loanCycle}} <br />
               No. of Active Loans :{{clientSummary?.activeLoans}} <br />
-              Last Loan Amount :{{clientSummary?.lastLoanAmount | number}} <br />
+              Last Loan Amount :{{clientSummary?.lastLoanAmount | formatNumber}} <br />
             </p>
           </td>
           <td>
             <p>
               No. of Active Savings :{{clientSummary?.activeSavings}} <br />
-              Total Savings :{{clientSummary?.totalSavings | number}} <br />
+              Total Savings :{{clientSummary?.totalSavings | formatNumber}} <br />
             </p>
           </td>
         </tr>
@@ -54,22 +54,22 @@
 
     <ng-container matColumnDef="Due">
       <th mat-header-cell class="r-amount" *matHeaderCellDef> Due </th>
-      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.amount | number}} </td>
+      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.amount | formatNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Paid">
       <th mat-header-cell class="r-amount" *matHeaderCellDef>Paid </th>
-      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.amountPaid | number}} </td>
+      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.amountPaid | formatNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Waived">
       <th mat-header-cell class="r-amount" *matHeaderCellDef> Waived </th>
-      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.amountWaived | number}} </td>
+      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.amountWaived | formatNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Outstanding">
       <th mat-header-cell class="r-amount" *matHeaderCellDef> Outstanding </th>
-      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.amountOutstanding | number}} </td>
+      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.amountOutstanding | formatNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">
@@ -128,12 +128,12 @@
     </ng-container>
     <ng-container matColumnDef="Loan Balance">
       <th mat-header-cell class="r-amount" *matHeaderCellDef> Loan Balance </th>
-      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.loanBalance | number}} </td>
+      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.loanBalance | formatNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Amount Paid">
       <th mat-header-cell class="r-amount" *matHeaderCellDef> Amount Paid </th>
-      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.amountPaid | number}} </td>
+      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.amountPaid | formatNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Type">
@@ -203,12 +203,12 @@
 
     <ng-container matColumnDef="Loan Balance">
       <th mat-header-cell class="r-amount" *matHeaderCellDef>Loan Balance </th>
-      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.loanBalance | number}} </td>
+      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.loanBalance | formatNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Amount Paid">
       <th mat-header-cell class="r-amount" *matHeaderCellDef> Amount Paid </th>
-      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.accountBalance | number}} </td>
+      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.accountBalance | formatNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Type">
@@ -265,7 +265,7 @@
 
     <ng-container matColumnDef="Balance">
       <th mat-header-cell class="r-amount" *matHeaderCellDef> Balance </th>
-      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.accountBalance | number}} </td>
+      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.accountBalance | formatNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">
@@ -363,7 +363,7 @@
 
     <ng-container matColumnDef="Balance">
       <th mat-header-cell class="r-amount" *matHeaderCellDef> Balance </th>
-      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.accountBalance | number}} </td>
+      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.accountBalance | formatNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">
@@ -455,7 +455,7 @@
 
     <ng-container matColumnDef="Balance">
       <th mat-header-cell class="r-amount" *matHeaderCellDef> Balance </th>
-      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.accountBalance | number}} </td>
+      <td mat-cell class="r-amount" *matCellDef="let element"> {{element.accountBalance | formatNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">
@@ -640,17 +640,17 @@
 
     <ng-container matColumnDef="Quantity">
       <th mat-header-cell class="r-amount" *matHeaderCellDef>Quantity</th>
-      <td mat-cell class="r-amount" *matCellDef="let element">{{ element.quantity | number }}</td>
+      <td mat-cell class="r-amount" *matCellDef="let element">{{ element.quantity | formatNumber }}</td>
     </ng-container>
 
     <ng-container matColumnDef="Total Value">
       <th mat-header-cell class="r-amount" *matHeaderCellDef>Total Value</th>
-      <td mat-cell class="r-amount" *matCellDef="let element">{{ element.basePrice*element.quantity | number}}</td>
+      <td mat-cell class="r-amount" *matCellDef="let element">{{ element.basePrice*element.quantity | formatNumber}}</td>
     </ng-container>
 
     <ng-container matColumnDef="Total Collateral Value">
       <th mat-header-cell class="r-amount" *matHeaderCellDef>Total Collateral Value</th>
-      <td mat-cell class="r-amount" *matCellDef="let element">{{ element.pctToBase*element.basePrice*element.quantity/100 | number}}</td>
+      <td mat-cell class="r-amount" *matCellDef="let element">{{ element.pctToBase*element.basePrice*element.quantity/100 | formatNumber}}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="collateralsColumns"></tr>

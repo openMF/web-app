@@ -101,7 +101,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.amount | number }}
+          {{ chargeData.amount | formatNumber }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
@@ -109,7 +109,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.amountPaid | number }}
+          {{ chargeData.amountPaid | formatNumber }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
@@ -117,7 +117,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.amountWaived | number }}
+          {{ chargeData.amountWaived | formatNumber }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
@@ -125,7 +125,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.amountOutstanding | number }}
+          {{ chargeData.amountOutstanding | formatNumber }}
         </div>
 
       </div>

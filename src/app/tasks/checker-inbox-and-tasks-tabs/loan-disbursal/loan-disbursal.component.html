@@ -45,7 +45,7 @@
 
     <ng-container matColumnDef="principal">
       <th mat-header-cell *matHeaderCellDef> Principal </th>
-      <td mat-cell *matCellDef="let loan"> {{loan.principal | number}} </td>
+      <td mat-cell *matCellDef="let loan"> {{loan.principal | formatNumber}} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
