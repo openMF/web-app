@@ -113,7 +113,7 @@
               <td>Interest On Overdraft</td>
               <td>
                 {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalOverdraftInterestDerived
-                | number}}</td>
+                | formatNumber}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.interestNotPosted < 0">
               <td>Overdraft Interest Not Posted</td>
@@ -122,7 +122,7 @@
             </tr>
             <tr>
               <td>Nominal Interest Rate</td>
-              <td>{{savingsAccountData.nominalAnnualInterestRate | number}} %</td>
+              <td>{{savingsAccountData.nominalAnnualInterestRate | formatNumber}} %</td>
             </tr>
             <tr>
               <td>Interest Compounding Period</td>
@@ -167,28 +167,28 @@
             </tr>
             <tr *ngIf="savingsAccountData.annualFee">
               <td>Annual Fee</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.annualFee.amount | number}}
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.annualFee.amount | formatNumber}}
               </td>
             </tr>
             <tr *ngIf="savingsAccountData.allowOverdraft">
               <td>Over Draft Limit</td>
-              <td>{{savingsAccountData.overdraftLimit | number}}</td>
+              <td>{{savingsAccountData.overdraftLimit | formatNumber}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.allowOverdraft">
               <td>Min Overdraft Required for Interest Calculation</td>
-              <td>{{savingsAccountData.minOverdraftForInterestCalculation | number}}</td>
+              <td>{{savingsAccountData.minOverdraftForInterestCalculation | formatNumber}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.minBalanceForInterestCalculation">
               <td>Min Balance Required for Interest Calculation</td>
-              <td>{{savingsAccountData.minBalanceForInterestCalculation | number}}</td>
+              <td>{{savingsAccountData.minBalanceForInterestCalculation | formatNumber}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.minRequiredBalance">
               <td>Minimum Required Balance</td>
-              <td>{{savingsAccountData.minRequiredBalance | number}}</td>
+              <td>{{savingsAccountData.minRequiredBalance | formatNumber}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.enforceMinRequiredBalance">
               <td>Enforce Minimum Required Balance</td>
-              <td>{{savingsAccountData.enforceMinRequiredBalance | number}}</td>
+              <td>{{savingsAccountData.enforceMinRequiredBalance | formatNumber}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.summary.lastInterestCalculationDate">
               <td>Interest Recalculation Date</td>
@@ -196,7 +196,7 @@
             </tr>
             <tr *ngIf="savingsAccountData.onHoldFunds">
               <td>On Hold Funds</td>
-              <td><a *mifosxHasPermission="'READ_SAVINGSACCOUNT'">{{savingsAccountData.onHoldFunds | number}}</a></td>
+              <td><a *mifosxHasPermission="'READ_SAVINGSACCOUNT'">{{savingsAccountData.onHoldFunds | formatNumber}}</a></td>
             </tr>
             <tr *ngIf="savingsAccountData.withHoldTax">
               <td>Withhold Tax Group</td>
@@ -255,7 +255,7 @@
               </tr>
               <tr>
                 <td>Nominal Interest Rate</td>
-                <td>{{savingsAccountData.nominalAnnualInterestRate | number}} %</td>
+                <td>{{savingsAccountData.nominalAnnualInterestRate | formatNumber}} %</td>
               </tr>
             </tbody>
           </table>
@@ -291,7 +291,7 @@
               <tr *ngIf="savingsAccountData.summary.totalInterestEarned >= 0">
                 <td>Total Interest Earned</td>
                 <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalInterestEarned
-                  | number}}</td>
+                  | formatNumber}}</td>
               </tr>
             </tbody>
           </table>

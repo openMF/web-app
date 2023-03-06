@@ -34,6 +34,18 @@ export class SettingsComponent implements OnInit {
     'MM-dd-yy',
     'yyyy-MM-dd'
   ];
+    /** Decimals. */
+    decimals: string[] = [
+      '0',
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      '8',
+   ];
   /** Placeholder for fonts. */
   fonts: any;
 
@@ -41,6 +53,8 @@ export class SettingsComponent implements OnInit {
   language = new FormControl('');
   /** Date Format Setting */
   dateFormat =  new FormControl('');
+  /** Decimals to Display Setting */
+  decimalsToDisplay =  new FormControl('');
 
   /**
    * @param {SettingsService} settingsService Settings Service
@@ -50,6 +64,7 @@ export class SettingsComponent implements OnInit {
   ngOnInit() {
     this.language.patchValue(this.settingsService.language);
     this.dateFormat.patchValue(this.settingsService.dateFormat);
+    this.decimalsToDisplay.patchValue(this.settingsService.decimals);
     this.buildDependencies();
   }
 
@@ -62,6 +77,9 @@ export class SettingsComponent implements OnInit {
     });
     this.dateFormat.valueChanges.subscribe((dateFormat: string) => {
       this.settingsService.setDateFormat(dateFormat);
+    });
+    this.decimalsToDisplay.valueChanges.subscribe((decimals: string) => {
+      this.settingsService.setDecimalToDisplay(decimals);
     });
   }
 

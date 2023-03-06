@@ -16,21 +16,6 @@
       <div fxLayout="column">
 
         <mat-form-field>
-          <mat-label>Name of the Organization</mat-label>
-          <input matInput>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Description</mat-label>
-          <textarea matInput></textarea>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Summary</mat-label>
-          <textarea matInput></textarea>
-        </mat-form-field>
-
-        <mat-form-field>
           <mat-label>Default Language</mat-label>
           <mat-select [formControl]="language" [compareWith]="compareOptions">
             <mat-option *ngFor="let language of languages" [value]="language">
@@ -44,6 +29,15 @@
           <mat-select [formControl]="dateFormat">
             <mat-option *ngFor="let dateFormat of dateFormats" [value]="dateFormat">
               {{ dateFormat }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Decimals to Display</mat-label>
+          <mat-select [formControl]="decimalsToDisplay">
+            <mat-option *ngFor="let decimalOpt of decimals" [value]="decimalOpt">
+              {{ decimalOpt }}
             </mat-option>
           </mat-select>
         </mat-form-field>

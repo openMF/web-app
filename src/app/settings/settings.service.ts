@@ -40,6 +40,14 @@ export class SettingsService {
     localStorage.setItem('mifosXLanguage', JSON.stringify(language));
   }
 
+  /**
+   * Sets decimals to Display throughout the app.
+   * @param {string} decimals.
+   */
+  setDecimalToDisplay(decimals: string) {
+    localStorage.setItem('mifosXDecimalsToDisplay', decimals);
+  }
+
   setDefaultLanguage() {
     const defaultLanguage = environment.defaultLanguage ? environment.defaultLanguage : 'en-US';
     this.setLanguage({
@@ -111,6 +119,16 @@ export class SettingsService {
       this.setDefaultLanguage();
     }
     return JSON.parse(localStorage.getItem('mifosXLanguage'));
+  }
+
+  /**
+   * Returns Decimals to Display setting
+   */
+  get decimals() {
+    if (!localStorage.getItem('mifosXDecimalsToDisplay')) {
+      return '2';
+    }
+    return localStorage.getItem('mifosXDecimalsToDisplay');
   }
 
   /**

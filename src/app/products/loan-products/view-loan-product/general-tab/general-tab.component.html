@@ -75,9 +75,9 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Principal:</span>
-    <span fxFlex="60%">{{ loanProduct.principal | number }}
-      (Min {{ (loanProduct.minPrincipal ? loanProduct.minPrincipal : loanProduct.principal) | number }}
-      : Max {{ (loanProduct.maxPrincipal ? loanProduct.maxPrincipal : loanProduct.principal) | number }})
+    <span fxFlex="60%">{{ loanProduct.principal | formatNumber }}
+      (Min {{ (loanProduct.minPrincipal ? loanProduct.minPrincipal : loanProduct.principal) | formatNumber }}
+      : Max {{ (loanProduct.maxPrincipal ? loanProduct.maxPrincipal : loanProduct.principal) | formatNumber }})
     </span>
   </div>
 
@@ -88,9 +88,9 @@
 
   <div fxFlexFill *ngIf="loanProduct.allowApprovedDisbursedAmountsOverApplied">
     <span fxFlex="40%">Over Applied Amount:</span>
-    <span fxFlex="60%" *ngIf="loanProduct.overAppliedCalculationType === 'percentage'">{{ loanProduct.overAppliedNumber | number
+    <span fxFlex="60%" *ngIf="loanProduct.overAppliedCalculationType === 'percentage'">{{ loanProduct.overAppliedNumber | formatNumber
       }} %</span>
-    <span fxFlex="60%" *ngIf="loanProduct.overAppliedCalculationType === 'flat'">{{ loanProduct.overAppliedNumber | number }} {{
+    <span fxFlex="60%" *ngIf="loanProduct.overAppliedCalculationType === 'flat'">{{ loanProduct.overAppliedNumber | formatNumber }} {{
       loanProduct.currencyCode }}</span>
   </div>
 

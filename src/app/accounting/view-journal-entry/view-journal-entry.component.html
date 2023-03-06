@@ -45,7 +45,7 @@
         <span *ngIf="data.journalEntry.entryType.value === 'DEBIT'">Debit</span>
       </th>
       <td>
-        {{ data.journalEntry.currency.displaySymbol }} {{ data.journalEntry.amount | number }}
+        {{ data.journalEntry.currency.displaySymbol }} {{ data.journalEntry.amount | formatNumber }}
       </td>
     </tr>
 
