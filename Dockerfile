@@ -31,7 +31,7 @@ RUN npm install --location=global @angular/cli@13.3.10
 
 RUN npm install
 
-RUN ng build --output-path=/dist $BUILD_ENVIRONMENT_OPTIONS
+RUN ng build --max_old_space_size=2048 --output-path=/dist $BUILD_ENVIRONMENT_OPTIONS
 
 ###############
 ### STAGE 2: Serve app with nginx ###
