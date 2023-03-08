@@ -21,13 +21,13 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Use Node.js 16
+      - name: Use Node.js 19
         uses: actions/setup-node@v1
         with:
           # no support for lts as of now with github actions.
           # issue link : https://github.com/actions/setup-node/issues/26
-          # lts/gallium node v16.15.1 (npm v8.11.0)
-          node-version: '16.15.1'
+          # lts/gallium node v19.7.0 (npm v9.5.0)
+          node-version: '19.7.0'
       - name: Angular CLI install
         run : npm install -g --silent @angular/cli@13.3.10
 

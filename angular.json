@@ -92,15 +92,24 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all"
+              "optimization": true,
+              "sourceMap": true,
+              "namedChunks": true,
+              "outputHashing": "all",
+              "extractLicenses": true,
+              "aot": true,
+              "buildOptimizer": true,
+              "vendorChunk": false
             },
             "development": {
-              "buildOptimizer": false,
-              "optimization": false,
-              "vendorChunk": true,
-              "extractLicenses": false,
+              "optimization": true,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "outputHashing": "all",
+              "extractLicenses": true,
+              "aot": true,
+              "buildOptimizer": true,
+              "vendorChunk": false
             }
           },
           "defaultConfiguration": "production"
