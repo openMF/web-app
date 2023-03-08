@@ -132,7 +132,7 @@
     </mat-card-content>
 
     <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-      <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+      <button type="button" mat-raised-button [routerLink]="['../..']">Cancel</button>
       <button mat-raised-button color="primary" [disabled]="!makeAccountTransferForm.valid"
         *mifosxHasPermission="'CREATE_ACCOUNTTRANSFER'" (click)="submit()">Submit</button>
     </mat-card-actions>

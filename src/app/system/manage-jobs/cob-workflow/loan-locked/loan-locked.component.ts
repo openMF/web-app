@@ -46,9 +46,6 @@ export class LoanLockedComponent implements OnInit {
     private systemService: SystemService,
     private tasksService: TasksService,
     private dialog: MatDialog) {
-    this.route.data.subscribe((data: { loansData: any }) => {
-      this.loans = data.loansData.content;
-    });
   }
 
   ngOnInit(): void {
@@ -56,6 +53,7 @@ export class LoanLockedComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.selection = new SelectionModel(true, []);
     this.allowRunInlineJob = false;
+    this.getLoansLocked(this.currentPage);
   }
 
   applyFilter(filterValue: string = '') {
