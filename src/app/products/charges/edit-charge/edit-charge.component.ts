@@ -162,7 +162,7 @@ export class EditChargeComponent implements OnInit {
 
   evalThirdParty(isThirdParty: boolean) {
     if (isThirdParty) {
-      this.chargeForm.addControl('incomeAccountId', new FormControl(''));
+      this.chargeForm.addControl('incomeAccountId', this.formBuilder.control(this.chargeData.incomeOrLiabilityAccount.id, Validators.required));
     } else {
       this.chargeForm.removeControl('incomeAccountId');
     }
