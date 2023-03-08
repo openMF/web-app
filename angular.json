@@ -93,7 +93,7 @@
                 }
               ],
               "optimization": true,
-              "sourceMap": true,
+              "sourceMap": false,
               "namedChunks": true,
               "outputHashing": "all",
               "extractLicenses": true,
