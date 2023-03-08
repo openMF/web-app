@@ -190,7 +190,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'transfer-funds',
+        path: ':savingAccountId/transfer-funds',
         loadChildren: () => import('../account-transfers/account-transfers.module').then(m => m.AccountTransfersModule)
       },
       {

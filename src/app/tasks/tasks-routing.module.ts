@@ -25,8 +25,6 @@ import { GetLoans } from './common-resolvers/getLoans.resolver';
 import { GetRescheduleLoans } from './common-resolvers/getRescheduleLoans.resolver';
 import { MakerCheckerTemplate } from './common-resolvers/makerCheckerTemplate.resolver';
 import { GetCheckerInboxDetailResolver } from './common-resolvers/getCheckerInboxDetail.resolver';
-import { LoanLockedComponent } from './checker-inbox-and-tasks-tabs/loan-locked/loan-locked.component';
-import { LoanLockedResolver } from './checker-inbox-and-tasks-tabs/loan-locked/loan-locked.resolver';
 
 /** Tasks Routes */
 const routes: Routes = [
@@ -68,14 +66,6 @@ const routes: Routes = [
           data: { title: extract('Loan Disbursal') },
           resolve: {
             loansData: GetLoans
-          }
-        },
-        {
-          path: 'loan-locked',
-          component: LoanLockedComponent,
-          data: { title: extract('Loan Locked') },
-          resolve: {
-            loansData: LoanLockedResolver
           }
         },
         {

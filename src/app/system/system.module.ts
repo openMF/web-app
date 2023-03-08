@@ -71,6 +71,7 @@ import { WorkflowJobsComponent } from './manage-jobs/workflow-jobs/workflow-jobs
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ManageExternalEventsComponent } from './manage-external-events/manage-external-events.component';
 import { CobWorkflowComponent } from './manage-jobs/cob-workflow/cob-workflow.component';
+import { LoanLockedComponent } from './manage-jobs/cob-workflow/loan-locked/loan-locked.component';
 
 @NgModule({
   imports: [
@@ -141,7 +142,8 @@ import { CobWorkflowComponent } from './manage-jobs/cob-workflow/cob-workflow.co
     WorkflowJobsComponent,
     WorkflowDiagramComponent,
     ManageExternalEventsComponent,
-    CobWorkflowComponent
+    CobWorkflowComponent,
+    LoanLockedComponent
   ],
 })
 export class SystemModule { }
