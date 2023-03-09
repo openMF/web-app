@@ -4,7 +4,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Product Name</mat-label>
-      <mat-select formControlName="productId" required>
+      <mat-select formControlName="productId" matTooltip="The name of the loan product that the loan account is based upon" required>
         <mat-option *ngFor="let product of productData" [value]="product.id">
           {{ product.name }}
         </mat-option>
@@ -16,7 +16,7 @@
 
     <mat-form-field fxFlex="48%" *ngIf="loanProductSelected">
       <mat-label>Loan officer</mat-label>
-      <mat-select formControlName="loanOfficerId">
+      <mat-select formControlName="loanOfficerId" matTooltip="The financial institution representative who has responsibility for, and interacts with, the client/group associated with a loan account">
         <mat-option *ngFor="let loanOfficer of loanOfficerOptions" [value]="loanOfficer.id">
           {{ loanOfficer.displayName }}
         </mat-option>
@@ -28,7 +28,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Loan purpose</mat-label>
-      <mat-select formControlName="loanPurposeId">
+      <mat-select formControlName="loanPurposeId" matTooltip="Provides an indication of how the funds provided through the loan will be directed and can be used to group loans with the same purpose for reporting">
         <mat-option *ngFor="let loanPurpose of loanPurposeOptions" [value]="loanPurpose.id">
           {{ loanPurpose.name }}
         </mat-option>
@@ -46,7 +46,7 @@
 
     <mat-form-field fxFlex="48%" (click)="submitPicker.open()">
       <mat-label>Submitted on</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submitPicker" required
+      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submitPicker" matTooltip="The date the loan account application was received" required
         formControlName="submittedOnDate">
       <mat-datepicker-toggle matSuffix [for]="submitPicker"></mat-datepicker-toggle>
       <mat-datepicker #submitPicker></mat-datepicker>
@@ -57,7 +57,7 @@
 
     <mat-form-field fxFlex="48%" (click)="disbursementPicker.open()">
       <mat-label>Disbursement on</mat-label>
-      <input matInput [min]="loansAccountDetailsForm.value.submittedOnDate" [max]="maxDate" [matDatepicker]="disbursementPicker" required
+      <input matInput [min]="loansAccountDetailsForm.value.submittedOnDate" [max]="maxDate" [matDatepicker]="disbursementPicker" matTooltip="The date that the loan account is expected to be disbursed" required
         formControlName="expectedDisbursementDate">
       <mat-datepicker-toggle matSuffix [for]="disbursementPicker"></mat-datepicker-toggle>
       <mat-datepicker #disbursementPicker></mat-datepicker>
@@ -68,7 +68,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>External id</mat-label>
-      <input matInput formControlName="externalId">
+      <input matInput formControlName="externalId" matTooltip="Provides an external id for the loan account">
     </mat-form-field>
 
     <mat-divider fxFlex="98%"></mat-divider>
