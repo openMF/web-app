@@ -126,6 +126,9 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
    */
   submit() {
     const user = this.userForm.value;
+    if (this.userForm.value.staffId == null || this.userForm.value.staffId === '') {
+      delete user.staffId;
+    }
     this.usersService.createUser(user).subscribe((response: any) => {
       if (this.configurationWizardService.showUsersForm === true) {
         this.configurationWizardService.showUsersForm = false;
