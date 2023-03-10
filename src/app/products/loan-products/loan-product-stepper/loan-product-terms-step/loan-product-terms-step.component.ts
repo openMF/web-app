@@ -51,7 +51,7 @@ export class LoanProductTermsStepComponent implements OnInit {
       'maxNumberOfRepayments': this.loanProductsTemplate.maxNumberOfRepayments,
       'isLinkedToFloatingInterestRates': this.loanProductsTemplate.isLinkedToFloatingInterestRates,
       'minInterestRatePerPeriod': this.loanProductsTemplate.minInterestRatePerPeriod,
-      'interestRatePerPeriod': this.loanProductsTemplate.interestRatePerPeriod,
+      'interestRatePerPeriod': this.loanProductsTemplate.interestRatePerPeriod ? this.loanProductsTemplate.interestRatePerPeriod: 0,
       'maxInterestRatePerPeriod': this.loanProductsTemplate.maxInterestRatePerPeriod,
       'interestRateFrequencyType': this.loanProductsTemplate.interestRateFrequencyType.id,
       'floatingRatesId': this.loanProductsTemplate.floatingRateId,
