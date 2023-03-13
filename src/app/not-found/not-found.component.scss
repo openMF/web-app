@@ -1,28 +1,18 @@
-#particles-js {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: cornflowerblue;
-}
+@import "assets/styles/helper";
 
-.text {
-	position: absolute;
-	top: 50%;
-	right: 50%;
-	transform: translate(50%,-50%);
-	max-width: 90%;
-	padding: 2em 3em;
-  color: white;
-	font-family: 'Raleway', sans-serif;
+.not-found-container {
+  height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  background: $accent;
+  color: $white;
 }
 
 #title {
-  font-size: 120pt;
+  font-size: 160px;
+  font-weight: bolder;
 }
 
-#subtitle {
-  font-size: 12pt;
-}
+

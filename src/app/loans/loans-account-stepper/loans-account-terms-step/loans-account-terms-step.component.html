@@ -42,13 +42,13 @@
 
     <mat-form-field fxFlex="48%" (click)="repaymentsPicker.open()">
       <mat-label>First repayment on</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="repaymentsPicker"
+      <input matInput [min]="minDate" [max]="maxDate" matTooltip="May be entered to override the date the system would schedule" [matDatepicker]="repaymentsPicker"
         formControlName="repaymentsStartingFromDate">
       <mat-datepicker-toggle matSuffix [for]="repaymentsPicker"></mat-datepicker-toggle>
       <mat-datepicker #repaymentsPicker></mat-datepicker>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">Repaid Every</h4>
+    <h4 fxFlex="98%" class="mat-h4">Repaid Every <i class="fas fa-question" matTooltip="These fields are input to calculating the repayment schedule for a loan account and are used to determine when payments are due."></i></h4>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Repaid every</mat-label>
@@ -89,7 +89,7 @@
 
     <mat-form-field fxFlex="48%" (click)="interestPicker.open()">
       <mat-label>Interest charged from</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="interestPicker"
+      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="interestPicker" matTooltip="May be entered to override the date the system would start charging interest"
         formControlName="interestChargedFromDate">
       <mat-datepicker-toggle matSuffix [for]="interestPicker"></mat-datepicker-toggle>
       <mat-datepicker #interestPicker></mat-datepicker>
@@ -104,7 +104,7 @@
 
       <mat-form-field fxFlex="48%">
         <mat-label>Interest method</mat-label>
-        <mat-select formControlName="interestType">
+        <mat-select formControlName="interestType" matTooltip="The Interest method value is input to calculating the payments amount for repayment of the loan.">
           <mat-option *ngFor="let interestType of interestTypeData" [value]="interestType.id">
             {{ interestType.value }}
           </mat-option>
@@ -141,7 +141,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Amortization</mat-label>
-      <mat-select required formControlName="amortizationType">
+      <mat-select required matTooltip="The Amortization value is input to calculating the repayment amounts for repayment of the loan." formControlName="amortizationType">
         <mat-option *ngFor="let amortizationType of amortizationTypeData" [value]="amortizationType.id">
           {{ amortizationType.value }}
         </mat-option>
@@ -155,7 +155,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Interest calculation period</mat-label>
-      <mat-select formControlName="interestCalculationPeriodType">
+      <mat-select formControlName="interestCalculationPeriodType" matTooltip="Daily - Will Calculate the interest on DAILY basis ex: Month of February has 28days and it will calculate interest for 28days, SAME AS REPAYMENT PERIOD- it calculates for the month,that is, 30days.">
         <mat-option *ngFor="let interestCalculationPeriodType of interestCalculationPeriodTypeData"
           [value]="interestCalculationPeriodType.id">
           {{ interestCalculationPeriodType.value }}
@@ -163,23 +163,23 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-checkbox fxFlex="48%" formControlName="allowPartialPeriodInterestCalcualtion">
+    <mat-checkbox fxFlex="48%" formControlName="allowPartialPeriodInterestCalcualtion" matTooltip="To be used with SAME AS REPAYMENT PERIOD- for  calculating exact interest with partial period  ex: Interest charged from is 5th of April , Principal is 10000 and interest is 1% per month then the interest will be (10000 * 1%)* (25/30) , it calculates for the month first then calculates exact periods between start date and end date(can be a decimal)">
       <p>Calculate interest for exact days in partial period</p>
     </mat-checkbox>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Arrears tolerance {{currencyDisplaySymbol}}</mat-label>
-      <input matInput type="number" formControlName="inArrearsTolerance">
+      <input matInput type="number" formControlName="inArrearsTolerance" matTooltip="With 'Arrears tolerance' you can specify a tolerance amount and if the loan is behind (in arrears), but within the tolerance, it won't be classified as 'in arrears' and part of the portfolio at risk.">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Interest free period</mat-label>
-      <input matInput formControlName="graceOnInterestCharged">
+      <input matInput formControlName="graceOnInterestCharged" matTooltip="If the Interest Free Period is '4' and the client's Repayment Frequency is every week, then for the first four weeks the client need not to pay interest, he has to pay principle due for that week only.">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Repayment strategy</mat-label>
-      <mat-select formControlName="transactionProcessingStrategyCode">
+      <mat-select formControlName="transactionProcessingStrategyCode" matTooltip="The repayment strategy determines the sequence in which each of the components is paid.">
         <mat-option *ngFor="let transactionProcessingStrategy of transactionProcessingStrategyOptions" [value]="transactionProcessingStrategy.code">
           {{ transactionProcessingStrategy.name }}
         </mat-option>
@@ -189,7 +189,7 @@
       </mat-error>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">Moratorium</h4>
+    <h4 fxFlex="98%" class="mat-h4">Moratorium <i class="fas fa-question" matTooltip="The moratorium information will default from the loan product settings, but can be changed for this loan account"></i></h4>
 
     <mat-form-field fxFlex="23%">
       <mat-label>Grace on principal payment</mat-label>
