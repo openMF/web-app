@@ -3,6 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SettingsService } from 'app/settings/settings.service';
+import { TooltipPosition } from '@angular/material/tooltip';
 
 /** Custom Services */
 import { LoansService } from '../../loans.service';

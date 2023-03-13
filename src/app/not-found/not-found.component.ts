@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-declare var particlesJS: any;
+import { Component } from '@angular/core';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'mifosx-not-found',
   templateUrl: './not-found.component.html',
   styleUrls: ['./not-found.component.scss']
 })
-export class NotFoundComponent implements OnInit {
+export class NotFoundComponent {
 
-  constructor() { }
+constructor(private location: Location) {}
 
-  ngOnInit() {
-    particlesJS.load('particles-js', '/assets/particles.json');
+  goBack(): void {
+  this.location.back();
   }
 
 }

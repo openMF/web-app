@@ -1,5 +1,9 @@
-  <div id="particles-js"></div>
-  <div class="text">
-    <h1 id="title">404</h1>
-    <p id="subtitle">Something went wrong.</p>
+  <div class="not-found-container">
+    <div id="title">404</div>
+    <div id="subtitle" class="f30">{{'not_found_subtitle' | translate}}</div>
+    <div class="back-button m-t-20">
+      <button type="button" (click)="goBack()" mat-raised-button>
+        <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
+        {{'labels.buttons.Back' | translate}}</button>
+    </div>
   </div>

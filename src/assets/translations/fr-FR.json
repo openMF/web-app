@@ -2,6 +2,7 @@
   "APP_NAME": "Mifos X",
   "Logged in as": "Logged in as",
   "Remember me": "Remember me",
+  "not_found_subtitle": "Oups.. Il semble que cette page n'existe pas.",
   "languages": {
     "en-US": "English",
     "fr-FR": "French",
