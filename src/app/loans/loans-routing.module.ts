@@ -56,6 +56,7 @@ import { LoanDelinquencyTagsTabComponent } from './loans-view/loan-delinquency-t
 import { LoanReschedulesResolver } from './common-resolvers/loan-reschedules.resolver';
 import { RescheduleLoanTabComponent } from './loans-view/reschedule-loan-tab/reschedule-loan-tab.component';
 import { AdjustLoanChargeComponent } from './loans-view/loan-account-actions/adjust-loan-charge/adjust-loan-charge.component';
+import { LoanArrearDelinquencyResolver } from './common-resolvers/loan-arrear-delinquency.resolver';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -77,7 +78,8 @@ const routes: Routes = [
         component: LoansViewComponent,
         resolve: {
           loanDetailsData: LoanDetailsResolver,
-          loanDatatables: LoanDatatablesResolver
+          loanDatatables: LoanDatatablesResolver,
+          loanArrearsDelinquencyConfig: LoanArrearDelinquencyResolver
         },
         children: [
           {
