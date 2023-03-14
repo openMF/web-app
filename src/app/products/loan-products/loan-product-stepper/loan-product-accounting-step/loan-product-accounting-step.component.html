@@ -180,6 +180,42 @@
         </mat-error>
       </mat-form-field>
 
+      <mat-form-field fxFlex="48%">
+        <mat-label>Income from Goodwill Credit Interest</mat-label>
+        <mat-select formControlName="incomeFromGoodwillCreditInterestAccountId" required>
+          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
+            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          Income from Goodwill Credit Interest is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="48%">
+        <mat-label>Income from Goodwill Credit Fees</mat-label>
+        <mat-select formControlName="incomeFromGoodwillCreditFeesAccountId" required>
+          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
+            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          Income from Goodwill Credit Fees is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="48%">
+        <mat-label>Income from Goodwill Credit Penalty</mat-label>
+        <mat-select formControlName="incomeFromGoodwillCreditPenaltyAccountId" required>
+          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
+            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          Income from Goodwill Credit Penalty is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
       <mat-divider fxFlex="98%"></mat-divider>
 
       <h4 fxFlex="98%" class="mat-h4">Expenses</h4>
@@ -250,9 +286,7 @@
 
       <mat-divider fxFlex="98%"></mat-divider>
 
-      <h3 fxFlex="23%" class="mat-h3">Advanced Accounting Rules</h3>
-
-      <mat-checkbox fxFlex="73%" formControlName="advancedAccountingRules"></mat-checkbox>
+      <mat-checkbox fxFlex="73%" formControlName="advancedAccountingRules">Advanced Accounting Rules</mat-checkbox>
 
       <div *ngIf="loanProductAccountingForm.value.advancedAccountingRules" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 

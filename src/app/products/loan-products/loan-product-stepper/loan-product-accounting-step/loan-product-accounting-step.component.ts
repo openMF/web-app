@@ -82,6 +82,9 @@ export class LoanProductAccountingStepComponent implements OnInit {
           'incomeFromChargeOffPenaltyAccountId': accountingMappings.incomeFromChargeOffPenaltyAccount ? accountingMappings.incomeFromChargeOffPenaltyAccount.id : '',
           'incomeFromChargeOffFeesAccountId': accountingMappings.incomeFromChargeOffFeesAccount ? accountingMappings.incomeFromChargeOffFeesAccount.id : '',
           'incomeFromChargeOffInterestAccountId': accountingMappings.incomeFromChargeOffInterestAccount ? accountingMappings.incomeFromChargeOffInterestAccount.id : '',
+          'incomeFromGoodwillCreditInterestAccountId': accountingMappings.incomeFromGoodwillCreditInterestAccount ? accountingMappings.incomeFromGoodwillCreditInterestAccount.id : '',
+          'incomeFromGoodwillCreditFeesAccountId': accountingMappings.incomeFromGoodwillCreditFeesAccount ? accountingMappings.incomeFromGoodwillCreditFeesAccount.id : '',
+          'incomeFromGoodwillCreditPenaltyAccountId': accountingMappings.incomeFromGoodwillCreditPenaltyAccount ? accountingMappings.incomeFromGoodwillCreditPenaltyAccount.id : '',
           'advancedAccountingRules': (this.loanProductsTemplate.paymentChannelToFundSourceMappings || this.loanProductsTemplate.feeToIncomeAccountMappings || this.loanProductsTemplate.penaltyToIncomeAccountMappings) ? true : false
         });
 
@@ -123,6 +126,9 @@ export class LoanProductAccountingStepComponent implements OnInit {
           this.loanProductAccountingForm.addControl('incomeFromChargeOffPenaltyAccountId', new FormControl('', Validators.required));
           this.loanProductAccountingForm.addControl('incomeFromChargeOffFeesAccountId', new FormControl('', Validators.required));
           this.loanProductAccountingForm.addControl('incomeFromChargeOffInterestAccountId', new FormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('incomeFromGoodwillCreditInterestAccountId', new FormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('incomeFromGoodwillCreditFeesAccountId', new FormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('incomeFromGoodwillCreditPenaltyAccountId', new FormControl('', Validators.required));
 
           this.loanProductAccountingForm.get('advancedAccountingRules').valueChanges
             .subscribe((advancedAccountingRules: boolean) => {
@@ -153,6 +159,9 @@ export class LoanProductAccountingStepComponent implements OnInit {
           this.loanProductAccountingForm.removeControl('incomeFromChargeOffPenaltyAccountId');
           this.loanProductAccountingForm.removeControl('incomeFromChargeOffFeesAccountId');
           this.loanProductAccountingForm.removeControl('incomeFromChargeOffInterestAccountId');
+          this.loanProductAccountingForm.removeControl('incomeFromGoodwillCreditInterestAccountId');
+          this.loanProductAccountingForm.removeControl('incomeFromGoodwillCreditFeesAccountId');
+          this.loanProductAccountingForm.removeControl('incomeFromGoodwillCreditPenaltyAccountId');
         }
 
         if (accountingRule === 3 || accountingRule === 4) {
