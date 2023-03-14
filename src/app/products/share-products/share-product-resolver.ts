@@ -24,8 +24,8 @@ export class ShareProductResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const id = route.paramMap.get('id');
-    return this.productsService.getShareProduct(id);
+    const productId = route.parent.paramMap.get('productId');
+    return this.productsService.getShareProduct(productId);
   }
 
 }

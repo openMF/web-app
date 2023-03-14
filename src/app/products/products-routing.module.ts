@@ -124,6 +124,10 @@ import { FixedDepositGeneralTabComponent } from './fixed-deposit-products/view-f
 import { FixedDepositDatatableTabComponent } from './fixed-deposit-products/view-fixed-deposit-product/fixed-deposit-datatable-tab/fixed-deposit-datatable-tab.component';
 import { RecurringDepositGeneralTabComponent } from './recurring-deposit-products/view-recurring-deposit-product/recurring-deposit-general-tab/recurring-deposit-general-tab.component';
 import { RecurringDepositDatatableTabComponent } from './recurring-deposit-products/view-recurring-deposit-product/recurring-deposit-datatable-tab/recurring-deposit-datatable-tab.component';
+import { ShareProductGeneralTabComponent } from './share-products/view-share-product/share-product-general-tab/share-product-general-tab.component';
+import { ShareProductDatatableTabComponent } from './share-products/view-share-product/share-product-datatable-tab/share-product-datatable-tab.component';
+import { ShareProductDatatablesResolver } from './share-products/share-product-datatables.resolver';
+import { ShareProductDatatableResolver } from './share-products/share-product-datatable.resolver';
 
 /** Products Routes */
 const routes: Routes = [
@@ -228,7 +232,6 @@ const routes: Routes = [
                 {
                   path: '',
                   component: ViewSavingProductComponent,
-
                   children: [
                     {
                       path: '',
@@ -288,18 +291,41 @@ const routes: Routes = [
               }
             },
             {
-              path: ':id',
-              data: { title: extract('View Share Product'), routeParamBreadcrumb: 'id' },
+              path: ':productId',
+              data: { title: extract('View Share Product'), breadcrumb: 'productId', routeParamBreadcrumb: 'productId' },
               resolve: {
-                shareProduct: ShareProductResolver
+                shareProductDatatables: ShareProductDatatablesResolver
               },
               children: [
                 {
                   path: '',
                   component: ViewShareProductComponent,
-                  resolve: {
-                    shareProduct: ShareProductResolver
-                  },
+                  children: [
+                    {
+                      path: '',
+                      redirectTo: 'general',
+                      pathMatch: 'full'
+                    },
+                    {
+                      path: 'general',
+                      data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false },
+                      component: ShareProductGeneralTabComponent,
+                      resolve: {
+                        shareProduct: ShareProductResolver
+                      },
+                    },
+                    {
+                      path: 'datatables',
+                      children: [{
+                        path: ':datatableName',
+                        component: ShareProductDatatableTabComponent,
+                        data: { title: extract('Data Table View'), routeParamBreadcrumb: 'datatableName' },
+                        resolve: {
+                          shareProductDatatable: ShareProductDatatableResolver
+                        }
+                      }]
+                    }
+                  ]
                 },
                 {
                   path: 'edit',

@@ -1,0 +1,224 @@
+<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+  <button mat-raised-button color="primary" [routerLink]="['../edit']" *mifosxHasPermission="'UPDATE_SHAREPRODUCT'">
+    <fa-icon icon="edit" class="m-r-10"></fa-icon>
+    Edit
+  </button>
+  <button mat-raised-button color="primary" [routerLink]="['../dividends']" *mifosxHasPermission="'UPDATE_SHAREPRODUCT'">
+    <fa-icon icon="hand-holding-usd" class="m-r-10"></fa-icon>
+    Dividends
+  </button>
+</div>
+
+<div class="container">
+
+  <mat-card>
+
+    <mat-card-content>
+
+      <div fxLayout="row wrap" fxLayout.lt-md="column">
+
+        <h2 class="mat-h2" fxFlexFill>{{ shareProduct.name }}</h2>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <h3 class="mat-h3" fxFlexFill>Details</h3>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Short Name:</span>
+          <span fxFlex="60%">{{ shareProduct.shortName }}</span>
+        </div>
+
+        <div fxFlexFill *ngIf="shareProduct.description">
+          <span fxFlex="40%">Description:</span>
+          <span fxFlex="60%">{{ shareProduct.description }}</span>
+        </div>
+
+        <h3 class="mat-h3" fxFlexFill>Currency</h3>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Currency:</span>
+          <span fxFlex="60%">{{ shareProduct.currency.name }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Decimal Places:</span>
+          <span fxFlex="60%">{{ shareProduct.currency.decimalPlaces }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Currency in multiples of:</span>
+          <span fxFlex="60%">{{ shareProduct.currency.inMultiplesOf }}</span>
+        </div>
+
+        <h3 class="mat-h3" fxFlexFill>Terms</h3>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Total Number of Shares:</span>
+          <span fxFlex="60%">{{ shareProduct.totalShares }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Shares to be Issued:</span>
+          <span fxFlex="60%">{{ shareProduct.totalSharesIssued }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Nominal/Unit Price:</span>
+          <span fxFlex="60%">{{ shareProduct.unitPrice }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Capital Value:</span>
+          <span fxFlex="60%">{{ shareProduct.shareCapital }}</span>
+        </div>
+
+        <h3 class="mat-h3" fxFlexFill>Settings</h3>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Shares per Client:</span>
+          <span fxFlex="60%">{{ shareProduct.nominalShares + ' (Min: ' + (shareProduct.minimumShares ? shareProduct.minimumShares : shareProduct.nominalShares) + ', Max: ' + (shareProduct.maximumShares ? shareProduct.maximumShares : shareProduct.nominalShares) + ')' }}</span>
+        </div>
+
+        <div fxFlexFill *ngIf="shareProduct.minimumActivePeriod">
+          <span fxFlex="40%">Minimum Active Period:</span>
+          <span fxFlex="60%">{{ shareProduct.minimumActivePeriod + ' ' + shareProduct.minimumActivePeriodForDividendsTypeEnum.value }}</span>
+        </div>
+
+        <div fxFlexFill *ngIf="shareProduct.lockinPeriod">
+          <span fxFlex="40%">Lock-in Period:</span>
+          <span fxFlex="60%">{{ shareProduct.lockinPeriod + ' ' + shareProduct.lockPeriodTypeEnum.value }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Allow dividends for inactive clients:</span>
+          <span fxFlex="60%">{{ shareProduct.allowDividendCalculationForInactiveClients ? 'Yes' : 'No' }}</span>
+        </div>
+
+        <div fxFlexFill *ngIf="shareProduct.marketPrice?.length" fxLayout="row wrap" fxLayout.lt-md="column">
+
+          <h3 class="mat-h3" fxFlexFill>Market Price Periods</h3>
+
+          <mat-divider [inset]="true"></mat-divider>
+
+          <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="shareProduct.marketPrice">
+
+            <ng-container matColumnDef="fromDate">
+              <th mat-header-cell *matHeaderCellDef> From Date </th>
+              <td mat-cell *matCellDef="let marketPrice">
+                {{ marketPrice.fromDate  | dateFormat }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="shareValue">
+              <th mat-header-cell *matHeaderCellDef> Nominal/Unit Price </th>
+              <td mat-cell *matCellDef="let marketPrice">
+                {{ marketPrice.shareValue }}
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="marketPriceDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: marketPriceDisplayedColumns;"></tr>
+
+          </table>
+
+        </div>
+
+        <div fxFlexFill *ngIf="shareProduct.charges.length" fxLayout="row wrap" fxLayout.lt-md="column">
+
+          <h3 class="mat-h3" fxFlexFill>Charges</h3>
+
+          <mat-divider [inset]="true"></mat-divider>
+
+          <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="shareProduct.charges">
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Name </th>
+              <td mat-cell *matCellDef="let charge">
+                {{ charge.name + ', ' + charge.currency.displaySymbol }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="chargeCalculationType">
+              <th mat-header-cell *matHeaderCellDef> Type </th>
+              <td mat-cell *matCellDef="let charge">
+                {{ charge.chargeCalculationType.value }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef> Amount </th>
+              <td mat-cell *matCellDef="let charge">
+                {{ charge.amount | numberFormat }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="chargeTimeType">
+              <th mat-header-cell *matHeaderCellDef> Collected On </th>
+              <td mat-cell *matCellDef="let charge">
+                {{ charge.chargeTimeType.value }}
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="chargesDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: chargesDisplayedColumns;"></tr>
+
+          </table>
+
+        </div>
+
+        <h3 class="mat-h3" fxFlexFill>Accounting</h3>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Type:</span>
+          <span fxFlex="60%">{{ shareProduct.accountingRule.value }}</span>
+        </div>
+
+        <div fxFlexFill *ngIf="shareProduct.accountingRule.id === 2" fxLayout="row wrap" fxLayout.lt-md="column">
+
+          <h4 fxFlexFill class="mat-h4">Assets</h4>
+
+          <div fxFlexFill>
+            <span fxFlex="40%">Share reference:</span>
+            <span fxFlex="60%">({{ shareProduct.accountingMappings.shareReferenceId.glCode }}) {{ shareProduct.accountingMappings.shareReferenceId.name }}</span>
+          </div>
+
+          <h4 fxFlexFill class="mat-h4">Liabilities</h4>
+
+          <div fxFlexFill>
+            <span fxFlex="40%">Share suspense control:</span>
+            <span fxFlex="60%">({{ shareProduct.accountingMappings.shareSuspenseId.glCode }}) {{ shareProduct.accountingMappings.shareSuspenseId.name }}</span>
+          </div>
+
+          <h4 fxFlexFill class="mat-h4">Share Equity</h4>
+
+          <div fxFlexFill>
+            <span fxFlex="40%">Equity:</span>
+            <span fxFlex="60%">({{ shareProduct.accountingMappings.shareEquityId.glCode }}) {{ shareProduct.accountingMappings.shareEquityId.name }}</span>
+          </div>
+
+          <h4 fxFlexFill class="mat-h4">Income</h4>
+
+          <div fxFlexFill>
+            <span fxFlex="40%">Income from fees:</span>
+            <span fxFlex="60%">({{ shareProduct.accountingMappings.incomeFromFeeAccountId.glCode }}) {{ shareProduct.accountingMappings.incomeFromFeeAccountId.name }}</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

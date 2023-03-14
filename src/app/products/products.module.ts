@@ -114,6 +114,8 @@ import { FixedDepositGeneralTabComponent } from './fixed-deposit-products/view-f
 import { FixedDepositDatatableTabComponent } from './fixed-deposit-products/view-fixed-deposit-product/fixed-deposit-datatable-tab/fixed-deposit-datatable-tab.component';
 import { RecurringDepositDatatableTabComponent } from './recurring-deposit-products/view-recurring-deposit-product/recurring-deposit-datatable-tab/recurring-deposit-datatable-tab.component';
 import { RecurringDepositGeneralTabComponent } from './recurring-deposit-products/view-recurring-deposit-product/recurring-deposit-general-tab/recurring-deposit-general-tab.component';
+import { ShareProductGeneralTabComponent } from './share-products/view-share-product/share-product-general-tab/share-product-general-tab.component';
+import { ShareProductDatatableTabComponent } from './share-products/view-share-product/share-product-datatable-tab/share-product-datatable-tab.component';
 
 /**
  * Products Module
@@ -235,7 +237,9 @@ import { RecurringDepositGeneralTabComponent } from './recurring-deposit-product
     FixedDepositGeneralTabComponent,
     FixedDepositDatatableTabComponent,
     RecurringDepositDatatableTabComponent,
-    RecurringDepositGeneralTabComponent
+    RecurringDepositGeneralTabComponent,
+    ShareProductGeneralTabComponent,
+    ShareProductDatatableTabComponent
   ],
   entryComponents: [
     DepositProductIncentiveFormDialogComponent,
