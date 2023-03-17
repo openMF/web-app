@@ -8,14 +8,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ViewShareProductComponent implements OnInit {
 
-  shareProduct: any;
-
-  marketPriceDisplayedColumns: string[] = ['fromDate', 'shareValue'];
-  chargesDisplayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType'];
+  shareProductDatatables: any = [];
 
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { shareProduct: any }) => {
-      this.shareProduct = data.shareProduct;
+    this.route.data.subscribe((data: { shareProductDatatables: any }) => {
+      this.shareProductDatatables = [];
+      data.shareProductDatatables.forEach((datatable: any) => {
+        this.shareProductDatatables.push(datatable);
+      });
     });
   }
 

@@ -75,6 +75,9 @@ export class EditConfigurationComponent implements OnInit {
       const payload = {
         ...this.configurationForm.value
       };
+      if (!this.configurationForm.value.stringValue) {
+        delete payload.stringValue;
+      }
       if (this.configurationForm.value.dateValue != null) {
         payload.locale = this.settingsService.language.code;
         payload.dateFormat = this.settingsService.dateFormat;

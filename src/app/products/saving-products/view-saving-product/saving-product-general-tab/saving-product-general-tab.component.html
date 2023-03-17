@@ -215,21 +215,21 @@
 
           <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
             <span fxFlex="40%">Saving reference:</span>
-            <span fxFlex="60%">{{ savingProduct.accountingMappings.savingsReferenceAccount.name }}</span>
+            <span fxFlex="60%">({{ savingProduct.accountingMappings.savingsReferenceAccount.glCode }}) {{ savingProduct.accountingMappings.savingsReferenceAccount.name }}</span>
             <span fxFlex="40%">Overdraft portfolio:</span>
-            <span fxFlex="60%">{{ savingProduct.accountingMappings.overdraftPortfolioControl.name }}</span>
+            <span fxFlex="60%">({{ savingProduct.accountingMappings.overdraftPortfolioControl.glCode }}) {{ savingProduct.accountingMappings.overdraftPortfolioControl.name }}</span>
           </div>
 
           <h4 fxFlexFill class="mat-h4">Liabilities</h4>
 
           <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
             <span fxFlex="40%">Saving control:</span>
-            <span fxFlex="60%">{{ savingProduct.accountingMappings.savingsControlAccount.name }}</span>
+            <span fxFlex="60%">({{ savingProduct.accountingMappings.savingsControlAccount.glCode }}) {{ savingProduct.accountingMappings.savingsControlAccount.name }}</span>
             <span fxFlex="40%">Savings transfers in suspense:</span>
-            <span fxFlex="60%">{{ savingProduct.accountingMappings.transfersInSuspenseAccount.name }}</span>
+            <span fxFlex="60%">({{ savingProduct.accountingMappings.transfersInSuspenseAccount.glCode }}) {{ savingProduct.accountingMappings.transfersInSuspenseAccount.name }}</span>
             <div fxFlexFill *ngIf="savingProduct.isDormancyTrackingActive">
               <span fxFlex="40%">Escheat liability:</span>
-              <span fxFlex="60%">{{ savingProduct.accountingMappings.escheatLiabilityAccount.name }}</span>
+              <span fxFlex="60%">({{ savingProduct.accountingMappings.escheatLiabilityAccount.glCode }}) {{ savingProduct.accountingMappings.escheatLiabilityAccount.name }}</span>
             </div>
           </div>
 
@@ -237,20 +237,20 @@
 
           <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
             <span fxFlex="40%">Interest on savings:</span>
-            <span fxFlex="60%">{{ savingProduct.accountingMappings.interestOnSavingsAccount.name }}</span>
+            <span fxFlex="60%">({{ savingProduct.accountingMappings.interestOnSavingsAccount.glCode }}) {{ savingProduct.accountingMappings.interestOnSavingsAccount.name }}</span>
             <span fxFlex="40%">Write-off:</span>
-            <span fxFlex="60%">{{ savingProduct.accountingMappings.writeOffAccount.name }}</span>
+            <span fxFlex="60%">({{ savingProduct.accountingMappings.writeOffAccount.glCode }}) {{ savingProduct.accountingMappings.writeOffAccount.name }}</span>
           </div>
 
           <h4 fxFlexFill class="mat-h4">Income</h4>
 
           <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
             <span fxFlex="40%">Income from fees:</span>
-            <span fxFlex="60%">{{ savingProduct.accountingMappings.incomeFromFeeAccount.name }}</span>
+            <span fxFlex="60%">({{ savingProduct.accountingMappings.incomeFromFeeAccount.glCode }}) {{ savingProduct.accountingMappings.incomeFromFeeAccount.name }}</span>
             <span fxFlex="40%">Income from penalties:</span>
-            <span fxFlex="60%">{{ savingProduct.accountingMappings.incomeFromPenaltyAccount.name }}</span>
+            <span fxFlex="60%">({{ savingProduct.accountingMappings.incomeFromPenaltyAccount.glCode }}) {{ savingProduct.accountingMappings.incomeFromPenaltyAccount.name }}</span>
             <span fxFlex="40%">Overdraft Interest Income:</span>
-            <span fxFlex="60%">{{ savingProduct.accountingMappings.incomeFromInterest.name }}</span>
+            <span fxFlex="60%">({{ savingProduct.accountingMappings.incomeFromInterest.glCode }}) {{ savingProduct.accountingMappings.incomeFromInterest.name }}</span>
           </div>
 
           <div *ngIf="savingProduct.paymentChannelToFundSourceMappings?.length || savingProduct.feeToIncomeAccountMappings?.length || savingProduct.penaltyToIncomeAccountMappings?.length" fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
@@ -275,7 +275,7 @@
                 <ng-container matColumnDef="fundSourceAccountId">
                   <th mat-header-cell *matHeaderCellDef> Fund Source </th>
                   <td mat-cell *matCellDef="let paymentFundSource">
-                    {{ paymentFundSource.fundSourceAccount.name }}
+                    ({{ paymentFundSource.fundSourceAccount.glCode }}) {{ paymentFundSource.fundSourceAccount.name }}
                   </td>
                 </ng-container>
 
@@ -302,7 +302,7 @@
                 <ng-container matColumnDef="incomeAccountId">
                   <th mat-header-cell *matHeaderCellDef> Income Account </th>
                   <td mat-cell *matCellDef="let feesIncome">
-                    {{ feesIncome.incomeAccount.name }}
+                    ({{ feesIncome.incomeAccount.glCode }}) {{ feesIncome.incomeAccount.name }}
                   </td>
                 </ng-container>
 
@@ -329,7 +329,7 @@
                 <ng-container matColumnDef="incomeAccountId">
                   <th mat-header-cell *matHeaderCellDef> Income Account </th>
                   <td mat-cell *matCellDef="let penaltyIncome">
-                    {{ penaltyIncome.incomeAccount.name }}
+                    ({{ penaltyIncome.incomeAccount.glCode }}) {{ penaltyIncome.incomeAccount.name }}
                   </td>
                 </ng-container>
 
