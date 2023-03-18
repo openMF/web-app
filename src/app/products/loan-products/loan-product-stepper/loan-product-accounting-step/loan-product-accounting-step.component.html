@@ -180,6 +180,42 @@
         </mat-error>
       </mat-form-field>
 
+      <mat-form-field fxFlex="48%">
+        <mat-label>Income from Goodwill Credit Interest</mat-label>
+        <mat-select formControlName="incomeFromGoodwillCreditInterestAccountId" required>
+          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
+            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          Income from Goodwill Credit Interest is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="48%">
+        <mat-label>Income from Goodwill Credit Fees</mat-label>
+        <mat-select formControlName="incomeFromGoodwillCreditFeesAccountId" required>
+          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
+            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          Income from Goodwill Credit Fees is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="48%">
+        <mat-label>Income from Goodwill Credit Penalty</mat-label>
+        <mat-select formControlName="incomeFromGoodwillCreditPenaltyAccountId" required>
+          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
+            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          Income from Goodwill Credit Penalty is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
       <mat-divider fxFlex="98%"></mat-divider>
 
       <h4 fxFlex="98%" class="mat-h4">Expenses</h4>

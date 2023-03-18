@@ -42,7 +42,7 @@ export class TransactionsTabComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.transactionsData);
-    this.accountWithTransactions = (this.transactionsData.length > 0);
+    this.accountWithTransactions = (this.transactionsData && this.transactionsData.length > 0);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
