@@ -148,4 +148,12 @@ export class Datatables {
     return columnName;
   }
 
+  public isValidUrl(urlString: string): boolean {
+      try {
+        return Boolean(new URL(urlString));
+      } catch (e) {
+        return false;
+      }
+  }
+
 }

@@ -36,6 +36,12 @@
           {{dataObject.data[0].row[i]}}
         </span>
         <span *ngSwitchDefault>
+          <span class="m-r-5" *ngIf="isValidUrl(dataObject.data[0].row[i])">
+            <button mat-icon-button matTooltip="View Link" (click)="openSite(dataObject.data[0].row[i])"
+              matTooltipPosition="right" class="small-icon">
+              <fa-icon icon="eye" size="lg"></fa-icon>
+            </button>
+          </span>
           {{dataObject.data[0].row[i]}}
         </span>
       </div>
