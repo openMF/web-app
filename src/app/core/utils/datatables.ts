@@ -13,7 +13,7 @@ import { Dates } from './dates';
 export class Datatables {
 
   systemFields: string[] = ['id', 'created_at', 'updated_at', 'client_id', 'savings_account_id',
-    'loan_id', 'group_id', 'center_id', 'office_id', 'product_loan_id', 'savings_product_id'];
+    'loan_id', 'group_id', 'center_id', 'office_id', 'product_loan_id', 'savings_product_id', 'share_product_id'];
 
   constructor(private dateUtils: Dates,
     private settingsService: SettingsService) { }
@@ -146,6 +146,14 @@ export class Datatables {
       return columnName.split('_cd_')[0];
     }
     return columnName;
+  }
+
+  public isValidUrl(urlString: string): boolean {
+      try {
+        return Boolean(new URL(urlString));
+      } catch (e) {
+        return false;
+      }
   }
 
 }

@@ -56,7 +56,9 @@ export class SavingAccountActionsComponent {
    */
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
-      this.currencyCode = data.savingsAccountActionData.currency.code;
+      if (data.savingsAccountActionData) {
+        this.currencyCode = data.savingsAccountActionData.currency.code;
+      }
     });
     const name = this.route.snapshot.params['name'];
     this.actions[name] = true;

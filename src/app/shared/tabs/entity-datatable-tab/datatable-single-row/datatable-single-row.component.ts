@@ -133,4 +133,13 @@ export class DatatableSingleRowComponent implements OnInit {
   getInputName(attr: string): string {
     return this.datatables.getName(attr);
   }
+
+  isValidUrl(urlString: string): boolean {
+    return this.datatables.isValidUrl(urlString);
+  }
+
+  openSite(siteUrl: string) {
+    window.open(siteUrl, '_blank');
+  }
+
 }
