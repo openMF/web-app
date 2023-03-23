@@ -17,31 +17,31 @@ export class KeyboardShortcutsConfiguration {
 
     makeCombination() {
         this.buttonsArray = [
-            // Navigation Page - alt + n
+            // Navigation Page - ctrl + n
             {
                 title: 'Navigation Page',
-                ctrlKey: false,
+                ctrlKey: true,
                 shiftKey: false,
-                altKey: true,
+                altKey: false,
                 key: 'n',
                 route: 'navigation'
             },
-            // Run Report - alt + r
+            // Run Report - ctrl + t
             {
                 title: 'Run Report',
-                ctrlKey: false,
+                ctrlKey: true,
                 shiftKey: false,
-                altKey: true,
-                key: 'r',
+                altKey: false,
+                key: 't',
                 route: '',
                 id: 'runReport'
             },
-            // Checker Inbox & Pending Tasks - ctrl + alt + i
+            // Checker Inbox & Pending Tasks - ctrl + i
             {
               title: 'Checker Inbox & Pending Tasks',
               ctrlKey: true,
               shiftKey: false,
-              altKey: true,
+              altKey: false,
               key: 'i',
               route: 'checker-inbox-and-tasks/checker-inbox'
             },
@@ -54,104 +54,104 @@ export class KeyboardShortcutsConfiguration {
             // key: 'o',
             // route: ''
             // },
-            // Create Client - ctrl + alt + c
+            // Create Client - ctrl + c
             {
                 title: 'Create Client',
                 ctrlKey: true,
                 shiftKey: false,
-                altKey: true,
+                altKey: false,
                 key: 'c',
                 route: 'clients/create'
             },
-            // Create Group - ctrl + alt + g
+            // Create Group - ctrl + g
             {
                 title: 'Create Group',
                 ctrlKey: true,
                 shiftKey: false,
-                altKey: true,
+                altKey: false,
                 key: 'g',
                 route: 'groups/create'
             },
-            // Create Center - ctrl + alt + q
+            // Create Center - ctrl + q
             {
                 title: 'Create Center',
                 ctrlKey: true,
                 shiftKey: false,
-                altKey: true,
+                altKey: false,
                 key: 'q',
                 route: 'centers/create'
             },
-            // Frequent Posting - ctrl + alt + f
+            // Frequent Posting - ctrl + f
             {
                 title: 'Frequent Posting',
                 ctrlKey: true,
                 shiftKey: false,
-                altKey: true,
+                altKey: false,
                 key: 'f',
                 route: 'accounting/journal-entries/frequent-postings'
             },
-            // Closure Entries - ctrl + alt + e
+            // Closure Entries - ctrl + e
             {
                 title: 'Closure Entries',
                 ctrlKey: true,
                 shiftKey: false,
-                altKey: true,
+                altKey: false,
                 key: 'e',
                 route: 'accounting/closing-entries'
             },
-            // Journal Entry - ctrl + alt + j
+            // Journal Entry - ctrl + j
             {
                 title: 'Journal Entry',
                 ctrlKey: true,
                 shiftKey: false,
-                altKey: true,
+                altKey: false,
                 key: 'j',
                 route: 'accounting/journal-entries/create'
             },
-            // Reports - ctrl + alt + r
+            // Reports - ctrl + r
             {
                 title: 'Reports',
                 ctrlKey: true,
                 shiftKey: false,
-                altKey: true,
+                altKey: false,
                 key: 'r',
                 route: 'reports'
             },
-            // Accounting - ctrl + alt + a
+            // Accounting - ctrl + a
             {
                 title: 'Accounting',
                 ctrlKey: true,
                 shiftKey: false,
-                altKey: true,
+                altKey: false,
                 key: 'a',
                 route: 'accounting'
             },
-            // Save/Submit Forms - ctrl + alt + s
+            // Save/Submit Forms - ctrl + s
             {
                 title: 'Save/Submit Forms',
                 ctrlKey: true,
                 shiftKey: false,
-                altKey: true,
+                altKey: false,
                 key: 's',
                 route: '',
                 id: 'submit'
             },
-            // Cancel - ctrl + alt + x
+            // Cancel - ctrl + x
             {
                 title: 'Cancel',
                 ctrlKey: true,
                 shiftKey: false,
-                altKey: true,
+                altKey: false,
                 key: 'x',
                 route: '',
                 id: 'cancel'
             },
-            // Help - ctrl + alt + h
+            // Help - ctrl + h
             {
                 title: 'Help',
                 ctrlKey: true,
                 shiftKey: false,
-                altKey: true,
+                altKey: false,
                 key: 'h',
                 route: '',
                 id: 'help'
@@ -174,11 +174,11 @@ export class KeyboardShortcutsConfiguration {
             //     key: 'p,
             //     route: ''
             // },
-            // Logout - ctrl + shift + l
+            // Logout - ctrl + l
             {
                 title: 'Logout',
                 ctrlKey: true,
-                shiftKey: true,
+                shiftKey: false,
                 altKey: false,
                 key: 'l',
                 route: '',
