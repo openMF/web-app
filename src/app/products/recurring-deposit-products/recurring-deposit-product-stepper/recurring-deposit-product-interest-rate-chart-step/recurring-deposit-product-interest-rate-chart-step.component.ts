@@ -229,7 +229,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
       'fromDate': ['', Validators.required],
       'endDate': [''],
       'isPrimaryGroupingByAmount': [false],
-      'chartSlabs': this.formBuilder.array([])
+      'chartSlabs': this.formBuilder.array([], Validators.required)
     });
   }
 
