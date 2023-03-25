@@ -24,8 +24,8 @@
         </div>
 
         <mat-form-field fxFlex="32%">
-          <mat-label>Name</mat-label>
-          <input matInput formControlName="name" required>
+          <mat-label >Name</mat-label>
+          <input matInput formControlName="name"  matTooltip="The name is a unique identifier for the chart." required>
         </mat-form-field>
 
         <mat-form-field fxFlex="31%" (click)="validFromDatePicker.open()">
@@ -46,8 +46,8 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="65%">
-          <mat-label>Description</mat-label>
-          <textarea matInput formControlName="description" required></textarea>
+          <mat-label >Description</mat-label>
+          <textarea matInput formControlName="description"  matTooltip="The description is used to provide additional information regarding the purpose and characteristics of the chart." required></textarea>
         </mat-form-field>
 
         <div fxFlex="31%" fxLayout="row" fxLayoutAlign="space-between center">
