@@ -13,7 +13,7 @@
   <div #filter fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
       <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
-      <input matInput (keyup)="applyFilter($event.target.value)">
+      <input matInput (keyup)="applyFilter($event.target.value)"  matTooltip="Add Filters" matTooltipPosition="left">
     </mat-form-field>
   </div>
 
@@ -23,12 +23,12 @@
 
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-        <td mat-cell *matCellDef="let recurringDepositProduct" matTooltip="{{ recurringDepositProduct.name }}" matTooltipPosition="left"> {{ recurringDepositProduct.name }} </td>
+        <td mat-cell *matCellDef="let recurringDepositProduct"> {{ recurringDepositProduct.name }} </td>
       </ng-container>
 
       <ng-container matColumnDef="shortName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Short Name </th>
-        <td mat-cell *matCellDef="let recurringDepositProduct" matTooltip="{{ recurringDepositProduct.shortName }}" matTooltipPosition="left"> {{ recurringDepositProduct.shortName }} </td>
+        <td mat-cell *matCellDef="let recurringDepositProduct"> {{ recurringDepositProduct.shortName }} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
