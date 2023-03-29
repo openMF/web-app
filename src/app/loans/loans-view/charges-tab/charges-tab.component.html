@@ -32,26 +32,26 @@
 
     <ng-container matColumnDef="due">
       <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header> Due </th>
-      <td mat-cell class="r-amount" *matCellDef="let charge"> {{ charge.currency.displaySymbol }} {{ charge.amount|
-        number }} </td>
+      <td mat-cell class="r-amount" *matCellDef="let charge">  {{ charge.amount |
+        currency:charge.currency.code:'symbol-narrow':'1.2-2' }} </td>
     </ng-container>
 
     <ng-container matColumnDef="paid">
       <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header> Paid </th>
-      <td mat-cell class="r-amount" *matCellDef="let charge"> {{ charge.currency.displaySymbol }}{{ charge.amountPaid|
-        number }} </td>
+      <td mat-cell class="r-amount" *matCellDef="let charge"> {{ charge.amountPaid |
+        currency:charge.currency.code:'symbol-narrow':'1.2-2' }} </td>
     </ng-container>
 
     <ng-container matColumnDef="waived">
       <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header> Waived </th>
-      <td mat-cell class="r-amount" *matCellDef="let charge"> {{ charge.currency.displaySymbol }}{{ charge.amountWaived|
-        number }} </td>
+      <td mat-cell class="r-amount" *matCellDef="let charge"> {{ charge.amountWaived |
+        currency:charge.currency.code:'symbol-narrow':'1.2-2' }} </td>
     </ng-container>
 
     <ng-container matColumnDef="outstanding">
       <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header> Outstanding </th>
-      <td mat-cell class="r-amount" *matCellDef="let charge"> {{ charge.currency.displaySymbol }}{{
-        charge.amountOutstanding| formatNumber }} </td>
+      <td mat-cell class="r-amount" *matCellDef="let charge"> {{charge.amountOutstanding |
+        currency:charge.currency.code:'symbol-narrow':'1.2-2' }} </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">

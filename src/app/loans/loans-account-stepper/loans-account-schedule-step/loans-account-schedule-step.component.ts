@@ -10,6 +10,8 @@ import { SettingsService } from 'app/settings/settings.service';
 })
 export class LoansAccountScheduleStepComponent implements OnInit {
 
+  /** Currency Code */
+  @Input() currencyCode: string;
   /** Loans Account Template */
   @Input() loansAccountTemplate: any;
   /** Loans Account Product Template */
