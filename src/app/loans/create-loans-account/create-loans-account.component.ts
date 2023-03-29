@@ -41,6 +41,8 @@ export class CreateLoansAccountComponent implements OnInit {
   /** Principal Amount */
   principal: any;
   datatables: any = [];
+  /** Currency Code */
+  currencyCode: string;
 
   /**
    * Sets loans account create form.
@@ -70,6 +72,7 @@ export class CreateLoansAccountComponent implements OnInit {
    */
   setTemplate($event: any) {
     this.loansAccountProductTemplate = $event;
+    this.currencyCode = this.loansAccountProductTemplate.currency.code;
     const clientId = this.loansAccountTemplate.clientId;
     this.clientService.getCollateralTemplate(clientId).subscribe((response: any) => {
       this.collateralOptions = response;
