@@ -30,6 +30,8 @@ export class EditLoansAccountComponent implements OnInit {
   collateralOptions: any;
   /** Loan Id */
   loanId: any;
+  /** Currency Code */
+  currencyCode: string;
 
   /**
    * Sets loans account edit form.
@@ -60,6 +62,7 @@ export class EditLoansAccountComponent implements OnInit {
    */
   setTemplate($event: any) {
     this.loansAccountProductTemplate = $event;
+    this.currencyCode = this.loansAccountProductTemplate.currency.code;
     if (this.loansAccountProductTemplate.loanProductId) {
       this.loansService.getLoansCollateralTemplateResource(this.loansAccountProductTemplate.loanProductId).subscribe((response: any) => {
         this.collateralOptions = response.loanCollateralOptions;

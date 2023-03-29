@@ -8,6 +8,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class RepaymentScheduleTabComponent implements OnInit {
 
+  /** Currency Code */
+  @Input() currencyCode: string;
   /** Loan Repayment Schedule to be Edited */
   @Input() forEditing = false;
   /** Loan Repayment Schedule Details Data */
@@ -30,6 +32,9 @@ export class RepaymentScheduleTabComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute) {
     this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
+      if (data.loanDetailsData) {
+        this.currencyCode = data.loanDetailsData.currency.code;
+      }
       this.loanDetailsDataRepaymentSchedule = data.loanDetailsData ? data.loanDetailsData.repaymentSchedule : [];
     });
   }
