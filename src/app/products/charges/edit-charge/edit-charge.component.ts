@@ -125,7 +125,7 @@ export class EditChargeComponent implements OnInit {
     if (this.chargeData.taxGroup) {
       this.chargeForm.addControl('taxGroupId', this.formBuilder.control({ value: this.chargeData.taxGroup.id }, Validators.required));
     } else {
-      this.chargeForm.addControl('taxGroupId', this.formBuilder.control({ value: '' }));
+      delete this.chargeData.taxGroupId;
     }
   }
 
