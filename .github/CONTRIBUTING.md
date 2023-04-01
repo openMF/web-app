@@ -20,7 +20,7 @@ Do not open issues for general support questions as we want to keep GitHub issue
 
 Each active repository has its own channel to direct questions to. Also join the [official gitter channel](https://gitter.im/openMF/mifos) of Mifos.
 
-Remember that this is an inclusive community, commited to creating a safe, positive environment. See the whole [Code of Conduct](CODE_OF_CONDUCT.md) and please follow it in all your interactions with the project.
+Remember that this is an inclusive community, committed to creating a safe, positive environment. See the whole [Code of Conduct](CODE_OF_CONDUCT.md) and please follow it in all your interactions with the project.
 
 
 ## Submitting or Requesting an Issue/Enhancement
@@ -50,7 +50,7 @@ git clone https://github.com/your-username/web-app.git
 ```
 git checkout master
 ```
-  - Create a new branch with a meaningful name before adding and commiting your changes.
+  - Create a new branch with a meaningful name before adding and committing your changes.
 ```
 git checkout -b branch-name
 ```
