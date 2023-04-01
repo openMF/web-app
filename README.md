@@ -96,7 +96,7 @@ Access the webapp on http://localhost:4200 in your browser.
 
 ### Docker compose
 It is possible to do a 'one-touch' installation of Mifos X Web App using containers (AKA "Docker").
-Fineract now packs the mifos community-app web UI in it's docker deploy.
+Fineract now packs the Mifos community-app web UI in it's docker deploy.
 
 As Prerequisites, you must have `docker` and `docker-compose` installed on your machine; see
 [Docker Install](https://docs.docker.com/install/) and
@@ -109,7 +109,7 @@ Now to run a new MifosX Web App instance you can simply:
 1. `docker-compose up -d`
 1. Access the webapp on http://localhost:4200 in your browser.
 
-You can also setup different confiurations for the MifosX Web App using environment variables:
+You can also setup different configurations for the MifosX Web App using environment variables:
 
 1. Use environment variables (best choice if you run with Docker Compose):
 
