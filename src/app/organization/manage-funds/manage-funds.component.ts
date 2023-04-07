@@ -18,6 +18,9 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
 
 /** Custom Dialog Component */
 import { ContinueSetupDialogComponent } from '../../configuration-wizard/continue-setup-dialog/continue-setup-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 /**
  * Manage Funds component.
@@ -40,6 +43,15 @@ export class ManageFundsComponent implements OnInit, AfterViewInit {
   @ViewChild('fundFormRef') fundFormRef: ElementRef<any>;
   /* Template for popover on funds form */
   @ViewChild('templateFundFormRef') templateFundFormRef: TemplateRef<any>;
+  /** Columns to be displayed in funds table. */
+  displayedColumns: string[] = ['name', 'externalId'];
+  /** Data source for Funds table. */
+  dataSource: MatTableDataSource<any>;
+
+  /** Paginator for charges table. */
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  /** Sorter for charges table. */
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /**
    * Retrieves the manage funds data from `resolve`.
@@ -64,7 +76,18 @@ export class ManageFundsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.createFundForm();
+    this.dataSource = new MatTableDataSource(this.fundsData);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+
+  }
+
+  /**
+   * Filters data in charges table based on passed value.
+   * @param {string} filterValue Value to filter data.
+   */
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   /**

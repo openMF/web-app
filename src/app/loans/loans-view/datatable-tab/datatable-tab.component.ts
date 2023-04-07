@@ -10,7 +10,7 @@ export class DatatableTabComponent {
 
   entityId: string;
   /** Loan Datatable */
-  entityDatatable: any;
+  entityDatatable: any = null;
   /** Multi Row Datatable Flag */
   multiRowDatatableFlag: boolean;
 
@@ -20,9 +20,10 @@ export class DatatableTabComponent {
    */
   constructor(private route: ActivatedRoute) {
     this.entityId = this.route.parent.parent.snapshot.paramMap.get('loanId');
-
+    this.entityDatatable = null;
     this.route.data.subscribe((data: { loanDatatable: any }) => {
       this.entityDatatable = data.loanDatatable;
+      console.log(this.entityDatatable);
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });
   }
