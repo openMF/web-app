@@ -1,0 +1,37 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="fundForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput required autofocus formControlName="name">
+            <mat-error *ngIf="fundForm.controls.name.hasError('required')">
+              Name <strong>is required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>External Id</mat-label>
+            <input matInput autofocus formControlName="externalId">
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!fundForm.valid" *mifosxHasPermission="'UPDATE_FUND'">Submit</button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
+
+</div>
