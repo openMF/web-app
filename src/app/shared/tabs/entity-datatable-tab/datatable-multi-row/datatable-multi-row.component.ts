@@ -1,5 +1,5 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
@@ -18,7 +18,7 @@ import { SystemService } from 'app/system/system.service';
   templateUrl: './datatable-multi-row.component.html',
   styleUrls: ['./datatable-multi-row.component.scss']
 })
-export class DatatableMultiRowComponent implements OnInit {
+export class DatatableMultiRowComponent implements OnInit, OnDestroy {
 
   /** Data Object */
   @Input() dataObject: any;
@@ -34,6 +34,7 @@ export class DatatableMultiRowComponent implements OnInit {
 
   /** Toggle button visibility */
   showDeleteBotton: boolean;
+  hasEntityData = false;
 
   /** Data Table Reference */
   @ViewChild('dataTable', { static: true }) dataTableRef: MatTable<Element>;
@@ -55,7 +56,9 @@ export class DatatableMultiRowComponent implements OnInit {
               private datatables: Datatables,
               private dateFormat: DateFormatPipe,
               private dateTimeFormat: DatetimeFormatPipe,
-              private numberFormat: DecimalPipe) { }
+              private numberFormat: DecimalPipe) {
+
+    }
 
   /**
    * Fetches data table name from route params.
@@ -69,7 +72,17 @@ export class DatatableMultiRowComponent implements OnInit {
       return columnHeader.columnName;
     });
     this.datatableData = this.dataObject.data;
-    this.showDeleteBotton = this.datatableData[0] ? true : false;
+    this.hasEntityData = (this.datatableData && this.datatableData.length > 0);
+    console.log(this.hasEntityData);
+    console.log(this.dataObject.data);
+  }
+
+  ngOnDestroy(): void {
+    this.datatableColumns = null;
+    this.datatableData = null;
+    this.hasEntityData = false;
+    console.log(this.hasEntityData);
+    console.log(this.dataObject.data);
   }
 
   /**
@@ -128,7 +141,11 @@ export class DatatableMultiRowComponent implements OnInit {
     } else if (columnDisplayType === 'DATETIME') {
       return this.dateTimeFormat.transform(value);
     } else if (columnDisplayType === 'INTEGER' || columnDisplayType === 'DECIMAL') {
-      return this.numberFormat.transform(value);
+      if (typeof value === 'number') {
+        return this.numberFormat.transform(value);
+      } else {
+        return value;
+      }
     }
     return value;
   }

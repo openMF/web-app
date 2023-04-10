@@ -11,14 +11,14 @@
         </button>
       </span>
       <span *mifosxHasPermission="'DELETE_' + datatableName">
-        <button class="delete-button" mat-raised-button color="warn" (click)="delete()" *ngIf="showDeleteBotton">
+        <button class="delete-button" mat-raised-button color="warn" (click)="delete()" *ngIf="hasEntityData">
           <fa-icon icon="trash" class="m-r-10"></fa-icon>Delete All
         </button>
       </span>
     </div>
   </div>
 
-  <table #dataTable mat-table [hidden]="!datatableData[0]" [dataSource]="datatableData" class="mat-elevation-z1 m-b-25">
+  <table #dataTable mat-table [hidden]="!hasEntityData" [dataSource]="datatableData" class="mat-elevation-z1 m-b-25">
 
     <ng-container *ngFor="let datatableColumn of datatableColumns;let i = index" [matColumnDef]="datatableColumn">
       <th mat-header-cell class="right" *matHeaderCellDef> {{datatableColumn}} </th>

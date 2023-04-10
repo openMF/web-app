@@ -101,6 +101,11 @@ import { LoanProvisioningCriteriaTemplateResolver } from './loan-provisioning-cr
 import { LoanProvisioningCriteriaAndTemplateResolver } from './loan-provisioning-criteria/common-resolvers/loan-provisioning-criteria-and-template.resolver';
 import { StandingInstructionsTemplateResolver } from './standing-instructions-history/standing-instructions-template.resolver';
 import { AdvanceSearchTemplateResolver } from './fund-mapping/advance-search-template.resolver';
+import { ManageFundResolver } from './manage-funds/manage-fund.resolver';
+import { ViewFundComponent } from './manage-funds/view-fund/view-fund.component';
+import { EditFundComponent } from './manage-funds/edit-fund/edit-fund.component';
+import { CreateFundComponent } from './manage-funds/create-fund/create-fund.component';
+import { GlAccountsResolver } from 'app/accounting/common-resolvers/gl-accounts.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -570,8 +575,49 @@ const routes: Routes = [
         },
         {
           path: 'manage-funds',
-          component: ManageFundsComponent,
-          data: { title: extract('Manage Funds Days'), breadcrumb: 'Manage Funds' },
+          data: { title: extract('Manage Funds'), breadcrumb: 'Manage Funds' },
+          children: [
+            {
+              path: '',
+              component: ManageFundsComponent,
+              resolve: {
+                funds: ManageFundsResolver
+              },
+            },
+            {
+              path: 'create',
+              component: CreateFundComponent,
+              data: { title: extract('Create Fund'), breadcrumb: 'Create' },
+              resolve: {
+                glAccounts: GlAccountsResolver
+              }
+            },
+            {
+              path: ':id',
+              data: { title: extract('View Fund'), breadcrumb: 'id', routeParamBreadcrumb: 'id' },
+              resolve: {
+                fundData: ManageFundResolver
+              },
+              children: [
+                {
+                  path: '',
+                  component: ViewFundComponent,
+                  resolve: {
+                    fundData: ManageFundResolver
+                  },
+                },
+                {
+                  path: 'edit',
+                  component: EditFundComponent,
+                  data: { title: extract('Edit Fund'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    fundData: ManageFundResolver,
+                    glAccounts: GlAccountsResolver
+                  }
+                },
+              ]
+            },
+          ],
           resolve: {
             funds: ManageFundsResolver
           }

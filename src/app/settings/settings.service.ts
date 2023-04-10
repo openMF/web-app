@@ -159,6 +159,7 @@ export class SettingsService {
    * Returns current Business date server
    */
   get businessDate(): Date {
+    console.log(localStorage.getItem('mifosXServerDate'));
     return this.dateUtils.convertToDate(localStorage.getItem('mifosXServerDate'), SettingsService.businessDateFormat);
   }
 
