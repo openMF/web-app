@@ -9,6 +9,8 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class GeneralTabComponent implements OnInit {
 
+  /** Currency Code */
+  currencyCode: string;
   loanDetails: any;
   status: any;
   loanSummaryColumns: string[] = ['Empty', 'Original', 'Paid', 'Waived', 'Written Off', 'Outstanding', 'Over Due'];
@@ -35,6 +37,7 @@ export class GeneralTabComponent implements OnInit {
   constructor(private route: ActivatedRoute) {
     this.route.parent.data.subscribe((data: { loanDetailsData: any, }) => {
       this.loanDetails = data.loanDetailsData;
+      this.currencyCode = this.loanDetails.currency.code;
       if (this.loanDetails.transactions) {
         this.loanDetails.transactions.some((transaction: any) => {
           if (transaction.type.code === 'loanTransactionType.chargeback') {
@@ -67,7 +70,6 @@ export class GeneralTabComponent implements OnInit {
         'writtenOff': this.loanDetails.summary.principalWrittenOff,
         'outstanding': this.loanDetails.summary.principalOutstanding,
         'overdue': this.loanDetails.summary.principalOverdue,
-
     },
     {
         'property': 'Interest',

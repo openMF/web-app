@@ -74,6 +74,9 @@ import { OfficeItemNode } from './holidays/create-holiday/office-item.class';
 import { OfficeItemFlatNode } from './holidays/create-holiday/office-flat-item.class';
 import { ChecklistDatabase } from './holidays/create-holiday/checklist-db.class';
 import { CreateHoliday } from './holidays/create-holiday/create-holiday.service';
+import { CreateFundComponent } from './manage-funds/create-fund/create-fund.component';
+import { EditFundComponent } from './manage-funds/edit-fund/edit-fund.component';
+import { ViewFundComponent } from './manage-funds/view-fund/view-fund.component';
 
 
 /**
@@ -148,6 +151,9 @@ import { CreateHoliday } from './holidays/create-holiday/create-holiday.service'
     StandingInstructionsHistoryComponent,
     FundMappingComponent,
     CreateHolidayComponent,
+    CreateFundComponent,
+    EditFundComponent,
+    ViewFundComponent,
   ],
   providers: [
     CreateHoliday,

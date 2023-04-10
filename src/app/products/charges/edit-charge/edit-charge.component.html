@@ -104,15 +104,15 @@
 
           <mat-form-field fxFlex="48%">
             <mat-label>Tax Group</mat-label>
-            <mat-select *ngIf="chargeData.taxGroup" required formControlName="taxGroupId">
+            <mat-select *ngIf="chargeData.taxGroup" formControlName="taxGroupId">
               <mat-option *ngFor="let taxGroup of chargeData.taxGroupOptions" [value]="taxGroup.id">
                 {{ taxGroup.name }}
               </mat-option>
             </mat-select>
 
-            <mat-select *ngIf="!chargeData.taxGroup" required formControlName="taxGroupId">
-              <mat-option value="?">
-                Select Option
+            <mat-select *ngIf="!chargeData.taxGroup" formControlName="taxGroupId">
+              <mat-option *ngFor="let taxGroup of chargeData.taxGroupOptions" [value]="taxGroup.id">
+                {{ taxGroup.name }}
               </mat-option>
             </mat-select>
           </mat-form-field>

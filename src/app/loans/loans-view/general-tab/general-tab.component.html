@@ -36,37 +36,37 @@
 
       <ng-container matColumnDef="Original">
         <th mat-header-cell class="r-amount" *matHeaderCellDef> Original </th>
-        <td mat-cell class="r-amount" *matCellDef="let ele"> {{ ele.original | currency }} </td>
+        <td mat-cell class="r-amount" *matCellDef="let ele"> {{ ele.original | currency:currencyCode:'symbol-narrow':'1.2-2' }} </td>
       </ng-container>
 
       <ng-container matColumnDef="Paid">
         <th mat-header-cell class="r-amount" *matHeaderCellDef> Paid </th>
-        <td mat-cell class="r-amount amount-minus" *matCellDef="let ele"> {{ ele.paid | currency }} </td>
+        <td mat-cell class="r-amount amount-minus" *matCellDef="let ele"> {{ ele.paid | currency:currencyCode:'symbol-narrow':'1.2-2' }} </td>
       </ng-container>
 
       <ng-container matColumnDef="Adjustments">
         <th mat-header-cell class="r-amount" *matHeaderCellDef> Credit Adjustments </th>
-        <td mat-cell class="r-amount amount-plus" *matCellDef="let ele"> {{ ele.adjustment | currency }} </td>
+        <td mat-cell class="r-amount amount-plus" *matCellDef="let ele"> {{ ele.adjustment | currency:currencyCode:'symbol-narrow':'1.2-2' }} </td>
       </ng-container>
 
       <ng-container matColumnDef="Waived">
         <th mat-header-cell class="r-amount" *matHeaderCellDef> Waived </th>
-        <td mat-cell class="r-amount amount-minus" *matCellDef="let ele"> {{ ele.waived | currency }} </td>
+        <td mat-cell class="r-amount amount-minus" *matCellDef="let ele"> {{ ele.waived | currency:currencyCode:'symbol-narrow':'1.2-2' }} </td>
       </ng-container>
 
       <ng-container matColumnDef="Written Off">
         <th mat-header-cell class="r-amount" *matHeaderCellDef> Written Off </th>
-        <td mat-cell class="r-amount amount-minus" *matCellDef="let ele"> {{ ele.writtenOff | currency }} </td>
+        <td mat-cell class="r-amount amount-minus" *matCellDef="let ele"> {{ ele.writtenOff | currency:currencyCode:'symbol-narrow':'1.2-2' }} </td>
       </ng-container>
 
       <ng-container matColumnDef="Outstanding">
         <th mat-header-cell class="r-amount" *matHeaderCellDef> Outstanding </th>
-        <td mat-cell class="r-amount" *matCellDef="let ele"> {{ ele.outstanding | currency }} </td>
+        <td mat-cell class="r-amount" *matCellDef="let ele"> {{ ele.outstanding | currency:currencyCode:'symbol-narrow':'1.2-2' }} </td>
       </ng-container>
 
       <ng-container matColumnDef="Over Due">
         <th mat-header-cell class="r-amount" *matHeaderCellDef> Over Due </th>
-        <td mat-cell class="r-amount" *matCellDef="let ele"> {{ ele.overdue | currency }} </td>
+        <td mat-cell class="r-amount" *matCellDef="let ele"> {{ ele.overdue | currency:currencyCode:'symbol-narrow':'1.2-2' }} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="loanSummaryColumns"></tr>
@@ -193,17 +193,17 @@
 
         <div fxFlexFill>
           <span fxFlex="50%">Proposed Amount:</span>
-          <span fxFlex="50%">{{ loanDetails.proposedPrincipal | currency}}</span>
+          <span fxFlex="50%">{{ loanDetails.proposedPrincipal | currency:currencyCode:'symbol-narrow':'1.2-2'}}</span>
         </div>
 
         <div fxFlexFill *ngIf="showApprovedAmountBasedOnStatus()">
           <span fxFlex="50%">Approved Amount:</span>
-          <span fxFlex="50%">{{ loanDetails.approvedPrincipal | currency }}</span>
+          <span fxFlex="50%">{{ loanDetails.approvedPrincipal | currency:currencyCode:'symbol-narrow':'1.2-2' }}</span>
         </div>
 
         <div fxFlexFill *ngIf="showDisbursedAmountBasedOnStatus()">
           <span fxFlex="50%">Disburse Amount:</span>
-          <span fxFlex="50%">{{ loanDetails.principal | currency }}</span>
+          <span fxFlex="50%">{{ loanDetails.principal | currency:currencyCode:'symbol-narrow':'1.2-2' }}</span>
         </div>
 
         <div fxFlexFill>

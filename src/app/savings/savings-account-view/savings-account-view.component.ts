@@ -34,6 +34,7 @@ export class SavingsAccountViewComponent implements OnInit {
   entityType: string;
 
   isActive = false;
+  currencyCode: string;
 
   /**
    * Fetches savings account data from `resolve`
@@ -47,6 +48,7 @@ export class SavingsAccountViewComponent implements OnInit {
               public dialog: MatDialog) {
     this.route.data.subscribe((data: { savingsAccountData: any, savingsDatatables: any }) => {
       this.savingsAccountData = data.savingsAccountData;
+      this.currencyCode = this.savingsAccountData.currency.code;
       this.savingsDatatables = data.savingsDatatables;
     });
     if (this.router.url.includes('clients')) {

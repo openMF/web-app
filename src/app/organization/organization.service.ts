@@ -681,6 +681,13 @@ export class OrganizationService {
   }
 
   /**
+   * @returns {Observable<any>} Fund data
+   */
+  getFund(fundId: string): Observable<any> {
+    return this.http.get(`/funds/${fundId}`);
+  }
+
+  /**
    * @param {any} fund Fund to be created.
    * @returns {Observable<any>}
    */
