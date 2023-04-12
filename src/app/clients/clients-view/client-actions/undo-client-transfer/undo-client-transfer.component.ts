@@ -1,23 +1,22 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormBuilder } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
 
 /** Custom Services */
-import { ClientsService } from 'app/clients/clients.service';
-import { Dates } from 'app/core/utils/dates';
-import { SettingsService } from 'app/settings/settings.service';
+import { ClientsService } from "app/clients/clients.service";
+import { Dates } from "app/core/utils/dates";
+import { SettingsService } from "app/settings/settings.service";
 
 /**
  * Undo Client Transfer Component
  */
 @Component({
-  selector: 'mifosx-undo-client-transfer',
-  templateUrl: './undo-client-transfer.component.html',
-  styleUrls: ['./undo-client-transfer.component.scss']
+  selector: "mifosx-undo-client-transfer",
+  templateUrl: "./undo-client-transfer.component.html",
+  styleUrls: ["./undo-client-transfer.component.scss"],
 })
 export class UndoClientTransferComponent implements OnInit {
-
   /** Undo Client Transfer form. */
   undoClientTransferForm: FormGroup;
   /** Client Id */
@@ -31,16 +30,18 @@ export class UndoClientTransferComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private formBuilder: FormBuilder,
-              private clientsService: ClientsService,
-              private settingsService: SettingsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private clientsService: ClientsService,
+    private settingsService: SettingsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.transferDate = data.clientActionData;
     });
-    this.clientId = this.route.parent.snapshot.params['clientId'];
+    this.clientId = this.route.parent.snapshot.params["clientId"];
   }
 
   /**
@@ -55,8 +56,8 @@ export class UndoClientTransferComponent implements OnInit {
    */
   createUndoClientTransferForm() {
     this.undoClientTransferForm = this.formBuilder.group({
-      'transferDate': {value: new Date(this.transferDate), disabled: true},
-      'note': ['']
+      transferDate: { value: new Date(this.transferDate), disabled: true },
+      note: [""],
     });
   }
 
@@ -74,12 +75,11 @@ export class UndoClientTransferComponent implements OnInit {
     }
     const data = {
       ...undoClientTransferFormData,
-      dateFormat,
-      locale
+      /*  dateFormat,
+      locale */
     };
-    this.clientsService.executeClientCommand(this.clientId, 'withdrawTransfer', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+    this.clientsService.executeClientCommand(this.clientId, "withdrawTransfer", data).subscribe(() => {
+      this.router.navigate(["../../"], { relativeTo: this.route });
     });
   }
-
 }
