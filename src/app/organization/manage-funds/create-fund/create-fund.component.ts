@@ -44,7 +44,7 @@ export class CreateFundComponent implements OnInit {
     this.fundForm = this.formBuilder.group({
       'name': ['', Validators.required],
       'externalId': [''],
-      'isActive': [true],
+      'active': [true],
       'glAccountId': ['', Validators.required]
     });
   }

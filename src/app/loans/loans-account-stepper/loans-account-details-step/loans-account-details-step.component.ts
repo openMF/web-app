@@ -87,7 +87,7 @@ export class LoansAccountDetailsStepComponent implements OnInit {
       'productId': ['', Validators.required],
       'loanOfficerId': [''],
       'loanPurposeId': [''],
-      'fundId': ['', Validators.required],
+      'fundId': [''],
       'submittedOnDate': [this.settingsService.businessDate, Validators.required],
       'expectedDisbursementDate': ['', Validators.required],
       'externalId': [''],
