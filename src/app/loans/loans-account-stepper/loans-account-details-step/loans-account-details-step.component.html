@@ -37,7 +37,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Fund</mat-label>
-      <mat-select required formControlName="fundId">
+      <mat-select formControlName="fundId">
         <mat-option *ngFor="let fund of fundOptions" [value]="fund.id">
           {{ fund.name }}
         </mat-option>

@@ -47,7 +47,7 @@ export class EditFundComponent implements OnInit {
     this.fundForm = this.formBuilder.group({
       'name': [this.fundData.name, Validators.required],
       'externalId': [this.fundData.externalId],
-      'isActive': [this.fundData.active],
+      'active': [this.fundData.active],
       'glAccountId': [this.fundData.glAccount.id, Validators.required]
     });
   }
