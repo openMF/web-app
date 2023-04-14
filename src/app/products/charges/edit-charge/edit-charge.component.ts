@@ -188,7 +188,6 @@ export class EditChargeComponent implements OnInit {
   submit() {
     const chargeData = this.chargeForm.getRawValue();
     const locale = this.settingsService.language.code;
-    chargeData.chargePaymentMode = this.chargeData.chargePaymentMode.id;
     if (chargeData.taxGroupId === '') {
       delete chargeData.taxGroupId;
     }
