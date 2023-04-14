@@ -126,4 +126,11 @@ export const BulkImports = [
       permission: 'READ_CLIENT',
       formFields: 1
     },
+    {
+      name: 'Healthy Path',
+      entityType: 'loanproducthealthypath',
+      urlSuffix: '/loanproducthealthypaths',
+      permission: 'READ_CLIENT',
+      formFields: 1
+    },
   ];

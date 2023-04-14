@@ -137,6 +137,13 @@
             <h4 matLine>Guarantors</h4>
           </mat-list-item>
 
+          <mat-list-item [routerLink]="['Healthy Path']" *mifosxHasPermission="'READ_OFFICE'">
+            <mat-icon matListIcon>
+              <fa-icon icon="chevron-right" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Healthy Path</h4>
+          </mat-list-item>
+
         </mat-nav-list>
 
       </div>
