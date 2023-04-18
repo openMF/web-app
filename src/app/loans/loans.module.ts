@@ -59,6 +59,7 @@ import { ViewRecieptComponent } from './loans-view/transactions/view-reciept/vie
 import { ExportTransactionsComponent } from './loans-view/transactions/export-transactions/export-transactions.component';
 import { ViewTransactionComponent } from './loans-view/transactions/view-transaction/view-transaction.component';
 import { EditTransactionComponent } from './loans-view/transactions/edit-transaction/edit-transaction.component';
+import { TopUpLoanComponent } from './loans-view/loan-account-actions/top-up-loan/top-up-loan.component';
 
 /** Dialog Components */
 import { LoansAccountViewGuarantorDetailsDialogComponent } from './custom-dialog/loans-account-view-guarantor-details-dialog/loans-account-view-guarantor-details-dialog.component';
@@ -126,7 +127,8 @@ import { LoanAccountLoadDocumentsDialogComponent } from './custom-dialog/loan-ac
     ViewTransactionComponent,
     EditTransactionComponent,
     ViewRecieptComponent,
-    ExportTransactionsComponent
+    ExportTransactionsComponent,
+    TopUpLoanComponent
   ],
   providers: [ ],
 })
