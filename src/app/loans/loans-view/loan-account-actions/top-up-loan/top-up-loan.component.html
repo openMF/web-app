@@ -1,0 +1,61 @@
+<div class="container">
+
+  <mat-card>
+
+    <form [formGroup]="topUpLoanForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+          <mat-form-field (click)="transactionDatePicker.open()">
+            <mat-label>Transaction Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDatePicker" required
+              formControlName="transactionDate">
+            <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #transactionDatePicker></mat-datepicker>
+            <mat-error *ngIf="topUpLoanForm.controls.transactionDate.hasError('required')">
+              Transaction Date <strong>is required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Top-up Loan Product</mat-label>
+            <mat-select required (selectionChange)="onLoanProductChanged()" formControlName="loanProductForTopUp">
+
+              <mat-option *ngFor="let loanProductForTopUp of topUpLoanOptions" [value]="loanProductForTopUp">
+                {{ loanProductForTopUp.name + ' (' + loanProductForTopUp?.shortName + ')' }}
+              </mat-option>
+
+            </mat-select>
+            <mat-error *ngIf="topUpLoanForm.controls.loanProductForTopUp.hasError('required')">
+              Charge is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Principal</mat-label>
+            <input type="number" required matInput formControlName="topUpAmount" />
+            <mat-error *ngIf="topUpLoanForm.controls.topUpAmount.hasError('required')">
+              Principal is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Note</mat-label>
+            <textarea matInput formControlName="note"></textarea>
+          </mat-form-field>
+
+        </div>
+
+        <mat-card-actions fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
+          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+          <button mat-raised-button color="primary" *mifosxHasPermission="'TOPUP_LOAN'">Submit</button>
+        </mat-card-actions>
+
+      </mat-card-content>
+
+    </form>
+
+  </mat-card>
+
+</div>
