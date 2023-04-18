@@ -275,7 +275,7 @@ export class LoansService {
     httpParams = isGroup ? httpParams.set('groupId', entityId)
                                       .set('templateType', 'group') :
                                       httpParams.set('clientId', entityId)
-                                      .set('templateType', 'individual');
+                                      .set('templateType', 'ill');
     return this.http.get('/loans/template', { params: httpParams });
   }
 
