@@ -273,9 +273,9 @@ export class LoansService {
                                       .set('staffInSelectedOfficeOnly', 'true');
     httpParams = productId ? httpParams.set('productId', productId) : httpParams;
     httpParams = isGroup ? httpParams.set('groupId', entityId)
-                                      .set('templateType', 'group') :
+                                      .set('templateType', 'gll') :
                                       httpParams.set('clientId', entityId)
-                                      .set('templateType', 'individual');
+                                      .set('templateType', 'ill');
     return this.http.get('/loans/template', { params: httpParams });
   }
 
