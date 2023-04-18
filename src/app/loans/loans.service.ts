@@ -440,4 +440,25 @@ export class LoansService {
     return this.http.post(`/loans/${accountId}/transactions`, data, { params: httpParams });
   }
 
+  /**
+   * @param {string} loanId loanId of the loan.
+   * @returns {Observable<any>}
+   */
+  getTopUpLoanTemplateResource(loanId: string, command: string): Observable<any> {
+    const httpParams = new HttpParams().set('command', command);
+    return this.http.get(`/loans/${loanId}/transactions/template`, { params: httpParams});
+  }
+
+  /**
+   * Used For: Loan Top up Action,
+   * Returns the response of the action
+   * @param loanId Loan Id
+   * @param data Data
+   * @param command Command
+   */
+  submitTopUpLoanApplication(loanId: string, data: any, command: any) {
+    const httpParams = new HttpParams().set('command', command);
+    return this.http.post(`/loans/${loanId}`, data, {params: httpParams});
+  }
+
 }

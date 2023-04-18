@@ -35,6 +35,11 @@ export class LoansAccountButtonConfiguration {
                         taskPermissionName: 'CREATE_LOANCHARGE',
                     },
                     {
+                        name: 'Top up loan',
+                        icon: 'fa fa-plus',
+                        taskPermissionName: 'TOPUP_LOAN',
+                    },
+                    {
                         name: 'Foreclosure',
                         icon: 'icon-dollar',
                         taskPermissionName: 'FORECLOSURE_LOAN',
