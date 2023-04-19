@@ -44,7 +44,7 @@
           </mat-form-field>
 
           <mat-form-field *ngIf="editClientForm.contains('fullname')" fxFlex="48%">
-            <mat-label>{{ editClientForm.value.legalFormId === 1 ? 'Name' : 'Entity Name' }}</mat-label>
+            <mat-label>{{ legalFormId === 1 ? 'Name' : 'Entity Name' }}</mat-label>
             <input matInput required formControlName="fullname">
             <mat-error *ngIf="editClientForm.controls.fullname.hasError('required')">
               Client name is <strong>required</strong>
@@ -72,8 +72,17 @@
             </mat-error>
           </mat-form-field>
 
+          <mat-form-field *ngIf="legalFormId === 1" fxFlex="48%">
+            <mat-label>Gender</mat-label>
+            <mat-select formControlName="genderId">
+              <mat-option *ngFor="let gender of genderOptions" [value]="gender.id">
+                {{ gender.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
           <mat-form-field fxFlex="48%" (click)="dateOfBirthDatePicker.open()">
-            <mat-label>{{ editClientForm.value.legalFormId === 1 ? 'Date of Birth' : 'Incorporation Date' }}</mat-label>
+            <mat-label>{{ legalFormId === 1 ? 'Date of Birth' : 'Incorporation Date' }}</mat-label>
             <input matInput [max]="maxDate" [matDatepicker]="dateOfBirthDatePicker" formControlName="dateOfBirth">
             <mat-datepicker-toggle matSuffix [for]="dateOfBirthDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #dateOfBirthDatePicker></mat-datepicker>
@@ -123,7 +132,7 @@
             <input matInput formControlName="externalId">
           </mat-form-field>
 
-          <mat-checkbox *ngIf="editClientForm.value.legalFormId === 1" fxFlex="48%" labelPosition="before" formControlName="isStaff" class="margin-v">
+          <mat-checkbox *ngIf="legalFormId === 1" fxFlex="48%" labelPosition="before" formControlName="isStaff" class="margin-v">
             Is staff?
           </mat-checkbox>
 
@@ -174,15 +183,6 @@
               formControlName="activationDate">
             <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #activatedOnDatePicker></mat-datepicker>
-          </mat-form-field>
-
-          <mat-form-field *ngIf="editClientForm.value.legalFormId === 1" fxFlex="48%">
-            <mat-label>Gender</mat-label>
-            <mat-select formControlName="genderId">
-              <mat-option *ngFor="let gender of genderOptions" [value]="gender.id">
-                {{ gender.name }}
-              </mat-option>
-            </mat-select>
           </mat-form-field>
 
         </div>

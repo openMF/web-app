@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { TooltipPosition } from '@angular/material/tooltip';
 
 @Component({
   selector: 'mifosx-loan-product-settings-step',
@@ -170,6 +169,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'holdGuaranteeFunds': [false],
       'multiDisburseLoan': [false],
       'allowAttributeConfiguration': [true],
+      'allowPartialPeriodInterestCalcualtion': [false],
       'allowAttributeOverrides': this.formBuilder.group({
         'amortizationType': [true],
         'interestType': [true],
@@ -189,10 +189,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
 
     this.loanProductSettingsForm.get('interestCalculationPeriodType').valueChanges
       .subscribe((interestCalculationPeriodType: any) => {
-        if (interestCalculationPeriodType === 1) {
-          this.loanProductSettingsForm.addControl('allowPartialPeriodInterestCalcualtion', new FormControl(false));
-        } else {
-          this.loanProductSettingsForm.removeControl('allowPartialPeriodInterestCalcualtion');
+        if (interestCalculationPeriodType === 0) {
+          this.loanProductSettingsForm.patchValue({'allowPartialPeriodInterestCalcualtion': false});
         }
       });
 
