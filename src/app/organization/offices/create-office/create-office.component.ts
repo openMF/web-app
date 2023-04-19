@@ -78,23 +78,20 @@ export class CreateOfficeComponent implements OnInit {
     });
   }
 
+  convertArray(data:any){
+    return Object.assign({}, data);
+  }
 
   convertArrayToObject (hierarchyData: any) {
-    hierarchyData.forEach(element => {
-      if (element.descendant.length > 0) {
-        const obj = element.descendant;
-        element.descendant = Object.assign({}, element.descendant[0]);
-        if (obj[0].descendant.length > 0) {
-          element.descendant.descendant = Object.assign({}, obj[0].descendant[0]);
-          delete element.descendant.descendant.descendant;
-        } else {
-          delete element.descendant.descendant;
-        }
-      } else {
-        delete element.descendant;
-      }
-    });
-    return hierarchyData;
+    for (let i = 0; i < hierarchyData.descendant.length; i++) {
+      if (hierarchyData.descendant[i].descendant && hierarchyData.descendant[i].descendant.length>0) {
+        this.convertArrayToObject(hierarchyData.descendant[i]);
+        hierarchyData.descendant[i].descendant=Object.assign({}, hierarchyData.descendant[i].descendant[0]);
+     } else {
+      delete hierarchyData.descendant[i].descendant
+     }
+   }
+   return hierarchyData;
   }
   /**
    * Submits the office form and creates office.
@@ -103,8 +100,8 @@ export class CreateOfficeComponent implements OnInit {
   submit () {
     const hierarchyData = this.officeHierarchy?._database.data;
     if (hierarchyData && hierarchyData.length > 0 && this.showHierarchy) {
-      const dataArray = this.convertArrayToObject(hierarchyData);
-      const hierarchalData = Object.assign({}, dataArray[0]);
+      let hierarchalData = this.convertArrayToObject(hierarchyData[0]);
+      hierarchalData.descendant=Object.assign({}, hierarchalData.descendant[0]);
       this.officeForm.patchValue({
         countryHierarchy: hierarchalData
       });

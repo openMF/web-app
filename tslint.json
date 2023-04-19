@@ -4,6 +4,7 @@
   ],
   "rules": {
     "arrow-return-shorthand": true,
+    "prefer-for-of": false,
     "callable-types": true,
     "class-name": true,
     "comment-format": [

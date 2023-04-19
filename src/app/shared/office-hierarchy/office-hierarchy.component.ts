@@ -234,13 +234,10 @@ export class OfficeHierarchyComponent implements OnInit {
 
   /** Select the category so we can insert the new item. */
   addNewItem(node: OfficeHierarchyFlatNode) {
-    if (node.level < 2) {
     const parentNode = this.flatNodeMap.get(node);
     this._database.insertItem(parentNode, '');
     this.treeControl.expand(node);
-    } else {
-      alert('You can\'t add more than three levels');
-    }
+
   }
   removeItem(node: OfficeHierarchyFlatNode) {
     const parentNode = this.flatNodeMap.get(node);

@@ -9,8 +9,10 @@
         <div fxLayout="column">
           <div floatLabel="always" appearance="outline" class="full-width radio-container">
             <mat-label class="ou-label">Is the OU a country</mat-label>
-            <input class="custom-radio" (change)="change_country(true)" formControlName="country" type="radio"  value="Yes">
-            <input class="custom-radio" (change)="change_country(false)" formControlName="country" type="radio"  value="No">
+            <input class="custom-radio" (change)="change_country(true)" formControlName="country" type="radio"  value="Yes" id="yes">
+            <label class="mat-label-for" for="yes">Yes</label>
+            <input class="custom-radio" (change)="change_country(false)" formControlName="country" type="radio"  value="No" id="no">
+            <label class="mat-label-for" for="no">No</label>
           </div>
 
           <mat-form-field>

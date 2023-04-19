@@ -66,41 +66,17 @@ export class EditOfficeComponent implements OnInit {
     return this.allowedParentsSliced.find((item: { id: any; }) => item.id === office.id);
 
   }
-  convertArrayToObject (hierarchyData: any) {
-    hierarchyData.forEach(element => {
-      if (Array.isArray(element.descendant)) {
-        element.children = [];
-        element.parentId = null;
-        element.root = true;
-      if (element.descendant && element.descendant.length > 0) {
-        const obj = element.descendant;
-        element.descendant.parentId = null;
-        element.descendant = Object.assign({}, element.descendant[0]);
-        element.descendant.children = [];
-        if (obj[0].descendant && obj[0].descendant.length > 0) {
-          element.descendant.descendant.children = [];
-          element.descendant.descendant.parentId = null;
-          element.descendant.descendant = Object.assign({}, obj[0].descendant[0]);
-          delete element.descendant.descendant.descendant;
-        } else {
-          delete element.descendant.descendant;
-        }
-      } else {
-        delete element.descendant;
-      }
-    } else {
-      element.descendant.children = [];
-      element.descendant.parentId = element.id;
-      if (element.descendant?.descendant?.length > 0) {
-        element.descendant.descendant.parentId = null;
-        element.descendant.descendant = Object.assign({}, element.descendant.descendant[0]);
-        delete element.descendant.descendant.descendant;
-      } else {
-        delete element?.descendant?.descendant;
-      }
-    }
-    });
-    return hierarchyData;
+  convertArrayToObject (treeData: any) {
+    treeData.children=[];
+    for (let i = 0; i < treeData.descendant.length; i++) {
+      if (treeData.descendant[i].descendant && treeData.descendant[i].descendant.length>0) {
+        this.convertArrayToObject(treeData.descendant[i]);
+        treeData.descendant[i].descendant=Object.assign({}, treeData.descendant[i].descendant[0]);
+     } else {
+      delete treeData.descendant[i].descendant
+     }
+   }
+   return treeData;
   }
 
   /**
@@ -124,15 +100,15 @@ export class EditOfficeComponent implements OnInit {
    */
   submit() {
     if (this.treeDataSource && this.treeDataSource.length > 0 && this.showHierarchy) {
-      const dataArray = this.convertArrayToObject(this.treeDataSource);
+      const treeData = this.convertArrayToObject(this.treeDataSource[0]);
       if (Array.isArray(this.treeDataSource)) {
-        const hierarchalData = Object.assign({}, dataArray[0]);
+        const hierarchalData  =treeData.descendant=Object.assign({}, treeData.descendant[0]);
         this.officeForm.patchValue({
           countryHierarchy: hierarchalData
         });
       } else {
         this.officeForm.patchValue({
-          countryHierarchy: dataArray
+          countryHierarchy: treeData
         });
       }
     }
