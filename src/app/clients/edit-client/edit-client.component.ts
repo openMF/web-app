@@ -44,6 +44,7 @@ export class EditClientComponent implements OnInit {
   constitutionOptions: any;
   /** Gender Options */
   genderOptions: any;
+  legalFormId = 1;
 
   /**
    * Fetches client template data from `resolve`
@@ -70,6 +71,7 @@ export class EditClientComponent implements OnInit {
     this.createEditClientForm();
     this.setOptions();
     this.buildDependencies();
+    this.legalFormId = 1;
     this.editClientForm.patchValue({
       'officeId': this.clientDataAndTemplate.officeId,
       'staffId': this.clientDataAndTemplate.staffId,
@@ -87,6 +89,9 @@ export class EditClientComponent implements OnInit {
       'submittedOnDate': this.clientDataAndTemplate.timeline.submittedOnDate && new Date(this.clientDataAndTemplate.timeline.submittedOnDate),
       'activationDate': this.clientDataAndTemplate.timeline.activatedOnDate && new Date(this.clientDataAndTemplate.timeline.activatedOnDate)
     });
+    if (this.clientDataAndTemplate.legalForm) {
+      this.legalFormId = this.clientDataAndTemplate.legalForm.id;
+    }
   }
 
   /**
