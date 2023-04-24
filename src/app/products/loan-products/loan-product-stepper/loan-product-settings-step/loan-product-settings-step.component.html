@@ -32,7 +32,8 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Interest calculation period</mat-label>
-      <mat-select formControlName="interestCalculationPeriodType" matTooltip="Daily - Will Calculate the interest on DAILY basis ex: Month of February has 28days and it will calculate interest for 28days, SAME AS REPAYMENT PERIOD- it calculates for the month,that is, 30days." required>
+      <mat-select formControlName="interestCalculationPeriodType" matTooltip="Daily - Will Calculate the interest on DAILY basis ex: Month of February has 28days
+      and it will calculate interest for 28days, SAME AS REPAYMENT PERIOD- it calculates for the month,that is, 30days." required>
         <mat-option *ngFor="let interestCalculationPeriodType of interestCalculationPeriodTypeData" [value]="interestCalculationPeriodType.id">
           {{ interestCalculationPeriodType.value }}
         </mat-option>
@@ -42,7 +43,10 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-checkbox *ngIf="loanProductSettingsForm.value.interestCalculationPeriodType === 1" fxFlex="48%" labelPosition="before" matTooltip=" To be used with SAME AS REPAYMENT PERIOD- for  calculating exact interest with partial period  ex: Interest charged from is 5th of April , Principal is 10000 and interest is 1% per month then the interest will be (10000 * 1%)* (25/30) , it calculates for the month first then calculates exact periods between start date and end date(can be a decimal)" formControlName="allowPartialPeriodInterestCalcualtion">
+    <mat-checkbox *ngIf="loanProductSettingsForm.value.interestCalculationPeriodType === 1" fxFlex="48%" labelPosition="before"
+      matTooltip=" To be used with SAME AS REPAYMENT PERIOD- for  calculating exact interest with partial period  ex: Interest charged from is 5th of April ,
+      Principal is 10000 and interest is 1% per month then the interest will be (10000 * 1%)* (25/30) , it calculates for the month first then calculates exact periods between start date and end date(can be a decimal)"
+      formControlName="allowPartialPeriodInterestCalcualtion">
       Calculate interest for exact days in partial period
     </mat-checkbox>
 
@@ -89,12 +93,14 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Interest free period</mat-label>
-      <input type="number" matInput matTooltip="If the Interest Free Period is '4' and the client's Repayment Frequency is every week, then for the first four weeks the client need not to pay interest, he has to pay principle due for that week only." formControlName="graceOnInterestCharged">
+      <input type="number" matInput matTooltip="If the Interest Free Period is '4' and the client's Repayment Frequency is every week,
+      then for the first four weeks the client need not to pay interest, he has to pay principle due for that week only." formControlName="graceOnInterestCharged">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Arrears tolerance</mat-label>
-      <input type="number" matInput matTooltip="With 'Arrears tolerance' you can specify a tolerance amount and if the loan is behind (in arrears), but within the tolerance, it won't be classified as 'in arrears' and part of the portfolio at risk." formControlName="inArrearsTolerance">
+      <input type="number" matInput matTooltip="With 'Arrears tolerance' you can specify a tolerance amount and if the loan is behind (in arrears),
+      but within the tolerance, it won't be classified as 'in arrears' and part of the portfolio at risk." formControlName="inArrearsTolerance">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
@@ -125,14 +131,16 @@
       Allow fixing of the installment amount
     </mat-checkbox>
 
-    <h4 fxFlex="48%" class="mat-h4">Number of days a loan may be overdue before moving into arrears <i class="fas fa-question" matTooltip="A loan is in arrears once the number of days entered into this field is exceeded. If this field is blank, the loan will be in arrears the day after a scheduled payment is missed. "></i></h4>
+    <h4 fxFlex="48%" class="mat-h4">Number of days a loan may be overdue before moving into arrears <i class="fas fa-question"
+      matTooltip="A loan is in arrears once the number of days entered into this field is exceeded. If this field is blank, the loan will be in arrears the day after a scheduled payment is missed. "></i></h4>
 
     <mat-form-field fxFlex="48%">
       <mat-label>On arrears ageing</mat-label>
       <input type="number" matInput formControlName="graceOnArrearsAgeing">
     </mat-form-field>
 
-    <h4 fxFlex="48%" class="mat-h4">Maximum number of days a loan may be overdue before becoming a NPA (non-performing asset) <i class="fas fa-question" matTooltip="A loan is a NPA (non performing asset) once the number of days entered into this field is exceeded. If this field is blank, the loan will be an NPA the day after a scheduled payment is missed."></i></h4>
+    <h4 fxFlex="48%" class="mat-h4">Maximum number of days a loan may be overdue before becoming a NPA (non-performing asset) <i class="fas fa-question"
+      matTooltip="A loan is a NPA (non performing asset) once the number of days entered into this field is exceeded. If this field is blank, the loan will be an NPA the day after a scheduled payment is missed."></i></h4>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Overdue days for NPA</mat-label>
@@ -269,7 +277,8 @@
 
         </div>
 
-        <div *ngIf="(loanProductSettingsForm.value.recalculationCompoundingFrequencyType === 4 && loanProductSettingsForm.value.recalculationCompoundingFrequencyNthDayType !== -2) || loanProductSettingsForm.value.recalculationCompoundingFrequencyType === 3" fxFlex="31%" fxLayout="row" fxLayout.lt-md="column">
+        <div *ngIf="(loanProductSettingsForm.value.recalculationCompoundingFrequencyType === 4 && loanProductSettingsForm.value.recalculationCompoundingFrequencyNthDayType !== -2) ||
+        loanProductSettingsForm.value.recalculationCompoundingFrequencyType === 3" fxFlex="31%" fxLayout="row" fxLayout.lt-md="column">
 
           <mat-form-field fxFlexFill>
               <mat-select formControlName="recalculationCompoundingFrequencyDayOfWeekType">
@@ -281,7 +290,8 @@
 
         </div>
 
-        <div *ngIf="loanProductSettingsForm.value.recalculationCompoundingFrequencyType === 4 && loanProductSettingsForm.value.recalculationCompoundingFrequencyNthDayType === -2" fxFlex="31%" fxLayout="row" fxLayout.lt-md="column">
+        <div *ngIf="loanProductSettingsForm.value.recalculationCompoundingFrequencyType === 4 && loanProductSettingsForm.value.recalculationCompoundingFrequencyNthDayType === -2"
+        fxFlex="31%" fxLayout="row" fxLayout.lt-md="column">
 
           <mat-form-field fxFlexFill>
             <mat-select formControlName="recalculationCompoundingFrequencyOnDayType">
@@ -319,7 +329,8 @@
 
       </div>
 
-      <div *ngIf="(loanProductSettingsForm.value.recalculationRestFrequencyType === 4 && loanProductSettingsForm.value.recalculationRestFrequencyNthDayType !== -2) || loanProductSettingsForm.value.recalculationRestFrequencyType === 3" fxFlex="31%" fxLayout="row" fxLayout.lt-md="column">
+      <div *ngIf="(loanProductSettingsForm.value.recalculationRestFrequencyType === 4 && loanProductSettingsForm.value.recalculationRestFrequencyNthDayType !== -2) ||
+      loanProductSettingsForm.value.recalculationRestFrequencyType === 3" fxFlex="31%" fxLayout="row" fxLayout.lt-md="column">
 
         <mat-form-field fxFlexFill>
           <mat-select formControlName="recalculationRestFrequencyDayOfWeekType">
@@ -383,7 +394,8 @@
 
     <h3 fxFlex="23%" class="mat-h3">Loan Tranche Details</h3>
 
-    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="multiDisburseLoan" matTooltip="Leave this checkbox unchecked if the loan is a single disburse loan. Check this checkbox if the loan is a multi disburse loan. See additional fields for additional information required for this type of loan." class="margin-b">
+    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="multiDisburseLoan" matTooltip="Leave this checkbox unchecked if the loan is a single disburse loan. Check this
+    checkbox if the loan is a multi disburse loan. See additional fields for additional information required for this type of loan." class="margin-b">
       Enable Multiple Disbursals
     </mat-checkbox>
 
