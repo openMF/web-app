@@ -1,4 +1,4 @@
-<div class="tab-container mat-typography">
+<div class="tab-container mat-typography" id="selector-{{datatableName}}">
 
   <div fxLayout="row" fxLayoutAlign="start">
     <div class="m-b-10">
@@ -11,23 +11,25 @@
         </button>
       </span>
       <span *mifosxHasPermission="'DELETE_' + datatableName">
-        <button class="delete-button" mat-raised-button color="warn" (click)="delete()" *ngIf="hasEntityData">
+        <button class="delete-button" mat-raised-button color="warn" (click)="delete()" *ngIf="dataObject.data.length > 0">
           <fa-icon icon="trash" class="m-r-10"></fa-icon>Delete All
         </button>
       </span>
     </div>
   </div>
 
-  <table #dataTable mat-table [hidden]="!hasEntityData" [dataSource]="datatableData" class="mat-elevation-z1 m-b-25">
+  <div class="m-t-10" *ngIf="dataObject.data.length > 0">
+    <table #dataTable mat-table [dataSource]="datatableData" class="mat-elevation-z1 m-b-25">
 
-    <ng-container *ngFor="let datatableColumn of datatableColumns;let i = index" [matColumnDef]="datatableColumn">
-      <th mat-header-cell class="right" *matHeaderCellDef> {{datatableColumn}} </th>
-      <td mat-cell class="right" *matCellDef="let data">{{ formatValue(i, data.row[i]) }}</td>
-    </ng-container>
+      <ng-container *ngFor="let datatableColumn of datatableColumns;let i = index" [matColumnDef]="datatableColumn">
+        <th mat-header-cell class="right" *matHeaderCellDef> {{datatableColumn}} </th>
+        <td mat-cell class="right" *matCellDef="let data">{{ formatValue(i, data.row[i]) }}</td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="datatableColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: datatableColumns;"></tr>
+      <tr mat-header-row *matHeaderRowDef="datatableColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: datatableColumns;"></tr>
 
-  </table>
+    </table>
+  </div>
 
 </div>
