@@ -19,9 +19,12 @@
               <h3>
                 <i class="fa fa-stop" matTooltip="{{ loanDetailsData.status.value }}"
                   [ngClass]="loanDetailsData.inArrears?'status-active-overdue':(loanDetailsData.status.code|statusLookup)"></i>
-                Loan Product: {{loanDetailsData.loanProductName}}<span
-                  class="m-l-10">({{loanDetailsData.accountNo}})</span>
+                {{loanDetailsData.loanProductName}}<span
+                  class="m-l-15">({{loanDetailsData.accountNo}})</span>
               </h3>
+              <span class="loans-overview" *ngIf="loanDetailsData.externalId">
+                External Id: <span class="m-l-10">{{loanDetailsData.externalId}}</span><br />
+              </span>
               <span class="loans-overview">
                 {{entityType}} Name: {{loanDetailsData.clientName ||
                 loanDetailsData.groupName}}<span class="m-l-10">({{loanDetailsData.clientAccountNo}})</span><br />
