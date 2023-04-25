@@ -34,7 +34,6 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy {
 
   /** Toggle button visibility */
   showDeleteBotton: boolean;
-  hasEntityData = false;
 
   /** Data Table Reference */
   @ViewChild('dataTable', { static: true }) dataTableRef: MatTable<Element>;
@@ -56,9 +55,7 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy {
               private datatables: Datatables,
               private dateFormat: DateFormatPipe,
               private dateTimeFormat: DatetimeFormatPipe,
-              private numberFormat: DecimalPipe) {
-
-    }
+              private numberFormat: DecimalPipe) { }
 
   /**
    * Fetches data table name from route params.
@@ -72,17 +69,12 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy {
       return columnHeader.columnName;
     });
     this.datatableData = this.dataObject.data;
-    this.hasEntityData = (this.datatableData && this.datatableData.length > 0);
-    console.log(this.hasEntityData);
-    console.log(this.dataObject.data);
   }
 
   ngOnDestroy(): void {
+    this.datatableName = null;
     this.datatableColumns = null;
     this.datatableData = null;
-    this.hasEntityData = false;
-    console.log(this.hasEntityData);
-    console.log(this.dataObject.data);
   }
 
   /**
@@ -135,16 +127,18 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy {
   }
 
   formatValue(index: number, value: any): any {
-    const columnDisplayType = this.dataObject.columnHeaders[index].columnDisplayType;
-    if (columnDisplayType === 'DATE') {
-      return this.dateFormat.transform(value);
-    } else if (columnDisplayType === 'DATETIME') {
-      return this.dateTimeFormat.transform(value);
-    } else if (columnDisplayType === 'INTEGER' || columnDisplayType === 'DECIMAL') {
-      if (typeof value === 'number') {
-        return this.numberFormat.transform(value);
-      } else {
-        return value;
+    if (this.dataObject.columnHeaders && this.dataObject.columnHeaders[index]) {
+      const columnDisplayType = this.dataObject.columnHeaders[index].columnDisplayType;
+      if (columnDisplayType === 'DATE') {
+        return this.dateFormat.transform(value);
+      } else if (columnDisplayType === 'DATETIME') {
+        return this.dateTimeFormat.transform(value);
+      } else if (columnDisplayType === 'INTEGER' || columnDisplayType === 'DECIMAL') {
+        if (typeof value === 'number') {
+          return this.numberFormat.transform(value);
+        } else {
+          return value;
+        }
       }
     }
     return value;
