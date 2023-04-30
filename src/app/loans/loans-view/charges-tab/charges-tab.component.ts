@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource, MatTable } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
@@ -65,6 +65,7 @@ export class ChargesTabComponent implements OnInit {
     this.status = this.loanDetails.status.value;
     let actionFlag;
     this.chargesData.forEach((element: any) => {
+      element.dueDate = this.dateUtils.parseDate(element.dueDate);
       if (element.paid || element.waived || element.chargeTimeType.value === 'Disbursement' || this.loanDetails.status.value !== 'Active') {
         actionFlag = true;
       } else {
@@ -72,6 +73,7 @@ export class ChargesTabComponent implements OnInit {
       }
       element.actionFlag = actionFlag;
     });
+    this.chargesData = this.chargesData.sort(function(a: any, b: any) { return b.dueDate - a.dueDate; } );
     this.dataSource = new MatTableDataSource(this.chargesData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
