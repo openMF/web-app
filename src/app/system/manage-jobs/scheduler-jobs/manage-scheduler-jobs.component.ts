@@ -8,7 +8,6 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 
 /** rxjs Imports */
-import { of } from 'rxjs';
 import { SystemService } from '../../system.service';
 
 /** Custom Services */
@@ -33,7 +32,7 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
   /** Scheduler data */
   schedulerData: any;
   /** Columns to be displayed in manage scheduler jobs table. */
-  displayedColumns: string[] = ['select', 'displayName', 'nextRunTime', 'previousRunTime', 'previousRunStatus', 'currentlyRunning', 'errorLog'];
+  displayedColumns: string[] = ['select', 'displayName', 'active', 'nextRunTime', 'previousRunTime', 'previousRunStatus', 'currentlyRunning', 'errorLog'];
   /** Data source for manage scheduler jobs table. */
   dataSource: MatTableDataSource<any>;
   /** Initialize Selection */
@@ -66,11 +65,11 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor(private route: ActivatedRoute,
-              private systemService: SystemService,
-              private router: Router,
-              private dialog: MatDialog,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) {
+    private systemService: SystemService,
+    private router: Router,
+    private dialog: MatDialog,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService) {
     this.route.data.subscribe((data: { jobsScheduler: any }) => {
       if (data.jobsScheduler) {
         this.jobData = data.jobsScheduler[0];
@@ -100,8 +99,8 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
    */
   masterToggle() {
     this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
   /**
@@ -117,44 +116,44 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
    */
   setJobs() {
     this.systemService.getJobs()
-    .subscribe((jobData: any) => {
-      this.dataSource = new MatTableDataSource(jobData);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.jobsCounter = jobData.length;
-      this.selection.clear();
-      this.dataSource.sortingDataAccessor = (item, property) => {
-        switch (property) {
-          case 'previousRunStatus': return item.lastRunHistory.status;
-          case 'errorLog': return item.lastRunHistory.status;
-          case 'previousRunTime': return new Date(item.lastRunHistory.jobRunStartTime);
-          case 'nextRunTime': return new Date(item.nextRunTime);
-          default: return item[property];
-        }
-      };
-    });
+      .subscribe((jobData: any) => {
+        this.dataSource = new MatTableDataSource(jobData);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.jobsCounter = jobData.length;
+        this.selection.clear();
+        this.dataSource.sortingDataAccessor = (item, property) => {
+          switch (property) {
+            case 'previousRunStatus': return item.lastRunHistory.status;
+            case 'errorLog': return item.lastRunHistory.status;
+            case 'previousRunTime': return new Date(item.lastRunHistory.jobRunStartTime);
+            case 'nextRunTime': return new Date(item.nextRunTime);
+            default: return item[property];
+          }
+        };
+      });
   }
 
   getScheduler() {
     this.systemService.getScheduler()
-    .subscribe((schedulerData: any) => {
-      this.schedulerData = schedulerData;
-      this.schedulerActive = this.schedulerData.active;
-    });
+      .subscribe((schedulerData: any) => {
+        this.schedulerData = schedulerData;
+        this.schedulerActive = this.schedulerData.active;
+      });
   }
 
   suspendScheduler(): void {
     this.systemService.runCommandOnScheduler('stop')
-    .subscribe(() => {
-      this.getScheduler();
-    });
+      .subscribe(() => {
+        this.getScheduler();
+      });
   }
 
   activateScheduler(): void {
     this.systemService.runCommandOnScheduler('start')
-    .subscribe(() => {
-      this.getScheduler();
-    });
+      .subscribe(() => {
+        this.getScheduler();
+      });
   }
 
   runSelectedJobs(): void {
@@ -216,7 +215,7 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
    * Next Step (Accounting) Dialog Configuration Wizard.
    */
   openNextStepDialog() {
-    const nextStepDialogRef = this.dialog.open( NextStepDialogComponent, {
+    const nextStepDialogRef = this.dialog.open(NextStepDialogComponent, {
       data: {
         nextStepName: 'Setup Accounting',
         previousStepName: 'System',
@@ -224,16 +223,16 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
       },
     });
     nextStepDialogRef.afterClosed().subscribe((response: { nextStep: boolean }) => {
-    if (response.nextStep) {
-      this.configurationWizardService.showSchedulerJobsPage = false;
-      this.configurationWizardService.showSchedulerJobsList = false;
-      this.configurationWizardService.showChartofAccounts = true;
-      this.router.navigate(['/accounting']);
+      if (response.nextStep) {
+        this.configurationWizardService.showSchedulerJobsPage = false;
+        this.configurationWizardService.showSchedulerJobsList = false;
+        this.configurationWizardService.showChartofAccounts = true;
+        this.router.navigate(['/accounting']);
       } else {
-      this.configurationWizardService.showSchedulerJobsPage = false;
-      this.configurationWizardService.showSchedulerJobsList = false;
-      this.router.navigate(['/home']);
+        this.configurationWizardService.showSchedulerJobsPage = false;
+        this.configurationWizardService.showSchedulerJobsList = false;
+        this.router.navigate(['/home']);
       }
     });
-}
+  }
 }
