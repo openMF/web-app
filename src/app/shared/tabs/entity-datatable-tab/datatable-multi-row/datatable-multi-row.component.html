@@ -1,4 +1,4 @@
-<div class="tab-container mat-typography" id="selector-{{datatableName}}">
+<div class="tab-container mat-typography">
 
   <div fxLayout="row" fxLayoutAlign="start">
     <div class="m-b-10">
@@ -18,7 +18,7 @@
     </div>
   </div>
 
-  <div class="m-t-10" *ngIf="dataObject.data.length > 0">
+  <div class="m-t-10">
     <table #dataTable mat-table [dataSource]="datatableData" class="mat-elevation-z1 m-b-25">
 
       <ng-container *ngFor="let datatableColumn of datatableColumns;let i = index" [matColumnDef]="datatableColumn">

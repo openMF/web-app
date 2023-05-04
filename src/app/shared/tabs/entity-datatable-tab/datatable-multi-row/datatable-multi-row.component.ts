@@ -1,5 +1,5 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
@@ -18,7 +18,7 @@ import { SystemService } from 'app/system/system.service';
   templateUrl: './datatable-multi-row.component.html',
   styleUrls: ['./datatable-multi-row.component.scss']
 })
-export class DatatableMultiRowComponent implements OnInit, OnDestroy {
+export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges {
 
   /** Data Object */
   @Input() dataObject: any;
@@ -36,7 +36,7 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy {
   showDeleteBotton: boolean;
 
   /** Data Table Reference */
-  @ViewChild('dataTable', { static: true }) dataTableRef: MatTable<Element>;
+  @ViewChild('dataTable') dataTableRef: MatTable<Element>;
 
   /**
    * Fetches center Id from parent route params.
@@ -65,16 +65,28 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy {
     this.route.params.subscribe((routeParams: any) => {
       this.datatableName = routeParams.datatableName;
     });
-    this.datatableColumns = this.dataObject.columnHeaders.map((columnHeader: any) => {
-      return columnHeader.columnName;
-    });
-    this.datatableData = this.dataObject.data;
+    this.setData();
   }
 
   ngOnDestroy(): void {
     this.datatableName = null;
     this.datatableColumns = null;
     this.datatableData = null;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.setData();
+  }
+
+  setData() {
+    this.datatableColumns = this.dataObject.columnHeaders.map((columnHeader: any) => {
+      return columnHeader.columnName;
+    });
+    this.datatableData = this.dataObject.data;
+
+    if (this.dataTableRef) {
+      this.dataTableRef.renderRows();
+    }
   }
 
   /**
@@ -99,7 +111,9 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy {
         this.systemService.addEntityDatatableEntry(this.entityId, this.datatableName, dataTableEntryObject).subscribe(() => {
           this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
             this.datatableData = dataObject.data;
-            this.dataTableRef.renderRows();
+            if (this.dataTableRef) {
+              this.dataTableRef.renderRows();
+            }
           });
         });
       }
@@ -119,7 +133,9 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy {
           this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
             this.datatableData = dataObject.data;
             this.showDeleteBotton = false;
-            this.dataTableRef.renderRows();
+            if (this.dataTableRef) {
+              this.dataTableRef.renderRows();
+            }
            });
         });
       }
