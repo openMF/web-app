@@ -17,7 +17,7 @@ import { TasksService } from 'app/tasks/tasks.service';
 export class LoanLockedComponent implements OnInit {
 
   /** Loans Data */
-  loans: any[];
+  loans: any[] = [];
   /** Batch Requests */
   batchRequests: any[];
   /** Datasource for loans disbursal table */
@@ -71,6 +71,7 @@ export class LoanLockedComponent implements OnInit {
   getLoansLocked(page: number) {
     this.tasksService.getAllLoansLocked(page, this.pageSize).subscribe((data: any) => {
       this.loans = data.content;
+      this.dataSource = new MatTableDataSource(this.loans);
       this.allowRunInlineJob = false;
       this.selection = new SelectionModel(true, []);
     });
