@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -16,7 +16,7 @@ import { Dates } from 'app/core/utils/dates';
   templateUrl: './make-repayment.component.html',
   styleUrls: ['./make-repayment.component.scss']
 })
-export class MakeRepaymentComponent implements OnInit {
+export class MakeRepaymentComponent implements OnInit, OnDestroy {
 
   @Input() dataObject: any;
   /** Loan Id */
@@ -56,6 +56,10 @@ export class MakeRepaymentComponent implements OnInit {
     this.maxDate = this.settingsService.businessDate;
     this.createRepaymentLoanForm();
     this.setRepaymentLoanDetails();
+  }
+
+  ngOnDestroy(): void {
+
   }
 
   /**

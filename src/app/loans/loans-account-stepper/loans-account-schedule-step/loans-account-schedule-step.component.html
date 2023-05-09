@@ -4,8 +4,7 @@
     Repayment Info
   </a>
 
-  <mifosx-repayment-schedule-tab fxFlex="100%"
-    [repaymentScheduleDetails]="repaymentScheduleDetails"
+  <mifosx-repayment-schedule-tab fxFlex="100%" [repaymentScheduleDetails]="repaymentScheduleDetails"
     [currencyCode]="currencyCode">
   </mifosx-repayment-schedule-tab>
 
@@ -17,8 +16,8 @@
     Previous
   </button>
   <button mat-raised-button matStepperNext>
-    Next&nbsp;&nbsp;
-    <fa-icon icon="arrow-right"></fa-icon>
+    Next
+    <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
   </button>
   <button mat-raised-button *ngIf="loanId" [routerLink]="['../', 'general']">
     Cancel

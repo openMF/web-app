@@ -6,8 +6,9 @@
 
       <div class="profile-image-container">
         <div>
-          <img mat-card-md-image class="profile-image" matTooltip="Loans Account"
-            [src]="'assets/images/loans_account_placeholder.png'">
+          <mifosx-svg-icon [iconClass]="" iconFile="account_placeholder"
+          iconName="LOAN_ACCOUNT" iconWidth="210" matTooltip="Loan Account">
+          </mifosx-svg-icon>
         </div>
       </div>
 
@@ -18,7 +19,7 @@
             <div fxFlex="60%">
               <h3>
                 <i class="fa fa-stop" matTooltip="{{ loanDetailsData.status.value }}"
-                  [ngClass]="loanDetailsData.inArrears?'status-active-overdue':(loanDetailsData.status.code|statusLookup)"></i>
+                  [ngClass]="loanDetailsData.inArrears?'status-active-overdue':( iconLoanStatusColor() | statusLookup)"></i>
                 Loan Product: {{loanDetailsData.loanProductName}}<span
                   class="m-l-10">({{loanDetailsData.accountNo}})</span>
               </h3>

@@ -40,7 +40,9 @@ export class LoanAccountActionsComponent {
             'Merchant Issued Refund': boolean,
             'Payout Refund': boolean,
             'Credit Balance Refund': boolean,
-            'Edit Repayment Schedule': boolean
+            'Edit Repayment Schedule': boolean,
+            'Charge-Off': boolean,
+            'Undo Charge-Off': boolean
          } = {
               'Close': false,
               'Undo Approval': false,
@@ -69,7 +71,9 @@ export class LoanAccountActionsComponent {
               'Merchant Issued Refund': false,
               'Payout Refund': false,
               'Credit Balance Refund': false,
-              'Edit Repayment Schedule': false
+              'Edit Repayment Schedule': false,
+              'Charge-Off': false,
+              'Undo Charge-Off': false
           };
 
   actionButtonData: any;

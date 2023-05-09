@@ -589,7 +589,6 @@ export class LoansService {
     delete loansAccountData.principalAmount;
 
     return loansAccountData;
-
   }
 
 }
