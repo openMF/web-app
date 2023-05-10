@@ -68,12 +68,15 @@ $status-inactive: #666f73;
 $status-deleted: #000000;
 $status-pending: #ffa500;
 $status-approved: #0f36e4;
+$status-chargeoff: #f39c12;
 $status-overpaid: #800080;
 $status-active-overdue: #ff0000;
 $status-matured: #ff4000;
 $state-done: #00ce00;
 $status-transfer-progress:#FF4000;
 $status-transfer-hold:#DF0101;
+
+$error-log: #ffa726;
 
 .column-mandatory {
   color: $status-active;
