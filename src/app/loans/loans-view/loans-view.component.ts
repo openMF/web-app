@@ -147,6 +147,17 @@ export class LoansViewComponent implements OnInit {
         });
       }
 
+      if (!this.loanDetailsData.chargedOff) {
+        // Charge-Off only when there is not Interest Recalculation and the Interest Rate is zero
+        if (!this.loanDetailsData.chargedOff && !this.loanDetailsData.isInterestRecalculationEnabled && this.loanDetailsData.interestRatePerPeriod === 0) {
+          this.buttonConfig.addButton({
+            name: 'Charge-Off',
+            icon: 'coins',
+            taskPermissionName: 'CHARGEOFF_LOAN'
+          });
+        }
+      }
+
     }
   }
 
@@ -185,6 +196,13 @@ export class LoansViewComponent implements OnInit {
         });
       }
     });
+  }
+
+  iconLoanStatusColor() {
+    if (this.loanDetailsData.chargedOff) {
+      return 'loanStatusType.chargeoff';
+    }
+    return this.loanDetailsData.status.code;
   }
 
   /**

@@ -25,3 +25,5 @@
 <mifosx-approve-loan *ngIf="actions['Approve']" ></mifosx-approve-loan>
 <mifosx-add-loan-charge *ngIf="actions['Add Loan Charge']"></mifosx-add-loan-charge>
 <mifosx-edit-repayment-schedule *ngIf="actions['Edit Repayment Schedule']"></mifosx-edit-repayment-schedule>
+<mifosx-charge-off [dataObject]="actionButtonData" *ngIf="actions['Charge-Off']"></mifosx-charge-off>
+<mifosx-undo-command [actionName]="actionName" *ngIf="actions['Undo Charge-Off']"></mifosx-undo-command>

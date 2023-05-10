@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 
 /**
  * Create Loans Account Preview Step
@@ -9,10 +9,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   templateUrl: './loans-account-preview-step.component.html',
   styleUrls: ['./loans-account-preview-step.component.scss']
 })
-export class LoansAccountPreviewStepComponent implements OnInit {
+export class LoansAccountPreviewStepComponent implements OnInit, OnDestroy {
 
   /** Loans Account Template */
-  @Input() loansAccountTemplate: any;
+  @Input() loansAccountTemplate: any = [];
   /** Loans Account Product Template */
   @Input() loansAccountProductTemplate: any;
   /** Loans Account Data */
@@ -28,5 +28,7 @@ export class LoansAccountPreviewStepComponent implements OnInit {
   constructor() { }
 
   ngOnInit() { }
+
+  ngOnDestroy(): void { }
 
 }

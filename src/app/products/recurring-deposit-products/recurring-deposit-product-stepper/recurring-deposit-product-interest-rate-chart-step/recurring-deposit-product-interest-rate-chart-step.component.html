@@ -61,7 +61,7 @@
         </div>
 
         <div fxFlex="100%" *ngIf="chart.value.chartSlabs.length === 0">
-          <h3 class="mat-h3">It's required to add at least one Slab</h3>  
+          <h3 class="mat-h3">It's required to add at least one Slab</h3>
         </div>
 
         <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="chart.value.chartSlabs" *ngIf="chart.value.chartSlabs.length !== 0" multiTemplateDataRows>
@@ -221,8 +221,8 @@
       Previous
     </button>
     <button mat-raised-button matStepperNext>
-      Next&nbsp;&nbsp;
-      <fa-icon icon="arrow-right"></fa-icon>
+      Next
+      <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
     </button>
   </div>
 

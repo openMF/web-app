@@ -1,0 +1,58 @@
+<div class="container mat-elevation-z8">
+
+  <mat-card>
+
+    <form [formGroup]="chargeoffLoanForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field (click)="transactionDatePicker.open()">
+            <mat-label>Transaction Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDatePicker" required
+              formControlName="transactionDate">
+            <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #transactionDatePicker></mat-datepicker>
+            <mat-error *ngIf="chargeoffLoanForm.controls.transactionDate.hasError('required')">
+              Transaction Date <strong>is required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Reason for Charge-Off</mat-label>
+            <mat-select formControlName="chargeOffReasonId">
+              <mat-option *ngFor="let chargeOffReason of chargeOffReasonOptions" [value]="chargeOffReason.id">
+                {{ chargeOffReason.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="chargeoffLoanForm.controls.chargeOffReasonId.hasError('required')">
+              Reason for Charge-Off <strong>is required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>External Id</mat-label>
+            <input matInput formControlName="externalId">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Note</mat-label>
+            <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+          </mat-form-field>
+
+        </div>
+
+        <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+          <button mat-raised-button color="primary" [disabled]="!chargeoffLoanForm.valid"
+            *mifosxHasPermission="'CHARGEOFF_LOAN'">Submit</button>
+        </mat-card-actions>
+
+      </mat-card-content>
+
+    </form>
+
+  </mat-card>
+
+</div>
