@@ -36,6 +36,7 @@ import { EntityDatatableTabComponent } from './tabs/entity-datatable-tab/entity-
 import { DatatableSingleRowComponent } from './tabs/entity-datatable-tab/datatable-single-row/datatable-single-row.component';
 import { DatatableMultiRowComponent } from './tabs/entity-datatable-tab/datatable-multi-row/datatable-multi-row.component';
 import { SvgIconComponent } from './svg-icon/svg-icon.component';
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 
 /**
  * Shared Module
@@ -50,7 +51,9 @@ import { SvgIconComponent } from './svg-icon/svg-icon.component';
     ReactiveFormsModule,
     TranslateModule.forRoot(),
     PipesModule,
-    DirectivesModule
+    DirectivesModule,
+    NgxMatDatetimePickerModule,
+    NgxMatNativeDateModule
   ],
   declarations: [
     FormfieldComponent,
