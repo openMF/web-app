@@ -23,7 +23,7 @@ import * as _ from 'lodash';
 })
 export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges {
 
-  SELECT_NAME_FIELD:string = 'select';
+  SELECT_NAME_FIELD = 'select';
   /** Data Object */
   @Input() dataObject: any;
   @Input() entityId: string;
@@ -163,7 +163,9 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
         this.selection.selected.forEach((data) => {
           this.systemService.deleteDatatableEntry(this.entityId, data.row[1], this.datatableName).subscribe(() => {
             this.datatableData.forEach((item: any, index: any) => {
-              if (item.row[1] === data.row[1]) delete this.datatableData[index]
+              if (item.row[1] === data.row[1]) {
+                delete this.datatableData[index];
+              }
             });
           });
         });
@@ -192,7 +194,7 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected;
-    return (this.datatableData.length == numSelected);
+    return (this.datatableData.length === numSelected);
   }
 
   isAnySelected() {
