@@ -26,14 +26,22 @@ export class LoanLockedComponent implements OnInit {
   selection: SelectionModel<any>;
   /** Displayed Columns for loan disbursal data */
   displayedColumns: string[] = ['select', 'loanId', 'lockPlacedOn', 'lockOwner', 'error', 'details'];
+
   /** Paginator for the table */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: false})
+  set paginator(value: MatPaginator) {
+    this.dataSource.paginator = value;
+  }
+
   currentPage = 0;
-  pageSize = 10;
+  itemsToRead = 5000;
+  pageSize = 100;
   /** Control for enable/disable button */
   allowRunInlineJob = false;
   /** Const for the jobName */
   jobName: String = 'LOAN_COB';
+
+  showPaginator = false;
 
   /**
    * @param {LoansService} loansService Loans Service
@@ -49,29 +57,27 @@ export class LoanLockedComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource(this.loans);
-    this.dataSource.paginator = this.paginator;
-    this.selection = new SelectionModel(true, []);
     this.allowRunInlineJob = false;
-    this.getLoansLocked(this.currentPage);
+    this.getLoansLocked(0);
   }
 
   applyFilter(filterValue: string = '') {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  handlePage(e: any) {
+  changePaging(e: any) {
+    this.pageSize = e.pageSize;
     if (this.currentPage !== e.pageIndex) {
       this.currentPage = e.pageIndex;
-      this.pageSize = e.pageSize;
-      this.getLoansLocked(this.currentPage);
     }
   }
 
   getLoansLocked(page: number) {
-    this.tasksService.getAllLoansLocked(page, this.pageSize).subscribe((data: any) => {
+    this.tasksService.getAllLoansLocked(page, this.itemsToRead).subscribe((data: any) => {
       this.loans = data.content;
       this.dataSource = new MatTableDataSource(this.loans);
+      this.dataSource.paginator = this.paginator;
+      this.showPaginator = (this.loans.length > this.pageSize);
       this.allowRunInlineJob = false;
       this.selection = new SelectionModel(true, []);
     });
