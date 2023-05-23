@@ -149,6 +149,13 @@ export class SettingsService {
   }
 
   /**
+   * Returns server url with api path without version
+   */
+  get baseServerUrl() {
+    return this.server + environment.apiProvider;
+  }
+
+  /**
    * Returns server url with api path and version
    */
   get serverUrl() {
