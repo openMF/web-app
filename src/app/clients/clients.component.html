@@ -6,9 +6,6 @@
       </mat-form-field>
     </div>
     <div class="filter-box" *ngIf="existsClientsToFilter">
-      <mat-form-field class="filter-box m-r-30">
-        <input matInput placeholder="Filter by client name or external Id" class="filter-box" (keyup)="applyFilter($event.target.value)">
-      </mat-form-field>
       <mat-checkbox #showClosedAccounts labelPosition="after" class="m-r-10">Show Closed Accounts
       </mat-checkbox>
     </div>
@@ -23,25 +20,26 @@
   </div>
 
   <div [hidden]="!existsClientsToFilter">
-    <table mat-table [dataSource]="dataSource" matSort>
+    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortChanged($event)">
 
       <!-- Name Column -->
-      <ng-container matColumnDef="entityName">
+      <ng-container matColumnDef="displayName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-        <td mat-cell *matCellDef="let row"> {{row.entityName}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.displayName}} </td>
       </ng-container>
 
       <!-- Account no Column -->
-      <ng-container matColumnDef="entityAccountNo">
+      <ng-container matColumnDef="accountNumber">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Account No. </th>
-        <td mat-cell *matCellDef="let row"> {{row.entityAccountNo}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.accountNumber}} </td>
       </ng-container>
 
       <!-- External ID Column -->
-      <ng-container matColumnDef="entityExternalId">
+      <ng-container matColumnDef="externalId">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> External Id </th>
         <td mat-cell *matCellDef="let row">
-          <mifosx-external-identifier externalId="{{row.entityExternalId}}"></mifosx-external-identifier>
+          <mifosx-external-identifier externalId="{{row.externalId}}"></mifosx-external-identifier>
         </td>
       </ng-container>
 
@@ -49,33 +47,27 @@
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef> Status </th>
         <td mat-cell *matCellDef="let row">
-          <div [ngClass]="row.entityStatus.code | statusLookup">
+          <div [ngClass]="row.status.code | statusLookup">
             <fa-icon icon="stop"></fa-icon>
             <span class="m-l-10 status">
-              {{ row.entityStatus.value | translate }}
+              {{ row.status.value | translate }}
             </span>
           </div>
         </td>
       </ng-container>
 
       <!-- Color Column -->
-      <ng-container matColumnDef="parentName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Office Name </th>
-        <td mat-cell *matCellDef="let row"> {{row.parentName}} </td>
-      </ng-container>
-
-      <!-- ID Column -->
-      <ng-container matColumnDef="staffName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Staff Name </th>
-        <td mat-cell *matCellDef="let row"> {{row.staffName}} </td>
+      <ng-container matColumnDef="officeName">
+        <th mat-header-cell *matHeaderCellDef> Office Name </th>
+        <td mat-cell *matCellDef="let row"> {{row.officeName}} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="[row.entityId,'general']" class="select-row">
-      </tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="[row.id,'general']" class="select-row">
+      </tr> 
     </table>
 
-    <mat-paginator [hidden]="!moreClientsToFilter" [pageSize]="50" [pageSizeOptions]="[50, 100]"
+    <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 50, 100]" [length]="totalRows" (page)="pageChanged($event)"
       showFirstLastButtons></mat-paginator>
   </div>
 

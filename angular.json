@@ -102,7 +102,7 @@
               "vendorChunk": false
             },
             "development": {
-              "optimization": true,
+              "optimization": false,
               "sourceMap": true,
               "namedChunks": true,
               "outputHashing": "all",

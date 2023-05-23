@@ -381,4 +381,26 @@ export class ClientsService {
   getCollateralTemplate(clientId: any) {
     return this.http.get(`/clients/${clientId}/collaterals/template`);
   }
+
+  searchByText(text: string, page: number, pageSize: number, sortAttribute: string = '', sortDirection: string = '') {
+    let request: any = {
+        request: {
+          text
+        },
+        page,
+        size: pageSize
+    }
+    if (sortAttribute !== '' && sortDirection !== '') {
+      request = {
+        ...request,
+        sorts: [
+          {
+          direction: sortDirection,
+          property: sortAttribute
+          }
+        ]
+      }
+    }
+    return this.http.post(`/v2/clients/search`, request);
+  }
 }

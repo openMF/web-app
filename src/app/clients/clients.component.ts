@@ -1,13 +1,13 @@
 /** Angular Imports. */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
 /** Custom Services */
-import { SearchService } from 'app/search/search.service';
 import { environment } from 'environments/environment';
+import { ClientsService } from './clients.service';
 
 @Component({
   selector: 'mifosx-clients',
@@ -15,51 +15,75 @@ import { environment } from 'environments/environment';
   styleUrls: ['./clients.component.scss'],
 })
 export class ClientsComponent implements OnInit {
-  @ViewChild('showClosedAccounts', { static: true }) showClosedAccounts: MatCheckbox;
+  @ViewChild('showClosedAccounts') showClosedAccounts: MatCheckbox;
 
-  displayedColumns = ['entityName', 'entityAccountNo', 'entityExternalId', 'status', 'parentName', 'staffName'];
-  dataSource: MatTableDataSource<any>;
+  displayedColumns = ['displayName', 'accountNumber', 'externalId', 'status', 'officeName'];
+  dataSource: MatTableDataSource<any> = new MatTableDataSource();
 
   existsClientsToFilter = false;
   notExistsClientsToFilter = false;
-  moreClientsToFilter = false;
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  totalRows: number;
+  isLoading = false;
+  
+  pageSize = 50;
+  currentPage = 0;
+  filterText = '';
 
-  constructor(private searchService: SearchService) { }
+  sortAttribute = '';
+  sortDirection = '';
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
+  constructor(private clientService: ClientsService) { }
 
   ngOnInit() {
     if (environment.preloadClients) {
-      this.getClients('');
+      this.getClients();
     }
-  }
-
-  /**
-   * Filter Client Data
-   * @param {string} filterValue Value to filter data.
-   */
-  applyFilter(filterValue: string = '') {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   /**
    * Searches server for query and resource.
    */
   search(value: string) {
-    if (value !== '') {
-      this.getClients(value);
-    }
+    this.filterText = value;
+    this.getClients();
   }
 
-  private getClients(value: string) {
-    this.searchService.getSearchResults(value, 'clients').subscribe((data: any) => {
-      this.dataSource = new MatTableDataSource(data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.existsClientsToFilter = (data.length > 0);
+  private getClients() {
+    this.isLoading = true;
+    this.clientService.searchByText(this.filterText, this.currentPage, this.pageSize, this.sortAttribute, this.sortDirection)
+    .subscribe((data: any) => {
+      this.dataSource.data = data.content;
+
+      this.totalRows = data.totalElements;
+
+      this.existsClientsToFilter = (data.numberOfElements > 0);
       this.notExistsClientsToFilter = !this.existsClientsToFilter;
-      this.moreClientsToFilter = (data.length > 50);
+      this.isLoading = false;
+    }, (error: any) => {
+      this.isLoading = false;
     });
+  }
+
+  pageChanged(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.getClients();
+  }
+
+  sortChanged(event: Sort) {
+    if (event.direction === '') {
+      this.sortDirection = '';
+      this.sortAttribute = '';
+    } else {
+      this.sortAttribute = event.active;
+      this.sortDirection = event.direction;
+    }
+    this.currentPage = 0;
+    this.paginator.firstPage();
+    this.getClients();
   }
 }

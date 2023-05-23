@@ -22,13 +22,18 @@ export class ApiPrefixInterceptor implements HttpInterceptor {
    * Intercepts a Http request and prefixes it with `serverUrl`.
    */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    let baseUrl = this.settingsService.serverUrl;
+
+    const versionRegex = /^\/(v[1-9][0-9]*\/).*$/;
+    if (versionRegex.test(request.url)) {
+      baseUrl = this.settingsService.baseServerUrl;
+    }
     /**
      * Ignore URLs that are complete for i18n
      */
     if (!request.url.includes('http:') && !request.url.includes('https:')) {
-      request = request.clone({ url: this.settingsService.serverUrl + request.url });
+      request = request.clone({ url: baseUrl + request.url });
     }
-
     return next.handle(request);
   }
 
