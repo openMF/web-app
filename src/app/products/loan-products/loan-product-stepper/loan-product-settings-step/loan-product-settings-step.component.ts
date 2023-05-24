@@ -38,6 +38,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
       .subscribe((isLinkedToFloatingInterestRates: any) => {
         if (isLinkedToFloatingInterestRates) {
           this.loanProductSettingsForm.get('isInterestRecalculationEnabled').setValue(true);
+          this.loanProductSettingsForm.get('allowPartialPeriodInterestCalcualtion').setValue(true);
         }
       });
 
