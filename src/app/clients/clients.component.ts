@@ -49,6 +49,7 @@ export class ClientsComponent implements OnInit {
    */
   search(value: string) {
     this.filterText = value;
+    this.resetPaginator();
     this.getClients();
   }
 
@@ -82,8 +83,12 @@ export class ClientsComponent implements OnInit {
       this.sortAttribute = event.active;
       this.sortDirection = event.direction;
     }
+    this.resetPaginator();
+    this.getClients();
+  }
+
+  private resetPaginator() {
     this.currentPage = 0;
     this.paginator.firstPage();
-    this.getClients();
   }
 }
