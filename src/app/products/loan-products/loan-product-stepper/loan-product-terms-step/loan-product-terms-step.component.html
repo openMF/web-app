@@ -6,7 +6,10 @@
 
     <mat-form-field fxFlex="31%">
       <mat-label>Minimum</mat-label>
-      <input type="number" matInput formControlName="minPrincipal">
+      <input type="number" matInput formControlName="minPrincipal" [min]="0">
+      <mat-error>
+        Minimum Value must be <strong>greater equal to than 0</strong>
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="31%">
@@ -19,7 +22,10 @@
 
     <mat-form-field fxFlex="31%">
       <mat-label>Maximum</mat-label>
-      <input type="number" matInput formControlName="maxPrincipal">
+      <input type="number" matInput formControlName="maxPrincipal" [min]="0">
+      <mat-error>
+        Maximum Value must be <strong>greater equal to than 0</strong> and must be greater than <strong>Minimum Principal</strong>
+      </mat-error>
     </mat-form-field>
 
     <mat-checkbox fxFlex="31%" labelPosition="before" formControlName="allowApprovedDisbursedAmountsOverApplied">
@@ -44,7 +50,10 @@
 
     <mat-form-field fxFlex="31%">
       <mat-label>Minimum</mat-label>
-      <input type="number" matInput formControlName="minNumberOfRepayments">
+      <input type="number" matInput formControlName="minNumberOfRepayments" [min]="0">
+      <mat-error>
+        Minimum Value must be <strong>greater equal to than 0</strong>
+        </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="31%">
@@ -57,7 +66,10 @@
 
     <mat-form-field fxFlex="31%">
       <mat-label>Maximum</mat-label>
-      <input type="number" matInput formControlName="maxNumberOfRepayments">
+      <input type="number" matInput formControlName="maxNumberOfRepayments" [min]="0">
+      <mat-error>
+        Maximum Value must be <strong>greater equal to than 0</strong> and must be greater than <strong>Minimum Principal</strong>
+      </mat-error>
     </mat-form-field>
 
     <mat-divider fxFlex="98%"></mat-divider>
@@ -74,7 +86,10 @@
 
       <mat-form-field fxFlex="23%">
         <mat-label>Minimum</mat-label>
-        <input type="number" matInput formControlName="minInterestRatePerPeriod">
+        <input type="number" matInput formControlName="minInterestRatePerPeriod" [min]="0.1">
+        <mat-error>
+          Minimum Value must be <strong>greater than 0</strong>
+          </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="23%">
@@ -87,7 +102,10 @@
 
       <mat-form-field fxFlex="23%">
         <mat-label>Maximum</mat-label>
-        <input type="number" matInput formControlName="maxInterestRatePerPeriod">
+        <input type="number" matInput formControlName="maxInterestRatePerPeriod" [min]="0.2">
+        <mat-error>
+          Maximum Value must be <strong>greater equal to than 0</strong> and must be greater than <strong>Minimum Principal</strong>
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="23%">
@@ -134,7 +152,7 @@
 
       <mat-form-field fxFlex="31%">
         <mat-label>Minimum</mat-label>
-        <input type="number" matInput formControlName="minDifferentialLendingRate" required>
+        <input type="number" matInput formControlName="minDifferentialLendingRate" [min]="0" required>
         <mat-error>
           Minimum interest rate is <strong>required</strong>
         </mat-error>
