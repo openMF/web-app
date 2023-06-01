@@ -297,7 +297,7 @@
           <input matInput required formControlName="maxOutstandingLoanBalance">
         </mat-form-field>
         <span fxFlex>
-          <button type="button" mat-icon-button color="primary" (click)="addDisbursementDataEntry(disbursementData)"
+          <button type="button" mat-icon-button color="primary" required (click)="addDisbursementDataEntry(disbursementData)"
             [disabled]="isMultiDisbursedCompleted">
             <fa-icon icon="plus-circle" size="lg"></fa-icon>
           </button>
