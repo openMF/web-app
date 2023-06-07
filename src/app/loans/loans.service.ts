@@ -587,7 +587,7 @@ export class LoansService {
     delete loansAccountData.isValid;
     loansAccountData.principal = loansAccountData.principalAmount;
     delete loansAccountData.principalAmount;
-    delete loansAccountData.multiDisburseLoan; //this was just added so that disbursement data can be send in the backend
+    delete loansAccountData.multiDisburseLoan; // this was just added so that disbursement data can be send in the backend
     return loansAccountData;
   }
 

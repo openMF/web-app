@@ -12,7 +12,9 @@ import { Dates } from './dates';
 })
 export class Datatables {
 
-  systemFields: string[] = ['id', 'created_at', 'updated_at', 'client_id', 'savings_account_id',
+  systemFields: string[] = ['id', 'created_at', 'updated_at'];
+
+  entitiesIdFields: string[] = ['client_id', 'savings_account_id',
     'loan_id', 'group_id', 'center_id', 'office_id', 'product_loan_id', 'savings_product_id', 'share_product_id'];
 
   constructor(private dateUtils: Dates,
@@ -73,9 +75,17 @@ export class Datatables {
     });
   }
 
+  public isEntityId(columnName: string): boolean {
+    return (this.entitiesIdFields.includes(columnName));
+  }
+
+  public isSystemColumn(columnName: string): boolean {
+    return (this.systemFields.includes(columnName) || this.entitiesIdFields.includes(columnName));
+  }
+
   public filterSystemColumns(columnHeaders: any): any {
     return columnHeaders.filter((column: any, index: number) => {
-      if (!this.systemFields.includes(column.columnName)) {
+      if (!this.isSystemColumn(column.columnName)) {
         column.idx = index;
         return column;
       }

@@ -25,7 +25,7 @@ export class ClientsComponent implements OnInit {
 
   totalRows: number;
   isLoading = false;
-  
+
   pageSize = 50;
   currentPage = 0;
   filterText = '';

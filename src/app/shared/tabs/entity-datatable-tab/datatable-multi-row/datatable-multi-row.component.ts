@@ -40,6 +40,7 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
   showDeleteBotton: boolean;
   /** Row Selection Data */
   selection: SelectionModel<any>;
+  isSelected = false;
 
   /** Data Table Reference */
   @ViewChild('dataTable') dataTableRef: MatTable<Element>;
@@ -73,6 +74,7 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
       this.datatableName = routeParams.datatableName;
     });
     this.setData();
+    this.isSelected = false;
   }
 
   ngOnDestroy(): void {
@@ -86,13 +88,15 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
   }
 
   setData() {
-    this.datatableColumns = [this.SELECT_NAME_FIELD].concat(this.dataObject.columnHeaders.map((columnHeader: any) => {
-      return columnHeader.columnName;
-    })
-    );
-    this.datatableData = this.dataObject.data;
-    // console.log(this.datatableData);
+    this.datatableColumns = [this.SELECT_NAME_FIELD];
+    this.dataObject.columnHeaders.filter((columnHeader: any) => {
+      if (!this.datatables.isEntityId(columnHeader.columnName)) {
+        this.datatableColumns.push(columnHeader.columnName);
+        return columnHeader;
+      }
+    });
 
+    this.datatableData = this.dataObject.data;
     if (this.dataTableRef) {
       this.dataTableRef.renderRows();
     }
@@ -198,7 +202,7 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
   }
 
   isAnySelected() {
-    return (this.selection.selected.length > 0);
+    return (this.selection.selected && this.selection.selected.length > 0);
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
@@ -208,6 +212,12 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
     } else {
       this.selection = new SelectionModel(true, []);
     }
+    this.isSelected = (this.selection.selected.length > 0);
+  }
+
+  itemToggle(data: any): void {
+    this.selection.toggle(data);
+    this.isSelected = (this.selection.selected.length > 0);
   }
 
   /** The label for the checkbox on the passed row */

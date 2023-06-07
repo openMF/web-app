@@ -389,7 +389,7 @@ export class ClientsService {
         },
         page,
         size: pageSize
-    }
+    };
     if (sortAttribute !== '' && sortDirection !== '') {
       request = {
         ...request,
@@ -399,7 +399,7 @@ export class ClientsService {
           property: sortAttribute
           }
         ]
-      }
+      };
     }
     return this.http.post(`/v2/clients/search`, request);
   }
