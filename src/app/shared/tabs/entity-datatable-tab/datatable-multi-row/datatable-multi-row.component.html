@@ -10,13 +10,13 @@
           <fa-icon icon="plus" class="m-r-10"></fa-icon>Add
         </button>
       </span>
-      <span *mifosxHasPermission="'DELETE_' + datatableName">
-        <button class="delete-button" mat-raised-button color="warn" (click)="deleteSelected()" *ngIf="dataObject.data.length > 0">
-          <fa-icon icon="trash" [disabled]="!isAnySelected()" class="m-r-10"></fa-icon>Delete Selected
+      <span *mifosxHasPermission="'DELETE_' + datatableName" [fxShow]="isSelected">
+        <button class="delete-button" mat-raised-button color="warn" (click)="deleteSelected()">
+          <fa-icon icon="trash" class="m-r-10"></fa-icon>Delete Selected
         </button>
       </span>
-      <span *mifosxHasPermission="'DELETE_' + datatableName">
-        <button class="delete-button" mat-raised-button color="warn" (click)="delete()" *ngIf="dataObject.data.length > 0">
+      <span *mifosxHasPermission="'DELETE_' + datatableName" [fxShow]="datatableData.length > 0">
+        <button class="delete-button" mat-raised-button color="warn" (click)="delete()">
           <fa-icon icon="trash" class="m-r-10"></fa-icon>Delete All
         </button>
       </span>
@@ -31,7 +31,7 @@
           <th mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let data">
             <mat-checkbox class="center" (click)="$event.stopPropagation()"
-              (change)="$event ? selection.toggle(data) : null" [checked]="selection.isSelected(data)">
+              (change)="$event ? itemToggle(data) : null" [checked]="selection.isSelected(data)">
             </mat-checkbox>
           </td>
         </ng-container>
@@ -39,7 +39,7 @@
         <ng-container *ngIf="i > 0">
           <th mat-header-cell class="right" *matHeaderCellDef> {{datatableColumn}} </th>
           <td mat-cell class="right" *matCellDef="let data" [ngClass]="isToDelete(data)">
-              {{ formatValue(i, data.row[i]) }}
+              {{ formatValue(i, data.row[i - 1]) }}
           </td>
         </ng-container>
       </ng-container>

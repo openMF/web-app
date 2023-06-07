@@ -147,7 +147,7 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
     const payload = this.savingsAccountTermsForm.getRawValue();
     delete payload.currencyCode;
     delete payload.decimal;
-    delete payload.minBalanceForInterestCalculation; //Backend is not accepting minBalanceForInterestCalculation value
+    delete payload.minBalanceForInterestCalculation; // Backend is not accepting minBalanceForInterestCalculation value
     return payload;
   }
 

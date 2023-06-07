@@ -127,7 +127,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         'fixedEmiAmount': this.loansAccountTermsData.fixedEmiAmount,
         'maxOutstandingLoanBalance': this.loansAccountTermsData.maxOutstandingLoanBalance,
         'transactionProcessingStrategyCode': this.loansAccountTermsData.transactionProcessingStrategyCode,
-        'interestRateDifferential':this.loansAccountTermsData.interestRateDifferential,
+        'interestRateDifferential': this.loansAccountTermsData.interestRateDifferential,
         'multiDisburseLoan': this.loansAccountTermsData.multiDisburseLoan
       });
 
@@ -211,7 +211,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         'fixedEmiAmount': this.loansAccountTermsData.fixedEmiAmount,
         'maxOutstandingLoanBalance': this.loansAccountTermsData.maxOutstandingLoanBalance,
         'transactionProcessingStrategyCode': this.loansAccountTermsData.transactionProcessingStrategyCode,
-        'interestRateDifferential':this.loansAccountTermsData.interestRateDifferential,
+        'interestRateDifferential': this.loansAccountTermsData.interestRateDifferential,
         'multiDisburseLoan': this.loansAccountTermsData.multiDisburseLoan
       });
     }
@@ -273,9 +273,9 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       'fixedEmiAmount': [''],
       'isTopup': [''],
       'maxOutstandingLoanBalance': [''],
-      'interestRateDifferential':[''],
+      'interestRateDifferential': [''],
       'transactionProcessingStrategyCode': ['', Validators.required],
-      'multiDisburseLoan': [false] 
+      'multiDisburseLoan': [false]
     });
   }
 
