@@ -57,6 +57,10 @@ import { LoanReschedulesResolver } from './common-resolvers/loan-reschedules.res
 import { RescheduleLoanTabComponent } from './loans-view/reschedule-loan-tab/reschedule-loan-tab.component';
 import { AdjustLoanChargeComponent } from './loans-view/loan-account-actions/adjust-loan-charge/adjust-loan-charge.component';
 import { LoanArrearDelinquencyResolver } from './common-resolvers/loan-arrear-delinquency.resolver';
+import { ExternalAssetOwnerTabComponent } from './loans-view/external-asset-owner-tab/external-asset-owner-tab.component';
+import { ExternalAssetOwnerResolver } from './common-resolvers/external-asset-owner.resolver';
+import { ExternalAssetOwnerActiveTransferResolver } from './common-resolvers/external-asset-owner-active-transfer.resolver';
+import { ExternalAssetOwnerJournalEntryResolver } from './common-resolvers/external-asset-owner-journal-entry.resolver';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -197,6 +201,15 @@ const routes: Routes = [
             path: 'standing-instruction',
             component: StandingInstructionsTabComponent,
             data: { title: extract('Standing Instructions'), breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false }
+          },
+          {
+            path: 'external-asset-owner',
+            component: ExternalAssetOwnerTabComponent,
+            data: { title: extract('External Asset Owner'), breadcrumb: 'External Asset Owner', routeParamBreadcrumb: false },
+            resolve: {
+              activeTransferData: ExternalAssetOwnerActiveTransferResolver,
+              loanTransfersData: ExternalAssetOwnerResolver
+            }
           },
           {
             path: 'datatables',
@@ -349,7 +362,8 @@ const routes: Routes = [
     GroupAccountsResolver,
     GLIMViewResolver,
     GSIMAccountsResolver,
-    GLIMLoanTemplateResolver
+    GLIMLoanTemplateResolver,
+    ExternalAssetOwnerResolver
   ]
 })
 

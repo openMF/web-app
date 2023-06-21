@@ -1,0 +1,81 @@
+<div class="tab-container mat-typography">
+  <div fxLayout="row" fxLayoutAlign="start center">
+
+    <h3 fxFlex="90%">External Asset Owner</h3>
+
+    <div fxFlex="10%" *ngIf="canBeSaled()" >
+      <button mat-raised-button class="f-right" color="primary" (click)="saleLoan()" *mifosxHasPermission="'SALE_LOAN'">
+        <fa-icon icon="dollar-sign" class="m-r-10"></fa-icon>Sale Loan
+      </button>
+    </div>
+
+    <div fxFlex="10%" *ngIf="canBeCancelled()" >
+      <button mat-raised-button class="f-right" color="warn" (click)="cancelSaleLoan()" *mifosxHasPermission="'SALE_LOAN'">
+        <fa-icon icon="trash" class="m-r-10"></fa-icon>Cancel Sale Loan
+      </button>
+    </div>
+
+    <div fxFlex="10%" *ngIf="canBeBuyed()" >
+      <button mat-raised-button class="f-right" color="primary" (click)="buyBackLoan()" *mifosxHasPermission="'SALE_LOAN'">
+        <fa-icon icon="dollar-sign" class="m-r-10"></fa-icon>Buy Back Loan
+      </button>
+    </div>
+  </div>
+
+  <table mat-table mat-sort [dataSource]="loanTransfersData" *ngIf="loanTransfersData.length>0">
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let item">
+        <div [ngClass]="itemStatus(item.status)">
+          <fa-icon icon="stop"></fa-icon>
+          <span class="m-l-10 status">
+            {{ item.status | translate }}
+          </span>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="effectiveFrom">
+      <th mat-header-cell *matHeaderCellDef> Effective From </th>
+      <td mat-cell *matCellDef="let item"> {{ item.effectiveFrom | dateFormat }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="ownerExternalId">
+      <th mat-header-cell *matHeaderCellDef> Owner External Id </th>
+      <td mat-cell *matCellDef="let item">
+        <mifosx-external-identifier externalId="{{item.owner.externalId}}"></mifosx-external-identifier>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="transferExternalId">
+      <th mat-header-cell *matHeaderCellDef> Transfer External Id </th>
+      <td mat-cell *matCellDef="let item">
+        <mifosx-external-identifier externalId="{{item.transferExternalId}}"></mifosx-external-identifier>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="settlementDate">
+      <th mat-header-cell *matHeaderCellDef> Settlement Date </th>
+      <td mat-cell *matCellDef="let item"> {{ item.settlementDate | dateFormat }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="purchasePriceRatio">
+      <th mat-header-cell *matHeaderCellDef> Purchase Price Ratio </th>
+      <td mat-cell *matCellDef="let item"> {{ item.purchasePriceRatio | number }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell class="center" *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let item" class="center td-min-space">
+        <button class="account-action-button" *ngIf="!isPending(item)" mat-raised-button color="primary" matTooltip="View Journal Entries"
+          matTooltipPosition="left" (click)="routeJournalEntry($event)" [routerLink]="['/', 'journal-entry', 'view-transfer', item.transferId]">
+          <i class="fa fa-arrow-circle-right"></i>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="loanTransferColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: loanTransferColumns;"></tr>
+  </table>
+</div>

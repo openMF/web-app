@@ -12,12 +12,16 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class ViewJournalEntryComponent implements OnInit {
 
+  existsPaymentDetails = false;
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    * @param {any} data Provides journal entry.
    */
   constructor(public dialogRef: MatDialogRef<ViewJournalEntryComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) { }
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+
+    this.existsPaymentDetails = (data.journalEntry.transactionDetails != null && data.journalEntry.transactionDetails.paymentDetails != null);
+  }
 
   ngOnInit() {
   }

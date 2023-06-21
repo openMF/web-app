@@ -1,0 +1,57 @@
+<div class="container mat-elevation-z8">
+
+  <mat-card>
+
+    <form [formGroup]="saleLoanForm" (ngSubmit)="submit()">
+
+      <mat-card-content>
+
+        <div fxLayout="column">
+
+          <mat-form-field (click)="settlementDatePicker.open()">
+            <mat-label>Settlement Date</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="settlementDatePicker" required
+              formControlName="settlementDate">
+            <mat-datepicker-toggle matSuffix [for]="settlementDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #settlementDatePicker></mat-datepicker>
+            <mat-error *ngIf="saleLoanForm.controls.settlementDate.hasError('required')">
+              Settlement Date <strong>is required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="!isBuyBack()">
+            <mat-label>Purchase Price Ratio</mat-label>
+            <input type="number" matInput required formControlName="purchasePriceRatio">
+            <mat-error *ngIf="saleLoanForm.controls.purchasePriceRatio.hasError('required')">
+              Purchase Price Ratio <strong>is required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="!isBuyBack()">
+            <mat-label>Owner External Id</mat-label>
+            <input matInput formControlName="ownerExternalId">
+            <mat-error *ngIf="saleLoanForm.controls.ownerExternalId.hasError('required')">
+              Owner External Id <strong>is required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Transfer External Id</mat-label>
+            <input matInput formControlName="transferExternalId">
+          </mat-form-field>
+
+        </div>
+
+        <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+          <button mat-raised-button color="primary" [disabled]="!saleLoanForm.valid"
+            *mifosxHasPermission="'SALE_LOAN'">Submit</button>
+        </mat-card-actions>
+
+      </mat-card-content>
+
+    </form>
+
+  </mat-card>
+
+</div>

@@ -7,7 +7,7 @@
   </button>
 </div>
 
-<div class="container m-b-20">
+<div class="container m-b-20" *ngIf="isViewTransaction()">
 
     <mat-card class="mat-elevation-z8" *ngIf="dataSource">
 
@@ -94,7 +94,7 @@
 
   </table>
 
-  <div fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column" class="action-bar">
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px" class="m-t-15 m-b-15">
     <button type="button" color="primary" mat-raised-button (click)="goBack()">Back</button>
   </div>
 

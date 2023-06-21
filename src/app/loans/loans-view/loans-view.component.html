@@ -135,7 +135,7 @@
           Transactions
         </a>
       </ng-container>
-      <ng-container>
+      <ng-container *ngIf="loanDetailsData.status.active">
         <a mat-tab-link [routerLink]="['./delinquencytags']" routerLinkActive #delinquencytags="routerLinkActive"
           [active]="delinquencytags.isActive">
           Delinquency Tags
@@ -171,10 +171,12 @@
           Charges
         </a>
       </ng-container>
-      <a mat-tab-link [routerLink]="['./loan-reschedules']" routerLinkActive #loanReschedules="routerLinkActive"
-        [active]="loanReschedules.isActive">
-        Loan Reschedules
-      </a>
+      <ng-container *ngIf="loanDetailsData.status.active">
+        <a mat-tab-link [routerLink]="['./loan-reschedules']" routerLinkActive #loanReschedules="routerLinkActive"
+          [active]="loanReschedules.isActive">
+          Loan Reschedules
+        </a>
+      </ng-container>
       <a mat-tab-link [routerLink]="['./loan-documents']" routerLinkActive #loanDocuments="routerLinkActive"
         [active]="loanDocuments.isActive">
         Loan Documents
@@ -187,6 +189,12 @@
         <a mat-tab-link [routerLink]="['./standing-instruction']" routerLinkActive
           #standingInstruction="routerLinkActive" [active]="standingInstruction.isActive">
           Standing Instruction
+        </a>
+      </ng-container>
+      <ng-container *ngIf="loanDetailsData.status.active">
+        <a mat-tab-link [routerLink]="['./external-asset-owner']" routerLinkActive #externalAssetOwner="routerLinkActive"
+          [active]="externalAssetOwner.isActive">
+          External Asset Owner
         </a>
       </ng-container>
       <ng-container *ngFor="let loanDatatable of loanDatatables">

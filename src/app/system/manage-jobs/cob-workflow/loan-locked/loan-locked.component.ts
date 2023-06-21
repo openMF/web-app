@@ -30,7 +30,9 @@ export class LoanLockedComponent implements OnInit {
   /** Paginator for the table */
   @ViewChild(MatPaginator, {static: false})
   set paginator(value: MatPaginator) {
-    this.dataSource.paginator = value;
+    if (this.dataSource != null) {
+      this.dataSource.paginator = value;
+    }
   }
 
   currentPage = 0;

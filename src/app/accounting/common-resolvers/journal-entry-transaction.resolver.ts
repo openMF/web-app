@@ -12,7 +12,7 @@ import { AccountingService } from '../accounting.service';
  * Transaction data resolver.
  */
 @Injectable()
-export class TransactionResolver implements Resolve<Object> {
+export class JournalEntryTransactionResolver implements Resolve<Object> {
 
   /**
    * @param {AccountingService} accountingService Accounting service.

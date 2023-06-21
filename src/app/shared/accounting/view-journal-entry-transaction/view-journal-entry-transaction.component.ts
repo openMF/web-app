@@ -1,31 +1,23 @@
-/** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-
-/** Custom Services */
-import { AccountingService } from '../accounting.service';
-
-/** Custom Components */
-import { RevertTransactionComponent } from '../revert-transaction/revert-transaction.component';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ViewJournalEntryComponent } from '../view-journal-entry/view-journal-entry.component';
+import { RevertTransactionComponent } from 'app/accounting/revert-transaction/revert-transaction.component';
+import { AccountingService } from 'app/accounting/accounting.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { Location } from '@angular/common';
 
-/**
- * View transaction component.
- */
 @Component({
-  selector: 'mifosx-view-transaction',
-  templateUrl: './view-transaction.component.html',
-  styleUrls: ['./view-transaction.component.scss']
+  selector: 'mifosx-view-journal-entry-transaction',
+  templateUrl: './view-journal-entry-transaction.component.html',
+  styleUrls: ['./view-journal-entry-transaction.component.scss']
 })
-export class ViewTransactionComponent implements OnInit {
+export class ViewJournalEntryTransactionComponent implements OnInit {
 
-  // TODO: Update once language and date settings are setup
-
+  title: string;
+  journalEntriesData: any[];
   /** Transaction data.  */
   transaction: any;
   /** Transaction ID. */
@@ -56,27 +48,44 @@ export class ViewTransactionComponent implements OnInit {
    * Retrieves the transaction data from `resolve` and sets the transaction table.
    */
   ngOnInit() {
-    this.route.data.subscribe((data: { transaction: any }) => {
-      this.transaction = data.transaction;
-      this.transactionId = data.transaction.pageItems[0].transactionId;
+    this.route.data.subscribe((data: { title: string, transaction: any, transferJournalEntryData: any }) => {
+      this.title = data.title;
+      if (this.isViewTransaction()) {
+        this.transaction = data.transaction;
+        this.transactionId = data.transaction.pageItems[0].transactionId;
+      } else if (this.isViewTransfer()) {
+        this.journalEntriesData = data.transferJournalEntryData.journalEntryData.content;
+      }
       this.setTransaction();
     });
+  }
+
+  isViewTransaction(): boolean {
+    return (this.title === 'View Transaction');
+  }
+
+  isViewTransfer(): boolean {
+    return (this.title === 'View Transfer');
   }
 
   /**
    * Initializes the data source for transaction table with journal entries, paginator and sorter.
    */
   setTransaction() {
-    this.dataSource = new MatTableDataSource(this.transaction.pageItems);
+    if (this.journalEntriesData != null) {
+      this.dataSource = new MatTableDataSource(this.journalEntriesData);
+    } else {
+      this.dataSource = new MatTableDataSource(this.transaction.pageItems);
+      this.dataSource.sortingDataAccessor = (transaction: any, property: any) => {
+        switch (property) {
+          case 'glAccountType': return transaction.glAccountType.value;
+          case 'debit': return transaction.amount;
+          case 'credit': return transaction.amount;
+          default: return transaction[property];
+        }
+      };
+    }
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sortingDataAccessor = (transaction: any, property: any) => {
-      switch (property) {
-        case 'glAccountType': return transaction.glAccountType.value;
-        case 'debit': return transaction.amount;
-        case 'credit': return transaction.amount;
-        default: return transaction[property];
-      }
-    };
     this.dataSource.sort = this.sort;
   }
 
@@ -113,5 +122,4 @@ export class ViewTransactionComponent implements OnInit {
   goBack(): void {
     this.location.back();
   }
-
 }

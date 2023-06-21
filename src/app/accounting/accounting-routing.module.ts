@@ -15,7 +15,6 @@ import { AccountingComponent } from './accounting.component';
 import { FrequentPostingsComponent } from './frequent-postings/frequent-postings.component';
 import { CreateJournalEntryComponent } from './create-journal-entry/create-journal-entry.component';
 import { SearchJournalEntryComponent } from './search-journal-entry/search-journal-entry.component';
-import { ViewTransactionComponent } from './view-transaction/view-transaction.component';
 import { FinancialActivityMappingsComponent } from './financial-activity-mappings/financial-activity-mappings.component';
 import { CreateFinancialActivityMappingComponent } from './financial-activity-mappings/create-financial-activity-mapping/create-financial-activity-mapping.component';
 import { ViewFinancialActivityMappingComponent } from './financial-activity-mappings/view-financial-activity-mapping/view-financial-activity-mapping.component';
@@ -45,7 +44,6 @@ import { AccountingRulesAssociationsResolver } from './common-resolvers/accounti
 import { CurrenciesResolver } from './common-resolvers/currencies.resolver';
 import { PaymentTypesResolver } from './common-resolvers/payment-types.resolver';
 import { GlAccountsResolver } from './common-resolvers/gl-accounts.resolver';
-import { TransactionResolver } from './view-transaction/transaction.resolver';
 import { FinancialActivityMappingsResolver } from './financial-activity-mappings/financial-activity-mappings.resolver';
 import { FinancialActivityMappingsTemplateResolver } from './financial-activity-mappings/create-financial-activity-mapping/financial-activity-mappings-template.resolver';
 import { FinancialActivityMappingResolver } from './financial-activity-mappings/view-financial-activity-mapping/financial-activity-mapping.resolver';
@@ -64,6 +62,9 @@ import { ProvisioningEntryEntriesResolver } from './provisioning-entries/view-pr
 import { LoanProductsResolver } from './common-resolvers/loan-products.resolver';
 import { ProvisioningCategoriesResolver } from './common-resolvers/provisioning-categories.resolver';
 import { ProvisioningJournalEntriesResolver } from './provisioning-entries/view-provisioning-journal-entries/provisioning-journal-entries.resolver';
+import { ViewJournalEntryTransactionComponent } from 'app/shared/accounting/view-journal-entry-transaction/view-journal-entry-transaction.component';
+import { JournalEntryTransactionResolver } from './common-resolvers/journal-entry-transaction.resolver';
+import { ExternalAssetOwnerJournalEntryResolver } from 'app/loans/common-resolvers/external-asset-owner-journal-entry.resolver';
 
 /** Accounting Routes */
 const routes: Routes = [
@@ -116,10 +117,10 @@ const routes: Routes = [
               children: [
                 {
                   path: 'view/:id',
-                  component: ViewTransactionComponent,
+                  component: ViewJournalEntryTransactionComponent,
                   data: { title: extract('View Transaction'), routeParamBreadcrumb: 'id' },
                   resolve: {
-                    transaction: TransactionResolver
+                    transaction: JournalEntryTransactionResolver
                   }
                 }
               ]
@@ -363,10 +364,18 @@ const routes: Routes = [
       children: [
         {
           path: 'view/:id',
-          component: ViewTransactionComponent,
+          component: ViewJournalEntryTransactionComponent,
           data: { title: extract('View Transaction'), routeParamBreadcrumb: 'id' },
           resolve: {
-            transaction: TransactionResolver
+            transaction: JournalEntryTransactionResolver
+          }
+        },
+        {
+          path: 'view-transfer/:transferId',
+          component: ViewJournalEntryTransactionComponent,
+          data: { title: extract('View Transfer'), routeParamBreadcrumb: 'transferId' },
+          resolve: {
+            transferJournalEntryData: ExternalAssetOwnerJournalEntryResolver
           }
         }
       ]
@@ -388,7 +397,7 @@ const routes: Routes = [
     CurrenciesResolver,
     PaymentTypesResolver,
     GlAccountsResolver,
-    TransactionResolver,
+    JournalEntryTransactionResolver,
     FinancialActivityMappingsResolver,
     FinancialActivityMappingsTemplateResolver,
     FinancialActivityMappingResolver,

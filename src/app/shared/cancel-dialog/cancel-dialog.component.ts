@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 /**
  * Cancel dialog component.
@@ -15,7 +15,8 @@ export class CancelDialogComponent implements OnInit {
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    */
-  constructor(public dialogRef: MatDialogRef<CancelDialogComponent>) { }
+  constructor(public dialogRef: MatDialogRef<CancelDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
   }

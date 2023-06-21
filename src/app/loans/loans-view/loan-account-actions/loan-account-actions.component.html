@@ -27,3 +27,4 @@
 <mifosx-edit-repayment-schedule *ngIf="actions['Edit Repayment Schedule']"></mifosx-edit-repayment-schedule>
 <mifosx-charge-off [dataObject]="actionButtonData" *ngIf="actions['Charge-Off']"></mifosx-charge-off>
 <mifosx-undo-command [actionName]="actionName" *ngIf="actions['Undo Charge-Off']"></mifosx-undo-command>
+<mifosx-asset-transfer-loan *ngIf="actions['Sale Loan'] || actions['Buy Back Loan']"></mifosx-asset-transfer-loan>

@@ -75,6 +75,8 @@ import { LoansAccountDatatableStepComponent } from './loans-account-stepper/loan
 import { RescheduleLoanTabComponent } from './loans-view/reschedule-loan-tab/reschedule-loan-tab.component';
 import { AdjustLoanChargeComponent } from './loans-view/loan-account-actions/adjust-loan-charge/adjust-loan-charge.component';
 import { ChargeOffComponent } from './loans-view/loan-account-actions/charge-off/charge-off.component';
+import { AssetTransferLoanComponent } from './loans-view/loan-account-actions/asset-transfer-loan/asset-transfer-loan.component';
+import { ExternalAssetOwnerTabComponent } from './loans-view/external-asset-owner-tab/external-asset-owner-tab.component';
 
 /**
  * Loans Module
@@ -148,7 +150,9 @@ import { ChargeOffComponent } from './loans-view/loan-account-actions/charge-off
     LoansAccountDatatableStepComponent,
     RescheduleLoanTabComponent,
     AdjustLoanChargeComponent,
-    ChargeOffComponent
+    ChargeOffComponent,
+    AssetTransferLoanComponent,
+    ExternalAssetOwnerTabComponent
   ],
   providers: [ ],
 })
