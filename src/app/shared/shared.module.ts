@@ -37,6 +37,8 @@ import { DatatableSingleRowComponent } from './tabs/entity-datatable-tab/datatab
 import { DatatableMultiRowComponent } from './tabs/entity-datatable-tab/datatable-multi-row/datatable-multi-row.component';
 import { SvgIconComponent } from './svg-icon/svg-icon.component';
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
+import { ViewJournalEntryComponent } from './accounting/view-journal-entry/view-journal-entry.component';
+import { ViewJournalEntryTransactionComponent } from './accounting/view-journal-entry-transaction/view-journal-entry-transaction.component';
 
 /**
  * Shared Module
@@ -80,7 +82,9 @@ import { NgxMatDatetimePickerModule, NgxMatNativeDateModule } from '@angular-mat
     EntityDatatableTabComponent,
     DatatableSingleRowComponent,
     DatatableMultiRowComponent,
-    SvgIconComponent
+    SvgIconComponent,
+    ViewJournalEntryComponent,
+    ViewJournalEntryTransactionComponent
   ],
   exports: [
     FileUploadComponent,
@@ -102,6 +106,8 @@ import { NgxMatDatetimePickerModule, NgxMatNativeDateModule } from '@angular-mat
     EntityNotesTabComponent,
     EntityDocumentsTabComponent,
     EntityDatatableTabComponent,
+    ViewJournalEntryComponent,
+    ViewJournalEntryTransactionComponent,
     SvgIconComponent
   ]
 })

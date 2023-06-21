@@ -64,41 +64,41 @@
       <td>{{ data.journalEntry.comments }}</td>
     </tr>
 
-    <tr *ngIf="data.journalEntry.transactionDetails.paymentDetails">
+    <tr *ngIf="existsPaymentDetails">
       <th colspan="2" class="header">Payment Details</th>
     </tr>
 
-    <tr *ngIf="data.journalEntry.transactionDetails.paymentDetails?.paymentType">
+    <tr *ngIf="existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.paymentType">
       <th>Payment Type</th>
       <td>{{ data.journalEntry.transactionDetails.paymentDetails.paymentType.name }}</td>
     </tr>
 
-    <tr *ngIf="data.journalEntry.transactionDetails.paymentDetails?.accountNumber">
+    <tr *ngIf="existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.accountNumber">
       <th>Account Number</th>
       <td>{{ data.journalEntry.transactionDetails.paymentDetails.accountNumber }}</td>
     </tr>
 
-    <tr *ngIf="data.journalEntry.transactionDetails.paymentDetails?.checkNumber">
+    <tr *ngIf="existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.checkNumber">
       <th>Cheque Number</th>
       <td>{{ data.journalEntry.transactionDetails.paymentDetails.checkNumber }}</td>
     </tr>
 
-    <tr *ngIf="data.journalEntry.transactionDetails.paymentDetails?.routingCode">
+    <tr *ngIf="existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.routingCode">
       <th>Routing Code</th>
       <td>{{ data.journalEntry.transactionDetails.paymentDetails.routingCode }}</td>
     </tr>
 
-    <tr *ngIf="data.journalEntry.transactionDetails.paymentDetails?.receiptNumber">
+    <tr *ngIf="existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.receiptNumber">
       <th>Receipt Number</th>
       <td>{{ data.journalEntry.transactionDetails.paymentDetails.receiptNumber }}</td>
     </tr>
 
-    <tr *ngIf="data.journalEntry.transactionDetails.paymentDetails?.bankNumber">
+    <tr *ngIf="existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.bankNumber">
       <th>Bank Number</th>
       <td>{{ data.journalEntry.transactionDetails.paymentDetails.bankNumber }}</td>
     </tr>
 
-    <tr>
+    <tr *ngIf="existsPaymentDetails">
       <th>Created by</th>
       <td>{{ data.journalEntry.createdByUserName }}</td>
     </tr>

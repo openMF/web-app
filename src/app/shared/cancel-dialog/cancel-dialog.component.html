@@ -1,6 +1,7 @@
 <h1 mat-dialog-title>Cancel</h1>
 <div mat-dialog-content>
-  <p>Are you sure you want to leave this page and lose all inputted data?</p>
+  <p *ngIf="!data.cancelContext">Are you sure you want to leave this page and lose all inputted data?</p>
+  <p *ngIf="data.cancelContext">Are you sure you want to cancel {{ data.cancelContext }} ?</p>
 </div>
 <mat-dialog-actions align="end">
   <button mat-raised-button mat-dialog-close>No</button>

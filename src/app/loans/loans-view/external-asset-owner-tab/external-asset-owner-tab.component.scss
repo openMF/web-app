@@ -1,0 +1,35 @@
+.container {
+  padding-bottom: 2%;
+
+  .transaction-buttons {
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    .accruals {
+      padding-top: 1%;
+    }
+  }
+
+  table {
+    width: 100%;
+
+    .select-row:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.tab-container {
+	padding: 1%;
+	margin: 1%;
+}
+
+.status {
+  color: black;
+}
+
+.account-action-button{
+  min-width: 26px;
+  padding: 0 0 3px 0;
+  margin: 0 2%;
+  line-height: 25px;
+}

@@ -189,6 +189,10 @@ export class LoansAccountButtonConfiguration {
           {
             name: 'Recover From Guarantor',
             taskPermissionName: 'RECOVERGUARANTEES_LOAN',
+          },
+          {
+            name: 'Sale Loan',
+            taskPermissionName: 'SALE_LOAN',
           }
         ];
         this.optionPaymentArray = [
