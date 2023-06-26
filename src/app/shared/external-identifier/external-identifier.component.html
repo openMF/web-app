@@ -1,4 +1,5 @@
 <div>
-  <span *ngIf="isLongValue()"><fa-icon icon="eye" size="sm" [title]="externalId"></fa-icon></span>
+  <span matTooltip="{{externalId}}" (mouseenter)="$event.stopImmediatePropagation()" (mouseleave)="$event.stopImmediatePropagation()" #tooltip="matTooltip"></span>
+  <span *ngIf="isLongValue()" (click)="tooltip.toggle()"><fa-icon icon="eye" size="sm" [title]="externalId"></fa-icon></span>
   {{ externalId | externalIdentifier }}
 </div>
