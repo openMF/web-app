@@ -16,6 +16,7 @@ export class ExternalAssetOwnerTabComponent implements OnInit {
   loanTransferColumns: string[] = ['status', 'effectiveFrom', 'ownerExternalId', 'transferExternalId', 'settlementDate', 'purchasePriceRatio', 'actions'];
 
   currentItem: any;
+  existActiveTransfer = false;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -24,7 +25,10 @@ export class ExternalAssetOwnerTabComponent implements OnInit {
     ) {
     this.route.data.subscribe((data: { loanTransfersData: any, activeTransferData: any }) => {
       this.loanTransfersData =  data.loanTransfersData.empty ? [] : data.loanTransfersData.content;
-      this.activeTransferData = data.activeTransferData || {};
+      this.activeTransferData = data.activeTransferData || null;
+      this.existActiveTransfer = (data.activeTransferData && data.activeTransferData.transferId != null);
+      console.log(this.existActiveTransfer);
+      console.log(this.activeTransferData);
     });
   }
 
@@ -33,6 +37,13 @@ export class ExternalAssetOwnerTabComponent implements OnInit {
     if (this.loanTransfersData.length > 0) {
       this.currentItem = this.loanTransfersData[(this.loanTransfersData.length - 1)];
     }
+  }
+
+  itemCurrentStatus(item: any): string {
+    if (item.status === 'BUYBACK' && item.effectiveTo === '9999-12-31') {
+      return item.status + ' PENDING';
+    }
+    return item.status;
   }
 
   itemStatus(status: string): string {

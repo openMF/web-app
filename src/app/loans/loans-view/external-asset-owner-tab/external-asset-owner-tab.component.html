@@ -1,4 +1,80 @@
 <div class="tab-container mat-typography">
+  <div fxFlexFill *ngIf="existActiveTransfer">
+    <h3>Active Asset Transfer</h3>
+    <div fxLayout="row" fxLayoutGap="32px" class="asset-transfer-container">
+      <table>
+        <tbody>
+          <tr>
+            <td fxFlex="25%">
+              <b>Status :</b>
+            </td>
+            <td fxFlex="25%" class="left">
+              <div [ngClass]="itemStatus(activeTransferData.status)">
+                <fa-icon icon="stop"></fa-icon>
+                <span class="m-l-10 status">{{activeTransferData.status}}</span>
+              </div>
+            </td>
+            <td fxFlex="25%">
+              <b>Owner External Id :</b>
+            </td>
+            <td fxFlex="25%" class="left">
+              {{activeTransferData.owner.externalId}}
+            </td>
+          </tr>
+          <tr>
+            <td fxFlex="25%">
+              <b>Settlement Date :</b>
+            </td>
+            <td fxFlex="25%" class="left">
+              {{activeTransferData.settlementDate | dateFormat}}
+            </td>
+            <td fxFlex="25%">
+              <b>Effective Date :</b>
+            </td>
+            <td fxFlex="25%" class="left">
+              {{activeTransferData.effectiveFrom | dateFormat}}
+            </td>
+          </tr>
+          <tr>
+            <td fxFlex="25%">
+              <b>Details :</b>
+            </td>
+            <td fxFlex="75%" class="left">
+              <table>
+                <tbody>
+                  <tr>
+                    <td fxFlex="50%"><b>Principal Outstanding :</b></td>
+                    <td fxFlex="50%" class="r-amount">{{activeTransferData.details.totalPrincipalOutstanding | number}}</td>
+                  </tr>
+                  <tr>
+                    <td fxFlex="50%"><b>Interest Outstanding :</b></td>
+                    <td fxFlex="50%" class="r-amount">{{activeTransferData.details.totalInterestOutstanding | number}}</td>
+                  </tr>
+                  <tr>
+                    <td fxFlex="50%"><b>Fees Outstanding :</b></td>
+                    <td fxFlex="50%" class="r-amount">{{activeTransferData.details.totalFeeChargesOutstanding | number}}</td>
+                  </tr>
+                  <tr>
+                    <td fxFlex="50%"><b>Penalties Outstanding :</b></td>
+                    <td fxFlex="50%" class="r-amount">{{activeTransferData.details.totalPenaltyChargesOutstanding | number}}</td>
+                  </tr>
+                  <tr>
+                    <td fxFlex="50%"><b>Outstanding :</b></td>
+                    <td fxFlex="50%" class="r-amount">{{activeTransferData.details.totalOutstanding | number}}</td>
+                  </tr>
+                  <tr>
+                    <td fxFlex="50%"><b>Overpaid :</b></td>
+                    <td fxFlex="50%" class="r-amount">{{activeTransferData.details.totalOverpaid | number}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
   <div fxLayout="row" fxLayoutAlign="start center">
 
     <h3 fxFlex="90%">External Asset Owner</h3>
@@ -30,7 +106,7 @@
         <div [ngClass]="itemStatus(item.status)">
           <fa-icon icon="stop"></fa-icon>
           <span class="m-l-10 status">
-            {{ item.status | translate }}
+            {{ itemCurrentStatus(item) | translate }}
           </span>
         </div>
       </td>

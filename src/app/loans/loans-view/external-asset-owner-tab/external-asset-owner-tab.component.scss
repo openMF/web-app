@@ -1,5 +1,9 @@
-.container {
+.tab-container {
   padding-bottom: 2%;
+
+  h3 {
+    margin: 1% auto;
+  }
 
   .transaction-buttons {
     padding-bottom: 1rem;
@@ -7,6 +11,12 @@
     .accruals {
       padding-top: 1%;
     }
+  }
+
+  .asset-transfer-container {
+    border: 1px solid;
+    padding: 1%;
+    margin-bottom: 20px;
   }
 
   table {
@@ -33,3 +43,5 @@
   margin: 0 2%;
   line-height: 25px;
 }
+
+
