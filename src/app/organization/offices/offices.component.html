@@ -170,11 +170,11 @@
                 </div>
 
                 <div fxFlex="50%" class="mat-body-strong" *ngIf="office.externalId">
-                  {{'External ID'|translate}}
+                  {{'External Id'|translate}}
                 </div>
 
                 <div fxFlex="50%" *ngIf="office.externalId">
-                  {{ office.externalId }}
+                  <mifosx-external-identifier externalId="{{office.externalId}}"></mifosx-external-identifier>
                 </div>
 
               </div>

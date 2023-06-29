@@ -20,8 +20,7 @@
               <h3>
                 <i class="fa fa-stop" matTooltip="{{ loanDetailsData.status.value }}"
                   [ngClass]="loanDetailsData.inArrears?'status-active-overdue':( iconLoanStatusColor() | statusLookup)"></i>
-                Loan Product: {{loanDetailsData.loanProductName}}<span
-                  class="m-l-10">({{loanDetailsData.accountNo}})</span>
+                Loan Product: {{loanDetailsData.loanProductName}} <mifosx-account-number accountNo="{{loanDetailsData.accountNo}}"></mifosx-account-number>
               </h3>
               <span class="loans-overview">
                 {{entityType}} Name: {{loanDetailsData.clientName ||

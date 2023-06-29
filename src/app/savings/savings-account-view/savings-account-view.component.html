@@ -18,7 +18,8 @@
               [matTooltip]="savingsAccountData.status.value" *ngIf="!savingsAccountData.subStatus.block"></i>
             <i class="fa fa-stop" [ngClass]="savingsAccountData.subStatus.value | statusLookup"
               [matTooltip]="savingsAccountData.subStatus.value" *ngIf="savingsAccountData.subStatus.block"></i>
-            Savings Product : {{savingsAccountData.savingsProductName}}<span class="m-l-10">({{savingsAccountData.accountNo}})</span>
+            Savings Product : {{savingsAccountData.savingsProductName}}<span class="m-l-10">
+              <mifosx-account-number accountNo="{{savingsAccountData.accountNo}}"></mifosx-account-number></span>
           </h3>
           <div fxFlex="5%">
             <button mat-icon-button [matMenuTriggerFor]="accountMenu" aria-label="Loan account actions"
@@ -213,7 +214,10 @@
               </tr>
               <tr>
                 <td>External Id</td>
-                <td>{{savingsAccountData.externalId ? savingsAccountData.externalId : 'Not Provided'}}</td>
+                <td *ngIf="savingsAccountData.externalId">
+                  <mifosx-external-identifier externalId="{{savingsAccountData.externalId}}"></mifosx-external-identifier>
+                </td>
+                <td *ngIf="!savingsAccountData.externalId">Not Provided</td>
               </tr>
             </tbody>
           </table>
@@ -238,8 +242,10 @@
               </tr>
               <tr>
                 <td>External Id</td>
-                <td>{{savingsAccountData.externalId ? savingsAccountData.externalId : 'Not Provided'}}</td>
-              </tr>
+                <td *ngIf="savingsAccountData.externalId">
+                  <mifosx-external-identifier externalId="{{savingsAccountData.externalId}}"></mifosx-external-identifier>
+                </td>
+                <td *ngIf="!savingsAccountData.externalId">Not Provided</td>              </tr>
               <tr>
                 <td>Currency</td>
                 <td>{{savingsAccountData.currency.name}} [{{savingsAccountData.currency.code}}]</td>

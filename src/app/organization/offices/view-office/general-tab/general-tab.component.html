@@ -34,8 +34,11 @@
     <div fxFlex="45%" class="mat-body-strong left">
       External Id
     </div>
-    <div fxFlex="50%" class="right">
-      {{ officeData.externalId ? officeData.externalId : 'Unassigned' }}
+    <div fxFlex="50%" class="right" *ngIf="officeData.externalId">
+      <mifosx-external-identifier externalId="{{officeData.externalId}}"></mifosx-external-identifier>
+    </div>
+    <div fxFlex="50%" class="right" *ngIf="!officeData.externalId">
+      Unassigned
     </div>
   </div>
 

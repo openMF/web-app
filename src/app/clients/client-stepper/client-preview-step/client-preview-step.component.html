@@ -32,7 +32,9 @@
 
   <div fxFlexFill *ngIf="client.externalId">
     <span fxFlex="40%">External Id</span>
-    <span fxFlex="60%">{{ client.externalId }}</span>
+    <span fxFlex="60%">
+      <mifosx-external-identifier externalId="{{client.externalId}}"></mifosx-external-identifier>
+    </span>
   </div>
 
   <div fxFlexFill *ngIf="client.mobileNo">

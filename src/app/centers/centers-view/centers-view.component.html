@@ -28,7 +28,8 @@
                 Account #:{{centerViewData.accountNo}} <br />
                 Office: {{centerViewData.officeName}} <br />
                 <span *ngIf="centerViewData.externalId">
-                  External Id: {{centerViewData.externalId}} <br />
+                  External Id:
+                  <mifosx-external-identifier externalId="{{centerViewData.externalId}}"></mifosx-external-identifier><br />
                 </span>
                 <span *ngIf="centerViewData.staffName">
                   Staff: {{centerViewData.staffName}} <br />
