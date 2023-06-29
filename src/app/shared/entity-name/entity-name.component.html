@@ -1,0 +1,5 @@
+<span (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()">
+  <span class="m-l-5" *ngIf="displayL && iconVisible" (click)="copyValue()"><b><fa-icon icon="copy" size="sm" title="Copy Account Number"></fa-icon></b></span>
+  <span class="m-l-5"><b>{{ entityName }}</b></span>
+  <span class="m-l-3" *ngIf="displayR && iconVisible" (click)="copyValue()"><b><fa-icon icon="copy" size="sm" title="Copy Account Number"></fa-icon></b></span>
+</span>

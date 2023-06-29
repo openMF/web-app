@@ -38,7 +38,9 @@
 
     <div fxFlexFill *ngIf="loansAccount.externalId">
       <span fxFlex="40%">External id:</span>
-      <span fxFlex="60%">{{ loansAccount.externalId }}</span>
+      <span fxFlex="60%">
+        <mifosx-external-identifier externalId="{{loansAccount.externalId}}"></mifosx-external-identifier>
+      </span>
     </div>
 
     <h3 class="mat-h3" fxFlexFill>Terms</h3>

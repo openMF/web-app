@@ -4,16 +4,16 @@
     <div class="mat-typography">
       <mat-card-title>
         <h2>
-          {{ officeData.name }} 
+          {{ officeData.name }}
         </h2>
       </mat-card-title>
       <mat-card-subtitle>
-        <p>
-          {{ officeData.externalId ? 'External ID: ' + officeData.externalId : '' }}
+        <p *ngIf="officeData.externalId">
+          External Id:<mifosx-external-identifier externalId="{{officeData.externalId}}"></mifosx-external-identifier>
         </p>
       </mat-card-subtitle>
     </div>
-  </mat-card-title-group>      
+  </mat-card-title-group>
 </mat-card-header>
 
 <mat-card-content>

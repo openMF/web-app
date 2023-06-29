@@ -11,6 +11,7 @@ import { CancelDialogComponent } from 'app/shared/cancel-dialog/cancel-dialog.co
 })
 export class ExternalAssetOwnerTabComponent implements OnInit {
 
+  defaultDate = '9999-12-31';
   loanTransfersData: any[] = [];
   activeTransferData: any;
   loanTransferColumns: string[] = ['status', 'effectiveFrom', 'ownerExternalId', 'transferExternalId', 'settlementDate', 'purchasePriceRatio', 'actions'];
@@ -27,8 +28,6 @@ export class ExternalAssetOwnerTabComponent implements OnInit {
       this.loanTransfersData =  data.loanTransfersData.empty ? [] : data.loanTransfersData.content;
       this.activeTransferData = data.activeTransferData || null;
       this.existActiveTransfer = (data.activeTransferData && data.activeTransferData.transferId != null);
-      console.log(this.existActiveTransfer);
-      console.log(this.activeTransferData);
     });
   }
 
@@ -40,7 +39,7 @@ export class ExternalAssetOwnerTabComponent implements OnInit {
   }
 
   itemCurrentStatus(item: any): string {
-    if (item.status === 'BUYBACK' && item.effectiveTo === '9999-12-31') {
+    if (this.isBuyBackPending(item)) {
       return item.status + ' PENDING';
     }
     return item.status;
@@ -54,6 +53,14 @@ export class ExternalAssetOwnerTabComponent implements OnInit {
     return (item.status === 'PENDING');
   }
 
+  isPendingOrCanceled(item: any): boolean {
+    return ((item.status === 'PENDING') || (item.status === 'CANCELLED') || this.isBuyBackPending(item));
+  }
+
+  isBuyBackPending(item: any): boolean {
+    return (item.status === 'BUYBACK' && item.effectiveTo === this.defaultDate);
+  }
+
   canBeCancelled(): boolean {
     return this.validateStatus('PENDING');
   }
@@ -62,7 +69,7 @@ export class ExternalAssetOwnerTabComponent implements OnInit {
     if (this.currentItem == null) {
       return true;
     }
-    return ['', 'BUYBACK'].includes(this.currentItem.status);
+    return ['', 'CANCELLED'].includes(this.currentItem.status) || (this.currentItem.status === 'BUYBACK' && this.currentItem.effectiveTo !== this.defaultDate);
   }
 
   canBeBuyed(): boolean {
@@ -89,9 +96,9 @@ export class ExternalAssetOwnerTabComponent implements OnInit {
         const payload: any = {
           transferExternalId: this.currentItem.transferExternalId
         };
-        this.externalAssetOwnerService.executeExternalAssetOwnerLoanCommand(this.currentItem.loan.loanId, payload, 'cancel')
+        this.externalAssetOwnerService.executeExternalAssetOwnerTransferCommand(this.currentItem.transferId, payload, 'cancel')
           .subscribe((result: any) => {
-            console.log(result);
+            this.reload();
         });
       }
     });
@@ -105,4 +112,9 @@ export class ExternalAssetOwnerTabComponent implements OnInit {
     ev.stopPropagation();
   }
 
+  reload() {
+    const url: string = this.router.url;
+    this.router.navigateByUrl(`/`, {skipLocationChange: true})
+      .then(() => this.router.navigate([url]));
+  }
 }

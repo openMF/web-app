@@ -21,6 +21,17 @@ export class ExternalAssetOwnerService {
   }
 
   /**
+   * @param {string} transferId Transfer Id
+   * @param {string} command Command
+   * @param {any} data Data
+   * @returns {Observable<any>}
+   */
+  executeExternalAssetOwnerTransferCommand(transferId: string, data: any, command: string): Observable<any> {
+    const httpParams = new HttpParams().set('command', command);
+    return this.http.post(`/external-asset-owners/transfers/${transferId}`, data, { params: httpParams });
+  }
+
+  /**
    * @param {string} loanId Loan Id
    * @returns {Observable<any>}
    */

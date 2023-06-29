@@ -27,7 +27,9 @@
 
       <ng-container matColumnDef="externalId">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> External Id </th>
-        <td mat-cell *matCellDef="let charge"> {{ charge.externalId }} </td>
+        <td mat-cell *matCellDef="let charge">
+          <mifosx-external-identifier externalId="{{charge.externalId}}"></mifosx-external-identifier>
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

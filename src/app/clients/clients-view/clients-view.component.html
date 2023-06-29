@@ -33,7 +33,7 @@
           <h3 fxFlex="95%">
             <i class="fa fa-stop" [ngClass]="clientViewData.status.code|statusLookup"
               [matTooltip]="clientViewData.status.value"></i>
-            <b>Client Name :</b> {{clientViewData.displayName}}
+            <b>Client Name :</b><mifosx-entity-name entityName="{{clientViewData.displayName}}"></mifosx-entity-name>
           </h3>
           <div fxFlex="5%">
             <button mat-icon-button [matMenuTriggerFor]="clientMenu" aria-label="Client actions" yPosition="below">
@@ -46,9 +46,9 @@
 
         <mat-card-subtitle>
           <p>
-            <b>Office :</b> {{clientViewData.officeName}}<br />
-            <b>Client :</b> {{clientViewData.accountNo}}<br />
-            <b>External Id:</b> {{clientViewData.externalId}}<br />
+            <b>Office :</b><mifosx-entity-name entityName="{{clientViewData.officeName}}"></mifosx-entity-name><br />
+            <b>Client :</b> <mifosx-account-number accountNo="{{clientViewData.accountNo}}"></mifosx-account-number><br />
+            <b>External Id:</b><mifosx-external-identifier externalId="{{clientViewData.externalId}}" completed="true"></mifosx-external-identifier><br />
             <span *ngIf="clientViewData.staffName"><b>Staff :</b> {{clientViewData.staffName ||
               'Unassigned'}}<br /></span>
             <span *ngIf="clientViewData.activationDate"><b>Activation Date :</b> {{clientViewData.activationDate |

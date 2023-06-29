@@ -26,20 +26,22 @@
       <!-- Name Column -->
       <ng-container matColumnDef="displayName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-        <td mat-cell *matCellDef="let row"> {{row.displayName}} </td>
+        <td mat-cell *matCellDef="let row" [routerLink]="[row.id,'general']"> {{row.displayName}} </td>
       </ng-container>
 
       <!-- Account no Column -->
       <ng-container matColumnDef="accountNumber">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Account No. </th>
-        <td mat-cell *matCellDef="let row"> {{row.accountNumber}} </td>
+        <td mat-cell *matCellDef="let row">
+          <mifosx-account-number display="left" accountNo="{{row.accountNumber}}"></mifosx-account-number>
+        </td>
       </ng-container>
 
       <!-- External ID Column -->
       <ng-container matColumnDef="externalId">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> External Id </th>
         <td mat-cell *matCellDef="let row">
-          <mifosx-external-identifier externalId="{{row.externalId}}"></mifosx-external-identifier>
+          <mifosx-external-identifier display="left" externalId="{{row.externalId}}"></mifosx-external-identifier>
         </td>
       </ng-container>
 
@@ -56,15 +58,14 @@
         </td>
       </ng-container>
 
-      <!-- Color Column -->
       <ng-container matColumnDef="officeName">
         <th mat-header-cell *matHeaderCellDef> Office Name </th>
         <td mat-cell *matCellDef="let row"> {{row.officeName}} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="[row.id,'general']" class="select-row">
-      </tr> 
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row">
+      </tr>
     </table>
 
     <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 50, 100]" [length]="totalRows" (page)="pageChanged($event)"

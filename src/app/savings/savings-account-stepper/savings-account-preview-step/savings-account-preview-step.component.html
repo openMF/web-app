@@ -16,7 +16,12 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">External Id</span>
-    <span fxFlex="60%">{{ savingsAccount.externalId || 'Unassigned' }}</span>
+    <span fxFlex="60%" *ngIf="savingsAccount.externalId">
+      <mifosx-external-identifier externalId="{{savingsAccount.externalId}}"></mifosx-external-identifier>
+    </span>
+    <span fxFlex="60%" *ngIf="!savingsAccount.externalId">
+      Unassigned
+    </span>
   </div>
 
   <div fxFlexFill>

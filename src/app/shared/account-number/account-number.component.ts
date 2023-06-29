@@ -2,13 +2,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
-  selector: 'mifosx-external-identifier',
-  templateUrl: './external-identifier.component.html',
-  styleUrls: ['./external-identifier.component.scss']
+  selector: 'mifosx-account-number',
+  templateUrl: './account-number.component.html',
+  styleUrls: ['./account-number.component.scss']
 })
-export class ExternalIdentifierComponent implements OnInit {
-  @Input() externalId: string;
-  @Input() completed = false;
+export class AccountNumberComponent implements OnInit {
+  @Input() accountNo: string;
   @Input() display = 'right';
 
   iconVisible = false;
@@ -22,15 +21,8 @@ export class ExternalIdentifierComponent implements OnInit {
     this.displayR = (this.display === 'right');
   }
 
-  isLongValue(): boolean {
-    if (this.externalId == null) {
-      return false;
-    }
-    return (this.externalId.length > 15);
-  }
-
   copyValue(): void {
-    this.clipboard.copy(this.externalId);
+    this.clipboard.copy(this.accountNo);
   }
 
   mouseEnter() {

@@ -23,7 +23,6 @@ export class DatatableTabComponent {
     this.entityDatatable = null;
     this.route.data.subscribe((data: { loanDatatable: any }) => {
       this.entityDatatable = data.loanDatatable;
-      console.log(this.entityDatatable);
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });
   }

@@ -24,7 +24,7 @@
   </div>
 
   <div class="container space-top" fxLayout="row" fxLayoutGap="20px">
-    <button mat-raised-button color="primary" (click)="runSelectedJobs()">
+    <button mat-raised-button color="primary" (click)="runSelectedJobs()" [disabled]="!isAnyJobSelected()">
       <fa-icon icon="play" class="m-r-10"></fa-icon>
       Run Selected Jobs
     </button>
@@ -119,7 +119,7 @@
 </div>
 
 <div class="container space-top" fxLayout="row" fxLayoutGap="20px">
-  <button mat-raised-button color="primary" (click)="runSelectedJobs()">
+  <button mat-raised-button color="primary" (click)="runSelectedJobs()" [disabled]="!isAnyJobSelected()">
     <fa-icon icon="play" class="m-r-10"></fa-icon>
     Run Selected Jobs<ng-template #templateSchedulerJobs let-data let-popover="popover">
       <h2>Template</h2>

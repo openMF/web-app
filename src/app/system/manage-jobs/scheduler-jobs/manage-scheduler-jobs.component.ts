@@ -156,6 +156,10 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
       });
   }
 
+  isAnyJobSelected(): boolean {
+    return (this.selection.selected.length > 0);
+  }
+
   runSelectedJobs(): void {
     this.selection.selected.forEach((job) => {
       this.systemService.runSelectedJob(job.jobId);

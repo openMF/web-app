@@ -23,8 +23,8 @@
           <p>
             Account #: {{sharesAccountData.accountNo}} | Client Name: {{sharesAccountData.clientName}}<br/>
             Current Market Price: {{sharesAccountData.currency.displaySymbol}}&nbsp;{{sharesAccountData.currentMarketPrice}}<br/>
-            Lockin Period: {{sharesAccountData.lockinPeriod ? sharesAccountData.lockinPeriod : 'N/A'}} 
-            {{sharesAccountData.lockinPeriod ? sharesAccountData.lockPeriodTypeEnum.value : ''}} 
+            Lockin Period: {{sharesAccountData.lockinPeriod ? sharesAccountData.lockinPeriod : 'N/A'}}
+            {{sharesAccountData.lockinPeriod ? sharesAccountData.lockPeriodTypeEnum.value : ''}}
           </p>
         </mat-card-subtitle>
       </div>
@@ -37,7 +37,7 @@
         <button mat-raised-button *mifosxHasPermission="button.taskPermissionName" (click)="doAction(button.name)">
           <i class="{{button.icon}}"></i> {{button.name}}</button>
       </ng-container>
-  
+
       <ng-container *ngIf="buttonConfig.options.length">
         <button mat-raised-button [matMenuTriggerFor]="More">More</button>
         <mat-menu #More="matMenu">
@@ -46,7 +46,7 @@
         </span>
         </mat-menu>
       </ng-container>
-  
+
     </mat-card-actions>
 
   </mat-card-header>
@@ -69,11 +69,21 @@
             </tr>
             <tr>
               <td>External Id</td>
-              <td>{{sharesAccountData.externalId ? sharesAccountData.externalId : 'Not Provided'}}</td>
+              <td *ngIf="sharesAccountData.externalId">
+                <mifosx-external-identifier externalId="{{sharesAccountData.externalId}}"></mifosx-external-identifier>
+              </td>
+              <td *ngIf="!sharesAccountData.externalId">
+                Unassigned
+              </td>
             </tr>
             <tr>
               <td>Linked Savings Account(Dividend Posting)</td>
-              <td>{{sharesAccountData.savingsAccountNumber ? sharesAccountData.savingsAccountNumber : 'Unassigned'}}</td>
+              <td *ngIf="sharesAccountData.savingsAccountNumber">
+                <mifosx-account-number accountNo="{{sharesAccountData.savingsAccountNumber}}"></mifosx-account-number>
+              </td>
+              <td *ngIf="!sharesAccountData.savingsAccountNumber">
+                Unassigned
+              </td>
             </tr>
           </tbody>
         </table>
