@@ -416,6 +416,22 @@
 
     <mat-divider fxFlex="98%"></mat-divider>
 
+    <h3 fxFlex="23%" class="mat-h3">Event Settings</h3>
+    <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+      <mat-form-field fxFlex="48%">
+        <mat-label>Due days for repayment event</mat-label>
+        <input type="number" matInput matTooltip="Specific days when repayment due notification should be sent." formControlName="dueDaysForRepaymentEvent" [min]="0">
+      </mat-form-field>
+
+      <mat-form-field fxFlex="48%">
+        <mat-label>OverDue days for repayment event</mat-label>
+        <input type="number" matInput matTooltip="Specific days when repayment Overdue notification should be sent." formControlName="overDueDaysForRepaymentEvent" [min]="0">
+      </mat-form-field>
+    </div>
+
+    <mat-divider fxFlex="98%"></mat-divider>
+
     <h3 fxFlex="23%" class="mat-h3">Configurable Terms and Settings</h3>
 
     <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="allowAttributeConfiguration" class="margin-b">
