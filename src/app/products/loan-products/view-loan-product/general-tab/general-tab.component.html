@@ -506,6 +506,18 @@
     </div>
   </div>
 
+  <h3 class="mat-h3" fxFlexFill>Event Settings</h3>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Due days for repayment event:</span>
+    <span fxFlex="60%">{{ loanProduct.dueDaysForRepaymentEvent | number }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">OverDue days for repayment event:</span>
+    <span fxFlex="60%">{{ loanProduct.overDueDaysForRepaymentEvent | number }}</span>
+  </div>
+
   <h3 class="mat-h3" fxFlexFill>Configurable Terms and Settings</h3>
 
   <mat-divider [inset]="true"></mat-divider>
