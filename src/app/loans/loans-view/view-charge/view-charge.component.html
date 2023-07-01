@@ -128,6 +128,14 @@
           {{ chargeData.amountOutstanding | formatNumber }}
         </div>
 
+        <div fxFlex="50%" class="mat-body-strong">
+          Submitted On Date
+        </div>
+
+        <div fxFlex="50%">
+          {{ chargeData.submittedOnDate | dateFormat }}
+        </div>
+
       </div>
 
       <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column">
