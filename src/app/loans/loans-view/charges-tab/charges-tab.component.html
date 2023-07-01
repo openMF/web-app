@@ -20,6 +20,11 @@
       <td mat-cell *matCellDef="let charge"> {{ charge.chargeTimeType.value }} </td>
     </ng-container>
 
+    <ng-container matColumnDef="submittedDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Submitted On </th>
+      <td mat-cell *matCellDef="let charge"> {{ charge.submittedOnDate | dateFormat }} </td>
+    </ng-container>
+
     <ng-container matColumnDef="dueDate">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Due as of </th>
       <td mat-cell *matCellDef="let charge"> {{ charge.dueDate | dateFormat }} </td>
@@ -55,7 +60,7 @@
     </ng-container>
 
     <ng-container matColumnDef="actions">
-      <th mat-header-cell class="center" *matHeaderCellDef mat-sort-header> Actions </th>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header> Actions </th>
       <td mat-cell class="center" *matCellDef="let charge">
         <span *ngIf="status === 'Submitted and pending approval'">
           <button class="account-action-button" mat-raised-button color="primary" matTooltip="Edit Charge"
