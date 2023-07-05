@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { AlertService } from 'app/core/alert/alert.service';
 
 @Component({
   selector: 'mifosx-external-identifier',
@@ -15,7 +16,8 @@ export class ExternalIdentifierComponent implements OnInit {
   displayL = false;
   displayR = true;
 
-  constructor(private clipboard: Clipboard) { }
+  constructor(private clipboard: Clipboard,
+    private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.displayL = (this.display === 'left');
@@ -31,6 +33,7 @@ export class ExternalIdentifierComponent implements OnInit {
 
   copyValue(): void {
     this.clipboard.copy(this.externalId);
+    this.alertService.alert({ type: 'Clipboard', message: 'Copied: ' + this.externalId });
   }
 
   mouseEnter() {

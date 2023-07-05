@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Components */
@@ -42,16 +42,22 @@ export class CreateLoanProductComponent implements OnInit {
               private productsService: ProductsService,
               private settingsService: SettingsService,
               private router: Router) {
-    this.route.data.subscribe((data: { loanProductsTemplate: any }) => {
+    this.route.data.subscribe((data: { loanProductsTemplate: any, configurations: any }) => {
       this.loanProductsTemplate = data.loanProductsTemplate;
       const assetAccountData = this.loanProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
       const liabilityAccountData = this.loanProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
       this.loanProductsTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions = assetAccountData.concat(liabilityAccountData);
+      data.configurations.globalConfiguration.forEach((config: any) => {
+        if (config.name === 'days-before-repayment-is-due') {
+          this.loanProductsTemplate['dueDaysForRepaymentEvent'] = config.value;
+        } else if (config.name === 'days-after-repayment-is-overdue') {
+          this.loanProductsTemplate['overDueDaysForRepaymentEvent'] = config.value;
+        }
+      });
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   get loanProductDetailsForm() {
     return this.loanProductDetailsStep.loanProductDetailsForm;

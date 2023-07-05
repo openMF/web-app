@@ -54,7 +54,9 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
               private router: Router,
               private configurationWizardService: ConfigurationWizardService,
               private popoverService: PopoverService) {
-      this.configurationData = this.systemService.getConfigurations();
+    this.route.data.subscribe((data: { configurations: any }) => {
+      this.configurationData = data.configurations;
+    });
   }
 
   /**
