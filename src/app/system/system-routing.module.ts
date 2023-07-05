@@ -475,7 +475,9 @@ const routes: Routes = [
             {
               path: '',
               component: ConfigurationsComponent,
-              resolve: {}
+              resolve: {
+                configurations: GlobalConfigurationsResolver
+              }
             },
             {
               path: ':id/edit',
