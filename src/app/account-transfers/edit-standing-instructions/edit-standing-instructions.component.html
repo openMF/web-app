@@ -9,81 +9,81 @@
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Name</mat-label>
+            <mat-label>{{ "label.input.name" | translate}}</mat-label>
             <input matInput formControlName="name">
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Applicant</mat-label>
+            <mat-label>{{"label.heading.applicant" | translate}}</mat-label>
             <input matInput formControlName="applicant">
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Type</mat-label>
+            <mat-label>{{ "label.heading.type" | translate}}</mat-label>
             <input matInput formControlName="type">
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>From Account Type</mat-label>
+            <mat-label>{{"label.heading.fromaccounttype"| translate}}</mat-label>
             <input matInput formControlName="fromAccountType">
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Priority</mat-label>
+            <mat-label>{{  "label.heading.priority"| translate}}</mat-label>
             <mat-select required formControlName="priority">
               <mat-option *ngFor="let priorityType of priorityTypeData" [value]="priorityType.id">
                 {{ priorityType.value }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="editStandingInstructionsForm.controls.priority.hasError('required')">
-              Priority is <strong>required</strong>
+              {{  "label.heading.priority"| translate}} {{ "label.is" |translate}} <strong>{{ "label.input.isrequired" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Status</mat-label>
+            <mat-label>{{ "label.heading.status" | translate}}</mat-label>
             <mat-select required formControlName="status">
               <mat-option *ngFor="let statusType of statusTypeData" [value]="statusType.id">
                 {{ statusType.value }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="editStandingInstructionsForm.controls.status.hasError('required')">
-              Status is <strong>required</strong>
+              {{ "label.heading.status" | translate}} {{ "label.is" |translate}} <strong>{{ "label.input.isrequired" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>From Account</mat-label>
+            <mat-label>{{"label.heading.fromaccount" | translate}}</mat-label>
             <input matInput formControlName="fromAccount">
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Destination</mat-label>
+            <mat-label>{{"label.heading.destination"| translate}}</mat-label>
             <input matInput formControlName="destination">
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>To Office</mat-label>
+            <mat-label>{{"label.input.tooffice"| translate}}</mat-label>
             <input matInput formControlName="toOffice">
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Beneficiary</mat-label>
+            <mat-label>{{ "label.input.toclient"| translate}}</mat-label>
             <input matInput formControlName="toClientId">
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>To Account Type</mat-label>
+            <mat-label>{{"label.input.toaccounttype" | translate}}</mat-label>
             <input matInput formControlName="toAccountType">
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>To Account</mat-label>
+            <mat-label>{{"label.input.toaccount" | translate}}</mat-label>
             <input matInput formControlName="toAccount">
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Standing Instruction Type</mat-label>
+            <mat-label>{{ "label.input.instructiontype" | translate}}</mat-label>
             <mat-select formControlName="instructionType">
               <mat-option *ngFor="let instructionsType of instructionTypeData"
                 [value]="instructionsType.id">
@@ -93,51 +93,51 @@
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Amount</mat-label>
+            <mat-label>{{"label.heading.amount" | translate}}</mat-label>
             <input matInput formControlName="amount">
           </mat-form-field>
 
           <mat-form-field fxFlex="48%" (click)="validFromDatePicker.open()">
-            <mat-label>Validity From</mat-label>
+            <mat-label>{{"label.heading.validfrom" | translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="validFromDatePicker" required
               formControlName="validFrom">
             <mat-datepicker-toggle matSuffix [for]="validFromDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #validFromDatePicker></mat-datepicker>
             <mat-error *ngIf="editStandingInstructionsForm.controls.validFrom.hasError('required')">
-              Valid From Date is <strong>required</strong>
+              {{"label.heading.interestratechart.valid.from" | translate }} {{ "label.is" |translate}} <strong>{{ "label.input.isrequired" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%" (click)="validTillDatePicker.open()">
-            <mat-label>Validity To</mat-label>
+            <mat-label>{{"label.heading.validityto" | translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="validTillDatePicker" required
               formControlName="validTill">
             <mat-datepicker-toggle matSuffix [for]="validTillDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #validTillDatePicker></mat-datepicker>
             <mat-error *ngIf="editStandingInstructionsForm.controls.validTill.hasError('required')">
-              Valid Till Date is <strong>required</strong>
+              {{ "label.heading.validtilldate" | translate}} {{ "label.is" |translate}} <strong>{{ "label.input.isrequired" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Recurrence Type</mat-label>
+            <mat-label>{{"label.heading.recurrencetype" | translate}}</mat-label>
             <mat-select required formControlName="recurrenceType">
               <mat-option *ngFor="let recurrenceType of recurrenceTypeData" [value]="recurrenceType.id">
                 {{ recurrenceType.value }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="editStandingInstructionsForm.controls.recurrenceType.hasError('required')">
-              Recurrence Type is <strong>required</strong>
+              {{"label.heading.recurrencetype" | translate}} {{ "label.is" |translate}} <strong>{{ "label.input.isrequired" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Interval</mat-label>
+            <mat-label>{{"label.heading.reinterval" | translate}}</mat-label>
             <input matInput formControlName="recurrenceInterval">
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Recurrence Frequency</mat-label>
+            <mat-label>{{"label.heading.recurrencefrequency" | translate}}</mat-label>
             <mat-select formControlName="recurrenceFrequency">
               <mat-option *ngFor="let recurrenceFrequencyType of recurrenceFrequencyTypeData"
                 [value]="recurrenceFrequencyType.id">
@@ -147,7 +147,7 @@
           </mat-form-field>
 
           <mat-form-field fxFlex="48%" (click)="recurrenceOnMonthDayDatePicker.open()">
-            <mat-label>On Month Day</mat-label>
+            <mat-label>{{"label.heading.recurrenceonmonthday" | translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="recurrenceOnMonthDayDatePicker"
               formControlName="recurrenceOnMonthDay">
             <mat-datepicker-toggle matSuffix [for]="recurrenceOnMonthDayDatePicker"></mat-datepicker-toggle>
@@ -159,9 +159,9 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../view']">Cancel</button>
+        <button type="button" mat-raised-button [routerLink]="['../view']">{{ "label.button.cancel" | translate}}</button>
         <button mat-raised-button color="primary" [disabled]="!editStandingInstructionsForm.valid"
-        (click)="submit()" *mifosxHasPermission="'UPDATE_STANDINGINSTRUCTION'">Submit</button>
+        (click)="submit()" *mifosxHasPermission="'UPDATE_STANDINGINSTRUCTION'">{{"label.button.save" | translate}}</button>
       </mat-card-actions>
 
     </form>
