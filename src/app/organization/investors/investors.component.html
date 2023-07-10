@@ -1,0 +1,84 @@
+<div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+  <mat-form-field fxFlex="31%">
+    <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
+    <mat-select [formControl]="entryTypeFilter">
+      <mat-option *ngFor="let filter of entryTypeFilterData" [value]="filter.value">
+        {{ filter.option }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="31%" (click)="transferDateFromPicker.open()">
+    <mat-label>Transfer Date From</mat-label>
+    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transferDateFromPicker" [formControl]="transferDateFrom">
+    <mat-datepicker-toggle matSuffix [for]="transferDateFromPicker"></mat-datepicker-toggle>
+    <mat-datepicker #transferDateFromPicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="31%" (click)="transferDateToPicker.open()">
+    <mat-label>Transfer Date To</mat-label>
+    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transferDateToPicker" [formControl]="transferDateTo">
+    <mat-datepicker-toggle matSuffix [for]="transferDateToPicker"></mat-datepicker-toggle>
+    <mat-datepicker #transferDateToPicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="31%">
+    <mat-label>Transfer External Id</mat-label>
+    <input matInput [formControl]="transferExternalId">
+  </mat-form-field>
+
+</div>
+
+<div class="mat-elevation-z8 container">
+
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="investor">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor </th>
+      <td mat-cell *matCellDef="let item">  </td>
+    </ng-container>
+
+    <ng-container matColumnDef="loanAccount">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Loan </th>
+      <td mat-cell *matCellDef="let item">  </td>
+    </ng-container>
+
+    <ng-container matColumnDef="totalAmount">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Amount </th>
+      <td mat-cell *matCellDef="let item">  </td>
+    </ng-container>
+
+    <ng-container matColumnDef="principal">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Principal </th>
+      <td mat-cell *matCellDef="let item">  </td>
+    </ng-container>
+
+    <ng-container matColumnDef="interest">
+      <th mat-header-cell *matHeaderCellDef> Interest </th>
+      <td mat-cell *matCellDef="let item">  </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fees">
+      <th mat-header-cell *matHeaderCellDef> Fees </th>
+      <td mat-cell *matCellDef="let item">  </td>
+    </ng-container>
+
+    <ng-container matColumnDef="penalties">
+      <th mat-header-cell *matHeaderCellDef> Penalties </th>
+      <td mat-cell *matCellDef="let item">  </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+      <td mat-cell *matCellDef="let item">  </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['transactions/view', row.transactionId]" class="select-row"></tr>
+
+  </table>
+
+  <mat-paginator [pageSize]="50" [pageSizeOptions]="[50, 100, 200, 500]" showFirstLastButtons></mat-paginator>
+
+</div>

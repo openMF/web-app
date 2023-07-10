@@ -12,7 +12,7 @@
 
     <div *ngIf="userType.value === 'Existing User'">
 
-      <form>
+      <form [formGroup]="createUserForm">
 
         <mat-card-content>
 
@@ -20,18 +20,21 @@
 
             <mat-form-field>
               <mat-label>Office</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let office of officeData" [value]="office">
-                  {{ office }}
+              <mat-select required formControlName="officeId">
+                <mat-option *ngFor="let office of offices" [value]="office.id">
+                  {{ office.name }}
                 </mat-option>
               </mat-select>
+              <mat-error *ngIf="createUserForm.controls.officeId.hasError('required')">
+                Office is <strong>required</strong>
+              </mat-error>
             </mat-form-field>
 
             <mat-form-field>
               <mat-label>Staff</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let staff of staffData" [value]="staff">
-                  {{ staff }}
+              <mat-select formControlName="staffId">
+                <mat-option *ngFor="let staff of staffOptions" [value]="staff.id">
+                  {{ staff.displayName }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -63,26 +66,29 @@
 
     <div *ngIf="userType.value === 'New User'">
 
-      <form>
+      <form [formGroup]="createUserForm">
 
         <mat-card-content>
 
           <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-            <mat-form-field fxFlex="48%">
+            <mat-form-field>
               <mat-label>Office</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let office of officeData" [value]="office">
-                  {{ office }}
+              <mat-select required formControlName="officeId">
+                <mat-option *ngFor="let office of offices" [value]="office.id">
+                  {{ office.name }}
                 </mat-option>
               </mat-select>
+              <mat-error *ngIf="createUserForm.controls.officeId.hasError('required')">
+                Office is <strong>required</strong>
+              </mat-error>
             </mat-form-field>
 
             <mat-form-field fxFlex="48%">
               <mat-label>Staff</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let staff of staffData" [value]="staff">
-                  {{ staff }}
+              <mat-select formControlName="staffId">
+                <mat-option *ngFor="let staff of staffOptions" [value]="staff.id">
+                  {{ staff.displayName }}
                 </mat-option>
               </mat-select>
             </mat-form-field>

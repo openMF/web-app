@@ -198,7 +198,8 @@ const routes: Routes = [
                   component: EditLoanProductComponent,
                   data: { title: extract('Edit Loan Product'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
-                    loanProductAndTemplate: LoanProductAndTemplateResolver
+                    loanProductAndTemplate: LoanProductAndTemplateResolver,
+                    configurations: GlobalConfigurationsResolver
                   }
                 }
               ]

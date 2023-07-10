@@ -18,8 +18,9 @@ import { AppConfigurationComponent } from './app-configuration/app-configuration
 import { TaskManagementComponent } from './task-management/task-management.component';
 
 /** Custom Resolvers */
-import { UsersResolver } from './users/users.resolver';
 import { ViewUserResolver } from './users/view-user/view-user.resolver';
+import { OfficesResolver } from 'app/organization/offices/common-resolvers/offices.resolver';
+import { UsersResolver } from 'app/users/users.resolver';
 
 /** Self Service Admin Portal Routes */
 const routes: Routes = [
@@ -43,7 +44,10 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateUserComponent,
-              data: { title: extract('Create Self Service User'), breadcrumb: 'Create' }
+              data: { title: extract('Create Self Service User'), breadcrumb: 'Create' },
+              resolve: {
+                offices: OfficesResolver
+              }
             },
             {
               path: 'view/:id',
@@ -89,7 +93,6 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   providers: [
-    UsersResolver,
     ViewUserResolver
   ]
 })

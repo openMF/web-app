@@ -2,7 +2,7 @@
 import { Component, Input, ViewChild, OnChanges } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, NumberSymbol, getLocaleNumberSymbol } from '@angular/common';
 
 /** Custom Servies */
 import { ReportsService } from '../../reports.service';
@@ -30,6 +30,7 @@ export class TableAndSmsComponent implements OnChanges {
   hideOutput = true;
   /** Data to be converted into CSV file */
   csvData: any;
+  notExistsReportData = false;
 
   /** Paginator for run-report table. */
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -55,6 +56,7 @@ export class TableAndSmsComponent implements OnChanges {
     this.reportsService.getRunReportData(this.dataObject.report.name, this.dataObject.formData)
     .subscribe( (res: any) => {
       this.csvData = res.data;
+      this.notExistsReportData = (res.data.length === 0);
       this.setOutputTable(res.data);
       res.columnHeaders.forEach((header: any) => {
         this.columnTypes.push(header.columnDisplayType);
@@ -79,9 +81,14 @@ export class TableAndSmsComponent implements OnChanges {
    * Generates the CSV file dynamically for run report data.
    */
   downloadCSV() {
+    const userLang = navigator.language;
     const headers = this.displayedColumns;
-    let csv = this.csvData.map((object: any) => object.row.join());
-    csv.unshift(`data:text/csv;charset=utf-8,${headers.join()}`);
+    let delimiter = ',';
+    if (getLocaleNumberSymbol(userLang, NumberSymbol.CurrencyDecimal) !== '.') {
+      delimiter = ';';
+    }
+    let csv = this.csvData.map((object: any) => object.row.join(delimiter));
+    csv.unshift(`data:text/csv;charset=utf-8,${headers.join(delimiter)}`);
     csv = csv.join('\r\n');
     const link = document.createElement('a');
     link.setAttribute('href', encodeURI(csv));

@@ -20,6 +20,7 @@ import { RunReportResolver } from './common-resolvers/run-report.resolver';
 import { MixTaxonomyResolver } from './common-resolvers/mixtaxonomy.resolver';
 import { MixMappingsResolver } from './common-resolvers/mixmappings.resolver';
 import { GlAccountsResolver } from '../accounting/common-resolvers/gl-accounts.resolver';
+import { GlobalConfigurationsResolver } from 'app/system/configurations/global-configurations-tab/global-configurations.resolver';
 
 /** Reports Routes */
 const routes: Routes = [
@@ -45,7 +46,8 @@ const routes: Routes = [
           data: { title: extract('Reports'), routeParamBreadcrumb: 'name' },
           component: RunReportComponent,
           resolve: {
-            reportParameters: RunReportResolver
+            reportParameters: RunReportResolver,
+            configurations: GlobalConfigurationsResolver
           }
         }
       ]

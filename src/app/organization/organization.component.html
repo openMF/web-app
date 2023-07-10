@@ -8,76 +8,98 @@
 
         <mat-nav-list>
 
-        <div #office>
-          <mat-list-item [routerLink]="['offices']" *mifosxHasPermission="'READ_OFFICE'">
-            <mat-icon matListIcon>
-              <fa-icon icon="building" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>Manage Offices</h4>
-            <p matLine>Add new office or modify or deactivate office or modify hierarchy</p>
-          </mat-list-item>
-        </div>
+          <div #office>
+            <mat-list-item [routerLink]="['offices']" *mifosxHasPermission="'READ_OFFICE'">
+              <mat-icon matListIcon>
+                <fa-icon icon="building" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>Manage Offices</h4>
+              <p matLine>Add new office or modify or deactivate office or modify hierarchy</p>
+            </mat-list-item>
+          </div>
 
-        <div #holidays>
-          <mat-list-item [routerLink]="['holidays']" *mifosxHasPermission="'READ_HOLIDAY'">
-            <mat-icon matListIcon>
-              <fa-icon icon="calendar-alt" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>Manage Holidays</h4>
-            <p matLine>Define holidays for office</p>
-          </mat-list-item>
-        </div>
+          <div #holidays>
+            <mat-list-item [routerLink]="['holidays']" *mifosxHasPermission="'READ_HOLIDAY'">
+              <mat-icon matListIcon>
+                <fa-icon icon="calendar-alt" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>Manage Holidays</h4>
+              <p matLine>Define holidays for office</p>
+            </mat-list-item>
+          </div>
 
-        <div #employee>
-          <mat-list-item [routerLink]="['employees']" *mifosxHasPermission="'READ_STAFF'">
-            <mat-icon matListIcon>
-              <fa-icon icon="user" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>Manage Employees</h4>
-            <p matLine>An employee represents loan officers with no access to systems</p>
-          </mat-list-item>
-        </div>
+          <div #employee>
+            <mat-list-item [routerLink]="['employees']" *mifosxHasPermission="'READ_STAFF'">
+              <mat-icon matListIcon>
+                <fa-icon icon="user" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>Manage Employees</h4>
+              <p matLine>An employee represents loan officers with no access to systems</p>
+            </mat-list-item>
+          </div>
 
-          <mat-list-item [routerLink]="['standing-instructions-history']" *mifosxHasPermission="'READ_STANDINGINSTRUCTION'">
-            <mat-icon matListIcon>
-              <fa-icon icon="book" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>Standing Instructions History</h4>
-            <p matLine>View logged history of standing instructions</p>
-          </mat-list-item>
+          <div #standinginstructions>
+            <mat-list-item [routerLink]="['standing-instructions-history']"
+              *mifosxHasPermission="'READ_STANDINGINSTRUCTION'">
+              <mat-icon matListIcon>
+                <fa-icon icon="book" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>Standing Instructions History</h4>
+              <p matLine>View logged history of standing instructions</p>
+            </mat-list-item>
+          </div>
 
-          <mat-list-item [routerLink]="['fund-mapping']" *mifosxHasPermission="'READ_OFFICE'">
-            <mat-icon matListIcon>
-              <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>Fund Mapping</h4>
-            <p matLine>Bulk entry screen for mapping fund sources to loans</p>
-          </mat-list-item>
+          <div #fundmapping>
+            <mat-list-item [routerLink]="['fund-mapping']" *mifosxHasPermission="'READ_OFFICE'">
+              <mat-icon matListIcon>
+                <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>Fund Mapping</h4>
+              <p matLine>Bulk entry screen for mapping fund sources to loans</p>
+            </mat-list-item>
+          </div>
 
-          <mat-list-item [routerLink]="['password-preferences']" *mifosxHasPermission="'READ_PASSWORD_VALIDATION_POLICY'">
-            <mat-icon matListIcon>
-              <fa-icon icon="lock" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>Password Preferences</h4>
-            <p matLine>Define standards for enforcing the usage of stronger passwords</p>
-          </mat-list-item>
+          <div #investor>
+            <mat-list-item [routerLink]="['investors']" *mifosxHasPermission="'READ_OFFICE'">
+              <mat-icon matListIcon>
+                <fa-icon icon="user-tie" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>Investors</h4>
+              <p matLine>View the loan account details associated with the investors</p>
+            </mat-list-item>
+          </div>
 
-          <mat-list-item [routerLink]="['provisioning-criteria']" *mifosxHasPermission="'VIEW_PROVISIONS'">
-            <mat-icon matListIcon>
-              <fa-icon icon="edit" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>Loan Provisioning Criteria</h4>
-            <p matLine>Define Loan Provisioning Criteria for Organization</p>
-          </mat-list-item>
+          <div #provisioningcriteria>
+            <mat-list-item [routerLink]="['provisioning-criteria']" *mifosxHasPermission="'VIEW_PROVISIONS'">
+              <mat-icon matListIcon>
+                <fa-icon icon="edit" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>Loan Provisioning Criteria</h4>
+              <p matLine>Define Loan Provisioning Criteria for Organization</p>
+            </mat-list-item>
+          </div>
 
-          <mat-list-item [routerLink]="['entity-data-table-checks']" *mifosxHasPermission="'READ_ENTITY_DATATABLE_CHECK'">
-            <mat-icon matListIcon>
-              <fa-icon icon="check" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>Entity Data Table Checks </h4>
-            <p matLine>Define Entity Data Table Checks for Organization</p>
-          </mat-list-item>
+          <div #entitydatatable>
+            <mat-list-item [routerLink]="['entity-data-table-checks']"
+              *mifosxHasPermission="'READ_ENTITY_DATATABLE_CHECK'">
+              <mat-icon matListIcon>
+                <fa-icon icon="check" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>Entity Data Table Checks </h4>
+              <p matLine>Define Entity Data Table Checks for Organization</p>
+            </mat-list-item>
+          </div>
 
+          <div #passwordpreferences>
+            <mat-list-item [routerLink]="['password-preferences']"
+              *mifosxHasPermission="'READ_PASSWORD_VALIDATION_POLICY'">
+              <mat-icon matListIcon>
+                <fa-icon icon="lock" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>Password Preferences</h4>
+              <p matLine>Define standards for enforcing the usage of stronger passwords</p>
+            </mat-list-item>
+          </div>
         </mat-nav-list>
 
       </div>
@@ -86,84 +108,95 @@
 
         <mat-nav-list>
 
-        <div #addEditCurrency>
-          <mat-list-item [routerLink]="['currencies']" *mifosxHasPermission="'READ_CURRENCY'">
-            <mat-icon matListIcon>
-              <fa-icon icon="cogs" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>Currency Configuration</h4>
-            <p matLine>Currencies available across organization for different products</p>
-          </mat-list-item>
-        </div>
+          <div #addEditCurrency>
+            <mat-list-item [routerLink]="['currencies']" *mifosxHasPermission="'READ_CURRENCY'">
+              <mat-icon matListIcon>
+                <fa-icon icon="money-check" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>Currency Configuration</h4>
+              <p matLine>Currencies available across organization for different products</p>
+            </mat-list-item>
+          </div>
 
-        <div #manageFunds>
-          <mat-list-item [routerLink]="['manage-funds']" *mifosxHasPermission="'READ_FUND'">
-            <mat-icon matListIcon>
-              <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>Manage Funds</h4>
-            <p matLine>Funds are associated with loans</p>
-          </mat-list-item>
-        </div>
+          <div #manageFunds>
+            <mat-list-item [routerLink]="['manage-funds']" *mifosxHasPermission="'READ_FUND'">
+              <mat-icon matListIcon>
+                <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>Manage Funds</h4>
+              <p matLine>Funds are associated with loans</p>
+            </mat-list-item>
+          </div>
 
-          <mat-list-item [routerLink]="['bulkloan']" *mifosxHasPermission="'BULKREASSIGN_LOAN'">
-            <mat-icon matListIcon>
-              <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>Bulk Loan Reassignment</h4>
-            <p matLine>Easy way to reassign all the loan from one LO to another LO</p>
-          </mat-list-item>
+          <div #bulkloan>
+            <mat-list-item [routerLink]="['bulkloan']" *mifosxHasPermission="'BULKREASSIGN_LOAN'">
+              <mat-icon matListIcon>
+                <fa-icon icon="copy" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>Bulk Loan Reassignment</h4>
+              <p matLine>Easy way to reassign all the loan from one LO to another LO</p>
+            </mat-list-item>
+          </div>
 
-          <mat-list-item [routerLink]="['tellers']" *mifosxHasPermission="'READ_TELLER'">
-            <mat-icon matListIcon>
-              <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>Teller / Cashier Management</h4>
-            <p matLine>Manage Tellers / Cashiers and Cash Allocation and Settlement</p>
-          </mat-list-item>
+          <div #tellers>
+            <mat-list-item [routerLink]="['tellers']" *mifosxHasPermission="'READ_TELLER'">
+              <mat-icon matListIcon>
+                <fa-icon icon="building" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>Teller / Cashier Management</h4>
+              <p matLine>Manage Tellers / Cashiers and Cash Allocation and Settlement</p>
+            </mat-list-item>
+          </div>
 
-        <div #workingDays>
-          <mat-list-item [routerLink]="['working-days']" *mifosxHasPermission="'READ_WORKINGDAYS'">
-            <mat-icon matListIcon>
-              <fa-icon icon="calendar-alt" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>Working Days</h4>
-            <p matLine>Define working days and configure behaviour of payments due on holidays</p>
-          </mat-list-item>
-        </div>
+          <div #workingDays>
+            <mat-list-item [routerLink]="['working-days']" *mifosxHasPermission="'READ_WORKINGDAYS'">
+              <mat-icon matListIcon>
+                <fa-icon icon="calendar-alt" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>Working Days</h4>
+              <p matLine>Define working days and configure behaviour of payments due on holidays</p>
+            </mat-list-item>
+          </div>
 
-          <mat-list-item [routerLink]="['payment-types']" *mifosxHasPermission="'READ_PAYMENTTYPE'">
-            <mat-icon matListIcon>
-              <fa-icon icon="dollar-sign" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>Payment Type</h4>
-            <p matLine>Manage payment types</p>
-          </mat-list-item>
+          <div #paymenttypes>
+            <mat-list-item [routerLink]="['payment-types']" *mifosxHasPermission="'READ_PAYMENTTYPE'">
+              <mat-icon matListIcon>
+                <fa-icon icon="dollar-sign" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>Payment Type</h4>
+              <p matLine>Manage payment types</p>
+            </mat-list-item>
+          </div>
 
-          <mat-list-item [routerLink]="['sms-campaigns']" *mifosxHasPermission="'VIEW_SMSCAMPAIGNS'">
-            <mat-icon matListIcon>
-              <fa-icon icon="envelope" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>SMS Campaigns</h4>
-            <p matLine>Define SMS Campaigns for Organization</p>
-          </mat-list-item>
+          <div #smscampaigns>
+            <mat-list-item [routerLink]="['sms-campaigns']" *mifosxHasPermission="'VIEW_SMSCAMPAIGNS'">
+              <mat-icon matListIcon>
+                <fa-icon icon="envelope" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>SMS Campaigns</h4>
+              <p matLine>Define SMS Campaigns for Organization</p>
+            </mat-list-item>
+          </div>
 
-          <mat-list-item [routerLink]="['adhoc-query']" *mifosxHasPermission="'VIEW_ADHOC'">
-            <mat-icon matListIcon>
-              <fa-icon icon="chevron-right" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>AdHocQuery</h4>
-            <p matLine>Define AdHocQuery for Organization</p>
-          </mat-list-item>
+          <div #adhocquery>
+            <mat-list-item [routerLink]="['adhoc-query']" *mifosxHasPermission="'VIEW_ADHOC'">
+              <mat-icon matListIcon>
+                <fa-icon icon="chevron-right" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>AdHocQuery</h4>
+              <p matLine>Define AdHocQuery for Organization</p>
+            </mat-list-item>
+          </div>
 
-          <mat-list-item [routerLink]="['bulk-import']" *mifosxHasPermission="'VIEW_BULKIMPORT'">
-            <mat-icon matListIcon>
-              <fa-icon icon="upload" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>Bulk Import</h4>
-            <p matLine>Bulk data import using excel spreadsheet templates for clients, offices, etc.</p>
-          </mat-list-item>
-
+          <div #bulkimports>
+            <mat-list-item [routerLink]="['bulk-import']" *mifosxHasPermission="'VIEW_BULKIMPORT'">
+              <mat-icon matListIcon>
+                <fa-icon icon="upload" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>Bulk Import</h4>
+              <p matLine>Bulk data import using excel spreadsheet templates for clients, offices, etc.</p>
+            </mat-list-item>
+          </div>
         </mat-nav-list>
 
       </div>
@@ -178,7 +211,8 @@
   <h2>Manage Offices</h2>
   <p class="mw300">The Manage Offices page allows you to create, edit and add the offices within your organization.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="warn"
+      (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepOffice()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepOffice()">Next</button>
   </div>
@@ -186,9 +220,11 @@
 
 <ng-template #templateAddEditCurrency let-popover="popover">
   <h2>Currency Configuration</h2>
-  <p class="mw300">This section allows an organization to define what currencies will be used throughout their interactions within the Mifos X system.</p>
+  <p class="mw300">This section allows an organization to define what currencies will be used throughout their
+    interactions within the Mifos X system.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="warn"
+      (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepAddEditCurrency()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepAddEditCurrency()">Next</button>
   </div>
@@ -196,9 +232,11 @@
 
 <ng-template #templateHolidays let-popover="popover">
   <h2>Manage Holidays</h2>
-  <p class="mw300">The ability to manage holidays for individual offices is a very useful tool for an organization spanning multiple locations.Use this option to customize holidays for each office of your organization.</p>
+  <p class="mw300">The ability to manage holidays for individual offices is a very useful tool for an organization
+    spanning multiple locations.Use this option to customize holidays for each office of your organization.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="warn"
+      (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepHolidays()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepHolidays()">Next</button>
   </div>
@@ -208,7 +246,8 @@
   <h2>Manage Employees</h2>
   <p class="mw300">With this option, you may view, edit and/or delete your organization's employees.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="warn"
+      (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepEmployee()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepEmployee()">Next</button>
   </div>
@@ -218,7 +257,8 @@
   <h2>Working Days</h2>
   <p class="mw300">Working days page allows you to define which days of the week are working days.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="warn"
+      (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepWorkingDays()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepWorkingDays()">Next</button>
   </div>
@@ -228,7 +268,8 @@
   <h2>Manage Funds</h2>
   <p class="mw300">This allows you to manage funds associated with loans.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+    <button mat-raised-button color="warn"
+      (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStepManageFunds()">Back</button>
     <button mat-raised-button color="primary" (click)="popover.close();nextStepManageFunds()">Next</button>
   </div>

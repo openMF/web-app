@@ -77,6 +77,7 @@ import { CreateHoliday } from './holidays/create-holiday/create-holiday.service'
 import { CreateFundComponent } from './manage-funds/create-fund/create-fund.component';
 import { EditFundComponent } from './manage-funds/edit-fund/edit-fund.component';
 import { ViewFundComponent } from './manage-funds/view-fund/view-fund.component';
+import { InvestorsComponent } from './investors/investors.component';
 
 
 /**
@@ -154,6 +155,7 @@ import { ViewFundComponent } from './manage-funds/view-fund/view-fund.component'
     CreateFundComponent,
     EditFundComponent,
     ViewFundComponent,
+    InvestorsComponent,
   ],
   providers: [
     CreateHoliday,
