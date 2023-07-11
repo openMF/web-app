@@ -105,6 +105,7 @@ import { ManageFundResolver } from './manage-funds/manage-fund.resolver';
 import { ViewFundComponent } from './manage-funds/view-fund/view-fund.component';
 import { EditFundComponent } from './manage-funds/edit-fund/edit-fund.component';
 import { CreateFundComponent } from './manage-funds/create-fund/create-fund.component';
+import { InvestorsComponent } from './investors/investors.component';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -341,6 +342,12 @@ const routes: Routes = [
           resolve: {
             advanceSearchTemplate: AdvanceSearchTemplateResolver
           }
+        },
+        {
+          path: 'investors',
+          component: InvestorsComponent,
+          data: { title: extract('Investors'), breadcrumb: 'Investors' },
+          resolve: {  }
         },
         {
           path: 'adhoc-query',

@@ -4,7 +4,7 @@ import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
 
 /** Translation Imports */
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 /** Custom Services */
 import { AuthenticationService } from './authentication/authentication.service';
@@ -28,8 +28,6 @@ import { RouteReusableStrategy } from './route/route-reusable-strategy';
 
 /** Custom Modules */
 import { SharedModule } from '../shared/shared.module';
-import { NotificationsModule } from '../notifications/notifications.module';
-import { SearchModule } from 'app/search/search.module';
 
 /** Custom Components */
 import { ShellComponent } from './shell/shell.component';

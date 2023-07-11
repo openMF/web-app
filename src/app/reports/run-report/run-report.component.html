@@ -6,7 +6,7 @@
 
       <mat-card-content fxLayout="column">
 
-        <ng-container  *ngFor="let param of paramData" [ngSwitch]="param.displayType">
+        <ng-container *ngFor="let param of paramData" [ngSwitch]="param.displayType">
 
           <ng-container *ngIf="reportForm.contains(param.name)">
 
@@ -17,7 +17,7 @@
                 {{param.label}} is <strong>required</strong>
               </mat-error>
             </mat-form-field>
-    
+
             <mat-form-field fxFlex *ngSwitchCase="'date'" (click)="runReportDatePicker.open()">
               <mat-label>{{param.label}}</mat-label>
               <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="runReportDatePicker" required
@@ -46,7 +46,7 @@
         </ng-container>
 
         <mat-form-field fxFlex>
-          <mat-label>Decimal Places</mat-label>
+          <mat-label>{{ 'Decimal Places' | translate }}</mat-label>
           <mat-select [formControl]="decimalChoice">
             <mat-option value="0">0</mat-option>
             <mat-option value="1">1</mat-option>
@@ -56,14 +56,27 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field fxFlex *ngIf="report.type === 'Pentaho' && reportForm.contains('outputType')">
-          <mat-label>Output Type</mat-label>
-          <mat-select formControlName="outputType" value="HTML">
-            <mat-option value="HTML">Normal format</mat-option>
-            <mat-option value="XLS">Excel format</mat-option>
-            <mat-option value="XLSX">Excel 2007 format</mat-option>
-            <mat-option value="CSV">CSV format</mat-option>
-            <mat-option value="PDF">PDF format</mat-option>
+        <mat-form-field fxFlex *ngIf="isPentahoReport() && reportForm.contains('outputType')">
+          <mat-label>{{ 'Output Type' | translate }}</mat-label>
+          <mat-select required [formControlName]="outputType">
+            <mat-option *ngFor="let option of outputTypeOptions" [value]="option.value">
+              {{option.name | translate}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div fxFlex="98%" *ngIf="exportToS3Allowed"  >
+          <mat-checkbox labelPosition="after" formControlName="exportOutputToS3">
+            Export output data to S3 repository [{{exportToS3Repository}}]
+          </mat-checkbox>
+        </div>
+
+        <mat-form-field fxFlex *ngIf="report.type === 'Table' && reportForm.contains('exportAsType')">
+          <mat-label>{{ 'Export output as' | translate }}</mat-label>
+          <mat-select required formControlName="exportAsType">
+            <mat-option *ngFor="let option of outputTypeOptions" [value]="option.value">
+              {{option.name | translate}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
 
@@ -72,8 +85,8 @@
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
         <button type="button" mat-raised-button [routerLink]="['/reports']">Cancel</button>
         <button mat-raised-button color="primary" [disabled]="!reportForm.valid" id="runreport">
-          <fa-icon icon="cogs"></fa-icon>
-          &nbsp; Run Report
+          <fa-icon icon="file-export" class="m-r-10"></fa-icon>
+          {{ 'Run Report' | translate }}
         </button>
       </mat-card-actions>
 
@@ -89,12 +102,12 @@
 
     <div class="m-b-20">
       <button mat-raised-button color="primary" (click)="isCollapsed = false">
-        Parameters
+        {{ 'Parameters' | translate }}
       </button>
     </div>
 
     <div>
-      <mifosx-table-and-sms *ngIf="!hideTable"[dataObject]="dataObject"></mifosx-table-and-sms>
+      <mifosx-table-and-sms *ngIf="!hideTable" [dataObject]="dataObject"></mifosx-table-and-sms>
       <mifosx-chart *ngIf="!hideChart" [dataObject]="dataObject"></mifosx-chart>
       <mifosx-pentaho *ngIf="!hidePentaho" [dataObject]="dataObject"></mifosx-pentaho>
     </div>

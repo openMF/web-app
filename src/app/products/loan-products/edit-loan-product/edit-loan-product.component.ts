@@ -13,6 +13,7 @@ import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
 
 @Component({
   selector: 'mifosx-edit-loan-product',
@@ -42,11 +43,22 @@ export class EditLoanProductComponent implements OnInit {
               private productsService: ProductsService,
               private settingsService: SettingsService,
               private router: Router) {
-    this.route.data.subscribe((data: { loanProductAndTemplate: any }) => {
+    this.route.data.subscribe((data: { loanProductAndTemplate: any, configurations: any }) => {
       this.loanProductAndTemplate = data.loanProductAndTemplate;
       const assetAccountData = this.loanProductAndTemplate.accountingMappingOptions.assetAccountOptions || [];
       const liabilityAccountData = this.loanProductAndTemplate.accountingMappingOptions.liabilityAccountOptions || [];
       this.loanProductAndTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions = assetAccountData.concat(liabilityAccountData);
+      data.configurations.globalConfiguration.forEach((config: GlobalConfiguration) => {
+        if (config.name === 'days-before-repayment-is-due') {
+          if (this.loanProductAndTemplate['dueDaysForRepaymentEvent'] == null) {
+            this.loanProductAndTemplate['dueDaysForRepaymentEvent'] = config.value;
+          }
+        } else if (config.name === 'days-after-repayment-is-overdue') {
+          if (this.loanProductAndTemplate['overDueDaysForRepaymentEvent'] == null) {
+            this.loanProductAndTemplate['overDueDaysForRepaymentEvent'] = config.value;
+          }
+        }
+      });
     });
   }
 

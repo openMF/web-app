@@ -1,6 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ClientsService } from 'app/clients/clients.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 /**
@@ -14,17 +16,21 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./create-user.component.scss']
 })
 export class CreateUserComponent implements OnInit {
+  /** Create Client Form */
+  createUserForm: FormGroup;
 
   /** Denotes type of user. */
   userTypes = ['Existing User', 'New User'];
   /** Radio button group form control for type of user. */
   userType = new FormControl(this.userTypes[0]);
   /** Placeholder for office data. */
-  officeData = ['Office 1', 'Office 2'];
+  offices: any[] = [];
   /** Placeholder for staff data. */
-  staffData = ['Staff 1', 'Staff 2'];
+  staffOptions: any [] = [];
+  /** Placeholder for staff data. */
+  genderOptions: any [] = [];
   /** Placeholder for client data. */
-  clientData = ['Client 1', 'Client 2'];
+  clientData: any [] = [];
   /** Placeholder for gender data. */
   genderData = ['Male', 'Female'];
   /** Minimum date of birth of user allowed. */
@@ -35,10 +41,42 @@ export class CreateUserComponent implements OnInit {
   /**
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private settingsService: SettingsService) { }
+  constructor(private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private clientService: ClientsService,
+    private settingsService: SettingsService) {
+    this.route.data.subscribe((data: { offices: any }) => {
+      this.offices = data.offices;
+    });
+  }
 
   ngOnInit() {
+    this.minDate = this.settingsService.minAllowedDate;
     this.maxDate = this.settingsService.businessDate;
+    this.setClientForm();
+    this.buildDependencies();
+  }
+
+  /**
+   * Creates the client form.
+   */
+  setClientForm() {
+    this.createUserForm = this.formBuilder.group({
+      'officeId': ['', Validators.required],
+      'staffId': ['', Validators.required]
+    });
+  }
+
+  /**
+   * Adds controls conditionally.
+   */
+  buildDependencies() {
+    this.createUserForm.get('officeId').valueChanges.subscribe((officeId: number) => {
+      this.clientService.getClientWithOfficeTemplate(officeId).subscribe((clientTemplate: any) => {
+        this.staffOptions = clientTemplate.staffOptions;
+        this.genderOptions = clientTemplate.genderOptions;
+      });
+    });
   }
 
 }

@@ -13,6 +13,7 @@ import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
 
 @Component({
   selector: 'mifosx-create-loan-product',
@@ -47,7 +48,7 @@ export class CreateLoanProductComponent implements OnInit {
       const assetAccountData = this.loanProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
       const liabilityAccountData = this.loanProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
       this.loanProductsTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions = assetAccountData.concat(liabilityAccountData);
-      data.configurations.globalConfiguration.forEach((config: any) => {
+      data.configurations.globalConfiguration.forEach((config: GlobalConfiguration) => {
         if (config.name === 'days-before-repayment-is-due') {
           this.loanProductsTemplate['dueDaysForRepaymentEvent'] = config.value;
         } else if (config.name === 'days-after-repayment-is-overdue') {

@@ -184,8 +184,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
         'graceOnArrearsAgeing': [true]
       }),
       'delinquencyBucketId': ['', Validators.required],
-      'dueDaysForRepaymentEvent': [''],
-      'overDueDaysForRepaymentEvent': ['']
+      'dueDaysForRepaymentEvent': ['', Validators.required],
+      'overDueDaysForRepaymentEvent': ['', Validators.required]
     });
   }
 
