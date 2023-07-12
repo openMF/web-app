@@ -1,0 +1,4 @@
+{
+    "name": "@fineract/client",
+    "main": "./src/index.ts"
+}

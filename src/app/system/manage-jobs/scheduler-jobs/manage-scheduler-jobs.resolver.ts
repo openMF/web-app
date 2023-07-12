@@ -6,7 +6,7 @@ import { Resolve } from '@angular/router';
 import { Observable, forkJoin } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../system.service';
+import { SystemService } from '../../system.service';
 
 /**
  * Manage Scheduler Jobs data resolver.

@@ -31,6 +31,7 @@
   "dependencies": {
     "@angular-devkit/schematics": "^14.0.4",
     "@angular-material-components/datetime-picker": "^7.0.0",
+    "@fineract/client": "*",
     "@angular/animations": "^13.3.12",
     "@angular/cdk": "13.3.9",
     "@angular/common": "13.3.12",
@@ -111,5 +112,10 @@
   "engines": {
     "node": ">= 16.15.1",
     "npm": ">= 8.11.0"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/**"
+    ]
   }
 }
