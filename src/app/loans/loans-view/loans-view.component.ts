@@ -12,7 +12,7 @@ import { LoansAccountButtonConfiguration } from './loan-accounts-button-config';
 /** Dialog Components */
 import { ConfirmationDialogComponent } from '../../shared/confirmation-dialog/confirmation-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
-import { LoanStatus } from '../models/loan-status.nodel';
+import { LoanStatus } from '../models/loan-status.model';
 
 @Component({
   selector: 'mifosx-loans-view',

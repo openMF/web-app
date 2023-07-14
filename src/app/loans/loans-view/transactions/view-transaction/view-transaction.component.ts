@@ -14,6 +14,7 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { LoanTransactionType } from 'app/loans/models/loan-transaction-type.model';
 
 /** Custom Dialogs */
 
@@ -68,9 +69,10 @@ export class ViewTransactionComponent implements OnInit {
       this.transactionData = data.loansAccountTransaction;
       this.allowEdition = !this.transactionData.manuallyReversed && !this.allowTransactionEdition(this.transactionData.type.id);
       this.allowUndo = !this.transactionData.manuallyReversed;
-      this.allowChargeback = this.transactionData.type.repayment && !this.transactionData.manuallyReversed;
+      console.log(this.transactionData.type);
+      this.allowChargeback = this.allowChargebackTransaction(this.transactionData.type) && !this.transactionData.manuallyReversed;
       let transactionsChargebackRelated = false;
-      if (this.transactionData.type.repayment) {
+      if (this.allowChargeback) {
         if (this.transactionData.transactionRelations) {
           this.transactionRelations.data = this.transactionData.transactionRelations;
           this.existTransactionRelations = (this.transactionData.transactionRelations.length > 0);
@@ -83,7 +85,7 @@ export class ViewTransactionComponent implements OnInit {
           });
           this.amountRelationsAllowed = this.transactionData.amount - amountRelations;
           this.isFullRelated =  (this.amountRelationsAllowed === 0);
-          this.allowChargeback = this.transactionData.type.repayment && !this.isFullRelated;
+          this.allowChargeback = this.allowChargebackTransaction(this.transactionData.type) && !this.isFullRelated;
         }
       }
       if (!this.allowChargeback) {
@@ -113,6 +115,12 @@ export class ViewTransactionComponent implements OnInit {
     return (transactionType === 20
       || transactionType === 21 || transactionType === 22
       || transactionType === 23);
+  }
+
+  allowChargebackTransaction(transactionType: LoanTransactionType): boolean {
+    return (transactionType.repayment
+      || transactionType.goodwillCredit || transactionType.payoutRefund
+      || transactionType.merchantIssuedRefund);
   }
 
   /**
