@@ -22,6 +22,18 @@ steps:
       echo Tags: $IMAGE_TAGS
     displayName: Set tag variables
 
+  - script: |
+      docker run \
+        -v $(pwd):/data \
+        --env-file <(env | grep -e SYSTEM_ -e BUILD_ -e TF_ -e AGENT_) \
+        -e CI=true \
+        -e GITGUARDIAN_API_KEY \
+        gitguardian/ggshield:latest ggshield secret scan ci
+    condition: succeededOrFailed()
+    displayName: GitGuardian Scan
+    env:
+      GITGUARDIAN_API_KEY: $(GITGUARDIAN_API_KEY)
+
   - task: NodeTool@0
     inputs:
       versionSpec: "16.x"
