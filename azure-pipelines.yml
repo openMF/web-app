@@ -10,6 +10,11 @@ pr:
 pool:
   vmImage: "ubuntu-latest"
 
+variables:
+  # Exposes GITGUARDIAN_API_KEY and GITHUB_TOKEN
+  # WARNING, on first run of the pipeline, access to this variable group will need to be approved by Devops in Azure
+  - group: CodeScanningTools
+
 steps:
   - script: |
       VERSION_TAG=`git describe --abbrev=0 --tags`
