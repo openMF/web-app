@@ -24,9 +24,9 @@ export class LanguageSelectorComponent implements OnInit {
 
   /**
    * Sets the language of the application in the selector on initial setup.
-   * @param {I18nService} i18nService Internationalization Service.
+   * @param {TranslateService} translateService Translate Service.
    */
-   constructor(private translate: TranslateService,
+   constructor(private translateService: TranslateService,
     private settingsService: SettingsService) {
     this.languageSelector.setValue(this.currentLanguage);
   }
@@ -39,7 +39,7 @@ export class LanguageSelectorComponent implements OnInit {
    * @param {string} language New language.
    */
    setLanguage() {
-    this.translate.use(this.languageSelector.value);
+    this.translateService.use(this.languageSelector.value);
     this.settingsService.setLanguage({ name: '', code: this.languageSelector.value.substring(0, 2) });
   }
 
@@ -48,7 +48,7 @@ export class LanguageSelectorComponent implements OnInit {
    * @returns {string} Current language.
    */
   get currentLanguage(): string {
-    return this.translate.currentLang;
+    return this.translateService.currentLang;
   }
 
   /**
@@ -56,7 +56,7 @@ export class LanguageSelectorComponent implements OnInit {
    * @return {string[]} Supported languages.
    */
   get languages(): string[] {
-    return this.translate.getLangs();
+    return this.translateService.getLangs();
   }
 
 }

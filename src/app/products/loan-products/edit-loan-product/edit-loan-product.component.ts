@@ -48,16 +48,20 @@ export class EditLoanProductComponent implements OnInit {
       const assetAccountData = this.loanProductAndTemplate.accountingMappingOptions.assetAccountOptions || [];
       const liabilityAccountData = this.loanProductAndTemplate.accountingMappingOptions.liabilityAccountOptions || [];
       this.loanProductAndTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions = assetAccountData.concat(liabilityAccountData);
+      const itemsByDefault: string[] = [];
       data.configurations.globalConfiguration.forEach((config: GlobalConfiguration) => {
         if (config.name === 'days-before-repayment-is-due') {
           if (this.loanProductAndTemplate['dueDaysForRepaymentEvent'] == null) {
             this.loanProductAndTemplate['dueDaysForRepaymentEvent'] = config.value;
+            itemsByDefault.push('dueDaysForRepaymentEvent');
           }
         } else if (config.name === 'days-after-repayment-is-overdue') {
           if (this.loanProductAndTemplate['overDueDaysForRepaymentEvent'] == null) {
             this.loanProductAndTemplate['overDueDaysForRepaymentEvent'] = config.value;
+            itemsByDefault.push('overDueDaysForRepaymentEvent');
           }
         }
+        this.loanProductAndTemplate['itemsByDefault'] = itemsByDefault;
       });
     });
   }
