@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
-import { LoanStatus } from 'app/loans/models/loan-status.nodel';
+import { LoanStatus } from 'app/loans/models/loan-status.model';
 import { SettingsService } from 'app/settings/settings.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 
