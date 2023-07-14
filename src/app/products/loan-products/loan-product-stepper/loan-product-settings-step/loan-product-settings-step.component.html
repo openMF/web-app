@@ -416,16 +416,17 @@
 
     <mat-divider fxFlex="98%"></mat-divider>
 
-    <h3 fxFlex="23%" class="mat-h3">Event Settings</h3>
+    <h3 fxFlex="23%" class="mat-h3">Event Settings <i class="fas fa-question"
+      matTooltip="Setting for event notifications to be sent before or after repayments. Blue color means default value from global configurations."></i></h3>
     <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Due days for repayment event</mat-label>
+        <mat-label [ngClass]="styleByDefault('dueDaysForRepaymentEvent')">Due days for repayment event</mat-label>
         <input type="number" matInput matTooltip="Specific days before when repayment due notification should be sent." formControlName="dueDaysForRepaymentEvent" [min]="0">
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>OverDue days for repayment event</mat-label>
+        <mat-label [ngClass]="styleByDefault('dueDaysForRepaymentEvent')">OverDue days for repayment event</mat-label>
         <input type="number" matInput matTooltip="Specific days when after the repayment Overdue notification should be sent." formControlName="overDueDaysForRepaymentEvent" [min]="0">
       </mat-form-field>
     </div>

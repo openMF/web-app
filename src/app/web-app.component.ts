@@ -46,7 +46,6 @@ export class WebAppComponent implements OnInit {
    * @param {ActivatedRoute} activatedRoute Activated Route.
    * @param {Title} titleService Title Service.
    * @param {TranslateService} translateService Translate Service.
-   * @param {I18nService} i18nService I18n Service.
    * @param {ThemeStorageService} themeStorageService Theme Storage Service.
    * @param {MatSnackBar} snackBar Material Snackbar for notifications.
    * @param {AlertService} alertService Alert Service.

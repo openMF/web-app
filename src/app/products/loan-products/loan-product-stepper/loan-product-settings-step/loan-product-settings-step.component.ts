@@ -28,6 +28,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
   interestRecalculationOnDayTypeData: any;
   delinquencyBucketData: any;
 
+  itemsByDefault: string[] = [];
+
   constructor(private formBuilder: FormBuilder) {
     this.createLoanProductSettingsForm();
     this.setConditionalControls();
@@ -58,6 +60,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
     this.interestRecalculationOnDayTypeData = Array.from({ length: 28 }, (_, index) => index + 1);
     this.delinquencyBucketData = this.loanProductsTemplate.delinquencyBucketOptions;
 
+    this.itemsByDefault = this.loanProductsTemplate.itemsByDefault || [];
     this.loanProductSettingsForm.patchValue({
       'amortizationType': this.loanProductsTemplate.amortizationType.id,
       'interestType': this.loanProductsTemplate.interestType.id,
@@ -88,7 +91,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'outstandingLoanBalance': this.loanProductsTemplate.outstandingLoanBalance,
       'dueDaysForRepaymentEvent': this.loanProductsTemplate.dueDaysForRepaymentEvent,
       'overDueDaysForRepaymentEvent': this.loanProductsTemplate.overDueDaysForRepaymentEvent
-  });
+    });
 
     if (this.loanProductsTemplate.delinquencyBucket) {
       this.loanProductSettingsForm.patchValue({
@@ -195,7 +198,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
     this.loanProductSettingsForm.get('interestCalculationPeriodType').valueChanges
       .subscribe((interestCalculationPeriodType: any) => {
         if (interestCalculationPeriodType === 0) {
-          this.loanProductSettingsForm.patchValue({'allowPartialPeriodInterestCalcualtion': false});
+          this.loanProductSettingsForm.patchValue({ 'allowPartialPeriodInterestCalcualtion': false });
         }
       });
 
@@ -356,6 +359,13 @@ export class LoanProductSettingsStepComponent implements OnInit {
           });
         }
       });
+  }
+
+  styleByDefault(input: string): string {
+    if (this.itemsByDefault.includes(input)) {
+      return 'by-default';
+    }
+    return '';
   }
 
   get loanProductSettings() {
