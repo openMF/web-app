@@ -83,9 +83,11 @@ export class ClientsComponent implements OnInit, AfterViewInit {
    * @param {string} searchValue Value to filter data.
    */
    applySearch(searchValue: string = '') {
-    this.dataSource = new ClientsDataSource(this.clientsService, this.searchService);
-    this.searchValue = searchValue;
-    this.dataSource.searchClients(this.searchValue, this.showClosedAccounts.checked);
+    if (searchValue.length > 0) {
+      this.dataSource = new ClientsDataSource(this.clientsService, this.searchService);
+      this.searchValue = searchValue;
+      this.dataSource.searchClients(this.searchValue, this.showClosedAccounts.checked);
+    }
   }
 
 }
