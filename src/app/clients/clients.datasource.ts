@@ -6,6 +6,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 
 /** Custom Services */
 import { ClientsService } from './clients.service';
+import { SearchService } from 'app/search/search.service';
 
 /**
  * Clients custom data source to implement server side filtering, pagination and sorting.
@@ -21,8 +22,9 @@ export class ClientsDataSource implements DataSource<any> {
 
   /**
    * @param {ClientsService} clientsService Clients Service
+   * @param {SearchService} searchService Search Service
    */
-  constructor(private clientsService: ClientsService) { }
+  constructor(private clientsService: ClientsService, private searchService: SearchService) { }
 
   /**
    * Gets clients on the basis of provided parameters and emits the value.
@@ -44,6 +46,35 @@ export class ClientsDataSource implements DataSource<any> {
         this.recordsSubject.next(clients.totalFilteredRecords);
         this.clientsSubject.next(clients.pageItems);
       });
+  }
+  /**
+   * Search clients on the basis of provided parameters.
+   * @param {string} searchValue Property by which clients should be sorted.
+   * @param {boolean} showClosedAccounts determines if only active account should be displayed.
+   */
+   searchClients(searchValue: string, showClosedAccounts: boolean = true) {
+    this.clientsSubject.next([]);
+    this.searchService.getSearchResults(searchValue, "clients,clientIdentifiers").subscribe((data: any) => {
+      if (!showClosedAccounts) {
+        data = data.filter((client: any) => client.entityStatus && client.entityStatus.value !== "Closed");
+      }
+      this.recordsSubject.next(data.length);
+      const clients = data
+        .filter((result) => result.entityType === "CLIENT" || result.entityType === "CLIENTIDENTIFIER")
+        .map(
+          ({ entityStatus, entityName, entityAccountNo, entityId, entityExternalId, parentName, entityMobileNo, entityType, parentId, parentExternalId }) => ({
+            status: { ...entityStatus },
+            gender: { name: "" },
+            mobileNo: entityMobileNo,
+            displayName: entityType === "CLIENT" ? entityName: parentName,
+            accountNo: entityAccountNo,
+            id: entityType === "CLIENT" ? entityId: parentId,
+            externalId: entityType === "CLIENT" ? entityExternalId: parentExternalId,
+            officeName: entityType === "CLIENT" ? parentName: null,
+          })
+        );
+      this.clientsSubject.next(clients);
+    });
   }
 
   /**

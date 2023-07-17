@@ -2,8 +2,14 @@
   <div fxLayout="row" fxLayoutAlign="start center">
     <div class="search-box">
       <mat-form-field>
-        <input matInput placeholder="Search by client name" (keyup)="applyFilter($event.target.value)">
+        <input matInput placeholder="Filter by client name" (keyup)="applyFilter($event.target.value)">
       </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Search by client name" (keydown.enter)="applySearch($event.target.value)" #search>
+        </mat-form-field>
+        <button mat-icon-button (click)="applySearch(search.value)" fxHide.lt-sm="true">
+          <fa-icon icon="search" size="sm" matTooltip="Search"></fa-icon>
+        </button>
       <mat-checkbox #showClosedAccounts labelPosition="after">Show Closed Accounts
       </mat-checkbox>
     </div>

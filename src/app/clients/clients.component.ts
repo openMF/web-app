@@ -11,6 +11,7 @@ import { tap } from 'rxjs/operators';
 
 /** Custom Services */
 import { ClientsService } from './clients.service';
+import { SearchService } from '../search/search.service';
 
 @Component({
   selector: 'mifosx-clients',
@@ -29,7 +30,7 @@ export class ClientsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private clientsService: ClientsService) {
+  constructor(private clientsService: ClientsService, private searchService: SearchService) {
 
   }
 
@@ -65,7 +66,7 @@ export class ClientsComponent implements OnInit, AfterViewInit {
    * Initializes the data source for clients table and loads the first page.
    */
   getClients() {
-    this.dataSource = new ClientsDataSource(this.clientsService);
+    this.dataSource = new ClientsDataSource(this.clientsService, this.searchService);
     this.dataSource.getClients(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, this.showClosedAccounts.checked);
   }
 
@@ -76,6 +77,17 @@ export class ClientsComponent implements OnInit, AfterViewInit {
   applyFilter(filterValue: string = '') {
     this.searchValue = filterValue;
     this.dataSource.filterClients(filterValue.trim().toLowerCase(), this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, this.showClosedAccounts.checked);
+  }
+  /**
+   * Search Client Data
+   * @param {string} searchValue Value to filter data.
+   */
+   applySearch(searchValue: string = '') {
+    if (searchValue.length > 0) {
+      this.dataSource = new ClientsDataSource(this.clientsService, this.searchService);
+      this.searchValue = searchValue;
+      this.dataSource.searchClients(this.searchValue, this.showClosedAccounts.checked);
+    }
   }
 
 }
