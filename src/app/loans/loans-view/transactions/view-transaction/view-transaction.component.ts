@@ -15,6 +15,7 @@ import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { LoanTransactionType } from 'app/loans/models/loan-transaction-type.model';
+import { AlertService } from 'app/core/alert/alert.service';
 
 /** Custom Dialogs */
 
@@ -57,6 +58,7 @@ export class ViewTransactionComponent implements OnInit {
    * @param {MatDialog} dialog Dialog reference.
    * @param {Dates} dateUtils Date Utils.
    * @param {SettingsService} settingsService Settings Service
+   * @param {AlertService} alertService Alert Service
    */
   constructor(private loansService: LoansService,
               private route: ActivatedRoute,
@@ -64,12 +66,12 @@ export class ViewTransactionComponent implements OnInit {
               private router: Router,
               public dialog: MatDialog,
               private settingsService: SettingsService,
-              private organizationService: OrganizationService) {
+              private organizationService: OrganizationService,
+              private alertService: AlertService) {
     this.route.data.subscribe((data: { loansAccountTransaction: any }) => {
       this.transactionData = data.loansAccountTransaction;
       this.allowEdition = !this.transactionData.manuallyReversed && !this.allowTransactionEdition(this.transactionData.type.id);
       this.allowUndo = !this.transactionData.manuallyReversed;
-      console.log(this.transactionData.type);
       this.allowChargeback = this.allowChargebackTransaction(this.transactionData.type) && !this.transactionData.manuallyReversed;
       let transactionsChargebackRelated = false;
       if (this.allowChargeback) {
@@ -187,6 +189,9 @@ export class ViewTransactionComponent implements OnInit {
           this.loansService.executeLoansAccountTransactionsCommand(accountId, 'chargeback', payload, this.transactionData.id).subscribe(() => {
             this.router.navigate(['../'], { relativeTo: this.route });
           });
+        } else {
+          this.alertService.alert({ type: 'BusinessRule',
+            message: 'Chargeback amount must be lower or equal to: ' + this.amountRelationsAllowed });
         }
       }
     });

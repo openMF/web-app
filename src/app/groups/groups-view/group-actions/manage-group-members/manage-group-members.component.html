@@ -1,59 +1,66 @@
-<div class="container" fxLayout="row" fxLayoutGap="3%">
+<mat-card class="container">
 
-  <mat-card fxFlex class="client-card" fxLayout="column" fxLayoutGap="2%">
+  <mat-card-content fxLayout="row" >
 
-    <mat-form-field fxFlex="30%">
-      <mat-label>Add Clients</mat-label>
-      <input matInput [formControl]="clientChoice" [matAutocomplete]="clientsAutocomplete">
-    </mat-form-field>
+    <mat-card fxFlex class="client-card" fxLayout="column" fxLayoutGap="2%">
 
-    <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">
-      <mat-option *ngFor="let client of clientsData" [value]="client">
-        {{ client.displayName }}
-      </mat-option>
-    </mat-autocomplete>
+      <mat-form-field fxFlex="30%">
+        <mat-label>Add Clients</mat-label>
+        <input matInput [formControl]="clientChoice" [matAutocomplete]="clientsAutocomplete">
+      </mat-form-field>
 
-    <div class="mat-table">
-      <div class="mat-header-row">
-        <div class="mat-header-cell">Client Details</div>
-        <button mat-icon-button (click)="addClient()">
-          <fa-icon icon="plus"></fa-icon>
-        </button>
+      <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">
+        <mat-option *ngFor="let client of clientsData" [value]="client">
+          {{ client.displayName }}
+        </mat-option>
+      </mat-autocomplete>
+
+      <div class="mat-table">
+        <div class="mat-header-row">
+          <div class="mat-header-cell">Client Details</div>
+          <button mat-icon-button (click)="addClient()">
+            <fa-icon icon="plus"></fa-icon>
+          </button>
+        </div>
+        <div class="mat-row">
+          <div class="mat-cell">Name</div>
+          <div class="mat-cell">{{clientChoice.value.displayName}}</div>
+        </div>
+        <div class="mat-row">
+          <div class="mat-cell">Id</div>
+          <div class="mat-cell">{{clientChoice.value.id}}</div>
+        </div>
+        <div class="mat-row">
+          <div class="mat-cell">Office</div>
+          <div class="mat-cell">{{clientChoice.value.officeName}}</div>
+        </div>
       </div>
-      <div class="mat-row">
-        <div class="mat-cell">Name</div>
-        <div class="mat-cell">{{clientChoice.value.displayName}}</div>
-      </div>
-      <div class="mat-row">
-        <div class="mat-cell">Id</div>
-        <div class="mat-cell">{{clientChoice.value.id}}</div>
-      </div>
-      <div class="mat-row">
-        <div class="mat-cell">Office</div>
-        <div class="mat-cell">{{clientChoice.value.officeName}}</div>
-      </div>
+
+    </mat-card>
+
+    <mat-card fxFlex="50%">
+
+      <h3 matSubheader>Client Members</h3>
+
+      <mat-nav-list *ngIf="clientMembers?.length">
+        <div mat-list-item *ngFor="let client of clientMembers index as i">
+          <span matLine class="p-t-10">{{client.displayName}}</span>
+          <div fxFlex></div>
+          <button mat-icon-button color="warn" (click)="removeClient(i, client)" matTooltip="Remove Client from Group"
+            matTooltipPosition="left">
+            <fa-icon icon="trash"></fa-icon>
+          </button>
+        </div>
+      </mat-nav-list>
+
+    </mat-card>
+
+  </mat-card-content>
+
+  <mat-card-actions>
+    <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column">
+      <button type="button" mat-raised-button color="primary" [routerLink]="['../..']">{{ 'Back' | translate }}</button>
     </div>
+  </mat-card-actions>
 
-  </mat-card>
-
-  <mat-card fxFlex="50%">
-
-    <h3 matSubheader>Client Members</h3>
-
-    <mat-nav-list  *ngIf="clientMembers?.length">
-      <div mat-list-item *ngFor="let client of clientMembers index as i">
-        <span matLine class="p-t-10">{{client.displayName}}</span>
-        <div fxFlex></div>
-        <button mat-icon-button color="warn" (click)="removeClient(i, client)" matTooltip="Remove Client from Group" matTooltipPosition="left">
-          <fa-icon icon="trash"></fa-icon>
-        </button>
-      </div>
-    </mat-nav-list>
-
-  </mat-card>
-
-  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-    <button type="button" mat-raised-button [routerLink]="['../']">Back</button>
-  </div>
-
-</div>
+</mat-card>
