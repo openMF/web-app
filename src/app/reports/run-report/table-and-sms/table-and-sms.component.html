@@ -1,32 +1,53 @@
-<div *ngIf = "!hideOutput">
+<div class="container">
 
-  <div class="m-b-10" *ngIf = "dataObject.report.type === 'Table'" fxLayoutAlign="end">
-    <button mat-raised-button color="primary" (click)="downloadCSV()"  [disabled]="notExistsReportData">
-      Export CSV
-    </button>
-  </div>
+  <div *ngIf="!hideOutput && !toBeExportedToRepo">
 
-  <div class="table-output" [hidden]="notExistsReportData">
-    <table mat-table [dataSource]="dataSource">
-      <div *ngFor= "let column of displayedColumns index as i">
-        <ng-container [matColumnDef]="column">
-          <th mat-header-cell *matHeaderCellDef>{{column}}</th>
-          <td mat-cell *matCellDef="let param" >
-            <span *ngIf="isDecimal(i)">{{toDecimal(param.row[i])}}</span>
-            <span *ngIf="!isDecimal(i)">{{param.row[i]}}</span>
-          </td>
-        </ng-container>
+    <div class="m-b-10" *ngIf="dataObject.report.type === 'Table'" fxLayoutAlign="end">
+      <button mat-raised-button color="primary" (click)="downloadCSV()" [disabled]="notExistsReportData"
+        matToolTip="Export the data to CSV file">
+        Export CSV
+      </button>
+    </div>
+
+    <div class="table-output" [hidden]="notExistsReportData">
+      <table mat-table [dataSource]="dataSource">
+        <div *ngFor="let column of displayedColumns index as i">
+          <ng-container [matColumnDef]="column">
+            <th mat-header-cell *matHeaderCellDef>{{column}}</th>
+            <td mat-cell *matCellDef="let param">
+              <span *ngIf="isDecimal(i)">{{toDecimal(param.row[i])}}</span>
+              <span *ngIf="!isDecimal(i)">{{param.row[i]}}</span>
+            </td>
+          </ng-container>
+        </div>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[100, 200, 300]" showFirstLastButtons></mat-paginator>
+    </div>
+
+    <div class="alert" [hidden]="!notExistsReportData">
+      <div class="message">
+        <i class="fa fa-exclamation-circle alert-check"></i>
+        No report data was generated
       </div>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row" ></tr>
-    </table>
-    <mat-paginator [pageSizeOptions]="[100, 200, 300]" showFirstLastButtons></mat-paginator>
-  </div>
-
-  <div class="alert" [hidden]="!notExistsReportData">
-    <div class="message">
-      <i class="fa fa-exclamation-circle alert-check"></i>
-      No report data was generated
     </div>
   </div>
+
+  <div class="alert" *ngIf="!hideOutput && toBeExportedToRepo">
+    <div class="message">
+      <i class="fa fa-exclamation-circle alert-check"></i>
+      The report request has been sent and the report will be exported to file repository
+    </div>
+  </div>
+
+  <div class="table-output" *ngIf="hideOutput">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+
+  <div class="back-button" *ngIf="!hideOutput">
+    <button type="button" color="primary" mat-raised-button [routerLink]="['../..']">
+      <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>Back</button>
+  </div>
+
 </div>

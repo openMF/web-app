@@ -31,6 +31,7 @@ export class TableAndSmsComponent implements OnChanges {
   /** Data to be converted into CSV file */
   csvData: any;
   notExistsReportData = false;
+  toBeExportedToRepo = false;
 
   /** Paginator for run-report table. */
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -53,15 +54,19 @@ export class TableAndSmsComponent implements OnChanges {
   }
 
   getRunReportData() {
+    const exportS3 = this.dataObject.formData.exportS3;
     this.reportsService.getRunReportData(this.dataObject.report.name, this.dataObject.formData)
     .subscribe( (res: any) => {
-      this.csvData = res.data;
-      this.notExistsReportData = (res.data.length === 0);
-      this.setOutputTable(res.data);
-      res.columnHeaders.forEach((header: any) => {
-        this.columnTypes.push(header.columnDisplayType);
-        this.displayedColumns.push(header.columnName);
-      });
+      this.toBeExportedToRepo = exportS3;
+      if (!this.toBeExportedToRepo) {
+        this.csvData = res.data;
+        this.notExistsReportData = (res.data.length === 0);
+        this.setOutputTable(res.data);
+        res.columnHeaders.forEach((header: any) => {
+          this.columnTypes.push(header.columnDisplayType);
+          this.displayedColumns.push(header.columnName);
+        });
+      }
       this.hideOutput = false;
     });
   }
