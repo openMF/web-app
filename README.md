@@ -152,6 +152,18 @@ MIFOS_DEFAULT_LANGUAGE=en-US
 MIFOS_SUPPORTED_LANGUAGES=en-US,fr-FR
 ```
 
+
+Setting for applying the Client preload in the Clients view, Default true
+```
+MIFOS_PRELOAD_CLIENTS=false
+```
+
+
+Setting for exporting report table to CSV file using this field delimiter
+```
+MIFOS_DEFAULT_CHAR_DELIMITER=,
+```
+
 For more information look the env.sample file in the root directory of the project
 
 ## Want to help? [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/openMF/web-app/issues)

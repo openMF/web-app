@@ -8,7 +8,6 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SystemService } from 'app/system/system.service';
-import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'mifosx-datatable-single-row',

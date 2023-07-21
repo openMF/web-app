@@ -16,4 +16,7 @@
   window["env"]["supportedLanguages"] = '$MIFOS_SUPPORTED_LANGUAGES';
 
   window['env']['preloadClients'] = '$MIFOS_PRELOAD_CLIENTS';
+
+  // Char delimiter to Export CSV options: ',' ';' '|' ' '
+  window['env']['defaultCharDelimiter'] = '$MIFOS_DEFAULT_CHAR_DELIMITER';
 })(this);

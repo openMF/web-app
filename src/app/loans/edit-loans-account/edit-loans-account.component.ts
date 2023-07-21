@@ -155,6 +155,7 @@ export class EditLoansAccountComponent implements OnInit {
     }
     loansAccountData.principal = loansAccountData.principalAmount;
     delete loansAccountData.principalAmount;
+    delete loansAccountData.multiDisburseLoan;
     this.loansService.updateLoansAccount(this.loanId, loansAccountData).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });

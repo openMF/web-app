@@ -12,8 +12,8 @@ import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan
 
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
-import { SettingsService } from 'app/settings/settings.service';
 import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
+import { LoanProducts } from '../loan-products';
 
 @Component({
   selector: 'mifosx-edit-loan-product',
@@ -31,38 +31,28 @@ export class EditLoanProductComponent implements OnInit {
 
   loanProductAndTemplate: any;
   accountingRuleData = ['None', 'Cash', 'Accrual (periodic)', 'Accrual (upfront)'];
+  itemsByDefault: GlobalConfiguration[] = [];
 
   /**
    * @param {ActivatedRoute} route Activated Route.
    * @param {ProductsService} productsService Product Service.
-   * @param {SettingsService} settingsService Settings Service
+   * @param {LoanProducts} loanProducts LoanProducts
    * @param {Router} router Router for navigation.
    */
 
   constructor(private route: ActivatedRoute,
               private productsService: ProductsService,
-              private settingsService: SettingsService,
+              private loanProducts: LoanProducts,
               private router: Router) {
     this.route.data.subscribe((data: { loanProductAndTemplate: any, configurations: any }) => {
       this.loanProductAndTemplate = data.loanProductAndTemplate;
       const assetAccountData = this.loanProductAndTemplate.accountingMappingOptions.assetAccountOptions || [];
       const liabilityAccountData = this.loanProductAndTemplate.accountingMappingOptions.liabilityAccountOptions || [];
       this.loanProductAndTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions = assetAccountData.concat(liabilityAccountData);
-      const itemsByDefault: string[] = [];
-      data.configurations.globalConfiguration.forEach((config: GlobalConfiguration) => {
-        if (config.name === 'days-before-repayment-is-due') {
-          if (this.loanProductAndTemplate['dueDaysForRepaymentEvent'] == null) {
-            this.loanProductAndTemplate['dueDaysForRepaymentEvent'] = config.value;
-            itemsByDefault.push('dueDaysForRepaymentEvent');
-          }
-        } else if (config.name === 'days-after-repayment-is-overdue') {
-          if (this.loanProductAndTemplate['overDueDaysForRepaymentEvent'] == null) {
-            this.loanProductAndTemplate['overDueDaysForRepaymentEvent'] = config.value;
-            itemsByDefault.push('overDueDaysForRepaymentEvent');
-          }
-        }
-        this.loanProductAndTemplate['itemsByDefault'] = itemsByDefault;
-      });
+
+      this.itemsByDefault = loanProducts.setItemsByDefault(data.configurations);
+      this.loanProductAndTemplate['itemsByDefault'] = this.itemsByDefault;
+      this.loanProductAndTemplate = loanProducts.updateLoanProductDefaults(this.loanProductAndTemplate);
     });
   }
 
@@ -119,16 +109,8 @@ export class EditLoanProductComponent implements OnInit {
   }
 
   submit() {
-    // TODO: Update once language and date settings are setup
-    const dateFormat = this.settingsService.dateFormat;
-    const loanProduct = {
-      ...this.loanProduct,
-      charges: this.loanProduct.charges.map((charge: any) => ({ id: charge.id })),
-      dateFormat,
-      locale: this.settingsService.language.code
-    };
-    delete loanProduct.allowAttributeConfiguration;
-    delete loanProduct.advancedAccountingRules;
+    const loanProduct = this.loanProducts.buildPayload(this.loanProduct, this.itemsByDefault);
+
     this.productsService.updateLoanProduct(this.loanProductAndTemplate.id, loanProduct)
       .subscribe((response: any) => {
         this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
