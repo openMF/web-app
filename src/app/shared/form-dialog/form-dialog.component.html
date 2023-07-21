@@ -10,5 +10,5 @@
 
 <mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button mat-dialog-close>{{ layout.cancelButtonText }}</button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="{ data: form }" [disabled]="!form.valid || form.pristine">{{ layout.addButtonText }}</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="{ data: form }" [disabled]="!form.valid">{{ layout.addButtonText }}</button>
 </mat-dialog-actions>

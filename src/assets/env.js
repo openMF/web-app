@@ -16,4 +16,7 @@
   window["env"]["supportedLanguages"] = '';
 
   window['env']['preloadClients'] = '';
+
+  // Char delimiter to Export CSV options: ',' ';' '|' ' '
+  window['env']['defaultCharDelimiter'] = ',';
 })(this);

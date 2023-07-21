@@ -3,7 +3,7 @@
   <div *ngIf="!hideOutput && !toBeExportedToRepo">
 
     <div class="m-b-10" *ngIf="dataObject.report.type === 'Table'" fxLayoutAlign="end">
-      <button mat-raised-button color="primary" (click)="downloadCSV()" [disabled]="notExistsReportData"
+      <button mat-raised-button color="primary" (click)="exportFile()" [disabled]="notExistsReportData"
         matToolTip="Export the data to CSV file">
         Export CSV
       </button>

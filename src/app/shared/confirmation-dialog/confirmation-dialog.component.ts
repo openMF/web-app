@@ -1,6 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DialogData } from 'app/core/dialogs/dialog-data.model';
+import { Dialogs } from 'app/core/dialogs/dialogs';
 
 /**
  * Delete dialog component.
@@ -18,27 +20,15 @@ export class ConfirmationDialogComponent implements OnInit {
    * @param {any} data Provides a deleteContext.
    */
   constructor(public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) { }
+        private dialogs: Dialogs,
+        @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   ngOnInit() {
     this.setColor();
   }
 
   setColor() {
-    switch (this.data.type) {
-      case 'Basic':
-        this.color = 'primary';
-        break;
-      case 'Mild':
-        this.color = 'primary';
-        break;
-      case 'Strong':
-        this.color = 'warn';
-        break;
-      default:
-        this.color = 'warn';
-    }
+    this.color = this.dialogs.setColor(this.data.type);
   }
-
 
 }

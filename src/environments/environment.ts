@@ -28,7 +28,9 @@ export const environment = {
   },
   defaultLanguage: window['env']['defaultLanguage'] || 'en-US',
   supportedLanguages: window['env']['supportedLanguages'] || 'en-US,es-MX,fr-FR',
-  preloadClients: window['env']['preloadClients'] || true
+  preloadClients: window['env']['preloadClients'] || true,
+
+  defaultCharDelimiter: window['env']['defaultCharDelimiter'] || ','
 };
 
 // Server URL

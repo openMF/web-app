@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { LoanProducts } from '../../loan-products';
 
 @Component({
   selector: 'mifosx-loan-product-settings-step',
@@ -28,9 +29,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
   interestRecalculationOnDayTypeData: any;
   delinquencyBucketData: any;
 
-  itemsByDefault: string[] = [];
-
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,
+    private loanProducts: LoanProducts) {
     this.createLoanProductSettingsForm();
     this.setConditionalControls();
   }
@@ -60,7 +60,6 @@ export class LoanProductSettingsStepComponent implements OnInit {
     this.interestRecalculationOnDayTypeData = Array.from({ length: 28 }, (_, index) => index + 1);
     this.delinquencyBucketData = this.loanProductsTemplate.delinquencyBucketOptions;
 
-    this.itemsByDefault = this.loanProductsTemplate.itemsByDefault || [];
     this.loanProductSettingsForm.patchValue({
       'amortizationType': this.loanProductsTemplate.amortizationType.id,
       'interestType': this.loanProductsTemplate.interestType.id,
@@ -187,8 +186,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
         'graceOnArrearsAgeing': [true]
       }),
       'delinquencyBucketId': ['', Validators.required],
-      'dueDaysForRepaymentEvent': ['', Validators.required],
-      'overDueDaysForRepaymentEvent': ['', Validators.required]
+      'dueDaysForRepaymentEvent': [''],
+      'overDueDaysForRepaymentEvent': ['']
     });
   }
 
@@ -362,7 +361,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
   }
 
   styleByDefault(input: string): string {
-    if (this.itemsByDefault.includes(input)) {
+    if (this.loanProducts.isItemByDefault(input)) {
       return 'by-default';
     }
     return '';
