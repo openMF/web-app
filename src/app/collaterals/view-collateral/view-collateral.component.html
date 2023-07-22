@@ -1,11 +1,11 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
     <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CHARGE'">
       <fa-icon icon="edit" class="m-r-10"></fa-icon>
-      Edit
+      {{"labels.buttons.Edit" |translate}}
     </button>
     <button mat-raised-button color="warn" (click)="deleteCollateral()" *mifosxHasPermission="'DELETE_CHARGE'">
       <fa-icon icon="trash" class="m-r-10"></fa-icon>
-      Delete
+      {{"labels.buttons.Delete" |translate}}
     </button>
   </div>
 
@@ -15,43 +15,43 @@
 
         <div class="tab-container mat-typography">
 
-            <h3>Client Collateral Details</h3>
+            <h3>{{"labels.heading.Client Collateral Details" |translate}}</h3>
 
             <div fxLayout="row" fxLayoutGap="32px" class="group-details-container m-b-30">
               <p>
-                Name: {{ clientCollateralData.name }}<br/>
-                Quantity: {{ clientCollateralData.quantity }}<br/>
-                Total Value: {{ clientCollateralData.total }}<br/>
-                Total Collateral Value: {{ clientCollateralData.totalCollateral }}<br/>
+                {{"labels.inputs.name" |translate}}: {{ clientCollateralData.name }}<br/>
+                {{"labels.inputs.Quantity" |translate}}: {{ clientCollateralData.quantity }}<br/>
+                {{"labels.inputs.Total Value" |translate}}: {{ clientCollateralData.total }}<br/>
+                {{"labels.inputs.Total Collateral Value" |translate}}: {{ clientCollateralData.totalCollateral }}<br/>
               </p>
 
             </div>
 
 
-            <h3>Transaction Details</h3>
+            <h3>{{"labels.heading.Transaction Details" |translate}}</h3>
 
             <table mat-table [dataSource]="clientCollateralData.loanTransactionData"
             class="mat-elevation-z1 m-b-30">
 
             <ng-container matColumnDef="ID">
-                <th mat-header-cell *matHeaderCellDef> ID </th>
+                <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.ID" |translate}} </th>
                 <td mat-cell *matCellDef="let element">
                 {{element.loanId}}
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="Last Repayment">
-                <th mat-header-cell *matHeaderCellDef>Last Repayment</th>
+                <th mat-header-cell *matHeaderCellDef>{{"labels.inputs.Last Repayment" |translate}}</th>
                 <td mat-cell *matCellDef="let element"> {{element.lastRepayment}} </td>
             </ng-container>
 
             <ng-container matColumnDef="Remaining Amount">
-                <th mat-header-cell *matHeaderCellDef> Remaining Amount </th>
+                <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Remaining Amount" |translate}} </th>
                 <td mat-cell *matCellDef="let element"> {{element.remainingAmount}} </td>
             </ng-container>
 
             <ng-container matColumnDef="Last Repayment Date">
-                <th mat-header-cell *matHeaderCellDef> Last Repayment Date </th>
+                <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Last Repayment Date" |translate}} </th>
                 <td mat-cell *matCellDef="let element"> {{element.lastRepaymentDate | dateFormat}} </td>
 
             </ng-container>
