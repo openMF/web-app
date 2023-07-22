@@ -1,15 +1,15 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['pay']" *mifosxHasPermission="'PAY_CLIENTCHARGE'">
     <fa-icon icon="dollar-sign" class="m-r-10"></fa-icon>
-    Pay
+    {{ "labels.buttons.Pay" | translate}}
   </button>
   <button mat-raised-button color="primary" (click)="waiveCharge()" *mifosxHasPermission="'WAIVE_CLIENTCHARGE'">
     <i class="fa fa-flag"></i>
-    Waive Charge
+    {{ "labels.buttons.Waive Charge" | translate}}
   </button>
   <button mat-raised-button color="primary" (click)="deleteCharge()">
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    Delete
+    {{ "labels.buttons.Delete" | translate}}
   </button>
 </div>
 
@@ -32,41 +32,41 @@
           <tbody>
 
             <tr>
-              <td> Currency </td>
+              <td> {{ "labels.inputs.Currency" |translate}} </td>
               <td> {{ chargeData.currency.name }} </td>
             </tr>
 
             <tr>
-              <td> Charge Time Type </td>
+              <td> {{ "labels.inputs.Charge Time Type" |translate}} </td>
               <td> {{ chargeData.chargeTimeType.value }} </td>
             </tr>
 
             <tr>
-              <td> Charge Calculation Type </td>
+              <td> {{ "labels.inputs.Charge Calculation Type" |translate}} </td>
               <td> {{ chargeData.chargeCalculationType.value }} </td>
             </tr>
 
             <tr>
-              <td> Due as of </td>
+              <td> {{ "labels.inputs.Due as of" |translate}} </td>
               <td> {{ chargeData.dueDate  | dateFormat }} </td>
             </tr>
 
             <tr>
-              <td> Due </td>
+              <td> {{ "labels.inputs.Due" |translate}} </td>
               <td> {{ chargeData.amount }} </td>
             </tr>
 
             <tr>
-              <td> Paid </td>
+              <td> {{ "labels.inputs.Paid" |translate}} </td>
               <td> {{ chargeData.amountPaid }} </td>
             </tr>
 
             <tr>
-              <td> Waived </td>
+              <td> {{ "labels.inputs.Waived" |translate}} </td>
               <td> {{ chargeData.amountWaived }} </td>
             </tr>
             <tr>
-              <td> Outstanding </td>
+              <td> {{ "labels.inputs.Outstanding" |translate}} </td>
               <td> {{ chargeData.amountOutstanding }} </td>
             </tr>
 
@@ -79,36 +79,36 @@
     </mat-card-content>
 
     <div fxLayout="row wrap" class="content" style="padding-top:10px">
-      <h1><b> Transactions </b></h1>
+      <h1><b> {{ "labels.heading.Transactions" |translate}} </b></h1>
 
       <table mat-table [dataSource]="chargeData.clientTransactionDatas" *ngIf="chargeData.clientTransactionDatas">
 
         <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <th mat-header-cell *matHeaderCellDef> {{ "labels.inputs.ID" |translate}} </th>
           <td mat-cell *matCellDef="let element" [ngClass]="{'strikeoff':element.reversed}"> {{element.id}} </td>
         </ng-container>
 
         <ng-container matColumnDef="officeName">
-          <th mat-header-cell *matHeaderCellDef> Office Name </th>
+          <th mat-header-cell *matHeaderCellDef> {{ "labels.inputs.Office Name" |translate}} </th>
           <td mat-cell *matCellDef="let element" [ngClass]="{'strikeoff':element.reversed}"> {{element.officeName }} </td>
         </ng-container>
 
         <ng-container matColumnDef="type">
-          <th mat-header-cell *matHeaderCellDef> Type </th>
+          <th mat-header-cell *matHeaderCellDef> {{ "labels.inputs.Type" |translate}} </th>
           <td mat-cell *matCellDef="let element" [ngClass]="{'strikeoff':element.reversed}"> {{element.type.value}} </td>
         </ng-container>
         <ng-container matColumnDef="transactionDate">
-          <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
+          <th mat-header-cell *matHeaderCellDef> {{ "labels.inputs.Transaction Date" |translate}} </th>
           <td mat-cell *matCellDef="let element" [ngClass]="{'strikeoff':element.reversed}"> {{element.date  | dateFormat}} </td>
         </ng-container>
 
         <ng-container matColumnDef="amount">
-          <th mat-header-cell *matHeaderCellDef> Amount </th>
+          <th mat-header-cell *matHeaderCellDef> {{ "labels.inputs.Amount" |translate}} </th>
           <td mat-cell *matCellDef="let element" [ngClass]="{'strikeoff':element.reversed}"> {{element.amount | formatNumber }} </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <th mat-header-cell *matHeaderCellDef> {{ "labels.inputs.Actions" |translate}} </th>
           <td mat-cell *matCellDef="let element" [ngClass]="{'strikeoff':element.reversed}">
             <button mat-raised-button color="primary" (click)="undoTransaction(element.id)" class="delBtn">
               <fa-icon icon="trash" class="m-r-10"></fa-icon>
@@ -124,7 +124,7 @@
 
 
     <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-      <button type="button" mat-raised-button [routerLink]="['../../','general']">Back</button>
+      <button type="button" mat-raised-button [routerLink]="['../../','general']">{{ "labels.buttons.Back" | translate}}</button>
     </mat-card-actions>
 
   </mat-card>

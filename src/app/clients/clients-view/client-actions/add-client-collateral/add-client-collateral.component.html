@@ -8,59 +8,59 @@
 
                 <div fxLayout="column">
                     <mat-form-field>
-                        <mat-label>Collateral</mat-label>
+                        <mat-label>{{ "labels.inputs.Collateral" |translate}}</mat-label>
                         <mat-select required formControlName="collateralId">
                             <mat-option *ngFor="let clientCollateral of clientCollateralOptions" [value]="clientCollateral.id">
                                 {{ clientCollateral.name }}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="clientCollateralForm.controls.collateralId.hasError('required')">
-                            Collateral is <strong>required</strong>
+                            {{ "labels.inputs.Collateral" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
                         </mat-error>
                     </mat-form-field>
                     
                     <div *ngIf="collateralDetails" fxLayout="column">
 
                         <mat-form-field>
-                            <mat-label>Name</mat-label>
+                            <mat-label>{{ "labels.inputs.name" |translate}}</mat-label>
                             <input matInput required formControlName="name">
                         </mat-form-field>
 
                         <mat-form-field>
-                            <mat-label>Type/Quality</mat-label>
+                            <mat-label>{{ "labels.inputs.Type/Quality" |translate}}</mat-label>
                             <input matInput required formControlName="quality">
                         </mat-form-field>
 
                         <mat-form-field>
-                            <mat-label>Unit Type</mat-label>
+                            <mat-label>{{ "labels.inputs.Unit Type" |translate}}</mat-label>
                             <input matInput required formControlName="unitType">
                         </mat-form-field>
 
                         <mat-form-field>
-                            <mat-label>Base Price</mat-label>
+                            <mat-label>{{ "labels.inputs.Base Price" |translate}}</mat-label>
                             <input matInput required formControlName="basePrice">
                         </mat-form-field>
 
                         <mat-form-field>
-                            <mat-label>Percentage To Base</mat-label>
+                            <mat-label>{{ "labels.inputs.Percentage To Base" |translate}}</mat-label>
                             <input matInput required formControlName="pctToBase">
                         </mat-form-field>
 
                         <mat-form-field>
-                            <mat-label>Quantity</mat-label>
+                            <mat-label>{{ "labels.inputs.Quantity" |translate}}</mat-label>
                             <input matInput required formControlName="quantity">
                             <mat-error *ngIf="clientCollateralForm.controls.quantity.hasError('required')">
-                                Quantity is <strong>required</strong>
+                                {{ "labels.inputs.Quantity" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
                             </mat-error>
                         </mat-form-field>
 
                         <mat-form-field>
-                            <mat-label>Total</mat-label>
+                            <mat-label>{{ "labels.inputs.Total" |translate}}</mat-label>
                             <input matInput required formControlName="totalValue">
                         </mat-form-field>
 
                         <mat-form-field>
-                            <mat-label>Total Collateral Value</mat-label>
+                            <mat-label>{{ "labels.inputs.Total Collateral Value" |translate}}</mat-label>
                             <input matInput required formControlName="totalCollateralValue">
                         </mat-form-field>
 
@@ -71,8 +71,8 @@
             </mat-card-content>
 
             <mat-card-actions fxLayoutGap="5px" fxLayout="row" fsLayout.xs="column" fxLayoutAlign="center">
-                <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-                <button mat-raised-button color="primary" [disabled]="!clientCollateralForm.valid">Submit</button> 
+                <button type="button" mat-raised-button [routerLink]="['../../']">{{ "labels.buttons.Cancel" | translate}}</button>
+                <button mat-raised-button color="primary" [disabled]="!clientCollateralForm.valid">{{ "labels.buttons.Submit" | translate}}</button> 
             </mat-card-actions>
 
         </form>

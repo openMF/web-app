@@ -2,11 +2,11 @@
 
   <router-outlet>
 
-    <h3>Family Members</h3>
+    <h3>{{"labels.heading.Family Members" |translate}}</h3>
 
     <div fxLayout="row" fxLayoutAlign="flex-end">
       <button mat-raised-button color="primary" [routerLink]="['./add']">
-        <fa-icon icon="plus" class="m-r-10"></fa-icon>Add
+        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ "labels.buttons.Add" |translate}}
       </button>
     </div>
 
@@ -35,17 +35,17 @@
         </div>
 
         <p>
-          First Name : {{member.firstName}}<br />
-          Middle Name : {{member.middleName}}<br />
-          Last Name : {{member.lastName}}<br />
-          Qualification : {{member.qualification}}<br />
-          Mobile Number : {{member.mobileNumber}}<br />
-          Age : {{member.age}}<br />
-          Is Dependent : {{member.isDependent}}<br />
-          Martial Status : {{member.maritalStatus}}<br />
-          Gender : {{member.gender}}<br />
-          Profession : {{member.profession}}<br />
-          Date Of Birth : {{member.dateOfBirth  | dateFormat}}<br />
+          {{"labels.inputs.First Name" |translate}} : {{member.firstName}}<br />
+          {{"labels.inputs.Middle Name" |translate}} : {{member.middleName}}<br />
+          {{"labels.inputs.Last Name" |translate}} : {{member.lastName}}<br />
+          {{"labels.inputs.Qualification" |translate}} : {{member.qualification}}<br />
+          {{"labels.inputs.Mobile Number" |translate}} : {{member.mobileNumber}}<br />
+          {{"labels.inputs.Age" |translate}} : {{member.age}}<br />
+          {{"labels.inputs.Is Dependent" |translate}} : {{member.isDependent}}<br />
+          {{"labels.inputs.Martial Status" |translate}} : {{member.maritalStatus}}<br />
+          {{"labels.inputs.Gender" |translate}} : {{member.gender}}<br />
+          {{"labels.inputs.Profession" |translate}} : {{member.profession}}<br />
+          {{"labels.inputs.Date Of Birth" |translate}} : {{member.dateOfBirth  | dateFormat}}<br />
         </p>
 
       </mat-expansion-panel>

@@ -1,21 +1,21 @@
 <div class="tab-container mat-typography">
 
-  <h3>Performance History</h3>
+  <h3>{{ "labels.heading.Performance History" |translate}}</h3>
   <div fxLayout="row" fxLayoutGap="32px" class="performance-history-container">
     <table>
       <tbody>
         <tr>
           <td>
             <p>
-              No. Of Loan Cycles :{{clientSummary?.loanCycle}} <br />
-              No. of Active Loans :{{clientSummary?.activeLoans}} <br />
-              Last Loan Amount :{{clientSummary?.lastLoanAmount | formatNumber}} <br />
+              {{"labels.inputs.No. Of Loan Cycles" |translate}} :{{clientSummary?.loanCycle}} <br />
+              {{"labels.inputs.No. of Active Loans" |translate}} :{{clientSummary?.activeLoans}} <br />
+              {{"labels.inputs.Last Loan Amount" |translate}} :{{clientSummary?.lastLoanAmount | formatNumber}} <br />
             </p>
           </td>
           <td>
             <p>
-              No. of Active Savings :{{clientSummary?.activeSavings}} <br />
-              Total Savings :{{clientSummary?.totalSavings | formatNumber}} <br />
+              {{"labels.inputs.No. of Active Savings" |translate}} :{{clientSummary?.activeSavings}} <br />
+              {{"labels.inputs.Total Savings" |translate}} :{{clientSummary?.totalSavings | formatNumber}} <br />
             </p>
           </td>
         </tr>
@@ -27,13 +27,13 @@
   <div class="heading-content">
     <div fxLayout="column" fxFlex="50%">
       <div className="heading-name">
-        <h3>Upcoming Charges</h3>
+        <h3>{{ "labels.heading.Upcoming Charges" |translate}}</h3>
       </div>
     </div>
     <div fxLayout="column" fxFlex="50%">
       <div fxLayout="row" fxLayoutAlign="flex-end">
-        <button mat-raised-button class="f-right" color="primary" [routerLink]="['../', 'charges', 'overview']" *mifosxHasPermission="'READ_CLIENTCHARGE'">Charges
-          Overview</button>
+        <button mat-raised-button class="f-right" color="primary" [routerLink]="['../', 'charges', 'overview']" *mifosxHasPermission="'READ_CLIENTCHARGE'">
+          {{ "labels.buttons.Charges Overview" |translate}}</button>
       </div>
     </div>
   </div>
@@ -41,39 +41,39 @@
   <table mat-table [dataSource]="upcomingCharges">
 
     <ng-container matColumnDef="Name">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.name" |translate}} </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop"
           [ngClass]="(!(element.isWaived || element.isPaid)) | statusLookup"></i>
         {{element.name}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Due as of">
-      <th mat-header-cell *matHeaderCellDef> Due as of </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Due as of" |translate}}" </th>
       <td mat-cell *matCellDef="let element"> {{element.dueDate  | dateFormat}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Due">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef> Due </th>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef> {{"labels.inputs.Due" |translate}} </th>
       <td mat-cell class="r-amount" *matCellDef="let element"> {{element.amount | formatNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Paid">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef>Paid </th>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef> {{"labels.inputs.Paid" |translate}} </th>
       <td mat-cell class="r-amount" *matCellDef="let element"> {{element.amountPaid | formatNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Waived">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef> Waived </th>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef> {{"labels.inputs.Waived" |translate}} </th>
       <td mat-cell class="r-amount" *matCellDef="let element"> {{element.amountWaived | formatNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Outstanding">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef> Outstanding </th>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef> {{"labels.inputs.Outstanding" |translate}} </th>
       <td mat-cell class="r-amount" *matCellDef="let element"> {{element.amountOutstanding | formatNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">
-      <th mat-header-cell class="center" *matHeaderCellDef> Actions </th>
+      <th mat-header-cell class="center" *matHeaderCellDef> {{"labels.inputs.Actions" |translate}} </th>
       <td mat-cell class="center" *matCellDef="let element">
         <button class="account-action-button" mat-raised-button color="primary"
           (click)="routeEdit($event)" [routerLink]="['../','charges', element.id, 'pay']" *mifosxHasPermission="'PAY_CLIENTCHARGE'">
@@ -96,7 +96,7 @@
   <div class="heading-content">
     <div fxLayout="column" fxFlex="50%">
       <div class="heading-name">
-        <h3>Loan Accounts</h3>
+        <h3>{{"labels.heading.Loan Accounts" |translate}}</h3>
       </div>
     </div>
     <div fxLayout="column" fxFlex="50%">
@@ -110,7 +110,7 @@
   <table *ngIf="!showClosedLoanAccounts" mat-table [dataSource]="loanAccounts|accountsFilter:'loan'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" |translate}}. </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop"
           [ngClass]="element.inArrears?'status-active-overdue':(element.status.code|statusLookup)"></i>
         {{element.accountNo}}
@@ -118,54 +118,54 @@
     </ng-container>
 
     <ng-container matColumnDef="Loan Account">
-      <th mat-header-cell *matHeaderCellDef> Loan Account </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Loan Account" |translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Original Loan">
-      <th mat-header-cell *matHeaderCellDef> Original Loan </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Original Loan" |translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.originalLoan}} </td>
     </ng-container>
     <ng-container matColumnDef="Loan Balance">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef> Loan Balance </th>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef> {{"labels.inputs.Loan Balance" |translate}} </th>
       <td mat-cell class="r-amount" *matCellDef="let element"> {{element.loanBalance | formatNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Amount Paid">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef> Amount Paid </th>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef> {{"labels.inputs.Amount Paid" |translate}} </th>
       <td mat-cell class="r-amount" *matCellDef="let element"> {{element.amountPaid | formatNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Type">
-      <th mat-header-cell class="center" *matHeaderCellDef> Type </th>
+      <th mat-header-cell class="center" *matHeaderCellDef> {{"labels.inputs.Type" |translate}} </th>
       <td mat-cell class="center" *matCellDef="let element">
         <i class="fa fa-large" [ngClass]="(element.loanType.value=== 'Individual')?'fa-user':'fa-group'" matTooltip=" {{ element.loanType.value }}" matTooltipPosition="above"></i>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">
-      <th mat-header-cell class="center" *matHeaderCellDef> Actions </th>
+      <th mat-header-cell class="center" *matHeaderCellDef> {{"labels.inputs.Actions" |translate}}</th>
       <td mat-cell class="center" *matCellDef="let element">
-        <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary" matTooltip="Make Repayment" matTooltipPosition="above"
+        <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary" matTooltip="{{ 'tooltips.Make Repayment' | translate }}" matTooltipPosition="above"
         (click)="routeEdit($event)" [routerLink]="['../','loans-accounts', element.id, 'actions', 'Make Repayment']">
           <i class="fa fa-dollar"></i>
         </button>
         <span *ngIf="element.status.pendingApproval">
-          <button class="account-action-button" mat-raised-button color="primary" matTooltip="Approve"
+          <button class="account-action-button" mat-raised-button color="primary" matTooltip="{{ 'tooltips.Approve' | translate }}"
             matTooltipPosition="above" *mifosxHasPermission="'APPROVE_LOAN'" (click)="routeEdit($event)"
             [routerLink]="['../','loans-accounts', element.id, 'actions', 'Approve']">
             <i class="fa fa-check"></i>
           </button>
         </span>
         <span *ngIf="!element.status.pendingApproval && !element.status.active && !element.status.overpaid">
-          <button class="account-action-button" mat-raised-button color="primary" matTooltip="Disburse"
+          <button class="account-action-button" mat-raised-button color="primary" matTooltip="{{ 'tooltips.Disburse' | translate }}"
             matTooltipPosition="above" *mifosxHasPermission="'DISBURSE_LOAN'"
             (click)="routeEdit($event)" [routerLink]="['../','loans-accounts', element.id, 'actions', 'Disburse']">
             <i class="fa fa-flag"></i>
           </button>
         </span>
         <span *ngIf="!element.status.pendingApproval && !element.status.active && element.status.overpaid">
-        <button class="account-action-button" mat-raised-button color="primary" matTooltip="Transfer Funds"
+        <button class="account-action-button" mat-raised-button color="primary" matTooltip="{{ 'tooltips.Transfer Funds' | translate }}"
           matTooltipPosition="above" *mifosxHasPermission="'DISBURSE_LOAN'"
           (click)="routeEdit($event); routeTransferFund(element.id)">
           <i class="fa fa-exchange"></i>
@@ -184,7 +184,7 @@
   <table *ngIf="showClosedLoanAccounts" mat-table [dataSource]="loanAccounts|accountsFilter:'loan':'closed'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" |translate}}. </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop"
           [ngClass]="element.inArrears?'status-active-overdue':(element.status.code|statusLookup)"></i>
         {{element.accountNo}}
@@ -192,34 +192,34 @@
     </ng-container>
 
     <ng-container matColumnDef="Loan Account">
-      <th mat-header-cell *matHeaderCellDef> Loan Account </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Loan Account" |translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Original Loan">
-      <th mat-header-cell *matHeaderCellDef> Original Loan </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Original Loan" |translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.lastActiveTransactionDate  | dateFormat}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Loan Balance">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef>Loan Balance </th>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef> {{"labels.inputs.Loan Balance" |translate}} </th>
       <td mat-cell class="r-amount" *matCellDef="let element"> {{element.loanBalance | formatNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Amount Paid">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef> Amount Paid </th>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef> {{"labels.inputs.Amount Paid" |translate}} </th>
       <td mat-cell class="r-amount" *matCellDef="let element"> {{element.accountBalance | formatNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Type">
-      <th mat-header-cell class="center" *matHeaderCellDef> Type </th>
+      <th mat-header-cell class="center" *matHeaderCellDef> {{"labels.inputs.Type" |translate}} </th>
       <td mat-cell class="center" *matCellDef="let element">
         <i class="fa fa-large" [ngClass]="(element.loanType.value === 'Individual')?'fa-user':'fa-group'" matTooltip=" {{ element.loanType.value }}" matTooltipPosition="above"></i>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="Closed Date">
-      <th mat-header-cell *matHeaderCellDef> Closed Date </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Closed Date" |translate}} </th>
       <td mat-cell *matCellDef="let element">{{element.timeline.closedOnDate  | dateFormat}}</td>
     </ng-container>
 
@@ -233,7 +233,7 @@
   <div class="heading-content">
     <div fxLayout="column" fxFlex="50%">
       <div class="heading-name">
-        <h3>Saving Accounts</h3>
+        <h3>{{"labels.heading.Saving Accounts" |translate}}</h3>
       </div>
     </div>
     <div fxLayout="column" fxFlex="50%">
@@ -248,28 +248,28 @@
     [dataSource]="savingAccounts|accountsFilter:'saving':'open':'isSavings'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" |translate}}. </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         {{element.accountNo}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Saving Account">
-      <th mat-header-cell *matHeaderCellDef> Saving Account </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Saving Account" |translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Last Active">
-      <th mat-header-cell *matHeaderCellDef> Last Active </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Last Active" |translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.lastActiveTransactionDate  | dateFormat}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Balance">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef> Balance </th>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef> {{"labels.inputs.Balance" |translate}} </th>
       <td mat-cell class="r-amount" *matCellDef="let element"> {{element.accountBalance | formatNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">
-      <th mat-header-cell class="center" *matHeaderCellDef> Actions </th>
+      <th mat-header-cell class="center" *matHeaderCellDef> {{"labels.inputs.Actions" |translate}} </th>
       <td mat-cell class="center" *matCellDef="let element">
         <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary"
           (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Deposit']">
@@ -307,18 +307,18 @@
     [dataSource]="savingAccounts|accountsFilter:'saving':'closed':'isSavings'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" |translate}}. </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         {{element.accountNo}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Saving Account">
-      <th mat-header-cell *matHeaderCellDef> Saving Account </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Saving Account" |translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Closed Date">
-      <th mat-header-cell *matHeaderCellDef> Closed Date </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Closed Date" |translate}} </th>
       <td mat-cell *matCellDef="let element">{{element.timeline.closedOnDate  | dateFormat}}</td>
     </ng-container>
 
@@ -331,7 +331,7 @@
   <div class="heading-content">
     <div fxLayout="column" fxFlex="50%">
       <div class="heading-name">
-        <h3>Fixed Deposit Accounts</h3>
+        <h3>{{"labels.heading.Fixed Deposit Accounts" |translate}}</h3>
       </div>
     </div>
     <div fxLayout="column" fxFlex="50%">
@@ -346,28 +346,28 @@
     [dataSource]="savingAccounts|accountsFilter:'saving':'open':'isFixed'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" |translate}}. </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         {{element.accountNo}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Saving Account">
-      <th mat-header-cell *matHeaderCellDef> Saving Account </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Saving Account" |translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Last Active">
-      <th mat-header-cell *matHeaderCellDef> Last Active </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Last Active" |translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.lastActiveTransactionDate  | dateFormat}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Balance">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef> Balance </th>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef> {{"labels.inputs.Balance" |translate}} </th>
       <td mat-cell class="r-amount" *matCellDef="let element"> {{element.accountBalance | formatNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">
-      <th mat-header-cell class="center" *matHeaderCellDef> Actions </th>
+      <th mat-header-cell class="center" *matHeaderCellDef> {{"labels.inputs.Actions" |translate}} </th>
       <td mat-cell class="center" *matCellDef="let element">
         <button *ngIf="element.status.submittedAndPendingApproval" class="account-action-button" mat-raised-button
           color="primary" (click)="routeEdit($event)" [routerLink]="['../','fixed-deposits-accounts', element.id, 'actions', 'Approve']">
@@ -398,18 +398,18 @@
     [dataSource]="savingAccounts|accountsFilter:'saving':'closed':'isFixed'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" |translate}}. </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         {{element.accountNo}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Saving Account">
-      <th mat-header-cell *matHeaderCellDef> Saving Account </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Saving Account" |translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Closed Date">
-      <th mat-header-cell *matHeaderCellDef> Closed Date </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Closed Date" |translate}} </th>
       <td mat-cell *matCellDef="let element">{{element.timeline.closedOnDate  | dateFormat}}</td>
     </ng-container>
 
@@ -423,7 +423,7 @@
   <div class="heading-content">
     <div fxLayout="column" fxFlex="50%">
       <div class="heading-name">
-        <h3>Recurring Deposit Accounts</h3>
+        <h3>{{"labels.heading.Recurring Deposit Accounts" |translate}}</h3>
       </div>
     </div>
     <div fxLayout="column" fxFlex="50%">
@@ -438,28 +438,28 @@
     [dataSource]="savingAccounts|accountsFilter:'saving':'open':'isRecurring'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" |translate}}. </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         {{element.accountNo}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Saving Account">
-      <th mat-header-cell *matHeaderCellDef> Saving Account </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Saving Account" |translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Last Active">
-      <th mat-header-cell *matHeaderCellDef> Last Active </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Last Active" |translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.lastActiveTransactionDate  | dateFormat}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Balance">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef> Balance </th>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef> {{"labels.inputs.Balance" |translate}} </th>
       <td mat-cell class="r-amount" *matCellDef="let element"> {{element.accountBalance | formatNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">
-      <th mat-header-cell class="center" *matHeaderCellDef> Actions </th>
+      <th mat-header-cell class="center" *matHeaderCellDef> {{"labels.inputs.Actions" |translate}} </th>
       <td mat-cell class="center" *matCellDef="let element">
         <ng-container *ngIf="element.status.submittedAndPendingApproval">
           <button class="account-action-button" mat-raised-button *mifosxHasPermission="'APPROVE_SAVINGSACCOUNT'"
@@ -494,18 +494,18 @@
     [dataSource]="savingAccounts|accountsFilter:'saving':'closed':'isRecurring'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" |translate}}. </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         {{element.accountNo}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Saving Account">
-      <th mat-header-cell *matHeaderCellDef> Saving Account </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Saving Account" |translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Closed Date">
-      <th mat-header-cell *matHeaderCellDef> Closed Date </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Closed Date" |translate}} </th>
       <td mat-cell *matCellDef="let element">{{element.timeline.closedOnDate  | dateFormat}}</td>
     </ng-container>
 
@@ -518,7 +518,7 @@
   <div class="heading-content">
     <div fxLayout="column" fxFlex="50%">
       <div class="heading-name">
-        <h3>Shares Accounts</h3>
+        <h3>{{"labels.inputs.Shares Accounts" |translate}}</h3>
       </div>
     </div>
     <div fxLayout="column" fxFlex="50%">
@@ -532,28 +532,28 @@
   <table *ngIf="!showClosedShareAccounts" mat-table [dataSource]="shareAccounts|accountsFilter:'share'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" |translate}}. </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         {{element.accountNo}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Share Account">
-      <th mat-header-cell *matHeaderCellDef> Share Account </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Share Account" |translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Approved Shares">
-      <th mat-header-cell *matHeaderCellDef> Approved Shares </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Approved Shares" |translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.totalApprovedShares}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Pending For Approval Shares">
-      <th mat-header-cell *matHeaderCellDef> Pending For Approval Shares </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Pending For Approval Shares" |translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.totalPendingForApprovalShares}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">
-      <th mat-header-cell class="center" *matHeaderCellDef> Actions </th>
+      <th mat-header-cell class="center" *matHeaderCellDef> {{"labels.inputs.Actions" |translate}} </th>
       <td mat-cell class="center" *matCellDef="let element">
         <button *ngIf="element.status.submittedAndPendingApproval" class="account-action-button" mat-raised-button
           color="primary" (click)="routeEdit($event)" [routerLink]="['../','shares-accounts', element.id, 'actions', 'Approve']">
@@ -580,28 +580,28 @@
   <table *ngIf="showClosedShareAccounts" mat-table [dataSource]="shareAccounts|accountsFilter:'share':'closed'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> Account No. </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" |translate}}. </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         {{element.accountNo}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Share Account">
-      <th mat-header-cell *matHeaderCellDef> Share Account </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Share Account" |translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Approved Shares">
-      <th mat-header-cell *matHeaderCellDef> Approved Shares </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Approved Shares" |translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.totalApprovedShares}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Pending For Approval Shares">
-      <th mat-header-cell *matHeaderCellDef> Pending For Approval Shares </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Pending For Approval Shares" |translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.totalPendingForApprovalShares}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Closed Date">
-      <th mat-header-cell *matHeaderCellDef> Closed Date </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Closed Date" |translate}} </th>
       <td mat-cell *matCellDef="let element">{{element.timeline.closedOnDate  | dateFormat}}</td>
     </ng-container>
 
@@ -614,13 +614,13 @@
   <div class="heading-content">
     <div fxLayout="column" fxFlex="50%">
       <div class="heading-name">
-        <h3>Collateral Data</h3>
+        <h3>{{"labels.heading.Collateral Data" |translate}}</h3>
       </div>
     </div>
     <div fxLayout="column" fxFlex="50%">
       <div fxLayout="row" fxLayoutAlign="flex-end">
         <button mat-raised-button class="f-right" color="primary" disabled>
-          View Collaterals
+          {{"labels.buttons.View Collaterals" |translate}}
         </button>
       </div>
     </div>
@@ -629,27 +629,27 @@
   <table mat-table [dataSource]="collaterals">
 
     <ng-container matColumnDef="ID">
-      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <th mat-header-cell *matHeaderCellDef>{{"labels.inputs.ID" |translate}}</th>
       <td mat-cell *matCellDef="let element">{{ element.collateralId }}</td>
     </ng-container>
 
     <ng-container matColumnDef="Name">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <th mat-header-cell *matHeaderCellDef>{{"labels.inputs.name" |translate}}</th>
       <td mat-cell *matCellDef="let element">{{ element.name }}</td>
     </ng-container>
 
     <ng-container matColumnDef="Quantity">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef>Quantity</th>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef>{{"labels.inputs.Quantity" |translate}}</th>
       <td mat-cell class="r-amount" *matCellDef="let element">{{ element.quantity | formatNumber }}</td>
     </ng-container>
 
     <ng-container matColumnDef="Total Value">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef>Total Value</th>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef>{{"labels.inputs.Total Value" |translate}}</th>
       <td mat-cell class="r-amount" *matCellDef="let element">{{ element.basePrice*element.quantity | formatNumber}}</td>
     </ng-container>
 
     <ng-container matColumnDef="Total Collateral Value">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef>Total Collateral Value</th>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef>{{"labels.inputs.Total Collateral Value" |translate}}</th>
       <td mat-cell class="r-amount" *matCellDef="let element">{{ element.pctToBase*element.basePrice*element.quantity/100 | formatNumber}}</td>
     </ng-container>
 
