@@ -1,11 +1,11 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    Edit
+    {{"labels.buttons.Edit" |translate}}
   </button>
   <button mat-raised-button color="warn" (click)="deleteAccountingClosure()" *mifosxHasPermission="'DELETE_GLCLOSURE'">
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    Delete
+    {{"labels.buttons.Delete" |translate}}
   </button>
 </div>
 
@@ -18,7 +18,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="header">
-          Office
+         {{"labels.inputs.Office" |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -26,7 +26,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Closure Date
+          {{ "labels.inputs.Closure Date"| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -34,7 +34,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Closed By
+          {{ "labels.inputs.Closed By" |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -42,7 +42,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Updated By
+          {{ "labels.inputs.Updated By" |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -50,7 +50,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Updated On
+          {{ "labels.inputs.Updated On"|translate}}
         </div>
 
         <div fxFlex="50%">
@@ -58,7 +58,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Closure Creation Date
+          {{ "labels.inputs.Closure Creation Date"|translate}}
         </div>
 
         <div fxFlex="50%">
@@ -66,7 +66,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Comments
+          {{ "labels.inputs.Comments" |translate}}
         </div>
 
         <div fxFlex="50%">
