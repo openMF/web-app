@@ -1,13 +1,13 @@
-<h2 mat-dialog-title>Configuration Wizard</h2>
+<h2 mat-dialog-title>{{"labels.heading.Configuration Wizard" |translate}}</h2>
 
 <mat-dialog-content>
 
-<h3 class="mw600"> You have created {{stepName}} successfully. Please select from the options below to proceed furthur.</h3>
+<h3 class="mw600"> {{"labels.heading.You have created" |translate}} {{stepName}} {{"labels.heading.successfully select option" |translate}}</h3>
 
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button mat-raised-button color="warn"  [mat-dialog-close]="{ step: 1 }">Close Configuration Wizard</button>
-    <button mat-raised-button color="primary" [mat-dialog-close]="{ step: 2 }">Create more {{stepName}}</button>
-    <button mat-raised-button color="primary" [mat-dialog-close]="{ step: 3 }">Go to next step</button>
+    <button mat-raised-button color="warn"  [mat-dialog-close]="{ step: 1 }">{{"labels.buttons.Close Configuration Wizard" |translate}}</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="{ step: 2 }">{{"labels.buttons.Create more" |translate}} {{stepName}}</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="{ step: 3 }">{{"labels.buttons.Go to next step" |translate}}</button>
 </mat-dialog-actions>
