@@ -9,24 +9,24 @@
         <div fxLayout="column">
 
         <mat-form-field>
-          <mat-label>Existing Meeting Date</mat-label>
+          <mat-label>{{ "labels.inputs.Existing Meeting Date" |translate}}</mat-label>
           <mat-select formControlName="presentMeetingDate">
             <mat-option *ngFor="let date of nextMeetingDates" [value]="date">
               {{ date  | dateFormat }}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="centerEditMeetingScheduleForm.controls.presentMeetingDate.hasError('repeatsOnDay')">
-            Existing Meeting Date is <strong>required</strong>
+            {{ "labels.inputs.Existing Meeting Date" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
           </mat-error>
         </mat-form-field>
 
         <mat-form-field (click)="newMeetingDatePicker.open()">
-          <mat-label>Revised Meeting Date</mat-label>
+          <mat-label>{{ "labels.inputs.Revised Meeting Date" |translate}}</mat-label>
           <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="newMeetingDatePicker" required formControlName="newMeetingDate">
           <mat-datepicker-toggle matSuffix [for]="newMeetingDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #newMeetingDatePicker></mat-datepicker>
           <mat-error *ngIf="centerEditMeetingScheduleForm.controls.newMeetingDate.hasError('required')">
-            Revised Meeting Date is <strong>required</strong>
+            {{ "labels.inputs.Revised Meeting Date" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
           </mat-error>
         </mat-form-field>
   
@@ -35,8 +35,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!centerEditMeetingScheduleForm.valid" (click)="submit()">Submit</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">{{ "labels.buttons.Cancel" | translate}}</button>
+        <button mat-raised-button color="primary" [disabled]="!centerEditMeetingScheduleForm.valid" (click)="submit()">{{ "labels.buttons.Submit" | translate}}</button>
       </mat-card-actions>
 
     </form>
