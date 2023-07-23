@@ -3,19 +3,19 @@
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Product Name</mat-label>
+        <mat-label>{{"labels.inputs.Product Name"  |translate}}</mat-label>
         <mat-select formControlName="productId" required>
           <mat-option *ngFor="let product of productData" [value]="product.id">
             {{ product.name }}
           </mat-option>
         </mat-select>
         <mat-error>
-          Product Name is <strong>required</strong>
+          {{"labels.inputs.Product Name"  |translate}} {{ "labels.commons.is"  |translate}}  <strong>{{ "labels.commons.required"  |translate}}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Loan officer</mat-label>
+        <mat-label>{{"labels.inputs.Loan officer"  |translate}}</mat-label>
         <mat-select formControlName="loanOfficerId">
           <mat-option *ngFor="let loanOfficer of loanOfficerOptions" [value]="loanOfficer.id">
             {{ loanOfficer.displayName }}
@@ -25,7 +25,7 @@
 
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Fund</mat-label>
+        <mat-label>{{"labels.inputs.Fund"  |translate}}</mat-label>
         <mat-select formControlName="fundId">
           <mat-option *ngFor="let fund of fundOptions" [value]="fund.id">
             {{ fund.name }}
@@ -34,24 +34,24 @@
       </mat-form-field>
 
       <mat-form-field fxFlex="48%" (click)="submitPicker.open()">
-        <mat-label>Submitted on</mat-label>
+        <mat-label>{{"labels.inputs.Submitted on"  |translate}}</mat-label>
         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submitPicker" required
           formControlName="submittedOnDate">
         <mat-datepicker-toggle matSuffix [for]="submitPicker"></mat-datepicker-toggle>
         <mat-datepicker #submitPicker></mat-datepicker>
         <mat-error *ngIf="loansAccountDetailsForm.controls.submittedOnDate?.hasError('required')">
-          Submitted on is <strong>required</strong>
+          {{"labels.inputs.Submitted on"  |translate}} {{ "labels.commons.is"  |translate}}  <strong>{{ "labels.commons.required"  |translate}}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%" (click)="disbursementPicker.open()">
-        <mat-label>Disbursement on</mat-label>
+        <mat-label>{{"labels.inputs.Disbursement on"  |translate}}</mat-label>
         <input matInput [min]="loansAccountDetailsForm.value.submittedOnDate" [max]="maxDate" [matDatepicker]="disbursementPicker" required
           formControlName="expectedDisbursementDate">
         <mat-datepicker-toggle matSuffix [for]="disbursementPicker"></mat-datepicker-toggle>
         <mat-datepicker #disbursementPicker></mat-datepicker>
         <mat-error *ngIf="loansAccountDetailsForm.controls.submittedOnDate?.hasError('required')">
-          Disbursement on is <strong>required</strong>
+          {{"labels.inputs.Disbursement on"  |translate}} {{ "labels.commons.is"  |translate}}  <strong>{{ "labels.commons.required"  |translate}}</strong>
         </mat-error>
       </mat-form-field>
 
@@ -59,10 +59,10 @@
 
       <mat-divider fxFlex="98%"></mat-divider>
 
-      <h3 class="mat-h3" fxFlexFill>Savings Linkage</h3>
+      <h3 class="mat-h3" fxFlexFill>{{"labels.heading.Savings Linkage"  |translate}}</h3>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Link savings</mat-label>
+        <mat-label>{{"labels.inputs.Link savings"  |translate}}</mat-label>
         <mat-select formControlName="linkAccountId">
           <mat-option *ngFor="let savingaccount of gsimData" [value]="savingaccount.id">
             {{ savingaccount.accountNumber }}
@@ -77,10 +77,10 @@
     <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
       <button mat-raised-button matStepperPrevious disabled>
         <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-        Previous
+        {{"labels.buttons.Previous"  |translate}}
       </button>
       <button mat-raised-button matStepperNext>
-        Next
+        {{"labels.buttons.Next"  |translate}}
         <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
       </button>
     </div>

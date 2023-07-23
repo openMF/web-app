@@ -1,44 +1,44 @@
-<h1 mat-dialog-title>Add Loan Collateral</h1>
+<h1 mat-dialog-title>{{"labels.heading.Add Loan Collateral"  |translate}}</h1>
 
 <div mat-dialog-content [formGroup]="addCollateralForm" fxLayout="column">
 
   <mat-form-field>
-    <mat-label>Collateral</mat-label>
+    <mat-label>{{"labels.inputs.Collateral"  |translate}}</mat-label>
     <mat-select formControlName="collateral" required>
       <mat-option *ngFor="let collateralType of collateralTypeData" [value]="collateralType" >
         {{ collateralType.name }}
       </mat-option>
     </mat-select>
     <mat-error>
-      Collateral is <strong>required</strong>
+      {{"labels.inputs.Collateral"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
     </mat-error>
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Quantity</mat-label>
+    <mat-label>{{"labels.inputs.Quantity"  |translate}}</mat-label>
     <input type="number" [max]="maxQuantity" [min]="0" matInput formControlName="quantity" required>
     <mat-error *ngIf="addCollateralForm.controls.quantity.hasError('required')">
-      Quantity is <strong>required</strong>
+      {{"labels.inputs.Quantity"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
     </mat-error>
     <mat-error *ngIf="addCollateralForm.controls.quantity.hasError('max')">
-      Quantity can not be more than <strong>{{ maxQuantity }}</strong>
+      {{"labels.inputs.Quantity can not be more than"  |translate}} <strong>{{ maxQuantity }}</strong>
     </mat-error>
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Total Value</mat-label>
+    <mat-label>{{"labels.inputs.Total Value"  |translate}}</mat-label>
     <input type="text" matInput formControlName="totalValue" [disabled]="true">
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Total Collateral Value</mat-label>
+    <mat-label>{{"labels.inputs.Total Collateral Value"  |translate}}</mat-label>
     <input type="text" matInput formControlName="totalCollateralValue" [disabled]="true">
   </mat-form-field>
 
 </div>
 
 <mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
-  <button mat-raised-button mat-dialog-close> Cancel </button>
+  <button mat-raised-button mat-dialog-close> {{"labels.buttons.Cancel"  |translate}} </button>
   <button mat-raised-button color="primary" [mat-dialog-close]="{ data: addCollateralForm }"
     [disabled]="!addCollateralForm.valid || addCollateralForm.pristine">{{ layout.addButtonText }}</button>
 </mat-dialog-actions>

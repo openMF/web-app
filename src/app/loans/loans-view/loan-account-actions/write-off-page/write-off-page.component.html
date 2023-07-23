@@ -9,23 +9,23 @@
         <div fxLayout="column">
 
           <mat-form-field (click)="writeOffDatePicker.open()">
-            <mat-label>Write off on</mat-label>
+            <mat-label>{{"labels.inputs.Write off on"  |translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="writeOffDatePicker" required
               formControlName="transactionDate">
             <mat-datepicker-toggle matSuffix [for]="writeOffDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #writeOffDatePicker></mat-datepicker>
             <mat-error *ngIf="writeOffForm.controls.transactionDate.hasError('required')">
-              Write Off Date <strong>is required</strong>
+              {{"labels.inputs.Write Off Date"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Amount</mat-label>
+            <mat-label>{{"labels.inputs.Amount"  |translate}}</mat-label>
             <input matInput formControlName="amount">
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Note</mat-label>
+            <mat-label>{{"labels.inputs.Note"  |translate}}</mat-label>
             <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
           </mat-form-field>
 
@@ -34,9 +34,9 @@
       </form>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+        <button type="button" mat-raised-button [routerLink]="['../../general']">{{"labels.buttons.Cancel"  |translate}}</button>
         <button mat-raised-button color="primary" (click)="submit()"
-          *mifosxHasPermission="'WRITEOFF_LOAN'">Submit</button>
+          *mifosxHasPermission="'WRITEOFF_LOAN'">{{"labels.buttons.Submit"  |translate}}</button>
       </mat-card-actions>
 
     </mat-card-content>

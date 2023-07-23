@@ -9,27 +9,27 @@
         <div fxLayout="column">
 
           <mat-form-field (click)="rejectedDatePicker.open()">
-            <mat-label>Rejected On</mat-label>
+            <mat-label>{{"labels.inputs.Rejected On"  |translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="rejectedDatePicker" required
               formControlName="rejectedOnDate">
             <mat-datepicker-toggle matSuffix [for]="rejectedDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #rejectedDatePicker></mat-datepicker>
             <mat-error *ngIf="rejectLoanForm.controls.rejectedOnDate.hasError('required')">
-              Rejected Date <strong>is required</strong>
+              {{"labels.inputs.Rejected Date"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Note</mat-label>
+            <mat-label>{{"labels.inputs.Note"  |translate}}</mat-label>
             <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
           </mat-form-field>
 
         </div>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+          <button type="button" mat-raised-button [routerLink]="['../../general']">{{"labels.buttons.Cancel"  |translate}}</button>
           <button mat-raised-button color="primary" [disabled]="!rejectLoanForm.valid"
-            *mifosxHasPermission="'REJECT_LOAN'">Submit</button>
+            *mifosxHasPermission="'REJECT_LOAN'">{{"labels.buttons.Submit"  |translate}}</button>
         </mat-card-actions>
 
       </mat-card-content>

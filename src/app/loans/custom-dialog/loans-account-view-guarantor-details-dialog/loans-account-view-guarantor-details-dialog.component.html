@@ -1,37 +1,37 @@
-<h1 mat-dialog-title>Guarantor Detail</h1>
+<h1 mat-dialog-title>{{"labels.heading.Guarantor Detail"  |translate}}</h1>
 
 <div mat-dialog-content fxLayout="column">
 
   <div fxLayout="row wrap" fxLayout.lt-md="column">
 
     <div fxFlexFill>
-      <span fxFlex="50%">First Name:</span>
+      <span fxFlex="50%">{{"labels.inputs.First Name"  |translate}}:</span>
       <span fxFlex="50%">{{ data.guarantorData.firstname }}</span>
     </div>
 
     <div fxFlexFill>
-      <span fxFlex="50%">Last Name:</span>
+      <span fxFlex="50%">{{"labels.inputs.Last Name"  |translate}}:</span>
       <span fxFlex="50%">{{ data.guarantorData.lastname }}</span>
     </div>
 
     <div fxFlexFill>
-      <span fxFlex="50%">Relationship:</span>
+      <span fxFlex="50%">{{"labels.inputs.Relationship"  |translate}}:</span>
       <span fxFlex="50%">{{ data.guarantorData.clientRelationshipType.name }}</span>
     </div>
 
     <div fxFlexFill>
-      <span fxFlex="50%">Guarantor Type:</span>
+      <span fxFlex="50%">{{"labels.inputs.Guarantor Type"  |translate}}:</span>
       <span fxFlex="50%">{{ data.guarantorData.guarantorType.value }}</span>
     </div>
 
     <div fxFlexFill>
-      <span fxFlex="50%">Status:</span>
+      <span fxFlex="50%">{{"labels.inputs.Status"  |translate}}:</span>
       <span fxFlex="50%">
         <span *ngIf="data.guarantorData.status">
-          Active
+          {{"labels.inputs.Active"  |translate}}
         </span>
         <span *ngIf="!data.guarantorData.status">
-          Deleted
+          {{"labels.inputs.Deleted"  |translate}}
         </span></span>
     </div>
 
@@ -40,5 +40,5 @@
 </div>
 
 <mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
-  <button mat-raised-button mat-dialog-close> Cancel </button>
+  <button mat-raised-button mat-dialog-close> {{"labels.buttons.Cancel"  |translate}} </button>
 </mat-dialog-actions>

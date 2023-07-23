@@ -92,14 +92,14 @@
 
           <table mat-table [dataSource]="transactionRelations">
               <ng-container matColumnDef="relationType">
-                <th mat-header-cell *matHeaderCellDef> Relation Type </th>
+                <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Relation Type"  |translate}} </th>
                 <td mat-cell *matCellDef="let transactionRel" [matTooltip]="transactionRel.paymentType">
                   {{ transactionRel.relationType | translate }}
                 </td>
               </ng-container>
 
               <ng-container matColumnDef="toTransaction">
-                <th mat-header-cell *matHeaderCellDef> Transaction </th>
+                <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Transaction"  |translate}} </th>
                 <td mat-cell *matCellDef="let transactionRel">
                   <a [href]="loanTransactionRelatedLink(transactionRel.toLoanTransaction)">
                     {{ transactionRel.toLoanTransaction }}
@@ -108,7 +108,7 @@
               </ng-container>
 
               <ng-container matColumnDef="amount">
-                <th mat-header-cell *matHeaderCellDef> Amount </th>
+                <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Amount"  |translate}} </th>
                 <td mat-cell *matCellDef="let transactionRel">
                   {{ transactionRel.amount | currency }} {{ transactionData.currency.code }}
                 </td>

@@ -1,68 +1,68 @@
 <div fxLayout="row wrap" fxLayout.lt-md="column">
 
-  <h3 class="mat-h3" fxFlexFill>Details</h3>
+  <h3 class="mat-h3" fxFlexFill>{{"labels.heading.Details"  |translate}}</h3>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Product:</span>
+    <span fxFlex="40%">{{"labels.inputs.Product"  |translate}}:</span>
     <span fxFlex="60%">{{ loansAccount.productId | find:loansAccountTemplate.productOptions:'id':'name' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loansAccount.loanOfficerId">
-    <span fxFlex="40%">Loan officer:</span>
+    <span fxFlex="40%">{{"labels.inputs.Loan officer"  |translate}}:</span>
     <span
       fxFlex="60%">{{ loansAccount.loanOfficerId | find:loansAccountProductTemplate.loanOfficerOptions:'id':'displayName'}}</span>
   </div>
 
   <div fxFlexFill *ngIf="loansAccount.loanPurposeId">
-    <span fxFlex="40%">Loan purpose:</span>
+    <span fxFlex="40%">{{"labels.inputs.Loan purpose"  |translate}}:</span>
     <span
       fxFlex="60%">{{ loansAccount.loanPurposeId | find:loansAccountProductTemplate.loanPurposeOptions:'id':'name'}}</span>
   </div>
 
   <div fxFlexFill *ngIf="loansAccount.fundId">
-    <span fxFlex="40%">Fund:</span>
+    <span fxFlex="40%">{{"labels.inputs.Fund"  |translate}}:</span>
     <span fxFlex="60%">{{ loansAccount.fundId | find:loansAccountProductTemplate.fundOptions:'id':'name'}}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Submitted on:</span>
+    <span fxFlex="40%">{{"labels.inputs.Submitted on"  |translate}}:</span>
     <span fxFlex="60%">{{ loansAccount.submittedOnDate  | dateFormat }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Disbursement on:</span>
+    <span fxFlex="40%">{{"labels.inputs.Disbursement on"  |translate}}:</span>
     <span fxFlex="60%">{{ loansAccount.expectedDisbursementDate  | dateFormat }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loansAccount.externalId">
-    <span fxFlex="40%">External id:</span>
+    <span fxFlex="40%">{{"labels.inputs.External id"  |translate}}:</span>
     <span fxFlex="60%">
       <mifosx-external-identifier externalId="{{loansAccount.externalId}}"></mifosx-external-identifier>
     </span>
   </div>
 
-  <h3 class="mat-h3" fxFlexFill>Terms</h3>
+  <h3 class="mat-h3" fxFlexFill>{{"labels.heading.Terms"  |translate}}</h3>
 
   <mat-divider fxFlexFill></mat-divider>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Principal:</span>
+    <span fxFlex="40%">{{"labels.inputs.Principal"  |translate}}:</span>
     <span fxFlex="60%">{{ loansAccount.principal }} {{loansAccountProductTemplate.currency.DisplaySymbol}}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Loan term:</span>
+    <span fxFlex="40%">{{"labels.inputs.Loan term"  |translate}}:</span>
     <span fxFlex="60%">{{ loansAccount.loanTermFrequency }}
       {{loansAccount.loanTermFrequencyType | find: loansAccountProductTemplate.termFrequencyTypeOptions:'id':'name'}}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Number of repayments:</span>
+    <span fxFlex="40%">{{"labels.inputs.Number of repayments"  |translate}}:</span>
     <span fxFlex="60%">{{ loansAccount.numberOfRepayments }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Repaid every:</span>
+    <span fxFlex="40%">{{"labels.inputs.Repaid every"  |translate}}:</span>
     <span fxFlex="60%">{{loansAccount.repaymentEvery}}
       {{loansAccount.repaymentFrequencyType | find: loansAccountProductTemplate.termFrequencyTypeOptions:'id':'name'}}
       {{loansAccount.repaymentFrequencyNthDayType | find: loansAccountProductTemplate.repaymentFrequencyNthDayTypeOptions:'id': 'name'}}
@@ -70,137 +70,137 @@
   </div>
 
   <div fxFlexFill *ngIf="loansAccount.repaymentsStartingFromDate">
-    <span fxFlex="40%">First repayment on:</span>
+    <span fxFlex="40%">{{"labels.inputs.First repayment on"  |translate}}:</span>
     <span fxFlex="60%">{{ loansAccount.repaymentsStartingFromDate  | dateFormat }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loansAccount.interestChargedFromDate">
-    <span fxFlex="40%">Interest charged from:</span>
+    <span fxFlex="40%">{{"labels.inputs.Interest charged from"  |translate}}:</span>
     <span fxFlex="60%">{{ loansAccount.interestChargedFromDate  | dateFormat }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loansAccount.interestRatePerPeriod">
-    <span fxFlex="40%">Nominal interest rate:</span>
+    <span fxFlex="40%">{{"labels.inputs.Nominal interest rate"  |translate}}:</span>
     <span
       fxFlex="60%">{{loansAccount.interestRatePerPeriod}}&nbsp;&nbsp;{{loansAccountProductTemplate.interestRateFrequencyType.value}}</span>
   </div>
 
   <div fxFlexFill *ngIf="loansAccount.interestType">
-    <span fxFlex="40%">Interest method: </span>
+    <span fxFlex="40%">{{"labels.inputs.Interest method"  |translate}}: </span>
     <span fxFlex="60%">{{loansAccount.interestType}}</span>
   </div>
 
   <div fxFlexFill *ngIf="loansAccount.isEqualAmortization">
-    <span fxFlex="40%">Is Equal Amortization:</span>
+    <span fxFlex="40%">{{"labels.inputs.Is Equal Amortization"  |translate}}:</span>
     <span fxFlex="60%">{{loansAccount.isEqualAmortization}}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Amortization</span>
+    <span fxFlex="40%">{{"labels.inputs.Amortization"  |translate}}</span>
     <span
       fxFlex="60%">{{ loansAccount.amortizationType | find:loansAccountProductTemplate.amortizationTypeOptions:'id':'value' }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Interest calculation period: </span>
+    <span fxFlex="40%">{{"labels.inputs.Interest calculation period"  |translate}}: </span>
     <span
       fxFlex="60%">{{ loansAccount.interestCalculationPeriodType | find:loansAccountProductTemplate.interestCalculationPeriodTypeOptions:'id':'value'  }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loansAccount.allowPartialPeriodInterestCalcualtion">
-    <span fxFlex="40%">Calculate interest for exact days in partial period:</span>
+    <span fxFlex="40%">{{"labels.inputs.Calculate interest for exact days in partial period"  |translate}}:</span>
     <span fxFlex="60%">{{ loansAccount.allowPartialPeriodInterestCalcualtion }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loansAccount.inArrearsTolerance">
-    <span fxFlex="40%">Arrears tolerance: </span>
+    <span fxFlex="40%">{{"labels.inputs.Arrears tolerance"  |translate}}: </span>
     <span
       fxFlex="60%">{{loansAccount.inArrearsTolerance}}</span>
   </div>
 
   <div fxFlexFill *ngIf="loansAccount.graceOnInterestCharged">
-    <span fxFlex="40%">Interest free period: </span>
+    <span fxFlex="40%">{{"labels.inputs.Interest free period"  |translate}}: </span>
     <span fxFlex="60%">{{ loansAccount.graceOnInterestCharged }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Repayment strategy: </span>
+    <span fxFlex="40%">{{"labels.inputs.Repayment strategy"  |translate}}: </span>
     <span
       fxFlex="60%">{{ loansAccount.transactionProcessingStrategyCode | find:loansAccountTemplate.transactionProcessingStrategyOptions:'code':'name' }}</span>
   </div>
 
-  <h3 class="mat-h3" fxFlexFill>Moratorium</h3>
+  <h3 class="mat-h3" fxFlexFill>{{"labels.heading.Moratorium"  |translate}}</h3>
 
   <mat-divider fxFlexFill></mat-divider>
 
   <div fxFlexFill *ngIf="loansAccount.graceOnPrincipalPayment">
-    <span fxFlex="40%">On principal payment: </span>
+    <span fxFlex="40%">{{"labels.inputs.On principal payment"  |translate}}: </span>
     <span fxFlex="60%">{{ loansAccount.graceOnPrincipalPayment }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loansAccount.graceOnInterestPayment">
-    <span fxFlex="40%">On interest payment: </span>
+    <span fxFlex="40%">{{"labels.inputs.On interest payment"  |translate}}: </span>
     <span fxFlex="60%">{{ loansAccount.graceOnInterestPayment }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loansAccount.graceOnArrearsAgeing">
-    <span fxFlex="40%">On Arrears Aging: </span>
+    <span fxFlex="40%">{{"labels.inputs.On Arrears Aging"  |translate}}: </span>
     <span fxFlex="60%">{{ loansAccount.graceOnArrearsAgeing }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loansAccount.isTopup">
-    <span fxFlex="40%">Is Topup Loan? </span>
+    <span fxFlex="40%">{{"labels.inputs.Is Topup Loan"  |translate}}? </span>
     <span fxFlex="60%">{{ loansAccount.isTopup }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Recalculate Interest: </span>
+    <span fxFlex="40%">{{"labels.inputs.Recalculate Interest"  |translate}}: </span>
     <span fxFlex="60%">{{ loansAccountProductTemplate?.isInterestRecalculationEnabled? 'Yes' : 'No' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loansAccountProductTemplate?.daysInMonthType">
-    <span fxFlex="40%">Days in month: </span>
+    <span fxFlex="40%">{{"labels.inputs.Days in month"  |translate}}: </span>
     <span fxFlex="60%">{{ loansAccountProductTemplate?.daysInMonthType.value }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loansAccount.charges.length" fxLayout="row wrap" fxLayout.lt-md="column">
 
-    <h3 class="mat-h3" fxFlexFill>Charges</h3>
+    <h3 class="mat-h3" fxFlexFill>{{"labels.heading.Charges"  |translate}}</h3>
 
     <mat-divider fxFlexFill></mat-divider>
 
     <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="loansAccount.charges">
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.name"  |translate}} </th>
         <td mat-cell *matCellDef="let charge">
           {{ charge.name + ', ' + charge.currency.displaySymbol }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="chargeCalculationType">
-        <th mat-header-cell *matHeaderCellDef> Type </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Type"  |translate}} </th>
         <td mat-cell *matCellDef="let charge">
           {{ charge.chargeCalculationType.value }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef> Amount </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Amount"  |translate}} </th>
         <td mat-cell *matCellDef="let charge">
           {{ charge.amount }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="chargeTimeType">
-        <th mat-header-cell *matHeaderCellDef> Collected On </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Collected On"  |translate}} </th>
         <td mat-cell *matCellDef="let charge">
           {{ charge.chargeTimeType.value }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef> Date </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Date"  |translate}} </th>
         <td mat-cell *matCellDef="let charge">
           <span
             *ngIf="charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee'">
@@ -212,7 +212,7 @@
           <span
             *ngIf="!(charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'
                   || charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee')">
-            N/A
+                  {{"labels.inputs.N/A"  |translate}}
           </span>
         </td>
       </ng-container>
@@ -226,29 +226,29 @@
 
   <div fxFlexFill *ngIf="loansAccountProductTemplate.overdueCharges.length" fxLayout="row wrap" fxLayout.lt-md="column">
 
-    <h3 fxFlex="98%" class="mat-h3">Overdue Charges</h3>
+    <h3 fxFlex="98%" class="mat-h3">{{"labels.heading.Overdue Charges"  |translate}}</h3>
 
     <mat-divider fxFlex="98%"></mat-divider>
 
     <table mat-table class="mat-elevation-z1" [dataSource]="loansAccountProductTemplate.overdueCharges">
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.name"  |translate}} </th>
         <td mat-cell *matCellDef="let charge"> {{ charge.name }},{{ charge.currency.displaySymbol }} </td>
       </ng-container>
 
       <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef> Type </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Type"  |translate}} </th>
         <td mat-cell *matCellDef="let charge"> {{ charge.chargeCalculationType.value }} </td>
       </ng-container>
 
       <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef> Amount </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Amount"  |translate}} </th>
         <td mat-cell *matCellDef="let charge"> {{ charge.amount| formatNumber }} </td>
       </ng-container>
 
       <ng-container matColumnDef="collectedon">
-        <th mat-header-cell *matHeaderCellDef> Collected On </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Collected On"  |translate}} </th>
         <td mat-cell *matCellDef="let charge"> {{ charge.chargeTimeType.value }} </td>
       </ng-container>
 
@@ -262,12 +262,12 @@
 <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button matStepperPrevious>
     <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-    Previous
+    {{"labels.buttons.Previous"  |translate}}
   </button>
   <button mat-raised-button [routerLink]="['../']">
-    Cancel
+    {{"labels.buttons.Cancel"  |translate}}
   </button>
   <button mat-raised-button color="primary" (click)="submit.emit()">
-    Submit
+    {{"labels.buttons.Submit"  |translate}}
   </button>
 </div>

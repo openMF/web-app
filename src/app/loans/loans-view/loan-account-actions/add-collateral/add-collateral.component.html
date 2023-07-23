@@ -9,26 +9,26 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Collateral Type</mat-label>
+            <mat-label>{{"labels.inputs.Collateral Type"  |translate}}</mat-label>
             <mat-select required formControlName="collateralTypeId">
               <mat-option *ngFor="let collateral of dataObject.allowedCollateralTypes" [value]="collateral.id">
                 {{ collateral.name }}</mat-option>
             </mat-select>
             <mat-error *ngIf="collateralForm.controls.collateralTypeId.hasError('required')">
-              Collateral type <strong>required</strong>
+              {{"labels.inputs.Collateral type"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Value</mat-label>
+            <mat-label>{{"labels.inputs.Value"  |translate}}</mat-label>
             <input matInput required formControlName="value">
             <mat-error *ngIf="collateralForm.controls.value.hasError('required')">
-              Value is <strong>required</strong>
+              {{"labels.inputs.Value"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Description</mat-label>
+            <mat-label>{{"labels.inputs.Description"  |translate}}</mat-label>
             <textarea matInput formControlName="description" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
           </mat-form-field>
 
@@ -36,9 +36,9 @@
         </div>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+          <button type="button" mat-raised-button [routerLink]="['../../general']">{{"labels.buttons.Cancel"  |translate}}</button>
           <button mat-raised-button color="primary" [disabled]="!collateralForm.valid"
-            *mifosxHasPermission="'CREATE_COLLATERAL'">Submit</button>
+            *mifosxHasPermission="'CREATE_COLLATERAL'">{{"labels.buttons.Submit"  |translate}}</button>
         </mat-card-actions>
 
       </mat-card-content>
