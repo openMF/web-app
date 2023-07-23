@@ -9,26 +9,26 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Select Client Members for Transfer</mat-label>
+            <mat-label>{{"labels.inputs.Select Client Members for Transfer"  |translate}}</mat-label>
             <mat-select required formControlName="clients" multiple>
               <mat-option *ngFor="let member of clientMembers" [value]="{ id: member.id }">
                 {{ member.displayName }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="transferClientsForm.controls.clients.hasError('required')">
-              Office is <strong>required</strong>
+              {{"labels.inputs.Office"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-checkbox class="m-t-10 m-b-10" labelPosition="before" formControlName="inheritDestinationGroupLoanOfficer">
-            Inherit Group Loan Officer?
+            {{"labels.inputs.Inherit Group Loan Officer"  |translate}}?
           </mat-checkbox>
 
           <mat-form-field>
-            <mat-label>Destination Group</mat-label>
+            <mat-label>{{"labels.inputs.Destination Group"  |translate}}</mat-label>
             <input matInput formControlName="destinationGroupId" [matAutocomplete]="groupsAutocomplete">
             <mat-error *ngIf="transferClientsForm.controls.destinationGroupId.hasError('required')">
-              Destination Group is <strong>required</strong>
+              {{"labels.inputs.Destination Group"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
   
@@ -42,26 +42,26 @@
 
         <div class="mat-table" *ngIf="transferClientsForm.get('destinationGroupId').value">
           <div class="mat-header-row">
-            <div class="mat-header-cell">Destination Group Details</div>
+            <div class="mat-header-cell">{{"labels.inputs.Destination Group Details"  |translate}}</div>
           </div>
           <div class="mat-row">
-            <div class="mat-cell">Name</div>
+            <div class="mat-cell">{{"labels.inputs.name"  |translate}}</div>
             <div class="mat-cell">{{transferClientsForm.get('destinationGroupId').value.name}}</div>
           </div>
           <div class="mat-row">
-            <div class="mat-cell">Id</div>
+            <div class="mat-cell">{{"labels.inputs.Id"  |translate}}</div>
             <div class="mat-cell">{{transferClientsForm.get('destinationGroupId').value.id}}</div>
           </div>
           <div class="mat-row">
-            <div class="mat-cell">Activation Date</div>
+            <div class="mat-cell">{{"labels.inputs.Activation Date"  |translate}}</div>
             <div class="mat-cell">{{(transferClientsForm.get('destinationGroupId').value.activationDate  | dateFormat) || 'Not Activated'}}</div>
           </div>
           <div class="mat-row">
-            <div class="mat-cell">Staff</div>
+            <div class="mat-cell">{{"labels.inputs.Staff"  |translate}}</div>
             <div class="mat-cell">{{transferClientsForm.get('destinationGroupId').value.staffName || 'Unassigned'}}</div>
           </div>
           <div class="mat-row">
-            <div class="mat-cell">External Id</div>
+            <div class="mat-cell">{{"labels.inputs.External Id"  |translate}}</div>
             <div class="mat-cell">{{transferClientsForm.get('destinationGroupId').value.externalId || 'Unassigned'}}</div>
           </div>
         </div>
@@ -69,9 +69,9 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">{{"labels.buttons.Cancel"  |translate}}</button>
         <button mat-raised-button color="primary" [disabled]="!transferClientsForm.valid" (click)="submit()"
-          *mifosxHasPermission="'TRANSFERCLIENTS_GROUP'">Submit</button>
+          *mifosxHasPermission="'TRANSFERCLIENTS_GROUP'">{{"labels.buttons.Submit"  |translate}}</button>
       </mat-card-actions>
 
     </form>
