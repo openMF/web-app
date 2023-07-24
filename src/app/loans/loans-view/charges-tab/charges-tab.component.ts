@@ -20,6 +20,8 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { Dates } from 'app/core/utils/dates';
+import { SystemService } from 'app/system/system.service';
+import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
 
 @Component({
   selector: 'mifosx-charges-tab',
@@ -35,9 +37,11 @@ export class ChargesTabComponent implements OnInit {
   /** Status */
   status: any;
   /** Columns to be displayed in charges table. */
-  displayedColumns: string[] = ['name', 'feepenalty', 'paymentdueat', 'submittedDate', 'dueDate', 'calculationtype', 'due', 'paid', 'waived', 'outstanding', 'actions'];
+  displayedColumns: string[] = ['name', 'feepenalty', 'paymentdueat', 'dueDate', 'calculationtype', 'due', 'paid', 'waived', 'outstanding', 'actions'];
   /** Data source for charges table. */
   dataSource: MatTableDataSource<any>;
+
+  useDueDate = true;
 
   /** Paginator for charges table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -54,13 +58,17 @@ export class ChargesTabComponent implements OnInit {
               private dateUtils: Dates,
               private router: Router,
               public dialog: MatDialog,
-              private settingsService: SettingsService) {
+              private settingsService: SettingsService,
+              private systemService: SystemService) {
     this.route.parent.data.subscribe(( data: { loanDetailsData: any }) => {
       this.loanDetails = data.loanDetailsData;
     });
   }
 
   ngOnInit() {
+    this.systemService.getConfigurationByName('charge-accrual-date').subscribe((config: GlobalConfiguration) => {
+      this.useDueDate = (config.stringValue === 'due-date');
+    });
     this.chargesData = this.loanDetails.charges;
     this.status = this.loanDetails.status.value;
     let actionFlag;
