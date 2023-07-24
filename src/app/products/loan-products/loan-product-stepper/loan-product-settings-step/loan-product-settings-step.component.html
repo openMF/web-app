@@ -461,13 +461,21 @@
     <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
       <mat-form-field fxFlex="48%">
-        <mat-label [ngClass]="styleByDefault('dueDaysForRepaymentEvent')">Due days for repayment event</mat-label>
-        <input type="number" matInput matTooltip="Specific days before when repayment due notification should be sent." formControlName="dueDaysForRepaymentEvent" [min]="0">
+        <mat-label>Due days for repayment event</mat-label>
+        <mat-select formControlName="dueDaysForRepaymentEvent" matTooltip="The Amortization value is input to calculating the repayment amounts for repayment of the loan." required>
+          <mat-option *ngFor="let item of getDaysForRepayments(DAYS_BEFORE_REPAYMENT_IS_DUE)" [value]="item.days">
+            <span [ngClass]="item.style">{{item.label}}</span>
+          </mat-option>
+        </mat-select>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
-        <mat-label [ngClass]="styleByDefault('dueDaysForRepaymentEvent')">OverDue days for repayment event</mat-label>
-        <input type="number" matInput matTooltip="Specific days when after the repayment Overdue notification should be sent." formControlName="overDueDaysForRepaymentEvent" [min]="0">
+        <mat-label>OverDue days for repayment event</mat-label>
+        <mat-select formControlName="overDueDaysForRepaymentEvent" matTooltip="The Amortization value is input to calculating the repayment amounts for repayment of the loan." required>
+          <mat-option *ngFor="let item of getDaysForRepayments(DAYS_AFTER_REPAYMENT_IS_OVERDUE)" [value]="item.days">
+            <span [ngClass]="item.style">{{item.label}}</span>
+          </mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
 

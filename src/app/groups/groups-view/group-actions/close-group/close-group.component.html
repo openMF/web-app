@@ -9,24 +9,24 @@
         <div fxLayout="column">
 
           <mat-form-field (click)="closureDatePicker.open()">
-            <mat-label>Closed On Date</mat-label>
+            <mat-label>{{"labels.inputs.Closed On Date" | translate }}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closureDatePicker" required formControlName="closureDate">
             <mat-datepicker-toggle matSuffix [for]="closureDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closureDatePicker></mat-datepicker>
             <mat-error *ngIf="closeGroupForm.controls.closureDate.hasError('required')">
-              Closed On Date is <strong>required</strong>
+              {{"labels.inputs.Closed On Date" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Closure Reason</mat-label>
+            <mat-label>{{"labels.inputs.Closure Reason" | translate }}</mat-label>
             <mat-select formControlName="closureReasonId">
               <mat-option *ngFor="let reason of closureData" [value]="reason.id">
                 {{ reason.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="closeGroupForm.controls.closureReasonId.hasError('required')">
-              Closure Reason is <strong>required</strong>
+              {{"labels.inputs.Closure Reason" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -35,8 +35,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-        <button mat-raised-button color="warn" [disabled]="!closeGroupForm.valid">Confirm</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">{{"labels.buttons.Cancel" | translate }}</button>
+        <button mat-raised-button color="warn" [disabled]="!closeGroupForm.valid">{{"labels.buttons.Confirm" | translate }}</button>
       </mat-card-actions>
 
     </form>

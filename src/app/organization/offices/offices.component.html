@@ -12,7 +12,7 @@
   <div #buttonCreateOffice class="in-block">
     <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_OFFICE'">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
-      Create Office
+      {{'labels.buttons.Create Office' | translate }}
     </button>
   </div>
 
@@ -20,7 +20,7 @@
     <button mat-raised-button color="primary" *mifosxHasPermission="'CREATE_OFFICE'"
       [routerLink]="['/organization', 'bulk-import', 'Offices']">
       <fa-icon icon="upload" class="m-r-10"></fa-icon>
-      Import Offices
+      {{'labels.buttons.Import Offices' | translate }}
     </button>
   </div>
 
@@ -196,63 +196,62 @@
 </div>
 
 <ng-template #templateButtonTreeView let-popover="popover">
-  <h2>Tree View</h2>
-  <p class="mw300">This will launch an alternative view which allows you to view the office hierarchy for your
-    organization.</p>
+  <h2>{{'labels.heading.Tree View' | translate }}</h2>
+  <p class="mw300">{{ 'labels.text.Launch an alternative view for office hierarchy' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn"
-      (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStep();">Back</button>
+      (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep();">{{'labels.buttons.Back' | translate }}</button>
     <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateButtonCreateOffice,buttonCreateOffice,'bottom', true);">Next</button>
+      (click)="popover.close();showPopover(templateButtonCreateOffice,buttonCreateOffice,'bottom', true);">{{'labels.buttons.Next' | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateButtonCreateOffice let-popover="popover">
-  <h2>Create Office</h2>
-  <p class="mw300">This option allows you to create new offices in your organization.</p>
+  <h2>{{'labels.heading.Create Office' | translate }}</h2>
+  <p class="mw300">{{ 'labels.text.Create new offices' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn"
-      (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+      (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
     <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateButtonTreeView,buttonTreeView,'bottom', true);">Back</button>
+      (click)="popover.close();showPopover(templateButtonTreeView,buttonTreeView,'bottom', true);">{{'labels.buttons.Back' | translate }}</button>
     <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateButtonImportOffices,buttonImportOffices,'bottom', true);">Next</button>
+      (click)="popover.close();showPopover(templateButtonImportOffices,buttonImportOffices,'bottom', true);">{{'labels.buttons.Next' | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateButtonImportOffices let-popover="popover">
-  <h2>Import Offices</h2>
-  <p class="mw300">This will launch the Bulk import/Offices page.</p>
+  <h2>{{'labels.heading.Import Offices' | translate }}</h2>
+  <p class="mw300">{{ 'labels.text.Launch the Bulk import/Offices' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn"
-      (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+      (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
     <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateButtonCreateOffice,buttonCreateOffice,'bottom', true);">Back</button>
+      (click)="popover.close();showPopover(templateButtonCreateOffice,buttonCreateOffice,'bottom', true);">{{'labels.buttons.Back' | translate }}</button>
     <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateFilter,filter,'bottom', true);">Next</button>
+      (click)="popover.close();showPopover(templateFilter,filter,'bottom', true);">{{'labels.buttons.Next' | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateFilter let-popover="popover">
-  <h4>Search bar to filter offices.</h4>
+  <h4>{{'labels.heading.Search bar to filter offices.' | translate }}</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn"
-      (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+      (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
     <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateButtonImportOffices,buttonImportOffices,'bottom', true);">Back</button>
+      (click)="popover.close();showPopover(templateButtonImportOffices,buttonImportOffices,'bottom', true);">{{'labels.buttons.Back' | translate }}</button>
     <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateTableOffices,tableOffices,'top', true);">Next</button>
+      (click)="popover.close();showPopover(templateTableOffices,tableOffices,'top', true);">{{'labels.buttons.Next' | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateTableOffices let-popover="popover">
-  <h4>List of offices in the organization.</h4>
+  <h4>{{'labels.heading.List of offices in the organization.' | translate }}</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn"
-      (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+      (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
     <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateFilter,filter,'bottom', true);">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
+      (click)="popover.close();showPopover(templateFilter,filter,'bottom', true);">{{'labels.buttons.Back' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{'labels.buttons.Next' | translate }}</button>
   </div>
 </ng-template>

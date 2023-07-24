@@ -9,26 +9,26 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Client</mat-label>
+            <mat-label>{{"labels.inputs.Client" | translate }}</mat-label>
             <mat-select formControlName="clientId">
               <mat-option *ngFor="let client of clientMemberData" [value]="client.id">
                 {{ client.displayName }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="groupsAddRoleForm.controls.clientId.hasError('required')">
-              Client Member is <strong>required</strong>
+              {{"labels.inputs.Client Member" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Role</mat-label>
+            <mat-label>{{"labels.inputs.Role" | translate }}</mat-label>
             <mat-select formControlName="role">
               <mat-option *ngFor="let role of roleData" [value]="role.id">
                 {{ role.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="groupsAddRoleForm.controls.role.hasError('required')">
-              Role is <strong>required</strong>
+              {{"labels.inputs.Role" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -37,9 +37,9 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">{{"labels.buttons.Cancel" | translate }}</button>
         <button mat-raised-button color="primary" [disabled]="!groupsAddRoleForm.valid"
-          *mifosxHasPermission="'ASSIGNROLE_GROUP'">Confirm</button>
+          *mifosxHasPermission="'ASSIGNROLE_GROUP'">{{"labels.buttons.Confirm" | translate }}</button>
       </mat-card-actions>
 
     </form>
