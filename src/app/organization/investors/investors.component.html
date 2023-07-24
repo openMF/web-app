@@ -10,21 +10,21 @@
   </mat-form-field>
 
   <mat-form-field fxFlex="31%" (click)="transferDateFromPicker.open()">
-    <mat-label>Transfer Date From</mat-label>
+    <mat-label>{{ 'labels.inputs.Transfer Date From' | translate }}</mat-label>
     <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transferDateFromPicker" [formControl]="transferDateFrom">
     <mat-datepicker-toggle matSuffix [for]="transferDateFromPicker"></mat-datepicker-toggle>
     <mat-datepicker #transferDateFromPicker></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field fxFlex="31%" (click)="transferDateToPicker.open()">
-    <mat-label>Transfer Date To</mat-label>
+    <mat-label>{{ 'labels.inputs.Transfer Date To' | translate }}</mat-label>
     <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transferDateToPicker" [formControl]="transferDateTo">
     <mat-datepicker-toggle matSuffix [for]="transferDateToPicker"></mat-datepicker-toggle>
     <mat-datepicker #transferDateToPicker></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field fxFlex="31%">
-    <mat-label>Transfer External Id</mat-label>
+    <mat-label>{{ 'labels.inputs.Transfer External Id' | translate }}</mat-label>
     <input matInput [formControl]="transferExternalId">
   </mat-form-field>
 
@@ -35,42 +35,42 @@
   <table mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="investor">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Investor' | translate }} </th>
       <td mat-cell *matCellDef="let item">  </td>
     </ng-container>
 
     <ng-container matColumnDef="loanAccount">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Loan </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Loan' | translate }} </th>
       <td mat-cell *matCellDef="let item">  </td>
     </ng-container>
 
     <ng-container matColumnDef="totalAmount">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Amount </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Total Amount' | translate }} </th>
       <td mat-cell *matCellDef="let item">  </td>
     </ng-container>
 
     <ng-container matColumnDef="principal">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Principal </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Principal' | translate }} </th>
       <td mat-cell *matCellDef="let item">  </td>
     </ng-container>
 
     <ng-container matColumnDef="interest">
-      <th mat-header-cell *matHeaderCellDef> Interest </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Interest' | translate }} </th>
       <td mat-cell *matCellDef="let item">  </td>
     </ng-container>
 
     <ng-container matColumnDef="fees">
-      <th mat-header-cell *matHeaderCellDef> Fees </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Fees' | translate }} </th>
       <td mat-cell *matCellDef="let item">  </td>
     </ng-container>
 
     <ng-container matColumnDef="penalties">
-      <th mat-header-cell *matHeaderCellDef> Penalties </th>
+      <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Penalties' | translate }} </th>
       <td mat-cell *matCellDef="let item">  </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Actions' | translate }} </th>
       <td mat-cell *matCellDef="let item">  </td>
     </ng-container>
 

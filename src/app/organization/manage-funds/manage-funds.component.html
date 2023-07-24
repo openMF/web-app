@@ -2,7 +2,7 @@
   <div #buttonCreateCharge class="in-block">
     <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_FUND'">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
-      Create Fund
+      {{'labels.buttons.Create Fund' | translate }}
     </button>
   </div>
 </div>
@@ -21,12 +21,12 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.name' | translate }} </th>
         <td mat-cell *matCellDef="let charge"> {{ charge.name }} </td>
       </ng-container>
 
       <ng-container matColumnDef="externalId">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> External Id </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.External Id' | translate }} </th>
         <td mat-cell *matCellDef="let charge">
           <mifosx-external-identifier externalId="{{charge.externalId}}"></mifosx-external-identifier>
         </td>
@@ -44,13 +44,13 @@
 
 
 <ng-template #templateFundFormRef let-popover="popover">
-  <h2>Manage Funds</h2>
-  <p class="mw300">This form will be used to add fund. If you would like to add fund click on add funds button and fill the fund name then click on + button else click Next or Back. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141736/Manage+Funds" target="_blank">Manage Funds</a></p>
+  <h2>{{ 'labels.heading.Manage Funds' | translate }}</h2>
+  <p class="mw300">{{ 'labels.text.Used Add Fund' | translate }}: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141736/Manage+Funds" target="_blank">{{ 'labels.inputs.Manage Funds' | translate }}</a></p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();">Add Funds</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
+    <button mat-raised-button color="primary" (click)="popover.close();">{{'labels.buttons.Add Funds' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{'labels.buttons.Back' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{'labels.buttons.Next' | translate }}</button>
   </div>
 </ng-template>
 

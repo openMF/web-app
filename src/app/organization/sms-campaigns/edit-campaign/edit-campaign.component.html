@@ -24,7 +24,7 @@
 
     <mat-step completed>
 
-      <ng-template matStepLabel>CAMPAIGN</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.CAMPAIGN' | translate }}</ng-template>
 
       <mifosx-edit-sms-campaign-step 
         [smsCampaign]="smsCampaign"
@@ -37,7 +37,7 @@
 
     <mat-step>
 
-      <ng-template matStepLabel>MESSAGE</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.MESSAGE' | translate }}</ng-template>
 
       <mifosx-campaign-message-step 
         [templateParameters]="templateParameters"
@@ -49,7 +49,7 @@
 
     <mat-step state="preview" completed>
 
-      <ng-template matStepLabel>PREVIEW</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
 
       <mifosx-campaign-preview-step
         [campaign]="smsCampaign"

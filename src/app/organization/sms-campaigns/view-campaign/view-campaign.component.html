@@ -4,31 +4,31 @@
 
     <span *ngIf="smsCampaignData.campaignStatus.value !== 'active'">
       <button mat-raised-button color="primary" *mifosxHasPermission="'UPDATE_SMSCAMPAIGN'" [routerLink]="['edit']">
-        <fa-icon icon="edit" class="m-r-10"></fa-icon>Edit
+        <fa-icon icon="edit" class="m-r-10"></fa-icon>{{'labels.buttons.Edit' | translate }}
       </button>
     </span>
 
     <span *ngIf="smsCampaignData.campaignStatus.value === 'Pending'">
       <button mat-raised-button color="accent" *mifosxHasPermission="'ACTIVATE_SMSCAMPAIGN'" (click)="activateCampaign()">
-        <fa-icon icon="lock-open" class="m-r-10"></fa-icon>Activate
+        <fa-icon icon="lock-open" class="m-r-10"></fa-icon>{{'labels.buttons.Activate' | translate }}
       </button>
     </span>
 
     <span *ngIf="smsCampaignData.campaignStatus.value !== 'closed'">
       <button mat-raised-button color="warn" *mifosxHasPermission="'CLOSE_SMSCAMPAIGN'" (click)="closeCampaign()">
-        <fa-icon icon="times" class="m-r-10"></fa-icon>Close
+        <fa-icon icon="times" class="m-r-10"></fa-icon>{{'labels.buttons.Close' | translate }}
       </button>
     </span>
 
     <span *ngIf="smsCampaignData.campaignStatus.value !== 'Pending' && smsCampaignData.campaignStatus.value !== 'active'">
       <button mat-raised-button color="accent" *mifosxHasPermission="'REACTIVATE_SMSCAMPAIGN'" (click)="reactivateCampaign()">
-        <fa-icon icon="undo" class="m-r-10"></fa-icon>Reactivate
+        <fa-icon icon="undo" class="m-r-10"></fa-icon>{{'labels.buttons.Reactivate' | translate }}
       </button>
     </span>
 
     <span *ngIf="smsCampaignData.campaignStatus.value === 'closed'">
       <button mat-raised-button color="warn" *mifosxHasPermission="'DELETE_SMSCAMPAIGN'" (click)="deleteCampaign()">
-        <fa-icon icon="trash" class="m-r-10"></fa-icon>Delete
+        <fa-icon icon="trash" class="m-r-10"></fa-icon>{{'labels.buttons.Delete' | translate }}
       </button>
     </span>
 
@@ -47,31 +47,31 @@
             <mat-list>
 
               <mat-list-item>
-                Campaign Name : {{ smsCampaignData.campaignName }}
+                {{ 'labels.inputs.Campaign Name' | translate }} : {{ smsCampaignData.campaignName }}
               </mat-list-item>
 
               <mat-list-item>
-                Report Name : {{ smsCampaignData.reportName }}
+                {{ 'labels.inputs.Report Name' | translate }} : {{ smsCampaignData.reportName }}
               </mat-list-item>
 
               <mat-list-item>
-                Status : {{ smsCampaignData.campaignStatus.value }}
+                {{ 'labels.inputs.Status' | translate }} : {{ smsCampaignData.campaignStatus.value }}
               </mat-list-item>
 
               <mat-list-item>
-                Trigger Type : {{ smsCampaignData.triggerType.value }}
+                {{ 'labels.inputs.Trigger Type' | translate }} : {{ smsCampaignData.triggerType.value }}
               </mat-list-item>
 
               <mat-list-item>
-                Submitted on : {{ smsCampaignData.smsCampaignTimeLine.submittedOnDate  | dateFormat }}
+                {{ 'labels.inputs.Submitted on' | translate }} : {{ smsCampaignData.smsCampaignTimeLine.submittedOnDate  | dateFormat }}
               </mat-list-item>
 
               <mat-list-item *ngIf="smsCampaignData.recurrence">
-                Recurrence : {{ smsCampaignData.recurrence }}
+                {{ 'labels.inputs.Recurrence' | translate }} : {{ smsCampaignData.recurrence }}
               </mat-list-item>
 
               <div fxLayout="column" fxLayoutGap="10px" class="template-message">
-                <h3>Template Message :</h3>
+                <h3>{{'labels.heading.Template Message' | translate }} :</h3>
                 <textarea matInput disabled>{{ smsCampaignData.campaignMessage}}</textarea>
               </div>
 
@@ -90,14 +90,14 @@
               <div fxLayout="row" fxLayoutGap="3%" fxLayoutAlign="center">
 
                 <mat-form-field (click)="fromDatePicker.open()">
-                  <mat-label>From Date</mat-label>
+                  <mat-label>{{ 'labels.inputs.From Date' | translate }}</mat-label>
                   <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fromDatePicker" formControlName="fromDate">
                   <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
                   <mat-datepicker #fromDatePicker></mat-datepicker>
                 </mat-form-field>
 
                 <mat-form-field (click)="toDatePicker.open()">
-                  <mat-label>To Date</mat-label>
+                  <mat-label>{{ 'labels.inputs.To Date' | translate }}</mat-label>
                   <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="toDatePicker" formControlName="toDate">
                   <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
                   <mat-datepicker #toDatePicker></mat-datepicker>
@@ -105,7 +105,7 @@
 
                 <div class="search-button" >
                   <button mat-raised-button color="primary">
-                  <fa-icon icon="search" class="m-r-10"></fa-icon>Search</button>
+                  <fa-icon icon="search" class="m-r-10"></fa-icon>{{'labels.buttons.Search' | translate }}</button>
                 </div>
               </div>
 
@@ -114,22 +114,22 @@
             <table #messageTable mat-table [dataSource]="dataSource" class="mat-elevation-z1 m-b-25">
 
               <ng-container matColumnDef="Message">
-                <th mat-header-cell *matHeaderCellDef> Message </th>
+                <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Message' | translate }} </th>
                 <td mat-cell *matCellDef="let sms">{{sms.message}}</td>
               </ng-container>
 
               <ng-container matColumnDef="Status">
-                <th mat-header-cell *matHeaderCellDef> Status </th>
+                <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Status' | translate }} </th>
                 <td mat-cell *matCellDef="let sms">{{sms.status.value}}</td>
               </ng-container>
 
               <ng-container matColumnDef="Mobile No.">
-                <th mat-header-cell *matHeaderCellDef> Mobile No. </th>
+                <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Mobile No' | translate }}. </th>
                 <td mat-cell *matCellDef="let sms">{{sms.mobileNo}} </td>
               </ng-container>
 
               <ng-container matColumnDef="Campaign Name">
-                <th mat-header-cell *matHeaderCellDef> Campaign Name </th>
+                <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Campaign Name' | translate }} </th>
                 <td mat-cell *matCellDef="let sms">{{sms.campaignName}}</td>
               </ng-container>
 
