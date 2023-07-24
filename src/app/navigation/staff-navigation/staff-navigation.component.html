@@ -12,7 +12,7 @@
       </mat-card-title>
       <mat-card-subtitle>
         <p>
-          Associated Office: {{ employeeData.officeName }}
+          {{"labels.inputs.Associated Office"  |translate}}: {{ employeeData.officeName }}
         </p>
       </mat-card-subtitle>
     </div>
@@ -23,7 +23,7 @@
   <div fxLayout="row wrap" class="content">
 
     <div fxFlex="50%" class="mat-body-strong">
-      Joined On
+      {{"labels.inputs.Joined On"  |translate}}
     </div>
 
     <div fxFlex="50%">
@@ -31,7 +31,7 @@
     </div>
 
     <div fxFlex="50%" class="mat-body-strong">
-      Loan Officer
+      {{"labels.inputs.Loan Officer"  |translate}}
     </div>
 
     <div fxFlex="50%">
@@ -39,7 +39,7 @@
     </div>
 
     <div fxFlex="50%" class="mat-body-strong" *ngIf="employeeData.mobileNo">
-      Mobile Number
+      {{"labels.inputs.Mobile Number"  |translate}}
     </div>
 
     <div fxFlex="50%" *ngIf="employeeData.mobileNo">
@@ -47,7 +47,7 @@
     </div>
 
     <div fxFlex="50%" class="mat-body-strong">
-      Number of Centers
+      {{"labels.inputs.Number of Centers"  |translate}}
     </div>
 
     <div fxFlex="50%">

@@ -9,7 +9,7 @@
         <mat-card-content fxLayout="column">
 
           <mat-form-field *ngIf="!(officeData === undefined || officeData === null)">
-            <mat-label>Office</mat-label>
+            <mat-label>{{"labels.inputs.Office"  |translate}}</mat-label>
             <mat-select [formControl]="officeSelector">
               <mat-option *ngFor="let office of officeData" [value]="office.id">
                 {{ office.name }}
