@@ -52,7 +52,7 @@ export class EditLoanProductComponent implements OnInit {
 
       this.itemsByDefault = loanProducts.setItemsByDefault(data.configurations);
       this.loanProductAndTemplate['itemsByDefault'] = this.itemsByDefault;
-      this.loanProductAndTemplate = loanProducts.updateLoanProductDefaults(this.loanProductAndTemplate);
+      this.loanProductAndTemplate = loanProducts.updateLoanProductDefaults(this.loanProductAndTemplate, true);
     });
   }
 

@@ -22,12 +22,18 @@ export class LoanProducts {
     return itemsByDefault;
   }
 
-  public updateLoanProductDefaults(loanProductTemplate: any) {
+  public updateLoanProductDefaults(loanProductTemplate: any, isForUpdate: boolean) {
     const itemsByDefault: GlobalConfiguration[] = loanProductTemplate['itemsByDefault'];
     itemsByDefault.forEach((config: GlobalConfiguration) => {
       const propertyName = this.resolvePropertyName(config.name);
       if (propertyName !== '') {
-        loanProductTemplate[propertyName] = config.value;
+        if (isForUpdate) {
+          if (!loanProductTemplate[propertyName] || loanProductTemplate[propertyName] === '') {
+            loanProductTemplate[propertyName] = config.value;
+          }
+        } else {
+          loanProductTemplate[propertyName] = config.value;
+        }
       }
     });
     return loanProductTemplate;

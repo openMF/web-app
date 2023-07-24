@@ -47,7 +47,10 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Principal:</span>
-    <span fxFlex="60%">{{ loansAccount.principal }} {{loansAccountProductTemplate.currency.DisplaySymbol}}</span>
+    <span fxFlex="60%">
+      {{ loansAccount.principalAmount | currency:loansAccountProductTemplate.currency.code:'symbol-narrow':'1.2-2'}}
+      <span class="m-l-5">{{loansAccountProductTemplate.currency.code}}</span>
+    </span>
   </div>
 
   <div fxFlexFill>
