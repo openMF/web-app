@@ -4,16 +4,16 @@
   fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
     <button mat-raised-button color="accent" *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'" (click)="payCharge()">
       <fa-icon icon="dollar-sign" class="m-r-10"></fa-icon>
-      Pay
+      {{'labels.buttons.Pay'  |translate}}
     </button>
     <button mat-raised-button color="primary" *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'" (click)="waiveCharge()">
       <fa-icon icon="flag" class="m-r-10"></fa-icon>
-      Waive
+      {{'labels.buttons.Waive'  |translate}}
     </button>
     <span *ngIf="isRecurringCharge()">
       <button mat-raised-button color="warn" *mifosxHasPermission="'INACTIVATE_SAVINGSACCOUNTCHARGE'" (click)="inactivateCharge()">
         <fa-icon icon="trash" class="m-r-10"></fa-icon>
-        Inactivate
+        {{'labels.buttons.Inactivate'  |translate}}
       </button>
     </span>
 </div>
@@ -22,11 +22,11 @@
   fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
     <button mat-raised-button color="primary" *mifosxHasPermission="'UPDATE_SAVINGSACCOUNTCHARGE'" (click)="editCharge()">
       <fa-icon icon="edit" class="m-r-10"></fa-icon>
-      Edit
+      {{'labels.buttons.Edit'  |translate}}
     </button>
     <button mat-raised-button color="warn" *mifosxHasPermission="'DELETE_SAVINGSACCOUNTCHARGE'" (click)="deleteCharge()">
       <fa-icon icon="trash" class="m-r-10"></fa-icon>
-      Delete
+      {{'labels.buttons.Delete'  |translate}}
     </button>
 </div>
 
@@ -39,7 +39,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="mat-body-strong">
-          Name
+          {{ 'labels.inputs.name'  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -47,7 +47,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Charge Type
+          {{ 'labels.inputs.Charge Type'  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -55,7 +55,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Currency
+          {{ 'labels.inputs.Currency'  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -63,7 +63,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Payment due at
+          {{ 'labels.inputs.Payment due at'  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -71,7 +71,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Payment due as of
+          {{ 'labels.inputs.Payment due as of'  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -79,7 +79,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Calculation Type
+          {{ 'labels.inputs.Calculation Type'  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -87,7 +87,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Due
+          {{ 'labels.inputs.Due'  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -95,7 +95,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Paid
+          {{ 'labels.inputs.Paid'  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -103,7 +103,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Waived
+          {{ 'labels.inputs.Waived'  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -111,7 +111,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Outstanding
+          {{ 'labels.inputs.Outstanding'  |translate}}
         </div>
 
         <div fxFlex="50%">
