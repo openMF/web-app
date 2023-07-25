@@ -1,15 +1,15 @@
 <div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="2%">
   <button mat-raised-button color="primary" [routerLink]="['edit']">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    Edit
+    {{ 'labels.buttons.Edit'  |translate}}
   </button>
   <button mat-raised-button color="warn" (click)="delete()">
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    Delete
+    {{ 'labels.buttons.Delete'  |translate}}
   </button>
   <button mat-raised-button color="primary" (click)="changeUserPassword()">
     <fa-icon icon="cog" class="m-r-10"></fa-icon>
-    Change Password
+    {{ 'labels.buttons.Change Password'  |translate}}
   </button>
 </div>
 
@@ -22,7 +22,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="mat-body-strong">
-          Login Name
+          {{ 'labels.inputs.Login Name'  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -30,7 +30,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          First Name
+          {{ 'labels.inputs.First Name'  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -38,7 +38,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Last Name
+          {{ 'labels.inputs.Last Name'  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -47,7 +47,7 @@
 
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="userData.email">
-          Email
+          {{ 'labels.inputs.Email'  |translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="userData.email">
@@ -55,7 +55,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Office
+          {{ 'labels.inputs.Office'  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -63,7 +63,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Roles
+          {{ 'labels.inputs.Roles'  |translate}}
         </div>
 
         <div fxFlex="50%">
