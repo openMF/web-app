@@ -9,202 +9,202 @@
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Name</mat-label>
+            <mat-label>{{ "labels.inputs.name" | translate}}</mat-label>
             <input matInput required formControlName="name">
             <mat-error *ngIf="createStandingInstructionsForm.controls.name.hasError('required')">
-              Name is <strong>required</strong>
+              {{ "labels.inputs.name" | translate}} {{ "labels.commons.is" |translate}} <strong>{{ "labels.inputs.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Applicant</mat-label>
+            <mat-label>{{"labels.inputs.Applicant" | translate}}</mat-label>
             <input matInput formControlName="applicant">
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Type</mat-label>
+            <mat-label>{{ "labels.inputs.Type" | translate}}</mat-label>
             <mat-select required formControlName="transferType" (selectionChange)="changeEvent()">
               <mat-option *ngFor="let transferType of transferTypeData" [value]="transferType.id">
                 {{ transferType.value }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.transferType.hasError('required')">
-              Transfer Type is <strong>required</strong>
+              {{ "labels.inputs.Transfer Type" | translate}} {{"labels.commons.is" |translate}} <strong>{{ "labels.inputs.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Priority</mat-label>
+            <mat-label>{{  "labels.inputs.Priority"| translate}}</mat-label>
             <mat-select required formControlName="priority">
               <mat-option *ngFor="let priorityType of priorityTypeData" [value]="priorityType.id">
                 {{ priorityType.value }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.priority.hasError('required')">
-              Priority is <strong>required</strong>
+              {{ "labels.inputs.Priority"| translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Status</mat-label>
+            <mat-label>{{ "labels.inputs.Status" | translate}}</mat-label>
             <mat-select required formControlName="status">
               <mat-option *ngFor="let statusType of statusTypeData" [value]="statusType.id">
                 {{ statusType.value }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.status.hasError('required')">
-              Status is <strong>required</strong>
+              {{ "labels.inputs.Status" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>From Account Type</mat-label>
+            <mat-label>{{"labels.inputs.From Account Type"| translate}}</mat-label>
             <mat-select required formControlName="fromAccountType" (selectionChange)="changeEvent()">
               <mat-option *ngFor="let fromAccountType of fromAccountTypeData" [value]="fromAccountType.id">
                 {{ fromAccountType.value }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.fromAccountType.hasError('required')">
-              From Account Type is <strong>required</strong>
+              {{"labels.inputs.From Account Type"| translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>From Account</mat-label>
+            <mat-label>{{"labels.inputs.From Account" | translate}}</mat-label>
             <mat-select required formControlName="fromAccountId" (selectionChange)="changeEvent()">
               <mat-option *ngFor="let fromAccount of fromAccountData" [value]="fromAccount.id">
                 {{ fromAccount.productName }} - {{ fromAccount.accountNo }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.fromAccountId.hasError('required')">
-              From Account is <strong>required</strong>
+              {{"labels.inputs.From Account" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Destination</mat-label>
+            <mat-label>{{"labels.inputs.Destination"| translate}}</mat-label>
             <mat-select required formControlName="destination">
               <mat-option *ngFor="let destinationType of destinationTypeData" [value]="destinationType.id">
                 {{ destinationType.value }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.destination.hasError('required')">
-              Destination is <strong>required</strong>
+              {{"labels.inputs.Destination"| translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>To Office</mat-label>
+            <mat-label>{{"labels.inputs.To Office"| translate}}</mat-label>
             <mat-select required formControlName="toOfficeId" (selectionChange)="changeEvent()">
               <mat-option *ngFor="let toOfficeType of toOfficeTypeData" [value]="toOfficeType.id">
                 {{ toOfficeType.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.toOfficeId.hasError('required')">
-              To Office is <strong>required</strong>
+              {{"labels.inputs.To Office"| translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Beneficiary</mat-label>
+            <mat-label>{{ "labels.inputs.Beneficiary"| translate}}</mat-label>
             <mat-select required formControlName="toClientId" (selectionChange)="changeEvent()">
               <mat-option *ngFor="let toClientType of toClientTypeData" [value]="toClientType.id">
                 {{ toClientType.displayName }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.toClientId.hasError('required')">
-              Beneficiary is <strong>required</strong>
+              {{ "labels.inputs.Beneficiary"| translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>To Account Type</mat-label>
+            <mat-label>{{"labels.inputs.To Account Type" | translate}}</mat-label>
             <mat-select required formControlName="toAccountType" (selectionChange)="changeEvent()">
               <mat-option *ngFor="let toAccountType of toAccountTypeData" [value]="toAccountType.id">
                 {{ toAccountType.value }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.toAccountType.hasError('required')">
-              To Account Type is <strong>required</strong>
+              {{"labels.inputs.To Account Type" | translate}} {{ "labels.commons.is" |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>To Account</mat-label>
+            <mat-label>{{"labels.inputs.To Account" | translate}}</mat-label>
             <mat-select required formControlName="toAccountId" (selectionChange)="changeEvent()">
               <mat-option *ngFor="let toAccount of toAccountData" [value]="toAccount.id">
                 {{ toAccount.productName }} - {{ toAccount.accountNo }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.toAccountId.hasError('required')">
-              To Account is <strong>required</strong>
+              {{"labels.inputs.To Account" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Standing Instruction Type</mat-label>
+            <mat-label>{{ "labels.inputs.Standing Instruction Type" | translate}}</mat-label>
             <mat-select formControlName="instructionType">
               <mat-option *ngFor="let instructionsType of instructionTypeData" [value]="instructionsType.id">
                 {{ instructionsType.value }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.instructionType.hasError('required')">
-              Standing Instruction Type is <strong>required</strong>
+              {{ "labels.inputs.Standing Instruction Type" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Amount</mat-label>
+            <mat-label>{{"labels.inputs.Amount" | translate}}</mat-label>
             <input type="number" matInput required formControlName="amount">
             <mat-error *ngIf="createStandingInstructionsForm.controls.amount.hasError('required')">
-              Amount is <strong>required</strong>
+              {{"labels.inputs.Amount" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%" (click)="validFromDatePicker.open()">
-            <mat-label>Validity From</mat-label>
+            <mat-label>{{"labels.inputs.Validity from" | translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="validFromDatePicker" required
               formControlName="validFrom">
             <mat-datepicker-toggle matSuffix [for]="validFromDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #validFromDatePicker></mat-datepicker>
             <mat-error *ngIf="createStandingInstructionsForm.controls.validFrom.hasError('required')">
-              Valid From Date is <strong>required</strong>
+              {{"labels.inputs.Valid From Date" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%"  (click)="validTillDatePicker.open()">
-            <mat-label>Validity To</mat-label>
+            <mat-label>{{"labels.inputs.Validity To" | translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="validTillDatePicker" required
               formControlName="validTill">
             <mat-datepicker-toggle matSuffix [for]="validTillDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #validTillDatePicker></mat-datepicker>
             <mat-error *ngIf="createStandingInstructionsForm.controls.validTill.hasError('required')">
-              Valid Till Date is <strong>required</strong>
+              {{ "labels.inputs.Valid Till Date" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Recurrence Type</mat-label>
+            <mat-label>{{"labels.inputs.Recurrence Type" | translate}}</mat-label>
             <mat-select required formControlName="recurrenceType">
               <mat-option *ngFor="let recurrenceType of recurrenceTypeData" [value]="recurrenceType.id">
                 {{ recurrenceType.value }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.recurrenceType.hasError('required')">
-              Recurrence Type is <strong>required</strong>
+              {{"labels.inputs.Recurrence Type" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Interval</mat-label>
+            <mat-label>{{"labels.inputs.Interval" | translate}}</mat-label>
             <input type="number" matInput required formControlName="recurrenceInterval">
             <mat-error *ngIf="createStandingInstructionsForm.controls.recurrenceInterval.hasError('required')">
-              Recurrence Interval is <strong>required</strong>
+              {{"labels.inputs.Recurrence Interval" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Recurrence Frequency</mat-label>
+            <mat-label>{{"labels.inputs.Recurrence Frequency" | translate}}</mat-label>
             <mat-select required formControlName="recurrenceFrequency">
               <mat-option *ngFor="let recurrenceFrequencyType of recurrenceFrequencyTypeData"
                 [value]="recurrenceFrequencyType.id">
@@ -212,18 +212,18 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.recurrenceFrequency.hasError('required')">
-              Recurrence Frequency is <strong>required</strong>
+              {{"labels.inputs.Recurrence Frequency" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%"  (click)="recurrenceOnMonthDayDatePicker.open()">
-            <mat-label>On Month Day</mat-label>
+            <mat-label>{{"labels.inputs.On Month Day" | translate}}</mat-label>
             <input required matInput [min]="minDate" [max]="maxDate" [matDatepicker]="recurrenceOnMonthDayDatePicker"
               formControlName="recurrenceOnMonthDay">
             <mat-datepicker-toggle matSuffix [for]="recurrenceOnMonthDayDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #recurrenceOnMonthDayDatePicker></mat-datepicker>
             <mat-error *ngIf="createStandingInstructionsForm.controls.recurrenceOnMonthDay.hasError('required')">
-              On Month Day is <strong>required</strong>
+              {{"labels.inputs.On Month Day" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -232,9 +232,9 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">{{ "labels.buttons.Cancel" | translate}}</button>
         <button mat-raised-button color="primary" [disabled]="!createStandingInstructionsForm.valid" *mifosxHasPermission="'CREATE_STANDINGINSTRUCTION'"
-          (click)="submit()">Submit</button>
+          (click)="submit()">{{"labels.buttons.Submit | translate}}</button>
       </mat-card-actions>
 
     </form>
