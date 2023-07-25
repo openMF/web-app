@@ -12,17 +12,17 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="reportName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.name"  |translate}} </th>
         <td mat-cell *matCellDef="let report"> {{ report.reportName }} </td>
       </ng-container>
 
       <ng-container matColumnDef="reportType">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Type"  |translate}} </th>
         <td mat-cell *matCellDef="let report"> {{ report.reportType }} </td>
       </ng-container>
 
       <ng-container matColumnDef="reportCategory">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Category"  |translate}} </th>
         <td mat-cell *matCellDef="let report"> {{ report.reportCategory }} </td>
       </ng-container>
 

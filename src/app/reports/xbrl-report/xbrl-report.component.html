@@ -7,14 +7,14 @@
       <mat-card-content fxLayout="column">
 
         <mat-form-field fxFlex (click)="startDatePicker.open()">
-          <mat-label>Start Date</mat-label>
+          <mat-label>{{"labels.inputs.Start Date"  |translate}}</mat-label>
           <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="startDatePicker" formControlName="startDate">
           <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #startDatePicker></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field fxFlex (click)="endDatePicker.open()">
-          <mat-label>End Date</mat-label>
+          <mat-label>{{"labels.inputs.End Date"  |translate}}</mat-label>
           <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="endDatePicker" formControlName="endDate">
           <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #endDatePicker></mat-datepicker>
@@ -23,8 +23,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" id="runreport">Run Report</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">{{"labels.buttons.Cancel"  |translate}}</button>
+        <button mat-raised-button color="primary" id="runreport">{{"labels.buttons.Run Report"  |translate}}</button>
       </mat-card-actions>
 
     </form>
@@ -38,7 +38,7 @@
   <mat-card *ngIf="!isCollapsed">
 
     <button mat-raised-button color="primary" (click)="isCollapsed = !isCollapsed">
-      Parameters
+      {{"labels.buttons.Parameters"  |translate}}
     </button>
 
     <div class="m-t-20">
@@ -46,17 +46,17 @@
       <table mat-table [dataSource]="dataSource" matSort>
 
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.name"  |translate}} </th>
           <td mat-cell *matCellDef="let entry"> {{ entry.name }} </td>
         </ng-container>
 
         <ng-container matColumnDef="dimension">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Dimension </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Dimension"  |translate}} </th>
           <td mat-cell *matCellDef="let entry"> {{ entry.dimension }} </td>
         </ng-container>
 
         <ng-container matColumnDef="value">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Value </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Value"  |translate}} </th>
           <td mat-cell *matCellDef="let entry"> <input [formControl]="entry.value"></td>
         </ng-container>
 
@@ -66,9 +66,9 @@
       </table>
 
       <div class="container m-t-20" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px">
-        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">{{"labels.buttons.Cancel"  |translate}}</button>
         <a [href]="submit()" download="file.xml">
-        <button mat-raised-button color="primary">Submit</button>
+        <button mat-raised-button color="primary">{{"labels.buttons.Submit"  |translate}}</button>
         </a>
       </div>
 
