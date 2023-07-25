@@ -24,7 +24,7 @@
 
     <mat-step [stepControl]="sharesAccountDetailsForm">
 
-      <ng-template matStepLabel>DETAILS</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.DETAILS'  |translate}}</ng-template>
 
       <mifosx-shares-account-details-step
         [sharesAccountTemplate]="sharesAccountTemplate" 
@@ -36,7 +36,7 @@
 
     <mat-step [stepControl]="sharesAccountTermsForm">
 
-      <ng-template matStepLabel>TERMS</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.TERMS'  |translate}}</ng-template>
 
       <mifosx-shares-account-terms-step [sharesAccountProductTemplate]="sharesAccountProductTemplate"></mifosx-shares-account-terms-step>
 
@@ -44,7 +44,7 @@
 
     <mat-step>
 
-      <ng-template matStepLabel>CHARGES</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.CHARGES'  |translate}}</ng-template>
 
       <mifosx-shares-account-charges-step
         [sharesAccountProductTemplate]="sharesAccountProductTemplate"
@@ -57,7 +57,7 @@
 
     <mat-step *ngIf="sharesAccountFormValid" completed>
 
-      <ng-template matStepLabel>PREVIEW</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW'  |translate}}</ng-template>
 
       <mifosx-shares-account-preview-step
         [sharesAccountProductTemplate]="sharesAccountProductTemplate"
