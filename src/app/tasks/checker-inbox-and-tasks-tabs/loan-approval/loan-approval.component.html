@@ -8,7 +8,7 @@
     </div>
     <div fxFlex="60%">
       <button mat-raised-button color="success" *mifosxHasPermission="'APPROVE_LOAN'" (click)="approveLoan()">
-        <fa-icon icon="check" class="m-r-10"></fa-icon>Approve
+        <fa-icon icon="check" class="m-r-10"></fa-icon>{{ 'labels.buttons.Approve'  |translate}}
       </button>
     </div>
   </div>
@@ -36,24 +36,24 @@
         </ng-container>
 
         <ng-container matColumnDef="clientName">
-          <th mat-header-cell *matHeaderCellDef> Client </th>
+          <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Client'  |translate}} </th>
           <td mat-cell *matCellDef="let loan" class="view-details" [routerLink]="['../../clients', loan.clientId, 'general']">
             {{ loan.clientName }} </td>
         </ng-container>
 
         <ng-container matColumnDef="loan">
-          <th mat-header-cell *matHeaderCellDef> Loan </th>
+          <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Loan'  |translate}} </th>
           <td mat-cell *matCellDef="let loan" class="view-details" [routerLink]="['../../clients', loan.clientId, 'loans-accounts', 'loan.id']">
             {{ loan.loanProductName}}({{loan.accountNo}}) </td>
         </ng-container>
 
         <ng-container matColumnDef="amount">
-          <th mat-header-cell *matHeaderCellDef> Amount </th>
+          <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Amount'  |translate}} </th>
           <td mat-cell *matCellDef="let loan"> {{ loan.principal | formatNumber}} </td>
         </ng-container>
 
         <ng-container matColumnDef="loanPurpose">
-          <th mat-header-cell *matHeaderCellDef> Loan Purpose </th>
+          <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Loan Purpose'  |translate}} </th>
           <td mat-cell *matCellDef="let loan"> {{ loan.loanPurposeName }} </td>
         </ng-container>
 
@@ -72,7 +72,7 @@
 
   <div class="message">
     <i class="fa fa-exclamation-circle alert-check"></i>
-    No pending loans for approval.
+    {{ 'labels.text.No pending loans for approval'  |translate}}
   </div>
 
 </div>
