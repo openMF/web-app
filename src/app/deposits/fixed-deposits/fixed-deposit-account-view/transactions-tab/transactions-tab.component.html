@@ -2,7 +2,7 @@
 
   <div fxLayoutAlign="start">
     <div class="m-b-20">
-      <h3>All Transactions</h3>
+      <h3>{{"labels.heading.All Transactions" | translate }}</h3>
     </div>
   </div>
 
@@ -11,32 +11,32 @@
     <table mat-table [dataSource]="dataSource" >
 
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.ID" | translate }} </th>
         <td mat-cell *matCellDef="let transaction"> {{ transaction.id }} </td>
       </ng-container>
 
       <ng-container matColumnDef="transactionDate">
-        <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Transaction Date" | translate }} </th>
         <td mat-cell *matCellDef="let transaction"> {{ transaction.date  | dateFormat }} </td>
       </ng-container>
 
       <ng-container matColumnDef="transactionType">
-        <th mat-header-cell *matHeaderCellDef> Transaction Type </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Transaction Type" | translate }} </th>
         <td mat-cell *matCellDef="let transaction"> {{ transaction.transactionType.value  }} </td>
       </ng-container>
 
       <ng-container matColumnDef="debit">
-        <th mat-header-cell *matHeaderCellDef> Debit </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Debit" | translate }} </th>
         <td mat-cell *matCellDef="let transaction"> {{ isDebit(transaction.transactionType) ? transaction.amount : 'N/A'}} </td>
       </ng-container>
 
       <ng-container matColumnDef="credit">
-        <th mat-header-cell *matHeaderCellDef> Credit </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Credit" | translate }} </th>
         <td mat-cell *matCellDef="let transaction"> {{ !isDebit(transaction.transactionType) ? transaction.amount : 'N/A' }} </td>
       </ng-container>
 
       <ng-container matColumnDef="balance">
-        <th mat-header-cell *matHeaderCellDef> Balance </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Balance" | translate }} </th>
         <td mat-cell *matCellDef="let transaction"> {{ transaction.runningBalance }} </td>
       </ng-container>
 

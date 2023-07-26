@@ -1,8 +1,8 @@
-<h1 mat-dialog-title>Waive Charge</h1>
+<h1 mat-dialog-title>{{"labels.heading.Waive Charge" | translate }}</h1>
 <div mat-dialog-content>
-  <p>Are you sure you want to waive charge with id: {{ data.id }} ?</p>
+  <p>{{"labels.text.Are you sure you want to waive charge with id" | translate }}: {{ data.id }} ?</p>
 </div>
 <mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close>Cancel</button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="{ confirm: true }">Confirm</button>
+  <button mat-raised-button mat-dialog-close>{{"labels.buttons.Cancel" | translate }}</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="{ confirm: true }">{{"labels.buttons.Confirm" | translate }}</button>
 </mat-dialog-actions>

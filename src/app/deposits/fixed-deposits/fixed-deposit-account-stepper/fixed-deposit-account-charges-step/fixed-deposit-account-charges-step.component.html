@@ -1,7 +1,7 @@
 <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
   <mat-form-field fxFlex="48%">
-    <mat-label>Charge</mat-label>
+    <mat-label>{{"labels.inputs.Charge" | translate }}</mat-label>
     <mat-select #charge>
       <mat-option *ngFor="let charge of chargeData | chargesFilter:chargesDataSource:currencyCode.value"
         [value]="charge">
@@ -13,28 +13,28 @@
   <div fxFlex="48%" fxFlexAlign="center">
     <button type="button" mat-raised-button color="primary" (click)="addCharge(charge)" [disabled]="!charge.value">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
-      Add
+      {{"labels.buttons.Add" | translate }}
     </button>
   </div>
 
   <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="chargesDataSource" [hidden]="chargesDataSource.length === 0">
 
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.name" | translate }} </th>
       <td mat-cell *matCellDef="let charge">
         {{ charge.name + ', ' + charge.currency.displaySymbol }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="chargeCalculationType">
-      <th mat-header-cell *matHeaderCellDef> Type </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Type" | translate }} </th>
       <td mat-cell *matCellDef="let charge">
         {{ charge.chargeCalculationType.value }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="amount">
-      <th mat-header-cell *matHeaderCellDef> Amount </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Amount" | translate }} </th>
       <td mat-cell *matCellDef="let charge">
         {{ charge.amount }}
         <button mat-icon-button color="primary" (click)="editChargeAmount(charge)">
@@ -44,14 +44,14 @@
     </ng-container>
 
     <ng-container matColumnDef="chargeTimeType">
-      <th mat-header-cell *matHeaderCellDef> Collected On </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Collected On" | translate }} </th>
       <td mat-cell *matCellDef="let charge">
         {{ charge.chargeTimeType.value }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef> Date </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Date" | translate }} </th>
       <td mat-cell *matCellDef="let charge">
         <span *ngIf="charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee'">
           {{(charge.dueDate  | dateFormat) || 'Unassigned*'}}
@@ -61,7 +61,7 @@
         </span>
         <span *ngIf="!(charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'
                 || charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee')">
-          N/A
+                {{"labels.inputs.N/A" | translate }}
         </span>
         <button mat-icon-button color="primary" *ngIf="charge.chargeTimeType.value === 'Weekly Fee' || charge.chargeTimeType.value === 'Annual Fee'
                       || charge.chargeTimeType.value === 'Specified due date'" (click)="editChargeDate(charge)">
@@ -71,7 +71,7 @@
     </ng-container>
 
     <ng-container matColumnDef="repaymentsEvery">
-      <th mat-header-cell *matHeaderCellDef> Repayments Every </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Repayments Every" | translate }} </th>
       <td mat-cell *matCellDef="let charge">
         {{ charge.feeInterval || 'Not Provided' }}
         <button mat-icon-button color="primary"
@@ -83,7 +83,7 @@
     </ng-container>
 
     <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Actions" | translate }} </th>
       <td mat-cell *matCellDef="let charge">
         <button mat-icon-button color="warn" (click)="deleteCharge(charge)">
           <fa-icon icon="trash"></fa-icon>
@@ -101,10 +101,10 @@
 <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button matStepperPrevious>
     <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-    Previous
+    {{"labels.buttons.Previous" | translate }}
   </button>
   <button mat-raised-button matStepperNext [disabled]="!fixedDepositAccountFormValid">
-    Next
+    {{"labels.buttons.Next" | translate }}
     <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
   </button>
 </div>
