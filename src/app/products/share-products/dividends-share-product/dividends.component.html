@@ -1,7 +1,7 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
     <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_SHAREDIVIDEND'">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
-      Initiate Dividend
+      {{ 'labels.buttons.Initiate Dividend' | translate }}
     </button>
 </div>
 
@@ -19,27 +19,27 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.name' | translate }} </th>
         <td mat-cell *matCellDef="let dividend">{{ dividend.productData.name }}</td>
       </ng-container>
 
       <ng-container matColumnDef="dividendPeriodStartDate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Dividend Period Start Date </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Dividend Period Start Date' | translate }} </th>
         <td mat-cell *matCellDef="let dividend">{{ dividend.dividendPeriodStartDate  | dateFormat }}</td>
       </ng-container>
 
       <ng-container matColumnDef="dividendPeriodEndDate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Dividend Period End Date </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Dividend Period End Date' | translate }} </th>
         <td mat-cell *matCellDef="let dividend">{{ dividend.dividendPeriodEndDate  | dateFormat }}</td>
       </ng-container>
 
       <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Amount' | translate }} </th>
         <td mat-cell *matCellDef="let dividend"> {{ dividend.amount }}</td>
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Status' | translate }} </th>
         <td mat-cell *matCellDef="let dividend">{{ dividend.status.value }}</td>
       </ng-container>
 

@@ -1,7 +1,7 @@
 <div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="2%">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_TAXCOMPONENT'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    Edit
+    {{ 'labels.buttons.Edit' | translate }}
   </button>
 </div>
 
@@ -14,7 +14,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="mat-body-strong">
-          Name
+          {{ 'labels.inputs.name' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -22,7 +22,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Percentage
+          {{ 'labels.inputs.Percentage' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -30,7 +30,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="taxComponentData.debitAccountType">
-          Debit Account Type
+          {{ 'labels.inputs.Debit Account Type' | translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="taxComponentData.debitAccountType">
@@ -38,7 +38,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="taxComponentData.debitAccount">
-          Debit Account
+          {{ 'labels.inputs.Debit Account' | translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="taxComponentData.debitAccount">
@@ -46,7 +46,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="taxComponentData.creditAccountType">
-          Credit Account Type
+          {{ 'labels.inputs.Credit Account Type' | translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="taxComponentData.creditAccountType">
@@ -54,7 +54,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="taxComponentData.creditAccount">
-          Credit Account
+          {{ 'labels.inputs.Credit Account' | translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="taxComponentData.creditAccount">
@@ -62,7 +62,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Start date
+          {{ 'labels.inputs.Start date' | translate }}
         </div>
 
         <div fxFlex="50%">
