@@ -1,8 +1,8 @@
-<h1 mat-dialog-title>Delete</h1>
+<h1 mat-dialog-title>{{ 'labels.heading.Delete' | translate }}</h1>
 <div mat-dialog-content>
-  <p>Are you sure you want to delete {{ data.deleteContext }} ?</p>
+  <p>{{ 'labels.text.Are you sure you want to delete' | translate }} {{ data.deleteContext }} ?</p>
 </div>
 <mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close>Cancel</button>
-  <button mat-raised-button color="warn" [mat-dialog-close]="{ delete: true }">Confirm</button>
+  <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="{ delete: true }">{{ 'labels.buttons.Confirm' | translate }}</button>
 </mat-dialog-actions>

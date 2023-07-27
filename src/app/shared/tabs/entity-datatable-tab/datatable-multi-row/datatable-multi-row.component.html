@@ -7,17 +7,17 @@
     <div class="action-button m-b-7" fxLayoutGap="10px">
       <span *mifosxHasPermission="'CREATE_' + datatableName">
         <button mat-raised-button color="primary" (click)="add()">
-          <fa-icon icon="plus" class="m-r-10"></fa-icon>Add
+          <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
         </button>
       </span>
       <span *mifosxHasPermission="'DELETE_' + datatableName" [fxShow]="isSelected">
         <button class="delete-button" mat-raised-button color="warn" (click)="deleteSelected()">
-          <fa-icon icon="trash" class="m-r-10"></fa-icon>Delete Selected
+          <fa-icon icon="trash" class="m-r-10"></fa-icon>{{ 'labels.buttons.Delete Selected' | translate }}
         </button>
       </span>
       <span *mifosxHasPermission="'DELETE_' + datatableName" [fxShow]="datatableData.length > 0">
         <button class="delete-button" mat-raised-button color="warn" (click)="delete()">
-          <fa-icon icon="trash" class="m-r-10"></fa-icon>Delete All
+          <fa-icon icon="trash" class="m-r-10"></fa-icon>{{ 'labels.buttons.Delete All' | translate }}
         </button>
       </span>
     </div>
