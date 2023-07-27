@@ -43,8 +43,8 @@
 
         <ng-container matColumnDef="loan">
           <th mat-header-cell *matHeaderCellDef> Loan </th>
-          <td mat-cell *matCellDef="let loan" class="view-details" [routerLink]="['../../clients', loan.clientId, 'loans-accounts', 'loan.id']">
-            {{ loan.loanProductName}}({{loan.accountNo}}) </td>
+          <td mat-cell *matCellDef="let loan" class="view-details" [routerLink]="['../../clients', loan.clientId, 'loans-accounts', loan.id]">
+            {{ loan.loanProductName}} ({{loan.accountNo}}) </td>
         </ng-container>
 
         <ng-container matColumnDef="amount">
