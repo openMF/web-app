@@ -5,6 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 /** Custom Services */
 import { ReportsService } from '../../reports.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { ProgressBarService } from 'app/core/progress-bar/progress-bar.service';
 
 /**
  * Pentaho Component
@@ -30,7 +31,9 @@ export class PentahoComponent implements OnChanges {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private sanitizer: DomSanitizer,
-              private reportsService: ReportsService, private settingsService: SettingsService) { }
+              private reportsService: ReportsService,
+              private settingsService: SettingsService,
+              private progressBarService: ProgressBarService) { }
 
   /**
    * Fetches run report data post changes in run report form.
@@ -48,6 +51,7 @@ export class PentahoComponent implements OnChanges {
         const filecontent = URL.createObjectURL(file);
         this.pentahoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(filecontent);
         this.hideOutput = false;
+        this.progressBarService.decrease();
       });
   }
 

@@ -12,6 +12,7 @@ import { ReportParameter } from '../common-models/report-parameter.model';
 import { SelectOption } from '../common-models/select-option.model';
 import { Dates } from 'app/core/utils/dates';
 import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
+import { ProgressBarService } from 'app/core/progress-bar/progress-bar.service';
 
 /**
  * Run report component.
@@ -68,8 +69,9 @@ export class RunReportComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute,
               private reportsService: ReportsService,
-               private settingsService: SettingsService,
-              private dateUtils: Dates) {
+              private settingsService: SettingsService,
+              private dateUtils: Dates,
+              private progressBarService: ProgressBarService) {
     this.report.name = this.route.snapshot.params['name'];
     this.route.queryParams.subscribe((queryParams: { type: any, id: any }) => {
       this.report.type = queryParams.type;
@@ -124,13 +126,13 @@ export class RunReportComponent implements OnInit {
         }
       });
     if (this.isPentahoReport()) {
-      this.reportForm.addControl('outputType', new FormControl(''));
+      this.reportForm.addControl('outputType', new FormControl('', Validators.required));
       this.outputTypeOptions = [
+        { 'name': 'PDF format', 'value': 'PDF' },
         { 'name': 'Normal format', 'value': 'HTML' },
         { 'name': 'Excel format', 'value': 'XLS' },
         { 'name': 'Excel 2007 format', 'value': 'XLSX' },
-        { 'name': 'CSV format', 'value': 'CSV' },
-        { 'name': 'PDF format', 'value': 'PDF' }
+        { 'name': 'CSV format', 'value': 'CSV' }
       ];
       this.mapPentahoParams();
     }
@@ -231,8 +233,7 @@ export class RunReportComponent implements OnInit {
           formattedResponse[newKey] = value['id'];
           break;
         case 'date':
-          const dateFormat = 'yyyy-MM-dd';
-          formattedResponse[newKey] = this.dateUtils.formatDate(value, dateFormat);
+          formattedResponse[newKey] = this.dateUtils.formatDate(value, this.settingsService.dateFormat);
           this.reportUsesDates = true;
           break;
         case 'none':

@@ -147,15 +147,13 @@ export class LoansViewComponent implements OnInit {
         });
       }
 
+      // Allow ChargeOff only If there loan is not already ChargeOff
       if (!this.loanDetailsData.chargedOff) {
-        // Charge-Off only when there is not Interest Recalculation and the Interest Rate is zero
-        if (!this.loanDetailsData.chargedOff && !this.loanDetailsData.isInterestRecalculationEnabled && this.loanDetailsData.interestRatePerPeriod === 0) {
-          this.buttonConfig.addButton({
-            name: 'Charge-Off',
-            icon: 'coins',
-            taskPermissionName: 'CHARGEOFF_LOAN'
-          });
-        }
+        this.buttonConfig.addButton({
+          name: 'Charge-Off',
+          icon: 'coins',
+          taskPermissionName: 'CHARGEOFF_LOAN'
+        });
       }
 
     }
