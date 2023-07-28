@@ -36,6 +36,7 @@ import { ProfileModule } from './profile/profile.module';
 import { TasksModule } from './tasks/tasks.module';
 import { ConfigurationWizardModule } from './configuration-wizard/configuration-wizard.module';
 import {PortalModule} from '@angular/cdk/portal';
+import { ApiModule,Configuration,ConfigurationParameters } from '@fineract/client';
 
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';

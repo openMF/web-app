@@ -16,6 +16,7 @@
   ],
   "include": [
     "src/**/*.d.ts",
-    "typings.d.ts"
+    "typings.d.ts",
+    "../packages/fineract-client/src/**/*.ts"
   ]
 }

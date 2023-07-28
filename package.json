@@ -46,6 +46,7 @@
     "@ckeditor/ckeditor5-angular": "1.2.3",
     "@ckeditor/ckeditor5-build-classic": "21.0.0",
     "@fortawesome/angular-fontawesome": "^0.10.2",
+    "@fineract/client": "*",
     "@fortawesome/free-solid-svg-icons": "5.8.2",
     "@ngx-translate/core": "13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
@@ -111,5 +112,10 @@
   "engines": {
     "node": ">= 16.15.1",
     "npm": ">= 8.11.0"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/**"
+    ]
   }
 }
