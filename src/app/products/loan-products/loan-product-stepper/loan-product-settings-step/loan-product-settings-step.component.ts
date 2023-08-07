@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { LoanProducts } from '../../loan-products';
+import { rangeValidator } from 'app/shared/validators/percentage.validator';
 
 @Component({
   selector: 'mifosx-loan-product-settings-step',
@@ -89,10 +90,17 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'maxTrancheCount': this.loanProductsTemplate.maxTrancheCount,
       'outstandingLoanBalance': this.loanProductsTemplate.outstandingLoanBalance,
       'dueDaysForRepaymentEvent': this.loanProductsTemplate.dueDaysForRepaymentEvent,
-      'overDueDaysForRepaymentEvent': this.loanProductsTemplate.overDueDaysForRepaymentEvent
+      'overDueDaysForRepaymentEvent': this.loanProductsTemplate.overDueDaysForRepaymentEvent,
+      'enableDownPayment': this.loanProductsTemplate.enableDownPayment
     });
 
     if (this.loanProductsTemplate.delinquencyBucket) {
+      this.loanProductSettingsForm.patchValue({
+        'disbursedAmountPercentageForDownPayment': this.loanProductsTemplate.disbursedAmountPercentageForDownPayment || 0
+      });
+    }
+
+    if (this.loanProductsTemplate.enableDownPayment) {
       this.loanProductSettingsForm.patchValue({
         'delinquencyBucketId': this.loanProductsTemplate.delinquencyBucket.id
       });
@@ -187,7 +195,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
       }),
       'delinquencyBucketId': ['', Validators.required],
       'dueDaysForRepaymentEvent': [''],
-      'overDueDaysForRepaymentEvent': ['']
+      'overDueDaysForRepaymentEvent': [''],
+      'enableDownPayment': [false]
     });
   }
 
@@ -329,6 +338,15 @@ export class LoanProductSettingsStepComponent implements OnInit {
           this.loanProductSettingsForm.removeControl('maxTrancheCount');
           this.loanProductSettingsForm.removeControl('outstandingLoanBalance');
           this.loanProductSettingsForm.patchValue({ 'disallowExpectedDisbursements': false });
+        }
+      });
+
+      this.loanProductSettingsForm.get('enableDownPayment').valueChanges
+      .subscribe(enableDownPayment => {
+        if (enableDownPayment) {
+          this.loanProductSettingsForm.addControl('disbursedAmountPercentageForDownPayment', new FormControl(0, [Validators.required, rangeValidator(0, 100) ]));
+        } else {
+          this.loanProductSettingsForm.removeControl('disbursedAmountPercentageForDownPayment');
         }
       });
 

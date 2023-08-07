@@ -506,6 +506,20 @@
     </div>
   </div>
 
+  <h3 class="mat-h3" fxFlexFill>Down Payments</h3>
+
+  <mat-divider [inset]="true"></mat-divider>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Enable Down Payments:</span>
+    <span fxFlex="60%">{{ loanProduct.enableDownPayment ? 'Yes' : 'No' }}</span>
+  </div>
+
+  <div fxFlexFill *ngIf="loanProduct.enableDownPayment" fxLayout="row wrap" fxLayout.lt-md="column">
+    <span fxFlex="40%">Disbursed Amount Percentage Down Payment (%):</span>
+    <span fxFlex="60%">{{ loanProduct.disbursedAmountPercentageForDownPayment }} %</span>
+  </div>
+
   <h3 class="mat-h3" fxFlexFill>Event Settings</h3>
 
   <div fxFlexFill>

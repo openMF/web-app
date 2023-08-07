@@ -43,7 +43,7 @@ export class LoanAccountActionsComponent {
             'Edit Repayment Schedule': boolean,
             'Charge-Off': boolean,
             'Undo Charge-Off': boolean,
-            'Sale Loan': boolean,
+            'Sell Loan': boolean,
             'Buy Back Loan': boolean
          } = {
               'Close': false,
@@ -76,7 +76,7 @@ export class LoanAccountActionsComponent {
               'Edit Repayment Schedule': false,
               'Charge-Off': false,
               'Undo Charge-Off': false,
-              'Sale Loan': false,
+              'Sell Loan': false,
               'Buy Back Loan': false
           };
 
