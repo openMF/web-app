@@ -78,6 +78,8 @@ import { CreateFundComponent } from './manage-funds/create-fund/create-fund.comp
 import { EditFundComponent } from './manage-funds/edit-fund/edit-fund.component';
 import { ViewFundComponent } from './manage-funds/view-fund/view-fund.component';
 import { InvestorsComponent } from './investors/investors.component';
+import { ExternalAssetTransferComponent } from 'app/loans/loans-view/external-asset-owner-tab/external-asset-transfer/external-asset-transfer.component';
+import { LoansModule } from 'app/loans/loans.module';
 
 
 /**
@@ -90,7 +92,8 @@ import { InvestorsComponent } from './investors/investors.component';
     SharedModule,
     PipesModule,
     DirectivesModule,
-    OrganizationRoutingModule
+    OrganizationRoutingModule,
+    LoansModule
   ],
   declarations: [
     OrganizationComponent,
@@ -155,7 +158,7 @@ import { InvestorsComponent } from './investors/investors.component';
     CreateFundComponent,
     EditFundComponent,
     ViewFundComponent,
-    InvestorsComponent,
+    InvestorsComponent
   ],
   providers: [
     CreateHoliday,

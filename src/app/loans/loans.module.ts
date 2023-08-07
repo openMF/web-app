@@ -77,6 +77,7 @@ import { AdjustLoanChargeComponent } from './loans-view/loan-account-actions/adj
 import { ChargeOffComponent } from './loans-view/loan-account-actions/charge-off/charge-off.component';
 import { AssetTransferLoanComponent } from './loans-view/loan-account-actions/asset-transfer-loan/asset-transfer-loan.component';
 import { ExternalAssetOwnerTabComponent } from './loans-view/external-asset-owner-tab/external-asset-owner-tab.component';
+import { ExternalAssetTransferComponent } from './loans-view/external-asset-owner-tab/external-asset-transfer/external-asset-transfer.component';
 
 /**
  * Loans Module
@@ -152,7 +153,8 @@ import { ExternalAssetOwnerTabComponent } from './loans-view/external-asset-owne
     AdjustLoanChargeComponent,
     ChargeOffComponent,
     AssetTransferLoanComponent,
-    ExternalAssetOwnerTabComponent
+    ExternalAssetOwnerTabComponent,
+    ExternalAssetTransferComponent
   ],
   providers: [ ],
 })
