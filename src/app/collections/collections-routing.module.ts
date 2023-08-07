@@ -9,9 +9,7 @@ import { extract } from '../core/i18n/i18n.service';
 
 /** Custom Components */
 import { IndividualCollectionSheetComponent } from './individual-collection-sheet/individual-collection-sheet.component';
-
-/** Custom Resolvers */
-import { GetOfficesResolver } from './individual-collection-sheet/get-offices.resolver';
+import { OfficesResolver } from 'app/organization/offices/common-resolvers/offices.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -23,7 +21,7 @@ const routes: Routes = [
           data: { title: extract('Individual Collection Sheet'), breadcrumb: 'Individual Collection Sheet', routeParamBreadcrumb: false },
           component: IndividualCollectionSheetComponent,
           resolve: {
-            officesData: GetOfficesResolver
+            officesData: OfficesResolver
           }
         },
       ]
@@ -33,7 +31,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  providers: [GetOfficesResolver],
+  providers: [],
   exports: [RouterModule]
 })
 export class CollectionsRoutingModule { }
