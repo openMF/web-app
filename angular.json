@@ -37,33 +37,8 @@
               "src/main.scss",
               {
                 "inject": false,
-                "input": "src/theme/deeppurple-amber.scss",
-                "bundleName": "deeppurple-amber"
-              },
-              {
-                "inject": false,
-                "input": "src/theme/indigo-pink.scss",
-                "bundleName": "indigo-pink"
-              },
-              {
-                "inject": false,
-                "input": "src/theme/pink-bluegrey.scss",
-                "bundleName": "pink-bluegrey"
-              },
-              {
-                "inject": false,
-                "input": "src/theme/purple-green.scss",
-                "bundleName": "purple-green"
-              },
-              {
-                "inject": false,
-                "input": "src/theme/custom/denim-yellowgreen.scss",
-                "bundleName": "denim-yellowgreen"
-              },
-              {
-                "inject": false,
-                "input": "src/theme/custom/pictonblue-yellowgreen.scss",
-                "bundleName": "pictonblue-yellowgreen"
+                "input": "src/theme/mifosx-theme.scss",
+                "bundleName": "mifosx-theme"
               }
             ],
             "scripts": [],
@@ -147,33 +122,8 @@
               "src/main.scss",
               {
                 "inject": false,
-                "input": "src/theme/deeppurple-amber.scss",
-                "bundleName": "deeppurple-amber"
-              },
-              {
-                "inject": false,
-                "input": "src/theme/indigo-pink.scss",
-                "bundleName": "indigo-pink"
-              },
-              {
-                "inject": false,
-                "input": "src/theme/pink-bluegrey.scss",
-                "bundleName": "pink-bluegrey"
-              },
-              {
-                "inject": false,
-                "input": "src/theme/purple-green.scss",
-                "bundleName": "purple-green"
-              },
-              {
-                "inject": false,
-                "input": "src/theme/custom/denim-yellowgreen.scss",
-                "bundleName": "denim-yellowgreen"
-              },
-              {
-                "inject": false,
-                "input": "src/theme/custom/pictonblue-yellowgreen.scss",
-                "bundleName": "pictonblue-yellowgreen"
+                "input": "src/theme/mifosx-theme.scss",
+                "bundleName": "mifosx-theme"
               }
             ],
             "assets": [

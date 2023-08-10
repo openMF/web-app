@@ -1,37 +1,18 @@
 @use '@angular/material' as mat;
-// Plus imports for other components in your app.
-@import '../../app/clients/clients-view/clients-view.component-theme.scss';
-@import '../../app/groups/groups-view/groups-view.component-theme.scss';
-@import '../../app/centers/centers-view/centers-view.component-theme.scss';
-@import '../../app/home/dashboard/dashboard.component-theme.scss';
-@import '../../app/loans/loans-view/loans-view.component-theme.scss';
-@import '../../app/savings/savings-account-view/savings-account-view.component-theme.scss';
-@import '../../app/shares/shares-account-view/shares-account-view.component-theme.scss';
-@import '../../app/deposits/fixed-deposits/fixed-deposit-account-view/fixed-deposit-account-view.component-theme.scss';
-@import '../../app/deposits/recurring-deposits/recurring-deposits-account-view/recurring-deposits-account-view.component-theme.scss';
 
 // Custom material palette
-$mat-denim: (
-  100: #5ba2ec,
-  500: #1074b9,
-  700: #004989,
-  contrast: (
-    100: rgba(black, 0.87),
-    500: white,
-    700: white
-  )
-);
+@import 'material-palette';
 
-$mat-yellow-green: (
-  100: #e7ffa5,
-  500: #b4d575,
-  700: #83a447,
-  contrast: (
-    100: rgba(black, 0.87),
-    500: rgba(black, 0.87),
-    700: rgba(black, 0.87)
-  )
-);
+// Plus imports for other components in your app.
+@import '../app/clients/clients-view/clients-view.component-theme.scss';
+@import '../app/groups/groups-view/groups-view.component-theme.scss';
+@import '../app/centers/centers-view/centers-view.component-theme.scss';
+@import '../app/home/dashboard/dashboard.component-theme.scss';
+@import '../app/loans/loans-view/loans-view.component-theme.scss';
+@import '../app/savings/savings-account-view/savings-account-view.component-theme.scss';
+@import '../app/shares/shares-account-view/shares-account-view.component-theme.scss';
+@import '../app/deposits/fixed-deposits/fixed-deposit-account-view/fixed-deposit-account-view.component-theme.scss';
+@import '../app/deposits/recurring-deposits/recurring-deposits-account-view/recurring-deposits-account-view.component-theme.scss';
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
@@ -41,8 +22,8 @@ $mat-yellow-green: (
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$mifosx-app-primary: mat.define-palette($mat-denim);
-$mifosx-app-accent:  mat.define-palette($mat-yellow-green);
+$mifosx-app-primary: mat.define-palette($primary-palette);
+$mifosx-app-accent:  mat.define-palette($accent-palette);
 
 // The warn palette is optional (defaults to red).
 $mifosx-app-warn:    mat.define-palette(mat.$red-palette);

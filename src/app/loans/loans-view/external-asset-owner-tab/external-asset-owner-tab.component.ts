@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ExternalAssetOwnerService } from 'app/loans/external-asset-owner.service';
+import { ExternalAssetOwner } from 'app/loans/services/external-asset-owner';
+import { ExternalAssetOwnerService } from 'app/loans/services/external-asset-owner.service';
 import { CancelDialogComponent } from 'app/shared/cancel-dialog/cancel-dialog.component';
 
 @Component({
@@ -22,6 +23,7 @@ export class ExternalAssetOwnerTabComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
+    private externalAssetOwner: ExternalAssetOwner,
     private externalAssetOwnerService: ExternalAssetOwnerService
     ) {
     this.route.data.subscribe((data: { loanTransfersData: any, activeTransferData: any }) => {
@@ -39,52 +41,39 @@ export class ExternalAssetOwnerTabComponent implements OnInit {
   }
 
   itemCurrentStatus(item: any): string {
-    if (this.isBuyBackPending(item)) {
-      return item.status + ' PENDING';
-    }
-    return item.status;
+    return this.externalAssetOwner.itemCurrentStatus(item);
   }
 
   itemStatus(status: string): string {
-    return 'status-' + status.toLowerCase();
+    return this.externalAssetOwner.itemStatus(status);
   }
 
   isPending(item: any): boolean {
-    return (item.status === 'PENDING');
+    return this.externalAssetOwner.isPending(item);
   }
 
   isPendingOrCanceled(item: any): boolean {
-    return ((item.status === 'PENDING') || (item.status === 'CANCELLED') || this.isBuyBackPending(item));
+    return this.externalAssetOwner.isPendingOrCanceled(item);
   }
 
   isBuyBackPending(item: any): boolean {
-    return (item.status === 'BUYBACK' && item.effectiveTo === this.defaultDate);
+    return this.externalAssetOwner.isBuyBackPending(item);
   }
 
   canBeCancelled(): boolean {
-    return this.validateStatus('PENDING');
+    return this.externalAssetOwner.validateStatus(this.currentItem, 'PENDING');
   }
 
-  canBeSaled(): boolean {
-    if (this.currentItem == null) {
-      return true;
-    }
-    return ['', 'CANCELLED'].includes(this.currentItem.status) || (this.currentItem.status === 'BUYBACK' && this.currentItem.effectiveTo !== this.defaultDate);
+  canBeSold(): boolean {
+    return this.externalAssetOwner.canBeSold(this.currentItem);
   }
 
   canBeBuyed(): boolean {
-    return this.validateStatus('ACTIVE');
-  }
-
-  private validateStatus(status: string): boolean {
-    if (this.currentItem != null) {
-      return (this.currentItem.status === status);
-    }
-    return false;
+    return this.externalAssetOwner.validateStatus(this.currentItem, 'ACTIVE');
   }
 
   saleLoan(): void {
-    this.router.navigate(['../actions/Sale Loan'], { relativeTo: this.route });
+    this.router.navigate(['../actions/Sell Loan'], { relativeTo: this.route });
   }
 
   cancelSaleLoan(): void {

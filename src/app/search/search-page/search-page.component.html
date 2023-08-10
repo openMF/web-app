@@ -18,7 +18,9 @@
 
       <ng-container matColumnDef="entityAccount">
         <th mat-header-cell *matHeaderCellDef> Account No </th>
-        <td mat-cell *matCellDef="let entity" class="view-details"> {{entity.entityAccountNo}} </td>
+        <td mat-cell *matCellDef="let entity" class="view-details">
+          <mifosx-account-number display="left" accountNo="{{entity.entityAccountNo}}"></mifosx-account-number>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="externalId">

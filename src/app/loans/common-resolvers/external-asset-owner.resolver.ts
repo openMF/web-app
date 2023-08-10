@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ExternalAssetOwnerService } from '../external-asset-owner.service';
+import { ExternalAssetOwnerService } from '../services/external-asset-owner.service';
 
 @Injectable({
   providedIn: 'root'

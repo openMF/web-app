@@ -8,22 +8,28 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class LoanCollateralTabComponent implements OnInit {
 
-  /** Loan Details */
-  loanDetails: any;
+  /** Loan Collateral Details */
+  loanCollaterals: any[] = [];
   /** Columns to be displayed in collateral table. */
-  displayedColumns: string[] = ['id', 'quantity', 'total', 'totalCollateral'];
+  displayedColumns: string[] = ['id', 'currency', 'description', 'total'];
+
+  totalAmount: number;
 
   /**
    * Retrieves the loans data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
-      this.loanDetails = data.loanDetailsData;
+    this.route.data.subscribe((data: { loanCollaterals: any }) => {
+      this.loanCollaterals = data.loanCollaterals;
     });
   }
 
   ngOnInit() {
+    this.totalAmount = 0;
+    this.loanCollaterals.forEach((collateral: any) => {
+      this.totalAmount = this.totalAmount + collateral.value;
+    });
   }
 
 }

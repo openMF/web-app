@@ -113,6 +113,15 @@ export class LoansService {
   }
 
   /**
+   * Get collaterals.
+   * @param {string} loanId Loan Id.
+   * @returns {Observable<any>}
+   */
+  getLoanCollaterals(loanId: string): Observable<any> {
+    return this.http.get(`/loans/${loanId}/collaterals`);
+  }
+
+  /**
    * Create Loan Collateral.
    * @param {string} loanId Loan Id.
    * @param {any} collateralData Collateral Data.

@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class ExternalAssetOwnerService {
 
+  basePath = '/external-asset-owners';
+
   constructor(private http: HttpClient) { }
 
   /**
@@ -17,7 +19,7 @@ export class ExternalAssetOwnerService {
    */
   executeExternalAssetOwnerLoanCommand(loanId: string, data: any, command: string): Observable<any> {
     const httpParams = new HttpParams().set('command', command);
-    return this.http.post(`/external-asset-owners/transfers/loans/${loanId}`, data, { params: httpParams });
+    return this.http.post(`${this.basePath}/transfers/loans/${loanId}`, data, { params: httpParams });
   }
 
   /**
@@ -28,7 +30,7 @@ export class ExternalAssetOwnerService {
    */
   executeExternalAssetOwnerTransferCommand(transferId: string, data: any, command: string): Observable<any> {
     const httpParams = new HttpParams().set('command', command);
-    return this.http.post(`/external-asset-owners/transfers/${transferId}`, data, { params: httpParams });
+    return this.http.post(`${this.basePath}/transfers/${transferId}`, data, { params: httpParams });
   }
 
   /**
@@ -37,7 +39,7 @@ export class ExternalAssetOwnerService {
    */
   retrieveExternalAssetOwnerTransfers(loanId: string): Observable<any> {
     const httpParams = new HttpParams().set('loanId', loanId);
-    return this.http.get(`/external-asset-owners/transfers`, { params: httpParams });
+    return this.http.get(`${this.basePath}/transfers`, { params: httpParams });
   }
 
   /**
@@ -46,7 +48,7 @@ export class ExternalAssetOwnerService {
    */
   retrieveExternalAssetOwnerActiveTransfer(loanId: string): Observable<any> {
     const httpParams = new HttpParams().set('loanId', loanId);
-    return this.http.get(`/external-asset-owners/transfers/active-transfer`, { params: httpParams });
+    return this.http.get(`${this.basePath}/transfers/active-transfer`, { params: httpParams });
   }
 
   /**
@@ -54,7 +56,15 @@ export class ExternalAssetOwnerService {
    * @returns {Observable<any>}
    */
   retrieveExternalAssetOwnerTransferJournalEntries(transferId: string): Observable<any> {
-    return this.http.get(`/external-asset-owners/transfers/${transferId}/journal-entries`);
+    return this.http.get(`${this.basePath}/transfers/${transferId}/journal-entries`);
+  }
+
+  /**
+   * @param {any} request Transfer Id
+   * @returns {Observable<any>}
+   */
+  searchExternalAssetOwnerTransfer(request: any): Observable<any> {
+    return this.http.post(`${this.basePath}/search`, request);
   }
 
 }

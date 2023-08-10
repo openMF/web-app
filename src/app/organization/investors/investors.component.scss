@@ -1,0 +1,40 @@
+.status {
+  color: black;
+}
+
+.account-action-button{
+  min-width: 26px;
+  padding: 0 0 3px 0;
+  margin: 0 2%;
+  line-height: 25px;
+}
+
+.item-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+tr.detail-row {
+  height: 0;
+}
+
+tr.element-row:hover {
+  cursor: pointer;
+}
+
+tr.element-row:not(.expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.element-row:not(.expanded-row):active {
+  background: #efefef;
+}
+
+.element-row td {
+  border-bottom-width: 0;
+}
+
+.element-detail {
+  overflow: hidden;
+  display: flex;
+}
