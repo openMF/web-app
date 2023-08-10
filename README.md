@@ -4,7 +4,6 @@ Mifos X Web App is the revamped version of the Mifos X Community App, an effecti
 
 It is a Single-Page App (SPA) written in standard web technologies [HTML5](http://whatwg.org/html), [SCSS](http://sass-lang.com) and [TypeScript](http://www.typescriptlang.org). It leverages the popular [Angular](https://angular.io/) framework and [Angular Material](https://material.angular.io/) for material design components.
 
-
 ## Getting started using
 
 The latest code is continuously deployed at https://openmf.github.io/web-app/ whenever a PR is merged into the master branch.
