@@ -61,6 +61,7 @@ import { ExternalAssetOwnerTabComponent } from './loans-view/external-asset-owne
 import { ExternalAssetOwnerResolver } from './common-resolvers/external-asset-owner.resolver';
 import { ExternalAssetOwnerActiveTransferResolver } from './common-resolvers/external-asset-owner-active-transfer.resolver';
 import { ExternalAssetOwnerJournalEntryResolver } from './common-resolvers/external-asset-owner-journal-entry.resolver';
+import { LoanCollateralsResolver } from './common-resolvers/loan-collaterals.resolver';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -160,6 +161,9 @@ const routes: Routes = [
             path: 'loan-collateral',
             component: LoanCollateralTabComponent,
             data: { title: extract('Loan Collateral Details'), breadcrumb: 'Loan Collateral Details', routeParamBreadcrumb: false },
+            resolve: {
+              loanCollaterals: LoanCollateralsResolver
+            }
           },
           {
             path: 'loan-tranche-details',

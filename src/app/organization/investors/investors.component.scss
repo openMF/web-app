@@ -18,6 +18,10 @@ tr.detail-row {
   height: 0;
 }
 
+tr.element-row:hover {
+  cursor: pointer;
+}
+
 tr.element-row:not(.expanded-row):hover {
   background: whitesmoke;
 }
@@ -33,27 +37,4 @@ tr.element-row:not(.expanded-row):active {
 .element-detail {
   overflow: hidden;
   display: flex;
-}
-
-.element-diagram {
-  min-width: 80px;
-  border: 2px solid black;
-  padding: 8px;
-  font-weight: lighter;
-  margin: 8px 0;
-  height: 104px;
-}
-
-.element-symbol {
-  font-weight: bold;
-  font-size: 40px;
-  line-height: normal;
-}
-
-.element-description {
-  padding: 16px;
-}
-
-.element-description-attribution {
-  opacity: 0.5;
 }

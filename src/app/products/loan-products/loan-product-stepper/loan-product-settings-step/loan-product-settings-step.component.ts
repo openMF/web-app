@@ -96,13 +96,13 @@ export class LoanProductSettingsStepComponent implements OnInit {
 
     if (this.loanProductsTemplate.delinquencyBucket) {
       this.loanProductSettingsForm.patchValue({
-        'disbursedAmountPercentageForDownPayment': this.loanProductsTemplate.disbursedAmountPercentageForDownPayment || 0
+        'delinquencyBucketId': this.loanProductsTemplate.delinquencyBucket.id
       });
     }
 
     if (this.loanProductsTemplate.enableDownPayment) {
       this.loanProductSettingsForm.patchValue({
-        'delinquencyBucketId': this.loanProductsTemplate.delinquencyBucket.id
+        'disbursedAmountPercentageForDownPayment': this.loanProductsTemplate.disbursedAmountPercentageForDownPayment || 0
       });
     }
 

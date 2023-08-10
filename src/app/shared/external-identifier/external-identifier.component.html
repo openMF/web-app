@@ -1,4 +1,4 @@
-<span (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()">
+<span (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()" *ngIf="!emptyValue">
   <span (click)="copyValue()" *ngIf="displayL && iconVisible"><fa-icon icon="copy" size="sm" title="Copy External Id"></fa-icon></span>
   <span class="m-l-3" *ngIf="displayL && !completed && iconVisible && isLongValue()"><fa-icon icon="eye" size="sm" [title]="externalId"></fa-icon></span>
   <span class="m-l-5" *ngIf="!completed">{{ externalId | externalIdentifier }}</span>

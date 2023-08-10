@@ -36,7 +36,7 @@ export class InvestorsComponent implements OnInit {
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   existsDataToFilter = false;
-  expandedRow: any;
+  expandedRowId: number | null;
 
   totalRows: number;
   isLoading = false;
@@ -111,15 +111,15 @@ export class InvestorsComponent implements OnInit {
 
   searchEAO(): void {
     this.isLoading = true;
-    let payload: any = {
-      "request": {},
-      "page": this.currentPage,
-      "size": this.pageSize
-    }
+    const payload: any = {
+      'request': {},
+      'page': this.currentPage,
+      'size': this.pageSize
+    };
     const dateFormat = 'yyyy-MM-dd';
-    let request: any = {}
+    const request: any = {};
     if (this.searchText.value) {
-      request['text'] = this.searchText.value
+      request['text'] = this.searchText.value;
     }
     if (this.effectiveFromDate.value) {
       request['effectiveFromDate'] = this.dateUtils.formatDate(this.effectiveFromDate.value, dateFormat);
@@ -135,7 +135,6 @@ export class InvestorsComponent implements OnInit {
     }
     payload['request'] = request;
     this.externalAssetOwnerService.searchExternalAssetOwnerTransfer(payload).subscribe((response: any) => {
-      console.log(response);
       this.totalRows = response.totalElements;
       this.existsDataToFilter = (response.totalElements > 0);
       this.dataSource.data = response.content;

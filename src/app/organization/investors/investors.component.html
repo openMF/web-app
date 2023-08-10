@@ -49,7 +49,7 @@
   <div class="mat-elevation-z8 container">
     <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
 
-    <table mat-table [dataSource]="dataSource" matSort *ngIf="existsDataToFilter">
+    <table mat-table [dataSource]="dataSource" matSort *ngIf="existsDataToFilter" multiTemplateDataRows>
 
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
@@ -116,18 +116,19 @@
 
       <ng-container matColumnDef="expandedDetail">
         <td mat-cell *matCellDef="let item" [attr.colspan]="displayedColumns.length">
-          <div class="item-detail"
-          [@detailExpand]="item == expandedRow ? 'expanded' : 'collapsed'">
+          <div class="element-detail"
+          [@detailExpand]="item.transferId == expandedRowId ? 'expanded' : 'collapsed'">
             <mifosx-external-asset-transfer [transferData]="item"></mifosx-external-asset-transfer>
           </div>
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+      <tr mat-row *matRowDef="let item; columns: displayedColumns;"
         class="element-row"
-        [class.expanded-row]="expandedRow === row"
-        (click)="expandedRow = expandedRow === row ? null : row"></tr>
+        [class.expanded-row]="expandedRowId === item.transferId"
+        (click)="expandedRowId = expandedRowId === item.transferId ? null : item.transferId"></tr>
+      <tr mat-row *matRowDef="let item; columns: ['expandedDetail']" class="detail-row"></tr>
     </table>
 
     <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[50, 100, 200]" [length]="totalRows" (page)="pageChanged($event)"

@@ -13,6 +13,7 @@ export class ExternalAssetTransferComponent implements OnInit {
   constructor(private externalAssetOwner: ExternalAssetOwner) { }
 
   ngOnInit(): void {
+    console.log(this.transferData);
   }
 
   itemStatus(status: string): string {

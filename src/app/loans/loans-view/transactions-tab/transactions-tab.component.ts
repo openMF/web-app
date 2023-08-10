@@ -162,13 +162,15 @@ export class TransactionsTabComponent implements OnInit {
     if (this.isChargeOff(transaction.type)) {
       command = 'undo-charge-off';
       operationDate = this.settingsService.businessDate;
+      payload = {};
+    } else {
+      payload = {
+        transactionDate: this.dateUtils.formatDate(operationDate && new Date(operationDate), dateFormat),
+        transactionAmount: 0,
+        dateFormat,
+        locale
+      };
     }
-    payload = {
-      transactionDate: this.dateUtils.formatDate(operationDate && new Date(operationDate), dateFormat),
-      transactionAmount: 0,
-      dateFormat,
-      locale
-    };
 
     const undoTransactionAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { heading: 'Undo Transaction', dialogContext: `Are you sure you want undo the transaction type ${transaction.type.value} with id ${transaction.id}` }
