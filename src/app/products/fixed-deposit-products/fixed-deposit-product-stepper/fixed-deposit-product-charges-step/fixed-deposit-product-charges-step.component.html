@@ -8,12 +8,20 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+  
+  <div fxFlex="48%" fxLayout="row" fxLayoutGap="4%" fxLayout.lt-md="column">
+    <div fxFlexAlign="center">
+      <mat-checkbox labelPosition="before" formControlName="accrual">
+        Is Accrual
+      </mat-checkbox>
+    </div>
 
-  <div fxFlex="48%" fxFlexAlign="center">
-    <button type="button" mat-raised-button color="primary" (click)="addCharge(charge)" [disabled]="!charge.value">
-      <fa-icon icon="plus" class="m-r-10"></fa-icon>
-      Add
-    </button>
+    <div fxFlexAlign="center">
+      <button type="button" mat-raised-button color="primary" (click)="addCharge(charge)" [disabled]="!charge.value">
+        <fa-icon icon="plus" class="m-r-10"></fa-icon>
+        Add
+      </button>
+    </div>
   </div>
 
   <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="chargesDataSource" [hidden]="chargesDataSource.length === 0">
