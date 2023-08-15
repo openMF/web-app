@@ -253,7 +253,7 @@ export class AuthenticationService {
       if (isLoggedIn && this.isAuthenticated() === true) {
         this.authenticationInterceptor.removeAuthorization();
         this.setCredentials();
-        this.keyCloak.logout('http://localhost:4200');
+        this.keyCloak.logout();
       } else {
       return of(false);
       }

@@ -13,6 +13,7 @@ Release Notes
     * [SER-1617] - Fix error when accessing group member details from Group details page
     * [SER-1536] - Implement Loan Top-up in Fineract UI 
     * [SER-1618] - Search Client on the client list interface by multiple fields as done in the old version
+    * [SER-1895] - Fix Fineract UI Signout Redirect Keycloak Error
 
 
 ## Version 1.0.0 - for use with Fineract Web App
