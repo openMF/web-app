@@ -30,7 +30,7 @@ export class EditSavingProductComponent implements OnInit {
   @ViewChild(SavingProductAccountingStepComponent, { static: true }) savingProductAccountingStep: SavingProductAccountingStepComponent;
 
   savingProductAndTemplate: any;
-  accountingRuleData = ['None', 'Cash'];
+  accountingRuleData = ['None', 'Cash', 'Accrual (periodic)'];
 
   /**
    * @param {ActivatedRoute} route Activated Route.
