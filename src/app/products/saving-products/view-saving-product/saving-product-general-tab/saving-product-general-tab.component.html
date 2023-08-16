@@ -209,7 +209,7 @@
           <span fxFlex="60%">{{ savingProduct.accountingRule.value }}</span>
         </div>
 
-        <div fxFlexFill *ngIf="savingProduct.accountingRule.id === 2" fxLayout="row wrap" fxLayout.lt-md="column">
+        <div fxFlexFill *ngIf="savingProduct.accountingRule === 2 || savingProduct.accountingRule === 3" fxLayout="row wrap" fxLayout.lt-md="column">
 
           <h4 fxFlexFill class="mat-h4">Assets</h4>
 
@@ -220,13 +220,27 @@
             <span fxFlex="60%">({{ savingProduct.accountingMappings.overdraftPortfolioControl.glCode }}) {{ savingProduct.accountingMappings.overdraftPortfolioControl.name }}</span>
           </div>
 
+          <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column" *ngIf="savingProduct.accountingRule === 3">
+            <span fxFlex="40%">Fees receivable:</span>
+            <span fxFlex="60%">({{ savingProduct.accountingMappings.savingsReferenceAccount.glCode }}) {{ savingProduct.accountingMappings.savingsReferenceAccount.name }}</span>
+            <span fxFlex="40%">Penalties recievable:</span>
+            <span fxFlex="60%">({{ savingProduct.accountingMappings.overdraftPortfolioControl.glCode }}) {{ savingProduct.accountingMappings.overdraftPortfolioControl.name }}</span>
+          </div>
+
           <h4 fxFlexFill class="mat-h4">Liabilities</h4>
 
           <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
             <span fxFlex="40%">Saving control:</span>
             <span fxFlex="60%">({{ savingProduct.accountingMappings.savingsControlAccount.glCode }}) {{ savingProduct.accountingMappings.savingsControlAccount.name }}</span>
             <span fxFlex="40%">Savings transfers in suspense:</span>
-            <span fxFlex="60%">({{ savingProduct.accountingMappings.transfersInSuspenseAccount.glCode }}) {{ savingProduct.accountingMappings.transfersInSuspenseAccount.name }}</span>
+            <span fxFlex="60%">({{ savingProduct.accountingMappings.transfersInSuspenseAccount.glCode }}) {{ savingProduct.accountingMappings.transfersInSuspenseAccount.name }}</span>            
+          </div>
+
+          <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
+            <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column" *ngIf="savingProduct.accountingRule === 3">
+              <span fxFlex="40%">Saving control:</span>
+              <span fxFlex="60%">({{ savingProduct.accountingMappings.savingsControlAccount.glCode }}) {{ savingProduct.accountingMappings.savingsControlAccount.name }}</span>
+            </div>
             <div fxFlexFill *ngIf="savingProduct.isDormancyTrackingActive">
               <span fxFlex="40%">Escheat liability:</span>
               <span fxFlex="60%">({{ savingProduct.accountingMappings.escheatLiabilityAccount.glCode }}) {{ savingProduct.accountingMappings.escheatLiabilityAccount.name }}</span>

@@ -31,7 +31,7 @@ export class CreateRecurringDepositProductComponent implements OnInit {
   @ViewChild(RecurringDepositProductAccountingStepComponent, { static: true }) recurringDepositProductAccountingStep: RecurringDepositProductAccountingStepComponent;
 
   recurringDepositProductsTemplate: any;
-  accountingRuleData = ['None', 'Cash'];
+  accountingRuleData = ['None', 'Cash', 'Accrual (periodic)'];
 
   /**
    * @param {ActivatedRoute} route Activated Route.

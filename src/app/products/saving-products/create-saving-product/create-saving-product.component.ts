@@ -29,7 +29,7 @@ export class CreateSavingProductComponent implements OnInit {
   @ViewChild(SavingProductAccountingStepComponent, { static: true }) savingProductAccountingStep: SavingProductAccountingStepComponent;
 
   savingProductsTemplate: any;
-  accountingRuleData = ['None', 'Cash'];
+  accountingRuleData = ['None', 'Cash', 'Accrual (periodic)'];
 
   /**
    * @param {ActivatedRoute} route Activated Route.

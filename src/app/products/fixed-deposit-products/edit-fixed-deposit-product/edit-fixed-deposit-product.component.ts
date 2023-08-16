@@ -31,7 +31,7 @@ export class EditFixedDepositProductComponent implements OnInit {
   @ViewChild(FixedDepositProductAccountingStepComponent, { static: true }) fixedDepositProductAccountingStep: FixedDepositProductAccountingStepComponent;
 
   fixedDepositProductsTemplate: any;
-  accountingRuleData = ['None', 'Cash'];
+  accountingRuleData = ['None', 'Cash', 'Accrual (periodic)'];
 
   /**
    * @param {ActivatedRoute} route Activated Route.
