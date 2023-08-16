@@ -150,14 +150,14 @@ const routes: Routes = [
             children: [
               {
                 path: 'datatables',
-                children:[{
-                  path:':datatableName',
-                  component:DatatableTransactionTabComponent,
-                  data: {title : extract('View Data table'),routeParamBreadcrumb:'datatableName'},
+                children: [{
+                  path: ':datatableName',
+                  component: DatatableTransactionTabComponent,
+                  data: { title: extract('View Data table'), routeParamBreadcrumb: 'datatableName' },
                   resolve: {
-                    transactionDatatable:TransactionDatatableResolver
-                  }  
+                    transactionDatatable: TransactionDatatableResolver
                   }
+                }
                 ]
 
               }

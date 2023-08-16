@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
-//rxjs Imports 
+// rxjs Imports 
 import { Observable, of } from 'rxjs';
 
 // Custom Service
@@ -13,15 +13,15 @@ export class TransactionDatatablesResolver implements Resolve<Object> {
 
   /**
    * 
-   * @param savingsService 
+   * @param savingsService Savings Service
    */
-  constructor(private savingsService:SavingsService){}
+  constructor(private savingsService: SavingsService) { }
   /**
    * 
    * @param route 
    * @returns {Observable<any>}
    */
-  resolve(route: ActivatedRouteSnapshot): Observable<boolean> {
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
     return this.savingsService.getSavingsTransactionDatatables();
   }
 }

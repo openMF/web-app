@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
-//rxjs Imports 
+// rxjs Imports 
 import { Observable, of } from 'rxjs';
 
 // Custom Service

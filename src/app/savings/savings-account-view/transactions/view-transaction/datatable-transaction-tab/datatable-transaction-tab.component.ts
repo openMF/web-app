@@ -7,7 +7,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./datatable-transaction-tab.component.scss']
 })
 
-export class DatatableTransactionTabComponent implements OnInit {
+export class DatatableTransactionTabComponent {
+  /** Transaction Id */
   entityId: string;
   /** Savings Datatable */
   entityDatatable: any;
@@ -15,13 +16,10 @@ export class DatatableTransactionTabComponent implements OnInit {
   multiRowDatatableFlag: boolean;
   constructor(private route: ActivatedRoute) {
     this.entityId = this.route.parent.parent.snapshot.paramMap.get('id');
-    this.route.data.subscribe((data: { transactionDatatable:any }) => {
+    this.route.data.subscribe((data: { transactionDatatable: any }) => {
       this.entityDatatable = data.transactionDatatable;
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });
-   }
-
-  ngOnInit(): void {
   }
 
 }
