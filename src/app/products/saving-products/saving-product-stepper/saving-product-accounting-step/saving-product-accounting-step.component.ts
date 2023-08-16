@@ -92,7 +92,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
   setConditionalControls() {
     this.savingProductAccountingForm.get('accountingRule').valueChanges
       .subscribe((accountingRule: any) => {
-        if (accountingRule === 2) {
+        if (accountingRule === 2 || accountingRule === 3) {
           this.savingProductAccountingForm.addControl('savingsReferenceAccountId', new FormControl('', Validators.required));
           this.savingProductAccountingForm.addControl('overdraftPortfolioControlId', new FormControl('', Validators.required));
           this.savingProductAccountingForm.addControl('savingsControlAccountId', new FormControl('', Validators.required));
@@ -103,6 +103,12 @@ export class SavingProductAccountingStepComponent implements OnInit {
           this.savingProductAccountingForm.addControl('incomeFromPenaltyAccountId', new FormControl('', Validators.required));
           this.savingProductAccountingForm.addControl('incomeFromInterestId', new FormControl('', Validators.required));
           this.savingProductAccountingForm.addControl('advancedAccountingRules', new FormControl(false));
+
+          if (accountingRule === 3) {
+            this.savingProductAccountingForm.addControl('feeReceivableAccountId', new FormControl('', Validators.required));
+            this.savingProductAccountingForm.addControl('penaltyReceivableAccountId', new FormControl('', Validators.required));
+            this.savingProductAccountingForm.addControl('interestPayableAccountId', new FormControl('', Validators.required));
+          }
 
           if (this.isDormancyTrackingActive.value) {
             this.savingProductAccountingForm.addControl('escheatLiabilityId', new FormControl('', Validators.required));
@@ -273,6 +279,15 @@ export class SavingProductAccountingStepComponent implements OnInit {
 
   get savingProductAccounting() {
     return this.savingProductAccountingForm.value;
+  }
+
+  isCashOrAccrualAccounting(): boolean {
+    return ((this.savingProductAccountingForm.value.accountingRule === 2) || 
+            (this.savingProductAccountingForm.value.accountingRule === 3));
+  }
+
+  isAccrualAccounting(): boolean {
+    return (this.savingProductAccountingForm.value.accountingRule === 3);
   }
 
 }

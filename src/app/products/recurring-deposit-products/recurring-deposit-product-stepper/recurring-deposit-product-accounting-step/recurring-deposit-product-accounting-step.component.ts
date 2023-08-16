@@ -111,7 +111,7 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
   setConditionalControls() {
     this.recurringDepositProductAccountingForm.get('accountingRule').valueChanges
       .subscribe((accountingRule: any) => {
-        if (accountingRule === 2) {
+        if (accountingRule === 2 || accountingRule === 3) {
           this.recurringDepositProductAccountingForm.addControl('savingsReferenceAccountId', new FormControl('', Validators.required));
           this.recurringDepositProductAccountingForm.addControl('savingsControlAccountId', new FormControl('', Validators.required));
           this.recurringDepositProductAccountingForm.addControl('transfersInSuspenseAccountId', new FormControl('', Validators.required));
@@ -119,6 +119,12 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
           this.recurringDepositProductAccountingForm.addControl('incomeFromFeeAccountId', new FormControl('', Validators.required));
           this.recurringDepositProductAccountingForm.addControl('incomeFromPenaltyAccountId', new FormControl('', Validators.required));
           this.recurringDepositProductAccountingForm.addControl('advancedAccountingRules', new FormControl(false));
+
+          if (accountingRule === 3) {
+            this.recurringDepositProductAccountingForm.addControl('feeReceivableAccountId', new FormControl('', Validators.required));
+            this.recurringDepositProductAccountingForm.addControl('penaltyReceivableAccountId', new FormControl('', Validators.required));
+            this.recurringDepositProductAccountingForm.addControl('interestPayableAccountId', new FormControl('', Validators.required));
+          }
 
           this.recurringDepositProductAccountingForm.get('advancedAccountingRules').valueChanges
             .subscribe((advancedAccountingRules: boolean) => {
@@ -269,4 +275,12 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
     return this.recurringDepositProductAccountingForm.value;
   }
 
+  isCashOrAccrualAccounting(): boolean {
+    return ((this.recurringDepositProductAccountingForm.value.accountingRule === 2) || 
+            (this.recurringDepositProductAccountingForm.value.accountingRule === 3));
+  }
+
+  isAccrualAccounting(): boolean {
+    return (this.recurringDepositProductAccountingForm.value.accountingRule === 3);
+  }
 }
