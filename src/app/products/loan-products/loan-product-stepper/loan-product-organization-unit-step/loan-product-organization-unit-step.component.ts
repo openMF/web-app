@@ -7,6 +7,7 @@ import { OrganizationService } from 'app/organization/organization.service';
 import { CountryTreeViewComponent } from 'app/shared/country-tree-view/country-tree-view.component';
 import DataFlattner from 'app/core/utils/data-flattner';
 import { Router } from '@angular/router';
+import { AlertService } from 'app/core/alert/alert.service';
 
 @Component({
   selector: 'mifosx-loan-product-organization-unit-step',
@@ -25,14 +26,16 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
   treeDataSource: any = [];
   selectedUnits: any = [];
   data: any;
-
+  isCountryHasActiveCurrency: boolean = false;
   countryId: any;
+  countryName: any;
 
 
   constructor(
     private productsService: ProductsService,
     private formBuilder: FormBuilder,
     private organizationService: OrganizationService,
+    private alertService: AlertService,
     private router: Router,
   ) {
     this.getCountries();
@@ -40,6 +43,7 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
 
   ngOnInit(): void {
     this.createLoanProductOrganizationForm();
+    console.log("after", this)
 
     if (this.router.url.includes('edit')) {
       this.search(this.loanProductsTemplate.countryId);
@@ -47,7 +51,10 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
 
     this.loanProductOrganizationForm.patchValue({
           'countryId': this.loanProductsTemplate.countryId,
-          'officeIds': this.loanProductsTemplate.offices?.officeId
+          'officeIds': this.loanProductsTemplate.offices?.officeId,
+          'digitsAfterDecimal': 1,
+          'inMultiplesOf': 1,
+          'installmentAmountInMultiplesOf': 1
     });
   }
 
@@ -69,6 +76,22 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
       this.countryId = event.value;
       this.productsService.countryId = event.value;
     }
+    this.organizationService.getCountry(this.countryId).subscribe((res: any) => {
+      this.countryName = res.name;
+      if(res.hasOwnProperty('activeCurrency') && res.activeCurrency.code){
+        this.isCountryHasActiveCurrency = true;
+        this.loanProductOrganizationForm.patchValue({ 'currencyCode': res.activeCurrency.code });
+
+      } else {
+        this.isCountryHasActiveCurrency = false;
+        this.loanProductOrganizationForm.patchValue({ 'currencyCode': ''});
+        this.alertService.alert({
+          type: 'Source Country Currency Required',
+          message: `Please contact your administrator to add a currency for this country ${this.countryName}` 
+        });
+      }
+    });
+
     this.organizationService.searchCountryById(this.countryId).subscribe((res: any) => {
       if (this.router.url.includes('edit')) {
          this.data = res
@@ -101,8 +124,11 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
   createLoanProductOrganizationForm() {
     this.loanProductOrganizationForm = this.formBuilder.group({
       'countryId': ['', Validators.required],
-      'officeIds': [this.selectedUnits]
-
+      'officeIds': [this.selectedUnits],
+      'currencyCode': ['', Validators.required],
+      'digitsAfterDecimal': ['', Validators.required],
+      'inMultiplesOf': ['', Validators.required],
+      'installmentAmountInMultiplesOf': ['', Validators.required]
     });
   }
 

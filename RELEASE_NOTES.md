@@ -14,8 +14,7 @@ Release Notes
     * [SER-1536] - Implement Loan Top-up in Fineract UI 
     * [SER-1618] - Search Client on the client list interface by multiple fields as done in the old version
     * [SER-1895] - Fix Fineract UI Signout Redirect Keycloak Error
-
-
+    * [SER-1532] - Hide fields in the loan creation process
 ## Version 1.0.0 - for use with Fineract Web App
 
     * This repository was forked from Mifos Web App

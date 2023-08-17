@@ -244,6 +244,9 @@ export class OrganizationService {
   getCountries (): Observable<any> {
     return this.http.get('/countries');
   }
+  getCountry  (countryId: number): Observable<any> {
+    return this.http.get(`/countries/${countryId}`);
+  }
   searchCountryById (countryId: number) {
     return this.http.get(`/offices/search?countryId=${countryId}`);
   }
