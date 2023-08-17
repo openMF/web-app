@@ -102,7 +102,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
 
     if (this.loanProductsTemplate.enableDownPayment) {
       this.loanProductSettingsForm.patchValue({
-        'disbursedAmountPercentageForDownPayment': this.loanProductsTemplate.disbursedAmountPercentageForDownPayment || 0
+        'disbursedAmountPercentageForDownPayment': this.loanProductsTemplate.disbursedAmountPercentageForDownPayment || 0,
+        'enableAutoRepaymentForDownPayment': this.loanProductsTemplate.enableAutoRepaymentForDownPayment || false
       });
     }
 
@@ -345,8 +346,10 @@ export class LoanProductSettingsStepComponent implements OnInit {
       .subscribe(enableDownPayment => {
         if (enableDownPayment) {
           this.loanProductSettingsForm.addControl('disbursedAmountPercentageForDownPayment', new FormControl(0, [Validators.required, rangeValidator(0, 100) ]));
+          this.loanProductSettingsForm.addControl('enableAutoRepaymentForDownPayment', new FormControl(false, []));
         } else {
           this.loanProductSettingsForm.removeControl('disbursedAmountPercentageForDownPayment');
+          this.loanProductSettingsForm.removeControl('enableAutoRepaymentForDownPayment');
         }
       });
 
