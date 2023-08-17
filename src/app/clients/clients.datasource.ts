@@ -36,7 +36,7 @@ export class ClientsDataSource implements DataSource<any> {
    */
   getClients(orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, showClosedAccounts: boolean = true) {
     this.clientsSubject.next([]);
-    this.clientsService.getClients(orderBy, sortOrder, pageIndex * limit, limit)
+    this.clientsService.getClients('id', 'ASC', pageIndex * limit, limit)
       .subscribe((clients: any) => {
         if (showClosedAccounts) {
           clients.pageItems = clients.pageItems;
@@ -101,7 +101,7 @@ export class ClientsDataSource implements DataSource<any> {
    */
   filterClients(filter: string, orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, showClosedAccounts: boolean = true) {
     this.clientsSubject.next([]);
-    this.clientsService.getClients(orderBy, sortOrder, pageIndex * limit, limit)
+    this.clientsService.getClients('id', 'ASC', pageIndex * limit, limit)
       .subscribe((clients: any) => {
         if (showClosedAccounts) {
           clients.pageItems = clients.pageItems.filter((client: any) => client.displayName.toLowerCase().includes(filter));
