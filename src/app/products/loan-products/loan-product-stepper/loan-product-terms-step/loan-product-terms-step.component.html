@@ -60,28 +60,8 @@
       </mat-form-field>
 
       <mat-form-field fxFlex="23%">
-        <mat-label>Default</mat-label>
-        <input type="number" matInput formControlName="interestRatePerPeriod" required>
-        <mat-error>
-          Default nominal interest rate is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field fxFlex="23%">
         <mat-label>Maximum</mat-label>
         <input type="number" matInput formControlName="maxInterestRatePerPeriod">
-      </mat-form-field>
-
-      <mat-form-field fxFlex="23%">
-        <mat-label>Frequency</mat-label>
-        <mat-select formControlName="interestRateFrequencyType" required>
-          <mat-option *ngFor="let interestRateFrequencyType of interestRateFrequencyTypeData" [value]="interestRateFrequencyType.id">
-            {{ interestRateFrequencyType.value }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Nominal interest rate frequency is <strong>required</strong>
-        </mat-error>
       </mat-form-field>
 
     </div>

@@ -30,13 +30,6 @@
 
     </mat-step>
 
-    <mat-step [stepControl]="loanProductCurrencyForm">
-
-      <ng-template matStepLabel>CURRENCY</ng-template>
-
-      <mifosx-loan-product-currency-step [loanProductsTemplate]="loanProductsTemplate"></mifosx-loan-product-currency-step>
-
-    </mat-step>
 
     <mat-step [stepControl]="loanProductOrganizationForm">
 
@@ -88,7 +81,7 @@
 
       <mifosx-loan-product-charges-step
         [loanProductsTemplate]="loanProductsTemplate"
-        [currencyCode]="loanProductCurrencyForm.get('currencyCode')"
+        [currencyCode]="loanProductOrganizationForm.get('currencyCode')"
         [multiDisburseLoan]="loanProductSettingsForm.get('multiDisburseLoan')"
       >
       </mifosx-loan-product-charges-step>

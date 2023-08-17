@@ -18,19 +18,6 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
-      <mat-label>Fund</mat-label>
-      <mat-select formControlName="fundId">
-        <mat-option *ngFor="let fund of fundData" [value]="fund.id">
-          {{ fund.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-checkbox labelPosition="before" formControlName="includeInBorrowerCycle" fxFlex="48%">
-      Include in Customer Loan Counter
-    </mat-checkbox>
-
     <mat-form-field fxFlex="48%" (click)="startDatePicker.open()">
       <mat-label>Start Date</mat-label>
       <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="startDatePicker" formControlName="startDate">

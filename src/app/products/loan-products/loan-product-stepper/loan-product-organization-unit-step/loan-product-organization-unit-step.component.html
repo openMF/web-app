@@ -26,6 +26,17 @@
             </mifosx-country-tree-view>
           </div>
     </div>
+
+    <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+      <mat-form-field fxFlex="100%" fxFlex.xs="100%" fxFlex.sm="50%">
+        <mat-error *ngIf="!isCountryHasActiveCurrency">
+          There is no active currency set for this country <strong>{{ countryName }}</strong>
+        </mat-error>
+        <mat-label>Currency</mat-label>
+        <input matInput formControlName="currencyCode" [value]="loanProductsTemplate?.currencyCode" [readonly]="true" disabled>
+      </mat-form-field>
+    </div>
+
     <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
         <button mat-raised-button matStepperPrevious disabled>
           <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
