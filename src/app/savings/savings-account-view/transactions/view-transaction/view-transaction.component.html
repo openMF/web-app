@@ -1,140 +1,110 @@
-<div fxLayoutAlign="end" class="container m-b-20" fxLayoutGap="2%"
-  *ngIf="!(transactionData.interestedPostedAsOn === false && (transactionData.transactionType.id === 17 || transactionData.transactionType.id === 3))">
-  <span *mifosxHasPermission="'ADJUSTTRANSACTION_SAVINGSACCOUNT'">
-    <button mat-raised-button color="primary" *ngIf="transactionData.transactionType.value == 'Transfer' || transactionData.reversed == 'true'
-        || transactionData.transactionType.id==3 || transactionData.transactionType.id==17" [routerLink]="'edit'">
-      <fa-icon icon="edit" class="m-r-10"></fa-icon>Edit
-    </button>
-  </span>
-  <span *ngIf="!transactionData.reversed && transactionData.transactionType.amountHold">
-    <button mat-raised-button color="primary" *mifosxHasPermission="'RELEASEAMOUNT_SAVINGSACCOUNT'"
-      (click)="releaseAmount()">
-      <fa-icon icon="lock-open" class="m-r-10"></fa-icon>Release Amount
-    </button>
-  </span>
-  <button mat-raised-button color="warn" *mifosxHasPermission="'UNDOTRANSACTION_SAVINGSACCOUNT'"
-    (click)="undoTransaction()" [disabled]="transactionData.reversed">
-    <fa-icon icon="undo" class="m-r-10"></fa-icon>Undo
-  </button>
-</div>
-
-<div class="container">
-
-  <mat-card>
-
-    <mat-card-content>
-
-      <div fxLayout="row wrap" class="content">
-
-        <div fxFlex="50%" class="mat-body-strong">
-          Transaction Id
+<mat-card class="savings-account-card">
+  <!-- Header -->
+  <mat-card-header fxLayout="column" class="header">
+    <mat-card-title-group class="header-title-group">
+      <div class="profile-image-container">
+        <div>
+          <img mat-card-md-image class="profile-image" matTooltip="Savings Account"
+            [src]="'assets/images/savings_account_placeholder.png'">
         </div>
-
-        <div fxFlex="50%">
-          {{ transactionData.id }}
-        </div>
-
-        <div fxFlex="50%" class="mat-body-strong">
-          Type
-        </div>
-
-        <div fxFlex="50%">
-          {{ transactionData.transactionType.value }}
-        </div>
-
-        <div fxFlex="50%" class="mat-body-strong">
-          Transaction Date
-        </div>
-
-        <div fxFlex="50%">
-          {{ transactionData.date | dateFormat }}
-        </div>
-
-        <div fxFlex="50%" class="mat-body-strong">
-          Currency
-        </div>
-
-        <div fxFlex="50%">
-          {{ transactionData.currency.name }}
-        </div>
-
-        <div fxFlex="50%" class="mat-body-strong">
-          Amount
-        </div>
-
-        <div fxFlex="50%">
-          {{ transactionData.amount | currency }} {{ transactionData.currency.code }}
-        </div>
-
-        <div fxFlex="50%" class="mat-body-strong">
-          Note
-        </div>
-
-        <div fxFlex="50%">
-          {{ transactionData.note }}
-        </div>
-
-        <mat-divider *ngIf="transactionData.paymentDetailData" [inset]="true"></mat-divider>
-
-        <ng-container *ngIf="transactionData.paymentDetailData">
-
-          <div *ngIf="transactionData.paymentDetailData.paymentType" fxFlex="50%" class="mat-body-strong">
-            {{ 'Payment Type' | translate }}
-          </div>
-
-          <div *ngIf="transactionData.paymentDetailData.paymentType" fxFlex="50%">
-            {{ transactionData.paymentDetailData.paymentType.name }}
-          </div>
-
-          <div *ngIf="transactionData.paymentDetailData.accountNumber" fxFlex="50%" class="mat-body-strong">
-            {{ 'Account No.' | translate }}
-          </div>
-
-          <div *ngIf="transactionData.paymentDetailData.accountNumber" fxFlex="50%">
-            {{ transactionData.paymentDetailData.accountNumber }}
-          </div>
-
-          <div *ngIf="transactionData.paymentDetailData.checkNumber" fxFlex="50%" class="mat-body-strong">
-            {{ 'Cheque Number' | translate }}
-          </div>
-
-          <div *ngIf="transactionData.paymentDetailData.checkNumber" fxFlex="50%">
-            {{ transactionData.paymentDetailData.checkNumber }}
-          </div>
-
-          <div *ngIf="transactionData.paymentDetailData.routingCode" fxFlex="50%" class="mat-body-strong">
-            {{ 'Routing Code' | translate }}
-          </div>
-
-          <div *ngIf="transactionData.paymentDetailData.routingCode" fxFlex="50%">
-            {{ transactionData.paymentDetailData.routingCode }}
-          </div>
-
-          <div *ngIf="transactionData.paymentDetailData.receiptNumber" fxFlex="50%" class="mat-body-strong">
-            {{ 'Receipt No.' | translate }}
-          </div>
-
-          <div *ngIf="transactionData.paymentDetailData.receiptNumber" fxFlex="50%">
-            {{ transactionData.paymentDetailData.receiptNumber }}
-          </div>
-
-          <div *ngIf="transactionData.paymentDetailData.bankNumber" fxFlex="50%" class="mat-body-strong">
-            {{ 'Bank No.' | translate }}
-          </div>
-
-          <div *ngIf="transactionData.paymentDetailData.bankNumber" fxFlex="50%">
-            {{ transactionData.paymentDetailData.bankNumber }}
-          </div>
-
-        </ng-container>
-
       </div>
 
-      <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column">
-        <button type="button" mat-raised-button color="primary" [routerLink]="['../']">{{ 'Back' | translate }}</button>
+      <div class="mat-typography account-card-title">
+        <mat-card-title fxLayout="row" fxLayout.lt-md="column">
+          <h3 fxFlex="95%">
+            Transaction Id : {{transactionData.id}}<span class="m-l-10">
+              <mifosx-account-number accountNo="{{transactionData.id}}"></mifosx-account-number>
+            </span>
+          </h3>
+          <div fxFlex="15%">
+            <button mat-raised-button color="warn" *mifosxHasPermission="'UNDOTRANSACTION_SAVINGSACCOUNT'"
+              (click)="undoTransaction()" [disabled]="transactionData.reversed">
+              <fa-icon icon="undo" class="m-r-10"></fa-icon>Undo
+            </button>
+          </div>
+          <span *mifosxHasPermission="'ADJUSTTRANSACTION_SAVINGSACCOUNT'">
+            <button mat-raised-button color="primary" *ngIf="transactionData.transactionType.value === 'Transfer' || transactionData.reversed === 'true'
+                || transactionData.transactionType.id===3 || transactionData.transactionType.id===17" [routerLink]="'edit'">
+              <fa-icon icon="edit" class="m-r-10"></fa-icon>Edit
+            </button>
+          </span>
+          <span *ngIf="!transactionData.reversed && transactionData.transactionType.amountHold">
+            <button mat-raised-button color="primary" *mifosxHasPermission="'RELEASEAMOUNT_SAVINGSACCOUNT'"
+              (click)="releaseAmount()">
+              <fa-icon icon="lock-open" class="m-r-10"></fa-icon>Release Amount
+            </button>
+          </span>
+        </mat-card-title>
       </div>
-    </mat-card-content>
 
-  </mat-card>
+    </mat-card-title-group>
+  </mat-card-header>
 
-</div>
+  <!-- Content -->
+  <mat-card-content class="content">
+    <div class="savings-account-tables" fxLayout="row" fxLayoutGap="2%">
+      <div fxFlex="96%">
+        <h4 class="table-headers">Transaction Summary</h4>
+        <table>
+          <tbody>
+            <tr *ngIf="transactionData.transactionType.value">
+              <td>Transaction Type</td>
+              <td>{{transactionData.transactionType.value}}</td>
+            </tr>
+            <tr *ngIf="transactionData.date">
+              <td>Transaction Date</td>
+              <td>{{transactionData.date | dateFormat}}</td>
+            </tr>
+            <tr *ngIf="transactionData.currency.name">
+              <td>Currency</td>
+              <td>{{transactionData.currency.name}}</td>
+            </tr>
+            <tr *ngIf="transactionData.amount">
+              <td>Amount</td>
+              <td>{{transactionData.amount | currency}}</td>
+            </tr>
+            <tr *ngIf="transactionData.note">
+              <td>Note</td>
+              <td>{{transactionData.note}}</td>
+            </tr>
+            <tr *ngIf="transactionData.paymentDetailData.paymentType">
+              <td>{{ 'Payment Type' | translate }}</td>
+              <td>{{transactionData.paymentDetailData.paymentType.name}}</td>
+            </tr>
+            <tr *ngIf="transactionData.paymentDetailData.accountNumber">
+              <td>{{ 'Account Number' | translate }}</td>
+              <td>{{transactionData.paymentDetailData.accountNumber}}</td>
+            </tr>
+            <tr *ngIf="transactionData.paymentDetailData.checkNumber">
+              <td>{{ 'Cheque Number' | translate }}</td>
+              <td>{{transactionData.paymentDetailData.checkNumber}}</td>
+            </tr>
+            <tr *ngIf="transactionData.paymentDetailData.routingCode">
+              <td>{{ 'Routing Code' | translate }}</td>
+              <td>{{transactionData.paymentDetailData.routingCode}}</td>
+            </tr>
+            <tr *ngIf="transactionData.paymentDetailData.receiptNumber">
+              <td>{{ 'Receipt Number' | translate }}</td>
+              <td>{{transactionData.paymentDetailData.receiptNumber}}</td>
+            </tr>
+            <tr *ngIf="transactionData.paymentDetailData.bankNumber">
+              <td>{{ 'Bank Number' | translate }}</td>
+              <td>{{transactionData.paymentDetailData.bankNumber}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <nav mat-tab-nav-bar class="navigation-tabs">
+      <ng-container *ngFor="let transactionDatatable of entityDatatable">
+        <a mat-tab-link *mifosxHasPermission="'READ_' + transactionDatatable.registeredTableName"
+        [routerLink]="['./datatables',transactionDatatable.registeredTableName]" routerLinkActive #datatable="routerLinkActive"
+         [active]="datatable.isActive">
+          {{transactionDatatable.registeredTableName}}
+        </a>
+      </ng-container>
+    </nav>
+    <router-outlet></router-outlet>
+  </mat-card-content>
+</mat-card>
