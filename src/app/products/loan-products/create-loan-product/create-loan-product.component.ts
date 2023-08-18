@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Components */
 import { LoanProductDetailsStepComponent } from '../loan-product-stepper/loan-product-details-step/loan-product-details-step.component';
-import { LoanProductCurrencyStepComponent } from '../loan-product-stepper/loan-product-currency-step/loan-product-currency-step.component';
 import { LoanProductTermsStepComponent } from '../loan-product-stepper/loan-product-terms-step/loan-product-terms-step.component';
 import { LoanProductSettingsStepComponent } from '../loan-product-stepper/loan-product-settings-step/loan-product-settings-step.component';
 import { LoanProductChargesStepComponent } from '../loan-product-stepper/loan-product-charges-step/loan-product-charges-step.component';
@@ -25,7 +24,6 @@ import { SettingsService } from 'app/settings/settings.service';
 export class CreateLoanProductComponent implements OnInit {
 
   @ViewChild(LoanProductDetailsStepComponent, { static: true }) loanProductDetailsStep: LoanProductDetailsStepComponent;
-  @ViewChild(LoanProductCurrencyStepComponent, { static: true }) loanProductCurrencyStep: LoanProductCurrencyStepComponent;
   @ViewChild(LoanProductOrganizationUnitStepComponent, { static: true }) loanProductOrganizationStep: LoanProductOrganizationUnitStepComponent;
   @ViewChild(LoanProductTermsStepComponent, { static: true }) loanProductTermsStep: LoanProductTermsStepComponent;
   @ViewChild(LoanProductSettingsStepComponent, { static: true }) loanProductSettingsStep: LoanProductSettingsStepComponent;
@@ -60,9 +58,6 @@ export class CreateLoanProductComponent implements OnInit {
     return this.loanProductDetailsStep.loanProductDetailsForm;
   }
 
-  get loanProductCurrencyForm() {
-    return this.loanProductCurrencyStep.loanProductCurrencyForm;
-  }
 
   get loanProductOrganizationForm() {
     return this.loanProductOrganizationStep.loanProductOrganizationForm;
@@ -91,7 +86,6 @@ export class CreateLoanProductComponent implements OnInit {
   get loanProductFormValid() {
     return (
       this.loanProductDetailsForm.valid &&
-      this.loanProductCurrencyForm.valid &&
       this.loanProductOrganizationForm.valid &&
       this.loanProductAppsForm.valid &&
       this.loanProductTermsForm.valid &&
@@ -104,7 +98,6 @@ export class CreateLoanProductComponent implements OnInit {
   get loanProduct() {
     return {
       ...this.loanProductDetailsStep.loanProductDetails,
-      ...this.loanProductCurrencyStep.loanProductCurrency,
       ...this.loanProductOrganizationStep.loanProductOrganization,
       ...this.loanProductAppsStep.loanProductApps,
       ...this.loanProductTermsStep.loanProductTerms,

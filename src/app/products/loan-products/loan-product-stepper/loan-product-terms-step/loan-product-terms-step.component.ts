@@ -48,7 +48,7 @@ export class LoanProductTermsStepComponent implements OnInit {
       'maxNumberOfRepayments': this.loanProductsTemplate.maxNumberOfRepayments,
       'isLinkedToFloatingInterestRates': this.loanProductsTemplate.isLinkedToFloatingInterestRates,
       'minInterestRatePerPeriod': this.loanProductsTemplate.minInterestRatePerPeriod,
-      'interestRatePerPeriod': this.loanProductsTemplate.interestRatePerPeriod,
+      'interestRatePerPeriod': 0,
       'maxInterestRatePerPeriod': this.loanProductsTemplate.maxInterestRatePerPeriod,
       'interestRateFrequencyType': this.loanProductsTemplate.interestRateFrequencyType.id,
       'floatingRatesId': this.loanProductsTemplate.floatingRateId,
@@ -109,7 +109,7 @@ export class LoanProductTermsStepComponent implements OnInit {
           this.loanProductTermsForm.addControl('minInterestRatePerPeriod', new FormControl(''));
           this.loanProductTermsForm.addControl('interestRatePerPeriod', new FormControl('', Validators.required));
           this.loanProductTermsForm.addControl('maxInterestRatePerPeriod', new FormControl(''));
-          this.loanProductTermsForm.addControl('interestRateFrequencyType', new FormControl(this.interestRateFrequencyTypeData.id, Validators.required));
+          this.loanProductTermsForm.addControl('interestRateFrequencyType', new FormControl(this.interestRateFrequencyTypeData?.find(el => el.code == "interestRateFrequency.periodFrequencyType.whole_term")?.id, Validators.required));
           this.loanProductTermsForm.removeControl('floatingRatesId');
           this.loanProductTermsForm.removeControl('interestRateDifferential');
           this.loanProductTermsForm.removeControl('isFloatingInterestRateCalculationAllowed');
