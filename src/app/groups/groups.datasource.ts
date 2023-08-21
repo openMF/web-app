@@ -35,7 +35,7 @@ export class GroupsDataSource implements DataSource<any> {
    */
   getGroups(filterBy: any, orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, groupActive: boolean = true) {
     this.groupsSubject.next([]);
-    this.groupsService.getGroups(filterBy, orderBy, sortOrder, pageIndex * limit, limit)
+    this.groupsService.getGroups(filterBy, 'name', 'ASC', pageIndex, limit)
       .subscribe((groups: any) => {
         groups.pageItems = (groupActive) ? (groups.pageItems.filter((group: any) => group.active)) : groups.pageItems;
         this.recordsSubject.next(groups.totalFilteredRecords);
