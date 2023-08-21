@@ -31,7 +31,7 @@ export class BulkImportResolver implements Resolve<Object> {
    */
   getEntityName(importName: string) {
     const bulkImport = this.bulkImportsArray.find((entry: any) => importName === entry.name);
-    return bulkImport.entityType;
+    return bulkImport?.entityType;
   }
 
   /**
@@ -40,7 +40,7 @@ export class BulkImportResolver implements Resolve<Object> {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const entity = this.getEntityName(route.params['import-name']);
-    return this.organizationService.getImports(entity);
+    return entity ? this.organizationService.getImports(entity): null;
   }
 
 }

@@ -111,6 +111,7 @@ import { EditOutletComponent } from './rural-outlet/edit-outlet/edit-outlet.comp
 import { CreateOutletComponent } from './rural-outlet/create-outlet/create-outlet.component';
 import { EditRetailOutletResolver } from './rural-outlet/edit-retail-outlet.resolver';
 import { CreateCurrenciesComponent } from './currencies/create-currencies/create-currencies.component';
+import { BulkRepaymentDownloadComponent } from './bulk-import/bulk-repayment-download/bulk-repayment-download.component';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -663,14 +664,20 @@ const routes: Routes = [
               component: BulkImportComponent,
             },
             {
+              path: 'repayments-download',
+              data: { title: extract('Repayments Download'), breadcrumb: 'Repayments Download' },
+              children: [
+                {
+                  path: '',
+                  component: BulkRepaymentDownloadComponent,
+                }
+              ]
+            },
+            {
               path: ':import-name',
               component: ViewBulkImportComponent,
               data: { title: extract('View Bulk Import'), routeParamBreadcrumb: 'import-name' },
-              resolve: {
-                offices: OfficesResolver,
-                imports: BulkImportResolver
-              }
-            }
+            },
           ]
         },
         {

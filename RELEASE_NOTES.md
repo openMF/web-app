@@ -17,6 +17,7 @@ Release Notes
     * [SER-1532] - Hide fields in the loan creation process
     * [SER-1924] - Allow some transaction types clickable
     * [SER-1524] - Fix pagination issue
+    * [SER-1916] - Create a UI for repayments download
 
 ## Version 1.0.0 - for use with Fineract Web App
 

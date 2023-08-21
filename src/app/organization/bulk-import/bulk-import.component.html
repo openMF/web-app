@@ -65,6 +65,13 @@
             <h4 matLine>Share Accounts</h4>
           </mat-list-item>
 
+          <mat-list-item [routerLink]="['repayments-download']" *mifosxHasPermission="'READ_CLIENT'">
+            <mat-icon matListIcon>
+              <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Repayments Download</h4>
+          </mat-list-item>
+
         </mat-nav-list>
 
       </div>
