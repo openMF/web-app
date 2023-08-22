@@ -95,6 +95,11 @@
   </div>
 
   <div fxFlexFill>
+    <span fxFlex="40%">Installment day calculation from:</span>
+    <span fxFlex="60%">{{ loanProduct.repaymentStartDateType.value }}</span>
+  </div>
+
+  <div fxFlexFill>
     <span fxFlex="40%">Number of Repayments:</span>
     <span fxFlex="60%">{{ loanProduct.numberOfRepayments + ' (Min: ' + (loanProduct.minNumberOfRepayments ?
       loanProduct.minNumberOfRepayments : loanProduct.numberOfRepayments) + ', Max: ' +

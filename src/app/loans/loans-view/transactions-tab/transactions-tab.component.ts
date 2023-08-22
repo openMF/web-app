@@ -109,9 +109,10 @@ export class TransactionsTabComponent implements OnInit {
    * PAYOUT_REFUND:22
    * GOODWILL_CREDIT:23
    * CHARGE_ADJUSTMENT:26
+   * DOWN_PAYMENT:28
    */
   showTransactions(transactionsData: any) {
-    if ([1, 2, 4, 9, 20, 21, 22, 23, 26].includes(transactionsData.type.id)) {
+    if ([1, 2, 4, 9, 20, 21, 22, 23, 26, 28].includes(transactionsData.type.id)) {
       this.router.navigate([transactionsData.id], { relativeTo: this.route });
     }
   }
@@ -135,6 +136,9 @@ export class TransactionsTabComponent implements OnInit {
     }
     if (this.isChargeOff(transaction.type)) {
       return 'chargeoff';
+    }
+    if (this.isDownPayment(transaction.type)) {
+      return 'down-payment';
     }
     return '';
   }
@@ -195,6 +199,10 @@ export class TransactionsTabComponent implements OnInit {
 
   private isChargeOff(transactionType: any): boolean  {
     return (transactionType.chargeoff || transactionType.code === 'loanTransactionType.chargeOff');
+  }
+
+  private isDownPayment(transactionType: any): boolean  {
+    return (transactionType.downPayment || transactionType.code === 'loanTransactionType.downPayment');
   }
 
   private reload() {

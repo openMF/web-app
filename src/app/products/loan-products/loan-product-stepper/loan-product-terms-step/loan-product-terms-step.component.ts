@@ -26,6 +26,7 @@ export class LoanProductTermsStepComponent implements OnInit {
   interestRateFrequencyTypeData: any;
   overAppliedCalculationTypeData: any;
   repaymentFrequencyTypeData: any;
+  repaymentStartDateTypeOptions: any;
 
   displayedColumns: string[] = ['valueConditionType', 'borrowerCycleNumber', 'minValue', 'defaultValue', 'maxValue', 'actions'];
 
@@ -40,6 +41,7 @@ export class LoanProductTermsStepComponent implements OnInit {
     this.floatingRateData = this.loanProductsTemplate.floatingRateOptions;
     this.interestRateFrequencyTypeData = this.loanProductsTemplate.interestRateFrequencyTypeOptions;
     this.repaymentFrequencyTypeData = this.loanProductsTemplate.repaymentFrequencyTypeOptions;
+    this.repaymentStartDateTypeOptions = this.loanProductsTemplate.repaymentStartDateTypeOptions;
     this.overAppliedCalculationTypeData = [{id: 'percentage', value: 'Percentage'}, {id: 'flat', value: 'Fixed Amount'}];
 
     this.loanProductTermsForm.patchValue({
@@ -64,7 +66,8 @@ export class LoanProductTermsStepComponent implements OnInit {
       'useBorrowerCycle': this.loanProductsTemplate.useBorrowerCycle,
       'repaymentEvery': this.loanProductsTemplate.repaymentEvery,
       'repaymentFrequencyType': this.loanProductsTemplate.repaymentFrequencyType.id,
-      'minimumDaysBetweenDisbursalAndFirstRepayment': this.loanProductsTemplate.minimumDaysBetweenDisbursalAndFirstRepayment
+      'minimumDaysBetweenDisbursalAndFirstRepayment': this.loanProductsTemplate.minimumDaysBetweenDisbursalAndFirstRepayment,
+      'repaymentStartDateType': this.loanProductsTemplate.repaymentStartDateType.id || 1
     });
 
     if (this.loanProductsTemplate.allowApprovedDisbursedAmountsOverApplied) {
@@ -99,7 +102,8 @@ export class LoanProductTermsStepComponent implements OnInit {
       'interestRateFrequencyType': ['', Validators.required],
       'repaymentEvery': ['', Validators.required],
       'repaymentFrequencyType': ['', Validators.required],
-      'minimumDaysBetweenDisbursalAndFirstRepayment': ['']
+      'minimumDaysBetweenDisbursalAndFirstRepayment': [''],
+      'repaymentStartDateType': [1]
     });
   }
 
