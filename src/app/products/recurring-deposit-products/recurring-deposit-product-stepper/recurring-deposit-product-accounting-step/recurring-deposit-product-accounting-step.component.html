@@ -11,7 +11,7 @@
 
     <mat-divider fxFlex="98%"></mat-divider>
 
-    <div *ngIf="recurringDepositProductAccountingForm.value.accountingRule === 2" fxFlexFill fxLayout="row wrap"
+    <div *ngIf="isCashOrAccrualAccounting()" fxFlexFill fxLayout="row wrap"
       fxLayoutGap="2%" fxLayout.lt-md="column">
 
       <h4 fxFlex="98%" class="mat-h4">Assets</h4>
@@ -28,6 +28,30 @@
         </mat-error>
       </mat-form-field>
 
+      <mat-form-field *ngIf="isAccrualAccounting()" fxFlex="48%">
+        <mat-label>Fees receivable</mat-label>
+        <mat-select formControlName="feeReceivableAccountId" required>
+          <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
+            {{ assetAccount.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          Fees receivable is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="isAccrualAccounting()" fxFlex="48%">
+        <mat-label>Penalties receivable</mat-label>
+        <mat-select formControlName="penaltyReceivableAccountId" required>
+          <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
+            {{ assetAccount.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          Penalties receivable is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      
       <mat-divider fxFlex="98%"></mat-divider>
 
       <h4 fxFlex="98%" class="mat-h4">Liabilities</h4>
@@ -56,6 +80,18 @@
         </mat-error>
       </mat-form-field>
 
+      <mat-form-field *ngIf="isAccrualAccounting()" fxFlex="48%">
+        <mat-label>Interest payable</mat-label>
+        <mat-select formControlName="interestPayableAccountId" required>
+          <mat-option *ngFor="let liabilityAccount of liabilityAccountData" [value]="liabilityAccount.id">
+            {{ liabilityAccount.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          Interest payable is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      
       <mat-divider fxFlex="98%"></mat-divider>
 
       <h4 fxFlex="98%" class="mat-h4">Expenses</h4>
