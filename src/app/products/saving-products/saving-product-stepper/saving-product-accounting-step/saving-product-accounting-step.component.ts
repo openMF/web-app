@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, UntypedFormArray, Validators, UntypedFormControl, FormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormArray, Validators, UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -185,8 +185,8 @@ export class SavingProductAccountingStepComponent implements OnInit, OnChanges {
     return this.savingProductAccountingForm.get('feeToIncomeAccountMappings') as UntypedFormArray;
   }
 
-  get accrualCharges(): FormArray {
-    return this.savingProductAccountingForm.get('accrualCharges') as FormArray;
+  get accrualCharges(): UntypedFormArray {
+    return this.savingProductAccountingForm.get('accrualCharges') as UntypedFormArray;
   }
 
   get penaltyToIncomeAccountMappings(): UntypedFormArray {
