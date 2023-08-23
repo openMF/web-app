@@ -16,6 +16,7 @@ export class SavingProductPreviewStepComponent implements OnInit {
   chargesDisplayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType'];
   paymentFundSourceDisplayedColumns: string[] = ['paymentTypeId', 'fundSourceAccountId'];
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId'];
+  accrualChargesDisplayedColumns: string[] = ['chargeId'];
 
   constructor() { }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -13,8 +13,9 @@ import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
   templateUrl: './saving-product-accounting-step.component.html',
   styleUrls: ['./saving-product-accounting-step.component.scss']
 })
-export class SavingProductAccountingStepComponent implements OnInit {
+export class SavingProductAccountingStepComponent implements OnInit, OnChanges {
 
+  @Input() savingProduct: any;
   @Input() savingProductsTemplate: any;
   @Input() accountingRuleData: any;
   @Input() isDormancyTrackingActive: FormControl;
@@ -35,10 +36,18 @@ export class SavingProductAccountingStepComponent implements OnInit {
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId', 'actions'];
   accrualChargesDisplayedColumns: string[] = ['chargeId', 'actions'];
 
+  hasSavingsProductChargesLinked = false;
+
   constructor(private formBuilder: FormBuilder,
               public dialog: MatDialog) {
     this.createsavingProductAccountingForm();
     this.setConditionalControls();
+  }
+
+  ngOnChanges() {
+    if (this.savingProduct && this.savingProduct.charges) {
+      this.hasSavingsProductChargesLinked = this.savingProduct.charges ? (this.savingProduct.charges.length > 0) : false;
+    }
   }
 
   ngOnInit() {
@@ -49,6 +58,10 @@ export class SavingProductAccountingStepComponent implements OnInit {
     this.incomeAccountData = this.savingProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
     this.expenseAccountData = this.savingProductsTemplate.accountingMappingOptions.expenseAccountOptions || [];
     this.liabilityAccountData = this.savingProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
+
+    if (this.savingProduct && this.savingProduct.charges) {
+      this.hasSavingsProductChargesLinked = this.savingProduct.charges ? (this.savingProduct.charges.length > 0) : false;
+    }
 
     this.savingProductAccountingForm.patchValue({
       'accountingRule': this.savingProductsTemplate.accountingRule.id
@@ -65,7 +78,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
           'incomeFromFeeAccountId': this.savingProductsTemplate.accountingMappings.incomeFromFeeAccount.id,
           'incomeFromPenaltyAccountId': this.savingProductsTemplate.accountingMappings.incomeFromPenaltyAccount.id,
           'incomeFromInterestId': this.savingProductsTemplate.accountingMappings.incomeFromInterest.id,
-          'advancedAccountingRules': (this.savingProductsTemplate.paymentChannelToFundSourceMappings || this.savingProductsTemplate.feeToIncomeAccountMappings || this.savingProductsTemplate.penaltyToIncomeAccountMappings) ? true : false
+          'advancedAccountingRules': (this.savingProductsTemplate.paymentChannelToFundSourceMappings || this.savingProductsTemplate.feeToIncomeAccountMappings || this.savingProductsTemplate.penaltyToIncomeAccountMappings || this.savingProductsTemplate.accrualCharges) ? true : false
         });
 
       if (this.savingProductsTemplate.accountingRule.id === 3) {
@@ -139,10 +152,12 @@ export class SavingProductAccountingStepComponent implements OnInit {
                 this.savingProductAccountingForm.addControl('paymentChannelToFundSourceMappings', this.formBuilder.array([]));
                 this.savingProductAccountingForm.addControl('feeToIncomeAccountMappings', this.formBuilder.array([]));
                 this.savingProductAccountingForm.addControl('penaltyToIncomeAccountMappings', this.formBuilder.array([]));
+                this.savingProductAccountingForm.addControl('accrualCharges', this.formBuilder.array([]));
               } else {
                 this.savingProductAccountingForm.removeControl('paymentChannelToFundSourceMappings');
                 this.savingProductAccountingForm.removeControl('feeToIncomeAccountMappings');
                 this.savingProductAccountingForm.removeControl('penaltyToIncomeAccountMappings');
+                this.savingProductAccountingForm.removeControl('accrualCharges');
               }
             });
         } else {
@@ -167,6 +182,10 @@ export class SavingProductAccountingStepComponent implements OnInit {
 
   get feeToIncomeAccountMappings(): FormArray {
     return this.savingProductAccountingForm.get('feeToIncomeAccountMappings') as FormArray;
+  }
+
+  get accrualCharges(): FormArray {
+    return this.savingProductAccountingForm.get('accrualCharges') as FormArray;
   }
 
   get penaltyToIncomeAccountMappings(): FormArray {
@@ -218,7 +237,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
       case 'PaymentFundSource': return { title: 'Configure Fund Sources for Payment Channels', formfields: this.getPaymentFundSourceFormfields(values) };
       case 'FeesIncome': return { title: 'Map Fees to Income Accounts', formfields: this.getFeesIncomeFormfields(values) };
       case 'PenaltyIncome': return { title: 'Map Penalties to Specific Income Accounts', formfields: this.getPenaltyIncomeFormfields(values) };
-      case 'AccrualCharge': return { title: 'Select Charge to be Recognized As Accrual', formfields: this.getAccrualChargesFormfields(values) };
+      case 'AccrualCharges': return { title: 'Select Charge to be Recognized As Accrual', formfields: this.getAccrualChargesFormfields(values) };
     }
   }
 
@@ -291,13 +310,14 @@ export class SavingProductAccountingStepComponent implements OnInit {
   getAccrualChargesFormfields(values?: any) {
     const formfields: FormfieldBase[] = [
       new SelectBase({
-        controlName: 'paymentTypeId',
-        label: 'Charge Name',
-        value: values ? values.paymentTypeId : this.paymentTypeData[0].id,
-        options: { label: 'name', value: 'id', data: this.paymentTypeData },
+        controlName: 'id',
+        label: 'Fees',
+        value: values ? values.chargeId : this.savingProduct.charges[0].id,
+        options: { label: 'name', value: 'id', data: this.savingProduct.charges },
         required: true,
         order: 1
-      })];
+      })
+    ];
     return formfields;
   }
 
