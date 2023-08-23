@@ -209,7 +209,7 @@
           <span fxFlex="60%">{{ savingProduct.accountingRule.value }}</span>
         </div>
 
-        <div fxFlexFill *ngIf="savingProduct.accountingRule === 2 || savingProduct.accountingRule === 3" fxLayout="row wrap" fxLayout.lt-md="column">
+        <div fxFlexFill *ngIf="savingProduct.accountingRule.id === 2 || savingProduct.accountingRule.id === 3" fxLayout="row wrap" fxLayout.lt-md="column">
 
           <h4 fxFlexFill class="mat-h4">Assets</h4>
 
@@ -220,7 +220,7 @@
             <span fxFlex="60%">({{ savingProduct.accountingMappings.overdraftPortfolioControl.glCode }}) {{ savingProduct.accountingMappings.overdraftPortfolioControl.name }}</span>
           </div>
 
-          <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column" *ngIf="savingProduct.accountingRule === 3">
+          <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column" *ngIf="savingProduct.accountingRule.id === 3">
             <span fxFlex="40%">Fees receivable:</span>
             <span fxFlex="60%">({{ savingProduct.accountingMappings.savingsReferenceAccount.glCode }}) {{ savingProduct.accountingMappings.savingsReferenceAccount.name }}</span>
             <span fxFlex="40%">Penalties recievable:</span>
@@ -237,7 +237,7 @@
           </div>
 
           <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
-            <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column" *ngIf="savingProduct.accountingRule === 3">
+            <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column" *ngIf="savingProduct.accountingRule.id === 3">
               <span fxFlex="40%">Saving control:</span>
               <span fxFlex="60%">({{ savingProduct.accountingMappings.savingsControlAccount.glCode }}) {{ savingProduct.accountingMappings.savingsControlAccount.name }}</span>
             </div>
