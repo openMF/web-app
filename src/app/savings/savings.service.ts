@@ -124,7 +124,7 @@ export class SavingsService {
     const httpParams = new HttpParams().set('genericResultSet', 'true');
     return this.http.get(`/datatables/${datatableName}/${transactionId}`, { params: httpParams });
   }
-  
+
   /**
    * @param accountId account Id of savings account to get add datatable entry for.
    * @param datatableName Data Table name.

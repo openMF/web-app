@@ -157,10 +157,10 @@
           Signature </button>
         <button mat-menu-item (click)="doAction('Client Screen Reports')"> Client Screen Reports </button>
         <button mat-menu-item (click)="doAction('Create Standing Instructions')"
-          *mifosxHasPermission="'READ_STANDINGINSTRUCTION'">Create Standing Instructions</button>
+          *mifosxHasPermission="'CREATE_STANDINGINSTRUCTION'">Create Standing Instructions</button>
         <span *ngIf="clientViewData.status.value!='Transfer on hold'">
           <button mat-menu-item (click)="doAction('View Standing Instructions')"
-            *mifosxHasPermission="'CREATE_STANDINGINSTRUCTION'">View Standing Instructions</button>
+            *mifosxHasPermission="'READ_STANDINGINSTRUCTION'">View Standing Instructions</button>
         </span>
         <button mat-menu-item (click)="doAction('Create Self Service User')">Create Self Service User</button>
       </mat-menu>

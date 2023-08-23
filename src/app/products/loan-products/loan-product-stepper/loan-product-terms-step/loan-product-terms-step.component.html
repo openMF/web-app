@@ -28,22 +28,33 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-checkbox fxFlex="31%" labelPosition="before" formControlName="allowApprovedDisbursedAmountsOverApplied">
-      Allow approval / disbursal above loan applied amount?
-    </mat-checkbox>
+    <div fxFlex="98%">
+      <mat-checkbox fxFlex="31%" labelPosition="before" formControlName="allowApprovedDisbursedAmountsOverApplied">
+        Allow approval / disbursal above loan applied amount?
+      </mat-checkbox>
 
-    <mat-form-field fxFlex="31%" *ngIf="loanProductTermsForm.value.allowApprovedDisbursedAmountsOverApplied">
-      <mat-label>Over Amount Calculation Type</mat-label>
-      <mat-select formControlName="overAppliedCalculationType" required>
-        <mat-option *ngFor="let overAppliedCalculationType of overAppliedCalculationTypeData" [value]="overAppliedCalculationType.id">
-          {{ overAppliedCalculationType.value }}
+      <mat-form-field fxFlex="31%" *ngIf="loanProductTermsForm.value.allowApprovedDisbursedAmountsOverApplied">
+        <mat-label>Over Amount Calculation Type</mat-label>
+        <mat-select formControlName="overAppliedCalculationType" required>
+          <mat-option *ngFor="let overAppliedCalculationType of overAppliedCalculationTypeData" [value]="overAppliedCalculationType.id">
+            {{ overAppliedCalculationType.value }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="31%" *ngIf="loanProductTermsForm.value.allowApprovedDisbursedAmountsOverApplied">
+        <mat-label>Over Amount</mat-label>
+        <input type="number" matInput formControlName="overAppliedNumber" required>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field fxFlex="31%">
+      <mat-label>Installment day calculation from <i class="fas fa-question" matTooltip="Repayment schedule will start the installment dates from the submitted date or the disbursement date"></i></mat-label>
+      <mat-select formControlName="repaymentStartDateType" required>
+        <mat-option *ngFor="let repaymentStartDateType of repaymentStartDateTypeOptions" [value]="repaymentStartDateType.id">
+          {{ repaymentStartDateType.value | translate }}
         </mat-option>
       </mat-select>
-    </mat-form-field>
-
-    <mat-form-field fxFlex="31%" *ngIf="loanProductTermsForm.value.allowApprovedDisbursedAmountsOverApplied">
-      <mat-label>Over Amount</mat-label>
-      <input type="number" matInput formControlName="overAppliedNumber" required>
     </mat-form-field>
 
     <h4 fxFlex="98%" class="mat-h4">Number of repayments <i class="fas fa-question" matTooltip="These fields are used to define the minimum, default, and maximum number of repayments allowed for the loan product."></i></h4>
