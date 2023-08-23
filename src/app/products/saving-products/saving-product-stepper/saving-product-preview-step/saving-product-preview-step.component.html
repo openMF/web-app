@@ -196,7 +196,7 @@
     <span fxFlex="60%">{{ accountingRuleData[savingProduct.accountingRule-1] }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="savingProduct.accountingRule === 2" fxLayout="row wrap" fxLayout.lt-md="column">
+  <div fxFlexFill *ngIf="savingProduct.accountingRule === 2 || savingProduct.accountingRule === 3" fxLayout="row wrap" fxLayout.lt-md="column">
 
     <h4 fxFlexFill class="mat-h4">Assets</h4>
 
@@ -207,6 +207,13 @@
       <span fxFlex="60%">{{ savingProduct.overdraftPortfolioControlId | find:savingProductsTemplate.accountingMappingOptions.assetAccountOptions:'id':'name' }}</span>
     </div>
 
+    <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column" *ngIf="savingProduct.accountingRule === 3">
+      <span fxFlex="40%">Fees receivable:</span>
+      <span fxFlex="60%">{{ savingProduct.feeReceivableAccountId | find:savingProductsTemplate.accountingMappingOptions.assetAccountOptions:'id':'name' }}</span>
+      <span fxFlex="40%">Penalties recievable:</span>
+      <span fxFlex="60%">{{ savingProduct.penaltyReceivableAccountId | find:savingProductsTemplate.accountingMappingOptions.assetAccountOptions:'id':'name' }}</span>
+    </div>
+
     <h4 fxFlexFill class="mat-h4">Liabilities</h4>
 
     <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
@@ -214,6 +221,13 @@
       <span fxFlex="60%">{{ savingProduct.savingsControlAccountId | find:savingProductsTemplate.accountingMappingOptions.liabilityAccountOptions:'id':'name' }}</span>
       <span fxFlex="40%">Savings transfers in suspense:</span>
       <span fxFlex="60%">{{ savingProduct.transfersInSuspenseAccountId | find:savingProductsTemplate.accountingMappingOptions.liabilityAccountOptions:'id':'name' }}</span>
+    </div>
+
+    <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
+      <div fxFlexFill *ngIf="savingProduct.accountingRule === 3">
+        <span fxFlex="40%">Interest payable:</span>
+        <span fxFlex="60%">{{ savingProduct.interestPayableAccountId | find:savingProductsTemplate.accountingMappingOptions.liabilityAccountOptions:'id':'name' }}</span>
+      </div>
       <div fxFlexFill *ngIf="savingProduct.isDormancyTrackingActive">
         <span fxFlex="40%">Escheat liability:</span>
         <span fxFlex="60%">{{ savingProduct.escheatLiabilityId | find:savingProductsTemplate.accountingMappingOptions.liabilityAccountOptions:'id':'name' }}</span>

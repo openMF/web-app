@@ -276,7 +276,7 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
   }
 
   isCashOrAccrualAccounting(): boolean {
-    return ((this.fixedDepositProductAccountingForm.value.accountingRule === 2) || 
+    return ((this.fixedDepositProductAccountingForm.value.accountingRule === 2) ||
             (this.fixedDepositProductAccountingForm.value.accountingRule === 3));
   }
 

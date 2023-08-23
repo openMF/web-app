@@ -276,7 +276,7 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
   }
 
   isCashOrAccrualAccounting(): boolean {
-    return ((this.recurringDepositProductAccountingForm.value.accountingRule === 2) || 
+    return ((this.recurringDepositProductAccountingForm.value.accountingRule === 2) ||
             (this.recurringDepositProductAccountingForm.value.accountingRule === 3));
   }
 

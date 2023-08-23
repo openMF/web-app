@@ -325,13 +325,20 @@
     <span fxFlex="60%">{{ accountingRuleData[recurringDepositProduct.accountingRule-1] }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="recurringDepositProduct.accountingRule === 2" fxLayout="row wrap" fxLayout.lt-md="column">
+  <div fxFlexFill *ngIf="recurringDepositProduct.accountingRule === 2 || recurringDepositProduct.accountingRule.id === 3" fxLayout="row wrap" fxLayout.lt-md="column">
 
     <h4 fxFlexFill class="mat-h4">Assets</h4>
 
-    <div fxFlexFill>
+    <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
       <span fxFlex="40%">Saving reference:</span>
       <span fxFlex="60%">{{ recurringDepositProduct.savingsReferenceAccountId | find:recurringDepositProductsTemplate.accountingMappingOptions.assetAccountOptions:'id':'name' }}</span>
+      <span fxFlex="40%">Fees receivable:</span>
+      <span fxFlex="60%">{{ recurringDepositProduct.feeReceivableAccountId | find:recurringDepositProductsTemplate.accountingMappingOptions.assetAccountOptions:'id':'name' }}</span>
+    </div>
+
+    <div fxFlexFill >
+      <span fxFlex="40%">Penalties recievable:</span>
+      <span fxFlex="60%">{{ recurringDepositProduct.penaltyReceivableAccountId | find:recurringDepositProductsTemplate.accountingMappingOptions.assetAccountOptions:'id':'name' }}</span>
     </div>
 
     <h4 fxFlexFill class="mat-h4">Liabilities</h4>
