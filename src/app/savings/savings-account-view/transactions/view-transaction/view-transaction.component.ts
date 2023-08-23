@@ -26,7 +26,12 @@ export class ViewTransactionComponent {
   /** Transaction data. */
   transactionData: any;
 
-  accountId: string;
+  accountId: any;
+  /** Transaction Data Tables */
+  entityDatatable: any;
+  /** Multi Row Datatable Flag */
+  multiRowDatatableFlag: boolean;
+  isActive: false;
 
   /**
    * Retrieves the Transaction data from `resolve`.
@@ -43,10 +48,11 @@ export class ViewTransactionComponent {
               private router: Router,
               public dialog: MatDialog,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { savingsAccountTransaction: any }) => {
-      this.accountId = this.route.snapshot.params['savingAccountId'];
-      this.transactionData = data.savingsAccountTransaction;
-    });
+            this.route.data.subscribe((data: { savingsAccountTransaction: any, transactionDatatables: any}) => {
+                  this.accountId = this.route.snapshot.params['savingAccountId'];
+                  this.transactionData = data.savingsAccountTransaction;
+                  this.entityDatatable = data.transactionDatatables;
+                });
   }
 
   /**
