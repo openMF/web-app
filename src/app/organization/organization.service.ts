@@ -885,4 +885,18 @@ export class OrganizationService {
     formData.append('dateFormat', this.settingsService.dateFormat);
     return this.http.post(`${urlSuffix}/uploadtemplate`, formData, { params: httpParams });
   }
+
+  /**
+   * Downloads the output template from the specified URL suffix.
+   *
+   * @param {string} urlSuffix - The URL suffix to download the template from.
+   * @return {Observable<any>} - An observable that emits the downloaded template as an array buffer.
+   */
+    downloadOutputTemplate (urlSuffix: string): Observable<any> {
+      return this.http.get(urlSuffix, {
+        responseType: 'arraybuffer',
+        observe: 'response'
+      });
+    }
+    
 }
