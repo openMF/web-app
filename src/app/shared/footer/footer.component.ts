@@ -6,6 +6,7 @@ import { AuthenticationService } from 'app/core/authentication/authentication.se
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { SystemService } from 'app/system/system.service';
+import { VersionService } from 'app/system/version.service';
 
 /** Environment Configuration */
 import { environment } from 'environments/environment';
@@ -22,7 +23,9 @@ import { Subscription } from 'rxjs';
 export class FooterComponent implements OnInit, OnDestroy {
 
   /** Mifos X version. */
-  version: string = environment.version;
+  versions: any = {
+    mifos: environment.version
+  }
   /** Mifos X hash */
   hash: string = environment.hash;
   server = '';
@@ -35,11 +38,14 @@ export class FooterComponent implements OnInit, OnDestroy {
   alert$: Subscription;
   timer: any;
 
+  displayBackEndInfo: boolean = environment.displayBackEndInfo;
+
   constructor(private systemService: SystemService,
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
     private alertService: AlertService,
-    private dateUtils: Dates) { }
+    private dateUtils: Dates,
+    private versionService: VersionService) { }
 
   ngOnInit() {
     this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
@@ -60,6 +66,10 @@ export class FooterComponent implements OnInit, OnDestroy {
     });
     this.getConfigurations();
     this.server = this.settingsService.server;
+    this.versionService.getBackendInfo().subscribe((data: any) => {
+      console.log(data.build);
+      this.versions.fineract = data.build;
+    });
   }
 
   ngOnDestroy() {

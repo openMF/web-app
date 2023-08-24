@@ -156,6 +156,13 @@ export class SettingsService {
   }
 
   /**
+   * Returns server host
+   */
+  get serverHost() {
+    return this.server;
+  }
+
+  /**
    * Returns server url with api path and version
    */
   get serverUrl() {
