@@ -116,6 +116,7 @@ import { RecurringDepositDatatableTabComponent } from './recurring-deposit-produ
 import { RecurringDepositGeneralTabComponent } from './recurring-deposit-products/view-recurring-deposit-product/recurring-deposit-general-tab/recurring-deposit-general-tab.component';
 import { ShareProductGeneralTabComponent } from './share-products/view-share-product/share-product-general-tab/share-product-general-tab.component';
 import { ShareProductDatatableTabComponent } from './share-products/view-share-product/share-product-datatable-tab/share-product-datatable-tab.component';
+import { LoanProductPaymentStrategyStepComponent } from './loan-products/loan-product-stepper/loan-product-payment-strategy-step/loan-product-payment-strategy-step.component';
 
 /**
  * Products Module
@@ -136,6 +137,7 @@ import { ShareProductDatatableTabComponent } from './share-products/view-share-p
     LoanProductCurrencyStepComponent,
     LoanProductTermsStepComponent,
     LoanProductSettingsStepComponent,
+    LoanProductPaymentStrategyStepComponent,
     LoanProductChargesStepComponent,
     LoanProductAccountingStepComponent,
     LoanProductPreviewStepComponent,
