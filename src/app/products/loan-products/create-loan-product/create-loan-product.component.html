@@ -58,6 +58,17 @@
 
     </mat-step>
 
+    <mat-step *ngIf="isAdvancePaymentStrategy">
+
+      <ng-template matStepLabel>PAYMENT STRATEGY</ng-template>
+
+      <mifosx-loan-product-payment-strategy-step
+        [loanProductsTemplate]="loanProductsTemplate"
+      >
+      </mifosx-loan-product-payment-strategy-step>
+
+    </mat-step>
+
     <mat-step>
 
       <ng-template matStepLabel>CHARGES</ng-template>

@@ -91,6 +91,8 @@ export class FooterComponent implements OnInit, OnDestroy {
           this.timer = setTimeout(() => { this.getConfigurations(); }, 60000);
         }
       });
+    } else {
+      clearTimeout(this.timer);
     }
   }
 
