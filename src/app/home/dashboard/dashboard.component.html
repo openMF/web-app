@@ -8,12 +8,13 @@
 
         <mat-card-header class="header">
           <h3><fa-icon icon="bolt"></fa-icon>
-          &nbsp;&nbsp; Recent Activities</h3>
+            &nbsp;&nbsp; Recent Activities</h3>
         </mat-card-header>
 
         <mat-card-content>
           <mat-action-list class="list">
-            <button mat-list-item *ngFor="let activity of recentActivities" (click)="navigatetoActivity(activity)"> {{ activity | urlToString }} </button>
+            <button mat-list-item *ngFor="let activity of recentActivities" (click)="navigatetoActivity(activity)"> {{
+              activity | urlToString }} </button>
           </mat-action-list>
         </mat-card-content>
 
@@ -23,16 +24,16 @@
 
         <mat-card-header class="header">
           <h3><fa-icon icon="laptop"></fa-icon>
-          &nbsp;&nbsp; Frequent Activities</h3>
+            &nbsp;&nbsp; Frequent Activities</h3>
         </mat-card-header>
 
         <mat-card-content>
           <mat-action-list class="list">
-            <button mat-list-item *ngFor="let activity of frequentActivities"
-            [routerLink]="activity"> {{ activity | urlToString }} </button>
+            <button mat-list-item *ngFor="let activity of frequentActivities" [routerLink]="activity"> {{ activity |
+              urlToString }} </button>
           </mat-action-list>
         </mat-card-content>
-        
+
       </mat-card>
 
       <mifosx-amount-disbursed-pie></mifosx-amount-disbursed-pie>
@@ -46,7 +47,7 @@
       <mifosx-amount-collected-pie></mifosx-amount-collected-pie>
 
     </div>
-    
+    <div *ngIf="supersetEnable"><mifosx-superset></mifosx-superset></div>
   </mat-card>
 
 </div>

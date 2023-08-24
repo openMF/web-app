@@ -25,6 +25,10 @@ export const environment = {
   supportedLanguages: window['env']['supportedLanguages'] || 'en-US,es-MX,fr-FR',
   preloadClients: window['env']['preloadClients'] || true,
 
+  superset: {
+    enabled: window['env']['supersetEnabled'] || true
+  },
+  
   defaultCharDelimiter: window['env']['defaultCharDelimiter'] || ',',
 
   displayBackEndInfo: window['env']['displayBackEndInfo'] || true

@@ -2,6 +2,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+/** Custom Service */
+import { environment } from 'environments/environment';
+
 /**
  * Dashboard component.
  */
@@ -18,12 +21,15 @@ export class DashboardComponent implements OnInit {
   recentActivities: string[];
   /** Array of most frequent user activities */
   frequentActivities: string[];
+  /** To enable superset from environment  */
+  supersetEnable: false;
 
   /**
    * Gets user activities from local storage.
    */
   constructor(private router: Router) {
     this.userActivity = JSON.parse(localStorage.getItem('mifosXLocation'));
+    this.supersetEnable = environment.superset.enabled;
   }
 
   ngOnInit() {
