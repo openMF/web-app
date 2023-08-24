@@ -18,7 +18,7 @@
         <mat-label>Share reference</mat-label>
         <mat-select formControlName="shareReferenceId" required>
           <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
-            {{ assetAccount.name }}
+            ({{ assetAccount.glCode }}) {{ assetAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -34,7 +34,7 @@
         <mat-label>Share suspense control</mat-label>
         <mat-select formControlName="shareSuspenseId" required>
           <mat-option *ngFor="let liabilityAccount of liabilityAccountData" [value]="liabilityAccount.id">
-            {{ liabilityAccount.name }}
+            ({{ liabilityAccount.glCode }}) {{ liabilityAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -50,7 +50,7 @@
         <mat-label>Equity</mat-label>
         <mat-select formControlName="shareEquityId" required>
           <mat-option *ngFor="let equityAccount of equityAccountData" [value]="equityAccount.id">
-            {{ equityAccount.name }}
+            ({{ equityAccount.glCode }}) {{ equityAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -66,7 +66,7 @@
         <mat-label>Income from fees</mat-label>
         <mat-select formControlName="incomeFromFeeAccountId" required>
           <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            {{ incomeAccount.name }}
+            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
