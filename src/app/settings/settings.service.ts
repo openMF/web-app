@@ -170,6 +170,13 @@ export class SettingsService {
   }
 
   /**
+   * Returns server url with api path and version
+   */
+  get serverHost() {
+    return this.server;
+  }
+
+  /**
    * Returns current Business date server
    */
   get businessDate(): Date {
