@@ -67,10 +67,10 @@ export class FooterComponent implements OnInit, OnDestroy {
     this.getConfigurations();
     this.server = this.settingsService.server;
     this.versionService.getBackendInfo().subscribe((data: any) => {
-      const regExp = /0.0.0/gi;
+      const buildVersion: string = data.git.build.version;
       this.versions.fineract = {
-        version: data.git.build.replace(regExp, data.git.closest.tag.name)
-      }
+        version: buildVersion.split('-')
+      };
     });
   }
 
@@ -92,6 +92,8 @@ export class FooterComponent implements OnInit, OnDestroy {
           this.timer = setTimeout(() => { this.getConfigurations(); }, 60000);
         }
       });
+    } else {
+      clearTimeout(this.timer);
     }
   }
 

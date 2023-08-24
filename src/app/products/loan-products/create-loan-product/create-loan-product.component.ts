@@ -8,11 +8,11 @@ import { LoanProductCurrencyStepComponent } from '../loan-product-stepper/loan-p
 import { LoanProductTermsStepComponent } from '../loan-product-stepper/loan-product-terms-step/loan-product-terms-step.component';
 import { LoanProductSettingsStepComponent } from '../loan-product-stepper/loan-product-settings-step/loan-product-settings-step.component';
 import { LoanProductChargesStepComponent } from '../loan-product-stepper/loan-product-charges-step/loan-product-charges-step.component';
+import { LoanProductPaymentStrategyStepComponent } from '../loan-product-stepper/loan-product-payment-strategy-step/loan-product-payment-strategy-step.component';
 import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan-product-accounting-step/loan-product-accounting-step.component';
 
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
-import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
 import { LoanProducts } from '../loan-products';
 
 @Component({
@@ -26,12 +26,15 @@ export class CreateLoanProductComponent implements OnInit {
   @ViewChild(LoanProductCurrencyStepComponent, { static: true }) loanProductCurrencyStep: LoanProductCurrencyStepComponent;
   @ViewChild(LoanProductTermsStepComponent, { static: true }) loanProductTermsStep: LoanProductTermsStepComponent;
   @ViewChild(LoanProductSettingsStepComponent, { static: true }) loanProductSettingsStep: LoanProductSettingsStepComponent;
+  @ViewChild(LoanProductPaymentStrategyStepComponent, { static: true }) loanProductPaymentStrategyStep: LoanProductPaymentStrategyStepComponent;
   @ViewChild(LoanProductChargesStepComponent, { static: true }) loanProductChargesStep: LoanProductChargesStepComponent;
   @ViewChild(LoanProductAccountingStepComponent, { static: true }) loanProductAccountingStep: LoanProductAccountingStepComponent;
 
   loanProductsTemplate: any;
   accountingRuleData = ['None', 'Cash', 'Accrual (periodic)', 'Accrual (upfront)'];
   itemsByDefault: any[] = [];
+
+  isAdvancePaymentStrategy = false;
 
    /**
     * @param {ActivatedRoute} route Activated Route.
@@ -63,7 +66,9 @@ export class CreateLoanProductComponent implements OnInit {
   }
 
   get loanProductCurrencyForm() {
-    return this.loanProductCurrencyStep.loanProductCurrencyForm;
+    if (this.loanProductCurrencyStep != null) {
+      return this.loanProductCurrencyStep.loanProductCurrencyForm;
+    }
   }
 
   get loanProductTermsForm() {
@@ -78,7 +83,12 @@ export class CreateLoanProductComponent implements OnInit {
     return this.loanProductAccountingStep.loanProductAccountingForm;
   }
 
+  get loanProductPaymentStrategyForm() {
+    return this.loanProductPaymentStrategyStep.loanProductPaymentStrategyForm;
+  }
+
   get loanProductFormValid() {
+    this.isAdvancePaymentStrategy = (this.loanProductSettingsStep.loanProductSettings.transactionProcessingStrategyCode === 'advanced-payment-allocation-strategy');
     return (
       this.loanProductDetailsForm.valid &&
       this.loanProductCurrencyForm.valid &&
