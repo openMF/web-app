@@ -49,6 +49,7 @@
     "@fortawesome/free-solid-svg-icons": "5.8.2",
     "@ngx-translate/core": "13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
+    "@superset-ui/embedded-sdk": "^0.1.0-alpha.9",
     "@swimlane/ngx-graph": "^8.0.2",
     "@tailwindcss/forms": "^0.5.4",
     "chart.js": "3.0.0-alpha",
