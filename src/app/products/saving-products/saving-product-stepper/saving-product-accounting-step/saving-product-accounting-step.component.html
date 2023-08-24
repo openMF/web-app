@@ -18,7 +18,7 @@
         <mat-label>Saving reference</mat-label>
         <mat-select formControlName="savingsReferenceAccountId" required>
           <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
-            {{ assetAccount.name }}
+            ({{ assetAccount.glCode }}) {{ assetAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -30,7 +30,7 @@
         <mat-label>Overdraft portfolio</mat-label>
         <mat-select formControlName="overdraftPortfolioControlId" required>
           <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
-            {{ assetAccount.name }}
+            ({{ assetAccount.glCode }}) {{ assetAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -42,7 +42,7 @@
         <mat-label>Fees receivable</mat-label>
         <mat-select formControlName="feeReceivableAccountId" required>
           <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
-            {{ assetAccount.name }}
+            ({{ assetAccount.glCode }}) {{ assetAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -54,7 +54,7 @@
         <mat-label>Penalties Receivable</mat-label>
         <mat-select formControlName="penaltyReceivableAccountId" required>
           <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
-            {{ assetAccount.name }}
+            ({{ assetAccount.glCode }}) {{ assetAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -70,7 +70,7 @@
         <mat-label>Saving control</mat-label>
         <mat-select formControlName="savingsControlAccountId" required>
           <mat-option *ngFor="let liabilityAccount of liabilityAccountData" [value]="liabilityAccount.id">
-            {{ liabilityAccount.name }}
+            ({{ liabilityAccount.glCode }}) {{ liabilityAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -82,7 +82,7 @@
         <mat-label>Savings transfers in suspense</mat-label>
         <mat-select formControlName="transfersInSuspenseAccountId" required>
           <mat-option *ngFor="let liabilityAccount of liabilityAccountData" [value]="liabilityAccount.id">
-            {{ liabilityAccount.name }}
+            ({{ liabilityAccount.glCode }}) {{ liabilityAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -94,7 +94,7 @@
         <mat-label>Escheat liability</mat-label>
         <mat-select formControlName="escheatLiabilityId" required>
           <mat-option *ngFor="let liabilityAccount of liabilityAccountData" [value]="liabilityAccount.id">
-            {{ liabilityAccount.name }}
+            ({{ liabilityAccount.glCode }}) {{ liabilityAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -106,7 +106,7 @@
         <mat-label>Interest payable</mat-label>
         <mat-select formControlName="interestPayableAccountId" required>
           <mat-option *ngFor="let liabilityAccount of liabilityAccountData" [value]="liabilityAccount.id">
-            {{ liabilityAccount.name }}
+            ({{ liabilityAccount.glCode }}) {{ liabilityAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -122,7 +122,7 @@
         <mat-label>Interest on savings</mat-label>
         <mat-select formControlName="interestOnSavingsAccountId" required>
           <mat-option *ngFor="let expenseAccount of expenseAccountData" [value]="expenseAccount.id">
-            {{ expenseAccount.name }}
+            ({{ expenseAccount.glCode }}) {{ expenseAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -134,7 +134,7 @@
         <mat-label>Write-off</mat-label>
         <mat-select formControlName="writeOffAccountId" required>
           <mat-option *ngFor="let expenseAccount of expenseAccountData" [value]="expenseAccount.id">
-            {{ expenseAccount.name }}
+            ({{ expenseAccount.glCode }}) {{ expenseAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -150,7 +150,7 @@
         <mat-label>Income from fees</mat-label>
         <mat-select formControlName="incomeFromFeeAccountId" required>
           <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            {{ incomeAccount.name }}
+            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -162,7 +162,7 @@
         <mat-label>Income from penalties</mat-label>
         <mat-select formControlName="incomeFromPenaltyAccountId" required>
           <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            {{ incomeAccount.name }}
+            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -174,7 +174,7 @@
         <mat-label>Overdraft Interest Income</mat-label>
         <mat-select formControlName="incomeFromInterestId" required>
           <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            {{ incomeAccount.name }}
+            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>

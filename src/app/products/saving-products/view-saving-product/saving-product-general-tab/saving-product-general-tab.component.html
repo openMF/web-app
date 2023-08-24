@@ -280,9 +280,9 @@
           </div>
 
           <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
-            <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column" *ngIf="savingProduct.accountingRule.id === 3">
-              <span fxFlex="40%">Saving control:</span>
-              <span fxFlex="60%">({{ savingProduct.accountingMappings.savingsControlAccount.glCode }}) {{ savingProduct.accountingMappings.savingsControlAccount.name }}</span>
+            <div fxFlexFill *ngIf="savingProduct.accountingRule.id === 3">
+              <span fxFlex="40%">Interest payable:</span>
+              <span fxFlex="60%">{{ savingProduct.interestPayableAccountId | find:savingProductsTemplate.accountingMappingOptions.liabilityAccountOptions:'id':'name' }}</span>
             </div>
             <div fxFlexFill *ngIf="savingProduct.isDormancyTrackingActive">
               <span fxFlex="40%">Escheat liability:</span>
