@@ -4,6 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
+import { RunJobWithParamPayloadType } from './manage-jobs/scheduler-jobs/custom-parameters-popover/custom-parameters-popover.component';
 
 /**
  * System service.
@@ -321,6 +322,14 @@ export class SystemService {
    */
    runSelectedJob(jobId: string): Promise<any> {
     return this.http.post(`/jobs/${jobId}?command=executeJob`, this.emptyPayload).toPromise();
+  }
+
+  /**
+   * @param {string} jobId Job Id on which jobs to run
+   * @returns {Observable<any>}
+   */
+  runSelectedJobWithParameters(jobId: string, jobParameters: RunJobWithParamPayloadType): Promise<any> {
+    return this.http.post(`/jobs/${jobId}?command=executeJob`, jobParameters, { observe: 'response' }).toPromise();
   }
 
   /*
