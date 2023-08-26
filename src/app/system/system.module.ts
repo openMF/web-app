@@ -72,6 +72,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ManageExternalEventsComponent } from './manage-external-events/manage-external-events.component';
 import { CobWorkflowComponent } from './manage-jobs/cob-workflow/cob-workflow.component';
 import { LoanLockedComponent } from './manage-jobs/cob-workflow/loan-locked/loan-locked.component';
+import { CustomParametersPopoverComponent } from './manage-jobs/scheduler-jobs/custom-parameters-popover/custom-parameters-popover.component';
+import { CustomParametersTableComponent } from './manage-jobs/scheduler-jobs/custom-parameters-popover/custom-parameters-table/custom-parameters-table.component';
 
 @NgModule({
   imports: [
@@ -143,7 +145,9 @@ import { LoanLockedComponent } from './manage-jobs/cob-workflow/loan-locked/loan
     WorkflowDiagramComponent,
     ManageExternalEventsComponent,
     CobWorkflowComponent,
-    LoanLockedComponent
+    LoanLockedComponent,
+    CustomParametersPopoverComponent,
+    CustomParametersTableComponent
   ],
 })
 export class SystemModule { }
