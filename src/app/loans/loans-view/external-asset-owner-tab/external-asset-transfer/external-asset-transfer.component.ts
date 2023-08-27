@@ -6,15 +6,11 @@ import { ExternalAssetOwner } from 'app/loans/services/external-asset-owner';
   templateUrl: './external-asset-transfer.component.html',
   styleUrls: ['./external-asset-transfer.component.scss']
 })
-export class ExternalAssetTransferComponent implements OnInit {
+export class ExternalAssetTransferComponent {
   /** Input Fields Data */
   @Input() transferData: any;
 
   constructor(private externalAssetOwner: ExternalAssetOwner) { }
-
-  ngOnInit(): void {
-    console.log(this.transferData);
-  }
 
   itemStatus(status: string): string {
     return this.externalAssetOwner.itemStatus(status);

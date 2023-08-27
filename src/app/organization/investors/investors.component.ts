@@ -28,6 +28,7 @@ export class InvestorsComponent implements OnInit {
   /** Maximum transaction date allowed. */
   maxDate = new Date();
 
+  searchResults: any[] = [];
   searchText = new FormControl('');
   effectiveFromDate = new FormControl('');
   effectiveToDate = new FormControl('');
@@ -138,9 +139,14 @@ export class InvestorsComponent implements OnInit {
       this.totalRows = response.totalElements;
       this.existsDataToFilter = (response.totalElements > 0);
       this.dataSource.data = response.content;
+      this.searchResults = response.content;
       this.isLoading = false;
     });
 
+  }
+
+  transform(data: any): any {
+    return data;
   }
 
   pageChanged(event: PageEvent) {

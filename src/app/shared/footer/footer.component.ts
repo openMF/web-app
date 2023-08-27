@@ -24,7 +24,11 @@ export class FooterComponent implements OnInit, OnDestroy {
 
   /** Mifos X version. */
   versions: any = {
-    mifos: environment.version
+    mifos: environment.version,
+    fineract: {
+      version: '',
+      hash: ''
+    }
   };
   /** Mifos X hash */
   hash: string = environment.hash;

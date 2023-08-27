@@ -233,7 +233,11 @@ export class RunReportComponent implements OnInit {
           formattedResponse[newKey] = value['id'];
           break;
         case 'date':
-          formattedResponse[newKey] = this.dateUtils.formatDate(value, this.settingsService.dateFormat);
+          if (this.isTableReport()) {
+            formattedResponse[newKey] = this.dateUtils.formatDate(value, Dates.DEFAULT_DATEFORMAT);
+          } else {
+            formattedResponse[newKey] = this.dateUtils.formatDate(value, this.settingsService.dateFormat);
+          }
           this.reportUsesDates = true;
           break;
         case 'none':
@@ -254,10 +258,14 @@ export class RunReportComponent implements OnInit {
       ...userResponseValues,
     };
     if (this.reportUsesDates) {
+      let dateFormat = this.settingsService.dateFormat;
+      if (this.isTableReport()) {
+        dateFormat = Dates.DEFAULT_DATEFORMAT;
+      }
       formData = {
         ...userResponseValues,
         locale: this.settingsService.language.code,
-        dateFormat: this.settingsService.dateFormat
+        dateFormat: dateFormat
       };
     }
     if (this.reportToBeExportedInRepository) {
