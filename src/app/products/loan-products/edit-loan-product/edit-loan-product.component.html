@@ -46,15 +46,29 @@
 
       </mat-step>
 
-      <mat-step [stepControl]="loanProductSettingsForm" completed>
+      <mat-step [stepControl]="loanProductSettingsForm">
 
         <ng-template matStepLabel>SETTINGS</ng-template>
 
         <mifosx-loan-product-settings-step
           [loanProductsTemplate]="loanProductAndTemplate"
           [isLinkedToFloatingInterestRates]="loanProductTermsForm.get('isLinkedToFloatingInterestRates')"
+          (advancePaymentStrategy)="advancePaymentStrategy($event)"
         >
         </mifosx-loan-product-settings-step>
+
+      </mat-step>
+
+      <mat-step *ngIf="isAdvancedPaymentStrategy">
+
+        <ng-template matStepLabel>PAYMENT ALLOCATION</ng-template>
+
+        <mifosx-loan-product-payment-strategy-step
+          [loanProductsTemplate]="loanProductsTemplate"
+          (paymentAllocation)="setPaymentAllocation($event)"
+          (paymentAllocationChange)="paymentAllocationChanged($event)"
+        >
+        </mifosx-loan-product-payment-strategy-step>
 
       </mat-step>
 
