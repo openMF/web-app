@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { LoanProducts } from '../../loan-products';
 import { rangeValidator } from 'app/shared/validators/percentage.validator';
@@ -12,6 +12,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
 
   @Input() loanProductsTemplate: any;
   @Input() isLinkedToFloatingInterestRates: FormControl;
+  @Output() advancePaymentStrategy = new EventEmitter<string>();
 
   loanProductSettingsForm: FormGroup;
 
@@ -351,6 +352,11 @@ export class LoanProductSettingsStepComponent implements OnInit {
           this.loanProductSettingsForm.removeControl('disbursedAmountPercentageForDownPayment');
           this.loanProductSettingsForm.removeControl('enableAutoRepaymentForDownPayment');
         }
+      });
+
+    this.loanProductSettingsForm.get('transactionProcessingStrategyCode').valueChanges
+      .subscribe((transactionProcessingStrategyCode: string) => {
+        this.advancePaymentStrategy.emit(transactionProcessingStrategyCode);
       });
 
     this.loanProductSettingsForm.get('allowAttributeConfiguration').valueChanges
