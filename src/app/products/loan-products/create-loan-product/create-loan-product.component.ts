@@ -8,12 +8,12 @@ import { LoanProductCurrencyStepComponent } from '../loan-product-stepper/loan-p
 import { LoanProductTermsStepComponent } from '../loan-product-stepper/loan-product-terms-step/loan-product-terms-step.component';
 import { LoanProductSettingsStepComponent } from '../loan-product-stepper/loan-product-settings-step/loan-product-settings-step.component';
 import { LoanProductChargesStepComponent } from '../loan-product-stepper/loan-product-charges-step/loan-product-charges-step.component';
-import { LoanProductPaymentStrategyStepComponent } from '../loan-product-stepper/loan-product-payment-strategy-step/loan-product-payment-strategy-step.component';
 import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan-product-accounting-step/loan-product-accounting-step.component';
 
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
 import { LoanProducts } from '../loan-products';
+import { PaymentAllocation } from '../loan-product-stepper/loan-product-payment-strategy-step/loan-product-payment-strategy-step.component';
 
 @Component({
   selector: 'mifosx-create-loan-product',
@@ -26,7 +26,6 @@ export class CreateLoanProductComponent implements OnInit {
   @ViewChild(LoanProductCurrencyStepComponent, { static: true }) loanProductCurrencyStep: LoanProductCurrencyStepComponent;
   @ViewChild(LoanProductTermsStepComponent, { static: true }) loanProductTermsStep: LoanProductTermsStepComponent;
   @ViewChild(LoanProductSettingsStepComponent, { static: true }) loanProductSettingsStep: LoanProductSettingsStepComponent;
-  @ViewChild(LoanProductPaymentStrategyStepComponent, { static: true }) loanProductPaymentStrategyStep: LoanProductPaymentStrategyStepComponent;
   @ViewChild(LoanProductChargesStepComponent, { static: true }) loanProductChargesStep: LoanProductChargesStepComponent;
   @ViewChild(LoanProductAccountingStepComponent, { static: true }) loanProductAccountingStep: LoanProductAccountingStepComponent;
 
@@ -34,7 +33,8 @@ export class CreateLoanProductComponent implements OnInit {
   accountingRuleData = ['None', 'Cash', 'Accrual (periodic)', 'Accrual (upfront)'];
   itemsByDefault: any[] = [];
 
-  isAdvancePaymentStrategy = false;
+  isAdvancedPaymentStrategy = false;
+  paymentAllocation: PaymentAllocation[] = [];
 
    /**
     * @param {ActivatedRoute} route Activated Route.
@@ -75,6 +75,14 @@ export class CreateLoanProductComponent implements OnInit {
     return this.loanProductTermsStep.loanProductTermsForm;
   }
 
+  advancePaymentStrategy(value: string) {
+    this.isAdvancedPaymentStrategy = (value === 'advanced-payment-allocation-strategy');
+  }
+
+  setPaymentAllocation(paymentAllocation: PaymentAllocation[]) {
+    this.paymentAllocation = paymentAllocation;
+  }
+
   get loanProductSettingsForm() {
     return this.loanProductSettingsStep.loanProductSettingsForm;
   }
@@ -83,12 +91,7 @@ export class CreateLoanProductComponent implements OnInit {
     return this.loanProductAccountingStep.loanProductAccountingForm;
   }
 
-  get loanProductPaymentStrategyForm() {
-    return this.loanProductPaymentStrategyStep.loanProductPaymentStrategyForm;
-  }
-
   get loanProductFormValid() {
-    this.isAdvancePaymentStrategy = (this.loanProductSettingsStep.loanProductSettings.transactionProcessingStrategyCode === 'advanced-payment-allocation-strategy');
     return (
       this.loanProductDetailsForm.valid &&
       this.loanProductCurrencyForm.valid &&
@@ -99,7 +102,7 @@ export class CreateLoanProductComponent implements OnInit {
   }
 
   get loanProduct() {
-    return {
+    const loanProduct = {
       ...this.loanProductDetailsStep.loanProductDetails,
       ...this.loanProductCurrencyStep.loanProductCurrency,
       ...this.loanProductTermsStep.loanProductTerms,
@@ -107,6 +110,10 @@ export class CreateLoanProductComponent implements OnInit {
       ...this.loanProductChargesStep.loanProductCharges,
       ...this.loanProductAccountingStep.loanProductAccounting
     };
+    if (this.isAdvancedPaymentStrategy) {
+      loanProduct['paymentAllocation'] = this.paymentAllocation;
+    }
+    return loanProduct;
   }
 
   submit() {
