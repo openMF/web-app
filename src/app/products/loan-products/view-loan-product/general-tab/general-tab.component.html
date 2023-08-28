@@ -342,6 +342,40 @@
     </span>
   </div>
 
+  <div fxFlexFill *ngIf="loanProduct.paymentAllocation?.length">
+    <div fxFlexFill *ngFor="let paymentAllocation of loanProduct.paymentAllocation">
+      <div fxFlexFill>
+        <span fxFlex="40%">Transaction Type:</span>
+        <span fxFlex="60%">{{ paymentAllocation.transactionType }}</span>
+      </div>
+
+      <div fxFlexFill>
+        <span fxFlex="40%">Future Installment Allocation:</span>
+        <span fxFlex="60%">{{ paymentAllocation.futureInstallmentAllocationRule }}</span>
+      </div>
+
+      <div fxFlexFill>
+        <span fxFlex="40%">Payment Allocation Order</span>
+        <span fxFlex="60%">
+          <table>
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>Payment Allocation Rule</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let paymentAllocation of paymentAllocation.paymentAllocationOrder; let idx = index;">
+                <td>{{ (idx + 1) }}</td>
+                <td>{{ paymentAllocation.paymentAllocationRule }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </span>
+      </div>
+    </div>
+  </div>
+
   <div fxFlexFill *ngIf="loanProduct.graceOnPrincipalPayment">
     <span fxFlex="40%">Grace on principal payment:</span>
     <span fxFlex="60%">{{ loanProduct.graceOnPrincipalPayment }}</span>
