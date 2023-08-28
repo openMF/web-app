@@ -1,9 +1,8 @@
-/** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef , ViewChild,
-         AfterViewInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar'; // Import the MatSnackBar service
 
 /** Custom Services */
 import { UsersService } from '../users.service';
@@ -25,7 +24,6 @@ import { ContinueSetupDialogComponent } from '../../configuration-wizard/continu
   styleUrls: ['./create-user.component.scss']
 })
 export class CreateUserComponent implements OnInit, AfterViewInit {
-
   /** User form. */
   userForm: FormGroup;
   /** Offices data. */
@@ -43,25 +41,30 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
   /**
    * Retrieves the offices and roles data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {UsersService} UsersService Users Service.
+   * @param {UsersService} usersService Users Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
+   * @param {MatDialog} dialog Material Dialog.
+   * @param {MatSnackBar} snackBar Material Snack Bar.
    */
-  constructor(private formBuilder: FormBuilder,
-              private usersService: UsersService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private popoverService: PopoverService,
-              private configurationWizardService: ConfigurationWizardService,
-              public dialog: MatDialog) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private usersService: UsersService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private popoverService: PopoverService,
+    private configurationWizardService: ConfigurationWizardService,
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar // Inject the MatSnackBar service
+  ) {
     this.route.data.subscribe((data: {
-        usersTemplate: any
-      }) => {
-        this.officesData = data.usersTemplate.allowedOffices;
-        this.rolesData = data.usersTemplate.availableRoles;
-      });
+      usersTemplate: any;
+    }) => {
+      this.officesData = data.usersTemplate.allowedOffices;
+      this.rolesData = data.usersTemplate.availableRoles;
+    });
   }
 
   /**
@@ -91,7 +94,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Sets the staff data each time the user selects a new office
+   * Sets the staff data each time the user selects a new office.
    */
   setStaffData() {
     this.userForm.get('officeId').valueChanges.subscribe((officeId: string) => {
@@ -103,7 +106,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Sets the conditional controls of the user form
+   * Sets the conditional controls of the user form.
    */
   setConditionalControls() {
     this.userForm.get('sendPasswordToEmail').valueChanges.subscribe((sendPasswordToEmail: boolean) => {
@@ -129,18 +132,26 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
     if (this.userForm.value.staffId == null || this.userForm.value.staffId === '') {
       delete user.staffId;
     }
-    this.usersService.createUser(user).subscribe((response: any) => {
-      if (this.configurationWizardService.showUsersForm === true) {
-        this.configurationWizardService.showUsersForm = false;
-        this.openDialog();
-      } else {
-        this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+    this.usersService.createUser(user).subscribe(
+      (response: any) => {
+        if (this.configurationWizardService.showUsersForm === true) {
+          this.configurationWizardService.showUsersForm = false;
+          this.openDialog();
+        } else {
+          this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+        }
+      },
+      (error: any) => {
+        // Handle user creation failure
+        this.snackBar.open('Failed to create user. Please try again.', 'Close', {
+          duration: 5000, // Duration of the snackbar message in milliseconds
+        });
       }
-    });
+    );
   }
 
   /**
-   * Popover function
+   * Popover function.
    * @param template TemplateRef<any>.
    * @param target HTMLElement | ElementRef<any>.
    * @param position String.
@@ -155,9 +166,9 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
    */
   ngAfterViewInit() {
     if (this.configurationWizardService.showUsersForm === true) {
-    setTimeout(() => {
+      setTimeout(() => {
         this.showPopover(this.templateUserFormRef, this.userFormRef.nativeElement, 'top', true);
-    });
+      });
     }
   }
 
@@ -190,18 +201,18 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
     });
     continueSetupDialogRef.afterClosed().subscribe((response: { step: number }) => {
       if (response.step === 1) {
-          this.configurationWizardService.showUsersForm = false;
-          this.router.navigate(['../'], { relativeTo: this.route });
-        } else if (response.step === 2) {
-          this.configurationWizardService.showUsersForm = true;
-          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-          this.router.onSameUrlNavigation = 'reload';
-          this.router.navigate(['/organization/users/create']);
-        } else if (response.step === 3) {
-          this.configurationWizardService.showUsersForm = false;
-          this.configurationWizardService.showMakerCheckerTable = true;
-          this.router.navigate(['/system']);
-        }
+        this.configurationWizardService.showUsersForm = false;
+        this.router.navigate(['../'], { relativeTo: this.route });
+      } else if (response.step === 2) {
+        this.configurationWizardService.showUsersForm = true;
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate(['/organization/users/create']);
+      } else if (response.step === 3) {
+        this.configurationWizardService.showUsersForm = false;
+        this.configurationWizardService.showMakerCheckerTable = true;
+        this.router.navigate(['/system']);
+      }
     });
   }
 }
