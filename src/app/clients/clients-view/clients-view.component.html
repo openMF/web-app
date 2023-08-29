@@ -108,7 +108,7 @@
       </mat-menu>
 
       <mat-menu #accountApplications="matMenu">
-        <button mat-menu-item *mifosxHasPermission="'CREATE_LOANACCOUNT'"
+        <button mat-menu-item *mifosxHasPermission="'CREATE_LOAN'"
           [routerLink]="['loans-accounts', 'create']">New Loan Account</button>
         <button mat-menu-item *mifosxHasPermission="'CREATE_SAVINGSACCOUNT'"
           [routerLink]="['savings-accounts', 'create']">New Savings Account</button>

@@ -13,7 +13,7 @@ import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
 import { LoanProducts } from '../loan-products';
-import { PaymentAllocation } from '../loan-product-stepper/loan-product-payment-strategy-step/loan-product-payment-strategy-step.component';
+import { PaymentAllocation, PaymentAllocationTransactionType, PaymentAllocationTransactionTypes, PaymentAllocationTypes } from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 
 @Component({
   selector: 'mifosx-create-loan-product',
@@ -35,6 +35,9 @@ export class CreateLoanProductComponent implements OnInit {
 
   isAdvancedPaymentStrategy = false;
   paymentAllocation: PaymentAllocation[] = [];
+  transactionTypes: PaymentAllocationTransactionType[] = [
+    PaymentAllocationTransactionTypes.DEFAULT_TRANSACTION
+  ];
 
    /**
     * @param {ActivatedRoute} route Activated Route.
