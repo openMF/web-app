@@ -1,16 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
-import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
-import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
-import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
-import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { GlimChargesStepComponent } from './glim-account-stepper/glim-charges-step/glim-charges-step.component';
 import { GlimDetailsStepComponent } from './glim-account-stepper/glim-details-step/glim-details-step.component';
 import { GlimTermsStepComponent } from './glim-account-stepper/glim-terms-step/glim-terms-step.component';
@@ -112,8 +105,6 @@ export class CreateGlimAccountComponent implements OnInit {
     };
   }
 
-
-
   setData(client: any): any {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
@@ -140,7 +131,6 @@ export class CreateGlimAccountComponent implements OnInit {
     data.groupId = this.loansAccountTemplate.group.id;
 
     return JSON.stringify(data);
-
   }
 
   /** Request Body Data */
