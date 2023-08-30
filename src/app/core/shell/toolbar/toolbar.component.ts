@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, EventEmitter, Output, ViewChild, AfterViewInit, ElementRef, TemplateRef } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, ViewChild, AfterViewInit, ElementRef, TemplateRef, AfterContentChecked, ChangeDetectorRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -25,7 +25,7 @@ import { ConfigurationWizardComponent } from '../../../configuration-wizard/conf
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss']
 })
-export class ToolbarComponent implements OnInit, AfterViewInit {
+export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChecked {
 
   /* Reference of institution */
   @ViewChild('institution') institution: ElementRef<any>;
@@ -64,7 +64,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit {
               private authenticationService: AuthenticationService,
               private popoverService: PopoverService,
               private configurationWizardService: ConfigurationWizardService,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog,
+              private changeDetector: ChangeDetectorRef) { }
 
   /**
    * Subscribes to breakpoint for handset.
@@ -75,6 +76,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit {
         this.toggleSidenavCollapse(false);
       }
     });
+  }
+
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
   }
 
   /**
@@ -187,4 +192,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit {
       });
     }
   }
+
+  navigateMenu(routePath: string): void {
+    console.log(routePath);
+    this.router.navigate([routePath]);
+  }
+
 }
