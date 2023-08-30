@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -23,7 +23,7 @@ export class RejectClientComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Reject Share Account form. */
-  rejectClientForm: FormGroup;
+  rejectClientForm: UntypedFormGroup;
   /** Client Data */
   rejectionData: any;
   /** Client Id */
@@ -37,7 +37,7 @@ export class RejectClientComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private clientsService: ClientsService,
               private dateUtils: Dates,
               private route: ActivatedRoute,

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientsService } from 'app/clients/clients.service';
 import { SettingsService } from 'app/settings/settings.service';
@@ -17,12 +17,12 @@ import { SettingsService } from 'app/settings/settings.service';
 })
 export class CreateUserComponent implements OnInit {
   /** Create Client Form */
-  createUserForm: FormGroup;
+  createUserForm: UntypedFormGroup;
 
   /** Denotes type of user. */
   userTypes = ['Existing User', 'New User'];
   /** Radio button group form control for type of user. */
-  userType = new FormControl(this.userTypes[0]);
+  userType = new UntypedFormControl(this.userTypes[0]);
   /** Placeholder for office data. */
   offices: any[] = [];
   /** Placeholder for staff data. */
@@ -41,7 +41,7 @@ export class CreateUserComponent implements OnInit {
   /**
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private clientService: ClientsService,
     private settingsService: SettingsService) {

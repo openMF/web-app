@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -17,7 +17,7 @@ import { ProductsService } from '../../products.service';
 export class CreateProductMixComponent implements OnInit {
 
   /** Product mix form. */
-  productMixForm: FormGroup;
+  productMixForm: UntypedFormGroup;
   /** Products mix template data. */
   productsMixTemplateData: any;
   /** Product option data. */
@@ -32,7 +32,7 @@ export class CreateProductMixComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private productsService: ProductsService,
               private route: ActivatedRoute,
               private router: Router) {

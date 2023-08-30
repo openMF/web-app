@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -23,7 +23,7 @@ import { ContinueSetupDialogComponent } from '../../../configuration-wizard/cont
 export class CreateGlAccountComponent implements OnInit, AfterViewInit {
 
   /** GL account form. */
-  glAccountForm: FormGroup;
+  glAccountForm: UntypedFormGroup;
   /** Chart of accounts data. */
   chartOfAccountsData: any;
   /** Account type data. */
@@ -56,7 +56,7 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    * @param {Matdialog} dialog Matdialog.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private accountingService: AccountingService,
               private route: ActivatedRoute,
               private router: Router,

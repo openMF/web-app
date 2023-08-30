@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
 
@@ -29,7 +29,7 @@ export class GlimDetailsStepComponent implements OnInit {
   /** For edit loan accounts form */
   isFieldOfficerPatched = false;
   /** Loans Account Details Form */
-  loansAccountDetailsForm: FormGroup;
+  loansAccountDetailsForm: UntypedFormGroup;
 
   /** Loans Account Template with product data  */
   @Output() loansAccountProductTemplate = new EventEmitter();
@@ -39,7 +39,7 @@ export class GlimDetailsStepComponent implements OnInit {
    * @param {LoansService} loansService Loans Service.
    * @param {SettingsService} settingsService SettingsService
    */
-   constructor(private formBuilder: FormBuilder,
+   constructor(private formBuilder: UntypedFormBuilder,
     private loansService: LoansService,
     private settingsService: SettingsService) {
     this.createLoansAccountDetailsForm();

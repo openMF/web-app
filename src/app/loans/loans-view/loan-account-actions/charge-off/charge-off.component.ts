@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
@@ -24,7 +24,7 @@ export class ChargeOffComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Repayment Loan Form */
-  chargeoffLoanForm: FormGroup;
+  chargeoffLoanForm: UntypedFormGroup;
 
   chargeOffReasonOptions: any = [];
 
@@ -35,7 +35,7 @@ export class ChargeOffComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,

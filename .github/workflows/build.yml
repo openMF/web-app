@@ -29,7 +29,7 @@ jobs:
           # lts/gallium node v19.7.0 (npm v9.5.0)
           node-version: '19.7.0'
       - name: Angular CLI install
-        run : npm install -g --silent @angular/cli@13.3.10
+        run : npm install -g --silent @angular/cli@14.2.12
 
       - name: Npm install
         run: npm install

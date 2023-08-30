@@ -46,15 +46,6 @@ export class UserService {
   }
 
   /**
-   * Gets a self service user.
-   *
-   * TODO: Mock data to be replaced once API is available.
-   */
-  getUser(): Observable<any> {
-    return this.http.disableApiPrefix().get('/assets/mock/user.mock.json');
-  }
-
-  /**
    * Change User Password.
    * @param userId User Id of users
    * @param password New Password of the user

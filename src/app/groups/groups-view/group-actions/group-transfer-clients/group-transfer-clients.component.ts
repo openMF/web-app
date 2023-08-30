@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -18,7 +18,7 @@ import { SettingsService } from 'app/settings/settings.service';
 export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
 
   /** Transfer Clients form. */
-  transferClientsForm: FormGroup;
+  transferClientsForm: UntypedFormGroup;
   /** Group Data */
   groupData: any;
   /** Group data. */
@@ -36,7 +36,7 @@ export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
    * @param {GroupsService} groupsService GroupsService.
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private groupsService: GroupsService,

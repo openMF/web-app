@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 /** rxjs Imports */
 import { merge } from 'rxjs';
@@ -27,7 +27,7 @@ export class GroupsComponent implements OnInit, AfterViewInit {
   @ViewChild('showClosedGroups', { static: true }) showClosedGroups: MatCheckbox;
 
   /** Name form control. */
-  name = new FormControl();
+  name = new UntypedFormControl();
   /** Columns to be displayed in groups table. */
   displayedColumns =  ['name', 'accountNo', 'externalId', 'status', 'officeName'];
   /** Data source for groups table. */

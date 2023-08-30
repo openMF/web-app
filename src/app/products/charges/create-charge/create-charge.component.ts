@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -19,7 +19,7 @@ import { Dates } from 'app/core/utils/dates';
 export class CreateChargeComponent implements OnInit {
 
   /** Charge form. */
-  chargeForm: FormGroup;
+  chargeForm: UntypedFormGroup;
   /** Charges template data. */
   chargesTemplateData: any;
   /** Charge time type data. */
@@ -46,7 +46,7 @@ export class CreateChargeComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils to format date.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private productsService: ProductsService,
               private route: ActivatedRoute,
               private router: Router,
@@ -146,7 +146,7 @@ export class CreateChargeComponent implements OnInit {
       this.chargeForm.get('penalty').enable();
       switch (chargeAppliesTo) {
         case 1: // Loan
-          this.chargeForm.addControl('chargePaymentMode', new FormControl('', Validators.required));
+          this.chargeForm.addControl('chargePaymentMode', new UntypedFormControl('', Validators.required));
           this.chargeForm.removeControl('incomeAccountId');
           break;
         case 2: // Savings
@@ -155,7 +155,7 @@ export class CreateChargeComponent implements OnInit {
           break;
         case 3: // Client
           this.chargeForm.removeControl('chargePaymentMode');
-          this.chargeForm.addControl('incomeAccountId', new FormControl(''));
+          this.chargeForm.addControl('incomeAccountId', new UntypedFormControl(''));
           break;
         case 4: // Shares
           this.chargeForm.removeControl('chargePaymentMode');
@@ -176,20 +176,20 @@ export class CreateChargeComponent implements OnInit {
       }
       switch (chargeTimeType) {
         case 6: // Annual Fee
-          this.chargeForm.addControl('feeOnMonthDay', new FormControl('', Validators.required));
+          this.chargeForm.addControl('feeOnMonthDay', new UntypedFormControl('', Validators.required));
           break;
         case 7: // Monthly Fee
-          this.chargeForm.addControl('feeOnMonthDay', new FormControl(''));
-          this.chargeForm.addControl('feeInterval', new FormControl('', [Validators.required, Validators.min(1), Validators.max(12), Validators.pattern('^[1-9]\\d*$')]));
+          this.chargeForm.addControl('feeOnMonthDay', new UntypedFormControl(''));
+          this.chargeForm.addControl('feeInterval', new UntypedFormControl('', [Validators.required, Validators.min(1), Validators.max(12), Validators.pattern('^[1-9]\\d*$')]));
           this.repeatEveryLabel = 'Months';
           break;
         case 9: // Overdue Fee
           this.chargeForm.get('penalty').setValue(true);
-          this.chargeForm.addControl('addFeeFrequency', new FormControl(false));
+          this.chargeForm.addControl('addFeeFrequency', new UntypedFormControl(false));
           this.chargeForm.get('addFeeFrequency').valueChanges.subscribe((addFeeFrequency) => {
             if (addFeeFrequency) {
-              this.chargeForm.addControl('feeFrequency', new FormControl('', Validators.required));
-              this.chargeForm.addControl('feeInterval', new FormControl('', [Validators.required, Validators.pattern('^[1-9]\\d*$')]));
+              this.chargeForm.addControl('feeFrequency', new UntypedFormControl('', Validators.required));
+              this.chargeForm.addControl('feeInterval', new UntypedFormControl('', [Validators.required, Validators.pattern('^[1-9]\\d*$')]));
             } else {
               this.chargeForm.removeControl('feeFrequency');
               this.chargeForm.removeControl('feeInterval');
@@ -197,7 +197,7 @@ export class CreateChargeComponent implements OnInit {
           });
           break;
         case 11: // Weekly Fee
-          this.chargeForm.addControl('feeInterval', new FormControl('', [Validators.required, Validators.pattern('^[1-9]\\d*$')]));
+          this.chargeForm.addControl('feeInterval', new UntypedFormControl('', [Validators.required, Validators.pattern('^[1-9]\\d*$')]));
           this.repeatEveryLabel = 'Weeks';
           break;
       }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 import { FormfieldBase } from './model/formfield-base';
 
@@ -10,7 +10,7 @@ import { FormfieldBase } from './model/formfield-base';
 })
 export class FormfieldComponent implements OnInit {
 
-  @Input() form: FormGroup;
+  @Input() form: UntypedFormGroup;
   @Input() formfield: FormfieldBase;
 
   constructor() { }

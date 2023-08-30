@@ -25,7 +25,9 @@ export class LoanDetailsResolver implements Resolve<Object> {
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
       const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
-      return this.loansService.getLoanAccountAssociationDetails(loanId);
+      if (!isNaN(+loanId)) {
+        return this.loansService.getLoanAccountAssociationDetails(loanId);
+      }
     }
 
 }

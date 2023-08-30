@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -27,7 +27,7 @@ export class CreateHookComponent implements OnInit {
   /** Hooks Template Data. */
   hooksTemplateData: any;
   /** Hook Form. */
-  hookForm: FormGroup;
+  hookForm: UntypedFormGroup;
   /** Columns to be displayed in events table. */
   displayedColumns: string[] = ['entityName', 'actionName', 'actions'];
   /** Data source for events table. */
@@ -48,7 +48,7 @@ export class CreateHookComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private systemService: SystemService,
               private router: Router,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private dialog: MatDialog) {
     this.route.data.subscribe((data: { hooksTemplate: any }) => {
       this.hooksTemplateData = data.hooksTemplate;

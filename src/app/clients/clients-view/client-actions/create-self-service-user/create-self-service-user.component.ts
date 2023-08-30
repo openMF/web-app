@@ -1,6 +1,6 @@
 /** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, UntypedFormControl, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -14,11 +14,11 @@ import { ClientsService } from 'app/clients/clients.service';
 })
 export class CreateSelfServiceUserComponent implements OnInit {
 
-  createSelfServiceForm: FormGroup;
+  createSelfServiceForm: UntypedFormGroup;
   clientData: any;
   hidePasswordField = true;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private clientService: ClientsService,
               private router: Router) {
@@ -43,8 +43,8 @@ export class CreateSelfServiceUserComponent implements OnInit {
         this.createSelfServiceForm.removeControl('repeatPassword');
       } else {
         this.hidePasswordField = false;
-        this.createSelfServiceForm.addControl('password', new FormControl('', [Validators.required]));
-        this.createSelfServiceForm.addControl('repeatPassword', new FormControl('', [Validators.required, this.confirmPassword('password')]));
+        this.createSelfServiceForm.addControl('password', new UntypedFormControl('', [Validators.required]));
+        this.createSelfServiceForm.addControl('repeatPassword', new UntypedFormControl('', [Validators.required, this.confirmPassword('password')]));
       }
     });
   }
@@ -54,13 +54,13 @@ export class CreateSelfServiceUserComponent implements OnInit {
    */
   createSelfServiceUser() {
     this.createSelfServiceForm = this.formBuilder.group({
-      'username': new FormControl('', [Validators.required]),
-      'firstname': new FormControl(this.clientData.firstname, [Validators.required]),
-      'lastname': new FormControl(this.clientData.lastname, [Validators.required]),
-      'email': new FormControl('', [Validators.required, Validators.email]),
-      'sendPasswordToEmail': new FormControl(true),
-      'passwordNeverExpires': new FormControl(false),
-      'status': new FormControl({value: this.clientData.subStatus.active ? 'Active' : 'Inactive', disabled: true})
+      'username': new UntypedFormControl('', [Validators.required]),
+      'firstname': new UntypedFormControl(this.clientData.firstname, [Validators.required]),
+      'lastname': new UntypedFormControl(this.clientData.lastname, [Validators.required]),
+      'email': new UntypedFormControl('', [Validators.required, Validators.email]),
+      'sendPasswordToEmail': new UntypedFormControl(true),
+      'passwordNeverExpires': new UntypedFormControl(false),
+      'status': new UntypedFormControl({value: this.clientData.subStatus.active ? 'Active' : 'Inactive', disabled: true})
     });
   }
 

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -23,7 +23,7 @@ export class CloseCenterComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Close Share Account form. */
-  closeCenterForm: FormGroup;
+  closeCenterForm: UntypedFormGroup;
   /** Center Data */
   closureData: any;
   /** Center Id */
@@ -37,7 +37,7 @@ export class CloseCenterComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private centersService: CentersService,
               private settingsService: SettingsService,
               private dateUtils: Dates,

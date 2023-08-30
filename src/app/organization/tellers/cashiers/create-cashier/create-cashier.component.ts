@@ -1,6 +1,6 @@
 /** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -25,7 +25,7 @@ export class CreateCashierComponent implements OnInit {
   /** Cashier Template. */
   cashierTemplate: any;
   /** Create cashier form. */
-  createCashierForm: FormGroup;
+  createCashierForm: UntypedFormGroup;
 
   /**
    * Fetches cashier template from `resolve`
@@ -36,7 +36,7 @@ export class CreateCashierComponent implements OnInit {
    * @param {OrganizationService} organizationService Organization Service.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private dateUtils: Dates,

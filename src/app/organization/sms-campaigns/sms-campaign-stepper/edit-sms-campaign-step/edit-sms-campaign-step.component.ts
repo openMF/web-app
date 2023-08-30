@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
+import { UntypedFormGroup, Validators, UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
 import { ReportsService } from 'app/reports/reports.service';
@@ -25,7 +25,7 @@ export class EditSmsCampaignStepComponent implements OnInit {
   @Input() smsCampaign: any;
 
   /** SMS Campaign Form */
-  smsCampaignDetailsForm: FormGroup;
+  smsCampaignDetailsForm: UntypedFormGroup;
   /** Data to be passed to sub component */
   paramData: any;
   /** Trigger types options */
@@ -49,7 +49,7 @@ export class EditSmsCampaignStepComponent implements OnInit {
    * @param {ReportsService} reportService Reports Service
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private reportService: ReportsService,
               private settingsService: SettingsService) {
     this.createSMSCampaignDetailsForm();
@@ -107,7 +107,7 @@ export class EditSmsCampaignStepComponent implements OnInit {
       'isNotification': this.smsCampaign.isNotification
     });
     if (this.smsCampaign.triggerType.value === 'Schedule') {
-      this.smsCampaignDetailsForm.addControl('recurrenceStartDate', new FormControl(new Date(this.smsCampaign.recurrenceStartDate)));
+      this.smsCampaignDetailsForm.addControl('recurrenceStartDate', new UntypedFormControl(new Date(this.smsCampaign.recurrenceStartDate)));
     }
   }
 

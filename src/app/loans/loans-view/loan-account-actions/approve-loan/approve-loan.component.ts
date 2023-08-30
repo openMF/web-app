@@ -1,6 +1,6 @@
 /** Angular Imports. */
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -19,7 +19,7 @@ import { SettingsService } from 'app/settings/settings.service';
 export class ApproveLoanComponent implements OnInit {
 
   /** Approve Loan form. */
-  approveLoanForm: FormGroup;
+  approveLoanForm: UntypedFormGroup;
   /** Loan data. */
   loanData: any = new Object();
   /** Association Data */
@@ -38,7 +38,7 @@ export class ApproveLoanComponent implements OnInit {
    * @param router Router.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private dateUtils: Dates,
     private loanService: LoansService,

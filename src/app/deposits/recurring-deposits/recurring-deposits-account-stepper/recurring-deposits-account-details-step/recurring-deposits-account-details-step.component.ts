@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Services */
@@ -30,7 +30,7 @@ export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
   /** For edit recurring deposits form */
   isFieldOfficerPatched = false;
   /** Recurring Deposits Account Details Form */
-  recurringDepositAccountDetailsForm: FormGroup;
+  recurringDepositAccountDetailsForm: UntypedFormGroup;
 
   /** Recurring Deposits Account Template with product data  */
   @Output() recurringDepositsAccountProductTemplate = new EventEmitter();
@@ -41,7 +41,7 @@ export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
    * @param {RecurringDepositsService} recurringDepositsService Recurring Deposits Service.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private recurringDepositsService: RecurringDepositsService,
     private settingsService: SettingsService) {
     this.createRecurringDepositsAccountDetailsForm();

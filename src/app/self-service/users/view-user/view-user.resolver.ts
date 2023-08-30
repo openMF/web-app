@@ -6,10 +6,10 @@ import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { UserService } from '../user.service';
 
 /** Custom Model */
 import { User } from '../user.model';
+import { UsersService } from 'app/users/users.service';
 
 /**
  * View self service user data resolver.
@@ -20,14 +20,14 @@ export class ViewUserResolver implements Resolve<Object> {
   /**
    * @param {UserService} userService Self service user service.
    */
-  constructor(private userService: UserService) {}
+  constructor(private userService: UsersService) {}
 
   /**
    * Returns the user data.
    * @returns {Observable<User>}
    */
   resolve(): Observable<User> {
-    return this.userService.getUser();
+    return this.userService.getUser('1');
   }
 
 }

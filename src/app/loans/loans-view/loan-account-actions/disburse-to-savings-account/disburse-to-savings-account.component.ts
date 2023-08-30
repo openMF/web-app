@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
@@ -19,7 +19,7 @@ export class DisburseToSavingsAccountComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Disbursement Loan form. */
-  disbursementForm: FormGroup;
+  disbursementForm: UntypedFormGroup;
 
   /**
    * Get data from `Resolver`.
@@ -29,7 +29,7 @@ export class DisburseToSavingsAccountComponent implements OnInit {
    * @param {LoansService} loanService Loan Service.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
@@ -52,7 +52,7 @@ export class DisburseToSavingsAccountComponent implements OnInit {
       'note': ['']
     });
     if (this.dataObject.fixedEmiAmount) {
-      this.disbursementForm.addControl('fixedEmiAmount', new FormControl(this.dataObject.fixedEmiAmount, [Validators.required]));
+      this.disbursementForm.addControl('fixedEmiAmount', new UntypedFormControl(this.dataObject.fixedEmiAmount, [Validators.required]));
     }
   }
 
