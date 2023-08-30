@@ -256,4 +256,8 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
     return '';
   }
 
+  getInputName(attr: string): string {
+    return this.datatables.getName(attr);
+  }
+
 }

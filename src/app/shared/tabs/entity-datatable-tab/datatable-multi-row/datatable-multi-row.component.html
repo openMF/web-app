@@ -37,7 +37,7 @@
         </ng-container>
 
         <ng-container *ngIf="i > 0">
-          <th mat-header-cell class="right" *matHeaderCellDef> {{datatableColumn}} </th>
+          <th mat-header-cell class="right" *matHeaderCellDef> {{ getInputName(datatableColumn) }} </th>
           <td mat-cell class="right" *matCellDef="let data" [ngClass]="isToDelete(data)">
               {{ formatValue(data, datatableColumn) }}
           </td>
