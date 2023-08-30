@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -19,7 +19,7 @@ export class EditCollateralComponent implements OnInit {
   /** Collateral Template */
   collateralTemplateData: any;
   /** Collateral Form */
-  collateralForm: FormGroup;
+  collateralForm: UntypedFormGroup;
 
   /**
    * Retrieves the Collateral Data from `resolve`
@@ -30,7 +30,7 @@ export class EditCollateralComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor(private productsService: ProductsService,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {

@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /**
  * Report Parameter Dialog Component.
@@ -14,7 +14,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class ReportParameterDialogComponent implements OnInit {
 
   /** Report Parameter Form. */
-  reportParameterForm: FormGroup;
+  reportParameterForm: UntypedFormGroup;
 
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
@@ -22,7 +22,7 @@ export class ReportParameterDialogComponent implements OnInit {
    * @param {any} data Provides the allowed parameters and values for the form (if available).
    */
   constructor(public dialogRef: MatDialogRef<ReportParameterDialogComponent>,
-              public formBuilder: FormBuilder,
+              public formBuilder: UntypedFormBuilder,
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 

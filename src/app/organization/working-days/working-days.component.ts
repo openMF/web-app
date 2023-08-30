@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormArray, UntypedFormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -27,7 +27,7 @@ const recurrenceDefaultValue = 'FREQ=WEEKLY;INTERVAL=1;BYDAY=';
 export class WorkingDaysComponent implements OnInit, AfterViewInit {
 
   /** Working days form. */
-  workingDaysForm: FormGroup;
+  workingDaysForm: UntypedFormGroup;
   /** Working days data. */
   workingDaysData: any;
   /** Week days */
@@ -59,7 +59,7 @@ export class WorkingDaysComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private organizationService: OrganizationService,
               private settingsService: SettingsService,
@@ -95,8 +95,8 @@ export class WorkingDaysComponent implements OnInit, AfterViewInit {
   /**
    * @returns {FormArray} recurrence form array.
    */
-  get recurrence(): FormArray {
-    return this.workingDaysForm.get('recurrence') as FormArray;
+  get recurrence(): UntypedFormArray {
+    return this.workingDaysForm.get('recurrence') as UntypedFormArray;
   }
 
   /**
@@ -113,7 +113,7 @@ export class WorkingDaysComponent implements OnInit, AfterViewInit {
    * Creates the recurrence form array.
    */
   createRecurrenceFormArray() {
-    return this.weekDays.map(weekDay => new FormControl(weekDay.checked));
+    return this.weekDays.map(weekDay => new UntypedFormControl(weekDay.checked));
   }
 
   /**

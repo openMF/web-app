@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, AfterViewInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Dialogs */
@@ -26,7 +26,7 @@ export class ManageGroupsComponent implements AfterViewInit {
   /** Group Members. */
   groupMembers: any[] = [];
   /** GroupChoice. */
-  groupChoice = new FormControl('');
+  groupChoice = new UntypedFormControl('');
 
   /**
    * Fetches center action data from `resolve`

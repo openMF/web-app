@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
@@ -31,7 +31,7 @@ export class EditSchedulerJobComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private systemService: SystemService,
               private router: Router,
-              private formBuilder: FormBuilder ) {
+              private formBuilder: UntypedFormBuilder ) {
     this.route.data.subscribe((data: { jobSelected: any }) => {
       this.jobData = data.jobSelected;
     });

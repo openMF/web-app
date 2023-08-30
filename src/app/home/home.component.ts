@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit} from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 /** rxjs Imports */
@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   /** Activity Form. */
   activityForm: any;
   /** Search Text. */
-  searchText: FormControl = new FormControl();
+  searchText: UntypedFormControl = new UntypedFormControl();
   /** Filtered Activities. */
   filteredActivities: Observable<any[]>;
   /** All User Activities. */

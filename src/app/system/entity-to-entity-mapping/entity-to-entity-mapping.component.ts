@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Components */
@@ -63,7 +63,7 @@ export class EntityToEntityMappingComponent implements OnInit {
   entityMappingsListData: MatTableDataSource<any>;
 
   /** Filter Preference Form */
-  filterPreferenceForm: FormGroup;
+  filterPreferenceForm: UntypedFormGroup;
   /** List of Entity to Entity Mapping */
   displayedColumns: string[] = ['entitymapping'];
   /** Columns for details of a chosen mapping */
@@ -80,7 +80,7 @@ export class EntityToEntityMappingComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private systemService: SystemService,
     private dateUtils: Dates,
     private dialog: MatDialog,

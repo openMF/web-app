@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit  } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -34,7 +34,7 @@ import { DatatableColumn } from '../datatable-column.model';
 export class CreateDataTableComponent implements OnInit, AfterViewInit {
 
   /** Data Table Form */
-  dataTableForm: FormGroup;
+  dataTableForm: UntypedFormGroup;
   /** Application Table Data */
   appTableData = appTableData;
   entitySubTypeData = entitySubTypeData;
@@ -79,7 +79,7 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private systemService: SystemService,
               private route: ActivatedRoute,
               private router: Router,

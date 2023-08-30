@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import { ExternalAssetOwnerService } from 'app/loans/services/external-asset-owner.service';
@@ -23,9 +23,9 @@ export class AssetTransferLoanComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Sell Loan Form */
-  saleLoanForm: FormGroup;
+  saleLoanForm: UntypedFormGroup;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private externalAssetOwnerService: ExternalAssetOwnerService,
     private route: ActivatedRoute,
     private router: Router,

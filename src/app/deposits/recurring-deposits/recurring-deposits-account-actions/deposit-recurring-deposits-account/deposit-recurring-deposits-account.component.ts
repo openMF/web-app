@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -33,7 +33,7 @@ export class DepositRecurringDepositsAccountComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Deposits Recurring Deposit Account form. */
-  depositRecurringDepositForm: FormGroup;
+  depositRecurringDepositForm: UntypedFormGroup;
 
   /**
    * Retrieves action details transactions template data from `resolve`
@@ -44,7 +44,7 @@ export class DepositRecurringDepositsAccountComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,

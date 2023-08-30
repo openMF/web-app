@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Dialog Components */
@@ -30,7 +30,7 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
   /** Validity of fixed depsits account form */
   @Input() fixedDepositAccountFormValid: boolean;
   /** Currency Code */
-  @Input() currencyCode: FormControl;
+  @Input() currencyCode: UntypedFormControl;
 
   /** Charges Data */
   chargeData: any;

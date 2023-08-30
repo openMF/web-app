@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -20,7 +20,7 @@ import Chart from 'chart.js';
 export class AmountCollectedPieComponent implements OnInit {
 
   /** Static Form control for office Id */
-  officeId = new FormControl();
+  officeId = new UntypedFormControl();
   /** Office Data */
   officeData: any;
   /** Chart.js chart */

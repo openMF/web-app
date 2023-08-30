@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -19,7 +19,7 @@ import { Dates } from 'app/core/utils/dates';
 export class CreateCollateralComponent implements OnInit {
 
   /** Collateral form */
-  collateralForm: FormGroup;
+  collateralForm: UntypedFormGroup;
   /** Charges Template data */
   collateralTemplateData: any;
 
@@ -31,7 +31,7 @@ export class CreateCollateralComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private productsService: ProductsService,
               private route:  ActivatedRoute,
               private router: Router,

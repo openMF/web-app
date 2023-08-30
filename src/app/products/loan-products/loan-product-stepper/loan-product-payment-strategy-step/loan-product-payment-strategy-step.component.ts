@@ -1,6 +1,6 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -36,8 +36,8 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
   transactionTypeOptions: PaymentCode[] = [];
   installmentAllocationOptions: PaymentCode[] = [];
 
-  transactionType = new FormControl('');
-  futureInstallmentAllocationRule = new FormControl('', Validators.required);
+  transactionType = new UntypedFormControl('');
+  futureInstallmentAllocationRule = new UntypedFormControl('', Validators.required);
 
   @ViewChild('table') table: MatTable<any>;
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
@@ -12,9 +12,9 @@ import { SettingsService } from 'app/settings/settings.service';
 export class CreateRangeComponent implements OnInit {
 
   /** Delinquency Range form. */
-  delinquencyRangeForm: FormGroup;
+  delinquencyRangeForm: UntypedFormGroup;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private productsService: ProductsService,
     private route: ActivatedRoute,
     private router: Router,

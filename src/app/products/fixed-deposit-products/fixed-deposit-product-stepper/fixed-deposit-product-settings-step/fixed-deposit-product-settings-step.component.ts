@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { TooltipPosition } from '@angular/material/tooltip';
 
 @Component({
@@ -11,14 +11,14 @@ export class FixedDepositProductSettingsStepComponent implements OnInit {
 
   @Input() fixedDepositProductsTemplate: any;
 
-  fixedDepositProductSettingsForm: FormGroup;
+  fixedDepositProductSettingsForm: UntypedFormGroup;
 
   lockinPeriodFrequencyTypeData: any;
   periodFrequencyTypeData: any;
   preClosurePenalInterestOnTypeData: any;
   taxGroupData: any;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createFixedDepositProductSettingsForm();
     this.setConditionalControls();
   }
@@ -71,7 +71,7 @@ export class FixedDepositProductSettingsStepComponent implements OnInit {
     this.fixedDepositProductSettingsForm.get('withHoldTax').valueChanges
       .subscribe((withHoldTax: any) => {
         if (withHoldTax) {
-          this.fixedDepositProductSettingsForm.addControl('taxGroupId', new FormControl('', Validators.required));
+          this.fixedDepositProductSettingsForm.addControl('taxGroupId', new UntypedFormControl('', Validators.required));
         } else {
           this.fixedDepositProductSettingsForm.removeControl('taxGroupId');
         }

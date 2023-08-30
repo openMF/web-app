@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 /** rxjs Imports */
 import { of } from 'rxjs';
@@ -25,7 +25,7 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
 export class HolidaysComponent implements OnInit, AfterViewInit {
 
   /** Office selector. */
-  officeSelector = new FormControl();
+  officeSelector = new UntypedFormControl();
   /** Holidays data. */
   holidaysData: any;
   /** Offices data. */

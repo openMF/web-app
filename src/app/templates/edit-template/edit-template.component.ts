@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** CKEditor5 Imports */
@@ -28,7 +28,7 @@ export class EditTemplateComponent implements OnInit {
   @ViewChild('ckEditor', { static: true }) ckEditor: any;
 
   /** Template form. */
-  templateForm: FormGroup;
+  templateForm: UntypedFormGroup;
   /** Edit Template Data. */
   editTemplateData: any;
   /** Template Mappers */
@@ -50,7 +50,7 @@ export class EditTemplateComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {TemplateService} templateService Templates Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private templateService: TemplatesService) {
@@ -59,8 +59,8 @@ export class EditTemplateComponent implements OnInit {
       this.mappers = this.editTemplateData.template.mappers
         .map((mapper: any) => ({
           mappersorder: mapper.mapperorder,
-          mapperskey: new FormControl(mapper.mapperkey),
-          mappersvalue: new FormControl(mapper.mappervalue)
+          mapperskey: new UntypedFormControl(mapper.mapperkey),
+          mappersvalue: new UntypedFormControl(mapper.mappervalue)
         }));
     });
   }
@@ -90,14 +90,14 @@ export class EditTemplateComponent implements OnInit {
       if (value === 0) { // client
         this.mappers.splice(0, 1, {
           mappersorder: 0,
-          mapperskey: new FormControl('client'),
-          mappersvalue: new FormControl('clients/{{clientId}}?tenantIdentifier=' + tenantIdentifier)
+          mapperskey: new UntypedFormControl('client'),
+          mappersvalue: new UntypedFormControl('clients/{{clientId}}?tenantIdentifier=' + tenantIdentifier)
         });
       } else { // loan
         this.mappers.splice(0, 1, {
           mappersorder: 0,
-          mapperskey: new FormControl('loan'),
-          mappersvalue: new FormControl('loans/{{loanId}}?associations=all&tenantIdentifier=' + tenantIdentifier )
+          mapperskey: new UntypedFormControl('loan'),
+          mappersvalue: new UntypedFormControl('loans/{{loanId}}?associations=all&tenantIdentifier=' + tenantIdentifier )
         });
       }
       this.setEditorContent('');
@@ -110,8 +110,8 @@ export class EditTemplateComponent implements OnInit {
   addMapper() {
     this.mappers.push({
       mappersorder: this.mappers.length,
-      mapperskey: new FormControl(''),
-      mappersvalue: new FormControl('')
+      mapperskey: new UntypedFormControl(''),
+      mappersvalue: new UntypedFormControl('')
     });
   }
 

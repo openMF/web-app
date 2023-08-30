@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'mifosx-recurring-deposit-product-terms-step',
@@ -10,14 +10,14 @@ export class RecurringDepositProductTermsStepComponent implements OnInit {
 
   @Input() recurringDepositProductsTemplate: any;
 
-  recurringDepositProductTermsForm: FormGroup;
+  recurringDepositProductTermsForm: UntypedFormGroup;
 
   interestCompoundingPeriodTypeData: any;
   interestPostingPeriodTypeData: any;
   interestCalculationTypeData: any;
   interestCalculationDaysInYearTypeData: any;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createrecurringDepositProductTermsForm();
   }
 

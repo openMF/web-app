@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientsService } from 'app/clients/clients.service';
 import { GroupsService } from 'app/groups/groups.service';
@@ -24,9 +24,9 @@ export class EntityNotesTabComponent implements OnInit {
   @Input() callbackEdit: (noteId: string, note: string, index: number) => void;
   @Input() callbackDelete: (noteId: string, index: number) => void;
 
-  noteForm: FormGroup;
+  noteForm: UntypedFormGroup;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private savingsService: SavingsService,
     private loansService: LoansService,
     private clientsService: ClientsService,

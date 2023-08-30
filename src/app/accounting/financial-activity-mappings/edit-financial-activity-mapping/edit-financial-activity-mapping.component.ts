@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -17,7 +17,7 @@ import { AccountingService } from '../../accounting.service';
 export class EditFinancialActivityMappingComponent implements OnInit {
 
   /** Financial activity mapping form. */
-  financialActivityMappingForm: FormGroup;
+  financialActivityMappingForm: UntypedFormGroup;
   /** GL Account options. */
   glAccountOptions: any;
   /** GL Account data. */
@@ -38,7 +38,7 @@ export class EditFinancialActivityMappingComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuider: FormBuilder,
+  constructor(private formBuider: UntypedFormBuilder,
               private accountingService: AccountingService,
               private route: ActivatedRoute,
               private router: Router) {

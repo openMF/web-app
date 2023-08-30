@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrganizationService } from 'app/organization/organization.service';
 
@@ -11,7 +11,7 @@ import { OrganizationService } from 'app/organization/organization.service';
 export class CreateFundComponent implements OnInit {
 
   /** Charge form. */
-  fundForm: FormGroup;
+  fundForm: UntypedFormGroup;
 
   /**
    * Retrieves the charge data from `resolve`.
@@ -21,7 +21,7 @@ export class CreateFundComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor(private organizationService: OrganizationService,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private router: Router,
               private route: ActivatedRoute) {
   }

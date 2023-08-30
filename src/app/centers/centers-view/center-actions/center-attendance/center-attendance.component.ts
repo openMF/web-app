@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
 import { CentersService } from 'app/centers/centers.service';
@@ -35,7 +35,7 @@ export class CenterAttendanceComponent implements OnInit {
   /** Columns to be displayed in member's attendance table. */
   displayedColumns: string[] = ['name', 'attendance'];
   /** Start Date Form Control */
-  meetingDate = new FormControl();
+  meetingDate = new UntypedFormControl();
   /** Meeting Dates Data */
   meetingDates: any[];
   /** Data source for client members table. */

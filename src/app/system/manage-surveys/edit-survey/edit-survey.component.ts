@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormArray, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -25,7 +25,7 @@ import { Survey, QuestionData, ResponseData } from './../survey.model';
 export class EditSurveyComponent implements OnInit {
 
   /** Survey form. */
-  surveyForm: FormGroup;
+  surveyForm: UntypedFormGroup;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -34,7 +34,7 @@ export class EditSurveyComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private systemService: SystemService,
               private route: ActivatedRoute,
               private router: Router,
@@ -66,22 +66,22 @@ export class EditSurveyComponent implements OnInit {
   /**
    * Fills all the question forms.
    */
-  prepareQuestionDatas(questionForms: FormArray, questionDatas: Array<QuestionData>) {
+  prepareQuestionDatas(questionForms: UntypedFormArray, questionDatas: Array<QuestionData>) {
     questionDatas.forEach((questionData, idx) => {
       this.addQuestion();
-      const questionForm: FormGroup = <FormGroup>questionForms.at(idx);
+      const questionForm: UntypedFormGroup = <UntypedFormGroup>questionForms.at(idx);
       questionForm.get('key').setValue(questionData.key);
       questionForm.get('text').setValue(questionData.text);
       questionForm.get('description').setValue(questionData.description);
       // questionForm.get('responseDatas').setValue([]);
-      this.prepareResponseDatas((<FormArray>questionForm.get('responseDatas')), questionData.responseDatas, idx);
+      this.prepareResponseDatas((<UntypedFormArray>questionForm.get('responseDatas')), questionData.responseDatas, idx);
     });
   }
 
   /**
    * Fills all the response forms.
    */
-  prepareResponseDatas(responseForms: FormArray, responseDatas: Array<ResponseData>, questionIdx: number) {
+  prepareResponseDatas(responseForms: UntypedFormArray, responseDatas: Array<ResponseData>, questionIdx: number) {
     responseDatas.forEach((responseData, idx) => {
       if (idx) {
         this.addResponse(questionIdx);
@@ -110,8 +110,8 @@ export class EditSurveyComponent implements OnInit {
    * Gets the questions form array.
    * @returns {FormArray} Questions form array.
    */
-  get questionDatas(): FormArray {
-    return this.surveyForm.get('questionDatas') as FormArray;
+  get questionDatas(): UntypedFormArray {
+    return this.surveyForm.get('questionDatas') as UntypedFormArray;
   }
 
   /**
@@ -119,15 +119,15 @@ export class EditSurveyComponent implements OnInit {
    * @param {number} questionIndex Index of question to retrieve responses from.
    * @returns {FormArray} Responses form array.
    */
-  getResponseDatas(questionIndex: number): FormArray {
-    return this.surveyForm.get(['questionDatas', questionIndex, 'responseDatas']) as FormArray;
+  getResponseDatas(questionIndex: number): UntypedFormArray {
+    return this.surveyForm.get(['questionDatas', questionIndex, 'responseDatas']) as UntypedFormArray;
   }
 
   /**
    * Creates a question form group
    * @returns {FormGroup} Question form group.
    */
-  createQuestionForm(): FormGroup {
+  createQuestionForm(): UntypedFormGroup {
     return this.formBuilder.group({
       'key': ['', Validators.required],
       'text': ['', Validators.required],
@@ -158,7 +158,7 @@ export class EditSurveyComponent implements OnInit {
    * Creates a response form group
    * @returns {FormGroup} Response form group.
    */
-  createResponseForm(): FormGroup {
+  createResponseForm(): UntypedFormGroup {
     return this.formBuilder.group({
       'text': ['', Validators.required],
       'value': ['', [Validators.required, Validators.pattern('^\\s*[-]?\\d{0,4}\\s*$')]],
@@ -180,7 +180,7 @@ export class EditSurveyComponent implements OnInit {
    * @param {FormArray} responseFormArray Given responses form array.
    * @param {number} index Array index from where response form needs to be removed.
    */
-  removeResponse(responseFormArray: FormArray, index: number) {
+  removeResponse(responseFormArray: UntypedFormArray, index: number) {
     responseFormArray.removeAt(index);
     this.updateSequenceNumber();
   }

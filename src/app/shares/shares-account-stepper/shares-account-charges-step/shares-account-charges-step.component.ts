@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 /** Custom Dialogs */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -26,7 +26,7 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
   /** Shares Account Template */
   @Input() sharesAccountTemplate: any;
   /** Currency Code */
-  @Input() currencyCode: FormControl;
+  @Input() currencyCode: UntypedFormControl;
 
   /** Charge Data */
   chargeData: any = [];

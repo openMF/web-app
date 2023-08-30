@@ -1,6 +1,6 @@
 /** Angular Imports. */
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -26,7 +26,7 @@ export class WriteOffPageComponent implements OnInit {
   maxDate = new Date();
 
   /** Write Off form. */
-  writeOffForm: FormGroup;
+  writeOffForm: UntypedFormGroup;
 
   /**
    * Get data from `Resolver`.
@@ -37,7 +37,7 @@ export class WriteOffPageComponent implements OnInit {
    * @param {Router} router Router.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private loanService: LoansService,
               private dateUtils: Dates,

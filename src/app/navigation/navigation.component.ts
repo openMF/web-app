@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
 import { NavigationService } from './navigation.service';
@@ -42,15 +42,15 @@ export class NavigationComponent implements OnInit {
   clientData: any;
 
   /** Office selector */
-  officeSelector = new FormControl();
+  officeSelector = new UntypedFormControl();
   /** Employee selector */
-  employeeSelector = new FormControl();
+  employeeSelector = new UntypedFormControl();
   /** Center selector */
-  centerSelector = new FormControl();
+  centerSelector = new UntypedFormControl();
   /** Group selector */
-  groupSelector = new FormControl();
+  groupSelector = new UntypedFormControl();
   /** Client selector */
-  clientSelector = new FormControl();
+  clientSelector = new UntypedFormControl();
 
   /** Selected Item */
   selectedItem: any;

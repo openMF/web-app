@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -26,7 +26,7 @@ export class RedeemSharesComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Redeem Share Account form. */
-  redeemSharesForm: FormGroup;
+  redeemSharesForm: UntypedFormGroup;
   /** Shares Account Id */
   accountId: any;
 
@@ -38,7 +38,7 @@ export class RedeemSharesComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private sharesService: SharesService,
               private dateUtils: Dates,
               private route: ActivatedRoute,

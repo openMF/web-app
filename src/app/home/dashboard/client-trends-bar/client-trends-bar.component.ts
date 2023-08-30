@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 /** rxjs Imports */
@@ -25,9 +25,9 @@ import { Dates } from 'app/core/utils/dates';
 export class ClientTrendsBarComponent implements OnInit {
 
   /** Static Form control for office Id */
-  officeId = new FormControl();
+  officeId = new UntypedFormControl();
   /** Static Form control for time scale */
-  timescale = new FormControl();
+  timescale = new UntypedFormControl();
   /** Office Data */
   officeData: any;
   /** Chart.js chart */

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -31,7 +31,7 @@ export class CreateTaxGroupComponent implements OnInit {
   /** Maximum start date allowed. */
   maxDate = new Date(2100, 0, 1);
   /** Tax Group form. */
-  taxGroupForm: FormGroup;
+  taxGroupForm: UntypedFormGroup;
   /** Tax Group template data. */
   taxGroupTemplateData: any;
   /** Tax Component Data Source */
@@ -52,7 +52,7 @@ export class CreateTaxGroupComponent implements OnInit {
    * @param {MatDialog} dialog Dialog reference.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private productsService: ProductsService,
               private route: ActivatedRoute,
               private router: Router,
