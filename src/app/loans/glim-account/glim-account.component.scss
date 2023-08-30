@@ -1,33 +1,40 @@
-.tab-container {
+.loan-card {
+  margin: 0 auto;
+  max-width: 80rem;
+  width: 90%;
+  padding: 0;
+  .header {
     padding: 1%;
-    margin: 1%;
-    h3 {
-      margin:1% auto;
-    }
-    .group-details-container {
-      border: 1px solid;
-      padding: 1%;
-    }
-    .action-button{
-      margin-left: auto;
-    }
-    table {
-      width: 100%;
-      .account-action-button{
-        min-width: 26px;
-        padding: 0 6px;
-        margin: 4px;
-        line-height: 25px;
-      }
-      tr.select-row:hover {
-        cursor: pointer;
+    .header-title-group {
+      .loan-card-title {
+        color: white;
+        width: 90%;
+        p {
+          color: white;
+        }
       }
     }
-    i:hover {
-      cursor: pointer;
+    .profile-image-container {
+      margin: 1%;
+      .profile-image {
+        object-fit: cover;
+        border-radius: 20px;
+      }
     }
-    tr:hover {
-        cursor: pointer;
+    .loan-actions {
+      align-self: flex-end;
+      margin: 0 1%;
+      // min-width: 72%;
+    }
+    .loan-span {
+      margin: 0 0.5%;
     }
   }
-  
+  .navigation-tabs {
+    overflow: auto;
+  }
+}
+
+.loans-overview{
+  font-size: 14px;
+}

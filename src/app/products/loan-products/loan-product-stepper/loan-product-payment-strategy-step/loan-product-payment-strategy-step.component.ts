@@ -27,7 +27,7 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
   @ViewChild('table') table: MatTable<any>;
 
   /** Columns to be displayed in the table. */
-  displayedColumns: string[] = ['order', 'paymentAllocation'];
+  displayedColumns: string[] = ['paymentAllocation', 'order'];
 
   constructor() { }
 
