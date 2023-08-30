@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -17,7 +17,7 @@ import { GroupsService } from '../../groups.service';
 export class AddRoleComponent implements OnInit {
 
   /** Groups Add Role Form */
-  groupsAddRoleForm: FormGroup;
+  groupsAddRoleForm: UntypedFormGroup;
   /** Client Member Data */
   clientMemberData: any;
   /** Role Data */
@@ -31,7 +31,7 @@ export class AddRoleComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private groupsService: GroupsService,
               private route: ActivatedRoute,
               private router: Router) {

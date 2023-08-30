@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** rxjs Imports */
 import { finalize } from 'rxjs/operators';
@@ -19,7 +19,7 @@ import { AuthenticationService } from '../../core/authentication/authentication.
 export class LoginFormComponent implements OnInit {
 
   /** Login form group. */
-  loginForm: FormGroup;
+  loginForm: UntypedFormGroup;
   /** Password input field type. */
   passwordInputType: string;
   /** True if loading. */
@@ -29,7 +29,7 @@ export class LoginFormComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {AuthenticationService} authenticationService Authentication Service.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private authenticationService: AuthenticationService) {  }
 
   /**

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -17,7 +17,7 @@ import { RecurringDepositsService } from '../../recurring-deposits.service';
 export class UndoApprovalRecurringDepositsAccountComponent implements OnInit {
 
   /** Undo Approval Recurring Deposits Account form. */
-  undoApprovalRecurringDepositsAccountForm: FormGroup;
+  undoApprovalRecurringDepositsAccountForm: UntypedFormGroup;
   /** Recurring Deposits Account Id */
   accountId: any;
 
@@ -27,7 +27,7 @@ export class UndoApprovalRecurringDepositsAccountComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private recurringDepositsService: RecurringDepositsService,
     private route: ActivatedRoute,
     private router: Router) {

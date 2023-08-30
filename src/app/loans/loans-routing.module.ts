@@ -60,7 +60,6 @@ import { LoanArrearDelinquencyResolver } from './common-resolvers/loan-arrear-de
 import { ExternalAssetOwnerTabComponent } from './loans-view/external-asset-owner-tab/external-asset-owner-tab.component';
 import { ExternalAssetOwnerResolver } from './common-resolvers/external-asset-owner.resolver';
 import { ExternalAssetOwnerActiveTransferResolver } from './common-resolvers/external-asset-owner-active-transfer.resolver';
-import { ExternalAssetOwnerJournalEntryResolver } from './common-resolvers/external-asset-owner-journal-entry.resolver';
 import { LoanCollateralsResolver } from './common-resolvers/loan-collaterals.resolver';
 
 /** Loans Route. */

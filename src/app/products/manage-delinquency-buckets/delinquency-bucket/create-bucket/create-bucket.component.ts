@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from 'app/products/products.service';
@@ -15,7 +15,7 @@ import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 })
 export class CreateBucketComponent implements OnInit {
   /** Delinquency Bucket form. */
-  bucketForm: FormGroup;
+  bucketForm: UntypedFormGroup;
   /** Delinquency Bucket template data. */
   bucketTemplateData: any;
   /** Delinquency Range Data Source */
@@ -27,7 +27,7 @@ export class CreateBucketComponent implements OnInit {
   /** Delinquency Range Displayed Columns */
   displayedColumns: string[] = ['classification', 'minimumAgeDays', 'maximumAgeDays', 'actions'];
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private productsService: ProductsService,
     private router: Router,
     private route: ActivatedRoute,

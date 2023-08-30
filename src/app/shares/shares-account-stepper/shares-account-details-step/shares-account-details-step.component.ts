@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Services */
@@ -26,7 +26,7 @@ export class SharesAccountDetailsStepComponent implements OnInit {
   /** Product Data */
   productData: any;
   /** Shares Account Details Form */
-  sharesAccountDetailsForm: FormGroup;
+  sharesAccountDetailsForm: UntypedFormGroup;
 
   /** Shares Account Template with product data  */
   @Output() sharesAccountProductTemplate = new EventEmitter();
@@ -37,7 +37,7 @@ export class SharesAccountDetailsStepComponent implements OnInit {
    * @param {SharesService} sharesService Shares Service.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private sharesService: SharesService,
               private settingsService: SettingsService) {
     this.createSharesAccountDetailsForm();

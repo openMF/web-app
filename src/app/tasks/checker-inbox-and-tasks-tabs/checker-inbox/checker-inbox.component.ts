@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -30,7 +30,7 @@ export class CheckerInboxComponent implements OnInit {
   /** Checks if there is any checker data */
   checkerData = false;
   /** Maker Checker Search Form */
-  makerCheckerSearchForm: FormGroup;
+  makerCheckerSearchForm: UntypedFormGroup;
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -58,7 +58,7 @@ export class CheckerInboxComponent implements OnInit {
     private router: Router,
     private tasksService: TasksService,
     private settingsService: SettingsService,
-    private formBuilder: FormBuilder) {
+    private formBuilder: UntypedFormBuilder) {
     this.route.data.subscribe((data: { makerCheckerResource: any, makerCheckerTemplate: any }) => {
       this.searchData = data.makerCheckerResource;
       if (this.searchData.length > 0) {

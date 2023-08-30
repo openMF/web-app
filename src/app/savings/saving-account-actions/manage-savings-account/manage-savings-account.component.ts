@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import { SavingsService } from 'app/savings/savings.service';
@@ -18,7 +18,7 @@ export class ManageSavingsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Manage Savings Account form. */
-  manageSavingsAccountForm: FormGroup;
+  manageSavingsAccountForm: UntypedFormGroup;
   /** Savings Account Id */
   savingAccountId: string;
   transactionCommand: string;
@@ -40,7 +40,7 @@ export class ManageSavingsAccountComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private savingsService: SavingsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,

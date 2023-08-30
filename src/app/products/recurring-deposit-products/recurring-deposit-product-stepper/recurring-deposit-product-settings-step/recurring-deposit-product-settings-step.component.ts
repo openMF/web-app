@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'mifosx-recurring-deposit-product-settings-step',
@@ -10,14 +10,14 @@ export class RecurringDepositProductSettingsStepComponent implements OnInit {
 
   @Input() recurringDepositProductsTemplate: any;
 
-  recurringDepositProductSettingsForm: FormGroup;
+  recurringDepositProductSettingsForm: UntypedFormGroup;
 
   lockinPeriodFrequencyTypeData: any;
   periodFrequencyTypeData: any;
   preClosurePenalInterestOnTypeData: any;
   taxGroupData: any;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createrecurringDepositProductSettingsForm();
     this.setConditionalControls();
   }
@@ -73,7 +73,7 @@ export class RecurringDepositProductSettingsStepComponent implements OnInit {
     this.recurringDepositProductSettingsForm.get('withHoldTax').valueChanges
       .subscribe((withHoldTax: any) => {
         if (withHoldTax) {
-          this.recurringDepositProductSettingsForm.addControl('taxGroupId', new FormControl('', Validators.required));
+          this.recurringDepositProductSettingsForm.addControl('taxGroupId', new UntypedFormControl('', Validators.required));
         } else {
           this.recurringDepositProductSettingsForm.removeControl('taxGroupId');
         }

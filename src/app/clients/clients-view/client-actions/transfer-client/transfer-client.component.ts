@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -23,7 +23,7 @@ export class TransferClientComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Transfer Client form. */
-  transferClientForm: FormGroup;
+  transferClientForm: UntypedFormGroup;
   /** Client Data */
   officeData: any;
   /** Client Id */
@@ -37,7 +37,7 @@ export class TransferClientComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private clientsService: ClientsService,
               private dateUtils: Dates,
               private route: ActivatedRoute,

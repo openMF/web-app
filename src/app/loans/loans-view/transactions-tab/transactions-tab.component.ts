@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -22,7 +22,7 @@ export class TransactionsTabComponent implements OnInit {
   /** Temporary Transaction Data */
   tempTransaction: any;
   /** Form control to handle accural parameter */
-  hideAccrualsParam: FormControl;
+  hideAccrualsParam: UntypedFormControl;
   /** Stores the status of the loan account */
   status: string;
   /** Columns to be displayed in original schedule table. */
@@ -50,7 +50,7 @@ export class TransactionsTabComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.hideAccrualsParam = new FormControl(false);
+    this.hideAccrualsParam = new UntypedFormControl(false);
     this.setLoanTransactions(this.transactions);
   }
 

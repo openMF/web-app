@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -16,7 +16,7 @@ import { SystemService } from '../../system.service';
 })
 export class EditRoleComponent implements OnInit {
   /** Role Form */
-  roleForm: FormGroup;
+  roleForm: UntypedFormGroup;
   /** Role Data */
   roleData: any;
 
@@ -28,7 +28,7 @@ export class EditRoleComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private systemService: SystemService,
     private route: ActivatedRoute,
     private router: Router

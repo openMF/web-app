@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -29,7 +29,7 @@ import { DatatableColumn } from '../datatable-column.model';
 export class EditDataTableComponent implements OnInit {
 
   /** Data Table Form. */
-  dataTableForm: FormGroup;
+  dataTableForm: UntypedFormGroup;
   /** Data Table Data. */
   dataTableData: any;
   entitySubTypeData = entitySubTypeData;
@@ -81,7 +81,7 @@ export class EditDataTableComponent implements OnInit {
    * @param {MatDialog} dialog Dialog Reference.
    */
   constructor(private systemService: SystemService,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private dialog: MatDialog) {

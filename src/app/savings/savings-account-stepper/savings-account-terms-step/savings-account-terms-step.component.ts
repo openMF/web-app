@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnChanges, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 
 /**
@@ -23,7 +23,7 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Savings Account Terms Form */
-  savingsAccountTermsForm: FormGroup;
+  savingsAccountTermsForm: UntypedFormGroup;
   /** Lockin Period Frequency Type Data */
   lockinPeriodFrequencyTypeData: any;
   /** Interest Compounding Period Type Data */
@@ -39,7 +39,7 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private settingsService: SettingsService) {
     this.createSavingsAccountTermsForm();
     this.buildDependencies();
@@ -129,9 +129,9 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
   buildDependencies() {
     this.savingsAccountTermsForm.get('allowOverdraft').valueChanges.subscribe((allowOverdraft: any) => {
       if (allowOverdraft) {
-        this.savingsAccountTermsForm.addControl('minOverdraftForInterestCalculation', new FormControl(''));
-        this.savingsAccountTermsForm.addControl('nominalAnnualInterestRateOverdraft', new FormControl(''));
-        this.savingsAccountTermsForm.addControl('overdraftLimit', new FormControl(''));
+        this.savingsAccountTermsForm.addControl('minOverdraftForInterestCalculation', new UntypedFormControl(''));
+        this.savingsAccountTermsForm.addControl('nominalAnnualInterestRateOverdraft', new UntypedFormControl(''));
+        this.savingsAccountTermsForm.addControl('overdraftLimit', new UntypedFormControl(''));
       } else {
         this.savingsAccountTermsForm.removeControl('minOverdraftForInterestCalculation');
         this.savingsAccountTermsForm.removeControl('nominalAnnualInterestRateOverdraft');

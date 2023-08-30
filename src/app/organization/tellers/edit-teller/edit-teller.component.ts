@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -24,7 +24,7 @@ export class EditTellerComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Teller form. */
-  tellerForm: FormGroup;
+  tellerForm: UntypedFormGroup;
   /** Office data. */
   officeData: any;
   /** TellerStatuses data. */
@@ -41,7 +41,7 @@ export class EditTellerComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {Dates} dateUtils Date Utils to format date.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private organizationService: OrganizationService,
               private settingsService: SettingsService,
               private route: ActivatedRoute,

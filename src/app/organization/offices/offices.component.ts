@@ -11,7 +11,7 @@ import { of } from 'rxjs';
 /** Custom Services */
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { OfficeNode } from './office-node.model';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
@@ -27,7 +27,7 @@ import { OfficeTreeService } from './office-tree-service.service';
 })
 export class OfficesComponent implements OnInit, AfterViewInit {
   /** Button toggle group form control for type of view. (list/tree) */
-  viewGroup = new FormControl('listView');
+  viewGroup = new UntypedFormControl('listView');
 
   /** Offices data. */
   officesData: any;

@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
@@ -19,7 +19,7 @@ export class EditSMSComponent implements OnInit {
   /** SMS Configuration data */
   smsConfigurationData: any;
   /** SMS Configuration Form */
-  smsConfigurationForm: FormGroup;
+  smsConfigurationForm: UntypedFormGroup;
 
   /**
    * Retrieves the SMS configuration data from `resolve`.
@@ -28,7 +28,7 @@ export class EditSMSComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private systemService: SystemService,
               private route: ActivatedRoute,
               private router: Router) {

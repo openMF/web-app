@@ -80,7 +80,6 @@
               "optimization": false,
               "sourceMap": true,
               "namedChunks": true,
-              "outputHashing": "all",
               "extractLicenses": true,
               "aot": true,
               "buildOptimizer": true,
@@ -230,6 +229,5 @@
         }
       }
     }
-  },
-  "defaultProject": "mifosx-web-app"
+  }
 }

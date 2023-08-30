@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /**
  * Recurring Deposit Account Currency Step
@@ -17,11 +17,11 @@ export class RecurringDepositsAccountCurrencyStepComponent implements OnInit, On
   @Input() recurringDepositsAccountProductTemplate: any;
 
   /** Recurring Deposit Account Currency Form */
-  recurringDepositAccountCurrencyForm: FormGroup;
+  recurringDepositAccountCurrencyForm: UntypedFormGroup;
   /** Currency Data */
   currencyData: any;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createRecurringDepositAccountCurrencyForm();
   }
 

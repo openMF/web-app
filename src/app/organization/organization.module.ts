@@ -78,8 +78,6 @@ import { CreateFundComponent } from './manage-funds/create-fund/create-fund.comp
 import { EditFundComponent } from './manage-funds/edit-fund/edit-fund.component';
 import { ViewFundComponent } from './manage-funds/view-fund/view-fund.component';
 import { InvestorsComponent } from './investors/investors.component';
-import { ExternalAssetTransferComponent } from 'app/loans/loans-view/external-asset-owner-tab/external-asset-transfer/external-asset-transfer.component';
-import { LoansModule } from 'app/loans/loans.module';
 
 
 /**
@@ -92,8 +90,7 @@ import { LoansModule } from 'app/loans/loans.module';
     SharedModule,
     PipesModule,
     DirectivesModule,
-    OrganizationRoutingModule,
-    LoansModule
+    OrganizationRoutingModule
   ],
   declarations: [
     OrganizationComponent,

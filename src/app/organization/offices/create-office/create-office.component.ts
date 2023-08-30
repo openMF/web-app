@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, TemplateRef, ElementRef , ViewChild,
          AfterViewInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -26,7 +26,7 @@ import { ContinueSetupDialogComponent } from '../../../configuration-wizard/cont
 export class CreateOfficeComponent implements OnInit, AfterViewInit {
 
   /** Office form. */
-  officeForm: FormGroup;
+  officeForm: UntypedFormGroup;
   /** Office Data */
   officeData: any;
   /** Minimum Date allowed. */
@@ -51,7 +51,7 @@ export class CreateOfficeComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private organizationService: OrganizationService,
               private settingsService: SettingsService,
               private router: Router,

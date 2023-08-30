@@ -3,7 +3,7 @@ import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** rxjs Imports */
@@ -28,7 +28,7 @@ export class ClosingEntriesComponent implements OnInit, AfterViewInit {
   /** Data source for closing entries table. */
   dataSource: MatTableDataSource<any>;
   /** Office name filter form control. */
-  officeName = new FormControl();
+  officeName = new UntypedFormControl();
   /** Office data. */
   officeData: any;
   /** Filtered office data for autocomplete. */

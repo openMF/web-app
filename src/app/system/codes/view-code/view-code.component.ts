@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -25,7 +25,7 @@ export class ViewCodeComponent implements OnInit {
   /** Code Values Data */
   codeValuesData: any[];
   /** Code Values Form */
-  codeValuesForm: FormGroup;
+  codeValuesForm: UntypedFormGroup;
   /** Code Value Row Status */
   codeValueRowStatus: string[] = [];
 
@@ -40,7 +40,7 @@ export class ViewCodeComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private systemService: SystemService,
               private router: Router,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private dialog: MatDialog) {
     this.route.data.subscribe((data: { code: any, codeValues: any }) => {
       this.codeData = data.code;
@@ -70,8 +70,8 @@ export class ViewCodeComponent implements OnInit {
    * Gets the code values form array.
    * @returns {FormArray} Code values form array.
    */
-  get codeValues(): FormArray {
-    return this.codeValuesForm.get('codeValues') as FormArray;
+  get codeValues(): UntypedFormArray {
+    return this.codeValuesForm.get('codeValues') as UntypedFormArray;
   }
 
   /**
@@ -96,7 +96,7 @@ export class ViewCodeComponent implements OnInit {
    * Creates a code value row in code values form.
    * @param {any} codeValue Code value.
    */
-  createCodeValuesRow(codeValue?: any): FormGroup {
+  createCodeValuesRow(codeValue?: any): UntypedFormGroup {
     return this.formBuilder.group({
       'name': [{ value: codeValue ? codeValue.name : '', disabled: true }, Validators.required],
       'description': [{ value: codeValue ? codeValue.description : '', disabled: true }],

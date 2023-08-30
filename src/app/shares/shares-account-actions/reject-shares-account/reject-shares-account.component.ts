@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -23,7 +23,7 @@ export class RejectSharesAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Reject Share Account form. */
-  rejectSharesAccountForm: FormGroup;
+  rejectSharesAccountForm: UntypedFormGroup;
   /** Shares Account Id */
   accountId: any;
 
@@ -35,7 +35,7 @@ export class RejectSharesAccountComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private sharesService: SharesService,
               private dateUtils: Dates,
               private route: ActivatedRoute,

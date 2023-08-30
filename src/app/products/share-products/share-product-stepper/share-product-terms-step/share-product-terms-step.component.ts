@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { combineLatest } from 'rxjs';
 import { TooltipPosition } from '@angular/material/tooltip';
 
@@ -12,9 +12,9 @@ export class ShareProductTermsStepComponent implements OnInit {
 
   @Input() shareProductsTemplate: any;
 
-  shareProductTermsForm: FormGroup;
+  shareProductTermsForm: UntypedFormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createShareProductTermsForm();
   }
 

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services. */
@@ -35,7 +35,7 @@ export class ClientPayChargesComponent implements OnInit {
      */
   constructor(
     private clientsService: ClientsService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,

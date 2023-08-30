@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormArray, Validators, UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -19,7 +19,7 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
   @Input() accountingRuleData: any;
   @Input() recurringDepositProductFormValid: boolean;
 
-  recurringDepositProductAccountingForm: FormGroup;
+  recurringDepositProductAccountingForm: UntypedFormGroup;
 
   chargeData: any;
   penaltyData: any;
@@ -32,7 +32,7 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
   paymentFundSourceDisplayedColumns: string[] = ['paymentTypeId', 'fundSourceAccountId', 'actions'];
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId', 'actions'];
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     public dialog: MatDialog) {
     this.createrecurringDepositProductAccountingForm();
     this.setConditionalControls();
@@ -75,7 +75,7 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
             paymentTypeId: [paymentChannelToFundSourceMapping.paymentType.id, Validators.required],
             fundSourceAccountId: [paymentChannelToFundSourceMapping.fundSourceAccount.id, Validators.required]
           });
-          const formArray = this.recurringDepositProductAccountingForm.controls['paymentChannelToFundSourceMappings'] as FormArray;
+          const formArray = this.recurringDepositProductAccountingForm.controls['paymentChannelToFundSourceMappings'] as UntypedFormArray;
           formArray.push(paymentChannelToFundSourceMappingData);
         });
       }
@@ -85,7 +85,7 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
             chargeId: [feeToIncomeAccountMapping.charge.id, Validators.required],
             incomeAccountId: [feeToIncomeAccountMapping.incomeAccount.id, Validators.required]
           });
-          const formArray = this.recurringDepositProductAccountingForm.controls['feeToIncomeAccountMappings'] as FormArray;
+          const formArray = this.recurringDepositProductAccountingForm.controls['feeToIncomeAccountMappings'] as UntypedFormArray;
           formArray.push(feeToIncomeAccountMappingData);
         });
       }
@@ -95,7 +95,7 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
             chargeId: [penaltyToIncomeAccountMapping.charge.id, Validators.required],
             incomeAccountId: [penaltyToIncomeAccountMapping.incomeAccount.id, Validators.required]
           });
-          const formArray = this.recurringDepositProductAccountingForm.controls['penaltyToIncomeAccountMappings'] as FormArray;
+          const formArray = this.recurringDepositProductAccountingForm.controls['penaltyToIncomeAccountMappings'] as UntypedFormArray;
           formArray.push(penaltyToIncomeAccountMappingData);
         });
       }
@@ -112,13 +112,13 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
     this.recurringDepositProductAccountingForm.get('accountingRule').valueChanges
       .subscribe((accountingRule: any) => {
         if (accountingRule === 2) {
-          this.recurringDepositProductAccountingForm.addControl('savingsReferenceAccountId', new FormControl('', Validators.required));
-          this.recurringDepositProductAccountingForm.addControl('savingsControlAccountId', new FormControl('', Validators.required));
-          this.recurringDepositProductAccountingForm.addControl('transfersInSuspenseAccountId', new FormControl('', Validators.required));
-          this.recurringDepositProductAccountingForm.addControl('interestOnSavingsAccountId', new FormControl('', Validators.required));
-          this.recurringDepositProductAccountingForm.addControl('incomeFromFeeAccountId', new FormControl('', Validators.required));
-          this.recurringDepositProductAccountingForm.addControl('incomeFromPenaltyAccountId', new FormControl('', Validators.required));
-          this.recurringDepositProductAccountingForm.addControl('advancedAccountingRules', new FormControl(false));
+          this.recurringDepositProductAccountingForm.addControl('savingsReferenceAccountId', new UntypedFormControl('', Validators.required));
+          this.recurringDepositProductAccountingForm.addControl('savingsControlAccountId', new UntypedFormControl('', Validators.required));
+          this.recurringDepositProductAccountingForm.addControl('transfersInSuspenseAccountId', new UntypedFormControl('', Validators.required));
+          this.recurringDepositProductAccountingForm.addControl('interestOnSavingsAccountId', new UntypedFormControl('', Validators.required));
+          this.recurringDepositProductAccountingForm.addControl('incomeFromFeeAccountId', new UntypedFormControl('', Validators.required));
+          this.recurringDepositProductAccountingForm.addControl('incomeFromPenaltyAccountId', new UntypedFormControl('', Validators.required));
+          this.recurringDepositProductAccountingForm.addControl('advancedAccountingRules', new UntypedFormControl(false));
 
           this.recurringDepositProductAccountingForm.get('advancedAccountingRules').valueChanges
             .subscribe((advancedAccountingRules: boolean) => {
@@ -148,19 +148,19 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
       });
   }
 
-  get paymentChannelToFundSourceMappings(): FormArray {
-    return this.recurringDepositProductAccountingForm.get('paymentChannelToFundSourceMappings') as FormArray;
+  get paymentChannelToFundSourceMappings(): UntypedFormArray {
+    return this.recurringDepositProductAccountingForm.get('paymentChannelToFundSourceMappings') as UntypedFormArray;
   }
 
-  get feeToIncomeAccountMappings(): FormArray {
-    return this.recurringDepositProductAccountingForm.get('feeToIncomeAccountMappings') as FormArray;
+  get feeToIncomeAccountMappings(): UntypedFormArray {
+    return this.recurringDepositProductAccountingForm.get('feeToIncomeAccountMappings') as UntypedFormArray;
   }
 
-  get penaltyToIncomeAccountMappings(): FormArray {
-    return this.recurringDepositProductAccountingForm.get('penaltyToIncomeAccountMappings') as FormArray;
+  get penaltyToIncomeAccountMappings(): UntypedFormArray {
+    return this.recurringDepositProductAccountingForm.get('penaltyToIncomeAccountMappings') as UntypedFormArray;
   }
 
-  add(formType: string, formArray: FormArray) {
+  add(formType: string, formArray: UntypedFormArray) {
     const data = { ...this.getData(formType), pristine: false };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -170,7 +170,7 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
     });
   }
 
-  edit(formType: string, formArray: FormArray, index: number) {
+  edit(formType: string, formArray: UntypedFormArray, index: number) {
     const data = { ...this.getData(formType, formArray.at(index).value), layout: { addButtonText: 'Edit' } };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -180,7 +180,7 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
     });
   }
 
-  delete(formArray: FormArray, index: number) {
+  delete(formArray: UntypedFormArray, index: number) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `this` }
     });

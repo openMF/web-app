@@ -1,7 +1,7 @@
 /** Angular Imports. */
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild, Injectable } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
@@ -26,7 +26,7 @@ import { CreateHoliday } from './create-holiday.service';
 export class CreateHolidayComponent implements OnInit {
 
   /** Create Holiday form. */
-  holidayForm: FormGroup;
+  holidayForm: UntypedFormGroup;
   /** Repayment Scheduling data. */
   repaymentSchedulingTypes: any;
   /** Offices Data */
@@ -73,7 +73,7 @@ export class CreateHolidayComponent implements OnInit {
    * @param {OrganizationService} organizationService Organization Service.
    * @param {Router} router Router.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private dateUtils: Dates,
               private organizationService: OrganizationService,
@@ -271,7 +271,7 @@ export class CreateHolidayComponent implements OnInit {
   buildDependencies() {
     this.holidayForm.get('reschedulingType').valueChanges.subscribe((option: any) => {
       if (option === 2) {
-        this.holidayForm.addControl('repaymentsRescheduledTo', new FormControl('', Validators.required));
+        this.holidayForm.addControl('repaymentsRescheduledTo', new UntypedFormControl('', Validators.required));
       } else {
         this.holidayForm.removeControl('repaymentsRescheduledTo');
       }

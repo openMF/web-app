@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit , TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -29,7 +29,7 @@ export class CreateEmployeeComponent implements OnInit, AfterViewInit {
   /** Maximum joining date allowed. */
   maxDate = new Date();
   /** Employee form. */
-  employeeForm: FormGroup;
+  employeeForm: UntypedFormGroup;
   /** Office data. */
   officeData: any;
 
@@ -50,7 +50,7 @@ export class CreateEmployeeComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    * @param {MatDialog} dialog MatDialog.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private organizationService: OrganizationService,
               private settingsService: SettingsService,
               private route: ActivatedRoute,

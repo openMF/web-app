@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, TemplateRef, ElementRef , ViewChild,
          AfterViewInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -27,7 +27,7 @@ import { ContinueSetupDialogComponent } from '../../configuration-wizard/continu
 export class CreateUserComponent implements OnInit, AfterViewInit {
 
   /** User form. */
-  userForm: FormGroup;
+  userForm: UntypedFormGroup;
   /** Offices data. */
   officesData: any;
   /** Roles data. */
@@ -49,7 +49,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private usersService: UsersService,
               private route: ActivatedRoute,
               private router: Router,
@@ -112,8 +112,8 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
         this.userForm.removeControl('repeatPassword');
         this.userForm.get('email').setValidators([Validators.required, Validators.email]);
       } else {
-        this.userForm.addControl('password', new FormControl('', Validators.required));
-        this.userForm.addControl('repeatPassword', new FormControl('', Validators.required));
+        this.userForm.addControl('password', new UntypedFormControl('', Validators.required));
+        this.userForm.addControl('repeatPassword', new UntypedFormControl('', Validators.required));
         this.userForm.get('email').setValidators([Validators.email]);
       }
       this.userForm.get('email').updateValueAndValidity();

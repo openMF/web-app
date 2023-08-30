@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
@@ -19,7 +19,7 @@ export class EditAmazonS3Component implements OnInit {
   /** Amazon S3 Configuration data */
   amazonS3ConfigurationData: any;
   /** Amazon S3 Configuration Form */
-  amazonS3ConfigurationForm: FormGroup;
+  amazonS3ConfigurationForm: UntypedFormGroup;
   /** Secret Key input field type. */
   secretKeyInputType: string;
   /** Access Key field type. */
@@ -32,7 +32,7 @@ export class EditAmazonS3Component implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private systemService: SystemService,
               private route: ActivatedRoute,
               private router: Router) {

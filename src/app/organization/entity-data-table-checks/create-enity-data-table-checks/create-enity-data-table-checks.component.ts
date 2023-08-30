@@ -1,6 +1,6 @@
 /** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services. */
@@ -17,7 +17,7 @@ import { OrganizationService } from 'app/organization/organization.service';
 export class CreateEnityDataTableChecksComponent implements OnInit {
 
   /** Create Entity Datatable Checks form. */
-  createEntityForm: FormGroup;
+  createEntityForm: UntypedFormGroup;
   /** Entity Datatable Checks data. */
   createEntityData: any;
   /** Selected entity type. */
@@ -36,7 +36,7 @@ export class CreateEnityDataTableChecksComponent implements OnInit {
    * @param {OrganizationService} organizationService Organization Service.
    * @param {Router} router Router.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private organizationService: OrganizationService,
               private router: Router) {
@@ -85,7 +85,7 @@ export class CreateEnityDataTableChecksComponent implements OnInit {
           this.entityType = 'm_loan';
           this.dataTableList = this.createEntityData.datatables.filter((data: any) => data.entity === 'm_loan');
           this.statusList = this.createEntityData.statusLoans;
-          this.createEntityForm.addControl('productId', new FormControl('', Validators.required));
+          this.createEntityForm.addControl('productId', new UntypedFormControl('', Validators.required));
           break;
         }
         case 'm_group': {
@@ -99,7 +99,7 @@ export class CreateEnityDataTableChecksComponent implements OnInit {
           this.entityType = 'm_savings_account';
           this.dataTableList = this.createEntityData.datatables.filter((data: any) => data.entity === 'm_savings_account');
           this.statusList = this.createEntityData.statusSavings;
-          this.createEntityForm.addControl('productId', new FormControl('', Validators.required));
+          this.createEntityForm.addControl('productId', new UntypedFormControl('', Validators.required));
           break;
         }
       }

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
@@ -30,7 +30,7 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
   /** For edit savings form */
   isFieldOfficerPatched = false;
   /** Savings Account Details Form */
-  savingsAccountDetailsForm: FormGroup;
+  savingsAccountDetailsForm: UntypedFormGroup;
 
   savingsProductSelected = false;
 
@@ -43,7 +43,7 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
    * @param {SavingsService} savingsService Savings Service.
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private savingsService: SavingsService,
               private settingsService: SettingsService) {
     this.createSavingsAccountDetailsForm();

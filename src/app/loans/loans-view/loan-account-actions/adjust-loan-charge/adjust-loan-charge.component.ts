@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoansService } from 'app/loans/loans.service';
 import { OrganizationService } from 'app/organization/organization.service';
@@ -27,7 +27,7 @@ export class AdjustLoanChargeComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Repayment Loan Form */
-  adjustLoanChargeForm: FormGroup;
+  adjustLoanChargeForm: UntypedFormGroup;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -36,7 +36,7 @@ export class AdjustLoanChargeComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
@@ -84,11 +84,11 @@ export class AdjustLoanChargeComponent implements OnInit {
   addPaymentDetails() {
     this.showPaymentDetails = !this.showPaymentDetails;
     if (this.showPaymentDetails) {
-      this.adjustLoanChargeForm.addControl('accountNumber', new FormControl(''));
-      this.adjustLoanChargeForm.addControl('checkNumber', new FormControl(''));
-      this.adjustLoanChargeForm.addControl('routingCode', new FormControl(''));
-      this.adjustLoanChargeForm.addControl('receiptNumber', new FormControl(''));
-      this.adjustLoanChargeForm.addControl('bankNumber', new FormControl(''));
+      this.adjustLoanChargeForm.addControl('accountNumber', new UntypedFormControl(''));
+      this.adjustLoanChargeForm.addControl('checkNumber', new UntypedFormControl(''));
+      this.adjustLoanChargeForm.addControl('routingCode', new UntypedFormControl(''));
+      this.adjustLoanChargeForm.addControl('receiptNumber', new UntypedFormControl(''));
+      this.adjustLoanChargeForm.addControl('bankNumber', new UntypedFormControl(''));
     } else {
       this.adjustLoanChargeForm.removeControl('accountNumber');
       this.adjustLoanChargeForm.removeControl('checkNumber');

@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
-import { FormGroup, FormBuilder} from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder} from '@angular/forms';
 
 /** Custom Imports */
 import { OrganizationService } from '../../organization.service';
@@ -29,7 +29,7 @@ export class ViewBulkImportComponent implements OnInit {
   /** imports Data */
   importsData: any;
   /** bulk-import form. */
-  bulkImportForm: FormGroup;
+  bulkImportForm: UntypedFormGroup;
   /** array of deined bulk-imports */
   bulkImportsArray = BulkImports;
   /** bulk-import which user navigated to */
@@ -63,7 +63,7 @@ export class ViewBulkImportComponent implements OnInit {
    * @param {OrganizationService} organizationService OrganizationService
    */
   constructor(private route: ActivatedRoute,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private organizationService: OrganizationService,
               ) {
     this.bulkImport.name = this.route.snapshot.params['import-name'];

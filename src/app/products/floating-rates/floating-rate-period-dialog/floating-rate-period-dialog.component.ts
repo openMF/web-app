@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 
 /**
@@ -15,7 +15,7 @@ import { SettingsService } from 'app/settings/settings.service';
 export class FloatingRatePeriodDialogComponent implements OnInit {
 
   /** Floating Rate Period Form. */
-  floatingRatePeriodForm: FormGroup;
+  floatingRatePeriodForm: UntypedFormGroup;
   /** Minimum floating rate period date allowed. */
   minDate = new Date();
 
@@ -25,7 +25,7 @@ export class FloatingRatePeriodDialogComponent implements OnInit {
    * @param {any} data Provides values for the form (if available).
    */
   constructor(public dialogRef: MatDialogRef<FloatingRatePeriodDialogComponent>,
-              public formBuilder: FormBuilder,
+              public formBuilder: UntypedFormBuilder,
               private settingsService: SettingsService,
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }

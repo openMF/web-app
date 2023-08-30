@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormControl } from '@angular/forms';
 
 /** Custom Services */
 import { AccountTransfersService } from '../account-transfers.service';
@@ -27,7 +27,7 @@ export class CreateStandingInstructionsComponent implements OnInit {
   /** Allow Client Edit */
   allowclientedit = true;
   /** Edit Standing Instructions form. */
-  createStandingInstructionsForm: FormGroup;
+  createStandingInstructionsForm: UntypedFormGroup;
   /** Priority Type Data */
   priorityTypeData: any;
   /** Status Type Data */
@@ -72,7 +72,7 @@ export class CreateStandingInstructionsComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    * @param {Dates} dateUtils Date Utils
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private accountTransfersService: AccountTransfersService,

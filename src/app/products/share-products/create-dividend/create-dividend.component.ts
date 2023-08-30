@@ -1,6 +1,6 @@
 /** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -20,7 +20,7 @@ import { SettingsService } from 'app/settings/settings.service';
 export class CreateDividendComponent implements OnInit {
 
   /** Create Dividend Form. */
-  createDividendForm: FormGroup;
+  createDividendForm: UntypedFormGroup;
   /** Share Product data. */
   shareProductData: any;
   /** Minimum Date allowed. */
@@ -37,7 +37,7 @@ export class CreateDividendComponent implements OnInit {
    * @param {Router} router Router.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private dateUtils: Dates,
               private productService: ProductsService,

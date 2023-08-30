@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Services */
@@ -30,7 +30,7 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
   /** For edit savings form */
   isFieldOfficerPatched = false;
   /** Fixed Deposits Account Details Form */
-  fixedDepositAccountDetailsForm: FormGroup;
+  fixedDepositAccountDetailsForm: UntypedFormGroup;
 
   /** Fixed Deposits Account Template with product data  */
   @Output() fixedDepositsAccountProductTemplate = new EventEmitter();
@@ -41,7 +41,7 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
    * @param {FixedDepositsService} fixedDepositsService Fixed Deposits Service.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private fixedDepositsService: FixedDepositsService,
               private settingsService: SettingsService) {
     this.createFixedDepositsAccountDetailsForm();

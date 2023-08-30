@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { TooltipPosition } from '@angular/material/tooltip';
 
 @Component({
@@ -11,11 +11,11 @@ export class LoanProductCurrencyStepComponent implements OnInit {
 
   @Input() loanProductsTemplate: any;
 
-  loanProductCurrencyForm: FormGroup;
+  loanProductCurrencyForm: UntypedFormGroup;
 
   currencyData: any;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createLoanProductCurrencyForm();
   }
 
