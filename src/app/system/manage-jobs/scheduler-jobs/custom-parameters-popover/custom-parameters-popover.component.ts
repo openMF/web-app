@@ -20,8 +20,8 @@ export interface RunJobWithParamPayloadType {
 }
 
 export interface JobParameterType {
-  jobParameterName: string;
-  jobParameterValue: string;
+  parameterName: string;
+  parameterValue: string;
 }
 
 interface JobDataType {
