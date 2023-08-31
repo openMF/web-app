@@ -27,8 +27,8 @@ export class CustomParametersTableComponent implements OnInit {
   ngOnInit(): void {
     this.updatedJobParameters = this.jobParameters;
     this.updatedJobParameters.push({
-      jobParameterName: '',
-      jobParameterValue: ''
+      parameterName: '',
+      parameterValue: ''
     });
   }
 
@@ -36,8 +36,8 @@ export class CustomParametersTableComponent implements OnInit {
     this.updatedJobParameters = [
       ...this.updatedJobParameters,
       {
-        jobParameterName: '',
-        jobParameterValue: ''
+        parameterName: '',
+        parameterValue: ''
       }
     ];
   }
