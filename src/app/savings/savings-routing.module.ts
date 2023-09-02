@@ -44,6 +44,7 @@ import { SavingsDocumentsTabComponent } from './savings-account-view/savings-doc
 import { NotesTabComponent } from './savings-account-view/notes-tab/notes-tab.component';
 import { SavingNotesResolver } from './common-resolvers/saving-notes.resolver';
 import { SavingDocumentsResolver } from './common-resolvers/saving-documents.resolver';
+import { SavingsTransactionGeneralTabComponent } from './savings-account-view/transactions/view-transaction/savings-transaction-general-tab/savings-transaction-general-tab.component';
 
 /** Savings Routes */
 const routes: Routes = [
@@ -144,22 +145,33 @@ const routes: Routes = [
             path: '',
             component: ViewTransactionComponent,
             resolve: {
-              savingsAccountTransaction: SavingsAccountTransactionResolver,
               transactionDatatables: TransactionDatatablesResolver
             },
             children: [
               {
-                path: 'datatables',
-                children: [{
-                  path: ':datatableName',
-                  component: DatatableTransactionTabComponent,
-                  data: { title: extract('View Data table'), routeParamBreadcrumb: 'datatableName' },
-                  resolve: {
-                    transactionDatatable: TransactionDatatableResolver
-                  }
+                path: '',
+                redirectTo: 'general',
+                pathMatch: 'full'
+              },
+              {
+                path: 'general',
+                component: SavingsTransactionGeneralTabComponent,
+                resolve: {
+                  savingsAccountTransaction: SavingsAccountTransactionResolver,
                 }
+              },
+              {
+                path: 'datatables',
+                children: [
+                  {
+                    path: ':datatableName',
+                    component: DatatableTransactionTabComponent,
+                    data: { title: extract('View Data table'), routeParamBreadcrumb: 'datatableName' },
+                    resolve: {
+                      transactionDatatable: TransactionDatatableResolver
+                    }
+                  }
                 ]
-
               }
             ]
           },

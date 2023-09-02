@@ -1,0 +1,49 @@
+<ng-container class="content">
+  <div *ngIf="paymentDetailData.paymentType" fxFlex="50%" class="attribute">
+    {{ 'Payment Type' | translate }}
+  </div>
+
+  <div *ngIf="paymentDetailData.paymentType" fxFlex="50%">
+    {{ paymentDetailData.paymentType.name }}
+  </div>
+
+  <div *ngIf="paymentDetailData.accountNumber" fxFlex="50%" class="attribute">
+    {{ 'Account No.' | translate }}
+  </div>
+
+  <div *ngIf="paymentDetailData.accountNumber" fxFlex="50%">
+    {{ paymentDetailData.accountNumber }}
+  </div>
+
+  <div *ngIf="paymentDetailData.checkNumber" fxFlex="50%" class="attribute">
+    {{ 'Cheque Number' | translate }}
+  </div>
+
+  <div *ngIf="paymentDetailData.checkNumber" fxFlex="50%">
+    {{ paymentDetailData.checkNumber }}
+  </div>
+
+  <div *ngIf="paymentDetailData.routingCode" fxFlex="50%" class="attribute">
+    {{ 'Routing Code' | translate }}
+  </div>
+
+  <div *ngIf="paymentDetailData.routingCode" fxFlex="50%">
+    {{ paymentDetailData.routingCode }}
+  </div>
+
+  <div *ngIf="paymentDetailData.receiptNumber" fxFlex="50%" class="attribute">
+    {{ 'Receipt No.' | translate }}
+  </div>
+
+  <div *ngIf="paymentDetailData.receiptNumber" fxFlex="50%">
+    {{ paymentDetailData.receiptNumber }}
+  </div>
+
+  <div *ngIf="paymentDetailData.bankNumber" fxFlex="50%" class="attribute">
+    {{ 'Bank No.' | translate }}
+  </div>
+
+  <div *ngIf="paymentDetailData.bankNumber" fxFlex="50%">
+    {{ paymentDetailData.bankNumber }}
+  </div>
+</ng-container>

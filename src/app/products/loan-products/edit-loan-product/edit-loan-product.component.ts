@@ -127,6 +127,8 @@ export class EditLoanProductComponent implements OnInit {
       ...this.loanProductChargesStep.loanProductCharges,
       ...this.loanProductAccountingStep.loanProductAccounting
     };
+    // Default empty array
+    loanProduct['paymentAllocation'] = [];
     if (this.isAdvancedPaymentStrategy) {
       loanProduct['paymentAllocation'] = this.paymentAllocation;
     }

@@ -46,7 +46,7 @@
 
       </mat-step>
 
-      <mat-step [stepControl]="loanProductSettingsForm">
+      <mat-step [stepControl]="loanProductSettingsForm" completed>
 
         <ng-template matStepLabel>SETTINGS</ng-template>
 
@@ -59,7 +59,7 @@
 
       </mat-step>
 
-      <mat-step *ngIf="isAdvancedPaymentStrategy">
+      <mat-step *ngIf="isAdvancedPaymentStrategy" completed>
 
         <ng-template matStepLabel>PAYMENT ALLOCATION</ng-template>
 

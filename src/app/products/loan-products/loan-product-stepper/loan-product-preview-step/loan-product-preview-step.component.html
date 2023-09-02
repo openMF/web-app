@@ -346,14 +346,14 @@
           <table>
             <thead>
               <tr>
-                <th>Order</th>
                 <th>Payment Allocation Rule</th>
+                <th>Order</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let paymentAllocation of paymentAllocation.paymentAllocationOrder; let idx = index;">
-                <td>{{ (idx + 1) }}</td>
                 <td>{{ paymentAllocation.paymentAllocationRule }}</td>
+                <td>{{ (idx + 1) }}</td>
               </tr>
             </tbody>
           </table>

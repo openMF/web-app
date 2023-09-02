@@ -26,7 +26,7 @@ export class SavingsAccountTransactionResolver implements Resolve<Object> {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const savingAccountId = route.parent.paramMap.get('savingAccountId');
-    const transactionId = route.paramMap.get('id');
+    const transactionId = route.parent.paramMap.get('id');
     return this.savingsService.getSavingsAccountTransaction(savingAccountId, transactionId);
   }
 
