@@ -112,18 +112,18 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
     this.fixedDepositProductAccountingForm.get('accountingRule').valueChanges
       .subscribe((accountingRule: any) => {
         if (accountingRule === 2 || accountingRule === 3) {
-          this.fixedDepositProductAccountingForm.addControl('savingsReferenceAccountId', new FormControl('', Validators.required));
-          this.fixedDepositProductAccountingForm.addControl('savingsControlAccountId', new FormControl('', Validators.required));
-          this.fixedDepositProductAccountingForm.addControl('transfersInSuspenseAccountId', new FormControl('', Validators.required));
-          this.fixedDepositProductAccountingForm.addControl('interestOnSavingsAccountId', new FormControl('', Validators.required));
-          this.fixedDepositProductAccountingForm.addControl('incomeFromFeeAccountId', new FormControl('', Validators.required));
-          this.fixedDepositProductAccountingForm.addControl('incomeFromPenaltyAccountId', new FormControl('', Validators.required));
-          this.fixedDepositProductAccountingForm.addControl('advancedAccountingRules', new FormControl(false));
+          this.fixedDepositProductAccountingForm.addControl('savingsReferenceAccountId', new UntypedFormControl('', Validators.required));
+          this.fixedDepositProductAccountingForm.addControl('savingsControlAccountId', new UntypedFormControl('', Validators.required));
+          this.fixedDepositProductAccountingForm.addControl('transfersInSuspenseAccountId', new UntypedFormControl('', Validators.required));
+          this.fixedDepositProductAccountingForm.addControl('interestOnSavingsAccountId', new UntypedFormControl('', Validators.required));
+          this.fixedDepositProductAccountingForm.addControl('incomeFromFeeAccountId', new UntypedFormControl('', Validators.required));
+          this.fixedDepositProductAccountingForm.addControl('incomeFromPenaltyAccountId', new UntypedFormControl('', Validators.required));
+          this.fixedDepositProductAccountingForm.addControl('advancedAccountingRules', new UntypedFormControl(false));
 
           if (accountingRule === 3) {
-            this.fixedDepositProductAccountingForm.addControl('feeReceivableAccountId', new FormControl('', Validators.required));
-            this.fixedDepositProductAccountingForm.addControl('penaltyReceivableAccountId', new FormControl('', Validators.required));
-            this.fixedDepositProductAccountingForm.addControl('interestPayableAccountId', new FormControl('', Validators.required));
+            this.fixedDepositProductAccountingForm.addControl('feeReceivableAccountId', new UntypedFormControl('', Validators.required));
+            this.fixedDepositProductAccountingForm.addControl('penaltyReceivableAccountId', new UntypedFormControl('', Validators.required));
+            this.fixedDepositProductAccountingForm.addControl('interestPayableAccountId', new UntypedFormControl('', Validators.required));
           }
 
           this.fixedDepositProductAccountingForm.get('advancedAccountingRules').valueChanges

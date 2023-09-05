@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, UntypedFormArray, Validators, UntypedFormControl, FormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -78,7 +78,8 @@ export class SavingProductAccountingStepComponent implements OnInit, OnChanges {
           'incomeFromFeeAccountId': this.savingProductsTemplate.accountingMappings.incomeFromFeeAccount.id,
           'incomeFromPenaltyAccountId': this.savingProductsTemplate.accountingMappings.incomeFromPenaltyAccount.id,
           'incomeFromInterestId': this.savingProductsTemplate.accountingMappings.incomeFromInterest.id,
-          'advancedAccountingRules': (this.savingProductsTemplate.paymentChannelToFundSourceMappings || this.savingProductsTemplate.feeToIncomeAccountMappings || this.savingProductsTemplate.penaltyToIncomeAccountMappings || this.savingProductsTemplate.accrualCharges) ? true : false
+          'advancedAccountingRules': (this.savingProductsTemplate.paymentChannelToFundSourceMappings || this.savingProductsTemplate.feeToIncomeAccountMappings
+            || this.savingProductsTemplate.penaltyToIncomeAccountMappings || this.savingProductsTemplate.accrualCharges) ? true : false
         });
 
       if (this.savingProductsTemplate.accountingRule.id === 3) {
