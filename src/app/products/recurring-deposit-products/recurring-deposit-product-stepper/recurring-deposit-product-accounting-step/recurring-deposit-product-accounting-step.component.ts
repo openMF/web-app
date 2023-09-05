@@ -122,6 +122,7 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
 
           if (accountingRule === 3) {
             this.recurringDepositProductAccountingForm.addControl('feeReceivableAccountId', new UntypedFormControl('', Validators.required));
+            this.recurringDepositProductAccountingForm.addControl('penaltyReceivableAccountId', new UntypedFormControl('', Validators.required));
             this.recurringDepositProductAccountingForm.addControl('interestPayableAccountId', new UntypedFormControl('', Validators.required));
           }
 
