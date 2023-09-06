@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
       args:
         - BUILD_ENVIRONMENT_OPTIONS=--configuration production
-        - BUILDER_IMAGE=node:16-alpine
+        - BUILDER_IMAGE=node:20-alpine
         - NGINX_IMAGE=nginx:1.19.3
         - NPM_REGISTRY_URL=https://registry.npmjs.org/
         - PUPPETEER_DOWNLOAD_HOST_ARG=https://storage.googleapis.com

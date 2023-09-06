@@ -61,18 +61,19 @@
                     <span class="m-l-10 status">{{record.status}}</span>
                   </div>
                 </td>
-                <td> Owner ExternalId </td>
+                <td class="field-name"> Owner ExternalId </td>
                 <td>
                   <mifosx-external-identifier externalId="{{record.owner.externalId}}"></mifosx-external-identifier>
                 </td>
-                <td> Effective From </td>
+                <td class="field-name"> Transfer ExternalId </td>
+                <td>
+                  <mifosx-external-identifier externalId="{{record.transferExternalId}}"></mifosx-external-identifier>
+                </td>
+                <td class="field-name"> Effective From </td>
                 <td> {{ record.effectiveFrom | dateFormat }} </td>
               </tr>
               </table>
             </mat-panel-title>
-          <mat-panel-description>
-            <mifosx-external-identifier externalId="{{record.transferExternalId}}"></mifosx-external-identifier>
-          </mat-panel-description>
 
         </mat-expansion-panel-header>
 
@@ -110,7 +111,7 @@
                   {{record.effectiveFrom | dateFormat}}
                 </td>
               </tr>
-              <tr>
+              <tr *ngIf="record.details">
                 <td fxFlex="25%" class="m-l-5">
                   <b>Details :</b>
                 </td>
@@ -147,6 +148,14 @@
               </tr>
             </tbody>
           </table>
+        </div>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <div class="record-actions" fxLayout="row" fxLayoutAlign="flex-end" *ngIf="canBeCancelled(record)">
+          <button mat-button color="warn" (click)="cancelPendingSale(record)" matTooltip="Cancel Pending Sale">
+            <fa-icon icon="trash"></fa-icon>
+          </button>
         </div>
 
       </mat-expansion-panel>
