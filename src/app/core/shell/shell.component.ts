@@ -63,7 +63,9 @@ export class ShellComponent implements OnInit, OnDestroy {
    * Unsubscribes from progress bar.
    */
   ngOnDestroy() {
-    this.progressBar$.unsubscribe();
+    if (this.progressBar$) {
+      this.progressBar$.unsubscribe();
+    }
   }
 
 }
