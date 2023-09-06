@@ -44,12 +44,17 @@
         <td mat-cell class="r-amount" *matCellDef="let transaction"> {{ transaction.runningBalance | formatNumber }} </td>
       </ng-container>
 
-      <ng-container matColumnDef="viewReciept">
-        <th mat-header-cell class="center" *matHeaderCellDef> View Reciept </th>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell class="center" *matHeaderCellDef> Actions </th>
         <td mat-cell class="center" *matCellDef="let transaction">
           <button class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)" [routerLink]="[transaction.id, 'reciept']">
             <i class="fa fa-file" matTooltip="View Reciept"></i>
           </button>
+          <button class="account-action-button" mat-raised-button color="primary" matTooltip="View Journal Entries"
+          matTooltipPosition="left" (click)="routeEdit($event)"
+          [routerLink]="['/','journal-entry', 'view', 'S'+transaction.id ]">
+          <i class="fa fa-arrow-circle-right"></i>
+        </button>
         </td>
       </ng-container>
 

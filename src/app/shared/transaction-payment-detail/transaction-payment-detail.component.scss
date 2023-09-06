@@ -1,0 +1,14 @@
+@import "assets/styles/helper";
+
+.content {
+  width: 100%;
+  background-color: $concrete;
+
+  div {
+    text-align: left;
+  }
+
+  .attribute {
+    font-weight: 500;
+  }
+}

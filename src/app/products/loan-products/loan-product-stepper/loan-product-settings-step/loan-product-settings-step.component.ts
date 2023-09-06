@@ -10,6 +10,7 @@ import { rangeValidator } from 'app/shared/validators/percentage.validator';
 })
 export class LoanProductSettingsStepComponent implements OnInit {
 
+  @Input() toEdit: boolean;
   @Input() loanProductsTemplate: any;
   @Input() isLinkedToFloatingInterestRates: UntypedFormControl;
   @Output() advancePaymentStrategy = new EventEmitter<string>();

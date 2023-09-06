@@ -189,8 +189,8 @@ export class SavingProductAccountingStepComponent implements OnInit, OnChanges {
     return this.savingProductAccountingForm.get('accrualCharges') as FormArray;
   }
 
-  get penaltyToIncomeAccountMappings(): FormArray {
-    return this.savingProductAccountingForm.get('penaltyToIncomeAccountMappings') as FormArray;
+  get penaltyToIncomeAccountMappings(): UntypedFormArray {
+    return this.savingProductAccountingForm.get('penaltyToIncomeAccountMappings') as UntypedFormArray;
   }
 
   setSavingProductAccountingFormDirty() {

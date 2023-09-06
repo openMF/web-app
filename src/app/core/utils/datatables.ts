@@ -14,7 +14,7 @@ export class Datatables {
 
   systemFields: string[] = ['id', 'created_at', 'updated_at'];
 
-  entitiesIdFields: string[] = ['client_id', 'savings_account_id',
+  entitiesIdFields: string[] = ['client_id', 'savings_account_id', 'savings_transaction_id',
     'loan_id', 'group_id', 'center_id', 'office_id', 'product_loan_id', 'savings_product_id', 'share_product_id'];
 
   constructor(private dateUtils: Dates,
