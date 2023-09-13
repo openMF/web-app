@@ -20,7 +20,7 @@ export class TransactionsTabComponent implements OnInit {
   /** Transactions Data */
   transactionsData: any;
   /** Columns to be displayed in transactions table. */
-  displayedColumns: string[] = ['id', 'date', 'transactionType', 'debit', 'credit', 'balance', 'viewReciept'];
+  displayedColumns: string[] = ['id', 'date', 'transactionType', 'debit', 'credit', 'balance', 'actions'];
   /** Data source for transactions table. */
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -75,7 +75,7 @@ export class TransactionsTabComponent implements OnInit {
     if (transactionsData.transfer) {
       this.router.navigate([`account-transfers/account-transfers/${transactionsData.transfer.id}`], { relativeTo: this.route });
     } else {
-      this.router.navigate([transactionsData.id], { relativeTo: this.route });
+      this.router.navigate([transactionsData.id, 'general'], { relativeTo: this.route });
     }
   }
 

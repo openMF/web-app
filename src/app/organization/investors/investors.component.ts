@@ -1,13 +1,16 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import { ExternalAssetOwner } from 'app/loans/services/external-asset-owner';
 import { ExternalAssetOwnerService } from 'app/loans/services/external-asset-owner.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { CancelDialogComponent } from 'app/shared/cancel-dialog/cancel-dialog.component';
 
 @Component({
   selector: 'mifosx-investors',
@@ -73,6 +76,8 @@ export class InvestorsComponent implements OnInit {
   /** Columns to be displayed in investors table. */
   displayedColumns: string[] = ['status', 'effectiveFrom', 'ownerExternalId', 'loanAccount', 'transferExternalId', 'settlementDate', 'purchasePriceRatio', 'totalAmount', 'actions'];
   constructor(private settingsService: SettingsService,
+    private router: Router,
+    private dialog: MatDialog,
     private externalAssetOwner: ExternalAssetOwner,
     private externalAssetOwnerService: ExternalAssetOwnerService,
     private dateUtils: Dates) { }
@@ -153,6 +158,30 @@ export class InvestorsComponent implements OnInit {
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
     this.searchEAO();
+  }
+
+  cancelPendingSale(transfer: any): void {
+    const deleteDataTableDialogRef = this.dialog.open(CancelDialogComponent, {
+      data: { cancelContext: `the Asset Transfer with the Owner External Id ${transfer.owner.externalId} ` }
+    });
+    deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.cancel) {
+        const payload: any = {
+          transferExternalId: transfer.transferExternalId
+        };
+        this.externalAssetOwnerService.executeExternalAssetOwnerTransferCommand(transfer.transferId, payload, 'cancel')
+          .subscribe((result: any) => {
+            this.reload();
+        });
+      }
+    });
+  }
+
+  reload() {
+    const url: string = this.router.url;
+    console.log(url);
+    this.router.navigateByUrl(`/`, {skipLocationChange: true})
+      .then(() => this.router.navigate([url]));
   }
 
   private resetPaginator() {

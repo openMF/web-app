@@ -6,9 +6,17 @@
 
       <mat-card-content>
 
-        <div fxLayout="row">
+        <div fxLayoutAlign="center" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+          <mat-form-field fxFlex="60%">
+            <mat-label>Accrue For Product</mat-label>
+            <mat-select required formControlName="productType">
+              <mat-option *ngFor="let productTypeOption of productTypeOptions" [value]="productTypeOption.value">
+                {{ productTypeOption.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
-          <mat-form-field fxFlex (click)="tillDatePicker.open()">
+          <mat-form-field fxFlex="60%" (click)="tillDatePicker.open()">
             <mat-label>Accrue Till Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="tillDatePicker" required formControlName="tillDate">
             <mat-datepicker-toggle matSuffix [for]="tillDatePicker"></mat-datepicker-toggle>
