@@ -1,55 +1,25 @@
-<div class="container space-top" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-  <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+<mat-tab-group animationDuration="0ms" fxLayout="row wrap" fxLayoutGap="2%"
+    fxLayout.lt-md="column">
 
-    <mat-form-field fxFlex="33%">
-      <mat-label>Transaction Type</mat-label>
-      <mat-select [formControl]="transactionTypeCtrl" disabled>
-        <mat-option *ngFor="let transactionTypeOption of transactionTypeOptions" [value]="transactionTypeOption.code">
-          {{ transactionTypeOption.name | translate }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <mat-tab *ngFor="let advancedPaymentAllocation of advancedPaymentAllocations">
+        <ng-template mat-tab-label>
+            {{advancedPaymentAllocation.transaction.code}}
+        </ng-template>
+        <mifosx-advance-payment-allocation-tab [advancedPaymentAllocation]="advancedPaymentAllocation"
+            (paymentAllocationChange)="paymentAllocationChanged($event)"
+            (transactionTypeRemoved)="transactionTypeRemoved($event)">
+        </mifosx-advance-payment-allocation-tab>
+    </mat-tab>
 
-    <h4 class="m-b-15 right" fxFlex="63%">You can drag and drop the rows to set a Payment Allocations order</h4>
+    <mat-tab disabled>
+        <ng-template mat-tab-label>
+            <button mat-icon-button (click)="addTransaction()">
+                <mat-icon>add</mat-icon>
+            </button>
+        </ng-template>
+    </mat-tab>
+</mat-tab-group>
 
-    <div class="mat-elevation-z8 container m-t-15">
-      <table mat-table [dataSource]="paymentAllocationsData" #table cdkDropList
-        [cdkDropListData]="paymentAllocationsData" (cdkDropListDropped)="dropTable($event)">
-
-        <ng-container matColumnDef="paymentAllocation">
-          <th mat-header-cell *matHeaderCellDef> Payment Allocation </th>
-          <td mat-cell *matCellDef="let paymentAllocation"> {{ paymentAllocation.name }} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="order">
-          <th mat-header-cell *matHeaderCellDef> Order </th>
-          <td mat-cell *matCellDef="let paymentAllocation; let rowIndex = index"> {{ (rowIndex + 1) }} </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row cdkDrag [cdkDragData]="row" *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-    </div>
-
-    <mat-form-field fxFlex="33%" class="m-t-20">
-      <mat-label>Future Installment Allocation Rule</mat-label>
-      <mat-select [formControl]="futureInstallmentAllocationRule">
-        <mat-option *ngFor="let installmentAllocation of installmentAllocationOptions"
-          [value]="installmentAllocation.code">
-          {{ installmentAllocation.name | translate }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-  <div fxFlexFill fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
-    <button mat-raised-button matStepperPrevious>
-      <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-      Previous
-    </button>
-    <button mat-raised-button matStepperNext>
-      Next
-      <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
-    </button>
-  </div>
+<div fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutAlign="center" >
+  <mifosx-stepper-buttons fxFlex="100%" fxLayoutGap="2%"></mifosx-stepper-buttons>
 </div>
