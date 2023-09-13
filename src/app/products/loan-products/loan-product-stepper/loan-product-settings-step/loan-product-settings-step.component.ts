@@ -349,9 +349,11 @@ export class LoanProductSettingsStepComponent implements OnInit {
         if (enableDownPayment) {
           this.loanProductSettingsForm.addControl('disbursedAmountPercentageForDownPayment', new UntypedFormControl(0, [Validators.required, rangeValidator(0, 100) ]));
           this.loanProductSettingsForm.addControl('enableAutoRepaymentForDownPayment', new UntypedFormControl(false, []));
+          this.loanProductSettingsForm.addControl('disableScheduleExtensionForDownPayment', new UntypedFormControl(false, []));
         } else {
           this.loanProductSettingsForm.removeControl('disbursedAmountPercentageForDownPayment');
           this.loanProductSettingsForm.removeControl('enableAutoRepaymentForDownPayment');
+          this.loanProductSettingsForm.removeControl('disableScheduleExtensionForDownPayment');
         }
       });
 
@@ -396,7 +398,11 @@ export class LoanProductSettingsStepComponent implements OnInit {
   }
 
   get loanProductSettings() {
-    return this.loanProductSettingsForm.value;
+    const productSettings = this.loanProductSettingsForm.value;
+    if (!this.loanProductSettingsForm.value.multiDisburseLoan) {
+      delete productSettings['disableScheduleExtensionForDownPayment'];
+    }
+    return productSettings;
   }
 
 }
