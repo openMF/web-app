@@ -23,7 +23,17 @@ export class PeriodicAccrualsComponent implements OnInit {
   maxDate = new Date();
   /** Periodic accruals form. */
   periodicAccrualsForm: UntypedFormGroup;
-
+  /** Entry type filter data. */
+  productTypeOptions = [
+    {
+      name: 'Loans',
+      value: 'loans'
+    },
+    {
+      name: 'Savings',
+      value: 'savings'
+    }
+  ];
   /**
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {AccountingService} accountingService Accounting Service.
@@ -51,7 +61,8 @@ export class PeriodicAccrualsComponent implements OnInit {
    */
   createPeriodicAccrualsForm() {
     this.periodicAccrualsForm = this.formBuilder.group({
-      'tillDate': ['', Validators.required]
+      'tillDate': ['', Validators.required],
+      'productType': ['loans', Validators.required]
     });
   }
 
@@ -61,13 +72,15 @@ export class PeriodicAccrualsComponent implements OnInit {
    */
   submit() {
     const periodicAccruals = this.periodicAccrualsForm.value;
+    const productType = periodicAccruals['productType'];
+    delete periodicAccruals['productType'];
     // TODO: Update once language and date settings are setup
     periodicAccruals.locale = this.settingsService.language.code;
     periodicAccruals.dateFormat = this.settingsService.dateFormat;
     if (periodicAccruals.tillDate instanceof Date) {
       periodicAccruals.tillDate = this.dateUtils.formatDate(periodicAccruals.tillDate, this.settingsService.dateFormat);
     }
-    this.accountingService.executePeriodicAccruals(periodicAccruals).subscribe(() => {
+    this.accountingService.executePeriodicAccrualsForProduct(productType, periodicAccruals).subscribe(() => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

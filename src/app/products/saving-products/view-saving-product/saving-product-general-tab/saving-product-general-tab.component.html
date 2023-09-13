@@ -6,7 +6,6 @@
 
 <div class="tab-container mat-typography">
 
-
   <div fxLayout="row wrap" fxLayout.lt-md="column">
 
     <h2 class="mat-h2" fxFlexFill>{{ savingProduct.name }}</h2>
@@ -365,9 +364,9 @@
 
           </table>
 
-        </div>
+      </div>
 
-        <div *ngIf="savingProduct.penaltyToIncomeAccountMappings?.length" fxFlexFill fxLayout="row wrap"
+      <div *ngIf="savingProduct.penaltyToIncomeAccountMappings?.length" fxFlexFill fxLayout="row wrap"
           fxLayout.lt-md="column">
 
           <h4 class="mat-h4" fxFlexFill>Penalties to Specific Income Accounts</h4>
@@ -393,8 +392,6 @@
             <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns;"></tr>
 
           </table>
-
-        </div>
 
       </div>
 

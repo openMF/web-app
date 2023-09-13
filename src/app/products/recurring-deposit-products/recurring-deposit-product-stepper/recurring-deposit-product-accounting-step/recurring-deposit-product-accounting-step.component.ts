@@ -126,6 +126,8 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
           }
 
           this.recurringDepositProductAccountingForm.get('advancedAccountingRules').valueChanges
+            .subscribe((advancedAccountingRules: boolean) => {
+              if (advancedAccountingRules) {
                 this.recurringDepositProductAccountingForm.addControl('paymentChannelToFundSourceMappings', this.formBuilder.array([]));
                 this.recurringDepositProductAccountingForm.addControl('feeToIncomeAccountMappings', this.formBuilder.array([]));
                 this.recurringDepositProductAccountingForm.addControl('penaltyToIncomeAccountMappings', this.formBuilder.array([]));

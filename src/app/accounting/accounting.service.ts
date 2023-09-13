@@ -326,6 +326,15 @@ export class AccountingService {
   }
 
   /**
+   * @param {any} periodicAccruals Accruals to be executed.
+   * @returns {Observable<any>}
+   */
+  executePeriodicAccrualsForProduct(product: string, periodicAccruals: any): Observable<any> {
+    const httpParams = new HttpParams().set('product', product);
+    return this.http.post('/runaccruals', periodicAccruals, { params: httpParams });
+  }
+
+  /**
    * @returns {Observable<any>} Provisioning entries.
    */
   getProvisioningEntries(): Observable<any> {
