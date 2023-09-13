@@ -53,7 +53,7 @@ steps:
 
   - task: SonarCloudPrepare@1
     continueOnError: true
-    condition: eq(variables['Build.Analyse'], 'true')
+    condition: eq(variables['Build.SonarAnalyse'], 'true')
     inputs:
       SonarCloud: "sonar-oaf"
       organization: "one-acre-fund"
@@ -102,11 +102,11 @@ steps:
 
   - task: SonarCloudAnalyze@1
     continueOnError: true
-    condition: eq(variables['Build.Analyse'], 'true')
+    condition: eq(variables['Build.SonarAnalyse'], 'true')
 
   - task: SonarCloudPublish@1
     continueOnError: true
-    condition: eq(variables['Build.Analyse'], 'true')
+    condition: eq(variables['Build.SonarAnalyse'], 'true')
     inputs:
       pollingTimeoutSec: "300"
 

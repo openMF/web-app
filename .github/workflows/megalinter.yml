@@ -1,5 +1,5 @@
 ---
-name: Lint with Mega-linter
+name: CI-Megalinter
 
 'on':
   push:

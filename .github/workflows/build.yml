@@ -1,6 +1,4 @@
-
----
-name: Lint-Build-Test-CI
+name: CI-Lint-Build-Test
 'on':
   push:
     branches:
@@ -33,7 +31,7 @@ jobs:
           # lts/gallium node v16.15.1 (npm v8.11.0)
           node-version: "16.15.1"
       - name: Angular CLI install
-        run : npm install -g --silent @angular/cli@13.3.10
+        run: npm install -g --silent @angular/cli@13.3.10
 
       - name: Npm install
         run: npm install

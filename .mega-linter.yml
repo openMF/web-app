@@ -7,6 +7,7 @@ VALIDATE_ALL_CODEBASE: false
 DEFAULT_BRANCH: develop
 
 # If you use ENABLE_LINTERS variable, all other linters will be disabled by default
+LINTER_RULES_PATH: .github/linters
 ENABLE_LINTERS:
   # See https://megalinter.github.io/descriptors/css_scss_lint/
   - CSS_SCSS_LINT

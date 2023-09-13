@@ -29,6 +29,7 @@ xcuserdata/
 .dccache
 package-lock.json
 /environments/.env.ts
+megalinter-reports
 
 # IDE - VSCode
 .vscode/*
