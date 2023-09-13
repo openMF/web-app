@@ -1,9 +1,25 @@
-export interface PaymentCode {
-  name: string;
+import { Injectable } from '@angular/core';
+
+export interface PaymentAllocationTransactionType {
+  id: number;
+  value: string;
+  code: string;
+}
+
+export interface PaymentAllocationType {
+  id: number;
+  value: string;
+  code: string;
+}
+
+export interface FutureInstallmentAllocationRule {
+  id: number;
+  value: string;
   code: string;
 }
 
 export interface PaymentAllocationOrder {
+  id?: number;
   paymentAllocationRule: string;
   order: number;
 }
@@ -14,40 +30,125 @@ export interface PaymentAllocation {
   futureInstallmentAllocationRule: string;
 }
 
-export interface PaymentAllocationTransactionType {
-  name: string;
-  code: string;
-}
-
 export class PaymentAllocationTransactionTypes {
-  public static DEFAULT_TRANSACTION: PaymentAllocationTransactionType = { name: 'Default', code: 'DEFAULT' };
-
-  public static options: PaymentCode[] = [
-    this.DEFAULT_TRANSACTION
-  ];
+  public static DEFAULT_TRANSACTION: PaymentAllocationTransactionType = { id: 1, value: 'Default', code: 'DEFAULT' };
 }
 
-export class PaymentAllocationTypes {
-  public static options: PaymentCode[] = [
-    { name: 'Past due penalty', code: 'PAST_DUE_PENALTY' },
-    { name: 'Past due fee', code: 'PAST_DUE_FEE' },
-    { name: 'Past due principal', code: 'PAST_DUE_PRINCIPAL' },
-    { name: 'Past due interest', code: 'PAST_DUE_INTEREST' },
-    { name: 'Due penalty', code: 'DUE_PENALTY' },
-    { name: 'Due fee', code: 'DUE_FEE' },
-    { name: 'Due principal', code: 'DUE_PRINCIPAL' },
-    { name: 'Due interest', code: 'DUE_INTEREST' },
-    { name: 'In advance penalty', code: 'IN_ADVANCE_PENALTY' },
-    { name: 'In advance fee', code: 'IN_ADVANCE_FEE' },
-    { name: 'In advance principal', code: 'IN_ADVANCE_PRINCIPAL' },
-    { name: 'In advance interest', code: 'IN_ADVANCE_INTEREST' }
-    ];
+export class AdvancedPaymentAllocation {
+  transaction: PaymentAllocationTransactionType;
+  paymentAllocationOrder: PaymentAllocationOrder[];
+  futureInstallmentAllocationRule: FutureInstallmentAllocationRule;
+  futureInstallmentAllocationRules: FutureInstallmentAllocationRule[];
 }
 
-export class FutureInstallmentAllocationRules {
-  public static options: PaymentCode[] = [
-    { name: 'Next Installment', code: 'NEXT_INSTALLMENT' },
-    { name: 'Last Installment', code: 'LAST_INSTALLMENT' },
-    { name: 'Reamortization', code: 'REAMORTIZATION' }
-  ];
+@Injectable({
+  providedIn: 'root'
+})
+export class AdvancedPaymentStrategy {
+
+  public buildAdvancedPaymentAllocationList(loanProduct: any): AdvancedPaymentAllocation[] {
+    const advancedPaymentAllocation: AdvancedPaymentAllocation[] = [];
+    const advancedPaymentAllocationTransactionTypes: PaymentAllocationTransactionType[] =
+      loanProduct.advancedPaymentAllocationTransactionTypes;
+    const advancedPaymentAllocationTypes: PaymentAllocationOrder[] = loanProduct.advancedPaymentAllocationTypes;
+    const advancedPaymentAllocationFutureInstallmentAllocationRules: FutureInstallmentAllocationRule[] =
+      loanProduct.advancedPaymentAllocationFutureInstallmentAllocationRules;
+    loanProduct.paymentAllocation.forEach((item: PaymentAllocation) => {
+      advancedPaymentAllocation.push({
+        transaction: this.getItemByCode(item.transactionType, advancedPaymentAllocationTransactionTypes),
+        paymentAllocationOrder: this.buildCurrentPaymentAllocationOrder(item.paymentAllocationOrder,
+          advancedPaymentAllocationTypes),
+        futureInstallmentAllocationRule: this.getItemByCode(item.futureInstallmentAllocationRule,
+          advancedPaymentAllocationFutureInstallmentAllocationRules),
+        futureInstallmentAllocationRules: advancedPaymentAllocationFutureInstallmentAllocationRules,
+      });
+    });
+    // If this is Empty, add the Default
+    if (advancedPaymentAllocation.length === 0) {
+      advancedPaymentAllocation.push({
+        transaction: PaymentAllocationTransactionTypes.DEFAULT_TRANSACTION,
+        paymentAllocationOrder: this.buildPaymentAllocationTransactionOrder(true, [], loanProduct.advancedPaymentAllocationTypes),
+        futureInstallmentAllocationRule: loanProduct.advancedPaymentAllocationFutureInstallmentAllocationRules[0],
+        futureInstallmentAllocationRules: loanProduct.advancedPaymentAllocationFutureInstallmentAllocationRules,
+      });
+    }
+    return advancedPaymentAllocation;
+  }
+
+  public buildAdvancedPaymentAllocation(forDefault: boolean, transaction: PaymentAllocationTransactionType,
+    currentItems: PaymentAllocationOrder[],
+    futureInstallmentAllocationRules: FutureInstallmentAllocationRule[]): AdvancedPaymentAllocation {
+    return {
+      transaction: transaction,
+      paymentAllocationOrder: this.buildPaymentAllocationTransactionOrder(forDefault, currentItems, currentItems),
+      futureInstallmentAllocationRule: futureInstallmentAllocationRules[0],
+      futureInstallmentAllocationRules: futureInstallmentAllocationRules,
+    };
+  }
+
+  public buildPaymentAllocationTransactionOrder(forDefault: boolean, currentItems: PaymentAllocationOrder[], defaultItems: PaymentAllocationOrder[]): PaymentAllocationOrder[] {
+    const paymentAllocationOrder: PaymentAllocationOrder[] = [];
+    if (forDefault) {
+      return defaultItems;
+    } else {
+      currentItems.forEach((currentItem: PaymentAllocationOrder) => {
+        defaultItems.forEach((item: PaymentAllocationOrder) => {
+          if (currentItem.id === item.id) {
+            paymentAllocationOrder.push(item);
+          }
+        });
+      });
+    }
+    return paymentAllocationOrder;
+  }
+
+  public buildPaymentAllocations(advancedPaymentAllocations: AdvancedPaymentAllocation[]): PaymentAllocation[] {
+    const paymentAllocations: PaymentAllocation[] = [];
+    advancedPaymentAllocations.forEach((paymentAllocation: AdvancedPaymentAllocation) => {
+      paymentAllocations.push({
+        transactionType: paymentAllocation.transaction.code,
+        paymentAllocationOrder: this.buildPaymentAllocationOrder(paymentAllocation.paymentAllocationOrder),
+        futureInstallmentAllocationRule: paymentAllocation.futureInstallmentAllocationRule.code
+      });
+    });
+
+    return paymentAllocations;
+  }
+
+  public buildPaymentAllocationOrder(paymentAllocationOrder: PaymentAllocationOrder[]): PaymentAllocationOrder[] {
+    const paymentAllocations: any[] = [];
+    paymentAllocationOrder.forEach((item: any, index: number) => {
+      paymentAllocations.push({
+        order: (index + 1),
+        paymentAllocationRule: item.code
+      });
+    });
+
+    return paymentAllocations;
+  }
+
+  public buildCurrentPaymentAllocationOrder(currentItems: any[], defaultItems: PaymentAllocationOrder[]):
+    PaymentAllocationOrder[] {
+      const paymentAllocationOrder: PaymentAllocationOrder[] = [];
+      currentItems.forEach((item: any) => {
+        paymentAllocationOrder.push(this.getItemByCode(item.paymentAllocationRule, defaultItems));
+      });
+      return paymentAllocationOrder;
+  }
+
+  public getItemByCode(code: string,
+      options: any[]): any {
+    let transaction: any;
+    options.forEach((option: any) => {
+      if (option.code === code) {
+        transaction = option;
+      }
+    });
+    return transaction;
+  }
+
+  public isDefault(transaction: PaymentAllocationTransactionType): boolean {
+    return (transaction.code === PaymentAllocationTransactionTypes.DEFAULT_TRANSACTION.code);
+  }
+
 }
