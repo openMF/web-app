@@ -324,42 +324,19 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Repayment Strategy:</span>
-    <span fxFlex="60%">{{ loanProduct.transactionProcessingStrategyCode |
+    <span fxFlex="60%" class="repayment-strategy">{{ loanProduct.transactionProcessingStrategyCode |
       find:loanProductsTemplate.transactionProcessingStrategyOptions:'code':'name' }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="loanProduct.paymentAllocation?.length">
-    <div fxFlexFill *ngFor="let paymentAllocation of loanProduct.paymentAllocation">
-      <div fxFlexFill>
-        <span fxFlex="40%">Transaction Type:</span>
-        <span fxFlex="60%">{{ paymentAllocation.transactionType }}</span>
-      </div>
-
-      <div fxFlexFill>
-        <span fxFlex="40%">Future Installment Allocation:</span>
-        <span fxFlex="60%">{{ paymentAllocation.futureInstallmentAllocationRule }}</span>
-      </div>
-
-      <div fxFlexFill>
-        <span fxFlex="40%">Payment Allocation Order</span>
-        <span fxFlex="60%">
-          <table>
-            <thead>
-              <tr>
-                <th>Payment Allocation Rule</th>
-                <th>Order</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let paymentAllocation of paymentAllocation.paymentAllocationOrder; let idx = index;">
-                <td>{{ paymentAllocation.paymentAllocationRule }}</td>
-                <td>{{ (idx + 1) }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </span>
-      </div>
-    </div>
+  <div fxFlexFill *ngIf="isAdvancedPaymentAllocation">
+    <span fxFlex="40%">Advanced Payment Allocation Transactions:</span>
+    <span fxFlex="60%">
+      <mat-accordion>
+        <mifosx-view-advance-paymeny-allocation *ngFor="let paymentAllocation of loanProduct.paymentAllocation"
+          [paymentAllocation]="paymentAllocation">
+        </mifosx-view-advance-paymeny-allocation>
+      </mat-accordion>
+    </span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.graceOnPrincipalPayment">
