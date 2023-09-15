@@ -7,7 +7,7 @@
       <div class="profile-image-container">
         <div>
           <img mat-card-md-image class="profile-image"
-            matTooltip="Shares Account"
+            matTooltip="{{ 'tooltips.Shares Account'  |translate}}"
             src="assets/images/shares_account_placeholder.png">
         </div>
       </div>
@@ -16,14 +16,14 @@
         <mat-card-title>
           <h3>
             <i class="fa fa-stop" [ngClass]="sharesAccountData.status.code | statusLookup" [matTooltip]="sharesAccountData.status.value"></i>
-              Account Name : {{sharesAccountData.productName}}
+            {{ 'labels.heading.Account Name'  |translate}} : {{sharesAccountData.productName}}
           </h3>
         </mat-card-title>
         <mat-card-subtitle>
           <p>
-            Account #: {{sharesAccountData.accountNo}} | Client Name: {{sharesAccountData.clientName}}<br/>
-            Current Market Price: {{sharesAccountData.currency.displaySymbol}}&nbsp;{{sharesAccountData.currentMarketPrice}}<br/>
-            Lockin Period: {{sharesAccountData.lockinPeriod ? sharesAccountData.lockinPeriod : 'N/A'}}
+            {{ 'labels.inputs.Account'  |translate}} #: {{sharesAccountData.accountNo}} | {{ 'labels.inputs.Client Name'  |translate}}: {{sharesAccountData.clientName}}<br/>
+            {{ 'labels.inputs.Current Market Price'  |translate}}: {{sharesAccountData.currency.displaySymbol}}&nbsp;{{sharesAccountData.currentMarketPrice}}<br/>
+            {{ 'labels.inputs.Lockin Period'  |translate}}: {{sharesAccountData.lockinPeriod ? sharesAccountData.lockinPeriod : 'N/A'}}
             {{sharesAccountData.lockinPeriod ? sharesAccountData.lockPeriodTypeEnum.value : ''}}
           </p>
         </mat-card-subtitle>
@@ -39,7 +39,7 @@
       </ng-container>
 
       <ng-container *ngIf="buttonConfig.options.length">
-        <button mat-raised-button [matMenuTriggerFor]="More">More</button>
+        <button mat-raised-button [matMenuTriggerFor]="More">{{ 'labels.heading.More'  |translate}}</button>
         <mat-menu #More="matMenu">
         <span *ngFor="let option of buttonConfig.options">
           <button mat-menu-item *mifosxHasPermission="option.taskPermissionName" (click)="doAction(option.name)">{{option.name}}</button>
@@ -56,33 +56,33 @@
     <div class="shares-account-tables" fxLayout="row" fxLayoutGap="2%">
 
       <div fxFlex="49%">
-        <h4 class="table-headers">Shares Details</h4>
+        <h4 class="table-headers">{{ 'labels.heading.Shares Details'  |translate}}</h4>
         <table>
           <tbody>
             <tr>
-              <td>Activated On</td>
+              <td>{{ 'labels.inputs.Activated On'  |translate}}</td>
               <td>{{sharesAccountData.timeline.activatedOnDate ? (sharesAccountData.timeline.activatedOnDate  | dateFormat) : 'Not Activated'}}</td>
             </tr>
             <tr>
-              <td>Currency</td>
+              <td>{{ 'labels.inputs.Currency'  |translate}}</td>
               <td>{{sharesAccountData.currency.name}} [{{sharesAccountData.currency.code}}]</td>
             </tr>
             <tr>
-              <td>External Id</td>
+              <td>{{ 'labels.inputs.External Id'  |translate}}</td>
               <td *ngIf="sharesAccountData.externalId">
                 <mifosx-external-identifier externalId="{{sharesAccountData.externalId}}"></mifosx-external-identifier>
               </td>
               <td *ngIf="!sharesAccountData.externalId">
-                Unassigned
+                {{ 'labels.inputs.Unassigned'  |translate}}
               </td>
             </tr>
             <tr>
-              <td>Linked Savings Account(Dividend Posting)</td>
+              <td>{{ 'labels.inputs.Linked Savings Account(Dividend Posting)'  |translate}}</td>
               <td *ngIf="sharesAccountData.savingsAccountNumber">
                 <mifosx-account-number accountNo="{{sharesAccountData.savingsAccountNumber}}"></mifosx-account-number>
               </td>
               <td *ngIf="!sharesAccountData.savingsAccountNumber">
-                Unassigned
+                {{ 'labels.inputs.Unassigned'  |translate}}
               </td>
             </tr>
           </tbody>
@@ -90,15 +90,15 @@
       </div>
 
       <div fxFlex="49%">
-        <h4 class="table-headers">Account Summary</h4>
+        <h4 class="table-headers">{{ 'labels.heading.Account Summary'  |translate}}</h4>
         <table>
           <tbody>
             <tr>
-              <td>Approved Shares</td>
+              <td>{{ 'labels.inputs.Approved Shares'  |translate}}</td>
               <td>{{sharesAccountData.summary.totalApprovedShares}}</td>
             </tr>
             <tr>
-              <td>Pending for Approval Shares</td>
+              <td>{{ 'labels.inputs.Pending for Approval Shares'  |translate}}</td>
               <td>{{sharesAccountData.summary.totalPendingForApprovalShares}}</td>
             </tr>
           </tbody>
@@ -110,15 +110,15 @@
     <nav mat-tab-nav-bar class="navigation-tabs">
       <a mat-tab-link [routerLink]="['./transactions']" routerLinkActive #transactions="routerLinkActive"
       [active]="transactions.isActive" *mifosxHasPermission="'READ_SHAREACCOUNTPURCHASE'">
-        Transactions
+      {{ 'labels.inputs.Transactions'  |translate}}
       </a>
       <a mat-tab-link [routerLink]="['./charges']" routerLinkActive #charges="routerLinkActive"
       [active]="charges.isActive" *mifosxHasPermission="'READ_SHAREACCOUNTCHARGE'">
-        Charges
+      {{ 'labels.inputs.Charges'  |translate}}
       </a>
       <a mat-tab-link [routerLink]="['./dividends']" routerLinkActive #dividends="routerLinkActive"
       [active]="dividends.isActive" *mifosxHasPermission="'READ_SHAREACCOUNTDIVIDENDS'">
-        Dividends
+      {{ 'labels.inputs.Dividends'  |translate}}
       </a>
     </nav>
 
