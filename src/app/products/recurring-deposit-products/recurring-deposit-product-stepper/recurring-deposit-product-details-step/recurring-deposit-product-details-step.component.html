@@ -3,8 +3,8 @@
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Product Name</mat-label>
-      <input matInput formControlName="name" required>
+      <mat-label>Product Name </mat-label>
+      <input matInput formControlName="name" matTooltip="The product name is a unique identifier for the lending product." required>
       <mat-error *ngIf="recurringDepositProductDetailsForm.controls.name.hasError('required')">
         Product Name is <strong>required</strong>
       </mat-error>
@@ -12,7 +12,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Short Name</mat-label>
-      <input matInput formControlName="shortName" maxlength="4" required>
+      <input matInput formControlName="shortName" maxlength="4"  matTooltip="The short name is a unique identifier for the lending product." required>
       <mat-error *ngIf="recurringDepositProductDetailsForm.controls.shortName.hasError('required')">
         Short Name is <strong>required</strong>
       </mat-error>
@@ -20,7 +20,7 @@
 
     <mat-form-field fxFlex="98%">
       <mat-label>Description</mat-label>
-      <textarea matInput formControlName="description" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+      <textarea matInput formControlName="description" matTooltip="The description is used to provide additional information regarding the purpose and characteristics of the recurring deposit product."  cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
       <mat-error *ngIf="recurringDepositProductDetailsForm.controls.description.hasError('required')">
         Description is <strong>required</strong>
       </mat-error>

@@ -48,6 +48,11 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
  *
  * Core module and all feature modules should be imported here in proper order.
  */
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
+
 @NgModule({
   imports: [
     TranslateModule.forRoot({
@@ -86,6 +91,13 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     TasksModule,
     ConfigurationWizardModule,
     AppRoutingModule,
+    // TranslateModule.forRoot({
+    //   loader: {
+    //     provide: TranslateLoader,
+    //       useFactory: HttpLoaderFactory,
+    //       deps: [HttpClient]
+    //   }
+    // })
   ],
   declarations: [WebAppComponent, NotFoundComponent],
   providers: [DatePipe],

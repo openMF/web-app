@@ -1,118 +1,131 @@
 {
   "APP_NAME": "Mifos X",
-  "Logged in as": "Logged in as",
-  "Remember me": "Remember me",
-  "not_found_subtitle": "Oups.. Il semble que cette page n'existe pas.",
+  "Logged in as": "Connecté en tant que",
+  "Remember me": "Souvenez-vous de moi",
+  "not_found_subtitle": "Oups.. On dirait que cette page n’existe pas.",
   "languages": {
-    "en-US": "English",
-    "fr-FR": "French",
-    "es-MX": "Spanish"
+    "en-US": "Anglais",
+    "fr-FR": "Français",
+    "es-MX": "Espagnol"
   },
   "labels": {
     "breadcrumbs": {
-      "Home": "Home"
+      "Home": "Domicile"
     },
     "buttons": {
-      "Dashboard": "Dashboard",
-      "Add": "Add",
-      "Back": "Back",
-      "Close": "Close",
-      "Next": "Next",
-      "Login": "Login"
+      "Dashboard": "Tableau de bord",
+      "Add": "Ajouter",
+      "Back": "Précédent",
+      "Close": "Fermer",
+      "Next": "Prochain",
+      "Login": "Connectez-vous",
+      "Create User": "Créer un utilisateur"
     },
     "commons": {
-      "is required": "is required"
+      "is required": "est obligatoire"
     },
-    "inputs": {
-      "Tenant": "Tenant",
-      "Language": "Language",
-      "Server": "Server",
-      "Url": "Url",
-      "Login": "Login",
-      "Logout": "Logout",
-      "Username": "Username",
-      "Password": "Password",
-      "Remember me": "Remember me"
+    "inputs":{
+      "Tenant": "Locataire",
+      "Language": "Langue",
+      "Server": "Serveur",
+      "Url": "URL",
+      "Login": "Connectez-vous",
+      "Logout": "Se déconnecter",
+      "Username": "Nom d'utilisateur",
+      "Password": "Mot de passe",
+      "Remember me": "Souvenez-vous de moi",
+      "Filter": "Filtre",
+      "products": {
+        "loan": {
+          "Amortization": "Amortissement",
+          "amortizationType": {
+            "Equal installments": "Versements égaux",
+            "Equal principal payments": "Paiements de principal égaux"
+          },
+          "Is Equal Amortization?": "'est-ce qu'un amortissement égal ?"
+        }
+      }
     },
     "links": {
-      "Contribute": "Contribute",
-      "Resources": "Resources",
-      "Community": "Community",
-      "User Manual": "User Manual",
-      "Functional Specifications": "Functional Specifications",
-      "Developer Zone": "Developer Zone",
-      "User Group": "User Group",
-      "Developer Group": "Developer Group",
-      "IRC": "IRC",
-      "Key Design Principles": "Key Design Principles",
-      "Working with Code": "Working with Code",
-      "Donate": "Donate",
-      "Forgot Password?": "Forgot Password?"
+      "Contribute": "Contribuer",
+      "Resources": "Ressources",
+      "Community": "Communauté",
+      "User Manual": "Manuel de l'Utilisateur",
+      "Functional Specifications": "Spécifications fonctionnelles",
+      "Developer Zone": "Espace développeur",
+      "User Group": "Groupe d'utilisateurs",
+      "Developer Group": "Groupe de développeurs",
+      "IRC": "CRI",
+      "Key Design Principles": "Principes de conception clés",
+      "Working with Code": "Travailler avec du code",
+      "Donate": "Donner",
+      "Forgot Password?": "Mot de passe oublié?"
     },
     "menus": {
       "Institution": "Institution",
-      "Accounting": "Accounting",
-      "Breadcrumbs": "Breadcrumbs",
-      "Reports": "Reports",
-      "Admin": "Admin",
-      "Self Service": "Self Service",
-      "Configuration Wizard": "Configuration Wizard",
+      "Accounting": "Comptabilité",
+      "Breadcrumbs": "Chapelure",
+      "Reports": "Rapports",
+      "Admin": "Administrateur",
+      "Self Service": "En libre service",
+      "Configuration Wizard": "Assistant de configuration",
       "Clients": "Clients",
-      "Groups": "Groups",
-      "Centers": "Centers",
-      "All": "All",
-      "Loans": "Loans",
-      "Savings": "Savings",
-      "Funds": "Funds",
+      "Groups": "Groupes",
+      "Centers": "Centres",
+      "All": "Tous",
+      "Loans": "Prêts",
+      "Savings": "Des économies",
+      "Funds": "Fonds",
       "XBRL": "XBRL",
-      "Users": "Users",
-      "Organization": "Organization",
-      "System": "System",
-      "Products": "Products",
-      "Templates": "Templates",
-      "User Management": "User Management",
-      "App Configuration": "App Configuration",
-      "Task Management": "Task Management",
-      "Help": "Help",
-      "Profile": "Profile",
-      "Settings": "Settings",
-      "Sign Out": "Sign Out",
-      "Global Search": "Global Search",
-      "Language Selector": "Language Selector",
-      "Theme Picker": "Theme Picker",
-      "Application Menu": "Application Menu",
-      "User Panel": "User Panel",
-      "Frequently Accessed": "Frequently Accessed",
-      "Dashboard": "Dashboard",
-      "Navigation": "Navigation",
-      "Frequent Postings": "Frequent Postings",
-      "Create Journal Entry": "Create Journal Entry",
-      "Chart of Accounts": "Chart of Accounts",
-      "Notifications": "Notifications",
-      "Main Items": "Main Items",
-      "Checker Inbox and Tasks": "Checker Inbox and Tasks",
-      "Individual Collection Sheet": "Individual Collection Sheet",
-      "Keyboard Shortcuts": "Keyboard Shortcuts"
+      "Users": "Utilisateurs",
+      "Organization": "Organisation",
+      "System": "Système",
+      "Products": "Des produits",
+      "Templates": "Modèles",
+      "User Management": "Gestion des utilisateurs",
+      "App Configuration": "Configuration de l'application",
+      "Task Management": "Gestion des tâches",
+      "Help": "Aider",
+      "Profile": "Profil",
+      "Settings": "Paramètres",
+      "Sign Out": "Se déconnecter",
+      "Global Search": "Recherche globale",
+      "Language Selector": "Sélecteur de langue",
+      "Theme Picker": "Sélecteur de thème",
+      "Application Menu": "Menu des applications",
+      "User Panel": "Panneau d'utilisateur",
+      "Frequently Accessed": "Fréquemment consulté",
+      "Dashboard": "Tableau de bord",
+      "Navigation": "La navigation",
+      "Frequent Postings": "Publications fréquentes",
+      "Create Journal Entry": "Créer une entrée de journal",
+      "Chart of Accounts": "Plan comptable",
+      "Notifications": "Avis",
+      "Main Items": "Éléments principaux",
+      "Checker Inbox and Tasks": "Boîte de réception et tâches du vérificateur",
+      "Individual Collection Sheet": "Feuille de collecte individuelle",
+      "Keyboard Shortcuts": "Raccourcis clavier"
     },
     "placeholders": {
-      "Add new server": "Add new server",
-      "Search Activity": "Search Activity"
+      "Add new server": "Ajouter un nouveau serveur",
+      "Search Activity": "Activité de recherche"
     },
     "texts": {
-      "Welcome": "Welcome",
+      "Welcome": "Accueillir",
       "Version": "Version",
-      "by": "by"
+      "by": "par",
+      "Login into Tenant": "Connectez-vous au locataire"
     }
   },
   "errors": {
     "inputs": {
-      "Password is required": "Password is required",
-      "Username is required": "Username is required",
-      "Username or password incorrect.": "Username or password incorrect"
+      "Password is required": "Mot de passe requis",
+      "Username is required": "Nom d'utilisateur est nécessaire",
+      "Username or password incorrect.": "Nom d'utilisateur ou mot de passe incorrect"
     }
   },
   "tooltips": {
-    "Settings": "Settings",
-    "Sign Out": "Sign Out"
+    "Settings": "Paramètres",
+    "Sign Out": "Se déconnecter"
   }
 }
