@@ -5,12 +5,12 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="notification">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Notification </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Notification"  |translate}} </th>
         <td mat-cell *matCellDef="let notification"> {{ notification.content }} </td>
       </ng-container>
 
       <ng-container matColumnDef="createdAt">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Created At </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Created At"  |translate}} </th>
         <td mat-cell *matCellDef="let notification"> {{ notification.createdAt }} </td>
       </ng-container>
 
