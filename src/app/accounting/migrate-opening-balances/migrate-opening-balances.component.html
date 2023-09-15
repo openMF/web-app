@@ -10,69 +10,70 @@
         <div #searchFormRef fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
           <mat-form-field fxFlex="88%">
-            <mat-label>Office</mat-label>
+            <mat-label>{{"labels.inputs.Office" |translate}}</mat-label>
             <mat-select required formControlName="officeId">
               <mat-option *ngFor="let office of officeData" [value]="office.id">
                 {{ office.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="openingBalancesForm.controls.officeId.hasError('required')">
-              Office is <strong>required</strong>
+              {{"labels.inputs.Office" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <div>
-            <button mat-button type="button" color="primary" fxFlex="8%" (click)="retrieveOpeningBalances()">Retrieve</button>
+            <button mat-button type="button" color="primary" fxFlex="8%" (click)="retrieveOpeningBalances()">{{ "labels.buttons.Retrieve" | translate}}</button>
           </div>
 
         </div>
 
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" *ngIf="openingBalancesData">
 
-          <label fxFlex="98%" class="content"><span class="header">Opening Balances Contra Account:</span>&nbsp;&nbsp;{{ openingBalancesData.contraAccount.name + ' (' + openingBalancesData.contraAccount.glCode + ')' }}</label>
+          <label fxFlex="98%" class="content"><span class="header">{{"labels.inputs.Opening Balances Contra Account:" |translate}}</span>&nbsp;&nbsp;{{ openingBalancesData.contraAccount.name + ' (' + openingBalancesData.contraAccount.glCode + ')' }}</label>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Currency</mat-label>
+            <mat-label>{{"labels.inputs.Currency" |translate}}</mat-label>
             <mat-select required formControlName="currencyCode">
               <mat-option *ngFor="let currency of currencyData" [value]="currency.code">
                 {{ currency.displayLabel }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="openingBalancesForm.controls.currencyCode.hasError('required')">
-              Currency is <strong>required</strong>
+              {{"labels.inputs.Currency" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%" (click)="openingBalancesDatePicker.open()">
-            <mat-label>Opening Balances Date</mat-label>
+            <mat-label>{{"labels.inputs.Opening Balances Date" |translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="openingBalancesDatePicker" required formControlName="transactionDate">
             <mat-datepicker-toggle matSuffix [for]="openingBalancesDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #openingBalancesDatePicker></mat-datepicker>
             <mat-error *ngIf="openingBalancesForm.controls.transactionDate.hasError('required')">
-              Opening Balances Date is <strong>required</strong>
+              {{"labels.inputs.Opening Balances Date" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" class="content" fxFlex="100%">
 
             <div class="header" fxFlex="8%">
-              Type
+              {{"labels.inputs.Type" |translate}}
             </div>
 
             <div class="header" fxFlex="18%">
-              GL Code
+              {{"labels.inputs.GL Code" |translate}}
             </div>
 
             <div class="header" fxFlex="18%">
-              Account
+              {{"labels.inputs.Account" |translate}}
+              
             </div>
 
             <div class="header" fxFlex="23%">
-              Total Debit: {{ debitsSum }}
+              {{"labels.inputs.Total Debit" |translate}}: {{ debitsSum }}
             </div>
 
             <div class="header" fxFlex="23%">
-              Total Credit: {{ creditsSum }}
+              {{"labels.inputs.Total Credit" |translate}}: {{ creditsSum }}
             </div>
 
           </div>
@@ -96,14 +97,14 @@
 
               <div fxFlex="23%">
                 <mat-form-field>
-                  <mat-label>Debit</mat-label>
+                  <mat-label>{{"labels.inputs.Debit" |translate}}</mat-label>
                   <input matInput type="number" formControlName="debit">
                 </mat-form-field>
               </div>
 
               <div fxFlex="23%">
                 <mat-form-field>
-                  <mat-label>Credit</mat-label>
+                  <mat-label>{{"labels.inputs.Credit" |translate}}</mat-label>
                   <input matInput type="number" formControlName="credit">
                 </mat-form-field>
               </div>
@@ -117,8 +118,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px" *ngIf="openingBalancesData">
-        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!openingBalancesForm.valid" *mifosxHasPermission="'DEFINEOPENINGBALANCE_JOURNALENTRY'">Submit</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">{{ "labels.buttons.Cancel" | translate}}</button>
+        <button mat-raised-button color="primary" [disabled]="!openingBalancesForm.valid" *mifosxHasPermission="'DEFINEOPENINGBALANCE_JOURNALENTRY'">{{"labels.buttons.Submit | translate}}</button>
       </mat-card-actions>
 
     </form>
@@ -128,11 +129,11 @@
 </div>
 
 <ng-template #templateSearchFormRef let-popover="popover">
-  <h2>Migrate opening balances (Office-wise)</h2>
-  <p class="mw300">This form will be used to migrate opening balances. To know more click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/90243328/Migrate+opening+balances+Office-wise" target="_blank">Migrate opening balances (Office-wise)</a></p>
+  <h2>{{"labels.heading.Migrate opening balances (Office-wise)" |translate}}</h2>
+  <p class="mw300">{{"labels.text.Migrate Opening Balances" |translate}} <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/90243328/Migrate+opening+balances+Office-wise" target="_blank">{{"labels.inputs.Migrate opening balances (Office-wise)" |translate}}</a></p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();popover.close();previousStep();">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();popover.close();nextStep();">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" |translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();popover.close();previousStep();">{{"labels.buttons.Back" |translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();popover.close();nextStep();">{{"labels.buttons.Next" |translate}}</button>
   </div>
 </ng-template>
