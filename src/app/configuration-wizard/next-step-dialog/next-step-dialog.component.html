@@ -1,18 +1,18 @@
-<h1 mat-dialog-title>Welcome to Mifos</h1>
+<h1 mat-dialog-title>{{"labels.heading.Welcome to Mifos" |translate}}</h1>
 
 <mat-dialog-content>
 
-<h3 class="mw600">Following guide tour will help you configure Mifos according to your organization needs.</h3>
+<h3 class="mw600">{{"labels.heading.Configure Mifos Organization Needs" |translate}}</h3>
 
-<h3>You have successfully completed the setup of {{ previousStepName }}</h3>
+<h3>{{"labels.heading.Successfully completed" |translate}} {{ previousStepName }}</h3>
 
-<h3>Progress Bar : {{stepPercentage}}%</h3>
+<h3>{{"labels.heading.Progress Bar" |translate}} : {{stepPercentage}}%</h3>
 
 <mat-progress-bar mode="determinate" [value]="stepPercentage"></mat-progress-bar>
 
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button mat-raised-button color="warn" [mat-dialog-close]="{ nextStep: false }">Close Config. Wizard</button>
+    <button mat-raised-button color="warn" [mat-dialog-close]="{ nextStep: false }">{{"labels.buttons.Close Config. Wizard" |translate}}</button>
     <button mat-raised-button color="primary" [mat-dialog-close]="{ nextStep: true }"> {{ nextStepName }} </button>
 </mat-dialog-actions>
