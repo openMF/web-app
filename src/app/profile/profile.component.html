@@ -1,11 +1,11 @@
 <div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="2%">
   <button mat-raised-button color="primary" [routerLink]="['/system', 'roles-and-permissions']">
     <fa-icon icon="check" class="m-r-10"></fa-icon>
-    Permissions
+    {{"labels.buttons.Permissions"  |translate}}
   </button>
   <button mat-raised-button color="primary" (click)="changeUserPassword()">
     <fa-icon icon="cog" class="m-r-10"></fa-icon>
-    Change Password
+    {{"labels.buttons.Change Password"  |translate}}
   </button>
 </div>
 
@@ -17,7 +17,7 @@
     <div fxLayout="row wrap" class="content">
 
       <div fxFlex="50%" class="header">
-        Tenant Id
+        {{"labels.inputs.Tenant Id"  |translate}}
       </div>
 
       <div fxFlex="50%">
@@ -25,7 +25,7 @@
       </div>
 
       <div fxFlex="50%" class="header">
-        User Id
+        {{"labels.inputs.User Id"  |translate}}
       </div>
 
       <div fxFlex="50%">
@@ -33,7 +33,7 @@
       </div>
 
       <div fxFlex="50%" class="header">
-        User Name
+        {{"labels.inputs.User Name"  |translate}}
       </div>
 
       <div fxFlex="50%">
@@ -41,7 +41,7 @@
       </div>
 
       <div fxFlex="50%" class="header">
-        Office
+        {{"labels.inputs.Office"  |translate}}
       </div>
 
       <div fxFlex="50%">
@@ -49,7 +49,7 @@
       </div>
 
       <div fxFlex="50%" class="header">
-        Status
+        {{"labels.inputs.Status"  |translate}}
       </div>
 
       <div fxFlex="50%">
@@ -57,7 +57,7 @@
       </div>
 
       <div fxFlex="50%" class="header">
-        Language
+        {{"labels.inputs.Language"  |translate}}
       </div>
 
       <div fxFlex="50%">
@@ -73,12 +73,12 @@
     <table class="mat-elevation-z1" mat-table [dataSource]="dataSource">
 
       <ng-container matColumnDef="role">
-        <th mat-header-cell *matHeaderCellDef> Role </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Role"  |translate}} </th>
         <td mat-cell *matCellDef="let role"> {{ role.name }} </td>
       </ng-container>
 
       <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef> Description </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Description"  |translate}} </th>
         <td mat-cell *matCellDef="let role">{{ role.description }}</td>
       </ng-container>
 
