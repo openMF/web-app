@@ -2,30 +2,30 @@
   <span *mifosxHasPermission="'CREATE_GLACCOUNT'">
     <button mat-raised-button color="primary" *ngIf="glAccount.usage.value === 'HEADER'" [routerLink]="['/accounting/chart-of-accounts/gl-accounts/create']" [queryParams]="{ parent: glAccount.id, accountType: glAccount.type.id }">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
-      Subledger Account
+      {{"labels.buttons.Subledger Account" |translate}}
     </button>
   </span>
   <span *mifosxHasPermission="'UPDATE_GLACCOUNT'">
     <button mat-raised-button color="primary" [routerLink]="['edit']">
       <fa-icon icon="edit" class="m-r-10"></fa-icon>
-      Edit
+      {{"labels.buttons.Edit" |translate}}
     </button>
   </span>
   <span *mifosxHasPermission="'UPDATE_GLACCOUNT'">
     <button mat-raised-button color="warn" *ngIf="!glAccount.disabled" (click)="changeGlAccountState()">
       <fa-icon icon="lock" class="m-r-10"></fa-icon>
-      Disable
+      {{"labels.buttons.Disable" |translate}}
     </button>
   </span>
   <span *mifosxHasPermission="'UPDATE_GLACCOUNT'">
     <button mat-raised-button color="accent" *ngIf="glAccount.disabled" (click)="changeGlAccountState()">
       <fa-icon icon="lock-open" class="m-r-10"></fa-icon>
-      Enable
+      {{"labels.buttons.Enable" |translate}}
     </button>
   </span>
   <button mat-raised-button color="warn" (click)="deleteGlAccount()" *mifosxHasPermission="'DELETE_GLACCOUNT'">
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    Delete
+    {{"labels.buttons.Delete" |translate}}
   </button>
 </div>
 
@@ -38,7 +38,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="header">
-          Account Type
+          {{"labels.inputs.Account Type" |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -46,7 +46,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          GL Code
+          {{"labels.inputs.GL Code" |translate}}        
         </div>
 
         <div fxFlex="50%">
@@ -54,7 +54,7 @@
         </div>
 
         <div fxFlex="50%" class="header" *ngIf="glAccount.parent">
-          Parent Account Name
+          {{"labels.inputs.Parent Account Name" |translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="glAccount.parent">
@@ -64,7 +64,7 @@
         </div>
 
         <div fxFlex="50%" class="header" *ngIf="glAccount.tagId.id">
-          Tag
+           {{"labels.inputs.Tag" |translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="glAccount.tagId.id">
@@ -72,7 +72,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Account Usage
+          {{"labels.inputs.Account Usage" |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -80,7 +80,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Manual Entries Allowed
+          {{"labels.inputs.Manual Entries Allowed" |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -88,7 +88,7 @@
         </div>
 
         <div fxFlex="50%" class="header" *ngIf="glAccount.description">
-          Description
+          {{"labels.inputs.Description" |translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="glAccount.description">
