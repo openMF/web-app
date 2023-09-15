@@ -1,6 +1,7 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
 <div #buttonCreateRecurringProduct class="in-block">
-  <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission='"CREATE_RECURRINGDEPOSITPRODUCT"'>
+  <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission='"CREATE_RECURRINGDEPOSITPRODUCT"'
+  matTooltip="Create Recurring Deposit Product" matTooltipPosition="above">
     <fa-icon icon="plus" class="m-r-10"></fa-icon>
     Create Recurring Deposit Product
   </button>
@@ -12,7 +13,7 @@
   <div #filter fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
       <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
-      <input matInput (keyup)="applyFilter($event.target.value)">
+      <input matInput (keyup)="applyFilter($event.target.value)"  matTooltip="Add Filters" matTooltipPosition="left">
     </mat-form-field>
   </div>
 
