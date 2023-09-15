@@ -7,15 +7,16 @@
       <mat-form-field>
         <input matInput placeholder="Search by ExternalID" [formControl]="externalId">
       </mat-form-field>
-      <mat-checkbox #showClosedCenters labelPosition="after" (change)="changeShowClosedCenters()">Show Closed Centers
+      <mat-checkbox #showClosedCenters labelPosition="after" (change)="changeShowClosedCenters()">
+        {{"labels.inputs.Show Closed Centers" |translate}}
       </mat-checkbox>
     </div>
     <div class="action-button" fxLayoutGap="25px">
       <button mat-raised-button color="primary" [routerLink]="['../', 'organization', 'bulk-import', 'Centers']" *mifosxHasPermission="'CREATE_CENTER'">
-        <fa-icon icon="download" class="m-r-10"></fa-icon>Import Center
+        <fa-icon icon="download" class="m-r-10"></fa-icon>{{ "labels.buttons.Import Center" | translate}}
       </button>
       <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_CENTER'">
-        <fa-icon icon="plus" class="m-r-10"></fa-icon>Create Center
+        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ "labels.buttons.Create Center" | translate}}
       </button>
     </div>
   </div>
@@ -23,22 +24,22 @@
   <table mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.name" |translate}} </th>
       <td mat-cell *matCellDef="let center"> {{ center.name }} </td>
     </ng-container>
 
     <ng-container matColumnDef="accountNo">
-      <th mat-header-cell *matHeaderCellDef> Account # </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account" |translate}} # </th>
       <td mat-cell *matCellDef="let center"> {{ center.accountNo }} </td>
     </ng-container>
 
     <ng-container matColumnDef="externalId">
-      <th mat-header-cell *matHeaderCellDef> ExternalID </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.External Id" |translate}} </th>
       <td mat-cell *matCellDef="let center"> {{ center.externalId }} </td>
     </ng-container>
 
     <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Status" |translate}} </th>
       <td mat-cell *matCellDef="let row">
         <div [ngClass]="row.status.code|statusLookup">
           <fa-icon icon="stop"></fa-icon>
@@ -47,7 +48,7 @@
     </ng-container>
 
     <ng-container matColumnDef="officeName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Office Name </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Office Name" |translate}} </th>
       <td mat-cell *matCellDef="let center"> {{ center.officeName }} </td>
     </ng-container>
 
