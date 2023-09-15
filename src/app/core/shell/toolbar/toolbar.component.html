@@ -1,10 +1,10 @@
 <mat-toolbar fxLayout="row" color="primary" id="mifosx-toolbar">
 
-  <button mat-icon-button *ngIf="!sidenavCollapsed" (click)="toggleSidenav()" matTooltip="Toggle Hide/Open">
+  <button mat-icon-button *ngIf="!sidenavCollapsed" (click)="toggleSidenav()" matTooltip="{{ 'tooltips.Toggle Hide/Open' | translate }}">
     <fa-icon icon="bars" size="lg"></fa-icon>
   </button>
 
-  <button mat-icon-button *ngIf="sidenav.opened" (click)="toggleSidenavCollapse()" matTooltip="Toggle Collapse" fxHide.lt-md="true">
+  <button mat-icon-button *ngIf="sidenav.opened" (click)="toggleSidenavCollapse()" matTooltip="{{ 'tooltips.Toggle Collapse' | translate }}" fxHide.lt-md="true">
     <fa-icon *ngIf="!sidenavCollapsed" icon="chevron-left"></fa-icon>
     <fa-icon *ngIf="sidenavCollapsed" icon="chevron-right"></fa-icon>
   </button>
@@ -133,109 +133,109 @@
 
 <ng-template #templateInstitution let-popover="popover">
   <h2>{{ 'labels.menus.Institution' | translate }}</h2>
-  <p class="mw300">This button will be used for individual accounts, groups and centers</p>
+  <p class="mw300">{{"labels.text.Button for individual account" | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateAccounting, accounting)">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateAccounting, accounting)">{{"labels.buttons.Next" | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateAccounting let-popover="popover">
   <h2>{{ 'labels.menus.Accounting' | translate }}</h2>
-  <p class="mw300">This button opens the menu to access the system tools required by the accounting department.</p>
+  <p class="mw300">{{"labels.text.Button for accounting department" | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateInstitution, institution)">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateReports, reports)">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateInstitution, institution)">{{"labels.buttons.Back" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateReports, reports)">{{"labels.buttons.Next" | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateReports let-popover="popover">
   <h2>{{ 'labels.menus.Reports' | translate }}</h2>
-  <p class="mw300">Dropdown provides access to all types of system reports including the defualt reports provided by the Mifos and system reports that will be developed by the organization.</p>
+  <p class="mw300">{{"labels.text.Dropdown system reports" | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateAccounting, accounting)">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateAdmin, admin)">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateAccounting, accounting)">{{"labels.buttons.Back" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateAdmin, admin)">{{"labels.buttons.Next" | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateAdmin let-popover="popover">
   <h2>{{ 'labels.menus.Admin' | translate }}</h2>
-  <p class="mw300">This is where the system is setup according to your organization including users, organization, products and templates.</p>
+  <p class="mw300">{{"labels.text.Setup organization including users" | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateReports, reports)">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateSelfService, selfService)">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateReports, reports)">{{"labels.buttons.Back" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateSelfService, selfService)">{{"labels.buttons.Next" | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateSelfService let-popover="popover">
   <h2>{{ 'labels.menus.Self Service' | translate }}</h2>
-  <p class="mw300">Dropdown provides access to self service user administrative portal, app configuration and task management.</p>
+  <p class="mw300">{{"labels.text.Dropdown self service user administrative portal" | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateAdmin, admin)">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateConfigWizard, configWizard)">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateAdmin, admin)">{{"labels.buttons.Back" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateConfigWizard, configWizard)">{{"labels.buttons.Next" | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateConfigWizard let-popover="popover">
   <h2>{{ 'labels.menus.Configuration Wizard' | translate }}</h2>
-  <p class="mw300">This buttons opens up the configuration wizard to help the user in initial setup and application tour.</p>
+  <p class="mw300">{{"labels.text.Initial setup and application tour" | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateSelfService, selfService)">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateGlobalSearch, globalSearch)">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateSelfService, selfService)">{{"labels.buttons.Back" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateGlobalSearch, globalSearch)">{{"labels.buttons.Next" | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateGlobalSearch let-popover="popover">
   <h2>{{ 'labels.menus.Global Search' | translate }}</h2>
-  <p class="mw300">This will allow the user to quickly navigate the system selecting entity while searching makes the navigation more robust.</p>
+  <p class="mw300">{{"labels.text.Navigate system selecting entity" | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateConfigWizard, configWizard)">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover( templateLanguageSelector, languageSelector)">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateConfigWizard, configWizard)">{{"labels.buttons.Back" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover( templateLanguageSelector, languageSelector)">{{"labels.buttons.Next" | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateLanguageSelector let-popover="popover">
   <h2>{{ 'labels.menus.Language Selector' | translate }}</h2>
-  <p class="mw300">Organization can select a language here from the available languages here.</p>
+  <p class="mw300">{{"labels.text.Organization available languages" | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateGlobalSearch, globalSearch)">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateThemePicker, themePicker)">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateGlobalSearch, globalSearch)">{{"labels.buttons.Back" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateThemePicker, themePicker)">{{"labels.buttons.Next" | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateThemePicker let-popover="popover">
   <h2>{{ 'labels.menus.Theme Picker' | translate }}</h2>
-  <p class="mw300">This will be used to choose a theme as per organization will.</p>
+  <p class="mw300">{{"labels.text.Choose a theme as per organization will" | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover( templateLanguageSelector, languageSelector)">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateNotifications, notifications)">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover( templateLanguageSelector, languageSelector)">{{"labels.buttons.Back" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateNotifications, notifications)">{{"labels.buttons.Next" | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateNotifications let-popover="popover">
   <h2>{{ 'labels.menus.Notifications' | translate }}</h2>
-  <p class="mw300">This shows all the notifications.</p>
+  <p class="mw300">{{"labels.text.This shows all the notifications." | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateThemePicker, themePicker)">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateAppMenu, appMenu)">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateThemePicker, themePicker)">{{"labels.buttons.Back" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateAppMenu, appMenu)">{{"labels.buttons.Next" | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateAppMenu let-popover="popover">
   <h2>{{ 'labels.menus.Application Menu' | translate }}</h2>
-  <p class="mw300">This will have logged in user settings and sign out button.</p>
+  <p class="mw300">{{"labels.text.User settings and sign out button" | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateNotifications, notifications)">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateNotifications, notifications)">{{"labels.buttons.Back" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">{{"labels.buttons.Next" | translate }}</button>
   </div>
 </ng-template>

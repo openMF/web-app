@@ -51,61 +51,61 @@
       </div>
 
       <mat-nav-list>
-        <mat-list-item [routerLink]="['/dashboard']" matTooltip="Dashboard">
+        <mat-list-item [routerLink]="['/dashboard']" matTooltip="{{ 'tooltips.Dashboard' | translate }}">
           <mat-icon matListIcon >
             <fa-icon icon="tachometer-alt" size="sm"></fa-icon>
           </mat-icon>
           <a matLine #dashboard>{{ 'labels.menus.Dashboard' | translate }}</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/navigation']" matTooltip="Navigation">
+        <mat-list-item [routerLink]="['/navigation']" matTooltip="{{ 'tooltips.Navigation' | translate }}">
           <mat-icon matListIcon>
             <fa-icon icon="location-arrow" size="sm"></fa-icon>
           </mat-icon>
           <a matLine #navigation>{{ 'labels.menus.Navigation' | translate }}</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/checker-inbox-and-tasks/checker-inbox']" matTooltip="Checker Inbox and Tasks">
+        <mat-list-item [routerLink]="['/checker-inbox-and-tasks/checker-inbox']" matTooltip="{{ 'tooltips.Checker Inbox and Tasks' | translate }}">
           <mat-icon matListIcon>
             <i class="fa fa-check" ></i>
           </mat-icon>
           <a matLine>{{ 'labels.menus.Checker Inbox and Tasks' | translate }}</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/collections/individual-collection-sheet']" matTooltip="Individual Collection Sheet">
+        <mat-list-item [routerLink]="['/collections/individual-collection-sheet']" matTooltip="{{ 'tooltips.Individual Collection Sheet' | translate }}">
           <mat-icon matListIcon>
             <i class="fa fa-tasks "></i>
           </mat-icon>
           <a matLine>{{ 'labels.menus.Individual Collection Sheet' | translate }}</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/notifications']" matTooltip="Notifications">
+        <mat-list-item [routerLink]="['/notifications']" matTooltip="{{ 'tooltips.Notifications' | translate }}">
           <mat-icon matListIcon>
             <fa-icon icon="bell" size="sm"></fa-icon>
           </mat-icon>
           <a matLine>{{ 'labels.menus.Notifications' | translate }}</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/accounting/journal-entries/frequent-postings']" matTooltip="Frequent Postings">
+        <mat-list-item [routerLink]="['/accounting/journal-entries/frequent-postings']" matTooltip="{{ 'tooltips.Frequent Postings' | translate }}">
           <mat-icon matListIcon>
             <fa-icon icon="sync" size="sm"></fa-icon>
           </mat-icon>
           <a matLine #frequentPostings>{{ 'labels.menus.Frequent Postings' | translate }}</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/accounting/journal-entries/create']" matTooltip="Create Journal Entry">
+        <mat-list-item [routerLink]="['/accounting/journal-entries/create']" matTooltip="{{ 'tooltips.Create Journal Entry' | translate }}">
           <mat-icon matListIcon>
             <fa-icon icon="plus" size="sm"></fa-icon>
           </mat-icon>
           <a matLine #createJournalEntry>{{ 'labels.menus.Create Journal Entry' | translate }}</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/accounting/chart-of-accounts']" matTooltip="Chart Of Accounts">
+        <mat-list-item [routerLink]="['/accounting/chart-of-accounts']" matTooltip="{{ 'tooltips.Chart Of Accounts' | translate }}">
           <mat-icon matListIcon>
             <fa-icon icon="sitemap" size="sm"></fa-icon>
           </mat-icon>
           <a matLine #chartOfAccounts>{{ 'labels.menus.Chart of Accounts' | translate }}</a>
         </mat-list-item>
-        <mat-list-item (click)="showKeyboardShortcuts()" matTooltip="Keyboard Shortcuts">
+        <mat-list-item (click)="showKeyboardShortcuts()" matTooltip="{{ 'tooltips.Keyboard Shortcuts' | translate }}">
           <mat-icon matListIcon>
             <fa-icon icon="keyboard" size="sm"></fa-icon>
           </mat-icon>
           <a matLine>{{ 'labels.menus.Keyboard Shortcuts' | translate }}</a>
         </mat-list-item>
-        <mat-list-item matTooltip="Help">
+        <mat-list-item matTooltip="{{ 'tooltips.Help' | translate }}">
           <mat-icon matListIcon (click)="help()">
             <fa-icon icon="question-circle" size="sm"></fa-icon>
           </mat-icon>
@@ -121,80 +121,80 @@
 
 
 <ng-template #templateLogo let-popover="popover">
-  <p class="mw300">This logo will return the user to the welcome page from anywhere in the system..</p>
+  <p class="mw300">{{"labels.text.Welcome page logo from anywhere" | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateUserPanel,userPanel,'bottom', true);">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{"labels.buttons.Back" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateUserPanel,userPanel,'bottom', true);">{{"labels.buttons.Next" | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateUserPanel let-popover="popover">
   <h2>{{ 'labels.menus.User Panel' | translate }}</h2>
-  <p class="mw300">This section contains user name, user photograph, user settings and sign out button.</p>
+  <p class="mw300">{{"labels.text.Section Buttons" | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateLogo,logo,'bottom', true);">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFrequentlyAccessed,frequentlyAccessed,'bottom', true);">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateLogo,logo,'bottom', true);">{{"labels.buttons.Back" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFrequentlyAccessed,frequentlyAccessed,'bottom', true);">{{"labels.buttons.Next" | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateFrequentlyAccessed let-popover="popover">
   <h2>{{ 'labels.menus.Frequently Accessed' | translate }}</h2>
-  <p class="mw300">This contains shortcut to the frequently accessed components.</p>
+  <p class="mw300">{{"labels.text.Shortcut to the frequently accessed components" | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateUserPanel,userPanel,'bottom', true);">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateDashboard,dashboard,'bottom', true);">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateUserPanel,userPanel,'bottom', true);">{{"labels.buttons.Back" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateDashboard,dashboard,'bottom', true);">{{"labels.buttons.Next" | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateDashboard let-popover="popover">
   <h2>{{ 'labels.menus.Dashboard' | translate }}</h2>
-  <p class="mw300">This will navigate the user to dashboard component.</p>
+  <p class="mw300">{{"labels.text.User Dashboard Component" | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFrequentlyAccessed,frequentlyAccessed,'bottom', true);">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateNavigation,navigation,'bottom', true);">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFrequentlyAccessed,frequentlyAccessed,'bottom', true);">{{"labels.buttons.Back" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateNavigation,navigation,'bottom', true);">{{"labels.buttons.Next" | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateNavigation let-popover="popover">
   <h2>{{ 'labels.menus.Navigation' | translate }}</h2>
-  <p class="mw300">This will navigate the user to entity navigation screen.</p>
+  <p class="mw300">{{"labels.text.User Entity navigation screen" | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateDashboard,dashboard,'bottom', true);">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFrequentPostings,frequentPostings,'top', true);">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateDashboard,dashboard,'bottom', true);">{{"labels.buttons.Back" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFrequentPostings,frequentPostings,'top', true);">{{"labels.buttons.Next" | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateFrequentPostings let-popover="popover">
   <h2>{{ 'labels.menus.Frequent Postings' | translate }}</h2>
-  <p class="mw300">Shortcut to Journal entry screen with accouting rules in place</p>
+  <p class="mw300">{{"labels.text.Shortcut accounting rules" | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateNavigation,navigation,'bottom', true);">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateCreateJournalEntry,createJournalEntry,'top', true);">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateNavigation,navigation,'bottom', true);">{{"labels.buttons.Back" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateCreateJournalEntry,createJournalEntry,'top', true);">{{"labels.buttons.Next" | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateCreateJournalEntry let-popover="popover">
   <h2>{{ 'labels.menus.Create Journal Entry' | translate }}</h2>
-  <p class="mw300">Shortcut to the create journal entry screen.</p>
+  <p class="mw300">{{"labels.text.Shortcut entry screen" | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFrequentPostings,frequentPostings,'top', true);">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateChartOfAccounts,chartOfAccounts,'top', true);">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFrequentPostings,frequentPostings,'top', true);">{{"labels.buttons.Back" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateChartOfAccounts,chartOfAccounts,'top', true);">{{"labels.buttons.Next" | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateChartOfAccounts let-popover="popover">
   <h2>{{ 'labels.menus.Chart of Accounts' | translate }}</h2>
-  <p class="mw300">Shortcut to chart of accounts screen to add/modify the ledger accounts.</p>
+  <p class="mw300">{{"labels.text.Shortcut accounts screen" | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateCreateJournalEntry,createJournalEntry,'top', true);">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateCreateJournalEntry,createJournalEntry,'top', true);">{{"labels.buttons.Back" | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{"labels.buttons.Next" | translate }}</button>
   </div>
 </ng-template>
