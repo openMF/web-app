@@ -99,7 +99,7 @@
         }
       }
     },
-    "link": {
+    "links": {
       "Contribute": "Contribute",
       "Resources": "Resources",
       "Community": "Community",
@@ -114,7 +114,7 @@
       "Donate": "Donate",
       "Forgot Password?": "Forgot Password?"
     },
-    "menu": {
+    "menus": {
       "Institution": "Institution",
       "Accounting": "Accounting",
       "Breadcrumbs": "Breadcrumbs",
@@ -159,7 +159,7 @@
       "Individual Collection Sheet": "Individual Collection Sheet",
       "Keyboard Shortcuts": "Keyboard Shortcuts"
     },
-    "placeholder": {
+    "placeholders": {
       "Add new server": "Add new server",
       "Search Activity": "Search Activity"
     },
@@ -170,14 +170,14 @@
       "Login into Tenant": "Login into Tenant"
     }
   },
-  "error": {
+  "errors": {
     "inputs": {
       "Password is required": "Password is required",
       "Username is required": "Username is required",
       "Username or password incorrect.": "Username or password incorrect"
     }
   },
-  "tooltip": {
+  "tooltips": {
     "Settings": "Settings",
     "Sign Out": "Sign Out"
   }
