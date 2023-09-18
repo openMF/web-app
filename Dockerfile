@@ -24,7 +24,7 @@ RUN npm cache clear --force &&\
 ###############
 ### STAGE 2: Serve app with nginx ###
 ###############
-FROM nginx:1.23.1-alpine
+FROM nginx:1.25.2-alpine
 
 COPY --from=builder /dist /usr/share/nginx/html
 
