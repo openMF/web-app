@@ -26,6 +26,59 @@ export class SystemService {
     return this.http.get('/datatables');
   }
 
+
+  /**
+   * @returns {Observable<any>} Field Configuration.
+   */
+  getFieldConfiguration(): Observable<any> {
+    return this.http.get('/fieldconfiguration');
+  }
+
+  /**
+   * @returns {Observable<any>} Field Configuration.
+   */
+  getFieldConfigurationByType(type:any,countryId:any): Observable<any> {
+    return this.http.get(`/fieldconfiguration/${type}/${countryId}`);
+  }
+
+  /**
+   * @returns {Observable<any>} Field Configuration.
+   */
+  getFieldConfigurationBasedata(): Observable<any> {
+    return this.http.get('/datatables/m_field_base_c?template=true');
+  }
+
+  saveFieldConfiguration(configModel:any):Observable<any>{
+      return this.http.post('/fieldconfiguration', configModel);
+  }
+
+  updateFieldConfiguration(model:any,fieldId:any,countryId:any): Observable<any> {
+    return this.http.put(`/fieldconfiguration/${fieldId}?countryId=${countryId}`, model);
+  }
+
+  deleteConfiguration(fieldId:any,model:any): Observable<any>{
+    return this.http.put(`/fieldconfiguration/delete/${fieldId}`, model);
+  }
+
+  /**
+   * @returns {Observable<any>} Field Configuration.
+   */
+  getFieldCodes(): Observable<any> {
+    return this.http.get('/codes');
+  }
+
+
+  getCountries (): Observable<any> {
+    return this.http.get('/countries');
+  }
+
+  getConfigurationCodes(){
+    return this.http.get('/codes');
+  }
+
+  getFieldConfigurationByEntityCountry(entity:any,countryId:any){
+    return this.http.get(`/fieldconfiguration/${entity}/${countryId}`);
+  }
   /**
    * @returns {Observable<any>} Hooks.
    */
@@ -309,6 +362,16 @@ export class SystemService {
    */
   getDataTable(dataTableName: string): Observable<any> {
     return this.http.get(`/datatables/${dataTableName}`);
+  }
+
+  /**
+   * Retrieves the data table based on the specified app table name.
+   *
+   * @param {string} apptableName - The name of the app table.
+   * @return {Observable<any>}
+   */
+  async getDataTableByAppTableName(apptableName: string):  Promise<any> {
+    return await this.http.get(`/datatables?apptable=${apptableName}`).toPromise();;
   }
 
   /**

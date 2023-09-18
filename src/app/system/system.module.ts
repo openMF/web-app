@@ -63,6 +63,8 @@ import { BusinessDateTabComponent } from './configurations/business-date-tab/bus
 import { ConfigurationsComponent } from './configurations/configurations.component';
 import { GlobalConfigurationsTabComponent } from './configurations/global-configurations-tab/global-configurations-tab.component';
 import { CloneConfigurationComponent } from './configurations/global-configurations-tab/clone-configuration/clone-configuration.component';
+import { ConfigureDataFieldsComponent } from './configure-data-fields/configure-data-fields.component';
+import { DataFieldsComponent } from './configure-data-fields/data-fields/data-fields.component';
 
 @NgModule({
   imports: [
@@ -125,7 +127,9 @@ import { CloneConfigurationComponent } from './configurations/global-configurati
     BusinessDateTabComponent,
     ConfigurationsComponent,
     GlobalConfigurationsTabComponent,
-    CloneConfigurationComponent
+    CloneConfigurationComponent,
+    ConfigureDataFieldsComponent,
+    DataFieldsComponent
   ],
 })
 export class SystemModule { }

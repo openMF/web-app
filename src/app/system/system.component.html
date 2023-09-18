@@ -15,7 +15,13 @@
             <h4 matLine>Manage Data tables</h4>
             <p matLine>Add new extra fields to any entity in the form of data table</p>
           </mat-list-item>
-
+          <mat-list-item [routerLink]="['field-configuration']">
+            <mat-icon matListIcon>
+              <fa-icon icon="table" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Configure Data Fields</h4>
+            <p matLine>Configure new field to any module</p>
+          </mat-list-item>
           <mat-list-item [routerLink]="['codes']">
             <mat-icon matListIcon>
               <fa-icon icon="list-ul" size="sm"></fa-icon>

@@ -15,8 +15,8 @@
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       {{ 'Institution' | translate }}
     </a>
-    <a mat-tab-link class="tab-link" *ngIf="displayAdminOptions">
-      <mat-select class="mr-2" #countryId required formControlName="countryId">
+    <a mat-tab-link class="tab-link" *ngIf="displayAdminOptions && activeCountries.length>0">
+      <mat-select class="mr-2" #countryId required>
         <mat-option *ngFor="let country of activeCountries" [value]="country.id" (click)="saveTheSelectedCountry(country)">
           {{country.name}}
         </mat-option>
