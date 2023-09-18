@@ -113,6 +113,7 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
         }));
       }
       this.treeDataSource = DataFlattner.flatToHierarchy(this.data);
+      this.countryTreeComponent?.deselectAllNodes();
       this.countryTreeComponent?.refreshDataSource(this.treeDataSource);
     });
   }
