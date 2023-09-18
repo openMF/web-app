@@ -12,8 +12,8 @@
   "license": "MPL-2.0",
   "scripts": {
     "ng": "ng",
-    "build": "node version.js && npm run env -s && ng build --prod --output-hashing=none",
-    "build:prod": "node version.js && node --max-old-space-size=16384 ./node_modules/@angular/cli/bin/ng build --prod --output-hashing=none --base-href=/web-app/",
+    "build": "node version.js && npm run env -s && ng build --configuration production --output-hashing=none",
+    "build:prod": "node version.js && node --max-old-space-size=16384 ./node_modules/@angular/cli/bin/ng build --configuration production --output-hashing=none --base-href=/web-app/",
     "start": "npm run env -s && ng serve --aot --proxy-config proxy.conf.js",
     "serve:dev": "npm run env -s && ng serve",
     "serve:sw": "npm run build -s && npx http-server ./dist -p 4200",
