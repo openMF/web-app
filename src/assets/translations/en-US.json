@@ -36,8 +36,7 @@
       "Transferring From Details":"Transferring From Details",
       "Transferred To":"Transferred To",
       "Transaction Details":"Transaction Details",
-      "Transferred From":"Transferred From",
-
+      "Transferred From":"Transferred From"
     },
     "inputs": {
       "Tenant": "Tenant",
