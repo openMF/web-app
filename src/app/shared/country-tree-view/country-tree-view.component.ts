@@ -89,6 +89,14 @@ export class CountryTreeViewComponent implements OnInit, AfterViewInit {
     this.checkAllParentsSelection(node);
   }
 
+  /** Deselect all selected nodes if any */
+  deselectAllNodes(): void {
+    if (this.checklistSelection.selected.length > 0) {
+      this.checklistSelection.clear();
+      this.checkedOffices.emit(this.checklistSelection.selected);
+    }
+  }
+
   /** Toggle a leaf to-do item selection. Check all the parents to see if they changed */
   todoLeafItemSelectionToggle(node: OfficeFlatNode): void {
     this.checklistSelection.toggle(node);

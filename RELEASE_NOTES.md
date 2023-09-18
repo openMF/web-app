@@ -19,6 +19,7 @@ Release Notes
     * [SER-1524] - Fix pagination issue
     * [SER-1916] - Create a UI for repayments download
     * [SER-1112] - Create UI for field configuration (CRUD)
+    * [SER-1963] - Fix the OU tree selection issue on the loan product creation
 
 
 ## Version 1.0.0 - for use with Fineract Web App
