@@ -3,7 +3,7 @@
   <div class="m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
     <button mat-raised-button color="primary" (click)="createProvisioningJournalEntries()" [disabled]="provisioningEntry.journalEntry" *mifosxHasPermission="'CREATE_JOURNAL_ENTRY'">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
-      Create Journal Entries
+      {{"labels.buttons.Create Journal Entries" |translate}}
     </button>
   </div>
 
@@ -14,7 +14,7 @@
       <div fxLayout="row wrap" class="content" fxLayout.lt-md="column">
 
         <div fxFlex="16%" class="header">
-          Created By
+          {{"labels.inputs.Created By" |translate}}
         </div>
 
         <div fxFlex="16%">
@@ -22,7 +22,7 @@
         </div>
 
         <div fxFlex="16%" class="header">
-          Created On
+          {{"labels.inputs.Created On" |translate}}
         </div>
 
         <div fxFlex="16%">
@@ -30,7 +30,7 @@
         </div>
 
         <div fxFlex="18%" class="header">
-          Amount to be Reserved
+          {{"labels.inputs.Amount to be Reserved" |translate}}
         </div>
 
         <div fxFlex="18%">
@@ -49,17 +49,17 @@
 <div class="container m-t-20" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
   <mat-form-field fxFlex="31%">
-    <mat-label>Office Name</mat-label>
+    <mat-label>{{"labels.inputs.Office Name" |translate}}</mat-label>
     <input matInput [formControl]="officeName" [matAutocomplete]="officeNameAutocomplete">
   </mat-form-field>
 
   <mat-form-field fxFlex="31%">
-    <mat-label>Loan Product</mat-label>
+    <mat-label>{{"labels.inputs.Loan Product" |translate}}</mat-label>
     <input matInput [formControl]="loanProduct" [matAutocomplete]="loanProductAutocomplete">
   </mat-form-field>
 
   <mat-form-field fxFlex="31%">
-    <mat-label>Provisioning Category</mat-label>
+    <mat-label>{{"labels.inputs.Provisioning Category" |translate}}</mat-label>
     <input matInput [formControl]="provisioningCategory" [matAutocomplete]="provisioningCategoryAutocomplete">
   </mat-form-field>
 
@@ -91,37 +91,37 @@
   <table mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="officeName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Office Name </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Office Name" |translate}} </th>
       <td mat-cell *matCellDef="let provisioningEntry"> {{ provisioningEntry.officeName }} </td>
     </ng-container>
 
     <ng-container matColumnDef="productName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Name </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Product Name" |translate}}</th>
       <td mat-cell *matCellDef="let provisioningEntry"> {{ provisioningEntry.productName }} </td>
     </ng-container>
 
     <ng-container matColumnDef="currencyCode">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Currency Code </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Currency Code" |translate}} </th>
       <td mat-cell *matCellDef="let provisioningEntry"> {{ provisioningEntry.currencyCode }} </td>
     </ng-container>
 
     <ng-container matColumnDef="categoryName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Category Name </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Category Name" |translate}} </th>
       <td mat-cell *matCellDef="let provisioningEntry"> {{ provisioningEntry.categoryName }} </td>
     </ng-container>
 
     <ng-container matColumnDef="amountreserved">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Provisioning Amount </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Provisioning Amount" |translate}} </th>
       <td mat-cell *matCellDef="let provisioningEntry"> {{ provisioningEntry.amountreserved }} </td>
     </ng-container>
 
     <ng-container matColumnDef="liabilityAccountName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Liability Account (CR) </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Liability Account (CR)" |translate}} </th>
       <td mat-cell *matCellDef="let provisioningEntry"> {{ provisioningEntry.liabilityAccountName }} </td>
     </ng-container>
 
     <ng-container matColumnDef="expenseAccountName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Expense Account (DR) </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Expense Account (DR)" |translate}} </th>
       <td mat-cell *matCellDef="let provisioningEntry"> {{ provisioningEntry.expenseAccountName }} </td>
     </ng-container>
 

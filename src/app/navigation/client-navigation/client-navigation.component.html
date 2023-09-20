@@ -12,7 +12,7 @@
       </mat-card-title>
       <mat-card-subtitle>
         <p>
-          Account No: {{ clientData.accountNo }} {{ clientData.externalId ? '| External ID: ' + clientData.externalId : '' }}
+          {{"labels.inputs.Account No"  |translate}}: {{ clientData.accountNo }} {{ clientData.externalId ? '| External ID: ' + clientData.externalId : '' }}
         </p>
       </mat-card-subtitle>
     </div>
@@ -27,7 +27,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.firstName">
-          First Name
+          {{"labels.inputs.First Name"  |translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="clientData.firstName">
@@ -35,7 +35,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.middleName">
-          Middle Name
+          {{"labels.inputs.Middle Name"  |translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="clientData.middleName">
@@ -43,7 +43,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.lastName">
-          Last Name
+          {{"labels.inputs.Last Name"  |translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="clientData.lastName">
@@ -51,7 +51,7 @@
         </div>
         
         <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.dateOfBirth">
-          Date of Birth
+          {{"labels.inputs.Date of Birth"  |translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="clientData.dateOfBirth">
@@ -59,7 +59,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.mobileNo">
-          Mobile Number
+          {{"labels.inputs.Mobile Number"  |translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="clientData.mobileNo">
@@ -67,7 +67,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Activation Date
+          {{"labels.inputs.Activation Date"  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -75,7 +75,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.officeName">
-          Associated Office
+          {{"labels.inputs.Associated Office"  |translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="clientData.officeName">
@@ -83,7 +83,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.staffName">
-          Associated Staff
+          {{"labels.inputs.Associated Staff"  |translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="clientData.staffName">

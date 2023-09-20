@@ -1,11 +1,11 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_ACCOUNTINGRULE'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    Edit
+    {{"labels.buttons.Edit"|translate}}
   </button>
   <button mat-raised-button color="warn" (click)="deleteAccountingRule()" *mifosxHasPermission="'DELETE_ACCOUNTINGRULE'">
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    Delete
+    {{"labels.buttons.Delete" |translate}}
   </button>
 </div>
 
@@ -20,7 +20,7 @@
         <div fxLayout="row wrap" class="content">
 
           <div fxFlex="50%" class="header">
-            Office
+            {{"labels.inputs.Office" |translate}}
           </div>
 
           <div fxFlex="50%">
@@ -28,7 +28,7 @@
           </div>
 
           <div fxFlex="50%" class="header" *ngIf="accountingRule.description">
-            Description
+            {{"labels.inputs.Description" |translate}}
           </div>
 
           <div fxFlex="50%" *ngIf="accountingRule.description">
@@ -36,7 +36,7 @@
           </div>
 
           <div fxFlex="50%" class="header">
-            Multiple Debit Entries Allowed
+            {{"labels.inputs.Multiple Debit Entries Allowed" |translate}}
           </div>
 
           <div fxFlex="50%">
@@ -44,7 +44,7 @@
           </div>
 
           <div fxFlex="50%" class="header">
-            Multiple Credit Entries Allowed
+            {{"labels.inputs.Multiple Credit Entries Allowed" |translate}}
           </div>
 
           <div fxFlex="50%">
@@ -69,7 +69,7 @@
 
           <div fxFlex="50%" fxLayout="column" *ngIf="accountingRule.debitTags">
             <div class="header">
-              Debit Tags
+              {{"labels.inputs.Debit Tags" |translate}}
             </div>
             <div *ngFor="let debitTag of accountingRule.debitTags">
               {{ debitTag.tag.name }}
@@ -78,7 +78,7 @@
 
           <div fxFlex="50%" fxLayout="column" *ngIf="accountingRule.debitAccounts">
             <div class="header">
-              Debit Account Name
+              {{"labels.inputs.Debit Account Name" |translate}}
             </div>
             <div *ngFor="let debitAccount of accountingRule.debitAccounts">
               {{ debitAccount.name + ' (' + debitAccount.glCode + ')' }}
@@ -87,7 +87,7 @@
 
           <div fxFlex="50%" fxLayout="column" *ngIf="accountingRule.creditTags">
             <div class="header">
-              Credit Tags
+              {{"labels.inputs.Credit Tags" |translate}}
             </div>
             <div *ngFor="let creditTag of accountingRule.creditTags">
               {{ creditTag.tag.name }}
@@ -96,7 +96,7 @@
 
           <div fxFlex="50%" fxLayout="column" *ngIf="accountingRule.creditAccounts">
             <div class="header">
-              Credit Account Name
+              {{"labels.inputs.Credit Account Name" |translate}}
             </div>
             <div *ngFor="let creditAccount of accountingRule.creditAccounts">
               {{ creditAccount.name + ' (' + creditAccount.glCode + ')' }}

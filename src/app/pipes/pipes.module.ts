@@ -10,13 +10,14 @@ import { DateFormatPipe } from './date-format.pipe';
 import { DatetimeFormatPipe } from './datetime-format.pipe';
 import { ExternalIdentifierPipe } from './external-identifier.pipe';
 import { FormatNumberPipe } from './format-number.pipe';
+import { YesnoPipe } from './yesno.pipe';
 
 @NgModule({
   imports: [
     CommonModule
   ],
-  declarations: [StatusLookupPipe, AccountsFilterPipe, ChargesFilterPipe, ChargesPenaltyFilterPipe, FindPipe, UrlToStringPipe, DateFormatPipe, DatetimeFormatPipe, ExternalIdentifierPipe, FormatNumberPipe ],
-  providers: [StatusLookupPipe, AccountsFilterPipe, ChargesFilterPipe, ChargesPenaltyFilterPipe, FindPipe, UrlToStringPipe, DateFormatPipe, DatetimeFormatPipe, ExternalIdentifierPipe, FormatNumberPipe ],
-  exports: [StatusLookupPipe, AccountsFilterPipe, ChargesFilterPipe, ChargesPenaltyFilterPipe, FindPipe, UrlToStringPipe, DateFormatPipe, DatetimeFormatPipe, ExternalIdentifierPipe, FormatNumberPipe ]
+  declarations: [StatusLookupPipe, AccountsFilterPipe, ChargesFilterPipe, ChargesPenaltyFilterPipe, FindPipe, UrlToStringPipe, DateFormatPipe, DatetimeFormatPipe, ExternalIdentifierPipe, FormatNumberPipe, YesnoPipe ],
+  providers: [StatusLookupPipe, AccountsFilterPipe, ChargesFilterPipe, ChargesPenaltyFilterPipe, FindPipe, UrlToStringPipe, DateFormatPipe, DatetimeFormatPipe, ExternalIdentifierPipe, FormatNumberPipe, YesnoPipe ],
+  exports: [StatusLookupPipe, AccountsFilterPipe, ChargesFilterPipe, ChargesPenaltyFilterPipe, FindPipe, UrlToStringPipe, DateFormatPipe, DatetimeFormatPipe, ExternalIdentifierPipe, FormatNumberPipe, YesnoPipe ]
 })
 export class PipesModule { }

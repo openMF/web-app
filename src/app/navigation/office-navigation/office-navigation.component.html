@@ -9,7 +9,7 @@
       </mat-card-title>
       <mat-card-subtitle>
         <p *ngIf="officeData.externalId">
-          External Id:<mifosx-external-identifier externalId="{{officeData.externalId}}"></mifosx-external-identifier>
+          {{"labels.inputs.External Id"  |translate}}:<mifosx-external-identifier externalId="{{officeData.externalId}}"></mifosx-external-identifier>
         </p>
       </mat-card-subtitle>
     </div>
@@ -20,7 +20,7 @@
   <div fxLayout="row wrap" class="content">
 
     <div fxFlex="50%" class="mat-body-strong">
-      Opened On
+      {{"labels.inputs.Opened On"  |translate}}
     </div>
 
     <div fxFlex="50%">
@@ -28,7 +28,7 @@
     </div>
 
     <div fxFlex="50%" class="mat-body-strong" *ngIf="officeData.parentName">
-      Parent officeData
+      {{"labels.inputs.Parent officeData"  |translate}}
     </div>
 
     <div fxFlex="50%" *ngIf="officeData.parentName">
@@ -36,7 +36,7 @@
     </div>
 
     <div fxFlex="50%" class="mat-body-strong">
-      Number of Staff
+      {{"labels.inputs.Number of Staff"  |translate}}
     </div>
 
     <div fxFlex="50%">

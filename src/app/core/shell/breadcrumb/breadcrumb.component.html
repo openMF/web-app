@@ -15,7 +15,7 @@
 
 <ng-template #templateBreadcrumb let-popover="popover">
   <h2>{{ 'labels.popovers.Breadcrumbs' | translate }}</h2>
-  <p class="mw300">This will show the user's current location in the app.</p>
+  <p class="mw300">{{"labels.text.User's current location" |translate}}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{ 'labels.buttons.Close' | translate }}</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{ 'labels.buttons.Back' | translate }}</button>

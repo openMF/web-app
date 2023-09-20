@@ -20,7 +20,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Include in Customer Loan Counter:</span>
-    <span fxFlex="60%">{{ loanProduct.includeInBorrowerCycle ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.includeInBorrowerCycle | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.startDate">
@@ -75,7 +75,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Allow Approved / Disbursed Amounts Over Applied:</span>
-    <span fxFlex="60%">{{ loanProduct.allowApprovedDisbursedAmountsOverApplied ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.allowApprovedDisbursedAmountsOverApplied | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.allowApprovedDisbursedAmountsOverApplied">
@@ -101,7 +101,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Linked to floating interest rates:</span>
-    <span fxFlex="60%">{{ loanProduct.isLinkedToFloatingInterestRates ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.isLinkedToFloatingInterestRates | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="!loanProduct.isLinkedToFloatingInterestRates">
@@ -120,7 +120,7 @@
     <span fxFlex="40%">Interest Rate Differential:</span>
     <span fxFlex="60%">{{ loanProduct.interestRateDifferential }}</span>
     <span fxFlex="40%">Floating Interest Rate Calculation Allowed:</span>
-    <span fxFlex="60%">{{ loanProduct.isFloatingInterestRateCalculationAllowed ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.isFloatingInterestRateCalculationAllowed | yesNo }}</span>
     <span fxFlex="40%">Floating Interest Rate:</span>
     <span fxFlex="60%">{{ loanProduct.defaultDifferentialLendingRate + ' (Min: ' +
       (loanProduct.minDifferentialLendingRate ? loanProduct.minDifferentialLendingRate :
@@ -130,7 +130,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Terms vary based on loan cycle:</span>
-    <span fxFlex="60%">{{ loanProduct.useBorrowerCycle ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.useBorrowerCycle | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.principalVariationsForBorrowerCycle?.length">
@@ -302,7 +302,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Is Equal Amortization:</span>
-    <span fxFlex="60%">{{ loanProduct.isEqualAmortization ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.isEqualAmortization | yesNo }}</span>
   </div>
 
   <div fxFlexFill>
@@ -319,47 +319,24 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Allow Partial Interest Calculation with same as repayment:</span>
-    <span fxFlex="60%">{{ loanProduct.allowPartialPeriodInterestCalcualtion ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.allowPartialPeriodInterestCalcualtion | yesNo }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">Repayment Strategy:</span>
-    <span fxFlex="60%">{{ loanProduct.transactionProcessingStrategyCode |
+    <span fxFlex="60%" class="repayment-strategy">{{ loanProduct.transactionProcessingStrategyCode |
       find:loanProductsTemplate.transactionProcessingStrategyOptions:'code':'name' }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="loanProduct.paymentAllocation?.length">
-    <div fxFlexFill *ngFor="let paymentAllocation of loanProduct.paymentAllocation">
-      <div fxFlexFill>
-        <span fxFlex="40%">Transaction Type:</span>
-        <span fxFlex="60%">{{ paymentAllocation.transactionType }}</span>
-      </div>
-
-      <div fxFlexFill>
-        <span fxFlex="40%">Future Installment Allocation:</span>
-        <span fxFlex="60%">{{ paymentAllocation.futureInstallmentAllocationRule }}</span>
-      </div>
-
-      <div fxFlexFill>
-        <span fxFlex="40%">Payment Allocation Order</span>
-        <span fxFlex="60%">
-          <table>
-            <thead>
-              <tr>
-                <th>Payment Allocation Rule</th>
-                <th>Order</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let paymentAllocation of paymentAllocation.paymentAllocationOrder; let idx = index;">
-                <td>{{ paymentAllocation.paymentAllocationRule }}</td>
-                <td>{{ (idx + 1) }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </span>
-      </div>
-    </div>
+  <div fxFlexFill *ngIf="isAdvancedPaymentAllocation">
+    <span fxFlex="40%">Advanced Payment Allocation Transactions:</span>
+    <span fxFlex="60%">
+      <mat-accordion>
+        <mifosx-view-advance-paymeny-allocation *ngFor="let paymentAllocation of loanProduct.paymentAllocation"
+          [paymentAllocation]="paymentAllocation">
+        </mifosx-view-advance-paymeny-allocation>
+      </mat-accordion>
+    </span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.graceOnPrincipalPayment">
@@ -396,7 +373,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Allow fixing of the installment amount:</span>
-    <span fxFlex="60%">{{ loanProduct.canDefineInstallmentAmount ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.canDefineInstallmentAmount | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.graceOnArrearsAgeing">
@@ -411,12 +388,12 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Delinquency Bucket:</span>
-    <span fxFlex="60%">{{ loanProduct.delinquencyBucketId ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.delinquencyBucketId | yesNo }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">Account moves out of NPA only after all arrears have been cleared:</span>
-    <span fxFlex="60%">{{ loanProduct.accountMovesOutOfNPAOnlyOnArrearsCompletion ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.accountMovesOutOfNPAOnlyOnArrearsCompletion | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.principalThresholdForLastInstallment">
@@ -426,7 +403,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Variable Installments allowed:</span>
-    <span fxFlex="60%">{{ loanProduct.allowVariableInstallments ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.allowVariableInstallments | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.allowVariableInstallments">
@@ -437,7 +414,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Allowed to be used for providing Topup Loans:</span>
-    <span fxFlex="60%">{{ loanProduct.canUseForTopup ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.canUseForTopup | yesNo }}</span>
   </div>
 
   <h3 class="mat-h3" fxFlexFill>Interest Recalculation</h3>
@@ -446,7 +423,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Recalculate Interest:</span>
-    <span fxFlex="60%">{{ loanProduct.isInterestRecalculationEnabled ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.isInterestRecalculationEnabled | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.isInterestRecalculationEnabled" fxLayout="row wrap" fxLayout.lt-md="column">
@@ -510,7 +487,7 @@
     </div>
     <div fxFlexFill>
       <span fxFlex="40%">Is Arrears recognization based on original schedule:</span>
-      <span fxFlex="60%">{{ loanProduct.isArrearsBasedOnOriginalSchedule ? 'Yes' : 'No' }}</span>
+      <span fxFlex="60%">{{ loanProduct.isArrearsBasedOnOriginalSchedule | yesNo }}</span>
     </div>
   </div>
 
@@ -520,7 +497,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Place Guarantee Funds On-Hold:</span>
-    <span fxFlex="60%">{{ loanProduct.holdGuaranteeFunds ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.holdGuaranteeFunds | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.holdGuaranteeFunds" fxLayout="row wrap" fxLayout.lt-md="column">
@@ -542,7 +519,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Enable Multiple Disbursals:</span>
-    <span fxFlex="60%">{{ loanProduct.multiDisburseLoan ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.multiDisburseLoan | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.multiDisburseLoan" fxLayout="row wrap" fxLayout.lt-md="column">
@@ -556,7 +533,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Disallow Expected Disbursements:</span>
-    <span fxFlex="60%">{{ loanProduct.disallowExpectedDisbursements ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.disallowExpectedDisbursements | yesNo }}</span>
   </div>
 
   <h3 class="mat-h3" fxFlexFill>Down Payments</h3>
@@ -565,12 +542,22 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Enable Down Payments:</span>
-    <span fxFlex="60%">{{ loanProduct.enableDownPayment ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.enableDownPayment | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.enableDownPayment" fxLayout="row wrap" fxLayout.lt-md="column">
     <span fxFlex="40%">Disbursed Amount Percentage Down Payment (%):</span>
     <span fxFlex="60%">{{ loanProduct.disbursedAmountPercentageForDownPayment }} %</span>
+  </div>
+
+  <div fxFlexFill *ngIf="loanProduct.enableDownPayment" fxLayout="row wrap" fxLayout.lt-md="column">
+    <span fxFlex="40%">Enable Auto Repayment for Down Payment:</span>
+    <span fxFlex="60%">{{ loanProduct.enableAutoRepaymentForDownPayment | yesNo }}</span>
+  </div>
+
+  <div fxFlexFill *ngIf="loanProduct.enableDownPayment" fxLayout="row wrap" fxLayout.lt-md="column">
+    <span fxFlex="40%">Do not extend loan schedule for multi disbursal:</span>
+    <span fxFlex="60%">{{ loanProduct.disableScheduleExtensionForDownPayment | yesNo }}</span>
   </div>
 
   <h3 class="mat-h3" fxFlexFill>Event Settings</h3>
@@ -591,27 +578,27 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Allow overriding select terms and settings in loan accounts:</span>
-    <span fxFlex="60%">{{ loanProduct.allowAttributeConfiguration ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.allowAttributeConfiguration | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.allowAttributeConfiguration" fxLayout="row wrap" fxLayout.lt-md="column">
     <span fxFlex="40%">Amortization:</span>
-    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.amortizationType ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.amortizationType | yesNo }}</span>
     <span fxFlex="40%">Interest method:</span>
-    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.interestType ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.interestType | yesNo }}</span>
     <span fxFlex="40%">Repayment strategy:</span>
-    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.transactionProcessingStrategyCode ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.transactionProcessingStrategyCode | yesNo }}</span>
     <span fxFlex="40%">Interest calculation period:</span>
-    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.interestCalculationPeriodType ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.interestCalculationPeriodType | yesNo }}</span>
     <span fxFlex="40%">Arrears tolerance:</span>
-    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.inArrearsTolerance ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.inArrearsTolerance | yesNo }}</span>
     <span fxFlex="40%">Repaid every:</span>
-    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.repaymentEvery ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.repaymentEvery | yesNo }}</span>
     <span fxFlex="40%">Moratorium:</span>
     <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.graceOnPrincipalAndInterestPayment ? 'Yes' : 'No'
       }}</span>
     <span fxFlex="40%">Number of days a loan may be overdue before moving into arrears:</span>
-    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.graceOnArrearsAgeing ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.graceOnArrearsAgeing | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.charges.length" fxLayout="row wrap" fxLayout.lt-md="column">

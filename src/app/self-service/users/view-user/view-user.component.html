@@ -2,19 +2,19 @@
   <!-- TODO: Update to show only Activate/Inactivate button at a time according to status of user. -->
   <button mat-raised-button color="primary" [routerLink]="['edit']">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    Edit
+    {{'labels.buttons.Edit'  |translate}}
   </button>
   <button mat-raised-button color="primary" (click)="changeUserPassword()">
     <fa-icon icon="cog" class="m-r-10"></fa-icon>
-    Change Password
+    {{'labels.buttons.Change Password'  |translate}}
   </button>
   <button mat-raised-button color="accent">
     <fa-icon icon="lock-open" class="m-r-10"></fa-icon>
-    Activate
+    {{'labels.buttons.Activate'  |translate}}
   </button>
   <button mat-raised-button color="warn">
     <fa-icon icon="lock" class="m-r-10"></fa-icon>
-    Deactivate
+    {{'labels.buttons.Deactivate'  |translate}}
   </button>
 </div>
 
@@ -29,11 +29,11 @@
         <div fxFlex="100%" class="header">
           <fa-icon icon="circle" size="lg" matTooltip="{{ user.status }}" matTooltipPosition="above"></fa-icon>
           &nbsp;&nbsp;
-          ID: {{ user.id }}
+          {{ 'labels.inputs.ID'  |translate}}: {{ user.id }}
         </div>
 
         <div fxFlex="50%" class="header">
-          Username
+          {{ 'labels.inputs.User Name'  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -41,7 +41,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          First Name
+          {{ 'labels.inputs.First Name'  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -49,7 +49,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Last Name
+          {{ 'labels.inputs.Last Name'  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -57,7 +57,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Gender
+          {{ 'labels.inputs.Gender'  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -65,7 +65,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Date of Birth
+          {{ 'labels.inputs.Date of Birth'  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -73,7 +73,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Email
+          {{ 'labels.inputs.Email'  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -81,7 +81,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Mobile
+          {{ 'labels.inputs.Mobile'  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -89,7 +89,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Office
+          {{ 'labels.inputs.Office'  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -97,7 +97,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Staff
+          {{ 'labels.inputs.Staff'  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -105,7 +105,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Activation Date
+          {{ 'labels.inputs.Activation Date'  |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -117,7 +117,7 @@
     </mat-card-content>
 
     <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-      <button type="button" color="primary" mat-raised-button [routerLink]="['../../']">Back</button>
+      <button type="button" color="primary" mat-raised-button [routerLink]="['../../']">{{'labels.buttons.Back'  |translate}}</button>
     </mat-card-actions>
   </mat-card>
 

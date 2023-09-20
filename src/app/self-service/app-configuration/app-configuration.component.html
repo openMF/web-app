@@ -6,29 +6,29 @@
 
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Main Configuration
+          {{ 'labels.inputs.Main Configuration'  |translate}}
         </mat-panel-title>
       </mat-expansion-panel-header>
 
       <div fxLayout="column">
 
         <mat-form-field>
-          <mat-label>Name of the Organization</mat-label>
+          <mat-label>{{ 'labels.inputs.Name of the Organization'  |translate}}</mat-label>
           <input matInput>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Description</mat-label>
+          <mat-label>{{ 'labels.inputs.Description'  |translate}}</mat-label>
           <textarea matInput></textarea>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Summary</mat-label>
+          <mat-label>{{ 'labels.inputs.Summary'  |translate}}</mat-label>
           <textarea matInput></textarea>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Default Language</mat-label>
+          <mat-label>{{ 'labels.inputs.Default Language'  |translate}}</mat-label>
           <mat-select>
             <mat-option *ngFor="let language of languages" [value]="language">
               {{ language }}
@@ -37,7 +37,7 @@
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Default Date Format</mat-label>
+          <mat-label>{{ 'labels.inputs.Default Date Format'  |translate}}</mat-label>
           <mat-select>
             <mat-option *ngFor="let dateFormat of dateFormats" [value]="dateFormat">
               {{ dateFormat }}
@@ -53,22 +53,22 @@
 
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Images
+          {{ 'labels.inputs.Images'  |translate}}
         </mat-panel-title>
       </mat-expansion-panel-header>
 
       <div fxLayout="column">
 
-        <span class="header">Favicon</span>
+        <span class="header">{{ 'labels.inputs.Favicon'  |translate}}</span>
         <mifosx-file-upload></mifosx-file-upload>
 
-        <span class="header">Cover Image</span>
+        <span class="header">{{ 'labels.inputs.Cover Image'  |translate}}</span>
         <mifosx-file-upload></mifosx-file-upload>
 
-        <span class="header">Logo</span>
+        <span class="header">{{ 'labels.inputs.Logo'  |translate}}</span>
         <mifosx-file-upload></mifosx-file-upload>
 
-        <span class="header">Logo with Organization Name</span>
+        <span class="header">{{ 'labels.inputs.Logo with Organization Name'  |translate}}</span>
         <mifosx-file-upload></mifosx-file-upload>
 
       </div>
@@ -79,15 +79,15 @@
 
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Theme and Font
+          {{ 'labels.inputs.Theme and Font'  |translate}}
         </mat-panel-title>
       </mat-expansion-panel-header>
 
       <div fxLayout="column">
 
-        <span class="header">Mobile Banking App</span>
+        <span class="header">{{ 'labels.inputs.Mobile Banking App'  |translate}}</span>
         <mat-form-field>
-          <mat-label>Default Theme</mat-label>
+          <mat-label>{{ 'labels.inputs.Default Theme'  |translate}}</mat-label>
           <mat-select>
             <mat-option *ngFor="let theme of mobileAppThemes" [value]="theme">
               {{ theme }}
@@ -96,7 +96,7 @@
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Default Font</mat-label>
+          <mat-label>{{ 'labels.inputs.Default Font'  |translate}}</mat-label>
           <mat-select>
             <mat-option *ngFor="let font of mobileAppFonts" [value]="font">
               {{ font }}
@@ -104,9 +104,9 @@
           </mat-select>
         </mat-form-field>
 
-        <span class="header">Online Banking App</span>
+        <span class="header">{{ 'labels.inputs.Online Banking App'  |translate}}</span>
         <mat-form-field>
-          <mat-label>Default Theme</mat-label>
+          <mat-label>{{ 'labels.inputs.Default Theme'  |translate}}</mat-label>
           <mat-select>
             <mat-option *ngFor="let theme of onlineBankingAppThemes" [value]="theme">
               {{ theme }}
@@ -115,7 +115,7 @@
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Default Font</mat-label>
+          <mat-label>{{ 'labels.inputs.Default Font'  |translate}}</mat-label>
           <mat-select>
             <mat-option *ngFor="let font of onlineBankingAppFonts" [value]="font">
               {{ font }}
@@ -131,24 +131,24 @@
 
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Contact Information
+          {{ 'labels.inputs.Contact Information'  |translate}}
         </mat-panel-title>
       </mat-expansion-panel-header>
 
       <div fxLayout="column">
 
         <mat-form-field>
-          <mat-label>Website</mat-label>
+          <mat-label>{{ 'labels.inputs.Website'  |translate}}</mat-label>
           <input type="url" matInput>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Email</mat-label>
+          <mat-label>{{ 'labels.inputs.Email'  |translate}}</mat-label>
           <input type="email" matInput>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Contact No</mat-label>
+          <mat-label>{{ 'labels.inputs.Contact No'  |translate}}</mat-label>
           <input type="tel" matInput>
         </mat-form-field>
 

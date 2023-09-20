@@ -9,12 +9,12 @@
         <div fxLayout="row">
 
           <mat-form-field fxFlex (click)="tillDatePicker.open()">
-            <mat-label>Accrue Till Date</mat-label>
+            <mat-label>{{"labels.inputs.Accrue Till Date" |translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="tillDatePicker" required formControlName="tillDate">
             <mat-datepicker-toggle matSuffix [for]="tillDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #tillDatePicker></mat-datepicker>
             <mat-error *ngIf="periodicAccrualsForm.controls.tillDate.hasError('required')">
-              Accrue Date is <strong>required</strong>
+              {{"labels.inputs.Accrue Date" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -23,10 +23,10 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">{{ "labels.buttons.Cancel" | translate}}</button>
         <button mat-raised-button color="primary" [disabled]="!periodicAccrualsForm.valid" *mifosxHasPermission="'EXECUTE_PERIODICACCRUALACCOUNTING'">
           <fa-icon icon="play" class="m-r-10"></fa-icon>
-          Run Periodic Accruals
+          {{ "labels.buttons.Run Periodic Accruals" | translate}}
         </button>
       </mat-card-actions>
 
