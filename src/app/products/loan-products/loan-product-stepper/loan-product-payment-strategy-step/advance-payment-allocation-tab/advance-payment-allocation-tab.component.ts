@@ -21,7 +21,7 @@ export class AdvancePaymentAllocationTabComponent implements OnInit {
   paymentAllocationsData: PaymentAllocationOrder[] = [];
 
   /** Columns to be displayed in the table. */
-  displayedColumns: string[] = ['paymentAllocation', 'order'];
+  displayedColumns: string[] = ['actions', 'order', 'paymentAllocation'];
 
   futureInstallmentAllocationRule = new UntypedFormControl('', Validators.required);
 

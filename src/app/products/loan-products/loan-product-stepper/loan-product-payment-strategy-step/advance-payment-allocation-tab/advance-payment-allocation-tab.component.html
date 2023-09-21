@@ -12,14 +12,21 @@
     <table mat-table [dataSource]="paymentAllocationsData" #table cdkDropList
       [cdkDropListData]="paymentAllocationsData" (cdkDropListDropped)="dropTable($event)">
 
-      <ng-container matColumnDef="paymentAllocation">
-        <th mat-header-cell *matHeaderCellDef> Payment Allocation </th>
-        <td mat-cell *matCellDef="let paymentAllocation"> {{ paymentAllocation.value }} </td>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let paymentAllocation">
+            <fa-icon icon="bars"></fa-icon>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="order">
         <th mat-header-cell *matHeaderCellDef> Order </th>
         <td mat-cell *matCellDef="let paymentAllocation; let rowIndex = index"> {{ (rowIndex + 1) }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="paymentAllocation">
+        <th mat-header-cell *matHeaderCellDef> Payment Allocation </th>
+        <td mat-cell *matCellDef="let paymentAllocation"> {{ paymentAllocation.value }} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
