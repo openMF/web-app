@@ -16,7 +16,7 @@ import { ConfigurationWizardService } from '../configuration-wizard/configuratio
 })
 export class OrganizationComponent implements OnInit, AfterViewInit {
 
-  shouldShowFundMapping: boolean = true;
+  shouldShowFundMapping: boolean = false;
   /* Reference of manage offices */
   @ViewChild('office') office: ElementRef<any>;
   /* Template for popover on manage offices */

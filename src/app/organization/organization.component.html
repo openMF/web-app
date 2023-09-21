@@ -49,7 +49,7 @@
             </mat-list-item>
           </div>
 
-          <div #fundmapping *ngIf="!shouldShowFundMapping">
+          <div #fundmapping *ngIf="shouldShowFundMapping">
             <mat-list-item [routerLink]="['fund-mapping']" *mifosxHasPermission="'READ_OFFICE'">
               <mat-icon matListIcon>
                 <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
