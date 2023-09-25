@@ -179,7 +179,6 @@ export class InvestorsComponent implements OnInit {
 
   reload() {
     const url: string = this.router.url;
-    console.log(url);
     this.router.navigateByUrl(`/`, {skipLocationChange: true})
       .then(() => this.router.navigate([url]));
   }

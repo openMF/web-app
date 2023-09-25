@@ -194,7 +194,6 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
   }
 
   navigateMenu(routePath: string): void {
-    console.log(routePath);
     this.router.navigate([routePath]);
   }
 
