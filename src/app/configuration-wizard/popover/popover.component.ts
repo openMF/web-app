@@ -23,7 +23,6 @@ export class PopoverComponent extends BasePortalOutlet {
   @ViewChild(CdkPortalOutlet, { static: true }) portalOutlet: CdkPortalOutlet;
 
   attachComponentPortal<T>(componentPortal: ComponentPortal<any>): ComponentRef<T> {
-    console.log(this.portalOutlet.attachComponentPortal(componentPortal));
     return this.portalOutlet.attachComponentPortal(componentPortal);
   }
 

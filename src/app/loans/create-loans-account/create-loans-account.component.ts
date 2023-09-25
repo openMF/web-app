@@ -33,7 +33,7 @@ export class CreateLoansAccountComponent implements OnInit {
   /** Loans Account Template */
   loansAccountTemplate: any;
   /** Loans Account Product Template */
-  loansAccountProductTemplate: any;
+  loansAccountProductTemplate: any | null = null;
   /** Collateral Options */
   collateralOptions: any;
   /** Multi Disburse Loan */
@@ -63,8 +63,7 @@ export class CreateLoansAccountComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   /**
    * Sets loans account product template and collateral template

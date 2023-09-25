@@ -43,7 +43,6 @@ export class AddClientCollateralComponent implements OnInit {
     ) {
       this.route.data.subscribe((data: { clientActionData: any }) => {
         this.clientCollateralOptions = data.clientActionData;
-        console.log(this.clientCollateralOptions);
       });
       this.clientId = this.route.parent.snapshot.params['clientId'];
     }
@@ -60,7 +59,6 @@ export class AddClientCollateralComponent implements OnInit {
     this.clientCollateralForm.controls.collateralId.valueChanges.subscribe(collateralId => {
       this.productsService.getCollateral(collateralId).subscribe((data: any) => {
         this.collateralDetails = data;
-        console.log(data);
         this.clientCollateralForm.patchValue({
           'name': data.name,
           'quality': data.quality,

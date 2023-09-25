@@ -2,7 +2,7 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { LoansAccountAddCollateralDialogComponent } from 'app/loans/custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
 import { SettingsService } from 'app/settings/settings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -10,7 +10,6 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
-import { TooltipPosition } from '@angular/material/tooltip';
 
 /**
  * Create Loans Account Terms Step
@@ -22,6 +21,8 @@ import { TooltipPosition } from '@angular/material/tooltip';
 })
 export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
 
+  /** Loans Product Options */
+  @Input() loansProductOptions: any;
   /** Loans Account Product Template */
   @Input() loansAccountProductTemplate: any;
   /** Loans Account Template */
@@ -217,6 +218,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
     }
     this.createloansAccountTermsForm();
     // this.setCustomValidators();
+    this.setLoanTermListener();
   }
 
   allowAddDisbursementDetails() {
@@ -244,15 +246,36 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       });
   }
 
+  /** Custom Listeners for the form to calculate Loan Term */
+  setLoanTermListener() {
+    this.loansAccountTermsForm.get('numberOfRepayments').valueChanges
+      .subscribe(numberOfRepayments => {
+        const repaymentEvery: number =  this.loansAccountTermsForm.value.repaymentEvery;
+        this.calculateLoanTerm(numberOfRepayments, repaymentEvery);
+      });
+
+    this.loansAccountTermsForm.get('repaymentEvery').valueChanges
+      .subscribe(repaymentEvery => {
+        const numberOfRepayments: number = this.loansAccountTermsForm.value.numberOfRepayments;
+        this.calculateLoanTerm(numberOfRepayments, repaymentEvery);
+      });
+
+      this.loansAccountTermsForm.get('loanTermFrequencyType').valueChanges
+        .subscribe(loanTermFrequencyType => {
+          this.loansAccountTermsForm.patchValue({'repaymentFrequencyType': loanTermFrequencyType});
+      });
+
+  }
+
   /** Create Loans Account Terms Form */
   createloansAccountTermsForm() {
     this.loansAccountTermsForm = this.formBuilder.group({
       'principalAmount': ['', Validators.required],
-      'loanTermFrequency': ['', Validators.required],
+      'loanTermFrequency': [{ value: '', disabled: true }, Validators.required],
       'loanTermFrequencyType': ['', Validators.required],
       'numberOfRepayments': ['', Validators.required],
       'repaymentEvery': ['', Validators.required],
-      'repaymentFrequencyType': ['', Validators.required],
+      'repaymentFrequencyType': [{ value: '', disabled: true }, Validators.required],
       'repaymentFrequencyNthDayType': [''],
       'repaymentFrequencyDayOfWeekType': [''],
       'repaymentsStartingFromDate': [''],
@@ -277,6 +300,11 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       'transactionProcessingStrategyCode': ['', Validators.required],
       'multiDisburseLoan': [false]
     });
+  }
+
+  calculateLoanTerm(numberOfRepayments: number, repaymentEvery: number): void {
+    const loanTerm = numberOfRepayments * repaymentEvery;
+    this.loansAccountTermsForm.patchValue({'loanTermFrequency': loanTerm});
   }
 
   /**

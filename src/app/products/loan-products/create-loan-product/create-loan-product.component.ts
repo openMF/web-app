@@ -60,7 +60,9 @@ export class CreateLoanProductComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.buildAdvancedPaymentAllocation();
+  }
 
   get loanProductDetailsForm() {
     return this.loanProductDetailsStep.loanProductDetailsForm;
@@ -85,7 +87,6 @@ export class CreateLoanProductComponent implements OnInit {
   }
 
   setPaymentAllocation(paymentAllocation: PaymentAllocation[]): void {
-    console.log(paymentAllocation);
     this.paymentAllocation = paymentAllocation;
   }
 
