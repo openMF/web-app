@@ -1,10 +1,35 @@
+@import "assets/styles/helper";
+
 #footer {
+  align-items: center;
+
+  .content {
+    max-width: 30%;
+
+    .footer-content {
+      margin: 0;
+    }
+  }
+
   .divider {
     margin: 2.5rem 1rem 0.5rem;
     width: 4rem;
   }
 
-  .footer-content {
-    margin: 0;
+  .business-date {
+    color: $status-approved;
   }
+
+  .versions {
+    color: $status-inactive;
+  }
+
+  table {
+    border: none;
+
+    tr:nth-child(even) {
+      background-color: transparent;
+    }
+  }
+
 }

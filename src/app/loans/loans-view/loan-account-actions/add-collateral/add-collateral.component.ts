@@ -1,6 +1,6 @@
 /** Angular Imports. */
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services. */
@@ -19,7 +19,7 @@ export class AddCollateralComponent implements OnInit {
   @Input() dataObject: any;
 
   /** Collateral form. */
-  collateralForm: FormGroup;
+  collateralForm: UntypedFormGroup;
   /** Loan Id. */
   loanId: string;
 
@@ -30,7 +30,7 @@ export class AddCollateralComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {LoansService} LoansService loans service.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private router: Router,
               private route: ActivatedRoute,
               private loanService: LoansService ) { }
@@ -62,7 +62,7 @@ export class AddCollateralComponent implements OnInit {
     const collateralForm = this.collateralForm.value;
     collateralForm.locale = 'en';
     this.loanService.createLoanCollateral(loanId, collateralForm).subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
+      this.router.navigate(['../../loan-collateral'], { relativeTo: this.route });
     });
   }
 

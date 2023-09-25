@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /**
@@ -18,7 +18,7 @@ import { SettingsService } from 'app/settings/settings.service';
 export class AddClientCollateralComponent implements OnInit {
 
   /** Client Collateral Form */
-  clientCollateralForm: FormGroup;
+  clientCollateralForm: UntypedFormGroup;
   /** Client Collateral Options */
   clientCollateralOptions: any;
   /** Client Id */
@@ -34,7 +34,7 @@ export class AddClientCollateralComponent implements OnInit {
    * @param {ProductsService} productsService Products Service
    */
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private productsService: ProductsService,
@@ -43,7 +43,6 @@ export class AddClientCollateralComponent implements OnInit {
     ) {
       this.route.data.subscribe((data: { clientActionData: any }) => {
         this.clientCollateralOptions = data.clientActionData;
-        console.log(this.clientCollateralOptions);
       });
       this.clientId = this.route.parent.snapshot.params['clientId'];
     }
@@ -60,7 +59,6 @@ export class AddClientCollateralComponent implements OnInit {
     this.clientCollateralForm.controls.collateralId.valueChanges.subscribe(collateralId => {
       this.productsService.getCollateral(collateralId).subscribe((data: any) => {
         this.collateralDetails = data;
-        console.log(data);
         this.clientCollateralForm.patchValue({
           'name': data.name,
           'quality': data.quality,

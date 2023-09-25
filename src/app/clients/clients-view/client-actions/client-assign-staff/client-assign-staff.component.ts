@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -17,7 +17,7 @@ import { ClientsService } from 'app/clients/clients.service';
 export class ClientAssignStaffComponent implements OnInit {
 
   /** Client Assign Staff form. */
-  clientAssignStaffForm: FormGroup;
+  clientAssignStaffForm: UntypedFormGroup;
   /** Staff Data */
   staffData: any;
   /** Client Data */
@@ -30,7 +30,7 @@ export class ClientAssignStaffComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private clientsService: ClientsService,
               private route: ActivatedRoute,
               private router: Router) {

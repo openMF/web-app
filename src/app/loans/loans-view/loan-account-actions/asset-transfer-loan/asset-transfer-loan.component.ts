@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
-import { ExternalAssetOwnerService } from 'app/loans/external-asset-owner.service';
+import { ExternalAssetOwnerService } from 'app/loans/services/external-asset-owner.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
@@ -22,10 +22,10 @@ export class AssetTransferLoanComponent implements OnInit {
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
   maxDate = new Date();
-  /** Sale Loan Form */
-  saleLoanForm: FormGroup;
+  /** Sell Loan Form */
+  saleLoanForm: UntypedFormGroup;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private externalAssetOwnerService: ExternalAssetOwnerService,
     private route: ActivatedRoute,
     private router: Router,
@@ -33,11 +33,11 @@ export class AssetTransferLoanComponent implements OnInit {
     private settingsService: SettingsService) {
       this.loanId = this.route.snapshot.params['loanId'];
       const actionName = this.route.snapshot.params['action'];
-      this.command = (actionName === 'Sale Loan') ? this.SALE_COMMAND : this.BUYBACK_COMMAND;
+      this.command = (actionName === 'Sell Loan') ? this.SALE_COMMAND : this.BUYBACK_COMMAND;
     }
 
   /**
-   * Creates the sale loan form
+   * Creates the Sell Loan form
    * and initialize with the required values
    */
   ngOnInit() {

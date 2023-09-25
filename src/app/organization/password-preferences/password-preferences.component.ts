@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -17,7 +17,7 @@ import { OrganizationService } from '../organization.service';
 export class PasswordPreferencesComponent implements OnInit {
 
   /** Password preferences form. */
-  passwordPreferencesForm: FormGroup;
+  passwordPreferencesForm: UntypedFormGroup;
   /** Password preferences data. */
   passwordPreferencesData: any;
 
@@ -28,7 +28,7 @@ export class PasswordPreferencesComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private organizationService: OrganizationService,
               private route: ActivatedRoute,
               private router: Router) {

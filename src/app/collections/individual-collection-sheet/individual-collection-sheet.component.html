@@ -50,7 +50,7 @@
     <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
       <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
       <button mat-raised-button color="primary" [disabled]="!collectionSheetForm.valid">
-        <fa-icon icon="search"></fa-icon>&nbsp; Collection Sheet
+        <fa-icon icon="search" class="m-r-10"></fa-icon> Collection Sheet
       </button>
     </mat-card-actions>
 
@@ -104,7 +104,7 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
             <td mat-cell *matCellDef="let loan; let i = index">
-              <button mat-raised-button color="primary" (click)="showAndStorePaymentDetails('loans-accounts', loan, i)">Add Payment</button>
+              <button mat-raised-button color="primary" (click)="showAndStorePaymentDetails('loans/accounts', loan, i)">Add Payment</button>
             </td>
           </ng-container>
 

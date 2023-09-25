@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { SettingsService } from 'app/settings/settings.service';
 export class TenantSelectorComponent implements OnInit {
 
   /** Tenant selector form control. */
-  tenantSelector = new FormControl();
+  tenantSelector = new UntypedFormControl();
 
   /**
    * Sets the Tenant Identifier of the application in the selector on initial setup.

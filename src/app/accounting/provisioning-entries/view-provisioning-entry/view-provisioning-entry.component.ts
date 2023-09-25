@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -29,19 +29,19 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
   /** Provisioning entry entries. */
   provisioningEntryEntries: any;
   /** Office name filter form control. */
-  officeName = new FormControl();
+  officeName = new UntypedFormControl();
   /** Office data. */
   officeData: any;
   /** Filtered office data for autocomplete. */
   filteredOfficeData: any;
   /** Loan product filter form control. */
-  loanProduct = new FormControl();
+  loanProduct = new UntypedFormControl();
   /** Loan product data. */
   loanProductData: any;
   /** Filtered loan product data for autocomplete. */
   filteredLoanProductData: any;
   /** Provisioning category filter form control. */
-  provisioningCategory = new FormControl();
+  provisioningCategory = new UntypedFormControl();
   /** Provisioning category data. */
   provisioningCategoryData: any;
   /** Filtered provisioning category data for autocomplete. */

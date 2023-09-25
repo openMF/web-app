@@ -1,0 +1,41 @@
+<div>
+  <h2>Job: {{ displayName }}</h2>
+  <table mat-table [dataSource]="updatedJobParameters">
+    <ng-container matColumnDef="parameterName">
+      <th mat-header-cell *matHeaderCellDef>Parameter Name</th>
+      <td mat-cell *matCellDef="let element; index as i">
+        <mat-form-field>
+          <input matInput type="text" placeholder="Parameter Name" [(ngModel)]="element.parameterName" />
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="parameterValue">
+      <th mat-header-cell *matHeaderCellDef>Parameter Value</th>
+      <td mat-cell *matCellDef="let element; index as i">
+        <mat-form-field>
+          <input matInput type="text" placeholder="Parameter Value" [(ngModel)]="element.parameterValue" />
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row; let rowIndex = index">
+        <button type="button" mat-icon-button color="warn"
+          (click)="deleteParameter(rowIndex)" matTooltip="Delete"
+          matTooltipPosition="left">
+          <fa-icon icon="trash"></fa-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay" class="first-row"></tr>
+    <tr mat-row *matRowDef="let updatedJobParameters; columns: columnsToDisplay"></tr>
+  </table>
+
+  <button mat-button (click)="addParameter()">
+    <fa-icon icon="plus" class="m-r-10"></fa-icon>
+    Add Parameter
+  </button>
+</div>

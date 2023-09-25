@@ -36,7 +36,6 @@ export class CentersService {
     // filterBy: name, externalId
     filterBy.forEach(function (filter: any) {
       if (filter.value) {
-        console.log(filter.value);
         httpParams = httpParams.set(filter.type, filter.value);
       }
     });

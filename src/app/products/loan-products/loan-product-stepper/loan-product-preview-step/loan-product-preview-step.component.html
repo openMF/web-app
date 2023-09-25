@@ -20,7 +20,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Include in Customer Loan Counter:</span>
-    <span fxFlex="60%">{{ loanProduct.includeInBorrowerCycle ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.includeInBorrowerCycle | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.startDate">
@@ -68,49 +68,69 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Principal:</span>
-    <span fxFlex="60%">{{ loanProduct.principal + ' (Min: ' + (loanProduct.minPrincipal ? loanProduct.minPrincipal : loanProduct.principal) + ', Max: ' + (loanProduct.maxPrincipal ? loanProduct.maxPrincipal : loanProduct.principal) + ')' }}</span>
+    <span fxFlex="60%">{{ loanProduct.principal + ' (Min: ' + (loanProduct.minPrincipal ? loanProduct.minPrincipal :
+      loanProduct.principal) + ', Max: ' + (loanProduct.maxPrincipal ? loanProduct.maxPrincipal : loanProduct.principal)
+      + ')' }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">Allow Approved / Disbursed Amounts Over Applied:</span>
-    <span fxFlex="60%">{{ loanProduct.allowApprovedDisbursedAmountsOverApplied ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.allowApprovedDisbursedAmountsOverApplied | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.allowApprovedDisbursedAmountsOverApplied">
     <span fxFlex="40%">Over Applied:</span>
-    <span fxFlex="60%" *ngIf="loanProduct.overAppliedCalculationType === 'percentage'">{{ loanProduct.overAppliedNumber }} %</span>
-    <span fxFlex="60%" *ngIf="loanProduct.overAppliedCalculationType === 'flat'">{{ loanProduct.overAppliedNumber }} {{ loanProduct.currencyCode }}</span>
-</div>
+    <span fxFlex="60%" *ngIf="loanProduct.overAppliedCalculationType === 'percentage'">{{ loanProduct.overAppliedNumber
+      }} %</span>
+    <span fxFlex="60%" *ngIf="loanProduct.overAppliedCalculationType === 'flat'">{{ loanProduct.overAppliedNumber }} {{
+      loanProduct.currencyCode }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Installment day calculation from:</span>
+    <span fxFlex="60%">{{ loanProduct.repaymentStartDateType }}</span>
+  </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">Number of Repayments:</span>
-    <span fxFlex="60%">{{ loanProduct.numberOfRepayments + ' (Min: ' + (loanProduct.minNumberOfRepayments ? loanProduct.minNumberOfRepayments : loanProduct.numberOfRepayments) + ', Max: ' + (loanProduct.maxNumberOfRepayments ? loanProduct.maxNumberOfRepayments : loanProduct.numberOfRepayments) + ')' }}</span>
+    <span fxFlex="60%">{{ loanProduct.numberOfRepayments + ' (Min: ' + (loanProduct.minNumberOfRepayments ?
+      loanProduct.minNumberOfRepayments : loanProduct.numberOfRepayments) + ', Max: ' +
+      (loanProduct.maxNumberOfRepayments ? loanProduct.maxNumberOfRepayments : loanProduct.numberOfRepayments) + ')'
+      }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">Linked to floating interest rates:</span>
-    <span fxFlex="60%">{{ loanProduct.isLinkedToFloatingInterestRates ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.isLinkedToFloatingInterestRates | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="!loanProduct.isLinkedToFloatingInterestRates">
     <span fxFlex="40%">Nominal interest rate:</span>
-    <span fxFlex="60%">{{ loanProduct.interestRatePerPeriod + ' (Min: ' + (loanProduct.minInterestRatePerPeriod ? loanProduct.minInterestRatePerPeriod : loanProduct.interestRatePerPeriod) + ', Max: ' + (loanProduct.maxInterestRatePerPeriod ? loanProduct.maxInterestRatePerPeriod : loanProduct.interestRatePerPeriod) + ')' + ' ' + (loanProduct.interestRateFrequencyType | find:loanProductsTemplate.interestRateFrequencyTypeOptions:'id':'value') }}</span>
+    <span fxFlex="60%">{{ loanProduct.interestRatePerPeriod + ' (Min: ' + (loanProduct.minInterestRatePerPeriod ?
+      loanProduct.minInterestRatePerPeriod : loanProduct.interestRatePerPeriod) + ', Max: ' +
+      (loanProduct.maxInterestRatePerPeriod ? loanProduct.maxInterestRatePerPeriod : loanProduct.interestRatePerPeriod)
+      + ')' + ' ' + (loanProduct.interestRateFrequencyType |
+      find:loanProductsTemplate.interestRateFrequencyTypeOptions:'id':'value') }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.isLinkedToFloatingInterestRates" fxLayout="row wrap" fxLayout.lt-md="column">
     <span fxFlex="40%">Floating Lending Interest Rate:</span>
-    <span fxFlex="60%">{{ loanProduct.floatingRatesId | find:loanProductsTemplate.floatingRateOptions:'id':'name' }}</span>
+    <span fxFlex="60%">{{ loanProduct.floatingRatesId | find:loanProductsTemplate.floatingRateOptions:'id':'name'
+      }}</span>
     <span fxFlex="40%">Interest Rate Differential:</span>
     <span fxFlex="60%">{{ loanProduct.interestRateDifferential }}</span>
     <span fxFlex="40%">Floating Interest Rate Calculation Allowed:</span>
-    <span fxFlex="60%">{{ loanProduct.isFloatingInterestRateCalculationAllowed ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.isFloatingInterestRateCalculationAllowed | yesNo }}</span>
     <span fxFlex="40%">Floating Interest Rate:</span>
-    <span fxFlex="60%">{{ loanProduct.defaultDifferentialLendingRate + ' (Min: ' + (loanProduct.minDifferentialLendingRate ? loanProduct.minDifferentialLendingRate : loanProduct.defaultDifferentialLendingRate) + ', Max: ' + (loanProduct.maxDifferentialLendingRate ? loanProduct.maxDifferentialLendingRate : loanProduct.defaultDifferentialLendingRate) + ')' }}</span>
+    <span fxFlex="60%">{{ loanProduct.defaultDifferentialLendingRate + ' (Min: ' +
+      (loanProduct.minDifferentialLendingRate ? loanProduct.minDifferentialLendingRate :
+      loanProduct.defaultDifferentialLendingRate) + ', Max: ' + (loanProduct.maxDifferentialLendingRate ?
+      loanProduct.maxDifferentialLendingRate : loanProduct.defaultDifferentialLendingRate) + ')' }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">Terms vary based on loan cycle:</span>
-    <span fxFlex="60%">{{ loanProduct.useBorrowerCycle ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.useBorrowerCycle | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.principalVariationsForBorrowerCycle?.length">
@@ -136,7 +156,7 @@
       <ng-container matColumnDef="minValue">
         <th mat-header-cell *matHeaderCellDef> Minimum </th>
         <td mat-cell *matCellDef="let variation">
-          {{ variation.minValue  }}
+          {{ variation.minValue }}
         </td>
       </ng-container>
 
@@ -165,7 +185,8 @@
 
     <h4 class="mat-h4" fxFlexFill>Number of Repayments by loan cycle</h4>
 
-    <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="loanProduct.numberOfRepaymentVariationsForBorrowerCycle">
+    <table fxFlexFill class="mat-elevation-z1" mat-table
+      [dataSource]="loanProduct.numberOfRepaymentVariationsForBorrowerCycle">
 
       <ng-container matColumnDef="valueConditionType">
         <th mat-header-cell *matHeaderCellDef> Condition </th>
@@ -184,7 +205,7 @@
       <ng-container matColumnDef="minValue">
         <th mat-header-cell *matHeaderCellDef> Minimum </th>
         <td mat-cell *matCellDef="let variation">
-          {{ variation.minValue  }}
+          {{ variation.minValue }}
         </td>
       </ng-container>
 
@@ -213,7 +234,8 @@
 
     <h4 class="mat-h4" fxFlexFill>Nominal Interest Rate by loan cycle</h4>
 
-    <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="loanProduct.interestRateVariationsForBorrowerCycle">
+    <table fxFlexFill class="mat-elevation-z1" mat-table
+      [dataSource]="loanProduct.interestRateVariationsForBorrowerCycle">
 
       <ng-container matColumnDef="valueConditionType">
         <th mat-header-cell *matHeaderCellDef> Condition </th>
@@ -232,7 +254,7 @@
       <ng-container matColumnDef="minValue">
         <th mat-header-cell *matHeaderCellDef> Minimum </th>
         <td mat-cell *matCellDef="let variation">
-          {{ variation.minValue  }}
+          {{ variation.minValue }}
         </td>
       </ng-container>
 
@@ -259,7 +281,8 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Repay Every:</span>
-    <span fxFlex="60%">{{ loanProduct.repaymentEvery + ' ' + (loanProduct.repaymentFrequencyType | find:loanProductsTemplate.repaymentFrequencyTypeOptions:'id':'value') }}</span>
+    <span fxFlex="60%">{{ loanProduct.repaymentEvery + ' ' + (loanProduct.repaymentFrequencyType |
+      find:loanProductsTemplate.repaymentFrequencyTypeOptions:'id':'value') }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.minimumDaysBetweenDisbursalAndFirstRepayment">
@@ -273,32 +296,47 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Amortization:</span>
-    <span fxFlex="60%">{{ loanProduct.amortizationType | find:loanProductsTemplate.amortizationTypeOptions:'id':'value' }}</span>
+    <span fxFlex="60%">{{ loanProduct.amortizationType | find:loanProductsTemplate.amortizationTypeOptions:'id':'value'
+      }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">Is Equal Amortization:</span>
-    <span fxFlex="60%">{{ loanProduct.isEqualAmortization ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.isEqualAmortization | yesNo }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">Interest Method:</span>
-    <span fxFlex="60%">{{ loanProduct.interestType | find:loanProductsTemplate.interestTypeOptions:'id':'value' }}</span>
+    <span fxFlex="60%">{{ loanProduct.interestType | find:loanProductsTemplate.interestTypeOptions:'id':'value'
+      }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">Interest Calculation Period:</span>
-    <span fxFlex="60%">{{ loanProduct.interestCalculationPeriodType | find:loanProductsTemplate.interestCalculationPeriodTypeOptions:'id':'value' }}</span>
+    <span fxFlex="60%">{{ loanProduct.interestCalculationPeriodType |
+      find:loanProductsTemplate.interestCalculationPeriodTypeOptions:'id':'value' }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">Allow Partial Interest Calculation with same as repayment:</span>
-    <span fxFlex="60%">{{ loanProduct.allowPartialPeriodInterestCalcualtion ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.allowPartialPeriodInterestCalcualtion | yesNo }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">Repayment Strategy:</span>
-    <span fxFlex="60%">{{ loanProduct.transactionProcessingStrategyCode | find:loanProductsTemplate.transactionProcessingStrategyOptions:'code':'name' }}</span>
+    <span fxFlex="60%" class="repayment-strategy">{{ loanProduct.transactionProcessingStrategyCode |
+      find:loanProductsTemplate.transactionProcessingStrategyOptions:'code':'name' }}</span>
+  </div>
+
+  <div fxFlexFill *ngIf="isAdvancedPaymentAllocation">
+    <span fxFlex="40%">Advanced Payment Allocation Transactions:</span>
+    <span fxFlex="60%">
+      <mat-accordion>
+        <mifosx-view-advance-paymeny-allocation *ngFor="let paymentAllocation of loanProduct.paymentAllocation"
+          [paymentAllocation]="paymentAllocation">
+        </mifosx-view-advance-paymeny-allocation>
+      </mat-accordion>
+    </span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.graceOnPrincipalPayment">
@@ -323,17 +361,19 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Days in year:</span>
-    <span fxFlex="60%">{{ loanProduct.daysInYearType | find:loanProductsTemplate.daysInYearTypeOptions:'id':'value' }}</span>
+    <span fxFlex="60%">{{ loanProduct.daysInYearType | find:loanProductsTemplate.daysInYearTypeOptions:'id':'value'
+      }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">Days in month:</span>
-    <span fxFlex="60%">{{ loanProduct.daysInMonthType | find:loanProductsTemplate.daysInMonthTypeOptions:'id':'value' }}</span>
+    <span fxFlex="60%">{{ loanProduct.daysInMonthType | find:loanProductsTemplate.daysInMonthTypeOptions:'id':'value'
+      }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">Allow fixing of the installment amount:</span>
-    <span fxFlex="60%">{{ loanProduct.canDefineInstallmentAmount ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.canDefineInstallmentAmount | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.graceOnArrearsAgeing">
@@ -348,12 +388,12 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Delinquency Bucket:</span>
-    <span fxFlex="60%">{{ loanProduct.delinquencyBucketId ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.delinquencyBucketId | yesNo }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">Account moves out of NPA only after all arrears have been cleared:</span>
-    <span fxFlex="60%">{{ loanProduct.accountMovesOutOfNPAOnlyOnArrearsCompletion ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.accountMovesOutOfNPAOnlyOnArrearsCompletion | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.principalThresholdForLastInstallment">
@@ -363,17 +403,18 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Variable Installments allowed:</span>
-    <span fxFlex="60%">{{ loanProduct.allowVariableInstallments ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.allowVariableInstallments | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.allowVariableInstallments">
     <span fxFlex="40%">Variable Installments:</span>
-    <span fxFlex="60%">{{ '(Min: ' + loanProduct.minimumGap + ', Max: ' + (loanProduct.maximumGap ? loanProduct.maximumGap : loanProduct.minimumGap) + ')' }}</span>
+    <span fxFlex="60%">{{ '(Min: ' + loanProduct.minimumGap + ', Max: ' + (loanProduct.maximumGap ?
+      loanProduct.maximumGap : loanProduct.minimumGap) + ')' }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">Allowed to be used for providing Topup Loans:</span>
-    <span fxFlex="60%">{{ loanProduct.canUseForTopup ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.canUseForTopup | yesNo }}</span>
   </div>
 
   <h3 class="mat-h3" fxFlexFill>Interest Recalculation</h3>
@@ -382,25 +423,38 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Recalculate Interest:</span>
-    <span fxFlex="60%">{{ loanProduct.isInterestRecalculationEnabled ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.isInterestRecalculationEnabled | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.isInterestRecalculationEnabled" fxLayout="row wrap" fxLayout.lt-md="column">
     <span fxFlex="40%">Pre-closure interest calculation rule:</span>
-    <span fxFlex="60%">{{ loanProduct.preClosureInterestCalculationStrategy | find:loanProductsTemplate.preClosureInterestCalculationStrategyOptions:'id':'value' }}</span>
+    <span fxFlex="60%">{{ loanProduct.preClosureInterestCalculationStrategy |
+      find:loanProductsTemplate.preClosureInterestCalculationStrategyOptions:'id':'value' }}</span>
     <span fxFlex="40%">Advance payments adjustment type:</span>
-    <span fxFlex="60%">{{ loanProduct.rescheduleStrategyMethod | find:loanProductsTemplate.rescheduleStrategyTypeOptions:'id':'value' }}</span>
+    <span fxFlex="60%">{{ loanProduct.rescheduleStrategyMethod |
+      find:loanProductsTemplate.rescheduleStrategyTypeOptions:'id':'value' }}</span>
     <span fxFlex="40%">Interest recalculation compounding on:</span>
-    <span fxFlex="60%">{{ loanProduct.interestRecalculationCompoundingMethod | find:loanProductsTemplate.interestRecalculationCompoundingTypeOptions:'id':'value' }}</span>
-    <div fxFlexFill *ngIf="loanProduct.interestRecalculationCompoundingMethod !== 0" fxLayout="row wrap" fxLayout.lt-md="column">
+    <span fxFlex="60%">{{ loanProduct.interestRecalculationCompoundingMethod |
+      find:loanProductsTemplate.interestRecalculationCompoundingTypeOptions:'id':'value' }}</span>
+    <div fxFlexFill *ngIf="loanProduct.interestRecalculationCompoundingMethod !== 0" fxLayout="row wrap"
+      fxLayout.lt-md="column">
       <span fxFlex="40%">Frequency for compounding:</span>
       <span fxFlex="60%">
-        {{ loanProduct.recalculationCompoundingFrequencyType | find:loanProductsTemplate.interestRecalculationFrequencyTypeOptions:'id':'value' }}
-        <span *ngIf="loanProduct.recalculationCompoundingFrequencyType === 4">&nbsp;&nbsp;{{ loanProduct.recalculationCompoundingFrequencyNthDayType | find:loanProductsTemplate.interestRecalculationNthDayTypeOptions:'id':'value' }}</span>
-        <span *ngIf="(loanProduct.recalculationCompoundingFrequencyType === 4 && loanProduct.recalculationCompoundingFrequencyNthDayType !== -2) || loanProduct.recalculationCompoundingFrequencyType === 3">&nbsp;&nbsp;{{ loanProduct.recalculationCompoundingFrequencyDayOfWeekType | find:loanProductsTemplate.interestRecalculationDayOfWeekTypeOptions:'id':'value' }}</span>
-        <span *ngIf="loanProduct.recalculationCompoundingFrequencyType === 4 && loanProduct.recalculationCompoundingFrequencyNthDayType === -2">&nbsp;&nbsp;{{ loanProduct.recalculationCompoundingFrequencyOnDayType }}</span>
+        {{ loanProduct.recalculationCompoundingFrequencyType |
+        find:loanProductsTemplate.interestRecalculationFrequencyTypeOptions:'id':'value' }}
+        <span *ngIf="loanProduct.recalculationCompoundingFrequencyType === 4">&nbsp;&nbsp;{{
+          loanProduct.recalculationCompoundingFrequencyNthDayType |
+          find:loanProductsTemplate.interestRecalculationNthDayTypeOptions:'id':'value' }}</span>
+        <span
+          *ngIf="(loanProduct.recalculationCompoundingFrequencyType === 4 && loanProduct.recalculationCompoundingFrequencyNthDayType !== -2) || loanProduct.recalculationCompoundingFrequencyType === 3">&nbsp;&nbsp;{{
+          loanProduct.recalculationCompoundingFrequencyDayOfWeekType |
+          find:loanProductsTemplate.interestRecalculationDayOfWeekTypeOptions:'id':'value' }}</span>
+        <span
+          *ngIf="loanProduct.recalculationCompoundingFrequencyType === 4 && loanProduct.recalculationCompoundingFrequencyNthDayType === -2">&nbsp;&nbsp;{{
+          loanProduct.recalculationCompoundingFrequencyOnDayType }}</span>
       </span>
-      <div fxFlexFill *ngIf="loanProduct.recalculationCompoundingFrequencyType !== 1" fxLayout="row wrap" fxLayout.lt-md="column">
+      <div fxFlexFill *ngIf="loanProduct.recalculationCompoundingFrequencyType !== 1" fxLayout="row wrap"
+        fxLayout.lt-md="column">
         <span fxFlex="40%">Frequency Interval for compounding:</span>
         <span fxFlex="60%">{{ loanProduct.recalculationCompoundingFrequencyInterval }}</span>
       </div>
@@ -408,13 +462,22 @@
     <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
       <span fxFlex="40%">Frequency for recalculate Outstanding Principal:</span>
       <span fxFlex="60%">
-        {{ loanProduct.recalculationRestFrequencyType | find:loanProductsTemplate.interestRecalculationFrequencyTypeOptions:'id':'value' }}
-        <span *ngIf="loanProduct.recalculationRestFrequencyType === 4">&nbsp;&nbsp;{{ loanProduct.recalculationRestFrequencyNthDayType | find:loanProductsTemplate.interestRecalculationNthDayTypeOptions:'id':'value' }}</span>
-        <span *ngIf="(loanProduct.recalculationRestFrequencyType === 4 && loanProduct.recalculationRestFrequencyNthDayType !== -2) || loanProduct.recalculationRestFrequencyType === 3">&nbsp;&nbsp;{{ loanProduct.recalculationRestFrequencyDayOfWeekType | find:loanProductsTemplate.interestRecalculationDayOfWeekTypeOptions:'id':'value' }}</span>
-        <span *ngIf="loanProduct.recalculationRestFrequencyType === 4 && loanProduct.recalculationRestFrequencyNthDayType === -2">&nbsp;&nbsp;{{ loanProduct.recalculationRestFrequencyOnDayType }}</span>
+        {{ loanProduct.recalculationRestFrequencyType |
+        find:loanProductsTemplate.interestRecalculationFrequencyTypeOptions:'id':'value' }}
+        <span *ngIf="loanProduct.recalculationRestFrequencyType === 4">&nbsp;&nbsp;{{
+          loanProduct.recalculationRestFrequencyNthDayType |
+          find:loanProductsTemplate.interestRecalculationNthDayTypeOptions:'id':'value' }}</span>
+        <span
+          *ngIf="(loanProduct.recalculationRestFrequencyType === 4 && loanProduct.recalculationRestFrequencyNthDayType !== -2) || loanProduct.recalculationRestFrequencyType === 3">&nbsp;&nbsp;{{
+          loanProduct.recalculationRestFrequencyDayOfWeekType |
+          find:loanProductsTemplate.interestRecalculationDayOfWeekTypeOptions:'id':'value' }}</span>
+        <span
+          *ngIf="loanProduct.recalculationRestFrequencyType === 4 && loanProduct.recalculationRestFrequencyNthDayType === -2">&nbsp;&nbsp;{{
+          loanProduct.recalculationRestFrequencyOnDayType }}</span>
       </span>
     </div>
-    <div fxFlexFill *ngIf="loanProduct.recalculationRestFrequencyType !== 1" fxLayout="row wrap" fxLayout.lt-md="column">
+    <div fxFlexFill *ngIf="loanProduct.recalculationRestFrequencyType !== 1" fxLayout="row wrap"
+      fxLayout.lt-md="column">
       <span fxFlex="40%">Frequency Interval for recalculation:</span>
       <span fxFlex="60%">{{ loanProduct.recalculationRestFrequencyInterval }}</span>
       <div fxFlexFill *ngIf="loanProduct.recalculationRestFrequencyDate">
@@ -424,7 +487,7 @@
     </div>
     <div fxFlexFill>
       <span fxFlex="40%">Is Arrears recognization based on original schedule:</span>
-      <span fxFlex="60%">{{ loanProduct.isArrearsBasedOnOriginalSchedule ? 'Yes' : 'No' }}</span>
+      <span fxFlex="60%">{{ loanProduct.isArrearsBasedOnOriginalSchedule | yesNo }}</span>
     </div>
   </div>
 
@@ -434,7 +497,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Place Guarantee Funds On-Hold:</span>
-    <span fxFlex="60%">{{ loanProduct.holdGuaranteeFunds ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.holdGuaranteeFunds | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.holdGuaranteeFunds" fxLayout="row wrap" fxLayout.lt-md="column">
@@ -456,7 +519,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Enable Multiple Disbursals:</span>
-    <span fxFlex="60%">{{ loanProduct.multiDisburseLoan ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.multiDisburseLoan | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.multiDisburseLoan" fxLayout="row wrap" fxLayout.lt-md="column">
@@ -470,7 +533,31 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Disallow Expected Disbursements:</span>
-    <span fxFlex="60%">{{ loanProduct.disallowExpectedDisbursements ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.disallowExpectedDisbursements | yesNo }}</span>
+  </div>
+
+  <h3 class="mat-h3" fxFlexFill>Down Payments</h3>
+
+  <mat-divider [inset]="true"></mat-divider>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Enable Down Payments:</span>
+    <span fxFlex="60%">{{ loanProduct.enableDownPayment | yesNo }}</span>
+  </div>
+
+  <div fxFlexFill *ngIf="loanProduct.enableDownPayment" fxLayout="row wrap" fxLayout.lt-md="column">
+    <span fxFlex="40%">Disbursed Amount Percentage Down Payment (%):</span>
+    <span fxFlex="60%">{{ loanProduct.disbursedAmountPercentageForDownPayment }} %</span>
+  </div>
+
+  <div fxFlexFill *ngIf="loanProduct.enableDownPayment" fxLayout="row wrap" fxLayout.lt-md="column">
+    <span fxFlex="40%">Enable Auto Repayment for Down Payment:</span>
+    <span fxFlex="60%">{{ loanProduct.enableAutoRepaymentForDownPayment | yesNo }}</span>
+  </div>
+
+  <div fxFlexFill *ngIf="loanProduct.enableDownPayment" fxLayout="row wrap" fxLayout.lt-md="column">
+    <span fxFlex="40%">Do not extend loan schedule for multi disbursal:</span>
+    <span fxFlex="60%">{{ loanProduct.disableScheduleExtensionForDownPayment | yesNo }}</span>
   </div>
 
   <h3 class="mat-h3" fxFlexFill>Event Settings</h3>
@@ -491,26 +578,27 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Allow overriding select terms and settings in loan accounts:</span>
-    <span fxFlex="60%">{{ loanProduct.allowAttributeConfiguration ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.allowAttributeConfiguration | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.allowAttributeConfiguration" fxLayout="row wrap" fxLayout.lt-md="column">
     <span fxFlex="40%">Amortization:</span>
-    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.amortizationType ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.amortizationType | yesNo }}</span>
     <span fxFlex="40%">Interest method:</span>
-    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.interestType ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.interestType | yesNo }}</span>
     <span fxFlex="40%">Repayment strategy:</span>
-    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.transactionProcessingStrategyCode ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.transactionProcessingStrategyCode | yesNo }}</span>
     <span fxFlex="40%">Interest calculation period:</span>
-    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.interestCalculationPeriodType ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.interestCalculationPeriodType | yesNo }}</span>
     <span fxFlex="40%">Arrears tolerance:</span>
-    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.inArrearsTolerance ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.inArrearsTolerance | yesNo }}</span>
     <span fxFlex="40%">Repaid every:</span>
-    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.repaymentEvery ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.repaymentEvery | yesNo }}</span>
     <span fxFlex="40%">Moratorium:</span>
-    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.graceOnPrincipalAndInterestPayment ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.graceOnPrincipalAndInterestPayment ? 'Yes' : 'No'
+      }}</span>
     <span fxFlex="40%">Number of days a loan may be overdue before moving into arrears:</span>
-    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.graceOnArrearsAgeing ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.graceOnArrearsAgeing | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.charges.length" fxLayout="row wrap" fxLayout.lt-md="column">
@@ -519,7 +607,8 @@
 
     <mat-divider fxFlexFill></mat-divider>
 
-    <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="loanProduct.charges | chargesPenaltyFilter:false">
+    <table fxFlexFill class="mat-elevation-z1" mat-table
+      [dataSource]="loanProduct.charges | chargesPenaltyFilter:false">
 
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Name </th>
@@ -538,7 +627,7 @@
       <ng-container matColumnDef="amount">
         <th mat-header-cell *matHeaderCellDef> Amount </th>
         <td mat-cell *matCellDef="let charge">
-          {{ charge.amount  }}
+          {{ charge.amount }}
         </td>
       </ng-container>
 
@@ -577,7 +666,7 @@
       <ng-container matColumnDef="amount">
         <th mat-header-cell *matHeaderCellDef> Amount </th>
         <td mat-cell *matCellDef="let overdueCharge">
-          {{ overdueCharge.amount  }}
+          {{ overdueCharge.amount }}
         </td>
       </ng-container>
 
@@ -604,88 +693,115 @@
     <span fxFlex="60%">{{ accountingRuleData[loanProduct.accountingRule-1] }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="loanProduct.accountingRule >= 2 && loanProduct.accountingRule <= 4" fxLayout="row wrap" fxLayout.lt-md="column">
+  <div fxFlexFill *ngIf="loanProduct.accountingRule >= 2 && loanProduct.accountingRule <= 4" fxLayout="row wrap"
+    fxLayout.lt-md="column">
 
     <h4 fxFlexFill class="mat-h4">Assets / Liabilities</h4>
 
     <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
       <span fxFlex="40%">Fund source:</span>
-      <span fxFlex="60%">{{ loanProduct.fundSourceAccountId | find:loanProductsTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions:'id':'name' }}</span>
+      <span fxFlex="60%">{{ loanProduct.fundSourceAccountId |
+        find:loanProductsTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions:'id':'name' }}</span>
     </div>
 
     <h4 fxFlexFill class="mat-h4">Assets</h4>
 
     <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
       <span fxFlex="40%">Loan portfolio:</span>
-      <span fxFlex="60%">{{ loanProduct.loanPortfolioAccountId | find:loanProductsTemplate.accountingMappingOptions.assetAccountOptions:'id':'name' }}</span>
-      <div fxFlexFill *ngIf="loanProduct.accountingRule === 3 || loanProduct.accountingRule === 4" fxLayout="row wrap" fxLayout.lt-md="column">
+      <span fxFlex="60%">{{ loanProduct.loanPortfolioAccountId |
+        find:loanProductsTemplate.accountingMappingOptions.assetAccountOptions:'id':'name' }}</span>
+      <div fxFlexFill *ngIf="loanProduct.accountingRule === 3 || loanProduct.accountingRule === 4" fxLayout="row wrap"
+        fxLayout.lt-md="column">
         <span fxFlex="40%">Interest Receivable:</span>
-        <span fxFlex="60%">{{ loanProduct.receivableInterestAccountId | find:loanProductsTemplate.accountingMappingOptions.assetAccountOptions:'id':'name' }}</span>
+        <span fxFlex="60%">{{ loanProduct.receivableInterestAccountId |
+          find:loanProductsTemplate.accountingMappingOptions.assetAccountOptions:'id':'name' }}</span>
         <span fxFlex="40%">Fees Receivable:</span>
-        <span fxFlex="60%">{{ loanProduct.receivableFeeAccountId | find:loanProductsTemplate.accountingMappingOptions.assetAccountOptions:'id':'name' }}</span>
+        <span fxFlex="60%">{{ loanProduct.receivableFeeAccountId |
+          find:loanProductsTemplate.accountingMappingOptions.assetAccountOptions:'id':'name' }}</span>
         <span fxFlex="40%">Penalties Receivable:</span>
-        <span fxFlex="60%">{{ loanProduct.receivablePenaltyAccountId | find:loanProductsTemplate.accountingMappingOptions.assetAccountOptions:'id':'name' }}</span>
+        <span fxFlex="60%">{{ loanProduct.receivablePenaltyAccountId |
+          find:loanProductsTemplate.accountingMappingOptions.assetAccountOptions:'id':'name' }}</span>
       </div>
       <span fxFlex="40%">Transfer in suspense:</span>
-      <span fxFlex="60%">{{ loanProduct.transfersInSuspenseAccountId | find:loanProductsTemplate.accountingMappingOptions.assetAccountOptions:'id':'name' }}</span>
+      <span fxFlex="60%">{{ loanProduct.transfersInSuspenseAccountId |
+        find:loanProductsTemplate.accountingMappingOptions.assetAccountOptions:'id':'name' }}</span>
     </div>
 
     <h4 fxFlexFill class="mat-h4">Income</h4>
 
     <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
       <span fxFlex="40%">Income from Interest:</span>
-      <span fxFlex="60%">{{ loanProduct.interestOnLoanAccountId | find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
+      <span fxFlex="60%">{{ loanProduct.interestOnLoanAccountId |
+        find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
       <span fxFlex="40%">Income from fees:</span>
-      <span fxFlex="60%">{{ loanProduct.incomeFromFeeAccountId | find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
+      <span fxFlex="60%">{{ loanProduct.incomeFromFeeAccountId |
+        find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
       <span fxFlex="40%">Income from penalties:</span>
-      <span fxFlex="60%">{{ loanProduct.incomeFromPenaltyAccountId | find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
+      <span fxFlex="60%">{{ loanProduct.incomeFromPenaltyAccountId |
+        find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
       <span fxFlex="40%">Income from Recovery Repayments:</span>
-      <span fxFlex="60%">{{ loanProduct.incomeFromRecoveryAccountId | find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
+      <span fxFlex="60%">{{ loanProduct.incomeFromRecoveryAccountId |
+        find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
       <span fxFlex="40%">Income from ChargeOff Interest:</span>
-      <span fxFlex="60%">{{ loanProduct.incomeFromChargeOffInterestAccountId | find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
+      <span fxFlex="60%">{{ loanProduct.incomeFromChargeOffInterestAccountId |
+        find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
       <span fxFlex="40%">Income from ChargeOff Fees:</span>
-      <span fxFlex="60%">{{ loanProduct.incomeFromChargeOffFeesAccountId | find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
+      <span fxFlex="60%">{{ loanProduct.incomeFromChargeOffFeesAccountId |
+        find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
       <span fxFlex="40%">Income from ChargeOff Penalty:</span>
-      <span fxFlex="60%">{{ loanProduct.incomeFromChargeOffPenaltyAccountId | find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
+      <span fxFlex="60%">{{ loanProduct.incomeFromChargeOffPenaltyAccountId |
+        find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
       <span fxFlex="40%">Income from Goodwill Credit Interest:</span>
-      <span fxFlex="60%">{{ loanProduct.incomeFromGoodwillCreditInterestAccountId | find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
+      <span fxFlex="60%">{{ loanProduct.incomeFromGoodwillCreditInterestAccountId |
+        find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
       <span fxFlex="40%">Income from Goodwill Credit Fees:</span>
-      <span fxFlex="60%">{{ loanProduct.incomeFromGoodwillCreditFeesAccountId | find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
+      <span fxFlex="60%">{{ loanProduct.incomeFromGoodwillCreditFeesAccountId |
+        find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
       <span fxFlex="40%">Income from Goodwill Credit Penalty:</span>
-      <span fxFlex="60%">{{ loanProduct.incomeFromGoodwillCreditPenaltyAccountId | find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
+      <span fxFlex="60%">{{ loanProduct.incomeFromGoodwillCreditPenaltyAccountId |
+        find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}</span>
     </div>
 
     <h4 fxFlexFill class="mat-h4">Expenses</h4>
 
     <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
       <span fxFlex="40%">Losses written off:</span>
-      <span fxFlex="60%">{{ loanProduct.writeOffAccountId | find:loanProductsTemplate.accountingMappingOptions.expenseAccountOptions:'id':'name' }}</span>
+      <span fxFlex="60%">{{ loanProduct.writeOffAccountId |
+        find:loanProductsTemplate.accountingMappingOptions.expenseAccountOptions:'id':'name' }}</span>
       <span fxFlex="40%">Expenses from Goodwill Credit:</span>
-      <span fxFlex="60%">{{ loanProduct.goodwillCreditAccountId | find:loanProductsTemplate.accountingMappingOptions.expenseAccountOptions:'id':'name' }}</span>
+      <span fxFlex="60%">{{ loanProduct.goodwillCreditAccountId |
+        find:loanProductsTemplate.accountingMappingOptions.expenseAccountOptions:'id':'name' }}</span>
       <span fxFlex="40%">ChargeOff Expense:</span>
-      <span fxFlex="60%">{{ loanProduct.chargeOffExpenseAccountId | find:loanProductsTemplate.accountingMappingOptions.expenseAccountOptions:'id':'name' }}</span>
+      <span fxFlex="60%">{{ loanProduct.chargeOffExpenseAccountId |
+        find:loanProductsTemplate.accountingMappingOptions.expenseAccountOptions:'id':'name' }}</span>
       <span fxFlex="40%">ChargeOff Fraud Expense:</span>
-      <span fxFlex="60%">{{ loanProduct.chargeOffFraudExpenseAccountId | find:loanProductsTemplate.accountingMappingOptions.expenseAccountOptions:'id':'name' }}</span>
+      <span fxFlex="60%">{{ loanProduct.chargeOffFraudExpenseAccountId |
+        find:loanProductsTemplate.accountingMappingOptions.expenseAccountOptions:'id':'name' }}</span>
     </div>
 
     <h4 fxFlexFill class="mat-h4">Liabilities</h4>
 
     <div fxFlexFill>
       <span fxFlex="40%">Over payment liability:</span>
-      <span fxFlex="60%">{{ loanProduct.overpaymentLiabilityAccountId | find:loanProductsTemplate.accountingMappingOptions.liabilityAccountOptions:'id':'name' }}</span>
+      <span fxFlex="60%">{{ loanProduct.overpaymentLiabilityAccountId |
+        find:loanProductsTemplate.accountingMappingOptions.liabilityAccountOptions:'id':'name' }}</span>
     </div>
 
-    <div *ngIf="loanProduct.advancedAccountingRules && (loanProduct.paymentChannelToFundSourceMappings?.length || loanProduct.feeToIncomeAccountMappings?.length || loanProduct.penaltyToIncomeAccountMappings?.length)" fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
+    <div
+      *ngIf="loanProduct.advancedAccountingRules && (loanProduct.paymentChannelToFundSourceMappings?.length || loanProduct.feeToIncomeAccountMappings?.length || loanProduct.penaltyToIncomeAccountMappings?.length)"
+      fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
 
       <h3 class="mat-h3" fxFlexFill>Advanced Accounting Rules</h3>
 
       <mat-divider fxFlexFill></mat-divider>
 
-      <div *ngIf="loanProduct.paymentChannelToFundSourceMappings?.length" fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
+      <div *ngIf="loanProduct.paymentChannelToFundSourceMappings?.length" fxFlexFill fxLayout="row wrap"
+        fxLayout.lt-md="column">
 
         <h4 class="mat-h4" fxFlexFill>Fund Sources for Payment Channels</h4>
 
-        <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="loanProduct.paymentChannelToFundSourceMappings">
+        <table fxFlexFill class="mat-elevation-z1" mat-table
+          [dataSource]="loanProduct.paymentChannelToFundSourceMappings">
 
           <ng-container matColumnDef="paymentTypeId">
             <th mat-header-cell *matHeaderCellDef> Payment Type </th>
@@ -697,7 +813,8 @@
           <ng-container matColumnDef="fundSourceAccountId">
             <th mat-header-cell *matHeaderCellDef> Fund Source </th>
             <td mat-cell *matCellDef="let paymentFundSource">
-              {{ paymentFundSource.fundSourceAccountId | find:loanProductsTemplate.accountingMappingOptions.assetAccountOptions:'id':'name' }}
+              {{ paymentFundSource.fundSourceAccountId |
+              find:loanProductsTemplate.accountingMappingOptions.assetAccountOptions:'id':'name' }}
             </td>
           </ng-container>
 
@@ -708,7 +825,8 @@
 
       </div>
 
-      <div *ngIf="loanProduct.feeToIncomeAccountMappings?.length" fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
+      <div *ngIf="loanProduct.feeToIncomeAccountMappings?.length" fxFlexFill fxLayout="row wrap"
+        fxLayout.lt-md="column">
 
         <h4 class="mat-h4" fxFlexFill>Fees to Specific Income Accounts</h4>
 
@@ -724,7 +842,9 @@
           <ng-container matColumnDef="incomeAccountId">
             <th mat-header-cell *matHeaderCellDef> Income Account </th>
             <td mat-cell *matCellDef="let feesIncome">
-              {{ feesIncome.incomeAccountId | find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions.concat(loanProductsTemplate.accountingMappingOptions.liabilityAccountOptions):'id':'name' }}
+              {{ feesIncome.incomeAccountId |
+              find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions.concat(loanProductsTemplate.accountingMappingOptions.liabilityAccountOptions):'id':'name'
+              }}
             </td>
           </ng-container>
 
@@ -735,7 +855,8 @@
 
       </div>
 
-      <div *ngIf="loanProduct.penaltyToIncomeAccountMappings?.length" fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
+      <div *ngIf="loanProduct.penaltyToIncomeAccountMappings?.length" fxFlexFill fxLayout="row wrap"
+        fxLayout.lt-md="column">
 
         <h4 class="mat-h4" fxFlexFill>Penalties to Specific Income Accounts</h4>
 
@@ -744,14 +865,15 @@
           <ng-container matColumnDef="chargeId">
             <th mat-header-cell *matHeaderCellDef> Penalty </th>
             <td mat-cell *matCellDef="let penaltyIncome">
-              {{ penaltyIncome.chargeId  | find:loanProductsTemplate.penaltyOptions:'id':'name' }}
+              {{ penaltyIncome.chargeId | find:loanProductsTemplate.penaltyOptions:'id':'name' }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="incomeAccountId">
             <th mat-header-cell *matHeaderCellDef> Income Account </th>
             <td mat-cell *matCellDef="let penaltyIncome">
-              {{ penaltyIncome.incomeAccountId | find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}
+              {{ penaltyIncome.incomeAccountId |
+              find:loanProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}
             </td>
           </ng-container>
 

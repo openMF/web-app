@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -28,7 +28,7 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
   /** Maximum transaction date allowed. */
   maxDate = new Date();
   /** Journal entry form. */
-  journalEntryForm: FormGroup;
+  journalEntryForm: UntypedFormGroup;
   /** Office data. */
   officeData: any;
   /** Currency data. */
@@ -53,7 +53,7 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private accountingService: AccountingService,
     private settingsService: SettingsService,
     private dateUtils: Dates,
@@ -108,7 +108,7 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
    * Creates the affected gl entry form.
    * @returns {FormGroup} Affected gl entry form.
    */
-  createAffectedGLEntryForm(): FormGroup {
+  createAffectedGLEntryForm(): UntypedFormGroup {
     return this.formBuilder.group({
       'glAccountId': ['', Validators.required],
       'amount': ['', Validators.required]
@@ -119,23 +119,23 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
    * Gets the affected gl entry (debits) form array.
    * @returns {FormArray} Debits form array.
    */
-  get debits(): FormArray {
-    return this.journalEntryForm.get('debits') as FormArray;
+  get debits(): UntypedFormArray {
+    return this.journalEntryForm.get('debits') as UntypedFormArray;
   }
 
   /**
    * Gets the affected gl entry (credits) form array.
    * @returns {FormArray} Credits form array.
    */
-  get credits(): FormArray {
-    return this.journalEntryForm.get('credits') as FormArray;
+  get credits(): UntypedFormArray {
+    return this.journalEntryForm.get('credits') as UntypedFormArray;
   }
 
   /**
    * Adds the affected gl entry form to given affected gl entry form array.
    * @param {FormArray} affectedGLEntryFormArray Given affected gl entry form array (debit/credit).
    */
-  addAffectedGLEntry(affectedGLEntryFormArray: FormArray) {
+  addAffectedGLEntry(affectedGLEntryFormArray: UntypedFormArray) {
     affectedGLEntryFormArray.push(this.createAffectedGLEntryForm());
   }
 
@@ -144,7 +144,7 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
    * @param {FormArray} affectedGLEntryFormArray Given affected gl entry form array (debit/credit).
    * @param {number} index Array index from where affected gl entry form needs to be removed.
    */
-  removeAffectedGLEntry(affectedGLEntryFormArray: FormArray, index: number) {
+  removeAffectedGLEntry(affectedGLEntryFormArray: UntypedFormArray, index: number) {
     affectedGLEntryFormArray.removeAt(index);
   }
 

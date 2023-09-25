@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { LoanProducts } from '../../loan-products';
+import { rangeValidator } from 'app/shared/validators/percentage.validator';
 
 @Component({
   selector: 'mifosx-loan-product-settings-step',
@@ -9,10 +10,12 @@ import { LoanProducts } from '../../loan-products';
 })
 export class LoanProductSettingsStepComponent implements OnInit {
 
+  @Input() toEdit: boolean;
   @Input() loanProductsTemplate: any;
-  @Input() isLinkedToFloatingInterestRates: FormControl;
+  @Input() isLinkedToFloatingInterestRates: UntypedFormControl;
+  @Output() advancePaymentStrategy = new EventEmitter<string>();
 
-  loanProductSettingsForm: FormGroup;
+  loanProductSettingsForm: UntypedFormGroup;
 
   amortizationTypeData: any;
   interestTypeData: any;
@@ -29,7 +32,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
   interestRecalculationOnDayTypeData: any;
   delinquencyBucketData: any;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private loanProducts: LoanProducts) {
     this.createLoanProductSettingsForm();
     this.setConditionalControls();
@@ -89,12 +92,20 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'maxTrancheCount': this.loanProductsTemplate.maxTrancheCount,
       'outstandingLoanBalance': this.loanProductsTemplate.outstandingLoanBalance,
       'dueDaysForRepaymentEvent': this.loanProductsTemplate.dueDaysForRepaymentEvent,
-      'overDueDaysForRepaymentEvent': this.loanProductsTemplate.overDueDaysForRepaymentEvent
+      'overDueDaysForRepaymentEvent': this.loanProductsTemplate.overDueDaysForRepaymentEvent,
+      'enableDownPayment': this.loanProductsTemplate.enableDownPayment
     });
 
     if (this.loanProductsTemplate.delinquencyBucket) {
       this.loanProductSettingsForm.patchValue({
         'delinquencyBucketId': this.loanProductsTemplate.delinquencyBucket.id
+      });
+    }
+
+    if (this.loanProductsTemplate.enableDownPayment) {
+      this.loanProductSettingsForm.patchValue({
+        'disbursedAmountPercentageForDownPayment': this.loanProductsTemplate.disbursedAmountPercentageForDownPayment || 0,
+        'enableAutoRepaymentForDownPayment': this.loanProductsTemplate.enableAutoRepaymentForDownPayment || false
       });
     }
 
@@ -187,7 +198,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
       }),
       'delinquencyBucketId': ['', Validators.required],
       'dueDaysForRepaymentEvent': [''],
-      'overDueDaysForRepaymentEvent': ['']
+      'overDueDaysForRepaymentEvent': [''],
+      'enableDownPayment': [false]
     });
   }
 
@@ -204,8 +216,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
     this.loanProductSettingsForm.get('allowVariableInstallments').valueChanges
       .subscribe((allowVariableInstallments: any) => {
         if (allowVariableInstallments) {
-          this.loanProductSettingsForm.addControl('minimumGap', new FormControl('', Validators.required));
-          this.loanProductSettingsForm.addControl('maximumGap', new FormControl('', Validators.required));
+          this.loanProductSettingsForm.addControl('minimumGap', new UntypedFormControl('', Validators.required));
+          this.loanProductSettingsForm.addControl('maximumGap', new UntypedFormControl('', Validators.required));
         } else {
           this.loanProductSettingsForm.removeControl('minimumGap');
           this.loanProductSettingsForm.removeControl('maximumGap');
@@ -215,40 +227,40 @@ export class LoanProductSettingsStepComponent implements OnInit {
     this.loanProductSettingsForm.get('isInterestRecalculationEnabled').valueChanges
       .subscribe((isInterestRecalculationEnabled: any) => {
         if (isInterestRecalculationEnabled) {
-          this.loanProductSettingsForm.addControl('preClosureInterestCalculationStrategy', new FormControl(this.preClosureInterestCalculationStrategyData[0].id, Validators.required));
-          this.loanProductSettingsForm.addControl('rescheduleStrategyMethod', new FormControl(this.rescheduleStrategyTypeData[0].id, Validators.required));
-          this.loanProductSettingsForm.addControl('interestRecalculationCompoundingMethod', new FormControl(this.interestRecalculationCompoundingTypeData[0].id, Validators.required));
-          this.loanProductSettingsForm.addControl('recalculationRestFrequencyType', new FormControl(this.interestRecalculationFrequencyTypeData[0].id, Validators.required));
-          this.loanProductSettingsForm.addControl('isArrearsBasedOnOriginalSchedule', new FormControl(''));
+          this.loanProductSettingsForm.addControl('preClosureInterestCalculationStrategy', new UntypedFormControl(this.preClosureInterestCalculationStrategyData[0].id, Validators.required));
+          this.loanProductSettingsForm.addControl('rescheduleStrategyMethod', new UntypedFormControl(this.rescheduleStrategyTypeData[0].id, Validators.required));
+          this.loanProductSettingsForm.addControl('interestRecalculationCompoundingMethod', new UntypedFormControl(this.interestRecalculationCompoundingTypeData[0].id, Validators.required));
+          this.loanProductSettingsForm.addControl('recalculationRestFrequencyType', new UntypedFormControl(this.interestRecalculationFrequencyTypeData[0].id, Validators.required));
+          this.loanProductSettingsForm.addControl('isArrearsBasedOnOriginalSchedule', new UntypedFormControl(''));
 
           this.loanProductSettingsForm.get('interestRecalculationCompoundingMethod').valueChanges
             .subscribe((interestRecalculationCompoundingMethod: any) => {
               if (interestRecalculationCompoundingMethod !== 0) {
-                this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyType', new FormControl(this.interestRecalculationFrequencyTypeData[0].id, Validators.required));
+                this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyType', new UntypedFormControl(this.interestRecalculationFrequencyTypeData[0].id, Validators.required));
 
                 this.loanProductSettingsForm.get('recalculationCompoundingFrequencyType').valueChanges
                   .subscribe((recalculationCompoundingFrequencyType: any) => {
                     if (recalculationCompoundingFrequencyType !== 1) {
-                      this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyInterval', new FormControl('', Validators.required));
+                      this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyInterval', new UntypedFormControl('', Validators.required));
                     } else {
                       this.loanProductSettingsForm.removeControl('recalculationCompoundingFrequencyInterval');
                     }
 
                     if (recalculationCompoundingFrequencyType === 3) {
-                      this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyDayOfWeekType', new FormControl(''));
+                      this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyDayOfWeekType', new UntypedFormControl(''));
                       this.loanProductSettingsForm.removeControl('recalculationCompoundingFrequencyNthDayType');
                       this.loanProductSettingsForm.removeControl('recalculationCompoundingFrequencyOnDayType');
                     } else if (recalculationCompoundingFrequencyType === 4) {
-                      this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyNthDayType', new FormControl(''));
-                      this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyDayOfWeekType', new FormControl(''));
+                      this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyNthDayType', new UntypedFormControl(''));
+                      this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyDayOfWeekType', new UntypedFormControl(''));
 
                       this.loanProductSettingsForm.get('recalculationCompoundingFrequencyNthDayType').valueChanges
                         .subscribe((recalculationCompoundingFrequencyNthDayType: any) => {
                           if (recalculationCompoundingFrequencyNthDayType === -2) {
-                            this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyOnDayType', new FormControl(''));
+                            this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyOnDayType', new UntypedFormControl(''));
                             this.loanProductSettingsForm.removeControl('recalculationCompoundingFrequencyDayOfWeekType');
                           } else {
-                            this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyDayOfWeekType', new FormControl(''));
+                            this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyDayOfWeekType', new UntypedFormControl(''));
                             this.loanProductSettingsForm.removeControl('recalculationCompoundingFrequencyOnDayType');
                           }
                         });
@@ -267,26 +279,26 @@ export class LoanProductSettingsStepComponent implements OnInit {
           this.loanProductSettingsForm.get('recalculationRestFrequencyType').valueChanges
             .subscribe((recalculationRestFrequencyType: any) => {
               if (recalculationRestFrequencyType !== 1) {
-                this.loanProductSettingsForm.addControl('recalculationRestFrequencyInterval', new FormControl('', Validators.required));
+                this.loanProductSettingsForm.addControl('recalculationRestFrequencyInterval', new UntypedFormControl('', Validators.required));
               } else {
                 this.loanProductSettingsForm.removeControl('recalculationRestFrequencyInterval');
               }
 
               if (recalculationRestFrequencyType === 3) {
-                this.loanProductSettingsForm.addControl('recalculationRestFrequencyDayOfWeekType', new FormControl(''));
+                this.loanProductSettingsForm.addControl('recalculationRestFrequencyDayOfWeekType', new UntypedFormControl(''));
                 this.loanProductSettingsForm.removeControl('recalculationRestFrequencyNthDayType');
                 this.loanProductSettingsForm.removeControl('recalculationRestFrequencyOnDayType');
               } else if (recalculationRestFrequencyType === 4) {
-                this.loanProductSettingsForm.addControl('recalculationRestFrequencyNthDayType', new FormControl(''));
-                this.loanProductSettingsForm.addControl('recalculationRestFrequencyDayOfWeekType', new FormControl(''));
+                this.loanProductSettingsForm.addControl('recalculationRestFrequencyNthDayType', new UntypedFormControl(''));
+                this.loanProductSettingsForm.addControl('recalculationRestFrequencyDayOfWeekType', new UntypedFormControl(''));
 
                 this.loanProductSettingsForm.get('recalculationRestFrequencyNthDayType').valueChanges
                   .subscribe((recalculationRestFrequencyNthDayType: any) => {
                     if (recalculationRestFrequencyNthDayType === -2) {
-                      this.loanProductSettingsForm.addControl('recalculationRestFrequencyOnDayType', new FormControl(''));
+                      this.loanProductSettingsForm.addControl('recalculationRestFrequencyOnDayType', new UntypedFormControl(''));
                       this.loanProductSettingsForm.removeControl('recalculationRestFrequencyDayOfWeekType');
                     } else {
-                      this.loanProductSettingsForm.addControl('recalculationRestFrequencyDayOfWeekType', new FormControl(''));
+                      this.loanProductSettingsForm.addControl('recalculationRestFrequencyDayOfWeekType', new UntypedFormControl(''));
                       this.loanProductSettingsForm.removeControl('recalculationRestFrequencyOnDayType');
                     }
                   });
@@ -310,9 +322,9 @@ export class LoanProductSettingsStepComponent implements OnInit {
     this.loanProductSettingsForm.get('holdGuaranteeFunds').valueChanges
       .subscribe(holdGuaranteeFunds => {
         if (holdGuaranteeFunds) {
-          this.loanProductSettingsForm.addControl('mandatoryGuarantee', new FormControl('', Validators.required));
-          this.loanProductSettingsForm.addControl('minimumGuaranteeFromOwnFunds', new FormControl(''));
-          this.loanProductSettingsForm.addControl('minimumGuaranteeFromGuarantor', new FormControl(''));
+          this.loanProductSettingsForm.addControl('mandatoryGuarantee', new UntypedFormControl('', Validators.required));
+          this.loanProductSettingsForm.addControl('minimumGuaranteeFromOwnFunds', new UntypedFormControl(''));
+          this.loanProductSettingsForm.addControl('minimumGuaranteeFromGuarantor', new UntypedFormControl(''));
         } else {
           this.loanProductSettingsForm.removeControl('mandatoryGuarantee');
           this.loanProductSettingsForm.removeControl('minimumGuaranteeFromOwnFunds');
@@ -323,13 +335,31 @@ export class LoanProductSettingsStepComponent implements OnInit {
     this.loanProductSettingsForm.get('multiDisburseLoan').valueChanges
       .subscribe(multiDisburseLoan => {
         if (multiDisburseLoan) {
-          this.loanProductSettingsForm.addControl('maxTrancheCount', new FormControl('', Validators.required));
-          this.loanProductSettingsForm.addControl('outstandingLoanBalance', new FormControl(''));
+          this.loanProductSettingsForm.addControl('maxTrancheCount', new UntypedFormControl('', Validators.required));
+          this.loanProductSettingsForm.addControl('outstandingLoanBalance', new UntypedFormControl(''));
         } else {
           this.loanProductSettingsForm.removeControl('maxTrancheCount');
           this.loanProductSettingsForm.removeControl('outstandingLoanBalance');
           this.loanProductSettingsForm.patchValue({ 'disallowExpectedDisbursements': false });
         }
+      });
+
+      this.loanProductSettingsForm.get('enableDownPayment').valueChanges
+      .subscribe(enableDownPayment => {
+        if (enableDownPayment) {
+          this.loanProductSettingsForm.addControl('disbursedAmountPercentageForDownPayment', new UntypedFormControl(0, [Validators.required, rangeValidator(0, 100) ]));
+          this.loanProductSettingsForm.addControl('enableAutoRepaymentForDownPayment', new UntypedFormControl(false, []));
+          this.loanProductSettingsForm.addControl('disableScheduleExtensionForDownPayment', new UntypedFormControl(false, []));
+        } else {
+          this.loanProductSettingsForm.removeControl('disbursedAmountPercentageForDownPayment');
+          this.loanProductSettingsForm.removeControl('enableAutoRepaymentForDownPayment');
+          this.loanProductSettingsForm.removeControl('disableScheduleExtensionForDownPayment');
+        }
+      });
+
+    this.loanProductSettingsForm.get('transactionProcessingStrategyCode').valueChanges
+      .subscribe((transactionProcessingStrategyCode: string) => {
+        this.advancePaymentStrategy.emit(transactionProcessingStrategyCode);
       });
 
     this.loanProductSettingsForm.get('allowAttributeConfiguration').valueChanges
@@ -368,7 +398,11 @@ export class LoanProductSettingsStepComponent implements OnInit {
   }
 
   get loanProductSettings() {
-    return this.loanProductSettingsForm.value;
+    const productSettings = this.loanProductSettingsForm.value;
+    if (!this.loanProductSettingsForm.value.multiDisburseLoan) {
+      delete productSettings['disableScheduleExtensionForDownPayment'];
+    }
+    return productSettings;
   }
 
 }

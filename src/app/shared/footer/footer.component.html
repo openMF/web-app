@@ -1,11 +1,26 @@
 <div fxLayout="column" id="footer" class="m-b-20">
   <mat-divider fxFlexAlign="center" class="divider"></mat-divider>
-  <p fxFlexAlign="center" class="footer-content">{{ 'labels.texts.Version' | translate }} <b>{{ version }}</b> - <b>{{
-      hash }}</b></p>
-  <p fxFlexAlign="center" class="footer-content" *ngIf="isBusinessDateDefined">Current Business Date: <b>{{ businessDate
-      | date: 'EEEE, MMMM dd, y' }}</b></p>
-  <p fxFlexAlign="center" class="footer-content"><b>{{ server }}</b></p>
+  <div fxLayout="column" class="m-b-20 content">
+
+  <table class="versions">
+    <tr>
+      <td class="footer-content">Mifos</td>
+      <td class="right footer-content">{{ versions.mifos }} - <b>{{ hash }}</b></td>
+    </tr>
+    <tr>
+      <td class="footer-content">Fineract</td>
+      <td class="right footer-content">{{ versions.fineract.version }} - <b>{{ versions.fineract.hash }}</b></td>
+    </tr>
+    <tr *ngIf="displayBackEndInfo">
+      <td colspan="2" class="center footer-content"><b>{{ server }}</b></td>
+    </tr>
+    <tr *ngIf="isBusinessDateDefined">
+      <td class="footer-content">Current Business Date:</td>
+      <td class="center footer-content business-date"><b>{{ businessDate | date: 'EEEE, MMMM dd, y' }}</b></td>
+    </tr>
+  </table>
+  </div>
   <mat-divider fxFlexAlign="center" class="divider"></mat-divider>
-  <p fxFlexAlign="center" class="footer-content">{{ 'APP_NAME' | translate }} {{ 'labels.texts.by' | translate }} Mifos
+  <p fxFlexAlign="center" class="footer-content">{{ 'APP_NAME' | translate }} {{ 'labels.text.by' | translate }} Mifos
   </p>
 </div>

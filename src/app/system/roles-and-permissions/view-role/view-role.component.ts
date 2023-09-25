@@ -1,7 +1,7 @@
 /** Angular Imports  */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { SystemService } from '../../system.service';
 import * as _ from 'lodash';
@@ -40,9 +40,9 @@ export class ViewRoleComponent implements OnInit {
   /** Role ID */
   roleId: any;
   /** Creates permission form  */
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
   /** Creates Backup form */
-  backupform: FormGroup;
+  backupform: UntypedFormGroup;
   /** Temporarily stores Permission data */
   tempPermissionUIData: {
     permissions: { code: string }[]
@@ -63,7 +63,7 @@ export class ViewRoleComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private systemService: SystemService,
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public dialog: MatDialog) {
     this.route.data.subscribe((data: { roledetails: any }) => {
       this.rolePermissionService = data.roledetails;
@@ -96,7 +96,7 @@ export class ViewRoleComponent implements OnInit {
 
   }
 
-  createMemberGroup(permission: any): FormGroup {
+  createMemberGroup(permission: any): UntypedFormGroup {
     return this.formBuilder.group({
       ...permission,
       ...{
@@ -171,14 +171,14 @@ export class ViewRoleComponent implements OnInit {
    * Backups the valued
    */
   backupCheckValues() {
-    this.backupform = _.cloneDeep(this.formGroup) as FormGroup;
+    this.backupform = _.cloneDeep(this.formGroup) as UntypedFormGroup;
   }
 
   /**
    * Restores the checkboxes to previous data on clicking cancel
    */
   restoreCheckboxes() {
-    this.formGroup = _.cloneDeep(this.backupform) as FormGroup;
+    this.formGroup = _.cloneDeep(this.backupform) as UntypedFormGroup;
   }
 
   isRoleEnable(value: any) {

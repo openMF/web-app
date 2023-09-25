@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 /**
  * Revert transaction dialog component.
@@ -14,7 +14,7 @@ import { FormControl } from '@angular/forms';
 export class RevertTransactionComponent implements OnInit {
 
   /** Comments input form control. */
-  comments = new FormControl('');
+  comments = new UntypedFormControl('');
 
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.

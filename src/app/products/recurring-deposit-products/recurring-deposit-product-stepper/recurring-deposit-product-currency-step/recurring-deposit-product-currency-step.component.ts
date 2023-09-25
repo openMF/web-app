@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'mifosx-recurring-deposit-product-currency-step',
@@ -10,11 +10,11 @@ export class RecurringDepositProductCurrencyStepComponent implements OnInit {
 
   @Input() recurringDepositProductsTemplate: any;
 
-  recurringDepositProductCurrencyForm: FormGroup;
+  recurringDepositProductCurrencyForm: UntypedFormGroup;
 
   currencyData: any;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createrecurringDepositProductCurrencyForm();
   }
 

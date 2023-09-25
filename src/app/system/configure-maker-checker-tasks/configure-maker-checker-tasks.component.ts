@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 
 /** Custom Services */
@@ -24,8 +24,8 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewIni
   previousGrouping = '';
   checkboxesChanged: Boolean = false;
   currentGrouping: string;
-  formGroup: FormGroup;
-  backupform: FormGroup;
+  formGroup: UntypedFormGroup;
+  backupform: UntypedFormGroup;
 
   permissions: {
     permissions: { code: string, id: number }[]
@@ -53,7 +53,7 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewIni
    */
   constructor(private route: ActivatedRoute,
     private systemService: SystemService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private router: Router,
     private configurationWizardService: ConfigurationWizardService,
     private popoverService: PopoverService ) {
@@ -78,7 +78,7 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewIni
     });
   }
 
-  createMemberGroup(permission: any): FormGroup {
+  createMemberGroup(permission: any): UntypedFormGroup {
     return this.formBuilder.group({
       ...permission,
       ...{
@@ -140,14 +140,14 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewIni
    * Backups the valued
    */
   backupCheckValues() {
-    this.backupform = _.cloneDeep(this.formGroup) as FormGroup;
+    this.backupform = _.cloneDeep(this.formGroup) as UntypedFormGroup;
   }
 
   /**
    * Restores the checkboxes to previous data on clicking cancel
    */
   restoreCheckboxes() {
-    this.formGroup = _.cloneDeep(this.backupform) as FormGroup;
+    this.formGroup = _.cloneDeep(this.backupform) as UntypedFormGroup;
   }
 
   isTaskEnable(value: any) {

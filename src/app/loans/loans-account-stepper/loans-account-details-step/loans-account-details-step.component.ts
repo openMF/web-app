@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SettingsService } from 'app/settings/settings.service';
 import { TooltipPosition } from '@angular/material/tooltip';
@@ -38,7 +38,7 @@ export class LoansAccountDetailsStepComponent implements OnInit {
   /** For edit loan accounts form */
   isFieldOfficerPatched = false;
   /** Loans Account Details Form */
-  loansAccountDetailsForm: FormGroup;
+  loansAccountDetailsForm: UntypedFormGroup;
 
   loanId: any = null;
 
@@ -52,7 +52,7 @@ export class LoansAccountDetailsStepComponent implements OnInit {
    * @param {LoansService} loansService Loans Service.
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private loansService: LoansService,
     private route: ActivatedRoute,
     private settingsService: SettingsService) {

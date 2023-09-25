@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormArray } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
@@ -19,7 +19,7 @@ export class GlimTermsStepComponent implements OnInit, OnChanges {
   /** Maximum date allowed. */
   maxDate = new Date(2100, 0, 1);
   /** Loans Account Terms Form */
-  loansAccountTermsForm: FormGroup;
+  loansAccountTermsForm: UntypedFormGroup;
   /** Term Frequency Type Data */
   termFrequencyTypeData: any;
   /** Repayment Frequency Nth Day Type Data */
@@ -42,7 +42,7 @@ export class GlimTermsStepComponent implements OnInit, OnChanges {
    * @param formBuilder FormBuilder
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
       private settingsService: SettingsService) {
     this.createloansAccountTermsForm();
   }

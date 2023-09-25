@@ -25,6 +25,7 @@ import { SettingsService } from './settings/settings.service';
 import { Alert } from './core/alert/alert.model';
 import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
 import { Dates } from './core/utils/dates';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 /** Initialize Logger */
 const log = new Logger('MifosX');
@@ -35,7 +36,19 @@ const log = new Logger('MifosX');
 @Component({
   selector: 'mifosx-web-app',
   templateUrl: './web-app.component.html',
-  styleUrls: ['./web-app.component.scss']
+  styleUrls: ['./web-app.component.scss'],
+  animations: [
+    trigger('opacityScale', [
+      transition(':enter', [
+          style({ opacity: 0, transform: 'scale(.95)' }),
+          animate('100ms ease-out', style({  opacity: 1, transform: 'scale(1)' }))
+      ]),
+      transition(':leave', [
+          style({ opacity: 1, transform: 'scale(1)' }),
+          animate('75ms ease-in', style({ opacity: 0, transform: 'scale(.95)' }))
+      ])
+    ])
+  ]
 })
 export class WebAppComponent implements OnInit {
 

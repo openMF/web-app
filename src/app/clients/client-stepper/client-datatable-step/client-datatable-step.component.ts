@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Datatables } from 'app/core/utils/datatables';
 import { SettingsService } from 'app/settings/settings.service';
 
@@ -12,11 +12,11 @@ export class ClientDatatableStepComponent implements OnInit {
   /** Input Fields Data */
   @Input() datatableData: any;
   /** Create Input Form */
-  datatableForm: FormGroup;
+  datatableForm: UntypedFormGroup;
 
   datatableInputs: any = [];
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private settingsService: SettingsService,
     private datatableService: Datatables) { }
 
@@ -27,12 +27,12 @@ export class ClientDatatableStepComponent implements OnInit {
       input.controlName = this.getInputName(input);
       if (!input.isColumnNullable) {
         if (this.isNumeric(input.columnDisplayType)) {
-          inputItems[input.controlName] = new FormControl(0, [Validators.required]);
+          inputItems[input.controlName] = new UntypedFormControl(0, [Validators.required]);
         } else {
-          inputItems[input.controlName] = new FormControl('', [Validators.required]);
+          inputItems[input.controlName] = new UntypedFormControl('', [Validators.required]);
         }
       } else {
-        inputItems[input.controlName] = new FormControl('');
+        inputItems[input.controlName] = new UntypedFormControl('');
       }
     });
     this.datatableForm = this.formBuilder.group(inputItems);

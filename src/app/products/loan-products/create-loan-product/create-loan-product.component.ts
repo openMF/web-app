@@ -12,8 +12,8 @@ import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan
 
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
-import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
 import { LoanProducts } from '../loan-products';
+import { AdvancedPaymentAllocation, AdvancedPaymentStrategy, PaymentAllocation } from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 
 @Component({
   selector: 'mifosx-create-loan-product',
@@ -33,17 +33,21 @@ export class CreateLoanProductComponent implements OnInit {
   accountingRuleData = ['None', 'Cash', 'Accrual (periodic)', 'Accrual (upfront)'];
   itemsByDefault: any[] = [];
 
+  isAdvancedPaymentStrategy = false;
+  paymentAllocation: PaymentAllocation[] = [];
+  advancedPaymentAllocations: AdvancedPaymentAllocation[] = [];
+
    /**
     * @param {ActivatedRoute} route Activated Route.
     * @param {ProductsService} productsService Product Service.
     * @param {LoanProducts} loanProducts LoanProducts
     * @param {Router} router Router for navigation.
     */
-
   constructor(private route: ActivatedRoute,
               private productsService: ProductsService,
               private loanProducts: LoanProducts,
-              private router: Router) {
+              private router: Router,
+              private advancedPaymentStrategy: AdvancedPaymentStrategy) {
     this.route.data.subscribe((data: { loanProductsTemplate: any, configurations: any }) => {
       this.loanProductsTemplate = data.loanProductsTemplate;
       const assetAccountData = this.loanProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
@@ -52,22 +56,38 @@ export class CreateLoanProductComponent implements OnInit {
 
       this.itemsByDefault = loanProducts.setItemsByDefault(data.configurations);
       this.loanProductsTemplate['itemsByDefault'] = this.itemsByDefault;
-      this.loanProductsTemplate = loanProducts.updateLoanProductDefaults(this.loanProductsTemplate);
+      this.loanProductsTemplate = loanProducts.updateLoanProductDefaults(this.loanProductsTemplate, false);
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.buildAdvancedPaymentAllocation();
+  }
 
   get loanProductDetailsForm() {
     return this.loanProductDetailsStep.loanProductDetailsForm;
   }
 
   get loanProductCurrencyForm() {
-    return this.loanProductCurrencyStep.loanProductCurrencyForm;
+    if (this.loanProductCurrencyStep != null) {
+      return this.loanProductCurrencyStep.loanProductCurrencyForm;
+    }
   }
 
   get loanProductTermsForm() {
     return this.loanProductTermsStep.loanProductTermsForm;
+  }
+
+  advancePaymentStrategy(value: string) {
+    this.isAdvancedPaymentStrategy = (value === 'advanced-payment-allocation-strategy');
+  }
+
+  buildAdvancedPaymentAllocation(): void {
+    this.advancedPaymentAllocations = this.advancedPaymentStrategy.buildAdvancedPaymentAllocationList(this.loanProductsTemplate);
+  }
+
+  setPaymentAllocation(paymentAllocation: PaymentAllocation[]): void {
+    this.paymentAllocation = paymentAllocation;
   }
 
   get loanProductSettingsForm() {
@@ -89,7 +109,7 @@ export class CreateLoanProductComponent implements OnInit {
   }
 
   get loanProduct() {
-    return {
+    const loanProduct = {
       ...this.loanProductDetailsStep.loanProductDetails,
       ...this.loanProductCurrencyStep.loanProductCurrency,
       ...this.loanProductTermsStep.loanProductTerms,
@@ -97,6 +117,10 @@ export class CreateLoanProductComponent implements OnInit {
       ...this.loanProductChargesStep.loanProductCharges,
       ...this.loanProductAccountingStep.loanProductAccounting
     };
+    if (this.isAdvancedPaymentStrategy) {
+      loanProduct['paymentAllocation'] = this.paymentAllocation;
+    }
+    return loanProduct;
   }
 
   submit() {

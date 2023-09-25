@@ -4,7 +4,7 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 /** Custom Services */
 import { ProgressBarService } from './progress-bar.service';
@@ -28,17 +28,9 @@ export class ProgressInterceptor implements HttpInterceptor {
     this.progressBarService.increase();
     return next.handle(request)
       .pipe(
-        tap(event => {
-          if (event instanceof HttpResponse) {
-            this.progressBarService.decrease();
-          }
-        })
-      )
-      .pipe(
-        catchError(error => {
-          this.progressBarService.decrease();
-          throw error;
-        })
+        finalize(
+          () => { this.progressBarService.decrease(); }
+        )
       );
   }
 

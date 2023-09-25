@@ -221,7 +221,8 @@ export class IconsModule {
       faInfo,
       faTasks,
       faCoins,
-      faPiggyBank
+      faPiggyBank,
+      faBars
     );
   }
 

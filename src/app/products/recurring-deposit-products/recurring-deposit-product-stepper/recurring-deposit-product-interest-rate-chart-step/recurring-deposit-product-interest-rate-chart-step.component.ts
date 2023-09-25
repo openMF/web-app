@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
@@ -34,7 +34,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
 
   @Input() recurringDepositProductsTemplate: any;
 
-  recurringDepositProductInterestRateChartForm: FormGroup;
+  recurringDepositProductInterestRateChartForm: UntypedFormGroup;
 
   periodTypeData: any;
   entityTypeData: any;
@@ -63,7 +63,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
    * @param {SettingsService} settingsService Settings Service.
    */
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               public dialog: MatDialog,
               private dateUtils: Dates,
               private settingsService: SettingsService) {
@@ -101,7 +101,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
     this.getChartsDetailsData();
 
     // Iterates for every chart in charts
-    this.charts.controls.forEach((chartDetailControl: FormGroup, i: number) => {
+    this.charts.controls.forEach((chartDetailControl: UntypedFormGroup, i: number) => {
 
       if (!this.chartsDetail[i]) {
         return;
@@ -120,7 +120,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
           periodType: [chartSlabDetail.periodType, Validators.required],
           incentives: this.formBuilder.array([])
         });
-        const formArray = chartDetailControl.controls['chartSlabs'] as FormArray;
+        const formArray = chartDetailControl.controls['chartSlabs'] as UntypedFormArray;
         formArray.push(chartSlabInfo);
 
         // Iterate for every slab in chartSlab
@@ -136,7 +136,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
             entityType: [chartIncentiveDetail.entityType, Validators.required],
             incentiveType: [chartIncentiveDetail.incentiveType, Validators.required]
           });
-          const newFormArray = chartIncentiveControl['controls']['incentives'] as FormArray;
+          const newFormArray = chartIncentiveControl['controls']['incentives'] as UntypedFormArray;
           newFormArray.push(incentiveInfo);
         });
 
@@ -218,11 +218,11 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
     });
   }
 
-  get charts(): FormArray {
-    return this.recurringDepositProductInterestRateChartForm.get('charts') as FormArray;
+  get charts(): UntypedFormArray {
+    return this.recurringDepositProductInterestRateChartForm.get('charts') as UntypedFormArray;
   }
 
-  createChartForm(): FormGroup {
+  createChartForm(): UntypedFormGroup {
     return this.formBuilder.group({
       'name': [''],
       'description': [''],
@@ -247,11 +247,11 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
       });
   }
 
-  getIncentives(chartSlabs: FormArray, chartSlabIndex: number): FormArray {
-    return chartSlabs.at(chartSlabIndex).get('incentives') as FormArray;
+  getIncentives(chartSlabs: UntypedFormArray, chartSlabIndex: number): UntypedFormArray {
+    return chartSlabs.at(chartSlabIndex).get('incentives') as UntypedFormArray;
   }
 
-  addChartSlab(chartSlabs: FormArray) {
+  addChartSlab(chartSlabs: UntypedFormArray) {
     const data = { ...this.getData('Slab') };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -262,7 +262,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
     });
   }
 
-  addIncentive(incentives: FormArray) {
+  addIncentive(incentives: UntypedFormArray) {
     const data = { ...this.getData('Incentive'), entityType: this.entityTypeData[0].id };
     const dialogRef = this.dialog.open(DepositProductIncentiveFormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -272,7 +272,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
     });
   }
 
-  editChartSlab(chartSlabs: FormArray, chartSlabIndex: number) {
+  editChartSlab(chartSlabs: UntypedFormArray, chartSlabIndex: number) {
     const data = { ...this.getData('Slab', chartSlabs.at(chartSlabIndex).value), layout: { addButtonText: 'Edit' } };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -282,7 +282,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
     });
   }
 
-  editIncentive(incentives: FormArray, incentiveIndex: number) {
+  editIncentive(incentives: UntypedFormArray, incentiveIndex: number) {
     const data = { ...this.getData('Incentive', incentives.at(incentiveIndex).value), layout: { addButtonText: 'Edit' } };
     const dialogRef = this.dialog.open(DepositProductIncentiveFormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -292,7 +292,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
     });
   }
 
-  delete(formArray: FormArray, index: number) {
+  delete(formArray: UntypedFormArray, index: number) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `this` }
     });

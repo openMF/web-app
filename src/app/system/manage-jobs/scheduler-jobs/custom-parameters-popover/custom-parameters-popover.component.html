@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>Edit Job Custom Parameters</h1>
+
+<mat-dialog-content>
+  <div class="jobs-container">
+    <div *ngFor="let job of selectedJobs">
+      <mifosx-custom-parameters-table
+      [displayName]="job.displayName"
+      [jobId]="job.jobId"
+      [jobParameters]="job.jobParameters"
+      (retrieveData)="runSelectedJobs($event)"
+      >
+      </mifosx-custom-parameters-table>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-list>
+  <mat-list-item *ngFor="let message of messages" class="message" [ngClass]="{'green' : message.status}">
+    {{message.message}}
+  </mat-list-item>
+</mat-list>
+
+<mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="runSelectedJobs()">
+    <fa-icon icon="play" class="m-r-10"></fa-icon>
+    Run Selected Jobs
+  </button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="{ show: 0 }">
+    Close Custom Parameters
+  </button>
+</mat-dialog-actions>

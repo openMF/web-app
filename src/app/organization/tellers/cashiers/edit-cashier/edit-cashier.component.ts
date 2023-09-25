@@ -1,6 +1,6 @@
 /** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -21,7 +21,7 @@ export class EditCashierComponent implements OnInit {
   /** Cashier Data. */
   cashierData: any = new Object();
   /** Edit cashier form. */
-  editCashierForm: FormGroup;
+  editCashierForm: UntypedFormGroup;
   /** Is Staff ID present. */
   isStaffId = true;
   /** Minimum Date allowed. */
@@ -38,7 +38,7 @@ export class EditCashierComponent implements OnInit {
    * @param {OrganizationService} organizationService Organization Service.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private dateUtils: Dates,

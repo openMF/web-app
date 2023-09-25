@@ -15,11 +15,13 @@ export class ExternalIdentifierComponent implements OnInit {
   iconVisible = false;
   displayL = false;
   displayR = true;
+  emptyValue = false;
 
   constructor(private clipboard: Clipboard,
     private alertService: AlertService) { }
 
   ngOnInit(): void {
+    this.emptyValue = (!this.externalId || this.externalId === '');
     this.displayL = (this.display === 'left');
     this.displayR = (this.display === 'right');
   }

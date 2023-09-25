@@ -53,8 +53,23 @@
         <mifosx-loan-product-settings-step
           [loanProductsTemplate]="loanProductAndTemplate"
           [isLinkedToFloatingInterestRates]="loanProductTermsForm.get('isLinkedToFloatingInterestRates')"
+          (advancePaymentStrategy)="advancePaymentStrategy($event)"
         >
         </mifosx-loan-product-settings-step>
+
+      </mat-step>
+
+      <mat-step *ngIf="isAdvancedPaymentStrategy" completed>
+
+        <ng-template matStepLabel>PAYMENT ALLOCATION</ng-template>
+
+        <mifosx-loan-product-payment-strategy-step
+          [advancedPaymentAllocations]="advancedPaymentAllocations"
+          [advancedPaymentAllocationTransactionTypes]="loanProductAndTemplate.advancedPaymentAllocationTransactionTypes"
+          [paymentAllocationOrderDefault]="loanProductAndTemplate.advancedPaymentAllocationTypes"
+          (setPaymentAllocation)="setPaymentAllocation($event)"
+        >
+        </mifosx-loan-product-payment-strategy-step>
 
       </mat-step>
 

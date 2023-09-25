@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -21,7 +21,7 @@ export class EditChargeComponent implements OnInit {
   /** Selected Data. */
   chargeData: any;
   /** Charge form. */
-  chargeForm: FormGroup;
+  chargeForm: UntypedFormGroup;
   /** Select Income. */
   selectedIncome: any;
   /** Select Time Type. */
@@ -54,7 +54,7 @@ export class EditChargeComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private productsService: ProductsService,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {

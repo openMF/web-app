@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit  } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -17,7 +17,7 @@ import { ConfigurationWizardService } from '../../../configuration-wizard/config
 export class CreateCodeComponent implements OnInit, AfterViewInit {
 
   /** Code form. */
-  codeForm: FormGroup;
+  codeForm: UntypedFormGroup;
 
   /* Reference of create code form */
   @ViewChild('codeFormRef') codeFormRef: ElementRef<any>;
@@ -32,7 +32,7 @@ export class CreateCodeComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private systemService: SystemService,
               private route: ActivatedRoute,
               private router: Router,

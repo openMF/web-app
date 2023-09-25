@@ -5,31 +5,31 @@
     <table #sharesTable mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="transactionDate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Date </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Transaction Date'  |translate}} </th>
         <td mat-cell *matCellDef="let share"> {{ share.purchasedDate  | dateFormat }}</td>
       </ng-container>
 
       <ng-container matColumnDef="totalShares">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Shares </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Total Shares'  |translate}} </th>
         <td mat-cell *matCellDef="let share"> {{ share.numberOfShares }} </td>
       </ng-container>
 
       <ng-container matColumnDef="redeemedPrice">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Purchased/Redeemed Price </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Purchased/Redeemed Price'  |translate}} </th>
         <td mat-cell *matCellDef="let share"> {{ share.purchasedPrice }} </td>
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Status'  |translate}} </th>
         <td mat-cell *matCellDef="let share">
           <i class="fa fa-stop" [ngClass]="share.status.code|statusLookup" [matTooltip]="share.status.value"></i>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="approve">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Confirm Approve </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Confirm Approve'  |translate}} </th>
         <td mat-cell *matCellDef="let share">
-          <button class="share-action-button" mat-raised-button color="accent" matTooltip="Approve Share"
+          <button class="share-action-button" mat-raised-button color="accent" matTooltip="{{ 'tooltips.Approve Share'  |translate}}"
             (click)="approve(share.id)">
             <i class="fa fa-check"></i>
           </button>

@@ -28,6 +28,10 @@
       <fa-icon icon="play" class="m-r-10"></fa-icon>
       Run Selected Jobs
     </button>
+    <button mat-raised-button color="primary" (click)="openCustomParametersDialog()" [disabled]="!isAnyJobSelected()">
+      <fa-icon icon="plus" class="m-r-10"></fa-icon>
+      Add Custom Parameters
+    </button>
   </div>
 
   <div #jobsTable class="mat-elevation-z8 space-top">

@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 /** Custom Services */
 import { AccountTransfersService } from '../account-transfers.service';
@@ -27,7 +27,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   /** Maximum date allowed. */
   maxDate = new Date(2100, 0, 1);
   /** Edit Standing Instructions form. */
-  makeAccountTransferForm: FormGroup;
+  makeAccountTransferForm: UntypedFormGroup;
   /** To Office Type Data */
   toOfficeTypeData: any;
   /** To Client Type Data */
@@ -55,7 +55,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    * @param {SettingsService} settingsService Settings Service
    * @param {ClientsService} clientsService Clients Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private accountTransfersService: AccountTransfersService,

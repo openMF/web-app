@@ -22,7 +22,7 @@ export class UsersService {
    * @returns {Observable<any>} Users data
    */
   getUsers(): Observable<any> {
-    return this.http.get('/users');
+    return this.http.get(`/users`);
   }
 
   /**

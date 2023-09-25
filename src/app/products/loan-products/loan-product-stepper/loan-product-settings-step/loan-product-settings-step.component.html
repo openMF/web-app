@@ -399,7 +399,7 @@
       <mat-form-field fxFlex="48%">
         <mat-label>Maximum Tranche count</mat-label>
         <input type="number" matInput matTooltip="The maximum number of disbursements allowed for a loan account." formControlName="maxTrancheCount" required>
-        <mat-error>
+        <mat-error *ngIf="loanProductSettingsForm.controls.maxTrancheCount.hasError('required')">
           Maximum Tranche count is <strong>required</strong>
         </mat-error>
       </mat-form-field>
@@ -411,6 +411,40 @@
 
       <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="disallowExpectedDisbursements" class="margin-v">
         Disallow Expected Disbursements
+      </mat-checkbox>
+    </div>
+
+    <mat-divider fxFlex="98%"></mat-divider>
+
+    <h3 fxFlex="23%" class="mat-h3">Down Payment</h3>
+
+    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="enableDownPayment" matTooltip="Leave this checkbox checked if the loan has Down Payment, A Down Payment is
+    a sum a buyer pays upfront when purchasing a good. It represents a percentage of the total purchase price, and the balance is usually financed" class="margin-b">
+      Enable Down Payment
+    </mat-checkbox>
+
+    <div *ngIf="loanProductSettingsForm.value.enableDownPayment" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+      <mat-form-field fxFlex="48%">
+        <mat-label>Disbursed Amount Percentage Down Payment (%)</mat-label>
+        <input type="number" matInput matTooltip="The percentage of disbursements amount for Down Payment" formControlName="disbursedAmountPercentageForDownPayment" required [min]="0" [max]="100">
+        <mat-error *ngIf="loanProductSettingsForm.controls.disbursedAmountPercentageForDownPayment.hasError('required')">
+          Disbursed Amount Percentage Down Payment is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="loanProductSettingsForm.controls.disbursedAmountPercentageForDownPayment.errors?.range">
+          Disbursed Amount Percentage Down Payment is out <strong>percentage range</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="enableAutoRepaymentForDownPayment" matTooltip="Enable or disable  the auto repayment of down-payment.
+      When “auto repayment for the down-payments“ is enabled,  the disbursements will trigger an auto down payment transaction for the down payment amount" class="margin-b">
+        Enable Auto Repayment for Down Payment
+      </mat-checkbox>
+    </div>
+
+    <div *ngIf="loanProductSettingsForm.value.multiDisburseLoan && loanProductSettingsForm.value.enableDownPayment" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+      <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="disableScheduleExtensionForDownPayment" matTooltip="Enable or disable If Fineract extends the
+      repayment schedule to the exact number of repayments configured for that loan account" class="margin-b">
+        Do not extend loan schedule for multi disbursal
       </mat-checkbox>
     </div>
 

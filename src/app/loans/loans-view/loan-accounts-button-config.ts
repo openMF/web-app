@@ -191,7 +191,7 @@ export class LoansAccountButtonConfiguration {
             taskPermissionName: 'RECOVERGUARANTEES_LOAN',
           },
           {
-            name: 'Sale Loan',
+            name: 'Sell Loan',
             taskPermissionName: 'SALE_LOAN',
           }
         ];

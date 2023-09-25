@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** rxjs Imports */
 import { finalize } from 'rxjs/operators';
@@ -22,7 +22,7 @@ import { confirmPasswordValidator } from './confirm-password.validator';
 export class ResetPasswordComponent implements OnInit {
 
   /** Reset password form group. */
-  resetPasswordForm: FormGroup;
+  resetPasswordForm: UntypedFormGroup;
   /** Password input field type. */
   passwordInputType: string;
   /** True if loading. */
@@ -32,7 +32,7 @@ export class ResetPasswordComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {AuthenticationService} authenticationService Authentication Service.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private authenticationService: AuthenticationService) {  }
 
   /**

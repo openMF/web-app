@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -28,7 +28,7 @@ import { SettingsService } from 'app/settings/settings.service';
 export class EditLoanProvisioningCriteriaComponent implements OnInit {
 
   /** Loan Provisioning Criteria form. */
-  provisioningCriteriaForm: FormGroup;
+  provisioningCriteriaForm: UntypedFormGroup;
   /** Loan Provisioning Criteria Template */
   loanProvisioningCriteriaAndTemplate: any;
   /** Liability Accounts */
@@ -59,7 +59,7 @@ export class EditLoanProvisioningCriteriaComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private organizationService: OrganizationService,
               private router: Router,
               private settingsService: SettingsService,

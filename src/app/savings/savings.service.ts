@@ -108,6 +108,24 @@ export class SavingsService {
   }
 
   /**
+   * @returns {Observable<any>}
+   */
+  getSavingsTransactionDatatables(): Observable<any> {
+    const httpParams = new HttpParams().set('apptable', 'm_savings_account_transaction');
+    return this.http.get(`/datatables`, { params: httpParams });
+  }
+
+  /**
+   * @param accountId account Id of savings account to get datatable for.
+   * @param datatableName Data table name.
+   * @returns {Observable<any>}
+   */
+  getSavingsTransactionDatatable(transactionId: string, datatableName: string): Observable<any> {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.get(`/datatables/${datatableName}/${transactionId}`, { params: httpParams });
+  }
+
+  /**
    * @param accountId account Id of savings account to get add datatable entry for.
    * @param datatableName Data Table name.
    * @param data Data.

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
@@ -12,7 +12,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 export class RecurringDepositProductChargesStepComponent implements OnInit {
 
   @Input() recurringDepositProductsTemplate: any;
-  @Input() currencyCode: FormControl;
+  @Input() currencyCode: UntypedFormControl;
 
   chargeData: any;
 

@@ -56,13 +56,16 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field fxFlex *ngIf="isPentahoReport() && reportForm.contains('outputType')">
+        <mat-form-field fxFlex *ngIf="isPentahoReport()">
           <mat-label>{{ 'Output Type' | translate }}</mat-label>
-          <mat-select required [formControlName]="outputType">
+          <mat-select required formControlName="outputType">
             <mat-option *ngFor="let option of outputTypeOptions" [value]="option.value">
               {{option.name | translate}}
             </mat-option>
           </mat-select>
+          <mat-error *ngIf="reportForm.controls['outputType'].hasError('required')">
+            Report Output Type is <strong>required</strong>
+          </mat-error>
         </mat-form-field>
 
         <div fxFlex="98%" *ngIf="exportToS3Allowed"  >
@@ -70,15 +73,6 @@
             Export output data to S3 repository [{{exportToS3Repository}}]
           </mat-checkbox>
         </div>
-
-        <mat-form-field fxFlex *ngIf="report.type === 'Table' && reportForm.contains('exportAsType')">
-          <mat-label>{{ 'Export output as' | translate }}</mat-label>
-          <mat-select required formControlName="exportAsType">
-            <mat-option *ngFor="let option of outputTypeOptions" [value]="option.value">
-              {{option.name | translate}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
 
       </mat-card-content>
 

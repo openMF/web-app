@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services */
 import { UsersService } from '../users.service';
@@ -25,7 +25,7 @@ export class EditUserComponent implements OnInit {
   /** Roles Data */
   rolesData: any;
   /** Edit User form. */
-  editUserForm: FormGroup;
+  editUserForm: UntypedFormGroup;
 
   /**
    * Retrieves the offices data from `resolve`.
@@ -34,7 +34,7 @@ export class EditUserComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private usersService: UsersService,
               private route: ActivatedRoute,
               private router: Router) {

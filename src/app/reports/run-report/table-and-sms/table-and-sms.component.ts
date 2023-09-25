@@ -11,8 +11,8 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
-import { Dates } from 'app/core/utils/dates';
 import { environment } from 'environments/environment';
+import { ProgressBarService } from 'app/core/progress-bar/progress-bar.service';
 
 /**
  * Table and SMS Component
@@ -50,7 +50,7 @@ export class TableAndSmsComponent implements OnChanges {
   constructor(private reportsService: ReportsService,
           public dialog: MatDialog,
           private decimalPipe: DecimalPipe,
-          private dateUtils: Dates) { }
+          private progressBarService: ProgressBarService) { }
 
   /**
    * Fetches run report data post changes in run report form.
@@ -77,6 +77,7 @@ export class TableAndSmsComponent implements OnChanges {
         });
       }
       this.hideOutput = false;
+      this.progressBarService.decrease();
     });
   }
 

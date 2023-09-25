@@ -3,6 +3,10 @@
 .tab-container {
   padding: 1%;
   margin: 1%;
+
+  div: {
+    margin-top: 3px;
+  }
 }
 
 .mat-h3 {
@@ -14,5 +18,9 @@
 .mat-h4 {
   margin-top: 10px !important;
   font-weight: 200;
+  color: $status-approved;
+}
+
+.repayment-strategy {
   color: $status-approved;
 }

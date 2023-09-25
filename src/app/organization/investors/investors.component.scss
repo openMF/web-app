@@ -1,0 +1,37 @@
+.status {
+  color: black;
+}
+
+.field-name {
+  font-weight: 800;
+}
+
+.record-actions {
+  margin-top: 1%;
+  button{
+    margin-right: 1%;
+  }
+}
+
+.external-asset-transfer {
+  margin-top: 10px;
+  min-height: 160px;
+}
+
+.record {
+  .record-actions{
+    margin-top: 1%;
+    button{
+      margin-right: 1%;
+    }
+  }
+  h3 {
+    margin: 1% auto;
+  }
+
+  p {
+    line-height: 30px;
+    margin-left: 2%;
+  }
+}
+

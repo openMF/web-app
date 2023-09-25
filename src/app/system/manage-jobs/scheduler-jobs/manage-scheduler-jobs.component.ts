@@ -16,6 +16,7 @@ import { ConfigurationWizardService } from '../../../configuration-wizard/config
 
 /** Custom Dialog Component */
 import { NextStepDialogComponent } from '../../../configuration-wizard/next-step-dialog/next-step-dialog.component';
+import { CustomParametersPopoverComponent } from './custom-parameters-popover/custom-parameters-popover.component';
 
 /**
  * Manage scheduler jobs component.
@@ -239,4 +240,16 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
+  /**
+   * Open Custom Parameters Dialog
+   */
+  openCustomParametersDialog() {
+    this.dialog.open(CustomParametersPopoverComponent, {
+      data: {
+        selectedJobs: this.selection
+      }
+    });
+  }
+
 }

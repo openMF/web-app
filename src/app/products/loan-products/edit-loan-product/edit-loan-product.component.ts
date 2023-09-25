@@ -14,6 +14,7 @@ import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan
 import { ProductsService } from 'app/products/products.service';
 import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
 import { LoanProducts } from '../loan-products';
+import { AdvancedPaymentAllocation, AdvancedPaymentStrategy, PaymentAllocation, PaymentAllocationOrder, PaymentAllocationTransactionTypes } from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 
 @Component({
   selector: 'mifosx-edit-loan-product',
@@ -33,6 +34,11 @@ export class EditLoanProductComponent implements OnInit {
   accountingRuleData = ['None', 'Cash', 'Accrual (periodic)', 'Accrual (upfront)'];
   itemsByDefault: GlobalConfiguration[] = [];
 
+  isAdvancedPaymentStrategy = false;
+  wasPaymentAllocationChanged = false;
+  paymentAllocation: PaymentAllocation[] = [];
+  advancedPaymentAllocations: AdvancedPaymentAllocation[] = [];
+
   /**
    * @param {ActivatedRoute} route Activated Route.
    * @param {ProductsService} productsService Product Service.
@@ -43,7 +49,8 @@ export class EditLoanProductComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private productsService: ProductsService,
               private loanProducts: LoanProducts,
-              private router: Router) {
+              private router: Router,
+              private advancedPaymentStrategy: AdvancedPaymentStrategy) {
     this.route.data.subscribe((data: { loanProductAndTemplate: any, configurations: any }) => {
       this.loanProductAndTemplate = data.loanProductAndTemplate;
       const assetAccountData = this.loanProductAndTemplate.accountingMappingOptions.assetAccountOptions || [];
@@ -52,11 +59,12 @@ export class EditLoanProductComponent implements OnInit {
 
       this.itemsByDefault = loanProducts.setItemsByDefault(data.configurations);
       this.loanProductAndTemplate['itemsByDefault'] = this.itemsByDefault;
-      this.loanProductAndTemplate = loanProducts.updateLoanProductDefaults(this.loanProductAndTemplate);
+      this.loanProductAndTemplate = loanProducts.updateLoanProductDefaults(this.loanProductAndTemplate, true);
     });
   }
 
   ngOnInit() {
+    this.buildAdvancedPaymentAllocation();
   }
 
   get loanProductDetailsForm() {
@@ -73,6 +81,23 @@ export class EditLoanProductComponent implements OnInit {
 
   get loanProductSettingsForm() {
     return this.loanProductSettingsStep.loanProductSettingsForm;
+  }
+
+  advancePaymentStrategy(value: string): void {
+    this.isAdvancedPaymentStrategy = (value === 'advanced-payment-allocation-strategy');
+  }
+
+  buildAdvancedPaymentAllocation(): void {
+    this.advancedPaymentAllocations = this.advancedPaymentStrategy.buildAdvancedPaymentAllocationList(this.loanProductAndTemplate);
+  }
+
+  setPaymentAllocation(paymentAllocation: PaymentAllocation[]): void {
+    this.paymentAllocation = paymentAllocation;
+    this.wasPaymentAllocationChanged = true;
+  }
+
+  paymentAllocationChanged(value: boolean): void {
+    this.wasPaymentAllocationChanged = value;
   }
 
   get loanProductAccountingForm() {
@@ -92,13 +117,14 @@ export class EditLoanProductComponent implements OnInit {
         !this.loanProductTermsForm.pristine ||
         !this.loanProductSettingsForm.pristine ||
         !this.loanProductChargesStep.pristine ||
-        !this.loanProductAccountingForm.pristine
+        !this.loanProductAccountingForm.pristine ||
+        this.wasPaymentAllocationChanged
       )
     );
   }
 
   get loanProduct() {
-    return {
+    const loanProduct = {
       ...this.loanProductDetailsStep.loanProductDetails,
       ...this.loanProductCurrencyStep.loanProductCurrency,
       ...this.loanProductTermsStep.loanProductTerms,
@@ -106,6 +132,12 @@ export class EditLoanProductComponent implements OnInit {
       ...this.loanProductChargesStep.loanProductCharges,
       ...this.loanProductAccountingStep.loanProductAccounting
     };
+    // Default empty array
+    loanProduct['paymentAllocation'] = [];
+    if (this.isAdvancedPaymentStrategy) {
+      loanProduct['paymentAllocation'] = this.paymentAllocation;
+    }
+    return loanProduct;
   }
 
   submit() {

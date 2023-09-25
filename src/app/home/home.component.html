@@ -15,7 +15,7 @@
 
     <mat-card-header>
       <mat-card-title class="title">
-        {{ 'labels.texts.Welcome' | translate }}, {{ username }}!
+        {{ 'labels.text.Welcome' | translate }}, {{ username }}!
       </mat-card-title>
     </mat-card-header>
 
@@ -43,21 +43,21 @@
 </div>
 
 <ng-template #templateButtonDashboard let-popover="popover">
-  <h2>Dashboard</h2>
-  <p class="mw300">This will navigate the user to the dashboard component.</p>
+  <h2>{{"labels.heading.Dashboard"  |translate}}</h2>
+  <p class="mw300">{{"labels.text.This will navigate the user to the dashboard component."  |translate}}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateSearchActivity, searchActivity,'bottom',true)">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close"  |translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{"labels.buttons.Back"  |translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateSearchActivity, searchActivity,'bottom',true)">{{"labels.buttons.Next"  |translate}}</button>
   </div>
 </ng-template>
 
 <ng-template #templateSearchActivity let-popover="popover">
-  <h2>Search Activity</h2>
-  <p class="mw300">This will navigate the user to the searched activity.</p>
+  <h2>{{"labels.heading.Search Activity"  |translate}}</h2>
+  <p class="mw300">{{"labels.text.This will navigate the user to the searched activity."  |translate}}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonDashboard, buttonDashboard,'bottom',true)">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close"  |translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonDashboard, buttonDashboard,'bottom',true)">{{"labels.buttons.Back"  |translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{"labels.buttons.Next"  |translate}}</button>
   </div>
 </ng-template>

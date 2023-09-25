@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output} from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
 import { ReportsService } from 'app/reports/reports.service';
@@ -32,7 +32,7 @@ export class SmsCampaignStepComponent implements OnInit {
   maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 10));
 
   /** SMS Campaign Form */
-  smsCampaignDetailsForm: FormGroup;
+  smsCampaignDetailsForm: UntypedFormGroup;
   /** Data to be passed to sub component */
   paramData: any;
   /** Trigger types options */
@@ -51,7 +51,7 @@ export class SmsCampaignStepComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {ReportsService} reportService Reports Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private reportService: ReportsService) {
     this.createSMSCampaignDetailsForm();
     this.buildDependencies();
@@ -70,14 +70,14 @@ export class SmsCampaignStepComponent implements OnInit {
    * Else returns a cumulative form group.
    */
   get smsCampaignFormGroup() {
-    let smsCampaignFormGroup: FormGroup;
+    let smsCampaignFormGroup: UntypedFormGroup;
     if (this.businessRuleParametersComponent) {
-      smsCampaignFormGroup = new FormGroup({
+      smsCampaignFormGroup = new UntypedFormGroup({
         smsCampaign: this.smsCampaignDetailsForm,
         businessRule: this.businessRuleParametersComponent.ReportForm
       });
     } else {
-      smsCampaignFormGroup = new FormGroup({
+      smsCampaignFormGroup = new UntypedFormGroup({
         smsCampaign: this.smsCampaignDetailsForm
       });
     }
@@ -127,7 +127,7 @@ export class SmsCampaignStepComponent implements OnInit {
   buildDependencies() {
     this.smsCampaignDetailsForm.get('isNotification').valueChanges.subscribe((value: boolean) => {
       if (!value) {
-        this.smsCampaignDetailsForm.addControl('providerId', new FormControl(null));
+        this.smsCampaignDetailsForm.addControl('providerId', new UntypedFormControl(null));
       } else {
         this.smsCampaignDetailsForm.removeControl('providerId');
       }
@@ -152,9 +152,9 @@ export class SmsCampaignStepComponent implements OnInit {
         this.businessRules = this.businessRules.filter((rule: any) => rule.reportSubType !== 'Triggered');
       }
       if (value === 2) {
-        this.smsCampaignDetailsForm.addControl('recurrenceStartDate', new FormControl('', Validators.required));
-        this.smsCampaignDetailsForm.addControl('frequency', new FormControl('', Validators.required));
-        this.smsCampaignDetailsForm.addControl('interval', new FormControl('', Validators.required));
+        this.smsCampaignDetailsForm.addControl('recurrenceStartDate', new UntypedFormControl('', Validators.required));
+        this.smsCampaignDetailsForm.addControl('frequency', new UntypedFormControl('', Validators.required));
+        this.smsCampaignDetailsForm.addControl('interval', new UntypedFormControl('', Validators.required));
         this.smsCampaignDetailsForm.get('frequency').valueChanges.subscribe((frequency: number) => {
           this.smsCampaignDetailsForm.removeControl('repeatsOnDay');
           switch (frequency) {
@@ -163,7 +163,7 @@ export class SmsCampaignStepComponent implements OnInit {
             break;
             case 2: // Weekly
               this.repetitionIntervals = ['1', '2', '3'];
-              this.smsCampaignDetailsForm.addControl('repeatsOnDay', new FormControl('', Validators.required));
+              this.smsCampaignDetailsForm.addControl('repeatsOnDay', new UntypedFormControl('', Validators.required));
             break;
             case 3: // Monthly
               this.repetitionIntervals = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];

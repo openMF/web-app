@@ -20,7 +20,7 @@ The latest code is continuously deployed at https://openmf.github.io/web-app/ wh
 
 2. Install [angular-cli](https://github.com/angular/angular-cli) globally.
 ```
-npm install -g @angular/cli@13.3.10
+npm install -g @angular/cli@14.2.12
 ```
 
 3. Clone the project locally into your system.
@@ -58,7 +58,7 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ### Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--configuration production` flag for a production build.
 
 Run `npm run build:prod` to build a production artifacts Instead.
 

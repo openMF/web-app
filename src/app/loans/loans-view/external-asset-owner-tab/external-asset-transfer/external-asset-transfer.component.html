@@ -1,0 +1,70 @@
+<table>
+  <tbody>
+    <tr>
+      <td fxFlex="25%" class="m-l-5">
+        <b>Status :</b>
+      </td>
+      <td fxFlex="25%" class="m-l-5 left">
+        <div [ngClass]="itemStatus(transferData.status)">
+          <fa-icon icon="stop"></fa-icon>
+          <span class="m-l-5 status">{{transferData.status}}</span>
+        </div>
+      </td>
+      <td fxFlex="25%" class="m-l-5">
+        <b>Owner External Id :</b>
+      </td>
+      <td fxFlex="25%" class="m-l-5 left">
+        <mifosx-external-identifier externalId="{{transferData.owner.externalId}}" completed="true"></mifosx-external-identifier>
+      </td>
+    </tr>
+    <tr>
+      <td fxFlex="25%" class="m-l-5">
+        <b>Settlement Date :</b>
+      </td>
+      <td fxFlex="25%" class="m-l-5">
+        {{transferData.settlementDate | dateFormat}}
+      </td>
+      <td fxFlex="25%" class="m-l-5">
+        <b>Effective Date :</b>
+      </td>
+      <td fxFlex="25%" class="m-l-5">
+        {{transferData.effectiveFrom | dateFormat}}
+      </td>
+    </tr>
+    <tr>
+      <td fxFlex="25%" class="m-l-5">
+        <b>Details :</b>
+      </td>
+      <td fxFlex="75%" class="left">
+        <table>
+          <tbody>
+            <tr>
+              <td fxFlex="50%" class="m-l-5"><b>Principal Outstanding :</b></td>
+              <td fxFlex="50%" class="r-amount">{{transferData.details.totalPrincipalOutstanding | formatNumber}}</td>
+            </tr>
+            <tr>
+              <td fxFlex="50%" class="m-l-5"><b>Interest Outstanding :</b></td>
+              <td fxFlex="50%" class="r-amount">{{transferData.details.totalInterestOutstanding | formatNumber}}</td>
+            </tr>
+            <tr>
+              <td fxFlex="50%" class="m-l-5"><b>Fees Outstanding :</b></td>
+              <td fxFlex="50%" class="r-amount">{{transferData.details.totalFeeChargesOutstanding | formatNumber}}</td>
+            </tr>
+            <tr>
+              <td fxFlex="50%" class="m-l-5"><b>Penalties Outstanding :</b></td>
+              <td fxFlex="50%" class="r-amount">{{transferData.details.totalPenaltyChargesOutstanding | formatNumber}}</td>
+            </tr>
+            <tr>
+              <td fxFlex="50%" class="m-l-5"><b>Outstanding :</b></td>
+              <td fxFlex="50%" class="r-amount">{{transferData.details.totalOutstanding | formatNumber}}</td>
+            </tr>
+            <tr>
+              <td fxFlex="50%" class="m-l-5"><b>Overpaid :</b></td>
+              <td fxFlex="50%" class="r-amount">{{transferData.details.totalOverpaid | formatNumber}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>

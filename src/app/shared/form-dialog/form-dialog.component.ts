@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 import { FormfieldBase } from './formfield/model/formfield-base';
 
@@ -30,7 +30,7 @@ export class FormDialogComponent implements OnInit {
     addButtonText: 'Add'
   };
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   formfields: FormfieldBase[];
   pristine: boolean;
 

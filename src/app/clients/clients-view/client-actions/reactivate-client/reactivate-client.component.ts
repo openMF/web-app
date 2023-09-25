@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -23,7 +23,7 @@ export class ReactivateClientComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Reactivate client form. */
-  reactivateClientForm: FormGroup;
+  reactivateClientForm: UntypedFormGroup;
   /** Client Account Id */
   clientId: any;
 
@@ -35,7 +35,7 @@ export class ReactivateClientComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private clientsService: ClientsService,
               private dateUtils: Dates,
               private route: ActivatedRoute,

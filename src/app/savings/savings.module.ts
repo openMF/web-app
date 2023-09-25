@@ -49,6 +49,9 @@ import { ManageSavingsAccountComponent } from './saving-account-actions/manage-s
 import { ReleaseAmountDialogComponent } from './savings-account-view/custom-dialogs/release-amount-dialog/release-amount-dialog.component';
 import { SavingsDocumentsTabComponent } from './savings-account-view/savings-documents-tab/savings-documents-tab.component';
 import { NotesTabComponent } from './savings-account-view/notes-tab/notes-tab.component';
+import { DatatableTransactionTabComponent } from './savings-account-view/transactions/view-transaction/datatable-transaction-tab/datatable-transaction-tab.component';
+import { SavingsTransactionGeneralTabComponent } from './savings-account-view/transactions/view-transaction/savings-transaction-general-tab/savings-transaction-general-tab.component';
+import { SavingsTransactionDatatableTabComponent } from './savings-account-view/transactions/view-transaction/savings-transaction-datatable-tab/savings-transaction-datatable-tab.component';
 
 
 /**
@@ -104,7 +107,10 @@ import { NotesTabComponent } from './savings-account-view/notes-tab/notes-tab.co
     ManageSavingsAccountComponent,
     ReleaseAmountDialogComponent,
     SavingsDocumentsTabComponent,
-    NotesTabComponent
+    NotesTabComponent,
+    DatatableTransactionTabComponent,
+    SavingsTransactionGeneralTabComponent,
+    SavingsTransactionDatatableTabComponent
   ],
   providers: [ ]
 })

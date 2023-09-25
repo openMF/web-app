@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 
 /** Custom Services */
 import { ReportsService } from '../reports.service';
@@ -12,6 +12,7 @@ import { ReportParameter } from '../common-models/report-parameter.model';
 import { SelectOption } from '../common-models/select-option.model';
 import { Dates } from 'app/core/utils/dates';
 import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
+import { ProgressBarService } from 'app/core/progress-bar/progress-bar.service';
 
 /**
  * Run report component.
@@ -40,9 +41,9 @@ export class RunReportComponent implements OnInit {
   dataObject: any;
 
   /** Initializes new form group eportForm */
-  reportForm = new FormGroup({});
+  reportForm = new UntypedFormGroup({});
   /** Static Form control for decimal places in output */
-  decimalChoice = new FormControl();
+  decimalChoice = new UntypedFormControl();
 
   /** Toggles Report form */
   isCollapsed = false;
@@ -68,8 +69,9 @@ export class RunReportComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute,
               private reportsService: ReportsService,
-               private settingsService: SettingsService,
-              private dateUtils: Dates) {
+              private settingsService: SettingsService,
+              private dateUtils: Dates,
+              private progressBarService: ProgressBarService) {
     this.report.name = this.route.snapshot.params['name'];
     this.route.queryParams.subscribe((queryParams: { type: any, id: any }) => {
       this.report.type = queryParams.type;
@@ -112,7 +114,7 @@ export class RunReportComponent implements OnInit {
     this.paramData.forEach(
       (param: ReportParameter) => {
         if (!param.parentParameterName) { // Non Child Parameter
-          this.reportForm.addControl(param.name, new FormControl('', Validators.required));
+          this.reportForm.addControl(param.name, new UntypedFormControl('', Validators.required));
           if (param.displayType === 'select') {
             this.fetchSelectOptions(param, param.name);
           }
@@ -124,18 +126,18 @@ export class RunReportComponent implements OnInit {
         }
       });
     if (this.isPentahoReport()) {
-      this.reportForm.addControl('outputType', new FormControl(''));
+      this.reportForm.addControl('outputType', new UntypedFormControl('', Validators.required));
       this.outputTypeOptions = [
+        { 'name': 'PDF format', 'value': 'PDF' },
         { 'name': 'Normal format', 'value': 'HTML' },
         { 'name': 'Excel format', 'value': 'XLS' },
         { 'name': 'Excel 2007 format', 'value': 'XLSX' },
-        { 'name': 'CSV format', 'value': 'CSV' },
-        { 'name': 'PDF format', 'value': 'PDF' }
+        { 'name': 'CSV format', 'value': 'CSV' }
       ];
       this.mapPentahoParams();
     }
     if (this.exportToS3Allowed) {
-      this.reportForm.addControl('exportOutputToS3', new FormControl(false));
+      this.reportForm.addControl('exportOutputToS3', new UntypedFormControl(false));
     }
     this.decimalChoice.patchValue('0');
     this.setChildControls();
@@ -176,9 +178,9 @@ export class RunReportComponent implements OnInit {
       this.reportForm.get(param.name).valueChanges.subscribe((option: any) => {
         param.childParameters.forEach((child: ReportParameter) => {
           if (child.displayType === 'none') {
-            this.reportForm.addControl(child.name, new FormControl(child.defaultVal));
+            this.reportForm.addControl(child.name, new UntypedFormControl(child.defaultVal));
           } else {
-            this.reportForm.addControl(child.name, new FormControl('', Validators.required));
+            this.reportForm.addControl(child.name, new UntypedFormControl('', Validators.required));
           }
           if (child.displayType === 'select') {
             const inputstring = `${child.name}?${param.inputName}=${option.id}`;
@@ -231,8 +233,11 @@ export class RunReportComponent implements OnInit {
           formattedResponse[newKey] = value['id'];
           break;
         case 'date':
-          const dateFormat = 'yyyy-MM-dd';
-          formattedResponse[newKey] = this.dateUtils.formatDate(value, dateFormat);
+          if (this.isTableReport()) {
+            formattedResponse[newKey] = this.dateUtils.formatDate(value, Dates.DEFAULT_DATEFORMAT);
+          } else {
+            formattedResponse[newKey] = this.dateUtils.formatDate(value, this.settingsService.dateFormat);
+          }
           this.reportUsesDates = true;
           break;
         case 'none':
@@ -253,10 +258,14 @@ export class RunReportComponent implements OnInit {
       ...userResponseValues,
     };
     if (this.reportUsesDates) {
+      let dateFormat = this.settingsService.dateFormat;
+      if (this.isTableReport()) {
+        dateFormat = Dates.DEFAULT_DATEFORMAT;
+      }
       formData = {
         ...userResponseValues,
         locale: this.settingsService.language.code,
-        dateFormat: this.settingsService.dateFormat
+        dateFormat: dateFormat
       };
     }
     if (this.reportToBeExportedInRepository) {

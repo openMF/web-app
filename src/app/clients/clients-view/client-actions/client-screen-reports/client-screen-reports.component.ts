@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Renderer2, ViewChild, ElementRef, SecurityContext } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -18,7 +18,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class ClientScreenReportsComponent implements OnInit {
 
   /** Client Screen Reportform. */
-  clientScreenReportForm: FormGroup;
+  clientScreenReportForm: UntypedFormGroup;
   /** Templates Data */
   templatesData: any;
   /** Client Id */
@@ -37,7 +37,7 @@ export class ClientScreenReportsComponent implements OnInit {
    * @param {DomSanitizer} sanitizer DOM Sanitizer
    * @param {Renderer2} renderer Renderer 2
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private clientsService: ClientsService,
               private route: ActivatedRoute,
               private sanitizer: DomSanitizer,

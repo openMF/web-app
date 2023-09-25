@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -22,7 +22,7 @@ export class TransactionsTabComponent implements OnInit {
   /** Temporary Transaction Data */
   tempTransaction: any;
   /** Form control to handle accural parameter */
-  hideAccrualsParam: FormControl;
+  hideAccrualsParam: UntypedFormControl;
   /** Stores the status of the loan account */
   status: string;
   /** Columns to be displayed in original schedule table. */
@@ -50,7 +50,7 @@ export class TransactionsTabComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.hideAccrualsParam = new FormControl(false);
+    this.hideAccrualsParam = new UntypedFormControl(false);
     this.setLoanTransactions(this.transactions);
   }
 
@@ -109,9 +109,10 @@ export class TransactionsTabComponent implements OnInit {
    * PAYOUT_REFUND:22
    * GOODWILL_CREDIT:23
    * CHARGE_ADJUSTMENT:26
+   * DOWN_PAYMENT:28
    */
   showTransactions(transactionsData: any) {
-    if ([1, 2, 4, 9, 20, 21, 22, 23, 26].includes(transactionsData.type.id)) {
+    if ([1, 2, 4, 9, 20, 21, 22, 23, 26, 28].includes(transactionsData.type.id)) {
       this.router.navigate([transactionsData.id], { relativeTo: this.route });
     }
   }
@@ -135,6 +136,9 @@ export class TransactionsTabComponent implements OnInit {
     }
     if (this.isChargeOff(transaction.type)) {
       return 'chargeoff';
+    }
+    if (this.isDownPayment(transaction.type)) {
+      return 'down-payment';
     }
     return '';
   }
@@ -162,13 +166,15 @@ export class TransactionsTabComponent implements OnInit {
     if (this.isChargeOff(transaction.type)) {
       command = 'undo-charge-off';
       operationDate = this.settingsService.businessDate;
+      payload = {};
+    } else {
+      payload = {
+        transactionDate: this.dateUtils.formatDate(operationDate && new Date(operationDate), dateFormat),
+        transactionAmount: 0,
+        dateFormat,
+        locale
+      };
     }
-    payload = {
-      transactionDate: this.dateUtils.formatDate(operationDate && new Date(operationDate), dateFormat),
-      transactionAmount: 0,
-      dateFormat,
-      locale
-    };
 
     const undoTransactionAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { heading: 'Undo Transaction', dialogContext: `Are you sure you want undo the transaction type ${transaction.type.value} with id ${transaction.id}` }
@@ -193,6 +199,10 @@ export class TransactionsTabComponent implements OnInit {
 
   private isChargeOff(transactionType: any): boolean  {
     return (transactionType.chargeoff || transactionType.code === 'loanTransactionType.chargeOff');
+  }
+
+  private isDownPayment(transactionType: any): boolean  {
+    return (transactionType.downPayment || transactionType.code === 'loanTransactionType.downPayment');
   }
 
   private reload() {

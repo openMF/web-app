@@ -155,7 +155,7 @@ import { InvestorsComponent } from './investors/investors.component';
     CreateFundComponent,
     EditFundComponent,
     ViewFundComponent,
-    InvestorsComponent,
+    InvestorsComponent
   ],
   providers: [
     CreateHoliday,

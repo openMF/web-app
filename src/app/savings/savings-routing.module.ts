@@ -8,6 +8,7 @@ import { extract } from '../core/i18n/i18n.service';
 /** Custom Components */
 import { SavingsAccountViewComponent } from './savings-account-view/savings-account-view.component';
 import { TransactionsTabComponent } from './savings-account-view/transactions-tab/transactions-tab.component';
+import { DatatableTransactionTabComponent } from './savings-account-view/transactions/view-transaction/datatable-transaction-tab/datatable-transaction-tab.component';
 import { SavingAccountActionsComponent } from './saving-account-actions/saving-account-actions.component';
 import { ChargesTabComponent } from './savings-account-view/charges-tab/charges-tab.component';
 import { StandingInstructionsTabComponent } from './savings-account-view/standing-instructions-tab/standing-instructions-tab.component';
@@ -26,6 +27,8 @@ import { GsimAccountComponent } from './gsim-account/gsim-account.component';
 import { SavingsAccountViewResolver } from './common-resolvers/savings-account-view.resolver';
 import { SavingsDatatableResolver } from './common-resolvers/savings-datatable.resolver';
 import { SavingsDatatablesResolver } from './common-resolvers/savings-datatables.resolver';
+import { TransactionDatatableResolver } from './common-resolvers/transaction-datatable.resolver';
+import { TransactionDatatablesResolver } from './common-resolvers/transaction-datatables.resolver';
 import { SavingsAccountTemplateResolver } from './common-resolvers/savings-account-template.resolver';
 import { SavingsAccountAndTemplateResolver } from './common-resolvers/savings-account-and-template.resolver';
 import { SavingsAccountTransactionResolver } from './common-resolvers/savings-account-transaction.resolver';
@@ -41,6 +44,7 @@ import { SavingsDocumentsTabComponent } from './savings-account-view/savings-doc
 import { NotesTabComponent } from './savings-account-view/notes-tab/notes-tab.component';
 import { SavingNotesResolver } from './common-resolvers/saving-notes.resolver';
 import { SavingDocumentsResolver } from './common-resolvers/saving-documents.resolver';
+import { SavingsTransactionGeneralTabComponent } from './savings-account-view/transactions/view-transaction/savings-transaction-general-tab/savings-transaction-general-tab.component';
 
 /** Savings Routes */
 const routes: Routes = [
@@ -141,8 +145,35 @@ const routes: Routes = [
             path: '',
             component: ViewTransactionComponent,
             resolve: {
-              savingsAccountTransaction: SavingsAccountTransactionResolver
-            }
+              transactionDatatables: TransactionDatatablesResolver
+            },
+            children: [
+              {
+                path: '',
+                redirectTo: 'general',
+                pathMatch: 'full'
+              },
+              {
+                path: 'general',
+                component: SavingsTransactionGeneralTabComponent,
+                resolve: {
+                  savingsAccountTransaction: SavingsAccountTransactionResolver,
+                }
+              },
+              {
+                path: 'datatables',
+                children: [
+                  {
+                    path: ':datatableName',
+                    component: DatatableTransactionTabComponent,
+                    data: { title: extract('View Data table'), routeParamBreadcrumb: 'datatableName' },
+                    resolve: {
+                      transactionDatatable: TransactionDatatableResolver
+                    }
+                  }
+                ]
+              }
+            ]
           },
           {
             path: 'edit',
@@ -232,6 +263,8 @@ const routes: Routes = [
   providers: [SavingsAccountViewResolver,
     SavingsDatatablesResolver,
     SavingsDatatableResolver,
+    TransactionDatatableResolver,
+    TransactionDatatablesResolver,
     SavingsAccountTemplateResolver,
     SavingsAccountAndTemplateResolver,
     SavingsAccountTransactionResolver,

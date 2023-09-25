@@ -41,6 +41,8 @@ import { ViewJournalEntryComponent } from './accounting/view-journal-entry/view-
 import { ViewJournalEntryTransactionComponent } from './accounting/view-journal-entry-transaction/view-journal-entry-transaction.component';
 import { AccountNumberComponent } from './account-number/account-number.component';
 import { EntityNameComponent } from './entity-name/entity-name.component';
+import { TransactionPaymentDetailComponent } from './transaction-payment-detail/transaction-payment-detail.component';
+import { StepperButtonsComponent } from './steppers/stepper-buttons/stepper-buttons.component';
 
 /**
  * Shared Module
@@ -88,7 +90,9 @@ import { EntityNameComponent } from './entity-name/entity-name.component';
     ViewJournalEntryComponent,
     ViewJournalEntryTransactionComponent,
     AccountNumberComponent,
-    EntityNameComponent
+    EntityNameComponent,
+    TransactionPaymentDetailComponent,
+    StepperButtonsComponent
   ],
   exports: [
     FileUploadComponent,
@@ -114,7 +118,9 @@ import { EntityNameComponent } from './entity-name/entity-name.component';
     ViewJournalEntryComponent,
     ViewJournalEntryTransactionComponent,
     SvgIconComponent,
-    EntityNameComponent
+    EntityNameComponent,
+    TransactionPaymentDetailComponent,
+    StepperButtonsComponent
   ]
 })
 export class SharedModule { }
