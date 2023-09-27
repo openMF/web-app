@@ -421,6 +421,13 @@ export class SystemService {
   }
 
   /**
+ * @returns {Observable<any>} Configurations data by country.
+ */
+  getConfigurationsByCountry(countryId): Observable<any> {
+    let httpParams = new HttpParams().set('countryId', countryId.toString());
+    return this.http.get('/configurations', { params: httpParams });
+  }
+  /**
    * @param {string} configurationId Configuration ID of configuration.
    * @returns {Observable<any>} Configuration.
    */

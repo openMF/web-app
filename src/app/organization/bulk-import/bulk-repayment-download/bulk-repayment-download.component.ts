@@ -23,10 +23,14 @@ export class BulkRepaymentDownloadComponent implements OnInit {
     private formBuilder: FormBuilder,
     private organizationService: OrganizationService, 
     private settingsService: SettingsService
-  ) {}
+  ) {
+    this.route.data.subscribe((data) => {
+      this.countriesData = data.countries;
+      this.countriesDataSliced = this.countriesData;
+    });
+  }
 
   ngOnInit(): void {
-    this.getCountries();
     this.createRepaymentDownloadForm();
   }
 
@@ -37,19 +41,6 @@ export class BulkRepaymentDownloadComponent implements OnInit {
     this.repaymentDownloadForm = this.formBuilder.group({
       countryId: [""],
       repaymentsDate: [""],
-    });
-  }
-
-  /**
-   * Retrieves the list of countries.
-   *
-   * @param {type} paramName - description of parameter
-   * @return {type} description of return value
-   */
-  getCountries() {
-    this.organizationService.getCountries().subscribe((response: any) => {
-      this.countriesData = response;
-      this.countriesDataSliced = this.countriesData;
     });
   }
 

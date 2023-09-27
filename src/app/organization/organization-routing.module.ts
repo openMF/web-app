@@ -112,6 +112,7 @@ import { CreateOutletComponent } from './rural-outlet/create-outlet/create-outle
 import { EditRetailOutletResolver } from './rural-outlet/edit-retail-outlet.resolver';
 import { CreateCurrenciesComponent } from './currencies/create-currencies/create-currencies.component';
 import { BulkRepaymentDownloadComponent } from './bulk-import/bulk-repayment-download/bulk-repayment-download.component';
+import { CountriesResolver } from './bulk-import/view-bulk-import/country.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -670,6 +671,9 @@ const routes: Routes = [
                 {
                   path: '',
                   component: BulkRepaymentDownloadComponent,
+                  resolve: {
+                    countries: CountriesResolver
+                  }
                 }
               ]
             },
@@ -677,6 +681,10 @@ const routes: Routes = [
               path: ':import-name',
               component: ViewBulkImportComponent,
               data: { title: extract('View Bulk Import'), routeParamBreadcrumb: 'import-name' },
+              resolve: {
+                countries: CountriesResolver,
+                imports: BulkImportResolver
+              }
             },
           ]
         },
@@ -772,6 +780,7 @@ const routes: Routes = [
     HolidayResolver,
     HolidayTemplateResolver,
     BulkImportResolver,
+    CountriesResolver,
     HolidayResolver,
     EntityDataTableChecksTemplateResolver,
     LoanProvisioningCriteriasResolver,

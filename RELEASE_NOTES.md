@@ -20,6 +20,9 @@ Release Notes
     * [SER-1916] - Create a UI for repayments download
     * [SER-1112] - Create UI for field configuration (CRUD)
     * [SER-1963] - Fix the OU tree selection issue on the loan product creation
+    * [SER-1898] - Fix Office Bulk Import
+    * [SER-1899] - Fix Clients Bulk Import
+    * [SER-1900] - Fix Groups Bulk Import
 
 
 ## Version 1.0.0 - for use with Fineract Web App

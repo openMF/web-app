@@ -834,7 +834,7 @@ export class OrganizationService {
    * @param legalFormType Legal Form type fortemplate retrieval
    * @returns {Observable<any>} Import Template
    */
-  getImportTemplate (urlSuffix: string, officeId: any, staffId: any, legalFormType: string): Observable<any> {
+  getImportTemplate (urlSuffix: string, countryId: any, officeId: any, staffId: any, legalFormType: string): Observable<any> {
     let httpParams = new HttpParams()
       .set('tenantIdentifier', 'default')
       .set('locale', this.settingsService.language.code)
@@ -848,6 +848,11 @@ export class OrganizationService {
     if (legalFormType.length) {
       httpParams = httpParams.set('legalFormType', legalFormType);
     }
+
+    if (countryId) {
+      httpParams = httpParams.set('countryId', countryId.toString());
+    }
+
     return this.http.get(`${urlSuffix}/downloadtemplate`, {
       params: httpParams,
       responseType: 'arraybuffer',

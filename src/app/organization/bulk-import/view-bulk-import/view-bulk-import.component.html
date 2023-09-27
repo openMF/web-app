@@ -7,7 +7,26 @@
 
       <form [formGroup]="bulkImportForm">
         <mat-card-content>
-          <div *ngIf="bulkImport.formFields >= 1">
+          <div *ngIf="bulkImport.formFields >= 0">
+            <mat-form-field fxFlex>
+              <mat-label>Country</mat-label>
+              <mat-select required formControlName="countryId" (selectionChange)="onCountryChange($event.value)" #country>
+                <mat-select-filter
+                  *ngIf="country.focused"
+                  [array]="countriesData"
+                  (filteredReturn)="countriesDataSliced = $event"
+                  [displayMember]="'name'"
+                >
+                </mat-select-filter>
+
+                <mat-option *ngFor="let country of countriesData" [value]="country.id" [class.hide]="!isCountryFiltered(country)">
+                  {{ country.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div *ngIf="bulkImport.formFields >= 0 && bulkImport.name != 'Healthy Path' && bulkImport.name != 'Loan Repayments'">
             <mat-form-field fxFlex>
               <mat-label>Office</mat-label>
               <mat-select required formControlName="officeId" #office>
@@ -26,7 +45,7 @@
             </mat-form-field>
           </div>
 
-          <div *ngIf="bulkImport.formFields >= 2">
+          <div *ngIf="bulkImport.formFields >= 2 || bulkImport.name == 'Healthy Path'">
             <mat-form-field fxFlex>
               <mat-label>Staff</mat-label>
               <mat-select required formControlName="staffId">

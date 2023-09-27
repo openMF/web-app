@@ -9,6 +9,7 @@ import { FormGroup, FormBuilder } from "@angular/forms";
 /** Custom Imports */
 import { OrganizationService } from "../../organization.service";
 import { BulkImports } from "./bulk-imports";
+import { ClientsService } from "app/clients/clients.service";
 
 /**
  * View Bulk Imports Component
@@ -22,6 +23,10 @@ export class ViewBulkImportComponent implements OnInit {
   /** offices Data */
   officeData: any;
   officeDataSliced: any;
+  /** Countries data */
+  countriesData: any;
+  countriesDataSliced: any;
+  countryConfigurations: any;
   /** staff Data */
   staffData: any;
   /** Entity Template */
@@ -64,12 +69,14 @@ export class ViewBulkImportComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private organizationService: OrganizationService
-  ) {
+    private organizationService: OrganizationService, 
+    private clientsService: ClientsService) {
     this.bulkImport.name = this.route.snapshot.params["import-name"];
-    this.route.data.subscribe((data: any) => {
+    this.route.data.subscribe((data: {offices: any, imports:any, countries:any}) => {
       this.officeData = data.offices;
       this.officeDataSliced = this.officeData;
+      this.countriesData = data.countries;
+      this.countriesDataSliced = this.countriesData;
       this.importsData = data.imports;
     });
   }
@@ -92,10 +99,18 @@ export class ViewBulkImportComponent implements OnInit {
   }
 
   /**
+   * Used for filtering country dropdownlist.
+   */
+  public isCountryFiltered(country: any) {
+    return this.countriesDataSliced.find((item) => item.id === country.id);
+  }
+
+  /**
    * Creates the bulk import form.
    */
   createBulkImportForm() {
     this.bulkImportForm = this.formBuilder.group({
+      countryId: [""],
       officeId: [""],
       staffId: [""],
       legalForm: [""],
@@ -128,6 +143,7 @@ export class ViewBulkImportComponent implements OnInit {
    * Gets bulk import's downloadable template from API.
    */
   downloadTemplate() {
+    const countryId = this.bulkImportForm.get("countryId").value;
     const officeId = this.bulkImportForm.get("officeId").value;
     const staffId = this.bulkImportForm.get("staffId").value;
     let legalFormType = "";
@@ -141,7 +157,7 @@ export class ViewBulkImportComponent implements OnInit {
         break;
     }
     this.organizationService
-      .getImportTemplate(this.bulkImport.urlSuffix, officeId, staffId, legalFormType)
+      .getImportTemplate(this.bulkImport.urlSuffix, countryId, officeId, staffId, legalFormType)
       .subscribe((res: any) => {
         const contentType = res.headers.get("Content-Type");
         const blob = new Blob([res.body], { type: contentType });
@@ -150,6 +166,34 @@ export class ViewBulkImportComponent implements OnInit {
       });
   }
 
+  onCountryChange(countryId: any) {
+    let commandParam,
+    staffInSelectedOfficeOnly = true;
+
+    switch (this.bulkImport.name) {
+      case 'Clients':
+      case 'Groups':
+      case 'Offices':
+        commandParam = 'clientBulkImportTemplate';
+        break;
+      default:
+        commandParam = ''
+        break;
+    }
+
+    if(this.bulkImport.name != 'Loan Repayments' && this.bulkImport.name !== 'Health Path') {
+      this.getClientCommandTemplateForBulkImport(countryId, commandParam, staffInSelectedOfficeOnly);
+    }
+
+  }
+
+
+  getClientCommandTemplateForBulkImport(countryId:any, commandParam: string, staffInSelectedOfficeOnly: boolean) {
+    this.clientsService.getClientCommandTemplateForBulkImport(commandParam, countryId, staffInSelectedOfficeOnly).subscribe((data: any) => {
+      this.officeData = data.officeOptions;
+      this.officeDataSliced = this.officeData;
+    });
+  }
   /**
    * Sets file form control value.
    * @param {any} $event file change event.
