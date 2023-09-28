@@ -29,7 +29,7 @@
           <div *ngIf="bulkImport.formFields >= 0 && bulkImport.name != 'Healthy Path' && bulkImport.name != 'Loan Repayments'">
             <mat-form-field fxFlex>
               <mat-label>Office</mat-label>
-              <mat-select required formControlName="officeId" #office>
+              <mat-select required formControlName="officeId" (selectionChange)="retrieveStaffData($event.value)" #office>
                 <mat-select-filter
                   *ngIf="office.focused"
                   [array]="officeData"

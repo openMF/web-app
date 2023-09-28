@@ -87,7 +87,6 @@ export class ViewBulkImportComponent implements OnInit {
   ngOnInit() {
     this.bulkImport = this.bulkImportsArray.find((entry) => entry.name === this.bulkImport.name);
     this.createBulkImportForm();
-    this.buildDependencies();
     this.setImports();
   }
 
@@ -118,16 +117,14 @@ export class ViewBulkImportComponent implements OnInit {
   }
 
   /**
-   * Subscribe to value changes and fetches select options accordingly.
+   * Fetches staff data where necessary.
    */
-  buildDependencies() {
-    this.bulkImportForm.get("officeId").valueChanges.subscribe((value: any) => {
-      if (this.bulkImport.formFields >= 2) {
-        this.organizationService.getStaff(value).subscribe((data: any) => {
-          this.staffData = data;
-        });
-      }
-    });
+  retrieveStaffData(officeId: any) {
+    if (this.bulkImport.formFields >= 2 || this.bulkImport.name == 'Healthy Path') {
+      this.organizationService.getStaff(officeId).subscribe((data: any) => {
+        this.staffData = data;
+      });
+    }
   }
 
   /**
