@@ -296,6 +296,18 @@ export class ClientsService {
     return this.http.get(`/clients/template`, { params: httpParams });
   }
 
+  getClientCommandTemplateForBulkImport(commandParam: string, countryId: any, staffInSelectedOfficeOnly: boolean = false): Observable<any> {
+    let httpParams = new HttpParams()
+      .set('countryId', countryId)
+      .set('staffInSelectedOfficeOnly', staffInSelectedOfficeOnly);
+
+    if (commandParam.length > 0) {
+      httpParams = httpParams.set('commandParam', commandParam);
+    }
+
+    return this.http.get(`/clients/template`, { params: httpParams });
+  }
+
   getClientTransferProposalDate(clientId: any): Observable<any> {
     return this.http.get(`/clients/${clientId}/transferproposaldate`);
   }
