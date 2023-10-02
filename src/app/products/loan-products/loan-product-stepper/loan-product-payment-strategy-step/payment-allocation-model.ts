@@ -41,6 +41,12 @@ export class AdvancedPaymentAllocation {
   futureInstallmentAllocationRules: FutureInstallmentAllocationRule[];
 }
 
+export class AdvancePaymentAllocationData {
+  transactionTypes: PaymentAllocationTransactionType[];
+  allocationTypes: PaymentAllocationType[];
+  futureInstallmentAllocationRules: FutureInstallmentAllocationRule[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
