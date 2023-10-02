@@ -33,12 +33,12 @@
       </mat-error>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">Repayments <i class="fas fa-question" matTooltip="Enter the total count of repayments that loan schedule has excluding the down-payment.
-      Example: if the loan account has 4 Installments including down-payment then number of repayments is equal to 3"></i></h4>
+    <h4 fxFlex="98%" class="mat-h4">Repayments </h4>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Number of repayments</mat-label>
-      <input type="number" matInput formControlName="numberOfRepayments">
+      <input type="number" matInput formControlName="numberOfRepayments" matTooltip="Enter the total count of repayments that loan schedule has excluding the down-payment. Example:
+      If the loan account has 4 Installments including down-payment then number of repayments is equal to 3">
       <mat-error *ngIf="loansAccountTermsForm.controls.numberOfRepayments.hasError('required')">
         Number of repayments is <strong>required</strong>
       </mat-error>

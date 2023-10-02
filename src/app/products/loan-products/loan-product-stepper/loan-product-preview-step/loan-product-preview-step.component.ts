@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { AdvancePaymentAllocationData } from '../loan-product-payment-strategy-step/payment-allocation-model';
 
 @Component({
   selector: 'mifosx-loan-product-preview-step',
@@ -19,10 +20,17 @@ export class LoanProductPreviewStepComponent implements OnInit, OnChanges {
 
   isAdvancedPaymentAllocation = false;
 
+  advancePaymentAllocationData: AdvancePaymentAllocationData;
+
   constructor() { }
 
   ngOnInit() {
     this.isAdvancedPaymentAllocation = (this.loanProduct.transactionProcessingStrategyCode === 'advanced-payment-allocation-strategy');
+    this.advancePaymentAllocationData = {
+      transactionTypes: this.loanProductsTemplate.advancedPaymentAllocationTransactionTypes,
+      allocationTypes: this.loanProductsTemplate.advancedPaymentAllocationTypes,
+      futureInstallmentAllocationRules: this.loanProductsTemplate.advancedPaymentAllocationFutureInstallmentAllocationRules
+    };
   }
 
   ngOnChanges(changes: SimpleChanges): void {

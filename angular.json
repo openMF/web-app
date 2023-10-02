@@ -44,7 +44,8 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "lodash",
-              "@ckeditor/ckeditor5-build-classic"
+              "@ckeditor/ckeditor5-build-classic",
+              "moment"
             ]
           },
           "configurations": {
