@@ -214,8 +214,12 @@ export class ViewBulkImportComponent implements OnInit {
         legalFormType = "CLIENTS_PERSON";
       }
     }
+    let countryId = null;
+    if(this.bulkImport.name == 'Loan Repayments') {
+      countryId = this.bulkImportForm.get("countryId").value;
+    }
     this.organizationService
-      .uploadImportDocument(this.template, this.bulkImport.urlSuffix, legalFormType)
+      .uploadImportDocument(this.template, this.bulkImport.urlSuffix, legalFormType, countryId)
       .subscribe(() => {});
   }
 
