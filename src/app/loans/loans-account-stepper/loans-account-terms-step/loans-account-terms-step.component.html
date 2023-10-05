@@ -52,11 +52,12 @@
       <mat-datepicker #repaymentsPicker></mat-datepicker>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">Repaid Every <i class="fas fa-question" matTooltip="These fields are input to calculating the repayment schedule for a loan account and are used to determine when payments are due."></i></h4>
+    <h4 fxFlex="98%" class="mat-h4">Repaid Every</h4>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Repaid every</mat-label>
-      <input type="number" matInput required formControlName="repaymentEvery">
+      <input type="number" matInput required formControlName="repaymentEvery"
+      matTooltip="These fields are input to calculating the repayment schedule for a loan account and are used to determine when payments are due.">
       <mat-error *ngIf="loansAccountTermsForm.controls.repaymentEvery.hasError('required')">
         Repaid every is <strong>required</strong>
       </mat-error>
