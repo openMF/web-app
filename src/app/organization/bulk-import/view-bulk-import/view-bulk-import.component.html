@@ -48,7 +48,7 @@
           <div *ngIf="bulkImport.formFields >= 2 || bulkImport.name == 'Healthy Path'">
             <mat-form-field fxFlex>
               <mat-label>Staff</mat-label>
-              <mat-select required formControlName="staffId">
+              <mat-select formControlName="staffId">
                 <mat-option *ngFor="let staff of staffData" [value]="staff.id">
                   {{ staff.displayName }}
                 </mat-option>

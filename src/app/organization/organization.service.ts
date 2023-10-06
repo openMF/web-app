@@ -879,10 +879,13 @@ export class OrganizationService {
    * @param {string} legalFormType Legal Form type for file upload
    * @returns {Observable<any>}
    */
-  uploadImportDocument (file: File, urlSuffix: string, legalFormType: string): Observable<any> {
+  uploadImportDocument (file: File, urlSuffix: string, legalFormType: string, countryId: any): Observable<any> {
     let httpParams = new HttpParams();
     if (legalFormType.length) {
       httpParams = httpParams.set('legalFormType', legalFormType);
+    }
+    if(countryId) {
+      httpParams = httpParams.set('countryId', countryId);
     }
     const formData = new FormData();
     formData.append('file', file);
