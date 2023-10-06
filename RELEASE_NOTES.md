@@ -24,6 +24,7 @@ Release Notes
     * [SER-1899] - Fix Clients Bulk Import
     * [SER-1900] - Fix Groups Bulk Import
     * [SER-2043] - Hide unused bulk import items
+    * [SER-1562] - Refresh automatically after uploading a file
 
 
 ## Version 1.0.0 - for use with Fineract Web App

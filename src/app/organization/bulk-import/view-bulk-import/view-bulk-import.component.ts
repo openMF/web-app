@@ -10,6 +10,7 @@ import { FormGroup, FormBuilder } from "@angular/forms";
 import { OrganizationService } from "../../organization.service";
 import { BulkImports } from "./bulk-imports";
 import { ClientsService } from "app/clients/clients.service";
+import { AlertService } from "app/core/alert/alert.service";
 
 /**
  * View Bulk Imports Component
@@ -70,7 +71,8 @@ export class ViewBulkImportComponent implements OnInit {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private organizationService: OrganizationService, 
-    private clientsService: ClientsService) {
+    private clientsService: ClientsService,
+    private alertService: AlertService) {
     this.bulkImport.name = this.route.snapshot.params["import-name"];
     this.route.data.subscribe((data: {offices: any, imports:any, countries:any}) => {
       this.officeData = data.offices;
@@ -217,10 +219,19 @@ export class ViewBulkImportComponent implements OnInit {
     let countryId = null;
     if(this.bulkImport.name == 'Loan Repayments') {
       countryId = this.bulkImportForm.get("countryId").value;
+      if(!countryId) {
+        return this.alertService.alert({
+          type: "Error while uploading a file",
+          message: "Please select a country",
+        });
+      }
     }
+
     this.organizationService
       .uploadImportDocument(this.template, this.bulkImport.urlSuffix, legalFormType, countryId)
-      .subscribe(() => {});
+      .subscribe(() => {
+        this.refreshDocuments();
+      });
   }
 
   /**
