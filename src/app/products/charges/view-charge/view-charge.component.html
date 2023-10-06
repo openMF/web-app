@@ -57,13 +57,17 @@
             <td class="mat-body-strong">Active</td>
             <td class="mat-body-strong">{{ chargeData.active === true ? 'Yes' : 'No' }}</td>
           </tr>
-          <tr *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeFrequency">
+          <tr *ngIf="chargeData.feeFrequency">
             <td class="mat-body-strong">Fee Frequency</td>
             <td class="mat-body-strong">{{ chargeData.feeFrequency.value}}</td>
           </tr>
-          <tr *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeInterval">
+          <tr *ngIf="chargeData.feeInterval">
             <td class="mat-body-strong">Frequency Interval</td>
             <td class="mat-body-strong">{{ chargeData.feeInterval}}</td>
+          </tr>
+          <tr *ngIf="chargeData.extensionFrequency">
+            <td class="mat-body-strong">Extension Frequency</td>
+            <td class="mat-body-strong">{{ chargeData.extensionFrequency}}</td>
           </tr>
           <tr *ngIf="chargeData.incomeOrLiabilityAccount">
             <td class="mat-body-strong">Income from Charges</td>

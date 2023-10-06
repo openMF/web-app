@@ -25,6 +25,7 @@ Release Notes
     * [SER-1900] - Fix Groups Bulk Import
     * [SER-2043] - Hide unused bulk import items
     * [SER-1562] - Refresh automatically after uploading a file
+    * [SER-1521] - As a country admin, I should be able to add an extension charge
 
 
 ## Version 1.0.0 - for use with Fineract Web App

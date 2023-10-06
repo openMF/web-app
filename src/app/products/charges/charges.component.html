@@ -34,7 +34,18 @@
            {{charge.penalty}}
         </td>
       </ng-container>
+      <ng-container matColumnDef="extensible">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Is Extensible? </th>
+        <td mat-cell *matCellDef="let charge">
+           {{charge.extensionFrequency ? 'true' : 'false'}}
+        </td>
+      </ng-container>
 
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Country </th>
+        <td mat-cell *matCellDef="let charge"> {{ charge.countryName }} </td>
+      </ng-container>
+      
       <ng-container matColumnDef="active">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
         <td mat-cell *matCellDef="let charge">
