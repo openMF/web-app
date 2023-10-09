@@ -21,7 +21,7 @@ export class ChargesComponent implements OnInit {
   /** Charge data. */
   chargeData: any;
   /** Columns to be displayed in charges table. */
-  displayedColumns: string[] = ['name', 'chargeAppliesTo', 'penalty', 'active'];
+  displayedColumns: string[] = ['name', 'chargeAppliesTo', 'penalty','extensible','country', 'active'];
   /** Data source for charges table. */
   dataSource: MatTableDataSource<any>;
 
