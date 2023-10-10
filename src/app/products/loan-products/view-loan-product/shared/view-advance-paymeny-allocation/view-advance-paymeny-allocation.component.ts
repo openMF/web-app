@@ -17,16 +17,25 @@ export class ViewAdvancePaymenyAllocationComponent implements OnInit {
   }
 
   transactionTypeValue(code: string): string {
+    if (this.advancePaymentAllocationData == null) {
+      return code;
+    }
     const transactionType =  this.advancePaymentAllocationData.transactionTypes.find(t => t.code === code);
     return transactionType.value;
   }
 
   allocationRuleValue(code: string): string {
+    if (this.advancePaymentAllocationData == null) {
+      return code;
+    }
     const allocationType =  this.advancePaymentAllocationData.allocationTypes.find(t => t.code === code);
     return allocationType.value;
   }
 
   futureInstallmentRuleValue(code: string): string {
+    if (this.advancePaymentAllocationData == null) {
+      return code;
+    }
     const futureInstallmentAllocationRule =  this.advancePaymentAllocationData.futureInstallmentAllocationRules.find(t => t.code === code);
     return futureInstallmentAllocationRule.value;
   }
