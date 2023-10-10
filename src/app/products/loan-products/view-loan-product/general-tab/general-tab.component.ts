@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AdvancePaymentAllocationData } from '../../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 
 @Component({
   selector: 'mifosx-general-tab',
@@ -14,6 +15,8 @@ export class GeneralTabComponent implements OnInit {
   chargesDisplayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType'];
   paymentFundSourceDisplayedColumns: string[] = ['paymentTypeId', 'fundSourceAccountId'];
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId'];
+
+  advancePaymentAllocationData: AdvancePaymentAllocationData | null = null;
 
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe((data: { loanProduct: any }) => {
