@@ -16,11 +16,16 @@ export class GeneralTabComponent implements OnInit {
   paymentFundSourceDisplayedColumns: string[] = ['paymentTypeId', 'fundSourceAccountId'];
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId'];
 
-  advancePaymentAllocationData: AdvancePaymentAllocationData | null = null;
+  advancePaymentAllocationData: AdvancePaymentAllocationData;
 
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe((data: { loanProduct: any }) => {
       this.loanProduct = data.loanProduct;
+      this.advancePaymentAllocationData = {
+        transactionTypes: this.loanProduct.advancedPaymentAllocationTransactionTypes,
+        allocationTypes: this.loanProduct.advancedPaymentAllocationTypes,
+        futureInstallmentAllocationRules: this.loanProduct.advancedPaymentAllocationFutureInstallmentAllocationRules
+      };
     });
   }
 
