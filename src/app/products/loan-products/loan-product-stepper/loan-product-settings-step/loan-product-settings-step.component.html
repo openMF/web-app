@@ -76,6 +76,8 @@
       <input type="number" matInput formControlName="graceOnInterestPayment">
     </mat-form-field>
 
+    <mat-divider fxFlex="98%"></mat-divider>
+
     <mat-form-field fxFlex="48%">
       <mat-label>Delinquency Bucket</mat-label>
       <mat-select formControlName="delinquencyBucketId" required>
@@ -84,6 +86,10 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+
+    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="enableInstallmentLevelDelinquency" class="margin-v">
+      Enable installment level Delinquency
+    </mat-checkbox>
 
     <mat-divider fxFlex="98%"></mat-divider>
 

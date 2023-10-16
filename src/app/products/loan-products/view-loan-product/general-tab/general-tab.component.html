@@ -343,6 +343,16 @@
     </span>
   </div>
 
+  <div fxFlexFill>
+    <span fxFlex="40%">Delinquency Bucket:</span>
+    <span fxFlex="60%">{{ loanProduct.delinquencyBucket.name }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Enable installment level Delinquency:</span>
+    <span fxFlex="60%">{{ loanProduct.enableInstallmentLevelDelinquency | yesNo }}</span>
+  </div>
+
   <div fxFlexFill *ngIf="loanProduct.graceOnPrincipalPayment">
     <span fxFlex="40%">Grace on principal payment:</span>
     <span fxFlex="60%">{{ loanProduct.graceOnPrincipalPayment }}</span>
@@ -587,8 +597,6 @@
     <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.graceOnPrincipalAndInterestPayment | yesNo }}</span>
     <span fxFlex="40%">Number of days a loan may be overdue before moving into arrears:</span>
     <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.graceOnArrearsAgeing | yesNo }}</span>
-    <span fxFlex="40%">Delinquency Bucket:</span>
-    <span fxFlex="60%">{{ loanProduct.delinquencyBucket.id }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.charges.length" fxLayout="row wrap" fxLayout.lt-md="column">

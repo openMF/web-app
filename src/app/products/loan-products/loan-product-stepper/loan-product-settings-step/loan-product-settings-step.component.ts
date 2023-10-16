@@ -93,7 +93,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'outstandingLoanBalance': this.loanProductsTemplate.outstandingLoanBalance,
       'dueDaysForRepaymentEvent': this.loanProductsTemplate.dueDaysForRepaymentEvent,
       'overDueDaysForRepaymentEvent': this.loanProductsTemplate.overDueDaysForRepaymentEvent,
-      'enableDownPayment': this.loanProductsTemplate.enableDownPayment
+      'enableDownPayment': this.loanProductsTemplate.enableDownPayment,
+      'enableInstallmentLevelDelinquency': this.loanProductsTemplate.enableInstallmentLevelDelinquency
     });
 
     if (this.loanProductsTemplate.delinquencyBucket) {
@@ -199,7 +200,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'delinquencyBucketId': ['', Validators.required],
       'dueDaysForRepaymentEvent': [''],
       'overDueDaysForRepaymentEvent': [''],
-      'enableDownPayment': [false]
+      'enableDownPayment': [false],
+      'enableInstallmentLevelDelinquency': [false]
     });
   }
 

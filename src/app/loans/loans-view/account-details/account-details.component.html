@@ -23,7 +23,7 @@
 
         <div fxFlexFill>
             <span fxFlex="50%"> Equal Amortization </span>
-            <span fxFlex="50%"> {{loanDetails.isEqualAmortization}} </span>
+            <span fxFlex="50%"> {{loanDetails.isEqualAmortization | yesNo}} </span>
         </div>
 
         <div fxFlexFill>
@@ -44,6 +44,11 @@
         <div fxFlexFill>
             <span fxFlex="50%"> Grace on Arrears Ageing</span>
             <span fxFlex="50%"> {{loanDetails.graceOnArrearsAgeing}} </span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="50%"> Enable Installment Level Delinquency </span>
+          <span fxFlex="50%"> {{loanDetails.enableInstallmentLevelDelinquency | yesNo}} </span>
         </div>
 
         <div fxFlexFill>
@@ -98,7 +103,7 @@
 
         <div fxFlexFill *ngIf="loanDetails.isTopup">
             <span fxFlex="50%"> Is Topup Loan?</span>
-            <span fxFlex="50%"> {{loanDetails.isTopup}} </span>
+            <span fxFlex="50%"> {{loanDetails.isTopup | yesNo}} </span>
         </div>
 
         <div fxFlexFill *ngIf="loanDetails.isTopup">
@@ -113,7 +118,7 @@
 
         <div fxFlexFill>
             <span fxFlex="50%"> Recalculate Interest based on new terms</span>
-            <span fxFlex="50%">  {{loanDetails.isInterestRecalculationEnabled ? 'Yes' : 'No'  }} </span>
+            <span fxFlex="50%">  {{loanDetails.isInterestRecalculationEnabled | yesNo}} </span>
         </div>
 
         <div fxFlexFill>
@@ -148,7 +153,7 @@
 
         <div fxFlexFill *ngIf="loanDetails.isVariableInstallmentsAllowed">
             <span fxFlex="50%"> Variable Installments Allowed</span>
-            <span fxFlex="50%"> {{loanDetails.isVariableInstallmentsAllowed}} </span>
+            <span fxFlex="50%"> {{loanDetails.isVariableInstallmentsAllowed | yesNo}} </span>
         </div>
 
         <div fxFlexFill *ngIf="loanDetails.isVariableInstallmentsAllowed">
