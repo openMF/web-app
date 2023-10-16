@@ -389,7 +389,12 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Delinquency Bucket:</span>
-    <span fxFlex="60%">{{ loanProduct.delinquencyBucketId | yesNo }}</span>
+    <span fxFlex="60%">{{ loanProduct.delinquencyBucketId }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Enable installment level Delinquency:</span>
+    <span fxFlex="60%">{{ loanProduct.enableInstallmentLevelDelinquency | yesNo }}</span>
   </div>
 
   <div fxFlexFill>
