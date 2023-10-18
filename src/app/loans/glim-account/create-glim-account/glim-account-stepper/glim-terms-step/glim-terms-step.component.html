@@ -2,57 +2,57 @@
 
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-      <h4 fxFlex="98%" class="mat-h4">Term Options</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{"labels.heading.Term Options"  |translate}}</h4>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Loan Term</mat-label>
+        <mat-label>{{"labels.inputs.Loan Term"  |translate}}</mat-label>
         <input matInput required formControlName="loanTermFrequency">
         <mat-error *ngIf="loansAccountTermsForm.controls.loanTermFrequency.hasError('required')">
-          Loan Term is <strong>required</strong>
+          {{"labels.inputs.Loan Term"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Frequency</mat-label>
+        <mat-label>{{"labels.inputs.Frequency"  |translate}}</mat-label>
         <mat-select required formControlName="loanTermFrequencyType">
           <mat-option *ngFor="let type of termFrequencyTypeData" [value]="type.id">
             {{ type.value }}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="loansAccountTermsForm.controls.loanTermFrequencyType.hasError('required')">
-          Frequency is <strong>required</strong>
+          {{"labels.inputs.Frequency"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Number of repayments</mat-label>
+        <mat-label>{{"labels.inputs.Number of repayments"  |translate}}</mat-label>
         <input type="number" matInput formControlName="numberOfRepayments">
         <mat-error *ngIf="loansAccountTermsForm.controls.numberOfRepayments.hasError('required')">
-          Number of repayments is <strong>required</strong>
+          {{"labels.inputs.Number of repayments"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%" (click)="repaymentsPicker.open()">
-        <mat-label>First repayment on</mat-label>
+        <mat-label>{{"labels.inputs.First repayment on"  |translate}}</mat-label>
         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="repaymentsPicker"
           formControlName="repaymentsStartingFromDate">
         <mat-datepicker-toggle matSuffix [for]="repaymentsPicker"></mat-datepicker-toggle>
         <mat-datepicker #repaymentsPicker></mat-datepicker>
       </mat-form-field>
 
-      <h4 fxFlex="98%" class="mat-h4">Repaid Every</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{"labels.heading.Repaid Every"  |translate}}</h4>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Repaid every</mat-label>
+        <mat-label>{{"labels.inputs.Repaid every"  |translate}}</mat-label>
         <input matInput required formControlName="repaymentEvery"
           [disabled]="!loansAccountProductTemplate?.product.allowAttributeOverrides.repaymentEvery">
         <mat-error *ngIf="loansAccountTermsForm.controls.repaymentEvery.hasError('required')">
-          Repaid every is <strong>required</strong>
+          {{"labels.inputs.Repaid every"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Frequency</mat-label>
+        <mat-label>{{"labels.inputs.Frequency"  |translate}}</mat-label>
         <mat-select formControlName="repaymentFrequencyType" required
           [disabled]="!loansAccountProductTemplate?.product.allowAttributeOverrides.repaymentEvery">
           <mat-option *ngFor="let repaymentFrequencyType of termFrequencyTypeData"
@@ -63,7 +63,7 @@
       </mat-form-field>
 
       <mat-form-field fxFlex="48%" *ngIf="loansAccountTermsForm.controls.repaymentFrequencyType.value == 2">
-        <mat-label>Select On</mat-label>
+        <mat-label>{{"labels.inputs.Select On"  |translate}}</mat-label>
         <mat-select formControlName="repaymentFrequencyNthDayType">
           <mat-option
             *ngFor="let repaymentFrequencyNthDayType of repaymentFrequencyNthDayTypeData"
@@ -74,7 +74,7 @@
       </mat-form-field>
 
       <mat-form-field fxFlex="48%" *ngIf="loansAccountTermsForm.controls.repaymentFrequencyType.value == 2">
-        <mat-label>Select Day</mat-label>
+        <mat-label>{{"labels.inputs.Select Day"  |translate}}</mat-label>
         <mat-select formControlName="repaymentFrequencyDayOfWeekType">
           <mat-option
             *ngFor="let repaymentFrequencyDayOfWeekType of repaymentFrequencyDaysOfWeekTypeData"
@@ -85,7 +85,7 @@
       </mat-form-field>
 
       <mat-form-field fxFlex="48%" (click)="interestPicker.open()">
-        <mat-label>Interest charged from</mat-label>
+        <mat-label>{{"labels.inputs.Interest charged from"  |translate}}</mat-label>
         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="interestPicker"
           formControlName="interestChargedFromDate">
         <mat-datepicker-toggle matSuffix [for]="interestPicker"></mat-datepicker-toggle>
@@ -95,12 +95,12 @@
     <ng-container *ngIf="!loansAccountProductTemplate?.isLoanProductLinkedToFloatingRate">
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Nominal interest rate</mat-label>
+        <mat-label>{{"labels.inputs.Nominal interest rate"  |translate}}</mat-label>
         <input type="number" matInput formControlName="interestRatePerPeriod">
       </mat-form-field>
 
         <mat-form-field fxFlex="48%">
-          <mat-label>Interest method</mat-label>
+          <mat-label>{{"labels.inputs.Interest method"  |translate}}</mat-label>
           <mat-select [disabled]="!loansAccountProductTemplate?.product.allowAttributeOverrides.interestType"
             formControlName="interestType">
             <mat-option *ngFor="let interestType of interestTypeData"
@@ -118,10 +118,10 @@
     <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
       <button mat-raised-button matStepperPrevious>
         <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-        Previous
+        {{"labels.buttons.Previous"  |translate}}
       </button>
       <button mat-raised-button matStepperNext>
-        Next
+        {{"labels.buttons.Next"  |translate}}
         <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
       </button>
     </div>

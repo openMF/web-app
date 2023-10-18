@@ -1,11 +1,11 @@
 <div class="container">
 
-  <h3>Loan Delinquency Tags</h3>
+  <h3>{{"labels.heading.Loan Delinquency Tags"  |translate}}</h3>
 
   <table mat-table [dataSource]="loanDelinquencyTags" *ngIf="loanDelinquencyTags.length>0">
 
     <ng-container matColumnDef="classification">
-      <th mat-header-cell *matHeaderCellDef> Delinquency Classification </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Delinquency Classification"  |translate}} </th>
       <td mat-cell *matCellDef="let item"> {{ item.delinquencyRange.classification }}
         <span *ngIf="item.delinquencyRange.maximumAgeDays">( {{ item.delinquencyRange.minimumAgeDays }} - {{ item.delinquencyRange.maximumAgeDays }} )</span>
         <span *ngIf="!item.delinquencyRange.maximumAgeDays">( {{ item.delinquencyRange.minimumAgeDays }} )</span>
@@ -13,7 +13,7 @@
     </ng-container>
 
     <ng-container matColumnDef="addedOn">
-      <th mat-header-cell *matHeaderCellDef> Added On </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Added On"  |translate}} </th>
       <td mat-cell *matCellDef="let item">
         <span *ngIf="item.addedOnDate">
           {{ item.addedOnDate  | dateFormat }}
@@ -22,7 +22,7 @@
     </ng-container>
 
     <ng-container matColumnDef="liftedOn">
-      <th mat-header-cell *matHeaderCellDef> Lifted On </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Lifted On"  |translate}} </th>
       <td mat-cell *matCellDef="let item">
         <span *ngIf="item.liftedOnDate">
           {{ item.liftedOnDate  | dateFormat }}

@@ -23,7 +23,7 @@
 
     <mat-step [stepControl]="loansAccountDetailsForm">
 
-      <ng-template matStepLabel>DETAILS</ng-template>
+      <ng-template matStepLabel>{{"labels.inputs.DETAILS"  |translate}}</ng-template>
 
       <mifosx-glim-details-step [loansAccountTemplate]="loansAccountTemplate"
         (loansAccountProductTemplate)="setTemplate($event)" [gsimData]="gsimData">
@@ -33,7 +33,7 @@
 
     <mat-step [stepControl]="loansAccountTermsForm">
 
-      <ng-template matStepLabel>TERMS</ng-template>
+      <ng-template matStepLabel>{{"labels.inputs.TERMS"  |translate}}</ng-template>
 
       <mifosx-glim-terms-step [loansAccountProductTemplate]="loansAccountProductTemplate"
       [loansAccountTemplate] = "loansAccountTemplate">
@@ -43,7 +43,7 @@
 
     <mat-step>
 
-      <ng-template matStepLabel>CHARGES</ng-template>
+      <ng-template matStepLabel>{{"labels.inputs.CHARGES"  |translate}}</ng-template>
 
       <mifosx-glim-charges-step [loansAccountProductTemplate]="loansAccountProductTemplate"
         [loansAccountTemplate]="loansAccountTemplate"
@@ -55,7 +55,7 @@
 
     <mat-step state="preview" *ngIf="loansAccountFormValid" completed>
 
-      <ng-template matStepLabel>PREVIEW</ng-template>
+      <ng-template matStepLabel>{{"labels.inputs.PREVIEW"  |translate}}</ng-template>
 
       <mifosx-loans-account-preview-step [loansAccountTemplate]="loansAccountTemplate"
         [loansAccountProductTemplate]="loansAccountProductTemplate" [loansAccount]="loansAccount" (submit)="submit()">

@@ -9,27 +9,27 @@
         <div fxLayout="column">
 
           <mat-form-field (click)="withdrawnOnDatePicker.open()">
-            <mat-label>Withdrawn On</mat-label>
+            <mat-label>{{"labels.inputs.Withdrawn On"  |translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="withdrawnOnDatePicker" required
               formControlName="withdrawnOnDate">
             <mat-datepicker-toggle matSuffix [for]="withdrawnOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #withdrawnOnDatePicker></mat-datepicker>
             <mat-error *ngIf="withdrawnByClientLoanForm.controls.withdrawnOnDate.hasError('required')">
-              Withdrawn On Date <strong>is required</strong>
+              {{"labels.inputs.Withdrawn On Date"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Note</mat-label>
+            <mat-label>{{"labels.inputs.Note"  |translate}}</mat-label>
             <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
           </mat-form-field>
 
         </div>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../../../general']">Cancel</button>
+          <button type="button" mat-raised-button [routerLink]="['../../../general']">{{"labels.buttons.Cancel"  |translate}}</button>
           <button mat-raised-button color="primary" [disabled]="!withdrawnByClientLoanForm.valid"
-            *mifosxHasPermission="'WITHDRAW_LOAN'">Submit</button>
+            *mifosxHasPermission="'WITHDRAW_LOAN'">{{"labels.buttons.Submit"  |translate}}</button>
         </mat-card-actions>
 
       </mat-card-content>

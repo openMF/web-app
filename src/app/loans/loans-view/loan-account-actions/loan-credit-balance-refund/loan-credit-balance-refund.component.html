@@ -9,40 +9,40 @@
         <div fxLayout="column">
 
           <mat-form-field (click)="transactionDatePicker.open()">
-            <mat-label>Transaction Date</mat-label>
+            <mat-label>{{"labels.inputs.Transaction Date"  |translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDatePicker" required
               formControlName="transactionDate">
             <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionDatePicker></mat-datepicker>
             <mat-error *ngIf="creditBalanceLoanForm.controls.transactionDate.hasError('required')">
-              Transaction Date <strong>is required</strong>
+              {{"labels.inputs.Transaction Date"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Transaction Amount</mat-label>
+            <mat-label>{{"labels.inputs.Transaction Amount"  |translate}}</mat-label>
             <input matInput required formControlName="transactionAmount">
             <mat-error *ngIf="creditBalanceLoanForm.controls.transactionAmount.hasError('required')">
-              Transaction Amount <strong>is required</strong>
+              {{"labels.inputs.Transaction Amount"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>External Id</mat-label>
+            <mat-label>{{"labels.inputs.External Id"  |translate}}</mat-label>
             <input matInput formControlName="externalId">
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Note</mat-label>
+            <mat-label>{{"labels.inputs.Note"  |translate}}</mat-label>
             <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
           </mat-form-field>
 
         </div>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+          <button type="button" mat-raised-button [routerLink]="['../../general']">{{"labels.buttons.Cancel"  |translate}}</button>
           <button mat-raised-button color="primary" [disabled]="!creditBalanceLoanForm.valid"
-            *mifosxHasPermission="'REPAYMENT_LOAN'">Submit</button>
+            *mifosxHasPermission="'REPAYMENT_LOAN'">{{"labels.buttons.Submit"  |translate}}</button>
         </mat-card-actions>
 
       </mat-card-content>

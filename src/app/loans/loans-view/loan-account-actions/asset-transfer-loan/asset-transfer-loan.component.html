@@ -9,43 +9,43 @@
         <div fxLayout="column">
 
           <mat-form-field (click)="settlementDatePicker.open()">
-            <mat-label>Settlement Date</mat-label>
+            <mat-label>{{"labels.inputs.Settlement Date"  |translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="settlementDatePicker" required
               formControlName="settlementDate">
             <mat-datepicker-toggle matSuffix [for]="settlementDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #settlementDatePicker></mat-datepicker>
             <mat-error *ngIf="saleLoanForm.controls.settlementDate.hasError('required')">
-              Settlement Date <strong>is required</strong>
+              {{"labels.inputs.Settlement Date"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field *ngIf="!isBuyBack()">
-            <mat-label>Purchase Price Ratio</mat-label>
+            <mat-label>{{"labels.inputs.Purchase Price Ratio"  |translate}}</mat-label>
             <input type="number" matInput required formControlName="purchasePriceRatio">
             <mat-error *ngIf="saleLoanForm.controls.purchasePriceRatio.hasError('required')">
-              Purchase Price Ratio <strong>is required</strong>
+              {{"labels.inputs.Purchase Price Ratio"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field *ngIf="!isBuyBack()">
-            <mat-label>Owner External Id</mat-label>
+            <mat-label>{{"labels.inputs.Owner External Id"  |translate}}</mat-label>
             <input matInput formControlName="ownerExternalId">
             <mat-error *ngIf="saleLoanForm.controls.ownerExternalId.hasError('required')">
-              Owner External Id <strong>is required</strong>
+              {{"labels.inputs.Owner External Id"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Transfer External Id</mat-label>
+            <mat-label>{{"labels.inputs.Transfer External Id"  |translate}}</mat-label>
             <input matInput formControlName="transferExternalId">
           </mat-form-field>
 
         </div>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+          <button type="button" mat-raised-button [routerLink]="['../../general']">{{"labels.buttons.Cancel"  |translate}}</button>
           <button mat-raised-button color="primary" [disabled]="!saleLoanForm.valid"
-            *mifosxHasPermission="'SALE_LOAN'">Submit</button>
+            *mifosxHasPermission="'SALE_LOAN'">{{"labels.buttons.Submit"  |translate}}</button>
         </mat-card-actions>
 
       </mat-card-content>

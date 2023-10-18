@@ -9,35 +9,35 @@
         <div fxLayout="column">
 
           <mat-form-field (click)="interestDatePicker.open()">
-            <mat-label>Interest waived on</mat-label>
+            <mat-label>{{"labels.inputs.Interest waived on"  |translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="interestDatePicker" required
               formControlName="transactionDate">
             <mat-datepicker-toggle matSuffix [for]="interestDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #interestDatePicker></mat-datepicker>
             <mat-error *ngIf="loanInterestForm.controls.transactionDate.hasError('required')">
-              Interest Date is <strong>required</strong>
+              {{"labels.inputs.Interest Date"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Transaction amount</mat-label>
+            <mat-label>{{"labels.inputs.Transaction Amount"  |translate}}</mat-label>
             <input matInput required formControlName="transactionAmount">
             <mat-error *ngIf="loanInterestForm.controls.transactionAmount.hasError('required')">
-              Transaction Amount is <strong>required</strong>
+              {{"labels.inputs.Transaction Amount"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Note</mat-label>
+            <mat-label>{{"labels.inputs.Note"  |translate}}</mat-label>
             <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
           </mat-form-field>
 
         </div>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+          <button type="button" mat-raised-button [routerLink]="['../../general']">{{"labels.buttons.Cancel"  |translate}}</button>
           <button mat-raised-button color="primary" [disabled]="!loanInterestForm.valid"
-            *mifosxHasPermission="'WAIVEINTERESTPORTION_LOAN'">Submit</button>
+            *mifosxHasPermission="'WAIVEINTERESTPORTION_LOAN'">{{"labels.buttons.Submit"  |translate}}</button>
         </mat-card-actions>
 
       </mat-card-content>

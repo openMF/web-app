@@ -9,34 +9,34 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label> To Loan Officer</mat-label>
+            <mat-label> {{"labels.inputs.To Loan Officer"  |translate}}</mat-label>
             <mat-select required formControlName="toLoanOfficerId">
               <mat-option *ngFor="let loanOfficer of loanOfficers" [value]="loanOfficer.id">
                 {{ loanOfficer.displayName }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="assignOfficerForm.controls.toLoanOfficerId.hasError('required')">
-              Loan Officer is <strong>required</strong>
+              {{"labels.inputs.Loan Officer"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field (click)="assignOnDatePicker.open()">
-            <mat-label>Assignment Date</mat-label>
+            <mat-label>{{"labels.inputs.Assignment Date"  |translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="assignOnDatePicker" required
               formControlName="assignmentDate">
             <mat-datepicker-toggle matSuffix [for]="assignOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #assignOnDatePicker></mat-datepicker>
             <mat-error *ngIf="assignOfficerForm.controls.assignmentDate.hasError('required')">
-              Assignment Date <strong>is required</strong>
+              {{"labels.inputs.Assignment Date"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
         </div>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+          <button type="button" mat-raised-button [routerLink]="['../../general']">{{"labels.buttons.Cancel"  |translate}}</button>
           <button mat-raised-button color="primary" [disabled]="!assignOfficerForm.valid"
-            *mifosxHasPermission="'BULKREASSIGN_LOAN'">Submit</button>
+            *mifosxHasPermission="'BULKREASSIGN_LOAN'">{{"labels.buttons.Submit"  |translate}}</button>
         </mat-card-actions>
 
       </mat-card-content>

@@ -1,7 +1,7 @@
 <div fxLayout="row wrap" fxLayout.lt-md="column">
 
   <a mat-button (click)="showRepaymentInfo()">
-    Repayment Info
+    {{"labels.inputs.Repayment Info"  |translate}}
   </a>
 
   <mifosx-repayment-schedule-tab fxFlex="100%" [repaymentScheduleDetails]="repaymentScheduleDetails"
@@ -13,13 +13,13 @@
 <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button matStepperPrevious>
     <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-    Previous
+    {{"labels.buttons.Previous"  |translate}}
   </button>
   <button mat-raised-button matStepperNext>
-    Next
+    {{"labels.buttons.Next"  |translate}}
     <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
   </button>
   <button mat-raised-button *ngIf="loanId" [routerLink]="['../', 'general']">
-    Cancel
+    {{"labels.buttons.Cancel"  |translate}}
   </button>
 </div>

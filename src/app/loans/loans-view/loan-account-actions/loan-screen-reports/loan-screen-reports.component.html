@@ -9,23 +9,23 @@
         <div>
 
           <mat-form-field fxFlex>
-            <mat-label>Loan Screen Reports</mat-label>
+            <mat-label>{{"labels.inputs.Loan Screen Reports"  |translate}}</mat-label>
             <mat-select formControlName="templateId">
               <mat-option *ngFor="let template of templatesData" [value]="template.id">
                 {{ template.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="loanScreenReportForm.controls.templateId.hasError('required')">
-              Screen Report is <strong>required</strong>
+              {{"labels.inputs.Screen Report"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
         </div>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+          <button type="button" mat-raised-button [routerLink]="['../../general']">{{"labels.buttons.Cancel"  |translate}}</button>
           <button mat-raised-button color="primary" [disabled]="!loanScreenReportForm.valid">
-            <fa-icon icon="cogs" size="sm" class="m-r-10"></fa-icon>Generate Report
+            <fa-icon icon="cogs" size="sm" class="m-r-10"></fa-icon>{{"labels.buttons.Generate Report"  |translate}}
           </button>
         </mat-card-actions>
 
@@ -44,12 +44,12 @@
     <div fxLayoutAlign="end">
       <button mat-stroked-button color="primary" [disabled]="!template" (click)="print()">
         <fa-icon icon="file" class="m-r-10"></fa-icon>
-        Print
+        {{"labels.buttons.Print"  |translate}}
       </button>
     </div>
 
     <div #screenReport class="screen-report">
-      <p>Please select a screen report.</p>
+      <p>{{"labels.text.Please select a screen report."  |translate}}</p>
     </div>
 
   </mat-card>
