@@ -7,14 +7,14 @@
       <div fxLayout="column">
 
         <mat-form-field fxFlex>
-          <mat-label>Note</mat-label>
+          <mat-label>{{"labels.inputs.Note"  |translate}}</mat-label>
           <textarea matInput [formControl]="note"></textarea>
         </mat-form-field>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+          <button type="button" mat-raised-button [routerLink]="['../../general']">{{"labels.buttons.Cancel"  |translate}}</button>
           <button mat-raised-button color="primary" (click)="submit()"
-            *mifosxHasPermission="'APPROVALUNDO_LOAN'">Submit</button>
+            *mifosxHasPermission="'APPROVALUNDO_LOAN'">{{"labels.buttons.Submit"  |translate}}</button>
         </mat-card-actions>
 
       </div>

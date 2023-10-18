@@ -9,24 +9,24 @@
         <div fxLayout="column">
 
           <mat-form-field (click)="withdrawalDatePicker.open()">
-            <mat-label>Withdrawal Date</mat-label>
+            <mat-label>{{ "labels.inputs.Withdrawal Date" |translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="withdrawalDatePicker" required formControlName="withdrawalDate">
             <mat-datepicker-toggle matSuffix [for]="withdrawalDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #withdrawalDatePicker></mat-datepicker>
             <mat-error *ngIf="withdrawClientForm.controls.withdrawalDate.hasError('required')">
-              Withdrawal Date is <strong>required</strong>
+              {{ "labels.inputs.Withdrawal Date" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Withdrawal Reason</mat-label>
+            <mat-label>{{ "labels.inputs.Withdrawal Reason" |translate}}</mat-label>
             <mat-select formControlName="withdrawalReasonId">
               <mat-option *ngFor="let reason of withdrawalData" [value]="reason.id">
                 {{ reason.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="withdrawClientForm.controls.withdrawalReasonId.hasError('required')">
-              Withdrawal Reason is <strong>required</strong>
+              {{ "labels.inputs.Withdrawal Reason" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -35,8 +35,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!withdrawClientForm.valid">Confirm</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">{{ "labels.buttons.Cancel" |translate}}</button>
+        <button mat-raised-button color="primary" [disabled]="!withdrawClientForm.valid">{{ "labels.buttons.Confirm" |translate}}</button>
       </mat-card-actions>
 
     </form>

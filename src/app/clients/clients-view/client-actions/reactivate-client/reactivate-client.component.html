@@ -7,20 +7,20 @@
       <mat-card-content>
 
           <mat-form-field fxFlex (click)="reactivationDatePicker.open()">
-            <mat-label>Re Activation On Date</mat-label>
+            <mat-label>{{ "labels.inputs.Re Activation On Date" |translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="reactivationDatePicker" required formControlName="reactivationDate">
             <mat-datepicker-toggle matSuffix [for]="reactivationDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #reactivationDatePicker></mat-datepicker>
             <mat-error *ngIf="reactivateClientForm.controls.reactivationDate.hasError('required')">
-              Reactivation Date is <strong>required</strong>
+              {{ "labels.inputs.Reactivation Date" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!reactivateClientForm.valid">Confirm</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">{{ "labels.buttons.Cancel" |translate}}</button>
+        <button mat-raised-button color="primary" [disabled]="!reactivateClientForm.valid">{{ "labels.buttons.Confirm" |translate}}</button>
       </mat-card-actions>
 
     </form>

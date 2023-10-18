@@ -1,19 +1,19 @@
 <div class="tab-container mat-typography">
 
   <ng-container *ngIf="loanDetails.summary">
-    <h3>Performance History</h3>
+    <h3>{{"labels.heading.Performance History"  |translate}}</h3>
     <div fxLayout="row" fxLayoutGap="32px" class="performance-history-container">
       <table>
         <tbody>
           <tr>
             <td fxFlex="25%">
-              <b>Number of Repayments :</b>
+              <b>{{"labels.inputs.Number of Repayments"  |translate}} :</b>
             </td>
             <td fxFlex="25%" class="left">
               {{loanDetails?.numberOfRepayments | formatNumber}}
             </td>
             <td fxFlex="25%">
-              <b>Maturity Date :</b>
+              <b>{{"labels.inputs.Maturity Date"  |translate}} :</b>
             </td>
             <td fxFlex="25%" class="left">
               {{loanDetails?.timeline.expectedMaturityDate | dateFormat}}
@@ -26,7 +26,7 @@
 
   <div *ngIf="loanDetails.summary">
 
-    <h3> Loan Summary </h3>
+    <h3> {{"labels.heading.Loan Summary"  |translate}} </h3>
 
     <table mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="Empty">
@@ -35,37 +35,37 @@
       </ng-container>
 
       <ng-container matColumnDef="Original">
-        <th mat-header-cell class="r-amount" *matHeaderCellDef> Original </th>
+        <th mat-header-cell class="r-amount" *matHeaderCellDef> {{"labels.inputs.Original"  |translate}} </th>
         <td mat-cell class="r-amount" *matCellDef="let ele"> {{ ele.original | currency:currencyCode:'symbol-narrow':'1.2-2' }} </td>
       </ng-container>
 
       <ng-container matColumnDef="Paid">
-        <th mat-header-cell class="r-amount" *matHeaderCellDef> Paid </th>
+        <th mat-header-cell class="r-amount" *matHeaderCellDef> {{"labels.inputs.Paid"  |translate}} </th>
         <td mat-cell class="r-amount amount-minus" *matCellDef="let ele"> {{ ele.paid | currency:currencyCode:'symbol-narrow':'1.2-2' }} </td>
       </ng-container>
 
       <ng-container matColumnDef="Adjustments">
-        <th mat-header-cell class="r-amount" *matHeaderCellDef> Credit Adjustments </th>
+        <th mat-header-cell class="r-amount" *matHeaderCellDef> {{"labels.inputs.Credit Adjustments"  |translate}} </th>
         <td mat-cell class="r-amount amount-plus" *matCellDef="let ele"> {{ ele.adjustment | currency:currencyCode:'symbol-narrow':'1.2-2' }} </td>
       </ng-container>
 
       <ng-container matColumnDef="Waived">
-        <th mat-header-cell class="r-amount" *matHeaderCellDef> Waived </th>
+        <th mat-header-cell class="r-amount" *matHeaderCellDef> {{"labels.inputs.Waived"  |translate}} </th>
         <td mat-cell class="r-amount amount-minus" *matCellDef="let ele"> {{ ele.waived | currency:currencyCode:'symbol-narrow':'1.2-2' }} </td>
       </ng-container>
 
       <ng-container matColumnDef="Written Off">
-        <th mat-header-cell class="r-amount" *matHeaderCellDef> Written Off </th>
+        <th mat-header-cell class="r-amount" *matHeaderCellDef> {{"labels.inputs.Written Off"  |translate}} </th>
         <td mat-cell class="r-amount amount-minus" *matCellDef="let ele"> {{ ele.writtenOff | currency:currencyCode:'symbol-narrow':'1.2-2' }} </td>
       </ng-container>
 
       <ng-container matColumnDef="Outstanding">
-        <th mat-header-cell class="r-amount" *matHeaderCellDef> Outstanding </th>
+        <th mat-header-cell class="r-amount" *matHeaderCellDef> {{"labels.inputs.Outstanding"  |translate}} </th>
         <td mat-cell class="r-amount" *matCellDef="let ele"> {{ ele.outstanding | currency:currencyCode:'symbol-narrow':'1.2-2' }} </td>
       </ng-container>
 
       <ng-container matColumnDef="Over Due">
-        <th mat-header-cell class="r-amount" *matHeaderCellDef> Over Due </th>
+        <th mat-header-cell class="r-amount" *matHeaderCellDef> {{"labels.inputs.Over Due"  |translate}} </th>
         <td mat-cell class="r-amount" *matCellDef="let ele"> {{ ele.overdue | currency:currencyCode:'symbol-narrow':'1.2-2' }} </td>
       </ng-container>
 
@@ -77,29 +77,29 @@
 
   <div *ngIf="loanDetails.summary">
 
-    <h3> Loan Details</h3>
+    <h3> {{"labels.heading.Loan Details"  |translate}} </h3>
     <table mat-table [dataSource]="detailsDataSource">
 
       <ng-container matColumnDef="Key">
-        <th mat-header-cell *matHeaderCellDef> Key </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Key"  |translate}} </th>
         <td mat-cell *matCellDef="let ele"> {{ ele.key }} </td>
       </ng-container>
 
       <ng-container matColumnDef="Value">
-        <th mat-header-cell *matHeaderCellDef> Value </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Value"  |translate}} </th>
         <td mat-cell *matCellDef="let ele">
           <ng-container *ngIf="ele.key === 'Disbursement Date'" >
             <span *ngIf="loanDetails.timeline.actualDisbursementDate"> {{loanDetails.timeline.actualDisbursementDate  | dateFormat}} </span>
-            <span *ngIf="!loanDetails.timeline.actualDisbursementDate"> Not Available </span>
+            <span *ngIf="!loanDetails.timeline.actualDisbursementDate"> {{"labels.inputs.Not Available"  |translate}} </span>
           </ng-container>
 
           <ng-container *ngIf="ele.key === 'Loan Purpose'">
             <span *ngIf="loanDetails.loanPurposeName"> {{loanDetails.loanPurposeName}} </span>
-            <span *ngIf="!loanDetails.loanPurposeName"> Not Available </span>
+            <span *ngIf="!loanDetails.loanPurposeName"> {{"labels.inputs.Not Available"  |translate}} </span>
           </ng-container>
 
           <ng-container *ngIf="ele.key === 'Loan Officer'">
-            <span *ngIf="!loanDetails.loanOfficerName"> Unassigned </span>
+            <span *ngIf="!loanDetails.loanOfficerName"> {{"labels.inputs.Unassigned"  |translate}} </span>
             <span *ngIf="loanDetails.loanOfficerName"> {{loanDetails.loanOfficerName}} &nbsp;
               <span *ngIf="loanDetails.loanOfficerName">
                     <!-- <a ng-click="clickEvent('unassignloanofficer', loanDetails.id)" *mifosxHasPermission = "'REMOVELOANOFFICER_LOAN'"><i
@@ -116,7 +116,7 @@
             <span *ngIf="loanDetails.externalId">
               <mifosx-external-identifier externalId="{{loanDetails.externalId}}" completed="true"></mifosx-external-identifier>
             </span>
-            <span *ngIf="!loanDetails.externalId"> Not Available </span>
+            <span *ngIf="!loanDetails.externalId"> {{"labels.inputs.Not Available"  |translate}} </span>
           </ng-container>
 
           <ng-container *ngIf="ele.key === 'Proposed Amount' || ele.key === 'Approved Amount' || ele.key === 'Disburse Amount'">
@@ -134,24 +134,24 @@
 
   <div *ngIf="!loanDetails.summary">
 
-    <h3> Loan Details </h3>
+    <h3> {{"labels.heading.Loan Details"  |translate}} </h3>
     <table mat-table [dataSource]="detailsDataSource">
 
       <ng-container matColumnDef="Key">
-        <th mat-header-cell *matHeaderCellDef> Key </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Key"  |translate}} </th>
         <td mat-cell *matCellDef="let ele"> {{ ele.key }} </td>
       </ng-container>
 
       <ng-container matColumnDef="Value">
-        <th mat-header-cell *matHeaderCellDef> Value </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Value"  |translate}} </th>
         <td mat-cell *matCellDef="let ele">
           <ng-container *ngIf="ele.key === 'Disbursement Date'" >
             <span *ngIf="loanDetails.timeline.actualDisbursementDate"> {{loanDetails.timeline.actualDisbursementDate  | dateFormat}} </span>
-            <span *ngIf="!loanDetails.timeline.actualDisbursementDate"> Not Available </span>
+            <span *ngIf="!loanDetails.timeline.actualDisbursementDate"> {{"labels.inputs.Not Available"  |translate}} </span>
           </ng-container>
 
           <ng-container *ngIf="ele.key === 'Loan Officer'">
-            <span *ngIf="!loanDetails.loanOfficerName"> Unassigned </span>
+            <span *ngIf="!loanDetails.loanOfficerName"> {{"labels.inputs.Unassigned"  |translate}} </span>
             <span *ngIf="loanDetails.loanOfficerName"> {{loanDetails.loanOfficerName}} &nbsp;
               <span *ngIf="loanDetails.loanOfficerName">
                     <!-- <a ng-click="clickEvent('unassignloanofficer', loanDetails.id)" *mifosxHasPermission = "'REMOVELOANOFFICER_LOAN'"><i
@@ -168,7 +168,7 @@
             <span *ngIf="loanDetails.externalId">
               <mifosx-external-identifier externalId="{{loanDetails.externalId}}" completed="true"></mifosx-external-identifier>
             </span>
-            <span *ngIf="!loanDetails.externalId"> Not Available </span>
+            <span *ngIf="!loanDetails.externalId"> {{"labels.inputs.Not Available"  |translate}} </span>
           </ng-container>
 
         </td>
@@ -181,38 +181,38 @@
   </div>
 
   <div *ngIf="!loanDetails.summary">
-    <h3> Loan Purpose </h3>
+    <h3> {{"labels.heading.Loan Purpose"  |translate}} </h3>
     <div class="container">
       <div fxLayout="row wrap" fxLayout.lt-md="column">
 
         <div fxFlexFill>
-            <span fxFlex="50%">Loan Purpose:</span>
+            <span fxFlex="50%">{{"labels.inputs.Loan Purpose"  |translate}}:</span>
             <span fxFlex="50%" *ngIf="loanDetails.loanPurposeName">
               {{ loanDetails.loanPurposeName }}
             </span>
             <span fxFlex="50%" *ngIf="!loanDetails.loanPurposeName">
-              Not Provided
+              {{"labels.inputs.Not Provided"  |translate}}
             </span>
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="50%">Proposed Amount:</span>
+          <span fxFlex="50%">{{"labels.inputs.Proposed Amount"  |translate}}:</span>
           <span fxFlex="50%">{{ loanDetails.proposedPrincipal | currency:currencyCode:'symbol-narrow':'1.2-2'}}</span>
         </div>
 
         <div fxFlexFill *ngIf="showApprovedAmountBasedOnStatus()">
-          <span fxFlex="50%">Approved Amount:</span>
+          <span fxFlex="50%">{{"labels.inputs.Approved Amount"  |translate}}:</span>
           <span fxFlex="50%">{{ loanDetails.approvedPrincipal | currency:currencyCode:'symbol-narrow':'1.2-2' }}</span>
         </div>
 
         <div fxFlexFill *ngIf="showDisbursedAmountBasedOnStatus()">
-          <span fxFlex="50%">Disburse Amount:</span>
+          <span fxFlex="50%">{{"labels.inputs.Disburse Amount"  |translate}}:</span>
           <span fxFlex="50%">{{ loanDetails.principal | currency:currencyCode:'symbol-narrow':'1.2-2' }}</span>
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="50%">Arrears By:</span>
-          <span fxFlex="50%"> Not Provided</span>
+          <span fxFlex="50%">{{"labels.inputs.Arrears By"  |translate}}:</span>
+          <span fxFlex="50%">{{"labels.inputs.Not Provided"  |translate}}</span>
         </div>
 
       </div>

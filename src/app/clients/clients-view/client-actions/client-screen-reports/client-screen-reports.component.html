@@ -9,14 +9,14 @@
         <div>
 
           <mat-form-field fxFlex>
-            <mat-label>Client Screen Reports</mat-label>
+            <mat-label>{{ "labels.inputs.Client Screen Reports" |translate}}</mat-label>
             <mat-select formControlName="templateId">
               <mat-option *ngFor="let template of templatesData" [value]="template.id">
                 {{ template.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="clientScreenReportForm.controls.templateId.hasError('required')">
-              Screen Report is <strong>required</strong>
+              {{ "labels.inputs.Screen Report" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -25,9 +25,9 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">{{ "labels.buttons.Cancel" | translate}}</button>
         <button mat-raised-button color="primary" [disabled]="!clientScreenReportForm.valid">
-          <fa-icon icon="cogs" size="sm" class="m-r-10"></fa-icon>Generate Report</button>
+          <fa-icon icon="cogs" size="sm" class="m-r-10"></fa-icon>{{ "labels.buttons.Generate Report" | translate}}</button>
       </mat-card-actions>
 
     </form>
@@ -43,7 +43,7 @@
     <div fxLayoutAlign="end">
       <button mat-stroked-button color="primary" [disabled]="!template" (click)="print()">
         <fa-icon icon="file" class="m-r-10"></fa-icon>
-        Print
+        {{ "labels.buttons.Print" | translate}}
       </button>
     </div>
 

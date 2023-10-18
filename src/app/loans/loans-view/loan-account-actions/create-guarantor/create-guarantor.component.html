@@ -9,16 +9,16 @@
         <div fxLayout="column">
 
           <mat-checkbox labelPosition="before" formControlName="existingClient">
-            Existing Client
+            {{"labels.inputs.Existing Client"  |translate}}
           </mat-checkbox>
 
           <ng-container *ngIf="!showClientDetailsForm">
 
             <mat-form-field fxFlex="30%">
-              <mat-label>Name</mat-label>
+              <mat-label>{{"labels.inputs.name"  |translate}}</mat-label>
               <input matInput formControlName="name" [matAutocomplete]="clientsAutocomplete">
               <mat-error *ngIf="newGuarantorForm.controls.name.hasError('required')">
-                Name <strong>is required</strong>
+                {{"labels.inputs.name"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
               </mat-error>
             </mat-form-field>
 
@@ -30,7 +30,7 @@
             </mat-autocomplete>
 
             <mat-form-field>
-              <mat-label>Relationship</mat-label>
+              <mat-label>{{"labels.inputs.Relationship"  |translate}}</mat-label>
               <mat-select formControlName="clientRelationshipTypeId">
                 <mat-option *ngFor="let relationType of relationTypes" [value]="relationType.id">
                   {{ relationType.name }}
@@ -41,7 +41,7 @@
             <ng-container *ngIf="accountOptions.length > 0">
 
               <mat-form-field>
-                <mat-label>Account</mat-label>
+                <mat-label>{{"labels.inputs.Account"  |translate}}</mat-label>
                 <mat-select formControlName="savingsId">
                   <mat-option *ngFor="let accountOption of accountOptions" [value]="accountOption.id">
                     {{ accountOption.productName }} - {{ accountOption.accountNo }}
@@ -50,7 +50,7 @@
               </mat-form-field>
 
               <mat-form-field>
-                <mat-label>Amount</mat-label>
+                <mat-label>{{"labels.inputs.Amount"  |translate}}</mat-label>
                 <input type="number" matInput required formControlName="amount">
               </mat-form-field>
 
@@ -61,7 +61,7 @@
           <ng-container *ngIf="showClientDetailsForm">
 
             <mat-form-field>
-              <mat-label>Relationship</mat-label>
+              <mat-label>{{"labels.inputs.Relationship"  |translate}}</mat-label>
               <mat-select formControlName="clientRelationshipTypeId">
                 <mat-option *ngFor="let relationType of relationTypes" [value]="relationType.id">
                   {{ relationType.name }}
@@ -70,55 +70,55 @@
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>First Name</mat-label>
+              <mat-label>{{"labels.inputs.First Name"  |translate}}</mat-label>
               <input matInput required formControlName="firstname">
               <mat-error *ngIf="newGuarantorForm.controls.firstname.hasError('required')">
-                First Name <strong>is required</strong>
+                {{"labels.inputs.First Name"  |translate}} {{ "labels.commons.is"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
               </mat-error>
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Last Name</mat-label>
+              <mat-label>{{"labels.inputs.Last Name"  |translate}}</mat-label>
               <input matInput required formControlName="lastname">
               <mat-error *ngIf="newGuarantorForm.controls.lastname.hasError('required')">
-                Last Name <strong>is required</strong>
+                {{"labels.inputs.Last Name"  |translate}} {{ "labels.commons.is"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
               </mat-error>
             </mat-form-field>
 
             <mat-form-field (click)="dobDatePicker.open()">
-              <mat-label>Date Of Birth</mat-label>
+              <mat-label>{{"labels.inputs.Date Of Birth"  |translate}}</mat-label>
               <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dobDatePicker" formControlName="dob">
               <mat-datepicker-toggle matSuffix [for]="dobDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #dobDatePicker></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Address Line 1</mat-label>
+              <mat-label>{{"labels.inputs.Address Line"  |translate}} 1</mat-label>
               <input matInput formControlName="addressLine1">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Address Line 2</mat-label>
+              <mat-label>{{"labels.inputs.Address Line"  |translate}} 2</mat-label>
               <input matInput formControlName="addressLine2">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>City</mat-label>
+              <mat-label>{{"labels.inputs.City"  |translate}}</mat-label>
               <input matInput formControlName="city">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Zip</mat-label>
+              <mat-label>{{"labels.inputs.Zip"  |translate}}</mat-label>
               <input matInput formControlName="zip">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Mobile</mat-label>
+              <mat-label>{{"labels.inputs.Mobile"  |translate}}</mat-label>
               <input type="number" matInput formControlName="mobileNumber">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Residence Phone #</mat-label>
+              <mat-label>{{"labels.inputs.Residence Phone"  |translate}} #</mat-label>
               <input type="number" matInput formControlName="housePhoneNumber">
             </mat-form-field>
 
@@ -127,9 +127,9 @@
         </div>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+          <button type="button" mat-raised-button [routerLink]="['../../general']">{{"labels.buttons.Cancel"  |translate}}</button>
           <button mat-raised-button color="primary" [disabled]="!newGuarantorForm.valid"
-            *mifosxHasPermission="'CREATE_GUARANTOR'">Submit</button>
+            *mifosxHasPermission="'CREATE_GUARANTOR'">{{"labels.buttons.Submit"  |translate}}</button>
         </mat-card-actions>
 
       </mat-card-content>
@@ -139,18 +139,18 @@
     <ng-container *ngIf="!(newGuarantorForm.controls.name === undefined)">
       <div class="mat-table">
         <div class="mat-header-row">
-          <div class="mat-header-cell">Client Details</div>
+          <div class="mat-header-cell">{{"labels.inputs.Client Details"  |translate}}</div>
         </div>
         <div class="mat-row">
-          <div class="mat-cell">Name</div>
+          <div class="mat-cell">{{"labels.inputs.name"  |translate}}</div>
           <div class="mat-cell">{{newGuarantorForm.controls.name.value.displayName}}</div>
         </div>
         <div class="mat-row">
-          <div class="mat-cell">Id</div>
+          <div class="mat-cell">{{"labels.inputs.Id"  |translate}}</div>
           <div class="mat-cell">{{newGuarantorForm.controls.name.value.id}}</div>
         </div>
         <div class="mat-row">
-          <div class="mat-cell">Office</div>
+          <div class="mat-cell">{{"labels.inputs.Office"  |translate}}</div>
           <div class="mat-cell">{{newGuarantorForm.controls.name.value.officeName}}</div>
         </div>
       </div>

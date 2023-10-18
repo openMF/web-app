@@ -9,22 +9,22 @@
         <div fxLayout="column">
 
           <mat-form-field appearance="fill">
-            <mat-label>Amount</mat-label>
+            <mat-label>{{"labels.inputs.Amount"  |translate}}</mat-label>
             <span matTextSuffix class="m-l-10">{{ loanDetailsData.currency.code }}</span>
             <span fxFlex="auto"></span>
             <input type="number" matInput required class="right-input" formControlName="amount">
             <mat-error *ngIf="adjustLoanChargeForm.controls.amount.hasError('required')">
-              Amount <strong>is required</strong>
+              {{"labels.inputs.Amount"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>External Id</mat-label>
+            <mat-label>{{"labels.inputs.External Id"  |translate}}</mat-label>
             <input matInput formControlName="externalId">
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Payment Type</mat-label>
+            <mat-label>{{"labels.inputs.Payment Type"  |translate}}</mat-label>
             <mat-select formControlName="paymentTypeId">
               <mat-option *ngFor="let paymentType of paymentTypes" [value]="paymentType.id">
                 {{ paymentType.name }}
@@ -36,7 +36,7 @@
             <span fxFlex="75%" class="expandcollapsebutton m-l-10 m-t-40" (click)="addPaymentDetails()">
               <mat-slide-toggle>
                 <div [className]="showPaymentDetails ? 'enabled' : 'disabled'">
-                  <span class="m-l-10">Show Payment Details</span>
+                  <span class="m-l-10">{{"labels.inputs.Show Payment Details"  |translate}}</span>
                 </div>
               </mat-slide-toggle>
             </span>
@@ -44,42 +44,42 @@
 
           <ng-container *ngIf="showPaymentDetails">
             <mat-form-field>
-              <mat-label> Account #</mat-label>
+              <mat-label> {{"labels.inputs.Account"  |translate}} #</mat-label>
               <input matInput formControlName="accountNumber">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Cheque #</mat-label>
+              <mat-label>{{"labels.inputs.Cheque"  |translate}} #</mat-label>
               <input matInput formControlName="checkNumber">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Routing Code</mat-label>
+              <mat-label>{{"labels.inputs.Routing Code"  |translate}}</mat-label>
               <input matInput formControlName="routingCode">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Reciept #</mat-label>
+              <mat-label>{{"labels.inputs.Reciept"  |translate}} #</mat-label>
               <input matInput formControlName="receiptNumber">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Bank #</mat-label>
+              <mat-label>{{"labels.inputs.Bank"  |translate}} #</mat-label>
               <input matInput formControlName="bankNumber">
             </mat-form-field>
           </ng-container>
 
           <mat-form-field>
-            <mat-label>Note</mat-label>
+            <mat-label>{{"labels.inputs.Note"  |translate}}</mat-label>
             <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
           </mat-form-field>
 
         </div>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../..']">Cancel</button>
+          <button type="button" mat-raised-button [routerLink]="['../..']">{{"labels.buttons.Cancel"  |translate}}</button>
           <button mat-raised-button color="primary" [disabled]="!adjustLoanChargeForm.valid"
-            *mifosxHasPermission="'ADJUSTMENT_LOANCHARGE'">Submit</button>
+            *mifosxHasPermission="'ADJUSTMENT_LOANCHARGE'">{{"labels.buttons.Submit"  |translate}}</button>
         </mat-card-actions>
 
       </mat-card-content>
