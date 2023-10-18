@@ -9,14 +9,14 @@
         <div fxLayout="column">
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Default Savings Account</mat-label>
+            <mat-label>{{ "labels.inputs.Default Savings Account" |translate}}</mat-label>
             <mat-select formControlName="savingsAccountId">
               <mat-option *ngFor="let account of savingsAccounts" [value]="account.id">
                 {{ account.accountNo }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="clientSavingsAccountForm.controls.savingsAccountId.hasError('required')">
-              Account is <strong>required</strong>
+              {{ "labels.inputs.Account" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -25,8 +25,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!clientSavingsAccountForm.valid">Confirm</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">{{ "labels.buttons.Cancel" |translate}}</button>
+        <button mat-raised-button color="primary" [disabled]="!clientSavingsAccountForm.valid">{{ "labels.buttons.Confirm" |translate}}</button>
       </mat-card-actions>
 
     </form>

@@ -9,48 +9,48 @@
                 <div div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
                     <mat-form-field fxFlex="48%">
-                        <mat-label> User Name </mat-label>
+                        <mat-label> {{ "labels.inputs.User Name" |translate}} </mat-label>
                         <input matInput required formControlName="username">
                         <mat-error *ngIf="createSelfServiceForm.controls.username.hasError('required')">
-                            User Name is <strong>required</strong>
+                            {{ "labels.inputs.User Name" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
                         </mat-error>
                     </mat-form-field>
 
                     <mat-form-field fxFlex="48%">
-                        <mat-label> First Name </mat-label>
+                        <mat-label> {{ "labels.inputs.First Name" |translate}} </mat-label>
                         <input matInput required formControlName="firstname">
                         <mat-error *ngIf="createSelfServiceForm.controls.firstname.hasError('required')">
-                            First Name is <strong>required</strong>
+                            {{ "labels.inputs.First Name" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
                         </mat-error>
                     </mat-form-field>
 
                     <mat-form-field fxFlex="48%">
-                        <mat-label> Last Name </mat-label>
+                        <mat-label> {{ "labels.inputs.Last Name" |translate}} </mat-label>
                         <input matInput required formControlName="lastname">
                         <mat-error *ngIf="createSelfServiceForm.controls.lastname.hasError('required')">
-                            Last Name is <strong>required</strong>
+                            {{ "labels.inputs.Last Name" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
                         </mat-error>
                     </mat-form-field>
 
                     <mat-form-field fxFlex="48%">
-                        <mat-label> Email </mat-label>
+                        <mat-label> {{ "labels.inputs.Email" |translate}} </mat-label>
                         <input matInput required formControlName="email">
                         <mat-error *ngIf="createSelfServiceForm.controls.email.hasError('required')">
-                            Email is <strong>required</strong>
+                            {{ "labels.inputs.Email" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
                         </mat-error>
                         <mat-error *ngIf="createSelfServiceForm.controls.email.hasError('email')">
-                            Email should be a  <strong>valid</strong> email.
+                            {{ "labels.inputs.Email should be a" |translate}} <strong>{{ "labels.inputs.valid" |translate}}</strong> {{ "labels.inputs.email" |translate}}.
                         </mat-error>
                     </mat-form-field>
 
                     <mat-checkbox labelPosition="before" formControlName="sendPasswordToEmail" fxFlex="48%">
-                        Auto Generate Password
+                        {{ "labels.inputs.Auto Generate Password" |translate}}
                     </mat-checkbox>
 
                     <div fxFlex="48%" fxLayoutGap="5px" fxLayout="row">
 
                         <mat-checkbox labelPosition="before" formControlName="passwordNeverExpires">
-                            Override Password Expire Policy ?
+                            {{ "labels.inputs.Override Password Expire Policy" |translate}} ?
                         </mat-checkbox>
     
                         <i class="fa fa-question-circle fa fa-align-left" title="Determines if passwords do not expire for this user even if global configuration for password expiry is enabled"></i>
@@ -58,34 +58,34 @@
                     </div>
 
                     <mat-form-field fxFlex="48%" *ngIf="!hidePasswordField">
-                        <mat-label> Password </mat-label>
+                        <mat-label> {{ "labels.inputs.Password" |translate}} </mat-label>
                         <input matInput required formControlName="password" type="password">
                         <mat-error *ngIf="createSelfServiceForm.controls.password.hasError('required')">
-                            Password is <strong>required</strong>
+                            {{ "labels.inputs.Password" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
                         </mat-error>
                     </mat-form-field>
 
                     <mat-form-field fxFlex="48%" *ngIf="!hidePasswordField">
-                        <mat-label> Repeat Password </mat-label>
+                        <mat-label> {{ "labels.inputs.Repeat Password" |translate}} </mat-label>
                         <input matInput required formControlName="repeatPassword" type="password">
                         <mat-error *ngIf="createSelfServiceForm.controls.repeatPassword.hasError('required')">
-                            Repeat password is <strong>required</strong>
+                            {{ "labels.inputs.Repeat password" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
                         </mat-error>
                         <mat-error *ngIf="createSelfServiceForm.controls.repeatPassword.hasError('notequal')">
-                            Passwords should be <strong>matched</strong>
+                            {{ "labels.inputs.Passwords should be" |translate}} <strong>{{ "labels.inputs.matched" |translate}}</strong>
                         </mat-error>
                     </mat-form-field>
 
                     <mat-form-field fxFlex="48%">
-                        <mat-label> Status </mat-label>
+                        <mat-label> {{ "labels.inputs.Status" |translate}} </mat-label>
                         <input matInput formControlName="status">
                     </mat-form-field>
 
                 </div>
         
                 <mat-card-actions fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
-                  <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-                  <button mat-raised-button color="primary" [disabled]="!createSelfServiceForm.valid">Activate Self Service User</button>
+                  <button type="button" mat-raised-button [routerLink]="['../../']">{{ "labels.buttons.Cancel" | translate}}</button>
+                  <button mat-raised-button color="primary" [disabled]="!createSelfServiceForm.valid">{{ "labels.buttons.Activate Self Service User" | translate}}</button>
                   <i class="fa fa-question-circle fa-2x" title="Activate Self Service User Help"></i>
                 </mat-card-actions>
         

@@ -2,39 +2,39 @@
 
   <div style="margin-top: 5px;">
 
-    <h2> Charges Overview</h2>
+    <h2>{{ "labels.heading.Charges Overview" |translate}}</h2>
 
     <table mat-table [dataSource]="dataSource">
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <th mat-header-cell *matHeaderCellDef> {{ "labels.inputs.name" |translate}} </th>
         <td mat-cell *matCellDef="let chargeOverviewData"><i class="fa fa-stop"
           [ngClass]="(!(chargeOverviewData.isWaived || chargeOverviewData.isPaid))|statusLookup"></i>
           {{chargeOverviewData.name}} </td>
       </ng-container>
 
       <ng-container matColumnDef="dueAsOf">
-        <th mat-header-cell *matHeaderCellDef> Due as of </th>
+        <th mat-header-cell *matHeaderCellDef> {{ "labels.inputs.Due as of" |translate}} </th>
         <td mat-cell *matCellDef="let chargeOverviewData"> {{chargeOverviewData.dueDate  | dateFormat}} </td>
       </ng-container>
 
       <ng-container matColumnDef="due">
-        <th mat-header-cell *matHeaderCellDef> Due </th>
+        <th mat-header-cell *matHeaderCellDef> {{ "labels.inputs.Due" |translate}} </th>
         <td mat-cell *matCellDef="let chargeOverviewData"> {{chargeOverviewData.amount}} </td>
       </ng-container>
 
       <ng-container matColumnDef="paid">
-        <th mat-header-cell *matHeaderCellDef> Paid </th>
+        <th mat-header-cell *matHeaderCellDef> {{ "labels.inputs.Paid" |translate}} </th>
         <td mat-cell *matCellDef="let chargeOverviewData"> {{chargeOverviewData.amountPaid}} </td>
       </ng-container>
 
       <ng-container matColumnDef="waived">
-        <th mat-header-cell *matHeaderCellDef> Waived </th>
+        <th mat-header-cell *matHeaderCellDef> {{ "labels.inputs.Waived" |translate}} </th>
         <td mat-cell *matCellDef="let chargeOverviewData"> {{chargeOverviewData.amountWaived}} </td>
       </ng-container>
 
       <ng-container matColumnDef="outstanding">
-        <th mat-header-cell *matHeaderCellDef> Outstanding </th>
+        <th mat-header-cell *matHeaderCellDef> {{ "labels.inputs.Outstanding" |translate}} </th>
         <td mat-cell *matCellDef="let chargeOverviewData"> {{chargeOverviewData.amountOutstanding}} </td>
       </ng-container>
 

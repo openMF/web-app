@@ -9,29 +9,29 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Office</mat-label>
+            <mat-label>{{ "labels.inputs.Office" |translate}}</mat-label>
             <mat-select required formControlName="destinationOfficeId">
               <mat-option *ngFor="let office of officeData" [value]="office.id">
                 {{ office.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="transferClientForm.controls.destinationOfficeId.hasError('required')">
-              Office is <strong>required</strong>
+              {{ "labels.inputs.Office" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field (click)="transferDatePicker.open()">
-            <mat-label>Transfer Date</mat-label>
+            <mat-label>{{ "labels.inputs.Transfer Date" |translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transferDatePicker" required formControlName="transferDate">
             <mat-datepicker-toggle matSuffix [for]="transferDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transferDatePicker></mat-datepicker>
             <mat-error *ngIf="transferClientForm.controls.transferDate.hasError('required')">
-              Transfer Date is <strong>required</strong>
+              {{ "labels.inputs.Transfer Date" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Note</mat-label>
+            <mat-label>{{ "labels.inputs.Note" |translate}}</mat-label>
             <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
           </mat-form-field>
 
@@ -40,8 +40,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!transferClientForm.valid">Confirm</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">{{ "labels.buttons.Cancel" |translate}}</button>
+        <button mat-raised-button color="primary" [disabled]="!transferClientForm.valid">{{ "labels.buttons.Confirm" |translate}}</button>
       </mat-card-actions>
 
     </form>

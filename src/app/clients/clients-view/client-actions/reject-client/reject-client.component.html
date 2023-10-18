@@ -9,24 +9,24 @@
         <div fxLayout="column">
 
           <mat-form-field (click)="rejectionDatePicker.open()">
-            <mat-label>Rejection Date</mat-label>
+            <mat-label>{{ "labels.inputs.Rejection Date" |translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="rejectionDatePicker" required formControlName="rejectionDate">
             <mat-datepicker-toggle matSuffix [for]="rejectionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #rejectionDatePicker></mat-datepicker>
             <mat-error *ngIf="rejectClientForm.controls.rejectionDate.hasError('required')">
-              Rejection Date is <strong>required</strong>
+              {{ "labels.inputs.Rejection Date" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Rejection Reason</mat-label>
+            <mat-label>{{ "labels.inputs.Rejection Reason" |translate}}</mat-label>
             <mat-select formControlName="rejectionReasonId">
               <mat-option *ngFor="let reason of rejectionData" [value]="reason.id">
                 {{ reason.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="rejectClientForm.controls.rejectionReasonId.hasError('required')">
-              Rejection Reason is <strong>required</strong>
+              {{ "labels.inputs.Rejection Reason" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -35,8 +35,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-        <button mat-raised-button color="warn" [disabled]="!rejectClientForm.valid">Confirm</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">{{ "labels.buttons.Cancel" |translate}}</button>
+        <button mat-raised-button color="warn" [disabled]="!rejectClientForm.valid">{{ "labels.buttons.Confirm" |translate}}</button>
       </mat-card-actions>
 
     </form>

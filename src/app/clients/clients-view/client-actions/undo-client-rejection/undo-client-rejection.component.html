@@ -7,20 +7,20 @@
       <mat-card-content>
 
           <mat-form-field fxFlex (click)="reopenedDatePicker.open()">
-            <mat-label>Reopened On Date</mat-label>
+            <mat-label>{{ "labels.inputs.Reopened On Date" |translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="reopenedDatePicker" required formControlName="reopenedDate">
             <mat-datepicker-toggle matSuffix [for]="reopenedDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #reopenedDatePicker></mat-datepicker>
             <mat-error *ngIf="undoClientRejectionForm.controls.reopenedDate.hasError('required')">
-              Reopened On Date is <strong>required</strong>
+              {{ "labels.inputs.Reopened On Date" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!undoClientRejectionForm.valid">Confirm</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">{{ "labels.buttons.Cancel" |translate}}</button>
+        <button mat-raised-button color="primary" [disabled]="!undoClientRejectionForm.valid">{{ "labels.buttons.Confirm" |translate}}</button>
       </mat-card-actions>
 
     </form>
