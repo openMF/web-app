@@ -24,10 +24,10 @@
 
     <mat-step [stepControl]="sharesAccountDetailsForm">
 
-      <ng-template matStepLabel>{{ 'labels.inputs.DETAILS'  |translate}}</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.DETAILS' | translate }}</ng-template>
 
       <mifosx-shares-account-details-step
-        [sharesAccountTemplate]="sharesAccountAndTemplate" 
+        [sharesAccountTemplate]="sharesAccountAndTemplate"
         (sharesAccountProductTemplate)="setTemplate($event)"
       >
       </mifosx-shares-account-details-step>
@@ -36,9 +36,9 @@
 
     <mat-step [stepControl]="sharesAccountTermsForm">
 
-      <ng-template matStepLabel>{{ 'labels.inputs.TERMS'  |translate}}</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.TERMS' | translate }}</ng-template>
 
-      <mifosx-shares-account-terms-step 
+      <mifosx-shares-account-terms-step
         [sharesAccountProductTemplate]="sharesAccountProductTemplate"
         [sharesAccountTemplate]="sharesAccountAndTemplate">
       </mifosx-shares-account-terms-step>
@@ -47,11 +47,11 @@
 
     <mat-step>
 
-      <ng-template matStepLabel>{{ 'labels.inputs.CHARGES'  |translate}}</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.CHARGES' | translate }}</ng-template>
 
       <mifosx-shares-account-charges-step
         [sharesAccountProductTemplate]="sharesAccountProductTemplate"
-        [sharesAccountTemplate]="sharesAccountAndTemplate" 
+        [sharesAccountTemplate]="sharesAccountAndTemplate"
         [currencyCode]="sharesAccountTermsForm.get('currencyCode')"
       >
       </mifosx-shares-account-charges-step>
@@ -60,7 +60,7 @@
 
     <mat-step *ngIf="sharesAccountFormValidAndNotPristine" completed>
 
-      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW'  |translate}}</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
 
       <mifosx-shares-account-preview-step
         [sharesAccountProductTemplate]="sharesAccountProductTemplate"

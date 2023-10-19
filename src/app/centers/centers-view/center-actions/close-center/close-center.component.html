@@ -14,7 +14,7 @@
             <mat-datepicker-toggle matSuffix [for]="closureDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closureDatePicker></mat-datepicker>
             <mat-error *ngIf="closeCenterForm.controls.closureDate.hasError('required')">
-              {{"labels.inputs.Closed On Date" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Closed On Date" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -26,7 +26,7 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="closeCenterForm.controls.closureReasonId.hasError('required')">
-              {{"labels.inputs.Closure Reason" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Closure Reason" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 

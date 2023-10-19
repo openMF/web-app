@@ -1,10 +1,35 @@
+@import "assets/styles/helper";
+
 .container {
   max-width: 37rem;
-  
+
   .content {
     div {
       margin: 1rem 0;
       word-wrap: break-word;
     }
   }
+}
+
+.transaction-buttons {
+  margin-top: 3%;
+}
+
+.transaction-relation {
+  background-color: $mid-grey;
+}
+
+.active {
+  background-color: $status-active;
+  height: 4px;
+}
+
+.linked {
+  background-color: $status-approved;
+  height: 4px;
+}
+
+.undo {
+  background-color: $status-active-overdue;
+  height: 4px;
 }

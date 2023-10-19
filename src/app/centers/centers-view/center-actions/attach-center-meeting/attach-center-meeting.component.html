@@ -14,7 +14,7 @@
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
             <mat-error *ngIf="centerMeetingForm.controls.startDate.hasError('required')">
-              {{"labels.inputs.Start Date" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Start Date" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -30,7 +30,7 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="centerMeetingForm.controls.frequency.hasError('repeatsOnDay')">
-              {{"labels.inputs.Repetition Frequency" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Repetition Frequency" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -42,7 +42,7 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="centerMeetingForm.controls.interval.hasError('repeatsOnDay')">
-              {{"labels.inputs.Repetition Interval" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Repetition Interval" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -57,7 +57,7 @@
             {{"labels.inputs.At least" |translate}} <strong>{{"labels.inputs.one" |translate}}</strong> {{"labels.inputs.day must be selected" |translate}}
           </mat-error>
         </mat-form-field>
-  
+
         </div>
 
       </mat-card-content>

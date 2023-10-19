@@ -1,3 +1,5 @@
+@import "assets/styles/helper";
+
 table {
   width: 100%;
 
@@ -21,6 +23,12 @@ table {
       }
     }
   }
+}
+
+.mat-h3 {
+  margin-top: 10px !important;
+  font-weight: 300;
+  color: $status-approved;
 }
 
 .mat-elevation-z1 {

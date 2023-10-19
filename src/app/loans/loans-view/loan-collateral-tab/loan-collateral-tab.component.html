@@ -30,7 +30,7 @@
   <table mat-table *ngIf="loanCollaterals?.length > 0" [dataSource]="loanCollaterals">
 
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.ID"  |translate}} </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.ID" | translate }} </th>
       <td mat-cell *matCellDef="let ele"> {{ ele.id }} </td>
     </ng-container>
 
@@ -40,17 +40,17 @@
     </ng-container>
 
     <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Description"  |translate}} </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Description" | translate }} </th>
       <td mat-cell *matCellDef="let ele"> {{ ele.description }} </td>
     </ng-container>
 
     <ng-container matColumnDef="total">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Total Value"  |translate}} </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Total Value" | translate }} </th>
       <td mat-cell *matCellDef="let ele"> {{ ele.total }} </td>
     </ng-container>
 
     <ng-container matColumnDef="totalCollateral">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Total Collateral Value"  |translate}} </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Total Collateral Value" | translate }} </th>
       <td mat-cell *matCellDef="let ele"> {{ ele.totalCollateral }} </td>
     </ng-container>
 

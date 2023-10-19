@@ -82,7 +82,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Apply Withdrawal Fee for Transfers:</span>
-    <span fxFlex="60%">{{ savingProduct.withdrawalFeeForTransfers ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ savingProduct.withdrawalFeeForTransfers | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="savingProduct.minBalanceForInterestCalculation">
@@ -92,7 +92,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Enforce Minimum Balance:</span>
-    <span fxFlex="60%">{{ savingProduct.enforceMinRequiredBalance ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ savingProduct.enforceMinRequiredBalance | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="savingProduct.minRequiredBalance">
@@ -102,7 +102,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Withhold Tax is Applicable:</span>
-    <span fxFlex="60%">{{ savingProduct.withHoldTax ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ savingProduct.withHoldTax | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="savingProduct.withHoldTax">
@@ -112,7 +112,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Is Overdraft Allowed:</span>
-    <span fxFlex="60%">{{ savingProduct.allowOverdraft ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ savingProduct.allowOverdraft | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="savingProduct.minOverdraftForInterestCalculation">
@@ -132,7 +132,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Enable Dormancy Tracking:</span>
-    <span fxFlex="60%">{{ savingProduct.isDormancyTrackingActive ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ savingProduct.isDormancyTrackingActive | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="savingProduct.isDormancyTrackingActive" fxLayout="row wrap" fxLayout.lt-md="column">

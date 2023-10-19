@@ -55,6 +55,11 @@ const routes: Routes = [
             },
             children: [
               {
+                path: '',
+                redirectTo: 'transactions',
+                pathMatch: 'full'
+              },
+              {
                 path: 'interest-rate-chart',
                 component: InterestRateChartTabComponent,
                 data: { title: extract('Fixed Deposit Account Interest Rate Chart'), breadcrumb: 'Interest Rate Chart', routeParamBreadcrumb: false },

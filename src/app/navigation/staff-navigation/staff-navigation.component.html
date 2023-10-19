@@ -4,26 +4,26 @@
     <div class="mat-typography">
       <mat-card-title>
         <h2>
-          {{ employeeData.displayName }} 
+          {{ employeeData.displayName }}
           <span [className]="employeeData.isActive === true ? 'true' : 'false'">
             <fa-icon matTooltip="{{ employeeData.isActive === true ? 'Active' : 'Inactive' }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
-          </span>        
+          </span>
         </h2>
       </mat-card-title>
       <mat-card-subtitle>
         <p>
-          {{"labels.inputs.Associated Office"  |translate}}: {{ employeeData.officeName }}
+          {{"labels.inputs.Associated Office" | translate }}: {{ employeeData.officeName }}
         </p>
       </mat-card-subtitle>
     </div>
-  </mat-card-title-group> 
+  </mat-card-title-group>
 </mat-card-header>
 
 <mat-card-content>
   <div fxLayout="row wrap" class="content">
 
     <div fxFlex="50%" class="mat-body-strong">
-      {{"labels.inputs.Joined On"  |translate}}
+      {{"labels.inputs.Joined On" | translate }}
     </div>
 
     <div fxFlex="50%">
@@ -31,15 +31,15 @@
     </div>
 
     <div fxFlex="50%" class="mat-body-strong">
-      {{"labels.inputs.Loan Officer"  |translate}}
+      {{"labels.inputs.Loan Officer" | translate }}
     </div>
 
     <div fxFlex="50%">
-      {{ employeeData.isLoanOfficer ? 'Yes' : 'No' }}
+      {{ employeeData.isLoanOfficer | yesNo }}
     </div>
 
     <div fxFlex="50%" class="mat-body-strong" *ngIf="employeeData.mobileNo">
-      {{"labels.inputs.Mobile Number"  |translate}}
+      {{"labels.inputs.Mobile Number" | translate }}
     </div>
 
     <div fxFlex="50%" *ngIf="employeeData.mobileNo">
@@ -47,7 +47,7 @@
     </div>
 
     <div fxFlex="50%" class="mat-body-strong">
-      {{"labels.inputs.Number of Centers"  |translate}}
+      {{"labels.inputs.Number of Centers" | translate }}
     </div>
 
     <div fxFlex="50%">

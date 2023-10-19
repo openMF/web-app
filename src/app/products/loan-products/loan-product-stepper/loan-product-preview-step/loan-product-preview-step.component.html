@@ -601,7 +601,7 @@
     <span fxFlex="40%">Repaid every:</span>
     <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.repaymentEvery | yesNo }}</span>
     <span fxFlex="40%">Moratorium:</span>
-    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.graceOnPrincipalAndInterestPayment ? 'Yes' : 'No'
+    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.graceOnPrincipalAndInterestPayment | yesNo
       }}</span>
     <span fxFlex="40%">Number of days a loan may be overdue before moving into arrears:</span>
     <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.graceOnArrearsAgeing | yesNo }}</span>

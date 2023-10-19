@@ -10,7 +10,7 @@
         </mat-option>
       </mat-select>
       <mat-error *ngIf="createClientForm.controls.officeId.hasError('required')">
-        {{ "labels.inputs.Office" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+        {{ "labels.inputs.Office" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
       </mat-error>
     </mat-form-field>
 
@@ -36,10 +36,10 @@
       <mat-label>{{ createClientForm.value.legalFormId === 1 ? 'Name' : 'Entity Name' }}</mat-label>
       <input matInput required formControlName="fullname">
       <mat-error *ngIf="createClientForm.controls.fullname.hasError('required')">
-        {{ "labels.inputs.Client name" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+        {{ "labels.inputs.Client name" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
       </mat-error>
       <mat-error *ngIf="createClientForm.controls.fullname.hasError('pattern')">
-        {{ "labels.inputs.Client name" |translate}} <strong>{{ "labels.inputs.cannot" |translate}}</strong> {{ "labels.commons.begin with a special character or number"  |translate}}
+        {{ "labels.inputs.Client name" |translate}} <strong>{{ "labels.inputs.cannot" |translate}}</strong> {{ "labels.commons.begin with a special character or number" | translate }}
       </mat-error>
     </mat-form-field>
 
@@ -47,10 +47,10 @@
       <mat-label>{{ "labels.inputs.First Name" |translate}}</mat-label>
       <input matInput required formControlName="firstname">
       <mat-error *ngIf="createClientForm.controls.firstname.hasError('required')">
-        {{ "labels.inputs.Client first name" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+        {{ "labels.inputs.Client first name" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
       </mat-error>
       <mat-error *ngIf="createClientForm.controls.firstname.hasError('pattern')">
-        {{ "labels.inputs.Client first name" |translate}} <strong>{{ "labels.inputs.cannot" |translate}}</strong> {{ "labels.commons.begin with a special character or number"  |translate}}
+        {{ "labels.inputs.Client first name" |translate}} <strong>{{ "labels.inputs.cannot" |translate}}</strong> {{ "labels.commons.begin with a special character or number" | translate }}
       </mat-error>
     </mat-form-field>
 
@@ -58,7 +58,7 @@
       <mat-label>{{ "labels.inputs.Middle Name" |translate}}</mat-label>
       <input matInput formControlName="middlename">
       <mat-error *ngIf="createClientForm.controls.middlename.hasError('pattern')">
-        {{ "labels.inputs.Client middle name" |translate}} <strong>{{ "labels.inputs.cannot" |translate}}</strong> {{ "labels.commons.begin with a special character or number"  |translate}}
+        {{ "labels.inputs.Client middle name" |translate}} <strong>{{ "labels.inputs.cannot" |translate}}</strong> {{ "labels.commons.begin with a special character or number" | translate }}
       </mat-error>
     </mat-form-field>
 
@@ -66,10 +66,10 @@
       <mat-label>{{ "labels.inputs.Last Name" |translate}}</mat-label>
       <input matInput required formControlName="lastname">
       <mat-error *ngIf="createClientForm.controls.lastname.hasError('required')">
-        {{ "labels.inputs.Client last name" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+        {{ "labels.inputs.Client last name" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
       </mat-error>
       <mat-error *ngIf="createClientForm.controls.lastname.hasError('pattern')">
-        {{ "labels.inputs.Client last name" |translate}} <strong>{{ "labels.inputs.cannot" |translate}}</strong> {{ "labels.commons.begin with a special character or number"  |translate}}
+        {{ "labels.inputs.Client last name" |translate}} <strong>{{ "labels.inputs.cannot" |translate}}</strong> {{ "labels.commons.begin with a special character or number" | translate }}
       </mat-error>
     </mat-form-field>
 
@@ -189,7 +189,7 @@
       <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #activatedOnDatePicker></mat-datepicker>
       <mat-error *ngIf="createClientForm.controls.activationDate.hasError('required')">
-        {{ "labels.inputs.Activation Date" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+        {{ "labels.inputs.Activation Date" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
       </mat-error>
     </mat-form-field>
 
@@ -205,7 +205,7 @@
         </mat-option>
       </mat-select>
       <mat-error *ngIf="createClientForm.controls.savingsProductId.hasError('required')">
-        {{ "labels.inputs.Savings Product" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+        {{ "labels.inputs.Savings Product" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
       </mat-error>
     </mat-form-field>
 

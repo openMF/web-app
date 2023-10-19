@@ -69,7 +69,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">{{ "labels.inputs.Active" |translate}}?</span>
-    <span fxFlex="60%">{{ client.active ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ client.active | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.activationDate">
@@ -86,7 +86,7 @@
 
     <div fxFlexFill>
       <span fxFlex="40%">{{ "labels.inputs.Is Staff" |translate}}?</span>
-      <span fxFlex="60%">{{ client.isStaff ? 'Yes' : 'No' }}</span>
+      <span fxFlex="60%">{{ client.isStaff | yesNo }}</span>
     </div>
 
   </ng-container>

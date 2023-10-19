@@ -41,7 +41,7 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.priority.hasError('required')">
-              {{ "labels.inputs.Priority"| translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{ "labels.inputs.Priority"| translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -53,7 +53,7 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.status.hasError('required')">
-              {{ "labels.inputs.Status" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{ "labels.inputs.Status" | translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -65,7 +65,7 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.fromAccountType.hasError('required')">
-              {{"labels.inputs.From Account Type"| translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.From Account Type"| translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -77,7 +77,7 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.fromAccountId.hasError('required')">
-              {{"labels.inputs.From Account" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.From Account" | translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -89,7 +89,7 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.destination.hasError('required')">
-              {{"labels.inputs.Destination"| translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Destination"| translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -101,7 +101,7 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.toOfficeId.hasError('required')">
-              {{"labels.inputs.To Office"| translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.To Office"| translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -113,7 +113,7 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.toClientId.hasError('required')">
-              {{ "labels.inputs.Beneficiary"| translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{ "labels.inputs.Beneficiary"| translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -137,7 +137,7 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.toAccountId.hasError('required')">
-              {{"labels.inputs.To Account" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.To Account" | translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -149,7 +149,7 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.instructionType.hasError('required')">
-              {{ "labels.inputs.Standing Instruction Type" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{ "labels.inputs.Standing Instruction Type" | translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -157,7 +157,7 @@
             <mat-label>{{"labels.inputs.Amount" | translate}}</mat-label>
             <input type="number" matInput required formControlName="amount">
             <mat-error *ngIf="createStandingInstructionsForm.controls.amount.hasError('required')">
-              {{"labels.inputs.Amount" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Amount" | translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -168,7 +168,7 @@
             <mat-datepicker-toggle matSuffix [for]="validFromDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #validFromDatePicker></mat-datepicker>
             <mat-error *ngIf="createStandingInstructionsForm.controls.validFrom.hasError('required')">
-              {{"labels.inputs.Valid From Date" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Valid From Date" | translate }} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -179,7 +179,7 @@
             <mat-datepicker-toggle matSuffix [for]="validTillDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #validTillDatePicker></mat-datepicker>
             <mat-error *ngIf="createStandingInstructionsForm.controls.validTill.hasError('required')">
-              {{ "labels.inputs.Valid Till Date" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{ "labels.inputs.Valid Till Date" | translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -191,7 +191,7 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.recurrenceType.hasError('required')">
-              {{"labels.inputs.Recurrence Type" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Recurrence Type" | translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -199,7 +199,7 @@
             <mat-label>{{"labels.inputs.Interval" | translate}}</mat-label>
             <input type="number" matInput required formControlName="recurrenceInterval">
             <mat-error *ngIf="createStandingInstructionsForm.controls.recurrenceInterval.hasError('required')">
-              {{"labels.inputs.Recurrence Interval" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Recurrence Interval" | translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -212,7 +212,7 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createStandingInstructionsForm.controls.recurrenceFrequency.hasError('required')">
-              {{"labels.inputs.Recurrence Frequency" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Recurrence Frequency" | translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -223,7 +223,7 @@
             <mat-datepicker-toggle matSuffix [for]="recurrenceOnMonthDayDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #recurrenceOnMonthDayDatePicker></mat-datepicker>
             <mat-error *ngIf="createStandingInstructionsForm.controls.recurrenceOnMonthDay.hasError('required')">
-              {{"labels.inputs.On Month Day" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.On Month Day" | translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 

@@ -28,4 +28,11 @@ export class ViewTransactionComponent {
     });
   }
 
+  transactionColor(): string {
+    if (this.transactionData.manuallyReversed) {
+      return 'undo';
+    }
+    return 'active';
+  }
+
 }

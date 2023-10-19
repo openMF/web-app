@@ -21,7 +21,7 @@
           </mat-option>
         </mat-select>
         <mat-error *ngIf="collectionSheetForm.controls.officeId.hasError('required')">
-          {{"labels.inputs.Branch Office" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+          {{"labels.inputs.Branch Office" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
         </mat-error>
       </mat-form-field>
 
@@ -32,7 +32,7 @@
         <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDatePicker></mat-datepicker>
         <mat-error *ngIf="collectionSheetForm.controls.transactionDate.hasError('required')">
-          {{"labels.inputs.Repayment Date" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+          {{"labels.inputs.Repayment Date" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
         </mat-error>
       </mat-form-field>
 
