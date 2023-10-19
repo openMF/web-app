@@ -53,7 +53,7 @@
             <mat-datepicker-toggle matSuffix [for]="transferDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transferDatePicker></mat-datepicker>
             <mat-error *ngIf="makeAccountTransferForm.controls.transferDate.hasError('required')">
-              {{"labels.inputs.Transaction Date"| translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Transaction Date"| translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -65,7 +65,7 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="makeAccountTransferForm.controls.toOfficeId.hasError('required')">
-              {{ "labels.inputs.Office"| translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{ "labels.inputs.Office"| translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -73,7 +73,7 @@
             <mat-label>{{ "labels.inputs.Client"| translate}}</mat-label>
             <input matInput formControlName="toClientId" [matAutocomplete]="clientsAutocomplete">
             <mat-error *ngIf="makeAccountTransferForm.controls.toClientId.hasError('required')">
-              {{ "labels.inputs.Client" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{ "labels.inputs.Client" | translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -91,7 +91,7 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="makeAccountTransferForm.controls.toAccountType.hasError('required')">
-              {{ "labels.inputs.Account Type" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{ "labels.inputs.Account Type" | translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -103,7 +103,7 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="makeAccountTransferForm.controls.toAccountId.hasError('required')">
-              {{"labels.inputs.Account"| translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Account"| translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -111,7 +111,7 @@
             <mat-label>{{"labels.inputs.Amount" | translate}}</mat-label>
             <input type="number" matInput required formControlName="transferAmount">
             <mat-error *ngIf="makeAccountTransferForm.controls.transferAmount.hasError('required')">
-              {{"labels.inputs.Amount" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Amount" | translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -120,7 +120,7 @@
             <textarea matInput formControlName="transferDescription" cdkTextareaAutosize
               cdkAutosizeMinRows="2"></textarea>
             <mat-error *ngIf="makeAccountTransferForm.controls.transferDescription.hasError('required')">
-              {{"labels.inputs.Transfer Description" | translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Transfer Description" | translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
 
           </mat-form-field>

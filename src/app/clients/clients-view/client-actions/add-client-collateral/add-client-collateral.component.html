@@ -15,10 +15,10 @@
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="clientCollateralForm.controls.collateralId.hasError('required')">
-                            {{ "labels.inputs.Collateral" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+                            {{ "labels.inputs.Collateral" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
                         </mat-error>
                     </mat-form-field>
-                    
+
                     <div *ngIf="collateralDetails" fxLayout="column">
 
                         <mat-form-field>
@@ -50,7 +50,7 @@
                             <mat-label>{{ "labels.inputs.Quantity" |translate}}</mat-label>
                             <input matInput required formControlName="quantity">
                             <mat-error *ngIf="clientCollateralForm.controls.quantity.hasError('required')">
-                                {{ "labels.inputs.Quantity" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+                                {{ "labels.inputs.Quantity" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
                             </mat-error>
                         </mat-form-field>
 
@@ -72,11 +72,11 @@
 
             <mat-card-actions fxLayoutGap="5px" fxLayout="row" fsLayout.xs="column" fxLayoutAlign="center">
                 <button type="button" mat-raised-button [routerLink]="['../../']">{{ "labels.buttons.Cancel" | translate}}</button>
-                <button mat-raised-button color="primary" [disabled]="!clientCollateralForm.valid">{{ "labels.buttons.Submit" | translate}}</button> 
+                <button mat-raised-button color="primary" [disabled]="!clientCollateralForm.valid">{{ "labels.buttons.Submit" | translate}}</button>
             </mat-card-actions>
 
         </form>
-    
+
     </mat-card>
 
 </div>

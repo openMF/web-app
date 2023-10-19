@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
+import { FixedDepositsService } from '../../fixed-deposits.service';
 
 /**
  * Undo Approval Fixed Deposits Account Component
@@ -20,6 +21,9 @@ export class UndoApprovalFixedDepositsAccountComponent implements OnInit {
   undoApprovalFixedDepositsAccountForm: UntypedFormGroup;
   /** Fixed Deposits Account Id */
   accountId: any;
+  /** Action to be Undo */
+  undoAction: string;
+  undoCommand: string;
 
   /**
    * Fixed deposits endpoint is not supported so using Savings endpoint.
@@ -30,8 +34,14 @@ export class UndoApprovalFixedDepositsAccountComponent implements OnInit {
    */
   constructor(private formBuilder: UntypedFormBuilder,
               private savingsService: SavingsService,
+              private fixedDepositsService: FixedDepositsService,
               private route: ActivatedRoute,
               private router: Router) {
+    this.undoCommand = 'undoapproval'; // Default command
+    this.undoAction = this.route.snapshot.params['name'];
+    if (this.undoAction === 'Undo Activation') {
+      this.undoCommand = 'undoactivate';
+    }
     this.accountId = this.route.parent.snapshot.params['fixedDepositAccountId'];
   }
 
@@ -59,9 +69,15 @@ export class UndoApprovalFixedDepositsAccountComponent implements OnInit {
     const data = {
       ...this.undoApprovalFixedDepositsAccountForm.value,
     };
-    this.savingsService.executeSavingsAccountCommand(this.accountId, 'undoapproval', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    if (this.undoAction === 'Undo Activation') {
+      this.fixedDepositsService.executeFixedDepositsAccountCommand(this.accountId, this.undoCommand, data).subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
+    } else {
+      this.savingsService.executeSavingsAccountCommand(this.accountId, this.undoCommand, data).subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
+    }
   }
 
 }

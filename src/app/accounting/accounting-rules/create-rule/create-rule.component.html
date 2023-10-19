@@ -12,7 +12,7 @@
             <mat-label>{{"labels.inputs.Accounting Rule Name" |translate}}</mat-label>
             <input matInput required formControlName="name">
             <mat-error *ngIf="accountingRuleForm.controls.name.hasError('required')">
-              {{"labels.inputs.Accounting Rule Name" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Accounting Rule Name" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -24,7 +24,7 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="accountingRuleForm.controls.officeId.hasError('required')">
-              {{"labels.inputs.Office" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Office" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 

@@ -61,7 +61,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Active ? </th>
         <td mat-cell *matCellDef="let job" class="center">
           <div [className]="job.active === true ? 'currently-running' : 'not-currently-running'">
-            <fa-icon matTooltip="{{ job.active === true ? 'Yes' : 'No' }}" matTooltipPosition="right" icon="circle"
+            <fa-icon matTooltip="{{ job.active === true | yesNo }}" matTooltipPosition="right" icon="circle"
               size="lg"></fa-icon>
           </div>
         </td>
@@ -94,7 +94,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Currently Running </th>
         <td mat-cell *matCellDef="let job" class="center">
           <div [className]="job.currentlyRunning === true ? 'currently-running' : 'not-currently-running'">
-            <fa-icon matTooltip="{{ job.currentlyRunning === true ? 'Yes' : 'No' }}" matTooltipPosition="right"
+            <fa-icon matTooltip="{{ job.currentlyRunning === true | yesNo }}" matTooltipPosition="right"
               icon="circle" size="lg"></fa-icon>
           </div>
         </td>

@@ -14,11 +14,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class TransactionsTabComponent implements OnInit {
 
   /** Fixed Deposits Account Status */
-  status: any;
+  status: string;
+  showTransactionsData = false;
   /** Transactions Data */
   transactionsData: any;
   /** Columns to be displayed in transactions table. */
-  displayedColumns: string[] = ['id', 'transactionDate', 'transactionType', 'debit', 'credit', 'balance'];
+  displayedColumns: string[] = ['id', 'transactionDate', 'transactionType', 'debit', 'credit', 'balance', 'actions'];
   /** Data source for transactions table. */
   dataSource: MatTableDataSource<any>;
 
@@ -32,6 +33,7 @@ export class TransactionsTabComponent implements OnInit {
     this.route.parent.data.subscribe((data: { fixedDepositsAccountData: any }) => {
       this.transactionsData = data.fixedDepositsAccountData.transactions;
       this.status = data.fixedDepositsAccountData.status.value;
+      this.showTransactionsData = (this.status === 'Active');
     });
   }
 
@@ -58,6 +60,28 @@ export class TransactionsTabComponent implements OnInit {
     } else {
       this.router.navigate([transactionsData.id], { relativeTo: this.route });
     }
+  }
+
+  transactionColor(transaction: any): string {
+    if (transaction.reversed) {
+      return 'strike';
+    }
+    if (this.isAccrual(transaction.transactionType)) {
+      return 'accrual';
+    }
+    return '';
+  }
+
+  private isAccrual(transactionType: any): boolean  {
+    return (transactionType.accrual);
+  }
+
+  /**
+   * Stops the propagation to view pages.
+   * @param $event Mouse Event
+   */
+  routeEdit($event: MouseEvent) {
+    $event.stopPropagation();
   }
 
 }

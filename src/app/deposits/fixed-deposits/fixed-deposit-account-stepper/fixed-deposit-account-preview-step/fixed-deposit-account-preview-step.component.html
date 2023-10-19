@@ -98,7 +98,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Transfer Interest to Savings Account?</span>
-    <span fxFlex="60%">{{ fixedDepositAccountData.transferInterestToSavings ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ fixedDepositAccountData.transferInterestToSavings | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="fixedDepositAccountData.transferInterestToSavings">
@@ -108,7 +108,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Apply Penal Interest (less):</span>
-    <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate.preClosurePenalApplicable ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate.preClosurePenalApplicable | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="fixedDepositsAccountProductTemplate.preClosurePenalApplicable">
@@ -118,7 +118,7 @@
 
   <div fxFlexFill *ngIf="fixedDepositsAccountProductTemplate.withHoldTax">
     <span fxFlex="40%">Withhold Tax is Applicable:</span>
-    <span fxFlex="60%">{{ fixedDepositAccountData.withHoldTax ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ fixedDepositAccountData.withHoldTax | yesNo }}</span>
   </div>
 
   <h3 class="mat-h3" fxFlexFill>Interest Rate Chart</h3>
@@ -149,7 +149,7 @@
 
     <div fxFlexFill>
       <span fxFlex="40%">Primary Grouping by Amount:</span>
-      <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate?.accountChart.isPrimaryGroupingByAmount ? 'Yes' : 'No' }}</span>
+      <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate?.accountChart.isPrimaryGroupingByAmount | yesNo }}</span>
     </div>
 
     <table class="mat-elevation-z1 irc-table" mat-table [dataSource]="interestRateChartData" multiTemplateDataRows>

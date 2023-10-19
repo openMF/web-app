@@ -10,7 +10,7 @@
           <mat-label> {{ "labels.inputs.Amount" |translate}} </mat-label>
           <input matInput required autofocus formControlName="amount">
           <mat-error *ngIf="transactionForm.controls.amount.hasError('required')">
-            {{ "labels.inputs.Amount" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+            {{ "labels.inputs.Amount" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
           </mat-error>
         </mat-form-field>
 
@@ -20,7 +20,7 @@
           <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #transactionDatePicker></mat-datepicker>
           <mat-error *ngIf="transactionForm.controls.transactionDate.hasError('required')">
-            {{ "labels.inputs.Transaction date" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+            {{ "labels.inputs.Transaction date" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
           </mat-error>
         </mat-form-field>
 

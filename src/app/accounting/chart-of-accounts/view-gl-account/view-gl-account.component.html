@@ -46,7 +46,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          {{"labels.inputs.GL Code" |translate}}        
+          {{"labels.inputs.GL Code" |translate}}
         </div>
 
         <div fxFlex="50%">
@@ -84,7 +84,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ glAccount.manualEntriesAllowed ? 'Yes' : 'No' }}
+          {{ glAccount.manualEntriesAllowed | yesNo }}
         </div>
 
         <div fxFlex="50%" class="header" *ngIf="glAccount.description">

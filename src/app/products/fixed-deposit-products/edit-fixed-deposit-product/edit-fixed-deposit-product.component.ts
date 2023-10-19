@@ -108,7 +108,6 @@ export class EditFixedDepositProductComponent implements OnInit {
   }
 
   submit() {
-    // TODO: Update once language and date settings are setup
     const fixedDepositProduct = {
       ...this.fixedDepositProduct,
       charges: this.fixedDepositProduct.charges.map((charge: any) => ({ id: charge.id })),
@@ -117,6 +116,18 @@ export class EditFixedDepositProductComponent implements OnInit {
     if (!fixedDepositProduct.description) {
       fixedDepositProduct.description = '';
     }
+    const charts: any[] = [];
+    fixedDepositProduct.charts.forEach((chart: any) => {
+      if (chart['amountRangeFrom'] === '') {
+        delete chart['amountRangeFrom'];
+      }
+      if (chart['amountRangeTo'] === '') {
+        delete chart['amountRangeTo'];
+      }
+      charts.push(chart);
+    });
+    fixedDepositProduct.charts = charts;
+
     delete fixedDepositProduct.advancedAccountingRules;
     this.productsService.updateFixedDepositProduct(this.fixedDepositProductsTemplate.id, fixedDepositProduct)
       .subscribe((response: any) => {

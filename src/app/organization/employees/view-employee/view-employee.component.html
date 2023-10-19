@@ -42,7 +42,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ employeeData.isLoanOfficer === true ? 'Yes' : 'No' }}
+          {{ employeeData.isLoanOfficer === true | yesNo }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="employeeData.mobileNo">

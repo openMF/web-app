@@ -8,7 +8,7 @@
         <mat-label>{{"labels.inputs.First Name" |translate}}</mat-label>
         <input formControlName="firstName" required matInput />
         <mat-error *ngIf="addFamilyMemberForm.controls.firstName.hasError('required')">
-          {{"labels.inputs.First Name" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+          {{"labels.inputs.First Name" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
         </mat-error>
       </mat-form-field>
 
@@ -21,7 +21,7 @@
         <mat-label>{{"labels.inputs.Last Name" |translate}}</mat-label>
         <input formControlName="lastName" required matInput />
         <mat-error *ngIf="addFamilyMemberForm.controls.lastName.hasError('required')">
-          {{"labels.inputs.Last Name" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+          {{"labels.inputs.Last Name" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
         </mat-error>
       </mat-form-field>
 
@@ -34,7 +34,7 @@
         <mat-label>{{"labels.inputs.Age" |translate}}</mat-label>
         <input type="number" formControlName="age" required matInput [min]="minAge" />
         <mat-error *ngIf="addFamilyMemberForm.controls.age.hasError('required')">
-          {{"labels.inputs.Age" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required and cannot be negative" | translate}}</strong>
+          {{"labels.inputs.Age" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required and cannot be negative" | translate}}</strong>
         </mat-error>
       </mat-form-field>
 
@@ -49,7 +49,7 @@
           </mat-option>
         </mat-select>
         <mat-error *ngIf="addFamilyMemberForm.controls.relationshipId.hasError('required')">
-          {{"labels.inputs.Relationship" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+          {{"labels.inputs.Relationship" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
         </mat-error>
       </mat-form-field>
 
@@ -61,7 +61,7 @@
           </mat-option>
         </mat-select>
         <mat-error *ngIf="addFamilyMemberForm.controls.genderId.hasError('required')">
-          {{"labels.inputs.Gender" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+          {{"labels.inputs.Gender" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
         </mat-error>
       </mat-form-field>
 
@@ -92,12 +92,12 @@
         <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #dueDatePicker></mat-datepicker>
         <mat-error *ngIf="addFamilyMemberForm.controls.dateOfBirth.hasError('required')">
-          {{"labels.inputs.Date of birth" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+          {{"labels.inputs.Date of birth" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
         </mat-error>
       </mat-form-field>
 
     </div>
-    
+
     <div fxLayout="row" fxLayoutGap="32px" fxLayoutAlign="center">
       <button type="button" mat-raised-button [routerLink]="['../']">{{ "labels.buttons.Cancel" |translate}}</button>
       <button type="submit" mat-raised-button color="primary" [disabled]="!addFamilyMemberForm.valid">{{ "labels.buttons.Submit" |translate}}</button>

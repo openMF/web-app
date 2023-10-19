@@ -90,7 +90,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Deposit Frequency Same as Group/Center meeting:</span>
-    <span fxFlex="60%">{{ recurringDepositsAccountProductTemplate.isCalendarInherited === true ? 'Yes' : 'No'  }}</span>
+    <span fxFlex="60%">{{ recurringDepositsAccountProductTemplate.isCalendarInherited === true | yesNo  }}</span>
   </div>
 
   <ng-container *ngIf="!recurringDepositsAccountProductTemplate.isCalendarInherited">
@@ -155,7 +155,7 @@
     <div fxFlexFill>
       <span fxFlex="40%">Primary Grouping by Amount:</span>
       <span
-        fxFlex="60%">{{ recurringDepositsAccountProductTemplate?.accountChart.isPrimaryGroupingByAmount ? 'Yes' : 'No' }}</span>
+        fxFlex="60%">{{ recurringDepositsAccountProductTemplate?.accountChart.isPrimaryGroupingByAmount | yesNo }}</span>
     </div>
 
     <table class="mat-elevation-z1 irc-table" mat-table [dataSource]="interestRateChartData" multiTemplateDataRows>

@@ -4,9 +4,17 @@
   "Remember me": "Remember me",
   "not_found_subtitle": "Oops.. Looks like this page doesn't exist.",
   "languages": {
+    "cs-CS": "Czech",
     "en-US": "English",
     "fr-FR": "French",
-    "es-MX": "Spanish"
+    "es-MX": "Spanish",
+    "de-DE": "German",
+    "ko-KO": "Korean",
+    "it-IT": "Italian",
+    "lt-LT": "Lithuanian",
+    "lv-LV": "Latvian",
+    "ne-NE": "Nepali",
+    "pt-PT": "Portuguese"
   },
   "labels": {
     "breadcrumbs": {
