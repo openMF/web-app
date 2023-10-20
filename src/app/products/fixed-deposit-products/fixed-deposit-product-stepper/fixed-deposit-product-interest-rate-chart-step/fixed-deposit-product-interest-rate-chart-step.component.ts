@@ -111,12 +111,12 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
       this.chartsDetail[i].chartSlabs.forEach((chartSlabDetail: any, j: number) => {
 
         const chartSlabInfo = this.formBuilder.group({
-          amountRangeFrom: [chartSlabDetail.amountRangeFrom],
-          amountRangeTo: [chartSlabDetail.amountRangeTo],
+          amountRangeFrom: [chartSlabDetail.amountRangeFrom || ''],
+          amountRangeTo: [chartSlabDetail.amountRangeTo || ''],
           annualInterestRate: [chartSlabDetail.annualInterestRate, Validators.required],
           description: [chartSlabDetail.description, Validators.required],
           fromPeriod: [chartSlabDetail.fromPeriod, Validators.required],
-          toPeriod: [chartSlabDetail.toPeriod],
+          toPeriod: [chartSlabDetail.toPeriod || ''],
           periodType: [chartSlabDetail.periodType, Validators.required],
           incentives: this.formBuilder.array([])
         });

@@ -63,12 +63,15 @@
 
       <ng-template matStepLabel>PAYMENT ALLOCATION</ng-template>
 
-      <mifosx-loan-product-payment-strategy-step *ngFor="let transactionType of transactionTypes"
-        [loanProductsTemplate]="loanProductsTemplate"
-        (paymentAllocation)="setPaymentAllocation($event)"
-        (transactionType)="transactionType"
+      <mifosx-loan-product-payment-strategy-step
+      [advancedPaymentAllocations]="advancedPaymentAllocations"
+      [advancedPaymentAllocationTransactionTypes]="loanProductsTemplate.advancedPaymentAllocationTransactionTypes"
+      [paymentAllocationOrderDefault]="loanProductsTemplate.advancedPaymentAllocationTypes"
+      (setPaymentAllocation)="setPaymentAllocation($event)"
       >
       </mifosx-loan-product-payment-strategy-step>
+
+      <mifosx-stepper-buttons></mifosx-stepper-buttons>
 
     </mat-step>
 

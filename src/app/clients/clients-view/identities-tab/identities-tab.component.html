@@ -1,35 +1,35 @@
 <div class="tab-container mat-typography">
 
-    <h3>Identities</h3>
+    <h3>{{"labels.heading.Identities" |translate}}</h3>
 
     <button mat-raised-button class="f-right" color="primary" (click)="addIdentifier()" *mifosxHasPermission="'CREATE_CLIENTIDENTIFIER'">
-      <fa-icon icon="plus" class="m-r-10"></fa-icon> Add
+      <fa-icon icon="plus" class="m-r-10"></fa-icon> {{"labels.buttons.Add" |translate}}
     </button>
 
     <table mat-table #identifiersTable [dataSource]="clientIdentities">
 
         <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef> Id </th>
+          <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Id" |translate}} </th>
           <td mat-cell *matCellDef="let identity">{{identity.id}}</td>
         </ng-container>
 
         <ng-container matColumnDef="type">
-          <th mat-header-cell *matHeaderCellDef> type </th>
+          <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Type" |translate}} </th>
           <td mat-cell *matCellDef="let identity"> {{identity.documentType.name}}</td>
         </ng-container>
 
         <ng-container matColumnDef="documentKey">
-          <th mat-header-cell *matHeaderCellDef> Key </th>
+          <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Key" |translate}} </th>
           <td mat-cell *matCellDef="let identity"> {{identity.documentKey}} </td>
         </ng-container>
 
         <ng-container matColumnDef="description">
-          <th mat-header-cell *matHeaderCellDef> Description </th>
+          <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Description" |translate}} </th>
           <td mat-cell *matCellDef="let identity"> {{identity.description}} </td>
         </ng-container>
 
         <ng-container matColumnDef="documents">
-          <th mat-header-cell *matHeaderCellDef>Identity Documents </th>
+          <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Identity Documents" |translate}} </th>
           <td mat-cell *matCellDef="let identity">
             <div *ngFor="let document of identity.documents">
               {{document.name}}
@@ -39,14 +39,14 @@
         </ng-container>
 
         <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef> Status </th>
+          <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Status" |translate}} </th>
           <td mat-cell *matCellDef="let identity">
               {{(identity.status==='clientIdentifierStatusType.active')?'active':'inactive'}}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Actions" |translate}} </th>
           <td mat-cell *matCellDef="let identity; let i = index">
             <button class="identity-action-button" mat-raised-button color="primary" (click)="uploadDocument(i,identity.id)" *mifosxHasPermission="'CREATE_DOCUMENT'">
               <fa-icon icon="eye"></fa-icon>

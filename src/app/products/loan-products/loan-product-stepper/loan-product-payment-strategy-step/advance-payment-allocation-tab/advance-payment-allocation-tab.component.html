@@ -1,0 +1,46 @@
+<div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+  <h4 class="m-b-15 right" fxFlex="90%">You can drag and drop the rows to set a Payment Allocations order</h4>
+
+  <div class="right" fxFlex="4%" *ngIf="!isDefault()">
+    <button mat-button color="warn" (click)="removeTransaction()">
+      <fa-icon icon="trash" class="m-r-10"></fa-icon>
+    </button>
+  </div>
+
+  <div class="mat-elevation-z8 container m-t-15">
+    <table mat-table [dataSource]="paymentAllocationsData" #table cdkDropList
+      [cdkDropListData]="paymentAllocationsData" (cdkDropListDropped)="dropTable($event)">
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let paymentAllocation">
+            <fa-icon icon="bars"></fa-icon>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="order">
+        <th mat-header-cell *matHeaderCellDef> Order </th>
+        <td mat-cell *matCellDef="let paymentAllocation; let rowIndex = index"> {{ (rowIndex + 1) }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="paymentAllocation">
+        <th mat-header-cell *matHeaderCellDef> Payment Allocation </th>
+        <td mat-cell *matCellDef="let paymentAllocation"> {{ paymentAllocation.value }} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row cdkDrag [cdkDragData]="row" *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <mat-form-field fxFlex="33%" class="m-t-20">
+    <mat-label>Future Installment Allocation Rule</mat-label>
+    <mat-select [formControl]="futureInstallmentAllocationRule">
+      <mat-option *ngFor="let futureInstallmentAllocationRule of advancedPaymentAllocation.futureInstallmentAllocationRules"
+        [value]="futureInstallmentAllocationRule.code">
+        {{ futureInstallmentAllocationRule.value | translate }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

@@ -34,6 +34,10 @@ export class FixedDepositsButtonsConfiguration {
           {
             name: 'Calculate Interest',
             icon: 'fa fa-table'
+          },
+          {
+            name: 'Undo Activation',
+            icon: 'fa fa-undo'
           }
         ];
         break;

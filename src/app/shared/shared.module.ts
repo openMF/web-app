@@ -42,6 +42,7 @@ import { ViewJournalEntryTransactionComponent } from './accounting/view-journal-
 import { AccountNumberComponent } from './account-number/account-number.component';
 import { EntityNameComponent } from './entity-name/entity-name.component';
 import { TransactionPaymentDetailComponent } from './transaction-payment-detail/transaction-payment-detail.component';
+import { StepperButtonsComponent } from './steppers/stepper-buttons/stepper-buttons.component';
 
 /**
  * Shared Module
@@ -90,7 +91,8 @@ import { TransactionPaymentDetailComponent } from './transaction-payment-detail/
     ViewJournalEntryTransactionComponent,
     AccountNumberComponent,
     EntityNameComponent,
-    TransactionPaymentDetailComponent
+    TransactionPaymentDetailComponent,
+    StepperButtonsComponent
   ],
   exports: [
     FileUploadComponent,
@@ -117,7 +119,8 @@ import { TransactionPaymentDetailComponent } from './transaction-payment-detail/
     ViewJournalEntryTransactionComponent,
     SvgIconComponent,
     EntityNameComponent,
-    TransactionPaymentDetailComponent
+    TransactionPaymentDetailComponent,
+    StepperButtonsComponent
   ]
 })
 export class SharedModule { }

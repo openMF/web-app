@@ -93,7 +93,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'outstandingLoanBalance': this.loanProductsTemplate.outstandingLoanBalance,
       'dueDaysForRepaymentEvent': this.loanProductsTemplate.dueDaysForRepaymentEvent,
       'overDueDaysForRepaymentEvent': this.loanProductsTemplate.overDueDaysForRepaymentEvent,
-      'enableDownPayment': this.loanProductsTemplate.enableDownPayment
+      'enableDownPayment': this.loanProductsTemplate.enableDownPayment,
+      'enableInstallmentLevelDelinquency': this.loanProductsTemplate.enableInstallmentLevelDelinquency
     });
 
     if (this.loanProductsTemplate.delinquencyBucket) {
@@ -199,7 +200,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'delinquencyBucketId': ['', Validators.required],
       'dueDaysForRepaymentEvent': [''],
       'overDueDaysForRepaymentEvent': [''],
-      'enableDownPayment': [false]
+      'enableDownPayment': [false],
+      'enableInstallmentLevelDelinquency': [false]
     });
   }
 
@@ -349,9 +351,11 @@ export class LoanProductSettingsStepComponent implements OnInit {
         if (enableDownPayment) {
           this.loanProductSettingsForm.addControl('disbursedAmountPercentageForDownPayment', new UntypedFormControl(0, [Validators.required, rangeValidator(0, 100) ]));
           this.loanProductSettingsForm.addControl('enableAutoRepaymentForDownPayment', new UntypedFormControl(false, []));
+          this.loanProductSettingsForm.addControl('disableScheduleExtensionForDownPayment', new UntypedFormControl(false, []));
         } else {
           this.loanProductSettingsForm.removeControl('disbursedAmountPercentageForDownPayment');
           this.loanProductSettingsForm.removeControl('enableAutoRepaymentForDownPayment');
+          this.loanProductSettingsForm.removeControl('disableScheduleExtensionForDownPayment');
         }
       });
 
@@ -396,7 +400,11 @@ export class LoanProductSettingsStepComponent implements OnInit {
   }
 
   get loanProductSettings() {
-    return this.loanProductSettingsForm.value;
+    const productSettings = this.loanProductSettingsForm.value;
+    if (!this.loanProductSettingsForm.value.multiDisburseLoan) {
+      delete productSettings['disableScheduleExtensionForDownPayment'];
+    }
+    return productSettings;
   }
 
 }

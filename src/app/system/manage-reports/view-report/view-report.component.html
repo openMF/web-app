@@ -53,7 +53,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ reportData.coreReport ? 'Yes' : 'No' }}
+          {{ reportData.coreReport | yesNo }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
@@ -61,7 +61,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ reportData.useReport ? 'Yes' : 'No' }}
+          {{ reportData.useReport | yesNo }}
         </div>
 
       </div>

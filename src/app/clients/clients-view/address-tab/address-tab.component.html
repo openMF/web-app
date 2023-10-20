@@ -1,10 +1,10 @@
 <div class="tab-container mat-typography">
 
-  <h3>Address</h3>
+  <h3>{{ "labels.heading.Address" |translate}}</h3>
 
   <div fxLayout="row" fxLayoutAlign="flex-end">
     <button mat-raised-button color="primary" (click)="addAddress()">
-      <fa-icon icon="plus" class="m-r-10"></fa-icon>Add
+      <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ "labels.buttons.Add" | translate}}
     </button>
   </div>
 
@@ -31,18 +31,18 @@
       </div>
 
       <p>
-        <span *ngIf="isFieldEnabled('street')">Street : {{address.street}}<br /></span>
-        <span *ngIf="isFieldEnabled('addressLine1')">Address Line 1 : {{address.addressLine1}}<br /></span>
-        <span *ngIf="isFieldEnabled('addressLine2')">Address Line 2 : {{address.addressLine2}}<br /></span>
-        <span *ngIf="isFieldEnabled('addressLine3')">Address Line 3 : {{address.addressLine3}}<br /></span>
-        <span *ngIf="isFieldEnabled('townVillage')">Town / Village : {{address.townVillage}}<br /></span>
-        <span *ngIf="isFieldEnabled('city')">City : {{address.city}}<br /></span>
-        <span *ngIf="isFieldEnabled('stateProvinceId')">State / Province :
+        <span *ngIf="isFieldEnabled('street')">{{ "labels.inputs.Street" |translate}} : {{address.street}}<br /></span>
+        <span *ngIf="isFieldEnabled('addressLine1')">{{ "labels.inputs.Address Line" |translate}} 1 : {{address.addressLine1}}<br /></span>
+        <span *ngIf="isFieldEnabled('addressLine2')">{{ "labels.inputs.Address Line" |translate}} 2 : {{address.addressLine2}}<br /></span>
+        <span *ngIf="isFieldEnabled('addressLine3')">{{ "labels.inputs.Address Line" |translate}} 3 : {{address.addressLine3}}<br /></span>
+        <span *ngIf="isFieldEnabled('townVillage')">{{ "labels.inputs.Town / Village" |translate}} : {{address.townVillage}}<br /></span>
+        <span *ngIf="isFieldEnabled('city')">{{ "labels.inputs.City" |translate}} : {{address.city}}<br /></span>
+        <span *ngIf="isFieldEnabled('stateProvinceId')">{{ "labels.inputs.State / Province" |translate}} :
           {{getSelectedValue('stateProvinceIdOptions',address.stateProvinceId)?.name}}<br /></span>
-        <span *ngIf="isFieldEnabled('countryId')">Country :
+        <span *ngIf="isFieldEnabled('countryId')">{{ "labels.inputs.Country" |translate}} :
           {{getSelectedValue('countryIdOptions',address.countryId)?.name}}<br /></span>
-        <span *ngIf="isFieldEnabled('postalCode')">Postal Code : {{address.postalCode}}<br /></span>
-        <span *ngIf="isFieldEnabled('isActive')">Active Status : {{address.isActive}}<br /></span>
+        <span *ngIf="isFieldEnabled('postalCode')">{{ "labels.inputs.Postal Code" |translate}} : {{address.postalCode}}<br /></span>
+        <span *ngIf="isFieldEnabled('isActive')">{{ "labels.inputs.Active Status" |translate}} : {{address.isActive}}<br /></span>
       </p>
 
     </mat-expansion-panel>

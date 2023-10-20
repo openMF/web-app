@@ -18,7 +18,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Frequency</mat-label>
-      <input type="number" matInput formControlName="lockinPeriodFrequency">
+      <input type="number" matInput formControlName="lockinPeriodFrequency" matTooltip="The number at which lock in period occurs." >
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
@@ -35,7 +35,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Frequency</mat-label>
-      <input type="number" matInput formControlName="minDepositTerm" required>
+      <input type="number" matInput formControlName="minDepositTerm" matTooltip="The number at which minimum deposit occurs." required>
       <mat-error>
         Minimum Deposit Term Frequency is <strong>required</strong>
       </mat-error>
@@ -57,7 +57,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Frequency</mat-label>
-      <input type="number" matInput formControlName="inMultiplesOfDepositTerm">
+      <input type="number" matInput formControlName="inMultiplesOfDepositTerm" matTooltip="The number at which multiple deposits occurs.">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
@@ -73,7 +73,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Frequency</mat-label>
-      <input type="number" matInput formControlName="maxDepositTerm">
+      <input type="number" matInput formControlName="maxDepositTerm" matTooltip="The number at which minimum deposit occurs.">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">

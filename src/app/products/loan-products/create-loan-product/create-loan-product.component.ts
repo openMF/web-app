@@ -13,7 +13,7 @@ import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
 import { LoanProducts } from '../loan-products';
-import { PaymentAllocation, PaymentAllocationTransactionType, PaymentAllocationTransactionTypes, PaymentAllocationTypes } from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
+import { AdvancedPaymentAllocation, AdvancedPaymentStrategy, PaymentAllocation } from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 
 @Component({
   selector: 'mifosx-create-loan-product',
@@ -35,9 +35,7 @@ export class CreateLoanProductComponent implements OnInit {
 
   isAdvancedPaymentStrategy = false;
   paymentAllocation: PaymentAllocation[] = [];
-  transactionTypes: PaymentAllocationTransactionType[] = [
-    PaymentAllocationTransactionTypes.DEFAULT_TRANSACTION
-  ];
+  advancedPaymentAllocations: AdvancedPaymentAllocation[] = [];
 
    /**
     * @param {ActivatedRoute} route Activated Route.
@@ -45,11 +43,11 @@ export class CreateLoanProductComponent implements OnInit {
     * @param {LoanProducts} loanProducts LoanProducts
     * @param {Router} router Router for navigation.
     */
-
   constructor(private route: ActivatedRoute,
               private productsService: ProductsService,
               private loanProducts: LoanProducts,
-              private router: Router) {
+              private router: Router,
+              private advancedPaymentStrategy: AdvancedPaymentStrategy) {
     this.route.data.subscribe((data: { loanProductsTemplate: any, configurations: any }) => {
       this.loanProductsTemplate = data.loanProductsTemplate;
       const assetAccountData = this.loanProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
@@ -62,7 +60,9 @@ export class CreateLoanProductComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.buildAdvancedPaymentAllocation();
+  }
 
   get loanProductDetailsForm() {
     return this.loanProductDetailsStep.loanProductDetailsForm;
@@ -82,7 +82,11 @@ export class CreateLoanProductComponent implements OnInit {
     this.isAdvancedPaymentStrategy = (value === 'advanced-payment-allocation-strategy');
   }
 
-  setPaymentAllocation(paymentAllocation: PaymentAllocation[]) {
+  buildAdvancedPaymentAllocation(): void {
+    this.advancedPaymentAllocations = this.advancedPaymentStrategy.buildAdvancedPaymentAllocationList(this.loanProductsTemplate);
+  }
+
+  setPaymentAllocation(paymentAllocation: PaymentAllocation[]): void {
     this.paymentAllocation = paymentAllocation;
   }
 

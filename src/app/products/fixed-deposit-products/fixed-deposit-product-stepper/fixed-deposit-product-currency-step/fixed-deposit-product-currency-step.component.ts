@@ -39,7 +39,7 @@ export class FixedDepositProductCurrencyStepComponent implements OnInit {
     this.fixedDepositProductCurrencyForm = this.formBuilder.group({
       'currencyCode': ['', Validators.required],
       'digitsAfterDecimal': ['', Validators.required],
-      'inMultiplesOf': ['', Validators.required]
+      'inMultiplesOf': ['']
     });
   }
 

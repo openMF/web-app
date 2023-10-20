@@ -49,7 +49,7 @@
             </mat-list-item>
           </div>
 
-          <div #fundmapping>
+          <div #fundmapping *ngIf="shouldShowFundMapping">
             <mat-list-item [routerLink]="['fund-mapping']" *mifosxHasPermission="'READ_OFFICE'">
               <mat-icon matListIcon>
                 <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
@@ -98,6 +98,16 @@
               </mat-icon>
               <h4 matLine>Password Preferences</h4>
               <p matLine>Define standards for enforcing the usage of stronger passwords</p>
+            </mat-list-item>
+          </div>
+
+          <div #bulkimports>
+            <mat-list-item [routerLink]="['bulk-import']" *mifosxHasPermission="'VIEW_BULKIMPORT'">
+              <mat-icon matListIcon>
+                <fa-icon icon="upload" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine>Bulk Import</h4>
+              <p matLine>Bulk data import using excel spreadsheet templates for clients, offices, etc.</p>
             </mat-list-item>
           </div>
         </mat-nav-list>
@@ -185,16 +195,6 @@
               </mat-icon>
               <h4 matLine>AdHocQuery</h4>
               <p matLine>Define AdHocQuery for Organization</p>
-            </mat-list-item>
-          </div>
-
-          <div #bulkimports>
-            <mat-list-item [routerLink]="['bulk-import']" *mifosxHasPermission="'VIEW_BULKIMPORT'">
-              <mat-icon matListIcon>
-                <fa-icon icon="upload" size="sm"></fa-icon>
-              </mat-icon>
-              <h4 matLine>Bulk Import</h4>
-              <p matLine>Bulk data import using excel spreadsheet templates for clients, offices, etc.</p>
             </mat-list-item>
           </div>
         </mat-nav-list>

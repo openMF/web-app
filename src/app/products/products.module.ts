@@ -117,6 +117,8 @@ import { RecurringDepositGeneralTabComponent } from './recurring-deposit-product
 import { ShareProductGeneralTabComponent } from './share-products/view-share-product/share-product-general-tab/share-product-general-tab.component';
 import { ShareProductDatatableTabComponent } from './share-products/view-share-product/share-product-datatable-tab/share-product-datatable-tab.component';
 import { LoanProductPaymentStrategyStepComponent } from './loan-products/loan-product-stepper/loan-product-payment-strategy-step/loan-product-payment-strategy-step.component';
+import { ViewAdvancePaymenyAllocationComponent } from './loan-products/view-loan-product/shared/view-advance-paymeny-allocation/view-advance-paymeny-allocation.component';
+import { AdvancePaymentAllocationTabComponent } from './loan-products/loan-product-stepper/loan-product-payment-strategy-step/advance-payment-allocation-tab/advance-payment-allocation-tab.component';
 
 /**
  * Products Module
@@ -241,7 +243,9 @@ import { LoanProductPaymentStrategyStepComponent } from './loan-products/loan-pr
         RecurringDepositDatatableTabComponent,
         RecurringDepositGeneralTabComponent,
         ShareProductGeneralTabComponent,
-        ShareProductDatatableTabComponent
+        ShareProductDatatableTabComponent,
+        ViewAdvancePaymenyAllocationComponent,
+        AdvancePaymentAllocationTabComponent
     ]
 })
 export class ProductsModule { }

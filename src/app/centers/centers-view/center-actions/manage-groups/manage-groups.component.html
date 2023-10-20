@@ -3,7 +3,7 @@
   <mat-card fxFlex class="group-card" fxLayout="column" fxLayoutGap="2%">
 
     <mat-form-field fxFlex="30%">
-      <mat-label>Add Groups</mat-label>
+      <mat-label>{{ "labels.inputs.Add Groups" |translate}}</mat-label>
       <input matInput [formControl]="groupChoice" [matAutocomplete]="groupsAutocomplete">
     </mat-form-field>
 
@@ -15,21 +15,21 @@
 
     <div class="mat-table">
       <div class="mat-header-row">
-        <div class="mat-header-cell">Group Details</div>
+        <div class="mat-header-cell">{{ "labels.inputs.Group Details" |translate}}</div>
         <button mat-icon-button (click)="addGroup()">
           <fa-icon icon="plus"></fa-icon>
         </button>
       </div>
       <div class="mat-row">
-        <div class="mat-cell">Name</div>
+        <div class="mat-cell">{{ "labels.inputs.name" |translate}}</div>
         <div class="mat-cell">{{groupChoice.value.name}}</div>
       </div>
       <div class="mat-row">
-        <div class="mat-cell">Id</div>
+        <div class="mat-cell">{{ "labels.inputs.Id" |translate}}</div>
         <div class="mat-cell">{{groupChoice.value.id}}</div>
       </div>
       <div class="mat-row">
-        <div class="mat-cell">Office</div>
+        <div class="mat-cell">{{ "labels.inputs.Office" |translate}}</div>
         <div class="mat-cell">{{groupChoice.value.officeName}}</div>
       </div>
     </div>
@@ -38,7 +38,7 @@
 
   <mat-card fxFlex="40%">
 
-    <h3 matSubheader>Group Members</h3>
+    <h3 matSubheader>{{"labels.heading.Group Members" |translate}}</h3>
 
     <mat-nav-list  *ngIf="groupMembers?.length">
       <div mat-list-item *ngFor="let group of groupMembers index as i">
