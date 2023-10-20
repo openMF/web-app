@@ -62,7 +62,6 @@ export class AddressTabComponent {
     const addAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
     addAddressDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        console.log(response.data);
         this.clientService.createClientAddress(this.clientId, response.data.value.addressType, response.data.value).subscribe((res: any) => {
           const addressData = response.data.value;
           addressData.addressId = res.resourceId;
@@ -89,7 +88,6 @@ export class AddressTabComponent {
     const editAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
     editAddressDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        console.log(response.data.value);
         const addressData = response.data.value;
         addressData.addressId = address.addressId;
         addressData.isActive = address.isActive;

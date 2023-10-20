@@ -333,7 +333,8 @@
     <span fxFlex="60%">
       <mat-accordion>
         <mifosx-view-advance-paymeny-allocation *ngFor="let paymentAllocation of loanProduct.paymentAllocation"
-          [paymentAllocation]="paymentAllocation">
+          [paymentAllocation]="paymentAllocation"
+          [advancePaymentAllocationData]="advancePaymentAllocationData">
         </mifosx-view-advance-paymeny-allocation>
       </mat-accordion>
     </span>
@@ -388,7 +389,12 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Delinquency Bucket:</span>
-    <span fxFlex="60%">{{ loanProduct.delinquencyBucketId | yesNo }}</span>
+    <span fxFlex="60%">{{ loanProduct.delinquencyBucketId }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">Enable installment level Delinquency:</span>
+    <span fxFlex="60%">{{ loanProduct.enableInstallmentLevelDelinquency | yesNo }}</span>
   </div>
 
   <div fxFlexFill>
@@ -595,7 +601,7 @@
     <span fxFlex="40%">Repaid every:</span>
     <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.repaymentEvery | yesNo }}</span>
     <span fxFlex="40%">Moratorium:</span>
-    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.graceOnPrincipalAndInterestPayment ? 'Yes' : 'No'
+    <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.graceOnPrincipalAndInterestPayment | yesNo
       }}</span>
     <span fxFlex="40%">Number of days a loan may be overdue before moving into arrears:</span>
     <span fxFlex="60%">{{ loanProduct.allowAttributeOverrides.graceOnArrearsAgeing | yesNo }}</span>

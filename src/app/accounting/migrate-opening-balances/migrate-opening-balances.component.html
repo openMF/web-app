@@ -17,7 +17,7 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="openingBalancesForm.controls.officeId.hasError('required')">
-              {{"labels.inputs.Office" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Office" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -39,7 +39,7 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="openingBalancesForm.controls.currencyCode.hasError('required')">
-              {{"labels.inputs.Currency" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Currency" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -49,7 +49,7 @@
             <mat-datepicker-toggle matSuffix [for]="openingBalancesDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #openingBalancesDatePicker></mat-datepicker>
             <mat-error *ngIf="openingBalancesForm.controls.transactionDate.hasError('required')">
-              {{"labels.inputs.Opening Balances Date" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Opening Balances Date" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -65,7 +65,6 @@
 
             <div class="header" fxFlex="18%">
               {{"labels.inputs.Account" |translate}}
-              
             </div>
 
             <div class="header" fxFlex="23%">

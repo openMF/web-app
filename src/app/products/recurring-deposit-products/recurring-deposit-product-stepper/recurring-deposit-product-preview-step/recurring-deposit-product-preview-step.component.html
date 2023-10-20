@@ -92,7 +92,7 @@
   <!-- For Pre-mature closure -->
   <div fxFlexFill>
     <span fxFlex="40%">Apply Penal Interest (less):</span>
-    <span fxFlex="60%">{{ recurringDepositProduct.preClosurePenalApplicable ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ recurringDepositProduct.preClosurePenalApplicable | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="recurringDepositProduct.preClosurePenalApplicable">
@@ -108,7 +108,7 @@
   <!--  -->
   <div fxFlexFill>
     <span fxFlex="40%">Withhold Tax is Applicable:</span>
-    <span fxFlex="60%">{{ recurringDepositProduct.withHoldTax ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ recurringDepositProduct.withHoldTax | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="recurringDepositProduct.withHoldTax">
@@ -146,7 +146,7 @@
 
       <div fxFlexFill>
         <span fxFlex="40%">Primary Grouping by Amount:</span>
-        <span fxFlex="60%">{{ recurringDepositProduct.isPrimaryGroupingByAmount ? 'Yes' : 'No' }}</span>
+        <span fxFlex="60%">{{ recurringDepositProduct.isPrimaryGroupingByAmount | yesNo }}</span>
       </div>
 
       <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="chart.chartSlabs" *ngIf="chart.chartSlabs.length !== 0" multiTemplateDataRows>

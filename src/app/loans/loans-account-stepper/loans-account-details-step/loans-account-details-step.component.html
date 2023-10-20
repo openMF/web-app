@@ -3,20 +3,20 @@
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Product Name</mat-label>
-      <mat-select formControlName="productId" matTooltip="The name of the loan product that the loan account is based upon" required>
+      <mat-label>{{"labels.inputs.Product Name" | translate }}</mat-label>
+      <mat-select formControlName="productId" matTooltip="{{ 'tooltips.Name of the loan product' | translate }}" required>
         <mat-option *ngFor="let product of productData" [value]="product.id">
           {{ product.name }}
         </mat-option>
       </mat-select>
       <mat-error>
-        Product Name is <strong>required</strong>
+        {{"labels.inputs.Product Name" | translate }} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%" *ngIf="loanProductSelected">
-      <mat-label>Loan officer</mat-label>
-      <mat-select formControlName="loanOfficerId" matTooltip="The financial institution representative who has responsibility for, and interacts with, the client/group associated with a loan account">
+      <mat-label>{{"labels.inputs.Loan officer" | translate }}</mat-label>
+      <mat-select formControlName="loanOfficerId" matTooltip="{{ 'tooltips.Financial institution representative' | translate }}">
         <mat-option *ngFor="let loanOfficer of loanOfficerOptions" [value]="loanOfficer.id">
           {{ loanOfficer.displayName }}
         </mat-option>
@@ -27,8 +27,8 @@
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" *ngIf="loanProductSelected">
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Loan purpose</mat-label>
-      <mat-select formControlName="loanPurposeId" matTooltip="Provides an indication of how the funds provided through the loan will be directed and can be used to group loans with the same purpose for reporting">
+      <mat-label>{{"labels.inputs.Loan purpose" | translate }}</mat-label>
+      <mat-select formControlName="loanPurposeId" matTooltip="{{ 'tooltips.Provides an indication' | translate }}">
         <mat-option *ngFor="let loanPurpose of loanPurposeOptions" [value]="loanPurpose.id">
           {{ loanPurpose.name }}
         </mat-option>
@@ -36,7 +36,7 @@
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Fund</mat-label>
+      <mat-label>{{"labels.inputs.Fund" | translate }}</mat-label>
       <mat-select formControlName="fundId">
         <mat-option *ngFor="let fund of fundOptions" [value]="fund.id">
           {{ fund.name }}
@@ -45,38 +45,38 @@
     </mat-form-field>
 
     <mat-form-field fxFlex="48%" (click)="submitPicker.open()">
-      <mat-label>Submitted on</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submitPicker" matTooltip="The date the loan account application was received" required
+      <mat-label>{{"labels.inputs.Submitted on" | translate }}</mat-label>
+      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submitPicker" matTooltip="{{ 'tooltips.Date the loan account application' | translate }}" required
         formControlName="submittedOnDate">
       <mat-datepicker-toggle matSuffix [for]="submitPicker"></mat-datepicker-toggle>
       <mat-datepicker #submitPicker></mat-datepicker>
       <mat-error *ngIf="loansAccountDetailsForm.controls.submittedOnDate?.hasError('required')">
-        Submitted on is <strong>required</strong>
+        {{"labels.inputs.Submitted on" | translate }} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%" (click)="disbursementPicker.open()">
-      <mat-label>Disbursement on</mat-label>
-      <input matInput [min]="loansAccountDetailsForm.value.submittedOnDate" [max]="maxDate" [matDatepicker]="disbursementPicker" matTooltip="The date that the loan account is expected to be disbursed" required
+      <mat-label>{{"labels.inputs.Disbursement on" | translate }}</mat-label>
+      <input matInput [min]="loansAccountDetailsForm.value.submittedOnDate" [max]="maxDate" [matDatepicker]="disbursementPicker" matTooltip="{{ 'tooltips.Date that the loan account disbursed' | translate }}" required
         formControlName="expectedDisbursementDate">
       <mat-datepicker-toggle matSuffix [for]="disbursementPicker"></mat-datepicker-toggle>
       <mat-datepicker #disbursementPicker></mat-datepicker>
       <mat-error *ngIf="loansAccountDetailsForm.controls.submittedOnDate?.hasError('required')">
-        Disbursement on is <strong>required</strong>
+        {{"labels.inputs.Disbursement on" | translate }} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>External id</mat-label>
-      <input matInput formControlName="externalId" matTooltip="Provides an external id for the loan account">
+      <mat-label>{{"labels.inputs.External id" | translate }}</mat-label>
+      <input matInput formControlName="externalId" matTooltip="{{ 'tooltips.Provides an external id' | translate }}">
     </mat-form-field>
 
     <mat-divider fxFlex="98%"></mat-divider>
 
-    <h3 class="mat-h3" fxFlexFill>Savings Linkage</h3>
+    <h3 class="mat-h3" fxFlexFill>{{"labels.heading.Savings Linkage" | translate }}</h3>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Link savings</mat-label>
+      <mat-label>{{"labels.inputs.Link savings" | translate }}</mat-label>
       <mat-select formControlName="linkAccountId">
         <mat-option *ngFor="let savingaccount of accountLinkingOptions" [value]="savingaccount.id">
           ({{ savingaccount.accountNo }}) {{ savingaccount.productName }}
@@ -85,21 +85,21 @@
     </mat-form-field>
 
     <mat-checkbox fxFlex="48%" formControlName="createStandingInstructionAtDisbursement">
-      <p>Create standing instructions at disbursement</p>
+      <p>{{"labels.inputs.Create standing instructions at disbursement" | translate }}</p>
     </mat-checkbox>
   </div>
 
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious disabled>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-      Previous
+      {{"labels.buttons.Previous" | translate }}
     </button>
     <button mat-raised-button matStepperNext>
-      Next
+      {{"labels.buttons.Next" | translate }}
       <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
     </button>
     <button mat-raised-button *ngIf="loanId" [routerLink]="['../', 'general']">
-      Cancel
+      {{"labels.buttons.Cancel" | translate }}
     </button>
   </div>
 

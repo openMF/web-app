@@ -41,6 +41,12 @@ export class AdvancedPaymentAllocation {
   futureInstallmentAllocationRules: FutureInstallmentAllocationRule[];
 }
 
+export class AdvancePaymentAllocationData {
+  transactionTypes: PaymentAllocationTransactionType[];
+  allocationTypes: PaymentAllocationType[];
+  futureInstallmentAllocationRules: FutureInstallmentAllocationRule[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -53,16 +59,18 @@ export class AdvancedPaymentStrategy {
     const advancedPaymentAllocationTypes: PaymentAllocationOrder[] = loanProduct.advancedPaymentAllocationTypes;
     const advancedPaymentAllocationFutureInstallmentAllocationRules: FutureInstallmentAllocationRule[] =
       loanProduct.advancedPaymentAllocationFutureInstallmentAllocationRules;
-    loanProduct.paymentAllocation.forEach((item: PaymentAllocation) => {
-      advancedPaymentAllocation.push({
-        transaction: this.getItemByCode(item.transactionType, advancedPaymentAllocationTransactionTypes),
-        paymentAllocationOrder: this.buildCurrentPaymentAllocationOrder(item.paymentAllocationOrder,
-          advancedPaymentAllocationTypes),
-        futureInstallmentAllocationRule: this.getItemByCode(item.futureInstallmentAllocationRule,
-          advancedPaymentAllocationFutureInstallmentAllocationRules),
-        futureInstallmentAllocationRules: advancedPaymentAllocationFutureInstallmentAllocationRules,
+    if (loanProduct.paymentAllocation) {
+      loanProduct.paymentAllocation.forEach((item: PaymentAllocation) => {
+        advancedPaymentAllocation.push({
+          transaction: this.getItemByCode(item.transactionType, advancedPaymentAllocationTransactionTypes),
+          paymentAllocationOrder: this.buildCurrentPaymentAllocationOrder(item.paymentAllocationOrder,
+            advancedPaymentAllocationTypes),
+          futureInstallmentAllocationRule: this.getItemByCode(item.futureInstallmentAllocationRule,
+            advancedPaymentAllocationFutureInstallmentAllocationRules),
+          futureInstallmentAllocationRules: advancedPaymentAllocationFutureInstallmentAllocationRules,
+        });
       });
-    });
+    }
     // If this is Empty, add the Default
     if (advancedPaymentAllocation.length === 0) {
       advancedPaymentAllocation.push({

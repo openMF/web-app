@@ -12,7 +12,7 @@
             <mat-label>{{"labels.inputs.name" |translate}}</mat-label>
             <input matInput required formControlName="name">
             <mat-error *ngIf="editCenterForm.controls.name.hasError('required')">
-              {{"labels.inputs.Center Name" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Center Name" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
             <mat-error *ngIf="editCenterForm.controls.name.hasError('pattern')">
               {{"labels.inputs.Center Name" |translate}} <strong>{{"labels.inputs.cannot" |translate}}</strong> {{"labels.inputs.begin with a special character or number" |translate}}
@@ -41,7 +41,7 @@
               <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #activatedOnDatePicker></mat-datepicker>
               <mat-error *ngIf="editCenterForm.controls.activationDate.hasError('required')">
-                {{"labels.inputs.Activation Date" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+                {{"labels.inputs.Activation Date" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
               </mat-error>
             </mat-form-field>
           </ng-container>

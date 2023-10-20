@@ -35,6 +35,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
   savingsDatatables: any;
   /** Is Prematured Allowed */
   isprematureAllowed: any;
+  currencyCode: string;
   /**
    * Fetches recurringDeposits account data from `resolve`
    * @param {ActivatedRoute} route Activated Route
@@ -50,6 +51,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
       this.recurringDepositsAccountData = data.recurringDepositsAccountData;
       this.charges = this.recurringDepositsAccountData.charges;
       this.savingsDatatables = data.savingsDatatables;
+      this.currencyCode = this.recurringDepositsAccountData.currency.code;
       this.isprematureAllowed = data.recurringDepositsAccountData.maturityDate != null;
     });
   }

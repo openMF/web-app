@@ -16,7 +16,7 @@
             </mat-option>
           </mat-select>
           <mat-error *ngIf="centerEditMeetingScheduleForm.controls.presentMeetingDate.hasError('repeatsOnDay')">
-            {{ "labels.inputs.Existing Meeting Date" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+            {{ "labels.inputs.Existing Meeting Date" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
           </mat-error>
         </mat-form-field>
 
@@ -26,10 +26,10 @@
           <mat-datepicker-toggle matSuffix [for]="newMeetingDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #newMeetingDatePicker></mat-datepicker>
           <mat-error *ngIf="centerEditMeetingScheduleForm.controls.newMeetingDate.hasError('required')">
-            {{ "labels.inputs.Revised Meeting Date" |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+            {{ "labels.inputs.Revised Meeting Date" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
           </mat-error>
         </mat-form-field>
-  
+
         </div>
 
       </mat-card-content>

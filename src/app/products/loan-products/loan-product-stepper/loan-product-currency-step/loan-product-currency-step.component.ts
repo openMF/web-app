@@ -32,7 +32,9 @@ export class LoanProductCurrencyStepComponent implements OnInit {
   createLoanProductCurrencyForm() {
     this.loanProductCurrencyForm = this.formBuilder.group({
       'currencyCode': ['', Validators.required],
-      'digitsAfterDecimal': [2, Validators.required]
+      'digitsAfterDecimal': [2, Validators.required],
+      'inMultiplesOf': '',
+      'installmentAmountInMultiplesOf': ''
     });
   }
 

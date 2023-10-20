@@ -1,10 +1,10 @@
 <div class="mat-typography">
 
-    <h3>Family Members</h3>
+    <h3>{{"labels.heading.Family Members" |translate}}</h3>
 
     <div fxLayout="row" fxLayoutAlign="flex-end" class="m-b-20">
       <button mat-raised-button color="primary" (click)="addFamilyMember()">
-        <fa-icon icon="plus" class="m-r-10"></fa-icon>Add
+        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ "labels.buttons.Add" | translate}}
       </button>
     </div>
 
@@ -36,17 +36,17 @@
         </div>
 
         <p>
-          First Name : {{ member.firstName }}<br />
-          Middle Name : {{ member.middleName }}<br />
-          Last Name : {{ member.lastName }}<br />
-          Qualification : {{ member.qualification }}<br />
-          Relationship : {{ member.relationshipId | find:clientTemplate.familyMemberOptions.relationshipIdOptions:'id':'name' }}<br />
-          Age : {{ member.age }}<br />
-          Is Dependent : {{ member.isDependent ? 'Yes' : 'No' }}<br />
-          Marital Status : {{ member.maritalStatusId | find:clientTemplate.familyMemberOptions.maritalStatusIdOptions:'id':'name' }}<br />
-          Gender : {{ member.genderId | find:clientTemplate.familyMemberOptions.genderIdOptions:'id':'name' }}<br />
-          Profession : {{member.professionId | find:clientTemplate.familyMemberOptions.professionIdOptions:'id':'name' }}<br />
-          Date Of Birth : {{member.dateOfBirth  | dateFormat}}<br />
+          {{ "labels.inputs.First Name" |translate}} : {{ member.firstName }}<br />
+          {{ "labels.inputs.Middle Name" |translate}} : {{ member.middleName }}<br />
+          {{ "labels.inputs.Last Name" |translate}} : {{ member.lastName }}<br />
+          {{ "labels.inputs.Qualification" |translate}} : {{ member.qualification }}<br />
+          {{ "labels.inputs.Relationship" |translate}} : {{ member.relationshipId | find:clientTemplate.familyMemberOptions.relationshipIdOptions:'id':'name' }}<br />
+          {{ "labels.inputs.Age" |translate}} : {{ member.age }}<br />
+          {{ "labels.inputs.Is Dependent" |translate}} : {{ member.isDependent ? 'Yes' : 'No' }}<br />
+          {{ "labels.inputs.Marital Status" |translate}} : {{ member.maritalStatusId | find:clientTemplate.familyMemberOptions.maritalStatusIdOptions:'id':'name' }}<br />
+          {{ "labels.inputs.Gender" |translate}} : {{ member.genderId | find:clientTemplate.familyMemberOptions.genderIdOptions:'id':'name' }}<br />
+          {{ "labels.inputs.Profession" |translate}} : {{member.professionId | find:clientTemplate.familyMemberOptions.professionIdOptions:'id':'name' }}<br />
+          {{ "labels.inputs.Date Of Birth" |translate}} : {{member.dateOfBirth  | dateFormat}}<br />
         </p>
 
       </mat-expansion-panel>
@@ -56,10 +56,10 @@
     <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
       <button mat-raised-button matStepperPrevious>
         <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-        Previous
+        {{ "labels.buttons.Previous" | translate}}
       </button>
       <button mat-raised-button matStepperNext>
-        Next
+        {{ "labels.buttons.Next" | translate}}
         <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
       </button>
     </div>

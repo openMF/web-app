@@ -22,7 +22,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Primary Grouping by Amount:</span>
-    <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate?.accountChart.isPrimaryGroupingByAmount ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate?.accountChart.isPrimaryGroupingByAmount | yesNo }}</span>
   </div>
 
   <table class="mat-elevation-z1" mat-table [dataSource]="interestRateChartData" #chartsTable multiTemplateDataRows>

@@ -3,20 +3,16 @@
     <mat-panel-title>
       <div fxFlexFill>
         <span fxFlex="40%">Transaction Type:</span>
-        <span fxFlex="60%">{{ paymentAllocation.transactionType }}</span>
+        <span fxFlex="60%">{{ transactionTypeValue(paymentAllocation.transactionType) }}</span>
       </div>
     </mat-panel-title>
   </mat-expansion-panel-header>
 
   <div fxFlexFill>
-    <div fxFlexFill>
-      <span fxFlex="40%">Transaction Type:</span>
-      <span fxFlex="60%">{{ paymentAllocation.transactionType }}</span>
-    </div>
 
     <div fxFlexFill>
       <span fxFlex="40%">Future Installment Allocation:</span>
-      <span fxFlex="60%">{{ paymentAllocation.futureInstallmentAllocationRule }}</span>
+      <span fxFlex="60%">{{ futureInstallmentRuleValue(paymentAllocation.futureInstallmentAllocationRule) }}</span>
     </div>
 
     <div fxFlexFill>
@@ -32,7 +28,7 @@
           <tbody>
             <tr *ngFor="let paymentAllocation of paymentAllocation.paymentAllocationOrder; let idx = index;">
               <td>{{ (idx + 1) }}</td>
-              <td>{{ paymentAllocation.paymentAllocationRule }}</td>
+              <td>{{ allocationRuleValue(paymentAllocation.paymentAllocationRule) }}</td>
             </tr>
           </tbody>
         </table>

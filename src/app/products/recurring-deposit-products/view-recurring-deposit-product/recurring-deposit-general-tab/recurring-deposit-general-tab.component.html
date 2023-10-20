@@ -167,7 +167,7 @@
 
             <div fxFlexFill>
               <span fxFlex="40%">Primary Grouping by Amount:</span>
-              <span fxFlex="60%">{{ recurringDepositProduct.activeChart.isPrimaryGroupingByAmount ? 'Yes' : 'No' }}</span>
+              <span fxFlex="60%">{{ recurringDepositProduct.activeChart.isPrimaryGroupingByAmount | yesNo }}</span>
             </div>
 
             <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="recurringDepositProduct.activeChart.chartSlabs" multiTemplateDataRows>
