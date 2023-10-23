@@ -156,4 +156,12 @@ export class GeneralTabComponent {
     this.router.navigate(['../', 'loans-accounts', loanId, 'transfer-funds', 'make-account-transfer'], { relativeTo: this.route, queryParams: queryParams });
   }
 
+  viewAccountsLabel(closed: boolean): string {
+    if (closed) {
+      return 'labels.buttons.View Active Accounts';
+    } else {
+      return 'labels.buttons.View Closed Accounts';
+    }
+  }
+
 }

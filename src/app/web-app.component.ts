@@ -26,9 +26,36 @@ import { Alert } from './core/alert/alert.model';
 import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
 import { Dates } from './core/utils/dates';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { I18nService } from './core/i18n/i18n.service';
 
 /** Initialize Logger */
 const log = new Logger('MifosX');
+
+import { registerLocaleData } from '@angular/common';
+import localeCS from '@angular/common/locales/cs';
+import localeEN from '@angular/common/locales/en';
+import localeES from '@angular/common/locales/es';
+import localeDE from '@angular/common/locales/de';
+import localeFR from '@angular/common/locales/fr';
+import localeIT from '@angular/common/locales/it';
+import localeKO from '@angular/common/locales/ko';
+import localeLT from '@angular/common/locales/lt';
+import localeLV from '@angular/common/locales/lv';
+import localeNE from '@angular/common/locales/ne';
+import localePT from '@angular/common/locales/pt';
+import localeSW from '@angular/common/locales/sw';
+registerLocaleData(localeCS);
+registerLocaleData(localeEN);
+registerLocaleData(localeES);
+registerLocaleData(localeDE);
+registerLocaleData(localeFR);
+registerLocaleData(localeIT);
+registerLocaleData(localeKO);
+registerLocaleData(localeLT);
+registerLocaleData(localeLV);
+registerLocaleData(localeNE);
+registerLocaleData(localePT);
+registerLocaleData(localeSW);
 
 /**
  * Main web app component.
@@ -53,6 +80,8 @@ const log = new Logger('MifosX');
 export class WebAppComponent implements OnInit {
 
   buttonConfig: KeyboardShortcutsConfiguration;
+
+  i18nService: I18nService;
 
   /**
    * @param {Router} router Router for navigation.
@@ -101,6 +130,8 @@ export class WebAppComponent implements OnInit {
     this.translateService.addLangs(environment.supportedLanguages.split(','));
     this.translateService.use(environment.defaultLanguage);
 
+    this.i18nService = new I18nService(this.translateService);
+
     // Change page title on navigation or language change, based on route data
     const onNavigationEnd = this.router.events.pipe(filter(event => event instanceof NavigationEnd));
     merge(this.translateService.onLangChange, onNavigationEnd)
@@ -116,10 +147,13 @@ export class WebAppComponent implements OnInit {
         mergeMap(route => route.data)
       )
       .subscribe(event => {
-        const title = event['title'];
-        if (title) {
-          this.titleService.setTitle(`${this.translateService.instant(title)} | Mifos X`);
+        let title = event['title'];
+        if (!title) {
+          title = 'APP_NAME';
         }
+        this.i18nService.translate(title).subscribe((titleTranslated: any) => {
+          this.titleService.setTitle(titleTranslated);
+        });
       });
 
     // Stores top 100 user activites as local storage object.

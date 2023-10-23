@@ -2,7 +2,7 @@
 
   <div #filter fxLayout="row">
     <mat-form-field fxFlex>
-      <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
+      <mat-label>{{'labels.inputs.Filter' | translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)">
     </mat-form-field>
   </div>
@@ -12,41 +12,41 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.name' | translate}} </th>
         <td mat-cell *matCellDef="let configuration"> {{ configuration.name }}&nbsp;&nbsp;
-        <fa-icon icon="question-circle" matTooltip="{{ configuration.description === undefined ? 'No Description' : configuration.description }}" matTooltipPosition="right"></fa-icon>
+        <fa-icon icon="question-circle" matTooltip="{{ getTooltip(configuration.description) | translate }}" matTooltipPosition="right"></fa-icon>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="enabled">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Status' | translate}} </th>
         <td mat-cell *matCellDef="let configuration">
           <mat-slide-toggle [(ngModel)]="configuration.enabled" name="{{configuration.name}}" (click)="toggleStatus(configuration)">
             <div [className]="configuration.enabled ? 'enabled' : 'disabled'">
-              <span *ngIf="configuration.enabled">Enabled</span>
-              <span *ngIf="!configuration.enabled">Disabled</span>
+              <span *ngIf="configuration.enabled">{{'labels.inputs.Enabled' | translate}}</span>
+              <span *ngIf="!configuration.enabled">{{'labels.inputs.Disabled' | translate}}</span>
             </div>
           </mat-slide-toggle>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="value">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Value </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Value' | translate}} </th>
         <td mat-cell *matCellDef="let configuration"> {{ configuration.value }}</td>
       </ng-container>
 
       <ng-container matColumnDef="stringValue">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> String Value </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.String Value' | translate}} </th>
         <td mat-cell *matCellDef="let configuration"> {{ configuration.stringValue }}</td>
       </ng-container>
 
       <ng-container matColumnDef="dateValue">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Value </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Date Value' | translate}} </th>
         <td mat-cell *matCellDef="let configuration"> {{ configuration.dateValue | dateFormat }}</td>
       </ng-container>
 
       <ng-container matColumnDef="edit">
-        <th mat-header-cell *matHeaderCellDef> Edit </th>
+        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Edit' | translate}} </th>
         <td mat-cell *matCellDef="let configuration">
           <button mat-button color="primary" [routerLink]="[configuration.id, 'edit']">
             <fa-icon icon="edit"></fa-icon>
@@ -66,19 +66,19 @@
 </div>
 
 <ng-template #templateFilter let-data let-popover="popover">
- <h4>Search bar to filter configurations.</h4>
+ <h4>{{'labels.heading.Search bar to filter configurations' | translate}}</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateConfigurationsTable, configurationsTable, 'top', true)">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{'labels.buttons.Back' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateConfigurationsTable, configurationsTable, 'top', true)">{{'labels.buttons.Next' | translate}}</button>
   </div>
 </ng-template>
 
 <ng-template #templateConfigurationsTable let-data let-popover="popover">
-  <h4 class="mw300">Global Configuration options and their current status. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895362/Global+Configuration" target="_blank">Global Configurations</a></h4>
+  <h4 class="mw300">{{'labels.heading.Global Configuration options' | translate}}: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895362/Global+Configuration" target="_blank">{{'labels.inputs.Global Configurations' | translate}}</a></h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true)">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true)">{{'labels.buttons.Back' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{'labels.buttons.Next' | translate}}</button>
   </div>
 </ng-template>

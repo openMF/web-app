@@ -5,9 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 /** Routing Imports */
 import { Route } from '../core/route/route.service';
 
-/** Translation Imports */
-import { extract } from '../core/i18n/i18n.service';
-
 /** Custom Components */
 import { TemplatesComponent } from './templates.component';
 import { ViewTemplateComponent } from './view-template/view-template.component';
@@ -25,7 +22,7 @@ const routes: Routes = [
   Route.withShell([
     {
       path: 'templates',
-      data: { title: extract('Templates'), breadcrumb: 'Templates' },
+      data: { title: 'Templates', breadcrumb: 'Templates' },
       children: [
         {
           path: '',
@@ -36,7 +33,7 @@ const routes: Routes = [
         },
         {
           path: 'create',
-          data: { title: extract('Create Template'), breadcrumb: 'Create Template' },
+          data: { title: 'Create Template', breadcrumb: 'Create Template' },
           component: CreateTemplateComponent,
           resolve: {
             createTemplateData: CreateTemplateResolver
@@ -44,7 +41,7 @@ const routes: Routes = [
         },
         {
           path: ':id',
-          data: { title: extract('View Template'), routeParamBreadcrumb: 'id' },
+          data: { title: 'View Template', routeParamBreadcrumb: 'id' },
           children: [
             {
               path: '',
@@ -56,7 +53,7 @@ const routes: Routes = [
             {
               path: 'edit',
               component: EditTemplateComponent,
-              data: { title: extract('Edit Template'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+              data: { title: 'Edit Template', breadcrumb: 'Edit', routeParamBreadcrumb: false },
               resolve: {
                 editTemplateData: EditTemplateResolver
               }

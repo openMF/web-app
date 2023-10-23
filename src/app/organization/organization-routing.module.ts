@@ -5,9 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 /** Routing Imports */
 import { Route } from '../core/route/route.service';
 
-/** Translation Imports */
-import { extract } from '../core/i18n/i18n.service';
-
 /** Custom Components */
 import { OrganizationComponent } from './organization.component';
 import { LoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/loan-provisioning-criteria.component';
@@ -112,7 +109,7 @@ const routes: Routes = [
   Route.withShell([
     {
       path: 'organization',
-      data: { title: extract('Organization'), breadcrumb: 'Organization' },
+      data: { title: 'Organization', breadcrumb: 'Organization' },
       children: [
         {
           path: '',
@@ -120,7 +117,7 @@ const routes: Routes = [
         },
         {
           path: 'provisioning-criteria',
-          data: { title: extract('Provisioning Criteria'), breadcrumb: 'Provisioning Criteria' },
+          data: { title: 'Provisioning Criteria', breadcrumb: 'Provisioning Criteria' },
           children: [
             {
               path: '',
@@ -131,7 +128,7 @@ const routes: Routes = [
             },
             {
               path: 'create',
-              data: { title: extract('Create Provisioning Criteria'), breadcrumb: 'Create Provisioning Criteria' },
+              data: { title: 'Create Provisioning Criteria', breadcrumb: 'Create Provisioning Criteria' },
               component: CreateLoanProvisioningCriteriaComponent,
               resolve: {
                 loanProvisioningCriteriaTemplate: LoanProvisioningCriteriaTemplateResolver,
@@ -139,7 +136,7 @@ const routes: Routes = [
             },
             {
               path: ':id',
-              data: { title: extract('View Provisioning Criteria'), routeParamBreadcrumb: 'id' },
+              data: { title: 'View Provisioning Criteria', routeParamBreadcrumb: 'id' },
               children: [
                 {
                   path: '',
@@ -151,7 +148,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditLoanProvisioningCriteriaComponent,
-                  data: { title: extract('Edit Provisioning Criteria'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Provisioning Criteria', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     loanProvisioningCriteriaAndTemplate: LoanProvisioningCriteriaAndTemplateResolver
                   }
@@ -162,7 +159,7 @@ const routes: Routes = [
         },
         {
           path: 'offices',
-          data: { title: extract('Manage Offices'), breadcrumb: 'Manage Offices' },
+          data: { title: 'Manage Offices', breadcrumb: 'Manage Offices' },
           children: [
             {
               path: '',
@@ -174,14 +171,14 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateOfficeComponent,
-              data: { title: extract('Create Office'), breadcrumb: 'Create Office' },
+              data: { title: 'Create Office', breadcrumb: 'Create Office' },
               resolve: {
                 offices: OfficesResolver,
               }
             },
             {
               path: ':officeId',
-              data: { title: extract('View Office'), breadcrumb: 'officeId', routeParamBreadcrumb: 'officeId' },
+              data: { title: 'View Office', breadcrumb: 'officeId', routeParamBreadcrumb: 'officeId' },
               component: ViewOfficeComponent,
               resolve: {
                  officeDatatables: OfficeDatatablesResolver,
@@ -195,7 +192,7 @@ const routes: Routes = [
                 {
                   path: 'general',
                   component: GeneralTabComponent,
-                  data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false },
+                  data: { title: 'General', breadcrumb: 'General', routeParamBreadcrumb: false },
                   resolve: {
                     office: OfficeResolver
                   }
@@ -205,7 +202,7 @@ const routes: Routes = [
                   children: [{
                       path: ':datatableName',
                       component: DatatableTabsComponent,
-                      data: { title: extract('Data Table View'), routeParamBreadcrumb: 'datatableName' },
+                      data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
                       resolve: {
                         officeDatatable: OfficeDatatableResolver
                       }
@@ -217,7 +214,7 @@ const routes: Routes = [
             {
               path: ':officeId/edit',
               component: EditOfficeComponent,
-              data: { title: extract('Edit Office'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+              data: { title: 'Edit Office', breadcrumb: 'Edit', routeParamBreadcrumb: false },
               resolve: {
                 officeTemplate: EditOfficeResolver
               }
@@ -226,7 +223,7 @@ const routes: Routes = [
         },
         {
           path: 'employees',
-          data: { title: extract('Manage Employees'), breadcrumb: 'Manage Employees' },
+          data: { title: 'Manage Employees', breadcrumb: 'Manage Employees' },
           children: [
             {
               path: '',
@@ -238,14 +235,14 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateEmployeeComponent,
-              data: { title: extract('Create Employee'), breadcrumb: 'Create Employee' },
+              data: { title: 'Create Employee', breadcrumb: 'Create Employee' },
               resolve: {
                 offices: OfficesResolver
               }
             },
             {
               path: ':id',
-              data: { title: extract('View Employee'), routeParamBreadcrumb: 'id' },
+              data: { title: 'View Employee', routeParamBreadcrumb: 'id' },
               children: [
                 {
                   path: '',
@@ -257,7 +254,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditEmployeeComponent,
-                  data: { title: extract('Edit Employee'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Employee', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     employee: EditEmployeeResolver
                   }
@@ -268,7 +265,7 @@ const routes: Routes = [
         },
         {
           path: 'currencies',
-          data: { title: extract('Currency Configuration'), breadcrumb: 'Currency Configuration' },
+          data: { title: 'Currency Configuration', breadcrumb: 'Currency Configuration' },
           resolve: {
             currencies: CurrenciesResolver
           },
@@ -279,14 +276,14 @@ const routes: Routes = [
             },
             {
               path: 'manage',
-              data: { title: extract('Manage Currencies'), breadcrumb: 'Manage Currencies' },
+              data: { title: 'Manage Currencies', breadcrumb: 'Manage Currencies' },
               component: ManageCurrenciesComponent
             }
           ]
         },
         {
           path: 'sms-campaigns',
-          data: { title: extract('SMS Campaigns'), breadcrumb: 'SMS Campaigns' },
+          data: { title: 'SMS Campaigns', breadcrumb: 'SMS Campaigns' },
           children: [
             {
               path: '',
@@ -297,7 +294,7 @@ const routes: Routes = [
             },
             {
               path: 'create',
-              data: { title: extract('Create SMS Campaign'), breadcrumb: 'Create Campaign' },
+              data: { title: 'Create SMS Campaign', breadcrumb: 'Create Campaign' },
               component: CreateCampaignComponent,
               resolve: {
                 smsCampaignTemplate: SmsCampaignTemplateResolver
@@ -305,7 +302,7 @@ const routes: Routes = [
             },
             {
               path: ':id',
-              data: { title: extract('View SMS Campaign'), routeResolveBreadcrumb: ['smsCampaign', 'campaignName'] },
+              data: { title: 'View SMS Campaign', routeResolveBreadcrumb: ['smsCampaign', 'campaignName'] },
               resolve: {
                 smsCampaign: SmsCampaignResolver
               },
@@ -318,7 +315,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditCampaignComponent,
-                  data: { title: extract('Edit SMS Campaign'), breadcrumb: 'Edit', routeResolveBreadcrumb: false},
+                  data: { title: 'Edit SMS Campaign', breadcrumb: 'Edit', routeResolveBreadcrumb: false},
                   resolve: {
                     smsCampaignTemplate: SmsCampaignTemplateResolver,
                   }
@@ -330,7 +327,7 @@ const routes: Routes = [
         {
           path: 'standing-instructions-history',
           component: StandingInstructionsHistoryComponent,
-          data: { title: extract('Standing Instructions History'), breadcrumb: 'Standing Instructions History' },
+          data: { title: 'Standing Instructions History', breadcrumb: 'Standing Instructions History' },
           resolve: {
             standingInstructionsTemplate: StandingInstructionsTemplateResolver
           }
@@ -338,7 +335,7 @@ const routes: Routes = [
         {
           path: 'fund-mapping',
           component: FundMappingComponent,
-          data: { title: extract('Advance Search'), breadcrumb: 'Advance Search' },
+          data: { title: 'Advance Search', breadcrumb: 'Advance Search' },
           resolve: {
             advanceSearchTemplate: AdvanceSearchTemplateResolver
           }
@@ -346,12 +343,12 @@ const routes: Routes = [
         {
           path: 'investors',
           component: InvestorsComponent,
-          data: { title: extract('Investors'), breadcrumb: 'Investors' },
+          data: { title: 'Investors', breadcrumb: 'Investors' },
           resolve: {  }
         },
         {
           path: 'adhoc-query',
-          data: { title: extract('Adhoc Query'), breadcrumb: 'Adhoc Query' },
+          data: { title: 'Adhoc Query', breadcrumb: 'Adhoc Query' },
           children: [
             {
               path: '',
@@ -363,14 +360,14 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateAdhocQueryComponent,
-              data: { title: extract('Create Adhoc Query'), breadcrumb: 'Create' },
+              data: { title: 'Create Adhoc Query', breadcrumb: 'Create' },
               resolve: {
                 adhocQueryTemplate: AdhocQueryTemplateResolver
               }
             },
             {
               path: ':id',
-              data: { title: extract('View Adhoc Query'), routeParamBreadcrumb: 'id' },
+              data: { title: 'View Adhoc Query', routeParamBreadcrumb: 'id' },
               children: [
                 {
                   path: '',
@@ -382,7 +379,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditAdhocQueryComponent,
-                  data: { title: extract('Edit Adhoc Query'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Adhoc Query', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     adhocQueryAndTemplate: AdhocQueryAndTemplateResolver
                   }
@@ -393,7 +390,7 @@ const routes: Routes = [
         },
         {
           path: 'tellers',
-          data: { title: extract('Tellers'), breadcrumb: 'Tellers' },
+          data: { title: 'Tellers', breadcrumb: 'Tellers' },
           children: [
             {
               path: '',
@@ -405,14 +402,14 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateTellerComponent,
-              data: { title: extract('Create Teller'), breadcrumb: 'Create' },
+              data: { title: 'Create Teller', breadcrumb: 'Create' },
               resolve: {
                 offices: OfficesResolver
               }
             },
             {
               path: ':id',
-              data: { title: extract('View Teller'), routeParamBreadcrumb: 'id' },
+              data: { title: 'View Teller', routeParamBreadcrumb: 'id' },
               children: [
                 {
                   path: '',
@@ -424,7 +421,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditTellerComponent,
-                  data: { title: extract('Edit Teller'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Teller', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     teller: TellerResolver,
                     offices: OfficesResolver
@@ -432,7 +429,7 @@ const routes: Routes = [
                 },
                 {
                   path: 'cashiers',
-                  data: { title: extract('Cashiers'), breadcrumb: 'Cashiers', routeParamBreadcrumb: false },
+                  data: { title: 'Cashiers', breadcrumb: 'Cashiers', routeParamBreadcrumb: false },
                   children: [
                     {
                       path: '',
@@ -443,7 +440,7 @@ const routes: Routes = [
                     },
                     {
                       path: 'create',
-                      data: { title: extract('Cashiers'), breadcrumb: 'Create Cashier' },
+                      data: { title: 'Cashiers', breadcrumb: 'Create Cashier' },
                       component: CreateCashierComponent,
                       resolve: {
                         cashierTemplate: EditCashierResolver
@@ -451,12 +448,12 @@ const routes: Routes = [
                     },
                     {
                       path: ':id',
-                      data: { title: extract('View Cashier'),  routeParamBreadcrumb: 'id' },
+                      data: { title: 'View Cashier', routeParamBreadcrumb: 'id' },
                       children: [
                         {
                           path: '',
                           component: ViewCashierComponent,
-                          data: { title: extract('View Cashier'), breadcrumb: 'View Cashier', routeParamBreadcrumb: false },
+                          data: { title: 'View Cashier', breadcrumb: 'View Cashier', routeParamBreadcrumb: false },
                           resolve: {
                             cashier: CashierResolver
                           }
@@ -464,7 +461,7 @@ const routes: Routes = [
                         {
                           path: 'edit',
                           component: EditCashierComponent,
-                          data: { title: extract('Edit Cashier'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                          data: { title: 'Edit Cashier', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                           resolve: {
                             cashier: CashierResolver,
                             cashierTemplate: EditCashierResolver
@@ -472,7 +469,7 @@ const routes: Routes = [
                         },
                         {
                           path: 'transactions',
-                          data: { title: extract('Cashier Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+                          data: { title: 'Cashier Transactions', breadcrumb: 'Transactions', routeParamBreadcrumb: false },
                           component: TransactionsComponent,
                           resolve: {
                             currencies: CurrenciesResolver
@@ -481,7 +478,7 @@ const routes: Routes = [
                         {
                           path: 'settle',
                           component: SettleCashComponent,
-                          data: { title: extract('Settle Cash'), breadcrumb: 'Settle Cash', routeParamBreadcrumb: false },
+                          data: { title: 'Settle Cash', breadcrumb: 'Settle Cash', routeParamBreadcrumb: false },
                           resolve: {
                             cashierTemplate: CashierTransactionTemplateResolver
                           }
@@ -489,7 +486,7 @@ const routes: Routes = [
                         {
                           path: 'allocate',
                           component: AllocateCashComponent,
-                          data: { title: extract('Allocate Cash'), breadcrumb: 'Allocate Cash', routeParamBreadcrumb: false },
+                          data: { title: 'Allocate Cash', breadcrumb: 'Allocate Cash', routeParamBreadcrumb: false },
                           resolve: {
                             cashierTemplate: CashierTransactionTemplateResolver
                           }
@@ -504,7 +501,7 @@ const routes: Routes = [
         },
         {
           path: 'payment-types',
-          data: { title: extract('Payment Types'), breadcrumb: 'Payment Types' },
+          data: { title: 'Payment Types', breadcrumb: 'Payment Types' },
           children: [
             {
               path: '',
@@ -516,7 +513,7 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreatePaymentTypeComponent,
-              data: { title: extract('Create Payment Type'), breadcrumb: 'Create Payment Type'}
+              data: { title: 'Create Payment Type', breadcrumb: 'Create Payment Type'}
             },
             {
               path: ':id',
@@ -525,7 +522,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditPaymentTypeComponent,
-                  data: { title: extract('Edit Payment Type'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Payment Type', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     paymentType: PaymentTypesResolver
                   }
@@ -537,7 +534,7 @@ const routes: Routes = [
         {
           path: 'password-preferences',
           component: PasswordPreferencesComponent,
-          data: { title: extract('Password Preferences'), breadcrumb: 'Password Preferences' },
+          data: { title: 'Password Preferences', breadcrumb: 'Password Preferences' },
           resolve: {
             passwordPreferencesTemplate: PasswordPreferencesTemplateResolver
           }
@@ -545,14 +542,14 @@ const routes: Routes = [
         {
           path: 'bulkloan',
           component: BulkLoanReassignmnetComponent,
-          data: { title: extract('Bulk Loan Reassignment'), breadcrumb: 'Bulk Loan Reasssignment' },
+          data: { title: 'Bulk Loan Reassignment', breadcrumb: 'Bulk Loan Reasssignment' },
           resolve: {
             offices: OfficesResolver
           }
         },
         {
           path: 'entity-data-table-checks',
-          data: { title: extract('Entity Data Table Checks'), breadcrumb: 'Entity Data Table Checks' },
+          data: { title: 'Entity Data Table Checks', breadcrumb: 'Entity Data Table Checks' },
           children: [
             {
               path: '',
@@ -564,7 +561,7 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateEnityDataTableChecksComponent,
-              data: { title: extract('Create Entity Data Table Checks'), breadcrumb: 'Create' },
+              data: { title: 'Create Entity Data Table Checks', breadcrumb: 'Create' },
               resolve: {
                 dataTableEntity: EntityDataTableChecksTemplateResolver
               }
@@ -574,14 +571,14 @@ const routes: Routes = [
         {
           path: 'working-days',
           component: WorkingDaysComponent,
-          data: { title: extract('Working Days'), breadcrumb: 'Working Days' },
+          data: { title: 'Working Days', breadcrumb: 'Working Days' },
           resolve: {
             workingDays: WorkingDaysResolver
           }
         },
         {
           path: 'manage-funds',
-          data: { title: extract('Manage Funds'), breadcrumb: 'Manage Funds' },
+          data: { title: 'Manage Funds', breadcrumb: 'Manage Funds' },
           children: [
             {
               path: '',
@@ -593,11 +590,11 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateFundComponent,
-              data: { title: extract('Create Fund'), breadcrumb: 'Create' }
+              data: { title: 'Create Fund', breadcrumb: 'Create' }
             },
             {
               path: ':id',
-              data: { title: extract('View Fund'), breadcrumb: 'id', routeParamBreadcrumb: 'id' },
+              data: { title: 'View Fund', breadcrumb: 'id', routeParamBreadcrumb: 'id' },
               resolve: {
                 fundData: ManageFundResolver
               },
@@ -612,7 +609,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditFundComponent,
-                  data: { title: extract('Edit Fund'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Fund', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     fundData: ManageFundResolver
                   }
@@ -626,7 +623,7 @@ const routes: Routes = [
         },
         {
           path: 'bulk-import',
-          data: { title: extract('Bulk Import'), breadcrumb: 'Bulk Import' },
+          data: { title: 'Bulk Import', breadcrumb: 'Bulk Import' },
           children: [
             {
               path: '',
@@ -635,7 +632,7 @@ const routes: Routes = [
             {
               path: ':import-name',
               component: ViewBulkImportComponent,
-              data: { title: extract('View Bulk Import'), routeParamBreadcrumb: 'import-name' },
+              data: { title: 'View Bulk Import', routeParamBreadcrumb: 'import-name' },
               resolve: {
                 offices: OfficesResolver,
                 imports: BulkImportResolver
@@ -645,7 +642,7 @@ const routes: Routes = [
         },
         {
           path: 'holidays',
-          data: { title: extract('Manage Holidays'), breadcrumb: 'Manage Holidays' },
+          data: { title: 'Manage Holidays', breadcrumb: 'Manage Holidays' },
           children: [
             {
               path: '',
@@ -657,7 +654,7 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateHolidayComponent,
-              data: { title: extract('Create Holiday'), breadcrumb: 'Create' },
+              data: { title: 'Create Holiday', breadcrumb: 'Create' },
               resolve: {
                 offices: OfficesResolver,
                 holidayTemplate: HolidayTemplateResolver
@@ -665,7 +662,7 @@ const routes: Routes = [
             },
             {
               path: ':id',
-              data: { title: extract('View Holidays'), routeParamBreadcrumb: 'id' },
+              data: { title: 'View Holidays', routeParamBreadcrumb: 'id' },
               children: [
                 {
                   path: '',
@@ -677,7 +674,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditHolidayComponent,
-                  data: { title: extract('Edit Holidays'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Holidays', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     holiday: HolidayResolver,
                     holidayTemplate: HolidayTemplateResolver

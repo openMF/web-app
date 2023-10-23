@@ -1,24 +1,24 @@
 <nav class="breadcrumb-wrapper">
   <ul class="breadcrumb">
-    <span #breadcrumb class="breadcrumb-title">{{ breadcrumbs[breadcrumbs.length-1].label | translate }}</span>
+    <span #breadcrumb class="breadcrumb-title">{{ getTranslate(breadcrumbs[breadcrumbs.length-1].label) }}</span>
     <span *ngIf="breadcrumbs.length-1 !== 0" class="separator">
       <li *ngFor="let breadcrumb of breadcrumbs; let last = last" class="breadcrumb-label">
         <span *ngIf="!last" class="breadcrumb-link">
-          <a *ngIf="breadcrumb.url" [routerLink]="breadcrumb.url">{{ breadcrumb.label | translate }}</a>
-          <span *ngIf="!breadcrumb.url">{{ breadcrumb.label | translate }}</span>
+          <a *ngIf="breadcrumb.url" [routerLink]="breadcrumb.url">{{ getTranslate(breadcrumb.label) }}</a>
+          <span *ngIf="!breadcrumb.url">{{ getTranslate(breadcrumb.label) }}</span>
         </span>
-        <span *ngIf="last">{{ breadcrumb.label | translate }}</span>
+        <span *ngIf="last">{{ getTranslate(breadcrumb.label) }}</span>
       </li>
     </span>
   </ul>
 </nav>
 
 <ng-template #templateBreadcrumb let-popover="popover">
-  <h2>{{ 'labels.popovers.Breadcrumbs' | translate }}</h2>
-  <p class="mw300">{{"labels.text.User's current location" |translate}}</p>
+  <h2>{{'labels.popovers.Breadcrumbs' | translate}}</h2>
+  <p class="mw300">{{"labels.text.User's current location" | translate}}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{ 'labels.buttons.Close' | translate }}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{ 'labels.buttons.Back' | translate }}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{ 'labels.buttons.Next' | translate }}</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{'labels.buttons.Back' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{'labels.buttons.Next' | translate }}</button>
   </div>
 </ng-template>

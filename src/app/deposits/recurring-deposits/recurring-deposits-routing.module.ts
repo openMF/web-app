@@ -2,9 +2,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-/** Translation Imports */
-import { extract } from '../../core/i18n/i18n.service';
-
 /** Custom Components */
 import { RecurringDepositsAccountViewComponent } from './recurring-deposits-account-view/recurring-deposits-account-view.component';
 import { InterestRateChartTabComponent } from './recurring-deposits-account-view/interest-rate-chart-tab/interest-rate-chart-tab.component';
@@ -32,11 +29,11 @@ import { RecurringDepositsAccountTransactionTemplateResolver } from './common-re
 const routes: Routes = [
   {
     path: '',
-    data: { title: extract('Recurring Deposits'), breadcrumb: 'Recurring Deposits', routeParamBreadcrumb: false },
+    data: { title: 'Recurring Deposits', breadcrumb: 'Recurring Deposits', routeParamBreadcrumb: false },
     children: [
       {
         path: 'create-recurring-deposits-account',
-        data: { title: extract('Create Recurring Deposits Account'), breadcrumb: 'Create Recurring Deposits Account' },
+        data: { title: 'Create Recurring Deposits Account', breadcrumb: 'Create Recurring Deposits Account' },
         component: CreateRecurringDepositsAccountComponent,
         resolve: {
           recurringDepositsAccountTemplate: RecurringDepositsAccountTemplateResolver
@@ -44,7 +41,7 @@ const routes: Routes = [
       },
       {
         path: ':recurringDepositAccountId',
-        data: { title: extract('RecurringDeposit Account View'), routeParamBreadcrumb: 'recurringDepositAccountId' },
+        data: { title: 'RecurringDeposit Account View', routeParamBreadcrumb: 'recurringDepositAccountId' },
         children: [
           {
             path: '',
@@ -57,7 +54,7 @@ const routes: Routes = [
               {
                 path: 'interest-rate-chart',
                 component: InterestRateChartTabComponent,
-                data: { title: extract('Recurring Deposit Account Interest Rate Chart'), breadcrumb: 'Interest Rate Chart', routeParamBreadcrumb: false },
+                data: { title: 'Recurring Deposit Account Interest Rate Chart', breadcrumb: 'Interest Rate Chart', routeParamBreadcrumb: false },
                 resolve: {
                   recurringDepositsAccountData: RecurringDepositsAccountDataResolver
                 }
@@ -65,7 +62,7 @@ const routes: Routes = [
               {
                 path: 'transactions',
                 component: TransactionsTabComponent,
-                data: { title: extract('Recurring Deposit Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+                data: { title: 'Recurring Deposit Account Transactions', breadcrumb: 'Transactions', routeParamBreadcrumb: false },
                 resolve: {
                   recurringDepositsAccountData: RecurringDepositsAccountDataResolver
                 }
@@ -73,12 +70,12 @@ const routes: Routes = [
               {
                 path: 'charges',
                 component: ChargesTabComponent,
-                data: { title: extract('Recurring Deposit Account Charges'), breadcrumb: 'Charges', routeParamBreadcrumb: false }
+                data: { title: 'Recurring Deposit Account Charges', breadcrumb: 'Charges', routeParamBreadcrumb: false }
               },
               {
                 path: 'standing-instructions-tab',
                 component: StandingInstructionsTabComponent,
-                data: { title: extract('Recurring Deposit Account Standing Instructions'), breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false },
+                data: { title: 'Recurring Deposit Account Standing Instructions', breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false },
                 resolve: {
                   recurringDepositsAccountData: RecurringDepositsAccountDataResolver
                 }
@@ -89,7 +86,7 @@ const routes: Routes = [
                   {
                     path: ':datatableName',
                     component: DatatableTabsComponent,
-                    data: { title: extract('View Data Table'), routeParamBreadcrumb: 'datatableName' },
+                    data: { title: 'View Data Table', routeParamBreadcrumb: 'datatableName' },
                     resolve: {
                       savingsDatatable: SavingsDatatableResolver
                     }
@@ -100,7 +97,7 @@ const routes: Routes = [
           },
           {
             path: 'edit-recurring-deposit-account',
-            data: { title: extract('Edit Recurring Deposit Account'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+            data: { title: 'Edit Recurring Deposit Account', breadcrumb: 'Edit', routeParamBreadcrumb: false },
             component: EditRecurringDepositAccountComponent,
             resolve: {
               recurringDepositsAccountAndTemplate: RecurringDepositsAccountAndTemplateResolver
@@ -108,7 +105,7 @@ const routes: Routes = [
           },
           {
             path: 'transactions',
-            data: { title: extract('Recurring Deposits Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+            data: { title: 'Recurring Deposits Account Transactions', breadcrumb: 'Transactions', routeParamBreadcrumb: false },
             children: [
               {
                 path: '',
@@ -142,7 +139,7 @@ const routes: Routes = [
           },
           {
             path: 'actions/:name',
-            data: { title: extract('Recurring Deposits Account Actions'), routeParamBreadcrumb: 'name' },
+            data: { title: 'Recurring Deposits Account Actions', routeParamBreadcrumb: 'name' },
             component: RecurringDepositsAccountActionsComponent,
             resolve: {
               recurringDepositsAccountActionData: RecurringDepositsAccountActionsResolver
@@ -154,11 +151,11 @@ const routes: Routes = [
   },
   {
     path: '',
-    data: { title: extract('All Recurring Deposits'), breadcrumb: 'Recurring Deposits', routeParamBreadcrumb: false },
+    data: { title: 'All Recurring Deposits', breadcrumb: 'Recurring Deposits', routeParamBreadcrumb: false },
     children: [
       {
         path: ':recurringDepositAccountId',
-        data: { title: extract('RecurringDeposit Account View'), routeParamBreadcrumb: 'recurringDepositAccountId' },
+        data: { title: 'RecurringDeposit Account View', routeParamBreadcrumb: 'recurringDepositAccountId' },
         children: [
           {
             path: 'standing-instructions',
