@@ -20,7 +20,7 @@
       <h3 matLine>{{ entityNote.note }} </h3>
       <p matLine>
         <span>Created by: {{entityNote.createdByUsername}}</span><br />
-        <span>Date: {{entityNote.createdOn  | dateFormat}}</span>
+        <span>Date: {{entityNote.createdOn | dateFormat}}</span>
       </p>
       <div fxLayout="row" fxLayoutAlign="flex-start">
         <button mat-button color="primary" (click)="editNote(entityNote.id, entityNote.note, i)">

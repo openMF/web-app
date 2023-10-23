@@ -5,9 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 /** Routing Imports */
 import { Route } from '../core/route/route.service';
 
-/** Translation Imports */
-import { extract } from '../core/i18n/i18n.service';
-
 /** Custom Components */
 import { ProfileComponent } from './profile.component';
 
@@ -17,7 +14,7 @@ const routes: Routes = [
     {
       path: 'profile',
       component:  ProfileComponent,
-      data: { title: extract('Profile'), breadcrumb: 'Profile' },
+      data: { title: 'Profile', breadcrumb: 'Profile' },
     }
   ])
 ];

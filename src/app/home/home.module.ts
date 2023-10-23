@@ -24,7 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
     SharedModule,
     PipesModule,
     HomeRoutingModule,
-    TranslateModule.forRoot(),
+    TranslateModule,
   ],
   declarations: [
     HomeComponent,

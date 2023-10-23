@@ -90,14 +90,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CollectionsModule,
     TasksModule,
     ConfigurationWizardModule,
-    AppRoutingModule,
-    // TranslateModule.forRoot({
-    //   loader: {
-    //     provide: TranslateLoader,
-    //       useFactory: HttpLoaderFactory,
-    //       deps: [HttpClient]
-    //   }
-    // })
+    AppRoutingModule
   ],
   declarations: [WebAppComponent, NotFoundComponent],
   providers: [DatePipe],

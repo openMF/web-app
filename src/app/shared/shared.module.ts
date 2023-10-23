@@ -55,7 +55,7 @@ import { StepperButtonsComponent } from './steppers/stepper-buttons/stepper-butt
     IconsModule,
     MaterialModule,
     ReactiveFormsModule,
-    TranslateModule.forRoot(),
+    TranslateModule,
     PipesModule,
     DirectivesModule,
     NgxMatDatetimePickerModule,

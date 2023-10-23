@@ -1,4 +1,4 @@
-<div fxLayout="column" id="footer" class="m-b-20">
+<div fxLayout="column" id="footer" class="m-b-20" *ngIf="displayBackEndInfo">
   <mat-divider fxFlexAlign="center" class="divider"></mat-divider>
   <div fxLayout="column" class="m-b-20 content">
 
@@ -15,12 +15,12 @@
       <td colspan="2" class="center footer-content"><b>{{ server }}</b></td>
     </tr>
     <tr *ngIf="isBusinessDateDefined">
-      <td class="footer-content">Current Business Date:</td>
+      <td class="footer-content">{{'labels.text.Current Business Date' | translate}}:</td>
       <td class="center footer-content business-date"><b>{{ businessDate | date: 'EEEE, MMMM dd, y' }}</b></td>
     </tr>
   </table>
   </div>
   <mat-divider fxFlexAlign="center" class="divider"></mat-divider>
-  <p fxFlexAlign="center" class="footer-content">{{ 'APP_NAME' | translate }} {{ 'labels.text.by' | translate }} Mifos
+  <p fxFlexAlign="center" class="footer-content">{{ 'APP_NAME' | translate}} {{'labels.text.by' | translate}} Mifos
   </p>
 </div>

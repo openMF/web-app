@@ -12,7 +12,7 @@
       </mat-card-title>
       <mat-card-subtitle>
         <p>
-          {{"labels.inputs.Account No" | translate }}: {{ groupData.accountNo }} {{ groupData.externalId ? '| External ID: ' + groupData.externalId : '' }}
+          {{"labels.inputs.Account No" | translate}}: {{ groupData.accountNo }} {{ groupData.externalId ? '| External ID: ' + groupData.externalId : '' }}
         </p>
       </mat-card-subtitle>
     </div>
@@ -25,15 +25,15 @@
         <div fxLayout="row wrap" class="content">
 
           <div fxFlex="50%" class="mat-body-strong">
-            {{"labels.inputs.Activation Date" | translate }}
+            {{"labels.inputs.Activation Date" | translate}}
           </div>
 
           <div fxFlex="50%">
-            {{ groupData.activationDate  | dateFormat }}
+            {{ groupData.activationDate | dateFormat }}
           </div>
 
           <div fxFlex="50%" class="mat-body-strong">
-            {{"labels.inputs.Associated Officer" | translate }}
+            {{"labels.inputs.Associated Officer" | translate}}
           </div>
 
           <div fxFlex="50%">
@@ -41,7 +41,7 @@
           </div>
 
           <div fxFlex="50%" class="mat-body-strong" *ngIf="groupData.centerName">
-            {{"labels.inputs.Associated Center" | translate }}
+            {{"labels.inputs.Associated Center" | translate}}
           </div>
 
           <div fxFlex="50%" *ngIf="groupData.centerName">
@@ -49,15 +49,15 @@
           </div>
 
           <div fxFlex="50%" class="mat-body-strong" *ngIf="groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.nextTenRecurringDates[0]">
-            {{"labels.inputs.Next Meeting Date" | translate }}
+            {{"labels.inputs.Next Meeting Date" | translate}}
           </div>
 
           <div fxFlex="50%" *ngIf="groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.nextTenRecurringDates[0]">
-            {{ groupData.collectionMeetingCalendar.nextTenRecurringDates[0]  | dateFormat }}
+            {{ groupData.collectionMeetingCalendar.nextTenRecurringDates[0] | dateFormat }}
           </div>
 
           <div fxFlex="50%" class="mat-body-strong" *ngIf="groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.humanReadable">
-            {{"labels.inputs.Meeting Frequency" | translate }}
+            {{"labels.inputs.Meeting Frequency" | translate}}
           </div>
 
           <div fxFlex="50%" *ngIf="groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.humanReadable">
@@ -65,7 +65,7 @@
           </div>
 
           <div fxFlex="50%" class="mat-body-strong">
-            {{"labels.inputs.Number of Clients" | translate }}
+            {{"labels.inputs.Number of Clients" | translate}}
           </div>
 
           <div fxFlex="50%">

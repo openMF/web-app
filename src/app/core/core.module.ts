@@ -45,7 +45,7 @@ import { ContentComponent } from './shell/content/content.component';
   imports: [
     SharedModule,
     HttpClientModule,
-    TranslateModule.forRoot(),
+    TranslateModule,
     RouterModule
   ],
   declarations: [

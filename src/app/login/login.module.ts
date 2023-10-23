@@ -21,7 +21,7 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [
     SharedModule,
     LoginRoutingModule,
-    TranslateModule.forRoot()
+    TranslateModule
   ],
   declarations: [
     LoginComponent,

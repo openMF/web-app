@@ -42,43 +42,49 @@ export class FooterComponent implements OnInit, OnDestroy {
   alert$: Subscription;
   timer: any;
 
-  displayBackEndInfo: boolean = environment.displayBackEndInfo;
+  displayBackEndInfo = true;
 
   constructor(private systemService: SystemService,
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
     private alertService: AlertService,
     private dateUtils: Dates,
-    private versionService: VersionService) { }
+    private versionService: VersionService) {
+      this.displayBackEndInfo = (environment.displayBackEndInfo === 'true');
+  }
 
   ngOnInit() {
-    this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
-      const alertType = alertEvent.type;
-      if (alertType === SettingsService.businessDateType + ' Set Config') {
-        this.isBusinessDateEnabled = (alertEvent.message === 'enabled') ? true : false;
-        this.isBusinessDateDefined = false;
-        if (this.isBusinessDateEnabled) {
-          this.setBusinessDate();
+    if (this.displayBackEndInfo) {
+      this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
+        const alertType = alertEvent.type;
+        if (alertType === SettingsService.businessDateType + ' Set Config') {
+          this.isBusinessDateEnabled = (alertEvent.message === 'enabled') ? true : false;
+          this.isBusinessDateDefined = false;
+          if (this.isBusinessDateEnabled) {
+            this.setBusinessDate();
+          }
+        } else if (alertType === SettingsService.businessDateType + ' Set') {
+          if (this.isBusinessDateEnabled) {
+            this.setBusinessDate();
+          }
+        } else if (alertType === 'Authentication Start') {
+          this.timer = setTimeout(() => { this.getConfigurations(); }, 60000);
         }
-      } else if (alertType === SettingsService.businessDateType + ' Set') {
-        if (this.isBusinessDateEnabled) {
-          this.setBusinessDate();
-        }
-      } else if (alertType === 'Authentication Start') {
-        this.timer = setTimeout(() => { this.getConfigurations(); }, 60000);
-      }
-    });
-    this.getConfigurations();
-    this.server = this.settingsService.server;
-    this.versionService.getBackendInfo().subscribe((data: any) => {
-      const buildVersion: string = data.git.build.version.split('-');
-      this.versions.fineract.version = buildVersion[0];
-      this.versions.fineract.hash = buildVersion[1];
-    });
+      });
+      this.getConfigurations();
+      this.server = this.settingsService.server;
+      this.versionService.getBackendInfo().subscribe((data: any) => {
+        const buildVersion: string = data.git.build.version.split('-');
+        this.versions.fineract.version = buildVersion[0];
+        this.versions.fineract.hash = buildVersion[1];
+      });
+    }
   }
 
   ngOnDestroy() {
-    clearTimeout(this.timer);
+    if (this.displayBackEndInfo) {
+      clearTimeout(this.timer);
+    }
   }
 
   /**

@@ -2,20 +2,20 @@
 
   <button mat-raised-button color="primary" (click)="addCodeValueRow()" *mifosxHasPermission="'CREATE_CODEVALUE'">
     <fa-icon icon="plus" class="m-r-10"></fa-icon>
-    Add Code Value
+    {{'labels.buttons.Add Code Value' | translate}}
   </button>
 
   <span *ngIf="!codeData.systemDefined">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CODE'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    Edit Code
+    {{'labels.buttons.Edit Code' | translate}}
   </button>
   </span>
 
   <span *ngIf="!codeData.systemDefined">
     <button mat-raised-button color="warn" (click)="delete()" *mifosxHasPermission="'DELETE_CODEVALUE'">
       <fa-icon icon="trash" class="m-r-10"></fa-icon>
-      Delete Code
+      {{'labels.buttons.Delete Code' | translate}}
     </button>
   </span>
 
@@ -36,47 +36,47 @@
           <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroupName]="i">
 
             <mat-form-field fxFlex="20%">
-              <mat-label>Name</mat-label>
+              <mat-label>{{'labels.inputs.name' | translate}}</mat-label>
               <input required matInput formControlName="name">
               <mat-error *ngIf="codeValues.at(i).controls.name.hasError('required')">
-                Name is <strong>required</strong>
+                {{'labels.inputs.name' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
               </mat-error>
             </mat-form-field>
 
             <mat-form-field fxFlex="22%">
-              <mat-label>Description</mat-label>
+              <mat-label>{{'labels.inputs.Description' | translate}}</mat-label>
               <input matInput formControlName="description">
             </mat-form-field>
 
             <mat-form-field fxFlex="18%">
-              <mat-label>Position</mat-label>
+              <mat-label>{{'labels.inputs.Position' | translate}}</mat-label>
               <input required matInput formControlName="position" type="number">
               <mat-error *ngIf="codeValues.at(i).controls.position.hasError('required')">
-                Name is <strong>required</strong>
+                {{'labels.inputs.name' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
               </mat-error>
             </mat-form-field>
 
             <div class="active-wrapper" fxFlex="8%">
-              <mat-checkbox formControlName="isActive" class="active">Active</mat-checkbox>
+              <mat-checkbox formControlName="isActive" class="active">{{'labels.inputs.Active' | translate}}</mat-checkbox>
             </div>
 
             <div fxLayoutGap="2%" fxFlex="22%" class="options-wrapper">
               <span *ngIf="codeValueRowStatus[i] === 'edit'">
                 <button mat-stroked-button color="primary" [disabled]="codeValues.at(i).pristine" (click)="updateCodeValue(i)"
                   *mifosxHasPermission="'UPDATE_CODEVALUE'">
-                  Submit
+                  {{'labels.buttons.Submit' | translate}}
                 </button>
               </span>
               <button mat-button *ngIf="codeValueRowStatus[i] === 'edit'" (click)="disableRow(i)">
-                Cancel
+                {{'labels.buttons.Cancel' | translate}}
               </button>
-              <button mat-icon-button color="primary" [disabled]="!codeValuesForm.get('codeValues').at(i).valid" *ngIf="codeValueRowStatus[i] === 'new'" matTooltip="Add" matTooltipPosition="above" (click)="addCodeValue(i)">
+              <button mat-icon-button color="primary" [disabled]="!codeValuesForm.get('codeValues').at(i).valid" *ngIf="codeValueRowStatus[i] === 'new'" matTooltip="{{ 'tooltips.Add' | translate}}" matTooltipPosition="above" (click)="addCodeValue(i)">
                 <fa-icon icon="plus" size="lg"></fa-icon>
               </button>
-              <button type="button" color="primary" *ngIf="codeValueRowStatus[i] === 'disabled'" mat-icon-button matTooltip="Edit" matTooltipPosition="above" (click)="enableRow(i)">
+              <button type="button" color="primary" *ngIf="codeValueRowStatus[i] === 'disabled'" mat-icon-button matTooltip="{{ 'tooltips.Edit' | translate}}" matTooltipPosition="above" (click)="enableRow(i)">
                 <fa-icon icon="edit" size="lg"></fa-icon>
               </button>
-              <button type="button" color="warn" mat-icon-button matTooltip="Delete" *mifosxHasPermission="'DELETE_CODEVALUE'" matTooltipPosition="above" (click)="codeValueRowStatus[i] === 'new' ? removeNewCodeValue(i) : deleteCodeValue(i)">
+              <button type="button" color="warn" mat-icon-button matTooltip="{{ 'tooltips.Delete' | translate}}" *mifosxHasPermission="'DELETE_CODEVALUE'" matTooltipPosition="above" (click)="codeValueRowStatus[i] === 'new' ? removeNewCodeValue(i) : deleteCodeValue(i)">
                 <fa-icon icon="trash" size="lg"></fa-icon>
               </button>
             </div>

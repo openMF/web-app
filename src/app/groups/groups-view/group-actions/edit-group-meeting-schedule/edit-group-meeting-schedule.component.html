@@ -12,7 +12,7 @@
           <mat-label>Existing Meeting Date</mat-label>
           <mat-select formControlName="presentMeetingDate">
             <mat-option *ngFor="let date of nextMeetingDates" [value]="date">
-              {{ date  | dateFormat }}
+              {{ date | dateFormat }}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="groupEditMeetingScheduleForm.controls.presentMeetingDate.hasError('repeatsOnDay')">
@@ -29,7 +29,7 @@
             Revised Meeting Date is <strong>required</strong>
           </mat-error>
         </mat-form-field>
-  
+
         </div>
 
       </mat-card-content>

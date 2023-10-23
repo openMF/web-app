@@ -13,8 +13,8 @@
               <mat-icon matListIcon>
                 <fa-icon icon="table" size="sm"></fa-icon>
               </mat-icon>
-              <h4 matLine>Manage Data tables</h4>
-              <p matLine>Add new extra fields to any entity in the form of data table</p>
+              <h4 matLine>{{'labels.heading.Manage Data tables' | translate}}</h4>
+              <p matLine>{{'labels.text.Add new extra fields to any entity' | translate}}</p>
             </mat-list-item>
           </div>
 
@@ -23,8 +23,8 @@
               <mat-icon matListIcon>
                 <fa-icon icon="list-ul" size="sm"></fa-icon>
               </mat-icon>
-              <h4 matLine>Manage Codes</h4>
-              <p matLine>Codes are used to define drop down values</p>
+              <h4 matLine>{{'labels.heading.Manage Codes' | translate}}</h4>
+              <p matLine>{{'labels.text.Codes are used to define drop down values' | translate}}</p>
             </mat-list-item>
           </div>
 
@@ -33,8 +33,8 @@
               <mat-icon matListIcon>
                 <fa-icon icon="key" size="sm"></fa-icon>
               </mat-icon>
-              <h4 matLine>Manage Roles and Permissions</h4>
-              <p matLine>Define or modify roles and associated permissions</p>
+              <h4 matLine>{{'labels.heading.Manage Roles and Permissions' | translate}}</h4>
+              <p matLine>{{'labels.text.Define or modify roles and associated permissions' | translate}}</p>
             </mat-list-item>
           </div>
 
@@ -43,8 +43,8 @@
               <mat-icon matListIcon>
                 <fa-icon icon="sitemap" size="sm"></fa-icon>
               </mat-icon>
-              <h4 matLine>Configure Maker Checker Tasks</h4>
-              <p matLine>Define or modify Maker Checker tasks</p>
+              <h4 matLine>{{'labels.heading.Configure Maker Checker Tasks' | translate}}</h4>
+              <p matLine>{{'labels.text.Define or modify Maker Checker tasks' | translate}}</p>
             </mat-list-item>
           </div>
 
@@ -52,32 +52,32 @@
             <mat-icon matListIcon>
               <fa-icon icon="anchor" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Manage Hooks</h4>
-            <p matLine>Define Hooks</p>
+            <h4 matLine>{{'labels.heading.Manage Hooks' | translate}}</h4>
+            <p matLine>{{'labels.text.Define Hooks' | translate}}</p>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['entity-to-entity-mapping']">
             <mat-icon matListIcon>
               <fa-icon icon="road" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Entity to Entity Mapping</h4>
-            <p matLine>Define or modify entity to entity mappings</p>
+            <h4 matLine>{{'labels.heading.Entity to Entity Mapping' | translate}}</h4>
+            <p matLine>{{'labels.text.Define or modify entity to entity mappings' | translate}}</p>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['surveys']">
             <mat-icon matListIcon>
               <fa-icon icon="file-alt" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Manage Surveys</h4>
-            <p matLine>Manage your Services</p>
+            <h4 matLine>{{'labels.heading.Manage Surveys' | translate}}</h4>
+            <p matLine>{{'labels.text.Manage your Services' | translate}}</p>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['external-events']"  *mifosxHasPermission="'READ_EXTERNAL_EVENT_CONFIGURATION'">
             <mat-icon matListIcon>
               <fa-icon icon="anchor" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Manage External Events</h4>
-            <p matLine>External Events configuration, to enable or disable the event publication</p>
+            <h4 matLine>{{'labels.heading.Manage External Events' | translate}}</h4>
+            <p matLine>{{'labels.text.External Events configuration, to enable or disable' | translate}}</p>
           </mat-list-item>
 
         </mat-nav-list>
@@ -92,56 +92,56 @@
             <mat-icon matListIcon>
               <fa-icon icon="money-check" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Audit Trails</h4>
-            <p matLine>Audit logs of all the activities, such as create client, disburse loans etc</p>
+            <h4 matLine>{{'labels.heading.Audit Trails' | translate}}</h4>
+            <p matLine>{{'labels.text.Audit logs of all the activities' | translate}}</p>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['reports']">
             <mat-icon matListIcon>
               <fa-icon icon="file-word" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Manage Reports</h4>
-            <p matLine>Add new report and classify reports</p>
+            <h4 matLine>{{'labels.heading.Manage Reports' | translate}}</h4>
+            <p matLine>{{'labels.text.Add new report and classify reports' | translate}}</p>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['manage-jobs']">
             <mat-icon matListIcon>
               <fa-icon icon="clock" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Manage Jobs</h4>
-            <p matLine>Manage Schedule and Workflow jobs, modify jobs or view history and logs</p>
+            <h4 matLine>{{'labels.heading.Manage Jobs' | translate}}</h4>
+            <p matLine>{{'labels.text.Manage Schedule and Workflow jobs, modify jobs' | translate}}</p>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['configurations']">
             <mat-icon matListIcon>
               <fa-icon icon="cogs" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Configurations</h4>
-            <p matLine>Global configurations, Cache and Business Date settings</p>
+            <h4 matLine>{{'labels.heading.Configurations' | translate}}</h4>
+            <p matLine>{{'labels.text.Global configurations, Cache and Business Date' | translate}}</p>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['account-number-preferences']">
             <mat-icon matListIcon>
               <fa-icon icon="key" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Account Number Preferences</h4>
-            <p matLine>Preferences for generating account numbers for client, loan and savings accounts</p>
+            <h4 matLine>{{'labels.heading.Account Number Preferences' | translate}}</h4>
+            <p matLine>{{'labels.text.Preferences for generating account numbers for client' | translate}}</p>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['external-services']">
             <mat-icon matListIcon>
               <fa-icon icon="cog" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>External Services</h4>
-            <p matLine>External Services Configuration</p>
+            <h4 matLine>{{'labels.heading.External Services' | translate}}</h4>
+            <p matLine>{{'labels.text.External Services Configuration' | translate}}</p>
           </mat-list-item>
 
           <mat-list-item>
             <mat-icon matListIcon>
               <fa-icon icon="key" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Two-Factor Configuration</h4>
-            <p matLine>Two-factor authentication configuration settings</p>
+            <h4 matLine>{{'labels.heading.Two-Factor Configuration' | translate}}</h4>
+            <p matLine>{{'labels.text.Two-factor authentication configuration' | translate}}</p>
           </mat-list-item>
 
         </mat-nav-list>
@@ -155,71 +155,71 @@
 </div>
 
 <ng-template #templateDatatables let-popover="popover">
-  <h2>Manage Data Tables</h2>
-  <p class="mw300">Mifos X data-tables allow the user to add custom fields in addition to the built-in fields to a client profile, loan/saving account, group, center or an office.</p>
+  <h2>{{'labels.heading.Manage Data Tables' | translate}}</h2>
+  <p class="mw300">{{'labels.text.Mifos X data-tables allow the user to add custom fields' | translate}}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStepDatatables()">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStepDatatables()">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStepDatatables()">{{'labels.buttons.Back' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStepDatatables()">{{'labels.buttons.Next' | translate}}</button>
   </div>
 </ng-template>
 
 <ng-template #templateCodes let-popover="popover">
-  <h2>Manage Codes</h2>
-  <p class="mw300">From this selection you can create new drop-downs and edit their values as well as edit the values for system-generated codes and drop-downs.</p>
+  <h2>{{'labels.heading.Manage Codes' | translate}}</h2>
+  <p class="mw300">{{'labels.text.Selection you can create new drop-downs and edit' | translate}}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStepCodes()">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStepCodes()">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStepCodes()">{{'labels.buttons.Back' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStepCodes()">{{'labels.buttons.Next' | translate}}</button>
   </div>
 </ng-template>
 
 <ng-template #templateRolesandPermission let-popover="popover">
-  <h2>Manage Roles and Permissions</h2>
-  <p class="mw300">Roles and Permissions allow the administrator to control access to Mifos based on what roles are assigned to Users and what Permissions are assigned to roles.</p>
+  <h2>{{'labels.heading.Manage Roles and Permissions' | translate}}</h2>
+  <p class="mw300">{{'labels.text.Roles and Permissions allow the administrator to control access' | translate}}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStepRolesandPermission()">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStepRolesandPermission()">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStepRolesandPermission()">{{'labels.buttons.Back' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStepRolesandPermission()">{{'labels.buttons.Next' | translate}}</button>
   </div>
 </ng-template>
 
 <ng-template #templateMakerCheckerTable let-popover="popover">
-  <h2>Configure Maker-Checker Tasks</h2>
-  <p class="mw300">The “Maker-Checker” principle requires every tasks to be completed by two people to reduce the chance of errors and misuse. One person initiates the process and the second completes it.</p>
+  <h2>{{'labels.heading.Configure Maker-Checker Tasks' | translate}}</h2>
+  <p class="mw300">{{'labels.text.“Maker-Checker” principle requires every tasks' | translate}}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStepMakerCheckerTable()">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStepMakerCheckerTable()">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStepMakerCheckerTable()">{{'labels.buttons.Back' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStepMakerCheckerTable()">{{'labels.buttons.Next' | translate}}</button>
   </div>
 </ng-template>
 
 <ng-template #templateConfigurations let-popover="popover">
-  <h2>Configuration</h2>
-  <p class="mw300">The Configurations page allows you to further customize the way your organization uses the Mifos system.</p>
+  <h2>{{'labels.heading.Configuration' | translate}}</h2>
+  <p class="mw300">{{'labels.text.Configurations page allows you to further customize' | translate}}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStepConfigurations()">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStepConfigurations()">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStepConfigurations()">{{'labels.buttons.Back' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStepConfigurations()">{{'labels.buttons.Next' | translate}}</button>
   </div>
 </ng-template>
 
 <ng-template #templateSchedulerJobs let-popover="popover">
-  <h2>Manage Scheduler Jobs</h2>
-  <p class="mw300">By using Scheduler Jobs, you can set batch jobs to be completed at regular intervals. From this page you can schedule, modify or delete jobs.</p>
+  <h2>{{'labels.heading.Manage Scheduler Jobs' | translate}}</h2>
+  <p class="mw300">{{'labels.text.Scheduler Jobs can set batch jobs' | translate}}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStepSchedulerJobs()">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStepSchedulerJobs()">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStepSchedulerJobs()">{{'labels.buttons.Back' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStepSchedulerJobs()">{{'labels.buttons.Next' | translate}}</button>
   </div>
 </ng-template>
 
 <ng-template #templateManageReports let-popover="popover">
-  <h2>Manage Reports</h2>
-  <p class="mw300">You may add customized reports and edit core reports for your organization.</p>
+  <h2>{{'labels.heading.Manage Reports' | translate}}</h2>
+  <p class="mw300">{{'labels.text.Add customized reports and edit core reports' | translate}}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStepManageReports()">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStepManageReports()">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStepManageReports()">{{'labels.buttons.Back' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStepManageReports()">{{'labels.buttons.Next' | translate}}</button>
   </div>
 </ng-template>

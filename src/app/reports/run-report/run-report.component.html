@@ -14,7 +14,7 @@
               <mat-label>{{param.label}}</mat-label>
               <input matInput required [formControlName]="param.name">
               <mat-error *ngIf="reportForm.controls[param.name].hasError('required')">
-                {{param.label}} is <strong>required</strong>
+                {{param.label}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
               </mat-error>
             </mat-form-field>
 
@@ -25,7 +25,7 @@
               <mat-datepicker-toggle matSuffix [for]="runReportDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #runReportDatePicker></mat-datepicker>
               <mat-error *ngIf="reportForm.controls[param.name].hasError('required')">
-                {{param.label}} is <strong>required</strong>
+                {{param.label}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
               </mat-error>
             </mat-form-field>
 
@@ -37,7 +37,7 @@
                 </mat-option>
               </mat-select>
               <mat-error *ngIf="reportForm.controls[param.name].hasError('required')">
-                {{param.label}} is <strong>required</strong>
+                {{param.label}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
               </mat-error>
             </mat-form-field>
 
@@ -46,7 +46,7 @@
         </ng-container>
 
         <mat-form-field fxFlex>
-          <mat-label>{{ 'Decimal Places' | translate }}</mat-label>
+          <mat-label>{{"labels.inputs.Decimal Places" | translate}}</mat-label>
           <mat-select [formControl]="decimalChoice">
             <mat-option value="0">0</mat-option>
             <mat-option value="1">1</mat-option>
@@ -57,30 +57,30 @@
         </mat-form-field>
 
         <mat-form-field fxFlex *ngIf="isPentahoReport()">
-          <mat-label>{{ 'Output Type' | translate }}</mat-label>
+          <mat-label>{{'labels.inputs.Output Type' | translate}}</mat-label>
           <mat-select required formControlName="outputType">
             <mat-option *ngFor="let option of outputTypeOptions" [value]="option.value">
-              {{option.name | translate}}
+              {{ "labels.inputs." + option.name | translate}}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="reportForm.controls['outputType'].hasError('required')">
-            Report Output Type is <strong>required</strong>
+            {{ "labels.text.Report Output Type" | translate }} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
           </mat-error>
         </mat-form-field>
 
         <div fxFlex="98%" *ngIf="exportToS3Allowed"  >
           <mat-checkbox labelPosition="after" formControlName="exportOutputToS3">
-            Export output data to S3 repository [{{exportToS3Repository}}]
+            {{ "labels.text.Export output data to S3 repository" | translate }} [{{exportToS3Repository}}]
           </mat-checkbox>
         </div>
 
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['/reports']">Cancel</button>
+        <button type="button" mat-raised-button [routerLink]="['/reports']">{{"labels.buttons.Cancel" | translate}}</button>
         <button mat-raised-button color="primary" [disabled]="!reportForm.valid" id="runreport">
           <fa-icon icon="file-export" class="m-r-10"></fa-icon>
-          {{ 'Run Report' | translate }}
+          {{"labels.buttons.Run Report" | translate}}
         </button>
       </mat-card-actions>
 
@@ -96,7 +96,7 @@
 
     <div class="m-b-20">
       <button mat-raised-button color="primary" (click)="isCollapsed = false">
-        {{ 'Parameters' | translate }}
+        {{'labels.buttons.Parameters' | translate}}
       </button>
     </div>
 

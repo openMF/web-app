@@ -9,38 +9,38 @@
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
           <mat-form-field fxFlex="48%">
-            <mat-label>{{"labels.inputs.Office" |translate}}</mat-label>
+            <mat-label>{{"labels.inputs.Office" | translate}}</mat-label>
             <mat-select required formControlName="officeId">
               <mat-option *ngFor="let office of officeData" [value]="office.id">
                 {{ office.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="frequentPostingsForm.controls.officeId.hasError('required')">
-              {{"labels.inputs.Office" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Office" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>{{"labels.inputs.Accounting Rule" |translate}}</mat-label>
+            <mat-label>{{"labels.inputs.Accounting Rule" | translate}}</mat-label>
             <mat-select required formControlName="accountingRule">
               <mat-option *ngFor="let accountingRule of accountingRuleData" [value]="accountingRule">
                 {{ accountingRule.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="frequentPostingsForm.controls.accountingRule.hasError('required')">
-              {{"labels.inputs.Accounting Rule" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Accounting Rule" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>{{"labels.inputs.Currency" |translate}}</mat-label>
+            <mat-label>{{"labels.inputs.Currency" | translate}}</mat-label>
             <mat-select required formControlName="currencyCode">
               <mat-option *ngFor="let currency of currencyData" [value]="currency.code">
                 {{ currency.displayLabel }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="frequentPostingsForm.controls.currencyCode.hasError('required')">
-              {{"labels.inputs.Currency" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Currency" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -52,22 +52,22 @@
             <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroupName]="i">
 
               <mat-form-field fxFlex="48%">
-                <mat-label>{{"labels.inputs.Affected GL Entry (Debit)" |translate}}</mat-label>
+                <mat-label>{{"labels.inputs.Affected GL Entry (Debit)" | translate}}</mat-label>
                 <mat-select required formControlName="glAccountId">
                   <mat-option *ngFor="let affectedGLEntryDebit of debitAccountData" [value]="affectedGLEntryDebit.id">
                     {{ affectedGLEntryDebit.name }}
                   </mat-option>
                 </mat-select>
                 <mat-error *ngIf="debits.at(i).controls.glAccountId.hasError('required')">
-                  {{"labels.inputs.Affected GL Entry (Debit)" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
+                  {{"labels.inputs.Affected GL Entry (Debit)" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
                 </mat-error>
               </mat-form-field>
 
               <mat-form-field fxFlex="43%">
-                <mat-label>{{"labels.inputs.Debit Amount" |translate}}</mat-label>
+                <mat-label>{{"labels.inputs.Debit Amount" | translate}}</mat-label>
                 <input type="number" matInput required formControlName="amount">
                 <mat-error *ngIf="debits.at(i).controls.amount.hasError('required')">
-                  {{"labels.inputs.Debit Amount" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
+                  {{"labels.inputs.Debit Amount" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
                 </mat-error>
               </mat-form-field>
 
@@ -90,14 +90,14 @@
             <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroupName]="i">
 
               <mat-form-field fxFlex="48%">
-                <mat-label>{{"labels.inputs.Affected GL Entry (Credit)" |translate}}</mat-label>
+                <mat-label>{{"labels.inputs.Affected GL Entry (Credit)" | translate}}</mat-label>
                 <mat-select required formControlName="glAccountId">
                   <mat-option *ngFor="let affectedGLEntryCredit of creditAccountData" [value]="affectedGLEntryCredit.id">
                     {{ affectedGLEntryCredit.name }}
                   </mat-option>
                 </mat-select>
                 <mat-error *ngIf="credits.at(i).controls.glAccountId.hasError('required')">
-                  {{"labels.inputs.Affected GL Entry (Credit)" |translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
+                  {{"labels.inputs.Affected GL Entry (Credit)" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
                 </mat-error>
               </mat-form-field>
 
@@ -105,7 +105,7 @@
                 <mat-label>{{"labels.inputs.Credit Amount"|translate}}</mat-label>
                 <input type="number" matInput required formControlName="amount">
                 <mat-error *ngIf="credits.at(i).controls.amount.hasError('required')">
-                  {{"labels.inputs.Credit Amount"|translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
+                  {{"labels.inputs.Credit Amount"|translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
                 </mat-error>
               </mat-form-field>
 
@@ -133,7 +133,7 @@
             <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionDatePicker></mat-datepicker>
             <mat-error *ngIf="frequentPostingsForm.controls.transactionDate.hasError('required')">
-              {{"labels.inputs.Transaction Date"|translate}} {{ "labels.commons.is" | translate }} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Transaction Date"|translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -181,7 +181,7 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">{{ "labels.buttons.Cancel" | translate}}</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">{{"labels.buttons.Cancel" | translate}}</button>
         <button mat-raised-button color="primary" [disabled]="!frequentPostingsForm.valid" *mifosxHasPermission="'CREATE_JOURNALENTRY'">{{"labels.buttons.Submit" | translate}}</button>
       </mat-card-actions>
 

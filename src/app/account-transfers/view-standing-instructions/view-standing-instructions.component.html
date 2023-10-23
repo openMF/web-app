@@ -4,7 +4,7 @@
    {{"labels.buttons.Edit" | translate}}
   </button>
   <button mat-raised-button color="primary" [routerLink]="['../', 'list-account-transactions']" *mifosxHasPermission="'READ_ACCOUNTTRANSFER'">
-    {{ "labels.buttons.View Transactions History" | translate}}
+    {{"labels.buttons.View Transactions History" | translate}}
   </button>
 </div>
 
@@ -26,12 +26,12 @@
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{ "labels.inputs.Type" | translate}}:</span>
+          <span fxFlex="40%">{{"labels.inputs.Type" | translate}}:</span>
           <span fxFlex="60%">{{ standingInstructionsData.transferType.value }}</span>
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{  "labels.inputs.Priority"| translate}}:</span>
+          <span fxFlex="40%">{{  "labels.inputs.Priority" | translate}}:</span>
           <span fxFlex="60%">{{ standingInstructionsData.priority.value }}</span>
         </div>
 
@@ -41,7 +41,7 @@
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{"labels.inputs.From Account Type"| translate}}:</span>
+          <span fxFlex="40%">{{"labels.inputs.From Account Type" | translate}}:</span>
           <span fxFlex="60%">{{ standingInstructionsData.fromAccountType.value }}</span>
         </div>
 
@@ -51,20 +51,20 @@
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{"labels.inputs.Destination"| translate}}:</span>
+          <span fxFlex="40%">{{"labels.inputs.Destination" | translate}}:</span>
           <span fxFlex="60%">
-            <span *ngIf="allowclientedit"> {{ "labels.inputs.Within Bank"| translate}} </span>
-            <span *ngIf="!allowclientedit"> {{ "labels.inputs.Own Account"| translate}} </span>
+            <span *ngIf="allowclientedit"> {{"labels.inputs.Within Bank" | translate}} </span>
+            <span *ngIf="!allowclientedit"> {{"labels.inputs.Own Account" | translate}} </span>
           </span>
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{"labels.inputs.To Office"| translate}}:</span>
+          <span fxFlex="40%">{{"labels.inputs.To Office" | translate}}:</span>
           <span fxFlex="60%">{{ standingInstructionsData.toOffice.name }}</span>
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{ "labels.inputs.Beneficiary"| translate}}:</span>
+          <span fxFlex="40%">{{"labels.inputs.Beneficiary" | translate}}:</span>
           <span fxFlex="60%">{{ standingInstructionsData.toClient.displayName }}</span>
         </div>
 
@@ -79,7 +79,7 @@
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{ "labels.inputs.Standing Instruction Type" | translate}}:</span>
+          <span fxFlex="40%">{{"labels.inputs.Standing Instruction Type" | translate}}:</span>
           <span fxFlex="60%">{{ standingInstructionsData.instructionType.value }}</span>
         </div>
 
@@ -90,7 +90,7 @@
 
         <div fxFlexFill>
           <span fxFlex="40%">{{"labels.inputs.Validity" | translate}}:</span>
-          <span fxFlex="60%">{{ standingInstructionsData.validFrom  | dateFormat }} - {{ standingInstructionsData.validTill  | dateFormat }}</span>
+          <span fxFlex="60%">{{ standingInstructionsData.validFrom | dateFormat }} - {{ standingInstructionsData.validTill | dateFormat }}</span>
         </div>
 
         <div fxFlexFill>
@@ -110,7 +110,7 @@
 
         <div fxFlexFill>
           <span fxFlex="40%">{{"labels.inputs.On Month Day" | translate}}:</span>
-          <span fxFlex="60%">{{ standingInstructionsData.recurrenceOnMonthDay  | dateFormat }}</span>
+          <span fxFlex="60%">{{ standingInstructionsData.recurrenceOnMonthDay | dateFormat }}</span>
         </div>
 
       </div>
