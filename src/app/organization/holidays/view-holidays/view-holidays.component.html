@@ -2,16 +2,16 @@
     <span *mifosxHasPermission="'ACTIVATE_HOLIDAY'">
     <button mat-raised-button color="accent" (click)="activateHoliday()" *ngIf="holidayData.status.value !== 'Active'">
       <fa-icon icon="lock-open" class="m-r-10"></fa-icon>
-      Activate
+      {{'labels.buttons.Activate' | translate }}
     </button>
   </span>
     <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_HOLIDAY'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    Edit
+    {{'labels.buttons.Edit' | translate }}
   </button>
     <button mat-raised-button color="warn" (click)="deleteHoliday()" *mifosxHasPermission="'DELETE_HOLIDAY'">
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    Delete
+    {{'labels.buttons.Delete' | translate }}
   </button>
 </div>
 
@@ -24,7 +24,7 @@
             <div fxLayout="row wrap" class="content">
 
                 <div fxFlex="50%" class="header">
-                    Name
+                    {{ 'labels.inputs.Name' | translate }}
                 </div>
 
                 <div fxFlex="50%">
@@ -32,31 +32,31 @@
                 </div>
 
                 <div fxFlex="50%" class="header">
-                    From Date
+                    {{ 'labels.inputs.From Date' | translate }}
                 </div>
 
                 <div fxFlex="50%">
-                    {{ holidayData.fromDate  | dateFormat }}
+                    {{ holidayData.fromDate | dateFormat }}
                 </div>
 
                 <div fxFlex="50%" class="header">
-                    To Date
+                    {{ 'labels.inputs.To Date' | translate }}
                 </div>
 
                 <div fxFlex="50%">
-                    {{ holidayData.toDate  | dateFormat }}
+                    {{ holidayData.toDate | dateFormat }}
                 </div>
 
                 <div fxFlex="50%" class="header">
-                    Repayments Scheduled To
+                    {{ 'labels.inputs.Repayments Scheduled To' | translate }}
                 </div>
 
                 <div fxFlex="50%" *ngIf="holidayData.repaymentsRescheduledTo !== undefined && holidayData.repaymentsRescheduledTo !== null">
-                    {{ holidayData.repaymentsRescheduledTo  | dateFormat }}
+                    {{ holidayData.repaymentsRescheduledTo | dateFormat }}
                 </div>
 
                 <div fxFlex="50%" *ngIf="holidayData.repaymentsRescheduledTo === undefined || holidayData.repaymentsRescheduledTo === null">
-                    Next Repayment Date
+                    {{ 'labels.inputs.Next Repayment Date' | translate }}
                 </div>
 
             </div>

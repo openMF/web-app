@@ -5,9 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 /** Routing Imports */
 import { Route } from '../core/route/route.service';
 
-/** Translation Imports */
-import { extract } from '../core/i18n/i18n.service';
-
 /** Custom Components */
 import { SettingsComponent } from './settings.component';
 
@@ -17,7 +14,7 @@ const routes: Routes = [
     {
       path: 'settings',
       component: SettingsComponent,
-      data: { title: extract('Settings'), breadcrumb: 'Settings' }
+      data: { title: 'Settings', breadcrumb: 'Settings' }
     }
   ])
 ];

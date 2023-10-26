@@ -9,34 +9,34 @@
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Entity</mat-label>
+            <mat-label>{{'labels.inputs.Entity' | translate}}</mat-label>
             <mat-select required formControlName="entity">
               <mat-option *ngFor="let entity of createTemplateData.entities" [value]="entity.id">
                 {{ entity.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="templateForm.controls.entity.hasError('required')">
-              Entity is <strong>required</strong>
+              {{'labels.inputs.Entity' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Type</mat-label>
+            <mat-label>{{'labels.inputs.Type' | translate}}</mat-label>
             <mat-select required formControlName="type">
               <mat-option *ngFor="let type of createTemplateData.types" [value]="type.id">
                 {{ type.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="templateForm.controls.type.hasError('required')">
-              Type is <strong>required</strong>
+              {{'labels.inputs.Type' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Name</mat-label>
+            <mat-label>{{'labels.inputs.name' | translate}}</mat-label>
             <input matInput required formControlName="name">
             <mat-error *ngIf="templateForm.controls.name.hasError('required')">
-              Name is <strong>required</strong>
+              {{'labels.inputs.name' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -48,7 +48,8 @@
 
     <div role="toggle" fxFlex="13%">
 
-      <button mat-raised-button color="primary" (click)="showAdvanceOptions = !showAdvanceOptions">Advance Options</button>
+      <button mat-raised-button color="primary" (click)="showAdvanceOptions = !showAdvanceOptions">
+        {{'labels.buttons.Advance Options' | translate}}</button>
 
     </div>
 
@@ -57,20 +58,20 @@
       <div *ngFor="let mapper of mappers; index as i" fxLayout="row" fxLayoutGap="2%">
 
         <mat-form-field fxFlex="43%">
-          <mat-label>Mapper Key</mat-label>
+          <mat-label>{{'labels.inputs.Mapper Key' | translate}}</mat-label>
           <input matInput [formControl]="mapper.mapperskey">
         </mat-form-field>
 
         <mat-form-field fxFlex="43%">
-          <mat-label>Mapper Value</mat-label>
+          <mat-label>{{'labels.inputs.Mapper Value' | translate}}</mat-label>
           <input matInput [formControl]="mapper.mappersvalue">
         </mat-form-field>
 
         <button *ngIf="i === 0" class="mapper-button" fxFlex="8%" mat-raised-button color="primary" (click)="addMapper()">
-          <fa-icon icon="plus" class="m-r-10"></fa-icon>Add
+          <fa-icon icon="plus" class="m-r-10"></fa-icon>{{'labels.buttons.Add' | translate}}
         </button>
         <button *ngIf="!(i === 0)" class="mapper-button" fxFlex="9%" mat-raised-button color="primary" (click)="removeMapper(i)">
-          <fa-icon icon="minus" class="m-r-10"></fa-icon>Remove
+          <fa-icon icon="minus" class="m-r-10"></fa-icon>{{'labels.buttons.Remove' | translate}}
         </button>
 
       </div>
@@ -91,7 +92,7 @@
 
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Client Parameters
+              {{'labels.inputs.Client Parameters' | translate}}
             </mat-panel-title>
           </mat-expansion-panel-header>
 
@@ -108,7 +109,7 @@
 
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Loan Parameters
+              {{'labels.inputs.Loan Parameters' | translate}}
             </mat-panel-title>
           </mat-expansion-panel-header>
 
@@ -125,7 +126,7 @@
 
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Repayment Schedule Parameters
+              {{'labels.inputs.Repayment Schedule Parameters' | translate}}
             </mat-panel-title>
           </mat-expansion-panel-header>
 
@@ -143,8 +144,8 @@
     </div>
 
     <mat-card-actions class="m-b-20" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-      <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-      <button mat-raised-button color="primary" (click)="submit()">Submit</button>
+      <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate}}</button>
+      <button mat-raised-button color="primary" (click)="submit()">{{'labels.buttons.Submit' | translate}}</button>
     </mat-card-actions>
 
   </mat-card>

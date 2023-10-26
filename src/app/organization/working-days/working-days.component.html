@@ -9,7 +9,7 @@
         <div #workingDaysFormRef fxLayout="column">
 
           <div fxLayout="row" fxLayout.lt-md="column">
-            <mat-label fxFlex="50%" class="mat-h4">Working Days</mat-label>
+            <mat-label fxFlex="50%" class="mat-h4">{{ 'labels.inputs.Working Days' | translate }}</mat-label>
             <div fxFlex="50%" fxLayout="column" formArrayName="recurrence">
               <div *ngFor="let day of recurrence.controls; let i = index;">
                 <mat-checkbox labelPosition="after" [formControlName]="i">
@@ -20,7 +20,7 @@
           </div>
 
           <mat-form-field>
-            <mat-label>Payments due on non working days</mat-label>
+            <mat-label>{{ 'labels.inputs.Payments due on non working days' | translate }}</mat-label>
             <mat-select formControlName="repaymentRescheduleType">
               <mat-option *ngFor="let repaymentRescheduleType of repaymentRescheduleTypeData" [value]="repaymentRescheduleType.id">
                 {{ repaymentRescheduleType.value }}
@@ -29,7 +29,7 @@
           </mat-form-field>
 
           <mat-checkbox labelPosition="before" formControlName="extendTermForDailyRepayments">
-            Extend the term for loans following a daily repayment schedule
+            {{ 'labels.inputs.Loans daily repayment schedule' | translate }}
           </mat-checkbox>
 
         </div>
@@ -37,8 +37,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="workingDaysForm.pristine" *mifosxHasPermission="'UPDATE_WORKINGDAYS'">Submit</button>
+        <button mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Cancel' | translate }}</button>
+        <button mat-raised-button color="primary" [disabled]="workingDaysForm.pristine" *mifosxHasPermission="'UPDATE_WORKINGDAYS'">{{ 'labels.buttons.Submit' | translate }}</button>
       </mat-card-actions>
 
     </form>
@@ -48,12 +48,12 @@
 </div>
 
 <ng-template #templateWorkingDaysFormRef let-data let-popover="popover">
-  <h2>Working Days</h2>
-  <p class="mw400">Click (Define Working Days) to define working days. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/90243212/Working+Days" target="_blank">Working Days</a></p>
+  <h2>{{ 'labels.heading.Working Days' | translate }}</h2>
+  <p class="mw400">{{ 'labels.text.Click (Define Working Days)' | translate }}: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/90243212/Working+Days" target="_blank">{{ 'labels.inputs.Working Days' | translate }}</a></p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close()">Define Working Days</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next Step</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{ 'labels.buttons.Close' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close()">{{ 'labels.buttons.Define Working Days' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{ 'labels.buttons.Back' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{ 'labels.buttons.Next Step' | translate }}</button>
   </div>
 </ng-template>

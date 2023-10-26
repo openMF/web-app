@@ -2,9 +2,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-/** Translation Imports */
-import { extract } from 'app/core/i18n/i18n.service';
-
 /** Custom Components */
 import { FixedDepositAccountViewComponent } from './fixed-deposit-account-view/fixed-deposit-account-view.component';
 import { InterestRateChartTabComponent } from './fixed-deposit-account-view/interest-rate-chart-tab/interest-rate-chart-tab.component';
@@ -29,11 +26,11 @@ import { FixedDepositsAccountAndTemplateResolver } from './common-resolvers/fixe
 const routes: Routes = [
   {
     path: '',
-    data: { title: extract('All Fixed Deposits'), breadcrumb: 'Fixed Deposits', routeParamBreadcrumb: false },
+    data: { title: 'All Fixed Deposits', breadcrumb: 'Fixed Deposits', routeParamBreadcrumb: false },
     children: [
       {
         path: 'create',
-        data: { title: extract('Create Fixed Deposit Account'), breadcrumb: 'Create Fixed Deposit Account' },
+        data: { title: 'Create Fixed Deposit Account', breadcrumb: 'Create Fixed Deposit Account' },
         component: CreateFixedDepositAccountComponent,
         resolve: {
           fixedDepositsAccountTemplate: FixedDepositsAccountTemplateResolver
@@ -41,7 +38,7 @@ const routes: Routes = [
       },
       {
         path: ':fixedDepositAccountId',
-        data: { title: extract('Fixed Deposit Account View'), routeParamBreadcrumb: 'fixedDepositAccountId' },
+        data: { title: 'Fixed Deposit Account View', routeParamBreadcrumb: 'fixedDepositAccountId' },
         resolve: {
           fixedDepositsAccountData: FixedDepositsAccountViewResolver,
         },
@@ -62,22 +59,22 @@ const routes: Routes = [
               {
                 path: 'interest-rate-chart',
                 component: InterestRateChartTabComponent,
-                data: { title: extract('Fixed Deposit Account Interest Rate Chart'), breadcrumb: 'Interest Rate Chart', routeParamBreadcrumb: false },
+                data: { title: 'Fixed Deposit Account Interest Rate Chart', breadcrumb: 'Interest Rate Chart', routeParamBreadcrumb: false },
               },
               {
                 path: 'transactions',
                 component: TransactionsTabComponent,
-                data: { title: extract('Fixed Deposit Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+                data: { title: 'Fixed Deposit Account Transactions', breadcrumb: 'Transactions', routeParamBreadcrumb: false },
               },
               {
                 path: 'charges',
                 component: ChargesTabComponent,
-                data: { title: extract('Fixed Deposit Account Charges'), breadcrumb: 'Charges', routeParamBreadcrumb: false }
+                data: { title: 'Fixed Deposit Account Charges', breadcrumb: 'Charges', routeParamBreadcrumb: false }
               },
               {
                 path: 'standing-instructions',
                 component: StandingInstructionsTabComponent,
-                data: { title: extract('Fixed Deposit Account Standing Instructions'), breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false }
+                data: { title: 'Fixed Deposit Account Standing Instructions', breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false }
               },
               {
                 path: 'datatables',
@@ -85,7 +82,7 @@ const routes: Routes = [
                   {
                     path: ':datatableName',
                     component: DatatableTabsComponent,
-                    data: { title: extract('View Data Table'), routeParamBreadcrumb: 'datatableName' },
+                    data: { title: 'View Data Table', routeParamBreadcrumb: 'datatableName' },
                     resolve: {
                       savingsDatatable: SavingsDatatableResolver
                     }
@@ -96,7 +93,7 @@ const routes: Routes = [
           },
           {
             path: 'edit',
-            data: { title: extract('Edit Fixed Deposit Account'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+            data: { title: 'Edit Fixed Deposit Account', breadcrumb: 'Edit', routeParamBreadcrumb: false },
             component: EditFixedDepositAccountComponent,
             resolve: {
               fixedDepositsAccountAndTemplate: FixedDepositsAccountAndTemplateResolver
@@ -104,7 +101,7 @@ const routes: Routes = [
           },
           {
             path: 'transactions',
-            data: { title: extract('Fixed Deposits Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+            data: { title: 'Fixed Deposits Account Transactions', breadcrumb: 'Transactions', routeParamBreadcrumb: false },
             children: [
               {
                 path: '',
@@ -131,7 +128,7 @@ const routes: Routes = [
           },
           {
             path: 'actions/:name',
-            data: { title: extract('Fixed Deposits Account Actions'), routeParamBreadcrumb: 'name' },
+            data: { title: 'Fixed Deposits Account Actions', routeParamBreadcrumb: 'name' },
             component: FixedDepositsAccountActionsComponent,
             resolve: {
               fixedDepositsAccountActionData: FixedDepositsAccountActionsResolver

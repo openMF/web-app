@@ -9,14 +9,14 @@
 
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Main Configuration
+          {{'labels.inputs.Main Configuration' | translate}}
         </mat-panel-title>
       </mat-expansion-panel-header>
 
       <div fxLayout="column">
 
         <mat-form-field>
-          <mat-label>Default Language</mat-label>
+          <mat-label>{{'labels.inputs.Default Language' | translate}}</mat-label>
           <mat-select [formControl]="language" [compareWith]="compareOptions">
             <mat-option *ngFor="let language of languages" [value]="language">
               {{ language.name }}
@@ -25,7 +25,7 @@
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Default Date Format</mat-label>
+          <mat-label>{{'labels.inputs.Default Date Format' | translate}}</mat-label>
           <mat-select [formControl]="dateFormat">
             <mat-option *ngFor="let dateFormat of dateFormats" [value]="dateFormat">
               {{ dateFormat }}
@@ -34,7 +34,7 @@
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Decimals to Display</mat-label>
+          <mat-label>{{'labels.inputs.Decimals to Display' | translate}}</mat-label>
           <mat-select [formControl]="decimalsToDisplay">
             <mat-option *ngFor="let decimalOpt of decimals" [value]="decimalOpt">
               {{ decimalOpt }}
@@ -50,22 +50,22 @@
 
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Images
+          {{'labels.inputs.Images' | translate}}
         </mat-panel-title>
       </mat-expansion-panel-header>
 
       <div fxLayout="column">
 
-        <span class="header">Favicon</span>
+        <span class="header">{{'labels.inputs.Favicon' | translate}}</span>
         <mifosx-file-upload></mifosx-file-upload>
 
-        <span class="header">Cover Image</span>
+        <span class="header">{{'labels.inputs.Cover Image' | translate}}</span>
         <mifosx-file-upload></mifosx-file-upload>
 
-        <span class="header">Logo</span>
+        <span class="header">{{'labels.inputs.Logo' | translate}}</span>
         <mifosx-file-upload></mifosx-file-upload>
 
-        <span class="header">Logo with Organization Name</span>
+        <span class="header">{{'labels.inputs.Logo with Organization Name' | translate}}</span>
         <mifosx-file-upload></mifosx-file-upload>
 
       </div>
@@ -76,17 +76,17 @@
 
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Theme and Font
+          {{'labels.inputs.Theme and Font' | translate}}
         </mat-panel-title>
       </mat-expansion-panel-header>
 
       <div fxLayout="column">
 
-        <span class="header">Theme</span>
+        <span class="header">{{'labels.inputs.Theme' | translate}}</span>
         <mifosx-theme-picker></mifosx-theme-picker>
 
         <mat-form-field>
-          <mat-label>Default Font</mat-label>
+          <mat-label>{{'labels.inputs.Default Font' | translate}}</mat-label>
           <mat-select>
             <mat-option *ngFor="let font of fonts" [value]="font">
               {{ font }}
@@ -102,24 +102,24 @@
 
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Contact Information
+          {{'labels.inputs.Contact Information' | translate}}
         </mat-panel-title>
       </mat-expansion-panel-header>
 
       <div fxLayout="column">
 
         <mat-form-field>
-          <mat-label>Website</mat-label>
+          <mat-label>{{'labels.inputs.Website' | translate}}</mat-label>
           <input type="url" matInput>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Email</mat-label>
+          <mat-label>{{'labels.inputs.Email' | translate}}</mat-label>
           <input type="email" matInput>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Contact No</mat-label>
+          <mat-label>{{'labels.inputs.Contact No' | translate}}</mat-label>
           <input type="tel" matInput>
         </mat-form-field>
 

@@ -5,9 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 /** Routing Imports */
 import { Route } from '../core/route/route.service';
 
-/** Translation Imports */
-import { extract } from '../core/i18n/i18n.service';
-
 /** Custom Components */
 import { NotificationsPageComponent } from './notifications-page/notifications-page.component';
 
@@ -20,7 +17,7 @@ const routes: Routes = [
     {
       path: 'notifications',
       component: NotificationsPageComponent,
-      data: { title: extract('Notifications'), breadcrumb: 'Notifications' },
+      data: { title: 'Notifications', breadcrumb: 'Notifications' },
       resolve: {
         notifications: NotificationsResolver
       }

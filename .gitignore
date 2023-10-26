@@ -49,7 +49,6 @@ testem.log
 /typings
 /reports
 /src/translations/template.*
-package-lock.json
 
 # System Files
 .DS_Store

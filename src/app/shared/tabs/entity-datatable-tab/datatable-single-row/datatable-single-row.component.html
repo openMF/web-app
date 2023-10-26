@@ -2,13 +2,13 @@
   <h3>{{datatableName}}</h3>
   <div fxLayout="row" fxLayoutAlign="flex-end" class="m-b-20">
     <button mat-raised-button color="primary" (click)="add()" *ngIf="!dataObject.data[0]">
-      <fa-icon icon="plus" class="m-r-10"></fa-icon>Add
+      <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="edit()" *ngIf="dataObject.data[0]">
-      <fa-icon icon="edit" class="m-r-10"></fa-icon>Edit
+      <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
     </button>
     <button class="delete-button" mat-raised-button color="warn" (click)="delete()" *ngIf="dataObject.data[0]">
-      <fa-icon icon="trash" class="m-r-10"></fa-icon>Delete
+      <fa-icon icon="trash" class="m-r-10"></fa-icon>{{ 'labels.buttons.Delete' | translate }}
     </button>
   </div>
 
@@ -37,7 +37,7 @@
         </span>
         <span *ngSwitchDefault>
           <span class="m-r-5" *ngIf="isValidUrl(dataObject.data[0].row[i])">
-            <button mat-icon-button matTooltip="View Link" (click)="openSite(dataObject.data[0].row[i])"
+            <button mat-icon-button matTooltip="{{ 'tooltips.View Link' | translate }}" (click)="openSite(dataObject.data[0].row[i])"
               matTooltipPosition="right" class="small-icon">
               <fa-icon icon="eye" size="lg"></fa-icon>
             </button>

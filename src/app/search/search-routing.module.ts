@@ -5,9 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 /** Routing Imports */
 import { Route } from '../core/route/route.service';
 
-/** Translation Imports */
-import { extract } from '../core/i18n/i18n.service';
-
 /** Custom Components */
 import { SearchPageComponent } from './search-page/search-page.component';
 
@@ -20,7 +17,7 @@ const routes: Routes = [
     {
       path: 'search',
       component: SearchPageComponent,
-      data: { title: extract('Search'), breadcrumb: 'Search' },
+      data: { title: 'Search', breadcrumb: 'Search' },
       runGuardsAndResolvers: 'paramsOrQueryParamsChange',
       resolve: {
         searchResults: SearchResolver

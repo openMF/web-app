@@ -11,6 +11,7 @@ import { Breadcrumb } from './breadcrumb.model';
 /** Custom Services */
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Route data property to generate breadcrumb using a static string.
@@ -68,7 +69,8 @@ export class BreadcrumbComponent implements OnInit, AfterViewInit {
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) {
+              private popoverService: PopoverService,
+              private translateService: TranslateService) {
     this.generateBreadcrumbs();
   }
 
@@ -226,6 +228,13 @@ export class BreadcrumbComponent implements OnInit, AfterViewInit {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate(['/home']);
+  }
+
+  getTranslate(text: string): any {
+    const key: string = 'labels.text.' + text;
+    const translation = this.translateService.instant(key);
+    const result = (translation !== key) ? translation : text;
+    return result;
   }
 
 }

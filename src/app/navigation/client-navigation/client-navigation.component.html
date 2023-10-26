@@ -12,7 +12,7 @@
       </mat-card-title>
       <mat-card-subtitle>
         <p>
-          {{"labels.inputs.Account No" | translate }}: {{ clientData.accountNo }} {{ clientData.externalId ? '| External ID: ' + clientData.externalId : '' }}
+          {{"labels.inputs.Account No" | translate}}: {{ clientData.accountNo }} {{ clientData.externalId ? '| External ID: ' + clientData.externalId : '' }}
         </p>
       </mat-card-subtitle>
     </div>
@@ -27,7 +27,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.firstName">
-          {{"labels.inputs.First Name" | translate }}
+          {{"labels.inputs.First Name" | translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="clientData.firstName">
@@ -35,7 +35,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.middleName">
-          {{"labels.inputs.Middle Name" | translate }}
+          {{"labels.inputs.Middle Name" | translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="clientData.middleName">
@@ -43,7 +43,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.lastName">
-          {{"labels.inputs.Last Name" | translate }}
+          {{"labels.inputs.Last Name" | translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="clientData.lastName">
@@ -51,15 +51,15 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.dateOfBirth">
-          {{"labels.inputs.Date of Birth" | translate }}
+          {{"labels.inputs.Date of Birth" | translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="clientData.dateOfBirth">
-          {{ clientData.dateOfBirth  | dateFormat }}
+          {{ clientData.dateOfBirth | dateFormat }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.mobileNo">
-          {{"labels.inputs.Mobile Number" | translate }}
+          {{"labels.inputs.Mobile Number" | translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="clientData.mobileNo">
@@ -67,15 +67,15 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Activation Date" | translate }}
+          {{"labels.inputs.Activation Date" | translate}}
         </div>
 
         <div fxFlex="50%">
-          {{ clientData.activationDate  | dateFormat }}
+          {{ clientData.activationDate | dateFormat }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.officeName">
-          {{"labels.inputs.Associated Office" | translate }}
+          {{"labels.inputs.Associated Office" | translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="clientData.officeName">
@@ -83,7 +83,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.staffName">
-          {{"labels.inputs.Associated Staff" | translate }}
+          {{"labels.inputs.Associated Staff" | translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="clientData.staffName">

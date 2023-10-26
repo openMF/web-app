@@ -3,7 +3,7 @@
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Interest Compounding Period</mat-label>
+      <mat-label>{{"labels.inputs.Interest Compounding Period" | translate }}</mat-label>
       <mat-select formControlName="interestCompoundingPeriodType" required>
         <mat-option *ngFor="let interestCompoundingPeriodType of interestCompoundingPeriodTypeData"
           [value]="interestCompoundingPeriodType.id">
@@ -11,12 +11,12 @@
         </mat-option>
       </mat-select>
       <mat-error>
-        Interest Compounding Period is <strong>required</strong>
+        {{"labels.inputs.Interest Compounding Period" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Interest Posting Period</mat-label>
+      <mat-label>{{"labels.inputs.Interest Posting Period" | translate }}</mat-label>
       <mat-select formControlName="interestPostingPeriodType" required>
         <mat-option *ngFor="let interestPostingPeriodType of interestPostingPeriodTypeData"
           [value]="interestPostingPeriodType.id">
@@ -24,12 +24,12 @@
         </mat-option>
       </mat-select>
       <mat-error>
-        Interest Posting Period is <strong>required</strong>
+        {{"labels.inputs.Interest Posting Period" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Interest Calculated using</mat-label>
+      <mat-label>{{"labels.inputs.Interest Calculated using" | translate }}</mat-label>
       <mat-select formControlName="interestCalculationType" required>
         <mat-option *ngFor="let interestCalculationType of interestCalculationTypeData"
           [value]="interestCalculationType.id">
@@ -37,12 +37,12 @@
         </mat-option>
       </mat-select>
       <mat-error>
-        Interest Calculated using is <strong>required</strong>
+        {{"labels.inputs.Interest Calculated using" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Days in Year</mat-label>
+      <mat-label>{{"labels.inputs.Days in Year" | translate }}</mat-label>
       <mat-select formControlName="interestCalculationDaysInYearType" required>
         <mat-option *ngFor="let interestCalculationDaysInYearType of interestCalculationDaysInYearTypeData"
           [value]="interestCalculationDaysInYearType.id">
@@ -50,7 +50,7 @@
         </mat-option>
       </mat-select>
       <mat-error>
-        Days in Year is <strong>required</strong>
+        {{"labels.inputs.Days in Year" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
       </mat-error>
     </mat-form-field>
 
@@ -59,10 +59,10 @@
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-      Previous
+      {{"labels.buttons.Previous" | translate }}
     </button>
     <button mat-raised-button matStepperNext>
-      Next
+      {{"labels.buttons.Next" | translate }}
       <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
     </button>
   </div>

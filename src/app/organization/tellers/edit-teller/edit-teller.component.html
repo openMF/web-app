@@ -9,18 +9,18 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Teller Name</mat-label>
+            <mat-label>{{ 'labels.inputs.Teller Name' | translate }}</mat-label>
             <input matInput required formControlName="name">
             <mat-error *ngIf="tellerForm.controls.name.hasError('required')">
-              Teller Name is <strong>required</strong>
+              {{ 'labels.inputs.Teller Name' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
             </mat-error>
             <mat-error *ngIf="tellerForm.controls.name.hasError('pattern')">
-              Teller Name <strong>cannot</strong> begin with a special character or number
+              {{ 'labels.inputs.Teller Name' | translate }} <strong>{{'labels.commons.cannot' | translate }}</strong> {{'labels.commons.begin with a special character or number' | translate }}
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Office</mat-label>
+            <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <mat-select formControlName="officeId">
               <mat-option *ngFor="let office of officeData" [value]="office.id">
                 {{ office.name }}
@@ -29,37 +29,37 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Description</mat-label>
+            <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
             <input matInput formControlName="description">
           </mat-form-field>
 
           <mat-form-field (click)="startDatePicker.open()">
-            <mat-label>Start Date</mat-label>
+            <mat-label>{{ 'labels.inputs.Start Date' | translate }}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="startDatePicker" required
               formControlName="startDate">
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
             <mat-error *ngIf="tellerForm.controls.startDate.hasError('required')">
-              Start Date is <strong>required</strong>
+              {{ 'labels.inputs.Start Date' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field (click)="endDatePicker.open()">
-            <mat-label>End Date</mat-label>
+            <mat-label>{{ 'labels.inputs.End Date' | translate }}</mat-label>
             <input matInput [min]="tellerForm.value.startDate" [max]="maxDate" [matDatepicker]="endDatePicker" formControlName="endDate">
             <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #endDatePicker></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Status</mat-label>
+            <mat-label>{{ 'labels.inputs.Status' | translate }}</mat-label>
             <mat-select required formControlName="status">
               <mat-option *ngFor="let tellerStatus of tellerStatusesData" [value]="tellerStatus.id">
                 {{ tellerStatus.value }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="tellerForm.controls.status.hasError('required')">
-              Status is <strong>required</strong>
+              {{ 'labels.inputs.Status' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -68,9 +68,9 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Cancel' | translate }}</button>
         <button mat-raised-button color="primary" [disabled]="!tellerForm.valid"
-          *mifosxHasPermission="'UPDATE_TELLER'">Submit</button>
+          *mifosxHasPermission="'UPDATE_TELLER'">{{ 'labels.buttons.Submit' | translate }}</button>
       </mat-card-actions>
 
     </form>

@@ -5,9 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 /** Routing Imports */
 import { Route } from '../core/route/route.service';
 
-/** Translation Imports */
-import { extract } from '../core/i18n/i18n.service';
-
 /** Custom Components */
 import { SelfServiceComponent } from './self-service.component';
 import { UsersComponent } from './users/users.component';
@@ -28,11 +25,11 @@ const routes: Routes = [
     {
       path: 'self-service',
       component: SelfServiceComponent,
-      data: { title: extract('Self Service'), breadcrumb: 'Self Service', addBreadcrumbLink: false },
+      data: { title: 'Self Service', breadcrumb: 'Self Service', addBreadcrumbLink: false },
       children: [
         {
           path: 'users',
-          data: { title: extract('Self Service Users'), breadcrumb: 'Users' },
+          data: { title: 'Self Service Users', breadcrumb: 'Users' },
           children: [
             {
               path: '',
@@ -44,14 +41,14 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateUserComponent,
-              data: { title: extract('Create Self Service User'), breadcrumb: 'Create' },
+              data: { title: 'Create Self Service User', breadcrumb: 'Create' },
               resolve: {
                 offices: OfficesResolver
               }
             },
             {
               path: 'view/:id',
-              data: { title: extract('View Self Service User'), routeResolveBreadcrumb: ['user', 'username'] },
+              data: { title: 'View Self Service User', routeResolveBreadcrumb: ['user', 'username'] },
               resolve: {
                 user: ViewUserResolver
               },
@@ -63,7 +60,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditUserComponent,
-                  data: { title: extract('Edit Self Service User'), breadcrumb: 'Edit', routeResolveBreadcrumb: false }
+                  data: { title: 'Edit Self Service User', breadcrumb: 'Edit', routeResolveBreadcrumb: false }
                 }
               ]
             }
@@ -72,12 +69,12 @@ const routes: Routes = [
         {
           path: 'app-configuration',
           component: AppConfigurationComponent,
-          data: { title: extract('Self Service App Configuration'), breadcrumb: 'App Configuration' }
+          data: { title: 'Self Service App Configuration', breadcrumb: 'App Configuration' }
         },
         {
           path: 'task-management',
           component: TaskManagementComponent,
-          data: { title: extract('Self Service Task Management'), breadcrumb: 'Task Management' }
+          data: { title: 'Self Service Task Management', breadcrumb: 'Task Management' }
         }
       ]
     }

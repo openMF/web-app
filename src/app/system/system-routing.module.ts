@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 /** Routing Imports */
 import { Routes, RouterModule } from '@angular/router';
 import { Route } from '../core/route/route.service';
-import { extract } from '../core/i18n/i18n.service';
 
 /** Component Imports */
 import { SystemComponent } from './system.component';
@@ -94,7 +93,7 @@ const routes: Routes = [
   Route.withShell([
     {
       path: 'system',
-      data: { title: extract('System'), breadcrumb: 'System' },
+      data: { title: 'System', breadcrumb: 'System' },
       children: [
         {
           path: '',
@@ -102,7 +101,7 @@ const routes: Routes = [
         },
         {
           path: 'codes',
-          data: { title: extract('View Codes'), breadcrumb: 'Codes' },
+          data: { title: 'View Codes', breadcrumb: 'Codes' },
           children: [
             {
               path: '',
@@ -114,11 +113,11 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateCodeComponent,
-              data: { title: extract('Create Code'), breadcrumb: 'Create' }
+              data: { title: 'Create Code', breadcrumb: 'Create' }
             },
             {
               path: ':id',
-              data: { title: extract('View Code'), routeParamBreadcrumb: 'id' },
+              data: { title: 'View Code', routeParamBreadcrumb: 'id' },
               children: [
                 {
                   path: '',
@@ -131,7 +130,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditCodeComponent,
-                  data: { title: extract('Edit Code'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Code', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     code: CodeResolver
                   }
@@ -142,7 +141,7 @@ const routes: Routes = [
         },
         {
           path: 'external-events',
-          data: { title: extract('Manage External Events'), breadcrumb: 'Manage External Events' },
+          data: { title: 'Manage External Events', breadcrumb: 'Manage External Events' },
           children: [
             {
               path: '',
@@ -156,14 +155,14 @@ const routes: Routes = [
         {
           path: 'entity-to-entity-mapping',
           component: EntityToEntityMappingComponent,
-          data: { title: extract('Entity to Entity Mapping'), breadcrumb: 'Entity to Entity Mapping' },
+          data: { title: 'Entity to Entity Mapping', breadcrumb: 'Entity to Entity Mapping' },
           resolve: {
             entityMappings: EntityToEntityMappingResolver
           }
         },
         {
           path: 'external-services',
-          data: { title: extract('External Services'), breadcrumb: 'External Services' },
+          data: { title: 'External Services', breadcrumb: 'External Services' },
           children: [
             {
               path: '',
@@ -171,7 +170,7 @@ const routes: Routes = [
             },
             {
               path: 'amazon-s3',
-              data: { title: extract('View Amazon S3 Configuration'), breadcrumb: 'Amazon S3' },
+              data: { title: 'View Amazon S3 Configuration', breadcrumb: 'Amazon S3' },
               children: [
                 {
                   path: '',
@@ -183,7 +182,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditAmazonS3Component,
-                  data: { title: extract('Edit Amazon S3 Configuration'), breadcrumb: 'Edit' },
+                  data: { title: 'Edit Amazon S3 Configuration', breadcrumb: 'Edit' },
                   resolve: {
                     amazonS3Configuration: AmazonS3ConfigurationResolver
                   }
@@ -192,7 +191,7 @@ const routes: Routes = [
             },
             {
               path: 'email',
-              data: { title: extract('View Email Configuration'), breadcrumb: 'Email' },
+              data: { title: 'View Email Configuration', breadcrumb: 'Email' },
               children: [
                 {
                   path: '',
@@ -204,7 +203,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditEmailComponent,
-                  data: { title: extract('Edit Email Configuration'), breadcrumb: 'Edit' },
+                  data: { title: 'Edit Email Configuration', breadcrumb: 'Edit' },
                   resolve: {
                     emailConfiguration: EmailConfigurationResolver
                   }
@@ -213,7 +212,7 @@ const routes: Routes = [
             },
             {
               path: 'sms',
-              data: { title: extract('View SMS Configuration'), breadcrumb: 'SMS' },
+              data: { title: 'View SMS Configuration', breadcrumb: 'SMS' },
               children: [
                 {
                   path: '',
@@ -224,7 +223,7 @@ const routes: Routes = [
                 },
                 {
                   path: 'edit',
-                  data: { title: extract('Edit SMS Configuration'), breadcrumb: 'Edit' },
+                  data: { title: 'Edit SMS Configuration', breadcrumb: 'Edit' },
                   component: EditSMSComponent,
                   resolve: {
                     smsConfiguration: SMSConfigurationResolver
@@ -234,7 +233,7 @@ const routes: Routes = [
             },
             {
               path: 'notification',
-              data: { title: extract('View Notification Configuration'), breadcrumb: 'Notification' },
+              data: { title: 'View Notification Configuration', breadcrumb: 'Notification' },
               children: [
                 {
                   path: '',
@@ -246,7 +245,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditNotificationComponent,
-                  data: { title: extract('Edit Notification Configuration'), breadcrumb: 'Edit' },
+                  data: { title: 'Edit Notification Configuration', breadcrumb: 'Edit' },
                   resolve: {
                     notificationConfiguration: NotificationConfigurationResolver
                   }
@@ -257,7 +256,7 @@ const routes: Routes = [
         },
         {
           path: 'data-tables',
-          data: { title: extract('Manage Data Tables'), breadcrumb: 'Manage Data Tables' },
+          data: { title: 'Manage Data Tables', breadcrumb: 'Manage Data Tables' },
           children: [
             {
               path: '',
@@ -269,14 +268,14 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateDataTableComponent,
-              data: { title: extract('Create Data Table'), breadcrumb: 'Create' },
+              data: { title: 'Create Data Table', breadcrumb: 'Create' },
               resolve: {
                 columnCodes: CodesResolver
               }
             },
             {
               path: ':datatableName',
-              data: { title: extract('View Data Table'), routeParamBreadcrumb: 'datatableName' },
+              data: { title: 'View Data Table', routeParamBreadcrumb: 'datatableName' },
               children: [
                 {
                   path: '',
@@ -288,7 +287,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditDataTableComponent,
-                  data: { title: extract('Edit Data table'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Data table', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     dataTable: DataTableResolver,
                     columnCodes: CodesResolver
@@ -300,7 +299,7 @@ const routes: Routes = [
         },
         {
           path: 'hooks',
-          data: { title: extract('Manage Hooks'), breadcrumb: 'Manage Hooks' },
+          data: { title: 'Manage Hooks', breadcrumb: 'Manage Hooks' },
           children: [
             {
               path: '',
@@ -312,14 +311,14 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateHookComponent,
-              data: { title: extract('Create Hook'), breadcrumb: 'Create' },
+              data: { title: 'Create Hook', breadcrumb: 'Create' },
               resolve: {
                 hooksTemplate: HooksTemplateResolver
               }
             },
             {
               path: ':id',
-              data: { title: extract('View Hook'), routeParamBreadcrumb: 'id' },
+              data: { title: 'View Hook', routeParamBreadcrumb: 'id' },
               children: [
                 {
                   path: '',
@@ -331,7 +330,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditHookComponent,
-                  data: { title: extract('Edit Hook'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Hook', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     hooksTemplate: HooksTemplateResolver,
                     hook: HookResolver
@@ -343,7 +342,7 @@ const routes: Routes = [
         },
         {
           path: 'roles-and-permissions',
-          data: { title: extract('Roles and Permissions'), breadcrumb: 'Roles and Permissions' },
+          data: { title: 'Roles and Permissions', breadcrumb: 'Roles and Permissions' },
           children: [
             {
               path: '',
@@ -355,11 +354,11 @@ const routes: Routes = [
             {
               path: 'add',
               component: AddRoleComponent,
-              data: { title: extract('Add Role'), breadcrumb: 'Add' }
+              data: { title: 'Add Role', breadcrumb: 'Add' }
             },
             {
               path: ':id',
-              data: { title: extract('View Role'), routeParamBreadcrumb: 'id' },
+              data: { title: 'View Role', routeParamBreadcrumb: 'id' },
               runGuardsAndResolvers: 'always',
               children: [
                 {
@@ -372,7 +371,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditRoleComponent,
-                  data: { title: extract('Edit Role'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Role', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     role: ViewRoleResolver,
                   }
@@ -383,7 +382,7 @@ const routes: Routes = [
         },
         {
           path: 'configure-mc-tasks',
-          data: { title: extract('Configure Maker Checker Tasks'), breadcrumb: 'Configure Maker Checker Tasks' },
+          data: { title: 'Configure Maker Checker Tasks', breadcrumb: 'Configure Maker Checker Tasks' },
           component: ConfigureMakerCheckerTasksComponent,
           resolve: {
             permissions: MakerCheckerTasksResolver
@@ -391,7 +390,7 @@ const routes: Routes = [
         },
         {
           path: 'surveys',
-          data: { title: extract('Manage Surveys'), breadcrumb: 'Manage Surveys' },
+          data: { title: 'Manage Surveys', breadcrumb: 'Manage Surveys' },
           children: [
             {
               path: '',
@@ -403,11 +402,11 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateSurveyComponent,
-              data: { title: extract('Create Survey'), breadcrumb: 'Create' },
+              data: { title: 'Create Survey', breadcrumb: 'Create' },
             },
             {
               path: ':id',
-              data: { title: extract('View Survey'), routeParamBreadcrumb: 'id' },
+              data: { title: 'View Survey', routeParamBreadcrumb: 'id' },
               children: [
                 {
                   path: '',
@@ -419,7 +418,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditSurveyComponent,
-                  data: { title: extract('Edit Survey'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Survey', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     survey: SurveyResolver
                   }
@@ -430,7 +429,7 @@ const routes: Routes = [
         },
         {
           path: 'manage-jobs',
-          data: { title: extract('Manage Scheduler and COB Jobs'), breadcrumb: 'Manage Scheduler and COB Jobs' },
+          data: { title: 'Manage Scheduler and COB Jobs', breadcrumb: 'Manage Scheduler and COB Jobs' },
           children: [
             {
               path: '',
@@ -439,7 +438,7 @@ const routes: Routes = [
             },
             {
               path: ':id',
-              data: { title: extract('View Scheduler Job'), routeParamBreadcrumb: 'id' },
+              data: { title: 'View Scheduler Job', routeParamBreadcrumb: 'id' },
               children: [
                 {
                   path: '',
@@ -451,7 +450,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditSchedulerJobComponent,
-                  data: { title: extract('Edit Scheduler Job'), routeParamBreadcrumb: false, breadcrumb: 'Edit' },
+                  data: { title: 'Edit Scheduler Job', routeParamBreadcrumb: false, breadcrumb: 'Edit' },
                   resolve: {
                     jobSelected: ManageSchedulerJobResolver
                   }
@@ -459,7 +458,7 @@ const routes: Routes = [
                 {
                   path: 'viewhistory',
                   component: ViewHistorySchedulerJobComponent,
-                  data: { title: extract('Scheduler Job History'), breadcrumb: 'View History' },
+                  data: { title: 'Scheduler Job History', breadcrumb: 'View History' },
                   resolve: {
                     jobsSchedulerHistory: ViewHistorySchedulerJobsResolver
                   },
@@ -470,7 +469,7 @@ const routes: Routes = [
         },
         {
           path: 'configurations',
-          data: { title: extract('Configurations'), breadcrumb: 'Configurations' },
+          data: { title: 'Configurations', breadcrumb: 'Configurations' },
           children: [
             {
               path: '',
@@ -481,7 +480,7 @@ const routes: Routes = [
             },
             {
               path: ':id/edit',
-              data: { title: extract('Edit Configuration'), routeParamBreadcrumb: 'id' },
+              data: { title: 'Edit Configuration', routeParamBreadcrumb: 'id' },
               component: EditConfigurationComponent,
               resolve: {
                 configuration: GlobalConfigurationResolver
@@ -491,7 +490,7 @@ const routes: Routes = [
         },
         {
           path: 'account-number-preferences',
-          data: { title: extract('Account Number Preferences'), breadcrumb: 'Account Number Preferences' },
+          data: { title: 'Account Number Preferences', breadcrumb: 'Account Number Preferences' },
           children: [
             {
               path: '',
@@ -503,14 +502,14 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateAccountNumberPreferenceComponent,
-              data: { title: extract('Create Account Number Preference'), breadcrumb: 'Create' },
+              data: { title: 'Create Account Number Preference', breadcrumb: 'Create' },
               resolve: {
                 accountNumberPreferencesTemplate: AccountNumberPreferencesTemplateResolver
               }
             },
             {
               path: ':id',
-              data: { title: extract('View Account Number Preference'), routeParamBreadcrumb: 'id' },
+              data: { title: 'View Account Number Preference', routeParamBreadcrumb: 'id' },
               children: [
                 {
                   path: '',
@@ -522,7 +521,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditAccountNumberPreferenceComponent,
-                  data: { title: extract('Edit Account Number Preference'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Account Number Preference', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     accountNumberPreference: AccountNumberPreferenceResolver,
                     accountNumberPreferencesTemplate: AccountNumberPreferencesTemplateResolver
@@ -534,7 +533,7 @@ const routes: Routes = [
         },
         {
           path: 'reports',
-          data: { title: extract('Manage Reports'), breadcrumb: 'Manage Reports' },
+          data: { title: 'Manage Reports', breadcrumb: 'Manage Reports' },
           children: [
             {
               path: '',
@@ -546,14 +545,14 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateReportComponent,
-              data: { title: extract('Create Report'), breadcrumb: 'Create' },
+              data: { title: 'Create Report', breadcrumb: 'Create' },
               resolve: {
                 reportTemplate: ReportTemplateResolver
               }
             },
             {
               path: ':id',
-              data: { title: extract('View Report'), routeParamBreadcrumb: 'id' },
+              data: { title: 'View Report', routeParamBreadcrumb: 'id' },
               children: [
                 {
                   path: '',
@@ -565,7 +564,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditReportComponent,
-                  data: { title: extract('Edit Report'), routeParamBreadcrumb: false, breadcrumb: 'Edit' },
+                  data: { title: 'Edit Report', routeParamBreadcrumb: false, breadcrumb: 'Edit' },
                   resolve: {
                     report: ReportResolver,
                     reportTemplate: ReportTemplateResolver
@@ -577,7 +576,7 @@ const routes: Routes = [
         },
         {
           path: 'audit-trails',
-          data: { title: extract('Audit Trails'), breadcrumb: 'Audit Trails' },
+          data: { title: 'Audit Trails', breadcrumb: 'Audit Trails' },
           children: [
             {
               path: '',
@@ -589,7 +588,7 @@ const routes: Routes = [
             {
               path: ':id',
               component: ViewAuditComponent,
-              data: { title: extract('View Audit'), routeParamBreadcrumb: 'id' },
+              data: { title: 'View Audit', routeParamBreadcrumb: 'id' },
               resolve: {
                 auditTrail: AuditTrailResolver
               }

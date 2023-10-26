@@ -9,32 +9,32 @@
         <div fxLayout="column">
 
           <mat-form-field (click)="closedOnDatePicker.open()">
-            <mat-label>Closed On Date</mat-label>
+            <mat-label>{{'labels.inputs.Closed On Date' | translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closedOnDatePicker" required formControlName="closedOnDate">
             <mat-datepicker-toggle matSuffix [for]="closedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closedOnDatePicker></mat-datepicker>
             <mat-error *ngIf="closeSavingsAccountForm.controls.closedOnDate.hasError('required')">
-              Closed On Date is <strong>required</strong>
+              {{'labels.inputs.Closed On Date' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-checkbox class="m-b-25 m-t-15" formControlName="withdrawBalance">
-            Withdraw Balance
+            {{'labels.inputs.Withdraw Balance' | translate}}
           </mat-checkbox>
 
           <mat-checkbox  formControlName="postInterestValidationOnClosure">
-            Is Interest Posting required on closure date?
+            {{'labels.inputs.Is Interest Posting required on closure date' | translate}}?
           </mat-checkbox>
 
           <div *ngIf="closeSavingsAccountForm.controls['withdrawBalance'].value" fxLayout="column">
 
             <mat-form-field class="m-t-20" *ngIf="closeSavingsAccountForm.controls['amount']">
-              <mat-label>Transaction Amount</mat-label>
+              <mat-label>{{'labels.inputs.Transaction Amount' | translate}}</mat-label>
               <input type="number" required matInput formControlName="amount"/>
             </mat-form-field>
 
             <mat-form-field *ngIf="closeSavingsAccountForm.controls['paymentTypeId']">
-              <mat-label>Payment Type</mat-label>
+              <mat-label>{{'labels.inputs.Payment Type' | translate}}</mat-label>
               <mat-select formControlName="paymentTypeId">
                 <mat-option *ngFor="let paymentType of paymentTypeOptions"
                   [value]="paymentType.id">
@@ -47,41 +47,41 @@
               <span fxFlex="75%" class="expandcollapsebutton m-l-10 m-t-40" (click)="addPaymentDetails()">
                 <mat-slide-toggle>
                   <div [className]="showPaymentDetails ? 'enabled' : 'disabled'">
-                    <span class="m-l-10">Show Payment Details</span>
+                    <span class="m-l-10">{{'labels.inputs.Show Payment Details' | translate}}</span>
                   </div>
                 </mat-slide-toggle>
               </span>
             </div>
 
             <mat-form-field *ngIf="closeSavingsAccountForm.controls['accountNumber']">
-              <mat-label>Account Number</mat-label>
+              <mat-label>{{'labels.inputs.Account Number' | translate}}</mat-label>
               <input type="number" formControlName="accountNumber" matInput />
             </mat-form-field>
 
             <mat-form-field *ngIf="closeSavingsAccountForm.controls['checkNumber']">
-              <mat-label>Cheque</mat-label>
+              <mat-label>{{'labels.inputs.Cheque' | translate}}</mat-label>
               <input type="number" formControlName="checkNumber" matInput />
             </mat-form-field>
 
             <mat-form-field *ngIf="closeSavingsAccountForm.controls['routingCode']">
-              <mat-label>Routing Code</mat-label>
+              <mat-label>{{'labels.inputs.Routing Code' | translate}}</mat-label>
               <input formControlName="routingCode" matInput />
             </mat-form-field>
 
             <mat-form-field *ngIf="closeSavingsAccountForm.controls['receiptNumber']">
-              <mat-label>Receipt Number</mat-label>
+              <mat-label>{{'labels.inputs.Receipt Number' | translate}}</mat-label>
               <input formControlName="receiptNumber" matInput />
             </mat-form-field>
 
             <mat-form-field *ngIf="closeSavingsAccountForm.controls['bankNumber']">
-              <mat-label>Bank</mat-label>
+              <mat-label>{{'labels.inputs.Bank' | translate}}</mat-label>
               <input formControlName="bankNumber" matInput />
             </mat-form-field>
 
           </div>
 
           <mat-form-field>
-            <mat-label>Note</mat-label>
+            <mat-label>{{'labels.inputs.Note' | translate}}</mat-label>
             <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
           </mat-form-field>
 
@@ -90,8 +90,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-        <button mat-raised-button color="warn" [disabled]="!closeSavingsAccountForm.valid">Confirm</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">{{'labels.buttons.Cancel' | translate}}</button>
+        <button mat-raised-button color="warn" [disabled]="!closeSavingsAccountForm.valid">{{'labels.buttons.Confirm' | translate}}</button>
       </mat-card-actions>
 
     </form>

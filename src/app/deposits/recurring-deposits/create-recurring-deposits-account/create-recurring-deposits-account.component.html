@@ -23,7 +23,7 @@
 
     <mat-step [stepControl]="recurringDepositAccountDetailsForm">
 
-      <ng-template matStepLabel>DETAILS</ng-template>
+      <ng-template matStepLabel>{{"labels.inputs.DETAILS" | translate }}</ng-template>
 
       <mifosx-recurring-deposits-account-details-step
         [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
@@ -34,7 +34,7 @@
 
     <mat-step [stepControl]="recurringDepositAccountCurrencyForm">
 
-      <ng-template matStepLabel>CURRENCY</ng-template>
+      <ng-template matStepLabel>{{"labels.inputs.CURRENCY" | translate }}</ng-template>
 
       <mifosx-recurring-deposits-account-currency-step
         [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
@@ -45,7 +45,7 @@
 
     <mat-step [stepControl]="recurringDepositAccountTermsForm">
 
-      <ng-template matStepLabel>TERMS</ng-template>
+      <ng-template matStepLabel>{{"labels.inputs.TERMS" | translate }}</ng-template>
 
       <mifosx-recurring-deposits-account-terms-step
         [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
@@ -56,7 +56,7 @@
 
     <mat-step [stepControl]="recurringDepositAccountSettingsForm">
 
-      <ng-template matStepLabel>SETTINGS</ng-template>
+      <ng-template matStepLabel>{{"labels.inputs.SETTINGS" | translate }}</ng-template>
 
       <mifosx-recurring-deposits-account-settings-step
         [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
@@ -67,7 +67,7 @@
 
     <mat-step>
 
-      <ng-template matStepLabel>INTEREST RATE CHART</ng-template>
+      <ng-template matStepLabel>{{"labels.inputs.INTEREST RATE CHART" | translate }}</ng-template>
 
       <mifosx-recurring-deposits-account-interest-rate-chart-step
         [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
@@ -78,7 +78,7 @@
 
     <mat-step>
 
-      <ng-template matStepLabel>CHARGES</ng-template>
+      <ng-template matStepLabel>{{"labels.inputs.CHARGES" | translate }}</ng-template>
 
       <mifosx-recurring-deposits-account-charges-step
         [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
@@ -91,7 +91,7 @@
 
     <mat-step state="preview" *ngIf="recurringDepositAccountFormValid" completed>
 
-      <ng-template matStepLabel>PREVIEW</ng-template>
+      <ng-template matStepLabel>{{"labels.inputs.PREVIEW" | translate }}</ng-template>
 
       <mifosx-recurring-deposits-account-preview-step
         [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"

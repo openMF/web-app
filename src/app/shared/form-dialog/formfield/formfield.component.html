@@ -17,7 +17,7 @@
       </mat-select>
 
       <mat-error *ngIf="form.controls[formfield.controlName].hasError('required')">
-        {{ formfield.label }} is <strong>required</strong>
+        {{ formfield.label }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
       </mat-error>
 
     </mat-form-field>
@@ -31,7 +31,7 @@
     <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
     <mat-datepicker #datePicker></mat-datepicker>
     <mat-error *ngIf="form.controls[formfield.controlName].hasError('required')">
-      {{ formfield.label }} is <strong>required</strong>
+      {{ formfield.label }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
     </mat-error>
   </mat-form-field>
 
@@ -42,7 +42,7 @@
     <mat-datepicker-toggle matSuffix [for]="datetimePicker"></mat-datepicker-toggle>
     <ngx-mat-datetime-picker #datetimePicker [enableMeridian]="true"></ngx-mat-datetime-picker>
     <mat-error *ngIf="form.controls[formfield.controlName].hasError('required')">
-      {{ formfield.label }} is <strong>required</strong>
+      {{ formfield.label }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
     </mat-error>
   </mat-form-field>
 

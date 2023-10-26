@@ -2,9 +2,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-/** Translation Imports */
-import { extract } from '../core/i18n/i18n.service';
-
 /** Custom Components */
 import { ViewStandingInstructionsComponent } from './view-standing-instructions/view-standing-instructions.component';
 import { EditStandingInstructionsComponent } from './edit-standing-instructions/edit-standing-instructions.component';
@@ -29,7 +26,7 @@ const routes: Routes = [
     children: [
       {
         path: 'create-standing-instructions',
-        data: { title: extract('Create Standing Instructions'), breadcrumb: 'Create Standing Instructions', routeParamBreadcrumb: 'Create Standing Instructions' },
+        data: { title: 'Create Standing Instructions', breadcrumb: 'Create Standing Instructions', routeParamBreadcrumb: 'Create Standing Instructions' },
         component: CreateStandingInstructionsComponent,
         resolve: {
           standingIntructionsTemplate: StandingInstructionsTemplateResolver
@@ -37,7 +34,7 @@ const routes: Routes = [
       },
       {
         path: 'make-account-transfer',
-        data: { title: extract('Account Transfer'), breadcrumb: 'Account Transfer', routeParamBreadcrumb: 'Account Transfer' },
+        data: { title: 'Account Transfer', breadcrumb: 'Account Transfer', routeParamBreadcrumb: 'Account Transfer' },
         component: MakeAccountTransfersComponent,
         resolve: {
           accountTransferTemplate: MakeAccountTransferTemplateResolver
@@ -45,7 +42,7 @@ const routes: Routes = [
       },
       {
         path: 'list-standing-instructions',
-        data: { title: extract('List Standing Instructions'), breadcrumb: 'List Standing Instructions', routeParamBreadcrumb: 'List Standing Instructions' },
+        data: { title: 'List Standing Instructions', breadcrumb: 'List Standing Instructions', routeParamBreadcrumb: 'List Standing Instructions' },
         component: ListStandingInstructionsComponent,
         resolve: {
           standingIntructionsTemplate: StandingInstructionsTemplateResolver
@@ -53,7 +50,7 @@ const routes: Routes = [
       },
       {
         path: 'account-transfers',
-        data: { title: extract('View Account Transfer'), breadcrumb: 'Account Transfers', routeParamBreadcrumb: false },
+        data: { title: 'View Account Transfer', breadcrumb: 'Account Transfers', routeParamBreadcrumb: false },
         children: [
           {
             path: ':transferid',
@@ -67,11 +64,11 @@ const routes: Routes = [
       },
       {
         path: ':standingInstructionsId',
-        data: { title: extract('Standing Instructions'), routeParamBreadcrumb: 'standingInstructionsId' },
+        data: { title: 'Standing Instructions', routeParamBreadcrumb: 'standingInstructionsId' },
         children: [
           {
             path: 'view',
-            data: { title: extract('View Standing Instructions'), breadcrumb: 'view', routeParamBreadcrumb: false },
+            data: { title: 'View Standing Instructions', breadcrumb: 'view', routeParamBreadcrumb: false },
             component: ViewStandingInstructionsComponent,
             resolve: {
               standingInstructionsData: ViewStandingInstructionsResolver,
@@ -79,7 +76,7 @@ const routes: Routes = [
           },
           {
             path: 'edit',
-            data: { title: extract('Edit Standing Instructions'), breadcrumb: 'edit', routeParamBreadcrumb: false },
+            data: { title: 'Edit Standing Instructions', breadcrumb: 'edit', routeParamBreadcrumb: false },
             component: EditStandingInstructionsComponent,
             resolve: {
               standingInstructionsDataAndTemplate: StandingInstructionsDataAndTemplateResolver,
@@ -87,7 +84,7 @@ const routes: Routes = [
           },
           {
             path: 'list-account-transactions',
-            data: { title: extract('List Account Transactions'), breadcrumb: 'List Account Transactions', routeParamBreadcrumb: 'List Account Transactions' },
+            data: { title: 'List Account Transactions', breadcrumb: 'List Account Transactions', routeParamBreadcrumb: 'List Account Transactions' },
             component: ListTransactionsComponent,
             resolve: {
               listTransactionData: ListTransactionsResolver

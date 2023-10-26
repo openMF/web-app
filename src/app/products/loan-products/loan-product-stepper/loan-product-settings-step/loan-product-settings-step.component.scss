@@ -25,5 +25,6 @@ mat-divider {
 }
 
 .by-default {
-  color: $status-approved;
+  color: rgba($status-approved, .7);
+  font-weight: 700;
 }

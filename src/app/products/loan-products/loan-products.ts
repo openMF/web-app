@@ -7,7 +7,10 @@ import { GlobalConfiguration } from 'app/system/configurations/global-configurat
 })
 export class LoanProducts {
 
-  globalConfigurations: string[] = ['days-before-repayment-is-due', 'days-after-repayment-is-overdue'];
+  public static DAYS_BEFORE_REPAYMENT_IS_DUE = 'days-before-repayment-is-due';
+  public static DAYS_AFTER_REPAYMENT_IS_OVERDUE = 'days-after-repayment-is-overdue';
+
+  globalConfigurations: string[] = [LoanProducts.DAYS_BEFORE_REPAYMENT_IS_DUE, LoanProducts.DAYS_AFTER_REPAYMENT_IS_OVERDUE];
   propertyNames: string[] = ['dueDaysForRepaymentEvent', 'overDueDaysForRepaymentEvent'];
 
   constructor(private settingsService: SettingsService) { }
@@ -68,6 +71,10 @@ export class LoanProducts {
 
   public isItemByDefault(propertyName: string): boolean {
     return (this.propertyNames.includes(propertyName));
+  }
+
+  public isGlobalConfigurations(propertyName: string): boolean {
+    return (this.globalConfigurations.includes(propertyName));
   }
 
   private resolvePropertyName(configName: string): string {

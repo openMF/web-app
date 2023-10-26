@@ -5,9 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 /** Routing Imports */
 import { Route } from '../core/route/route.service';
 
-/** Translation Imports */
-import { extract } from '../core/i18n/i18n.service';
-
 /** Custom Imports */
 import { GroupsComponent } from './groups.component';
 import { GroupsViewComponent } from './groups-view/groups-view.component';
@@ -38,7 +35,7 @@ const routes: Routes = [
   Route.withShell([
     {
       path: 'groups',
-      data: { title: extract('Groups'), breadcrumb: 'Groups', routeParamBreadcrumb: false },
+      data: { title: 'Groups', breadcrumb: 'Groups', routeParamBreadcrumb: false },
       children: [
         {
           path: '',
@@ -47,14 +44,14 @@ const routes: Routes = [
         {
           path: 'create',
           component: CreateGroupComponent,
-          data: { title: extract('Create Group'), breadcrumb: 'Create', routeParamBreadcrumb: false },
+          data: { title: 'Create Group', breadcrumb: 'Create', routeParamBreadcrumb: false },
           resolve: {
             offices: OfficesResolver
           }
         },
         {
           path: ':groupId',
-          data: { title: extract('View Group'), routeParamBreadcrumb: 'groupId' },
+          data: { title: 'View Group', routeParamBreadcrumb: 'groupId' },
           resolve: {
             groupViewData: GroupViewResolver
           },
@@ -75,7 +72,7 @@ const routes: Routes = [
                 {
                   path: 'general',
                   component: GeneralTabComponent,
-                  data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false },
+                  data: { title: 'General', breadcrumb: 'General', routeParamBreadcrumb: false },
                   resolve: {
                     groupAccountsData: GroupAccountsResolver,
                     groupSummary: GroupSummaryResolver,
@@ -86,7 +83,7 @@ const routes: Routes = [
                 {
                   path: 'notes',
                   component: NotesTabComponent,
-                  data: { title: extract('Notes'), breadcrumb: 'Notes', routeParamBreadcrumb: false },
+                  data: { title: 'Notes', breadcrumb: 'Notes', routeParamBreadcrumb: false },
                   resolve: {
                     groupNotes: GroupNotesResolver
                   }
@@ -94,7 +91,7 @@ const routes: Routes = [
                 {
                   path: 'committee',
                   component: CommitteeTabComponent,
-                  data: { title: extract('Committee'), breadcrumb: 'Committee', routeParamBreadcrumb: false }
+                  data: { title: 'Committee', breadcrumb: 'Committee', routeParamBreadcrumb: false }
                 },
                 {
                   path: 'datatables',
@@ -102,7 +99,7 @@ const routes: Routes = [
                     {
                       path: ':datatableName',
                       component: DatatableTabsComponent,
-                      data: { title: extract('View Data Table'), routeParamBreadcrumb: 'datatableName' },
+                      data: { title: 'View Data Table', routeParamBreadcrumb: 'datatableName' },
                       resolve: {
                         groupDatatable: GroupDatatableResolver
                       }
@@ -114,7 +111,7 @@ const routes: Routes = [
             {
               path: 'edit',
               component: EditGroupComponent,
-              data: { title: extract('Edit Group'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+              data: { title: 'Edit Group', breadcrumb: 'Edit', routeParamBreadcrumb: false },
               resolve: {
                 groupAndTemplateData: GroupDataAndTemplateResolver,
                 groupViewData: GroupViewResolver
@@ -129,7 +126,7 @@ const routes: Routes = [
                 },
                 {
                   path: 'add-role',
-                  data: { title: extract('Add Role'), breadcrumb: 'Add Role', routeParamBreadcrumb: false },
+                  data: { title: 'Add Role', breadcrumb: 'Add Role', routeParamBreadcrumb: false },
                   component: AddRoleComponent,
                   resolve: {
                     groupAndTemplateData: GroupDataAndTemplateResolver
@@ -139,7 +136,7 @@ const routes: Routes = [
             },
             {
               path: 'actions/:action',
-              data: { title: extract('Group Actions'), breadcrumb: 'action', routeParamBreadcrumb: 'action' },
+              data: { title: 'Group Actions', breadcrumb: 'action', routeParamBreadcrumb: 'action' },
               component: GroupActionsComponent,
               resolve: {
                 groupActionData: GroupActionsResolver

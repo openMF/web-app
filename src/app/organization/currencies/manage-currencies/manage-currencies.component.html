@@ -8,14 +8,14 @@
         fxFlex="48%" (ngSubmit)="addCurrency()">
 
         <mat-form-field fxFlex="calc(90%-20px)">
-            <mat-label>Currency</mat-label>
+            <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
             <mat-select required formControlName="currency">
               <mat-option *ngFor="let currency of currencyData" [value]="currency">
                 {{ currency.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="currencyForm.controls.currency.hasError('required')">
-              Currency is <strong>required</strong>
+              {{ 'labels.inputs.Currency' | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
         </mat-form-field>
 
@@ -49,12 +49,12 @@
 </div>
 
 <ng-template #templateCurrencyFormRef let-popover="popover">
-  <h4>Add Currency Form</h4>
-  <p class="mw400">This form will be used to add currency. To add currency click on add currency and fill the form and then click add else click back or next. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141734/Currency+Configuration" target="_blank">Currency Configuration</a></p>
+  <h4>{{'labels.heading.Add Currency Form' | translate }}</h4>
+  <p class="mw400">{{ 'labels.text.Used to add currency' | translate }}: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141734/Currency+Configuration" target="_blank">{{ 'labels.inputs.Currency Configuration' | translate }}</a></p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();">Add Currency</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();">{{"labels.buttons.Add Currency' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{"labels.buttons.Back' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{"labels.buttons.Next' | translate }}</button>
   </div>
 </ng-template>

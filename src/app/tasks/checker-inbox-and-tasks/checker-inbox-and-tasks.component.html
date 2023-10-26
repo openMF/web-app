@@ -7,23 +7,23 @@
       <nav mat-tab-nav-bar class="navigation-tabs">
         <a mat-tab-link [routerLink]="['./checker-inbox']" routerLinkActive #checkerInbox="routerLinkActive"
         [active]="checkerInbox.isActive" *mifosxHasPermission="'ALL_FUNCTIONS_READ'">
-          Checker Inbox
+        {{'labels.inputs.Checker Inbox' | translate}}
         </a>
         <a mat-tab-link [routerLink]="['./client-approval']" routerLinkActive #clientApproval="routerLinkActive"
           [active]="clientApproval.isActive" *mifosxHasPermission="'READ_CLIENT'">
-          Client Approval
+          {{'labels.inputs.Client Approval' | translate}}
         </a>
         <a mat-tab-link [routerLink]="['./loan-approval']" routerLinkActive #loanApproval="routerLinkActive"
           [active]="loanApproval.isActive" *mifosxHasPermission="'READ_LOAN'">
-          Loan Approval
+          {{'labels.inputs.Loan Approval' | translate}}
         </a>
         <a mat-tab-link [routerLink]="['./loan-disbursal']" routerLinkActive #loanDisbursal="routerLinkActive"
           [active]="loanDisbursal.isActive" *mifosxHasPermission="'READ_LOAN'">
-          Loan Disbursal
+          {{'labels.inputs.Loan Disbursal' | translate}}
         </a>
         <a mat-tab-link [routerLink]="['./reschedule-loan']" routerLinkActive #rescheduleLoan="routerLinkActive"
           [active]="rescheduleLoan.isActive" *mifosxHasPermission="'RESCHEDULE_LOAN'">
-          Reschedule Loan
+          {{'labels.inputs.Reschedule Loan' | translate}}
         </a>
       </nav>
 
