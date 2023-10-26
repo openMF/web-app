@@ -9,54 +9,55 @@
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Office</mat-label>
+            <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <input matInput required autofocus [value]="cashierTemplate.officeName" disabled>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Teller Name</mat-label>
+            <mat-label>{{ 'labels.inputs.Teller Name' | translate }}</mat-label>
             <input matInput required autofocus [value]="cashierTemplate.tellerName" disabled>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Cashier</mat-label>
+            <mat-label>{{ 'labels.inputs.Cashier' | translate }}</mat-label>
             <mat-select formControlName="staffId">
               <mat-option *ngFor="let staff of cashierTemplate.staffOptions" [value]="staff.id">
                 {{ staff.displayName }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createCashierForm.controls.staffId.hasError('required')">
-              Cashier <strong>is required</strong>
+              {{ 'labels.inputs.Cashier' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Description/Notes</mat-label>
+            <mat-label>{{ 'labels.inputs.Description/Notes' | translate }}</mat-label>
             <input matInput autofocus formControlName="description">
           </mat-form-field>
 
           <mat-form-field fxFlex="48%" (click)="fromDatePicker.open()">
-            <mat-label>From</mat-label>
+            <mat-label>{{ 'labels.inputs.From' | translate }}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fromDatePicker" required formControlName="startDate">
             <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #fromDatePicker></mat-datepicker>
             <mat-error *ngIf="createCashierForm.controls.startDate.hasError('required')">
-              From Date <strong>is required</strong>
+              {{ 'labels.inputs.From Date' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%" (click)="toDatePicker.open()">
-            <mat-label>To</mat-label>
-            <input matInput [min]="createCashierForm.value.startDate" [max]="maxDate" [matDatepicker]="toDatePicker" required formControlName="endDate">            <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+            <mat-label>{{ 'labels.inputs.To' | translate }}</mat-label>
+            <input matInput [min]="createCashierForm.value.startDate" [max]="maxDate" [matDatepicker]="toDatePicker" required formControlName="endDate">            
+            <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #toDatePicker></mat-datepicker>
             <mat-error *ngIf="createCashierForm.controls.endDate.hasError('required')">
-              To Date <strong>is required</strong>
+              {{ 'labels.inputs.To Date' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <div fxFlex="48%" class="space">
             <mat-checkbox labelPosition="before" formControlName="isFullDay">
-              Full Day?
+              {{ 'labels.inputs.Full Day' | translate }}?
             </mat-checkbox>
           </div>
 
@@ -65,8 +66,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!createCashierForm.valid" *mifosxHasPermission="'UPDATECASHIERALLOCATION_TELLER'">Submit</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Cancel' | translate }}</button>
+        <button mat-raised-button color="primary" [disabled]="!createCashierForm.valid" *mifosxHasPermission="'UPDATECASHIERALLOCATION_TELLER'">{{ 'labels.buttons.Submit' | translate }}</button>
       </mat-card-actions>
 
     </form>

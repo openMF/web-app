@@ -9,60 +9,60 @@
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Office</mat-label>
+            <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <input matInput required formControlName="office">
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Teller Name</mat-label>
+            <mat-label>{{ 'labels.inputs.Teller Name' | translate }}</mat-label>
             <input matInput required formControlName="tellerName">
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Cashier</mat-label>
+            <mat-label>{{ 'labels.inputs.Cashier' | translate }}</mat-label>
             <input matInput required formControlName="cashier">
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Assignment Period</mat-label>
+            <mat-label>{{ 'labels.inputs.Assignment Period' | translate }}</mat-label>
             <input matInput formControlName="assignmentPeriod">
           </mat-form-field>
 
           <mat-form-field fxFlex="48%" (click)="cashDatePicker.open()">
-            <mat-label>Date</mat-label>
+            <mat-label>{{ 'labels.inputs.Date' | translate }}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="cashDatePicker" required formControlName="txnDate">
             <mat-datepicker-toggle matSuffix [for]="cashDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #cashDatePicker></mat-datepicker>
             <mat-error *ngIf="settleCashForm.controls.txnDate.hasError('required')">
-              Date <strong>is required</strong>
+              {{ 'labels.inputs.Date' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Currency</mat-label>
+            <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
             <mat-select required formControlName="currencyCode">
               <mat-option *ngFor="let currency of cashierData.currencyOptions" [value]="currency.code">
                 {{ currency.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="settleCashForm.controls.currencyCode.hasError('required')">
-              Currency <strong>is required</strong>
+              {{ 'labels.inputs.Currency' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Amount</mat-label>
+            <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
             <input matInput required formControlName="txnAmount">
             <mat-error *ngIf="settleCashForm.controls.txnAmount.hasError('required')">
-              Amount <strong>is required</strong>
+              {{ 'labels.inputs.Amount' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Notes/Comments</mat-label>
+            <mat-label>{{ 'labels.inputs.Notes/Comments' | translate }}</mat-label>
             <input matInput required formControlName="txnNote">
             <mat-error *ngIf="settleCashForm.controls.txnNote.hasError('required')">
-              Notes/Comments <strong>is required</strong>
+              {{ 'labels.inputs.Notes/Comments' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -71,8 +71,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!settleCashForm.valid" *mifosxHasPermission="'SETTLECASHFROMCASHIER_TELLER'">Settle Cash</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Cancel' | translate }}</button>
+        <button mat-raised-button color="primary" [disabled]="!settleCashForm.valid" *mifosxHasPermission="'SETTLECASHFROMCASHIER_TELLER'">{{ 'labels.buttons.Settle Cash' | translate }}</button>
       </mat-card-actions>
 
     </form>

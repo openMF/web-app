@@ -143,6 +143,8 @@ export class SavingsAccountViewComponent implements OnInit {
       case 'Add Charge':
       case 'Hold Amount':
       case 'Block Account':
+      case 'Block Deposit':
+      case 'Block Withdrawal':
       case 'Unassign Staff':
       case 'Withdraw By Client':
       case 'Apply Annual Fees':
@@ -174,7 +176,9 @@ export class SavingsAccountViewComponent implements OnInit {
         this.router.navigate(['transfer-funds/make-account-transfer'], { relativeTo: this.route, queryParams: queryParams });
         break;
       case 'Unblock Account':
-        this.unblockSavingsAccount();
+      case 'Unblock Deposit':
+      case 'Unblock Withdrawal':
+        this.unblockSavingsAccount(name);
         break;
     }
   }
@@ -260,13 +264,20 @@ export class SavingsAccountViewComponent implements OnInit {
   /**
    * Unblock Savings Account.
    */
-  private unblockSavingsAccount() {
+  private unblockSavingsAccount(action: string) {
     const unblockSavingsAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Unblock Savings Account', dialogContext: 'Are you sure you want Unblock this Savings Account' }
+      data: { heading: 'Savings Account', dialogContext: 'Are you sure you want ' + action + ' this Savings Account' }
     });
+    let command = 'unblock';
+    if (action === 'Unblock Deposit') {
+      command = 'unblockCredit';
+    }
+    if (action === 'Unblock Withdrawal') {
+      command = 'unblockDebit';
+    }
     unblockSavingsAccountDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
-        this.savingsService.executeSavingsAccountCommand(this.savingsAccountData.id, 'unblock', { })
+        this.savingsService.executeSavingsAccountCommand(this.savingsAccountData.id, command, { })
           .subscribe(() => {
             this.reload();
           });

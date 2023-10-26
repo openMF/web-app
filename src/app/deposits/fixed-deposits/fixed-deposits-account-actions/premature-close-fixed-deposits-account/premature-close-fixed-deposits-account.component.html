@@ -9,51 +9,51 @@
         <div fxLayout="column">
 
           <mat-form-field (click)="closedOnDatePicker.open()">
-            <mat-label>Premature Close Date</mat-label>
+            <mat-label>{{"labels.inputs.Premature Close Date" | translate }}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closedOnDatePicker" required formControlName="closedOnDate">
             <mat-datepicker-toggle matSuffix [for]="closedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closedOnDatePicker></mat-datepicker>
             <mat-error *ngIf="prematureCloseAccountForm.controls.closedOnDate.hasError('required')">
-              Premature Close Date is <strong>required</strong>
+              {{"labels.inputs.Premature Close Date" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field *ngIf="prematureCloseAccountForm.controls.maturityAmount">
-            <mat-label>Maturity Amount</mat-label>
+            <mat-label>{{"labels.inputs.Maturity Amount" | translate }}</mat-label>
             <input type="number" matInput formControlName="maturityAmount"/>
           </mat-form-field>
 
           <mat-form-field *ngIf="prematureCloseAccountForm.contains('onAccountClosureId')">
-            <mat-label>Action</mat-label>
+            <mat-label>{{"labels.inputs.Action" | translate }}</mat-label>
             <mat-select required formControlName="onAccountClosureId">
               <mat-option *ngFor="let closureOption of onAccountClosureOptions" [value]="closureOption.id">
                 {{ closureOption.value }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="prematureCloseAccountForm.controls.onAccountClosureId.hasError('required')">
-              Account action is <strong>required</strong>
+              {{"labels.inputs.Account action" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field *ngIf="prematureCloseAccountForm.contains('toSavingsAccountId')">
-            <mat-label>Transfer to Savings</mat-label>
+            <mat-label>{{"labels.inputs.Transfer to Savings" | translate }}</mat-label>
             <mat-select required formControlName="toSavingsAccountId">
               <mat-option *ngFor="let account of savingsAccountsData" [value]="account.id">
                 {{ account.accountNo }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="prematureCloseAccountForm.controls.toSavingsAccountId.hasError('required')">
-              Transfer to savings account is <strong>required</strong>
+              {{"labels.inputs.Transfer to savings account" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field *ngIf="prematureCloseAccountForm.contains('transferDescription')">
-            <mat-label>Transfer Description</mat-label>
+            <mat-label>{{"labels.inputs.Transfer Description" | translate }}</mat-label>
             <input matInput formControlName="transferDescription"/>
           </mat-form-field>
 
           <mat-form-field *ngIf="prematureCloseAccountForm.contains('note')">
-            <mat-label>Note</mat-label>
+            <mat-label>{{"labels.inputs.Note" | translate }}</mat-label>
             <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
           </mat-form-field>
 
@@ -62,8 +62,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-        <button mat-raised-button color="warn" [disabled]="!prematureCloseAccountForm.valid">Confirm</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">{{"labels.buttons.Cancel" | translate }}</button>
+        <button mat-raised-button color="warn" [disabled]="!prematureCloseAccountForm.valid">{{"labels.buttons.Confirm" | translate }}</button>
       </mat-card-actions>
 
     </form>

@@ -7,26 +7,26 @@
       <mat-card-content fxLayout="column">
 
         <mat-form-field (click)="dueDatePicker.open()">
-          <mat-label>Transaction Date</mat-label>
+          <mat-label>{{"labels.inputs.Transaction Date" | translate }}</mat-label>
           <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dueDatePicker"
             formControlName="transactionDate" required>
           <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #dueDatePicker></mat-datepicker>
           <mat-error *ngIf="editTransactionForm.controls.transactionDate.hasError('required')">
-            Transaction Date is <strong>required</strong>
+            {{"labels.inputs.Transaction Date" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
           </mat-error>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Transaction Amount</mat-label>
+          <mat-label>{{"labels.inputs.Transaction Amount" | translate }}</mat-label>
           <input type="number" formControlName="transactionAmount" required matInput />
           <mat-error *ngIf="editTransactionForm.controls.transactionAmount.hasError('required')">
-            Transaction Amount is <strong>required</strong>
+            {{"labels.inputs.Transaction Amount" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
           </mat-error>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Payment Type</mat-label>
+          <mat-label>{{"labels.inputs.Payment Type" | translate }}</mat-label>
           <mat-select formControlName="paymentTypeId">
             <mat-option *ngFor="let paymentType of paymentTypeOptions" [value]="paymentType.id">
               {{ paymentType.name }}
@@ -35,40 +35,40 @@
         </mat-form-field>
 
         <div fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column">
-          <mat-label fxFlexAlign="center">Show Payment Details</mat-label>
+          <mat-label fxFlexAlign="center">{{"labels.inputs.Show Payment Details" | translate }}</mat-label>
           <button type="button" mat-mini-fab color="primary" (click)="addPaymentDetails()">
             <fa-icon [icon]="!addPaymentDetailsFlag ? 'plus-circle' : 'minus-circle'" size="lg"></fa-icon>
           </button>
         </div>
 
         <mat-form-field *ngIf="editTransactionForm.controls['accountNumber']">
-          <mat-label>Account Number</mat-label>
+          <mat-label>{{"labels.inputs.Account Number" | translate }}</mat-label>
           <input type="number" formControlName="accountNumber" matInput />
         </mat-form-field>
 
         <mat-form-field *ngIf="editTransactionForm.controls['checkNumber']">
-          <mat-label>Cheque</mat-label>
+          <mat-label>{{"labels.inputs.Cheque" | translate }}</mat-label>
           <input type="number" formControlName="checkNumber" matInput />
         </mat-form-field>
 
         <mat-form-field *ngIf="editTransactionForm.controls['routingCode']">
-          <mat-label>Routing Code</mat-label>
+          <mat-label>{{"labels.inputs.Routing Code" | translate }}</mat-label>
           <input formControlName="routingCode" matInput />
         </mat-form-field>
 
         <mat-form-field *ngIf="editTransactionForm.controls['receiptNumber']">
-          <mat-label>Receipt Number</mat-label>
+          <mat-label>{{"labels.inputs.Receipt Number" | translate }}</mat-label>
           <input formControlName="receiptNumber" matInput />
         </mat-form-field>
 
         <mat-form-field *ngIf="editTransactionForm.controls['bankNumber']">
-          <mat-label>Bank</mat-label>
+          <mat-label>{{"labels.inputs.Bank" | translate }}</mat-label>
           <input formControlName="bankNumber" matInput />
         </mat-form-field>
 
         <mat-card-actions fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
-          <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-          <button mat-raised-button color="primary" [disabled]="!editTransactionForm.valid">Submit</button>
+          <button type="button" mat-raised-button [routerLink]="['../']">{{"labels.buttons.Cancel" | translate }}</button>
+          <button mat-raised-button color="primary" [disabled]="!editTransactionForm.valid">{{"labels.buttons.Submit" | translate }}</button>
         </mat-card-actions>
 
       </mat-card-content>

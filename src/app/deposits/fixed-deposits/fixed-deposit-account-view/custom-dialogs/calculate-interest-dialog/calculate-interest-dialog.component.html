@@ -1,8 +1,8 @@
-<h1 mat-dialog-title>Calculate Interest</h1>
+<h1 mat-dialog-title>{{"labels.heading.Calculate Interest" | translate }}</h1>
 <div mat-dialog-content>
-  <p>Are you sure you want to calculate interest ?</p>
+  <p>{{"labels.text.Are you sure you want to calculate interest" | translate }} ?</p>
 </div>
 <mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close>Cancel</button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="{ confirm: true }">Confirm</button>
+  <button mat-raised-button mat-dialog-close>{{"labels.buttons.Cancel" | translate }}</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="{ confirm: true }">{{"labels.buttons.Confirm" | translate }}</button>
 </mat-dialog-actions>

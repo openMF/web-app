@@ -3,13 +3,13 @@
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Currency</mat-label>
+      <mat-label>{{"labels.inputs.Currency" | translate }}</mat-label>
       <input type="text" matInput formControlName="currencyCode" matTooltip="Add Currency" matTooltipPosition="above" required>
 
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Decimal Places</mat-label>
+      <mat-label>{{"labels.inputs.Decimal Places" | translate }}</mat-label>
       <input type="number" matInput formControlName="decimalPlaces" required matTooltip="Add Decimal Places" matTooltipPosition="above">
     </mat-form-field>
 
@@ -18,10 +18,10 @@
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-      Previous
+      {{"labels.buttons.Previous" | translate }}
     </button>
     <button mat-raised-button matStepperNext>
-      Next
+      {{"labels.buttons.Next" | translate }}
       <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
     </button>
   </div>

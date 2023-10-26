@@ -1,7 +1,7 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_STAFF'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    Edit
+    {{'labels.buttons.Edit' | translate }}
   </button>
 </div>
 
@@ -14,7 +14,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="mat-body-strong">
-          First Name
+          {{'labels.inputs.First Name' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -22,7 +22,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Last Name
+          {{'labels.inputs.Last Name' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -30,7 +30,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Office
+          {{'labels.inputs.Office' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -38,7 +38,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Is Loan Officer
+          {{'labels.inputs.Is Loan Officer' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -46,7 +46,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="employeeData.mobileNo">
-          Mobile Number for SMS
+          {{'labels.inputs.Mobile Number for SMS' | translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="employeeData.mobileNo">
@@ -54,7 +54,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Status
+          {{'labels.inputs.Status' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -62,7 +62,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Joining Date
+          {{'labels.inputs.Joining Date' | translate }}
         </div>
 
         <div fxFlex="50%">

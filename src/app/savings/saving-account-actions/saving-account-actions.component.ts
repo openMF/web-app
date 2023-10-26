@@ -30,6 +30,10 @@ export class SavingAccountActionsComponent {
     'Hold Amount': boolean
     'Block Account': boolean
     'Unblock Account': boolean
+    'Block Deposit': boolean
+    'Unblock Deposit': boolean
+    'Block Withdrawal': boolean
+    'Unblock Withdrawal': boolean
   } = {
     'Approve': false,
     'Reject': false,
@@ -46,7 +50,11 @@ export class SavingAccountActionsComponent {
     'Apply Annual Fees': false,
     'Hold Amount': false,
     'Block Account': false,
-    'Unblock Account': false
+    'Unblock Account': false,
+    'Block Deposit': false,
+    'Unblock Deposit': false,
+    'Block Withdrawal': false,
+    'Unblock Withdrawal': false
   };
 
   currencyCode: string;
