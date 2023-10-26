@@ -2,9 +2,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-/** Translation Imports */
-import { extract } from '../core/i18n/i18n.service';
-
 /** Custom Components */
 import { SharesAccountViewComponent } from './shares-account-view/shares-account-view.component';
 import { TransactionsTabComponent } from './shares-account-view/transactions-tab/transactions-tab.component';
@@ -24,11 +21,11 @@ import { SharesAccountAndTemplateResolver } from './common-resolvers/share-accou
 const routes: Routes = [
   {
     path: '',
-    data: { title: extract('Shares'), breadcrumb: 'Shares', routeParamBreadcrumb: false },
+    data: { title: 'Shares', breadcrumb: 'Shares', routeParamBreadcrumb: false },
     children: [
       {
         path: 'create',
-        data: { title: extract('Create Shares Account'), breadcrumb: 'Create Shares Account' },
+        data: { title: 'Create Shares Account', breadcrumb: 'Create Shares Account' },
         component: CreateSharesAccountComponent,
         resolve: {
           sharesAccountTemplate: SharesAccountTemplateResolver
@@ -36,7 +33,7 @@ const routes: Routes = [
       },
       {
         path: ':shareAccountId',
-        data: { title: extract('Shares Account View'), routeParamBreadcrumb: 'shareAccountId' },
+        data: { title: 'Shares Account View', routeParamBreadcrumb: 'shareAccountId' },
         children: [
           {
             path: '',
@@ -48,23 +45,23 @@ const routes: Routes = [
               {
                 path: 'transactions',
                 component: TransactionsTabComponent,
-                data: { title: extract('Shares Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false }
+                data: { title: 'Shares Account Transactions', breadcrumb: 'Transactions', routeParamBreadcrumb: false }
               },
               {
                 path: 'charges',
                 component: ChargesTabComponent,
-                data: { title: extract('Shares Account Charges'), breadcrumb: 'Charges', routeParamBreadcrumb: false }
+                data: { title: 'Shares Account Charges', breadcrumb: 'Charges', routeParamBreadcrumb: false }
               },
               {
                 path: 'dividends',
                 component: DividendsTabComponent,
-                data: { title: extract('Shares Account Dividends'), breadcrumb: 'Dividends', routeParamBreadcrumb: false }
+                data: { title: 'Shares Account Dividends', breadcrumb: 'Dividends', routeParamBreadcrumb: false }
               }
             ]
           },
           {
             path: 'edit',
-            data: { title: extract('Edit Shares Account'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+            data: { title: 'Edit Shares Account', breadcrumb: 'Edit', routeParamBreadcrumb: false },
             component: EditSharesAccountComponent,
             resolve: {
               sharesAccountAndTemplate: SharesAccountAndTemplateResolver
@@ -72,7 +69,7 @@ const routes: Routes = [
           },
           {
             path: 'actions/:name',
-            data: { title: extract('Shares Account Actions'), breadcrumb: 'Actions', routeParamBreadcrumb: 'name' },
+            data: { title: 'Shares Account Actions', breadcrumb: 'Actions', routeParamBreadcrumb: 'name' },
             component: SharesAccountActionsComponent,
             resolve: {
               shareAccountActionData: ShareAccountActionsResolver

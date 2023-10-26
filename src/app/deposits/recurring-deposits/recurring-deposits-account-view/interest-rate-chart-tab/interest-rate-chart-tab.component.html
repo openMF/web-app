@@ -2,7 +2,7 @@
 
   <div fxLayoutAlign="start">
     <div class="m-b-20">
-      <h3>All Interest Rates</h3>
+      <h3>{{"labels.heading.All Interest Rates" | translate }}</h3>
     </div>
   </div>
 
@@ -11,38 +11,38 @@
     <table mat-table [dataSource]="interestRateChartData" #chartsTable multiTemplateDataRows>
 
       <ng-container matColumnDef="period">
-        <th mat-header-cell *matHeaderCellDef> Period </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Period" | translate }} </th>
         <td mat-cell *matCellDef="let chartSlab">
           {{chartSlab.fromPeriod}}-{{chartSlab.toPeriod}}&nbsp;{{chartSlab.periodType.value}}</td>
       </ng-container>
 
       <ng-container matColumnDef="amountRange">
-        <th mat-header-cell *matHeaderCellDef> Amount Range </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Amount Range" | translate }} </th>
         <td mat-cell *matCellDef="let chartSlab">{{chartSlab.amountRangeFrom}}-{{chartSlab.amountRangeTo}}</td>
       </ng-container>
 
       <ng-container matColumnDef="interest">
-        <th mat-header-cell *matHeaderCellDef> Interest </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Interest" | translate }} </th>
         <td mat-cell *matCellDef="let chartSlab"> {{ chartSlab.annualInterestRate }} </td>
       </ng-container>
 
       <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef> Description </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Description" | translate }} </th>
         <td mat-cell *matCellDef="let chartSlab"> {{ chartSlab.description }} </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Actions" | translate }} </th>
         <td mat-cell *matCellDef="let chartSlab; let chartSlabIndex = dataIndex">
           <button mat-button color="primary"
             (click)="expandChartSlabIndex = expandChartSlabIndex === chartSlabIndex ? null : chartSlabIndex">
             <span *ngIf="expandChartSlabIndex !== chartSlabIndex">
               <fa-icon icon="eye" class="m-r-10"></fa-icon>
-              View Incentives
+              {{"labels.buttons.View Incentives" | translate }}
             </span>
             <span *ngIf="expandChartSlabIndex === chartSlabIndex">
               <fa-icon icon="eye-slash" class="m-r-10"></fa-icon>
-              Hide Incentives
+              {{"labels.buttons.Hide Incentives" | translate }}
             </span>
           </button>
         </td>
@@ -58,49 +58,49 @@
             <mat-card fxLayout="row wrap" fxFlexFill>
 
               <h4 class="m-b-10" fxFlex="13%">
-                Incentives
+                {{"labels.heading.Incentives" | translate }}
               </h4>
 
               <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="chartSlab.incentives"
                 *ngIf="chartSlab.incentives?.length">
 
                 <ng-container matColumnDef="entityType">
-                  <th mat-header-cell *matHeaderCellDef> Entity Type </th>
+                  <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Entity Type" | translate }} </th>
                   <td mat-cell *matCellDef="let incentive">
                     {{ incentive.entityType.value }}
                   </td>
                 </ng-container>
 
                 <ng-container matColumnDef="attributeName">
-                  <th mat-header-cell *matHeaderCellDef> Attribute Name </th>
+                  <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Attribute Name" | translate }} </th>
                   <td mat-cell *matCellDef="let incentive">
                     {{ incentive.attributeName.value }}
                   </td>
                 </ng-container>
 
                 <ng-container matColumnDef="conditionType">
-                  <th mat-header-cell *matHeaderCellDef> Condition Type </th>
+                  <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Condition Type" | translate }} </th>
                   <td mat-cell *matCellDef="let incentive">
                     {{ incentive.conditionType.value | titlecase }}
                   </td>
                 </ng-container>
 
                 <ng-container matColumnDef="attributeValue">
-                  <th mat-header-cell *matHeaderCellDef> Attribute Value </th>
+                  <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Attribute Value" | translate }} </th>
                   <td mat-cell *matCellDef="let incentive" [ngSwitch]="incentive.attributeName">
                     {{ incentive.attributeValueDesc }}
                   </td>
                 </ng-container>
 
                 <ng-container matColumnDef="incentiveType">
-                  <th mat-header-cell *matHeaderCellDef> Incentive Type </th>
+                  <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Incentive Type" | translate }} </th>
                   <td mat-cell *matCellDef="let incentive">
                     {{ incentive.incentiveType.value }}
                   </td>
                 </ng-container>
 
                 <ng-container matColumnDef="amount">
-                  <th mat-header-cell *matHeaderCellDef> Interest </th>
+                  <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Interest" | translate }} </th>
                   <td mat-cell *matCellDef="let incentive">
                     {{ incentive.amount }}
                   </td>

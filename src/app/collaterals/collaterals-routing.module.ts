@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-/** Translation Imports */
-import { extract } from '../core/i18n/i18n.service';
-
 /** Custom Components */
 import { ViewCollateralComponent } from './view-collateral/view-collateral.component';
 
@@ -14,11 +11,11 @@ import { EditCollateralComponent } from './edit-collateral/edit-collateral.compo
 const routes: Routes = [
   {
     path: '',
-    data: { title: extract('Collateral'), breadcrumb: 'Collateral', routeParamBreadcrumb: false },
+    data: { title: 'Collateral', breadcrumb: 'Collateral', routeParamBreadcrumb: false },
     children: [
       {
         path: ':collateralId',
-        data: { title: extract('Collateral View'), routeParamBreadcrumb: 'collateralId' },
+        data: { title: 'Collateral View', routeParamBreadcrumb: 'collateralId' },
         children: [
           {
             path: '',
@@ -29,7 +26,7 @@ const routes: Routes = [
           },
           {
             path: 'edit',
-            data: { title: extract('edit'), routeParamBreadcrumb: 'edit' },
+            data: { title: 'edit', routeParamBreadcrumb: 'edit' },
             component: EditCollateralComponent,
             resolve: {
               clientCollateralData: ClientCollateralResolver,

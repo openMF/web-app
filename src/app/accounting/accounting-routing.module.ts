@@ -7,9 +7,6 @@ import { Routes, RouterModule } from '@angular/router';
 /** Routing Imports */
 import { Route } from '../core/route/route.service';
 
-/** Translation Imports */
-import { extract } from '../core/i18n/i18n.service';
-
 /** Custom Components */
 import { AccountingComponent } from './accounting.component';
 import { FrequentPostingsComponent } from './frequent-postings/frequent-postings.component';
@@ -71,7 +68,7 @@ const routes: Routes = [
   Route.withShell([
     {
       path: 'accounting',
-      data: { title: extract('Accounting'), breadcrumb: 'Accounting' },
+      data: { title: 'Accounting', breadcrumb: 'Accounting' },
       children: [
         {
           path: '',
@@ -79,7 +76,7 @@ const routes: Routes = [
         },
         {
           path: 'journal-entries',
-          data: { title: extract('Search Journal Entry'), breadcrumb: 'Journal Entries' },
+          data: { title: 'Search Journal Entry', breadcrumb: 'Journal Entries' },
           children: [
             {
               path: '',
@@ -92,7 +89,7 @@ const routes: Routes = [
             {
               path: 'frequent-postings',
               component: FrequentPostingsComponent,
-              data: { title: extract('Frequent Postings'), breadcrumb: 'Frequent Postings' },
+              data: { title: 'Frequent Postings', breadcrumb: 'Frequent Postings' },
               resolve: {
                 offices: OfficesResolver,
                 accountingRules: AccountingRulesAssociationsResolver,
@@ -103,7 +100,7 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateJournalEntryComponent,
-              data: { title: extract('Create Journal Entry'), breadcrumb: 'Create' },
+              data: { title: 'Create Journal Entry', breadcrumb: 'Create' },
               resolve: {
                 offices: OfficesResolver,
                 currencies: CurrenciesResolver,
@@ -113,12 +110,12 @@ const routes: Routes = [
             },
             {
               path: 'transactions',
-              data: { title: extract('Transactions'), breadcrumb: 'Transactions', addBreadcrumbLink: false },
+              data: { title: 'Transactions', breadcrumb: 'Transactions', addBreadcrumbLink: false },
               children: [
                 {
                   path: 'view/:id',
                   component: ViewJournalEntryTransactionComponent,
-                  data: { title: extract('View Transaction'), routeParamBreadcrumb: 'id' },
+                  data: { title: 'View Transaction', routeParamBreadcrumb: 'id' },
                   resolve: {
                     transaction: JournalEntryTransactionResolver
                   }
@@ -129,7 +126,7 @@ const routes: Routes = [
         },
         {
           path: 'financial-activity-mappings',
-          data: { title: extract('Financial Activity Mappings'), breadcrumb: 'Financial Activity Mappings' },
+          data: { title: 'Financial Activity Mappings', breadcrumb: 'Financial Activity Mappings' },
           children: [
             {
               path: '',
@@ -141,14 +138,14 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateFinancialActivityMappingComponent,
-              data: { title: extract('Create Financial Activity Mapping'), breadcrumb: 'Create' },
+              data: { title: 'Create Financial Activity Mapping', breadcrumb: 'Create' },
               resolve: {
                 financialActivityAccountsTemplate: FinancialActivityMappingsTemplateResolver
               }
             },
             {
               path: 'view/:id',
-              data: { title: extract('View Financial Activity Mapping'), routeParamBreadcrumb: 'id' },
+              data: { title: 'View Financial Activity Mapping', routeParamBreadcrumb: 'id' },
               children: [
                 {
                   path: '',
@@ -160,7 +157,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditFinancialActivityMappingComponent,
-                  data: { title: extract('Edit Financial Activity Mapping'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Financial Activity Mapping', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     financialActivityAccountAndTemplate: FinancialActivityMappingAndTemplateResolver
                   }
@@ -172,7 +169,7 @@ const routes: Routes = [
         {
           path: 'migrate-opening-balances',
           component: MigrateOpeningBalancesComponent,
-          data: { title:  extract('Migrate Opening Balances'), breadcrumb: 'Migrate Opening Balances' },
+          data: { title:  'Migrate Opening Balances', breadcrumb: 'Migrate Opening Balances' },
           resolve: {
             offices: OfficesResolver,
             currencies: CurrenciesResolver
@@ -180,7 +177,7 @@ const routes: Routes = [
         },
         {
           path: 'chart-of-accounts',
-          data: { title: extract('Chart of Accounts'), breadcrumb: 'Chart of Accounts' },
+          data: { title: 'Chart of Accounts', breadcrumb: 'Chart of Accounts' },
           children: [
             {
               path: '',
@@ -195,14 +192,14 @@ const routes: Routes = [
                 {
                   path: 'create',
                   component: CreateGlAccountComponent,
-                  data: { title: extract('Create GL Account'), breadcrumb: 'Create GL Account' },
+                  data: { title: 'Create GL Account', breadcrumb: 'Create GL Account' },
                   resolve: {
                     chartOfAccountsTemplate: ChartOfAccountsTemplateResolver
                   }
                 },
                 {
                   path: 'view/:id',
-                  data: { title: extract('View GL Account'), routeResolveBreadcrumb: ['glAccountAndChartOfAccountsTemplate', 'name'] },
+                  data: { title: 'View GL Account', routeResolveBreadcrumb: ['glAccountAndChartOfAccountsTemplate', 'name'] },
                   resolve: {
                     glAccountAndChartOfAccountsTemplate: GlAccountAndChartOfAccountsTemplateResolver
                   },
@@ -215,7 +212,7 @@ const routes: Routes = [
                     {
                       path: 'edit',
                       component: EditGlAccountComponent,
-                      data: { title: extract('Edit GL Account'), breadcrumb: 'Edit', routeResolveBreadcrumb: false }
+                      data: { title: 'Edit GL Account', breadcrumb: 'Edit', routeResolveBreadcrumb: false }
                     }
                   ]
                 }
@@ -225,7 +222,7 @@ const routes: Routes = [
         },
         {
           path: 'closing-entries',
-          data: { title: extract('Accounting Closures'), breadcrumb: 'Closing Entries' },
+          data: { title: 'Accounting Closures', breadcrumb: 'Closing Entries' },
           children: [
             {
               path: '',
@@ -238,14 +235,14 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateClosureComponent,
-              data: { title: extract('Create Accounting Closure'), breadcrumb: 'Create' },
+              data: { title: 'Create Accounting Closure', breadcrumb: 'Create' },
               resolve: {
                 offices: OfficesResolver
               }
             },
             {
               path: 'view/:id',
-              data: { title: extract('View Accounting Closure'), routeParamBreadcrumb: 'id' },
+              data: { title: 'View Accounting Closure', routeParamBreadcrumb: 'id' },
               resolve: {
                 glAccountClosure: ClosingEntryResolver
               },
@@ -258,7 +255,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditClosureComponent,
-                  data: { title: extract('Edit Accounting Closure'), breadcrumb: 'Edit', routeParamBreadcrumb: false }
+                  data: { title: 'Edit Accounting Closure', breadcrumb: 'Edit', routeParamBreadcrumb: false }
                 }
               ]
             }
@@ -266,7 +263,7 @@ const routes: Routes = [
         },
         {
           path: 'accounting-rules',
-          data: { title: extract('Accounting Rules'), breadcrumb: 'Accounting Rules' },
+          data: { title: 'Accounting Rules', breadcrumb: 'Accounting Rules' },
           children: [
             {
               path: '',
@@ -278,14 +275,14 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateRuleComponent,
-              data: { title: extract('Create Accounting Rule'), breadcrumb: 'Create' },
+              data: { title: 'Create Accounting Rule', breadcrumb: 'Create' },
               resolve: {
                 accountingRulesTemplate: AccountingRulesTemplateResolver
               }
             },
             {
               path: 'view/:id',
-              data: { title: extract('View Accounting Rule'), routeResolveBreadcrumb: ['accountingRule', 'name'] },
+              data: { title: 'View Accounting Rule', routeResolveBreadcrumb: ['accountingRule', 'name'] },
               resolve: {
                 accountingRule: AccountingRuleResolver
               },
@@ -298,7 +295,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditRuleComponent,
-                  data: { title: extract('Edit Accounting Rules'), breadcrumb: 'Edit', routeResolveBreadcrumb: false },
+                  data: { title: 'Edit Accounting Rules', breadcrumb: 'Edit', routeResolveBreadcrumb: false },
                   resolve: {
                     accountingRulesTemplate: AccountingRulesTemplateResolver
                   }
@@ -310,11 +307,11 @@ const routes: Routes = [
         {
           path: 'periodic-accruals',
           component: PeriodicAccrualsComponent,
-          data: { title: extract('Periodic Accrual Accounting'), breadcrumb: 'Execute Periodic Accrual Accounting' }
+          data: { title: 'Periodic Accrual Accounting', breadcrumb: 'Execute Periodic Accrual Accounting' }
         },
         {
           path: 'provisioning-entries',
-          data: { title: extract('Provisioning Entries'), breadcrumb: 'Provisioning Entries' },
+          data: { title: 'Provisioning Entries', breadcrumb: 'Provisioning Entries' },
           children: [
             {
               path: '',
@@ -326,12 +323,12 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateProvisioningEntryComponent,
-              data: { title: extract('Create Provisioning Entry'), breadcrumb: 'Create' }
+              data: { title: 'Create Provisioning Entry', breadcrumb: 'Create' }
             },
             {
               path: 'view/:id',
               component: ViewProvisioningEntryComponent,
-              data: { title: extract('View Provisioning Entry'), routeParamBreadcrumb: 'id' },
+              data: { title: 'View Provisioning Entry', routeParamBreadcrumb: 'id' },
               resolve: {
                 provisioningEntry: ProvisioningEntryResolver,
                 provisioningEntryEntries: ProvisioningEntryEntriesResolver,
@@ -347,7 +344,7 @@ const routes: Routes = [
                 {
                   path: 'view/:id',
                   component: ViewProvisioningJournalEntriesComponent,
-                  data: { title: extract('View Provisioning Journal Entry'), routeParamBreadcrumb: 'id' },
+                  data: { title: 'View Provisioning Journal Entry', routeParamBreadcrumb: 'id' },
                   resolve: {
                     provisioningJournalEntries: ProvisioningJournalEntriesResolver
                   }
@@ -360,12 +357,12 @@ const routes: Routes = [
     },
     {
       path: 'journal-entry',
-      data: {title: extract('Journal Entries'), breadcrumb: 'Journal Entries' },
+      data: {title: 'Journal Entries', breadcrumb: 'Journal Entries' },
       children: [
         {
           path: 'view/:id',
           component: ViewJournalEntryTransactionComponent,
-          data: { title: extract('View Transaction'), routeParamBreadcrumb: 'id' },
+          data: { title: 'View Transaction', routeParamBreadcrumb: 'id' },
           resolve: {
             transaction: JournalEntryTransactionResolver
           }
@@ -373,7 +370,7 @@ const routes: Routes = [
         {
           path: 'view-transfer/:transferId',
           component: ViewJournalEntryTransactionComponent,
-          data: { title: extract('View Transfer'), routeParamBreadcrumb: 'transferId' },
+          data: { title: 'View Transfer', routeParamBreadcrumb: 'transferId' },
           resolve: {
             transferJournalEntryData: ExternalAssetOwnerJournalEntryResolver
           }

@@ -5,9 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 /** Routing Imports */
 import { Route } from '../core/route/route.service';
 
-/** Translation Imports */
-import { extract } from '../core/i18n/i18n.service';
-
 /** Custom Components */
 import { ProductsComponent } from './products.component';
 import { LoanProductsComponent } from './loan-products/loan-products.component';
@@ -135,7 +132,7 @@ const routes: Routes = [
   Route.withShell([
     {
       path: 'products',
-      data: { title: extract('Products'), breadcrumb: 'Products' },
+      data: { title: 'Products', breadcrumb: 'Products' },
       children: [
         {
           path: '',
@@ -143,7 +140,7 @@ const routes: Routes = [
         },
         {
           path: 'loan-products',
-          data: { title: extract('Loan Products'), breadcrumb: 'Loan Products' },
+          data: { title: 'Loan Products', breadcrumb: 'Loan Products' },
           children: [
             {
               path: '',
@@ -155,7 +152,7 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateLoanProductComponent,
-              data: { title: extract('Create Loan Product'), breadcrumb: 'Create' },
+              data: { title: 'Create Loan Product', breadcrumb: 'Create' },
               resolve: {
                 loanProductsTemplate: LoanProductsTemplateResolver,
                 configurations: GlobalConfigurationsResolver
@@ -167,7 +164,7 @@ const routes: Routes = [
               resolve: {
                 loanProductDatatables: LoanProductDatatablesResolver
               },
-              data: { title: extract('View Loan Product'), breadcrumb: 'productId', routeParamBreadcrumb: 'productId' },
+              data: { title: 'View Loan Product', breadcrumb: 'productId', routeParamBreadcrumb: 'productId' },
               children: [
                 {
                   path: '',
@@ -176,7 +173,7 @@ const routes: Routes = [
                 },
                 {
                   path: 'general',
-                  data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false },
+                  data: { title: 'General', breadcrumb: 'General', routeParamBreadcrumb: false },
                   component: GeneralTabComponent,
                   resolve: {
                     loanProduct: LoanProductResolver
@@ -187,7 +184,7 @@ const routes: Routes = [
                   children: [{
                     path: ':datatableName',
                     component: DatatableTabComponent,
-                    data: { title: extract('Data Table View'), routeParamBreadcrumb: 'datatableName' },
+                    data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
                     resolve: {
                       loanProductDatatable: LoanProductDatatableResolver
                     }
@@ -196,7 +193,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditLoanProductComponent,
-                  data: { title: extract('Edit Loan Product'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Loan Product', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     loanProductAndTemplate: LoanProductAndTemplateResolver,
                     configurations: GlobalConfigurationsResolver
@@ -208,7 +205,7 @@ const routes: Routes = [
         },
         {
           path: 'saving-products',
-          data: { title: extract('Saving Products'), breadcrumb: 'Saving Products' },
+          data: { title: 'Saving Products', breadcrumb: 'Saving Products' },
           children: [
             {
               path: '',
@@ -220,14 +217,14 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateSavingProductComponent,
-              data: { title: extract('Create Saving Product'), breadcrumb: 'Create' },
+              data: { title: 'Create Saving Product', breadcrumb: 'Create' },
               resolve: {
                 savingProductsTemplate: SavingProductsTemplateResolver
               }
             },
             {
               path: ':productId',
-              data: { title: extract('View Saving Product'), breadcrumb: 'productId', routeParamBreadcrumb: 'productId' },
+              data: { title: 'View Saving Product', breadcrumb: 'productId', routeParamBreadcrumb: 'productId' },
               resolve: {
                 savingProductDatatables: SavingProductDatatablesResolver
               },
@@ -243,7 +240,7 @@ const routes: Routes = [
                     },
                     {
                       path: 'general',
-                      data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false },
+                      data: { title: 'General', breadcrumb: 'General', routeParamBreadcrumb: false },
                       component: SavingProductGeneralTabComponent,
                       resolve: {
                         savingProduct: SavingProductResolver
@@ -254,7 +251,7 @@ const routes: Routes = [
                       children: [{
                         path: ':datatableName',
                         component: SavingProductDatatableTabComponent,
-                        data: { title: extract('Data Table View'), routeParamBreadcrumb: 'datatableName' },
+                        data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
                         resolve: {
                           savingProductDatatable: SavingProductDatatableResolver
                         }
@@ -265,7 +262,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditSavingProductComponent,
-                  data: { title: extract('Edit Saving Product'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Saving Product', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     savingProductAndTemplate: SavingProductAndTemplateResolver
                   }
@@ -276,7 +273,7 @@ const routes: Routes = [
         },
         {
           path: 'share-products',
-          data: { title: extract('Share Products'), breadcrumb: 'Share Products' },
+          data: { title: 'Share Products', breadcrumb: 'Share Products' },
           children: [
             {
               path: '',
@@ -288,14 +285,14 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateShareProductComponent,
-              data: { title: extract('Create Share Product'), breadcrumb: 'Create' },
+              data: { title: 'Create Share Product', breadcrumb: 'Create' },
               resolve: {
                 shareProductsTemplate: ShareProductsTemplateResolver
               }
             },
             {
               path: ':productId',
-              data: { title: extract('View Share Product'), breadcrumb: 'productId', routeParamBreadcrumb: 'productId' },
+              data: { title: 'View Share Product', breadcrumb: 'productId', routeParamBreadcrumb: 'productId' },
               resolve: {
                 shareProductDatatables: ShareProductDatatablesResolver
               },
@@ -311,7 +308,7 @@ const routes: Routes = [
                     },
                     {
                       path: 'general',
-                      data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false },
+                      data: { title: 'General', breadcrumb: 'General', routeParamBreadcrumb: false },
                       component: ShareProductGeneralTabComponent,
                       resolve: {
                         shareProduct: ShareProductResolver
@@ -322,7 +319,7 @@ const routes: Routes = [
                       children: [{
                         path: ':datatableName',
                         component: ShareProductDatatableTabComponent,
-                        data: { title: extract('Data Table View'), routeParamBreadcrumb: 'datatableName' },
+                        data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
                         resolve: {
                           shareProductDatatable: ShareProductDatatableResolver
                         }
@@ -333,14 +330,14 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditShareProductComponent,
-                  data: { title: extract('Edit Share Product'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Share Product', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     shareProductAndTemplate: ShareProductAndTemplateResolver
                   }
                 },
                 {
                   path: 'dividends',
-                  data: { title: extract('Share Products Dividends'), breadcrumb: 'Dividends', routeParamBreadcrumb: false },
+                  data: { title: 'Share Products Dividends', breadcrumb: 'Dividends', routeParamBreadcrumb: false },
                   children: [
                     {
                       path: '',
@@ -352,7 +349,7 @@ const routes: Routes = [
                     {
                       path: 'create',
                       component: CreateDividendComponent,
-                      data: { title: extract('Create Dividend'), breadcrumb: 'Create', routeParamBreadcrumb: false },
+                      data: { title: 'Create Dividend', breadcrumb: 'Create', routeParamBreadcrumb: false },
                       resolve: {
                         shareProduct: ShareProductResolver
                       }
@@ -360,7 +357,7 @@ const routes: Routes = [
                     {
                       path: ':dividendId',
                       component: ViewDividendComponent,
-                      data: { title: extract('View Dividend'), routeParamBreadcrumb: 'dividendId' },
+                      data: { title: 'View Dividend', routeParamBreadcrumb: 'dividendId' },
                       resolve: {
                         dividendData: ViewDividendDataResolver
                       }
@@ -373,7 +370,7 @@ const routes: Routes = [
         },
         {
           path: 'tax-configurations',
-          data: { title: extract('Manage Tax Configurations'), breadcrumb: 'Manage Tax Configurations' },
+          data: { title: 'Manage Tax Configurations', breadcrumb: 'Manage Tax Configurations' },
           children: [
             {
               path: '',
@@ -381,7 +378,7 @@ const routes: Routes = [
             },
             {
               path: 'tax-components',
-              data: { title: extract('Manage Tax Components'), breadcrumb: 'Tax Components' },
+              data: { title: 'Manage Tax Components', breadcrumb: 'Tax Components' },
               children: [
                 {
                   path: '',
@@ -393,14 +390,14 @@ const routes: Routes = [
                 {
                   path: 'create',
                   component: CreateTaxComponentComponent,
-                  data: { title: extract('Create Tax Component'), breadcrumb: 'Create' },
+                  data: { title: 'Create Tax Component', breadcrumb: 'Create' },
                   resolve: {
                     taxComponentTemplate: TaxComponentTemplateResolver
                   }
                 },
                 {
                   path: ':id',
-                  data: { title: extract('View Tax Component'), routeParamBreadcrumb: 'id' },
+                  data: { title: 'View Tax Component', routeParamBreadcrumb: 'id' },
                   resolve: {
                     taxComponent: TaxComponentResolver
                   },
@@ -414,7 +411,7 @@ const routes: Routes = [
                     },
                     {
                       path: 'edit',
-                      data: { title: extract('Edit Tax Component'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                      data: { title: 'Edit Tax Component', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                       component: EditTaxComponentComponent,
                       resolve: {
                         taxComponent: TaxComponentResolver
@@ -426,7 +423,7 @@ const routes: Routes = [
             },
             {
               path: 'tax-groups',
-              data: { title: extract('Manage Tax Groups'), breadcrumb: 'Tax Groups' },
+              data: { title: 'Manage Tax Groups', breadcrumb: 'Tax Groups' },
               children: [
                 {
                   path: '',
@@ -438,14 +435,14 @@ const routes: Routes = [
                 {
                   path: 'create',
                   component: CreateTaxGroupComponent,
-                  data: { title: extract('Create Tax Group'), breadcrumb: 'Create' },
+                  data: { title: 'Create Tax Group', breadcrumb: 'Create' },
                   resolve: {
                     taxGroupTemplate: ManageTaxGroupTemplateResolver
                   }
                 },
                 {
                   path: ':id',
-                  data: { title: extract('View Tax Group'), routeParamBreadcrumb: 'id' },
+                  data: { title: 'View Tax Group', routeParamBreadcrumb: 'id' },
                   resolve: {
                     taxGroup: TaxGroupResolver
                   },
@@ -459,7 +456,7 @@ const routes: Routes = [
                     },
                     {
                       path: 'edit',
-                      data: { title: extract('Edit Tax Group'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                      data: { title: 'Edit Tax Group', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                       component: EditTaxGroupComponent,
                       resolve: {
                         taxGroup: EditTaxGroupResolver
@@ -473,7 +470,7 @@ const routes: Routes = [
         },
         {
           path: 'delinquency-bucket-configurations',
-          data: { title: extract('Manage Delinquency Bucket Configurations'), breadcrumb: 'Manage Delinquency Bucket Configurations' },
+          data: { title: 'Manage Delinquency Bucket Configurations', breadcrumb: 'Manage Delinquency Bucket Configurations' },
           children: [
             {
               path: '',
@@ -481,7 +478,7 @@ const routes: Routes = [
             },
             {
               path: 'ranges',
-              data: { title: extract('Manage Delinquency Ranges'), breadcrumb: 'Delinquency Ranges' },
+              data: { title: 'Manage Delinquency Ranges', breadcrumb: 'Delinquency Ranges' },
               children: [
                 {
                   path: '',
@@ -493,11 +490,11 @@ const routes: Routes = [
                 {
                   path: 'create',
                   component: CreateRangeComponent,
-                  data: { title: extract('Create Delinquency Range'), breadcrumb: 'Create' }
+                  data: { title: 'Create Delinquency Range', breadcrumb: 'Create' }
                 },
                 {
                   path: ':rangeId',
-                  data: { title: extract('View Delinquency Range'), routeParamBreadcrumb: 'id' },
+                  data: { title: 'View Delinquency Range', routeParamBreadcrumb: 'id' },
                   resolve: {
                     delinquencyRange: DelinquencyRangeComponentsResolver
                   },
@@ -511,7 +508,7 @@ const routes: Routes = [
                     },
                     {
                       path: 'edit',
-                      data: { title: extract('Edit Delinquency Range'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                      data: { title: 'Edit Delinquency Range', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                       component: EditRangeComponent,
                       resolve: {
                         delinquencyRange: DelinquencyRangeComponentsResolver
@@ -523,7 +520,7 @@ const routes: Routes = [
             },
             {
               path: 'buckets',
-              data: { title: extract('Manage Delinquency Bucket'), breadcrumb: 'Delinquency Buckets' },
+              data: { title: 'Manage Delinquency Bucket', breadcrumb: 'Delinquency Buckets' },
               children: [
                 {
                   path: '',
@@ -535,14 +532,14 @@ const routes: Routes = [
                 {
                   path: 'create',
                   component: CreateBucketComponent,
-                  data: { title: extract('Create Delinquency Bucket'), breadcrumb: 'Create' },
+                  data: { title: 'Create Delinquency Bucket', breadcrumb: 'Create' },
                   resolve: {
                     delinquencyRanges: DelinquencyRangeComponentsResolver
                   }
                 },
                 {
                   path: ':bucketId',
-                  data: { title: extract('View Delinquency Bucket'), routeParamBreadcrumb: 'id' },
+                  data: { title: 'View Delinquency Bucket', routeParamBreadcrumb: 'id' },
                   resolve: {
                     delinquencyBucket: DelinquencyBucketComponentsResolver
                   },
@@ -556,7 +553,7 @@ const routes: Routes = [
                     },
                     {
                       path: 'edit',
-                      data: { title: extract('Edit Delinquency Bucket'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                      data: { title: 'Edit Delinquency Bucket', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                       component: EditBucketComponent,
                       resolve: {
                         delinquencyBucket: DelinquencyBucketComponentsResolver,
@@ -571,12 +568,12 @@ const routes: Routes = [
         },
         {
           path: 'recurring-deposit-products',
-          data: { title: extract('Recurring Deposit Products'), breadcrumb: 'Recurring Deposit Products' },
+          data: { title: 'Recurring Deposit Products', breadcrumb: 'Recurring Deposit Products' },
           children: [
             {
               path: 'create',
               component: CreateRecurringDepositProductComponent,
-              data: { title: extract('Create Recurring Deposit Product'), breadcrumb: 'Create' },
+              data: { title: 'Create Recurring Deposit Product', breadcrumb: 'Create' },
               resolve: {
                 recurringDepositProductsTemplate: RecurringDepositProductsTemplateResolver
               }
@@ -590,7 +587,7 @@ const routes: Routes = [
             },
             {
               path: ':productId',
-              data: { title: extract('View Recurring Deposit Product'), breadcrumb: 'productId', routeParamBreadcrumb: 'productId' },
+              data: { title: 'View Recurring Deposit Product', breadcrumb: 'productId', routeParamBreadcrumb: 'productId' },
               component: ViewRecurringDepositProductComponent,
               resolve: {
                 recurringDepositDatatables: SavingProductDatatablesResolver
@@ -613,7 +610,7 @@ const routes: Routes = [
                   children: [{
                     path: ':datatableName',
                     component: RecurringDepositDatatableTabComponent,
-                    data: { title: extract('Data Table View'), routeParamBreadcrumb: 'datatableName' },
+                    data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
                     resolve: {
                       recurringDepositDatatable: SavingProductDatatableResolver
                     }
@@ -621,7 +618,7 @@ const routes: Routes = [
                 },
                 {
                   path: 'edit',
-                  data: { title: extract('Edit Recurring Deposit Product'), breadcrumb: 'edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Recurring Deposit Product', breadcrumb: 'edit', routeParamBreadcrumb: false },
                   component: EditRecurringDepositProductComponent,
                   resolve: {
                     recurringDepositProductAndTemplate: RecurringDepositProductAndTemplateResolver
@@ -633,12 +630,12 @@ const routes: Routes = [
         },
         {
           path: 'fixed-deposit-products',
-          data: { title: extract('Fixed Deposit Products'), breadcrumb: 'Fixed Deposit Products' },
+          data: { title: 'Fixed Deposit Products', breadcrumb: 'Fixed Deposit Products' },
           children: [
             {
               path: 'create',
               component: CreateFixedDepositProductComponent,
-              data: { title: extract('Create Fixed Deposit Product'), breadcrumb: 'Create' },
+              data: { title: 'Create Fixed Deposit Product', breadcrumb: 'Create' },
               resolve: {
                 fixedDepositProductsTemplate: FixedDepositProductsTemplateResolver
               }
@@ -652,7 +649,7 @@ const routes: Routes = [
             },
             {
               path: ':productId',
-              data: { title: extract('View Fixed Deposit Product'), breadcrumb: 'productId', routeParamBreadcrumb: 'productId' },
+              data: { title: 'View Fixed Deposit Product', breadcrumb: 'productId', routeParamBreadcrumb: 'productId' },
               component: ViewFixedDepositProductComponent,
               resolve: {
                 fixedDepositDatatables: SavingProductDatatablesResolver
@@ -675,7 +672,7 @@ const routes: Routes = [
                   children: [{
                     path: ':datatableName',
                     component: FixedDepositDatatableTabComponent,
-                    data: { title: extract('Data Table View'), routeParamBreadcrumb: 'datatableName' },
+                    data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
                     resolve: {
                       fixedDepositDatatable: SavingProductDatatableResolver
                     }
@@ -683,7 +680,7 @@ const routes: Routes = [
                 },
                 {
                   path: 'edit',
-                  data: { title: extract('Edit Fixed Deposit Product'), breadcrumb: 'edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Fixed Deposit Product', breadcrumb: 'edit', routeParamBreadcrumb: false },
                   component: EditFixedDepositProductComponent,
                   resolve: {
                     fixedDepositProductAndTemplate: FixedDepositProductAndTemplateResolver
@@ -695,12 +692,12 @@ const routes: Routes = [
         },
         {
           path: 'products-mix',
-          data: { title: extract('Products Mix'), breadcrumb: 'Products Mix' },
+          data: { title: 'Products Mix', breadcrumb: 'Products Mix' },
           children: [
             {
               path: 'create',
               component: CreateProductMixComponent,
-              data: { title: extract('Create Product Mix'), breadcrumb: 'Create' },
+              data: { title: 'Create Product Mix', breadcrumb: 'Create' },
               resolve: {
                 productsMixTemplate: ProductsMixTemplateResolver
               }
@@ -714,7 +711,7 @@ const routes: Routes = [
             },
             {
               path: ':id',
-              data: { title: extract('View Product Mix'), routeParamBreadcrumb: 'id' },
+              data: { title: 'View Product Mix', routeParamBreadcrumb: 'id' },
               resolve: {
                 productMix: ViewProductMixResolver
               },
@@ -728,7 +725,7 @@ const routes: Routes = [
                 },
                 {
                   path: 'edit',
-                  data: { title: extract('Edit Product Mix'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Product Mix', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   component: EditProductMixComponent,
                   resolve: {
                     productMix: ViewProductMixResolver
@@ -740,7 +737,7 @@ const routes: Routes = [
         },
         {
           path: 'floating-rates',
-          data: { title: extract('Floating Rates'), breadcrumb: 'Floating Rates' },
+          data: { title: 'Floating Rates', breadcrumb: 'Floating Rates' },
           children: [
             {
               path: '',
@@ -752,11 +749,11 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateFloatingRateComponent,
-              data: { title: extract('Create Floating Rate'), breadcrumb: 'Create' }
+              data: { title: 'Create Floating Rate', breadcrumb: 'Create' }
             },
             {
               path: ':id',
-              data: { title: extract('View Floating Rate'), routeParamBreadcrumb: 'id' },
+              data: { title: 'View Floating Rate', routeParamBreadcrumb: 'id' },
               resolve: {
                 floatingRate: FloatingRateResolver
               },
@@ -771,7 +768,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditFloatingRateComponent,
-                  data: { title: extract('Edit Floating Rate'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Floating Rate', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     floatingRate: FloatingRateResolver
                   }
@@ -782,12 +779,12 @@ const routes: Routes = [
         },
         {
           path: 'charges',
-          data: { title: extract('Charges'), breadcrumb: 'Charges' },
+          data: { title: 'Charges', breadcrumb: 'Charges' },
           children: [
             {
               path: 'create',
               component: CreateChargeComponent,
-              data: { title: extract('Create Charge'), breadcrumb: 'Create Charge' },
+              data: { title: 'Create Charge', breadcrumb: 'Create Charge' },
               resolve: {
                 chargesTemplate: ChargesTemplateResolver
               }
@@ -801,7 +798,7 @@ const routes: Routes = [
             },
             {
               path: ':id',
-              data: { title: extract('View Charges'), breadcrumb: 'id', routeParamBreadcrumb: 'id' },
+              data: { title: 'View Charges', breadcrumb: 'id', routeParamBreadcrumb: 'id' },
               resolve: {
                 charge: ChargeResolver
               },
@@ -816,7 +813,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditChargeComponent,
-                  data: { title: extract('Edit Charge'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Charge', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     chargesTemplate: ChargesTemplateAndResolver
                   }
@@ -827,12 +824,12 @@ const routes: Routes = [
         },
         {
           path: 'collaterals',
-          data: { title: extract('Collaterals'), breadcrumb: 'Collaterals' },
+          data: { title: 'Collaterals', breadcrumb: 'Collaterals' },
           children: [
             {
               path: 'create',
               component: CreateCollateralComponent,
-              data: { title: extract('Create Collateral'), breadcrumb: 'Create Collateral' },
+              data: { title: 'Create Collateral', breadcrumb: 'Create Collateral' },
               resolve: {
                 collateralTemplate: CollateralTemplateResolver
               }
@@ -846,7 +843,7 @@ const routes: Routes = [
             },
             {
               path: ':id',
-              data: { title: extract('View Collateral'), routeParamBreadcrumb: 'id' },
+              data: { title: 'View Collateral', routeParamBreadcrumb: 'id' },
               resolve: {
                 collateral: CollateralResolver
               },
@@ -861,7 +858,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditCollateralComponent,
-                  data: { title: extract('Edit Collateral'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Collateral', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     collateralTemplate: CollateralTemplateResolver,
                     collateral: CollateralResolver

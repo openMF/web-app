@@ -5,9 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 /** Routing Imports */
 import { Route } from '../core/route/route.service';
 
-/** Translation Imports */
-import { extract } from '../core/i18n/i18n.service';
-
 /** Custom Components */
 import { CheckerInboxAndTasksComponent } from './checker-inbox-and-tasks/checker-inbox-and-tasks.component';
 import { CheckerInboxComponent } from './checker-inbox-and-tasks-tabs/checker-inbox/checker-inbox.component';
@@ -32,12 +29,12 @@ const routes: Routes = [
     {
       path: 'checker-inbox-and-tasks',
       component: CheckerInboxAndTasksComponent,
-      data: { title: extract('Checker Inbox & Tasks'), breadcrumb: 'Checker Inbox & Tasks' },
+      data: { title: 'Checker Inbox & Tasks', breadcrumb: 'Checker Inbox & Tasks' },
       children: [
         {
           path: 'checker-inbox',
           component: CheckerInboxComponent,
-          data: { title: extract('Checker Inbox') },
+          data: { title: 'Checker Inbox' },
           resolve: {
             makerCheckerResource: GetMakerCheckers,
             makerCheckerTemplate: MakerCheckerTemplate
@@ -46,7 +43,7 @@ const routes: Routes = [
         {
           path: 'client-approval',
           component: ClientApprovalComponent,
-          data: { title: extract('Client Approval') },
+          data: { title: 'Client Approval' },
           resolve: {
             groupedClientData: GetGroupedClientsData
           },
@@ -54,7 +51,7 @@ const routes: Routes = [
         {
           path: 'loan-approval',
           component: LoanApprovalComponent,
-          data: { title: extract('Laon Approval') },
+          data: { title: 'Laon Approval' },
           resolve: {
             officesData: GetOffices,
             loansData: GetLoans
@@ -63,7 +60,7 @@ const routes: Routes = [
         {
           path: 'loan-disbursal',
           component: LoanDisbursalComponent,
-          data: { title: extract('Loan Disbursal') },
+          data: { title: 'Loan Disbursal' },
           resolve: {
             loansData: GetLoans
           }
@@ -71,7 +68,7 @@ const routes: Routes = [
         {
           path: 'reschedule-loan',
           component: RescheduleLoanComponent,
-          data: { title: extract('Reschedule Loan') },
+          data: { title: 'Reschedule Loan' },
           resolve: {
             recheduleLoansData: GetRescheduleLoans
           }
@@ -84,7 +81,7 @@ const routes: Routes = [
         {
           path: ':id/view',
           component: ViewCheckerInboxComponent,
-          data: { title: extract('View Checker Inbox Component'), routeParamBreadcrumb: 'clientId' },
+          data: { title: 'View Checker Inbox Component', routeParamBreadcrumb: 'clientId' },
           resolve: {
             checkerInboxDetail: GetCheckerInboxDetailResolver
           }

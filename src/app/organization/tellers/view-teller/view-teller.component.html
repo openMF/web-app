@@ -1,11 +1,11 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_TELLER'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    Edit
+    {{ 'labels.buttons.Edit' | translate }}
   </button>
   <button mat-raised-button color="warn" (click)="deleteTeller()" *mifosxHasPermission="'DELETE_TELLER'">
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    Delete
+    {{ 'labels.buttons.Delete' | translate }}
   </button>
 </div>
 
@@ -18,7 +18,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="mat-body-strong">
-          Teller Name
+          {{ 'labels.inputs.Teller Name' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -26,7 +26,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Office
+          {{ 'labels.inputs.Office' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -34,7 +34,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="tellerData.description">
-          Description
+          {{ 'labels.inputs.Description' | translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="tellerData.description">
@@ -42,23 +42,23 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Start Date
+          {{ 'labels.inputs.Start Date' | translate }}
         </div>
 
         <div fxFlex="50%">
-          {{ tellerData.startDate  | dateFormat }}
+          {{ tellerData.startDate | dateFormat }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="tellerData.endDate">
-          End Date
+          {{ 'labels.inputs.End Date' | translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="tellerData.endDate">
-          {{ tellerData.endDate  | dateFormat }}
+          {{ tellerData.endDate | dateFormat }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Status
+          {{ 'labels.inputs.Status' | translate }}
         </div>
 
         <div fxFlex="50%">

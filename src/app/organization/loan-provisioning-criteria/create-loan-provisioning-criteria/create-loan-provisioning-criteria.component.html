@@ -9,15 +9,15 @@
         <div fxLayout="row" fxLayoutGap="2%">
 
           <mat-form-field fxFlex>
-            <mat-label>Provisioning Criteria</mat-label>
+            <mat-label>{{ 'labels.inputs.Provisioning Criteria' | translate }}</mat-label>
             <input required matInput formControlName="criteriaName">
             <mat-error *ngIf="provisioningCriteriaForm.controls.criteriaName.hasError('required')">
-              Provisioning Criteria is <strong>required</strong>
+              {{ 'labels.inputs.Provisioning Criteria' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex>
-            <mat-label>Selected Products</mat-label>
+            <mat-label>{{ 'labels.inputs.Selected Products' | translate }}</mat-label>
             <mat-select formControlName="loanProducts" multiple>
               <mat-option *ngFor="let product of loanProvisioningCriteriaTemplate.loanProducts" [value]="product">
                 {{ product.name }}
@@ -33,46 +33,47 @@
 
     <div class="mat-elevation-z1">
 
-      <mat-hint *ngIf="!provisioningCriteriaFormValid">Please fill all provisioning criteria definitions.</mat-hint>
+      <mat-hint *ngIf="!provisioningCriteriaFormValid">
+        {{ 'labels.text.Provisioning criteria definitions' | translate }}</mat-hint>
 
       <table mat-table class="m-t-10" [dataSource]="definitions">
 
         <ng-container matColumnDef="category">
-          <th mat-header-cell *matHeaderCellDef> Category </th>
+          <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Category' | translate }} </th>
           <td mat-cell *matCellDef="let definition"> {{ definition.categoryName }} </td>
         </ng-container>
 
         <ng-container matColumnDef="minAge">
-          <th mat-header-cell *matHeaderCellDef> Min Age </th>
+          <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Min Age' | translate }} </th>
           <td mat-cell *matCellDef="let definition"> {{ definition.minAge || '0' }} </td>
         </ng-container>
 
         <ng-container matColumnDef="maxAge">
-          <th mat-header-cell *matHeaderCellDef> Max Age </th>
+          <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Max Age' | translate }} </th>
           <td mat-cell *matCellDef="let definition"> {{ definition.maxAge || '0' }} </td>
         </ng-container>
 
         <ng-container matColumnDef="percentage">
-          <th mat-header-cell *matHeaderCellDef> Percentage (%)</th>
+          <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Percentage' | translate }} (%)</th>
           <td mat-cell *matCellDef="let definition"> {{ definition.provisioningPercentage || '0' }} </td>
         </ng-container>
 
         <ng-container matColumnDef="liabilityAccount">
-          <th mat-header-cell *matHeaderCellDef> Liability Account </th>
+          <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Liability Account' | translate }} </th>
           <td mat-cell *matCellDef="let definition"> {{ (definition.liabilityAccount | find:loanProvisioningCriteriaTemplate.glAccounts:'id':'name') || '-' }} </td>
         </ng-container>
 
         <ng-container matColumnDef="expenseAccount">
-          <th mat-header-cell *matHeaderCellDef> Expense Account </th>
+          <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Expense Account' | translate }} </th>
           <td mat-cell *matCellDef="let definition"> {{ (definition.expenseAccount | find:loanProvisioningCriteriaTemplate.glAccounts:'id':'name') || '-' }} </td>
         </ng-container>
 
         <ng-container matColumnDef="edit">
-          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Actions' | translate }} </th>
           <td mat-cell *matCellDef="let definition">
             <button mat-button color="primary" (click)="editDefinition(definition)">
               <fa-icon icon="edit" class="m-r-10"></fa-icon>
-              Edit
+              {{'labels.buttons.Edit' | translate }}
             </button>
           </td>
         </ng-container>
@@ -85,8 +86,8 @@
     </div>
 
     <div class="m-t-20" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px">
-      <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-      <button mat-raised-button color="primary" [disabled]="!provisioningCriteriaFormValid" (click)="submit()" *mifosxHasPermission="'CREATE_PROVISIONING_CRITERIA'">Submit</button>
+      <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate }}</button>
+      <button mat-raised-button color="primary" [disabled]="!provisioningCriteriaFormValid" (click)="submit()" *mifosxHasPermission="'CREATE_PROVISIONING_CRITERIA'">{{'labels.buttons.Submit' | translate }}</button>
     </div>
 
   </mat-card>

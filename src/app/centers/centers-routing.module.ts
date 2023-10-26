@@ -4,9 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 /** Routing Imports */
 import { Route } from '../core/route/route.service';
 
-/** Translation Imports */
-import { extract } from '../core/i18n/i18n.service';
-
 /** Custom Components */
 import { CentersComponent } from './centers.component';
 import { CreateCenterComponent } from './create-center/create-center.component';
@@ -34,7 +31,7 @@ const routes: Routes = [
 
     {
       path: 'centers',
-      data: { title: extract('Centers'), breadcrumb: 'Centers' },
+      data: { title: 'Centers', breadcrumb: 'Centers' },
       children: [
         {
           path: '',
@@ -43,14 +40,14 @@ const routes: Routes = [
         {
           path: 'create',
           component: CreateCenterComponent,
-          data: { title: extract('Create Center'), breadcrumb: 'Create' },
+          data: { title: 'Create Center', breadcrumb: 'Create' },
           resolve: {
             offices: OfficesResolver,
           }
         },
         {
           path: ':centerId',
-          data: { title: extract('Centers View'), routeParamBreadcrumb: 'centerId' },
+          data: { title: 'Centers View', routeParamBreadcrumb: 'centerId' },
           resolve: {
             centerViewData: CenterViewResolver,
           },
@@ -66,7 +63,7 @@ const routes: Routes = [
                 {
                   path: 'general',
                   component: GeneralTabComponent,
-                  data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false },
+                  data: { title: 'General', breadcrumb: 'General', routeParamBreadcrumb: false },
                   resolve: {
                     centerSummaryData: CenterSummaryResolver,
                     centerViewData: CenterResourceResolver,
@@ -76,7 +73,7 @@ const routes: Routes = [
                 {
                   path: 'notes',
                   component: NotesTabComponent,
-                  data: { title: extract('Notes'), breadcrumb: 'Notes', routeParamBreadcrumb: false },
+                  data: { title: 'Notes', breadcrumb: 'Notes', routeParamBreadcrumb: false },
                   resolve: {
                     centerNotes: CenterNotesResolver
                   }
@@ -86,7 +83,7 @@ const routes: Routes = [
                   children: [{
                     path: ':datatableName',
                     component: DatatableTabComponent,
-                    data: { title: extract('Data Table View'), routeParamBreadcrumb: 'datatableName' },
+                    data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
                     resolve: {
                       centerDatatable: CenterDatatableResolver
                     }
@@ -97,14 +94,14 @@ const routes: Routes = [
             {
               path: 'edit',
               component: EditCenterComponent,
-              data: { title: extract('Edit Center'), breadcrumb: 'Edit', routeParamBreadcrumb: 'Edit' },
+              data: { title: 'Edit Center', breadcrumb: 'Edit', routeParamBreadcrumb: 'Edit' },
               resolve: {
                 centerData: CenterDataAndTemplateResolver,
               }
             },
             {
               path: 'actions/:name',
-              data: { title: extract('Center Actions'), routeParamBreadcrumb: 'name' },
+              data: { title: 'Center Actions', routeParamBreadcrumb: 'name' },
               component: CenterActionsComponent,
               resolve: {
                 centersActionData: CenterActionsResolver

@@ -1,8 +1,8 @@
-<h1 mat-dialog-title>{{ data.isEnable ? 'Enable' : 'Disable' }} Withhold Tax</h1>
+<h1 mat-dialog-title>{{ data.isEnable ? 'Enable' : 'Disable' }} {{"labels.heading.Withhold Tax" | translate }}</h1>
 <div mat-dialog-content>
-  <p>Are you sure you want to {{ data.isEnable ? 'enable' : 'disable' }} withhold tax for this account ?</p>
+  <p>{{"labels.text.Are you sure you want to" | translate }} {{ data.isEnable ? 'enable' : 'disable' }} {{"labels.text.withhold tax for this account" | translate }} ?</p>
 </div>
 <mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close>Cancel</button>
-  <button mat-raised-button color="{{ data.isEnable ? 'accent' : 'warn' }}" [mat-dialog-close]="{ confirm: true }">Confirm</button>
+  <button mat-raised-button mat-dialog-close>{{"labels.buttons.Cancel" | translate }}</button>
+  <button mat-raised-button color="{{ data.isEnable ? 'accent' : 'warn' }}" [mat-dialog-close]="{ confirm: true }">{{"labels.buttons.Confirm" | translate }}</button>
 </mat-dialog-actions>

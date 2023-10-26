@@ -5,9 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 /** Routing Imports */
 import { Route } from '../core/route/route.service';
 
-/** Translation Imports */
-import { extract } from '../core/i18n/i18n.service';
-
 /** Custom Components */
 import { ReportsComponent } from './reports.component';
 import { RunReportComponent } from './run-report/run-report.component';
@@ -27,7 +24,7 @@ const routes: Routes = [
   Route.withShell([
     {
       path: 'reports',
-      data: { title: extract('Reports'), breadcrumb: 'Reports' },
+      data: { title: 'Reports', breadcrumb: 'Reports' },
       resolve: {
         reports: ReportsResolver
       },
@@ -43,7 +40,7 @@ const routes: Routes = [
         },
         {
           path: 'run/:name',
-          data: { title: extract('Reports'), routeParamBreadcrumb: 'name' },
+          data: { title: 'Reports', routeParamBreadcrumb: 'name' },
           component: RunReportComponent,
           resolve: {
             reportParameters: RunReportResolver,
@@ -54,7 +51,7 @@ const routes: Routes = [
     },
     {
       path: 'xbrl',
-      data: { title: extract('XBRL'), breadcrumb: 'XBRL' },
+      data: { title: 'XBRL', breadcrumb: 'XBRL' },
       children: [
         {
           path: '',
@@ -67,7 +64,7 @@ const routes: Routes = [
         },
         {
           path: 'report',
-          data: { title: extract('XBRL Report'), breadcrumb: 'Run Report' },
+          data: { title: 'XBRL Report', breadcrumb: 'Run Report' },
           component: XBRLReportComponent
         }
       ]

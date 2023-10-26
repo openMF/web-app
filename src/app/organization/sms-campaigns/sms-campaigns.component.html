@@ -2,7 +2,7 @@
 
   <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_SMSCAMPAIGN'">
     <fa-icon icon="plus" class="m-r-10"></fa-icon>
-    Create SMS Campaign
+    {{ 'labels.buttons.Create SMS Campaign' | translate }}
   </button>
 
 </div>
@@ -11,7 +11,7 @@
 
   <div fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
-      <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
+      <mat-label>{{'labels.inputs.Filter' | translate}}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)">
     </mat-form-field>
   </div>
@@ -21,27 +21,27 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="campaignName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.name' | translate }} </th>
         <td mat-cell *matCellDef="let smsCampaign"> {{ smsCampaign.campaignName }} </td>
       </ng-container>
 
       <ng-container matColumnDef="campaignMessage">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Template Message </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Template Message' | translate }} </th>
         <td mat-cell *matCellDef="let smsCampaign"> {{ smsCampaign.campaignMessage }} </td>
       </ng-container>
 
       <ng-container matColumnDef="campaignType.value">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Campaign Type </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Campaign Type' | translate }} </th>
         <td mat-cell *matCellDef="let smsCampaign"> {{ smsCampaign.campaignType.value }} </td>
       </ng-container>
 
       <ng-container matColumnDef="triggerType.value">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Trigger Type </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Trigger Type' | translate }} </th>
         <td mat-cell *matCellDef="let smsCampaign"> {{ smsCampaign.triggerType.value }} </td>
       </ng-container>
 
       <ng-container matColumnDef="campaignStatus.value">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Status' | translate }} </th>
         <td mat-cell *matCellDef="let smsCampaign">
           <div [className]="smsCampaign.campaignStatus.code | statusLookup">
             <fa-icon matTooltip="{{ smsCampaign.campaignStatus.value | titlecase }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
@@ -50,7 +50,7 @@
       </ng-container>
 
       <ng-container matColumnDef="smsCampaignTimeLine.submittedByUsername">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Approved By </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Approved By' | translate }} </th>
         <td mat-cell *matCellDef="let smsCampaign"> {{ smsCampaign.smsCampaignTimeLine.submittedByUsername }} </td>
       </ng-container>
 

@@ -17,7 +17,8 @@ export class Dates {
   }
 
   public formatDate(timestamp: any, dateFormat: string): string {
-    return this.datePipe.transform(timestamp, dateFormat);
+    const datePipe: DatePipe = new DatePipe(this.language.code);
+    return datePipe.transform(timestamp, dateFormat);
   }
 
   public parseDate(value: any): Date {
@@ -35,4 +36,12 @@ export class Dates {
   public convertToDate(value: any, format: string): Date {
     return moment(value).toDate();
   }
+
+  get language() {
+    if (!localStorage.getItem('mifosXLanguage')) {
+      return 'en';
+    }
+    return JSON.parse(localStorage.getItem('mifosXLanguage'));
+  }
+
 }

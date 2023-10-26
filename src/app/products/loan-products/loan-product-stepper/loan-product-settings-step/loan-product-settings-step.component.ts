@@ -2,6 +2,20 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { LoanProducts } from '../../loan-products';
 import { rangeValidator } from 'app/shared/validators/percentage.validator';
+import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
+
+interface DaysData {
+  days: number;
+  label: string;
+  style: string;
+}
+
+interface DaysForRepayment {
+  days: DaysData[];
+  code: string;
+  config: GlobalConfiguration;
+  style: string;
+}
 
 @Component({
   selector: 'mifosx-loan-product-settings-step',
@@ -9,6 +23,9 @@ import { rangeValidator } from 'app/shared/validators/percentage.validator';
   styleUrls: ['./loan-product-settings-step.component.scss']
 })
 export class LoanProductSettingsStepComponent implements OnInit {
+
+  DAYS_BEFORE_REPAYMENT_IS_DUE = LoanProducts.DAYS_BEFORE_REPAYMENT_IS_DUE;
+  DAYS_AFTER_REPAYMENT_IS_OVERDUE = LoanProducts.DAYS_AFTER_REPAYMENT_IS_OVERDUE;
 
   @Input() toEdit: boolean;
   @Input() loanProductsTemplate: any;
@@ -32,13 +49,37 @@ export class LoanProductSettingsStepComponent implements OnInit {
   interestRecalculationOnDayTypeData: any;
   delinquencyBucketData: any;
 
-  constructor(private formBuilder: UntypedFormBuilder,
-    private loanProducts: LoanProducts) {
+  /** Values to Days for Repayments */
+  defaultConfigValues: GlobalConfiguration[] = [];
+  daysForRepayments: DaysForRepayment[] = [];
+
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createLoanProductSettingsForm();
     this.setConditionalControls();
   }
 
   ngOnInit() {
+    this.defaultConfigValues = this.loanProductsTemplate['itemsByDefault'];
+    this.defaultConfigValues.forEach((config: GlobalConfiguration) => {
+      const days: DaysData[] = [];
+      [...Array(10).keys()].forEach((day: number) => {
+        let label: string = day.toString();
+        let style = '';
+        if (day === config.value) {
+          label = day + ' *';
+          style = 'by-default';
+        }
+        days.push({days: day, label: label, style: style});
+      });
+
+      this.daysForRepayments.push({
+        days: days,
+        code: config.name,
+        config: config,
+        style: ''
+      });
+    });
+
     this.isLinkedToFloatingInterestRates.valueChanges
       .subscribe((isLinkedToFloatingInterestRates: any) => {
         if (isLinkedToFloatingInterestRates) {
@@ -390,13 +431,50 @@ export class LoanProductSettingsStepComponent implements OnInit {
           });
         }
       });
+
+    this.loanProductSettingsForm.get('dueDaysForRepaymentEvent').valueChanges
+    .subscribe((dueDaysForRepaymentEvent: number) => {
+      this.setStyleDaysForRepayment(this.DAYS_BEFORE_REPAYMENT_IS_DUE, dueDaysForRepaymentEvent);
+    });
+
+    this.loanProductSettingsForm.get('overDueDaysForRepaymentEvent').valueChanges
+    .subscribe((overDueDaysForRepaymentEvent: number) => {
+      this.setStyleDaysForRepayment(this.DAYS_AFTER_REPAYMENT_IS_OVERDUE, overDueDaysForRepaymentEvent);
+    });
   }
 
-  styleByDefault(input: string): string {
-    if (this.loanProducts.isItemByDefault(input)) {
-      return 'by-default';
-    }
+  setStyleDaysForRepayment(attribute: string, currentValue: number): void {
+    const currentValues: DaysForRepayment[] = this.daysForRepayments;
+    this.daysForRepayments = [];
+    currentValues.forEach((dfr: DaysForRepayment) => {
+      if (dfr.code === attribute) {
+        dfr.days.forEach((days: DaysData) => {
+          if (days.days === currentValue) {
+            dfr.style = days.style;
+          }
+        });
+      }
+      this.daysForRepayments.push(dfr);
+    });
+  }
+
+  styleDaysForRepayment(attribute: string): string {
+    this.daysForRepayments.forEach((item: DaysForRepayment) => {
+      if (item.code === attribute) {
+        return item.style;
+      }
+    });
     return '';
+  }
+
+  getDaysForRepayments(attribute: string): DaysData[] {
+    let days: DaysData[] = [];
+    this.daysForRepayments.forEach((item: DaysForRepayment) => {
+      if (item.code === attribute) {
+        days = item.days;
+      }
+    });
+    return days;
   }
 
   get loanProductSettings() {

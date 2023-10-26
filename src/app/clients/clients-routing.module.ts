@@ -4,9 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 /** Routing Imports */
 import { Route } from '../core/route/route.service';
 
-/** Translation Imports */
-import { extract } from '../core/i18n/i18n.service';
-
 /** Custom Components */
 import { ClientsComponent } from './clients.component';
 import { ClientsViewComponent } from './clients-view/clients-view.component';
@@ -53,7 +50,7 @@ import { ClientCollateralResolver } from './common-resolvers/client-collateral.r
 const routes: Routes = [
   Route.withShell([{
     path: 'clients',
-    data: { title: extract('Clients'), breadcrumb: 'Clients', routeParamBreadcrumb: false },
+    data: { title: 'Clients', breadcrumb: 'Clients', routeParamBreadcrumb: false },
     children: [
       {
         path: '',
@@ -61,7 +58,7 @@ const routes: Routes = [
       },
       {
         path: 'create',
-        data: { title: extract('Create Client'), breadcrumb: 'Create Client', routeParamBreadcrumb: false },
+        data: { title: 'Create Client', breadcrumb: 'Create Client', routeParamBreadcrumb: false },
         component: CreateClientComponent,
         resolve: {
           clientAddressFieldConfig: ClientAddressFieldConfigurationResolver,
@@ -71,7 +68,7 @@ const routes: Routes = [
       {
         path: ':clientId',
         component: ClientsViewComponent,
-        data: { title: extract('Clients View'), routeParamBreadcrumb: 'clientId' },
+        data: { title: 'Clients View', routeParamBreadcrumb: 'clientId' },
         resolve: {
           clientViewData: ClientViewResolver,
           clientTemplateData: ClientTemplateResolver,
@@ -86,7 +83,7 @@ const routes: Routes = [
           {
             path: 'general',
             component: GeneralTabComponent,
-            data: { title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false },
+            data: { title: 'General', breadcrumb: 'General', routeParamBreadcrumb: false },
             resolve: {
               clientAccountsData: ClientAccountsResolver,
               clientChargesData: ClientChargesResolver,
@@ -96,7 +93,7 @@ const routes: Routes = [
           {
             path: 'address',
             component: AddressTabComponent,
-            data: { title: extract('Address'), breadcrumb: 'Address', routeParamBreadcrumb: false },
+            data: { title: 'Address', breadcrumb: 'Address', routeParamBreadcrumb: false },
             resolve: {
               clientAddressFieldConfig: ClientAddressFieldConfigurationResolver,
               clientAddressTemplateData: ClientAddressTemplateResolver,
@@ -105,7 +102,7 @@ const routes: Routes = [
           },
           {
             path: 'family-members',
-            data: { title: extract('Family Members'), breadcrumb: 'Family Members', routeParamBreadcrumb: false },
+            data: { title: 'Family Members', breadcrumb: 'Family Members', routeParamBreadcrumb: false },
             children: [
               {
                 path: '',
@@ -117,7 +114,7 @@ const routes: Routes = [
               {
                 path: 'add',
                 component: AddFamilyMemberComponent,
-                data: { title: extract('Add'), breadcrumb: 'Add', routeParamBreadcrumb: false },
+                data: { title: 'Add', breadcrumb: 'Add', routeParamBreadcrumb: false },
                 resolve: {
                   clientTemplate: ClientTemplateResolver
                 }
@@ -127,7 +124,7 @@ const routes: Routes = [
                 children: [{
                   path: 'edit',
                   component: EditFamilyMemberComponent,
-                  data: { title: extract('Family Member View'), routeParamBreadcrumb: 'familyMemberId' },
+                  data: { title: 'Family Member View', routeParamBreadcrumb: 'familyMemberId' },
                   resolve: {
                     clientTemplate: ClientTemplateResolver,
                     editFamilyMember: ClientFamilyMemberResolver
@@ -139,7 +136,7 @@ const routes: Routes = [
           {
             path: 'identities',
             component: IdentitiesTabComponent,
-            data: { title: extract('Identities'), breadcrumb: 'Identities', routeParamBreadcrumb: false },
+            data: { title: 'Identities', breadcrumb: 'Identities', routeParamBreadcrumb: false },
             resolve: {
               clientIdentities: ClientIdentitiesResolver,
               clientIdentifierTemplate: ClientIdentifierTemplateResolver
@@ -148,7 +145,7 @@ const routes: Routes = [
           {
             path: 'documents',
             component: DocumentsTabComponent,
-            data: { title: extract('Documents'), breadcrumb: 'Documents', routeParamBreadcrumb: false },
+            data: { title: 'Documents', breadcrumb: 'Documents', routeParamBreadcrumb: false },
             resolve: {
               clientDocuments: ClientDocumentsResolver
             }
@@ -156,7 +153,7 @@ const routes: Routes = [
           {
             path: 'notes',
             component: NotesTabComponent,
-            data: { title: extract('Notes'), breadcrumb: 'Notes', routeParamBreadcrumb: false },
+            data: { title: 'Notes', breadcrumb: 'Notes', routeParamBreadcrumb: false },
             resolve: {
               clientNotes: ClientNotesResolver
             }
@@ -166,7 +163,7 @@ const routes: Routes = [
             children: [{
               path: ':datatableName',
               component: DatatableTabComponent,
-              data: { title: extract('Data Table View'), routeParamBreadcrumb: 'datatableName' },
+              data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
               resolve: {
                 clientDatatable: ClientDatatableResolver
               }
@@ -178,18 +175,18 @@ const routes: Routes = [
   },
   {
     path: 'clients',
-    data: { title: extract('Clients'), breadcrumb: 'Clients', routeParamBreadcrumb: false },
+    data: { title: 'Clients', breadcrumb: 'Clients', routeParamBreadcrumb: false },
     children: [
       {
         path: ':clientId',
-        data: { title: extract('Clients View'), routeParamBreadcrumb: 'clientId' },
+        data: { title: 'Clients View', routeParamBreadcrumb: 'clientId' },
         resolve: {
           clientViewData: ClientViewResolver
         },
         children: [
           {
             path: 'edit',
-            data: { title: extract('Edit Client'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+            data: { title: 'Edit Client', breadcrumb: 'Edit', routeParamBreadcrumb: false },
             component: EditClientComponent,
             resolve: {
               clientDataAndTemplate: ClientDataAndTemplateResolver
@@ -197,7 +194,7 @@ const routes: Routes = [
           },
           {
             path: 'actions/:name',
-            data: { title: extract('Client Actions'), routeParamBreadcrumb: 'name' },
+            data: { title: 'Client Actions', routeParamBreadcrumb: 'name' },
             component: ClientActionsComponent,
             resolve: {
               clientActionData: ClientActionsResolver
@@ -208,7 +205,7 @@ const routes: Routes = [
             children: [
               {
                 path: 'overview',
-                data: { title: extract('Charges Overview'), breadcrumb: 'Charges Overview' },
+                data: { title: 'Charges Overview', breadcrumb: 'Charges Overview' },
                 component: ChargesOverviewComponent,
                 resolve: {
                   clientChargesData: ClientChargeOverviewResolver
@@ -216,7 +213,7 @@ const routes: Routes = [
               },
               {
                 path: ':chargeId',
-                data: { title: extract('Charges'), routeParamBreadcrumb: 'chargeId' },
+                data: { title: 'Charges', routeParamBreadcrumb: 'chargeId' },
                 children: [
                   {
                     path: '',
@@ -227,7 +224,7 @@ const routes: Routes = [
                   },
                   {
                     path: 'pay',
-                    data: { title: extract('Pay Charge'), routeParamBreadcrumb: false },
+                    data: { title: 'Pay Charge', routeParamBreadcrumb: false },
                     component: ClientPayChargesComponent,
                     resolve: {
                       transactionData: ClientTransactionPayResolver

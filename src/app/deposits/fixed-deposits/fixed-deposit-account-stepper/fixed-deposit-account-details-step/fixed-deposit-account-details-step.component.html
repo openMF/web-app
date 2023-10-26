@@ -3,30 +3,30 @@
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Product Name</mat-label>
+      <mat-label>{{"labels.inputs.Product Name" | translate }}</mat-label>
       <mat-select formControlName="productId" required>
         <mat-option *ngFor="let product of productData" [value]="product.id">
           {{ product.name }}
         </mat-option>
       </mat-select>
       <mat-error>
-        Product Name is <strong>required</strong>
+        {{"labels.inputs.Product Name" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%" (click)="submittedOnDatePicker.open()">
-      <mat-label>Submitted On</mat-label>
+      <mat-label>{{"labels.inputs.Submitted On" | translate }}</mat-label>
       <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker"
         formControlName="submittedOnDate" required>
       <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #submittedOnDatePicker></mat-datepicker>
       <mat-error>
-        Submission Date is <strong>required</strong>
+        {{"labels.inputs.Submission Date" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Field Officer</mat-label>
+      <mat-label>{{"labels.inputs.Field Officer" | translate }}</mat-label>
       <mat-select formControlName="fieldOfficerId">
         <mat-option *ngFor="let officer of fieldOfficerData" [value]="officer.id">
           {{ officer.displayName }}
@@ -39,10 +39,10 @@
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious disabled>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-      Previous
+      {{"labels.buttons.Previous" | translate }}
     </button>
     <button mat-raised-button matStepperNext>
-      Next
+      {{"labels.buttons.Next" | translate }}
       <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
     </button>
   </div>

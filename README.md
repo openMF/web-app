@@ -148,8 +148,24 @@ Setting for Languages (i18n) still under development
 MIFOS_DEFAULT_LANGUAGE=en-US
 ```
 ```
-MIFOS_SUPPORTED_LANGUAGES=en-US,fr-FR
+MIFOS_SUPPORTED_LANGUAGES=cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW
 ```
+These are the Language available now:
+
+|  Language  | Code |    File    |
+|:----------:|:----:|:----------:|
+| Czech      |  cs  | cs-CS.json |
+| German     |  de  | de-DE.json |
+| English    |  en  | en-US.json |
+| Spanish    |  es  | es-MX.json |
+| French     |  fr  | fr-FR.json |
+| Italian    |  it  | it-IT.json |
+| Korean     |  ko  | ko-KO.json |
+| Lithuanian |  li  | li-LI.json |
+| Latvian    |  lv  | lv-LV.json |
+| Nepali     |  ne  | ne-NE.json |
+| Portuguese |  pt  | pt-PT.json |
+| Swahili    |  sw  | sw-SW.json |
 
 
 Setting for applying the Client preload in the Clients view, Default true

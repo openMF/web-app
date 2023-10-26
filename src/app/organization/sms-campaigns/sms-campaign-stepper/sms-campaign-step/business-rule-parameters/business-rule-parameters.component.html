@@ -2,7 +2,7 @@
 
   <mat-divider fxFlex="98%"></mat-divider>
 
-  <h3 fxFlex="98%" class="mat-h3">Business Rule Parameters</h3>
+  <h3 fxFlex="98%" class="mat-h3">{{ 'labels.heading.Business Rule Parameters' | translate }}</h3>
 
   <form [formGroup]="ReportForm">
 
@@ -16,7 +16,7 @@
             <mat-label>{{param.label}}</mat-label>
             <input matInput required [formControlName]="param.name">
             <mat-error *ngIf="ReportForm.controls[param.name].hasError('required')">
-              {{param.label}} is <strong>required</strong>
+              {{param.label}} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
   
@@ -27,7 +27,7 @@
             <mat-datepicker-toggle matSuffix [for]="runReportDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #runReportDatePicker></mat-datepicker>
             <mat-error *ngIf="ReportForm.controls[param.name].hasError('required')">
-              {{param.label}} is <strong>required</strong>
+              {{param.label}} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
   
@@ -39,7 +39,7 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="ReportForm.controls[param.name].hasError('required')">
-              {{param.label}} is <strong>required</strong>
+              {{param.label}} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -56,6 +56,6 @@
 <div class="margin-t" fxLayoutAlign="center">
   <button mat-raised-button matStepperNext color="primary" (click)="getResponseHeaders()"
     [disabled]="!this.ReportForm.valid">
-      Get Parameters
+    {{ 'labels.buttons.Get Parameters' | translate }}
   </button>
 </div>

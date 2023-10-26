@@ -1,7 +1,7 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_FUND'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    Edit
+    {{'labels.buttons.Edit' | translate }}
   </button>
 </div>
 
@@ -14,7 +14,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="mat-body-strong">
-          Name
+         {{ 'labels.inputs.name' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -22,7 +22,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          External Id
+          {{ 'labels.inputs.External Id' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -32,7 +32,7 @@
       </div>
 
       <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column">
-        <button type="button" mat-raised-button color="primary" [routerLink]="['../']">{{ 'Back' | translate }}</button>
+        <button type="button" mat-raised-button color="primary" [routerLink]="['../']">{{ 'Back' | translate}}</button>
       </div>
     </mat-card-content>
 

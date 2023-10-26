@@ -1,7 +1,7 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
   <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_TEMPLATE'">
     <fa-icon icon="plus" class="m-r-10"></fa-icon>
-    Create Template
+    {{'labels.buttons.Create Template' | translate}}
   </button>
 </div>
 
@@ -9,7 +9,7 @@
 
   <div fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
-      <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
+      <mat-label>{{'labels.inputs.Filter' | translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)">
     </mat-form-field>
   </div>
@@ -19,17 +19,17 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="entity">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Entity </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Entity' | translate}} </th>
         <td mat-cell *matCellDef="let template"> {{ template.entity }} </td>
       </ng-container>
 
       <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Type' | translate}} </th>
         <td mat-cell *matCellDef="let template"> {{ template.type }} </td>
       </ng-container>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.name' | translate}} </th>
         <td mat-cell *matCellDef="let template"> {{ template.name }} </td>
       </ng-container>
 

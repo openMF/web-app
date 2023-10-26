@@ -78,6 +78,7 @@ import { ChargeOffComponent } from './loans-view/loan-account-actions/charge-off
 import { AssetTransferLoanComponent } from './loans-view/loan-account-actions/asset-transfer-loan/asset-transfer-loan.component';
 import { ExternalAssetOwnerTabComponent } from './loans-view/external-asset-owner-tab/external-asset-owner-tab.component';
 import { ExternalAssetTransferComponent } from './loans-view/external-asset-owner-tab/external-asset-transfer/external-asset-transfer.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 /**
  * Loans Module
@@ -85,7 +86,13 @@ import { ExternalAssetTransferComponent } from './loans-view/external-asset-owne
  * All components related to loan functions should be declared here.
  */
 @NgModule({
-  imports: [SharedModule, LoansRoutingModule, DirectivesModule, PipesModule],
+  imports: [
+    SharedModule,
+    DirectivesModule,
+    LoansRoutingModule,
+    PipesModule,
+    TranslateModule
+  ],
   declarations: [
     AddLoanChargeComponent,
     LoansViewComponent,
