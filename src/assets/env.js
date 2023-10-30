@@ -2,14 +2,14 @@
   window["env"] = window["env"] || {};
 
   // BackEnd Environment variables
-  window["env"]["fineractApiUrls"] = 'https://ps-test.dev.alluvial.cloud';
-  window["env"]["fineractApiUrl"]  = 'https://ps-test.dev.alluvial.cloud';
+  window["env"]["fineractApiUrls"] = '';
+  window["env"]["fineractApiUrl"]  = '';
 
   window["env"]["apiProvider"] = '';
   window["env"]["apiVersion"]  = '';
 
-  window["env"]["fineractPlatformTenantId"]  = 'pstest';
-  window["env"]["fineractPlatformTenantIds"]  = 'pstest';
+  window["env"]["fineractPlatformTenantId"]  = '';
+  window["env"]["fineractPlatformTenantIds"]  = '';
 
   // Language Environment variables
   window["env"]["defaultLanguage"] = '';

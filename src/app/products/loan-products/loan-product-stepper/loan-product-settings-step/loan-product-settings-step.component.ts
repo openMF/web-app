@@ -132,10 +132,9 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'multiDisburseLoan': this.loanProductsTemplate.multiDisburseLoan,
       'maxTrancheCount': this.loanProductsTemplate.maxTrancheCount,
       'outstandingLoanBalance': this.loanProductsTemplate.outstandingLoanBalance,
-      'dueDaysForRepaymentEvent': this.loanProductsTemplate.dueDaysForRepaymentEvent,
-      'overDueDaysForRepaymentEvent': this.loanProductsTemplate.overDueDaysForRepaymentEvent,
       'enableDownPayment': this.loanProductsTemplate.enableDownPayment,
-      'enableInstallmentLevelDelinquency': this.loanProductsTemplate.enableInstallmentLevelDelinquency
+      'enableInstallmentLevelDelinquency': this.loanProductsTemplate.enableInstallmentLevelDelinquency,
+      'useDueForRepaymentsConfigurations': this.loanProductsTemplate.useDueForRepaymentsConfigurations
     });
 
     if (this.loanProductsTemplate.delinquencyBucket) {
@@ -239,10 +238,9 @@ export class LoanProductSettingsStepComponent implements OnInit {
         'graceOnArrearsAgeing': [true]
       }),
       'delinquencyBucketId': ['', Validators.required],
-      'dueDaysForRepaymentEvent': [''],
-      'overDueDaysForRepaymentEvent': [''],
       'enableDownPayment': [false],
-      'enableInstallmentLevelDelinquency': [false]
+      'enableInstallmentLevelDelinquency': [false],
+      'useDueForRepaymentsConfigurations': [false]
     });
   }
 
@@ -432,14 +430,17 @@ export class LoanProductSettingsStepComponent implements OnInit {
         }
       });
 
-    this.loanProductSettingsForm.get('dueDaysForRepaymentEvent').valueChanges
-    .subscribe((dueDaysForRepaymentEvent: number) => {
-      this.setStyleDaysForRepayment(this.DAYS_BEFORE_REPAYMENT_IS_DUE, dueDaysForRepaymentEvent);
-    });
-
-    this.loanProductSettingsForm.get('overDueDaysForRepaymentEvent').valueChanges
-    .subscribe((overDueDaysForRepaymentEvent: number) => {
-      this.setStyleDaysForRepayment(this.DAYS_AFTER_REPAYMENT_IS_OVERDUE, overDueDaysForRepaymentEvent);
+    this.loanProductSettingsForm.get('useDueForRepaymentsConfigurations').valueChanges
+    .subscribe((useDueForRepaymentsConfigurations: boolean) => {
+      if (useDueForRepaymentsConfigurations) {
+        this.loanProductSettingsForm.removeControl('dueDaysForRepaymentEvent');
+        this.loanProductSettingsForm.removeControl('overDueDaysForRepaymentEvent');
+      } else {
+        this.loanProductSettingsForm.addControl('dueDaysForRepaymentEvent',
+          new UntypedFormControl(this.loanProductsTemplate.dueDaysForRepaymentEvent, [Validators.required, rangeValidator(1, 100) ]));
+        this.loanProductSettingsForm.addControl('overDueDaysForRepaymentEvent',
+          new UntypedFormControl(this.loanProductsTemplate.overDueDaysForRepaymentEvent, [Validators.required, rangeValidator(1, 100) ]));
+      }
     });
   }
 
@@ -481,6 +482,10 @@ export class LoanProductSettingsStepComponent implements OnInit {
     const productSettings = this.loanProductSettingsForm.value;
     if (!this.loanProductSettingsForm.value.multiDisburseLoan) {
       delete productSettings['disableScheduleExtensionForDownPayment'];
+    }
+    if (this.loanProductSettingsForm.value.useDueForRepaymentsConfigurations) {
+      delete productSettings['dueDaysForRepaymentEvent'];
+      delete productSettings['overDueDaysForRepaymentEvent'];
     }
     return productSettings;
   }
