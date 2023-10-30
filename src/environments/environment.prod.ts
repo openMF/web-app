@@ -23,7 +23,7 @@ export const environment = {
   },
   warningDialog: {
     title: 'Warning',
-    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut id efficitur tortor. Pellentesque vel augue dolor. Quisque bibendum, lacus quis iaculis interdum, mi quam hendrerit tortor, sed ornare erat mi quis sapien. Maecenas maximus placerat arcu, a faucibus metus venenatis a. Maecenas at nibh in enim posuere ullamcorper.',
+    content: 'This system is for authorized use only. Unauthorized access will result in possible legal action. By accessing this system, you acknowledge that you are authorized to do so and that all data stored and processed here is confidential.',
     buttonText: 'Close'
   },
   defaultLanguage: window['env']['defaultLanguage'] || 'en-US',
