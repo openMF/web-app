@@ -39,6 +39,7 @@ export class AuthenticationService {
   /** User credentials. */
 
   private credentials: Credentials;
+  private dialogShown = false;
   /** Key to store credentials in storage. */
   private credentialsStorageKey = 'mifosXCredentials';
   /** Key to store oauth token details in storage. */
@@ -202,6 +203,7 @@ export class AuthenticationService {
     }
     this.authenticationInterceptor.removeAuthorization();
     this.setCredentials();
+    this.resetDialog();
     return of(true);
   }
 
@@ -264,6 +266,18 @@ export class AuthenticationService {
    */
   getDeliveryMethods() {
     return this.http.get('/twofactor');
+  }
+
+  showDialog() {
+    this.dialogShown = true;
+  }
+
+  resetDialog() {
+    this.dialogShown = false;
+  }
+
+  hasDialogBeenShown() {
+    return this.dialogShown;
   }
 
   /**
