@@ -21,6 +21,11 @@ export const environment = {
     enabled: false,  // For connecting to Mifos X using OAuth2 Authentication change the value to true
     serverUrl: ''
   },
+  warningDialog: {
+    title: 'Warning',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut id efficitur tortor. Pellentesque vel augue dolor. Quisque bibendum, lacus quis iaculis interdum, mi quam hendrerit tortor, sed ornare erat mi quis sapien. Maecenas maximus placerat arcu, a faucibus metus venenatis a. Maecenas at nibh in enim posuere ullamcorper.',
+    buttonText: 'Close'
+  },
   defaultLanguage: window['env']['defaultLanguage'] || 'en-US',
   supportedLanguages: window['env']['supportedLanguages'] || 'cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW',
   preloadClients: window['env']['preloadClients'] || true,
