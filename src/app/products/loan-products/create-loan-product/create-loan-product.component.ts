@@ -125,6 +125,11 @@ export class CreateLoanProductComponent implements OnInit {
 
   submit() {
     const loanProduct = this.loanProducts.buildPayload(this.loanProduct, this.itemsByDefault);
+    if (loanProduct['useDueForRepaymentsConfigurations'] === true) {
+      loanProduct['dueDaysForRepaymentEvent'] = null;
+      loanProduct['overDueDaysForRepaymentEvent'] = null;
+    }
+    delete loanProduct['useDueForRepaymentsConfigurations'];
 
     this.productsService.createLoanProduct(loanProduct)
       .subscribe((response: any) => {

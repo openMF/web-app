@@ -3,7 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'mifos-warning-dialog',
+  selector: 'mifosx-warning-dialog',
   templateUrl: './warning-dialog.component.html',
   styleUrls: ['./warning-dialog.component.scss']
 })
