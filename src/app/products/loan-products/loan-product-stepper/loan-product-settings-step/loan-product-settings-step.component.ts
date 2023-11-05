@@ -4,18 +4,6 @@ import { LoanProducts } from '../../loan-products';
 import { rangeValidator } from 'app/shared/validators/percentage.validator';
 import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
 
-interface DaysData {
-  days: number;
-  label: string;
-  style: string;
-}
-
-interface DaysForRepayment {
-  days: DaysData[];
-  code: string;
-  config: GlobalConfiguration;
-  style: string;
-}
 
 @Component({
   selector: 'mifosx-loan-product-settings-step',
@@ -51,7 +39,6 @@ export class LoanProductSettingsStepComponent implements OnInit {
 
   /** Values to Days for Repayments */
   defaultConfigValues: GlobalConfiguration[] = [];
-  daysForRepayments: DaysForRepayment[] = [];
 
   constructor(private formBuilder: UntypedFormBuilder) {
     this.createLoanProductSettingsForm();
@@ -60,26 +47,6 @@ export class LoanProductSettingsStepComponent implements OnInit {
 
   ngOnInit() {
     this.defaultConfigValues = this.loanProductsTemplate['itemsByDefault'];
-    this.defaultConfigValues.forEach((config: GlobalConfiguration) => {
-      const days: DaysData[] = [];
-      [...Array(10).keys()].forEach((day: number) => {
-        let label: string = day.toString();
-        let style = '';
-        if (day === config.value) {
-          label = day + ' *';
-          style = 'by-default';
-        }
-        days.push({days: day, label: label, style: style});
-      });
-
-      this.daysForRepayments.push({
-        days: days,
-        code: config.name,
-        config: config,
-        style: ''
-      });
-    });
-
     this.isLinkedToFloatingInterestRates.valueChanges
       .subscribe((isLinkedToFloatingInterestRates: any) => {
         if (isLinkedToFloatingInterestRates) {
@@ -133,9 +100,23 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'maxTrancheCount': this.loanProductsTemplate.maxTrancheCount,
       'outstandingLoanBalance': this.loanProductsTemplate.outstandingLoanBalance,
       'enableDownPayment': this.loanProductsTemplate.enableDownPayment,
-      'enableInstallmentLevelDelinquency': this.loanProductsTemplate.enableInstallmentLevelDelinquency,
-      'useDueForRepaymentsConfigurations': this.loanProductsTemplate.useDueForRepaymentsConfigurations
+      'enableInstallmentLevelDelinquency': this.loanProductsTemplate.enableInstallmentLevelDelinquency
     });
+
+    if (this.loanProductsTemplate.dueDaysForRepaymentEvent != null &&
+      this.loanProductsTemplate.overDueDaysForRepaymentEvent != null) {
+        this.loanProductSettingsForm.patchValue({
+          'useDueForRepaymentsConfigurations': false,
+          'dueDaysForRepaymentEvent': this.loanProductsTemplate.dueDaysForRepaymentEvent,
+          'overDueDaysForRepaymentEvent': this.loanProductsTemplate.overDueDaysForRepaymentEvent
+        });
+    } else {
+      this.loanProductSettingsForm.patchValue({
+        'useDueForRepaymentsConfigurations': true,
+        'dueDaysForRepaymentEvent': null,
+        'overDueDaysForRepaymentEvent': null
+      });
+    }
 
     if (this.loanProductsTemplate.delinquencyBucket) {
       this.loanProductSettingsForm.patchValue({
@@ -240,7 +221,9 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'delinquencyBucketId': ['', Validators.required],
       'enableDownPayment': [false],
       'enableInstallmentLevelDelinquency': [false],
-      'useDueForRepaymentsConfigurations': [false]
+      'useDueForRepaymentsConfigurations': [false],
+      'dueDaysForRepaymentEvent': [''],
+      'overDueDaysForRepaymentEvent': [''],
     });
   }
 
@@ -433,49 +416,27 @@ export class LoanProductSettingsStepComponent implements OnInit {
     this.loanProductSettingsForm.get('useDueForRepaymentsConfigurations').valueChanges
     .subscribe((useDueForRepaymentsConfigurations: boolean) => {
       if (useDueForRepaymentsConfigurations) {
-        this.loanProductSettingsForm.removeControl('dueDaysForRepaymentEvent');
-        this.loanProductSettingsForm.removeControl('overDueDaysForRepaymentEvent');
+        this.loanProductSettingsForm.patchValue({
+          'dueDaysForRepaymentEvent': null,
+          'overDueDaysForRepaymentEvent': null
+        });
       } else {
-        this.loanProductSettingsForm.addControl('dueDaysForRepaymentEvent',
-          new UntypedFormControl(this.loanProductsTemplate.dueDaysForRepaymentEvent, [Validators.required, rangeValidator(1, 100) ]));
-        this.loanProductSettingsForm.addControl('overDueDaysForRepaymentEvent',
-          new UntypedFormControl(this.loanProductsTemplate.overDueDaysForRepaymentEvent, [Validators.required, rangeValidator(1, 100) ]));
-      }
-    });
-  }
-
-  setStyleDaysForRepayment(attribute: string, currentValue: number): void {
-    const currentValues: DaysForRepayment[] = this.daysForRepayments;
-    this.daysForRepayments = [];
-    currentValues.forEach((dfr: DaysForRepayment) => {
-      if (dfr.code === attribute) {
-        dfr.days.forEach((days: DaysData) => {
-          if (days.days === currentValue) {
-            dfr.style = days.style;
-          }
+        this.loanProductSettingsForm.patchValue({
+          'dueDaysForRepaymentEvent': this.getGlobalConfigValue(LoanProducts.DAYS_BEFORE_REPAYMENT_IS_DUE),
+          'overDueDaysForRepaymentEvent': this.getGlobalConfigValue(LoanProducts.DAYS_AFTER_REPAYMENT_IS_OVERDUE)
         });
       }
-      this.daysForRepayments.push(dfr);
     });
   }
 
-  styleDaysForRepayment(attribute: string): string {
-    this.daysForRepayments.forEach((item: DaysForRepayment) => {
-      if (item.code === attribute) {
-        return item.style;
+  private getGlobalConfigValue(configName: string): number {
+    let value: number | null = null;
+    this.defaultConfigValues.forEach((config: GlobalConfiguration) => {
+      if (config.name === configName) {
+        value = config.value;
       }
     });
-    return '';
-  }
-
-  getDaysForRepayments(attribute: string): DaysData[] {
-    let days: DaysData[] = [];
-    this.daysForRepayments.forEach((item: DaysForRepayment) => {
-      if (item.code === attribute) {
-        days = item.days;
-      }
-    });
-    return days;
+    return value;
   }
 
   get loanProductSettings() {
@@ -484,8 +445,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
       delete productSettings['disableScheduleExtensionForDownPayment'];
     }
     if (this.loanProductSettingsForm.value.useDueForRepaymentsConfigurations) {
-      delete productSettings['dueDaysForRepaymentEvent'];
-      delete productSettings['overDueDaysForRepaymentEvent'];
+      productSettings['dueDaysForRepaymentEvent'] = null;
+      productSettings['overDueDaysForRepaymentEvent'] = null;
     }
     return productSettings;
   }

@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
               private router: Router,
               private dialog: MatDialog,
               private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService,) { }
+              private popoverService: PopoverService) { }
 
   /**
    * Sets the username of the authenticated user.
