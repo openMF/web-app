@@ -563,15 +563,15 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Use the Global Configurations values to the Repayment Event (notifications):</span>
-    <span fxFlex="60%">{{ loanProduct.useDueForRepaymentsConfigurations | yesNo }}</span>
+    <span fxFlex="60%">{{ useDueForRepaymentsConfigurations | yesNo }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="!loanProduct.useDueForRepaymentsConfigurations">
+  <div fxFlexFill *ngIf="loanProduct.dueDaysForRepaymentEvent">
     <span fxFlex="40%">Due days for repayment event:</span>
     <span fxFlex="60%">{{ loanProduct.dueDaysForRepaymentEvent | number }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="!loanProduct.useDueForRepaymentsConfigurations">
+  <div fxFlexFill *ngIf="loanProduct.overDueDaysForRepaymentEvent">
     <span fxFlex="40%">OverDue days for repayment event:</span>
     <span fxFlex="60%">{{ loanProduct.overDueDaysForRepaymentEvent | number }}</span>
   </div>

@@ -14,7 +14,7 @@ import { AmountCollectedPieComponent } from './dashboard/amount-collected-pie/am
 import { AmountDisbursedPieComponent } from './dashboard/amount-disbursed-pie/amount-disbursed-pie.component';
 import { ClientTrendsBarComponent } from './dashboard/client-trends-bar/client-trends-bar.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { WarningDialogComponent } from './warning-dialog/warning-dialog.component'
+import { WarningDialogComponent } from './warning-dialog/warning-dialog.component';
 
 /**
  * Home Component
