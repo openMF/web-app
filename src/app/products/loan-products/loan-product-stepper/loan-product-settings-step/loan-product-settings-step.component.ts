@@ -112,6 +112,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'enableDownPayment': this.loanProductsTemplate.enableDownPayment,
       'enableInstallmentLevelDelinquency': this.loanProductsTemplate.enableInstallmentLevelDelinquency,
       'loanScheduleType': this.loanProductsTemplate.loanScheduleType.code,
+      'useDueForRepaymentsConfigurations': this.loanProductsTemplate.useDueForRepaymentsConfigurations,
+      'allowAccrualPostingInArrears': this.loanProductsTemplate.allowAccrualPostingInArrears
     });
 
     this.isAdvancedTransactionProcessingStrategy = LoanProducts.isAdvancedPaymentAllocationStrategy(transactionProcessingStrategyCode);
@@ -243,6 +245,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'dueDaysForRepaymentEvent': [''],
       'overDueDaysForRepaymentEvent': [''],
       'loanScheduleType': [LoanProducts.LOAN_SCHEDULE_TYPE_CUMULATIVE, Validators.required],
+      'allowAccrualPostingInArrears': [false]
     });
   }
 
