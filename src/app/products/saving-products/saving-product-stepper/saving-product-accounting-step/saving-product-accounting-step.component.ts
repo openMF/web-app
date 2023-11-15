@@ -30,6 +30,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
   expenseAccountData: any;
   liabilityAccountData: any;
   incomeAndLiabilityAccountData: any;
+  combinedAccountData: any[];
 
   paymentFundSourceDisplayedColumns: string[] = ['paymentTypeId', 'fundSourceAccountId', 'actions'];
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId', 'actions'];
@@ -48,6 +49,23 @@ export class SavingProductAccountingStepComponent implements OnInit {
     this.incomeAccountData = this.savingProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
     this.expenseAccountData = this.savingProductsTemplate.accountingMappingOptions.expenseAccountOptions || [];
     this.liabilityAccountData = this.savingProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
+    this.combinedAccountData = [
+      ...this.assetAccountData,
+      ...this.incomeAccountData,
+      ...this.expenseAccountData,
+      ...this.liabilityAccountData
+    ];
+    this.combinedAccountData.sort((a, b) => {
+      const valueA = a.name.toLowerCase();
+      const valueB = b.name.toLowerCase();
+      if (valueA < valueB) {
+        return -1;
+      }
+      if (valueA > valueB) {
+        return 1;
+      }
+      return 0;
+    });
 
     this.savingProductAccountingForm.patchValue({
       'accountingRule': this.savingProductsTemplate.accountingRule.id
@@ -218,8 +236,8 @@ export class SavingProductAccountingStepComponent implements OnInit {
       new SelectBase({
         controlName: 'fundSourceAccountId',
         label: 'Fund Source',
-        value: values ? values.fundSourceAccountId : this.assetAccountData[0].id,
-        options: { label: 'name', value: 'id', data: this.assetAccountData },
+        value: values ? values.fundSourceAccountId : this.combinedAccountData[0].id,
+        options: { label: 'name', value: 'id', data: this.combinedAccountData },
         required: true,
         order: 2
       })
