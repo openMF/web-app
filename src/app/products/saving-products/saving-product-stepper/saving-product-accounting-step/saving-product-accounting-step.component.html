@@ -175,7 +175,7 @@
           <ng-container matColumnDef="fundSourceAccountId">
             <th mat-header-cell *matHeaderCellDef> Fund Source </th>
             <td mat-cell *matCellDef="let paymentFundSource">
-              {{ paymentFundSource.fundSourceAccountId | find:assetAccountData:'id':'name' }}
+              {{ paymentFundSource.fundSourceAccountId | find:combinedAccountData:'id':'name' }}
             </td>
           </ng-container>
 
