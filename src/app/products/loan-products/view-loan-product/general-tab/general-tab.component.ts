@@ -18,9 +18,12 @@ export class GeneralTabComponent implements OnInit {
 
   advancePaymentAllocationData: AdvancePaymentAllocationData;
 
+  useDueForRepaymentsConfigurations = false;
+
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe((data: { loanProduct: any }) => {
       this.loanProduct = data.loanProduct;
+      this.useDueForRepaymentsConfigurations = (!this.loanProduct.dueDaysForRepaymentEvent && !this.loanProduct.overDueDaysForRepaymentEvent);
       this.advancePaymentAllocationData = {
         transactionTypes: this.loanProduct.advancedPaymentAllocationTransactionTypes,
         allocationTypes: this.loanProduct.advancedPaymentAllocationTypes,

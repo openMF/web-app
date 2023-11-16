@@ -458,24 +458,21 @@
 
     <h3 fxFlex="23%" class="mat-h3">Event Settings <i class="fas fa-question"
       matTooltip="Setting for event notifications to be sent before or after repayments. Blue color means default value from global configurations."></i></h3>
-    <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="useDueForRepaymentsConfigurations" matTooltip="Use or not the Global Configurations values to the Repayment Event (notifications)" class="margin-b">
+        Use the Global Configurations values to the Repayment Event (notifications)
+    </mat-checkbox>
+
+    <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" *ngIf="!loanProductSettingsForm.value.useDueForRepaymentsConfigurations">
 
       <mat-form-field fxFlex="48%">
         <mat-label>Due days for repayment event</mat-label>
-        <mat-select formControlName="dueDaysForRepaymentEvent" matTooltip="The Amortization value is input to calculating the repayment amounts for repayment of the loan." required>
-          <mat-option *ngFor="let item of getDaysForRepayments(DAYS_BEFORE_REPAYMENT_IS_DUE)" [value]="item.days">
-            <span [ngClass]="item.style">{{item.label}}</span>
-          </mat-option>
-        </mat-select>
+        <input type="number" matInput matTooltip="The maximum outstanding loan account balance allowed at a point in time." formControlName="dueDaysForRepaymentEvent">
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
         <mat-label>OverDue days for repayment event</mat-label>
-        <mat-select formControlName="overDueDaysForRepaymentEvent" matTooltip="The Amortization value is input to calculating the repayment amounts for repayment of the loan." required>
-          <mat-option *ngFor="let item of getDaysForRepayments(DAYS_AFTER_REPAYMENT_IS_OVERDUE)" [value]="item.days">
-            <span [ngClass]="item.style">{{item.label}}</span>
-          </mat-option>
-        </mat-select>
+        <input type="number" matInput matTooltip="The maximum outstanding loan account balance allowed at a point in time." formControlName="overDueDaysForRepaymentEvent">
       </mat-form-field>
     </div>
 
