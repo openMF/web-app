@@ -33,6 +33,13 @@ export class SavingsTransactionGeneralTabComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  allowUndo(): boolean {
+    if (this.transactionData.reversed && this.transactionData.transactionType.amountHold) {
+      return false;
+    }
+    return !this.transactionData.reversed;
+  }
+
   releaseAmount(): void {
     const releaseAmountDialogRef = this.dialog.open(ReleaseAmountDialogComponent);
     releaseAmountDialogRef.afterClosed().subscribe((response: any) => {
