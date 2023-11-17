@@ -22,7 +22,7 @@
         {{ getInputName(columnHeader.columnName) }}
       </div>
 
-      <div fxFlex="68%" [ngSwitch]="columnHeader.columnDisplayType" class="right">
+      <div fxFlex="68%" [ngSwitch]="getColumnType(columnHeader.columnDisplayType, columnHeader.columnType)" class="right">
         <span *ngSwitchCase="'DATE'">
           {{dataObject.data[0].row[i] | dateFormat}}
         </span>
@@ -35,6 +35,8 @@
         <span *ngSwitchCase="'TEXT'" class="long-text">
           {{dataObject.data[0].row[i]}}
         </span>
+        <textarea *ngSwitchCase="'JSON'" cdkTextareaAutosize="true" cdkAutosizeMaxRows="20" cdkAutosizeMinRows="1" style="width: 100%; height: 100%" [innerHTML]="dataObject.data[0].row[i].value | prettyPrint">
+        </textarea>
         <span *ngSwitchDefault>
           <span class="m-r-5" *ngIf="isValidUrl(dataObject.data[0].row[i])">
             <button mat-icon-button matTooltip="{{ 'tooltips.View Link' | translate }}" (click)="openSite(dataObject.data[0].row[i])"
