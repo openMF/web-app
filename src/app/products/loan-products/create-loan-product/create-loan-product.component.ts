@@ -79,7 +79,7 @@ export class CreateLoanProductComponent implements OnInit {
   }
 
   advancePaymentStrategy(value: string) {
-    this.isAdvancedPaymentStrategy = (value === 'advanced-payment-allocation-strategy');
+    this.isAdvancedPaymentStrategy = LoanProducts.isAdvancedPaymentAllocationStrategy(value);
   }
 
   buildAdvancedPaymentAllocation(): void {

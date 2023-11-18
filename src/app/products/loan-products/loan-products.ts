@@ -7,11 +7,23 @@ import { GlobalConfiguration } from 'app/system/configurations/global-configurat
 })
 export class LoanProducts {
 
+  public static LOAN_SCHEDULE_TYPE_CUMULATIVE = 'CUMULATIVE';
+  public static LOAN_SCHEDULE_TYPE_PROGRESSIVE = 'PROGRESSIVE';
+
+  public static LOAN_SCHEDULE_PROCESSING_TYPE_HORIZONTAL = 'HORIZONTAL';
+  public static LOAN_SCHEDULE_PROCESSING_TYPE_VERTICAL = 'VERTICAL';
+
+  public static ADVANCED_PAYMENT_ALLOCATION_STRATEGY = 'advanced-payment-allocation-strategy';
+
   public static DAYS_BEFORE_REPAYMENT_IS_DUE = 'days-before-repayment-is-due';
   public static DAYS_AFTER_REPAYMENT_IS_OVERDUE = 'days-after-repayment-is-overdue';
 
   globalConfigurations: string[] = [LoanProducts.DAYS_BEFORE_REPAYMENT_IS_DUE, LoanProducts.DAYS_AFTER_REPAYMENT_IS_OVERDUE];
   propertyNames: string[] = ['dueDaysForRepaymentEvent', 'overDueDaysForRepaymentEvent'];
+
+  public static isAdvancedPaymentAllocationStrategy(code: string): boolean {
+    return (code === this.ADVANCED_PAYMENT_ALLOCATION_STRATEGY);
+  }
 
   constructor(private settingsService: SettingsService) { }
 

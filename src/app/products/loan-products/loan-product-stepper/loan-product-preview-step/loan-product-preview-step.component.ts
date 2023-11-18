@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { AdvancePaymentAllocationData } from '../loan-product-payment-strategy-step/payment-allocation-model';
+import { LoanProducts } from '../../loan-products';
 
 @Component({
   selector: 'mifosx-loan-product-preview-step',
@@ -13,28 +13,20 @@ export class LoanProductPreviewStepComponent implements OnInit, OnChanges {
   @Input() loanProduct: any;
   @Output() submit = new EventEmitter();
 
-  variationsDisplayedColumns: string[] = ['valueConditionType', 'borrowerCycleNumber', 'minValue', 'defaultValue', 'maxValue'];
-  chargesDisplayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType'];
-  paymentFundSourceDisplayedColumns: string[] = ['paymentTypeId', 'fundSourceAccountId'];
-  feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId'];
-
   isAdvancedPaymentAllocation = false;
-
-  advancePaymentAllocationData: AdvancePaymentAllocationData;
 
   constructor() { }
 
   ngOnInit() {
-    this.isAdvancedPaymentAllocation = (this.loanProduct.transactionProcessingStrategyCode === 'advanced-payment-allocation-strategy');
-    this.advancePaymentAllocationData = {
-      transactionTypes: this.loanProductsTemplate.advancedPaymentAllocationTransactionTypes,
-      allocationTypes: this.loanProductsTemplate.advancedPaymentAllocationTypes,
-      futureInstallmentAllocationRules: this.loanProductsTemplate.advancedPaymentAllocationFutureInstallmentAllocationRules
-    };
+    this.advancedPaymentAllocation();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.isAdvancedPaymentAllocation = (this.loanProduct.transactionProcessingStrategyCode === 'advanced-payment-allocation-strategy');
+    this.advancedPaymentAllocation();
+  }
+
+  advancedPaymentAllocation() {
+    this.isAdvancedPaymentAllocation = LoanProducts.isAdvancedPaymentAllocationStrategy(this.loanProduct.transactionProcessingStrategyCode);
   }
 
 }

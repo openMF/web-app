@@ -1,0 +1,47 @@
+@import "assets/styles/colours";
+
+.tab-container {
+  padding: 1%;
+  margin: 1%;
+
+  div: {
+    margin-top: 3px;
+  }
+}
+
+table {
+  width: 100%;
+}
+
+.mat-elevation-z1 {
+  margin: 1em 0 1.5em 0;
+}
+
+h2, h3, h4 {
+  margin: 0;
+  font-weight: 500;
+}
+
+span {
+  margin: 0.5em 0;
+}
+
+mat-divider {
+  margin: 0 0 0.5em 0;
+}
+
+.mat-h3 {
+  margin-top: 10px !important;
+  font-weight: 300;
+  color: $status-approved;
+}
+
+.mat-h4 {
+  margin-top: 10px !important;
+  font-weight: 200;
+  color: $status-approved;
+}
+
+.repayment-strategy {
+  color: $status-approved;
+}
