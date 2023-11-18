@@ -65,6 +65,10 @@ export class EditLoanProductComponent implements OnInit {
 
   ngOnInit() {
     this.buildAdvancedPaymentAllocation();
+    this.advancePaymentStrategy(this.loanProductAndTemplate.transactionProcessingStrategyCode);
+    if (this.isAdvancedPaymentStrategy) {
+      this.paymentAllocation = this.loanProductAndTemplate.paymentAllocation;
+    }
   }
 
   get loanProductDetailsForm() {
@@ -84,7 +88,7 @@ export class EditLoanProductComponent implements OnInit {
   }
 
   advancePaymentStrategy(value: string): void {
-    this.isAdvancedPaymentStrategy = (value === 'advanced-payment-allocation-strategy');
+    this.isAdvancedPaymentStrategy = LoanProducts.isAdvancedPaymentAllocationStrategy(value);
   }
 
   buildAdvancedPaymentAllocation(): void {
