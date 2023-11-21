@@ -50,59 +50,68 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
       this.penaltyToIncomeAccountMappings = this.loanProduct.penaltyToIncomeAccountMappings || [];
 
     } else {
-      const assetAccountData = this.loanProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
-      const incomeAccountData = this.loanProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
-      const expenseAccountData = this.loanProductsTemplate.accountingMappingOptions.expenseAccountOptions || [];
-      const liabilityAccountData = this.loanProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
-      const assetAndLiabilityAccountData = this.loanProductsTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions || [];
+      this.accountingMappings = {};
+      if ((this.loanProduct.accountingRule && this.loanProduct.accountingRule > 1) || this.loanProductsTemplate.accountingRule.value !== 'NONE') {
+        const assetAccountData = this.loanProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
+        const incomeAccountData = this.loanProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
+        const expenseAccountData = this.loanProductsTemplate.accountingMappingOptions.expenseAccountOptions || [];
+        const liabilityAccountData = this.loanProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
+        const assetAndLiabilityAccountData = this.loanProductsTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions || [];
 
-      this.accountingMappings = {
-        'fundSourceAccount': this.glAccountLookUp(this.loanProduct.fundSourceAccountId, assetAndLiabilityAccountData),
-        'loanPortfolioAccount': this.glAccountLookUp(this.loanProduct.loanPortfolioAccountId, assetAccountData),
-        'receivableInterestAccount': this.glAccountLookUp(this.loanProduct.receivableInterestAccountId, assetAccountData),
-        'receivableFeeAccount': this.glAccountLookUp(this.loanProduct.receivableFeeAccountId, assetAccountData),
-        'receivablePenaltyAccount': this.glAccountLookUp(this.loanProduct.receivablePenaltyAccountId, assetAccountData),
-        'transfersInSuspenseAccount': this.glAccountLookUp(this.loanProduct.transfersInSuspenseAccountId, assetAccountData),
+        this.accountingMappings = {
+          'fundSourceAccount': this.glAccountLookUp(this.loanProduct.fundSourceAccountId, assetAndLiabilityAccountData),
+          'loanPortfolioAccount': this.glAccountLookUp(this.loanProduct.loanPortfolioAccountId, assetAccountData),
+          'receivableInterestAccount': this.glAccountLookUp(this.loanProduct.receivableInterestAccountId, assetAccountData),
+          'receivableFeeAccount': this.glAccountLookUp(this.loanProduct.receivableFeeAccountId, assetAccountData),
+          'receivablePenaltyAccount': this.glAccountLookUp(this.loanProduct.receivablePenaltyAccountId, assetAccountData),
+          'transfersInSuspenseAccount': this.glAccountLookUp(this.loanProduct.transfersInSuspenseAccountId, assetAccountData),
 
-        'interestOnLoanAccount': this.glAccountLookUp(this.loanProduct.interestOnLoanAccountId, incomeAccountData),
-        'incomeFromFeeAccount': this.glAccountLookUp(this.loanProduct.incomeFromFeeAccountId, incomeAccountData),
-        'incomeFromPenaltyAccount': this.glAccountLookUp(this.loanProduct.incomeFromPenaltyAccountId, incomeAccountData),
-        'incomeFromRecoveryAccount': this.glAccountLookUp(this.loanProduct.incomeFromRecoveryAccountId, incomeAccountData),
-        'incomeFromChargeOffInterestAccount': this.glAccountLookUp(this.loanProduct.incomeFromChargeOffInterestAccountId, incomeAccountData),
-        'incomeFromChargeOffFeesAccount': this.glAccountLookUp(this.loanProduct.incomeFromChargeOffFeesAccountId, incomeAccountData),
-        'incomeFromChargeOffPenaltyAccount': this.glAccountLookUp(this.loanProduct.incomeFromChargeOffPenaltyAccountId, incomeAccountData),
+          'interestOnLoanAccount': this.glAccountLookUp(this.loanProduct.interestOnLoanAccountId, incomeAccountData),
+          'incomeFromFeeAccount': this.glAccountLookUp(this.loanProduct.incomeFromFeeAccountId, incomeAccountData),
+          'incomeFromPenaltyAccount': this.glAccountLookUp(this.loanProduct.incomeFromPenaltyAccountId, incomeAccountData),
+          'incomeFromRecoveryAccount': this.glAccountLookUp(this.loanProduct.incomeFromRecoveryAccountId, incomeAccountData),
+          'incomeFromChargeOffInterestAccount': this.glAccountLookUp(this.loanProduct.incomeFromChargeOffInterestAccountId, incomeAccountData),
+          'incomeFromChargeOffFeesAccount': this.glAccountLookUp(this.loanProduct.incomeFromChargeOffFeesAccountId, incomeAccountData),
+          'incomeFromChargeOffPenaltyAccount': this.glAccountLookUp(this.loanProduct.incomeFromChargeOffPenaltyAccountId, incomeAccountData),
 
-        'writeOffAccount': this.glAccountLookUp(this.loanProduct.writeOffAccountId, expenseAccountData),
-        'goodwillCreditAccount': this.glAccountLookUp(this.loanProduct.goodwillCreditAccountId, expenseAccountData),
-        'chargeOffExpenseAccount': this.glAccountLookUp(this.loanProduct.writeOffAccountId, expenseAccountData),
-        'chargeOffFraudExpenseAccount': this.glAccountLookUp(this.loanProduct.writeOffAccountId, expenseAccountData),
+          'writeOffAccount': this.glAccountLookUp(this.loanProduct.writeOffAccountId, expenseAccountData),
+          'goodwillCreditAccount': this.glAccountLookUp(this.loanProduct.goodwillCreditAccountId, expenseAccountData),
+          'chargeOffExpenseAccount': this.glAccountLookUp(this.loanProduct.writeOffAccountId, expenseAccountData),
+          'chargeOffFraudExpenseAccount': this.glAccountLookUp(this.loanProduct.writeOffAccountId, expenseAccountData),
 
-        'overpaymentLiabilityAccount': this.glAccountLookUp(this.loanProduct.overpaymentLiabilityAccountId, liabilityAccountData),
-      };
-      const paymentTypesData = this.loanProductsTemplate.paymentTypeOptions || [];
+          'overpaymentLiabilityAccount': this.glAccountLookUp(this.loanProduct.overpaymentLiabilityAccountId, liabilityAccountData),
+        };
 
-      this.loanProduct.paymentChannelToFundSourceMappings.forEach((m: any) => {
-        this.paymentChannelToFundSourceMappings.push({
-          fundSourceAccount: this.glAccountLookUp(m.fundSourceAccountId, assetAndLiabilityAccountData),
-          paymentType: this.paymentTypeLookUp(m.paymentTypeId, paymentTypesData)
-        });
-      });
+        if (this.loanProduct.paymentChannelToFundSourceMappings?.length > 0) {
+          const paymentTypesData = this.loanProductsTemplate.paymentTypeOptions || [];
+          this.loanProduct.paymentChannelToFundSourceMappings.forEach((m: any) => {
+            this.paymentChannelToFundSourceMappings.push({
+              fundSourceAccount: this.glAccountLookUp(m.fundSourceAccountId, assetAndLiabilityAccountData),
+              paymentType: this.paymentTypeLookUp(m.paymentTypeId, paymentTypesData)
+            });
+          });
+        }
 
-      this.feeToIncomeAccountMappings = [];
-      this.loanProduct.feeToIncomeAccountMappings.forEach((m: any) => {
-        this.feeToIncomeAccountMappings.push({
-          incomeAccount: this.glAccountLookUp(m.incomeAccountId, incomeAccountData),
-          charge: this.chargeLookUp(m.chargeId, this.loanProductsTemplate.chargeOptions)
-        });
-      });
+        this.feeToIncomeAccountMappings = [];
+        if (this.loanProduct.feeToIncomeAccountMappings?.length > 0) {
+          this.loanProduct.feeToIncomeAccountMappings.forEach((m: any) => {
+            this.feeToIncomeAccountMappings.push({
+              incomeAccount: this.glAccountLookUp(m.incomeAccountId, incomeAccountData),
+              charge: this.chargeLookUp(m.chargeId, this.loanProductsTemplate.chargeOptions)
+            });
+          });
+        }
 
-      this.penaltyToIncomeAccountMappings = [];
-      this.loanProduct.penaltyToIncomeAccountMappings.forEach((m: any) => {
-        this.penaltyToIncomeAccountMappings.push({
-          incomeAccount: this.glAccountLookUp(m.incomeAccountId, incomeAccountData),
-          charge: this.chargeLookUp(m.chargeId, this.loanProductsTemplate.penaltyOptions)
-        });
-      });
+        this.penaltyToIncomeAccountMappings = [];
+        if (this.loanProduct.penaltyToIncomeAccountMappings?.length > 0) {
+          this.loanProduct.penaltyToIncomeAccountMappings.forEach((m: any) => {
+            this.penaltyToIncomeAccountMappings.push({
+              incomeAccount: this.glAccountLookUp(m.incomeAccountId, incomeAccountData),
+              charge: this.chargeLookUp(m.chargeId, this.loanProductsTemplate.penaltyOptions)
+            });
+          });
+        }
+      }
 
       if (this.loanProduct.isInterestRecalculationEnabled) {
         this.loanProduct.interestRecalculationData = {
