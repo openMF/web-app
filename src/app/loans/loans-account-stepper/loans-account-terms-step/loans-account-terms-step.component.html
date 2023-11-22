@@ -10,7 +10,7 @@
       </mat-error>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">{{"labels.heading.Term Options <i class="fas fa-question" matTooltip="The loan term parameter in loan accounts
+    <h4 fxFlex="98%" class="mat-h4">{{"labels.heading.Term Options" | translate}} <i class="fas fa-question" matTooltip="The loan term parameter in loan accounts
       is the default-calculated field based on the number of repayments and repaid every value entered by the user"></i>" | translate}}</h4>
 
     <mat-form-field fxFlex="48%">
@@ -173,7 +173,7 @@
     </mat-checkbox>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>{{"labels.inputs.Arrears tolerance" | translate}} {{currencyDisplaySymbol}}</mat-label>
+      <mat-label>{{"labels.inputs.Arrears tolerance" | translate}} </mat-label>
       <input matInput type="number" formControlName="inArrearsTolerance" matTooltip="{{ 'tooltips.With Arrears tolerance' | translate}}">
     </mat-form-field>
 
