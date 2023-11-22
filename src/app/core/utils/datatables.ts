@@ -160,7 +160,8 @@ export class Datatables {
 
   public isValidUrl(urlString: string): boolean {
       try {
-        return Boolean(new URL(urlString));
+        const url = new URL(urlString);
+        return url.protocol.startsWith('http') || url.protocol.startsWith('https');
       } catch (e) {
         return false;
       }

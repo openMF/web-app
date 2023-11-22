@@ -33,4 +33,31 @@
     <tr mat-header-row *matHeaderRowDef="loanDelinquencyTagsColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: loanDelinquencyTagsColumns;"></tr>
   </table>
+
+  <div *ngIf="installmentLevelDelinquency.length > 0">
+
+    <h3>{{"labels.heading.Loan Delinquency Installment Tags" | translate}}</h3>
+
+    <table mat-table [dataSource]="installmentLevelDelinquency">
+
+      <ng-container matColumnDef="classification">
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Delinquency Classification" | translate}} </th>
+        <td mat-cell *matCellDef="let item"> {{ item.classification }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="minimumAgeDays">
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Days" | translate}} </th>
+        <td mat-cell *matCellDef="let item"> {{ item.minimumAgeDays | formatNumber }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Amount" | translate}} </th>
+        <td mat-cell *matCellDef="let item"> {{ item.delinquentAmount | currency:currency.code:'symbol-narrow':'1.2-2' }} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="installmentDelinquencyTagsColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: installmentDelinquencyTagsColumns;"></tr>
+    </table>
+
+  </div>
 </div>

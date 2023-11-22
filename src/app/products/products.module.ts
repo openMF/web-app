@@ -119,6 +119,7 @@ import { ShareProductDatatableTabComponent } from './share-products/view-share-p
 import { LoanProductPaymentStrategyStepComponent } from './loan-products/loan-product-stepper/loan-product-payment-strategy-step/loan-product-payment-strategy-step.component';
 import { ViewAdvancePaymenyAllocationComponent } from './loan-products/view-loan-product/shared/view-advance-paymeny-allocation/view-advance-paymeny-allocation.component';
 import { AdvancePaymentAllocationTabComponent } from './loan-products/loan-product-stepper/loan-product-payment-strategy-step/advance-payment-allocation-tab/advance-payment-allocation-tab.component';
+import { LoanProductSummaryComponent } from './loan-products/common/loan-product-summary/loan-product-summary.component';
 
 /**
  * Products Module
@@ -245,7 +246,8 @@ import { AdvancePaymentAllocationTabComponent } from './loan-products/loan-produ
         ShareProductGeneralTabComponent,
         ShareProductDatatableTabComponent,
         ViewAdvancePaymenyAllocationComponent,
-        AdvancePaymentAllocationTabComponent
+        AdvancePaymentAllocationTabComponent,
+        LoanProductSummaryComponent
     ]
 })
 export class ProductsModule { }

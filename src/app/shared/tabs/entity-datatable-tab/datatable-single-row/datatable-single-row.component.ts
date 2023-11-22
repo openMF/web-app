@@ -129,6 +129,33 @@ export class DatatableSingleRowComponent implements OnInit {
     return 'table-data';
   }
 
+  getColumnType(columnDisplayType: string, columnType: string) {
+    switch (columnDisplayType) {
+      case 'DATE': {
+        return columnDisplayType;
+      }
+      case 'DATETIME': {
+        return columnDisplayType;
+      }
+      case 'INTEGER': {
+        return columnDisplayType;
+      }
+      case 'DECIMAL': {
+        return columnDisplayType;
+      }
+      case 'TEXT': {
+        if (columnType === 'JSON') {
+          return 'JSON';
+        } else {
+          return columnDisplayType;
+        }
+      }
+      default: {
+        return columnDisplayType;
+      }
+    }
+  }
+
   getInputName(attr: string): string {
     return this.datatables.getName(attr);
   }
