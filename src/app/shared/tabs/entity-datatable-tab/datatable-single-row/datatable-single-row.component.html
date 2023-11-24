@@ -29,7 +29,10 @@
         <span *ngSwitchCase="'DATETIME'">
           {{dataObject.data[0].row[i] | datetimeFormat}}
         </span>
-        <span *ngSwitchCase="'INTEGER' || 'DECIMAL'">
+        <span *ngSwitchCase="'INTEGER'">
+          {{dataObject.data[0].row[i]}}
+        </span>
+        <span *ngSwitchCase="'DECIMAL'">
           {{dataObject.data[0].row[i] | formatNumber}}
         </span>
         <span *ngSwitchCase="'TEXT'" class="long-text">
