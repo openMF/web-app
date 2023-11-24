@@ -144,7 +144,7 @@ export class DatatableSingleRowComponent implements OnInit {
         return columnDisplayType;
       }
       case 'TEXT': {
-        if (columnType == 'JSON') {
+        if (columnType === 'JSON') {
           return 'JSON';
         } else {
           return columnDisplayType;

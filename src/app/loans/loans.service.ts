@@ -75,6 +75,13 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}/delinquencytags`);
   }
 
+  getDelinquencyData(loanId: string) {
+    const httpParams = new HttpParams()
+      .set('associations', 'collection')
+      .set('exclude', 'guarantors,futureSchedule');
+    return this.http.get(`/loans/${loanId}`, { params: httpParams });
+  }
+
   /**
    * Returns the loan template data with specific condition
    * @param loanId Loan Id
