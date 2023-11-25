@@ -1,0 +1,36 @@
+# Default values for fineract-ui.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+revisionHistoryLimit: 3
+
+app: openmf-webapp
+
+updateStrategy:
+  maxSurge: 25%
+  maxUnavailable: 25%
+  terminationGracePeriodSeconds: 30
+
+image:
+  repository: mojomojomojo/web-app
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "v0"
+
+service:
+  name: openmf-webapp
+  type: LoadBalancer
+  port: 80
+  targetPort: 80
+
+livenessProbe:
+  httpGet:
+      path: /
+      port: 80
+  initialDelaySeconds: 5
+  timeoutSeconds: 1
+  periodSeconds: 10
+  failureThreshold: 3
+
+containerPort: 80
