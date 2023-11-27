@@ -13,6 +13,7 @@ import { LoansAccountButtonConfiguration } from './loan-accounts-button-config';
 import { ConfirmationDialogComponent } from '../../shared/confirmation-dialog/confirmation-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { LoanStatus } from '../models/loan-status.model';
+import { Currency } from 'app/shared/models/general.model';
 
 @Component({
   selector: 'mifosx-loans-view',
@@ -42,6 +43,7 @@ export class LoansViewComponent implements OnInit {
   disburseTransactionNo = 0;
 
   loanStatus: LoanStatus;
+  currency: Currency;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -52,6 +54,7 @@ export class LoansViewComponent implements OnInit {
       this.loanDatatables = data.loanDatatables;
       this.loanDisplayArrearsDelinquency = data.loanArrearsDelinquencyConfig.value || 0;
       this.loanStatus = this.loanDetailsData.status;
+      this.currency = this.loanDetailsData.currency;
     });
     this.loanId = this.route.snapshot.params['loanId'];
     this.clientId = this.loanDetailsData.clientId;

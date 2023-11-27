@@ -13,6 +13,7 @@ import { ToggleWithholdTaxDialogComponent } from './custom-dialogs/toggle-withho
 import { SavingsButtonsConfiguration } from './savings-buttons.config';
 import { SavingsService } from '../savings.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
+import { Currency } from 'app/shared/models/general.model';
 
 /**
  * Savings Account View Component
@@ -34,7 +35,7 @@ export class SavingsAccountViewComponent implements OnInit {
   entityType: string;
 
   isActive = false;
-  currencyCode: string;
+  currency: Currency;
 
   /**
    * Fetches savings account data from `resolve`
@@ -48,7 +49,7 @@ export class SavingsAccountViewComponent implements OnInit {
               public dialog: MatDialog) {
     this.route.data.subscribe((data: { savingsAccountData: any, savingsDatatables: any }) => {
       this.savingsAccountData = data.savingsAccountData;
-      this.currencyCode = this.savingsAccountData.currency.code;
+      this.currency = this.savingsAccountData.currency;
       this.savingsDatatables = data.savingsDatatables;
     });
     if (this.router.url.includes('clients')) {

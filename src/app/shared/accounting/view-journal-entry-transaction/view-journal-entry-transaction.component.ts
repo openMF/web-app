@@ -32,6 +32,8 @@ export class ViewJournalEntryTransactionComponent implements OnInit {
   /** Sorter for transaction table. */
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
+  isJournalEntryLoaded = false;
+
   /**
    * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
@@ -50,11 +52,16 @@ export class ViewJournalEntryTransactionComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe((data: { title: string, transaction: any, transferJournalEntryData: any }) => {
       this.title = data.title;
+      this.isJournalEntryLoaded = false;
       if (this.isViewTransaction()) {
         this.transaction = data.transaction;
-        this.transactionId = data.transaction.pageItems[0].transactionId;
+        if (data.transaction.pageItems.length > 0) {
+          this.isJournalEntryLoaded = true;
+          this.transactionId = data.transaction.pageItems[0].transactionId;
+        }
       } else if (this.isViewTransfer()) {
         this.journalEntriesData = data.transferJournalEntryData.journalEntryData.content;
+        this.isJournalEntryLoaded = true;
       }
       this.setTransaction();
     });

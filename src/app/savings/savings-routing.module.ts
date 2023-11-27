@@ -42,6 +42,7 @@ import { NotesTabComponent } from './savings-account-view/notes-tab/notes-tab.co
 import { SavingNotesResolver } from './common-resolvers/saving-notes.resolver';
 import { SavingDocumentsResolver } from './common-resolvers/saving-documents.resolver';
 import { SavingsTransactionGeneralTabComponent } from './savings-account-view/transactions/view-transaction/savings-transaction-general-tab/savings-transaction-general-tab.component';
+import { GeneralTabComponent } from './savings-account-view/general-tab/general-tab.component';
 
 /** Savings Routes */
 const routes: Routes = [
@@ -68,8 +69,18 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'transactions',
+            redirectTo: 'general',
             pathMatch: 'full'
+          },
+          {
+            path: 'general',
+            data: { title: 'Savings Account Details', breadcrumb: 'General', routeParamBreadcrumb: false },
+            children: [
+              {
+                path: '',
+                component: GeneralTabComponent
+              }
+            ]
           },
           {
             path: 'transactions',

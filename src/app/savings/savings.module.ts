@@ -52,6 +52,7 @@ import { NotesTabComponent } from './savings-account-view/notes-tab/notes-tab.co
 import { DatatableTransactionTabComponent } from './savings-account-view/transactions/view-transaction/datatable-transaction-tab/datatable-transaction-tab.component';
 import { SavingsTransactionGeneralTabComponent } from './savings-account-view/transactions/view-transaction/savings-transaction-general-tab/savings-transaction-general-tab.component';
 import { SavingsTransactionDatatableTabComponent } from './savings-account-view/transactions/view-transaction/savings-transaction-datatable-tab/savings-transaction-datatable-tab.component';
+import { GeneralTabComponent } from './savings-account-view/general-tab/general-tab.component';
 
 
 /**
@@ -110,7 +111,8 @@ import { SavingsTransactionDatatableTabComponent } from './savings-account-view/
     NotesTabComponent,
     DatatableTransactionTabComponent,
     SavingsTransactionGeneralTabComponent,
-    SavingsTransactionDatatableTabComponent
+    SavingsTransactionDatatableTabComponent,
+    GeneralTabComponent
   ],
   providers: [ ]
 })

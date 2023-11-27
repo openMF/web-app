@@ -40,6 +40,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
   delinquencyBucketData: any;
   loanScheduleTypeData: OptionData[] = [];
   loanScheduleProcessingTypeData: OptionData[] = [];
+  isAdvancedTransactionProcessingStrategy = false;
+  advancedTransactionProcessingStrategyDisabled = true;
 
   /** Values to Days for Repayments */
   defaultConfigValues: GlobalConfiguration[] = [];
@@ -78,13 +80,14 @@ export class LoanProductSettingsStepComponent implements OnInit {
     this.loanScheduleTypeData = this.loanProductsTemplate.loanScheduleTypeOptions;
     this.loanScheduleProcessingTypeData = this.loanProductsTemplate.loanScheduleProcessingTypeOptions;
 
+    const transactionProcessingStrategyCode: string = this.loanProductsTemplate.transactionProcessingStrategyCode || this.transactionProcessingStrategyData[0].code;
     this.loanProductSettingsForm.patchValue({
       'amortizationType': this.loanProductsTemplate.amortizationType.id,
       'interestType': this.loanProductsTemplate.interestType.id,
       'isEqualAmortization': this.loanProductsTemplate.isEqualAmortization,
       'interestCalculationPeriodType': this.loanProductsTemplate.interestCalculationPeriodType.id,
       'allowPartialPeriodInterestCalcualtion': this.loanProductsTemplate.allowPartialPeriodInterestCalcualtion,
-      'transactionProcessingStrategyCode': this.loanProductsTemplate.transactionProcessingStrategyCode || this.transactionProcessingStrategyData[0].code,
+      'transactionProcessingStrategyCode': transactionProcessingStrategyCode,
       'graceOnPrincipalPayment': this.loanProductsTemplate.graceOnPrincipalPayment,
       'graceOnInterestPayment': this.loanProductsTemplate.graceOnInterestPayment,
       'graceOnInterestCharged': this.loanProductsTemplate.graceOnInterestCharged,
@@ -109,8 +112,14 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'enableDownPayment': this.loanProductsTemplate.enableDownPayment,
       'enableInstallmentLevelDelinquency': this.loanProductsTemplate.enableInstallmentLevelDelinquency,
       'loanScheduleType': this.loanProductsTemplate.loanScheduleType.code,
-      'loanScheduleProcessingType': this.loanProductsTemplate.loanScheduleProcessingType.code
     });
+
+    this.isAdvancedTransactionProcessingStrategy = LoanProducts.isAdvancedPaymentAllocationStrategy(transactionProcessingStrategyCode);
+    if (this.isAdvancedTransactionProcessingStrategy) {
+      this.loanProductSettingsForm.addControl('loanScheduleProcessingType', new UntypedFormControl(
+        this.loanProductsTemplate.loanScheduleProcessingType.code || LoanProducts.LOAN_SCHEDULE_PROCESSING_TYPE_HORIZONTAL,
+        [Validators.required ]));
+    }
 
     if (this.loanProductsTemplate.dueDaysForRepaymentEvent != null &&
       this.loanProductsTemplate.overDueDaysForRepaymentEvent != null) {
@@ -234,7 +243,6 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'dueDaysForRepaymentEvent': [''],
       'overDueDaysForRepaymentEvent': [''],
       'loanScheduleType': [LoanProducts.LOAN_SCHEDULE_TYPE_CUMULATIVE, Validators.required],
-      'loanScheduleProcessingType': [LoanProducts.LOAN_SCHEDULE_PROCESSING_TYPE_HORIZONTAL, Validators.required]
     });
   }
 
@@ -395,6 +403,13 @@ export class LoanProductSettingsStepComponent implements OnInit {
     this.loanProductSettingsForm.get('transactionProcessingStrategyCode').valueChanges
       .subscribe((transactionProcessingStrategyCode: string) => {
         this.advancePaymentStrategy.emit(transactionProcessingStrategyCode);
+        this.isAdvancedTransactionProcessingStrategy =  LoanProducts.isAdvancedPaymentAllocationStrategy(transactionProcessingStrategyCode);
+        if (this.isAdvancedTransactionProcessingStrategy) {
+          this.loanProductSettingsForm.addControl('loanScheduleProcessingType', new UntypedFormControl(
+              LoanProducts.LOAN_SCHEDULE_PROCESSING_TYPE_HORIZONTAL, [Validators.required]));
+        } else {
+          this.loanProductSettingsForm.removeControl('loanScheduleProcessingType');
+        }
       });
 
     this.loanProductSettingsForm.get('allowAttributeConfiguration').valueChanges
@@ -452,6 +467,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
             'transactionProcessingStrategyCode': this.transactionProcessingStrategyData[0].code
           });
         }
+        this.advancedTransactionProcessingStrategyDisabled = false;
       } else {
         // Only Advanced Payment Allocation Strategy
         this.transactionProcessingStrategyDataBase.some(
@@ -459,6 +475,10 @@ export class LoanProductSettingsStepComponent implements OnInit {
           if (LoanProducts.isAdvancedPaymentAllocationStrategy(cn.code)) {
             this.transactionProcessingStrategyData.push(cn);
           }
+        });
+        this.advancedTransactionProcessingStrategyDisabled = true;
+        this.loanProductSettingsForm.patchValue({
+          'transactionProcessingStrategyCode': this.transactionProcessingStrategyData[0].code
         });
       }
     });

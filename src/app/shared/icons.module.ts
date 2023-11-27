@@ -105,7 +105,9 @@ import {
   faCoins,
   faPiggyBank,
   faFileExcel,
-  faFileExport
+  faFileExport,
+  faCalculator,
+  faCalendarCheck
 } from '@fortawesome/free-solid-svg-icons';
 
 /**
@@ -124,13 +126,16 @@ export class IconsModule {
       faArchive,
       faArrowLeft,
       faArrowRight,
+      faBan,
       faBars,
       faBell,
       faBook,
       faBriefcase,
       faBuilding,
+      faCalculator,
       faCalendar,
       faCalendarAlt,
+      faCalendarCheck,
       faChartBar,
       faCheck,
       faCheckCircle,

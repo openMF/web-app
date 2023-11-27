@@ -3,13 +3,14 @@ export class RecurringDepositsButtonsConfiguration {
 
   optionArray: {
     name: string,
-    taskPermissionName?: string,
+    icon?: string,
+    taskPermissionName: string,
   }[];
 
   buttonsArray: {
     name: string,
     icon: string,
-    taskPermissionName?: string,
+    taskPermissionName: string,
   }[];
 
   constructor(status: string) {
@@ -31,15 +32,18 @@ export class RecurringDepositsButtonsConfiguration {
         this.buttonsArray = [
           {
             name: 'Deposit',
-            icon: 'fa fa-arrow-up'
+            icon: 'arrow-up',
+            taskPermissionName: 'DEPOSIT_RECURRINGDEPOSITACCOUNT'
           },
           {
             name: 'Premature Close',
-            icon: 'fa fa-arrow-left'
+            icon: 'arrow-left',
+            taskPermissionName: 'PREMATURECLOSE_RECURRINGDEPOSITACCOUNT'
           },
           {
             name: 'Calculate Interest',
-            icon: 'fa fa-table',
+            icon: 'calculator',
+            taskPermissionName: 'CALCULATEINTEREST_RECURRINGDEPOSITACCOUNT'
           }
         ];
         break;
@@ -47,11 +51,13 @@ export class RecurringDepositsButtonsConfiguration {
         this.buttonsArray = [
           {
             name: 'Modify Application',
-            icon: 'fa fa-pencil ',
+            icon: 'edit',
+            taskPermissionName: 'UPDATE_RECURRINGDEPOSITACCOUNT'
           },
           {
             name: 'Approve',
-            icon: 'fa fa-check'
+            icon: 'check',
+            taskPermissionName: 'APPROVE_RECURRINGDEPOSITACCOUNT'
           }
         ];
         break;
@@ -59,11 +65,13 @@ export class RecurringDepositsButtonsConfiguration {
         this.buttonsArray = [
           {
             name: 'Undo Approval',
-            icon: 'fa fa-undo'
+            icon: 'undo',
+            taskPermissionName: 'APPROVALUNDO_RECURRINGDEPOSITACCOUNT'
           },
           {
             name: 'Activate',
-            icon: 'fa fa-check'
+            icon: 'check',
+            taskPermissionName: 'ACTIVATE_RECURRINGDEPOSITACCOUNT'
           }
         ];
       break;
@@ -71,15 +79,18 @@ export class RecurringDepositsButtonsConfiguration {
         this.buttonsArray = [
           {
             name: 'Close',
-            icon: 'fa fa-arrow-right'
+            icon: 'arrow-right',
+            taskPermissionName: 'CLOSE_RECURRINGDEPOSITACCOUNT'
           },
           {
             name: 'Calculate Interest',
-            icon: 'fa fa-table'
+            icon: 'calculator',
+            taskPermissionName: 'CALCULATEINTEREST_RECURRINGDEPOSITACCOUNT'
           },
           {
             name: 'Post Interest',
-            icon: 'fa fa-table'
+            icon: 'money',
+            taskPermissionName: 'POSTINTEREST_RECURRINGDEPOSITACCOUNT'
           }
         ];
       break;
@@ -94,32 +105,46 @@ export class RecurringDepositsButtonsConfiguration {
         this.optionArray = [
           {
             name: 'Post Interest',
+            icon: 'table',
+            taskPermissionName: 'POSTINTEREST_RECURRINGDEPOSITACCOUNT'
           },
           {
             name: 'Add Charge',
+            icon: 'plus',
+            taskPermissionName: 'POSTINTEREST_RECURRINGDEPOSITACCOUNT'
           }
         ];
         break;
       case 'Submitted and pending approval':
         this.optionArray = [
           {
-            name: 'Reject'
+            name: 'Reject',
+            icon: 'ban',
+            taskPermissionName: 'REJECT_RECURRINGDEPOSITACCOUNT'
           },
           {
-            name: 'Withdraw By Client'
+            name: 'Withdrawn by client',
+            icon: 'arrow-down',
+            taskPermissionName: 'WITHDRAW_RECURRINGDEPOSITACCOUNT'
           },
           {
-            name: 'Add Charge'
+            name: 'Add Charge',
+            icon: 'plus',
+            taskPermissionName: 'ADDCHARGE_RECURRINGDEPOSITACCOUNT'
           },
           {
-            name: 'Delete'
+            name: 'Delete',
+            icon: 'trash',
+            taskPermissionName: 'DELETE_RECURRINGDEPOSITACCOUNT'
           }
         ];
         break;
       case 'Matured':
         this.optionArray = [
           {
-            name: 'Add Charge'
+            name: 'Add Charge',
+            icon: 'plus',
+            taskPermissionName: 'ADDCHARGE_RECURRINGDEPOSITACCOUNT'
           }
         ];
         break;
@@ -129,11 +154,11 @@ export class RecurringDepositsButtonsConfiguration {
     }
   }
 
-  addOption(option: {name: string, icon?: string, taskPermissionName?: string}) {
+  addOption(option: {name: string, icon?: string, taskPermissionName: string}) {
     this.optionArray.push(option);
   }
 
-  addButton(option: { name: string, icon: string, taskPermissionName?: string }) {
+  addButton(option: { name: string, icon: string, taskPermissionName: string }) {
     this.buttonsArray.push(option);
   }
 

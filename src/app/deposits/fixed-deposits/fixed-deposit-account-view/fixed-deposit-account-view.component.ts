@@ -15,6 +15,7 @@ import { FixedDepositsButtonsConfiguration } from './fixed-deposits-buttons.conf
 /** Custom Services */
 import { FixedDepositsService } from '../fixed-deposits.service';
 import { SavingsService } from 'app/savings/savings.service';
+import { Currency } from 'app/shared/models/general.model';
 
 /**
  * Fixed Deposits Account View Component
@@ -34,7 +35,7 @@ export class FixedDepositAccountViewComponent implements OnInit {
   buttonConfig: FixedDepositsButtonsConfiguration;
   /** Entity Type */
   entityType: string;
-  currencyCode: string;
+  currency: Currency;
 
   /**
    * Fetches fixed deposits account data from `resolve`
@@ -52,7 +53,7 @@ export class FixedDepositAccountViewComponent implements OnInit {
     this.route.data.subscribe((data: { fixedDepositsAccountData: any, savingsDatatables: any  }) => {
       this.fixedDepositsAccountData = data.fixedDepositsAccountData;
       this.savingsDatatables = data.savingsDatatables;
-      this.currencyCode = this.fixedDepositsAccountData.currency.code;
+      this.currency = this.fixedDepositsAccountData.currency;
     });
     if (this.router.url.includes('clients')) {
       this.entityType = 'Client';
