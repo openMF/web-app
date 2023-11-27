@@ -25,6 +25,7 @@ import { EditRecurringDepositAccountComponent } from './edit-recurring-deposit-a
 import { RecurringDepositsAccountAndTemplateResolver } from './common-resolvers/recurring-deposit-account-and-template.resolver';
 import { RecurringDepositsAccountTransactionResolver } from './common-resolvers/recurring-deposit-account-transaction.resolver';
 import { RecurringDepositsAccountTransactionTemplateResolver } from './common-resolvers/recurring-deposit-account-transaction-template.resolver';
+import { GeneralTabComponent } from './recurring-deposits-account-view/general-tab/general-tab.component';
 
 const routes: Routes = [
   {
@@ -47,25 +48,29 @@ const routes: Routes = [
             path: '',
             component: RecurringDepositsAccountViewComponent,
             resolve: {
-              recurringDepositsAccountData: RecurringDepositsAccountViewResolver,
+              recurringDepositsAccountData: RecurringDepositsAccountDataResolver,
               savingsDatatables: SavingsDatatablesResolver
             },
             children: [
               {
+                path: '',
+                redirectTo: 'general',
+                pathMatch: 'full'
+              },
+              {
+                path: 'general',
+                component: GeneralTabComponent,
+                data: { title: 'Recurring Deposit Account Details', breadcrumb: 'General', routeParamBreadcrumb: false },
+              },
+              {
                 path: 'interest-rate-chart',
                 component: InterestRateChartTabComponent,
                 data: { title: 'Recurring Deposit Account Interest Rate Chart', breadcrumb: 'Interest Rate Chart', routeParamBreadcrumb: false },
-                resolve: {
-                  recurringDepositsAccountData: RecurringDepositsAccountDataResolver
-                }
               },
               {
                 path: 'transactions',
                 component: TransactionsTabComponent,
                 data: { title: 'Recurring Deposit Account Transactions', breadcrumb: 'Transactions', routeParamBreadcrumb: false },
-                resolve: {
-                  recurringDepositsAccountData: RecurringDepositsAccountDataResolver
-                }
               },
               {
                 path: 'charges',
@@ -76,9 +81,6 @@ const routes: Routes = [
                 path: 'standing-instructions-tab',
                 component: StandingInstructionsTabComponent,
                 data: { title: 'Recurring Deposit Account Standing Instructions', breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false },
-                resolve: {
-                  recurringDepositsAccountData: RecurringDepositsAccountDataResolver
-                }
               },
               {
                 path: 'datatables',

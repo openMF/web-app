@@ -22,6 +22,7 @@ import { FixedDepositsAccountTransactionResolver } from './common-resolvers/fixe
 import { FixedDepositsAccountActionsResolver } from './common-resolvers/fixed-deposit-account-actions.resolver';
 import { FixedDepositsAccountTemplateResolver } from './common-resolvers/fixed-deposit-account-template.resolver';
 import { FixedDepositsAccountAndTemplateResolver } from './common-resolvers/fixed-deposit-account-and-template.resolver';
+import { GeneralTabComponent } from './fixed-deposit-account-view/general-tab/general-tab.component';
 
 const routes: Routes = [
   {
@@ -53,8 +54,13 @@ const routes: Routes = [
             children: [
               {
                 path: '',
-                redirectTo: 'transactions',
+                redirectTo: 'general',
                 pathMatch: 'full'
+              },
+              {
+                path: 'general',
+                component: GeneralTabComponent,
+                data: { title: 'Fixed Deposit Account Details', breadcrumb: 'General', routeParamBreadcrumb: false },
               },
               {
                 path: 'interest-rate-chart',

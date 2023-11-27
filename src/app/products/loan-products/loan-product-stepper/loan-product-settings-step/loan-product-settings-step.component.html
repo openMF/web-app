@@ -65,7 +65,8 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Repayment strategy</mat-label>
-      <mat-select formControlName="transactionProcessingStrategyCode" matTooltip="The repayment strategy determines the sequence in which each of the components is paid." required>
+      <mat-select formControlName="transactionProcessingStrategyCode" matTooltip="The repayment strategy determines the sequence in which each of the components is paid."
+        required [disabled]="advancedTransactionProcessingStrategyDisabled">
         <mat-option *ngFor="let transactionProcessingStrategy of transactionProcessingStrategyData" [value]="transactionProcessingStrategy.code">
           {{ transactionProcessingStrategy.name }}
         </mat-option>
@@ -75,7 +76,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field fxFlex="48%" *ngIf="isAdvancedTransactionProcessingStrategy">
       <mat-label>Loan Schedule Processing Type</mat-label>
       <mat-select formControlName="loanScheduleProcessingType" required>
         <mat-option *ngFor="let loanScheduleProcessingType of loanScheduleProcessingTypeData" [value]="loanScheduleProcessingType.code">

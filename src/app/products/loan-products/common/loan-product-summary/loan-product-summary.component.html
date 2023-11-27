@@ -330,6 +330,11 @@
   <mat-divider [inset]="true"></mat-divider>
 
   <div fxFlexFill>
+    <span fxFlex="47%">Loan Schedule Type:</span>
+    <span  fxFlex="53%">{{ loanProduct.loanScheduleType.value }}</span>
+  </div>
+
+  <div fxFlexFill>
     <span fxFlex="47%">Repayment Strategy:</span>
     <span  fxFlex="53%" class="repayment-strategy">{{ loanProduct.transactionProcessingStrategyName }}</span>
   </div>
@@ -346,12 +351,7 @@
     </span>
   </div>
 
-  <div fxFlexFill>
-    <span fxFlex="47%">Loan Schedule Type:</span>
-    <span  fxFlex="53%">{{ loanProduct.loanScheduleType.value }}</span>
-  </div>
-
-  <div fxFlexFill *ngIf="loanProduct.loanScheduleProcessingType">
+  <div fxFlexFill *ngIf="isAdvancedPaymentAllocationStrategy()">
     <span fxFlex="47%">Loan Schedule Processing Type:</span>
     <span  fxFlex="53%">{{ loanProduct.loanScheduleProcessingType.value }}</span>
   </div>

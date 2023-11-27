@@ -27,7 +27,7 @@
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" *ngIf="loanProductSelected">
 
     <mat-form-field fxFlex="48%">
-      <mat-label>{{"labels.inputs.Loan purpose" | translate}}</mat-label>
+      <mat-label>{{"labels.inputs.Loan Purpose" | translate}}</mat-label>
       <mat-select formControlName="loanPurposeId" matTooltip="{{ 'tooltips.Provides an indication' | translate}}">
         <mat-option *ngFor="let loanPurpose of loanPurposeOptions" [value]="loanPurpose.id">
           {{ loanPurpose.name }}

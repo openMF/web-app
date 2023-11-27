@@ -1,4 +1,4 @@
-<mat-card class="recurring-deposits-account-card">
+<mat-card class="account-card">
 
   <mat-card-header fxLayout="column" class="header">
 
@@ -13,11 +13,49 @@
 
       <div class="mat-typography account-card-title">
         <mat-card-title>
-          <h3 fxFlex="95%">
-            <i class="fa fa-stop" [ngClass]="recurringDepositsAccountData.status.code | statusLookup"
-              [matTooltip]="recurringDepositsAccountData.status.value"></i>
-              {{"labels.inputs.Account Name" | translate }} : {{recurringDepositsAccountData.depositProductName}}
-          </h3>
+          <div fxFlex="60%">
+            <h3>
+              <i class="fa fa-stop" [ngClass]="recurringDepositsAccountData.status.code | statusLookup"
+                [matTooltip]="recurringDepositsAccountData.status.value"></i>
+              {{"labels.inputs.Recurring Deposit" | translate }} : {{recurringDepositsAccountData.depositProductName}}
+              <mifosx-account-number accountNo="{{recurringDepositsAccountData.accountNo}}"></mifosx-account-number>
+            </h3>
+            <span class="account-overview">
+              {{'labels.text.' + entityType | translate}} {{"labels.inputs.name" | translate}}:
+              {{recurringDepositsAccountData.clientName ||
+              recurringDepositsAccountData.groupName}}
+              <span class="m-l-10" *ngIf="recurringDepositsAccountData.clientAccountNo">
+                <mifosx-account-number
+                  accountNo="{{recurringDepositsAccountData.clientAccountNo}}"></mifosx-account-number>
+              </span>
+            </span>
+          </div>
+
+          <div
+            *ngIf="!recurringDepositsAccountData.status.rejected && !recurringDepositsAccountData.status.submittedAndPendingApproval">
+            <h3> {{"labels.heading.Account Overview" | translate}} </h3>
+            <table class="account-overview">
+              <tbody>
+                <tr>
+                  <td>{{"labels.inputs.Current Balance" | translate }}</td>
+                  <td class="r-amount">{{recurringDepositsAccountData.summary.accountBalance |
+                    currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+                </tr>
+                <tr>
+                  <td>{{"labels.inputs.Deposit Amount" | translate }}</td>
+                  <td class="r-amount">{{recurringDepositsAccountData.depositAmount |
+                    currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+                </tr>
+                <tr>
+                  <td>{{"labels.inputs.Deposit Period" | translate }}</td>
+                  <td class="r-amount">{{recurringDepositsAccountData.depositPeriod | number}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <span fxFlex="auto"></span>
+
           <div fxFlex="5%">
             <button mat-icon-button [matMenuTriggerFor]="accountMenu" aria-label="Loan account actions"
               yPosition="below">
@@ -27,33 +65,26 @@
             </button>
           </div>
         </mat-card-title>
-        <mat-card-subtitle>
-          <p>
-            {{"labels.inputs.Account" | translate }} #: {{recurringDepositsAccountData.accountNo}} | {{"labels.inputs.Client Name" | translate }}:
-            {{recurringDepositsAccountData.clientName}}<br />
-            <span
-              *ngIf="!recurringDepositsAccountData.status.rejected && !recurringDepositsAccountData.status.submittedAndPendingApproval">
-              {{"labels.inputs.Current Balance" | translate }}:
-              {{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;{{recurringDepositsAccountData.summary.accountBalance}}<br />
-              {{"labels.inputs.Available Balance" | translate }}:
-              {{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;{{recurringDepositsAccountData.summary.availableBalance}}<br />
-            </span>
-          </p>
-        </mat-card-subtitle>
+
       </div>
 
       <mat-menu #accountMenu="matMenu">
-        <ng-container *ngFor="let button of buttonConfig.singleButtons">
-          <button mat-raised-button (click)="doAction(button.name)">
-            <i ngClass="{{button.icon}}"></i> {{button.name}}</button>
+        <ng-container *ngFor="let item of buttonConfig.singleButtons">
+          <button mat-menu-item *mifosxHasPermission="item.taskPermissionName" (click)="doAction(item.name)">
+            <mat-icon matListIcon>
+              <fa-icon icon="{{item.icon}}" size="sm"></fa-icon>
+            </mat-icon>
+            <span> {{'labels.menus.' + item.name | translate}} </span>
+          </button>
         </ng-container>
 
         <ng-container *ngIf="buttonConfig.options.length">
-          <button mat-raised-button [matMenuTriggerFor]="More">More</button>
+          <button mat-menu-item [matMenuTriggerFor]="More">{{'labels.menus.More' | translate}}</button>
           <mat-menu #More="matMenu">
-          <span *ngFor="let option of buttonConfig.options">
-            <button mat-menu-item (click)="doAction(option.name)">{{option.name}}</button>
-          </span>
+            <span *ngFor="let option of buttonConfig.options">
+              <button mat-menu-item *mifosxHasPermission="option.taskPermissionName"
+                (click)="doAction(option.name)">{{'labels.menus.' + option.name | translate}}</button>
+            </span>
           </mat-menu>
         </ng-container>
 
@@ -61,341 +92,42 @@
 
     </mat-card-title-group>
 
-    <mat-card-actions class="account-actions">
-
-      <ng-container *ngFor="let button of buttonConfig.singleButtons">
-        <button mat-raised-button (click)="doAction(button.name)">
-          <i ngClass="{{button.icon}}"></i> {{button.name}}</button>
-      </ng-container>
-
-      <ng-container *ngIf="buttonConfig.options.length">
-        <button mat-raised-button [matMenuTriggerFor]="More">{{"labels.buttons.More" | translate }}</button>
-        <mat-menu #More="matMenu">
-        <span *ngFor="let option of buttonConfig.options">
-          <button mat-menu-item (click)="doAction(option.name)">{{option.name}}</button>
-        </span>
-        </mat-menu>
-      </ng-container>
-
-    </mat-card-actions>
-
   </mat-card-header>
 
   <mat-card-content class="content">
 
-    <div class="recurring-deposits-account-tables" fxLayout="row" fxLayoutGap="2%">
-
-      <div fxFlex="49%"
-        *ngIf="!recurringDepositsAccountData.status.rejected && !recurringDepositsAccountData.status.submittedAndPendingApproval">
-        <h4 class="table-headers">{{"labels.heading.Savings Details" | translate }}</h4>
-        <table>
-          <tbody>
-            <tr>
-              <td>{{"labels.inputs.Field Officer" | translate }}</td>
-              <td>{{recurringDepositsAccountData.fieldOfficerName}}<span
-                  *ngIf="!recurringDepositsAccountData.fieldOfficerName">{{"labels.inputs.Unassigned" | translate }}</span></td>
-            </tr>
-            <tr>
-              <td>{{"labels.inputs.Activation date" | translate }}</td>
-              <td>{{recurringDepositsAccountData.timeline.activatedOnDate  | dateFormat}}</td>
-            </tr>
-            <tr>
-              <td>{{"labels.inputs.Maturity Date" | translate }}</td>
-              <td><span>{{recurringDepositsAccountData.maturityDate  | dateFormat}}</span></td>
-            </tr>
-            <tr
-              *ngIf="recurringDepositsAccountData.timeline.closedOnDate || recurringDepositsAccountData.summary.totalWitddrawals">
-              <td *ngIf="recurringDepositsAccountData.timeline.closedOnDate">
-                {{"labels.inputs.Closed on Date" | translate }}</td>
-              <td><span>{{recurringDepositsAccountData.timeline.closedOnDate  | dateFormat}}</span></td>
-            </tr>
-            <tr>
-            </tr>
-            <tr>
-              <td><span>{{recurringDepositsAccountData.recurringFrequency}}
-                  &nbsp;{{recurringDepositsAccountData.recurringFrequencyType.value}}
-                </span></td>
-            </tr>
-            <tr *ngIf="recurringDepositsAccountData.minBalanceForInterestCalculation">
-              <td> {{"labels.inputs.Balance Required For Interest Calculation" | translate }}</td>
-              <td><span>{{recurringDepositsAccountData.minBalanceForInterestCalculation}}</span></td>
-            </tr>
-            <tr *ngIf="recurringDepositsAccountData.witdHoldTax">
-              <td> {{"labels.inputs.Witdhold Tax Group" | translate }} </td>
-              <td><span>{{recurringDepositsAccountData.taxGroup.name}}</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div fxFlex="49%"
-        *ngIf="!recurringDepositsAccountData.status.rejected && !recurringDepositsAccountData.status.submittedAndPendingApproval">
-        <h4 class="table-headers">{{"labels.heading.Performance History" | translate }}</h4>
-        <table>
-          <tbody>
-            <tr>
-              <td>{{"labels.inputs.Principal Amount" | translate }}</td>
-              <td>
-                <span>{{recurringDepositsAccountData.depositAmount | currency:currencyCode:'symbol-narrow':'1.2-2'}}}</span>
-              </td>
-            </tr>
-            <tr>
-              <td>{{"labels.inputs.Maturity Amount" | translate }}</td>
-              <td>
-                <span>{{recurringDepositsAccountData.maturityAmount | currency:currencyCode:'symbol-narrow':'1.2-2'}}}</span>
-              </td>
-            </tr>
-            <tr>
-              <td>{{"labels.inputs.Recurring Deposit Amount" | translate }}</td>
-              <td>
-                <span>{{recurringDepositsAccountData?.mandatoryRecommendedDepositAmount | currency:currencyCode:'symbol-narrow':'1.2-2'}}</span>
-              </td>
-            </tr>
-            <tr>
-              <td>{{"labels.inputs.Deposits till Date" | translate }}</td>
-              <td><span
-                  *ngIf="recurringDepositsAccountData.summary.totalDeposits">{{recurringDepositsAccountData.summary.totalDeposits | currency:currencyCode:'symbol-narrow':'1.2-2'}}</span>
-                <span
-                  *ngIf="!recurringDepositsAccountData.summary.totalDeposits">{{ 0 | currency:currencyCode:'symbol-narrow':'1.2-2'}}</span>
-              </td>
-            </tr>
-            <tr>
-              <td>{{"labels.inputs.Withdrwals till Date" | translate }}</td>
-              <td><span
-                  *ngIf="recurringDepositsAccountData.summary.totalWithdrawals">{{recurringDepositsAccountData.summary.totalWithdrawals | currency:currencyCode:'symbol-narrow':'1.2-2'}}</span>
-                <span
-                  *ngIf="!recurringDepositsAccountData.summary.totalWithdrawals">{{ 0 | currency:currencyCode:'symbol-narrow':'1.2-2'}}</span>
-              </td>
-            </tr>
-
-            <tr *ngIf="recurringDepositsAccountData.summary.totalInterestEarned >= 0">
-              <td >{{"labels.inputs.Interest Earned" | translate }}</td>
-              <td><span>{{recurringDepositsAccountData.currency.displaySymbol}}&nbsp;{{recurringDepositsAccountData.summary.totalInterestEarned| formatNumber}}</span>
-              </td>
-            </tr>
-
-          </tbody>
-        </table>
-      </div>
-
-      <div fxFlex="49%"
-        *ngIf="recurringDepositsAccountData.status.rejected || recurringDepositsAccountData.status.submittedAndPendingApproval">
-        <table>
-          <tbody>
-            <tr>
-              <td>{{"labels.inputs.Date of Deposit" | translate }}</td>
-              <td>
-                <span *ngIf="!recurringDepositsAccountData.expectedFirstDepositOnDate">{{recurringDepositsAccountData.timeline.activatedOnDate  | dateFormat}}
-                  <span *ngIf="!recurringDepositsAccountData.timeline.activatedOnDate">{{"labels.inputs.Not Activated" | translate }}</span>
-                </span>
-                <span *ngIf="recurringDepositsAccountData.expectedFirstDepositOnDate" >{{recurringDepositsAccountData.expectedFirstDepositOnDate  | dateFormat}}
-                  <span *ngIf="!recurringDepositsAccountData.expectedFirstDepositOnDate">{{"labels.inputs.Not Activated" | translate }}</span>
-                </span>
-              </td>
-            </tr>
-            <tr>
-              <td>{{"labels.inputs.Period" | translate }}</td>
-              <td>
-                <span>{{recurringDepositsAccountData.depositPeriod}}&nbsp;{{recurringDepositsAccountData.depositPeriodFrequency.value}}</span>
-              </td>
-            </tr>
-            <tr *ngIf="recurringDepositsAccountData.maturityDate">
-              <td>{{"labels.inputs.Maturity Date" | translate }}</td>
-              <td><span>{{recurringDepositsAccountData.maturityDate  | dateFormat}}</span></td>
-            </tr>
-            <tr>
-              <td>{{"labels.inputs.Total Deposits" | translate }}</td>
-              <td>
-                <span *ngIf="recurringDepositsAccountData.summary.totalDeposits">{{ recurringDepositsAccountData.summary.totalDeposits | currency:currencyCode:'symbol-narrow':'1.2-2'}}</span>
-                <span *ngIf="!recurringDepositsAccountData.summary.totalDeposits">{{ 0 | currency:currencyCode:'symbol-narrow':'1.2-2'}}</span>
-              </td>
-            </tr>
-            <tr >
-              <td> {{"labels.inputs.Actual Available Balance" | translate }}</td>
-              <td>{{ recurringDepositsAccountData.currency.displaySymbol }}&nbsp;{{ recurringDepositsAccountData.summary.accountBalance }}</td>
-            </tr>
-            <tr>
-              <td> {{"labels.inputs.Recurring Deposits Amount" | translate }}</td>
-              <td>
-                {{ recurringDepositsAccountData.mandatoryRecommendedDepositAmount | currency:currencyCode:'symbol-narrow':'1.2-2'}}
-              </td>
-            </tr>
-            <tr *ngIf="recurringDepositsAccountData.summary.totalInterestEarned">
-              <td> {{"labels.inputs.Interests Earned" | translate }} </td>
-              <td><span>{{ recurringDepositsAccountData.currency.displaySymbol }}&nbsp;{{ recurringDepositsAccountData.summary.totalInterestEarned }}</span></td>
-            </tr>
-            <tr *ngIf="recurringDepositsAccountData.summary.totalWithdrawals">
-              <td> {{"labels.inputs.Total Withdrawls" | translate }} </td>
-              <td>
-                <span>{{ recurringDepositsAccountData.summary.totalWithdrawals | currency:currencyCode:'symbol-narrow':'1.2-2'}}</span>
-              </td>
-            </tr>
-            <tr *ngIf="recurringDepositsAccountData.minBalanceForInterestCalculation">
-              <td> {{"labels.inputs.Balance Required For Interest Calculation" | translate }} </td>
-              <td>
-                <span>{{ recurringDepositsAccountData.minBalanceForInterestCalculation | number  }}</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div fxFlex="49%"
-        *ngIf="recurringDepositsAccountData.status.rejected || recurringDepositsAccountData.status.submittedAndPendingApproval">
-        <table>
-          <tbody>
-            <tr>
-              <td>{{"labels.inputs.Principal Amount" | translate }}</td>
-              <td><span
-                  *ngIf="recurringDepositsAccountData.depositAmount">{{ recurringDepositsAccountData.depositAmount | currency:currencyCode:'symbol-narrow':'1.2-2'}}</span>
-                <span
-                  *ngIf="!recurringDepositsAccountData.depositAmount">{{ 0 | currency:currencyCode:'symbol-narrow':'1.2-2'}}</span>
-              </td>
-            </tr>
-            <tr>
-              <td>{{"labels.inputs.Rate of Interest" | translate }}</td>
-              <td>
-                <span>{{recurringDepositsAccountData.nominalAnnualInterestRate}}</span>
-              </td>
-            </tr>
-            <tr *ngIf="recurringDepositsAccountData.maturityDate">
-              <td>{{"labels.inputs.Maturity Amount" | translate }}</td>
-              <td>
-                <span>{{ recurringDepositsAccountData.maturityAmount | currency:currencyCode:'symbol-narrow':'1.2-2'}}</span>
-              </td>
-            </tr>
-            <tr>
-              <td>{{"labels.inputs.Total Withdrawls" | translate }} </td>
-              <td>
-                <span
-                  *ngIf="recurringDepositsAccountData.summary.totalWithdrawals">{{ recurringDepositsAccountData.summary.totalWithdrawals | currency:currencyCode:'symbol-narrow':'1.2-2'}}</span>
-                <span
-                  *ngIf="!recurringDepositsAccountData.summary.totalWithdrawals">{{ 0 | currency:currencyCode:'symbol-narrow':'1.2-2'}}</span>
-              </td>
-            </tr>
-            <tr *ngIf="recurringDepositsAccountData.timeline.closedOnDate">
-              <td> {{"labels.inputs.Closed on Date" | translate }} </td>
-              <td>
-                {{ recurringDepositsAccountData.timeline.closedOnDate | dateFormat }}
-              </td>
-            </tr>
-            <tr>
-              <td> {{"labels.inputs.Deposits Frequency" | translate }} </td>
-              <td>
-                {{ recurringDepositsAccountData.recurringFrequency }}&nbsp;{{ recurringDepositsAccountData.recurringFrequencyType.value }}
-              </td>
-            </tr>
-            <tr *ngIf="recurringDepositsAccountData.summary.totalInterestEarned">
-              <td> {{"labels.inputs.Interests Posted" | translate }} </td>
-              <td>
-                <span
-                  *ngIf="recurringDepositsAccountData.summary.totalInterestPosted">{{recurringDepositsAccountData.summary.totalInterestPosted | currency:currencyCode:'symbol-narrow':'1.2-2'}}</span>
-                <span
-                  *ngIf="!recurringDepositsAccountData.summary.totalInterestPosted">{{ 0 | currency:currencyCode:'symbol-narrow':'1.2-2'}}</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="recurring-deposits-account-tables" fxLayout="row" fxLayoutGap="2%">
-      <div fxFlex="49%"
-        *ngIf="!recurringDepositsAccountData.status.rejected && !recurringDepositsAccountData.status.submittedAndPendingApproval">
-        <h4 class="table-headers">{{"labels.heading.Interest Details" | translate }}</h4>
-        <table>
-          <tbody>
-            <tr>
-              <td>{{"labels.inputs.Interest Rate" | translate }}</td>
-              <td><span>{{recurringDepositsAccountData.nominalAnnualInterestRate}}%</span></td>
-            </tr>
-            <tr>
-              <td>{{"labels.inputs.Interest Compounding period" | translate }}</td>
-              <td><span>{{recurringDepositsAccountData.interestCompoundingPeriodType.value}}</span></td>
-            </tr>
-            <tr>
-              <td>{{"labels.inputs.Interest Posting period" | translate }}</td>
-              <td><span>{{recurringDepositsAccountData.interestPostingPeriodType.value}}</span></td>
-            </tr>
-            <tr>
-              <td>{{"labels.inputs.Interest calculated using" | translate }}</td>
-              <td><span>{{recurringDepositsAccountData.interestCalculationType.value}}</span></td>
-            </tr>
-            <tr>
-              <td># {{"labels.inputs.Days in Year" | translate }}</td>
-              <td><span>{{recurringDepositsAccountData.interestCalculationDaysInYearType.value}}</span></td>
-            </tr>
-            <tr *ngIf="recurringDepositsAccountData.preClosurePenalApplicable">
-              <td>{{"labels.inputs.Pre-closure penal Interest (less)" | translate }}</td>
-              <td><span>{{recurringDepositsAccountData.preClosurePenalInterest}} % on
-                  {{recurringDepositsAccountData.preClosurePenalInterestOnType.value}}</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div fxFlex="49%"
-        *ngIf="recurringDepositsAccountData.status.rejected || recurringDepositsAccountData.status.submittedAndPendingApproval">
-        <table>
-          <tbody>
-            <tr>
-              <td>{{"labels.inputs.Interest Compounding Period" | translate }}</td>
-              <td><span>{{recurringDepositsAccountData.interestCompoundingPeriodType.value}}</span></td>
-            </tr>
-            <tr>
-              <td>{{"labels.inputs.Interest Posting period" | translate }}</td>
-              <td><span>{{recurringDepositsAccountData.interestPostingPeriodType.value}}</span></td>
-            </tr>
-            <tr>
-              <td>{{"labels.inputs.Interest calculated using" | translate }}</td>
-              <td><span>{{recurringDepositsAccountData.interestCalculationType.value}}</span></td>
-            </tr>
-            <tr>
-              <td># {{"labels.inputs.Days in Year" | translate }}</td>
-              <td><span>{{recurringDepositsAccountData.interestCalculationDaysInYearType.value}}</span></td>
-            </tr>
-            <tr *ngIf="recurringDepositsAccountData.preClosurePenalApplicable">
-              <td>{{"labels.inputs.Pre-closure penal Interest (less)" | translate }}</td>
-              <td><span>{{recurringDepositsAccountData.preClosurePenalInterest}} % on
-                  {{recurringDepositsAccountData.preClosurePenalInterestOnType.value}}</span></td>
-            </tr>
-            <tr *ngIf="recurringDepositsAccountData.witdHoldTax">
-              <td> {{"labels.inputs.Witdhold Tax Group" | translate }} </td>
-              <td><span>{{recurringDepositsAccountData.taxGroup.name}}</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-    </div>
-
     <nav mat-tab-nav-bar class="navigation-tabs">
-        <a mat-tab-link [routerLink]="['./interest-rate-chart']" routerLinkActive #IRC="routerLinkActive"
-          [active]="IRC.isActive">
-          {{"labels.inputs.Interest Rate Chart" | translate }}
+      <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive"
+        [active]="general.isActive">
+        {{"labels.inputs.General" | translate }}
+      </a>
+      <a mat-tab-link [routerLink]="['./interest-rate-chart']" routerLinkActive #IRC="routerLinkActive"
+        [active]="IRC.isActive">
+        {{"labels.inputs.Interest Rate Chart" | translate }}
+      </a>
+      <ng-container *ngIf="recurringDepositsAccountData.transactions">
+        <a mat-tab-link [routerLink]="['./transactions']" routerLinkActive #transactions="routerLinkActive"
+          [active]="transactions.isActive">
+          {{"labels.inputs.Transactions" | translate }}
         </a>
-        <ng-container *ngIf="recurringDepositsAccountData.transactions">
-          <a mat-tab-link [routerLink]="['./transactions']" routerLinkActive #transactions="routerLinkActive"
-            [active]="transactions.isActive">
-            {{"labels.inputs.Transactions" | translate }}
-          </a>
-        </ng-container>
-        <a mat-tab-link [routerLink]="['./charges']" routerLinkActive #charges="routerLinkActive" [active]="charges.isActive">
-          {{"labels.inputs.Charges" | translate }}
+      </ng-container>
+      <a mat-tab-link [routerLink]="['./charges']" routerLinkActive #charges="routerLinkActive"
+        [active]="charges.isActive">
+        {{"labels.inputs.Charges" | translate }}
+      </a>
+      <ng-container *ngIf="recurringDepositsAccountData.clientId">
+        <a mat-tab-link [routerLink]="['./standing-instructions-tab']" routerLinkActive
+          #standingInstructions="routerLinkActive" [active]="standingInstructions.isActive">
+          {{"labels.inputs.Standing Instructions" | translate }}
         </a>
-        <ng-container *ngIf="recurringDepositsAccountData.clientId">
-          <a mat-tab-link [routerLink]="['./standing-instructions-tab']" routerLinkActive #standingInstructions="routerLinkActive"
-            [active]="standingInstructions.isActive">
-            {{"labels.inputs.Standing Instructions" | translate }}
-          </a>
-        </ng-container>
-        <ng-container *ngFor="let savingsDatatable of savingsDatatables">
-          <a mat-tab-link *mifosxHasPermission="'READ_' + savingsDatatable.registeredTableName"
-            [routerLink]="['./datatables',savingsDatatable.registeredTableName]" routerLinkActive #datatable="routerLinkActive"
-            [active]="datatable.isActive">
-            {{savingsDatatable.registeredTableName}}
-          </a>
-        </ng-container>
+      </ng-container>
+      <ng-container *ngFor="let savingsDatatable of savingsDatatables">
+        <a mat-tab-link *mifosxHasPermission="'READ_' + savingsDatatable.registeredTableName"
+          [routerLink]="['./datatables',savingsDatatable.registeredTableName]" routerLinkActive
+          #datatable="routerLinkActive" [active]="datatable.isActive">
+          {{savingsDatatable.registeredTableName}}
+        </a>
+      </ng-container>
     </nav>
 
     <router-outlet></router-outlet>
