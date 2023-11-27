@@ -38,6 +38,7 @@ import { EditTransactionComponent } from './recurring-deposits-account-view/tran
 
 /* Dialog Components */
 import { RecurringDepositConfirmationDialogComponent } from './recurring-deposits-account-view/custom-dialogs/recurring-deposit-confirmation-dialog/recurring-deposit-confirmation-dialog.component';
+import { GeneralTabComponent } from './recurring-deposits-account-view/general-tab/general-tab.component';
 
 /**
  * RecurringDeposits Module
@@ -79,7 +80,8 @@ import { RecurringDepositConfirmationDialogComponent } from './recurring-deposit
     CloseRecurringDepositsAccountComponent,
     DepositRecurringDepositsAccountComponent,
     ViewTransactionComponent,
-    EditTransactionComponent
+    EditTransactionComponent,
+    GeneralTabComponent
   ],
   providers: [ ]
 })

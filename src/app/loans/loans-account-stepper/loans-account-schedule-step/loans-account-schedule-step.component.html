@@ -1,8 +1,8 @@
 <div fxLayout="row wrap" fxLayout.lt-md="column">
 
-  <a mat-button (click)="showRepaymentInfo()">
-    {{"labels.inputs.Repayment Info" | translate}}
-  </a>
+  <button mat-stroked-button color="primary" (click)="showRepaymentInfo()">
+    <fa-icon icon="calendar" class="m-r-10"></fa-icon>{{"labels.inputs.Generate Repayment Schedule" | translate}}
+  </button>
 
   <mifosx-repayment-schedule-tab fxFlex="100%" [repaymentScheduleDetails]="repaymentScheduleDetails"
     [currencyCode]="currencyCode">

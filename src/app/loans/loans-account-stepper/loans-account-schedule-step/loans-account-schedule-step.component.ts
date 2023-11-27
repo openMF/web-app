@@ -19,7 +19,6 @@ export class LoansAccountScheduleStepComponent implements OnInit {
   /** Loans Account Data */
   @Input() loansAccount: any;
 
-  showRepayment = false;
   repaymentScheduleDetails: any = {periods: []};
 
   loanId: any = null;
@@ -34,16 +33,13 @@ export class LoansAccountScheduleStepComponent implements OnInit {
 
   showRepaymentInfo(): void {
     this.repaymentScheduleDetails = {periods: []};
-    this.showRepayment = !this.showRepayment;
-    if (this.showRepayment) {
-      const locale = this.settingsService.language.code;
-      const dateFormat = this.settingsService.dateFormat;
-      const payload = this.loansService.buildLoanRequestPayload(this.loansAccount, this.loansAccountTemplate,
-        this.loansAccountProductTemplate.calendarOptions, locale, dateFormat);
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
+    const payload = this.loansService.buildLoanRequestPayload(this.loansAccount, this.loansAccountTemplate,
+      this.loansAccountProductTemplate.calendarOptions, locale, dateFormat);
 
-      this.loansService.calculateLoanSchedule(payload).subscribe((response: any) => {
-        this.repaymentScheduleDetails = response;
-      });
-    }
+    this.loansService.calculateLoanSchedule(payload).subscribe((response: any) => {
+      this.repaymentScheduleDetails = response;
+    });
   }
 }

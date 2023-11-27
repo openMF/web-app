@@ -13,6 +13,7 @@ import { RecurringDepositsButtonsConfiguration } from './recurring-deposits-butt
 /** Custom Dialogs */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { RecurringDepositConfirmationDialogComponent } from './custom-dialogs/recurring-deposit-confirmation-dialog/recurring-deposit-confirmation-dialog.component';
+import { Currency } from 'app/shared/models/general.model';
 
 
 /**
@@ -35,7 +36,8 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
   savingsDatatables: any;
   /** Is Prematured Allowed */
   isprematureAllowed: any;
-  currencyCode: string;
+  entityType: string;
+  currency: Currency;
   /**
    * Fetches recurringDeposits account data from `resolve`
    * @param {ActivatedRoute} route Activated Route
@@ -51,8 +53,15 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
       this.recurringDepositsAccountData = data.recurringDepositsAccountData;
       this.charges = this.recurringDepositsAccountData.charges;
       this.savingsDatatables = data.savingsDatatables;
-      this.currencyCode = this.recurringDepositsAccountData.currency.code;
+      this.currency = this.recurringDepositsAccountData.currency;
       this.isprematureAllowed = data.recurringDepositsAccountData.maturityDate != null;
+      if (this.router.url.includes('clients')) {
+        this.entityType = 'Client';
+      } else if (this.router.url.includes('groups')) {
+        this.entityType = 'Group';
+      } else if (this.router.url.includes('centers')) {
+        this.entityType = 'Center';
+      }
     });
   }
 
@@ -69,6 +78,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
     if (this.recurringDepositsAccountData.clientId && this.recurringDepositsAccountData.status.value === 'Matured') {
       this.buttonConfig.addOption({
         name: 'Transfer Funds',
+        taskPermissionName: 'CREATE_ACCOUNTTRANSFER'
       });
     }
 
@@ -77,6 +87,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
         if (element.name === 'Annual fee - INR') {
           this.buttonConfig.addOption({
             name: 'Apply Annual Fees',
+            taskPermissionName: 'APPLYANNUALFEE_SAVINGSACCOUNT'
           });
         }
       });
@@ -85,7 +96,8 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
     if (this.recurringDepositsAccountData.clientId && this.recurringDepositsAccountData.status.value === 'Active') {
       if (this.recurringDepositsAccountData.allowWithdrawal === true) {
         this.buttonConfig.addOption({
-          name: 'Withdraw'
+          name: 'Withdraw',
+          taskPermissionName: 'WITHDRAW_RECURRINGDEPOSITACCOUNT'
         });
       }
       if (this.recurringDepositsAccountData.charges) {
@@ -93,6 +105,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
           if (element.name === 'Annual fee - INR') {
             this.buttonConfig.addOption({
               name: 'Apply Annual Fees',
+              taskPermissionName: 'APPLYANNUALFEE_SAVINGSACCOUNT'
             });
           }
         });
@@ -101,7 +114,8 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
       if (!this.isprematureAllowed) {
         this.buttonConfig.addButton({
           name: 'Close',
-          icon: 'fa fa-arrow-right'
+          icon: 'arrow-right',
+          taskPermissionName: 'CLOSE_RECURRINGDEPOSITACCOUNT'
         });
       }
 
@@ -144,7 +158,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
       case 'Reject':
       case 'Undo Approval':
       case 'Add Charge':
-      case 'Withdraw By Client':
+      case 'Withdrawn by client':
       case 'Premature Close':
       case 'Close':
       case 'Deposit':
