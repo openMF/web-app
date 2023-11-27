@@ -1,25 +1,6 @@
-.client-card {
-  margin: 0 auto;
-  max-width: 80rem;
-  width: 90%;
-  padding: 0;
+.account-card {
   .header {
-    padding: 1%;
-    .header-title-group {
-      .client-card-title {
-        color: white;
-        width: 90%;
-        p {
-          color: white;
-        }
-      }
-    }
     .profile-image-container {
-      margin: 4px;
-      .profile-image {
-        object-fit: cover;
-        border-radius: 20px;
-      }
       .client-image-button {
         min-width: 26px;
         padding: 0 6px;
@@ -37,19 +18,5 @@
         }
       }
     }
-    .client-actions {
-      align-self: flex-end;
-      margin: 0 1%;
-      i {
-        margin-bottom: 2px;
-        margin-right: 4px;
-      }
-    }
-  }
-  .navigation-tabs {
-    overflow: auto;
-  }
-  i:hover {
-    cursor: pointer;
   }
 }

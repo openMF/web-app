@@ -303,7 +303,7 @@
 
     <tr mat-header-row *matHeaderRowDef="openSavingsColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: openSavingsColumns;"
-      [routerLink]="['../', 'savings-accounts', row.id, 'transactions']"></tr>
+      [routerLink]="['../', 'savings-accounts', row.id, 'general']"></tr>
 
   </table>
 
@@ -329,7 +329,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="closedSavingsColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: closedSavingsColumns;" [routerLink]="['../', 'savings-accounts', row.id, 'transactions']"></tr>
+    <tr mat-row *matRowDef="let row; columns: closedSavingsColumns;" [routerLink]="['../', 'savings-accounts', row.id, 'general']"></tr>
 
   </table>
 
@@ -397,7 +397,7 @@
 
     <tr mat-header-row *matHeaderRowDef="openSavingsColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: openSavingsColumns;"
-      [routerLink]="['../', 'fixed-deposits-accounts', row.id, 'interest-rate-chart']"></tr>
+      [routerLink]="['../', 'fixed-deposits-accounts', row.id, 'general']"></tr>
 
   </table>
 
@@ -425,7 +425,7 @@
 
     <tr mat-header-row *matHeaderRowDef="closedSavingsColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: closedSavingsColumns;"
-      [routerLink]="['../', 'fixed-deposits-account', row.id]"></tr>
+      [routerLink]="['../', 'fixed-deposits-accounts', row.id, 'general']"></tr>
 
   </table>
 
@@ -498,7 +498,7 @@
 
     <tr mat-header-row *matHeaderRowDef="openSavingsColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: openSavingsColumns;"
-      [routerLink]="['../', 'recurringdeposits', row.id, 'interest-rate-chart']" class="select-row"></tr>
+      [routerLink]="['../', 'recurringdeposits', row.id, 'general']" class="select-row"></tr>
 
   </table>
 
@@ -525,7 +525,7 @@
 
     <tr mat-header-row *matHeaderRowDef="closedSavingsColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: closedSavingsColumns;"
-    [routerLink]="['../', 'recurringdeposits', row.id, 'interest-rate-chart']" class="select-row"></tr>
+    [routerLink]="['../', 'recurringdeposits', row.id, 'general']" class="select-row"></tr>
   </table>
 
   <!-- Shares overview Table -->
