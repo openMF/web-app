@@ -40,6 +40,20 @@
         <td mat-cell *matCellDef="let transaction"> {{ transaction.runningBalance }} </td>
       </ng-container>
 
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Actions" | translate }} </th>
+        <td mat-cell class="center" *matCellDef="let transaction">
+          <button class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)" [routerLink]="[transaction.id, 'reciept']">
+            <i class="fa fa-file" matTooltip="View Reciept"></i>
+          </button>
+          <button class="account-action-button" mat-raised-button color="primary" matTooltip="View Journal Entries"
+            matTooltipPosition="left" (click)="routeEdit($event)"
+            [routerLink]="['/','journal-entry', 'view', 'S'+transaction.id ]">
+            <i class="fa fa-arrow-circle-right"></i>
+          </button>
+        </td>
+      </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row" (click)="showTransactions(row)"></tr>
 
