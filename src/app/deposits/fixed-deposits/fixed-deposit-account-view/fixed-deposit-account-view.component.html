@@ -90,10 +90,12 @@
       [active]="IRC.isActive">
       {{"labels.inputs.Interest Rate Chart" | translate }}
       </a>
-      <a mat-tab-link [routerLink]="['./transactions']" routerLinkActive #transactions="routerLinkActive"
-      [active]="transactions.isActive">
-      {{"labels.inputs.Transactions" | translate }}
-      </a>
+      <span *ngIf="showTransactions">
+        <a mat-tab-link [routerLink]="['./transactions']" routerLinkActive #transactions="routerLinkActive"
+        [active]="transactions.isActive">
+        {{"labels.inputs.Transactions" | translate }}
+        </a>
+      </span>
       <a mat-tab-link [routerLink]="['./charges']" routerLinkActive #charges="routerLinkActive"
       [active]="charges.isActive">
       {{"labels.inputs.Charges" | translate }}
