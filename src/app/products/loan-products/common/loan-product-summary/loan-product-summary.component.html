@@ -43,27 +43,27 @@
 
   <mat-divider [inset]="true"></mat-divider>
 
-  <div fxFlexFill *ngIf="loanProduct.currencyCode">
+  <div fxFlexFill>
     <span fxFlex="47%">Currency:</span>
-    <span  fxFlex="53%">{{ loanProduct.currencyCode | find:loanProductsTemplate.currencyOptions:'code':'name' }}</span>
+    <span  fxFlex="53%">{{ loanProduct.currency.code }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="!loanProduct.currencyCode">
+  <div fxFlexFill>
     <span fxFlex="47%">Currency:</span>
-    <span  fxFlex="53%">{{ loanProduct.currency.name }}</span>
+    <span  fxFlex="53%">{{ loanProduct.currency.displayLabel }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="!loanProduct.currencyCode">
+  <div fxFlexFill>
     <span fxFlex="47%">Decimal Places:</span>
     <span  fxFlex="53%">{{ loanProduct.currency.decimalPlaces }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="!loanProduct.currencyCode">
+  <div fxFlexFill>
     <span fxFlex="47%">Currency in multiples of:</span>
     <span  fxFlex="53%">{{ loanProduct.currency.inMultiplesOf }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="!loanProduct.currencyCode">
+  <div fxFlexFill>
     <span fxFlex="47%">Installment in multiples of:</span>
     <span  fxFlex="53%">{{ loanProduct.installmentAmountInMultiplesOf }}</span>
   </div>
@@ -87,17 +87,17 @@
 
   <div fxFlexFill *ngIf="loanProduct.allowApprovedDisbursedAmountsOverApplied">
     <span fxFlex="47%">Over Applied Amount:</span>
-    <span  fxFlex="53%" *ngIf="loanProduct.overAppliedCalculationType === 'percentage'">{{ loanProduct.overAppliedNumber
+    <span fxFlex="53%" *ngIf="loanProduct.overAppliedCalculationType === 'percentage'">{{ loanProduct.overAppliedNumber
       | formatNumber
       }} %</span>
-    <span  fxFlex="53%" *ngIf="loanProduct.overAppliedCalculationType === 'flat'">{{ loanProduct.overAppliedNumber |
+    <span fxFlex="53%" *ngIf="loanProduct.overAppliedCalculationType === 'flat'">{{ loanProduct.overAppliedNumber |
       formatNumber }} {{
       loanProduct.currencyCode }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="47%">Installment day calculation from:</span>
-    <span  fxFlex="53%">{{ loanProduct.repaymentStartDateType.value }}</span>
+    <span  fxFlex="53%">{{ loanProduct.repaymentStartDateType?.value }}</span>
   </div>
 
   <div fxFlexFill>
@@ -118,7 +118,7 @@
     <span  fxFlex="53%">{{ loanProduct.interestRatePerPeriod + ' (Min: ' + (loanProduct.minInterestRatePerPeriod ?
       loanProduct.minInterestRatePerPeriod : loanProduct.interestRatePerPeriod) + ', Max: ' +
       (loanProduct.maxInterestRatePerPeriod ? loanProduct.maxInterestRatePerPeriod : loanProduct.interestRatePerPeriod)
-      + ')' + ' ' + loanProduct.interestRateFrequencyType.value }}</span>
+      + ')' + ' ' + loanProduct.interestRateFrequencyType?.value }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.isLinkedToFloatingInterestRates" fxLayout="row wrap" fxLayout.lt-md="column">
@@ -300,7 +300,7 @@
 
   <mat-divider [inset]="true"></mat-divider>
 
-  <div fxFlexFill>
+  <div fxFlexFill *ngIf="loanProduct.amortizationType?.value">
     <span fxFlex="47%">Amortization:</span>
     <span  fxFlex="53%">{{ loanProduct.amortizationType.value }}</span>
   </div>
@@ -312,15 +312,15 @@
 
   <div fxFlexFill>
     <span fxFlex="47%">Interest Method:</span>
-    <span  fxFlex="53%">{{ loanProduct.interestType.value }}</span>
+    <span  fxFlex="53%">{{ loanProduct.interestType?.value }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="47%">Interest Calculation Period:</span>
-    <span  fxFlex="53%">{{ loanProduct.interestCalculationPeriodType.value }}</span>
+    <span  fxFlex="53%">{{ loanProduct.interestCalculationPeriodType?.value }}</span>
   </div>
 
-  <div fxFlexFill>
+  <div fxFlexFill *ngIf="loanProduct.allowPartialPeriodInterestCalculation">
     <span fxFlex="47%">Allow Partial Interest Calculation with same as repayment:</span>
     <span  fxFlex="53%">{{ loanProduct.allowPartialPeriodInterestCalculation | yesNo }}</span>
   </div>
@@ -339,7 +339,12 @@
     <span  fxFlex="53%" class="repayment-strategy">{{ loanProduct.transactionProcessingStrategyName }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="isAdvancedPaymentAllocationStrategy()">
+  <div fxFlexFill *ngIf="isAdvancedPaymentAllocation">
+    <span fxFlex="47%">Loan Schedule Processing Type:</span>
+    <span  fxFlex="53%">{{ loanProduct.loanScheduleProcessingType.value }}</span>
+  </div>
+
+  <div fxFlexFill *ngIf="isAdvancedPaymentAllocation">
     <span fxFlex="47%">Advanced Payment Allocation Transactions:</span>
     <span  fxFlex="53%">
       <mat-accordion>
@@ -349,11 +354,6 @@
         </mifosx-view-advance-paymeny-allocation>
       </mat-accordion>
     </span>
-  </div>
-
-  <div fxFlexFill *ngIf="isAdvancedPaymentAllocationStrategy()">
-    <span fxFlex="47%">Loan Schedule Processing Type:</span>
-    <span  fxFlex="53%">{{ loanProduct.loanScheduleProcessingType.value }}</span>
   </div>
 
   <h3 class="mat-h3" fxFlexFill>Down Payments</h3>
@@ -414,12 +414,12 @@
 
   <div fxFlexFill>
     <span fxFlex="47%">Days in year:</span>
-    <span  fxFlex="53%">{{ loanProduct.daysInYearType.value }}</span>
+    <span  fxFlex="53%">{{ loanProduct.daysInYearType?.value }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="47%">Days in month:</span>
-    <span  fxFlex="53%">{{ loanProduct.daysInMonthType.value }}</span>
+    <span  fxFlex="53%">{{ loanProduct.daysInMonthType?.value }}</span>
   </div>
 
   <div fxFlexFill>

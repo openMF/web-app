@@ -10,6 +10,7 @@ export interface LoanProduct {
   useBorrowerCycle:                                          boolean;
   status:                                                    string;
   currency:                                                  Currency;
+  currencyCode?:                                             string;
   fundId?:                                                   number;
   fundName?:                                                 string;
   startDate?:                                                string;

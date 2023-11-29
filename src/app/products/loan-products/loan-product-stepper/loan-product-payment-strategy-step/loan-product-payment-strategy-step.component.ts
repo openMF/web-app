@@ -25,7 +25,9 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
   constructor(private dialog: MatDialog,
     private advancedPaymentStrategy: AdvancedPaymentStrategy) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.sendPaymentAllocation();
+  }
 
   sendPaymentAllocation(): void {
     const data = this.advancedPaymentStrategy.buildPaymentAllocations(this.advancedPaymentAllocations);
