@@ -59,6 +59,7 @@ import { ExternalAssetOwnerResolver } from './common-resolvers/external-asset-ow
 import { ExternalAssetOwnerActiveTransferResolver } from './common-resolvers/external-asset-owner-active-transfer.resolver';
 import { LoanCollateralsResolver } from './common-resolvers/loan-collaterals.resolver';
 import { LoanDelinquencyDataResolver } from './common-resolvers/loan-delinquency-data.resolver';
+import { LoanDelinquencyActionsResolver } from './common-resolvers/loan-delinquency-actions.resolver';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -133,7 +134,8 @@ const routes: Routes = [
             data: { title: 'Loans Delinquency Tags', breadcrumb: 'Delinquency Tags', routeParamBreadcrumb: false },
             resolve: {
               loanDelinquencyTagsData: LoanDelinquencyTagsResolver,
-              loanDelinquencyData: LoanDelinquencyDataResolver
+              loanDelinquencyData: LoanDelinquencyDataResolver,
+              loanDelinquencyActions: LoanDelinquencyActionsResolver
             },
             children: [
               {
