@@ -13,9 +13,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class TransactionsTabComponent implements OnInit {
 
-  /** Fixed Deposits Account Status */
-  status: string;
-  showTransactionsData = false;
   /** Transactions Data */
   transactionsData: any;
   /** Columns to be displayed in transactions table. */
@@ -32,8 +29,6 @@ export class TransactionsTabComponent implements OnInit {
               private router: Router) {
     this.route.parent.data.subscribe((data: { fixedDepositsAccountData: any }) => {
       this.transactionsData = data.fixedDepositsAccountData.transactions;
-      this.status = data.fixedDepositsAccountData.status.value;
-      this.showTransactionsData = (this.status === 'Active');
     });
   }
 

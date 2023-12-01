@@ -36,6 +36,7 @@ export class FixedDepositAccountViewComponent implements OnInit {
   /** Entity Type */
   entityType: string;
   currency: Currency;
+  showTransactions = false;
 
   /**
    * Fetches fixed deposits account data from `resolve`
@@ -54,6 +55,8 @@ export class FixedDepositAccountViewComponent implements OnInit {
       this.fixedDepositsAccountData = data.fixedDepositsAccountData;
       this.savingsDatatables = data.savingsDatatables;
       this.currency = this.fixedDepositsAccountData.currency;
+      const status: any = data.fixedDepositsAccountData.status;
+      this.showTransactions = (status.id >= 300);
     });
     if (this.router.url.includes('clients')) {
       this.entityType = 'Client';

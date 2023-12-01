@@ -468,6 +468,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
           });
         }
         this.advancedTransactionProcessingStrategyDisabled = false;
+        this.isAdvancedTransactionProcessingStrategy =  false;
       } else {
         // Only Advanced Payment Allocation Strategy
         this.transactionProcessingStrategyDataBase.some(
@@ -480,6 +481,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
         this.loanProductSettingsForm.patchValue({
           'transactionProcessingStrategyCode': this.transactionProcessingStrategyData[0].code
         });
+        this.isAdvancedTransactionProcessingStrategy =  true;
       }
     });
   }
