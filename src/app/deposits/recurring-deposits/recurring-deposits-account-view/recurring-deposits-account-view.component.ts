@@ -96,7 +96,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
     if (this.recurringDepositsAccountData.clientId && this.recurringDepositsAccountData.status.value === 'Active') {
       if (this.recurringDepositsAccountData.allowWithdrawal === true) {
         this.buttonConfig.addOption({
-          name: 'Withdraw',
+          name: 'Withdrawal',
           taskPermissionName: 'WITHDRAW_RECURRINGDEPOSITACCOUNT'
         });
       }
