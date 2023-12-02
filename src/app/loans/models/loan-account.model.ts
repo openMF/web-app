@@ -24,3 +24,28 @@ export interface InstallmentLevelDelinquency {
   minimumAgeDays:   number;
   delinquentAmount: number;
 }
+
+export interface LoanDelinquencyTags {
+  id:               number;
+  loanId:           number;
+  delinquencyRange: DelinquencyRange;
+  addedOnDate:      number[];
+  liftedOnDate:     number[];
+}
+
+export interface LoanDelinquencyAction {
+  id:             number;
+  action:         string;
+  startDate:      number[];
+  endDate:        number[];
+  createdById:    number;
+  createdOn:      Date;
+  updatedById:    number;
+  lastModifiedOn: Date;
+}
+
+export interface DelinquencyPausePeriod {
+  active:           boolean;
+  pausePeriodStart: number[];
+  pausePeriodEnd:   number[];
+}

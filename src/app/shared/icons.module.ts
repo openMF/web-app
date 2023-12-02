@@ -107,7 +107,8 @@ import {
   faFileExcel,
   faFileExport,
   faCalculator,
-  faCalendarCheck
+  faCalendarCheck,
+  faPause
 } from '@fortawesome/free-solid-svg-icons';
 
 /**
@@ -177,6 +178,7 @@ export class IconsModule {
       faMinusCircle,
       faMoneyBillAlt,
       faMoneyCheck,
+      faPause,
       faPencilAlt,
       faPlay,
       faPlus,
