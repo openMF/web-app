@@ -82,6 +82,14 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}`, { params: httpParams });
   }
 
+  getDelinquencyActions(loanId: string) {
+    return this.http.get(`/loans/${loanId}/delinquency-actions`);
+  }
+
+  createDelinquencyActions(loanId: string, delinquencyActions: any) {
+    return this.http.post(`/loans/${loanId}/delinquency-actions`, delinquencyActions);
+  }
+
   /**
    * Returns the loan template data with specific condition
    * @param loanId Loan Id
