@@ -73,6 +73,9 @@ export class RecurringDepositsService {
    */
   executeRecurringDepositsAccountCommand(accountId: string, command: string, data: any): Observable<any> {
     const httpParams = new HttpParams().set('command', command);
+    if (command === 'deposit' || command === 'withdrawal') {
+      return this.http.post(`/recurringdepositaccounts/${accountId}/transactions`, data, { params: httpParams });
+    }
     return this.http.post(`/recurringdepositaccounts/${accountId}`, data, { params: httpParams });
   }
 
