@@ -28,7 +28,7 @@ export class RecurringDepositsAccountActionsResolver implements Resolve<Object> 
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const actionName = route.paramMap.get('name');
+    const actionName: string = route.paramMap.get('name');
     const recurringDepositAccountId = route.paramMap.get('recurringDepositAccountId') || route.parent.parent.paramMap.get('recurringDepositAccountId');
     switch (actionName) {
       case 'Add Charge':
@@ -36,7 +36,8 @@ export class RecurringDepositsAccountActionsResolver implements Resolve<Object> 
       case 'Close':
         return this.recurringDepositsService.getRecurringDepositAccountActionResource(recurringDepositAccountId, 'close');
       case 'Deposit':
-        return this.recurringDepositsService.getRecurringDepositAccountTransactionTemplateResource(recurringDepositAccountId, 'deposit');
+      case 'Withdrawal':
+        return this.recurringDepositsService.getRecurringDepositAccountTransactionTemplateResource(recurringDepositAccountId, actionName.toLocaleLowerCase());
       default:
         return undefined;
     }

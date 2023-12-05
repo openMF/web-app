@@ -38,6 +38,8 @@ export class DepositRecurringDepositsAccountComponent implements OnInit {
   /** Deposits Recurring Deposit Account form. */
   depositRecurringDepositForm: UntypedFormGroup;
 
+  action: string;
+
   /**
    * Retrieves action details transactions template data from `resolve`
    * @param {FormBuilder} formBuilder Form Builder
@@ -62,6 +64,8 @@ export class DepositRecurringDepositsAccountComponent implements OnInit {
         this.transactionAmount = this.transactionAmount + this.outstandingChargeAmount;
       }
     });
+    const name: string = this.route.snapshot.params['name'];
+    this.action = name.toLowerCase();
     this.accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
   }
 
@@ -125,7 +129,9 @@ export class DepositRecurringDepositsAccountComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.recurringDepositsService.executeRecurringDepositsAccountCommand(this.accountId, 'deposit', data).subscribe(() => {
+
+    delete data['note'];
+    this.recurringDepositsService.executeRecurringDepositsAccountCommand(this.accountId, this.action, data).subscribe(() => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }

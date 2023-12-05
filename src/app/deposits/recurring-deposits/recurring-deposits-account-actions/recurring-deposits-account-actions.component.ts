@@ -20,6 +20,7 @@ export class RecurringDepositsAccountActionsComponent {
     'Premature Close': boolean
     'Close': boolean
     'Deposit': boolean
+    'Withdrawal': boolean
   } = {
       'Activate': false,
       'Undo Approval': false,
@@ -29,7 +30,8 @@ export class RecurringDepositsAccountActionsComponent {
       'Add Charge': false,
       'Premature Close': false,
       'Close': false,
-      'Deposit': false
+      'Deposit': false,
+      'Withdrawal': false
     };
 
     currency: Currency;
