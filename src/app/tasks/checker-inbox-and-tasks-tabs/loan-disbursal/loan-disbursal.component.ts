@@ -122,7 +122,7 @@ export class LoanDisbursalComponent {
   }
 
   loanResource() {
-    this.tasksService.getAllLoans().subscribe((response: any) => {
+    this.tasksService.getAllLoansToBeDisbursed().subscribe((response: any) => {
       this.loans = response.pageItems;
       this.loans = this.loans.filter((account: any) => {
         return (account.status.waitingForDisbursal === true);

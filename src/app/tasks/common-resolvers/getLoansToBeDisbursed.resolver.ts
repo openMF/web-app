@@ -12,7 +12,7 @@ import { TasksService } from '../tasks.service';
  * Loans data resolver.
  */
 @Injectable()
-export class GetLoans implements Resolve<Object> {
+export class GetLoansToBeDisbursed implements Resolve<Object> {
 
     /**
      * @param {TasksService} tasksService Tasks service.
@@ -24,7 +24,7 @@ export class GetLoans implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(): Observable<any> {
-        return this.tasksService.getAllLoans();
+        return this.tasksService.getAllLoansToBeDisbursed();
     }
 
 }
