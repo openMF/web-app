@@ -169,7 +169,7 @@ export class LoanApprovalComponent {
   }
 
   loanResource() {
-    this.tasksService.getAllLoans().subscribe((response: any) => {
+    this.tasksService.getAllLoansToBeApproved().subscribe((response: any) => {
       this.loans = response.pageItems;
       this.loans = this.loans.filter((account: any) => {
         return (account.status.waitingForDisbursal === true);
