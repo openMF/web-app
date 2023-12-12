@@ -22,6 +22,7 @@ import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicke
 import { Dates } from 'app/core/utils/dates';
 import { SystemService } from 'app/system/system.service';
 import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'mifosx-charges-tab',
@@ -54,13 +55,14 @@ export class ChargesTabComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private loansService: LoansService,
-              private route: ActivatedRoute,
-              private dateUtils: Dates,
-              private router: Router,
-              public dialog: MatDialog,
-              private settingsService: SettingsService,
-              private systemService: SystemService) {
-    this.route.parent.data.subscribe(( data: { loanDetailsData: any }) => {
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private router: Router,
+    private translateService: TranslateService,
+    public dialog: MatDialog,
+    private settingsService: SettingsService,
+    private systemService: SystemService) {
+    this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loanDetails = data.loanDetailsData;
     });
   }
@@ -81,7 +83,7 @@ export class ChargesTabComponent implements OnInit {
       }
       element.actionFlag = actionFlag;
     });
-    this.chargesData = this.chargesData.sort(function(a: any, b: any) { return b.dueDate - a.dueDate; } );
+    this.chargesData = this.chargesData.sort(function (a: any, b: any) { return b.dueDate - a.dueDate; });
     this.dataSource = new MatTableDataSource(this.chargesData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -138,7 +140,7 @@ export class ChargesTabComponent implements OnInit {
    * @param {any} chargeId Charge Id
    */
   waiveCharge(chargeId: any) {
-    const waiveChargeDialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { heading: 'Waive Charge', dialogContext: `Are you sure you want to waive charge with id: ${chargeId}`, type: 'Basic' } });
+    const waiveChargeDialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { heading: 'Waive Charge', dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to waive charge with id') + `${chargeId} ?`, type: 'Basic' } });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         this.loansService.executeLoansAccountChargesCommand(this.loanDetails.id, 'waive', {}, chargeId)

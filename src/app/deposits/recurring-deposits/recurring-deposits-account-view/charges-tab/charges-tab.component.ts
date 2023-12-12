@@ -18,6 +18,7 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { Dates } from 'app/core/utils/dates';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Charges Tab Component
@@ -60,12 +61,13 @@ export class ChargesTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute,
-              private savingsService: SavingsService,
-              private dateUtils: Dates,
-              private router: Router,
-              public dialog: MatDialog,
-              private settingsService: SettingsService, ) {
-      this.route.parent.data.subscribe((data: { recurringDepositsAccountData: any }) => {
+    private savingsService: SavingsService,
+    private dateUtils: Dates,
+    private router: Router,
+    public dialog: MatDialog,
+    private translateService: TranslateService,
+    private settingsService: SettingsService,) {
+    this.route.parent.data.subscribe((data: { recurringDepositsAccountData: any }) => {
       this.recurringDepositsAccountData = data.recurringDepositsAccountData;
       this.chargesData = this.recurringDepositsAccountData.charges;
     });
@@ -126,7 +128,7 @@ export class ChargesTabComponent implements OnInit {
    * @param {any} chargeId Charge Id
    */
   waiveCharge(chargeId: any) {
-    const waiveChargeDialogRef = this.dialog.open(RecurringDepositConfirmationDialogComponent, { data: { heading: 'Waive Charge', dialogContext: `Are you sure you want to waive charge with id: ${chargeId}?` } });
+    const waiveChargeDialogRef = this.dialog.open(RecurringDepositConfirmationDialogComponent, { data: { heading: 'Waive Charge', dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to waive charge with id: ')+ `${chargeId} ?` } });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         this.savingsService.executeSavingsAccountChargesCommand(this.recurringDepositsAccountData.id, 'waive', {}, chargeId)

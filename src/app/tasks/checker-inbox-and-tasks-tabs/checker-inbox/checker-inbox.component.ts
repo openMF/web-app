@@ -13,6 +13,7 @@ import { SettingsService } from 'app/settings/settings.service';
 /** Dialog Components */
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { Dates } from 'app/core/utils/dates';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'mifosx-checker-inbox',
@@ -56,6 +57,7 @@ export class CheckerInboxComponent implements OnInit {
     private dialog: MatDialog,
     private dateUtils: Dates,
     private router: Router,
+    private translateService: TranslateService,
     private tasksService: TasksService,
     private settingsService: SettingsService,
     private formBuilder: UntypedFormBuilder) {
@@ -130,7 +132,7 @@ export class CheckerInboxComponent implements OnInit {
 
   approveChecker() {
     const approveCheckerDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Approve Checker', dialogContext: 'Are you sure you want to approve checker' }
+      data: { heading: 'Approve Checker', dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to approve checker') }
     });
     approveCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
@@ -141,7 +143,7 @@ export class CheckerInboxComponent implements OnInit {
 
   rejectChecker() {
     const rejectCheckerDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Reject Checker', dialogContext: 'Are you sure you want to reject checker' }
+      data: { heading: 'Reject Checker', dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to reject checker') }
     });
     rejectCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
@@ -152,7 +154,7 @@ export class CheckerInboxComponent implements OnInit {
 
   deleteChecker() {
     const deleteCheckerDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Delete Checker', dialogContext: 'Are you sure you want to delete checker' }
+      data: { heading: 'Delete Checker', dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to delete checker') }
     });
     deleteCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {

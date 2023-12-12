@@ -13,6 +13,7 @@ import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/conf
 import { TasksService } from '../../tasks.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'mifosx-reschedule-loan',
@@ -46,6 +47,7 @@ export class RescheduleLoanComponent implements OnInit {
     private dateUtils: Dates,
     private router: Router,
     private settingsService: SettingsService,
+    private translateService: TranslateService,
     private tasksService: TasksService) {
     this.route.data.subscribe((data: { recheduleLoansData: any }) => {
       this.loans = data.recheduleLoansData;
@@ -81,7 +83,7 @@ export class RescheduleLoanComponent implements OnInit {
 
   bulkLoanReschedule(action: string) {
     const rescheduleLoanDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Reschedule Loan', dialogContext: 'Are you sure you want to ' + action + ' the Reschedule Loan' }
+      data: { heading: 'Reschedule Loan', dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to') + action + this.translateService.instant('labels.dialogContext.the Reschedule Loan') }
     });
     rescheduleLoanDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
