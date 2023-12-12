@@ -82,7 +82,7 @@
     </mat-checkbox>
 
     <mat-form-field fxFlex="48%" *ngIf="fixedDepositAccountSettingsForm.contains('linkAccountId')" class="margin-b">
-      <mat-label>{{"labels.inputs.Link Savings Account" | translate }}</mat-label>
+      <mat-label>{{"labels.inputs.Linked Savings Account" | translate }}</mat-label>
       <mat-select formControlName="linkAccountId" required>
         <mat-option *ngFor="let account of savingsAccountsData" [value]="account.id">
           {{ account.accountNo }}

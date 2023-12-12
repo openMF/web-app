@@ -67,7 +67,7 @@ export class TasksService {
                                        .set('status', '100');
     return this.http.get('/loans', { params: httpParams });
   }
- 
+
   /**
    * Get all loans to be created
    */

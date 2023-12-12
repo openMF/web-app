@@ -12,6 +12,7 @@ import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicke
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { Dates } from 'app/core/utils/dates';
+import { Charge, Currency } from 'app/shared/models/general.model';
 
 /**
  * Fixed Deposit Account Charges Step
@@ -30,7 +31,7 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
   /** Validity of fixed depsits account form */
   @Input() fixedDepositAccountFormValid: boolean;
   /** Currency Code */
-  @Input() currencyCode: UntypedFormControl;
+  currency: Currency | null = null;
 
   /** Charges Data */
   chargeData: any;
@@ -53,21 +54,25 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
               private settingsService: SettingsService) { }
 
   ngOnInit() {
-    this.currencyCode.valueChanges.subscribe(() => {
-      if (!this.isChargesPatched && this.fixedDepositsAccountTemplate.charges) {
-        this.chargesDataSource = this.fixedDepositsAccountTemplate.charges.map((charge: any) => ({...charge, id: charge.chargeId})) || [];
-        this.isChargesPatched = true;
-      } else {
-        this.chargesDataSource = [];
-      }
-    });
+    this.chargesDataSource = [];
+    if (this.fixedDepositsAccountTemplate.id && this.fixedDepositsAccountTemplate.charges) {
+      this.chargesDataSource = this.fixedDepositsAccountTemplate.charges.map((charge: any) => ({...charge, id: charge.chargeId})) || [];
+    }
   }
 
   ngOnChanges() {
-    if (this.fixedDepositsAccountProductTemplate) {
-      this.chargeData = this.fixedDepositsAccountProductTemplate.chargeOptions;
+    if (this.currency == null) {
+      if (this.fixedDepositsAccountTemplate.currency) {
+        this.currency = this.fixedDepositsAccountTemplate.currency;
+      } else if (this.fixedDepositsAccountProductTemplate && this.fixedDepositsAccountProductTemplate.currency) {
+        this.currency = this.fixedDepositsAccountProductTemplate.currency;
+      }
     }
-   }
+    if (this.fixedDepositsAccountProductTemplate) {
+      this.chargeData = this.fixedDepositsAccountProductTemplate.chargeOptions
+        .filter((c: Charge) => c.currency.code === this.currency.code);
+    }
+  }
 
   /**
    * Add a charge

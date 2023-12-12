@@ -52,7 +52,7 @@ export class FixedDepositAccountTermsStepComponent implements OnInit, OnChanges 
 
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
-    if (this.fixedDepositsAccountTemplate.interestCompoundingPeriodType) {
+    if (this.fixedDepositsAccountTemplate.id) {
       this.fixedDepositAccountTermsForm.patchValue({
         'interestCompoundingPeriodType': this.fixedDepositsAccountTemplate.interestCompoundingPeriodType.id,
         'interestPostingPeriodType': this.fixedDepositsAccountTemplate.interestPostingPeriodType.id,
@@ -89,6 +89,17 @@ export class FixedDepositAccountTermsStepComponent implements OnInit, OnChanges 
     this.interestCalculationTypeData = this.fixedDepositsAccountProductTemplate.interestCalculationTypeOptions;
     this.interestCalculationDaysInYearTypeData = this.fixedDepositsAccountProductTemplate.interestCalculationDaysInYearTypeOptions;
     this.periodFrequencyTypeData = this.fixedDepositsAccountProductTemplate.periodFrequencyTypeOptions;
+    if (!this.fixedDepositsAccountTemplate.id) {
+      this.fixedDepositAccountTermsForm.patchValue({
+        'interestCompoundingPeriodType': this.fixedDepositsAccountProductTemplate.interestCompoundingPeriodType.id,
+        'interestPostingPeriodType': this.fixedDepositsAccountProductTemplate.interestPostingPeriodType.id,
+        'interestCalculationType': this.fixedDepositsAccountProductTemplate.interestCalculationType.id,
+        'interestCalculationDaysInYearType': this.fixedDepositsAccountProductTemplate.interestCalculationDaysInYearType.id,
+        'depositAmount': this.fixedDepositsAccountProductTemplate.depositAmount,
+        'depositPeriod': this.fixedDepositsAccountProductTemplate.minDepositTerm,
+        'depositPeriodFrequencyId': this.fixedDepositsAccountProductTemplate.minDepositTermType.id,
+      });
+    }
   }
 
   /**

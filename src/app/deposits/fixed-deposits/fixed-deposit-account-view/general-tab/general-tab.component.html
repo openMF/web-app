@@ -8,6 +8,15 @@
       <table>
         <tbody>
           <tr>
+            <td>{{"labels.inputs.External Id" | translate }}</td>
+            <td>
+              <span *ngIf="fixedDepositsAccountData.externalId">
+                <mifosx-external-identifier externalId="{{fixedDepositsAccountData.externalId}}" completed="true"></mifosx-external-identifier>
+              </span>
+              <span *ngIf="!fixedDepositsAccountData.externalId"> {{"labels.inputs.Not Available" | translate}} </span>
+            </td>
+          </tr>
+          <tr>
             <td>{{"labels.inputs.Activated On" | translate }}</td>
             <td>{{fixedDepositsAccountData.timeline.activatedOnDate ? (fixedDepositsAccountData.timeline.activatedOnDate  | dateFormat) : 'Not Activated'}}</td>
           </tr>

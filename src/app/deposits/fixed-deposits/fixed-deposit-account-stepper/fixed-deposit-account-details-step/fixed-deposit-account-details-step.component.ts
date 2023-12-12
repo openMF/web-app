@@ -32,6 +32,8 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
   /** Fixed Deposits Account Details Form */
   fixedDepositAccountDetailsForm: UntypedFormGroup;
 
+  isProductSelected = false;
+
   /** Fixed Deposits Account Template with product data  */
   @Output() fixedDepositsAccountProductTemplate = new EventEmitter();
 
@@ -55,7 +57,9 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
       if (this.fixedDepositsAccountTemplate.depositProductId) {
         this.fixedDepositAccountDetailsForm.patchValue({
           'productId': this.fixedDepositsAccountTemplate.depositProductId,
-          'submittedOnDate': this.fixedDepositsAccountTemplate.timeline.submittedOnDate && new Date(this.fixedDepositsAccountTemplate.timeline.submittedOnDate)
+          'submittedOnDate': this.fixedDepositsAccountTemplate.timeline.submittedOnDate
+            && new Date(this.fixedDepositsAccountTemplate.timeline.submittedOnDate),
+          'externalId': this.fixedDepositsAccountTemplate.externalId || '',
         });
       }
     }
@@ -68,7 +72,8 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
     this.fixedDepositAccountDetailsForm = this.formBuilder.group({
       'productId': ['', Validators.required],
       'submittedOnDate': ['', Validators.required],
-      'fieldOfficerId': ['']
+      'fieldOfficerId': [''],
+      'externalId': ['']
     });
   }
 
@@ -80,6 +85,7 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
     this.fixedDepositAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
       this.fixedDepositsService.getFixedDepositsAccountTemplate(clientId, productId).subscribe((response: any) => {
         this.fixedDepositsAccountProductTemplate.emit(response);
+        this.isProductSelected = true;
         this.fieldOfficerData = response.fieldOfficerOptions;
         if (!this.isFieldOfficerPatched && this.fixedDepositsAccountTemplate.fieldOfficerId) {
           this.fixedDepositAccountDetailsForm.get('fieldOfficerId').patchValue(this.fixedDepositsAccountTemplate.fieldOfficerId);

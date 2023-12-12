@@ -1,7 +1,7 @@
 <div class="container">
 
   <mat-horizontal-stepper class="mat-elevation-z8" labelPosition="bottom" #fixedDepositAccountStepper>
-    
+
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
     </ng-template>
@@ -30,17 +30,6 @@
         [fixedDepositsAccountTemplate]="fixedDepositsAccountTemplate"
         (fixedDepositsAccountProductTemplate)="setTemplate($event)">
       </mifosx-fixed-deposit-account-details-step>
-
-    </mat-step>
-
-    <mat-step [stepControl]="fixedDepositAccountDetailsForm.get('productId')">
-
-      <ng-template matStepLabel>{{"labels.inputs.CURRENCY" | translate }}</ng-template>
-
-      <mifosx-fixed-deposit-account-currency-step
-        [fixedDepositsAccountTemplate]="fixedDepositsAccountTemplate"
-        [fixedDepositsAccountProductTemplate]="fixedDepositsAccountProductTemplate">
-      </mifosx-fixed-deposit-account-currency-step>
 
     </mat-step>
 
@@ -84,8 +73,7 @@
       <mifosx-fixed-deposit-account-charges-step
         [fixedDepositsAccountTemplate]="fixedDepositsAccountTemplate"
         [fixedDepositsAccountProductTemplate]="fixedDepositsAccountProductTemplate"
-        [fixedDepositAccountFormValid]="fixedDepositAccountFormValid"
-        [currencyCode]="fixedDepositAccountCurrencyForm.get('currencyCode')">
+        [fixedDepositAccountFormValid]="fixedDepositAccountFormValid">
       </mifosx-fixed-deposit-account-charges-step>
 
     </mat-step>
