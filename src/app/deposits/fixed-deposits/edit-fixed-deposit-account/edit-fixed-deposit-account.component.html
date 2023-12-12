@@ -33,17 +33,6 @@
 
     </mat-step>
 
-    <mat-step [stepControl]="fixedDepositAccountDetailsForm.get('productId')">
-
-      <ng-template matStepLabel>{{"labels.inputs.CURRENCY" | translate }}</ng-template>
-
-      <mifosx-fixed-deposit-account-currency-step
-        [fixedDepositsAccountTemplate]="fixedDepositsAccountAndTemplate"
-        [fixedDepositsAccountProductTemplate]="fixedDepositsAccountProductTemplate">
-      </mifosx-fixed-deposit-account-currency-step>
-
-    </mat-step>
-
     <mat-step [stepControl]="fixedDepositAccountTermsForm">
 
       <ng-template matStepLabel>{{"labels.inputs.TERMS" | translate }}</ng-template>
@@ -84,8 +73,7 @@
       <mifosx-fixed-deposit-account-charges-step
         [fixedDepositsAccountTemplate]="fixedDepositsAccountAndTemplate"
         [fixedDepositsAccountProductTemplate]="fixedDepositsAccountProductTemplate"
-        [fixedDepositAccountFormValid]="fixedDepositAccountFormValidAndNotPristine"
-        [currencyCode]="fixedDepositAccountCurrencyForm.get('currencyCode')">
+        [fixedDepositAccountFormValid]="fixedDepositAccountFormValidAndNotPristine">
       </mifosx-fixed-deposit-account-charges-step>
 
     </mat-step>

@@ -14,7 +14,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%" (click)="submittedOnDatePicker.open()">
+    <mat-form-field fxFlex="48%" (click)="submittedOnDatePicker.open()" *ngIf="isProductSelected">
       <mat-label>{{"labels.inputs.Submitted On" | translate }}</mat-label>
       <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker"
         formControlName="submittedOnDate" required>
@@ -25,13 +25,18 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field fxFlex="48%" *ngIf="isProductSelected">
       <mat-label>{{"labels.inputs.Field Officer" | translate }}</mat-label>
       <mat-select formControlName="fieldOfficerId">
         <mat-option *ngFor="let officer of fieldOfficerData" [value]="officer.id">
           {{ officer.displayName }}
         </mat-option>
       </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%" *ngIf="isProductSelected">
+      <mat-label>{{"labels.inputs.External id" | translate}}</mat-label>
+      <input matInput formControlName="externalId" matTooltip="{{ 'tooltips.Provides an external id' | translate}}">
     </mat-form-field>
 
   </div>

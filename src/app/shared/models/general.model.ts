@@ -64,8 +64,8 @@ export interface Charge {
   isPaymentType?:                 boolean;
   currency?:                      Currency;
   amount?:                        number;
-  chargeTimeType?:                Charge;
-  chargeAppliesTo?:               Charge;
-  chargeCalculationType?:         Charge;
-  chargePaymentMode?:             Charge;
+  chargeTimeType?:                OptionData;
+  chargeAppliesTo?:               OptionData;
+  chargeCalculationType?:         OptionData;
+  chargePaymentMode?:             OptionData;
 }
