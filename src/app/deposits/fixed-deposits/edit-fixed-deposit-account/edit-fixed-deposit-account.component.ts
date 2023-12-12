@@ -13,6 +13,7 @@ import { FixedDepositAccountTermsStepComponent } from '../fixed-deposit-account-
 import { FixedDepositAccountSettingsStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-settings-step/fixed-deposit-account-settings-step.component';
 import { FixedDepositAccountChargesStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-charges-step/fixed-deposit-account-charges-step.component';
 import { Dates } from 'app/core/utils/dates';
+import { Currency } from 'app/shared/models/general.model';
 
 /**
  * Edit Fixed Deposit Account Component
@@ -40,6 +41,8 @@ export class EditFixedDepositAccountComponent {
   /** Fixed Deposit Account Product Template */
   fixedDepositsAccountProductTemplate: any;
 
+  currency: Currency;
+
   /**
    * Fetches FD account template from `resolve`
    * @param {ActivatedRoute} route Activated Route
@@ -64,6 +67,7 @@ export class EditFixedDepositAccountComponent {
    */
   setTemplate($event: any) {
     this.fixedDepositsAccountProductTemplate = $event;
+    this.currency = this.fixedDepositsAccountAndTemplate.currency;
   }
 
   /**
@@ -119,7 +123,7 @@ export class EditFixedDepositAccountComponent {
       ...this.fixedDepositsAccountDetailsStep.fixedDepositAccountDetails,
       ...this.fixedDepositAccountTermsStep.fixedDepositAccountTerms,
       ...this.fixedDepositAccountSettingsStep.fixedDepositAccountSettings,
-      ...this.fixedDepositAccountChargesStep.fixedDepositAccountCharges,
+      ...this.fixedDepositAccountChargesStep?.fixedDepositAccountCharges
     };
   }
 

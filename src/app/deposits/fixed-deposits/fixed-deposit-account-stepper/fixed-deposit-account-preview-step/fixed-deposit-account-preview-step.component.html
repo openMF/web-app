@@ -14,6 +14,11 @@
     <span fxFlex="60%">{{ fixedDepositAccountData.submittedOnDate  | dateFormat }}</span>
   </div>
 
+  <div fxFlexFill *ngIf="fixedDepositAccountData.externalId">
+    <span fxFlex="40%">{{"labels.inputs.External Id" | translate }}</span>
+    <span fxFlex="60%">{{ fixedDepositAccountData.externalId }}</span>
+  </div>
+
   <div fxFlexFill>
     <span fxFlex="40%">{{"labels.inputs.Field Officer" | translate }}</span>
     <span fxFlex="60%">{{ (fixedDepositAccountData.fieldOfficerId | find:fixedDepositsAccountProductTemplate.fieldOfficerOptions:'id':'displayName') || 'Unassigned' }}</span>

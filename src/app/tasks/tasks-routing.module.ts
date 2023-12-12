@@ -18,7 +18,8 @@ import { ViewCheckerInboxComponent } from './view-checker-inbox/view-checker-inb
 import { GetMakerCheckers } from './common-resolvers/getmakercheckers.resolver';
 import { GetGroupedClientsData } from './common-resolvers/getGroupedClientsData.resolver';
 import { GetOffices } from './common-resolvers/getOffices.resolver';
-import { GetLoans } from './common-resolvers/getLoans.resolver';
+import { GetLoansToBeApproved } from './common-resolvers/getLoansToBeApproved.resolver';
+import { GetLoansToBeDisbursed } from './common-resolvers/getLoansToBeDisbursed.resolver';
 import { GetRescheduleLoans } from './common-resolvers/getRescheduleLoans.resolver';
 import { MakerCheckerTemplate } from './common-resolvers/makerCheckerTemplate.resolver';
 import { GetCheckerInboxDetailResolver } from './common-resolvers/getCheckerInboxDetail.resolver';
@@ -54,7 +55,7 @@ const routes: Routes = [
           data: { title: 'Laon Approval' },
           resolve: {
             officesData: GetOffices,
-            loansData: GetLoans
+            loansData: GetLoansToBeApproved
           },
         },
         {
@@ -62,7 +63,7 @@ const routes: Routes = [
           component: LoanDisbursalComponent,
           data: { title: 'Loan Disbursal' },
           resolve: {
-            loansData: GetLoans
+            loansData: GetLoansToBeDisbursed
           }
         },
         {
@@ -98,7 +99,8 @@ const routes: Routes = [
     GetMakerCheckers,
     GetGroupedClientsData,
     GetOffices,
-    GetLoans,
+    GetLoansToBeApproved,
+    GetLoansToBeDisbursed,
     GetRescheduleLoans,
     MakerCheckerTemplate,
     GetCheckerInboxDetailResolver

@@ -48,7 +48,7 @@ export class TasksService {
    */
   getGroupedClientsData(): Observable<any> {
     const httpParams = new HttpParams().set('limit', '1000')
-                                       .set('sqlSearch', 'c.status_enum=100');
+                                       .set('status', 'PENDING');
     return this.http.get('/clients', { params: httpParams});
   }
 
@@ -60,11 +60,20 @@ export class TasksService {
   }
 
   /**
-   * Get all Loans Data
+   * Get all loans to be approved
    */
-  getAllLoans(): Observable<any> {
+  getAllLoansToBeApproved(): Observable<any> {
     const httpParams = new HttpParams().set('limit', '1000')
-                                       .set('sqlSearch', 'l.loan_status_id in (100,200)');
+                                       .set('status', '100');
+    return this.http.get('/loans', { params: httpParams });
+  }
+
+  /**
+   * Get all loans to be created
+   */
+  getAllLoansToBeDisbursed(): Observable<any> {
+    const httpParams = new HttpParams().set('limit', '1000')
+                                       .set('status', '200');
     return this.http.get('/loans', { params: httpParams });
   }
 

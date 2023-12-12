@@ -3,7 +3,7 @@
   <mat-form-field fxFlex="48%">
     <mat-label>{{"labels.inputs.Charge" | translate }}</mat-label>
     <mat-select #charge>
-      <mat-option *ngFor="let charge of chargeData | chargesFilter:chargesDataSource:currencyCode.value"
+      <mat-option *ngFor="let charge of chargeData"
         [value]="charge">
         {{ charge.name }}
       </mat-option>

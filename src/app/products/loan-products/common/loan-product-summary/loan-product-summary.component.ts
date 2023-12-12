@@ -166,16 +166,15 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
         this.loanProductsTemplate.transactionProcessingStrategyOptions);
       this.loanProduct.transactionProcessingStrategyName = codeValue.name;
 
-      if (this.isAdvancedPaymentAllocation) {
+      if (!this.loanProduct.loanScheduleType || !this.loanProduct.loanScheduleType.value) {
+        this.loanProduct.loanScheduleType = this.optionDataLookUpByCode(this.loanProduct.loanScheduleType,
+          this.loanProductsTemplate.loanScheduleTypeOptions);
+      }
 
+      if (this.isAdvancedPaymentAllocation) {
         if (!this.loanProduct.loanScheduleProcessingType || !this.loanProduct.loanScheduleProcessingType.value) {
           this.loanProduct.loanScheduleProcessingType = this.optionDataLookUpByCode(this.loanProduct.loanScheduleProcessingType,
             this.loanProductsTemplate.loanScheduleProcessingTypeOptions);
-        }
-
-        if (!this.loanProduct.loanScheduleType || !this.loanProduct.loanScheduleType.value) {
-          this.loanProduct.loanScheduleType = this.optionDataLookUpByCode(this.loanProduct.loanScheduleType,
-            this.loanProductsTemplate.loanScheduleTypeOptions);
         }
       }
     }
