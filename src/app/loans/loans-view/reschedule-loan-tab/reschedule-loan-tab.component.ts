@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
 import { LoanStatus } from 'app/loans/models/loan-status.model';
@@ -24,6 +25,7 @@ export class RescheduleLoanTabComponent implements OnInit {
     private loansServices: LoansService,
     private settingsService: SettingsService,
     private dateUtils: Dates,
+    private translateService: TranslateService,
     private dialog: MatDialog) {
     this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
     this.route.parent.data.subscribe((data: { loanRescheduleData: any }) => {
@@ -36,7 +38,7 @@ export class RescheduleLoanTabComponent implements OnInit {
 
   manageRequest(request: any, command: string): void {
     const approveLoanRescheduleDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: `${command} Loan Reschedule`, dialogContext: `Are you sure you want ${command} the Loan Reschedule ${request.id}` }
+      data: { heading: `${command} Loan Reschedule`, dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want') + `${command}` + this.translateService.instant('labels.dialogContext.the Loan Reschedule') + `${request.id}` }
     });
     approveLoanRescheduleDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {

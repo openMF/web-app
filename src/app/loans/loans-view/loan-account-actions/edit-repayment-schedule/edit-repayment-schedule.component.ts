@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
@@ -41,6 +42,7 @@ export class EditRepaymentScheduleComponent implements OnInit {
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private dateUtils: Dates,
+    private translateService: TranslateService,
     private settingsService: SettingsService) {
     this.loanId = this.route.snapshot.params['loanId'];
     this.getRepaymentSchedule();
@@ -60,7 +62,7 @@ export class EditRepaymentScheduleComponent implements OnInit {
     const periods: any = [];
     this.repaymentScheduleDetails['periods'].forEach((period: any) => {
       if (period.period) {
-        periods.push({idx: period.period, dueDate: this.dateUtils.formatDate(period.dueDate, this.settingsService.dateFormat) });
+        periods.push({ idx: period.period, dueDate: this.dateUtils.formatDate(period.dueDate, this.settingsService.dateFormat) });
       }
     });
     const formfields: FormfieldBase[] = [
@@ -102,7 +104,7 @@ export class EditRepaymentScheduleComponent implements OnInit {
           if (period.period && fromPeriod <= period.period && toPeriod >= period.period) {
             if (period.totalDueForPeriod !== amount) {
               period.totalDueForPeriod = amount;
-              this.repaymentScheduleChanges[dueDate] = {dueDate: dueDate, installmentAmount: amount};
+              this.repaymentScheduleChanges[dueDate] = { dueDate: dueDate, installmentAmount: amount };
               this.wasChanged = true;
               period['changed'] = true;
             }
@@ -116,7 +118,7 @@ export class EditRepaymentScheduleComponent implements OnInit {
 
   reset(): void {
     const recoverScheduleDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Recover Original Schedule', dialogContext: 'Are you sure you want recover the Original Schedule'}
+      data: { heading: 'Recover Original Schedule', dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want recover the Original Schedule') }
     });
     recoverScheduleDialogRef.afterClosed().subscribe((responseConfirmation: any) => {
       if (responseConfirmation.confirm) {

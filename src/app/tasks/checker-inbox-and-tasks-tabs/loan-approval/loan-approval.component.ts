@@ -13,6 +13,7 @@ import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/conf
 import { TasksService } from '../../tasks.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'mifosx-loan-approval',
@@ -53,6 +54,7 @@ export class LoanApprovalComponent {
     private dialog: MatDialog,
     private dateUtils: Dates,
     private router: Router,
+    private translateService: TranslateService,
     private settingsService: SettingsService,
     private tasksService: TasksService) {
     this.route.data.subscribe((data: { officesData: any, loansData: any }) => {
@@ -121,7 +123,7 @@ export class LoanApprovalComponent {
 
   approveLoan() {
     const approveLoanDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Approve Loan', dialogContext: 'Are you sure you want to Approve Loan' }
+      data: { heading: 'Approve Loan', dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to Approve Loan') }
     });
     approveLoanDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {

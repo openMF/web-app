@@ -16,6 +16,7 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 import { MatTableDataSource } from '@angular/material/table';
 import { LoanTransactionType } from 'app/loans/models/loan-transaction-type.model';
 import { AlertService } from 'app/core/alert/alert.service';
+import { TranslateService } from '@ngx-translate/core';
 
 /** Custom Dialogs */
 
@@ -65,6 +66,7 @@ export class ViewTransactionComponent implements OnInit {
               private dateUtils: Dates,
               private router: Router,
               public dialog: MatDialog,
+              private translateService:TranslateService,
               private settingsService: SettingsService,
               private organizationService: OrganizationService,
               private alertService: AlertService) {
@@ -131,7 +133,7 @@ export class ViewTransactionComponent implements OnInit {
   undoTransaction() {
     const accountId = this.route.snapshot.params['loanId'];
     const undoTransactionAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Undo Transaction', dialogContext: `Are you sure you want undo the transaction ${this.transactionData.id}` }
+      data: { heading: 'Undo Transaction', dialogContext:this.translateService.instant('labels.dialogContext.Are you sure you want undo the transaction') +`${this.transactionData.id}` }
     });
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
