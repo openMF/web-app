@@ -17,7 +17,6 @@ import { DatatableTabsComponent } from './recurring-deposits-account-view/datata
 import { CreateRecurringDepositsAccountComponent } from './create-recurring-deposits-account/create-recurring-deposits-account.component';
 import { RecurringDepositsAccountDetailsStepComponent } from './recurring-deposits-account-stepper/recurring-deposits-account-details-step/recurring-deposits-account-details-step.component';
 import { RecurringDepositsAccountTermsStepComponent } from './recurring-deposits-account-stepper/recurring-deposits-account-terms-step/recurring-deposits-account-terms-step.component';
-import { RecurringDepositsAccountCurrencyStepComponent } from './recurring-deposits-account-stepper/recurring-deposits-account-currency-step/recurring-deposits-account-currency-step.component';
 import { RecurringDepositsAccountSettingsStepComponent } from './recurring-deposits-account-stepper/recurring-deposits-account-settings-step/recurring-deposits-account-settings-step.component';
 import { RecurringDepositsAccountInterestRateChartStepComponent } from './recurring-deposits-account-stepper/recurring-deposits-account-interest-rate-chart-step/recurring-deposits-account-interest-rate-chart-step.component';
 import { RecurringDepositsAccountChargesStepComponent } from './recurring-deposits-account-stepper/recurring-deposits-account-charges-step/recurring-deposits-account-charges-step.component';
@@ -62,7 +61,6 @@ import { GeneralTabComponent } from './recurring-deposits-account-view/general-t
     CreateRecurringDepositsAccountComponent,
     RecurringDepositsAccountDetailsStepComponent,
     RecurringDepositsAccountTermsStepComponent,
-    RecurringDepositsAccountCurrencyStepComponent,
     RecurringDepositsAccountSettingsStepComponent,
     RecurringDepositsAccountInterestRateChartStepComponent,
     RecurringDepositsAccountChargesStepComponent,

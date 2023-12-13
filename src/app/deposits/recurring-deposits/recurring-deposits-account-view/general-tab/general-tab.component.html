@@ -3,9 +3,18 @@
 
   <div fxFlex="49%"
     *ngIf="!recurringDepositsAccountData.status.rejected && !recurringDepositsAccountData.status.submittedAndPendingApproval">
-    <h4 class="table-headers">{{"labels.heading.Account Details" | translate }}</h4>
+    <h4 class="table-headers">{{"labels.inputs.Account Details" | translate }}</h4>
     <table>
       <tbody>
+        <tr>
+          <td>{{"labels.inputs.External Id" | translate }}</td>
+          <td>
+            <span *ngIf="recurringDepositsAccountData.externalId">
+              <mifosx-external-identifier externalId="{{recurringDepositsAccountData.externalId}}" completed="true"></mifosx-external-identifier>
+            </span>
+            <span *ngIf="!recurringDepositsAccountData.externalId"> {{"labels.inputs.Not Available" | translate}} </span>
+          </td>
+        </tr>
         <tr>
           <td>{{"labels.inputs.Field Officer" | translate }}</td>
           <td>{{recurringDepositsAccountData.fieldOfficerName}}<span
@@ -49,6 +58,15 @@
     <h4 class="table-headers">{{"labels.heading.Performance History" | translate }}</h4>
     <table>
       <tbody>
+        <tr>
+          <td>{{"labels.inputs.External Id" | translate }}</td>
+          <td>
+            <span *ngIf="recurringDepositsAccountData.externalId">
+              <mifosx-external-identifier externalId="{{recurringDepositsAccountData.externalId}}" completed="true"></mifosx-external-identifier>
+            </span>
+            <span *ngIf="!recurringDepositsAccountData.externalId"> {{"labels.inputs.Not Available" | translate}} </span>
+          </td>
+        </tr>
         <tr>
           <td>{{"labels.inputs.Principal Amount" | translate }}</td>
           <td class="r-amount">
@@ -99,6 +117,15 @@
     <table>
       <tbody>
         <tr>
+          <td>{{"labels.inputs.External Id" | translate }}</td>
+          <td>
+            <span *ngIf="recurringDepositsAccountData.externalId">
+              <mifosx-external-identifier externalId="{{recurringDepositsAccountData.externalId}}" completed="true"></mifosx-external-identifier>
+            </span>
+            <span *ngIf="!recurringDepositsAccountData.externalId"> {{"labels.inputs.Not Available" | translate}} </span>
+          </td>
+        </tr>
+        <tr>
           <td>{{"labels.inputs.Date of Deposit" | translate }}</td>
           <td>
             <span *ngIf="!recurringDepositsAccountData.expectedFirstDepositOnDate">{{recurringDepositsAccountData.timeline.activatedOnDate  | dateFormat}}
@@ -128,7 +155,7 @@
         </tr>
         <tr >
           <td> {{"labels.inputs.Actual Available Balance" | translate }}</td>
-          <td>{{ recurringDepositsAccountData.currency.displaySymbol }}&nbsp;{{ recurringDepositsAccountData.summary.accountBalance }}</td>
+          <td class="r-amount">{{ recurringDepositsAccountData.summary.accountBalance | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
         </tr>
         <tr>
           <td> {{"labels.inputs.Recurring Deposit Amount" | translate }}</td>

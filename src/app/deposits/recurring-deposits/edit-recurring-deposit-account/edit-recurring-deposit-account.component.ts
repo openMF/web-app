@@ -9,7 +9,6 @@ import { SettingsService } from 'app/settings/settings.service';
 /** Step Components */
 import { RecurringDepositsAccountDetailsStepComponent } from '../recurring-deposits-account-stepper/recurring-deposits-account-details-step/recurring-deposits-account-details-step.component';
 import { RecurringDepositsAccountTermsStepComponent } from '../recurring-deposits-account-stepper/recurring-deposits-account-terms-step/recurring-deposits-account-terms-step.component';
-import { RecurringDepositsAccountCurrencyStepComponent } from '../recurring-deposits-account-stepper/recurring-deposits-account-currency-step/recurring-deposits-account-currency-step.component';
 import { RecurringDepositsAccountSettingsStepComponent } from '../recurring-deposits-account-stepper/recurring-deposits-account-settings-step/recurring-deposits-account-settings-step.component';
 import { RecurringDepositsAccountChargesStepComponent } from '../recurring-deposits-account-stepper/recurring-deposits-account-charges-step/recurring-deposits-account-charges-step.component';
 import { Dates } from 'app/core/utils/dates';
@@ -26,7 +25,6 @@ export class EditRecurringDepositAccountComponent implements OnInit {
 
   /** Imports all the step component */
   @ViewChild(RecurringDepositsAccountDetailsStepComponent, { static: true }) recurringDepositsAccountDetailsStep: RecurringDepositsAccountDetailsStepComponent;
-  @ViewChild(RecurringDepositsAccountCurrencyStepComponent, { static: true }) recurringDepositAccountCurrencyStep: RecurringDepositsAccountCurrencyStepComponent;
   @ViewChild(RecurringDepositsAccountTermsStepComponent, { static: true }) recurringDepositAccountTermsStep: RecurringDepositsAccountTermsStepComponent;
   @ViewChild(RecurringDepositsAccountSettingsStepComponent, { static: true }) recurringDepositAccountSettingsStep: RecurringDepositsAccountSettingsStepComponent;
   @ViewChild(RecurringDepositsAccountChargesStepComponent, { static: true }) recurringDepositAccountChargesStep: RecurringDepositsAccountChargesStepComponent;
@@ -63,11 +61,6 @@ export class EditRecurringDepositAccountComponent implements OnInit {
     return this.recurringDepositsAccountDetailsStep.recurringDepositAccountDetailsForm;
   }
 
-  /** Get Recurring Deposit Account Currency Form Data */
-  get recurringDepositAccountCurrencyForm() {
-    return this.recurringDepositAccountCurrencyStep.recurringDepositAccountCurrencyForm;
-  }
-
   /** Get Recurring Deposit Account Terms Form Data */
   get recurringDepositAccountTermsForm() {
     return this.recurringDepositAccountTermsStep.recurringDepositAccountTermsForm;
@@ -97,7 +90,6 @@ export class EditRecurringDepositAccountComponent implements OnInit {
   get recurringDepositAccountData() {
     return {
       ...this.recurringDepositsAccountDetailsStep.recurringDepositAccountDetails,
-      ...this.recurringDepositAccountCurrencyStep.recurringDepositAccountCurrency,
       ...this.recurringDepositAccountTermsStep.recurringDepositAccountTerms,
       ...this.recurringDepositAccountSettingsStep.recurringDepositAccountSettings,
       ...this.recurringDepositAccountChargesStep.recurringDepositAccountCharges,

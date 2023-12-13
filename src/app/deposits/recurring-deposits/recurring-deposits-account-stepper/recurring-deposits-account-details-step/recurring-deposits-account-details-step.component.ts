@@ -32,6 +32,8 @@ export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
   /** Recurring Deposits Account Details Form */
   recurringDepositAccountDetailsForm: UntypedFormGroup;
 
+  isProductSelected = false;
+
   /** Recurring Deposits Account Template with product data  */
   @Output() recurringDepositsAccountProductTemplate = new EventEmitter();
 
@@ -56,6 +58,7 @@ export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
         this.recurringDepositAccountDetailsForm.patchValue({
           'productId': this.recurringDepositsAccountTemplate.depositProductId,
           'submittedOnDate': this.recurringDepositsAccountTemplate.timeline.submittedOnDate && new Date(this.recurringDepositsAccountTemplate.timeline.submittedOnDate),
+          'externalId': this.recurringDepositsAccountTemplate.externalId
         });
       }
     }
@@ -68,7 +71,8 @@ export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
     this.recurringDepositAccountDetailsForm = this.formBuilder.group({
       'productId': ['', Validators.required],
       'submittedOnDate': ['', Validators.required],
-      'fieldOfficerId': ['']
+      'fieldOfficerId': [''],
+      'externalId': ['']
     });
   }
 
@@ -81,6 +85,7 @@ export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
       this.recurringDepositsService.getRecurringDepositsAccountTemplate(clientId, productId).subscribe((response: any) => {
         this.recurringDepositsAccountProductTemplate.emit(response);
         this.fieldOfficerData = response.fieldOfficerOptions;
+        this.isProductSelected = true;
         if (!this.isFieldOfficerPatched && this.recurringDepositsAccountTemplate.fieldOfficerId) {
           this.recurringDepositAccountDetailsForm.get('fieldOfficerId').patchValue(this.recurringDepositsAccountTemplate.fieldOfficerId);
           this.isFieldOfficerPatched = true;

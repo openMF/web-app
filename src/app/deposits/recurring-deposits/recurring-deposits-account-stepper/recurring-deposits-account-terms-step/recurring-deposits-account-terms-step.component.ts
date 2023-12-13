@@ -48,7 +48,7 @@ export class RecurringDepositsAccountTermsStepComponent implements OnInit, OnCha
 
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
-    if (this.recurringDepositsAccountTemplate.interestCompoundingPeriodType) {
+    if (this.recurringDepositsAccountTemplate.id) {
       this.recurringDepositAccountTermsForm.patchValue({
         'interestCompoundingPeriodType': this.recurringDepositsAccountTemplate.interestCompoundingPeriodType.id,
         'interestPostingPeriodType': this.recurringDepositsAccountTemplate.interestPostingPeriodType.id,
@@ -78,6 +78,14 @@ export class RecurringDepositsAccountTermsStepComponent implements OnInit, OnCha
     this.interestPostingPeriodTypeData = this.recurringDepositsAccountProductTemplate.interestPostingPeriodTypeOptions;
     this.interestCalculationTypeData = this.recurringDepositsAccountProductTemplate.interestCalculationTypeOptions;
     this.interestCalculationDaysInYearTypeData = this.recurringDepositsAccountProductTemplate.interestCalculationDaysInYearTypeOptions;
+    if (!this.recurringDepositsAccountTemplate.id) {
+      this.recurringDepositAccountTermsForm.patchValue({
+        'interestCompoundingPeriodType': this.recurringDepositsAccountProductTemplate.interestCompoundingPeriodType.id,
+        'interestPostingPeriodType': this.recurringDepositsAccountProductTemplate.interestPostingPeriodType.id,
+        'interestCalculationType': this.recurringDepositsAccountProductTemplate.interestCalculationType.id,
+        'interestCalculationDaysInYearType': this.recurringDepositsAccountProductTemplate.interestCalculationDaysInYearType.id,
+      });
+    }
   }
 
   /**
