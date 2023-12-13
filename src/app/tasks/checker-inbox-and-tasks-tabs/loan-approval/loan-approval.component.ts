@@ -123,7 +123,7 @@ export class LoanApprovalComponent {
 
   approveLoan() {
     const approveLoanDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Approve Loan', dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to Approve Loan') }
+      data: { heading: this.translateService.instant('labels.heading.Approve Loan'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to Approve Loan') }
     });
     approveLoanDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {

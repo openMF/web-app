@@ -269,7 +269,7 @@ export class SavingsAccountViewComponent implements OnInit {
    */
   private unblockSavingsAccount(action: string) {
     const unblockSavingsAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Savings Account', dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want') + action + this.translateService.instant('this Savings Account') }
+      data: { heading: this.translateService.instant('labels.heading.Savings Account'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want') + action + this.translateService.instant('this Savings Account') }
     });
     let command = 'unblock';
     if (action === 'Unblock Deposit') {

@@ -83,7 +83,7 @@ export class RescheduleLoanComponent implements OnInit {
 
   bulkLoanReschedule(action: string) {
     const rescheduleLoanDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Reschedule Loan', dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to') + action + this.translateService.instant('labels.dialogContext.the Reschedule Loan') }
+      data: { heading: this.translateService.instant('labels.heading.Reschedule Loan'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to') + action + this.translateService.instant('labels.dialogContext.the Reschedule Loan') }
     });
     rescheduleLoanDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {

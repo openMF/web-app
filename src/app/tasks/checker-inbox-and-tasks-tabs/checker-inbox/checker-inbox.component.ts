@@ -132,7 +132,7 @@ export class CheckerInboxComponent implements OnInit {
 
   approveChecker() {
     const approveCheckerDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Approve Checker', dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to approve checker') }
+      data: { heading: this.translateService.instant('labels.heading.Approve Checker'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to approve checker') }
     });
     approveCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
@@ -143,7 +143,7 @@ export class CheckerInboxComponent implements OnInit {
 
   rejectChecker() {
     const rejectCheckerDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Reject Checker', dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to reject checker') }
+      data: { heading: this.translateService.instant('labels.heading.Reject Checker'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to reject checker') }
     });
     rejectCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
@@ -154,7 +154,7 @@ export class CheckerInboxComponent implements OnInit {
 
   deleteChecker() {
     const deleteCheckerDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Delete Checker', dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to delete checker') }
+      data: { heading: this.translateService.instant('labels.heading.Delete Checker'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to delete checker') }
     });
     deleteCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
