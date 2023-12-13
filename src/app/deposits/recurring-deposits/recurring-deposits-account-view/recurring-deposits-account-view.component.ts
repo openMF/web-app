@@ -209,7 +209,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
    */
   private calculateInterest() {
     const calculateInterestAccountDialogRef = this.dialog.open(RecurringDepositConfirmationDialogComponent, {
-      data: { heading: 'Calculate Interest', dialogContext: this.translateService.instant(`labels.dialogContext.Are you sure you want to calculate interest ?`) }
+      data: { heading: this.translateService.instant('labels.heading.Calculate Interest'), dialogContext: this.translateService.instant(`labels.dialogContext.Are you sure you want to calculate interest ?`) }
     });
     calculateInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
@@ -225,7 +225,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
    */
   private postInterest() {
     const postInterestAccountDialogRef = this.dialog.open(RecurringDepositConfirmationDialogComponent, {
-      data: { heading: 'Post Interest', dialogContext:this.translateService.instant('lables.dialogContext.Are you sure you want to post interest ?')  }
+      data: { heading: this.translateService.instant('labels.heading.Post Interest'), dialogContext:this.translateService.instant('lables.dialogContext.Are you sure you want to post interest ?')  }
     });
     postInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
@@ -243,7 +243,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
    */
   private enableWithHoldTax() {
     const deleteSavingsAccountDialogRef = this.dialog.open(RecurringDepositConfirmationDialogComponent, {
-      data: { heading: 'Enable Withhold Tax', dialogContext: this.translateService.instant('labels.dialogContext.Enable withhold tax for this account ?') }
+      data: { heading: this.translateService.instant('labels.heading.Enable Withhold Tax'), dialogContext: this.translateService.instant('labels.dialogContext.Enable withhold tax for this account ?') }
     });
     deleteSavingsAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
@@ -261,7 +261,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
    */
   private disableWithHoldTax() {
     const disableWithHoldTaxDialogRef = this.dialog.open(RecurringDepositConfirmationDialogComponent, {
-      data: { heading: 'Disable Withhold Tax', dialogContext: this.translateService.instant('labels.dialogContext.Disable withhold tax for this account ?') }
+      data: { heading: this.translateService.instant('labels.heading.Disable Withhold Tax'), dialogContext: this.translateService.instant('labels.dialogContext.Disable withhold tax for this account ?') }
     });
     disableWithHoldTaxDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {

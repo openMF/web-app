@@ -53,7 +53,7 @@ export class ViewTransactionComponent {
    */
   undoTransaction() {
     const accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
-    const undoTransactionAccountDialogRef = this.dialog.open(RecurringDepositConfirmationDialogComponent, { data: { heading: 'Undo Transaction', dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to undo this transaction ?') } });
+    const undoTransactionAccountDialogRef = this.dialog.open(RecurringDepositConfirmationDialogComponent, { data: { heading: this.translateService.instant('labels.heading.Undo Transaction'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to undo this transaction ?') } });
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         const locale = this.settingsService.language.code;

@@ -60,7 +60,7 @@ export class ViewHolidaysComponent {
    */
   activateHoliday() {
     const unAssignStaffDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Holiday', dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to activate') + ` ${this.holidayData.name} ` + this.translateService.instant('labels.dialogContext.holiday') }
+      data: { heading: this.translateService.instant('labels.heading.Holiday'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to activate') + ` ${this.holidayData.name} ` + this.translateService.instant('labels.dialogContext.holiday') }
     });
     unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {

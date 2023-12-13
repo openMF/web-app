@@ -38,7 +38,7 @@ export class RescheduleLoanTabComponent implements OnInit {
 
   manageRequest(request: any, command: string): void {
     const approveLoanRescheduleDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: `${command} Loan Reschedule`, dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want') + `${command}` + this.translateService.instant('labels.dialogContext.the Loan Reschedule') + `${request.id}` }
+      data: { heading: `${command}` + this.translateService.instant('labels.heading.Loan Reschedule'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want') + `${command}` + this.translateService.instant('labels.dialogContext.the Loan Reschedule') + `${request.id}` }
     });
     approveLoanRescheduleDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {

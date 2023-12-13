@@ -90,7 +90,7 @@ export class LoanDelinquencyTagsTabComponent implements OnInit {
   resumeDelinquencyClassification(item: LoanDelinquencyAction): void {
     const removePauseDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        heading: 'Loan Delinquency Classification',
+        heading: this.translateService.instant('labels.heading.Loan Delinquency Classification'),
         dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want resume the Delinquency Classification for Loan') + this.loanId,
         type: 'Mild'
       }

@@ -100,7 +100,7 @@ export class CentersViewComponent implements OnInit {
   private centersUnassignStaff() {
     const dialogcontext: string = ""
     const unAssignStaffDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Unassign Staff', dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want Unassign Staff') }
+      data: { heading: this.translateService.instant('labels.heading.Unassign Staff'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want Unassign Staff') }
     });
     unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
