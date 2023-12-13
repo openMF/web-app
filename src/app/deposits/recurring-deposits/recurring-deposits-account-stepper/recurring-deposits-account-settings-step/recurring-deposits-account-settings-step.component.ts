@@ -61,6 +61,8 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
         'preClosurePenalInterest': this.recurringDepositsAccountProductTemplate.preClosurePenalInterest,
         'preClosurePenalInterestOnTypeId': this.recurringDepositsAccountProductTemplate.preClosurePenalInterestOnType ? this.recurringDepositsAccountProductTemplate.preClosurePenalInterestOnType.id : '',
         'minBalanceForInterestCalculation': this.recurringDepositsAccountProductTemplate.minBalanceForInterestCalculation,
+        'depositPeriod': this.recurringDepositsAccountProductTemplate.minDepositTerm,
+        'depositPeriodFrequencyId': this.recurringDepositsAccountProductTemplate.minDepositTermType.id
       });
       if (this.recurringDepositsAccountProductTemplate.withHoldTax) {
         this.recurringDepositAccountSettingsForm.addControl('withHoldTax', new UntypedFormControl(false));

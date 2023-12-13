@@ -32,17 +32,6 @@
 
     </mat-step>
 
-    <mat-step [stepControl]="recurringDepositAccountCurrencyForm">
-
-      <ng-template matStepLabel>{{"labels.inputs.CURRENCY" | translate }}</ng-template>
-
-      <mifosx-recurring-deposits-account-currency-step
-        [recurringDepositsAccountTemplate]="recurringDepositsAccountAndTemplate"
-        [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate">
-      </mifosx-recurring-deposits-account-currency-step>
-
-    </mat-step>
-
     <mat-step [stepControl]="recurringDepositAccountTermsForm">
 
       <ng-template matStepLabel>{{"labels.inputs.TERMS" | translate }}</ng-template>
@@ -83,8 +72,7 @@
       <mifosx-recurring-deposits-account-charges-step
         [recurringDepositsAccountTemplate]="recurringDepositsAccountAndTemplate"
         [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate"
-        [recurringDepositAccountFormValid]="recurringDepositAccountFormValidAndNotPristine"
-        [currencyCode]="recurringDepositAccountCurrencyForm.get('currencyCode')">
+        [recurringDepositAccountFormValid]="recurringDepositAccountFormValidAndNotPristine">
       </mifosx-recurring-deposits-account-charges-step>
 
     </mat-step>

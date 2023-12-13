@@ -77,9 +77,9 @@
       fxFlex="60%">{{ recurringDepositAccountData.lockinPeriodFrequency + ' ' + (recurringDepositAccountData.lockinPeriodFrequencyType | find:recurringDepositsAccountProductTemplate.lockinPeriodFrequencyTypeOptions:'id':'value') }}</span>
   </div>
 
-  <div fxFlexFill>
+  <div fxFlexFill *ngIf="recurringDepositAccountData.mandatoryRecommendedDepositAmount">
     <span fxFlex="40%">{{"labels.inputs.Recurring Deposit Amount" | translate }}:</span>
-    <span fxFlex="60%">{{ recurringDepositAccountData?.mandatoryRecommendedDepositAmount}}</span>
+    <span fxFlex="60%">{{ recurringDepositAccountData.mandatoryRecommendedDepositAmount | formatNumber}}</span>
   </div>
 
   <div fxFlexFill>
