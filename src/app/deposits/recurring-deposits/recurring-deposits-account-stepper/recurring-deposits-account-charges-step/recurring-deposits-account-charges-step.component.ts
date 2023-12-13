@@ -13,6 +13,7 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { Charge, Currency } from 'app/shared/models/general.model';
 
 /**
  * Recurring Deposit Account Charges Step
@@ -39,6 +40,8 @@ export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnC
   pristine = true;
   /** For Edit Recurring Deposits Account Form */
   isChargesPatched = false;
+  /** Currency Code */
+  currency: Currency | null = null;
 
   constructor(public dialog: MatDialog,
     private dateUtils: Dates,
@@ -46,19 +49,23 @@ export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnC
   }
 
   ngOnInit() {
-    this.currencyCode.valueChanges.subscribe(() => {
-      if (!this.isChargesPatched && this.recurringDepositsAccountTemplate.charges) {
-        this.chargesDataSource = this.recurringDepositsAccountTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
-        this.isChargesPatched = true;
-      } else {
-        this.chargesDataSource = [];
-      }
-    });
+    this.chargesDataSource = [];
+    if (this.recurringDepositsAccountTemplate.id && this.recurringDepositsAccountTemplate.charges) {
+      this.chargesDataSource = this.recurringDepositsAccountTemplate.charges.map((charge: any) => ({...charge, id: charge.chargeId})) || [];
+    }
   }
 
   ngOnChanges() {
+    if (this.currency == null) {
+      if (this.recurringDepositsAccountTemplate.currency) {
+        this.currency = this.recurringDepositsAccountTemplate.currency;
+      } else if (this.recurringDepositsAccountProductTemplate && this.recurringDepositsAccountProductTemplate.currency) {
+        this.currency = this.recurringDepositsAccountProductTemplate.currency;
+      }
+    }
     if (this.recurringDepositsAccountProductTemplate) {
-      this.chargeData = this.recurringDepositsAccountProductTemplate.chargeOptions;
+      this.chargeData = this.recurringDepositsAccountProductTemplate.chargeOptions
+        .filter((c: Charge) => c.currency.code === this.currency.code);
     }
   }
 

@@ -17,6 +17,7 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { Dates } from 'app/core/utils/dates';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * View Charge Component.
@@ -45,11 +46,12 @@ export class ViewChargeComponent {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private loansService: LoansService,
-              private route: ActivatedRoute,
-              private dateUtils: Dates,
-              private router: Router,
-              public dialog: MatDialog,
-              private settingsService: SettingsService) {
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private router: Router,
+    private translateService: TranslateService,
+    public dialog: MatDialog,
+    private settingsService: SettingsService) {
     this.route.data.subscribe((data: { loansAccountCharge: any, loanDetailsData: any }) => {
       this.chargeData = data.loansAccountCharge;
       this.allowPayCharge = (this.chargeData.chargePayable && !this.chargeData.paid);
@@ -99,7 +101,7 @@ export class ViewChargeComponent {
    * Waive's the charge
    */
   waiveCharge() {
-    const waiveChargeDialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { heading: 'Waive Charge', dialogContext: `Are you sure you want to waive charge with id: ${this.chargeData.id}`, type: 'Basic' } });
+    const waiveChargeDialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { heading: 'Waive Charge', dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to waive charge with id:')` ${this.chargeData.id}`, type: 'Basic' } });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         this.loansService.executeLoansAccountChargesCommand(this.chargeData.loanId, 'waive', {}, this.chargeData.id)
@@ -179,7 +181,7 @@ export class ViewChargeComponent {
   }
 
   adjustmentCharge(): void {
-    this.router.navigate(['adjustment'], { relativeTo: this.route});
+    this.router.navigate(['adjustment'], { relativeTo: this.route });
   }
 
   /**

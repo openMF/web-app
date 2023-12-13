@@ -9,7 +9,7 @@ import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/conf
 /** Custom Services */
 import { CentersService } from '../centers.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
-
+import { TranslateService } from '@ngx-translate/core';
 /**
  * Create Center View
  */
@@ -32,17 +32,18 @@ export class CentersViewComponent implements OnInit {
    * @param route route Activated Route.
    */
   constructor(private route: ActivatedRoute,
-              private router: Router,
-              public dialog: MatDialog,
-              public centersService: CentersService) {
-      this.route.data.subscribe((data: {
-        centerViewData: any,
-        centerDatatables: any
-      }) => {
-        this.centerViewData = data.centerViewData;
-        this.centerDatatables = data.centerDatatables;
-      });
-    }
+    private router: Router,
+    public dialog: MatDialog,
+    public centersService: CentersService,
+    private translateService: TranslateService) {
+    this.route.data.subscribe((data: {
+      centerViewData: any,
+      centerDatatables: any
+    }) => {
+      this.centerViewData = data.centerViewData;
+      this.centerDatatables = data.centerDatatables;
+    });
+  }
 
   ngOnInit() {
     if (this.centerViewData.collectionMeetingCalendar) {
@@ -56,7 +57,7 @@ export class CentersViewComponent implements OnInit {
   get editMeeting() {
     if (this.centerViewData.collectionMeetingCalendar) {
       const entityType = this.centerViewData.collectionMeetingCalendar.entityType.value;
-      if (entityType === 'CENTERS' && this.centerViewData.hierarchy === '.' + this.centerViewData.id + '.' ) {
+      if (entityType === 'CENTERS' && this.centerViewData.hierarchy === '.' + this.centerViewData.id + '.') {
         return true;
       }
     }
@@ -97,8 +98,9 @@ export class CentersViewComponent implements OnInit {
    * Unassign's the centers's staff.
    */
   private centersUnassignStaff() {
+    const dialogcontext: string = ""
     const unAssignStaffDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Unassign Staff', dialogContext: 'Are you sure you want Unassign Staff' }
+      data: { heading: 'Unassign Staff', dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want Unassign Staff') }
     });
     unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
@@ -132,7 +134,7 @@ export class CentersViewComponent implements OnInit {
    */
   reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/centers`, {skipLocationChange: true})
+    this.router.navigateByUrl(`/centers`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
 

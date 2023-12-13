@@ -9,6 +9,7 @@ import { LoansService } from 'app/loans/loans.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsService } from 'app/settings/settings.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'mifosx-transactions-tab',
@@ -41,6 +42,7 @@ export class TransactionsTabComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     private loansService: LoansService,
+    private translateService: TranslateService,
     private settingsService: SettingsService) {
     this.route.parent.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.transactions = data.loanDetailsData.transactions;
@@ -177,7 +179,7 @@ export class TransactionsTabComponent implements OnInit {
     }
 
     const undoTransactionAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Undo Transaction', dialogContext: `Are you sure you want undo the transaction type ${transaction.type.value} with id ${transaction.id}` }
+      data: { heading: 'Undo Transaction', dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want undo the transaction type') + `${transaction.type.value}` + this.translateService.instant('labels.dialogContext.with id') + `${transaction.id}` }
     });
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
@@ -193,15 +195,15 @@ export class TransactionsTabComponent implements OnInit {
     });
   }
 
-  private isAccrual(transactionType: any): boolean  {
+  private isAccrual(transactionType: any): boolean {
     return (transactionType.accrual || transactionType.code === 'loanTransactionType.overdueCharge');
   }
 
-  private isChargeOff(transactionType: any): boolean  {
+  private isChargeOff(transactionType: any): boolean {
     return (transactionType.chargeoff || transactionType.code === 'loanTransactionType.chargeOff');
   }
 
-  private isDownPayment(transactionType: any): boolean  {
+  private isDownPayment(transactionType: any): boolean {
     return (transactionType.downPayment || transactionType.code === 'loanTransactionType.downPayment');
   }
 

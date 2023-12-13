@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
 import { LoanDelinquencyActionDialogComponent } from 'app/loans/custom-dialog/loan-delinquency-action-dialog/loan-delinquency-action-dialog.component';
 import { LoansService } from 'app/loans/loans.service';
@@ -32,19 +33,22 @@ export class LoanDelinquencyTagsTabComponent implements OnInit {
   dateFormat: string;
 
   constructor(private route: ActivatedRoute,
-      private loansServices: LoansService,
-      private dateUtils: Dates,
-      private settingsService: SettingsService,
-      public dialog: MatDialog) {
+    private loansServices: LoansService,
+    private dateUtils: Dates,
+    private settingsService: SettingsService,
+    private translateService: TranslateService,
+    public dialog: MatDialog) {
     this.loanId = this.route.parent.parent.snapshot.params['loanId'];
 
-    this.route.parent.data.subscribe((data: { loanDelinquencyTagsData: LoanDelinquencyTags[],
+    this.route.parent.data.subscribe((data: {
+      loanDelinquencyTagsData: LoanDelinquencyTags[],
       loanDelinquencyData: any,
-      loanDelinquencyActions: LoanDelinquencyAction[] }) => {
+      loanDelinquencyActions: LoanDelinquencyAction[]
+    }) => {
       this.loanDelinquencyTags = data.loanDelinquencyTagsData;
       this.loanDelinquencyActions = data.loanDelinquencyActions || [];
       this.validateDelinquencyActions();
-      const loanDelinquencyData: DelinquentData | null  = data.loanDelinquencyData.delinquent || null;
+      const loanDelinquencyData: DelinquentData | null = data.loanDelinquencyData.delinquent || null;
       this.currency = data.loanDelinquencyData.currency;
       this.installmentLevelDelinquency = [];
       if (loanDelinquencyData != null) {
@@ -85,10 +89,11 @@ export class LoanDelinquencyTagsTabComponent implements OnInit {
 
   resumeDelinquencyClassification(item: LoanDelinquencyAction): void {
     const removePauseDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Loan Delinquency Classification',
-              dialogContext: 'Are you sure you want resume the Delinquency Classification for Loan ' + this.loanId,
-              type: 'Mild'
-            }
+      data: {
+        heading: 'Loan Delinquency Classification',
+        dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want resume the Delinquency Classification for Loan') + this.loanId,
+        type: 'Mild'
+      }
     });
     removePauseDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
