@@ -236,7 +236,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
         'graceOnPrincipalAndInterestPayment': [true],
         'graceOnArrearsAgeing': [true]
       }),
-      'delinquencyBucketId': ['', Validators.required],
+      'delinquencyBucketId': [''],
       'enableDownPayment': [false],
       'enableInstallmentLevelDelinquency': [false],
       'useDueForRepaymentsConfigurations': [false],

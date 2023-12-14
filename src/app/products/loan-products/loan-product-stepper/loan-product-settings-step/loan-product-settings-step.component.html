@@ -163,7 +163,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Delinquency Bucket</mat-label>
-      <mat-select formControlName="delinquencyBucketId" required>
+      <mat-select formControlName="delinquencyBucketId">
         <mat-option *ngFor="let delinquencyBucket of delinquencyBucketData" [value]="delinquencyBucket.id">
           {{ delinquencyBucket.name }}
         </mat-option>
