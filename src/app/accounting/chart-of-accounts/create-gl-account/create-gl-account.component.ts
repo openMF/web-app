@@ -57,12 +57,12 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
    * @param {Matdialog} dialog Matdialog.
    */
   constructor(private formBuilder: UntypedFormBuilder,
-              private accountingService: AccountingService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService,
-              public dialog: MatDialog) {
+    private accountingService: AccountingService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService,
+    public dialog: MatDialog) {
     this.route.queryParamMap.subscribe(params => {
       this.accountTypeId = Number(params.get('accountType'));
       this.parentId = Number(params.get('parent'));
@@ -97,7 +97,7 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
       'glCode': ['', Validators.required],
       'parentId': [this.parentId || undefined],
       'tagId': [''],
-      'manualEntriesAllowed': [true, Validators.required],
+      'manualEntriesAllowed': [true],
       'description': ['']
     });
   }
@@ -109,20 +109,20 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
     this.glAccountForm.get('type').valueChanges.subscribe(accountTypeId => {
       switch (accountTypeId) {
         case 1: this.parentData = this.chartOfAccountsData.assetHeaderAccountOptions;
-                this.tagData = this.chartOfAccountsData.allowedAssetsTagOptions;
-        break;
+          this.tagData = this.chartOfAccountsData.allowedAssetsTagOptions;
+          break;
         case 2: this.parentData = this.chartOfAccountsData.liabilityHeaderAccountOptions;
-                this.tagData = this.chartOfAccountsData.allowedLiabilitiesTagOptions;
-        break;
+          this.tagData = this.chartOfAccountsData.allowedLiabilitiesTagOptions;
+          break;
         case 3: this.parentData = this.chartOfAccountsData.equityHeaderAccountOptions;
-                this.tagData = this.chartOfAccountsData.allowedEquityTagOptions;
-        break;
+          this.tagData = this.chartOfAccountsData.allowedEquityTagOptions;
+          break;
         case 4: this.parentData = this.chartOfAccountsData.incomeHeaderAccountOptions;
-                this.tagData = this.chartOfAccountsData.allowedIncomeTagOptions;
-        break;
+          this.tagData = this.chartOfAccountsData.allowedIncomeTagOptions;
+          break;
         case 5: this.parentData = this.chartOfAccountsData.expenseHeaderAccountOptions;
-                this.tagData = this.chartOfAccountsData.allowedExpensesTagOptions;
-        break;
+          this.tagData = this.chartOfAccountsData.allowedExpensesTagOptions;
+          break;
       }
     });
 
@@ -188,25 +188,25 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
    * Opens dialog if the user wants to create more accounts.
    */
   openDialog() {
-  const continueSetupDialogRef = this.dialog.open(ContinueSetupDialogComponent, {
-    data: {
-      stepName: 'GL account'
-    },
-  });
+    const continueSetupDialogRef = this.dialog.open(ContinueSetupDialogComponent, {
+      data: {
+        stepName: 'GL account'
+      },
+    });
     continueSetupDialogRef.afterClosed().subscribe((response: { step: number }) => {
       if (response.step === 1) {
-          this.configurationWizardService.showChartofAccountsForm = false;
-          this.router.navigate(['../'], { relativeTo: this.route });
-        } else if (response.step === 2) {
-          this.configurationWizardService.showChartofAccountsForm = true;
-          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-          this.router.onSameUrlNavigation = 'reload';
-          this.router.navigate(['/accounting/chart-of-accounts/gl-accounts/create']);
-        } else if (response.step === 3) {
-          this.configurationWizardService.showChartofAccountsForm = false;
-          this.configurationWizardService.showAccountsLinked = true;
-          this.router.navigate(['/accounting']);
-        }
+        this.configurationWizardService.showChartofAccountsForm = false;
+        this.router.navigate(['../'], { relativeTo: this.route });
+      } else if (response.step === 2) {
+        this.configurationWizardService.showChartofAccountsForm = true;
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate(['/accounting/chart-of-accounts/gl-accounts/create']);
+      } else if (response.step === 3) {
+        this.configurationWizardService.showChartofAccountsForm = false;
+        this.configurationWizardService.showAccountsLinked = true;
+        this.router.navigate(['/accounting']);
+      }
     });
   }
 }
