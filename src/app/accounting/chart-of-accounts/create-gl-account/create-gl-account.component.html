@@ -16,7 +16,8 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="glAccountForm.controls.type.hasError('required')">
-              {{"labels.inputs.Account Type" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Account Type" | translate}} {{"labels.commons.is" | translate}}
+              <strong>{{"labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -24,7 +25,8 @@
             <mat-label>{{"labels.inputs.Account Name" | translate}}</mat-label>
             <input matInput required formControlName="name">
             <mat-error *ngIf="glAccountForm.controls.name.hasError('required')">
-              {{"labels.inputs.Account Name" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Account Name" | translate}} {{"labels.commons.is" | translate}}
+              <strong>{{"labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -36,7 +38,8 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="glAccountForm.controls.usage.hasError('required')">
-              {{"labels.inputs.Account Usage" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.Account Usage" | translate}} {{"labels.commons.is" | translate}}
+              <strong>{{"labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -44,7 +47,8 @@
             <mat-label>{{"labels.inputs.GL Code" | translate}}</mat-label>
             <input matInput required formControlName="glCode">
             <mat-error *ngIf="glAccountForm.controls.glCode.hasError('required')">
-              {{"labels.inputs.GL Code" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+              {{"labels.inputs.GL Code" | translate}} {{"labels.commons.is" | translate}}
+              <strong>{{"labels.commons.required" | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -67,7 +71,7 @@
           </mat-form-field>
 
           <div fxFlex="18%" class="manual-entries-allowed-wrapper">
-            <mat-checkbox labelPosition="before" required formControlName="manualEntriesAllowed" class="manual-entries-allowed">
+            <mat-checkbox labelPosition="before" formControlName="manualEntriesAllowed" class="manual-entries-allowed">
               {{"labels.inputs.Manual Entries Allowed" | translate}}
             </mat-checkbox>
           </div>
@@ -82,8 +86,10 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="[cancelRoute]">{{"labels.buttons.Cancel" | translate}}</button>
-        <button mat-raised-button color="primary" [disabled]="!glAccountForm.valid" *mifosxHasPermission="'CREATE_GLACCOUNT'">{{"labels.buttons.Submit" | translate}}</button>
+        <button type="button" mat-raised-button [routerLink]="[cancelRoute]">{{"labels.buttons.Cancel" |
+          translate}}</button>
+        <button mat-raised-button color="primary" [disabled]="!glAccountForm.valid"
+          *mifosxHasPermission="'CREATE_GLACCOUNT'">{{"labels.buttons.Submit" | translate}}</button>
       </mat-card-actions>
 
     </form>
@@ -94,11 +100,18 @@
 
 <ng-template #templateAccountFormRef let-popover="popover">
   <h2>{{"labels.heading.Create GL account" | translate}}</h2>
-  <p class="mw400">{{"labels.text.Filling Details" | translate}} <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141745/Chart+of+Accounts+-+General+Ledger+Setup" target="_blank">{{"labels.inputs.Chart of Accounts" | translate}}</a></p>
+  <p class="mw400">{{"labels.text.Filling Details" | translate}} <a
+      href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141745/Chart+of+Accounts+-+General+Ledger+Setup"
+      target="_blank">{{"labels.inputs.Chart of Accounts" | translate}}</a></p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close()">{{"labels.buttons.Create GL Account" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{"labels.buttons.Back" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{"labels.buttons.Next" | translate}}</button>
+    <button mat-raised-button color="warn"
+      (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" |
+      translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close()">{{"labels.buttons.Create GL Account" |
+      translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{"labels.buttons.Back" |
+      translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{"labels.buttons.Next" |
+      translate}}</button>
   </div>
 </ng-template>
