@@ -95,7 +95,7 @@
 
           <mat-form-field fxFlex="48%">
             <mat-label>{{"labels.inputs.To Office" | translate}}</mat-label>
-            <mat-select required formControlName="toOfficeId" (selectionChange)="changeEvent()">
+            <mat-select [disabled]="ToOfficeId" required formControlName="toOfficeId" (selectionChange)="changeEvent()">
               <mat-option *ngFor="let toOfficeType of toOfficeTypeData" [value]="toOfficeType.id">
                 {{ toOfficeType.name }}
               </mat-option>
@@ -107,7 +107,7 @@
 
           <mat-form-field fxFlex="48%">
             <mat-label>{{"labels.inputs.Beneficiary" | translate}}</mat-label>
-            <mat-select required formControlName="toClientId" (selectionChange)="changeEvent()">
+            <mat-select [disabled]="ToClientId" required formControlName="toClientId" (selectionChange)="changeEvent()">
               <mat-option *ngFor="let toClientType of toClientTypeData" [value]="toClientType.id">
                 {{ toClientType.displayName }}
               </mat-option>
@@ -234,7 +234,7 @@
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
         <button type="button" mat-raised-button [routerLink]="['../']">{{"labels.buttons.Cancel" | translate}}</button>
         <button mat-raised-button color="primary" [disabled]="!createStandingInstructionsForm.valid" *mifosxHasPermission="'CREATE_STANDINGINSTRUCTION'"
-          (click)="submit()">{{"labels.buttons.Submit | translate}}</button>
+          (click)="submit()">{{"labels.buttons.Submit" | translate}}</button>
       </mat-card-actions>
 
     </form>
