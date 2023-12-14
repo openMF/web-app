@@ -58,6 +58,10 @@ export class CreateStandingInstructionsComponent implements OnInit {
   accountTypeId: any;
   /** Office Id */
   officeId: any;
+  /** ToOffice Id Boolean for disabling the officeId formControl */
+  ToOfficeId: any;
+  /** ToClient Id Boolean for disabling the officeId formControl */
+  ToClientId: any;
   /** Account Type */
   accountType: any;
   /** Client Id */
@@ -119,7 +123,7 @@ export class CreateStandingInstructionsComponent implements OnInit {
   createCreateStandingInstructionsForm() {
     this.createStandingInstructionsForm = this.formBuilder.group({
       'name': ['', Validators.required],
-      'applicant': [{value: '', disabled: true}],
+      'applicant': [{ value: '', disabled: true }],
       'transferType': ['', Validators.required],
       'priority': ['', Validators.required],
       'status': ['', Validators.required],
@@ -169,8 +173,8 @@ export class CreateStandingInstructionsComponent implements OnInit {
           'toOfficeId': this.officeId,
           'toClientId': this.clientId
         });
-        this.createStandingInstructionsForm.controls['toOfficeId'].disable();
-        this.createStandingInstructionsForm.controls['toClientId'].disable();
+        this.ToOfficeId = true;
+        this.ToClientId = true;
         this.changeEvent();
       } else {
         this.allowclientedit = true;
