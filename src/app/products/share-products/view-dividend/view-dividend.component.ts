@@ -40,7 +40,7 @@ export class ViewDividendComponent implements OnInit {
   }
 
   postDividends() {
-    const shareProductId = this.route.parent.parent.snapshot.paramMap.get('id');
+    const shareProductId = this.route.parent.parent.snapshot.paramMap.get('productId');
     const dividendId = this.route.snapshot.paramMap.get('dividendId');
     this.productsService.approveDividend(shareProductId, dividendId, { productId: shareProductId, dividendId: dividendId}).subscribe(() => {
       this.router.navigate(['../'], { relativeTo: this.route });
