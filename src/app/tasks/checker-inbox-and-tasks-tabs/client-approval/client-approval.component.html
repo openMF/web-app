@@ -3,12 +3,12 @@
   <div fxLayout="row" fxLayoutAlign="start center">
     <div class="search-box" fxFlex="40%">
       <mat-form-field fxFlex="90%">
-        <input matInput placeholder="{{'labels.text.Filter by name' | tranalate}}" (keyup)="applyFilter($event.target.value)">
+        <input matInput placeholder="{{'labels.text.Filter by name' | translate}}"
+          (keyup)="applyFilter($event.target.value)">
       </mat-form-field>
     </div>
     <div fxFlex="60%">
-      <button mat-raised-button color="success" *mifosxHasPermission="'ACTIVATE_CLIENT'"
-        (click)="approveClients()">
+      <button mat-raised-button color="success" *mifosxHasPermission="'ACTIVATE_CLIENT'" (click)="approveClients()">
         <fa-icon icon="check" class="m-r-10"></fa-icon>{{'labels.buttons.Approve' | translate}}
       </button>
     </div>
@@ -24,8 +24,10 @@
 
         <ng-container matColumnDef="select">
           <th mat-header-cell *matHeaderCellDef>
-            <mat-checkbox (change)="$event ? masterToggle(client.value) : null" [checked]="selection.hasValue() && isAllSelected(client.value)"
-              [indeterminate]="selection.hasValue() && !isAllSelected(client.value)" [aria-label]="checkboxLabel(client.value)">
+            <mat-checkbox (change)="$event ? masterToggle(client.value) : null"
+              [checked]="selection.hasValue() && isAllSelected(client.value)"
+              [indeterminate]="selection.hasValue() && !isAllSelected(client.value)"
+              [aria-label]="checkboxLabel(client.value)">
             </mat-checkbox>
           </th>
           <td mat-cell *matCellDef="let row">
@@ -37,17 +39,20 @@
 
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.name' | translate}} </th>
-          <td mat-cell *matCellDef="let element" class="view-details" [routerLink]="['../../clients', element.id]"> {{ element.displayName }} </td>
+          <td mat-cell *matCellDef="let element" class="view-details" [routerLink]="['../../clients', element.id]"> {{
+            element.displayName }} </td>
         </ng-container>
 
         <ng-container matColumnDef="accountNumber">
           <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Account Number' | translate}} </th>
-          <td mat-cell *matCellDef="let element" class="view-details" [routerLink]="['../../clients', element.id]"> {{ element.accountNo }} </td>
+          <td mat-cell *matCellDef="let element" class="view-details" [routerLink]="['../../clients', element.id]"> {{
+            element.accountNo }} </td>
         </ng-container>
 
         <ng-container matColumnDef="staff">
           <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Staff' | translate}} </th>
-          <td mat-cell *matCellDef="let element" class="view-details" [routerLink]="['../../clients', element.id]"> {{ element.staffName }} </td>
+          <td mat-cell *matCellDef="let element" class="view-details" [routerLink]="['../../clients', element.id]"> {{
+            element.staffName }} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
