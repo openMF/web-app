@@ -15,6 +15,12 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 
+$custom-typography: mat.define-typography-config(
+  $font-family: Futura,
+);
+@include mat.typography-hierarchy($custom-typography);
+
+
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
