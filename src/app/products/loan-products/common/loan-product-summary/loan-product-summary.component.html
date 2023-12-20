@@ -384,7 +384,13 @@
 
   <div fxFlexFill *ngIf="loanProduct.delinquencyBucket">
     <span fxFlex="47%">Delinquency Bucket:</span>
-    <span  fxFlex="53%">{{ loanProduct.delinquencyBucket.name }}</span>
+    <span fxFlex="53%" *ngIf="loanProduct.delinquencyBucket.name">{{ loanProduct.delinquencyBucket.name }}</span>
+    <span fxFlex="53%" *ngIf="!loanProduct.delinquencyBucket.name">{{ 'labels.inputs.Unassigned' | translate }}</span>
+  </div>
+
+  <div fxFlexFill *ngIf="!loanProduct.delinquencyBucket">
+    <span fxFlex="47%">Delinquency Bucket:</span>
+    <span fxFlex="53%">{{ 'labels.inputs.Unassigned' | translate }}</span>
   </div>
 
   <div fxFlexFill>

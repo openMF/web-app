@@ -496,6 +496,16 @@ export class LoanProductSettingsStepComponent implements OnInit {
     return value;
   }
 
+  clearProperty($event: Event, propertyName: string): void {
+    if (propertyName === 'delinquencyBucketId') {
+      this.loanProductSettingsForm.patchValue({
+        'delinquencyBucketId': ''
+      });
+    }
+    this.loanProductSettingsForm.markAsDirty();
+    $event.stopPropagation();
+  }
+
   get loanProductSettings() {
     const productSettings = this.loanProductSettingsForm.value;
     if (!this.loanProductSettingsForm.value.multiDisburseLoan) {
@@ -504,6 +514,9 @@ export class LoanProductSettingsStepComponent implements OnInit {
     if (this.loanProductSettingsForm.value.useDueForRepaymentsConfigurations) {
       productSettings['dueDaysForRepaymentEvent'] = null;
       productSettings['overDueDaysForRepaymentEvent'] = null;
+    }
+    if (productSettings['delinquencyBucketId'] === '') {
+      delete productSettings['delinquencyBucketId'];
     }
     return productSettings;
   }

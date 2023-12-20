@@ -179,7 +179,9 @@ export class TransactionsTabComponent implements OnInit {
     }
 
     const undoTransactionAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: this.translateService.instant('labels.heading.Undo Transaction'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want undo the transaction type') + `${transaction.type.value}` + this.translateService.instant('labels.dialogContext.with id') + `${transaction.id}` }
+      data: { heading: this.translateService.instant('labels.heading.Undo Transaction'),
+      dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want undo the transaction type') + `${transaction.type.value}` + this.translateService.instant('labels.dialogContext.with id') + `${transaction.id}`
+      }
     });
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {

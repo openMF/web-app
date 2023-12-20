@@ -50,7 +50,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
               private recurringDepositsService: RecurringDepositsService,
               private savingsService: SavingsService,
               public dialog: MatDialog,
-              private translateService:TranslateService) {
+              private translateService: TranslateService) {
     this.route.data.subscribe((data: { recurringDepositsAccountData: any, savingsDatatables: any }) => {
       this.recurringDepositsAccountData = data.recurringDepositsAccountData;
       this.charges = this.recurringDepositsAccountData.charges;
@@ -225,7 +225,9 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
    */
   private postInterest() {
     const postInterestAccountDialogRef = this.dialog.open(RecurringDepositConfirmationDialogComponent, {
-      data: { heading: this.translateService.instant('labels.heading.Post Interest'), dialogContext:this.translateService.instant('lables.dialogContext.Are you sure you want to post interest ?')  }
+      data: { heading: this.translateService.instant('labels.heading.Post Interest'),
+        dialogContext: this.translateService.instant('lables.dialogContext.Are you sure you want to post interest ?')
+      }
     });
     postInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
