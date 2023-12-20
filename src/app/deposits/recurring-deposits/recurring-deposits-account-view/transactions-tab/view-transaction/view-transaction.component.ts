@@ -25,7 +25,6 @@ export class ViewTransactionComponent {
 
   /** Transaction data. */
   transactionData: any;
-  
 
   /**
    * Retrieves the Transaction data from `resolve`.
@@ -41,7 +40,7 @@ export class ViewTransactionComponent {
     private dateUtils: Dates,
     private router: Router,
     public dialog: MatDialog,
-    private translateService:TranslateService,
+    private translateService: TranslateService,
     private settingsService: SettingsService, ) {
     this.route.data.subscribe((data: { recurringDepositsAccountTransaction: any }) => {
       this.transactionData = data.recurringDepositsAccountTransaction;

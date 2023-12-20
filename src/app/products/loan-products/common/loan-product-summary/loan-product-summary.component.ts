@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { LoanProduct } from '../../models/loan-product.model';
+import { DelinquencyBucket, LoanProduct } from '../../models/loan-product.model';
 import { AccountingMapping, Charge, ChargeToIncomeAccountMapping, GLAccount, PaymentChannelToFundSourceMapping, PaymentType, PaymentTypeOption } from '../../../../shared/models/general.model';
 import { AdvancePaymentAllocationData, PaymentAllocation } from '../../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 import { LoanProducts } from '../../loan-products';
@@ -62,6 +62,7 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
 
     } else {
       this.accountingMappings = {};
+
       if ((this.loanProduct.accountingRule && this.loanProduct.accountingRule > 1) || this.loanProductsTemplate.accountingRule.value !== 'NONE') {
         const assetAccountData = this.loanProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
         const incomeAccountData = this.loanProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
@@ -161,6 +162,10 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
 
       optionValue = this.optionDataLookUp(this.loanProduct.repaymentStartDateType, this.loanProductsTemplate.repaymentStartDateTypeOptions);
       this.loanProduct.repaymentStartDateType = optionValue;
+
+      if (this.loanProduct.delinquencyBucketId) {
+        this.loanProduct.delinquencyBucket = this.delinquencyBucketLookUp(this.loanProduct.delinquencyBucketId, this.loanProductsTemplate.delinquencyBucketOptions);
+      }
 
       const codeValue: CodeName = this.codeNameLookUpByCode(this.loanProduct.transactionProcessingStrategyCode,
         this.loanProductsTemplate.transactionProcessingStrategyOptions);
@@ -273,6 +278,18 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
       });
     }
     return paymentType;
+  }
+
+  delinquencyBucketLookUp(delinquencyBucketId: any, delinquencyBuckets: DelinquencyBucket[]): DelinquencyBucket {
+    let delinquencyBucketData: DelinquencyBucket | null = null;
+    if (delinquencyBucketId) {
+      delinquencyBuckets.some((delinquencyBucket: DelinquencyBucket) => {
+        if (delinquencyBucket.id === delinquencyBucketId) {
+          delinquencyBucketData = { id: delinquencyBucket.id, name: delinquencyBucket.name };
+        }
+      });
+    }
+    return delinquencyBucketData;
   }
 
   accountingRule(): number {
