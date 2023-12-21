@@ -40,6 +40,10 @@
             <td>{{"labels.inputs.Tax Group" | translate }}</td>
             <td>{{fixedDepositsAccountData.taxGroup.name}}</td>
           </tr>
+          <tr *ngIf="fixedDepositsAccountData.onAccountClosure">
+            <td>{{"labels.inputs.Maturity Instructions" | translate }}</td>
+            <td>{{fixedDepositsAccountData.onAccountClosure.value}}</td>
+          </tr>
         </tbody>
       </table>
     </div>

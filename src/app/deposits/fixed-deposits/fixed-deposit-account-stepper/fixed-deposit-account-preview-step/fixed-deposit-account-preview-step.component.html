@@ -111,6 +111,11 @@
     <span fxFlex="60%">{{ fixedDepositAccountData.linkAccountId | find:fixedDepositsAccountProductTemplate.savingsAccounts:'id':'accountNo' }}</span>
   </div>
 
+  <div fxFlexFill *ngIf="fixedDepositAccountData.maturityInstructionId">
+    <span fxFlex="40%">{{"labels.inputs.Maturity Instructions" | translate }}</span>
+    <span fxFlex="60%">{{ fixedDepositAccountData.maturityInstructionId | find:fixedDepositsAccountProductTemplate.maturityInstructionOptions:'id':'value' }}</span>
+  </div>
+
   <div fxFlexFill>
     <span fxFlex="40%">{{"labels.inputs.Apply Penal Interest (less)" | translate }}:</span>
     <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate.preClosurePenalApplicable ? 'Yes' : 'No' }}</span>

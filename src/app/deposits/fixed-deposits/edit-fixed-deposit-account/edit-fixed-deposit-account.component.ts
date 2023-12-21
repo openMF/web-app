@@ -8,7 +8,6 @@ import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Components */
 import { FixedDepositAccountDetailsStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-details-step/fixed-deposit-account-details-step.component';
-import { FixedDepositAccountCurrencyStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-currency-step/fixed-deposit-account-currency-step.component';
 import { FixedDepositAccountTermsStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-terms-step/fixed-deposit-account-terms-step.component';
 import { FixedDepositAccountSettingsStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-settings-step/fixed-deposit-account-settings-step.component';
 import { FixedDepositAccountChargesStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-charges-step/fixed-deposit-account-charges-step.component';
@@ -27,8 +26,6 @@ export class EditFixedDepositAccountComponent {
 
   /** Fixed Deposits Account Details Step */
   @ViewChild(FixedDepositAccountDetailsStepComponent, { static: true }) fixedDepositsAccountDetailsStep: FixedDepositAccountDetailsStepComponent;
-  /** Fixed Deposits Account Currency Step */
-  @ViewChild(FixedDepositAccountCurrencyStepComponent, { static: true }) fixedDepositAccountCurrencyStep: FixedDepositAccountCurrencyStepComponent;
   /** Fixed Deposits Account Terms Step */
   @ViewChild(FixedDepositAccountTermsStepComponent, { static: true }) fixedDepositAccountTermsStep: FixedDepositAccountTermsStepComponent;
   /** Fixed Deposits Account Settings Step */
@@ -75,13 +72,6 @@ export class EditFixedDepositAccountComponent {
    */
   get fixedDepositAccountDetailsForm() {
     return this.fixedDepositsAccountDetailsStep.fixedDepositAccountDetailsForm;
-  }
-
-  /**
-   * Retrieves Fixed Deposit Account Currency Form Data
-   */
-  get fixedDepositAccountCurrencyForm() {
-    return this.fixedDepositAccountCurrencyStep.fixedDepositAccountCurrencyForm;
   }
 
   /**
