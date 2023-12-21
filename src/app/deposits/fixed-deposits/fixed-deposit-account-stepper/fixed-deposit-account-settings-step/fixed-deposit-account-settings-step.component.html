@@ -95,6 +95,29 @@
 
     <mat-divider fxFlex="98%"></mat-divider>
 
+    <mat-form-field fxFlex="48%">
+      <mat-label>{{"labels.inputs.Maturity Instructions" | translate }}</mat-label>
+      <mat-select formControlName="maturityInstructionId">
+        <mat-option *ngFor="let maturityInstruction of maturityInstructionOptions" [value]="maturityInstruction.id">
+          {{ maturityInstruction.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%" *ngIf="fixedDepositAccountSettingsForm.contains('transferToSavingsId')" class="margin-b">
+      <mat-label>{{"labels.inputs.Transfer to savings account" | translate }}</mat-label>
+      <mat-select formControlName="transferToSavingsId" required>
+        <mat-option *ngFor="let account of savingsAccountsData" [value]="account.id">
+          {{ account.accountNo }}
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        {{"labels.inputs.Transfer to savings account" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-divider fxFlex="98%"></mat-divider>
+
     <h4 fxFlex="23%" class="mat-h4">{{"labels.heading.For Pre-mature closure" | translate }}</h4>
 
     <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="preClosurePenalApplicable" class="margin-v">

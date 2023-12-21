@@ -2,6 +2,7 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
+import { OptionData } from 'app/shared/models/option-data.model';
 
 /**
  * Fixed Deposits Account Settings Step
@@ -33,6 +34,8 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
   /** Savings Accounts Data */
   savingsAccountsData: any;
 
+  maturityInstructionOptions: OptionData;
+
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {SettingsService} settingsService Settings Service
@@ -54,7 +57,8 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
         'maxDepositTermTypeId': this.fixedDepositsAccountProductTemplate.maxDepositTermType ? this.fixedDepositsAccountProductTemplate.maxDepositTermType.id : '',
         'preClosurePenalApplicable': this.fixedDepositsAccountProductTemplate.preClosurePenalApplicable,
         'preClosurePenalInterest': this.fixedDepositsAccountProductTemplate.preClosurePenalInterest,
-        'preClosurePenalInterestOnTypeId': this.fixedDepositsAccountProductTemplate.preClosurePenalInterestOnType ? this.fixedDepositsAccountProductTemplate.preClosurePenalInterestOnType.id : ''
+        'preClosurePenalInterestOnTypeId': this.fixedDepositsAccountProductTemplate.preClosurePenalInterestOnType ? this.fixedDepositsAccountProductTemplate.preClosurePenalInterestOnType.id : '',
+        'maturityInstructionId': this.fixedDepositsAccountProductTemplate.maturityInstructionId
       });
       if (this.fixedDepositsAccountProductTemplate.withHoldTax) {
         this.fixedDepositAccountSettingsForm.addControl('withHoldTax', new UntypedFormControl(false));
@@ -101,7 +105,8 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
       'transferInterestToSavings': [false],
       'preClosurePenalApplicable': [{ value: '', disabled: true }],
       'preClosurePenalInterest': [{ value: '', disabled: true }],
-      'preClosurePenalInterestOnTypeId': [{ value: '', disabled: true }]
+      'preClosurePenalInterestOnTypeId': [{ value: '', disabled: true }],
+      'maturityInstructionId': ['']
     });
   }
 
@@ -117,6 +122,15 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
         this.fixedDepositAccountSettingsForm.removeControl('linkAccountId');
       }
     });
+    this.fixedDepositAccountSettingsForm.get('maturityInstructionId').valueChanges.subscribe((value: number) => {
+      console.log(value);
+      if (value > 100) {
+        this.fixedDepositAccountSettingsForm.addControl('transferToSavingsId', new UntypedFormControl('', Validators.required));
+        this.fixedDepositAccountSettingsForm.get('transferToSavingsId').patchValue(this.fixedDepositsAccountTemplate.transferToSavingsId && this.fixedDepositsAccountTemplate.transferToSavingsId.id);
+      } else {
+        this.fixedDepositAccountSettingsForm.removeControl('transferToSavingsId');
+      }
+    });
   }
 
   /**
@@ -127,6 +141,7 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
     this.periodFrequencyTypeData = this.fixedDepositsAccountProductTemplate.periodFrequencyTypeOptions;
     this.savingsAccountsData = this.fixedDepositsAccountProductTemplate.savingsAccounts;
     this.preClosurePenalInterestOnTypeData = this.fixedDepositsAccountProductTemplate.preClosurePenalInterestOnTypeOptions;
+    this.maturityInstructionOptions = this.fixedDepositsAccountProductTemplate.maturityInstructionOptions;
   }
 
   /**
