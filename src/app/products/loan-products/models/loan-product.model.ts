@@ -82,6 +82,7 @@ export interface LoanProduct {
   isEqualAmortization:                                       boolean;
   delinquencyBucketOptions:                                  DelinquencyBucket[];
   delinquencyBucket:                                         DelinquencyBucket;
+  delinquencyBucketId?:                                      number;
   graceOnPrincipalPayment?:                                  number;
   graceOnInterestPayment?:                                   number;
   graceOnInterestCharged?:                                   number;
@@ -137,9 +138,9 @@ export interface AllowAttributeOverrides {
 }
 
 export interface DelinquencyBucket {
-  id:     number;
-  name:   string;
-  ranges: Range[];
+  id:      number;
+  name:    string;
+  ranges?: Range[];
 }
 
 export interface Range {

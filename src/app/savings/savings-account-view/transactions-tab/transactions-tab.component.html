@@ -7,6 +7,8 @@
         <h3>All Transactions</h3>
       </div>
       <div class="action-button m-b-20" fxLayout="row" fxLayoutGap="20px" *ngIf="checkStatus()">
+        <mat-checkbox [formControl]="hideAccrualsParam" (click)="hideAccruals()" class="accruals">
+          {{"labels.inputs.Hide Accruals" | translate}}</mat-checkbox>
         <button mat-raised-button color="primary" [routerLink]="['/accounting', 'journal-entries']">View Journal Entries</button>
         <button mat-raised-button color="primary" [routerLink]="['export']">Export</button>
       </div>

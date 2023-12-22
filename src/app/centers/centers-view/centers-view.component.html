@@ -95,7 +95,7 @@
               {{"labels.buttons.Unassign Staff" | translate}} </button>
           </span>
           <span *ngIf="centerViewData.status.value==='Active'">
-            <button mat-menu-item *mifosxHasPermission="'DELETE_CENTER'" (click)="doAction('Delete')"> {{"labels.buttons.Delete " | translate}}</button>
+            <button mat-menu-item *mifosxHasPermission="'DELETE_CENTER'" (click)="doAction('Delete')"> {{"labels.buttons.Delete" | translate}}</button>
           </span>
           <button mat-menu-item *mifosxHasPermission="'CLOSE_CENTER'" (click)="doAction('Close')"> {{"labels.buttons.Close" | translate}} </button>
           <span *ngIf="centerViewData.status.value==='Active' && !(centerViewData.collectionMeetingCalendar)">

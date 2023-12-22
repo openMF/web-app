@@ -101,7 +101,7 @@ export class ViewChargeComponent {
    * Waive's the charge
    */
   waiveCharge() {
-    const waiveChargeDialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { heading: 'Waive Charge', dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to waive charge with id:')` ${this.chargeData.id}`, type: 'Basic' } });
+    const waiveChargeDialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { heading: this.translateService.instant('labels.heading.Waive Charge'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to waive charge with id:')` ${this.chargeData.id}`, type: 'Basic' } });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         this.loansService.executeLoansAccountChargesCommand(this.chargeData.loanId, 'waive', {}, this.chargeData.id)

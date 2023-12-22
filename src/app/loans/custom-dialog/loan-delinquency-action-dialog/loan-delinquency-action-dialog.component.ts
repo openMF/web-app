@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
   selector: 'mifosx-loan-delinquency-action-dialog',
@@ -18,14 +17,11 @@ export class LoanDelinquencyActionDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<LoanDelinquencyActionDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder: UntypedFormBuilder,
-    private settingsService: SettingsService) {
+    private formBuilder: UntypedFormBuilder) {
       this.createDelinquencyActionForm();
   }
 
-  ngOnInit(): void {
-    this.minDate = this.settingsService.businessDate;
-  }
+  ngOnInit(): void { }
 
   createDelinquencyActionForm() {
     this.delinquencyActionForm = this.formBuilder.group({

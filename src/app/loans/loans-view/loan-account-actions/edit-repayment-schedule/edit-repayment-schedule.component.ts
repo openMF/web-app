@@ -118,7 +118,7 @@ export class EditRepaymentScheduleComponent implements OnInit {
 
   reset(): void {
     const recoverScheduleDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Recover Original Schedule', dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want recover the Original Schedule') }
+      data: { heading: this.translateService.instant('labels.heading.Recover Original Schedule'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want recover the Original Schedule') }
     });
     recoverScheduleDialogRef.afterClosed().subscribe((responseConfirmation: any) => {
       if (responseConfirmation.confirm) {
