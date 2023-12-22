@@ -21,6 +21,8 @@ export class UndoApprovalRecurringDepositsAccountComponent implements OnInit {
   /** Recurring Deposits Account Id */
   accountId: any;
 
+  actionName: string;
+
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {SavingsService} recurringDepositsService Recurring Deposits Service
@@ -31,7 +33,8 @@ export class UndoApprovalRecurringDepositsAccountComponent implements OnInit {
     private recurringDepositsService: RecurringDepositsService,
     private route: ActivatedRoute,
     private router: Router) {
-    this.accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
+      this.actionName = this.route.snapshot.params['name'];
+      this.accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
   }
 
   /**
@@ -58,7 +61,11 @@ export class UndoApprovalRecurringDepositsAccountComponent implements OnInit {
     const data = {
       ...this.undoApprovalRecurringDepositsAccountForm.value,
     };
-    this.recurringDepositsService.executeRecurringDepositsAccountCommand(this.accountId, 'undoapproval', data).subscribe(() => {
+    let command = 'undoapproval';
+    if (this.actionName === 'Undo Activation') {
+      command = 'undoActivate';
+    }
+    this.recurringDepositsService.executeRecurringDepositsAccountCommand(this.accountId, command, data).subscribe(() => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }

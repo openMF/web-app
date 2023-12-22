@@ -156,6 +156,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
   doAction(name: string) {
     switch (name) {
       case 'Activate':
+      case 'Undo Activation':
       case 'Approve':
       case 'Reject':
       case 'Undo Approval':

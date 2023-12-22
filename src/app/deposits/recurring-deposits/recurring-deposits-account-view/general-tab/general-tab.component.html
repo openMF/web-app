@@ -37,12 +37,13 @@
         <tr>
         </tr>
         <tr>
-          <td><span>{{recurringDepositsAccountData.recurringFrequency}}
-              &nbsp;{{recurringDepositsAccountData.recurringFrequencyType.value}}
-            </span></td>
+          <td>{{"labels.inputs.Frequency" | translate }}</td>
+          <td><span class="m-r-5">{{recurringDepositsAccountData.recurringFrequency}}</span>
+            <span>{{recurringDepositsAccountData.recurringFrequencyType.value}}</span>
+          </td>
         </tr>
         <tr *ngIf="recurringDepositsAccountData.minBalanceForInterestCalculation">
-          <td> {{"labels.inputs.Balance Required For Interest Calculation" | translate }}</td>
+          <td>{{"labels.inputs.Balance Required For Interest Calculation" | translate }}</td>
           <td><span>{{recurringDepositsAccountData.minBalanceForInterestCalculation}}</span></td>
         </tr>
         <tr *ngIf="recurringDepositsAccountData.witdHoldTax">
@@ -58,15 +59,6 @@
     <h4 class="table-headers">{{"labels.heading.Performance History" | translate }}</h4>
     <table>
       <tbody>
-        <tr>
-          <td>{{"labels.inputs.External Id" | translate }}</td>
-          <td>
-            <span *ngIf="recurringDepositsAccountData.externalId">
-              <mifosx-external-identifier externalId="{{recurringDepositsAccountData.externalId}}" completed="true"></mifosx-external-identifier>
-            </span>
-            <span *ngIf="!recurringDepositsAccountData.externalId"> {{"labels.inputs.Not Available" | translate}} </span>
-          </td>
-        </tr>
         <tr>
           <td>{{"labels.inputs.Principal Amount" | translate }}</td>
           <td class="r-amount">

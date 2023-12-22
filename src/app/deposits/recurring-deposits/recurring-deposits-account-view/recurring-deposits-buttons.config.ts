@@ -36,6 +36,11 @@ export class RecurringDepositsButtonsConfiguration {
             taskPermissionName: 'DEPOSIT_RECURRINGDEPOSITACCOUNT'
           },
           {
+            name: 'Undo Activation',
+            icon: 'undo',
+            taskPermissionName: 'UNDO_ACTIVATE_RECURRINGDEPOSITACCOUNT'
+          },
+          {
             name: 'Premature Close',
             icon: 'arrow-left',
             taskPermissionName: 'PREMATURECLOSE_RECURRINGDEPOSITACCOUNT'
