@@ -42,7 +42,7 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
   /**
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
     this.currencyCode.valueChanges.subscribe(() => {
@@ -57,7 +57,8 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     if (this.sharesAccountProductTemplate) {
-      this.chargeData = this.sharesAccountProductTemplate.charges;
+      this.chargeData = this.sharesAccountTemplate.chargeOptions;
+      this.chargesDataSource = this.sharesAccountProductTemplate.charges;
     }
   }
 
