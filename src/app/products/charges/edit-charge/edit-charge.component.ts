@@ -54,10 +54,10 @@ export class EditChargeComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private productsService: ProductsService,
-              private formBuilder: UntypedFormBuilder,
-              private route: ActivatedRoute,
-              private router: Router,
-              private settingsService: SettingsService) {
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private settingsService: SettingsService) {
     this.route.data.subscribe((data: { chargesTemplate: any }) => {
       this.chargeData = data.chargesTemplate;
     });
@@ -80,6 +80,8 @@ export class EditChargeComponent implements OnInit {
       'amount': [this.chargeData.amount, Validators.required],
       'active': [this.chargeData.active],
       'penalty': [this.chargeData.penalty],
+      'minCap': [this.chargeData.minCap],
+      'maxCap': [this.chargeData.maxCap],
       'chargeTimeType': [this.chargeData.chargeTimeType.id, Validators.required],
       'chargeCalculationType': [this.chargeData.chargeCalculationType.id, Validators.required],
     });
@@ -151,6 +153,12 @@ export class EditChargeComponent implements OnInit {
     charges.locale = this.settingsService.language.code;
     if (charges.taxGroupId.value === '') {
       delete charges.taxGroupId;
+    }
+    if (!charges.minCap) {
+      delete charges.minCap;
+    }
+    if (!charges.maxCap) {
+      delete charges.maxCap;
     }
     this.productsService.updateCharge(this.chargeData.id.toString(), charges)
       .subscribe((response: any) => {

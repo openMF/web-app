@@ -47,11 +47,11 @@ export class CreateChargeComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: UntypedFormBuilder,
-              private productsService: ProductsService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private dateUtils: Dates,
-              private settingsService: SettingsService) {
+    private productsService: ProductsService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private settingsService: SettingsService) {
     this.route.data.subscribe((data: { chargesTemplate: any }) => {
       this.chargesTemplateData = data.chargesTemplate;
       if (data.chargesTemplate.incomeOrLiabilityAccountOptions.liabilityAccountOptions) {

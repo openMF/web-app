@@ -49,6 +49,22 @@
           {{ chargeData.amount }}
         </div>
 
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="minCap">
+          Minimum Charge Cap
+        </div>
+
+        <div fxFlex="50%" *ngIf="minCap">
+          {{ chargeData.minCap }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="maxCap">
+          Maximum Charge Cap
+        </div>
+
+        <div fxFlex="50%" *ngIf="maxCap">
+          {{ chargeData.maxCap }}
+        </div>
+        
         <div fxFlex="50%" class="mat-body-strong">
           Charge Time Type
         </div>
@@ -93,7 +109,8 @@
           Fee Frequency
         </div>
 
-        <div fxFlex="50%" *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeFrequency && chargeData.feeFrequency">
+        <div fxFlex="50%"
+          *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeFrequency && chargeData.feeFrequency">
           {{ chargeData.feeFrequency.value }}
         </div>
 
