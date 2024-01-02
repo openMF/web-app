@@ -11,7 +11,8 @@
           <mat-form-field fxFlex="48%">
             <mat-label>Charge Applies To</mat-label>
             <mat-select required formControlName="chargeAppliesTo">
-              <mat-option *ngFor="let chargeAppliesTo of chargesTemplateData.chargeAppliesToOptions" [value]="chargeAppliesTo.id">
+              <mat-option *ngFor="let chargeAppliesTo of chargesTemplateData.chargeAppliesToOptions"
+                [value]="chargeAppliesTo.id">
                 {{ chargeAppliesTo.value }}
               </mat-option>
             </mat-select>
@@ -22,7 +23,8 @@
 
           <mat-divider [inset]="true"></mat-divider>
 
-          <div *ngIf="chargeForm.controls.chargeAppliesTo.value" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+          <div *ngIf="chargeForm.controls.chargeAppliesTo.value" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%"
+            fxLayout.lt-md="column">
 
             <mat-form-field fxFlex="48%">
               <mat-label>Charge Name</mat-label>
@@ -59,7 +61,8 @@
             <mat-form-field fxFlex="48%">
               <mat-label>Charge Calculation Type</mat-label>
               <mat-select required formControlName="chargeCalculationType">
-                <mat-option *ngFor="let chargeCalculationType of filteredChargeCalculationType()" [value]="chargeCalculationType.id">
+                <mat-option *ngFor="let chargeCalculationType of filteredChargeCalculationType()"
+                  [value]="chargeCalculationType.id">
                   {{ chargeCalculationType.value }}
                 </mat-option>
               </mat-select>
@@ -71,7 +74,8 @@
             <mat-form-field *ngIf="chargeForm.controls.chargeAppliesTo.value === 1" fxFlex="48%">
               <mat-label>Charge Payment Mode</mat-label>
               <mat-select required formControlName="chargePaymentMode">
-                <mat-option *ngFor="let chargePaymentMode of chargesTemplateData.chargePaymetModeOptions" [value]="chargePaymentMode.id">
+                <mat-option *ngFor="let chargePaymentMode of chargesTemplateData.chargePaymetModeOptions"
+                  [value]="chargePaymentMode.id">
                   {{ chargePaymentMode.value }}
                 </mat-option>
               </mat-select>
@@ -86,7 +90,9 @@
               </mat-checkbox>
             </div>
 
-            <mat-form-field *ngIf="chargeForm.controls.chargeTimeType.value === 9 && chargeForm.controls.addFeeFrequency.value" fxFlex="48%">
+            <mat-form-field
+              *ngIf="chargeForm.controls.chargeTimeType.value === 9 && chargeForm.controls.addFeeFrequency.value"
+              fxFlex="48%">
               <mat-label>Frequency Interval</mat-label>
               <input matInput required formControlName="feeInterval">
               <mat-error *ngIf="chargeForm.controls.feeInterval.hasError('required')">
@@ -97,10 +103,13 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field *ngIf="chargeForm.controls.chargeTimeType.value === 9 && chargeForm.controls.addFeeFrequency.value" fxFlex="48%">
+            <mat-form-field
+              *ngIf="chargeForm.controls.chargeTimeType.value === 9 && chargeForm.controls.addFeeFrequency.value"
+              fxFlex="48%">
               <mat-label>Charge Frequency</mat-label>
               <mat-select required formControlName="feeFrequency">
-                <mat-option *ngFor="let feeFrequency of chargesTemplateData.feeFrequencyOptions" [value]="feeFrequency.id">
+                <mat-option *ngFor="let feeFrequency of chargesTemplateData.feeFrequencyOptions"
+                  [value]="feeFrequency.id">
                   {{ feeFrequency.value }}
                 </mat-option>
               </mat-select>
@@ -109,9 +118,12 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field (click)="dueDatePicker.open()" *ngIf="chargeForm.controls.chargeTimeType.value === 6 || chargeForm.controls.chargeTimeType.value === 7" fxFlex="48%">
+            <mat-form-field (click)="dueDatePicker.open()"
+              *ngIf="chargeForm.controls.chargeTimeType.value === 6 || chargeForm.controls.chargeTimeType.value === 7"
+              fxFlex="48%">
               <mat-label>Due Date</mat-label>
-              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dueDatePicker" required formControlName="feeOnMonthDay">
+              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dueDatePicker" required
+                formControlName="feeOnMonthDay">
               <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #dueDatePicker></mat-datepicker>
               <mat-error *ngIf="chargeForm.controls.feeOnMonthDay.hasError('required')">
@@ -119,13 +131,15 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field fxFlex="48%" *ngIf="chargeForm.controls.chargeTimeType.value === 7 || chargeForm.controls.chargeTimeType.value === 11">
+            <mat-form-field fxFlex="48%"
+              *ngIf="chargeForm.controls.chargeTimeType.value === 7 || chargeForm.controls.chargeTimeType.value === 11">
               <mat-label>Repeat Every ({{ repeatEveryLabel }})</mat-label>
               <input matInput required formControlName="feeInterval">
               <mat-error *ngIf="chargeForm.controls.feeInterval.hasError('required')">
                 Repeat Every ({{ repeatEveryLabel }}) is <strong>required</strong>
               </mat-error>
-              <mat-error *ngIf="(chargeForm.controls.feeInterval.hasError('min') || chargeForm.controls.feeInterval.hasError('max')) && !chargeForm.controls.feeInterval.hasError('pattern')">
+              <mat-error
+                *ngIf="(chargeForm.controls.feeInterval.hasError('min') || chargeForm.controls.feeInterval.hasError('max')) && !chargeForm.controls.feeInterval.hasError('pattern')">
                 Repeat Every ({{ repeatEveryLabel }}) <strong>must be between 1 and 12</strong>
               </mat-error>
               <mat-error *ngIf="chargeForm.controls.feeInterval.hasError('pattern')">
@@ -140,19 +154,27 @@
                 Amount is <strong>required</strong>
               </mat-error>
               <mat-error *ngIf="chargeForm.controls.amount.hasError('pattern') && currencyDecimalPlaces !== undefined">
-                Amount must be <strong>a positive number with {{ currencyDecimalPlaces ? 'up to ' + currencyDecimalPlaces : 'no' }} decimal places</strong>
+                Amount must be <strong>a positive number with {{ currencyDecimalPlaces ? 'up to ' +
+                  currencyDecimalPlaces : 'no' }} decimal places</strong>
               </mat-error>
               <mat-error *ngIf="chargeForm.controls.amount.hasError('pattern') && currencyDecimalPlaces === undefined">
                 Amount must be <strong>a positive number</strong>
               </mat-error>
             </mat-form-field>
-
-            <mat-form-field fxFlex="48%">
+            <!--
+   * minCap and maxCap only allowed for loan ,shares and savings entitites
+   * In Loan case: Only for the "charge calculation type" set as "%amount", "% loan amount+interest", "%interest",and"%disbursement amount". 
+   * In saving case: Only for 1. charge time type is "withdrawlfee" or "savings no activity fee" with charge calculation type as "% amount"
+   * In shares case: Only for charge time type: SHARE_PURCHASE and SHARE_REDEEM and with charge calculation type as % amount only
+  -->
+            <mat-form-field fxFlex="48%"
+              *ngIf="(chargeForm.controls.chargeAppliesTo.value === 1 && (chargeForm.controls.chargeCalculationType.value === 2 || chargeForm.controls.chargeCalculationType.value === 3 || chargeForm.controls.chargeCalculationType.value === 4 || chargeForm.controls.chargeCalculationType.value==5)) || (chargeForm.controls.chargeAppliesTo.value === 2 && (chargeForm.controls.chargeTimeType.value === 16 || chargeForm.controls.chargeTimeType.value === 5)&&(chargeForm.controls.chargeCalculationType.value === 2)) || (chargeForm.controls.chargeAppliesTo.value === 4 && (chargeForm.controls.chargeTimeType.value==14 || chargeForm.controls.chargeTimeType.value==15) && chargeForm.controls.chargeCalculationType.value === 2)">
               <mat-label>Minimum Charge Cap</mat-label>
               <input matInput formControlName="minCap">
             </mat-form-field>
 
-            <mat-form-field fxFlex="48%">
+            <mat-form-field fxFlex="48%"
+              *ngIf="(chargeForm.controls.chargeAppliesTo.value === 1 && (chargeForm.controls.chargeCalculationType.value === 2 || chargeForm.controls.chargeCalculationType.value === 3 || chargeForm.controls.chargeCalculationType.value === 4 || chargeForm.controls.chargeCalculationType.value==5)) || (chargeForm.controls.chargeAppliesTo.value === 2 && (chargeForm.controls.chargeTimeType.value === 16 || chargeForm.controls.chargeTimeType.value === 5)&&(chargeForm.controls.chargeCalculationType.value === 2)) || (chargeForm.controls.chargeAppliesTo.value === 4 && (chargeForm.controls.chargeTimeType.value==14 || chargeForm.controls.chargeTimeType.value==15) && chargeForm.controls.chargeCalculationType.value === 2)">
               <mat-label>Maximum Charge Cap</mat-label>
               <input matInput formControlName="maxCap">
             </mat-form-field>
@@ -174,7 +196,8 @@
             <mat-form-field *ngIf="chargeForm.controls.chargeAppliesTo.value === 3" fxFlex="48%">
               <mat-label>Income from Charge </mat-label>
               <mat-select formControlName="incomeAccountId">
-                <mat-option *ngFor="let incomeOrLiabilityAccount of incomeAndLiabilityAccountData" [value]="incomeOrLiabilityAccount.id">
+                <mat-option *ngFor="let incomeOrLiabilityAccount of incomeAndLiabilityAccountData"
+                  [value]="incomeOrLiabilityAccount.id">
                   {{ incomeOrLiabilityAccount.name }}
                 </mat-option>
               </mat-select>
@@ -197,7 +220,8 @@
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
         <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!chargeForm.valid" *mifosxHasPermission="'CREATE_CHARGE'">Submit</button>
+        <button mat-raised-button color="primary" [disabled]="!chargeForm.valid"
+          *mifosxHasPermission="'CREATE_CHARGE'">Submit</button>
       </mat-card-actions>
 
     </form>
