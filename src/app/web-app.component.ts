@@ -197,7 +197,9 @@ export class WebAppComponent implements OnInit {
     // Set the server list from the env var FINERACT_API_URLS
     this.settingsService.setServers(environment.baseApiUrls.split(','));
     // Set the Tenant Identifier(s) list from the env var
-    this.settingsService.setTenantIdentifier(environment.fineractPlatformTenantId || 'default');
+    if (!localStorage.getItem('mifosXTenantIdentifier')) {
+      this.settingsService.setTenantIdentifier(environment.fineractPlatformTenantId || 'default');
+    }
     this.settingsService.setTenantIdentifiers(environment.fineractPlatformTenantIds.split(','));
   }
 
