@@ -23,4 +23,9 @@
   // Display or not the BackEnd Info
   window['env']['displayBackEndInfo'] = '';
 
+  // Time in seconds for Notifications, default 60 seconds
+  window['env']['waitTimeForNotifications'] = '';
+
+  // Time in seconds for COB Catch-Up, default 30 seconds
+  window['env']['waitTimeForCOBCatchUp'] = '';
 })(this);

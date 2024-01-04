@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { SystemService } from 'app/system/system.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'mifosx-cob-workflow',
@@ -8,7 +9,7 @@ import { SystemService } from 'app/system/system.service';
 })
 export class CobWorkflowComponent implements OnInit, OnDestroy {
   /** Wait time between API status calls 30 seg */
-  waitTime = 30000;
+  waitTime = environment.waitTimeForCOBCatchUp || 30;
   /** Process running flag */
   @Input() isCatchUpRunning = true;
   /** Timer to refetch COB Catch-Up status every 5 seconds */
@@ -17,7 +18,6 @@ export class CobWorkflowComponent implements OnInit, OnDestroy {
   constructor(private systemService: SystemService) { }
 
   ngOnInit(): void {
-    setTimeout(() => { this.getCOBCatchUpStatus(); }, this.waitTime);
     this.getCOBCatchUpStatus();
   }
 
@@ -28,11 +28,8 @@ export class CobWorkflowComponent implements OnInit, OnDestroy {
   getCOBCatchUpStatus(): void {
     this.systemService.getCOBCatchUpStatus().subscribe((response: any) => {
       this.isCatchUpRunning = response.isCatchUpRunning;
-      if (!this.isCatchUpRunning) {
-        this.waitTime = 30000;
-      }
     });
-    this.timer = setTimeout(() => { this.getCOBCatchUpStatus(); }, this.waitTime);
+    this.timer = setTimeout(() => { this.getCOBCatchUpStatus(); }, this.waitTime * 1000);
   }
 
   runCatchUp(): void {

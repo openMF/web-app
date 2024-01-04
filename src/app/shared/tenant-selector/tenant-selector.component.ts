@@ -16,11 +16,10 @@ export class TenantSelectorComponent implements OnInit {
    * Sets the Tenant Identifier of the application in the selector on initial setup.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private settingsService: SettingsService) {
-    this.tenantSelector.setValue(this.settingsService.tenantIdentifier);
-  }
+  constructor(private settingsService: SettingsService) { }
 
   ngOnInit(): void {
+    this.tenantSelector.setValue(this.settingsService.tenantIdentifier);
   }
 
   /**
