@@ -406,7 +406,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
         this.isAdvancedTransactionProcessingStrategy =  LoanProducts.isAdvancedPaymentAllocationStrategy(transactionProcessingStrategyCode);
         if (this.isAdvancedTransactionProcessingStrategy) {
           this.loanProductSettingsForm.addControl('loanScheduleProcessingType', new UntypedFormControl(
-              LoanProducts.LOAN_SCHEDULE_PROCESSING_TYPE_HORIZONTAL, [Validators.required]));
+            this.loanProductsTemplate.loanScheduleProcessingType.code || LoanProducts.LOAN_SCHEDULE_PROCESSING_TYPE_HORIZONTAL, [Validators.required]));
         } else {
           this.loanProductSettingsForm.removeControl('loanScheduleProcessingType');
         }
