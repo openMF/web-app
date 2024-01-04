@@ -36,7 +36,6 @@ export class ViewChargeComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog) {
     this.route.data.subscribe((data: { charge: any }) => {
-      console.log(data.charge);
       this.chargeData = data.charge;
       if (this.chargeData.minCap) {
         this.minCap = true;

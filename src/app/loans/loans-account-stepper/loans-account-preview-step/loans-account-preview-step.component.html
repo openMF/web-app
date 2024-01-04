@@ -129,7 +129,7 @@
   <div fxFlexFill>
     <span fxFlex="40%">{{"labels.inputs.Repayment strategy" | translate}}: </span>
     <span
-      fxFlex="60%">{{ loansAccount.transactionProcessingStrategyCode | find:loansAccountTemplate.transactionProcessingStrategyOptions:'code':'name' }}</span>
+      fxFlex="60%">{{ loansAccount.transactionProcessingStrategyCode | find:loansAccountProductTemplate.transactionProcessingStrategyOptions:'code':'name' }}</span>
   </div>
 
   <h3 class="mat-h3" fxFlexFill>{{"labels.heading.Moratorium" | translate}}</h3>
