@@ -32,7 +32,11 @@ export const environment = {
 
   defaultCharDelimiter: window['env']['defaultCharDelimiter'] || ',',
 
-  displayBackEndInfo: window['env']['displayBackEndInfo'] || 'true'
+  displayBackEndInfo: window['env']['displayBackEndInfo'] || 'true',
+  // Time in seconds, default 60 seconds
+  waitTimeForNotifications: window['env']['waitTimeForNotifications'] || 60,
+  // Time in seconds, default 30 seconds
+  waitTimeForCOBCatchUp: window['env']['waitTimeForCOBCatchUp'] || 30
 };
 
 // Server URL

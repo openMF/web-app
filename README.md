@@ -180,6 +180,18 @@ Setting for exporting report table to CSV file using this field delimiter
 MIFOS_DEFAULT_CHAR_DELIMITER=,
 ```
 
+
+Setting for Wait time in seconds for reading the user notifications, Default 60 seconds
+```
+MIFOS_WAIT_TIME_FOR_NOTIFICATIONS=60
+```
+
+Setting for Wait time in seconds for reading the COB Catch-Up status, Default 30 seconds
+```
+MIFOS_WAIT_TIME_FOR_CATCHUP=30
+```
+
+
 For more information look the env.sample file in the root directory of the project
 
 ## Want to help? [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/openMF/web-app/issues)
