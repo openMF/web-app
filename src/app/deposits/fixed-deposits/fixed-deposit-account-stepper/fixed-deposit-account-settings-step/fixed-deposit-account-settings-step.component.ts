@@ -123,7 +123,6 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
       }
     });
     this.fixedDepositAccountSettingsForm.get('maturityInstructionId').valueChanges.subscribe((value: number) => {
-      console.log(value);
       if (value > 100) {
         this.fixedDepositAccountSettingsForm.addControl('transferToSavingsId', new UntypedFormControl('', Validators.required));
         this.fixedDepositAccountSettingsForm.get('transferToSavingsId').patchValue(this.fixedDepositsAccountTemplate.transferToSavingsId && this.fixedDepositsAccountTemplate.transferToSavingsId.id);

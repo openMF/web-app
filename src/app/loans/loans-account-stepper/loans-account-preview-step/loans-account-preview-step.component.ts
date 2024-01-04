@@ -9,7 +9,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angu
   templateUrl: './loans-account-preview-step.component.html',
   styleUrls: ['./loans-account-preview-step.component.scss']
 })
-export class LoansAccountPreviewStepComponent implements OnInit, OnDestroy {
+export class LoansAccountPreviewStepComponent implements OnInit {
 
   /** Loans Account Template */
   @Input() loansAccountTemplate: any = [];
@@ -28,7 +28,5 @@ export class LoansAccountPreviewStepComponent implements OnInit, OnDestroy {
   constructor() { }
 
   ngOnInit() { }
-
-  ngOnDestroy(): void { }
 
 }

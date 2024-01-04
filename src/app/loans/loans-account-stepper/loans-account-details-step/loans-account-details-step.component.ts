@@ -7,6 +7,7 @@ import { TooltipPosition } from '@angular/material/tooltip';
 
 /** Custom Services */
 import { LoansService } from '../../loans.service';
+import { Commons } from 'app/core/utils/commons';
 
 /**
  * Loans Account Details Step
@@ -55,7 +56,8 @@ export class LoansAccountDetailsStepComponent implements OnInit {
   constructor(private formBuilder: UntypedFormBuilder,
     private loansService: LoansService,
     private route: ActivatedRoute,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService,
+    private commons: Commons) {
     this.loanId = this.route.snapshot.params['loanId'];
   }
 
@@ -64,7 +66,7 @@ export class LoansAccountDetailsStepComponent implements OnInit {
     this.maxDate = this.settingsService.maxFutureDate;
     this.buildDependencies();
     if (this.loansAccountTemplate) {
-      this.productData = this.loansAccountTemplate.productOptions;
+      this.productData = this.loansAccountTemplate.productOptions.sort(this.commons.dynamicSort('name'));
       if (this.loansAccountTemplate.loanProductId) {
         this.loansAccountDetailsForm.patchValue({
           'productId': this.loansAccountTemplate.loanProductId,

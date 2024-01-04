@@ -121,6 +121,23 @@
         <p>{{"labels.inputs.Is Equal Amortization" | translate}}</p>
       </mat-checkbox>
 
+      <div fxFlex="48%" *ngIf="loanScheduleType">
+        <span fxFlex="40%"><p>{{"labels.inputs.Loan Schedule Type" | translate}}</p></span>
+        <span fxFlex="60%"><p>{{ loanScheduleType.value }}</p></span>
+      </div>
+
+      <mat-form-field fxFlex="48%">
+        <mat-label>{{"labels.inputs.Repayment Strategy" | translate}}</mat-label>
+        <mat-select formControlName="transactionProcessingStrategyCode" matTooltip="{{ 'tooltips.The repayment strategy' | translate}}" [disabled]="repaymentStrategyDisabled">
+          <mat-option *ngFor="let transactionProcessingStrategy of transactionProcessingStrategyOptions" [value]="transactionProcessingStrategy.code">
+            {{ transactionProcessingStrategy.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="loansAccountTermsForm.controls.transactionProcessingStrategyCode.hasError('required')">
+          {{"labels.inputs.Repayment Strategy" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+        </mat-error>
+      </mat-form-field>
+
     </ng-container>
 
     <ng-container *ngIf="loansAccountTermsData?.isLoanProductLinkedToFloatingRate">
@@ -180,18 +197,6 @@
     <mat-form-field fxFlex="48%">
       <mat-label>{{"labels.inputs.Interest free period" | translate}}</mat-label>
       <input matInput formControlName="graceOnInterestCharged" matTooltip="{{ 'tooltips.If the Interest Free Period' | translate}}">
-    </mat-form-field>
-
-    <mat-form-field fxFlex="48%">
-      <mat-label>{{"labels.inputs.Repayment strategy" | translate}}</mat-label>
-      <mat-select formControlName="transactionProcessingStrategyCode" matTooltip="{{ 'tooltips.The repayment strategy' | translate}}">
-        <mat-option *ngFor="let transactionProcessingStrategy of transactionProcessingStrategyOptions" [value]="transactionProcessingStrategy.code">
-          {{ transactionProcessingStrategy.name }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="loansAccountTermsForm.controls.transactionProcessingStrategyCode.hasError('required')">
-        {{"labels.inputs.Repayment Strategy" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
-      </mat-error>
     </mat-form-field>
 
     <h4 fxFlex="98%" class="mat-h4">{{"labels.heading.Moratorium" | translate}} <i class="fas fa-question" matTooltip="{{ 'tooltips.The moratorium information' | translate}}"></i></h4>

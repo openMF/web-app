@@ -4,12 +4,14 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, FormArray } from '@an
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { LoansAccountAddCollateralDialogComponent } from 'app/loans/custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
+import { LoanProducts } from 'app/products/loan-products/loan-products';
 import { SettingsService } from 'app/settings/settings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
+import { CodeName, OptionData } from 'app/shared/models/option-data.model';
 
 /**
  * Create Loans Account Terms Step
@@ -61,9 +63,9 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   /** Multi Disbursement Data */
   disbursementDataSource: {}[] = [];
   currencyDisplaySymbol = '$';
-  /** Loan Transaction strategies */
+  /** Loan repayment strategies */
   transactionProcessingStrategyOptions: any = [];
-
+  repaymentStrategyDisabled = false;
   /** Check if value of collateral added  is more than principal amount */
   isCollateralSufficient = false;
   /** Total value of all collateral added to a loan */
@@ -82,6 +84,8 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   pristine = true;
 
   loanId: any = null;
+
+  loanScheduleType: OptionData | null = null;
 
   /**
    * Create Loans Account Terms Form
@@ -440,7 +444,24 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
     this.amortizationTypeData = this.loansAccountProductTemplate.amortizationTypeOptions;
     this.interestCalculationPeriodTypeData = this.loansAccountProductTemplate.interestCalculationPeriodTypeOptions;
     this.clientActiveLoanData = this.loansAccountProductTemplate.clientActiveLoanOptions;
-    this.transactionProcessingStrategyOptions = this.loansAccountProductTemplate.transactionProcessingStrategyOptions;
+    this.loanScheduleType = this.loansAccountProductTemplate.loanScheduleType;
+    this.transactionProcessingStrategyOptions = [];
+    if (this.loanScheduleType.code === LoanProducts.LOAN_SCHEDULE_TYPE_CUMULATIVE) {
+      // Filter Advanced Payment Allocation Strategy
+      this.transactionProcessingStrategyOptions = this.loansAccountProductTemplate.transactionProcessingStrategyOptions.filter(
+        (cn: CodeName) => !LoanProducts.isAdvancedPaymentAllocationStrategy(cn.code)
+      );
+      this.repaymentStrategyDisabled = false;
+    } else {
+      // Only Advanced Payment Allocation Strategy
+      this.loansAccountProductTemplate.transactionProcessingStrategyOptions.some(
+        (cn: CodeName) => {
+        if (LoanProducts.isAdvancedPaymentAllocationStrategy(cn.code)) {
+          this.transactionProcessingStrategyOptions.push(cn);
+        }
+      });
+      this.repaymentStrategyDisabled = true;
+    }
   }
 
   /**
