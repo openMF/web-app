@@ -138,7 +138,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
 
     if (this.loanProductsTemplate.delinquencyBucket) {
       this.loanProductSettingsForm.patchValue({
-        'delinquencyBucketId': this.loanProductsTemplate.delinquencyBucket.id
+        'delinquencyBucketId': this.loanProductsTemplate.delinquencyBucket.id > 0 ? this.loanProductsTemplate.delinquencyBucket.id : ''
       });
     }
 

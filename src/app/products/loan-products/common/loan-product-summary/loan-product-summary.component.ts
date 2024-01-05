@@ -159,6 +159,10 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
       this.loanProduct.daysInYearType = optionValue;
       optionValue = this.optionDataLookUp(this.loanProduct.interestRateFrequencyType, this.loanProductsTemplate.interestRateFrequencyTypeOptions);
       this.loanProduct.interestRateFrequencyType = optionValue;
+      if (!this.loanProduct.repaymentFrequencyType.id) {
+        optionValue = this.optionDataLookUp(this.loanProduct.repaymentFrequencyType, this.loanProductsTemplate.repaymentFrequencyTypeOptions);
+        this.loanProduct.repaymentFrequencyType = optionValue;
+      }
 
       optionValue = this.optionDataLookUp(this.loanProduct.repaymentStartDateType, this.loanProductsTemplate.repaymentStartDateTypeOptions);
       this.loanProduct.repaymentStartDateType = optionValue;
