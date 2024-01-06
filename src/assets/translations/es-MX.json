@@ -2753,18 +2753,18 @@
         }
     },
     "languages": {
-        "cs-CS": "Checo",
-        "de-DE": "Alemán",
-        "en-US": "Inglés",
+        "cs-CS": "Čeština",
+        "de-DE": "Deutsch",
+        "en-US": "English",
         "es-MX": "Español",
-        "fr-FR": "Francés",
+        "fr-FR": "Français",
         "it-IT": "Italiano",
-        "ko-KO": "Coreano",
-        "lt-LT": "Lituano",
-        "lv-LV": "Letón",
-        "ne-NE": "Nepalí",
-        "pt-PT": "Portugués",
-        "sw-SW": "Swahili"
+        "ko-KO": "한국어",
+        "lt-LT": "Lietuvių",
+        "lv-LV": "Latviešu",
+        "ne-NE": "नेपाली",
+        "pt-PT": "Português",
+        "sw-SW": "Kiswahili"
     },
     "not_found_subtitle": "Vaya... Parece que esta página no existe.",
     "tooltips": {
