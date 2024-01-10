@@ -12,139 +12,99 @@
 
     <div *ngIf="savingProductAccountingForm.value.accountingRule === 2" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-      <h4 fxFlex="98%" class="mat-h4">Assets</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.Assets' | translate}}</h4>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Saving reference</mat-label>
-        <mat-select formControlName="savingsReferenceAccountId" required>
-          <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
-            ({{ assetAccount.glCode }}) {{ assetAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Saving reference is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="savingProductAccountingForm.controls.savingsReferenceAccountId"
+        [glAccountList]="assetAccountData"
+        [required]="true"
+        [inputLabel]="'Saving reference'"
+      >
+      </mifosx-gl-account-selector>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Overdraft portfolio</mat-label>
-        <mat-select formControlName="overdraftPortfolioControlId" required>
-          <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
-            ({{ assetAccount.glCode }}) {{ assetAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Overdraft portfolio is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="savingProductAccountingForm.controls.overdraftPortfolioControlId"
+        [glAccountList]="assetAccountData"
+        [required]="true"
+        [inputLabel]="'Overdraft portfolio'"
+      >
+      </mifosx-gl-account-selector>
 
       <mat-divider fxFlex="98%"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">Liabilities</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.Liabilities' | translate}}</h4>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Saving control</mat-label>
-        <mat-select formControlName="savingsControlAccountId" required>
-          <mat-option *ngFor="let liabilityAccount of liabilityAccountData" [value]="liabilityAccount.id">
-            ({{ liabilityAccount.glCode }}) {{ liabilityAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Saving control is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="savingProductAccountingForm.controls.savingsControlAccountId"
+        [glAccountList]="liabilityAccountData"
+        [required]="true"
+        [inputLabel]="'Saving control'"
+      >
+      </mifosx-gl-account-selector>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Savings transfers in suspense</mat-label>
-        <mat-select formControlName="transfersInSuspenseAccountId" required>
-          <mat-option *ngFor="let liabilityAccount of liabilityAccountData" [value]="liabilityAccount.id">
-            ({{ liabilityAccount.glCode }}) {{ liabilityAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Savings transfers in suspense is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="savingProductAccountingForm.controls.transfersInSuspenseAccountId"
+        [glAccountList]="liabilityAccountData"
+        [required]="true"
+        [inputLabel]="'Savings transfers in suspense'"
+      >
+      </mifosx-gl-account-selector>
 
-      <mat-form-field fxFlex="48%" *ngIf="isDormancyTrackingActive.value">
-        <mat-label>Escheat liability</mat-label>
-        <mat-select formControlName="escheatLiabilityId" required>
-          <mat-option *ngFor="let liabilityAccount of liabilityAccountData" [value]="liabilityAccount.id">
-            ({{ liabilityAccount.glCode }}) {{ liabilityAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Escheat liability is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%" *ngIf="isDormancyTrackingActive.value"
+        [inputFormControl]="savingProductAccountingForm.controls.escheatLiabilityId"
+        [glAccountList]="liabilityAccountData"
+        [required]="true"
+        [inputLabel]="'Escheat liability'"
+      >
+      </mifosx-gl-account-selector>
 
       <mat-divider fxFlex="98%"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">Expenses</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.Expenses' | translate}}</h4>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Interest on savings</mat-label>
-        <mat-select formControlName="interestOnSavingsAccountId" required>
-          <mat-option *ngFor="let expenseAccount of expenseAccountData" [value]="expenseAccount.id">
-            ({{ expenseAccount.glCode }}) {{ expenseAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Interest on savings is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="savingProductAccountingForm.controls.interestOnSavingsAccountId"
+        [glAccountList]="expenseAccountData"
+        [required]="true"
+        [inputLabel]="'Interest on savings'"
+      >
+      </mifosx-gl-account-selector>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Write-off</mat-label>
-        <mat-select formControlName="writeOffAccountId" required>
-          <mat-option *ngFor="let expenseAccount of expenseAccountData" [value]="expenseAccount.id">
-            ({{ expenseAccount.glCode }}) {{ expenseAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Write-off is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="savingProductAccountingForm.controls.writeOffAccountId"
+        [glAccountList]="expenseAccountData"
+        [required]="true"
+        [inputLabel]="'Write-off'"
+      >
+      </mifosx-gl-account-selector>
 
       <mat-divider fxFlex="98%"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">Income</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.Income' | translate}}</h4>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Income from fees</mat-label>
-        <mat-select formControlName="incomeFromFeeAccountId" required>
-          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Income from fees Repayments is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="savingProductAccountingForm.controls.incomeFromFeeAccountId"
+        [glAccountList]="incomeAccountData"
+        [required]="true"
+        [inputLabel]="'Income from fees'"
+      >
+      </mifosx-gl-account-selector>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Income from penalties</mat-label>
-        <mat-select formControlName="incomeFromPenaltyAccountId" required>
-          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Income from penalties is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="savingProductAccountingForm.controls.incomeFromPenaltyAccountId"
+        [glAccountList]="incomeAccountData"
+        [required]="true"
+        [inputLabel]="'Income from penalties'"
+      >
+      </mifosx-gl-account-selector>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Overdraft Interest Income</mat-label>
-        <mat-select formControlName="incomeFromInterestId" required>
-          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Overdraft Interest Income is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="savingProductAccountingForm.controls.incomeFromInterestId"
+        [glAccountList]="incomeAccountData"
+        [required]="true"
+        [inputLabel]="'Overdraft Interest Income'"
+      >
+      </mifosx-gl-account-selector>
 
       <mat-divider fxFlex="98%"></mat-divider>
 

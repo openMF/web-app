@@ -25,13 +25,11 @@
           {{ financialActivityAccount?.financialActivityData.name }}
         </div>
 
-        <div fxFlex="50%" class="header">
-          {{"labels.inputs.Account Name" | translate}}
-        </div>
-
-        <div fxFlex="50%">
-          {{ financialActivityAccount?.glAccountData.name }}
-        </div>
+        <mifosx-gl-account-display fxFlex="100%"
+          [glAccount]="financialActivityAccount?.glAccountData"
+          [accountTitle]="'Account Name'"
+        >
+        </mifosx-gl-account-display>
 
       </div>
 

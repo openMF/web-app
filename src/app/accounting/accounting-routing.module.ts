@@ -169,7 +169,7 @@ const routes: Routes = [
         {
           path: 'migrate-opening-balances',
           component: MigrateOpeningBalancesComponent,
-          data: { title:  'Migrate Opening Balances', breadcrumb: 'Migrate Opening Balances' },
+          data: { title: 'Migrate Opening Balances', breadcrumb: 'Migrate Opening Balances' },
           resolve: {
             offices: OfficesResolver,
             currencies: CurrenciesResolver

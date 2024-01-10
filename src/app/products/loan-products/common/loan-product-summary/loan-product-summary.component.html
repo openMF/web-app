@@ -723,93 +723,78 @@
     <h4 fxFlexFill class="mat-h4">Assets / Liabilities</h4>
 
     <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
-      <span fxFlex="47%">Fund source:</span>
-      <span  fxFlex="53%">({{accountingMappings.fundSourceAccount.glCode}}) {{
-        accountingMappings.fundSourceAccount.name }}</span>
+      <mifosx-gl-account-display fxFlex="100%"
+        [accountTitle]="'Fund source'" [glAccount]="accountingMappings.fundSourceAccount" [withTitle]="'47%'">
+      </mifosx-gl-account-display>
     </div>
 
-    <h4 fxFlexFill class="mat-h4">Assets</h4>
-
+    <h4 fxFlexFill class="mat-h4">{{'labels.heading.Assets' | translate}}</h4>
     <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
-      <span fxFlex="47%">Loan portfolio:</span>
-      <span  fxFlex="53%">({{accountingMappings.loanPortfolioAccount.glCode}}) {{
-        accountingMappings.loanPortfolioAccount.name }}</span>
+      <mifosx-gl-account-display fxFlex="100%"
+        [accountTitle]="'Loan portfolio'" [glAccount]="accountingMappings.loanPortfolioAccount" [withTitle]="'47%'">
+      </mifosx-gl-account-display>
       <div fxFlexFill *ngIf="loanProduct.accountingRule.id === 3 || loanProduct.accountingRule.id === 4"
         fxLayout="row wrap" fxLayout.lt-md="column">
-        <span fxFlex="47%">Interest Receivable:</span>
-        <span  fxFlex="53%">({{accountingMappings.receivableInterestAccount.glCode}}) {{
-          accountingMappings.receivableInterestAccount.name }}</span>
-        <span fxFlex="47%">Fees Receivable:</span>
-        <span  fxFlex="53%">({{accountingMappings.receivableFeeAccount.glCode}}) {{
-          accountingMappings.receivableInterestAccount.name }}</span>
-        <span fxFlex="47%">Penalties Receivable:</span>
-        <span  fxFlex="53%">({{accountingMappings.receivablePenaltyAccount.glCode}}) {{
-          accountingMappings.receivablePenaltyAccount.name }}</span>
+        <mifosx-gl-account-display fxFlex="100%"
+          [accountTitle]="'Interest Receivable'" [glAccount]="accountingMappings.receivableInterestAccount" [withTitle]="'47%'">
+        </mifosx-gl-account-display>
+        <mifosx-gl-account-display fxFlex="100%"
+          [accountTitle]="'Fees Receivable'" [glAccount]="accountingMappings.receivableFeeAccount" [withTitle]="'47%'">
+        </mifosx-gl-account-display>
+        <mifosx-gl-account-display fxFlex="100%"
+          [accountTitle]="'Penalties Receivable'" [glAccount]="accountingMappings.receivablePenaltyAccount" [withTitle]="'47%'">
+        </mifosx-gl-account-display>
       </div>
-      <span fxFlex="47%">Transfer in suspense:</span>
-      <span  fxFlex="53%">({{accountingMappings.transfersInSuspenseAccount.glCode}}) {{
-        accountingMappings.transfersInSuspenseAccount.name }}</span>
+      <mifosx-gl-account-display fxFlex="100%"
+        [accountTitle]="'Transfer in suspense'" [glAccount]="accountingMappings.transfersInSuspenseAccount" [withTitle]="'47%'">
+      </mifosx-gl-account-display>
     </div>
 
-    <h4 fxFlexFill class="mat-h4">Income</h4>
+    <h4 fxFlexFill class="mat-h4">{{'labels.heading.Income' | translate}}</h4>
+    <mifosx-gl-account-display fxFlex="100%"
+      [accountTitle]="'Income from Interest'" [glAccount]="accountingMappings.interestOnLoanAccount" [withTitle]="'47%'">
+    </mifosx-gl-account-display>
+    <mifosx-gl-account-display fxFlex="100%"
+      [accountTitle]="'Income from fees'" [glAccount]="accountingMappings.incomeFromFeeAccount" [withTitle]="'47%'">
+    </mifosx-gl-account-display>
+    <mifosx-gl-account-display fxFlex="100%"
+      [accountTitle]="'Income from penalties'" [glAccount]="accountingMappings.incomeFromPenaltyAccount" [withTitle]="'47%'">
+    </mifosx-gl-account-display>
+    <mifosx-gl-account-display fxFlex="100%"
+      [accountTitle]="'Income from Recovery Repayments'" [glAccount]="accountingMappings.incomeFromRecoveryAccount" [withTitle]="'47%'">
+    </mifosx-gl-account-display>
+
+    <mifosx-gl-account-display fxFlex="100%" *ngIf="accountingMappings.incomeFromChargeOffInterestAccount"
+      [accountTitle]="'Income from ChargeOff Interest'" [glAccount]="accountingMappings.incomeFromChargeOffInterestAccount" [withTitle]="'47%'">
+    </mifosx-gl-account-display>
+    <mifosx-gl-account-display fxFlex="100%" *ngIf="accountingMappings.incomeFromChargeOffFeesAccount"
+      [accountTitle]="'Income from ChargeOff Fees'" [glAccount]="accountingMappings.incomeFromChargeOffFeesAccount" [withTitle]="'47%'">
+    </mifosx-gl-account-display>
+    <mifosx-gl-account-display fxFlex="100%" *ngIf="accountingMappings.incomeFromChargeOffPenaltyAccount"
+      [accountTitle]="'Income from ChargeOff Penalty'" [glAccount]="accountingMappings.incomeFromChargeOffPenaltyAccount" [withTitle]="'47%'">
+    </mifosx-gl-account-display>
+
+
+    <h4 fxFlexFill class="mat-h4">{{'labels.heading.Expenses' | translate}}</h4>
 
     <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
-      <span fxFlex="47%">Income from Interest:</span>
-      <span  fxFlex="53%">({{accountingMappings.interestOnLoanAccount.glCode}}) {{
-        accountingMappings.interestOnLoanAccount.name }}</span>
-      <span fxFlex="47%">Income from fees:</span>
-      <span  fxFlex="53%">({{accountingMappings.incomeFromFeeAccount.glCode}}) {{
-        accountingMappings.incomeFromFeeAccount.name }}</span>
-      <span fxFlex="47%">Income from penalties:</span>
-      <span  fxFlex="53%">({{accountingMappings.incomeFromPenaltyAccount.glCode}}) {{
-        accountingMappings.incomeFromPenaltyAccount.name }}</span>
-      <span fxFlex="47%">Income from Recovery Repayments:</span>
-      <span  fxFlex="53%">({{accountingMappings.incomeFromRecoveryAccount.glCode}}) {{
-        accountingMappings.incomeFromRecoveryAccount.name }}</span>
-      <span *ngIf="accountingMappings.incomeFromChargeOffInterestAccount" fxFlex="47%">Income from ChargeOff
-        Interest:</span>
-      <span *ngIf="accountingMappings.incomeFromChargeOffInterestAccount"  fxFlex="53%">
-        ({{accountingMappings.incomeFromChargeOffInterestAccount.glCode}}) {{
-        accountingMappings.incomeFromChargeOffInterestAccount.name }}</span>
-      <span fxFlex="47%" *ngIf="accountingMappings.incomeFromChargeOffFeesAccount">Income from ChargeOff
-        Fees:</span>
-      <span  fxFlex="53%" *ngIf="accountingMappings.incomeFromChargeOffFeesAccount">
-        ({{accountingMappings.incomeFromChargeOffFeesAccount.glCode}}) {{
-        accountingMappings.incomeFromChargeOffFeesAccount.name }}</span>
-      <span fxFlex="47%" *ngIf="accountingMappings.incomeFromChargeOffPenaltyAccount">Income from ChargeOff
-        Penalty:</span>
-      <span  fxFlex="53%" *ngIf="accountingMappings.incomeFromChargeOffPenaltyAccount">
-        ({{accountingMappings.incomeFromChargeOffPenaltyAccount.glCode}}) {{
-        accountingMappings.incomeFromChargeOffPenaltyAccount.name }}</span>
-    </div>
+    <mifosx-gl-account-display fxFlex="100%"
+      [accountTitle]="'Losses written off'" [glAccount]="accountingMappings.writeOffAccount" [withTitle]="'47%'">
+    </mifosx-gl-account-display>
+    <mifosx-gl-account-display fxFlex="100%"
+      [accountTitle]="'Expenses from Goodwill Credit'" [glAccount]="accountingMappings.goodwillCreditAccount" [withTitle]="'47%'">
+    </mifosx-gl-account-display>
+    <mifosx-gl-account-display fxFlex="100%" *ngIf="accountingMappings.chargeOffExpenseAccount"
+      [accountTitle]="'ChargeOff Expense'" [glAccount]="accountingMappings.chargeOffExpenseAccount" [withTitle]="'47%'">
+    </mifosx-gl-account-display>
+    <mifosx-gl-account-display fxFlex="100%" *ngIf="accountingMappings.chargeOffFraudExpenseAccount"
+      [accountTitle]="'ChargeOff Fraud Expense'" [glAccount]="accountingMappings.chargeOffFraudExpenseAccount" [withTitle]="'47%'">
+    </mifosx-gl-account-display>
 
-    <h4 fxFlexFill class="mat-h4">Expenses</h4>
-
-    <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
-      <span fxFlex="47%">Losses written off:</span>
-      <span  fxFlex="53%">({{accountingMappings.writeOffAccount.glCode}}) {{
-        accountingMappings.writeOffAccount.name }}</span>
-      <span fxFlex="47%">Expenses from Goodwill Credit:</span>
-      <span  fxFlex="53%">({{accountingMappings.goodwillCreditAccount.glCode}}) {{
-        accountingMappings.goodwillCreditAccount.name }}</span>
-      <span *ngIf="accountingMappings.chargeOffExpenseAccount" fxFlex="47%">ChargeOff Expense:</span>
-      <span *ngIf="accountingMappings.chargeOffExpenseAccount"  fxFlex="53%">
-        ({{accountingMappings.chargeOffExpenseAccount.glCode}}) {{
-        accountingMappings.chargeOffExpenseAccount.name }}</span>
-      <span *ngIf="accountingMappings.chargeOffFraudExpenseAccount" fxFlex="47%">ChargeOff Fraud
-        Expense:</span>
-      <span *ngIf="accountingMappings.chargeOffFraudExpenseAccount"  fxFlex="53%">
-        ({{accountingMappings.chargeOffFraudExpenseAccount.glCode}}) {{
-        accountingMappings.chargeOffFraudExpenseAccount.name }}</span>
-    </div>
-
-    <h4 fxFlexFill class="mat-h4">Liabilities</h4>
-
-    <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
-      <span fxFlex="47%">Over payment liability:</span>
-      <span  fxFlex="53%">({{accountingMappings.overpaymentLiabilityAccount.glCode}}) {{
-        accountingMappings.overpaymentLiabilityAccount.name }}</span>
-    </div>
+    <h4 fxFlexFill class="mat-h4">{{'labels.heading.Liabilities' | translate}}</h4>
+    <mifosx-gl-account-display fxFlex="100%"
+      [accountTitle]="'Over payment liability'" [glAccount]="accountingMappings.overpaymentLiabilityAccount" [withTitle]="'47%'">
+    </mifosx-gl-account-display>
 
     <div
       *ngIf="isAdvancedAccountingEnabled()"

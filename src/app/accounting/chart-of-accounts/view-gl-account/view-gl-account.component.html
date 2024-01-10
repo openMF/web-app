@@ -59,7 +59,7 @@
 
         <div fxFlex="50%" *ngIf="glAccount.parent">
           <a class="tab-link" [routerLink]="['/accounting/chart-of-accounts/gl-accounts/view/' + glAccount.parent.id]">
-            ({{ glAccount.parent.glCode }}) {{ glAccount.parent.name }}
+            <mifosx-gl-account-display [glAccount]="glAccount.parent"></mifosx-gl-account-display>
           </a>
         </div>
 
