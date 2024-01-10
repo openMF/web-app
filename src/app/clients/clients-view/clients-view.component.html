@@ -32,7 +32,7 @@
         <mat-card-title fxLayout="row wrap" class="content">
           <h3 fxFlex="95%">
             <i class="fa fa-stop" [ngClass]="clientViewData.status.code|statusLookup"
-              [matTooltip]="clientViewData.status.value"></i>
+              matTooltip="{{'labels.status.' + clientViewData.status.value | translate}}"></i>
             <b>{{"labels.inputs.Client Name" | translate}} :</b><mifosx-entity-name entityName="{{clientViewData.displayName}}"></mifosx-entity-name>
           </h3>
           <div fxFlex="5%">

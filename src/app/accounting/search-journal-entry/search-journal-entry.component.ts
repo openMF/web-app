@@ -170,7 +170,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
 
     this.glAccount.valueChanges
       .pipe(
-        map(value => value.id ? value.id : ''),
+        map(value => value ? value : ''),
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
@@ -267,15 +267,6 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    */
   displayOfficeName(office?: any): string | undefined {
     return office ? office.name : undefined;
-  }
-
-  /**
-   * Displays gl account name in form control input.
-   * @param {any} glAccount Gl Account data.
-   * @returns {string} Gl Account name if valid otherwise undefined.
-   */
-  displayGLAccount(glAccount?: any): string | undefined {
-    return glAccount ? glAccount.name + ' (' + glAccount.glCode + ')' : undefined;
   }
 
   /**

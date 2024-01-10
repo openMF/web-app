@@ -43,6 +43,8 @@ import { AccountNumberComponent } from './account-number/account-number.componen
 import { EntityNameComponent } from './entity-name/entity-name.component';
 import { TransactionPaymentDetailComponent } from './transaction-payment-detail/transaction-payment-detail.component';
 import { StepperButtonsComponent } from './steppers/stepper-buttons/stepper-buttons.component';
+import { GlAccountSelectorComponent } from './accounting/gl-account-selector/gl-account-selector.component';
+import { GlAccountDisplayComponent } from './accounting/gl-account-display/gl-account-display.component';
 
 /**
  * Shared Module
@@ -92,7 +94,9 @@ import { StepperButtonsComponent } from './steppers/stepper-buttons/stepper-butt
     AccountNumberComponent,
     EntityNameComponent,
     TransactionPaymentDetailComponent,
-    StepperButtonsComponent
+    StepperButtonsComponent,
+    GlAccountSelectorComponent,
+    GlAccountDisplayComponent
   ],
   exports: [
     FileUploadComponent,
@@ -120,7 +124,9 @@ import { StepperButtonsComponent } from './steppers/stepper-buttons/stepper-butt
     SvgIconComponent,
     EntityNameComponent,
     TransactionPaymentDetailComponent,
-    StepperButtonsComponent
+    StepperButtonsComponent,
+    GlAccountSelectorComponent,
+    GlAccountDisplayComponent
   ]
 })
 export class SharedModule { }

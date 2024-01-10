@@ -1,0 +1,8 @@
+div {
+  margin: 0.3rem 0;
+  word-wrap: break-word;
+
+  &.header {
+    font-weight: 500;
+  }
+}

@@ -82,7 +82,7 @@
 
             <div fxFlex="4%">
               <button mat-icon-button [matMenuTriggerFor]="accountMenu" aria-label="Loan account actions"
-                yPosition="below">
+                yPosition="below" *ngIf="buttonConfig.singleButtons.length > 0">
                 <mat-icon matListIcon class="actions-menu">
                   <fa-icon icon="bars" size="sm"></fa-icon>
                 </mat-icon>

@@ -70,9 +70,7 @@ export class RejectClientTransferComponent implements OnInit {
       rejectClientTransferFormData.transferDate = this.dateUtils.formatDate(prevTransferDate, dateFormat);
     }
     const data = {
-      ...rejectClientTransferFormData,
-      dateFormat,
-      locale
+      ...rejectClientTransferFormData
     };
     this.clientsService.executeClientCommand(this.clientId, 'rejectTransfer', data).subscribe(() => {
       this.router.navigate(['../../'], { relativeTo: this.route });

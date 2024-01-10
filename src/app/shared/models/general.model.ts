@@ -15,6 +15,7 @@ export interface GLAccount {
   name:                   string;
   glCode:                 string;
   description:            string;
+  nameDecorated?:         string;
   disabled:               boolean;
   manualEntriesAllowed:   boolean;
   type:                   OptionData;

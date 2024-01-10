@@ -48,14 +48,13 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
-            <mat-label>{{"labels.inputs.Parent" | translate}}</mat-label>
-            <mat-select formControlName="parentId">
-              <mat-option *ngFor="let parent of parentData" [value]="parent.id">
-                ({{ parent.glCode }}) {{ parent.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <mifosx-gl-account-selector fxFlex="48%"
+            [inputFormControl]="glAccountForm.controls.parentId"
+            [glAccountList]="parentData"
+            [required]="false"
+            [inputLabel]="'Parent'"
+          >
+          </mifosx-gl-account-selector>
 
           <mat-form-field fxFlex="28%">
             <mat-label>{{"labels.inputs.Tag" | translate}}</mat-label>

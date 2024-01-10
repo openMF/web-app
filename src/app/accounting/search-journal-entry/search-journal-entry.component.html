@@ -5,10 +5,13 @@
     <input matInput [formControl]="officeName" [matAutocomplete]="officeNameAutocomplete">
   </mat-form-field>
 
-  <mat-form-field fxFlex="31%">
-    <mat-label>{{"labels.inputs.GL Account Name or Code" | translate}}</mat-label>
-    <input matInput [formControl]="glAccount" [matAutocomplete]="glAccountAutocomplete">
-  </mat-form-field>
+  <mifosx-gl-account-selector fxFlex="31%"
+    [inputFormControl]="glAccount"
+    [glAccountList]="glAccountData"
+    [required]="true"
+    [inputLabel]="'GL Account Name or Code'"
+  >
+  </mifosx-gl-account-selector>
 
   <mat-form-field fxFlex="31%">
     <mat-label>{{'labels.inputs.Filter' | translate}}</mat-label>
@@ -61,13 +64,6 @@
     {{ office.name }}
   </mat-option>
 </mat-autocomplete>
-
-<mat-autocomplete autoActiveFirstOption #glAccountAutocomplete="matAutocomplete" [displayWith]="displayGLAccount">
-  <mat-option *ngFor="let glAccount of filteredGLAccountData | async" [value]="{ id: glAccount.id, name: glAccount.name, glCode: glAccount.glCode }">
-    {{ glAccount.name + ' (' + glAccount.glCode + ')' }}
-  </mat-option>
-</mat-autocomplete>
-
 
 <div class="mat-elevation-z8 container">
 

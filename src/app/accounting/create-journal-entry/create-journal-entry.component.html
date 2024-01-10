@@ -37,17 +37,13 @@
 
             <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroupName]="i">
 
-              <mat-form-field fxFlex="48%">
-                <mat-label>{{"labels.inputs.Affected GL Entry (Debit)" | translate}}</mat-label>
-                <mat-select required formControlName="glAccountId">
-                  <mat-option *ngFor="let affectedGLEntryDebit of glAccountData" [value]="affectedGLEntryDebit.id">
-                    {{ affectedGLEntryDebit.name + ' (' + affectedGLEntryDebit.glCode + ')' }}
-                  </mat-option>
-                </mat-select>
-                <mat-error *ngIf="debits.at(i).controls.glAccountId.hasError('required')">
-                  {{"labels.inputs.Affected GL Entry (Debit)" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
-                </mat-error>
-              </mat-form-field>
+              <mifosx-gl-account-selector fxFlex="48%"
+                [inputFormControl]="debits.at(i).controls.glAccountId"
+                [glAccountList]="glAccountData"
+                [required]="true"
+                [inputLabel]="'Affected GL Entry (Debit)'"
+              >
+              </mifosx-gl-account-selector>
 
               <mat-form-field fxFlex="43%">
                 <mat-label>{{"labels.inputs.Debit Amount" | translate}}</mat-label>
@@ -75,17 +71,13 @@
 
             <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroupName]="i">
 
-              <mat-form-field fxFlex="48%">
-                <mat-label>{{"labels.inputs.Affected GL Entry (Credit)" | translate}}</mat-label>
-                <mat-select required formControlName="glAccountId">
-                  <mat-option *ngFor="let affectedGLEntryCredit of glAccountData" [value]="affectedGLEntryCredit.id">
-                    {{ affectedGLEntryCredit.name + ' (' + affectedGLEntryCredit.glCode + ')' }}
-                  </mat-option>
-                </mat-select>
-                <mat-error *ngIf="credits.at(i).controls.glAccountId.hasError('required')">
-                  {{"labels.inputs.Affected GL Entry (Credit)" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
-                </mat-error>
-              </mat-form-field>
+              <mifosx-gl-account-selector fxFlex="48%"
+                [inputFormControl]="credits.at(i).controls.glAccountId"
+                [glAccountList]="glAccountData"
+                [required]="true"
+                [inputLabel]="'Affected GL Entry (Credit)'"
+              >
+              </mifosx-gl-account-selector>
 
               <mat-form-field fxFlex="43%">
                 <mat-label>{{"labels.inputs.Credit Amount"|translate}}</mat-label>
