@@ -30,9 +30,7 @@ export class ViewTransactionComponent {
       public dialog: MatDialog,
       private settingsService: SettingsService) {
     this.route.data.subscribe((data: { fixedDepositsAccountTransaction: any }) => {
-      console.log(this.route.parent.snapshot.params);
       this.accountId = this.route.parent.snapshot.params['fixedDepositAccountId'];
-
       this.transactionData = data.fixedDepositsAccountTransaction;
     });
   }
