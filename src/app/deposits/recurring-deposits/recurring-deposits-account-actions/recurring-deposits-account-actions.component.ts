@@ -12,6 +12,7 @@ export class RecurringDepositsAccountActionsComponent {
   /** Flag object to store possible actions and render appropriate UI to the user */
   actions: {
     'Activate': boolean
+    'Undo Activation': boolean
     'Undo Approval': boolean
     'Approve': boolean
     'Reject': boolean
@@ -23,6 +24,7 @@ export class RecurringDepositsAccountActionsComponent {
     'Withdrawal': boolean
   } = {
       'Activate': false,
+      'Undo Activation': false,
       'Undo Approval': false,
       'Approve': false,
       'Reject': false,
