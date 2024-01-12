@@ -207,57 +207,44 @@
 
     <div fxFlexFill *ngIf="savingProduct.accountingRule.id === 2" fxLayout="row wrap" fxLayout.lt-md="column">
 
-      <h4 fxFlexFill class="mat-h4">Assets</h4>
+      <h4 fxFlexFill class="mat-h4">{{'labels.heading.Assets' | translate}}</h4>
+      <mifosx-gl-account-display fxFlex="100%" [accountTitle]="'Saving reference'"
+        [glAccount]="savingProduct.accountingMappings.savingsReferenceAccount" [withTitle]="'40%'">
+      </mifosx-gl-account-display>
+      <mifosx-gl-account-display fxFlex="100%" [accountTitle]="'Overdraft portfolio'"
+        [glAccount]="savingProduct.accountingMappings.overdraftPortfolioControl" [withTitle]="'40%'">
+      </mifosx-gl-account-display>
 
-      <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
-        <span fxFlex="40%">Saving reference:</span>
-        <span fxFlex="60%">({{ savingProduct.accountingMappings.savingsReferenceAccount.glCode }}) {{
-          savingProduct.accountingMappings.savingsReferenceAccount.name }}</span>
-        <span fxFlex="40%">Overdraft portfolio:</span>
-        <span fxFlex="60%">({{ savingProduct.accountingMappings.overdraftPortfolioControl.glCode }}) {{
-          savingProduct.accountingMappings.overdraftPortfolioControl.name }}</span>
-      </div>
+      <h4 fxFlexFill class="mat-h4">{{'labels.heading.Income' | translate}}</h4>
+      <mifosx-gl-account-display fxFlex="100%" [accountTitle]="'Income from fees'"
+        [glAccount]="savingProduct.accountingMappings.incomeFromFeeAccount" [withTitle]="'40%'">
+      </mifosx-gl-account-display>
+      <mifosx-gl-account-display fxFlex="100%" [accountTitle]="'Income from penalties'"
+        [glAccount]="savingProduct.accountingMappings.incomeFromPenaltyAccount" [withTitle]="'40%'">
+      </mifosx-gl-account-display>
+      <mifosx-gl-account-display fxFlex="100%" [accountTitle]="'Income from penalties'"
+        [glAccount]="savingProduct.accountingMappings.incomeFromInterest" [withTitle]="'40%'">
+      </mifosx-gl-account-display>
 
-      <h4 fxFlexFill class="mat-h4">Liabilities</h4>
+      <h4 fxFlexFill class="mat-h4">{{'labels.heading.Expenses' | translate}}</h4>
+      <mifosx-gl-account-display fxFlex="100%" [accountTitle]="'Interest on savings'"
+        [glAccount]="savingProduct.accountingMappings.interestOnSavingsAccount" [withTitle]="'40%'">
+      </mifosx-gl-account-display>
+      <mifosx-gl-account-display fxFlex="100%" [accountTitle]="'Write-off'"
+        [glAccount]="savingProduct.accountingMappings.writeOffAccount" [withTitle]="'40%'">
+      </mifosx-gl-account-display>
 
-      <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
-        <span fxFlex="40%">Saving control:</span>
-        <span fxFlex="60%">({{ savingProduct.accountingMappings.savingsControlAccount.glCode }}) {{
-          savingProduct.accountingMappings.savingsControlAccount.name }}</span>
-        <span fxFlex="40%">Savings transfers in suspense:</span>
-        <span fxFlex="60%">({{ savingProduct.accountingMappings.transfersInSuspenseAccount.glCode }}) {{
-          savingProduct.accountingMappings.transfersInSuspenseAccount.name }}</span>
-        <div fxFlexFill *ngIf="savingProduct.isDormancyTrackingActive">
-          <span fxFlex="40%">Escheat liability:</span>
-          <span fxFlex="60%">({{ savingProduct.accountingMappings.escheatLiabilityAccount.glCode }}) {{
-            savingProduct.accountingMappings.escheatLiabilityAccount.name }}</span>
-        </div>
-      </div>
-
-      <h4 fxFlexFill class="mat-h4">Expenses</h4>
-
-      <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
-        <span fxFlex="40%">Interest on savings:</span>
-        <span fxFlex="60%">({{ savingProduct.accountingMappings.interestOnSavingsAccount.glCode }}) {{
-          savingProduct.accountingMappings.interestOnSavingsAccount.name }}</span>
-        <span fxFlex="40%">Write-off:</span>
-        <span fxFlex="60%">({{ savingProduct.accountingMappings.writeOffAccount.glCode }}) {{
-          savingProduct.accountingMappings.writeOffAccount.name }}</span>
-      </div>
-
-      <h4 fxFlexFill class="mat-h4">Income</h4>
-
-      <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
-        <span fxFlex="40%">Income from fees:</span>
-        <span fxFlex="60%">({{ savingProduct.accountingMappings.incomeFromFeeAccount.glCode }}) {{
-          savingProduct.accountingMappings.incomeFromFeeAccount.name }}</span>
-        <span fxFlex="40%">Income from penalties:</span>
-        <span fxFlex="60%">({{ savingProduct.accountingMappings.incomeFromPenaltyAccount.glCode }}) {{
-          savingProduct.accountingMappings.incomeFromPenaltyAccount.name }}</span>
-        <span fxFlex="40%">Overdraft Interest Income:</span>
-        <span fxFlex="60%">({{ savingProduct.accountingMappings.incomeFromInterest.glCode }}) {{
-          savingProduct.accountingMappings.incomeFromInterest.name }}</span>
-      </div>
+      <h4 fxFlexFill class="mat-h4">{{'labels.heading.Liabilities' | translate}}</h4>
+      <mifosx-gl-account-display fxFlex="100%" [accountTitle]="'Saving control'"
+        [glAccount]="savingProduct.accountingMappings.savingsControlAccount" [withTitle]="'40%'">
+      </mifosx-gl-account-display>
+      <mifosx-gl-account-display fxFlex="100%" [accountTitle]="'Savings transfers in suspense'"
+        [glAccount]="savingProduct.accountingMappings.transfersInSuspenseAccount" [withTitle]="'40%'">
+      </mifosx-gl-account-display>
+      <mifosx-gl-account-display fxFlex="100%" [accountTitle]="'Escheat liability'"
+        *ngIf="savingProduct.accountingMappings.escheatLiabilityAccount"
+        [glAccount]="savingProduct.accountingMappings.escheatLiabilityAccount" [withTitle]="'40%'">
+      </mifosx-gl-account-display>
 
       <div
         *ngIf="savingProduct.paymentChannelToFundSourceMappings?.length || savingProduct.feeToIncomeAccountMappings?.length || savingProduct.penaltyToIncomeAccountMappings?.length"

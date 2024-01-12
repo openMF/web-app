@@ -2,15 +2,19 @@
 
   <div *ngIf="!hideOutput && !toBeExportedToRepo">
 
-    <div class="m-b-10" *ngIf="dataObject.report.type === 'Table'" fxLayoutAlign="end">
+    <div class="m-b-10" *ngIf="dataObject.report.type === 'Table'" fxLayoutGap="25px" fxLayoutAlign="end">
       <button mat-raised-button color="primary" (click)="exportFile()" [disabled]="notExistsReportData"
         matToolTip="{{'labels.text.Export the data to CSV file' | translate}}">
         {{'labels.buttons.Export CSV' | translate}}
       </button>
+      <button mat-raised-button color="primary" (click)="exportToXLS()" [disabled]="notExistsReportData"
+        matToolTip="{{'labels.text.Export the data to XLS file' | translate}}">
+        {{'labels.buttons.Export XLS' | translate}}
+      </button>
     </div>
 
     <div class="table-output" [hidden]="notExistsReportData">
-      <table mat-table [dataSource]="dataSource">
+      <table id="report-table" mat-table [dataSource]="dataSource">
         <div *ngFor="let column of displayedColumns index as i">
           <ng-container [matColumnDef]="column">
             <th mat-header-cell *matHeaderCellDef>{{column}}</th>

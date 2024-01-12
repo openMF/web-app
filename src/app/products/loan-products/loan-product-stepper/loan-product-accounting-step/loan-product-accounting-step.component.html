@@ -12,277 +12,193 @@
 
     <div *ngIf="loanProductAccountingForm.value.accountingRule >= 2 && loanProductAccountingForm.value.accountingRule <= 4" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-      <h4 fxFlex="98%" class="mat-h4">Assets / Liability</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.Assets' | translate}} / {{'labels.heading.Liability' | translate}}</h4>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Fund source</mat-label>
-        <mat-select formControlName="fundSourceAccountId" required>
-          <mat-option *ngFor="let assetAndLiabilityAccount of assetAndLiabilityAccountData" [value]="assetAndLiabilityAccount.id">
-            ({{ assetAndLiabilityAccount.glCode }}) {{ assetAndLiabilityAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Fund source is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="loanProductAccountingForm.controls.fundSourceAccountId"
+        [glAccountList]="assetAndLiabilityAccountData"
+        [required]="true"
+        [inputLabel]="'Fund source'"
+      >
+      </mifosx-gl-account-selector>
 
-      <h4 fxFlex="98%" class="mat-h4">Assets</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.Assets' | translate}}</h4>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Loan portfolio</mat-label>
-        <mat-select formControlName="loanPortfolioAccountId" required>
-          <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
-            ({{ assetAccount.glCode }}) {{ assetAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Loan portfolio is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="loanProductAccountingForm.controls.loanPortfolioAccountId"
+        [glAccountList]="assetAccountData"
+        [required]="true"
+        [inputLabel]="'Loan portfolio'"
+      >
+      </mifosx-gl-account-selector>
+
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="loanProductAccountingForm.controls.transfersInSuspenseAccountId"
+        [glAccountList]="assetAccountData"
+        [required]="true"
+        [inputLabel]="'Transfer in suspense'"
+      >
+      </mifosx-gl-account-selector>
 
       <div *ngIf="loanProductAccountingForm.value.accountingRule === 3 || loanProductAccountingForm.value.accountingRule === 4" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-        <mat-form-field fxFlex="48%">
-          <mat-label>Interest Receivable</mat-label>
-          <mat-select formControlName="receivableInterestAccountId" required>
-            <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
-              ({{ assetAccount.glCode }}) {{ assetAccount.name }}
-            </mat-option>
-          </mat-select>
-          <mat-error>
-            Interest Receivable is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+        <mifosx-gl-account-selector fxFlex="48%"
+          [inputFormControl]="loanProductAccountingForm.controls.receivableInterestAccountId"
+          [glAccountList]="assetAccountData"
+          [required]="true"
+          [inputLabel]="'Interest Receivable'"
+        >
+        </mifosx-gl-account-selector>
 
-        <mat-form-field fxFlex="48%">
-          <mat-label>Fees Receivable</mat-label>
-          <mat-select formControlName="receivableFeeAccountId" required>
-            <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
-              ({{ assetAccount.glCode }}) {{ assetAccount.name }}
-            </mat-option>
-          </mat-select>
-          <mat-error>
-            Fees Receivable is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+        <mifosx-gl-account-selector fxFlex="48%"
+          [inputFormControl]="loanProductAccountingForm.controls.receivableFeeAccountId"
+          [glAccountList]="assetAccountData"
+          [required]="true"
+          [inputLabel]="'Fees Receivable'"
+        >
+        </mifosx-gl-account-selector>
 
-        <mat-form-field fxFlex="48%">
-          <mat-label>Penalties Receivable</mat-label>
-          <mat-select formControlName="receivablePenaltyAccountId" required>
-            <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
-              ({{ assetAccount.glCode }}) {{ assetAccount.name }}
-            </mat-option>
-          </mat-select>
-          <mat-error>
-            Penalties Receivable is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+        <mifosx-gl-account-selector fxFlex="48%"
+          [inputFormControl]="loanProductAccountingForm.controls.receivablePenaltyAccountId"
+          [glAccountList]="assetAccountData"
+          [required]="true"
+          [inputLabel]="'Penalties Receivable'"
+        >
+        </mifosx-gl-account-selector>
 
       </div>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Transfer in suspense</mat-label>
-        <mat-select formControlName="transfersInSuspenseAccountId" required>
-          <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
-            ({{ assetAccount.glCode }}) {{ assetAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Transfer in suspense is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mat-divider fxFlex="98%"></mat-divider>
+
+      <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.Income' | translate}}</h4>
+
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="loanProductAccountingForm.controls.interestOnLoanAccountId"
+        [glAccountList]="incomeAccountData"
+        [required]="true"
+        [inputLabel]="'Income from Interest'"
+      >
+      </mifosx-gl-account-selector>
+
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="loanProductAccountingForm.controls.incomeFromFeeAccountId"
+        [glAccountList]="incomeAccountData"
+        [required]="true"
+        [inputLabel]="'Income from fees'"
+      >
+      </mifosx-gl-account-selector>
+
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="loanProductAccountingForm.controls.incomeFromPenaltyAccountId"
+        [glAccountList]="incomeAccountData"
+        [required]="true"
+        [inputLabel]="'Income from penalties'"
+      >
+      </mifosx-gl-account-selector>
+
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="loanProductAccountingForm.controls.incomeFromRecoveryAccountId"
+        [glAccountList]="incomeAccountData"
+        [required]="true"
+        [inputLabel]="'Income from Recovery Repayments'"
+      >
+      </mifosx-gl-account-selector>
+
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="loanProductAccountingForm.controls.incomeFromChargeOffInterestAccountId"
+        [glAccountList]="incomeAccountData"
+        [required]="true"
+        [inputLabel]="'Income from ChargeOff Interest'"
+      >
+      </mifosx-gl-account-selector>
+
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="loanProductAccountingForm.controls.incomeFromChargeOffFeesAccountId"
+        [glAccountList]="incomeAccountData"
+        [required]="true"
+        [inputLabel]="'Income from ChargeOff Fees'"
+      >
+      </mifosx-gl-account-selector>
+
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="loanProductAccountingForm.controls.incomeFromChargeOffPenaltyAccountId"
+        [glAccountList]="incomeAccountData"
+        [required]="true"
+        [inputLabel]="'Income from ChargeOff Penalty'"
+      >
+      </mifosx-gl-account-selector>
+
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="loanProductAccountingForm.controls.incomeFromGoodwillCreditInterestAccountId"
+        [glAccountList]="incomeAccountData"
+        [required]="true"
+        [inputLabel]="'Income from Goodwill Credit Interest'"
+      >
+      </mifosx-gl-account-selector>
+
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="loanProductAccountingForm.controls.incomeFromGoodwillCreditFeesAccountId"
+        [glAccountList]="incomeAccountData"
+        [required]="true"
+        [inputLabel]="'Income from Goodwill Credit Fees'"
+      >
+      </mifosx-gl-account-selector>
+
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="loanProductAccountingForm.controls.incomeFromGoodwillCreditPenaltyAccountId"
+        [glAccountList]="incomeAccountData"
+        [required]="true"
+        [inputLabel]="'Income from Goodwill Credit Penalty'"
+      >
+      </mifosx-gl-account-selector>
 
       <mat-divider fxFlex="98%"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">Income</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.Expenses' | translate}}</h4>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Income from Interest</mat-label>
-        <mat-select formControlName="interestOnLoanAccountId" required>
-          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Income from Interest is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="loanProductAccountingForm.controls.writeOffAccountId"
+        [glAccountList]="expenseAccountData"
+        [required]="true"
+        [inputLabel]="'Losses written off'"
+      >
+      </mifosx-gl-account-selector>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Income from fees</mat-label>
-        <mat-select formControlName="incomeFromFeeAccountId" required>
-          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Income from fees is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="loanProductAccountingForm.controls.goodwillCreditAccountId"
+        [glAccountList]="expenseAccountData"
+        [required]="true"
+        [inputLabel]="'Expenses from Goodwill Credit'"
+      >
+      </mifosx-gl-account-selector>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Income from penalties</mat-label>
-        <mat-select formControlName="incomeFromPenaltyAccountId" required>
-          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Income from penalties is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="loanProductAccountingForm.controls.chargeOffExpenseAccountId"
+        [glAccountList]="expenseAccountData"
+        [required]="true"
+        [inputLabel]="'ChargeOff Expense'"
+      >
+      </mifosx-gl-account-selector>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Income from Recovery Repayments</mat-label>
-        <mat-select formControlName="incomeFromRecoveryAccountId" required>
-          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Income from Recovery Repayments is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field fxFlex="48%">
-        <mat-label>Income from ChargeOff Interest</mat-label>
-        <mat-select formControlName="incomeFromChargeOffInterestAccountId" required>
-          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Income from ChargeOff Interest is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field fxFlex="48%">
-        <mat-label>Income from ChargeOff Fees</mat-label>
-        <mat-select formControlName="incomeFromChargeOffFeesAccountId" required>
-          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Income from ChargeOff Fees is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field fxFlex="48%">
-        <mat-label>Income from ChargeOff Penalty</mat-label>
-        <mat-select formControlName="incomeFromChargeOffPenaltyAccountId" required>
-          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Income from ChargeOff Penalty is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field fxFlex="48%">
-        <mat-label>Income from Goodwill Credit Interest</mat-label>
-        <mat-select formControlName="incomeFromGoodwillCreditInterestAccountId" required>
-          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Income from Goodwill Credit Interest is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field fxFlex="48%">
-        <mat-label>Income from Goodwill Credit Fees</mat-label>
-        <mat-select formControlName="incomeFromGoodwillCreditFeesAccountId" required>
-          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Income from Goodwill Credit Fees is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field fxFlex="48%">
-        <mat-label>Income from Goodwill Credit Penalty</mat-label>
-        <mat-select formControlName="incomeFromGoodwillCreditPenaltyAccountId" required>
-          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Income from Goodwill Credit Penalty is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="loanProductAccountingForm.controls.chargeOffFraudExpenseAccountId"
+        [glAccountList]="expenseAccountData"
+        [required]="true"
+        [inputLabel]="'ChargeOff Fraud Expense'"
+      >
+      </mifosx-gl-account-selector>
 
       <mat-divider fxFlex="98%"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">Expenses</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.Liabilities' | translate}}</h4>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Losses written off</mat-label>
-        <mat-select formControlName="writeOffAccountId" required>
-          <mat-option *ngFor="let expenseAccount of expenseAccountData" [value]="expenseAccount.id">
-            ({{ expenseAccount.glCode }}) {{ expenseAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Losses written off is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field fxFlex="48%">
-        <mat-label>Expenses from Goodwill Credit</mat-label>
-        <mat-select formControlName="goodwillCreditAccountId" required>
-          <mat-option *ngFor="let expenseAccount of expenseAccountData" [value]="expenseAccount.id">
-            ({{ expenseAccount.glCode }}) {{ expenseAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Goodwill credit is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field fxFlex="48%">
-        <mat-label>ChargeOff Expense</mat-label>
-        <mat-select formControlName="chargeOffExpenseAccountId" required>
-          <mat-option *ngFor="let expenseAccount of expenseAccountData" [value]="expenseAccount.id">
-            ({{ expenseAccount.glCode }}) {{ expenseAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          ChargeOff Expense is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field fxFlex="48%">
-        <mat-label>ChargeOff Fraud Expense</mat-label>
-        <mat-select formControlName="chargeOffFraudExpenseAccountId" required>
-          <mat-option *ngFor="let expenseAccount of expenseAccountData" [value]="expenseAccount.id">
-            ({{ expenseAccount.glCode }}) {{ expenseAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          ChargeOff Fraud Expense is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-
-      <mat-divider fxFlex="98%"></mat-divider>
-
-      <h4 fxFlex="98%" class="mat-h4">Liabilities</h4>
-
-      <mat-form-field fxFlex="48%">
-        <mat-label>Over payment liability</mat-label>
-        <mat-select formControlName="overpaymentLiabilityAccountId" required>
-          <mat-option *ngFor="let liabilityAccount of liabilityAccountData" [value]="liabilityAccount.id">
-            ({{ liabilityAccount.glCode }}) {{ liabilityAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Over payment liability is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="loanProductAccountingForm.controls.overpaymentLiabilityAccountId"
+        [glAccountList]="liabilityAccountData"
+        [required]="true"
+        [inputLabel]="'Over payment liability'"
+      >
+      </mifosx-gl-account-selector>
 
       <mat-divider fxFlex="98%"></mat-divider>
 

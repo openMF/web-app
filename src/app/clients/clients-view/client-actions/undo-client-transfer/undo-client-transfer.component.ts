@@ -73,9 +73,7 @@ export class UndoClientTransferComponent implements OnInit {
       undoClientTransferFormData.transferDate = this.dateUtils.formatDate(prevTransferDate, dateFormat);
     }
     const data = {
-      ...undoClientTransferFormData,
-      dateFormat,
-      locale
+      ...undoClientTransferFormData
     };
     this.clientsService.executeClientCommand(this.clientId, 'withdrawTransfer', data).subscribe(() => {
       this.router.navigate(['../../'], { relativeTo: this.route });

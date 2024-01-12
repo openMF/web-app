@@ -26,8 +26,8 @@ export class AddEventDialogComponent implements OnInit {
    * @param {any} data Provides grouping, entities and actions data to fill dropdowns.
    */
   constructor(public dialogRef: MatDialogRef<AddEventDialogComponent>,
-              public formBuilder: UntypedFormBuilder,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
+    public formBuilder: UntypedFormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
   /**
@@ -59,7 +59,7 @@ export class AddEventDialogComponent implements OnInit {
   setEntityListener() {
     this.eventForm.get('entity').valueChanges
       .subscribe(changedEntity => {
-        this.actionData = this.entityData[0].actions;
+        this.actionData = this.entityData.find((entity: any) => entity.name === changedEntity).actions;
       });
   }
 

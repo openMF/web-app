@@ -17,15 +17,13 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field>
-            <mat-label>{{"labels.inputs.Account"|translate}}</mat-label>
-            <mat-select required formControlName="glAccountId">
-              <mat-option *ngFor="let glAccount of glAccountData" [value]="glAccount.id">
-                {{ glAccount.name + ' (' + glAccount.glCode + ')' }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
+          <mifosx-gl-account-selector
+            [inputFormControl]="financialActivityMappingForm.controls.glAccountId"
+            [glAccountList]="glAccountData"
+            [required]="true"
+            [inputLabel]="'Account'"
+          >
+          </mifosx-gl-account-selector>
         </div>
 
       </mat-card-content>

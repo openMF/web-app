@@ -21,7 +21,9 @@ export class ViewChargeComponent implements OnInit {
 
   /** Charge data. */
   chargeData: any;
-
+  /** Boolean for MinCap and MaxCap */
+  minCap: boolean;
+  maxCap: boolean;
   /**
    * Retrieves the charge data from `resolve`.
    * @param {ProductsService} productsService Products Service.
@@ -30,11 +32,17 @@ export class ViewChargeComponent implements OnInit {
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor(private productsService: ProductsService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private dialog: MatDialog) {
+    private route: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog) {
     this.route.data.subscribe((data: { charge: any }) => {
       this.chargeData = data.charge;
+      if (this.chargeData.minCap) {
+        this.minCap = true;
+      }
+      if (this.chargeData.maxCap) {
+        this.maxCap = true;
+      }
     });
   }
 

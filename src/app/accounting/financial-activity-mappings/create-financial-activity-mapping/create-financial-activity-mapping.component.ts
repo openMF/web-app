@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { AccountingService } from '../../accounting.service';
+import { GLAccount } from 'app/shared/models/general.model';
 
 /**
  * Create financial activity mapping component.
@@ -21,7 +22,7 @@ export class CreateFinancialActivityMappingComponent implements OnInit {
   /** GL Account options. */
   glAccountOptions: any;
   /** GL Account data. */
-  glAccountData: any;
+  glAccountData: GLAccount[] = [];
   /** Financial activity data. */
   financialActivityData: any;
 

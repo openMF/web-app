@@ -23,4 +23,9 @@
   // Display or not the BackEnd Info
   window['env']['displayBackEndInfo'] = '$MIFOS_DISPLAY_BACKEND_INFO';
 
+  // Time in seconds for Notifications, default 60 seconds
+  window['env']['waitTimeForNotifications'] = '$MIFOS_WAIT_TIME_FOR_NOTIFICATIONS';
+
+  // Time in seconds for COB Catch-Up, default 30 seconds
+  window['env']['waitTimeForCOBCatchUp'] = '$MIFOS_WAIT_TIME_FOR_CATCHUP';
 })(this);

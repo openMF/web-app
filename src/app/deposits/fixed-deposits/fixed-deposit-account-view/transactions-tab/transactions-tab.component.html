@@ -1,12 +1,15 @@
 <div class="tab-container mat-typography">
 
-  <div fxLayoutAlign="start">
-    <div class="m-b-20">
-      <h3>{{"labels.heading.All Transactions" | translate }}</h3>
-    </div>
-  </div>
-
   <div class="mat-elevation-z1 m-b-25">
+    <div fxLayout="row" fxLayoutAlign="start">
+      <div class="m-b-20">
+        <h3>{{"labels.heading.All Transactions" | translate }}</h3>
+      </div>
+      <div class="action-button m-b-20" fxLayout="row" fxLayoutGap="20px" *ngIf="checkStatus()">
+        <mat-checkbox [formControl]="hideAccrualsParam" (click)="hideAccruals()" class="accruals">
+          {{"labels.inputs.Hide Accruals" | translate}}</mat-checkbox>
+      </div>
+    </div>
 
     <table mat-table [dataSource]="dataSource">
 

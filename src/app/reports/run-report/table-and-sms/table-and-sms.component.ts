@@ -2,7 +2,7 @@
 import { Component, Input, ViewChild, OnChanges } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { DecimalPipe, NumberSymbol, getLocaleNumberSymbol } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 
 /** Custom Servies */
 import { ReportsService } from '../../reports.service';
@@ -13,6 +13,8 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { environment } from 'environments/environment';
 import { ProgressBarService } from 'app/core/progress-bar/progress-bar.service';
+
+import * as XLSX from 'xlsx';
 
 /**
  * Table and SMS Component
@@ -133,6 +135,21 @@ export class TableAndSmsComponent implements OnChanges {
         this.downloadCSV(response.data.value.fileName, response.data.value.delimiter);
       }
     });
+  }
+
+  exportToXLS(): void {
+    const fileName = `${this.dataObject.report.name}.xlsx`;
+    const data = this.csvData.map((object: any) => {
+      const row = {};
+      for (let i = 0; i < this.displayedColumns.length; i++) {
+        row[this.displayedColumns[i]] = object.row[i];
+      }
+      return row;
+    });
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data, {header: this.displayedColumns});
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Report');
+    XLSX.writeFile(wb, fileName);
   }
 
   /**

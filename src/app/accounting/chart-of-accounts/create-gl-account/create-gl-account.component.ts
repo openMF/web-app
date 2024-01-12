@@ -11,6 +11,7 @@ import { ConfigurationWizardService } from '../../../configuration-wizard/config
 
 /** Custom Dialog Component */
 import { ContinueSetupDialogComponent } from '../../../configuration-wizard/continue-setup-dialog/continue-setup-dialog.component';
+import { GLAccount } from 'app/shared/models/general.model';
 
 /**
  * Create gl account component.
@@ -31,7 +32,7 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
   /** Account usage data. */
   accountUsageData: any;
   /** Parent data. */
-  parentData: any;
+  parentData: GLAccount[] = [];
   /** Tag data. */
   tagData: any;
   /** Account type id. (for creation of sub-ledger account) */
