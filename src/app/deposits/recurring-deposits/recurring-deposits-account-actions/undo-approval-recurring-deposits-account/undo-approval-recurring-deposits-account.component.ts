@@ -20,6 +20,9 @@ export class UndoApprovalRecurringDepositsAccountComponent implements OnInit {
   undoApprovalRecurringDepositsAccountForm: UntypedFormGroup;
   /** Recurring Deposits Account Id */
   accountId: any;
+  /** Action to be Undo */
+  undoAction: string;
+  undoCommand: string;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
@@ -31,6 +34,11 @@ export class UndoApprovalRecurringDepositsAccountComponent implements OnInit {
     private recurringDepositsService: RecurringDepositsService,
     private route: ActivatedRoute,
     private router: Router) {
+    this.undoCommand = 'undoapproval'; // Default command
+    this.undoAction = this.route.snapshot.params['name'];
+    if (this.undoAction === 'Undo Activation') {
+      this.undoCommand = 'undoactivate';
+    }
     this.accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
   }
 
@@ -58,9 +66,15 @@ export class UndoApprovalRecurringDepositsAccountComponent implements OnInit {
     const data = {
       ...this.undoApprovalRecurringDepositsAccountForm.value,
     };
-    this.recurringDepositsService.executeRecurringDepositsAccountCommand(this.accountId, 'undoapproval', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    if (this.undoAction === 'Undo Activation') {
+      this.recurringDepositsService.executeRecurringDepositsAccountCommand(this.accountId, this.undoCommand, data).subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
+    } else {
+      this.recurringDepositsService.executeRecurringDepositsAccountCommand(this.accountId, 'undoapproval', data).subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
+    }
   }
 
 }

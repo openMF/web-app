@@ -44,6 +44,11 @@ export class RecurringDepositsButtonsConfiguration {
             name: 'Calculate Interest',
             icon: 'calculator',
             taskPermissionName: 'CALCULATEINTEREST_RECURRINGDEPOSITACCOUNT'
+          },
+          {
+            name: 'Undo Activation',
+            icon: 'fa fa-undo',
+            taskPermissionName: 'UNDO_ACTIVATE_RECURRINGDEPOSITACCOUNT'
           }
         ];
         break;
