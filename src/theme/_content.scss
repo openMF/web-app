@@ -76,3 +76,15 @@
     }
   }
 }
+
+@mixin login-form-component-theme($theme) {
+  $primary: map-get($theme, primary);
+
+  mifosx-login-form,
+  mifosx-tenant-selector {
+    fa-icon {
+      color: mat.get-color-from-palette($primary, 500);
+    }
+  }
+
+}

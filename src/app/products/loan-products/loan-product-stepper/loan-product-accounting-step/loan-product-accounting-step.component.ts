@@ -7,6 +7,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
+import { GLAccount } from 'app/shared/models/general.model';
 
 @Component({
   selector: 'mifosx-loan-product-accounting-step',
@@ -237,6 +238,10 @@ export class LoanProductAccountingStepComponent implements OnInit {
   }
 
   getPaymentFundSourceFormfields(values?: any) {
+    const glAccounts: any[] = [];
+    this.assetAccountData.forEach((account: GLAccount) => {
+      glAccounts.push({id: account.id, name: '(' + account.glCode + ') ' + account.name});
+    });
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'paymentTypeId',
@@ -249,8 +254,8 @@ export class LoanProductAccountingStepComponent implements OnInit {
       new SelectBase({
         controlName: 'fundSourceAccountId',
         label: 'Fund Source',
-        value: values ? values.fundSourceAccountId : this.assetAccountData[0].id,
-        options: { label: 'name', value: 'id', data: this.assetAccountData },
+        value: values ? values.fundSourceAccountId : glAccounts[0].id,
+        options: { label: 'name', value: 'id', data: glAccounts },
         required: true,
         order: 2
       })
@@ -259,6 +264,10 @@ export class LoanProductAccountingStepComponent implements OnInit {
   }
 
   getFeesIncomeFormfields(values?: any) {
+    const glAccounts: any[] = [];
+    this.incomeAndLiabilityAccountData.forEach((account: GLAccount) => {
+      glAccounts.push({id: account.id, name: '(' + account.glCode + ') ' + account.name});
+    });
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'chargeId',
@@ -271,8 +280,8 @@ export class LoanProductAccountingStepComponent implements OnInit {
       new SelectBase({
         controlName: 'incomeAccountId',
         label: 'Income Account',
-        value: values ? values.incomeAccountId : this.incomeAndLiabilityAccountData[0].id,
-        options: { label: 'name', value: 'id', data: this.incomeAndLiabilityAccountData },
+        value: values ? values.incomeAccountId : glAccounts[0].id,
+        options: { label: 'name', value: 'id', data: glAccounts },
         required: true,
         order: 2
       })
@@ -281,6 +290,10 @@ export class LoanProductAccountingStepComponent implements OnInit {
   }
 
   getPenaltyIncomeFormfields(values?: any) {
+    const glAccounts: any[] = [];
+    this.incomeAndLiabilityAccountData.forEach((account: GLAccount) => {
+      glAccounts.push({id: account.id, name: '(' + account.glCode + ') ' + account.name});
+    });
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'chargeId',
@@ -293,8 +306,8 @@ export class LoanProductAccountingStepComponent implements OnInit {
       new SelectBase({
         controlName: 'incomeAccountId',
         label: 'Income Account',
-        value: values ? values.incomeAccountId : this.incomeAccountData[0].id,
-        options: { label: 'name', value: 'id', data: this.incomeAccountData },
+        value: values ? values.incomeAccountId : glAccounts[0].id,
+        options: { label: 'name', value: 'id', data: glAccounts },
         required: true,
         order: 2
       })

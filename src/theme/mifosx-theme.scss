@@ -42,3 +42,4 @@ $mifosx-app-theme: mat.define-light-theme($mifosx-app-primary, $mifosx-app-accen
 @include dashboard-component-theme($mifosx-app-theme);
 @include shares-account-view-component-theme($mifosx-app-theme);
 @include account-view-component-theme($mifosx-app-theme);
+@include login-form-component-theme($mifosx-app-theme);

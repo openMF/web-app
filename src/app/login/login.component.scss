@@ -7,8 +7,8 @@
 
   &::after {
     content: "";
-    opacity: 0.5;
-    background: linear-gradient(#000, #000);
+    // opacity: 0.5;
+    // background: linear-gradient(#000, #000);
     width: 100%;
     height: 100%;
     top: 0;
@@ -20,14 +20,15 @@
 
   .cover-content {
     display: block;
-    max-width: 80%;
+    max-width: 40%;
     margin: 100px;
-    color: #fff;
+    margin-left: 50%;
+    color: #000;
     text-align: justify;
     z-index: 2;
 
     .cover-title {
-      border-bottom: 2px solid #fff;
+      border-bottom: 2px solid #000;
       margin: 0 0 20px;
       padding-bottom: 10px;
     }
