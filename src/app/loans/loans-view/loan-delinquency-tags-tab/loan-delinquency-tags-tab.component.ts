@@ -129,7 +129,22 @@ export class LoanDelinquencyTagsTabComponent implements OnInit {
 
   isCurrentAndPauseAction(item: LoanDelinquencyAction): boolean {
     if (this.currentLoanDelinquencyAction != null) {
-      return (this.currentLoanDelinquencyAction.id === item.id && item.action === 'PAUSE');
+      if (this.currentLoanDelinquencyAction.id === item.id) {
+        if (item.action === 'PAUSE') {
+          const businessDate: Date = this.settingsService.businessDate;
+          const startDate: Date = this.dateUtils.parseDate(item.startDate);
+          if (businessDate < startDate) {
+            return false;
+          }
+          if (item.endDate) {
+            const endDate: Date = this.dateUtils.parseDate(item.endDate);
+            if (businessDate > endDate) {
+              return false;
+            }
+          }
+          return true;
+        }
+      }
     }
     return false;
   }

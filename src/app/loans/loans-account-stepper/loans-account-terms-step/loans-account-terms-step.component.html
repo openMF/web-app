@@ -221,13 +221,13 @@
       <input type="number" matInput formControlName="fixedEmiAmount">
     </mat-form-field>
 
-    <ng-container *ngIf="loansAccountTermsData?.canUseForTopup">
+    <ng-container *ngIf="loansAccountTermsData?.isTopup">
 
-      <mat-checkbox fxFlex="48%" formControlName="isTopup">
+      <mat-checkbox fxFlex="20%" formControlName="isTopup">
         <p>{{"labels.inputs.Is Topup Loan" | translate}}?</p>
       </mat-checkbox>
 
-      <mat-form-field fxFlex="48%" *ngIf="loansAccountTermsForm.controls.isTopup.value">
+      <mat-form-field fxFlex="24%" *ngIf="loansAccountTermsForm.controls.isTopup.value">
         <mat-label>{{"labels.inputs.Loan closed with Topup" | translate}}</mat-label>
         <mat-select formControlName="loanIdToClose">
           <mat-option *ngFor="let clientActiveLoan of clientActiveLoanData" [value]="clientActiveLoan.id">
