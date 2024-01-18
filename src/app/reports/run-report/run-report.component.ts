@@ -12,7 +12,9 @@ import { ReportParameter } from '../common-models/report-parameter.model';
 import { SelectOption } from '../common-models/select-option.model';
 import { Dates } from 'app/core/utils/dates';
 import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
-import { ProgressBarService } from 'app/core/progress-bar/progress-bar.service';
+
+import * as XLSX from 'xlsx';
+import { AlertService } from 'app/core/alert/alert.service';
 
 /**
  * Run report component.
@@ -60,6 +62,8 @@ export class RunReportComponent implements OnInit {
   exportToS3Repository: string;
   outputTypeOptions: any[] = [];
 
+  isProcessing = false;
+
   /**
    * Fetches report specifications from route params and retrieves report parameters data from `resolve`.
    * @param {ActivatedRoute} route ActivatedRoute.
@@ -70,8 +74,8 @@ export class RunReportComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private reportsService: ReportsService,
               private settingsService: SettingsService,
-              private dateUtils: Dates,
-              private progressBarService: ProgressBarService) {
+              private alertService: AlertService,
+              private dateUtils: Dates) {
     this.report.name = this.route.snapshot.params['name'];
     this.route.queryParams.subscribe((queryParams: { type: any, id: any }) => {
       this.report.type = queryParams.type;
@@ -288,6 +292,50 @@ export class RunReportComponent implements OnInit {
         this.hidePentaho = false;
        break;
     }
+  }
+
+  runReportAndExport($event: Event): void {
+    $event.stopPropagation();
+    this.isProcessing = true;
+    const userResponseValues = this.formatUserResponse(this.reportForm.value);
+
+    const reportName = this.report.name;
+    const payload = {
+      ...userResponseValues,
+      decimalChoice: this.decimalChoice.value,
+      // exportCSV: true
+    };
+    this.reportsService.getRunReportData(reportName, payload)
+    .subscribe( (res: any) => {
+      if (res.data.length > 0) {
+        this.alertService.alert({type: 'Report generation', message: `Report: ${reportName} data generated`});
+
+        const displayedColumns: string[] = [];
+        res.columnHeaders.forEach((header: any) => {
+          displayedColumns.push(header.columnName);
+        });
+
+        this.exportToXLS(reportName, res.data, displayedColumns);
+      } else {
+        this.alertService.alert({type: 'Report generation', message: `Report: ${reportName} without data generated`});
+      }
+      this.isProcessing = false;
+    });
+  }
+
+  exportToXLS(reportName: string, csvData: any, displayedColumns: string[]): void {
+    const fileName = `${reportName}.xlsx`;
+    const data = csvData.map((object: any) => {
+      const row = {};
+      for (let i = 0; i < displayedColumns.length; i++) {
+        row[displayedColumns[i]] = object.row[i];
+      }
+      return row;
+    });
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data, {header: displayedColumns});
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'report');
+    XLSX.writeFile(wb, fileName);
   }
 
 }
