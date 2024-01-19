@@ -2,7 +2,7 @@
 
   <mat-card *ngIf="!isCollapsed">
 
-    <form [formGroup]="reportForm" (ngSubmit)="run()">
+    <form [formGroup]="reportForm">
 
       <mat-card-content fxLayout="column">
 
@@ -78,9 +78,13 @@
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
         <button type="button" mat-raised-button [routerLink]="['/reports']">{{"labels.buttons.Cancel" | translate}}</button>
-        <button mat-raised-button color="primary" [disabled]="!reportForm.valid" id="runreport">
+        <button mat-raised-button color="primary" [disabled]="!reportForm.valid || isProcessing" id="runreport" (click)="run()">
           <fa-icon icon="file-export" class="m-r-10"></fa-icon>
           {{"labels.buttons.Run Report" | translate}}
+        </button>
+        <button *ngIf="isTableReport()" mat-raised-button color="primary" [disabled]="!reportForm.valid || isProcessing" (click)="runReportAndExport($event)">
+          <fa-icon icon="download" class="m-r-10"></fa-icon>
+          {{"labels.buttons.Run and Download Report" | translate}}
         </button>
       </mat-card-actions>
 

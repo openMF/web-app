@@ -53,7 +53,7 @@ export class ViewUserComponent implements OnInit {
       if (response.delete) {
         this.usersService.deleteUser(this.userData.id)
           .subscribe(() => {
-            this.router.navigate(['/users']);
+            this.router.navigate(['/appusers']);
           });
       }
     });
@@ -74,7 +74,7 @@ export class ViewUserComponent implements OnInit {
         const firstname = this.userData.firstname;
         const data = {password: password, repeatPassword: repeatPassword, firstname: firstname};
         this.usersService.changePassword(this.userData.id, data).subscribe(() => {
-          this.router.navigate(['/users']);
+          this.router.navigate(['/appusers']);
         });
       }
     });

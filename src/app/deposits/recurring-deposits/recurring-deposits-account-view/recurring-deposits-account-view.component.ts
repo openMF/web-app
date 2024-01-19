@@ -39,6 +39,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
   isprematureAllowed: any;
   entityType: string;
   currency: Currency;
+  showTransactions = false;
   /**
    * Fetches recurringDeposits account data from `resolve`
    * @param {ActivatedRoute} route Activated Route
@@ -64,6 +65,8 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
       } else if (this.router.url.includes('centers')) {
         this.entityType = 'Center';
       }
+      const status: any = data.recurringDepositsAccountData.status;
+      this.showTransactions = (status.id >= 300);
     });
   }
 
@@ -156,6 +159,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
   doAction(name: string) {
     switch (name) {
       case 'Activate':
+      case 'Undo Activation':
       case 'Approve':
       case 'Reject':
       case 'Undo Approval':

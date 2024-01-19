@@ -71,10 +71,7 @@
       <mat-menu #accountMenu="matMenu">
         <ng-container *ngFor="let item of buttonConfig.singleButtons">
           <button mat-menu-item *mifosxHasPermission="item.taskPermissionName" (click)="doAction(item.name)">
-            <mat-icon matListIcon>
-              <fa-icon icon="{{item.icon}}" size="sm"></fa-icon>
-            </mat-icon>
-            <span> {{'labels.menus.' + item.name | translate}} </span>
+            <i ngClass="{{item.icon}}"></i> {{'labels.menus.' + item.name | translate}}
           </button>
         </ng-container>
 
@@ -105,7 +102,7 @@
         [active]="IRC.isActive">
         {{"labels.inputs.Interest Rate Chart" | translate }}
       </a>
-      <ng-container *ngIf="recurringDepositsAccountData.transactions">
+      <ng-container *ngIf="showTransactions">
         <a mat-tab-link [routerLink]="['./transactions']" routerLinkActive #transactions="routerLinkActive"
           [active]="transactions.isActive">
           {{"labels.inputs.Transactions" | translate }}

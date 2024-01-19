@@ -81,13 +81,13 @@
 
     <div fxFlex="10%" *ngIf="canBeSold()" >
       <button mat-raised-button class="f-right" color="primary" (click)="saleLoan()" *mifosxHasPermission="'SALE_LOAN'">
-        <fa-icon icon="dollar-sign" class="m-r-10"></fa-icon>{{"labels.buttons.Sale Loan" | translate}}
+        <fa-icon icon="dollar-sign" class="m-r-10"></fa-icon>{{"labels.buttons.Sell Loan" | translate}}
       </button>
     </div>
 
     <div fxFlex="10%" *ngIf="canBeCancelled()" >
       <button mat-raised-button class="f-right" color="warn" (click)="cancelSaleLoan()" *mifosxHasPermission="'SALE_LOAN'">
-        <fa-icon icon="trash" class="m-r-10"></fa-icon>{{"labels.buttons.Cancel Sale Loan" | translate}}
+        <fa-icon icon="trash" class="m-r-10"></fa-icon>{{"labels.buttons.Cancel Sell Loan" | translate}}
       </button>
     </div>
 
