@@ -13,6 +13,7 @@ export interface LoanTransactionType {
   contra: boolean;
   creditBalanceRefund: boolean;
   disbursement: boolean;
+  downPayment: boolean;
   goodwillCredit: boolean;
   initiateTransfer: boolean;
   merchantIssuedRefund: boolean;
