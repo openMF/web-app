@@ -118,13 +118,13 @@ export class ViewTransactionComponent implements OnInit {
   allowTransactionEdition(transactionType: number): boolean {
     return (transactionType === 20
       || transactionType === 21 || transactionType === 22
-      || transactionType === 23);
+      || transactionType === 23 || transactionType === 28);
   }
 
   allowChargebackTransaction(transactionType: LoanTransactionType): boolean {
     return (transactionType.repayment
       || transactionType.goodwillCredit || transactionType.payoutRefund
-      || transactionType.merchantIssuedRefund);
+      || transactionType.merchantIssuedRefund || transactionType.downPayment);
   }
 
   /**
