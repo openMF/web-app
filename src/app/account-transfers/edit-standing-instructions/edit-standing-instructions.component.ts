@@ -39,7 +39,7 @@ export class EditStandingInstructionsComponent implements OnInit {
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
-  maxDate = new Date();
+  maxDate = new Date(2100,0,1);
 
   /**
    * Retrieves the standing instructions template from `resolve`.
@@ -70,7 +70,6 @@ export class EditStandingInstructionsComponent implements OnInit {
    * Creates and sets the edit standing instructions form.
    */
   ngOnInit() {
-    this.maxDate = this.settingsService.businessDate;
     this.createEditStandingInstructionsForm();
     const presentDate = new Date();
     const n = presentDate.getFullYear();
