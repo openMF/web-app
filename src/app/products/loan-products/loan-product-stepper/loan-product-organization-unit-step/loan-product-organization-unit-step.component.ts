@@ -30,6 +30,10 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
   countryId: any;
   countryName: any;
 
+  // loan terms and condition templates
+  enableTermsAndConditions: boolean = false;
+  loanProductTemplates: any = [];
+  loanProductTemplateForm: FormGroup;
 
   constructor(
     private productsService: ProductsService,
@@ -43,7 +47,6 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
 
   ngOnInit(): void {
     this.createLoanProductOrganizationForm();
-    console.log("after", this)
 
     if (this.router.url.includes('edit')) {
       this.search(this.loanProductsTemplate.countryId);
@@ -116,6 +119,16 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
       this.countryTreeComponent?.deselectAllNodes();
       this.countryTreeComponent?.refreshDataSource(this.treeDataSource);
     });
+
+    this.productsService.getLoanProductWithCountryOptions(this.countryId).subscribe((res: any) => {
+      this.enableTermsAndConditions = res.configurations?.enableTermsAndConditions;
+      this.loanProductTemplates = res.loanProductTemplates;
+      console.log("enableee---", this.enableTermsAndConditions)
+      this.loanProductTemplateForm.patchValue({
+        'loanProductTemplates': this.loanProductTemplates
+      });   
+      console.log("after the country retr--:", this.loanProductTemplateForm.value.loanProductTemplates)   
+    })
   }
 
   getCheckedUnits(event: any) {
@@ -130,6 +143,9 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
       'digitsAfterDecimal': ['', Validators.required],
       'inMultiplesOf': ['', Validators.required],
       'installmentAmountInMultiplesOf': ['', Validators.required]
+    });
+    this.loanProductTemplateForm = this.formBuilder.group({
+      'loanProductTemplates': ['']
     });
   }
 

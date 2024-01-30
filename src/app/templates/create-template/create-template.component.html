@@ -3,11 +3,23 @@
   <mat-card fxLayout="column" fxLayoutGap="2%">
 
     <form [formGroup]="templateForm">
-  
+
       <mat-card-content>
-  
+
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-  
+
+          <mat-form-field fxFlex="48%">
+            <mat-label>Country</mat-label>
+            <mat-select required formControlName="countryId">
+              <mat-option *ngFor="let country of countries" [value]="country.id">
+                {{ country.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="templateForm.controls.countryId.hasError('required')">
+              Country is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
           <mat-form-field fxFlex="48%">
             <mat-label>Entity</mat-label>
             <mat-select required formControlName="entity">
@@ -18,8 +30,8 @@
             <mat-error *ngIf="templateForm.controls.entity.hasError('required')">
               Entity is <strong>required</strong>
             </mat-error>
-          </mat-form-field>		
-  
+          </mat-form-field>
+
           <mat-form-field fxFlex="48%">
             <mat-label>Type</mat-label>
             <mat-select required formControlName="type">
@@ -31,7 +43,7 @@
               Type is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-  
+
           <mat-form-field fxFlex="48%">
             <mat-label>Name</mat-label>
             <input matInput required formControlName="name">
@@ -39,9 +51,9 @@
               Name is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-  
+
         </div>
-  
+
       </mat-card-content>
 
     </form>
@@ -88,47 +100,47 @@
       <mat-accordion>
 
         <mat-expansion-panel *ngIf="templateForm.controls.entity.value === 0">
-  
+
           <mat-expansion-panel-header>
             <mat-panel-title>
               Client Parameters
             </mat-panel-title>
           </mat-expansion-panel-header>
-          
+
           <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="center">
             <button mat-stroked-button color="primary" class="parameter"
               *ngFor="let label of clientParameterLabels" (click)="addText(label)">
               {{ label }}
             </button>
           </div>
-  
+
         </mat-expansion-panel>
 
         <mat-expansion-panel *ngIf="templateForm.controls.entity.value === 1">
-  
+
           <mat-expansion-panel-header>
             <mat-panel-title>
               Loan Parameters
             </mat-panel-title>
           </mat-expansion-panel-header>
-          
+
           <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="center">
             <button mat-stroked-button color="primary" class="parameter"
               *ngFor="let label of loanParameterLabels" (click)="addText(label)">
               {{ label }}
             </button>
           </div>
-  
+
         </mat-expansion-panel>
 
         <mat-expansion-panel *ngIf="templateForm.controls.entity.value === 1">
-  
+
           <mat-expansion-panel-header>
             <mat-panel-title>
               Repayment Schedule Parameters
             </mat-panel-title>
           </mat-expansion-panel-header>
-          
+
           <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="center">
             <button mat-stroked-button color="primary" class="parameter"
               *ngFor="let label of repaymentParameterLabels" (click)="addText(label)">
@@ -137,7 +149,7 @@
           </div>
 
         </mat-expansion-panel>
-  
+
       </mat-accordion>
 
     </div>
@@ -146,7 +158,7 @@
       <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
       <button mat-raised-button color="primary" (click)="submit()">Submit</button>
     </mat-card-actions>
-  
+
   </mat-card>
 
 </div>

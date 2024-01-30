@@ -104,6 +104,10 @@ export class EditLoanProductComponent implements OnInit {
     );
   }
 
+  get loanProductTemplateForm() {
+    return this.loanProductOrganizationStep.loanProductTemplateForm;
+  }
+
   get loanProduct() {
     return {
       ...this.loanProductDetailsStep.loanProductDetails,
@@ -113,7 +117,8 @@ export class EditLoanProductComponent implements OnInit {
       ...this.loanProductChargesStep.loanProductCharges,
       ...this.loanProductAccountingStep.loanProductAccounting,
       ...this.loanProductClientEligibilityStep.loanProductClientEligibility,
-      ...this.loanProductAppsStep.loanProductApps
+      ...this.loanProductAppsStep.loanProductApps,
+      ...this.loanProductTemplateForm.value
     };
   }
 

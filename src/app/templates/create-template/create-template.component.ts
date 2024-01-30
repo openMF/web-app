@@ -36,6 +36,10 @@ export class CreateTemplateComponent implements OnInit {
   /** Toggles Visibility of Advance Options */
   showAdvanceOptions = false;
 
+  /** retrieve countries */
+  countries: any;
+  countriesDataSliced: any;
+
   /** Client Parameter Labels */
   clientParameterLabels: string[] = clientParameterLabels;
   /** Loan Parameter Labels */
@@ -54,8 +58,9 @@ export class CreateTemplateComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private templateService: TemplatesService) {
-    this.route.data.subscribe((data: { createTemplateData: any }) => {
+    this.route.data.subscribe((data: { createTemplateData: any, countries: any }) => {
       this.createTemplateData = data.createTemplateData;
+      this.countries = data.countries;
     });
   }
 
@@ -71,7 +76,8 @@ export class CreateTemplateComponent implements OnInit {
     this.templateForm = this.formBuilder.group({
       'entity': ['', Validators.required],
       'type': ['', Validators.required],
-      'name': ['', Validators.required]
+      'name': ['', Validators.required],
+      'countryId': ['', Validators.required]
     });
   }
 
