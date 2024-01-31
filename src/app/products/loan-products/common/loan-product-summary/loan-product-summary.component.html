@@ -375,11 +375,6 @@
     <span  fxFlex="53%">{{ loanProduct.enableAutoRepaymentForDownPayment | yesNo }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="loanProduct.enableDownPayment" fxLayout="row wrap" fxLayout.lt-md="column">
-    <span fxFlex="47%">Do not extend loan schedule for multi disbursal:</span>
-    <span  fxFlex="53%">{{ loanProduct.disableScheduleExtensionForDownPayment | yesNo }}</span>
-  </div>
-
   <h3 class="mat-h3" fxFlexFill>Moratorium</h3>
 
   <div fxFlexFill *ngIf="loanProduct.delinquencyBucket">
