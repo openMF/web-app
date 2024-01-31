@@ -134,11 +134,13 @@ export class LoanDelinquencyTagsTabComponent implements OnInit {
           const businessDate: Date = this.settingsService.businessDate;
           const startDate: Date = this.dateUtils.parseDate(item.startDate);
           if (businessDate < startDate) {
+            this.allowPause = true;
             return false;
           }
           if (item.endDate) {
             const endDate: Date = this.dateUtils.parseDate(item.endDate);
             if (businessDate > endDate) {
+              this.allowPause = true;
               return false;
             }
           }
