@@ -136,13 +136,6 @@
       </mat-checkbox>
     </div>
 
-    <div *ngIf="loanProductSettingsForm.value.multiDisburseLoan && loanProductSettingsForm.value.enableDownPayment" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-      <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="disableScheduleExtensionForDownPayment" matTooltip="Enable or disable If Fineract extends the
-      repayment schedule to the exact number of repayments configured for that loan account" class="margin-b">
-        Do not extend loan schedule for multi disbursal
-      </mat-checkbox>
-    </div>
-
     <mat-divider fxFlex="98%"></mat-divider>
 
     <span fxFlex="48%" fxHide.lt-md></span>
