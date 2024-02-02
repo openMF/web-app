@@ -117,8 +117,7 @@ export class EditLoanProductComponent implements OnInit {
       ...this.loanProductChargesStep.loanProductCharges,
       ...this.loanProductAccountingStep.loanProductAccounting,
       ...this.loanProductClientEligibilityStep.loanProductClientEligibility,
-      ...this.loanProductAppsStep.loanProductApps,
-      ...this.loanProductTemplateForm.value
+      ...this.loanProductAppsStep.loanProductApps
     };
   }
 

@@ -123,11 +123,9 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
     this.productsService.getLoanProductWithCountryOptions(this.countryId).subscribe((res: any) => {
       this.enableTermsAndConditions = res.configurations?.enableTermsAndConditions;
       this.loanProductTemplates = res.loanProductTemplates;
-      console.log("enableee---", this.enableTermsAndConditions)
       this.loanProductTemplateForm.patchValue({
         'loanProductTemplates': this.loanProductTemplates
       });   
-      console.log("after the country retr--:", this.loanProductTemplateForm.value.loanProductTemplates)   
     })
   }
 
