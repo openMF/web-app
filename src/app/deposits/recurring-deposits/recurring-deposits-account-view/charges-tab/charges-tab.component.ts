@@ -211,7 +211,7 @@ export class ChargesTabComponent implements OnInit {
   private reload() {
     const clientId = this.recurringDepositsAccountData.clientId;
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients/${clientId}/recurringdeposits`, { skipLocationChange: true })
+    this.router.navigateByUrl(`/clients/${clientId}/recurring-deposits-accounts`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
 

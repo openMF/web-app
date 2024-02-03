@@ -33,7 +33,7 @@ export class NotificationsPageComponent implements OnInit {
     'center' : '/centers/',
     'shareAccount' : '/shares-accounts/',
     'fixedDeposit' : '/fixed-deposits-accounts/',
-    'recurringDepositAccount': '/recurringdeposits/',
+    'recurringDepositAccount': '/recurring-deposits-accounts/',
     'savingsAccount' : '/savings-accounts/',
     'shareProduct': '/products/share-products/',
     'loanProduct' : '/products/loan-products/'
