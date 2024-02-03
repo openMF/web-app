@@ -91,7 +91,6 @@ export interface LoanProduct {
   overDueDaysForRepaymentEvent:                              number;
   enableDownPayment:                                         boolean;
   enableAutoRepaymentForDownPayment:                         boolean;
-  disableScheduleExtensionForDownPayment:                    boolean;
   enableInstallmentLevelDelinquency:                         boolean;
   loanScheduleType:                                          OptionData;
   loanScheduleProcessingType:                                OptionData;

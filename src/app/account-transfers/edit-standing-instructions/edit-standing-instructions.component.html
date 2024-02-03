@@ -161,7 +161,7 @@
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
         <button type="button" mat-raised-button [routerLink]="['../view']">{{"labels.buttons.Cancel" | translate}}</button>
         <button mat-raised-button color="primary" [disabled]="!editStandingInstructionsForm.valid"
-        (click)="submit()" *mifosxHasPermission="'UPDATE_STANDINGINSTRUCTION'">{{"labels.buttons.Submit | translate}}</button>
+        (click)="submit()" *mifosxHasPermission="'UPDATE_STANDINGINSTRUCTION'">{{"labels.buttons.Submit" | translate}}</button>
       </mat-card-actions>
 
     </form>
