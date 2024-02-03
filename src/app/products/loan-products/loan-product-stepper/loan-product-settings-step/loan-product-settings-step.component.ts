@@ -514,7 +514,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
       productSettings['overDueDaysForRepaymentEvent'] = null;
     }
     if (productSettings['delinquencyBucketId'] === '') {
-      delete productSettings['delinquencyBucketId'];
+      productSettings['delinquencyBucketId'] = null;
     }
     return productSettings;
   }
