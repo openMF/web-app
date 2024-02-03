@@ -476,7 +476,7 @@
       <td mat-cell class="center" *matCellDef="let element">
         <ng-container *ngIf="element.status.submittedAndPendingApproval">
           <button class="account-action-button" mat-raised-button *mifosxHasPermission="'APPROVE_SAVINGSACCOUNT'"
-          [routerLink]="['../','recurringdeposits', element.id, 'actions', 'Approve']" color="primary">
+          [routerLink]="['../','recurring-deposits-accounts', element.id, 'actions', 'Approve']" color="primary">
             <i class="fa fa-check"></i>
           </button>
         </ng-container>
@@ -484,12 +484,12 @@
           <button
             class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)"
             *mifosxHasPermission="'APPROVALUNDO_SAVINGSACCOUNT'"
-            [routerLink]="['../','recurringdeposits', element.id, 'actions', 'Undo Approval']">
+            [routerLink]="['../','recurring-deposits-accounts', element.id, 'actions', 'Undo Approval']">
             <i class="fa fa-undo"></i>
           </button>
           <button class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)"
             *mifosxHasPermission="'ACTIVATE_SAVINGSACCOUNT'"
-            [routerLink]="['../','recurringdeposits', element.id, 'actions', 'Activate']">
+            [routerLink]="['../','recurring-deposits-accounts', element.id, 'actions', 'Activate']">
             <i class="fa fa-check-circle"></i>
           </button>
         </ng-container>
@@ -498,7 +498,7 @@
 
     <tr mat-header-row *matHeaderRowDef="openSavingsColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: openSavingsColumns;"
-      [routerLink]="['../', 'recurringdeposits', row.id, 'general']" class="select-row"></tr>
+      [routerLink]="['../', 'recurring-deposits-accounts', row.id, 'general']" class="select-row"></tr>
 
   </table>
 
@@ -525,7 +525,7 @@
 
     <tr mat-header-row *matHeaderRowDef="closedSavingsColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: closedSavingsColumns;"
-    [routerLink]="['../', 'recurringdeposits', row.id, 'general']" class="select-row"></tr>
+    [routerLink]="['../', 'recurring-deposits-accounts', row.id, 'general']" class="select-row"></tr>
   </table>
 
   <!-- Shares overview Table -->

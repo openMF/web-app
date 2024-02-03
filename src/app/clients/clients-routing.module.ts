@@ -251,7 +251,7 @@ const routes: Routes = [
             loadChildren: () => import('../savings/savings.module').then(m => m.SavingsModule)
           },
           {
-            path: 'recurringdeposits',
+            path: 'recurring-deposits-accounts',
             loadChildren: () => import('../deposits/recurring-deposits/recurring-deposits.module').then(m => m.RecurringDepositsModule)
           },
           {

@@ -3,6 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router, ActivatedRoute } from '@angular/router';
+import { SearchData } from '../search.model';
 
 /**
  * Search Page Component
@@ -16,7 +17,7 @@ export class SearchPageComponent {
   /** Flags if number of search results exceed 200 */
   overload: boolean;
   /** Datasource for loans disbursal table */
-  dataSource: MatTableDataSource<any>;
+  dataSource: MatTableDataSource<SearchData>;
   /** Displayed Columns for serach results */
   displayedColumns: string[] = ['entityType', 'entityName', 'entityAccount', 'externalId', 'parentType', 'parentName', 'details'];
   /** Paginator for the table */
@@ -31,6 +32,7 @@ export class SearchPageComponent {
   constructor(private route: ActivatedRoute,
               private router: Router) {
     this.route.data.subscribe(( data: { searchResults: any }) => {
+      console.log(data.searchResults);
       this.dataSource = new MatTableDataSource(data.searchResults);
       this.dataSource.paginator = this.paginator;
       this.hasResults = (data.searchResults.length > 0);
@@ -45,7 +47,7 @@ export class SearchPageComponent {
    * Returns link to entity view page.
    * @param {any} entity Entity
    */
-  navigate(entity: any) {
+  navigate(entity: SearchData) {
     switch (entity.entityType) {
       case 'CLIENT':
         this.router.navigate(['clients', entity.entityId, 'general']);
@@ -60,7 +62,13 @@ export class SearchPageComponent {
         this.router.navigate(['clients', entity.parentId, 'shares-accounts', entity.entityId]);
         break;
       case 'SAVING':
-        this.router.navigate(['clients', entity.parentId, 'savings-accounts', entity.entityId, 'transactions']);
+        if (entity.subEntityType === 'depositAccountType.recurringDeposit') {
+            this.router.navigate(['clients', entity.parentId, 'recurring-deposits-accounts', entity.entityId, 'transactions']);
+        } else if (entity.subEntityType === 'depositAccountType.fixedDeposit') {
+            this.router.navigate(['clients', entity.parentId, 'fixed-deposits-accounts', entity.entityId, 'transactions']);
+        } else if (entity.subEntityType === 'depositAccountType.savingsDeposit') {
+            this.router.navigate(['clients', entity.parentId, 'savings-accounts', entity.entityId, 'transactions']);
+        }
         break;
       case 'LOAN':
         this.router.navigate(['clients', entity.parentId, 'loans-accounts', entity.entityId, 'general']);
