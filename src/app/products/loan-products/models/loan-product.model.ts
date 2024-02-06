@@ -1,6 +1,6 @@
 import { AccountingMapping, ChargeToIncomeAccountMapping, Currency, PaymentChannelToFundSourceMapping } from 'app/shared/models/general.model';
 import { OptionData } from 'app/shared/models/option-data.model';
-import { PaymentAllocation } from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
+import { CreditAllocation, PaymentAllocation } from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 
 export interface LoanProduct {
   id:                                                        number;
@@ -41,6 +41,7 @@ export interface LoanProduct {
   transactionProcessingStrategyCode:                         string;
   transactionProcessingStrategyName:                         string;
   paymentAllocation?:                                        PaymentAllocation[];
+  creditAllocation?:                                         CreditAllocation[];
   daysInMonthType:                                           OptionData;
   daysInYearType:                                            OptionData;
   isInterestRecalculationEnabled:                            boolean;
@@ -69,6 +70,8 @@ export interface LoanProduct {
   advancedPaymentAllocationTransactionTypes:                 OptionData[];
   advancedPaymentAllocationFutureInstallmentAllocationRules: OptionData[];
   advancedPaymentAllocationTypes:                            OptionData[];
+  creditAllocationTransactionTypes:                          OptionData[];
+  creditAllocationAllocationTypes:                           OptionData[];
   multiDisburseLoan:                                         boolean;
   maxTrancheCount:                                           number;
   disallowExpectedDisbursements:                             boolean;

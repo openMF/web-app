@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AdvancePaymentAllocationData, PaymentAllocation } from 'app/products/loan-products/loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
+import { AdvancePaymentAllocationData, CreditAllocation, PaymentAllocation } from 'app/products/loan-products/loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 
 @Component({
   selector: 'mifosx-view-advance-paymeny-allocation',
@@ -8,7 +8,8 @@ import { AdvancePaymentAllocationData, PaymentAllocation } from 'app/products/lo
 })
 export class ViewAdvancePaymenyAllocationComponent implements OnInit {
 
-  @Input() paymentAllocation: PaymentAllocation;
+  @Input() paymentAllocation: PaymentAllocation | null;
+  @Input() creditAllocation: CreditAllocation | null;
   @Input() advancePaymentAllocationData: AdvancePaymentAllocationData;
 
   constructor() { }

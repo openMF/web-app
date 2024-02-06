@@ -35,7 +35,9 @@ export class CreateLoanProductComponent implements OnInit {
 
   isAdvancedPaymentStrategy = false;
   paymentAllocation: PaymentAllocation[] = [];
+  creditAllocation: PaymentAllocation[] = [];
   advancedPaymentAllocations: AdvancedPaymentAllocation[] = [];
+  advancedCreditAllocations: AdvancedPaymentAllocation[] = [];
 
    /**
     * @param {ActivatedRoute} route Activated Route.
@@ -90,6 +92,10 @@ export class CreateLoanProductComponent implements OnInit {
     this.paymentAllocation = paymentAllocation;
   }
 
+  setCreditAllocation(paymentAllocation: PaymentAllocation[]): void {
+    this.creditAllocation = paymentAllocation;
+  }
+
   get loanProductSettingsForm() {
     return this.loanProductSettingsStep.loanProductSettingsForm;
   }
@@ -119,6 +125,7 @@ export class CreateLoanProductComponent implements OnInit {
     };
     if (this.isAdvancedPaymentStrategy) {
       loanProduct['paymentAllocation'] = this.paymentAllocation;
+      loanProduct['creditAllocation'] = this.creditAllocation;
     }
     return loanProduct;
   }

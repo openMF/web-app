@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { AdvancedPaymentAllocation, AdvancedPaymentStrategy, FutureInstallmentAllocationRule, PaymentAllocationOrder, PaymentAllocationTransactionType } from '../payment-allocation-model';
+import { AdvancedPaymentAllocation, AdvancedPaymentStrategy, CreditAllocationOrder, FutureInstallmentAllocationRule, PaymentAllocationOrder, PaymentAllocationTransactionType } from '../payment-allocation-model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,7 +18,8 @@ export class AdvancePaymentAllocationTabComponent implements OnInit {
   @Output() paymentAllocationChange = new EventEmitter<boolean>();
   @Output() transactionTypeRemoved = new EventEmitter<PaymentAllocationTransactionType>();
 
-  paymentAllocationsData: PaymentAllocationOrder[] = [];
+  paymentAllocationsData: PaymentAllocationOrder[] | null = null;
+  creditAllocationsData: CreditAllocationOrder[] | null = null;
 
   /** Columns to be displayed in the table. */
   displayedColumns: string[] = ['actions', 'order', 'paymentAllocation'];
@@ -31,29 +32,51 @@ export class AdvancePaymentAllocationTabComponent implements OnInit {
     private advancedPaymentStrategy: AdvancedPaymentStrategy) { }
 
   ngOnInit(): void {
-    this.paymentAllocationsData = this.advancedPaymentAllocation.paymentAllocationOrder;
-    this.futureInstallmentAllocationRule.patchValue(this.advancedPaymentAllocation.futureInstallmentAllocationRule.code);
-    this.futureInstallmentAllocationRule.valueChanges.subscribe((value: any) => {
-      this.advancedPaymentAllocation.futureInstallmentAllocationRules.forEach((item: FutureInstallmentAllocationRule) => {
-        if (value === item.code) {
-          this.advancedPaymentAllocation.futureInstallmentAllocationRule = item;
-          this.paymentAllocationChange.emit(true);
-        }
+    console.log(this.advancedPaymentAllocation);
+    if (this.advancedPaymentAllocation) {
+      if (this.advancedPaymentAllocation.creditAllocationOrder) {
+        this.creditAllocationsData = this.advancedPaymentAllocation.creditAllocationOrder;
+      }
+      if (this.advancedPaymentAllocation.paymentAllocationOrder) {
+        this.paymentAllocationsData = this.advancedPaymentAllocation.paymentAllocationOrder;
+      }
+      if (this.advancedPaymentAllocation.futureInstallmentAllocationRule) {
+        this.futureInstallmentAllocationRule.patchValue(this.advancedPaymentAllocation.futureInstallmentAllocationRule.code);
+      }
+      this.futureInstallmentAllocationRule.valueChanges.subscribe((value: any) => {
+        this.advancedPaymentAllocation.futureInstallmentAllocationRules.forEach((item: FutureInstallmentAllocationRule) => {
+          if (value === item.code) {
+            this.advancedPaymentAllocation.futureInstallmentAllocationRule = item;
+            this.paymentAllocationChange.emit(true);
+          }
+        });
       });
-    });
+    }
   }
 
-  dropTable(event: CdkDragDrop<any[]>) {
-    const prevIndex = this.paymentAllocationsData.findIndex((d: any) => d === event.item.data);
-    moveItemInArray(this.paymentAllocationsData, prevIndex, event.currentIndex);
-    this.paymentAllocationsData = [...this.paymentAllocationsData];
-    this.advancedPaymentAllocation.paymentAllocationOrder = this.paymentAllocationsData;
-    this.table.renderRows();
-    this.paymentAllocationChange.emit(true);
+  dropTable(event: CdkDragDrop<any[]>, credit: boolean) {
+    if (!credit) {
+      const prevIndex = this.paymentAllocationsData.findIndex((d: any) => d === event.item.data);
+      moveItemInArray(this.paymentAllocationsData, prevIndex, event.currentIndex);
+      this.paymentAllocationsData = [...this.paymentAllocationsData];
+      this.advancedPaymentAllocation.paymentAllocationOrder = this.paymentAllocationsData;
+      this.table.renderRows();
+      this.paymentAllocationChange.emit(true);
+    } else {
+      const prevIndex = this.creditAllocationsData.findIndex((d: any) => d === event.item.data);
+      moveItemInArray(this.creditAllocationsData, prevIndex, event.currentIndex);
+      this.creditAllocationsData = [...this.creditAllocationsData];
+      this.advancedPaymentAllocation.creditAllocationOrder = this.creditAllocationsData;
+      this.table.renderRows();
+      this.paymentAllocationChange.emit(true);
+    }
   }
 
   isDefault(): boolean {
-    return this.advancedPaymentStrategy.isDefault(this.advancedPaymentAllocation.transaction);
+    if (this.advancedPaymentAllocation && this.advancedPaymentAllocation.transaction) {
+      return this.advancedPaymentStrategy.isDefault(this.advancedPaymentAllocation.transaction);
+    }
+    return false;
   }
 
   removeTransaction(): void {

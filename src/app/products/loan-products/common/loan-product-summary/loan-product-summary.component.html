@@ -356,6 +356,18 @@
     </span>
   </div>
 
+  <div fxFlexFill *ngIf="isAdvancedPaymentAllocation">
+    <span fxFlex="47%">Advanced Credit Allocation Transactions:</span>
+    <span  fxFlex="53%">
+      <mat-accordion>
+        <mifosx-view-advance-paymeny-allocation *ngFor="let creditAllocation of creditAllocations"
+          [creditAllocation]="creditAllocation"
+          [advancePaymentAllocationData]="advancePaymentAllocationData">
+        </mifosx-view-advance-paymeny-allocation>
+      </mat-accordion>
+    </span>
+  </div>
+
   <h3 class="mat-h3" fxFlexFill>Down Payments</h3>
 
   <mat-divider [inset]="true"></mat-divider>
