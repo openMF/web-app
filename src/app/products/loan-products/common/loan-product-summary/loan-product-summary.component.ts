@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DelinquencyBucket, LoanProduct } from '../../models/loan-product.model';
 import { AccountingMapping, Charge, ChargeToIncomeAccountMapping, GLAccount, PaymentChannelToFundSourceMapping, PaymentType, PaymentTypeOption } from '../../../../shared/models/general.model';
-import { AdvancePaymentAllocationData, PaymentAllocation } from '../../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
+import { AdvancePaymentAllocationData, CreditAllocation, PaymentAllocation } from '../../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 import { LoanProducts } from '../../loan-products';
 import { CodeName, OptionData } from '../../../../shared/models/option-data.model';
 
@@ -17,6 +17,7 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
   @Input() loanProductsTemplate: any | null;
   @Input() useDueForRepaymentsConfigurations: boolean;
   @Input() paymentAllocations: PaymentAllocation | null;
+  @Input() creditAllocations: CreditAllocation | null;
 
   variationsDisplayedColumns: string[] = ['valueConditionType', 'borrowerCycleNumber', 'minValue', 'defaultValue', 'maxValue'];
   chargesDisplayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType'];
@@ -185,15 +186,23 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
     }
 
     if (this.loanProduct.advancedPaymentAllocationTransactionTypes) {
+      const advancedAllocationTransactionTypes: OptionData[] = this.loanProduct.advancedPaymentAllocationTransactionTypes
+        .concat(this.loanProduct.creditAllocationTransactionTypes);
+      const advancedPaymentAllocationTypes: OptionData[] = this.loanProduct.advancedPaymentAllocationTypes
+        .concat(this.loanProduct.creditAllocationAllocationTypes);
       this.advancePaymentAllocationData = {
-        transactionTypes: this.loanProduct.advancedPaymentAllocationTransactionTypes,
-        allocationTypes: this.loanProduct.advancedPaymentAllocationTypes,
+        transactionTypes: advancedAllocationTransactionTypes,
+        allocationTypes: advancedPaymentAllocationTypes,
         futureInstallmentAllocationRules: this.loanProduct.advancedPaymentAllocationFutureInstallmentAllocationRules
       };
     } else {
+      const advancedAllocationTransactionTypes: OptionData[] = this.loanProductsTemplate.advancedPaymentAllocationTransactionTypes
+        .concat(this.loanProductsTemplate.creditAllocationTransactionTypes);
+      const advancedPaymentAllocationTypes: OptionData[] = this.loanProductsTemplate.advancedPaymentAllocationTypes
+        .concat(this.loanProductsTemplate.creditAllocationAllocationTypes);
       this.advancePaymentAllocationData = {
-        transactionTypes: this.loanProductsTemplate.advancedPaymentAllocationTransactionTypes,
-        allocationTypes: this.loanProductsTemplate.advancedPaymentAllocationTypes,
+        transactionTypes: advancedAllocationTransactionTypes,
+        allocationTypes: advancedPaymentAllocationTypes,
         futureInstallmentAllocationRules: this.loanProductsTemplate.advancedPaymentAllocationFutureInstallmentAllocationRules
       };
     }

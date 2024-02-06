@@ -65,9 +65,13 @@
 
         <mifosx-loan-product-payment-strategy-step
           [advancedPaymentAllocations]="advancedPaymentAllocations"
+          [advancedCreditAllocations]="advancedCreditAllocations"
           [advancedPaymentAllocationTransactionTypes]="loanProductAndTemplate.advancedPaymentAllocationTransactionTypes"
           [paymentAllocationOrderDefault]="loanProductAndTemplate.advancedPaymentAllocationTypes"
+          [advancedCreditAllocationTransactionTypes]="loanProductAndTemplate.creditAllocationTransactionTypes"
+          [creditAllocationOrderDefault]="loanProductAndTemplate.creditAllocationAllocationTypes"
           (setPaymentAllocation)="setPaymentAllocation($event)"
+          (setCreditAllocation)="setCreditAllocation($event)"
         >
         </mifosx-loan-product-payment-strategy-step>
 
