@@ -432,6 +432,24 @@
 
     </div>
 
+    <mat-divider fxFlex="98%"></mat-divider>
+
+    <mat-checkbox *ngIf="loanProductTemplates.value !== 'undefined'" fxFlex="73%" labelPosition="before"  class="margin-b" (change)="toggleTermsAndConditions()">
+      Add terms and conditions
+    </mat-checkbox>
+
+    <mat-form-field *ngIf="showTermsAndConditions && loanProductTemplates.value !== 'undefined'" fxFlex="31%">
+      <mat-label>Terms and Conditions</mat-label>
+      <mat-select formControlName="templateForTermsAndConditions" >
+        <mat-option *ngFor="let loanProductTemplate of loanProductTemplates.value" [value]="loanProductTemplate.id">
+          {{ loanProductTemplate.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        Terms and condition template is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
   </div>
 
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">

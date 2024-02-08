@@ -19,6 +19,7 @@ import { TemplatesResolver } from './common-resolvers/templates.resolver';
 import { TemplateResolver } from './common-resolvers/template.resolver';
 import { EditTemplateResolver } from './common-resolvers/edit-template.resolver';
 import { CreateTemplateResolver } from './common-resolvers/create-template.resolver';
+import { CountriesResolver } from './common-resolvers/country.resolver';
 
 /** Templates Routes */
 const routes: Routes = [
@@ -39,7 +40,8 @@ const routes: Routes = [
           data: { title: extract('Create Template'), breadcrumb: 'Create Template' },
           component: CreateTemplateComponent,
           resolve: {
-            createTemplateData: CreateTemplateResolver
+            createTemplateData: CreateTemplateResolver,
+            countries: CountriesResolver
           }
         },
         {
@@ -80,7 +82,8 @@ const routes: Routes = [
     TemplatesResolver,
     TemplateResolver,
     EditTemplateResolver,
-    CreateTemplateResolver
+    CreateTemplateResolver,
+    CountriesResolver
   ]
 })
 export class TemplatesRoutingModule { }

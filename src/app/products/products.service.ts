@@ -62,6 +62,11 @@ export class ProductsService {
     return this.http.get(`/loanproducts/${loanProductId}`, { params: httpParams });
   }
 
+  getLoanProductWithCountryOptions(countryId: any): Observable<any> {
+    const httpParams = new HttpParams().set('countryId', countryId);
+    return this.http.get('/loanproducts/countryOptions', { params: httpParams });
+  }
+
   updateLoanProduct(loanProductId: string, loanProduct: any): Observable<any> {
     return this.http.put(`/loanproducts/${loanProductId}`, loanProduct);
   }

@@ -10,6 +10,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
 
   @Input() loanProductsTemplate: any;
   @Input() isLinkedToFloatingInterestRates: FormControl;
+  @Input() loanProductTemplates: any;
 
   loanProductSettingsForm: FormGroup;
 
@@ -26,6 +27,9 @@ export class LoanProductSettingsStepComponent implements OnInit {
   interestRecalculationNthDayTypeData: any;
   interestRecalculationDayOfWeekTypeData: any;
   interestRecalculationOnDayTypeData: any;
+  // terms and conditions template
+  templateForTermsAndConditions: any;
+  showTermsAndConditions = false;
 
   constructor(private formBuilder: FormBuilder) {
     this.createLoanProductSettingsForm();
@@ -168,7 +172,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
         'repaymentEvery': [true],
         'graceOnPrincipalAndInterestPayment': [true],
         'graceOnArrearsAgeing': [true]
-      })
+      }),
+      'templateForTermsAndConditions': ['']
     });
   }
 
@@ -340,6 +345,10 @@ export class LoanProductSettingsStepComponent implements OnInit {
           });
         }
       });
+  }
+
+  toggleTermsAndConditions() {
+    this.showTermsAndConditions = !this.showTermsAndConditions;
   }
 
   get loanProductSettings() {

@@ -26,6 +26,7 @@ Release Notes
     * [SER-2043] - Hide unused bulk import items
     * [SER-1562] - Refresh automatically after uploading a file
     * [SER-1521] - As a country admin, I should be able to add an extension charge
+    * [SER-2030] - Implement loan terms and conditions
 
 
 ## Version 1.0.0 - for use with Fineract Web App

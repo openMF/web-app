@@ -104,6 +104,10 @@ export class EditLoanProductComponent implements OnInit {
     );
   }
 
+  get loanProductTemplateForm() {
+    return this.loanProductOrganizationStep.loanProductTemplateForm;
+  }
+
   get loanProduct() {
     return {
       ...this.loanProductDetailsStep.loanProductDetails,

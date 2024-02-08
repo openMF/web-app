@@ -63,6 +63,10 @@ export class CreateLoanProductComponent implements OnInit {
     return this.loanProductOrganizationStep.loanProductOrganizationForm;
   }
 
+  get loanProductTemplateForm() {
+    return this.loanProductOrganizationStep.loanProductTemplateForm;
+  }
+
   get loanProductTermsForm() {
     return this.loanProductTermsStep.loanProductTermsForm;
   }
