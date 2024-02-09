@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { AdvancedPaymentAllocation, AdvancedPaymentStrategy, CreditAllocationOrder, FutureInstallmentAllocationRule, PaymentAllocationOrder, PaymentAllocationTransactionType } from '../payment-allocation-model';
+import { AdvancedCreditAllocation, AdvancedPaymentAllocation, AdvancedPaymentStrategy, CreditAllocationOrder, FutureInstallmentAllocationRule, PaymentAllocationOrder, PaymentAllocationTransactionType } from '../payment-allocation-model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,15 +14,16 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 export class AdvancePaymentAllocationTabComponent implements OnInit {
 
   @Input() advancedPaymentAllocation: AdvancedPaymentAllocation;
+  @Input() advancedCreditAllocation: AdvancedCreditAllocation;
 
-  @Output() paymentAllocationChange = new EventEmitter<boolean>();
+  @Output() allocationChanged = new EventEmitter<boolean>();
   @Output() transactionTypeRemoved = new EventEmitter<PaymentAllocationTransactionType>();
 
   paymentAllocationsData: PaymentAllocationOrder[] | null = null;
   creditAllocationsData: CreditAllocationOrder[] | null = null;
 
   /** Columns to be displayed in the table. */
-  displayedColumns: string[] = ['actions', 'order', 'paymentAllocation'];
+  displayedColumns: string[] = ['actions', 'order', 'allocationRule'];
 
   futureInstallmentAllocationRule = new UntypedFormControl('', Validators.required);
 
@@ -32,14 +33,13 @@ export class AdvancePaymentAllocationTabComponent implements OnInit {
     private advancedPaymentStrategy: AdvancedPaymentStrategy) { }
 
   ngOnInit(): void {
-    console.log(this.advancedPaymentAllocation);
+    if (this.advancedCreditAllocation) {
+      this.creditAllocationsData = this.advancedCreditAllocation?.creditAllocationOrder;
+    }
+
     if (this.advancedPaymentAllocation) {
-      if (this.advancedPaymentAllocation.creditAllocationOrder) {
-        this.creditAllocationsData = this.advancedPaymentAllocation.creditAllocationOrder;
-      }
-      if (this.advancedPaymentAllocation.paymentAllocationOrder) {
-        this.paymentAllocationsData = this.advancedPaymentAllocation.paymentAllocationOrder;
-      }
+      this.paymentAllocationsData = this.advancedPaymentAllocation?.paymentAllocationOrder;
+
       if (this.advancedPaymentAllocation.futureInstallmentAllocationRule) {
         this.futureInstallmentAllocationRule.patchValue(this.advancedPaymentAllocation.futureInstallmentAllocationRule.code);
       }
@@ -47,7 +47,7 @@ export class AdvancePaymentAllocationTabComponent implements OnInit {
         this.advancedPaymentAllocation.futureInstallmentAllocationRules.forEach((item: FutureInstallmentAllocationRule) => {
           if (value === item.code) {
             this.advancedPaymentAllocation.futureInstallmentAllocationRule = item;
-            this.paymentAllocationChange.emit(true);
+            this.allocationChanged.emit(true);
           }
         });
       });
@@ -61,14 +61,14 @@ export class AdvancePaymentAllocationTabComponent implements OnInit {
       this.paymentAllocationsData = [...this.paymentAllocationsData];
       this.advancedPaymentAllocation.paymentAllocationOrder = this.paymentAllocationsData;
       this.table.renderRows();
-      this.paymentAllocationChange.emit(true);
+      this.allocationChanged.emit(true);
     } else {
       const prevIndex = this.creditAllocationsData.findIndex((d: any) => d === event.item.data);
       moveItemInArray(this.creditAllocationsData, prevIndex, event.currentIndex);
       this.creditAllocationsData = [...this.creditAllocationsData];
-      this.advancedPaymentAllocation.creditAllocationOrder = this.creditAllocationsData;
+      this.advancedCreditAllocation.creditAllocationOrder = this.creditAllocationsData;
       this.table.renderRows();
-      this.paymentAllocationChange.emit(true);
+      this.allocationChanged.emit(true);
     }
   }
 
@@ -80,12 +80,19 @@ export class AdvancePaymentAllocationTabComponent implements OnInit {
   }
 
   removeTransaction(): void {
+    let transaction: PaymentAllocationTransactionType = null;
+    if (this.advancedPaymentAllocation && this.advancedPaymentAllocation.transaction) {
+      transaction = this.advancedPaymentAllocation.transaction;
+    } else if (this.advancedCreditAllocation && this.advancedCreditAllocation.transaction) {
+      transaction = this.advancedCreditAllocation.transaction;
+      transaction.credit = true;
+    }
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: ` the Transaction Type ${this.advancedPaymentAllocation.transaction.value}` }
+      data: { deleteContext: ` the Transaction Type ${transaction.value}` }
     });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.transactionTypeRemoved.emit(this.advancedPaymentAllocation.transaction);
+        this.transactionTypeRemoved.emit(transaction);
       }
     });
   }
