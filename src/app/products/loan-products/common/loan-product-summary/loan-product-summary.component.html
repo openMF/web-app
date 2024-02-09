@@ -356,7 +356,7 @@
     </span>
   </div>
 
-  <div fxFlexFill *ngIf="isAdvancedPaymentAllocation">
+  <div fxFlexFill *ngIf="isAdvancedPaymentAllocation && creditAllocations.length > 0">
     <span fxFlex="47%">Advanced Credit Allocation Transactions:</span>
     <span  fxFlex="53%">
       <mat-accordion>
