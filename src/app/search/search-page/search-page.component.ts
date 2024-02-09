@@ -32,7 +32,6 @@ export class SearchPageComponent {
   constructor(private route: ActivatedRoute,
               private router: Router) {
     this.route.data.subscribe(( data: { searchResults: any }) => {
-      console.log(data.searchResults);
       this.dataSource = new MatTableDataSource(data.searchResults);
       this.dataSource.paginator = this.paginator;
       this.hasResults = (data.searchResults.length > 0);

@@ -24,8 +24,8 @@
         <td mat-cell *matCellDef="let paymentAllocation; let rowIndex = index"> {{ (rowIndex + 1) }} </td>
       </ng-container>
 
-      <ng-container matColumnDef="paymentAllocation">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Payment Allocation' | translate }}</th>
+      <ng-container matColumnDef="allocationRule">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Payment Allocation Rule' | translate }}</th>
         <td mat-cell *matCellDef="let paymentAllocation"> {{ paymentAllocation.value }} </td>
       </ng-container>
 
@@ -34,7 +34,7 @@
     </table>
   </div>
 
-  <div class="mat-elevation-z8 container m-t-15" *ngIf="creditAllocationsData">
+  <div class="mat-elevation-z8 container m-t-15 m-b-15" *ngIf="creditAllocationsData">
     <table mat-table [dataSource]="creditAllocationsData" #table cdkDropList
       [cdkDropListData]="creditAllocationsData" (cdkDropListDropped)="dropTable($event, true)">
 
@@ -50,8 +50,8 @@
         <td mat-cell *matCellDef="let creditAllocation; let rowIndex = index"> {{ (rowIndex + 1) }} </td>
       </ng-container>
 
-      <ng-container matColumnDef="paymentAllocation">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Payment Allocation' | translate }}</th>
+      <ng-container matColumnDef="allocationRule">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Credit Allocation Rule' | translate }}</th>
         <td mat-cell *matCellDef="let creditAllocation"> {{ creditAllocation.value }} </td>
       </ng-container>
 

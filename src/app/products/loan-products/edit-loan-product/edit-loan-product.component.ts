@@ -14,7 +14,7 @@ import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan
 import { ProductsService } from 'app/products/products.service';
 import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
 import { LoanProducts } from '../loan-products';
-import { AdvancedPaymentAllocation, AdvancedPaymentStrategy, CreditAllocation, PaymentAllocation, PaymentAllocationOrder, PaymentAllocationTransactionTypes } from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
+import { AdvancedCreditAllocation, AdvancedPaymentAllocation, AdvancedPaymentStrategy, CreditAllocation, PaymentAllocation, PaymentAllocationOrder, PaymentAllocationTransactionTypes } from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 
 @Component({
   selector: 'mifosx-edit-loan-product',
@@ -39,7 +39,7 @@ export class EditLoanProductComponent implements OnInit {
   paymentAllocation: PaymentAllocation[] = [];
   creditAllocation: CreditAllocation[] = [];
   advancedPaymentAllocations: AdvancedPaymentAllocation[] = [];
-  advancedCreditAllocations: AdvancedPaymentAllocation[] = [];
+  advancedCreditAllocations: AdvancedCreditAllocation[] = [];
 
   /**
    * @param {ActivatedRoute} route Activated Route.
@@ -97,7 +97,6 @@ export class EditLoanProductComponent implements OnInit {
   buildAdvancedPaymentAllocation(): void {
     this.advancedPaymentAllocations = this.advancedPaymentStrategy.buildAdvancedPaymentAllocationList(this.loanProductAndTemplate);
     this.advancedCreditAllocations = this.advancedPaymentStrategy.buildAdvancedCreditAllocationList(this.loanProductAndTemplate);
-    console.log(this.advancedCreditAllocations);
   }
 
   setPaymentAllocation(paymentAllocation: PaymentAllocation[]): void {

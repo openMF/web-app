@@ -2776,18 +2776,18 @@
     }
   },
   "languages": {
-    "cs-CS": "Čeština (Czech)",
-    "de-DE": "Deutsch (German)",
-    "en-US": "English (English)",
-    "es-MX": "Español (Spanish)",
-    "fr-FR": "Français (French)",
-    "it-IT": "Italiano (Italian)",
-    "ko-KO": "한국어 (Korean)",
-    "lt-LT": "Lietuvių (Lithuanian)",
-    "lv-LV": "Latviešu (Latvian)",
+    "cs-CS": "Čeština (Tschechisch)",
+    "de-DE": "Deutsch",
+    "en-US": "English (Englisch)",
+    "es-MX": "Español (Spanisch)",
+    "fr-FR": "Français (Französisch)",
+    "it-IT": "Italiano (Italienisch)",
+    "ko-KO": "한국어 (Koreanisch)",
+    "lt-LT": "Lietuvių (Litauisch)",
+    "lv-LV": "Latviešu (Lettisch)",
     "ne-NE": "नेपाली (Nepali)",
-    "pt-PT": "Português (Portuguese)",
-    "sw-SW": "Kiswahili (Swahili)"
+    "pt-PT": "Português (Portugiesisch)",
+    "sw-SW": "Kiswahili (Suaheli)"
   },
   "not_found_subtitle": "Hoppla. Anscheinend existiert diese Seite nicht.",
   "tooltips": {

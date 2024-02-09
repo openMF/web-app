@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { AdvancedPaymentAllocation, AdvancedPaymentStrategy, CreditAllocation, PaymentAllocation, PaymentAllocationOrder, PaymentAllocationTransactionType } from './payment-allocation-model';
+import { AdvancedCreditAllocation, AdvancedPaymentAllocation, AdvancedPaymentStrategy, CreditAllocation, CreditAllocationOrder, PaymentAllocation, PaymentAllocationOrder, PaymentAllocationTransactionType } from './payment-allocation-model';
 import { MatDialog } from '@angular/material/dialog';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
@@ -14,13 +14,12 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class LoanProductPaymentStrategyStepComponent implements OnInit {
 
-  advancedAllocations: AdvancedPaymentAllocation[] = [];
   @Input() advancedPaymentAllocations: AdvancedPaymentAllocation[] = [];
-  @Input() advancedCreditAllocations: AdvancedPaymentAllocation[] = [];
+  @Input() advancedCreditAllocations: AdvancedCreditAllocation[] = [];
   @Input() advancedPaymentAllocationTransactionTypes: PaymentAllocationTransactionType[] = [];
   @Input() paymentAllocationOrderDefault: PaymentAllocationOrder[];
   @Input() advancedCreditAllocationTransactionTypes: PaymentAllocationTransactionType[] = [];
-  @Input() creditAllocationOrderDefault: PaymentAllocationOrder[];
+  @Input() creditAllocationOrderDefault: CreditAllocationOrder[];
 
   @Output() paymentAllocationChange = new EventEmitter<boolean>();
   @Output() setPaymentAllocation = new EventEmitter<PaymentAllocation[]>();
@@ -33,18 +32,15 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
     private translateService: TranslateService) { }
 
   ngOnInit(): void {
-    this.advancedAllocations = this.advancedPaymentAllocations.concat(this.advancedCreditAllocations);
     this.sendAllocations();
   }
 
   sendAllocations(): void {
     this.setPaymentAllocation.emit(this.advancedPaymentStrategy.buildPaymentAllocations(this.advancedPaymentAllocations));
-    if (this.advancedCreditAllocations?.length > 0) {
-      this.setCreditAllocation.emit(this.advancedPaymentStrategy.buildCreditAllocations(this.advancedCreditAllocations));
-    }
+    this.setCreditAllocation.emit(this.advancedPaymentStrategy.buildCreditAllocations(this.advancedCreditAllocations));
   }
 
-  paymentAllocationChanged(changed: boolean): void {
+  allocationChanged(changed: boolean): void {
     this.paymentAllocationChange.emit(changed);
     this.sendAllocations();
   }
@@ -105,8 +101,6 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
               );
             }
             this.paymentAllocationChange.emit(true);
-            this.advancedAllocations = this.advancedPaymentAllocations.concat(this.advancedCreditAllocations);
-            this.tabGroup.selectedIndex = (this.advancedAllocations.length - 1);
             this.sendAllocations();
           }
         });

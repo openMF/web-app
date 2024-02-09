@@ -2777,18 +2777,18 @@
     }
   },
   "languages": {
-    "cs-CS": "Čeština (Czech)",
-    "de-DE": "Deutsch (German)",
-    "en-US": "English (English)",
-    "es-MX": "Español (Spanish)",
-    "fr-FR": "Français (French)",
-    "it-IT": "Italiano (Italian)",
-    "ko-KO": "한국어 (Korean)",
-    "lt-LT": "Lietuvių (Lithuanian)",
-    "lv-LV": "Latviešu (Latvian)",
-    "ne-NE": "नेपाली (Nepali)",
-    "pt-PT": "Português (Portuguese)",
-    "sw-SW": "Kiswahili (Swahili)"
+    "cs-CS": "Čeština (Čehu)",
+    "de-DE": "Deutsch (Vācu)",
+    "en-US": "English (Angļu)",
+    "es-MX": "Español (Spāņu valoda)",
+    "fr-FR": "Français (Franču valoda)",
+    "it-IT": "Italiano (Itāļu valoda)",
+    "ko-KO": "한국어 (Korejiešu)",
+    "lt-LT": "Lietuvių (Lietuviešu)",
+    "lv-LV": "Latviešu",
+    "ne-NE": "नेपाली (Nepāliešu)",
+    "pt-PT": "Português (Portugāļu)",
+    "sw-SW": "Kiswahili (Svahili)"
   },
   "not_found_subtitle": "Hmm... Šķiet, ka šī lapa neeksistē.",
   "tooltips": {
