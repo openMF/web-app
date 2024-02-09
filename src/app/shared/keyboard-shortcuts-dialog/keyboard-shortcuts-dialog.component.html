@@ -3,6 +3,7 @@
 <div mat-dialog-content>
   <div fxLayout="column" fxLayoutGap="2%">
     <ng-container *ngFor="let item of buttonConfig.buttonCombinations">
+      <mat-divider [inset]="true"></mat-divider>
       <div fxFlexFill fxFlex="50%">
         <span fxFlex="50%">
           <span *ngIf="item.ctrlKey"> <span class="modifierKey">{{ 'labels.inputs.Ctrl' | translate }}</span> + </span>
@@ -12,7 +13,6 @@
         </span>
         <span fxFlex="50%">{{ item.title }}</span>
       </div>
-      <mat-divider [inset]="true"></mat-divider>
     </ng-container>
   </div>
 </div>
