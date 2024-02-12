@@ -2777,18 +2777,18 @@
     }
   },
   "languages": {
-    "cs-CS": "Kicheki",
-    "de-DE": "Kijerumani",
-    "en-US": "Kiingereza",
-    "es-MX": "Kihispania",
-    "fr-FR": "Kifaransa",
-    "it-IT": "Kiitaliano",
-    "ko-KO": "Kikorea",
-    "lt-LT": "Kilithuania",
-    "lv-LV": "Kilatvia",
-    "ne-NE": "Kinepali",
-    "pt-PT": "Kireno",
-    "sw-SW": "kiswahili"
+    "cs-CS": "Čeština (Kicheki)",
+    "de-DE": "Deutsch (Kijerumani)",
+    "en-US": "English (Kiingereza)",
+    "es-MX": "Español (Kihispania)",
+    "fr-FR": "Français (Kifaransa)",
+    "it-IT": "Italiano (Kiitaliano)",
+    "ko-KO": "한국어 (Kikorea)",
+    "lt-LT": "Lietuvių (Kilithuania)",
+    "lv-LV": "Latviešu (Kilatvia)",
+    "ne-NE": "नेपाली (Kinepali)",
+    "pt-PT": "Kireno (Kireno)",
+    "sw-SW": "Kiswahili"
   },
   "not_found_subtitle": "Lo.. Inaonekana kama ukurasa huu haupo.",
   "tooltips": {
