@@ -2777,18 +2777,18 @@
     }
   },
   "languages": {
-    "cs-CS": "체코 사람",
-    "de-DE": "독일 사람",
-    "en-US": "영어",
-    "es-MX": "스페인의",
-    "fr-FR": "프랑스 국민",
-    "it-IT": "이탈리아 사람",
-    "ko-KO": "한국인",
-    "lt-LT": "리투아니아 사람",
-    "lv-LV": "라트비아 사람",
-    "ne-NE": "네팔어",
-    "pt-PT": "포르투갈 인",
-    "sw-SW": "스와힐리어"
+    "cs-CS": "Čeština (체코 사람)",
+    "de-DE": "Deutsch (독일 사람)",
+    "en-US": "English (영어)",
+    "es-MX": "Español (스페인의)",
+    "fr-FR": "Français (프랑스 국민)",
+    "it-IT": "Italiano (이탈리아 사람)",
+    "ko-KO": "한국어",
+    "lt-LT": "Lietuvių (리투아니아 사람)",
+    "lv-LV": "Latviešu (라트비아 사람)",
+    "ne-NE": "नेपाली (네팔어)",
+    "pt-PT": "Português (포르투갈 인)",
+    "sw-SW": "Kiswahili (스와힐리어)"
   },
   "not_found_subtitle": "이런.. 이 페이지가 존재하지 않는 것 같습니다.",
   "tooltips": {
