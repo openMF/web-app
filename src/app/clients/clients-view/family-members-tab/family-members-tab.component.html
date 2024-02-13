@@ -16,7 +16,7 @@
 
         <mat-expansion-panel-header>
           <mat-panel-title>
-            {{member.firstName+' '+member.middleName+' '+member.lastName}}
+            {{displayName(member)}}
           </mat-panel-title>
           <mat-panel-description>
             {{member.relationship}}
@@ -35,17 +35,17 @@
         </div>
 
         <p>
-          {{"labels.inputs.First Name" | translate}} : {{member.firstName}}<br />
-          {{"labels.inputs.Middle Name" | translate}} : {{member.middleName}}<br />
-          {{"labels.inputs.Last Name" | translate}} : {{member.lastName}}<br />
-          {{"labels.inputs.Qualification" | translate}} : {{member.qualification}}<br />
-          {{"labels.inputs.Mobile Number" | translate}} : {{member.mobileNumber}}<br />
-          {{"labels.inputs.Age" | translate}} : {{member.age}}<br />
-          {{"labels.inputs.Is Dependent" | translate}} : {{member.isDependent}}<br />
-          {{"labels.inputs.Martial Status" | translate}} : {{member.maritalStatus}}<br />
-          {{"labels.inputs.Gender" | translate}} : {{member.gender}}<br />
-          {{"labels.inputs.Profession" | translate}} : {{member.profession}}<br />
-          {{"labels.inputs.Date Of Birth" | translate}} : {{member.dateOfBirth | dateFormat}}<br />
+          <span *ngIf="member.firstName">{{"labels.inputs.First Name" | translate}} : {{member.firstName}}<br /></span>
+          <span *ngIf="member.middleName">{{"labels.inputs.Middle Name" | translate}} : {{member.middleName}}<br /></span>
+          <span *ngIf="member.lastName">{{"labels.inputs.Last Name" | translate}} : {{member.lastName}}<br /></span>
+          <span *ngIf="member.qualification">{{"labels.inputs.Qualification" | translate}} : {{member.qualification}}<br /></span>
+          <span *ngIf="member.mobileNumber">{{"labels.inputs.Mobile Number" | translate}} : {{member.mobileNumber}}<br /></span>
+          <span *ngIf="member.age">{{"labels.inputs.Age" | translate}} : {{member.age}}<br /></span>
+          <span *ngIf="member.isDependent">{{"labels.inputs.Is Dependent" | translate}} : {{member.isDependent | yesNo}}<br /></span>
+          <span *ngIf="member.maritalStatus">{{"labels.inputs.Marital Status" | translate}} : {{member.maritalStatus}}<br /></span>
+          <span *ngIf="member.gender">{{"labels.inputs.Gender" | translate}} : {{member.gender}}<br /></span>
+          <span *ngIf="member.profession">{{"labels.inputs.Profession" | translate}} : {{member.profession}}<br /></span>
+          <span *ngIf="member.dateOfBirth">{{"labels.inputs.Date Of Birth" | translate}} : {{member.dateOfBirth | dateFormat}}<br /></span>
         </p>
 
       </mat-expansion-panel>
