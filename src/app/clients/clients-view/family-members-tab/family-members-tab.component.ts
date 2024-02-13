@@ -52,4 +52,15 @@ export class FamilyMembersTabComponent {
     });
   }
 
+  displayName(member: any): string {
+    let fullName: string = member.firstName;
+    if (member.middleName) {
+      fullName = fullName + ' ' + member.middleName;
+    }
+    if (member.lastName) {
+      fullName = fullName + ' ' + member.lastName;
+    }
+    return fullName;
+  }
+
 }
