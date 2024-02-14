@@ -48,7 +48,7 @@
     </ng-container>
 
     <ng-container matColumnDef="Due as of">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Due as of" | translate}}" </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Due as of" | translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.dueDate | dateFormat}} </td>
     </ng-container>
 
@@ -112,7 +112,7 @@
   <table *ngIf="!showClosedLoanAccounts" mat-table [dataSource]="loanAccounts|accountsFilter:'loan'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" | translate}}. </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" | translate}} </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop"
           [ngClass]="element.inArrears?'status-active-overdue':(element.status.code|statusLookup)"></i>
           <mifosx-account-number accountNo="{{element.accountNo}}"></mifosx-account-number>
@@ -186,7 +186,7 @@
   <table *ngIf="showClosedLoanAccounts" mat-table [dataSource]="loanAccounts|accountsFilter:'loan':'closed'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" | translate}}. </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" | translate}} </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop"
           [ngClass]="element.inArrears?'status-active-overdue':(element.status.code|statusLookup)"></i>
           <mifosx-account-number accountNo="{{element.accountNo}}"></mifosx-account-number>
@@ -252,7 +252,7 @@
     [dataSource]="savingAccounts|accountsFilter:'saving':'open':'isSavings'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" | translate}}. </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" | translate}} </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         <mifosx-account-number accountNo="{{element.accountNo}}"></mifosx-account-number>
       </td>
@@ -312,7 +312,7 @@
     [dataSource]="savingAccounts|accountsFilter:'saving':'closed':'isSavings'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" | translate}}. </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" | translate}} </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         <mifosx-account-number accountNo="{{element.accountNo}}"></mifosx-account-number>
       </td>
@@ -354,7 +354,7 @@
     [dataSource]="savingAccounts|accountsFilter:'saving':'open':'isFixed'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" | translate}}. </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" | translate}} </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         <mifosx-account-number accountNo="{{element.accountNo}}"></mifosx-account-number>
       </td>
@@ -407,7 +407,7 @@
     [dataSource]="savingAccounts|accountsFilter:'saving':'closed':'isFixed'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" | translate}}. </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" | translate}} </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         <mifosx-account-number accountNo="{{element.accountNo}}"></mifosx-account-number>
       </td>
@@ -450,7 +450,7 @@
     [dataSource]="savingAccounts|accountsFilter:'saving':'open':'isRecurring'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" | translate}}. </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" | translate}} </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         <mifosx-account-number accountNo="{{element.accountNo}}"></mifosx-account-number>
       </td>
@@ -507,7 +507,7 @@
     [dataSource]="savingAccounts|accountsFilter:'saving':'closed':'isRecurring'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" | translate}}. </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" | translate}} </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         <mifosx-account-number accountNo="{{element.accountNo}}"></mifosx-account-number>
       </td>
@@ -548,7 +548,7 @@
   <table *ngIf="!showClosedShareAccounts" mat-table [dataSource]="shareAccounts|accountsFilter:'share'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" | translate}}. </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" | translate}} </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         <mifosx-account-number accountNo="{{element.accountNo}}"></mifosx-account-number>
       </td>
@@ -597,7 +597,7 @@
   <table *ngIf="showClosedShareAccounts" mat-table [dataSource]="shareAccounts|accountsFilter:'share':'closed'">
 
     <ng-container matColumnDef="Account No">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" | translate}}. </th>
+      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account No" | translate}} </th>
       <td mat-cell *matCellDef="let element"> <i class="fa fa-stop" [ngClass]="element.status.code|statusLookup"></i>
         <mifosx-account-number accountNo="{{element.accountNo}}"></mifosx-account-number>
       </td>
