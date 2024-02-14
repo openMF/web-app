@@ -12,7 +12,7 @@
 
     <div *ngIf="loanProductAccountingForm.value.accountingRule >= 2 && loanProductAccountingForm.value.accountingRule <= 4" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-      <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.Assets' | translate}} / {{'labels.heading.Liability' | translate}}</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.Assets' | translate}} / {{'labels.heading.Liabilities' | translate}}</h4>
 
       <mifosx-gl-account-selector fxFlex="48%"
         [inputFormControl]="loanProductAccountingForm.controls.fundSourceAccountId"

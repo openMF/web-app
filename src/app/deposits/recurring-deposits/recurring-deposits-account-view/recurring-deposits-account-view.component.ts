@@ -230,7 +230,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
   private postInterest() {
     const postInterestAccountDialogRef = this.dialog.open(RecurringDepositConfirmationDialogComponent, {
       data: { heading: this.translateService.instant('labels.heading.Post Interest'),
-        dialogContext: this.translateService.instant('lables.dialogContext.Are you sure you want to post interest ?')
+        dialogContext: this.translateService.instant('lables.text.Are you sure you want to post interest') + ' ?'
       }
     });
     postInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
