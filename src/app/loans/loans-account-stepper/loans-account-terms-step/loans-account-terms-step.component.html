@@ -100,7 +100,7 @@
       <mat-datepicker #interestPicker></mat-datepicker>
     </mat-form-field>
 
-    <ng-container *ngIf="!loansAccountTemplate?.isLoanProductLinkedToFloatingRate">
+    <ng-container *ngIf="!loansAccountTermsData?.isLoanProductLinkedToFloatingRate">
 
       <mat-form-field fxFlex="48%">
         <mat-label>{{"labels.inputs.Nominal interest rate" | translate}}</mat-label>
