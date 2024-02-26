@@ -380,8 +380,10 @@
           <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
             <span fxFlex="40%">Interest on savings:</span>
             <span fxFlex="60%">{{ recurringDepositProduct.accountingMappings.interestOnSavingsAccount.name }}</span>
-            <span fxFlex="40%">Write-off:</span>
-            <span fxFlex="60%">{{ recurringDepositProduct.accountingMappings.writeOffAccount.name }}</span>
+            <span *ngIf="recurringDepositProduct.accountingMappings.writeOffAccount">
+              <span fxFlex="40%">Write-off:</span>
+              <span fxFlex="60%">{{ recurringDepositProduct.accountingMappings.writeOffAccount.name }}</span>  
+            </span>
           </div>
 
           <h4 fxFlexFill class="mat-h4">Income</h4>
