@@ -39,7 +39,7 @@
       </div>
       <div class="icon-menu">
         <div class="icon-menu-item" *ngFor="let activity of mappedActivities">
-          <button mat-raised-button [matTooltip]="activity.toolTip" [routerLink]="[activity.path]">
+          <button mat-raised-button [matTooltipPosition]="tooltipPosition" [matTooltip]="activity.toolTip" [routerLink]="[activity.path]">
             <fa-icon [icon]="activity.icon" size="lg"></fa-icon>
           </button>
         </div>
@@ -51,61 +51,61 @@
       </div>
 
       <mat-nav-list>
-        <mat-list-item [routerLink]="['/dashboard']" matTooltip="{{ 'tooltips.Dashboard' | translate}}">
+        <mat-list-item [routerLink]="['/dashboard']" [matTooltipPosition]="tooltipPosition" matTooltip="{{ 'tooltips.Dashboard' | translate}}">
           <mat-icon matListIcon >
             <fa-icon icon="tachometer-alt" size="sm"></fa-icon>
           </mat-icon>
           <a matLine #dashboard>{{'labels.menus.Dashboard' | translate}}</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/navigation']" matTooltip="{{ 'tooltips.Navigation' | translate}}">
+        <mat-list-item [routerLink]="['/navigation']" [matTooltipPosition]="tooltipPosition" matTooltip="{{ 'tooltips.Navigation' | translate}}">
           <mat-icon matListIcon>
             <fa-icon icon="location-arrow" size="sm"></fa-icon>
           </mat-icon>
           <a matLine #navigation>{{'labels.menus.Navigation' | translate}}</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/checker-inbox-and-tasks/checker-inbox']" matTooltip="{{ 'tooltips.Checker Inbox and Tasks' | translate}}">
+        <mat-list-item [routerLink]="['/checker-inbox-and-tasks/checker-inbox']" [matTooltipPosition]="tooltipPosition" matTooltip="{{ 'tooltips.Checker Inbox and Tasks' | translate}}">
           <mat-icon matListIcon>
             <i class="fa fa-check" ></i>
           </mat-icon>
           <a matLine>{{'labels.menus.Checker Inbox and Tasks' | translate}}</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/collections/individual-collection-sheet']" matTooltip="{{ 'tooltips.Individual Collection Sheet' | translate}}">
+        <mat-list-item [routerLink]="['/collections/individual-collection-sheet']" [matTooltipPosition]="tooltipPosition" matTooltip="{{ 'tooltips.Individual Collection Sheet' | translate}}">
           <mat-icon matListIcon>
             <i class="fa fa-tasks "></i>
           </mat-icon>
           <a matLine>{{'labels.menus.Individual Collection Sheet' | translate}}</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/notifications']" matTooltip="{{ 'tooltips.Notifications' | translate}}">
+        <mat-list-item [routerLink]="['/notifications']" [matTooltipPosition]="tooltipPosition" matTooltip="{{ 'tooltips.Notifications' | translate}}">
           <mat-icon matListIcon>
             <fa-icon icon="bell" size="sm"></fa-icon>
           </mat-icon>
           <a matLine>{{'labels.menus.Notifications' | translate}}</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/accounting/journal-entries/frequent-postings']" matTooltip="{{ 'tooltips.Frequent Postings' | translate}}">
+        <mat-list-item [routerLink]="['/accounting/journal-entries/frequent-postings']" [matTooltipPosition]="tooltipPosition" matTooltip="{{ 'tooltips.Frequent Postings' | translate}}">
           <mat-icon matListIcon>
             <fa-icon icon="sync" size="sm"></fa-icon>
           </mat-icon>
           <a matLine #frequentPostings>{{'labels.menus.Frequent Postings' | translate}}</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/accounting/journal-entries/create']" matTooltip="{{ 'tooltips.Create Journal Entry' | translate}}">
+        <mat-list-item [routerLink]="['/accounting/journal-entries/create']" [matTooltipPosition]="tooltipPosition" matTooltip="{{ 'tooltips.Create Journal Entry' | translate}}">
           <mat-icon matListIcon>
             <fa-icon icon="plus" size="sm"></fa-icon>
           </mat-icon>
           <a matLine #createJournalEntry>{{'labels.menus.Create Journal Entry' | translate}}</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/accounting/chart-of-accounts']" matTooltip="{{ 'tooltips.Chart Of Accounts' | translate}}">
+        <mat-list-item [routerLink]="['/accounting/chart-of-accounts']" [matTooltipPosition]="tooltipPosition" matTooltip="{{ 'tooltips.Chart Of Accounts' | translate}}">
           <mat-icon matListIcon>
             <fa-icon icon="sitemap" size="sm"></fa-icon>
           </mat-icon>
           <a matLine #chartOfAccounts>{{'labels.menus.Chart of Accounts' | translate}}</a>
         </mat-list-item>
-        <mat-list-item (click)="showKeyboardShortcuts()" matTooltip="{{ 'tooltips.Keyboard Shortcuts' | translate}}">
+        <mat-list-item (click)="showKeyboardShortcuts()" [matTooltipPosition]="tooltipPosition" matTooltip="{{ 'tooltips.Keyboard Shortcuts' | translate}}">
           <mat-icon matListIcon>
             <fa-icon icon="keyboard" size="sm"></fa-icon>
           </mat-icon>
           <a matLine>{{'labels.menus.Keyboard Shortcuts' | translate}}</a>
         </mat-list-item>
-        <mat-list-item matTooltip="{{ 'tooltips.Help' | translate}}">
+        <mat-list-item [matTooltipPosition]="tooltipPosition" matTooltip="{{ 'tooltips.Help' | translate}}">
           <mat-icon matListIcon (click)="help()">
             <fa-icon icon="question-circle" size="sm"></fa-icon>
           </mat-icon>
