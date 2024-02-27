@@ -11,94 +11,93 @@
 
     <mat-divider fxFlex="98%"></mat-divider>
 
-    <div *ngIf="recurringDepositProductAccountingForm.value.accountingRule === 2" fxFlexFill fxLayout="row wrap"
-      fxLayoutGap="2%" fxLayout.lt-md="column">
+    <div *ngIf="isCashOrAccrualAccounting()" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-      <h4 fxFlex="98%" class="mat-h4">Assets</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.Assets' | translate}}</h4>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Saving reference</mat-label>
-        <mat-select formControlName="savingsReferenceAccountId" required>
-          <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
-            ({{ assetAccount.glCode }}) {{ assetAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Saving reference is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="recurringDepositProductAccountingForm.controls.savingsReferenceAccountId"
+        [glAccountList]="assetAccountData"
+        [required]="true"
+        [inputLabel]="'Saving reference'"
+      >
+      </mifosx-gl-account-selector>
 
-      <mat-divider fxFlex="98%"></mat-divider>
+      <mifosx-gl-account-selector fxFlex="48%" *ngIf="isAccrualAccounting()" 
+        [inputFormControl]="recurringDepositProductAccountingForm.controls.feesReceivableAccountId"
+        [glAccountList]="assetAccountData"
+        [required]="true"
+        [inputLabel]="'Fees Receivable'"
+      >
+      </mifosx-gl-account-selector>
 
-      <h4 fxFlex="98%" class="mat-h4">Liabilities</h4>
-
-      <mat-form-field fxFlex="48%">
-        <mat-label>Saving control</mat-label>
-        <mat-select formControlName="savingsControlAccountId" required>
-          <mat-option *ngFor="let liabilityAccount of liabilityAccountData" [value]="liabilityAccount.id">
-            ({{ liabilityAccount.glCode }}) {{ liabilityAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Saving control is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field fxFlex="48%">
-        <mat-label>Savings transfers in suspense</mat-label>
-        <mat-select formControlName="transfersInSuspenseAccountId" required>
-          <mat-option *ngFor="let liabilityAccount of liabilityAccountData" [value]="liabilityAccount.id">
-            ({{ liabilityAccount.glCode }}) {{ liabilityAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Savings transfers in suspense is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%" *ngIf="isAccrualAccounting()" 
+        [inputFormControl]="recurringDepositProductAccountingForm.controls.penaltiesReceivableAccountId"
+        [glAccountList]="assetAccountData"
+        [required]="true"
+        [inputLabel]="'Penalties Receivable'"
+      >
+      </mifosx-gl-account-selector>
 
       <mat-divider fxFlex="98%"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">Expenses</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.Liabilities' | translate}}</h4>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Interest on savings</mat-label>
-        <mat-select formControlName="interestOnSavingsAccountId" required>
-          <mat-option *ngFor="let expenseAccount of expenseAccountData" [value]="expenseAccount.id">
-            ({{ expenseAccount.glCode }}) {{ expenseAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Interest on savings is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="recurringDepositProductAccountingForm.controls.savingsControlAccountId"
+        [glAccountList]="liabilityAccountData"
+        [required]="true"
+        [inputLabel]="'Saving control'"
+      >
+      </mifosx-gl-account-selector>
+
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="recurringDepositProductAccountingForm.controls.transfersInSuspenseAccountId"
+        [glAccountList]="liabilityAccountData"
+        [required]="true"
+        [inputLabel]="'Savings transfers in suspense'"
+      >
+      </mifosx-gl-account-selector>
+
+      <mifosx-gl-account-selector fxFlex="48%" *ngIf="isAccrualAccounting()"
+        [inputFormControl]="recurringDepositProductAccountingForm.controls.interestPayableAccountId"
+        [glAccountList]="liabilityAccountData"
+        [required]="true"
+        [inputLabel]="'Interest Payable'"
+      >
+      </mifosx-gl-account-selector>
 
       <mat-divider fxFlex="98%"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">Income</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.Expenses' | translate}}</h4>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Income from fees</mat-label>
-        <mat-select formControlName="incomeFromFeeAccountId" required>
-          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Income from fees Repayments is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="recurringDepositProductAccountingForm.controls.interestOnSavingsAccountId"
+        [glAccountList]="expenseAccountData"
+        [required]="true"
+        [inputLabel]="'Interest on savings'"
+      >
+      </mifosx-gl-account-selector>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Income from penalties</mat-label>
-        <mat-select formControlName="incomeFromPenaltyAccountId" required>
-          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Income from penalties is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mat-divider fxFlex="98%"></mat-divider>
+
+      <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.Income' | translate}}</h4>
+
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="recurringDepositProductAccountingForm.controls.incomeFromFeeAccountId"
+        [glAccountList]="incomeAccountData"
+        [required]="true"
+        [inputLabel]="'Income from fees'"
+      >
+      </mifosx-gl-account-selector>
+
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="recurringDepositProductAccountingForm.controls.incomeFromPenaltyAccountId"
+        [glAccountList]="incomeAccountData"
+        [required]="true"
+        [inputLabel]="'Income from penalties'"
+      >
+      </mifosx-gl-account-selector>
 
       <mat-divider fxFlex="98%"></mat-divider>
 
