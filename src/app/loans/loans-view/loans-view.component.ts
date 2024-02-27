@@ -16,6 +16,7 @@ import { LoanStatus } from '../models/loan-status.model';
 import { Currency } from 'app/shared/models/general.model';
 import { DelinquencyPausePeriod } from '../models/loan-account.model';
 import { TranslateService } from '@ngx-translate/core';
+import { LoanTransaction } from 'app/products/loan-products/models/loan-account.model';
 
 @Component({
   selector: 'mifosx-loans-view',
@@ -47,6 +48,7 @@ export class LoansViewComponent implements OnInit {
   loanDelinquencyClassificationStyle = '';
   loanStatus: LoanStatus;
   currency: Currency;
+  loanReAged = false;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -59,6 +61,11 @@ export class LoansViewComponent implements OnInit {
       this.loanDisplayArrearsDelinquency = data.loanArrearsDelinquencyConfig.value || 0;
       this.loanStatus = this.loanDetailsData.status;
       this.currency = this.loanDetailsData.currency;
+      this.loanDetailsData.transactions.some((lt: LoanTransaction) => {
+        if (lt.type.reAge) {
+          this.loanReAged = true;
+        }
+      });
     });
     this.loanId = this.route.snapshot.params['loanId'];
     this.clientId = this.loanDetailsData.clientId;
@@ -164,6 +171,14 @@ export class LoansViewComponent implements OnInit {
         });
       }
 
+      // Allow Re-Ageing only when there is not any Re-Age transaction
+      if (!this.loanReAged) {
+        this.buttonConfig.addButton({
+          name: 'Re-Ageing',
+          icon: 'calendar',
+          taskPermissionName: 'REAGE_LOAN',
+        });
+      }
     }
   }
 
