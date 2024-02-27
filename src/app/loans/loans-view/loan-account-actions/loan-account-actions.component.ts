@@ -44,7 +44,8 @@ export class LoanAccountActionsComponent {
             'Charge-Off': boolean,
             'Undo Charge-Off': boolean,
             'Sell Loan': boolean,
-            'Buy Back Loan': boolean
+            'Buy Back Loan': boolean,
+            'Re-Ageing': boolean
          } = {
               'Close': false,
               'Undo Approval': false,
@@ -77,7 +78,8 @@ export class LoanAccountActionsComponent {
               'Charge-Off': false,
               'Undo Charge-Off': false,
               'Sell Loan': false,
-              'Buy Back Loan': false
+              'Buy Back Loan': false,
+              'Re-Ageing': false
           };
 
   actionButtonData: any;
