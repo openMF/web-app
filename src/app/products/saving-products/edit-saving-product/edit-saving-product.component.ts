@@ -13,6 +13,7 @@ import { SavingProductAccountingStepComponent } from '../saving-product-stepper/
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Accounting } from 'app/core/utils/accounting';
 
 
 @Component({
@@ -30,7 +31,7 @@ export class EditSavingProductComponent implements OnInit {
   @ViewChild(SavingProductAccountingStepComponent, { static: true }) savingProductAccountingStep: SavingProductAccountingStepComponent;
 
   savingProductAndTemplate: any;
-  accountingRuleData = ['None', 'Cash'];
+  accountingRuleData: string[] = [];
 
   /**
    * @param {ActivatedRoute} route Activated Route.
@@ -42,10 +43,12 @@ export class EditSavingProductComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private productsService: ProductsService,
               private router: Router,
-              private settingsService: SettingsService) {
+              private settingsService: SettingsService,
+              private accounting: Accounting) {
     this.route.data.subscribe((data: { savingProductAndTemplate: any }) => {
       this.savingProductAndTemplate = data.savingProductAndTemplate;
     });
+    this.accountingRuleData = this.accounting.getAccountingRulesForSavings();
   }
 
   ngOnInit() {

@@ -201,145 +201,103 @@
 
     <mat-divider [inset]="true"></mat-divider>
 
-    <div fxFlexFill>
-      <span fxFlex="40%">Type:</span>
-      <span fxFlex="60%">{{ savingProduct.accountingRule.value }}</span>
-    </div>
+    <mifosx-view-savings-accounting-details
+    [accountingRule]="savingProduct.accountingRule"
+    [accountingMappings]="savingProduct.accountingMappings"
+    >
+    </mifosx-view-savings-accounting-details>
+    
+    <div
+      *ngIf="savingProduct.paymentChannelToFundSourceMappings?.length || savingProduct.feeToIncomeAccountMappings?.length || savingProduct.penaltyToIncomeAccountMappings?.length"
+      fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
 
-    <div fxFlexFill *ngIf="savingProduct.accountingRule.id === 2" fxLayout="row wrap" fxLayout.lt-md="column">
+      <h3 class="mat-h3" fxFlexFill>Advanced Accounting Rules</h3>
 
-      <h4 fxFlexFill class="mat-h4">{{'labels.heading.Assets' | translate}}</h4>
-      <mifosx-gl-account-display fxFlex="100%" [accountTitle]="'Saving reference'"
-        [glAccount]="savingProduct.accountingMappings.savingsReferenceAccount" [withTitle]="'40%'">
-      </mifosx-gl-account-display>
-      <mifosx-gl-account-display fxFlex="100%" [accountTitle]="'Overdraft portfolio'"
-        [glAccount]="savingProduct.accountingMappings.overdraftPortfolioControl" [withTitle]="'40%'">
-      </mifosx-gl-account-display>
+      <mat-divider [inset]="true"></mat-divider>
 
-      <h4 fxFlexFill class="mat-h4">{{'labels.heading.Income' | translate}}</h4>
-      <mifosx-gl-account-display fxFlex="100%" [accountTitle]="'Income from fees'"
-        [glAccount]="savingProduct.accountingMappings.incomeFromFeeAccount" [withTitle]="'40%'">
-      </mifosx-gl-account-display>
-      <mifosx-gl-account-display fxFlex="100%" [accountTitle]="'Income from penalties'"
-        [glAccount]="savingProduct.accountingMappings.incomeFromPenaltyAccount" [withTitle]="'40%'">
-      </mifosx-gl-account-display>
-      <mifosx-gl-account-display fxFlex="100%" [accountTitle]="'Income from penalties'"
-        [glAccount]="savingProduct.accountingMappings.incomeFromInterest" [withTitle]="'40%'">
-      </mifosx-gl-account-display>
+      <div *ngIf="savingProduct.paymentChannelToFundSourceMappings?.length" fxFlexFill fxLayout="row wrap"
+        fxLayout.lt-md="column">
 
-      <h4 fxFlexFill class="mat-h4">{{'labels.heading.Expenses' | translate}}</h4>
-      <mifosx-gl-account-display fxFlex="100%" [accountTitle]="'Interest on savings'"
-        [glAccount]="savingProduct.accountingMappings.interestOnSavingsAccount" [withTitle]="'40%'">
-      </mifosx-gl-account-display>
-      <mifosx-gl-account-display fxFlex="100%" [accountTitle]="'Write-off'"
-        [glAccount]="savingProduct.accountingMappings.writeOffAccount" [withTitle]="'40%'">
-      </mifosx-gl-account-display>
+        <h4 class="mat-h4" fxFlexFill>Fund Sources for Payment Channels</h4>
 
-      <h4 fxFlexFill class="mat-h4">{{'labels.heading.Liabilities' | translate}}</h4>
-      <mifosx-gl-account-display fxFlex="100%" [accountTitle]="'Saving control'"
-        [glAccount]="savingProduct.accountingMappings.savingsControlAccount" [withTitle]="'40%'">
-      </mifosx-gl-account-display>
-      <mifosx-gl-account-display fxFlex="100%" [accountTitle]="'Savings transfers in suspense'"
-        [glAccount]="savingProduct.accountingMappings.transfersInSuspenseAccount" [withTitle]="'40%'">
-      </mifosx-gl-account-display>
-      <mifosx-gl-account-display fxFlex="100%" [accountTitle]="'Escheat liability'"
-        *ngIf="savingProduct.accountingMappings.escheatLiabilityAccount"
-        [glAccount]="savingProduct.accountingMappings.escheatLiabilityAccount" [withTitle]="'40%'">
-      </mifosx-gl-account-display>
+        <table fxFlexFill class="mat-elevation-z1" mat-table
+          [dataSource]="savingProduct.paymentChannelToFundSourceMappings">
 
-      <div
-        *ngIf="savingProduct.paymentChannelToFundSourceMappings?.length || savingProduct.feeToIncomeAccountMappings?.length || savingProduct.penaltyToIncomeAccountMappings?.length"
-        fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
+          <ng-container matColumnDef="paymentTypeId">
+            <th mat-header-cell *matHeaderCellDef> Payment Type </th>
+            <td mat-cell *matCellDef="let paymentFundSource">
+              {{ paymentFundSource.paymentType.name }}
+            </td>
+          </ng-container>
 
-        <h3 class="mat-h3" fxFlexFill>Advanced Accounting Rules</h3>
+          <ng-container matColumnDef="fundSourceAccountId">
+            <th mat-header-cell *matHeaderCellDef> Fund Source </th>
+            <td mat-cell *matCellDef="let paymentFundSource">
+              ({{ paymentFundSource.fundSourceAccount.glCode }}) {{ paymentFundSource.fundSourceAccount.name }}
+            </td>
+          </ng-container>
 
-        <mat-divider [inset]="true"></mat-divider>
+          <tr mat-header-row *matHeaderRowDef="paymentFundSourceDisplayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: paymentFundSourceDisplayedColumns;"></tr>
 
-        <div *ngIf="savingProduct.paymentChannelToFundSourceMappings?.length" fxFlexFill fxLayout="row wrap"
-          fxLayout.lt-md="column">
+        </table>
 
-          <h4 class="mat-h4" fxFlexFill>Fund Sources for Payment Channels</h4>
+      </div>
 
-          <table fxFlexFill class="mat-elevation-z1" mat-table
-            [dataSource]="savingProduct.paymentChannelToFundSourceMappings">
+      <div *ngIf="savingProduct.feeToIncomeAccountMappings?.length" fxFlexFill fxLayout="row wrap"
+        fxLayout.lt-md="column">
 
-            <ng-container matColumnDef="paymentTypeId">
-              <th mat-header-cell *matHeaderCellDef> Payment Type </th>
-              <td mat-cell *matCellDef="let paymentFundSource">
-                {{ paymentFundSource.paymentType.name }}
-              </td>
-            </ng-container>
+        <h4 class="mat-h4" fxFlexFill>Fees to Specific Income Accounts</h4>
 
-            <ng-container matColumnDef="fundSourceAccountId">
-              <th mat-header-cell *matHeaderCellDef> Fund Source </th>
-              <td mat-cell *matCellDef="let paymentFundSource">
-                ({{ paymentFundSource.fundSourceAccount.glCode }}) {{ paymentFundSource.fundSourceAccount.name }}
-              </td>
-            </ng-container>
+        <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="savingProduct.feeToIncomeAccountMappings">
 
-            <tr mat-header-row *matHeaderRowDef="paymentFundSourceDisplayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: paymentFundSourceDisplayedColumns;"></tr>
+          <ng-container matColumnDef="chargeId">
+            <th mat-header-cell *matHeaderCellDef> Fees </th>
+            <td mat-cell *matCellDef="let feesIncome">
+              {{ feesIncome.charge.name }}
+            </td>
+          </ng-container>
 
-          </table>
+          <ng-container matColumnDef="incomeAccountId">
+            <th mat-header-cell *matHeaderCellDef> Income Account </th>
+            <td mat-cell *matCellDef="let feesIncome">
+              ({{ feesIncome.incomeAccount.glCode }}) {{ feesIncome.incomeAccount.name }}
+            </td>
+          </ng-container>
 
-        </div>
+          <tr mat-header-row *matHeaderRowDef="feesPenaltyIncomeDisplayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns;"></tr>
 
-        <div *ngIf="savingProduct.feeToIncomeAccountMappings?.length" fxFlexFill fxLayout="row wrap"
-          fxLayout.lt-md="column">
+        </table>
 
-          <h4 class="mat-h4" fxFlexFill>Fees to Specific Income Accounts</h4>
+      </div>
 
-          <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="savingProduct.feeToIncomeAccountMappings">
+      <div *ngIf="savingProduct.penaltyToIncomeAccountMappings?.length" fxFlexFill fxLayout="row wrap"
+        fxLayout.lt-md="column">
 
-            <ng-container matColumnDef="chargeId">
-              <th mat-header-cell *matHeaderCellDef> Fees </th>
-              <td mat-cell *matCellDef="let feesIncome">
-                {{ feesIncome.charge.name }}
-              </td>
-            </ng-container>
+        <h4 class="mat-h4" fxFlexFill>Penalties to Specific Income Accounts</h4>
 
-            <ng-container matColumnDef="incomeAccountId">
-              <th mat-header-cell *matHeaderCellDef> Income Account </th>
-              <td mat-cell *matCellDef="let feesIncome">
-                ({{ feesIncome.incomeAccount.glCode }}) {{ feesIncome.incomeAccount.name }}
-              </td>
-            </ng-container>
+        <table fxFlexFill class="mat-elevation-z1" mat-table
+          [dataSource]="savingProduct.penaltyToIncomeAccountMappings">
 
-            <tr mat-header-row *matHeaderRowDef="feesPenaltyIncomeDisplayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns;"></tr>
+          <ng-container matColumnDef="chargeId">
+            <th mat-header-cell *matHeaderCellDef> Penalty </th>
+            <td mat-cell *matCellDef="let penaltyIncome">
+              {{ penaltyIncome.charge.name }}
+            </td>
+          </ng-container>
 
-          </table>
+          <ng-container matColumnDef="incomeAccountId">
+            <th mat-header-cell *matHeaderCellDef> Income Account </th>
+            <td mat-cell *matCellDef="let penaltyIncome">
+              ({{ penaltyIncome.incomeAccount.glCode }}) {{ penaltyIncome.incomeAccount.name }}
+            </td>
+          </ng-container>
 
-        </div>
+          <tr mat-header-row *matHeaderRowDef="feesPenaltyIncomeDisplayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns;"></tr>
 
-        <div *ngIf="savingProduct.penaltyToIncomeAccountMappings?.length" fxFlexFill fxLayout="row wrap"
-          fxLayout.lt-md="column">
-
-          <h4 class="mat-h4" fxFlexFill>Penalties to Specific Income Accounts</h4>
-
-          <table fxFlexFill class="mat-elevation-z1" mat-table
-            [dataSource]="savingProduct.penaltyToIncomeAccountMappings">
-
-            <ng-container matColumnDef="chargeId">
-              <th mat-header-cell *matHeaderCellDef> Penalty </th>
-              <td mat-cell *matCellDef="let penaltyIncome">
-                {{ penaltyIncome.charge.name }}
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="incomeAccountId">
-              <th mat-header-cell *matHeaderCellDef> Income Account </th>
-              <td mat-cell *matCellDef="let penaltyIncome">
-                ({{ penaltyIncome.incomeAccount.glCode }}) {{ penaltyIncome.incomeAccount.name }}
-              </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="feesPenaltyIncomeDisplayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns;"></tr>
-
-          </table>
-
-        </div>
+        </table>
 
       </div>
 

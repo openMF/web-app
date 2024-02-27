@@ -10,7 +10,7 @@
 
     <mat-divider fxFlex="98%"></mat-divider>
 
-    <div *ngIf="savingProductAccountingForm.value.accountingRule === 2" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <div *ngIf="isCashOrAccrualAccounting()" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
       <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.Assets' | translate}}</h4>
 
@@ -27,6 +27,22 @@
         [glAccountList]="assetAccountData"
         [required]="true"
         [inputLabel]="'Overdraft portfolio'"
+      >
+      </mifosx-gl-account-selector>
+
+      <mifosx-gl-account-selector fxFlex="48%" *ngIf="isAccrualAccounting()" 
+        [inputFormControl]="savingProductAccountingForm.controls.feesReceivableAccountId"
+        [glAccountList]="assetAccountData"
+        [required]="true"
+        [inputLabel]="'Fees Receivable'"
+      >
+      </mifosx-gl-account-selector>
+
+      <mifosx-gl-account-selector fxFlex="48%" *ngIf="isAccrualAccounting()" 
+        [inputFormControl]="savingProductAccountingForm.controls.penaltiesReceivableAccountId"
+        [glAccountList]="assetAccountData"
+        [required]="true"
+        [inputLabel]="'Penalties Receivable'"
       >
       </mifosx-gl-account-selector>
 
@@ -50,6 +66,14 @@
       >
       </mifosx-gl-account-selector>
 
+      <mifosx-gl-account-selector fxFlex="48%" *ngIf="isAccrualAccounting()"
+        [inputFormControl]="savingProductAccountingForm.controls.interestPayableAccountId"
+        [glAccountList]="liabilityAccountData"
+        [required]="true"
+        [inputLabel]="'Interest Payable'"
+      >
+      </mifosx-gl-account-selector>
+
       <mifosx-gl-account-selector fxFlex="48%" *ngIf="isDormancyTrackingActive.value"
         [inputFormControl]="savingProductAccountingForm.controls.escheatLiabilityId"
         [glAccountList]="liabilityAccountData"
@@ -57,8 +81,6 @@
         [inputLabel]="'Escheat liability'"
       >
       </mifosx-gl-account-selector>
-
-      <mat-divider fxFlex="98%"></mat-divider>
 
       <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.Expenses' | translate}}</h4>
 
