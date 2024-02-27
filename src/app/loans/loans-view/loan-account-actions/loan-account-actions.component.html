@@ -28,3 +28,4 @@
 <mifosx-charge-off [dataObject]="actionButtonData" *ngIf="actions['Charge-Off']"></mifosx-charge-off>
 <mifosx-undo-command [actionName]="actionName" *ngIf="actions['Undo Charge-Off']"></mifosx-undo-command>
 <mifosx-asset-transfer-loan *ngIf="actions['Sell Loan'] || actions['Buy Back Loan']"></mifosx-asset-transfer-loan>
+<mifosx-loan-reaging [dataObject]="actionButtonData" *ngIf="actions['Re-Ageing']"></mifosx-loan-reaging>

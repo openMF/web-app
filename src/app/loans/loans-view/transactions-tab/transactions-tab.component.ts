@@ -142,6 +142,9 @@ export class TransactionsTabComponent implements OnInit {
     if (this.isDownPayment(transaction.type)) {
       return 'down-payment';
     }
+    if (this.isReAge(transaction.type)) {
+      return 'reage';
+    }
     return '';
   }
 
@@ -207,6 +210,10 @@ export class TransactionsTabComponent implements OnInit {
 
   private isDownPayment(transactionType: any): boolean {
     return (transactionType.downPayment || transactionType.code === 'loanTransactionType.downPayment');
+  }
+
+  private isReAge(transactionType: any): boolean {
+    return (transactionType.code === 'loanTransactionType.reAge');
   }
 
   private reload() {
