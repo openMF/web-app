@@ -1,5 +1,9 @@
 @import "assets/styles/helper";
 
+.container {
+  width: 100%;
+}
+
 .tab-container {
   padding: 1%;
   margin: 1%;
@@ -9,10 +13,6 @@
   margin-top: 10px !important;
   font-weight: 300;
   color: $status-approved;
-}
-
-table {
-  width: 100%;
 }
 
 .mat-elevation-z1 {

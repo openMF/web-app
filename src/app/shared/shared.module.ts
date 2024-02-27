@@ -45,6 +45,7 @@ import { TransactionPaymentDetailComponent } from './transaction-payment-detail/
 import { StepperButtonsComponent } from './steppers/stepper-buttons/stepper-buttons.component';
 import { GlAccountSelectorComponent } from './accounting/gl-account-selector/gl-account-selector.component';
 import { GlAccountDisplayComponent } from './accounting/gl-account-display/gl-account-display.component';
+import { ViewSavingsAccountingDetailsComponent } from './accounting/view-savings-accounting-details/view-savings-accounting-details.component';
 
 /**
  * Shared Module
@@ -96,7 +97,8 @@ import { GlAccountDisplayComponent } from './accounting/gl-account-display/gl-ac
     TransactionPaymentDetailComponent,
     StepperButtonsComponent,
     GlAccountSelectorComponent,
-    GlAccountDisplayComponent
+    GlAccountDisplayComponent,
+    ViewSavingsAccountingDetailsComponent
   ],
   exports: [
     FileUploadComponent,
@@ -126,7 +128,8 @@ import { GlAccountDisplayComponent } from './accounting/gl-account-display/gl-ac
     TransactionPaymentDetailComponent,
     StepperButtonsComponent,
     GlAccountSelectorComponent,
-    GlAccountDisplayComponent
+    GlAccountDisplayComponent,
+    ViewSavingsAccountingDetailsComponent,
   ]
 })
 export class SharedModule { }

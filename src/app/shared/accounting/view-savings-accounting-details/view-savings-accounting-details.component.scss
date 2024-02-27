@@ -1,26 +1,9 @@
-@import "assets/styles/helper";
+@import "assets/styles/colours";
 
 .container {
-  width: 100%;
-}
-
-.tab-container {
   padding: 1%;
   margin: 1%;
-}
-
-.mat-h3 {
-  margin-top: 10px !important;
-  font-weight: 300;
-  color: $status-approved;
-}
-
-.mat-elevation-z1 {
-  margin: 1em 0 1.5em 0;
-}
-
-.interestCarts {
-  float:right;
+  width: 100%;
 }
 
 table {
@@ -46,6 +29,12 @@ table {
       }
     }
   }
+}
+
+.mat-h4 {
+    margin-top: 10px !important;
+    font-weight: 200;
+    color: $status-approved;
 }
 
 .mat-elevation-z1 {

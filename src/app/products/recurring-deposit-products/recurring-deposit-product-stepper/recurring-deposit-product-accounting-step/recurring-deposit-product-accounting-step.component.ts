@@ -7,6 +7,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
+import { Accounting } from 'app/core/utils/accounting';
 
 @Component({
   selector: 'mifosx-recurring-deposit-product-accounting-step',
@@ -33,7 +34,8 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId', 'actions'];
 
   constructor(private formBuilder: UntypedFormBuilder,
-    public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private accounting: Accounting) {
     this.createrecurringDepositProductAccountingForm();
     this.setConditionalControls();
   }
@@ -52,10 +54,11 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
   }
 
   assignAccountingStepData() {
-    if (this.recurringDepositProductsTemplate.accountingRule.id === 2) {
-      this.recurringDepositProductAccountingForm.patchValue({
-        'accountingRule': this.recurringDepositProductsTemplate.accountingRule.id
-      });
+    this.recurringDepositProductAccountingForm.patchValue({
+      'accountingRule': this.recurringDepositProductsTemplate.accountingRule.id
+    });
+    if (this.isCashOrAccrualAccounting()) {
+
       this.recurringDepositProductAccountingForm.patchValue({
         'savingsReferenceAccountId': this.recurringDepositProductsTemplate.accountingMappings.savingsReferenceAccount.id,
         'savingsControlAccountId': this.recurringDepositProductsTemplate.accountingMappings.savingsControlAccount.id,
@@ -64,6 +67,15 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
         'incomeFromPenaltyAccountId': this.recurringDepositProductsTemplate.accountingMappings.incomeFromPenaltyAccount.id,
         'interestOnSavingsAccountId': this.recurringDepositProductsTemplate.accountingMappings.interestOnSavingsAccount.id
       });
+
+      if (this.isAccrualAccounting()) {
+        this.recurringDepositProductAccountingForm.patchValue({
+          'feesReceivableAccountId': this.recurringDepositProductsTemplate.accountingMappings.feeReceivableAccount.id,
+          'penaltiesReceivableAccountId': this.recurringDepositProductsTemplate.accountingMappings.penaltyReceivableAccount.id,
+          'interestPayableAccountId': this.recurringDepositProductsTemplate.accountingMappings.interestPayableAccount.id
+        });
+      }
+
       if (this.recurringDepositProductsTemplate.paymentChannelToFundSourceMappings || this.recurringDepositProductsTemplate.feeToIncomeAccountMappings || this.recurringDepositProductsTemplate.penaltyToIncomeAccountMappings) {
         this.recurringDepositProductAccountingForm.patchValue({
           'advancedAccountingRules': true
@@ -111,7 +123,7 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
   setConditionalControls() {
     this.recurringDepositProductAccountingForm.get('accountingRule').valueChanges
       .subscribe((accountingRule: any) => {
-        if (accountingRule === 2) {
+        if (accountingRule === 2 || accountingRule === 3) {
           this.recurringDepositProductAccountingForm.addControl('savingsReferenceAccountId', new UntypedFormControl('', Validators.required));
           this.recurringDepositProductAccountingForm.addControl('savingsControlAccountId', new UntypedFormControl('', Validators.required));
           this.recurringDepositProductAccountingForm.addControl('transfersInSuspenseAccountId', new UntypedFormControl('', Validators.required));
@@ -119,6 +131,12 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
           this.recurringDepositProductAccountingForm.addControl('incomeFromFeeAccountId', new UntypedFormControl('', Validators.required));
           this.recurringDepositProductAccountingForm.addControl('incomeFromPenaltyAccountId', new UntypedFormControl('', Validators.required));
           this.recurringDepositProductAccountingForm.addControl('advancedAccountingRules', new UntypedFormControl(false));
+
+          if (accountingRule === 3) {
+            this.recurringDepositProductAccountingForm.addControl('feesReceivableAccountId', new UntypedFormControl('', Validators.required));
+            this.recurringDepositProductAccountingForm.addControl('penaltiesReceivableAccountId', new UntypedFormControl('', Validators.required));
+            this.recurringDepositProductAccountingForm.addControl('interestPayableAccountId', new UntypedFormControl('', Validators.required));
+          }
 
           this.recurringDepositProductAccountingForm.get('advancedAccountingRules').valueChanges
             .subscribe((advancedAccountingRules: boolean) => {
@@ -144,6 +162,9 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
           this.recurringDepositProductAccountingForm.removeControl('incomeFromInterestId');
           this.recurringDepositProductAccountingForm.removeControl('advancedAccountingRules');
           this.recurringDepositProductAccountingForm.removeControl('escheatLiabilityId');
+          this.recurringDepositProductAccountingForm.removeControl('feesReceivableAccountId');
+          this.recurringDepositProductAccountingForm.removeControl('penaltiesReceivableAccountId');
+          this.recurringDepositProductAccountingForm.removeControl('interestPayableAccountId');
         }
       });
   }
@@ -267,6 +288,14 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
 
   get recurringDepositProductAccounting() {
     return this.recurringDepositProductAccountingForm.value;
+  }
+
+  isCashOrAccrualAccounting(): boolean {
+    return this.accounting.isCashOrAccrualAccountingRuleId(this.recurringDepositProductAccountingForm.value.accountingRule);
+  }
+
+  isAccrualAccounting(): boolean {
+    return this.accounting.isAccrualAccountingRuleId(this.recurringDepositProductAccountingForm.value.accountingRule);
   }
 
 }
