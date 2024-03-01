@@ -13,3 +13,8 @@ table {
 .text-center {
   text-align: center;
 }
+
+.table-container {
+  overflow-x: auto;
+  max-width: 100%;
+}
