@@ -19,3 +19,9 @@ body {
 .overflow-scroll {
   overflow: scroll;
 }
+
+.table-container {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
