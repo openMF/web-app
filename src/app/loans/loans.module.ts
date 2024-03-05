@@ -81,6 +81,7 @@ import { ExternalAssetTransferComponent } from './loans-view/external-asset-owne
 import { TranslateModule } from '@ngx-translate/core';
 import { LoanDelinquencyActionDialogComponent } from './custom-dialog/loan-delinquency-action-dialog/loan-delinquency-action-dialog.component';
 import { LoanReagingComponent } from './loans-view/loan-account-actions/loan-reaging/loan-reaging.component';
+import { LoanReamortizeComponent } from './loans-view/loan-account-actions/loan-reamortize/loan-reamortize.component';
 
 /**
  * Loans Module
@@ -165,7 +166,8 @@ import { LoanReagingComponent } from './loans-view/loan-account-actions/loan-rea
     ExternalAssetOwnerTabComponent,
     ExternalAssetTransferComponent,
     LoanDelinquencyActionDialogComponent,
-    LoanReagingComponent
+    LoanReagingComponent,
+    LoanReamortizeComponent
   ],
   providers: [ ],
 })
