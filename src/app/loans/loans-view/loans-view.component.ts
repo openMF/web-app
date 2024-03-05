@@ -174,9 +174,15 @@ export class LoansViewComponent implements OnInit {
       // Allow Re-Ageing only when there is not any Re-Age transaction
       if (!this.loanReAged) {
         this.buttonConfig.addButton({
-          name: 'Re-Ageing',
+          name: 'Re-Age',
           icon: 'calendar',
           taskPermissionName: 'REAGE_LOAN',
+        });
+      } else {
+        this.buttonConfig.addButton({
+          name: 'Undo Re-Age',
+          icon: 'undo',
+          taskPermissionName: 'UNDO_REAGE_LOAN',
         });
       }
     }
@@ -196,6 +202,9 @@ export class LoansViewComponent implements OnInit {
       case 'Transfer Funds':
         const queryParams: any = { loanId: this.loanId, accountType: 'fromloans' };
         this.router.navigate(['transfer-funds/make-account-transfer'], { relativeTo: this.route, queryParams: queryParams });
+        break;
+      case 'Undo Re-Age':
+        this.undoReAge();
         break;
       default:
         this.router.navigate(['actions', button], { relativeTo: this.route });
@@ -228,6 +237,21 @@ export class LoansViewComponent implements OnInit {
         }
       });
     }
+  }
+
+  undoReAge(): void {
+    const undoTransactionAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { heading: this.translateService.instant('labels.heading.Undo Transaction'),
+      dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want undo the transaction type') + ' ReAge'
+      }
+    });
+    undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.confirm) {
+        this.loansService.executeLoansAccountTransactionsCommand(String(this.loanId), 'undoReAge', {}).subscribe(() => {
+          this.reload();
+        });
+      }
+    });
   }
 
   iconLoanStatusColor() {
