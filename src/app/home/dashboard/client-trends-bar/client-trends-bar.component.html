@@ -20,7 +20,7 @@
   <mat-card-content>
     <!-- Structural directives like *ngIf break the canvas -->
     <div [ngStyle]="{'display': (hideOutput) ? 'none' : 'block'}">
-      <canvas id="client-trends-bar" width="800" height="465"></canvas>
+      <canvas id="client-trends-bar" width="800" height="465" class="fallback"></canvas>
     </div>
     <mat-button-toggle-group [formControl]="timescale" id='timescale' appearance="legacy">
       <mat-button-toggle value="Day">{{"labels.buttons.Day" | translate}}</mat-button-toggle>
