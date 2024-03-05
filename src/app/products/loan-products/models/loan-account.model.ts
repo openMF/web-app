@@ -56,4 +56,5 @@ export interface LoanTransactionType {
     chargeoff:               boolean;
     downPayment:             boolean;
     reAge:                   boolean;
+    reAmortize:              boolean;
 }
