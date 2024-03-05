@@ -1,10 +1,56 @@
 .card {
+  box-sizing: border-box;
   padding: 2%;
-  .recent-activities, .frequent-activities {
-    width: 20rem;
-    padding: 0;
-    .list {
-      padding-top: 0px;
+  display: flex;
+  flex-direction: column;
+
+  .top-card {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 2px;
+
+    .recent-activities,
+    .frequent-activities{
+      min-width: 18.5rem;
+    }
+    .recent-activities,
+    .frequent-activities,
+    .amount-disbursed {
+      flex: 1 0 calc(26.33% - 10px);
+      padding: 0;
+      margin: 10px;
+
+      .list {
+        padding-top: 0;
+      }
+    }
+  }
+
+  .bottom-card{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 2px;
+
+    .trends-bar,
+    .amount-collected {
+      flex: 1 0 calc(40% - 10px);
+      padding: 0;
+      margin: 10px;
+    }
+  }
+ 
+  @media screen and (max-width: 768px) {
+    .recent-activities,
+    .frequent-activities,
+    .amount-disbursed,
+    .trends-bar,
+    .amount-collected {
+      box-sizing: border-box;
+      width: 100%;
+      flex: 1 0 calc(80% - 10px);
+      margin-bottom: 20px;
     }
   }
 }

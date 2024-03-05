@@ -2,7 +2,7 @@
 
   <mat-card class="card" fxLayout="column" fxLayoutGap="40px">
 
-    <div fxLayout="row" fxLayoutGap="40px">
+    <div fxLayout="row" class="top-card">
 
       <mat-card class="recent-activities">
 
@@ -35,16 +35,22 @@
 
       </mat-card>
 
-      <mifosx-amount-disbursed-pie></mifosx-amount-disbursed-pie>
+      <div class="amount-disbursed">
+        <mifosx-amount-disbursed-pie></mifosx-amount-disbursed-pie>
+      </div>
 
     </div>
 
-    <div fxLayout="row" fxLayoutGap="40px">
+    <div fxLayout="row" class="bottom-card">
 
-      <mifosx-client-trends-bar></mifosx-client-trends-bar>
+      <div class="trends-bar">
+        <mifosx-client-trends-bar></mifosx-client-trends-bar>
+      </div>
 
-      <mifosx-amount-collected-pie></mifosx-amount-collected-pie>
-
+      <div class="amount-collected">
+        <mifosx-amount-collected-pie></mifosx-amount-collected-pie>
+      </div>
+      
     </div>
 
   </mat-card>
