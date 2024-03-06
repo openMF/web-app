@@ -28,6 +28,7 @@ export class LoanReamortizeComponent implements OnInit {
 
   createReAmortizeLoanForm() {
     this.reamortizeLoanForm = this.formBuilder.group({
+      'note': '',
       'externalId': ''
     });
   }
