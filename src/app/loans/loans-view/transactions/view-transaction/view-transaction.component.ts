@@ -33,6 +33,7 @@ export class ViewTransactionComponent implements OnInit {
 
   /** Transaction data. */
   transactionData: any;
+  transactionType: LoanTransactionType;
   /** Is Editable */
   allowEdition = true;
   /** Is Undoable */
@@ -72,9 +73,10 @@ export class ViewTransactionComponent implements OnInit {
     private alertService: AlertService) {
     this.route.data.subscribe((data: { loansAccountTransaction: any }) => {
       this.transactionData = data.loansAccountTransaction;
+      this.transactionType = this.transactionData.type;
       this.allowEdition = !this.transactionData.manuallyReversed && !this.allowTransactionEdition(this.transactionData.type.id);
       this.allowUndo = !this.transactionData.manuallyReversed;
-      this.allowChargeback = this.allowChargebackTransaction(this.transactionData.type) && !this.transactionData.manuallyReversed;
+      this.allowChargeback = this.allowChargebackTransaction(this.transactionType) && !this.transactionData.manuallyReversed;
       let transactionsChargebackRelated = false;
       if (this.allowChargeback) {
         if (this.transactionData.transactionRelations) {
@@ -89,13 +91,13 @@ export class ViewTransactionComponent implements OnInit {
           });
           this.amountRelationsAllowed = this.transactionData.amount - amountRelations;
           this.isFullRelated = (this.amountRelationsAllowed === 0);
-          this.allowChargeback = this.allowChargebackTransaction(this.transactionData.type) && !this.isFullRelated;
+          this.allowChargeback = this.allowChargebackTransaction(this.transactionType) && !this.isFullRelated;
         }
       }
       if (!this.allowChargeback) {
         this.allowEdition = false;
       }
-      if (this.existTransactionRelations && transactionsChargebackRelated) {
+      if ((this.existTransactionRelations && transactionsChargebackRelated) || this.transactionType.reAge || this.transactionType.reAmortize) {
         this.allowUndo = false;
       }
     });

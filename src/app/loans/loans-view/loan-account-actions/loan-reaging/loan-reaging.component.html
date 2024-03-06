@@ -34,6 +34,13 @@
                         </mat-error>
                     </mat-form-field>
 
+                    <div fxLayout="column">
+                        <mat-form-field>
+                            <mat-label>{{"labels.inputs.Reason" | translate}}</mat-label>
+                            <input matInput formControlName="note">
+                        </mat-form-field>
+                    </div>
+    
                     <mat-form-field>
                         <mat-label>{{"labels.inputs.External Id" | translate}}</mat-label>
                         <input matInput formControlName="externalId">

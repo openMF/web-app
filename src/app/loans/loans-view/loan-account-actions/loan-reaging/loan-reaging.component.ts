@@ -47,6 +47,7 @@ export class LoanReagingComponent implements OnInit {
       'numberOfInstallments': [1, Validators.required],
       'startDate': [this.settingsService.businessDate, Validators.required],
       'frequency': [, Validators.required],
+      'note': '',
       'externalId': ''
     });
   }
