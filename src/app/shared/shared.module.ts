@@ -22,6 +22,7 @@ import { SearchToolComponent } from './search-tool/search-tool.component';
 import { KeyboardShortcutsDialogComponent } from './keyboard-shortcuts-dialog/keyboard-shortcuts-dialog.component';
 import { ServerSelectorComponent } from './server-selector/server-selector.component';
 import { TenantSelectorComponent } from './tenant-selector/tenant-selector.component';
+import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
 
 /** Custom Modules */
 import { IconsModule } from './icons.module';
@@ -98,7 +99,8 @@ import { ViewSavingsAccountingDetailsComponent } from './accounting/view-savings
     StepperButtonsComponent,
     GlAccountSelectorComponent,
     GlAccountDisplayComponent,
-    ViewSavingsAccountingDetailsComponent
+    ViewSavingsAccountingDetailsComponent,
+    ThemeToggleComponent
   ],
   exports: [
     FileUploadComponent,
@@ -130,6 +132,7 @@ import { ViewSavingsAccountingDetailsComponent } from './accounting/view-savings
     GlAccountSelectorComponent,
     GlAccountDisplayComponent,
     ViewSavingsAccountingDetailsComponent,
+    ThemeToggleComponent,
   ]
 })
 export class SharedModule { }
