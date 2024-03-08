@@ -65,6 +65,7 @@ export class RecoveryRepaymentComponent implements OnInit {
     this.recoveryRepaymentLoanForm = this.formBuilder.group({
       'transactionDate': [new Date(), Validators.required],
       'transactionAmount': ['', Validators.required],
+      'externalId': [''],
       'paymentTypeId': [''],
       'note': ['']
     });
