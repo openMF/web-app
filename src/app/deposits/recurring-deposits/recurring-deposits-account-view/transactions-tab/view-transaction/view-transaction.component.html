@@ -21,6 +21,8 @@
     <mat-card-content>
 
       <div fxLayout="row wrap" class="content">
+        <div fxFlex="100%" [ngClass]="transactionColor()">
+        </div>
 
         <div fxFlex="50%" class="mat-body-strong">
           {{"labels.inputs.Transaction Id" | translate }}
@@ -126,6 +128,9 @@
 
     </mat-card-content>
 
+    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px" class="m-b-20">
+      <button type="button" color="primary" mat-raised-button (click)="goBack()">{{  "labels.buttons.Back" | translate}}</button>
+    </mat-card-actions>
   </mat-card>
 
 </div>

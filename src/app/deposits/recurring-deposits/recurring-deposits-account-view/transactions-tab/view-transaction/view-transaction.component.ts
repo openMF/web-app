@@ -11,6 +11,7 @@ import { SettingsService } from 'app/settings/settings.service';
 import { RecurringDepositConfirmationDialogComponent } from '../../custom-dialogs/recurring-deposit-confirmation-dialog/recurring-deposit-confirmation-dialog.component';
 import { Dates } from 'app/core/utils/dates';
 import { TranslateService } from '@ngx-translate/core';
+import { Location } from '@angular/common';
 
 /**
  * View Transaction Component.
@@ -37,6 +38,7 @@ export class ViewTransactionComponent {
    */
   constructor(private recurringDepositsService: RecurringDepositsService,
     private route: ActivatedRoute,
+    private location: Location,
     private dateUtils: Dates,
     private router: Router,
     public dialog: MatDialog,
@@ -70,4 +72,14 @@ export class ViewTransactionComponent {
     });
   }
 
+  transactionColor(): string {
+    if (this.transactionData.manuallyReversed) {
+      return 'undo';
+    }
+    return 'active';
+  }
+
+  goBack(): void {
+    this.location.back();
+  }
 }

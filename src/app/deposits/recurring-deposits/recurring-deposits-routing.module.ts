@@ -130,10 +130,6 @@ const routes: Routes = [
                     resolve: {
                       recurringDepositsAccountTransactionTemplate: RecurringDepositsAccountTransactionTemplateResolver
                     }
-                  },
-                  {
-                    path: 'account-transfers',
-                    loadChildren: () => import('../../account-transfers/account-transfers.module').then(m => m.AccountTransfersModule)
                   }
                 ]
               }
@@ -148,6 +144,10 @@ const routes: Routes = [
             }
           }
         ]
+      },
+      {
+        path: ':recurringDepositAccountId/transfer-funds',
+        loadChildren: () => import('../../account-transfers/account-transfers.module').then(m => m.AccountTransfersModule)
       }
     ]
   },
