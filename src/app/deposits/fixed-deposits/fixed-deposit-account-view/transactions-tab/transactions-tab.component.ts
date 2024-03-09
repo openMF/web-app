@@ -22,7 +22,7 @@ export class TransactionsTabComponent implements OnInit {
   /** Form control to handle accural parameter */
   hideAccrualsParam: UntypedFormControl;
   /** Columns to be displayed in transactions table. */
-  displayedColumns: string[] = ['id', 'transactionDate', 'transactionType', 'debit', 'credit', 'balance', 'actions'];
+  displayedColumns: string[] = ['row', 'id', 'transactionDate', 'transactionType', 'debit', 'credit', 'balance', 'actions'];
   /** Data source for transactions table. */
   dataSource: MatTableDataSource<any>;
 

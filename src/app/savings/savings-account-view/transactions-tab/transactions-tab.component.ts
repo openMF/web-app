@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SavingsAccountTransaction } from 'app/savings/models/savings-account-transaction.model';
 
 /**
  * Transactions Tab Component.
@@ -19,13 +20,14 @@ export class TransactionsTabComponent implements OnInit {
   /** Savings Account Status */
   status: any;
   /** Transactions Data */
-  transactionsData: any;
+  transactionsData: SavingsAccountTransaction[] = [];
   /** Temporary Transaction Data */
   tempTransaction: any;
   /** Form control to handle accural parameter */
   hideAccrualsParam: UntypedFormControl;
+  hideReversedParam: UntypedFormControl;
   /** Columns to be displayed in transactions table. */
-  displayedColumns: string[] = ['id', 'date', 'transactionType', 'debit', 'credit', 'balance', 'actions'];
+  displayedColumns: string[] = ['row', 'id', 'date', 'transactionType', 'debit', 'credit', 'balance', 'actions'];
   /** Data source for transactions table. */
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -48,6 +50,7 @@ export class TransactionsTabComponent implements OnInit {
 
   ngOnInit() {
     this.hideAccrualsParam = new UntypedFormControl(false);
+    this.hideReversedParam = new UntypedFormControl(false);
     this.setTransactions();
   }
 
@@ -117,6 +120,21 @@ export class TransactionsTabComponent implements OnInit {
     } else {
       this.dataSource = new MatTableDataSource(this.transactionsData);
     }
+  }
+
+  hideReversed() {
+    let transactions: SavingsAccountTransaction[] = this.transactionsData;
+    if (!this.hideReversedParam.value) {
+      transactions = [];
+      this.transactionsData.forEach((t: SavingsAccountTransaction) => {
+        if (!t.reversed) {
+          transactions.push(t);
+        }
+      });
+    }
+    this.dataSource = new MatTableDataSource(transactions);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
 }
