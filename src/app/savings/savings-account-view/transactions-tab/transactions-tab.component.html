@@ -7,6 +7,8 @@
         <h3>All Transactions</h3>
       </div>
       <div class="action-button m-b-20" fxLayout="row" fxLayoutGap="20px" *ngIf="checkStatus()">
+        <mat-checkbox [formControl]="hideReversedParam" (click)="hideReversed()" class="accruals">
+          {{"labels.inputs.Hide Reversed" | translate}}</mat-checkbox>
         <mat-checkbox [formControl]="hideAccrualsParam" (click)="hideAccruals()" class="accruals">
           {{"labels.inputs.Hide Accruals" | translate}}</mat-checkbox>
         <button mat-raised-button color="primary" [routerLink]="['/accounting', 'journal-entries']">View Journal Entries</button>
@@ -15,6 +17,11 @@
     </div>
 
     <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="row">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
+        <td mat-cell *matCellDef="let idx = index;">{{(idx + 1)}}</td>
+      </ng-container>
 
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>

@@ -13,6 +13,11 @@
 
     <table mat-table [dataSource]="dataSource">
 
+      <ng-container matColumnDef="row">
+        <th mat-header-cell *matHeaderCellDef> # </th>
+        <td mat-cell *matCellDef="let idx = index;">{{(idx + 1)}}</td>
+      </ng-container>
+
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.ID" | translate }} </th>
         <td mat-cell *matCellDef="let transaction"> {{ transaction.id }} </td>

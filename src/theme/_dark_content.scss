@@ -75,7 +75,7 @@
               font-size: 14px;
 
               tr:nth-child(even) {
-                background-color: transparent;
+                background-color: transparent !important;
               }
             }
           }
@@ -140,6 +140,14 @@
     color: white;
   }
 
+}
+
+body.dark-theme {
+  table {
+    tr:nth-child(even) {
+      background-color: #303135 !important;
+    }
+  }
 }
 
 .dark-theme {
