@@ -35,13 +35,14 @@
     <!-- Language Selector to the extreme right -->
     <div fxLayout="row-reverse" fxFlex="1 0 auto">
       <mifosx-language-selector class="p-r-10 p-t-10"></mifosx-language-selector>
+      <mifosx-theme-toggle class="p-r-10 p-t-10"></mifosx-theme-toggle>
       <div fxFlex></div>
       <mifosx-server-selector class="p-l-10 p-t-10" *ngIf="environment.allowServerSwitch"></mifosx-server-selector>
     </div>
 
     <!-- Logo with Organization Name -->
     <div fxLayout="row" fxLayoutAlign="center center" fxFlex="1 0 auto">
-      <img src="assets/images/mifos-logo-flat.png" alt="{{ 'APP_NAME' | translate}} Logo" class="img-container">
+      <img src="assets/images/mifos_lg-logo.png" alt="{{ 'APP_NAME' | translate}} Logo" class="img-container">
     </div>
 
     <!-- Tenant Identifier Name -->
@@ -72,6 +73,9 @@
     <!-- Footer -->
     <mifosx-footer></mifosx-footer>
 
+    <div fxLayout="row" fxLayoutAlign="end" class="m-b-20 m-r-10">
+      <a (click)="reloadSettings()"><fa-icon icon="refresh"></fa-icon></a>
+    </div>
   </div>
 
 </div>

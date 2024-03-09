@@ -5,6 +5,12 @@
 
   .content {
     max-width: 30%;
+    width: 30%;
+
+    .versions {
+      width: 100%;
+      color: $status-inactive;
+    }
 
     .footer-content {
       margin: 0;
@@ -20,9 +26,6 @@
     color: $status-approved;
   }
 
-  .versions {
-    color: $status-inactive;
-  }
 
   table {
     border: none;
