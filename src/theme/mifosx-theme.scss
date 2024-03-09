@@ -9,6 +9,7 @@
 @import '../app/home/dashboard/dashboard.component-theme.scss';
 @import '../app/shares/shares-account-view/shares-account-view.component-theme.scss';
 @import 'content';
+@import 'dark_content';
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
@@ -23,10 +24,10 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $mifosx-app-primary: mat.define-palette($primary-palette);
-$mifosx-app-accent:  mat.define-palette($accent-palette);
+$mifosx-app-accent: mat.define-palette($accent-palette);
 
 // The warn palette is optional (defaults to red).
-$mifosx-app-warn:    mat.define-palette(mat.$red-palette);
+$mifosx-app-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object (a Sass map containing all of the palettes).
 $mifosx-app-theme: mat.define-light-theme($mifosx-app-primary, $mifosx-app-accent, $mifosx-app-warn);
@@ -46,45 +47,19 @@ $mifosx-app-theme: mat.define-light-theme($mifosx-app-primary, $mifosx-app-accen
 
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
-$mifosx-app-dark-primary:  mat.define-palette($dark-primary-palette);
-$mifosx-app-dark-accent:  mat.define-palette($dark-accent-palette);
-$mifosx-app-dark-warn:    mat.define-palette(mat.$red-palette);
+$mifosx-app-dark-primary: mat.define-palette($dark-primary-palette);
+$mifosx-app-dark-accent: mat.define-palette($dark-accent-palette);
+$mifosx-app-dark-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object (a Sass map containing all of the palettes).
 $mifosx-app-dark-theme: mat.define-dark-theme($mifosx-app-dark-primary, $mifosx-app-dark-accent, $mifosx-app-dark-warn);
 
 // Include theme styles for core and each component used in your app.
 .dark-theme {
-
-    // Override the background color of the label text for dark theme
-    .mat-option-text,.mat-input-element,.mat-form-field-label{
-        color: white !important;
-    }
-    mifosx-popover,.mat-menu-content{
-        background-color: #303135;
-        color : white;
-    }
-
-    // Override the background color of the calendar for dark theme
-    .mat-calendar,
-    .mat-calendar-body-cell,
-    .mat-calendar-body-label,
-    .mat-calendar-table{
-        background-color: #303135;
-        border: none;
-    }
-    
-    // Changing the logo color for dark mode
-    .img-button,
-    .app-user-photo,
-    .profile-image{
-        filter: invert(100%);
-    }
-    
     @include mat.all-component-themes($mifosx-app-dark-theme);
     @include groups-view-component-theme($mifosx-app-dark-theme);
     @include centers-view-component-theme($mifosx-app-dark-theme);
     @include dashboard-component-theme($mifosx-app-dark-theme);
     @include shares-account-view-component-theme($mifosx-app-dark-theme);
-    @include account-view-component-theme($mifosx-app-dark-theme);
+    @include account-view-component-dark-theme($mifosx-app-dark-theme);
 }

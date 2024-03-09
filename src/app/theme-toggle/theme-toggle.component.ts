@@ -1,20 +1,28 @@
-import { Component } from '@angular/core';
-import { ThemeService } from '../theme.service';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ThemingService } from './theming.service';
 
 @Component({
   selector: 'theme-toggle-component',
   templateUrl: './theme-toggle.component.html',
   styleUrls: ['./theme-toggle.component.scss'],
 })
-export class ThemeToggleComponent {
-  isDarkMode: boolean;
+export class ThemeToggleComponent implements OnInit, OnChanges {
+  darkModeOn: boolean;
 
-  constructor(private themeService: ThemeService) {
-    this.isDarkMode = this.themeService.isDarkMode();
+  constructor(private themingService: ThemingService) {
+    this.darkModeOn = this.themingService.isDarkMode();
+  }
+
+  ngOnInit(): void {
+    this.darkModeOn = this.themingService.isDarkMode();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.darkModeOn = this.themingService.isDarkMode();
   }
 
   toggleTheme() {
-    this.isDarkMode = !this.isDarkMode;
-    this.themeService.setDarkMode(this.isDarkMode);
+    this.darkModeOn = !this.darkModeOn;
+    this.themingService.setDarkMode(this.darkModeOn);
   }
 }
