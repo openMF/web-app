@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, HostBinding } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -27,6 +27,7 @@ import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
 import { Dates } from './core/utils/dates';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { I18nService } from './core/i18n/i18n.service';
+import { ThemingService } from './theme-toggle/theming.service';
 
 /** Initialize Logger */
 const log = new Logger('MifosX');
@@ -104,7 +105,10 @@ export class WebAppComponent implements OnInit {
               private alertService: AlertService,
               private settingsService: SettingsService,
               private authenticationService: AuthenticationService,
+              private themingService: ThemingService,
               private dateUtils: Dates) { }
+
+  @HostBinding('class') public cssClass: string;
 
   /**
    * Initial Setup:
@@ -120,6 +124,10 @@ export class WebAppComponent implements OnInit {
    * 5) Alerts
    */
   ngOnInit() {
+    this.themingService.theme.subscribe((theme: string) => {
+      this.cssClass = theme;
+    });
+
     // Setup logger
     if (environment.production) {
       Logger.enableProductionMode();

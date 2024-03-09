@@ -1,18 +1,19 @@
 @use "@angular/material" as mat;
 
-@mixin account-view-component-theme($theme) {
+
+@mixin account-view-component-dark-theme($theme) {
   $primary: map-get($theme, primary);
 
   mifosx-view-bulk-import {
     .cover {
-      background-color: white;
+      background-color: #424242;
       margin-top: 1%;
     }
   }
 
   mifosx-clients {
     .status {
-      color: black;
+      color: white;
     }
   }
 
@@ -26,14 +27,17 @@
       max-width: 80rem;
       width: 90%;
       padding: 0;
+
       .header {
         background-color: mat.get-color-from-palette($primary, 500);
 
         padding: 1%;
+
         .header-title-group {
           .account-card-title {
             color: white;
             width: 90%;
+
             p {
               color: white;
             }
@@ -49,46 +53,131 @@
             }
           }
         }
+
         .profile-image-container {
           margin: 1%;
+
           .profile-image {
             object-fit: cover;
             border-radius: 20px;
           }
+
           .signature {
             background-color: mat.get-color-from-palette($primary, 500);
           }
         }
+
         .account-actions {
           align-self: flex-end;
           margin: 0 1%;
+
           i {
             margin-bottom: 2px;
             margin-right: 4px;
           }
         }
       }
+
       .navigation-tabs {
-        background-color: #f2f2f2;
+        background-color: #303135;
+        color: white;
         overflow: auto;
       }
+
       .content {
         .savings-account-tables {
           padding: 1%;
           margin: 1%;
+
           .table-headers {
             margin: 0;
             padding: 6px;
           }
+
           td {
             padding: 3px;
           }
         }
       }
+
       i,
       img:hover {
         cursor: pointer;
       }
     }
   }
+}
+
+.dark-theme {
+
+  // Override the background color of the label text for dark theme
+  .mat-option-text,
+  .mat-input-element,
+  .mat-form-field-label {
+    color: white !important;
+  }
+
+  mifosx-popover,
+  .mat-menu-content,
+  .mat-dialog-container {
+    background-color: #303135;
+    color: white;
+  }
+
+  // Override the background color of the calendar for dark theme
+  .mat-calendar,
+  .mat-calendar-body-cell,
+  .mat-calendar-body-label,
+  .mat-calendar-table,
+  .mat-list-item.active {
+    background-color: #303135;
+    border: none;
+  }
+
+  .mat-tab-label-active {
+    border-bottom: lightgray;
+  }
+
+  // Changing the logo color for dark mode
+  .img-button,
+  .app-user-photo,
+  .profile-image {
+    filter: invert(100%);
+  }
+
+  span.breadcrumb-link {
+    a {
+      color: #0098ff !important;
+    }
+  }
+
+  a:-webkit-any-link {
+    color: #0098ff !important;
+  }
+
+  div.alert {
+    color: #303135;
+  }
+
+  a.tab-link {
+    color: white !important;
+  }
+
+  .cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+      0 8px 10px 1px rgba(0, 0, 0, 0.14),
+      0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    display: table;
+    background-color: white;
+    color: #303135;
+  }
+
+  #footer {
+    .business-date {
+      color: #0098ff;
+    }
+  }
+
 }
