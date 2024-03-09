@@ -13,6 +13,7 @@ import { AlertService } from '../core/alert/alert.service';
 
 /** Environment Imports */
 import { environment } from '../../environments/environment';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Login component.
@@ -38,7 +39,8 @@ export class LoginComponent implements OnInit, OnDestroy {
    * @param {Router} router Router for navigation.
    */
   constructor(private alertService: AlertService,
-              private router: Router) { }
+      private settingsService: SettingsService,
+      private router: Router) { }
 
   /**
    * Subscribes to alert event of alert service.
@@ -65,6 +67,14 @@ export class LoginComponent implements OnInit, OnDestroy {
    */
   ngOnDestroy() {
     this.alert$.unsubscribe();
+  }
+
+  reloadSettings(): void {
+    this.settingsService.setTenantIdentifier('');
+    this.settingsService.setTenantIdentifier(environment.fineractPlatformTenantId || 'default');
+    this.settingsService.setTenantIdentifiers(environment.fineractPlatformTenantIds.split(','));
+    this.settingsService.setServers(environment.baseApiUrls.split(','));
+    window.location.reload();
   }
 
 }

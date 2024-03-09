@@ -22,7 +22,6 @@ import { SearchToolComponent } from './search-tool/search-tool.component';
 import { KeyboardShortcutsDialogComponent } from './keyboard-shortcuts-dialog/keyboard-shortcuts-dialog.component';
 import { ServerSelectorComponent } from './server-selector/server-selector.component';
 import { TenantSelectorComponent } from './tenant-selector/tenant-selector.component';
-import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
 
 /** Custom Modules */
 import { IconsModule } from './icons.module';
@@ -47,6 +46,7 @@ import { StepperButtonsComponent } from './steppers/stepper-buttons/stepper-butt
 import { GlAccountSelectorComponent } from './accounting/gl-account-selector/gl-account-selector.component';
 import { GlAccountDisplayComponent } from './accounting/gl-account-display/gl-account-display.component';
 import { ViewSavingsAccountingDetailsComponent } from './accounting/view-savings-accounting-details/view-savings-accounting-details.component';
+import { ThemeToggleComponent } from './theme-toggle/theme-toggle.component';
 
 /**
  * Shared Module
@@ -132,7 +132,7 @@ import { ViewSavingsAccountingDetailsComponent } from './accounting/view-savings
     GlAccountSelectorComponent,
     GlAccountDisplayComponent,
     ViewSavingsAccountingDetailsComponent,
-    ThemeToggleComponent,
+    ThemeToggleComponent
   ]
 })
 export class SharedModule { }

@@ -4,6 +4,33 @@
 @mixin account-view-component-dark-theme($theme) {
   $primary: map-get($theme, primary);
 
+  mifosx-login {
+    .login-container {
+      background-color: #424242;
+      box-shadow: 1px 1px 50px white;
+    }
+
+    .cover {
+      .cover-content {
+        color: white;
+    
+        .cover-description {
+          .cover-link {
+            color: white !important;
+    
+            &:hover {
+              color: #d3d3d3;
+            }
+          }
+        }
+      }
+    }    
+  }
+
+  mifosx-login-form {
+    color: white;
+  }
+
   mifosx-view-bulk-import {
     .cover {
       background-color: #424242;
@@ -106,9 +133,19 @@
       }
     }
   }
+
+  fa-icon,
+  mat-icon,
+  mat-checkbox {
+    color: white;
+  }
+
 }
 
 .dark-theme {
+  .sticky {
+    background-color: #303135 !important;
+  }
 
   // Override the background color of the label text for dark theme
   .mat-option-text,
@@ -159,6 +196,7 @@
     color: #303135;
   }
 
+  a.mat-tab-link,
   a.tab-link {
     color: white !important;
   }
@@ -175,6 +213,16 @@
   }
 
   #footer {
+    color: white;
+
+    .mat-checkbox {
+      color: white !important;
+    }
+
+    .versions {
+      color: white !important;
+    }
+  
     .business-date {
       color: #0098ff;
     }

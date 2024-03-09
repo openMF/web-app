@@ -27,7 +27,7 @@ import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
 import { Dates } from './core/utils/dates';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { I18nService } from './core/i18n/i18n.service';
-import { ThemingService } from './theme-toggle/theming.service';
+import { ThemingService } from './shared/theme-toggle/theming.service';
 
 /** Initialize Logger */
 const log = new Logger('MifosX');
@@ -124,9 +124,10 @@ export class WebAppComponent implements OnInit {
    * 5) Alerts
    */
   ngOnInit() {
-    this.themingService.theme.subscribe((theme: string) => {
-      this.cssClass = theme;
+    this.themingService.theme.subscribe((value: string) => {
+      this.cssClass = value;
     });
+    this.themingService.setInitialDarkMode();
 
     // Setup logger
     if (environment.production) {
