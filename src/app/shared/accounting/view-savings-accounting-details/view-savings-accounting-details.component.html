@@ -1,6 +1,6 @@
 <div fxLayout="row wrap" fxLayout.lt-md="column">
 
-    <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
+    <div fxFlexFill *ngIf="accountingRule" fxLayout="row wrap" fxLayout.lt-md="column">
         <span fxFlex="40%">Type:</span>
         <span fxFlex="60%">{{ accountingRule.value }}</span>
     </div>
