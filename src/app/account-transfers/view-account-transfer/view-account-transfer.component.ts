@@ -35,4 +35,8 @@ export class ViewAccountTransferComponent {
     this.location.back();
   }
 
+  transactionColor(): string {
+    return this.viewAccountTransferData.reversed ? 'undo' : 'active';
+  }
+
 }
