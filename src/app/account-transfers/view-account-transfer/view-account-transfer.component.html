@@ -1,10 +1,16 @@
 <div class="container">
+  <span *ngIf="!viewAccountTransferData.reversed">
+    <button mat-raised-button color="warn" *mifosxHasPermission="'ADJUST_ACCOUNTTRANSFER'" >
+      <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'labels.buttons.Undo' | translate}}
+    </button>
+  </span>
 
   <mat-card>
 
     <mat-card-content>
 
       <div fxLayout="row wrap" fxLayout.lt-md="column">
+        <div fxFlex="100%" [ngClass]="transactionColor()"></div>
 
         <h3 class="mat-h3" fxFlexFill>{{"labels.heading.Transaction Details" | translate}}</h3>
 
