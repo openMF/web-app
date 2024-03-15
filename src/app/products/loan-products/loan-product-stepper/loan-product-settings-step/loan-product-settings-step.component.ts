@@ -4,6 +4,7 @@ import { LoanProducts } from '../../loan-products';
 import { rangeValidator } from 'app/shared/validators/percentage.validator';
 import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
 import { CodeName, OptionData } from 'app/shared/models/option-data.model';
+import { ProcessingStrategyService } from '../../services/processing-strategy.service';
 
 
 @Component({
@@ -46,7 +47,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
   /** Values to Days for Repayments */
   defaultConfigValues: GlobalConfiguration[] = [];
 
-  constructor(private formBuilder: UntypedFormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder,
+    private processingStrategyService: ProcessingStrategyService) {
     this.createLoanProductSettingsForm();
     this.setConditionalControls();
   }
@@ -117,11 +119,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
     });
 
     this.isAdvancedTransactionProcessingStrategy = LoanProducts.isAdvancedPaymentAllocationStrategy(transactionProcessingStrategyCode);
-    if (this.isAdvancedTransactionProcessingStrategy) {
-      this.loanProductSettingsForm.addControl('loanScheduleProcessingType', new UntypedFormControl(
-        this.loanProductsTemplate.loanScheduleProcessingType.code || LoanProducts.LOAN_SCHEDULE_PROCESSING_TYPE_HORIZONTAL,
-        [Validators.required ]));
-    }
+    this.processingStrategyService.initialize(this.isAdvancedTransactionProcessingStrategy);
+    this.validateAdvancedPaymentStrategyControls();
 
     if (this.loanProductsTemplate.dueDaysForRepaymentEvent != null &&
       this.loanProductsTemplate.overDueDaysForRepaymentEvent != null) {
@@ -405,12 +404,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
       .subscribe((transactionProcessingStrategyCode: string) => {
         this.advancePaymentStrategy.emit(transactionProcessingStrategyCode);
         this.isAdvancedTransactionProcessingStrategy =  LoanProducts.isAdvancedPaymentAllocationStrategy(transactionProcessingStrategyCode);
-        if (this.isAdvancedTransactionProcessingStrategy) {
-          this.loanProductSettingsForm.addControl('loanScheduleProcessingType', new UntypedFormControl(
-            this.loanProductsTemplate.loanScheduleProcessingType.code || LoanProducts.LOAN_SCHEDULE_PROCESSING_TYPE_HORIZONTAL, [Validators.required]));
-        } else {
-          this.loanProductSettingsForm.removeControl('loanScheduleProcessingType');
-        }
+        this.processingStrategyService.initialize(this.isAdvancedTransactionProcessingStrategy);
+        this.validateAdvancedPaymentStrategyControls();
       });
 
     this.loanProductSettingsForm.get('allowAttributeConfiguration').valueChanges
@@ -484,6 +479,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
         });
         this.isAdvancedTransactionProcessingStrategy =  true;
       }
+      this.processingStrategyService.initialize(this.isAdvancedTransactionProcessingStrategy);
     });
   }
 
@@ -519,4 +515,12 @@ export class LoanProductSettingsStepComponent implements OnInit {
     return productSettings;
   }
 
+  private validateAdvancedPaymentStrategyControls(): void {
+    if (this.isAdvancedTransactionProcessingStrategy) {
+      this.loanProductSettingsForm.addControl('loanScheduleProcessingType', new UntypedFormControl(
+        this.loanProductsTemplate.loanScheduleProcessingType.code || LoanProducts.LOAN_SCHEDULE_PROCESSING_TYPE_HORIZONTAL, [Validators.required]));
+    } else {
+      this.loanProductSettingsForm.removeControl('loanScheduleProcessingType');
+    }
+  }
 }

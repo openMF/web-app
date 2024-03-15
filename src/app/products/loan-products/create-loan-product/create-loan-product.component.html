@@ -38,14 +38,6 @@
 
     </mat-step>
 
-    <mat-step [stepControl]="loanProductTermsForm">
-
-      <ng-template matStepLabel>TERMS</ng-template>
-
-      <mifosx-loan-product-terms-step [loanProductsTemplate]="loanProductsTemplate"></mifosx-loan-product-terms-step>
-
-    </mat-step>
-
     <mat-step [stepControl]="loanProductSettingsForm">
 
       <ng-template matStepLabel>SETTINGS</ng-template>
@@ -76,6 +68,14 @@
       </mifosx-loan-product-payment-strategy-step>
 
       <mifosx-stepper-buttons></mifosx-stepper-buttons>
+
+    </mat-step>
+
+    <mat-step [stepControl]="loanProductTermsForm">
+
+      <ng-template matStepLabel>TERMS</ng-template>
+
+      <mifosx-loan-product-terms-step [loanProductsTemplate]="loanProductsTemplate"></mifosx-loan-product-terms-step>
 
     </mat-step>
 

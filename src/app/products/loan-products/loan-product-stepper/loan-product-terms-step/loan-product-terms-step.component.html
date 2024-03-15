@@ -87,7 +87,11 @@
 
     <h3 fxFlex="23%" class="mat-h3">Interest Rates</h3>
 
-    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="isLinkedToFloatingInterestRates">
+    <mat-checkbox [formControl]="zeroInterest" fxFlex="23%" labelPosition="before" *ngIf="!loanProductTermsForm.value.isLinkedToFloatingInterestRates">
+      Is Zero Interest?
+    </mat-checkbox>
+
+    <mat-checkbox fxFlex="32%" labelPosition="before" formControlName="isLinkedToFloatingInterestRates" *ngIf="!isZeroInterest()">
       Is Linked to floating interest rates?
     </mat-checkbox>
 
@@ -97,7 +101,7 @@
 
       <mat-form-field fxFlex="23%">
         <mat-label>Minimum</mat-label>
-        <input type="number" matInput formControlName="minInterestRatePerPeriod" [min]="0">
+        <input type="number" matInput formControlName="minInterestRatePerPeriod" [min]="0" [attr.disabled]="isZeroInterest()">
         <mat-error>
           Minimum Value must be <strong>greater than 0</strong>
           </mat-error>
@@ -105,7 +109,7 @@
 
       <mat-form-field fxFlex="23%">
         <mat-label>Default</mat-label>
-        <input type="number" matInput formControlName="interestRatePerPeriod" required>
+        <input type="number" matInput formControlName="interestRatePerPeriod" required [attr.disabled]="isZeroInterest()">
         <mat-error>
           Default nominal interest rate is <strong>required</strong>
         </mat-error>
@@ -113,7 +117,7 @@
 
       <mat-form-field fxFlex="23%">
         <mat-label>Maximum</mat-label>
-        <input type="number" matInput formControlName="maxInterestRatePerPeriod" [min]="0">
+        <input type="number" matInput formControlName="maxInterestRatePerPeriod" [min]="0" [attr.disabled]="isZeroInterest()">
         <mat-error>
           Maximum Value must be <strong>greater equal to than 0</strong> and must be greater than <strong>Minimum Principal</strong>
         </mat-error>
@@ -121,7 +125,7 @@
 
       <mat-form-field fxFlex="23%">
         <mat-label>Frequency</mat-label>
-        <mat-select formControlName="interestRateFrequencyType" required>
+        <mat-select formControlName="interestRateFrequencyType" required [disabled]="isZeroInterest()">
           <mat-option *ngFor="let interestRateFrequencyType of interestRateFrequencyTypeData" [value]="interestRateFrequencyType.id">
             {{ interestRateFrequencyType.value }}
           </mat-option>
@@ -133,7 +137,7 @@
 
     </div>
 
-    <div *ngIf="loanProductTermsForm.value.isLinkedToFloatingInterestRates" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="start center">
+    <div *ngIf="loanProductTermsForm.value.isLinkedToFloatingInterestRates && !isZeroInterest()" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="start center">
 
       <h4 fxFlex="98%" class="mat-h4">Floating interest rate <i class="fas fa-question" matTooltip="These fields are used to define the minimum, default, maximum, and period for the floating interest rate allowed for the loan product. The minimum, default, and maximum floating interest rates are expressed as percentages."></i></h4>
 
@@ -390,9 +394,9 @@
 
     <mat-divider fxFlex="98%"></mat-divider>
 
-    <h4 fxFlex="98%" class="mat-h4">Repaid every <i class="fas fa-question" matTooltip="These fields are input to calculating the repayment schedule for a loan account and are used to determine when payments are due."></i></h4>
+    <h4 fxFlex="33%" class="mat-h4">Repaid every <i class="fas fa-question" matTooltip="These fields are input to calculating the repayment schedule for a loan account and are used to determine when payments are due."></i></h4>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field fxFlex="30%">
       <mat-label>Frequency</mat-label>
       <input type="number" matInput formControlName="repaymentEvery" required>
       <mat-error>
@@ -400,7 +404,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field fxFlex="30%">
       <mat-label>Type</mat-label>
       <mat-select formControlName="repaymentFrequencyType" required>
         <mat-option *ngFor="let repaymentFrequencyType of repaymentFrequencyTypeData" [value]="repaymentFrequencyType.id">
@@ -412,6 +416,15 @@
       </mat-error>
     </mat-form-field>
 
+    <h4 fxFlex="33%" class="mat-h4" *ngIf="allowFixedLength()">Fixed Length <i class="fas fa-question" 
+      matTooltip="Due to regulatory requirements in some countries, the loans cannot exceed X days, the Fineract SOR needs to be extended to support defining that a loan has a maximum length and the maximum length of that loan defines the length of the last installment which will be a shorter period than the first installments."></i></h4>
+
+    <mat-form-field fxFlex="30%" *ngIf="allowFixedLength()">
+      <mat-label>Fixed Length</mat-label>
+      <input type="number" matInput formControlName="fixedLength">
+    </mat-form-field>
+    <span fxFlex="30%" *ngIf="allowFixedLength()" class="label-field">{{ loanProductTermsForm.value.repaymentFrequencyType | find:repaymentFrequencyTypeData:'id':'value' }}</span>
+  
     <mat-form-field fxFlex="48%">
       <mat-label>Minimum days between disbursal and first repayment date</mat-label>
       <input type="number" matInput formControlName="minimumDaysBetweenDisbursalAndFirstRepayment">
