@@ -74,9 +74,9 @@ export class FooterComponent implements OnInit, OnDestroy {
       this.getConfigurations();
       this.server = this.settingsService.server;
       this.versionService.getBackendInfo().subscribe((data: any) => {
-        const buildVersion: string = data.git.build.version.split('-');
-        this.versions.fineract.version = buildVersion[0];
-        this.versions.fineract.hash = buildVersion[1];
+        const buildVersionArray: string[] = data?.git?.build?.version?.split('-') ?? [];
+        this.versions.fineract.version = buildVersionArray[0] ?? '';
+        this.versions.fineract.hash = buildVersionArray[1] ?? '';
       });
     }
   }
