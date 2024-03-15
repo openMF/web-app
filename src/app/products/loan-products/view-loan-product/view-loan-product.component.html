@@ -3,6 +3,10 @@
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
     Edit
   </button>
+  <button mat-raised-button color="warn"  (click)="deleteLoanProduct()" *mifosxHasPermission="'DELETE_LOANPRODUCT'">
+    <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
+    Delete
+  </button>
 </div>
 
 <div class="container">
