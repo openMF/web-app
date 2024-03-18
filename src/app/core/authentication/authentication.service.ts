@@ -118,7 +118,7 @@ export class AuthenticationService {
       return this.http
         .disableApiPrefix()
         .post(
-          `https://loans.test.oneacrefund.org/auth/realms/OneAcreFund/protocol/openid-connect/token`,
+          environment.oauth.tokenUrl,
           {},
           { params: httpParams }
         )
@@ -157,7 +157,6 @@ export class AuthenticationService {
     const userName = `${tokenResponse.username}/username`;
     this.http
       .get('/users/' + userName, { params: httpParams })
-      // this.http.get('/usersdetails', { params: httpParams })
       .subscribe((credentials: Credentials) => {
         credentials.accessToken = accessToken;
         this.onLoginSuccess(credentials);
@@ -392,5 +391,44 @@ export class AuthenticationService {
         this.login(loginContext).subscribe();
       })
     );
+  }
+
+  getConnectedUsername(): string {
+    const credentials = this.getCredentials();
+    if (credentials) {
+      console.debug("Getting the connected username from the storage");
+      return credentials.username;
+    } else {
+      console.debug("Getting the connected username from Keycloak");
+      return this.keyCloak.getUsername();
+    }
+  }
+
+  decodeToken (str) {
+    str = str.split('.')[1];
+
+    str = str.replace('/-/g', '+');
+    str = str.replace('/_/g', '/');
+    switch (str.length % 4)
+    {
+        case 0:
+            break;
+        case 2:
+            str += '==';
+            break;
+        case 3:
+            str += '=';
+            break;
+        default:
+            throw 'Invalid token';
+    }
+
+    str = (str + '===').slice(0, str.length + (str.length % 4));
+    str = str.replace(/-/g, '+').replace(/_/g, '/');
+
+    str = decodeURIComponent(escape(atob(str)));
+
+    str = JSON.parse(str);
+    return str;
   }
 }

@@ -95,6 +95,34 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ]
+            },
+            "local": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.local.ts"
+                }
+              ]
+            },
+            "qa": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.qa.ts"
+                }
+              ]
             }
           }
         },
@@ -106,6 +134,12 @@
           "configurations": {
             "production": {
               "browserTarget": "mifosx-web-app:build:production"
+            },
+            "local": {
+              "browserTarget": "mifosx-web-app:build:local"
+            },
+            "qa": {
+              "browserTarget": "mifosx-web-app:build:qa"
             }
           }
         },
@@ -192,6 +226,12 @@
           "configurations": {
             "production": {
               "devServerTarget": "mifosx-web-app:serve:production"
+            },
+            "local": {
+              "devServerTarget": "mifosx-web-app:serve:local"
+            },
+            "qa": {
+              "devServerTarget": "mifosx-web-app:serve:qa"
             }
           }
         },

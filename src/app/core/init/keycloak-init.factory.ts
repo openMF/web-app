@@ -20,7 +20,6 @@ export function initializer (keycloak: KeycloakService, authService: Authenticat
               redirectUri: `${environment.oauth.redirectUri}`,
             },
 
-            loadUserProfileAtStartUp: true,
             enableBearerInterceptor: true,
             bearerExcludedUrls: [],
             bearerPrefix: 'Bearer'
@@ -28,15 +27,18 @@ export function initializer (keycloak: KeycloakService, authService: Authenticat
           .then(response => {
             keycloak.isLoggedIn().then(isLoggedIn => {
               const isAuthenticated = service.isAuthenticated();
+              
               if (isLoggedIn && !isAuthenticated) {
                   keycloak.getToken().then(token => {
+
+                    const decodedToken = authService.decodeToken(token);
                     const context: OAuth2Token = {
                       scope: 'openid email profile',
                       token_type: 'Bearer',
                       access_token: token,
                       expires_in: 12955743,
                       refresh_token: token,
-                      username: keycloak.getUsername()
+                      username: decodedToken.email
                     };
                     service.getUserDetails(context);
                   });
