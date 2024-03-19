@@ -177,7 +177,7 @@
         </tr>
         <tr *ngIf="savingsAccountData.enforceMinRequiredBalance">
           <td>{{'labels.inputs.Enforce Minimum Required Balance' | translate}}</td>
-          <td>{{savingsAccountData.enforceMinRequiredBalance | formatNumber}}</td>
+          <td>{{savingsAccountData.enforceMinRequiredBalance | yesNo}}</td>
         </tr>
         <tr *ngIf="savingsAccountData.summary.lastInterestCalculationDate">
           <td>{{'labels.inputs.Interest Recalculation Date' | translate}}</td>

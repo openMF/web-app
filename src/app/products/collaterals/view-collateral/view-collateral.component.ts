@@ -17,7 +17,7 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
   templateUrl: './view-collateral.component.html',
   styleUrls: ['./view-collateral.component.scss']
 })
-export class ViewCollateralComponent implements OnInit {
+export class ViewCollateralComponent {
 
   /** Collateral Data */
   collateralData: any;
@@ -34,21 +34,18 @@ export class ViewCollateralComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private dialog: MatDialog,
-              private translateService:TranslateService) {
+              private translateService: TranslateService) {
                 this.route.data.subscribe((data: { collateral: any }) => {
                     this.collateralData = data.collateral;
                 });
-               }
-
-  ngOnInit(): void {
-  }
+              }
 
   /**
    * Deletes the collateral and redirects to collaterals
    */
   deleteCollateral() {
     const deleteCollateralDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.text.Collateral') + " " + this.collateralData.id}
+      data: { deleteContext: this.translateService.instant('labels.text.Collateral') + ' ' + this.collateralData.id}
     });
     deleteCollateralDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

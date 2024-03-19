@@ -64,11 +64,13 @@ export class TransactionsTabComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.transactions);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.tempTransaction.forEach((element: any) => {
-      if (this.isAccrual(element.type)) {
-        this.tempTransaction = this.removeItem(this.tempTransaction, element);
-      }
-    });
+    if (this.tempTransaction) {
+      this.tempTransaction.forEach((element: any) => {
+        if (this.isAccrual(element.transactionType)) {
+          this.tempTransaction = this.removeItem(this.tempTransaction, element);
+        }
+      });
+    }
   }
 
   /**
