@@ -1,6 +1,6 @@
 Release Notes
 
-## Unreleased
+## 1.1.0-RC.1
 
     * [SER-1406] - Fix create client errors
     * [SER-842] - Allow an authorised user to select an active country so that s/he can make any changes to a specific country
@@ -27,6 +27,7 @@ Release Notes
     * [SER-1562] - Refresh automatically after uploading a file
     * [SER-1521] - As a country admin, I should be able to add an extension charge
     * [SER-2030] - Implement loan terms and conditions
+    * [SER-2045] - Add delete button for loan product 
     * [SER-2093] - Add qualification rules on loan products
 
 

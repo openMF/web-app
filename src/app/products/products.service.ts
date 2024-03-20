@@ -106,6 +106,15 @@ export class ProductsService {
     return this.http.get('/channels');
   }
 
+  /**
+   * Call API to delete a loan product by loan product id
+   * @param loanProductId 
+   * @returns 
+   */
+  deleteLoanProduct(loanProductId: string): Observable<any> {
+    return this.http.delete(`/loanproducts/${loanProductId}`);
+  }
+
 
   /**
    * @returns {Observable<any>} Saving products data
