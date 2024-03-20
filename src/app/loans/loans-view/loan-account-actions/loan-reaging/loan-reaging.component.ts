@@ -46,7 +46,8 @@ export class LoanReagingComponent implements OnInit {
     this.reagingLoanForm = this.formBuilder.group({
       'numberOfInstallments': [1, Validators.required],
       'startDate': [this.settingsService.businessDate, Validators.required],
-      'frequency': [, Validators.required],
+      'frequencyNumber': [1, Validators.required],
+      'frequencyType': [, Validators.required],
       'note': '',
       'externalId': ''
     });
