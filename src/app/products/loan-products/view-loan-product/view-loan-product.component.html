@@ -303,12 +303,26 @@
           <span fxFlex="60%">{{ loanProduct.repaymentEvery + ' ' + loanProduct.repaymentFrequencyType.value }}</span>
         </div>
 
+        <div fxFlexFill>
+          <span fxFlex="40%">Prepaid Amount:</span>
+          <span fxFlex="60%">{{ loanProduct.terms?.prepaidAmount + ' ' + loanProduct.terms?.prepaidAmountCalculationType?.value }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">Repayment Start Period:</span>
+          <span fxFlex="60%">{{ loanProduct.terms?.repaymentStartPeriod + ' ' + loanProduct.terms?.repaymentStartPeriodFrequencyType?.value }}</span>
+        </div>
+
         <div fxFlexFill *ngIf="loanProduct.minimumDaysBetweenDisbursalAndFirstRepayment">
           <span fxFlex="40%">Minimum days between disbursal and first repayment date:</span>
           <span fxFlex="60%">{{ loanProduct.minimumDaysBetweenDisbursalAndFirstRepayment }}</span>
         </div>
 
         <mifosx-client-eligbility class="client" [loanProduct]="loanProduct"></mifosx-client-eligbility>
+
+        <div fxFlexFill *ngIf="isQualificationRulesPresent">
+          <mifosx-qualification-rules-view class="client" [loanProduct]="loanProduct" [loanTypeId]="loanProduct.loanType?.id" [loanProductsTemplate] ="loanProduct"></mifosx-qualification-rules-view>
+        </div>
 
           <h3 class="mat-h3" fxFlexFill>Settings</h3>
 

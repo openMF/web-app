@@ -16,8 +16,11 @@ import { SettingsService } from 'app/settings/settings.service';
 })
 export class ProductsService {
 
-  private  loanId$ = new BehaviorSubject<any>(null);
+  private  loanTypeId$ = new BehaviorSubject<any>(null);
   private  countryId$ = new BehaviorSubject<any>(null);
+  private prepaidAmount$ = new BehaviorSubject <any>(null);
+  private prepaidAmountCalculationType$ = new BehaviorSubject<any>(null);
+  private isQualificationRequired$ = new BehaviorSubject<boolean>(false);
 
   /**
    * @param {HttpClient} http Http Client to send requests.
@@ -26,12 +29,12 @@ export class ProductsService {
   constructor(private http: HttpClient,
               private settingsService: SettingsService) { }
 
-  set loanId(val: any) {
-    this.loanId$.next(val);
+  set loanTypeId(val: any) {
+    this.loanTypeId$.next(val);
   }
 
-  get loanId(): any {
-    return this.loanId$.asObservable();
+  get loanTypeId(): any {
+    return this.loanTypeId$.asObservable();
   }
 
   set countryId(val: any) {
@@ -40,6 +43,30 @@ export class ProductsService {
 
   get countryId(): any {
     return this.countryId$.asObservable();
+  }
+
+  get prepaidAmount(): any {  
+    return this.prepaidAmount$.asObservable();
+  }
+
+  set prepaidAmount(val: any) {
+    this.prepaidAmount$.next(val);
+  }
+
+  get prepaidAmountCalculationType(): any {  
+    return this.prepaidAmountCalculationType$.asObservable();
+  }
+
+  set prepaidAmountCalculationType(val: any) {
+    this.prepaidAmountCalculationType$.next(val);
+  }
+
+  get isQualificationRequired(): any {  
+    return this.isQualificationRequired$.asObservable();
+  }
+
+  set isQualificationRequired(val: any) {
+    this.isQualificationRequired$.next(val);
   }
 
   /**

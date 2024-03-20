@@ -1,0 +1,38 @@
+<h3 class="mat-h3" fxFlexFill>Qulaification Rules</h3>
+<mat-divider fxFlexFill></mat-divider>
+
+<div fxFlexFill>
+  <span fxFlex="40%">DownPayment:</span>
+  <span fxFlex="60%">{{
+    loanProduct.prepaidAmount +
+      " " +
+      (loanProduct.prepaidAmountCalculationType
+        | find : loanProductsTemplate.amountCalculationTypeOptions : "id" : "value")
+  }}</span>
+</div>
+
+<div *ngIf="loanTypeId == 2">
+  <div fxFlexFill>
+    <span fxFlex="40%">Minimum qualified members:</span>
+    <span fxFlex="60%">{{ loanProduct.qualificationRules?.minimumQualifiedMembers }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%">New Joiner windows after qualifications:</span>
+    <span fxFlex="60%">{{
+      loanProduct.qualificationRules?.newJoinerWindowsAfterQualification +
+        " " +
+        (loanProduct.qualificationRules?.newJoinerWindowsAfterQualificationFrequency
+          | find : loanProductsTemplate.repaymentFrequencyTypeOptions : "id" : "value")
+    }}</span>
+  </div>
+  <div fxFlexFill>
+    <span fxFlex="40%">Order pickup window after qualifications:</span>
+    <span fxFlex="60%">{{
+      loanProduct.qualificationRules?.orderPickupWindowsAfterQualification +
+        " " +
+        (loanProduct.qualificationRules?.orderPickupWindowsAfterQualificationFrequency
+          | find : loanProductsTemplate.repaymentFrequencyTypeOptions : "id" : "value")
+    }}</span>
+  </div>
+</div>

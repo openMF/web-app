@@ -33,6 +33,9 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
   // loan terms and condition templates
   enableTermsAndConditions: boolean = false;
   loanProductTemplates: any = [];
+
+  isQualificationRequired: boolean = false;
+
   loanProductTemplateForm: FormGroup;
 
   constructor(
@@ -122,9 +125,12 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
 
     this.productsService.getLoanProductWithCountryOptions(this.countryId).subscribe((res: any) => {
       this.enableTermsAndConditions = res.configurations?.enableTermsAndConditions;
+      this.isQualificationRequired = res.configurations?.isQualificationRequired;
       this.loanProductTemplates = res.loanProductTemplates;
+      this.productsService.isQualificationRequired = this.isQualificationRequired;
       this.loanProductTemplateForm.patchValue({
-        'loanProductTemplates': this.loanProductTemplates
+        'loanProductTemplates': this.loanProductTemplates,
+        
       });   
     })
   }

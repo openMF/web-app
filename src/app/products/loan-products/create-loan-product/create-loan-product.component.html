@@ -62,6 +62,12 @@
 
     </mat-step>
 
+    <mat-step [stepControl]="loanProductQualificationRuleForm" *ngIf="isQualificationRequired">
+      <ng-template matStepLabel>QUALIFICATION RULES</ng-template>
+
+      <mifosx-loan-product-qualification-rules-step [loanProductsTemplate]="loanProductsTemplate"></mifosx-loan-product-qualification-rules-step>
+    </mat-step>
+
 
     <mat-step [stepControl]="loanProductSettingsForm">
 
