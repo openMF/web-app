@@ -40,7 +40,7 @@ export class LoanProductQualificationRulesStepComponent implements OnInit {
       this.setLoanProductClientEligibilityFormForEdit();
       // Iniitializing prepaid amount and prepaid amount calculation type for Edit page
       this.prepaidAmount = this.loanProductsTemplate.terms?.prepaidAmount;
-      this.prepaidAmountCalculationType = this.loanProductsTemplate.terms?.prepaidAmountCalculationType?.id;
+      this.prepaidAmountCalculationType = this.loanProductsTemplate.terms?.prepaidAmountCalculationType?.value;
     }
   }
   
