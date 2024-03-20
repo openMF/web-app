@@ -13,11 +13,16 @@
                         <input type="number" matInput required formControlName="numberOfInstallments">
                     </mat-form-field>
 
+                  <mat-form-field>
+                    <mat-label>{{"labels.inputs.Frequency Number" | translate}}</mat-label>
+                    <input type="number" matInput required formControlName="frequencyNumber">
+                  </mat-form-field>
+
                     <mat-form-field>
                         <mat-label>{{"labels.inputs.Frequency Type" | translate}}</mat-label>
-                        <mat-select formControlName="frequency">
-                          <mat-option *ngFor="let frequency of frequencyOptions" [value]="frequency.code">
-                            {{ frequency.value }}
+                        <mat-select formControlName="frequencyType">
+                          <mat-option *ngFor="let frequencyType of frequencyOptions" [value]="frequencyType.code">
+                            {{ frequencyType.value }}
                           </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -34,13 +39,13 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <div fxLayout="column">
-                        <mat-form-field>
-                            <mat-label>{{"labels.inputs.Reason" | translate}}</mat-label>
-                            <input matInput formControlName="note">
-                        </mat-form-field>
-                    </div>
-    
+
+                  <mat-form-field>
+                    <mat-label>{{"labels.inputs.Reason" | translate}}</mat-label>
+                    <input matInput formControlName="note">
+                  </mat-form-field>
+
+
                     <mat-form-field>
                         <mat-label>{{"labels.inputs.External Id" | translate}}</mat-label>
                         <input matInput formControlName="externalId">
