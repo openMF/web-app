@@ -306,7 +306,7 @@ export class LoanProductTermsStepComponent implements OnInit, OnChanges {
   }
 
   get loanProductTerms() {
-    return this.loanProductTermsForm.value;
+    return this.loanProductTermsForm.getRawValue();
   }
 
   isZeroInterest(): boolean {
