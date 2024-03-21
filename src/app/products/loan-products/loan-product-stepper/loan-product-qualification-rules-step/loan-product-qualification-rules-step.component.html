@@ -1,0 +1,57 @@
+<form [formGroup]="loanProductQualificationRuleForm">
+    <div fxLayout="row wrap" fxFlexFill fxLayoutGap="2%" fxLayout.lt-md="column">
+        <mat-label fxFlex="98%">Downpayment</mat-label>
+        <mat-form-field fxFlex="32%">
+            <input matInput [value]="prepaidAmount" disabled="true">
+        </mat-form-field>
+        <mat-form-field fxFlex="32%">
+          <input matInput [value]="prepaidAmountCalculationType" disabled="true">
+      </mat-form-field>
+    </div>
+    <div *ngIf="loanProductsTemplate?.loanType?.id==2 || loanTypeId==2">
+      <p style="color:red">*Applicable to Group loans only</p>
+      <div fxLayout="row wrap" fxFlexFill fxLayoutGap="2%" fxLayout.lt-md="column">
+        <mat-label fxFlex="98%">Minimum qualified members</mat-label>
+        <mat-form-field fxFlex="32%">
+          <input matInput formControlName="minimumQualifiedMembers">
+        </mat-form-field>
+      </div>
+      <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+        <mat-label fxFlex="98%">New Joiner windows after qualifications</mat-label>
+        <mat-form-field fxFlex="32%">
+          <input matInput formControlName="newJoinerWindowsAfterQualification">
+        </mat-form-field>
+        <mat-form-field fxFlex="32%">
+          <mat-select formControlName="newJoinerWindowsAfterQualificationFrequency">
+            <mat-option *ngFor="let repaymentFrequencyType of repaymentFrequencyTypeOptions" [value]="repaymentFrequencyType.id">
+              {{ repaymentFrequencyType.value }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+        <mat-label fxFlex="98%">Order pickup window after qualifications</mat-label>
+        <mat-form-field fxFlex="32%">
+          <input matInput formControlName="orderPickupWindowsAfterQualification">
+        </mat-form-field>
+        <mat-form-field fxFlex="32%">
+          <mat-select formControlName="orderPickupWindowsAfterQualificationFrequency">
+            <mat-option *ngFor="let repaymentFrequencyType of repaymentFrequencyTypeOptions" [value]="repaymentFrequencyType.id">
+              {{ repaymentFrequencyType.value }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+        <button mat-raised-button matStepperPrevious disabled>
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
+          Previous
+        </button>
+        <button mat-raised-button matStepperNext>
+          Next&nbsp;&nbsp;
+          <fa-icon icon="arrow-right"></fa-icon>
+        </button>
+    </div>
+</form>

@@ -28,6 +28,7 @@ Release Notes
     * [SER-1521] - As a country admin, I should be able to add an extension charge
     * [SER-2030] - Implement loan terms and conditions
     * [SER-2045] - Add delete button for loan product 
+    * [SER-2093] - Add qualification rules on loan products
 
 
 ## Version 1.0.0 - for use with Fineract Web App

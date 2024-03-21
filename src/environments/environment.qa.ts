@@ -16,17 +16,17 @@ export const environment = {
   baseApiUrls: window['env']['fineractApiUrls'] ||
     'https://dev.mifos.io,https://demo.mifos.io,https://qa.mifos.io,https://staging.mifos.io,https://mobile.mifos.io,https://loans.test.oneacrefund.org,https://localhost:8443',
   // For connecting to server running elsewhere set the base API URL
-  baseApiUrl: window['env']['baseApiUrl'] || 'https://loans.test.oneacrefund.org',
+  baseApiUrl: window['env']['baseApiUrl'] || 'https://loans.qa.oneacrefund.org',
   allowServerSwitch: env.allow_switching_backend_instance,
   apiProvider: window['env']['apiProvider'] || '/fineract-provider/api',
   apiVersion: window['env']['apiVersion'] || '/v1',
   serverUrl: '',
   oauth: {
     enabled: true,  // For connecting to Mifos X using OAuth2 Authentication change the value to true
-    serverUrl: 'https://accounts.test.oneacrefund.org',
+    serverUrl: 'https://accounts.qa.oneacrefund.org',
     realm: 'OneAcreFund',
     client_id: 'fineract',
-    tokenUrl: `https://loans.test.oneacrefund.org/auth/realms/OneAcreFund/protocol/openid-connect/token`,
+    tokenUrl: `https://loans.qa.oneacrefund.org/auth/realms/OneAcreFund/protocol/openid-connect/token`,
     redirectUri: window['env']['homeURL'] || 'http://localhost:4200/home'
   },
   defaultLanguage: window['env']['defaultLanguage'] || 'en-US',
@@ -35,4 +35,3 @@ export const environment = {
 
 // Server URL
 environment.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}${environment.apiVersion}`;
-// environment.oauth.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}`;

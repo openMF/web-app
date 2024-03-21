@@ -43,12 +43,8 @@ export class HomeComponent implements OnInit {
    * Set Form.
    */
   ngOnInit() {
-    const credentials = this.authenticationService.getCredentials();
-    if (credentials) {
-    this.username = credentials.username;
-    } else {
-    this.username = this.keyCloakService.getUsername();
-    }
+    this.username = this.authenticationService.getConnectedUsername();
+
     this.setFilteredActivities();
   }
 

@@ -27,6 +27,9 @@ export class LoanProductPreviewStepComponent implements OnInit {
   paymentFundSourceDisplayedColumns: string[] = ['paymentTypeId', 'fundSourceAccountId'];
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId'];
 
+  isQualificationRequired:boolean = false;
+  loanTypeId: any;
+
   constructor(
     private organizationService: OrganizationService,
     private productsService: ProductsService,
@@ -34,7 +37,12 @@ export class LoanProductPreviewStepComponent implements OnInit {
   ) {
     this.getCountries();
     this.getChannels();
-
+    this.productsService.isQualificationRequired.subscribe((val) => {
+      this.isQualificationRequired = val;
+    });
+    this.productsService.loanTypeId.subscribe((val) => {
+      this.loanTypeId = val;
+    });
    }
 
   ngOnInit() {

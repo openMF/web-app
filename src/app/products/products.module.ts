@@ -98,6 +98,8 @@ import { ClientEligbilityComponent } from './loan-products/shared/client-eligbil
 import { LoanProductAllocationSettingComponent } from './loan-product-allocation-setting/loan-product-allocation-setting.component';
 import { LoanProductAllocationComponent } from './loan-product-allocation-setting/loan-product-allocation/loan-product-allocation.component';
 import { DragulaModule } from 'ng2-dragula';
+import { LoanProductQualificationRulesStepComponent } from './loan-products/loan-product-stepper/loan-product-qualification-rules-step/loan-product-qualification-rules-step.component';
+import { QualificationRulesViewComponent } from './loan-products/shared/qualification-rules-view/qualification-rules-view.component';
 
 /**
  * Products Module
@@ -203,7 +205,9 @@ import { DragulaModule } from 'ng2-dragula';
     LoanProductAppsComponent,
     ClientEligbilityComponent,
     LoanProductAllocationSettingComponent,
-    LoanProductAllocationComponent
+    LoanProductAllocationComponent,
+    LoanProductQualificationRulesStepComponent,
+    QualificationRulesViewComponent
   ],
   providers: [ ]
 })

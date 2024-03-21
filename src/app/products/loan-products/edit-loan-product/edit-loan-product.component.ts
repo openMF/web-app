@@ -15,6 +15,7 @@ import { LoanProductAppsComponent } from '../loan-product-stepper/loan-product-a
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { LoanProductQualificationRulesStepComponent } from '../loan-product-stepper/loan-product-qualification-rules-step/loan-product-qualification-rules-step.component';
 
 @Component({
   selector: 'mifosx-edit-loan-product',
@@ -31,9 +32,11 @@ export class EditLoanProductComponent implements OnInit {
   @ViewChild(LoanProductOrganizationUnitStepComponent, { static: true }) loanProductOrganizationStep: LoanProductOrganizationUnitStepComponent;
   @ViewChild(LoanProductClientEligibilityStepComponent, { static: true }) loanProductClientEligibilityStep: LoanProductClientEligibilityStepComponent;
   @ViewChild(LoanProductAppsComponent, { static: true }) loanProductAppsStep: LoanProductAppsComponent;
+  @ViewChild(LoanProductQualificationRulesStepComponent, { static: false }) loanProductQualificationRulesStep: LoanProductQualificationRulesStepComponent;
 
   loanProductAndTemplate: any;
   accountingRuleData = ['None', 'Cash', 'Accrual (periodic)', 'Accrual (upfront)'];
+  isQualificationRequired: boolean = false;
 
   /**
    * @param {ActivatedRoute} route Activated Route.
@@ -48,6 +51,7 @@ export class EditLoanProductComponent implements OnInit {
               private router: Router) {
     this.route.data.subscribe((data: { loanProductAndTemplate: any }) => {
       this.loanProductAndTemplate = data.loanProductAndTemplate;
+      this.isQualificationRequired = this.loanProductAndTemplate.configurations?.isQualificationRequired;
     });
   }
 
@@ -80,6 +84,10 @@ export class EditLoanProductComponent implements OnInit {
 
   get loanProductAppsForm() {
     return this.loanProductAppsStep?.loanProductAppsForm;
+  }
+
+  get loanProductQualificationRuleForm() {
+    return this.loanProductQualificationRulesStep?.loanProductQualificationRuleForm;
   }
 
   get loanProductFormValidAndNotPristine() {
@@ -117,7 +125,8 @@ export class EditLoanProductComponent implements OnInit {
       ...this.loanProductChargesStep.loanProductCharges,
       ...this.loanProductAccountingStep.loanProductAccounting,
       ...this.loanProductClientEligibilityStep.loanProductClientEligibility,
-      ...this.loanProductAppsStep.loanProductApps
+      ...this.loanProductAppsStep.loanProductApps,
+      ...this.loanProductQualificationRulesStep?.loanProductQualificationRule
     };
   }
 

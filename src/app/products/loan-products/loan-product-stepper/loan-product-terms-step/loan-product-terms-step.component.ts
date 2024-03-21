@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -8,6 +8,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
+import { ProductsService } from 'app/products/products.service';
 
 @Component({
   selector: 'mifosx-loan-product-terms-step',
@@ -24,11 +25,14 @@ export class LoanProductTermsStepComponent implements OnInit {
   floatingRateData: any;
   interestRateFrequencyTypeData: any;
   repaymentFrequencyTypeData: any;
+  amountCalculationTypeOptions: any;
+  repaymentFrequencyTypeOptions: any;
+
 
   displayedColumns: string[] = ['valueConditionType', 'borrowerCycleNumber', 'minValue', 'defaultValue', 'maxValue', 'actions'];
 
   constructor(private formBuilder: FormBuilder,
-              public dialog: MatDialog) {
+              public dialog: MatDialog, private productService: ProductsService) {
     this.createLoanProductTermsForm();
     this.setConditionalControls();
   }
@@ -38,6 +42,8 @@ export class LoanProductTermsStepComponent implements OnInit {
     this.floatingRateData = this.loanProductsTemplate.floatingRateOptions;
     this.interestRateFrequencyTypeData = this.loanProductsTemplate.interestRateFrequencyTypeOptions;
     this.repaymentFrequencyTypeData = this.loanProductsTemplate.repaymentFrequencyTypeOptions;
+    this.amountCalculationTypeOptions = this.loanProductsTemplate.amountCalculationTypeOptions;
+    this.repaymentFrequencyTypeOptions = this.loanProductsTemplate.repaymentFrequencyTypeOptions;
 
     this.loanProductTermsForm.patchValue({
       'minPrincipal': this.loanProductsTemplate.minPrincipal,
@@ -60,7 +66,11 @@ export class LoanProductTermsStepComponent implements OnInit {
       'useBorrowerCycle': this.loanProductsTemplate.useBorrowerCycle,
       'repaymentEvery': this.loanProductsTemplate.repaymentEvery,
       'repaymentFrequencyType': this.loanProductsTemplate.repaymentFrequencyType.id,
-      'minimumDaysBetweenDisbursalAndFirstRepayment': this.loanProductsTemplate.minimumDaysBetweenDisbursalAndFirstRepayment
+      'minimumDaysBetweenDisbursalAndFirstRepayment': this.loanProductsTemplate.minimumDaysBetweenDisbursalAndFirstRepayment,
+      'prepaidAmount': this.loanProductsTemplate.terms?.prepaidAmount,
+      'prepaidAmountCalculationType': this.loanProductsTemplate.terms?.prepaidAmountCalculationType?.id,
+      'repaymentStartPeriod': this.loanProductsTemplate.terms?.repaymentStartPeriod,
+      'repaymentStartPeriodFrequencyType': this.loanProductsTemplate.terms?.repaymentStartPeriodFrequencyType?.id,
     });
 
     this.loanProductTermsForm.setControl('principalVariationsForBorrowerCycle',
@@ -87,7 +97,11 @@ export class LoanProductTermsStepComponent implements OnInit {
       'interestRateFrequencyType': ['', Validators.required],
       'repaymentEvery': ['', Validators.required],
       'repaymentFrequencyType': ['', Validators.required],
-      'minimumDaysBetweenDisbursalAndFirstRepayment': ['']
+      'minimumDaysBetweenDisbursalAndFirstRepayment': [''],
+      'prepaidAmount': [''],
+      'prepaidAmountCalculationType': [''],
+      'repaymentStartPeriod': [''],
+      'repaymentStartPeriodFrequencyType': [''],
     });
   }
 
@@ -239,6 +253,16 @@ export class LoanProductTermsStepComponent implements OnInit {
 
   get loanProductTerms() {
     return this.loanProductTermsForm.value;
+  }
+
+  prepaidAmountChange(){
+    const prepaidAmount = this.loanProductTermsForm.get('prepaidAmount');
+    this.productService.prepaidAmount = prepaidAmount.value ;
+  }
+
+  prepaidAmountCalculationTypeChange(amountCalculationType){
+    this.productService.prepaidAmountCalculationType = amountCalculationType.value;
+    
   }
 
 }

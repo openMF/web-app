@@ -15,17 +15,17 @@ export class LoanProductClientEligibilityStepComponent implements OnInit {
   amountCalculationTypeOptions: any;
   loanProductClientEligibilityForm: FormGroup;
 
-  loanId: any;
+  loanTypeId: any;
 
   constructor( private formBuilder: FormBuilder, private router: Router, private productService: ProductsService ) {
-    this.productService.loanId.subscribe(val => {
-      this.loanId = val;
+    this.productService.loanTypeId.subscribe(val => {
+      this.loanTypeId = val;
     });
   }
 
   ngOnInit(): void {
 
-    this.loanId = this.productService.loanId;
+    this.loanTypeId = this.productService.loanTypeId;
 
     this.createloanProductClientEligibilityForm();
     this.amountCalculationTypeOptions = this.loanProductsTemplate.amountCalculationTypeOptions;

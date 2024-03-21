@@ -15,6 +15,7 @@ import { LoanProductAppsComponent } from '../loan-product-stepper/loan-product-a
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { LoanProductQualificationRulesStepComponent } from '../loan-product-stepper/loan-product-qualification-rules-step/loan-product-qualification-rules-step.component';
 
 @Component({
   selector: 'mifosx-create-loan-product',
@@ -30,6 +31,7 @@ export class CreateLoanProductComponent implements OnInit {
   @ViewChild(LoanProductChargesStepComponent, { static: true }) loanProductChargesStep: LoanProductChargesStepComponent;
   @ViewChild(LoanProductAccountingStepComponent, { static: true }) loanProductAccountingStep: LoanProductAccountingStepComponent;
   @ViewChild(LoanProductClientEligibilityStepComponent, { static: true }) loanProductClientEligibilityStep: LoanProductClientEligibilityStepComponent;
+  @ViewChild(LoanProductQualificationRulesStepComponent, { static: false }) loanProductQualificationRulesStep: LoanProductQualificationRulesStepComponent;
   @ViewChild(LoanProductAppsComponent, { static: true }) loanProductAppsStep: LoanProductAppsComponent;
 
   loanProductsTemplate: any;
@@ -87,6 +89,10 @@ export class CreateLoanProductComponent implements OnInit {
     return this.loanProductAppsStep?.loanProductAppsForm;
   }
 
+  get loanProductQualificationRuleForm() {
+    return this.loanProductQualificationRulesStep?.loanProductQualificationRuleForm;
+  }
+
   get loanProductFormValid() {
     return (
       this.loanProductDetailsForm.valid &&
@@ -95,7 +101,7 @@ export class CreateLoanProductComponent implements OnInit {
       this.loanProductTermsForm.valid &&
       this.loanProductClientEligibilityForm.valid &&
       this.loanProductSettingsForm.valid &&
-      this.loanProductAccountingForm.valid
+      this.loanProductAccountingForm.valid 
     );
   }
 
@@ -108,22 +114,39 @@ export class CreateLoanProductComponent implements OnInit {
       ...this.loanProductClientEligibilityStep.loanProductClientEligibility,
       ...this.loanProductSettingsStep.loanProductSettings,
       ...this.loanProductChargesStep.loanProductCharges,
-      ...this.loanProductAccountingStep.loanProductAccounting
+      ...this.loanProductAccountingStep.loanProductAccounting,
+      ...this.loanProductQualificationRulesStep?.loanProductQualificationRule
     };
+  }
+
+  get isQualificationRequired(){
+    return this.loanProductOrganizationStep.isQualificationRequired;
   }
 
   submit() {
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
-    const loanProduct = {
+    const loanProductToSave = {
       ...this.loanProduct,
       charges: this.loanProduct.charges.map((charge: any) => ({ id: charge.id })),
+      terms : {
+        prepaidAmount: this.loanProduct.prepaidAmount, prepaidAmountCalculationType: this.loanProduct.prepaidAmountCalculationType,
+        repaymentStartPeriod: this.loanProduct.repaymentStartPeriod, repaymentStartPeriodFrequencyType: this.loanProduct.repaymentStartPeriodFrequencyType,
+      },
       dateFormat,
       locale: this.settingsService.language.code
     };
-    delete loanProduct.allowAttributeConfiguration;
-    delete loanProduct.advancedAccountingRules;
-    this.productsService.createLoanProduct(loanProduct)
+
+    if(loanProductToSave.templateForTermsAndConditions == undefined || loanProductToSave.templateForTermsAndConditions == null || loanProductToSave.templateForTermsAndConditions == ""){
+      delete loanProductToSave.templateForTermsAndConditions;
+    }
+    delete loanProductToSave.allowAttributeConfiguration;
+    delete loanProductToSave.advancedAccountingRules;
+    delete loanProductToSave.prepaidAmount;
+    delete loanProductToSave.prepaidAmountCalculationType;
+    delete loanProductToSave.repaymentStartPeriod;
+    delete loanProductToSave.repaymentStartPeriodFrequencyType;
+    this.productsService.createLoanProduct(loanProductToSave)
       .subscribe((response: any) => {
         this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
       });

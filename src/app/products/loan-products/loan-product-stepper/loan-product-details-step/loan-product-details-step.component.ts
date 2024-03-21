@@ -15,11 +15,8 @@ import { SettingsService } from 'app/settings/settings.service';
 export class LoanProductDetailsStepComponent implements OnInit {
 
   @Input() loanProductsTemplate: any;
-  @Output() loanType = new EventEmitter();
 
   loanProductDetailsForm: FormGroup;
-
-  loanId: any;
 
   minDate = new Date(2000, 0, 1);
   maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 10));
@@ -80,7 +77,7 @@ export class LoanProductDetailsStepComponent implements OnInit {
   }
 
   selected(event: any, id: any) {
-    this.productService.loanId = id;
+    this.productService.loanTypeId = id;
 
   }
 

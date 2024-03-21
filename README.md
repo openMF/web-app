@@ -37,10 +37,19 @@ npm install
 ```
 
 6. To preview the app, run the following command and navigate to `http://localhost:4200/`.
+    1. 
+        ```
+        ng serve
+        ```
+    2. Run the application with local configurations in environments/environment.local.ts file
+        ```
+        ng serve -c local
+        ```
+    3. Run the application with QA configurations in environments/environment.qa.ts file
+        ```
+        ng serve -c qa
+        ```
 
-```
-ng serve
-```
 
 The application is using the development server with basic authentication by default. The credentials for the same are:
 
