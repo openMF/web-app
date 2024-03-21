@@ -48,7 +48,8 @@
 .login-container {
   box-shadow: 1px 1px 50px #000;
   height: 100vh;
-  overflow: auto;
+  width: 100%;
+  min-width: 21.5 rem;
 
   .img-container {
     max-width: 18rem;
