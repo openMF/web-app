@@ -144,8 +144,10 @@
 
 body.dark-theme {
   table {
-    tr:nth-child(even) {
-      background-color: #303135 !important;
+    tbody {
+      tr:nth-child(even) {
+        background-color: #303135 !important;
+      }
     }
   }
 }

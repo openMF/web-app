@@ -109,7 +109,9 @@ import {
   faFileExport,
   faCalculator,
   faCalendarCheck,
-  faPause
+  faPause,
+  faReceipt,
+  faTableCells
 } from '@fortawesome/free-solid-svg-icons';
 
 /**
@@ -231,7 +233,10 @@ export class IconsModule {
       faTasks,
       faCoins,
       faPiggyBank,
-      faBars
+      faBars,
+      faUndo,
+      faReceipt,
+      faTableCells
     );
   }
 
