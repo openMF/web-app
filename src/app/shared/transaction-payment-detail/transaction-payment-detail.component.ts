@@ -15,4 +15,18 @@ export class TransactionPaymentDetailComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  hasSomeValue(): boolean {
+    return (
+      this.isNotNullOrEmpty(this.paymentDetailData.accountNumber) ||
+      this.isNotNullOrEmpty(this.paymentDetailData.bankNumber) ||
+      this.isNotNullOrEmpty(this.paymentDetailData.checkNumber) ||
+      this.isNotNullOrEmpty(this.paymentDetailData.receiptNumber) ||
+      this.isNotNullOrEmpty(this.paymentDetailData.routingCode)
+    );
+  }
+
+  isNotNullOrEmpty(value: any): boolean {
+    return (value !== null && value !== '');
+  }
+
 }

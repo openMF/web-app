@@ -1,9 +1,11 @@
 <div class="container">
-  <span *ngIf="!viewAccountTransferData.reversed">
-    <button mat-raised-button color="warn" *mifosxHasPermission="'ADJUST_ACCOUNTTRANSFER'" >
-      <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'labels.buttons.Undo' | translate}}
-    </button>
-  </span>
+  <div fxLayoutAlign="end" class="container m-b-20" fxLayoutGap="2%">
+    <span *ngIf="!viewAccountTransferData.reversed">
+      <button mat-raised-button color="warn" *mifosxHasPermission="'ADJUST_ACCOUNTTRANSFER'" >
+        <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'labels.buttons.Undo' | translate}}
+      </button>
+    </span>
+  </div>
 
   <mat-card>
 

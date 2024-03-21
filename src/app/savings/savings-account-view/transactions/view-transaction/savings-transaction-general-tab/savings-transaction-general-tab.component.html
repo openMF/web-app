@@ -4,20 +4,20 @@
     <span *mifosxHasPermission="'ADJUSTTRANSACTION_SAVINGSACCOUNT'">
       <button mat-raised-button color="primary" *ngIf="transactionData.transactionType.value == 'Transfer' || transactionData.reversed == 'true'
           || transactionData.transactionType.id==3 || transactionData.transactionType.id==17" [routerLink]="'edit'">
-        <fa-icon icon="edit" class="m-r-10"></fa-icon>Edit
+        <fa-icon icon="edit" class="m-r-10"></fa-icon>{{"labels.buttons.Edit" | translate}}
       </button>
     </span>
   </span>
   <span *ngIf="!transactionData.reversed && transactionData.transactionType.amountHold">
     <button mat-raised-button color="primary" *mifosxHasPermission="'RELEASEAMOUNT_SAVINGSACCOUNT'"
       (click)="releaseAmount()">
-      <fa-icon icon="lock-open" class="m-r-10"></fa-icon>Release Amount
+      <fa-icon icon="lock-open" class="m-r-10"></fa-icon>{{"labels.buttons.Release Amount" | translate}}
     </button>
   </span>
   <span *ngIf="allowUndo()">
     <button mat-raised-button color="warn" *mifosxHasPermission="'UNDOTRANSACTION_SAVINGSACCOUNT'"
       (click)="undoTransaction()">
-      <fa-icon icon="undo" class="m-r-10"></fa-icon>Undo
+      <fa-icon icon="undo" class="m-r-10"></fa-icon>{{"labels.buttons.Undo" | translate}}
     </button>
   </span>
 </div>
@@ -31,7 +31,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="mat-body-strong">
-          Transaction Id
+          {{"labels.inputs.Id" | translate}}
         </div>
 
         <div fxFlex="50%">
@@ -39,7 +39,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Type
+          {{"labels.inputs.Transaction Type" | translate}}
         </div>
 
         <div fxFlex="50%">
@@ -47,7 +47,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Transaction Date
+          {{"labels.inputs.Transaction Date" | translate}}
         </div>
 
         <div fxFlex="50%">
@@ -55,7 +55,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Currency
+          {{"labels.inputs.Currency" | translate}}
         </div>
 
         <div fxFlex="50%">
@@ -63,18 +63,18 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Amount
+          {{"labels.inputs.Amount" | translate}}
         </div>
 
         <div fxFlex="50%">
           {{ transactionData.amount | currency:transactionData.currency.code }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
-          Note
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="transactionData.note">
+          {{"labels.inputs.Note" | translate}}
         </div>
 
-        <div fxFlex="50%">
+        <div fxFlex="50%" *ngIf="transactionData.note">
           {{ transactionData.note }}
         </div>
 
