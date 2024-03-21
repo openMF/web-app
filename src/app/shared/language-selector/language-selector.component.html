@@ -1,4 +1,4 @@
-<mat-form-field id="language-selector">
+<mat-form-field id="language-selector" class="m-l-10">
   <mat-label>{{'labels.inputs.Language' | translate}}</mat-label>
   <mat-select [formControl]="languageSelector" (selectionChange)="setLanguage()" class="languageselector">
     <mat-option *ngFor="let language of languages" [value]="language">
