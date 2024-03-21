@@ -15,14 +15,7 @@
 
       <div fxLayout="column">
 
-        <mat-form-field>
-          <mat-label>{{'labels.inputs.Default Language' | translate}}</mat-label>
-          <mat-select [formControl]="language" [compareWith]="compareOptions">
-            <mat-option *ngFor="let language of languages" [value]="language">
-              {{ language.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <mifosx-language-selector></mifosx-language-selector>
 
         <mat-form-field>
           <mat-label>{{'labels.inputs.Default Date Format' | translate}}</mat-label>

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
@@ -18,6 +18,14 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./language-selector.component.scss']
 })
 export class LanguageSelectorComponent implements OnInit {
+
+  /**
+   * Optional css styles for the language selector component.
+   */
+  @Input() styles = {
+    width: '100%',
+    'max-width': '100%',
+  }
 
   /** Language selector form control. */
   languageSelector = new UntypedFormControl();
