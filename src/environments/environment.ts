@@ -27,7 +27,7 @@ export const environment = {
     realm: 'OneAcreFund',
     client_id: 'fineract',
     tokenUrl: `https://loans.test.oneacrefund.org/auth/realms/OneAcreFund/protocol/openid-connect/token`,
-    redirectUri: window['env']['homeURL'] || 'http://localhost:4200/#products/loan-products/create'
+    redirectUri: window['env']['homeURL'] || 'http://localhost:4200/home'
   },
   defaultLanguage: window['env']['defaultLanguage'] || 'en-US',
   supportedLanguages: window['env']['supportedLanguages'] || 'en-US,fr-FR'
