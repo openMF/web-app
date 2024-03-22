@@ -15,11 +15,54 @@ import { UntypedFormControl } from '@angular/forms';
 })
 export class SettingsComponent implements OnInit {
 
-  /** Placeholder for languages. update once translations are set up */
   languages: any[] = [
+    {
+      name: 'Čeština (Czech)',
+      code: 'cs'
+    },
+    {
+      name: 'Deutsch (German)',
+      code: 'de'
+    },
     {
       name: 'English',
       code: 'en'
+    },
+    {
+      name: 'Español (Spanish)',
+      code: 'es'
+    },
+    {
+      name: 'Français (French)',
+      code: 'fr'
+    },
+    {
+      name: 'Italiano (Italian)',
+      code: 'it'
+    },
+    {
+      name: '한국어 (Korean)',
+      code: 'ko'
+    },
+    {
+      name: 'Lietuvių (Lithuanian)',
+      code: 'lt'
+    },
+    {
+      name: 'Latviešu (Latvian)',
+      code: 'lv'
+    },
+    {
+      name: 'नेपाली (Nepali)',
+      code: 'ne'
+    },
+    {
+      name: 'Português (Portuguese)',
+      code: 'pt'
+    },
+    {
+      name: 'Kiswahili (Swahili)',
+      code: 'sw'
     }
   ];
   /** Date formats. */
