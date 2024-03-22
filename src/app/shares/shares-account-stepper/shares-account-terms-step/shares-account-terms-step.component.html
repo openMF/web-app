@@ -21,7 +21,7 @@
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>{{'labels.inputs.Today's Price' | translate}}</mat-label>
+      <mat-label>{{"labels.inputs.Today's Price" | translate}}</mat-label>
       <input type="number" matInput formControlName="unitPrice">
     </mat-form-field>
 
@@ -43,13 +43,13 @@
     </mat-form-field>
 
     <mat-form-field fxFlex="48%" (click)="applicationDatePicker.open()">
-      <mat-label>{{'labels.inputs.Application Date' | translate}}</mat-label>
+      <mat-label>{{"labels.inputs.Application Date" | translate}}</mat-label>
       <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="applicationDatePicker"
         formControlName="applicationDate" required>
       <mat-datepicker-toggle matSuffix [for]="applicationDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #applicationDatePicker></mat-datepicker>
       <mat-error>
-        {{'labels.inputs.Application Date' | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+        {{ "labels.inputs.Application Date" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
       </mat-error>
     </mat-form-field>
 
