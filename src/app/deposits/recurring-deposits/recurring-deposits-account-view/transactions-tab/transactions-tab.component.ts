@@ -43,11 +43,13 @@ export class TransactionsTabComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.transactionsData);
     this.hideAccrualsParam = new UntypedFormControl(false);
-    this.tempTransaction.forEach((element: any) => {
-      if (this.isAccrual(element.transactionType)) {
-        this.tempTransaction = this.removeItem(this.tempTransaction, element);
-      }
-    });
+    if (this.tempTransaction) {
+      this.tempTransaction.forEach((element: any) => {
+        if (this.isAccrual(element.transactionType)) {
+          this.tempTransaction = this.removeItem(this.tempTransaction, element);
+        }
+      });
+    }
   }
 
   private removeItem(arr: any, item: any) {

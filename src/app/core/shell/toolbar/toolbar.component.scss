@@ -38,3 +38,15 @@
     margin-right: 1rem;
   }
 }
+
+// Show icon on small screens
+.lg-icon {
+  display: none;
+}
+
+@media (max-width: 959px) {
+  .lg-icon {
+    display: block; 
+    margin-left: 5px;
+  }
+}

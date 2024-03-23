@@ -26,9 +26,9 @@ $accent-palette: (
 /* ############ Dark mode palettes ################*/
 
 $dark-primary-palette: (
-  100: #273350,
-  500: #313f6b,
-  700: #39415c,
+  100: #5ba2ec,
+  500: #1074b9,
+  700: #004989,
   contrast: (
     100: white,
     500: rgba(white, 0.87),
@@ -37,9 +37,9 @@ $dark-primary-palette: (
 );
 
 $dark-accent-palette: (
-  100: #364461,
-  500: #3e5372,
-  700: #476385,
+  100: #e7ffa5,
+  500: #b4d575,
+  700: #83a447,
   contrast: (
     100: white,
     500: white,

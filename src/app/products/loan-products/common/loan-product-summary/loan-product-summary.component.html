@@ -290,6 +290,11 @@
     <span fxFlex="47%">Repay Every:</span>
     <span  fxFlex="53%">{{ loanProduct.repaymentEvery + ' ' + loanProduct.repaymentFrequencyType.value }}</span>
   </div>
+  
+  <div fxFlexFill *ngIf="loanProduct.fixedLength">
+    <span fxFlex="47%">Fixed Length:</span>
+    <span  fxFlex="53%">{{ loanProduct.fixedLength + ' ' + loanProduct.repaymentFrequencyType.value }}</span>
+  </div>
 
   <div fxFlexFill *ngIf="loanProduct.minimumDaysBetweenDisbursalAndFirstRepayment">
     <span fxFlex="47%">Minimum days between disbursal and first repayment date:</span>

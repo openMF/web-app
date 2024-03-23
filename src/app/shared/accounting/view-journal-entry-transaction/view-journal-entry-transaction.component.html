@@ -63,14 +63,12 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="id">
-        <th mat-header-cell class="center" *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Entry ID' | translate }}
-        </th>
+        <th mat-header-cell class="center" *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Entry ID' | translate }}</th>
         <td mat-cell *matCellDef="let transaction"> {{ transaction.id }} </td>
       </ng-container>
 
       <ng-container matColumnDef="glAccountType">
-        <th mat-header-cell class="center" *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Type' | translate }}
-        </th>
+        <th mat-header-cell class="center" *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Type' | translate }}</th>
         <td mat-cell *matCellDef="let transaction"> {{ transaction.glAccountType.value }} </td>
       </ng-container>
 
@@ -87,24 +85,21 @@
       </ng-container>
 
       <ng-container matColumnDef="debit">
-        <th mat-header-cell class="center" *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Debit' | translate }}
-        </th>
+        <th mat-header-cell class="center" *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Debit' | translate }}</th>
         <td mat-cell *matCellDef="let transaction"><span *ngIf="transaction.entryType.value === 'DEBIT'"> {{
             (transaction.currency.displaySymbol || transaction.currency.code) }} {{ transaction.amount | formatNumber }}
           </span></td>
       </ng-container>
 
       <ng-container matColumnDef="credit">
-        <th mat-header-cell class="center" *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Credit' | translate }}
-        </th>
+        <th mat-header-cell class="center" *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Credit' | translate }}</th>
         <td mat-cell *matCellDef="let transaction"><span *ngIf="transaction.entryType.value === 'CREDIT'"> {{
             (transaction.currency.displaySymbol || transaction.currency.code) }} {{ transaction.amount | formatNumber }}
           </span></td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="viewJournalEntry(row)" class="select-row">
-      </tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="viewJournalEntry(row)" class="select-row"></tr>
 
     </table>
 
@@ -122,5 +117,10 @@
       <i class="fa fa-exclamation-circle alert-check"></i>
       {{"labels.text.No data found" | translate}}
     </div>
+  </div>
+
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px" class="m-t-15 m-b-15">
+    <button type="button" color="primary" mat-raised-button (click)="goBack()">{{ 'labels.buttons.Back' | translate
+      }}</button>
   </div>
 </div>

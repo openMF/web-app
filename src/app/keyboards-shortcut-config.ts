@@ -17,170 +17,170 @@ export class KeyboardShortcutsConfiguration {
 
     makeCombination() {
         this.buttonsArray = [
-            // Navigation Page - Shift + N
+            // Navigation Page - ctrl + n
             {
                 title: 'Navigation Page',
-                ctrlKey: false,
-                shiftKey: true,
+                ctrlKey: true,
+                shiftKey: false,
                 altKey: false,
-                key: 'N',
+                key: 'n',
                 route: 'navigation'
             },
-            // Run Report - Shift + T
+            // Run Report - ctrl + t
             {
                 title: 'Run Report',
-                ctrlKey: false,
-                shiftKey: true,
+                ctrlKey: true,
+                shiftKey: false,
                 altKey: false,
-                key: 'T',
+                key: 't',
                 route: '',
                 id: 'runReport'
             },
-            // Checker Inbox & Pending Tasks - Shift + I
+            // Checker Inbox & Pending Tasks - ctrl + i
             {
-                title: 'Checker Inbox & Pending Tasks',
-                ctrlKey: false,
-                shiftKey: true,
-                altKey: false,
-                key: 'I',
-                route: 'checker-inbox-and-tasks/checker-inbox'
+              title: 'Checker Inbox & Pending Tasks',
+              ctrlKey: true,
+              shiftKey: false,
+              altKey: false,
+              key: 'i',
+              route: 'checker-inbox-and-tasks/checker-inbox'
             },
-            // Collection Sheet- Ctrl + Alt + O
+            // Collection Sheet- ctrl + alt + o
             // {
-            //     title: 'Collection Sheet',
-            //     ctrlKey: true,
-            //     shiftKey: false,
-            //     altKey: true,
-            //     key: 'o',
-            //     route: ''
+            // title: 'Collection Sheet',
+            // ctrlKey: true,
+            // shiftKey: false,
+            // altKey: true,
+            // key: 'o',
+            // route: ''
             // },
-            // Create Client - Shift + C
+            // Create Client - ctrl + c
             {
                 title: 'Create Client',
-                ctrlKey: false,
-                shiftKey: true,
+                ctrlKey: true,
+                shiftKey: false,
                 altKey: false,
-                key: 'C',
+                key: 'c',
                 route: 'clients/create'
             },
-            // Create Group - Shift + G
+            // Create Group - ctrl + g
             {
                 title: 'Create Group',
-                ctrlKey: false,
-                shiftKey: true,
+                ctrlKey: true,
+                shiftKey: false,
                 altKey: false,
-                key: 'G',
+                key: 'g',
                 route: 'groups/create'
             },
-            // Create Center - Shift + Q
+            // Create Center - ctrl + q
             {
                 title: 'Create Center',
-                ctrlKey: false,
-                shiftKey: true,
+                ctrlKey: true,
+                shiftKey: false,
                 altKey: false,
-                key: 'Q',
+                key: 'q',
                 route: 'centers/create'
             },
-            // Frequent Posting - Shift + F
+            // Frequent Posting - ctrl + f
             {
                 title: 'Frequent Posting',
-                ctrlKey: false,
-                shiftKey: true,
+                ctrlKey: true,
+                shiftKey: false,
                 altKey: false,
-                key: 'F',
+                key: 'f',
                 route: 'accounting/journal-entries/frequent-postings'
             },
-            // Closure Entries - Shift + E
+            // Closure Entries - ctrl + e
             {
                 title: 'Closure Entries',
-                ctrlKey: false,
-                shiftKey: true,
+                ctrlKey: true,
+                shiftKey: false,
                 altKey: false,
-                key: 'E',
+                key: 'e',
                 route: 'accounting/closing-entries'
             },
-            // Journal Entry - Shift + J
+            // Journal Entry - ctrl + j
             {
                 title: 'Journal Entry',
-                ctrlKey: false,
-                shiftKey: true,
+                ctrlKey: true,
+                shiftKey: false,
                 altKey: false,
-                key: 'J',
+                key: 'j',
                 route: 'accounting/journal-entries/create'
             },
-            // Reports - Shift + R
+            // Reports - ctrl + r
             {
                 title: 'Reports',
-                ctrlKey: false,
-                shiftKey: true,
+                ctrlKey: true,
+                shiftKey: false,
                 altKey: false,
-                key: 'R',
+                key: 'r',
                 route: 'reports'
             },
-            // Accounting - Shift + A
+            // Accounting - ctrl + a
             {
                 title: 'Accounting',
-                ctrlKey: false,
-                shiftKey: true,
+                ctrlKey: true,
+                shiftKey: false,
                 altKey: false,
-                key: 'A',
+                key: 'a',
                 route: 'accounting'
             },
-            // Save/Submit Forms - Shift + S
+            // Save/Submit Forms - ctrl + s
             {
                 title: 'Save/Submit Forms',
-                ctrlKey: false,
-                shiftKey: true,
+                ctrlKey: true,
+                shiftKey: false,
                 altKey: false,
-                key: 'S',
+                key: 's',
                 route: '',
                 id: 'submit'
             },
-            // Cancel - Shift + X
+            // Cancel - ctrl + x
             {
                 title: 'Cancel',
-                ctrlKey: false,
-                shiftKey: true,
+                ctrlKey: true,
+                shiftKey: false,
                 altKey: false,
-                key: 'X',
+                key: 'x',
                 route: '',
                 id: 'cancel'
             },
-            // Help - Shift + H
+            // Help - ctrl + h
             {
                 title: 'Help',
-                ctrlKey: false,
-                shiftKey: true,
+                ctrlKey: true,
+                shiftKey: false,
                 altKey: false,
-                key: 'H',
+                key: 'h',
                 route: '',
                 id: 'help'
             },
-            // Pagination: Next - Ctrl + n
+            // Pagination: Next - ctrl + n
             // {
             //     title: 'Pagination: Next'
             //     ctrlKey: true,
             //     shiftKey: false,
             //     altKey: true,
-            //     key: 'n',
+            //     key: 'n,
             //     route: ''
             // },
-            // Pagination: Previous - Ctrl + p
+            // Pagination: Previous - ctrl + p
             // {
             //     title: 'Pagination: Previous'
             //     ctrlKey: true,
             //     shiftKey: false,
             //     altKey: true,
-            //     key: 'p',
+            //     key: 'p,
             //     route: ''
             // },
-            // Logout - Shift + L
+            // Logout - ctrl + l
             {
                 title: 'Logout',
-                ctrlKey: false,
-                shiftKey: true,
+                ctrlKey: true,
+                shiftKey: false,
                 altKey: false,
-                key: 'L',
+                key: 'l',
                 route: '',
                 id: 'logout'
             }

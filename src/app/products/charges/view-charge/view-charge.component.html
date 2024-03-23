@@ -1,11 +1,11 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CHARGE'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    Edit
+    {{"labels.heading.Edit" | translate}}
   </button>
   <button mat-raised-button color="warn" (click)="deleteCharge()" *mifosxHasPermission="'DELETE_CHARGE'">
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    Delete
+    {{"labels.heading.Delete" | translate}}
   </button>
 </div>
 
@@ -18,7 +18,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="mat-body-strong">
-          Charge Name
+          {{"labels.inputs.Charge Name" | translate}}
         </div>
 
         <div fxFlex="50%">
@@ -26,7 +26,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Charge Type
+          {{"labels.inputs.Charge Type" | translate}}
         </div>
 
         <div fxFlex="50%">
@@ -34,7 +34,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Currency
+          {{"labels.inputs.Currency" | translate}}
         </div>
 
         <div fxFlex="50%">
@@ -42,7 +42,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Amount
+          {{"labels.inputs.Amount" | translate}}
         </div>
 
         <div fxFlex="50%">
@@ -50,7 +50,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="minCap">
-          Minimum Charge Cap
+          {{"labels.inputs.Minimum Charge Cap" | translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="minCap">
@@ -58,15 +58,15 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="maxCap">
-          Maximum Charge Cap
+          {{"labels.inputs.Maximum Charge Cap" | translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="maxCap">
           {{ chargeData.maxCap }}
         </div>
-        
+
         <div fxFlex="50%" class="mat-body-strong">
-          Charge Time Type
+          {{"labels.inputs.Charge Time Type" | translate}}
         </div>
 
         <div fxFlex="50%">
@@ -74,7 +74,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Charge Applies to
+          {{"labels.inputs.Charge Applies To" | translate}}
         </div>
 
         <div fxFlex="50%">
@@ -82,7 +82,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Charge Calculation Type
+          {{"labels.inputs.Charge Calculation Type" | translate}}
         </div>
 
         <div fxFlex="50%">
@@ -90,7 +90,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Charge Payment Mode
+          {{"labels.inputs.Charge Payment Mode" | translate}}
         </div>
 
         <div fxFlex="50%">
@@ -98,7 +98,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Active
+          {{"labels.status.Active" | translate}}
         </div>
 
         <div fxFlex="50%">
@@ -106,7 +106,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeFrequency">
-          Fee Frequency
+          {{"labels.inputs.Add Fee Frequency" | translate}}
         </div>
 
         <div fxFlex="50%"
@@ -115,7 +115,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeInterval">
-          Frequency Interval
+          {{"labels.inputs.Frequency Interval" | translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeInterval">
@@ -123,7 +123,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.incomeOrLiabilityAccount">
-          Income from Charges
+          {{"labels.heading.Income" | translate}} {{"labels.inputs.From" | translate}} {{"labels.heading.Charges" | translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="chargeData.incomeOrLiabilityAccount">
@@ -131,7 +131,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.taxGroup">
-          Tax Group
+          {{"labels.inputs.Tax Group" | translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="chargeData.taxGroup">

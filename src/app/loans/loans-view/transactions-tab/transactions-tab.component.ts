@@ -10,6 +10,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { SettingsService } from 'app/settings/settings.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
+import { LoanTransaction } from 'app/products/loan-products/models/loan-account.model';
+import { LoanTransactionType } from 'app/loans/models/loan-transaction-type.model';
 
 @Component({
   selector: 'mifosx-transactions-tab',
@@ -24,15 +26,19 @@ export class TransactionsTabComponent implements OnInit {
   tempTransaction: any;
   /** Form control to handle accural parameter */
   hideAccrualsParam: UntypedFormControl;
+  hideReversedParam: UntypedFormControl;
   /** Stores the status of the loan account */
   status: string;
   /** Columns to be displayed in original schedule table. */
   displayedColumns: string[] = ['row', 'id', 'office', 'externalId', 'date', 'transactionType', 'amount', 'principal', 'interest', 'fee', 'penalties', 'loanBalance', 'actions'];
+  displayedHeader1Columns: string[] = ['h1-row', 'h1-id', 'h1-office', 'h1-external-id', 'h1-transaction-date', 'h1-transaction-type', 'h1-space', 'h1-breakdown', 'h1-loan-balance', 'h1-actions'];
+  displayedHeader2Columns: string[] = ['h2-space', 'h2-amount', 'h2-principal', 'h2-interest', 'h2-fees', 'h2-penalties', 'h2-action'];
 
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
+  loanId: number;
   /**
    * Retrieves the loans with associations data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
@@ -49,10 +55,12 @@ export class TransactionsTabComponent implements OnInit {
       this.tempTransaction = data.loanDetailsData.transactions;
       this.status = data.loanDetailsData.status.value;
     });
+    this.loanId = this.route.parent.parent.snapshot.params['loanId'];
   }
 
   ngOnInit() {
     this.hideAccrualsParam = new UntypedFormControl(false);
+    this.hideReversedParam = new UntypedFormControl(false);
     this.setLoanTransactions(this.transactions);
   }
 
@@ -64,11 +72,13 @@ export class TransactionsTabComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.transactions);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.tempTransaction.forEach((element: any) => {
-      if (this.isAccrual(element.type)) {
-        this.tempTransaction = this.removeItem(this.tempTransaction, element);
-      }
-    });
+    if (this.tempTransaction) {
+      this.tempTransaction.forEach((element: LoanTransaction) => {
+        if (this.isAccrual(element.type)) {
+          this.tempTransaction = this.removeItem(this.tempTransaction, element);
+        }
+      });
+    }
   }
 
   /**
@@ -106,29 +116,36 @@ export class TransactionsTabComponent implements OnInit {
    * WAIVE_INTEREST:4
    * WAIVE_CHARGES:9
    * ACCRUAL:10
+   * REFUND:16
+   * CHARGE_PAYMENT:17
+   * REFUND_FOR_ACTIVE_LOAN:18
+   * INCOME_POSTING: 19
    * CREDIT_BALANCE_REFUND:20
    * MERCHANT_ISSUED_REFUND:21
    * PAYOUT_REFUND:22
    * GOODWILL_CREDIT:23
+   * CHARGE_REFUND:24
+   * CHARGEBACK:25
    * CHARGE_ADJUSTMENT:26
+   * CHARGE_OFF:27
    * DOWN_PAYMENT:28
    * REAGE:29
    * REAMORTIZE:30
    */
-  showTransactions(transactionsData: any) {
+  showTransactions(transactionsData: LoanTransaction) {
     if ([1, 2, 4, 9, 20, 21, 22, 23, 26, 28, 29, 30].includes(transactionsData.type.id)) {
       this.router.navigate([transactionsData.id], { relativeTo: this.route });
     }
   }
 
-  allowUndoTransaction(transaction: any) {
+  allowUndoTransaction(transaction: LoanTransaction) {
     if (transaction.manuallyReversed) {
       return false;
     }
-    return ([27].includes(transaction.type.id));
+    return !(transaction.type.disbursement || transaction.type.chargeoff || this.isReAgoeOrReAmortize(transaction.type) );
   }
 
-  loanTransactionColor(transaction: any): string {
+  loanTransactionColor(transaction: LoanTransaction): string {
     if (transaction.manuallyReversed) {
       return 'strike';
     }
@@ -165,13 +182,13 @@ export class TransactionsTabComponent implements OnInit {
    * Stops the propagation to view pages.
    * @param $event Mouse Event
    */
-  undoTransaction(transaction: any, $event: MouseEvent) {
+  undoTransaction(transaction: LoanTransaction, $event: MouseEvent) {
     $event.stopPropagation();
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const loanId = this.route.parent.parent.snapshot.params['loanId'];
     let command = 'undo';
-    let operationDate = transaction.date;
+    let operationDate = this.dateUtils.parseDate(transaction.date);
     let payload = {};
     if (this.isChargeOff(transaction.type)) {
       command = 'undo-charge-off';
@@ -205,31 +222,78 @@ export class TransactionsTabComponent implements OnInit {
     });
   }
 
-  private isAccrual(transactionType: any): boolean {
+  undoReAgeOrReAmortize(transaction: LoanTransaction): void {
+    const actionName = transaction.type.reAmortize ? 'Re-Amortize' : 'Re-Age';
+    const undoTransactionAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        heading: this.translateService.instant('labels.heading.Undo Transaction'),
+        dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want undo the transaction type') + ' ' + this.translateService.instant('labels.menus.' + actionName)
+      }
+    });
+    undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.confirm) {
+        const undoCommand = actionName === 'Re-Age' ? 'undoReAge' : 'undoReAmortize';
+        this.loansService.executeLoansAccountTransactionsCommand(String(this.loanId), undoCommand, {}).subscribe(() => {
+          this.reload();
+        });
+      }
+    });
+  }
+
+  private isAccrual(transactionType: LoanTransactionType): boolean {
     return (transactionType.accrual || transactionType.code === 'loanTransactionType.overdueCharge');
   }
 
-  private isChargeOff(transactionType: any): boolean {
+  private isChargeOff(transactionType: LoanTransactionType): boolean {
     return (transactionType.chargeoff || transactionType.code === 'loanTransactionType.chargeOff');
   }
 
-  private isDownPayment(transactionType: any): boolean {
+  private isDownPayment(transactionType: LoanTransactionType): boolean {
     return (transactionType.downPayment || transactionType.code === 'loanTransactionType.downPayment');
   }
 
-  private isReAge(transactionType: any): boolean {
-    return (transactionType.code === 'loanTransactionType.reAge');
+  private isReAge(transactionType: LoanTransactionType): boolean {
+    return (transactionType.reAge || transactionType.code === 'loanTransactionType.reAge');
   }
 
-  private isReAmortize(transactionType: any): boolean {
-    return (transactionType.code === 'loanTransactionType.reAmortize');
+  private isReAmortize(transactionType: LoanTransactionType): boolean {
+    return (transactionType.reAmortize || transactionType.code === 'loanTransactionType.reAmortize');
+  }
+
+  private isReAgoeOrReAmortize(transactionType: LoanTransactionType): boolean {
+    return this.isReAmortize(transactionType) || this.isReAge(transactionType);
+  }
+
+  viewJournalEntry(transactionType: LoanTransactionType): boolean {
+    return !(this.isReAmortize(transactionType) || this.isReAge(transactionType));
   }
 
   private reload() {
     const clientId = this.route.parent.parent.snapshot.params['clientId'];
-    const loanId = this.route.parent.parent.snapshot.params['loanId'];
     const url: string = this.router.url;
     this.router.navigateByUrl(`/clients/${clientId}/loans-accounts`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
+  }
+
+  hideReversed() {
+    let transactions: LoanTransaction[] = this.transactions;
+    if (!this.hideReversedParam.value) {
+      transactions = [];
+      this.transactions.forEach((t: LoanTransaction) => {
+        if (!t.manuallyReversed) {
+          transactions.push(t);
+        }
+      });
+    }
+    this.dataSource = new MatTableDataSource(transactions);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  displaySubMenu(transaction: LoanTransaction): boolean {
+    if (this.isReAgoeOrReAmortize(transaction.type) && transaction.manuallyReversed) {
+      return false;
+    }
+    return true;
   }
 }
