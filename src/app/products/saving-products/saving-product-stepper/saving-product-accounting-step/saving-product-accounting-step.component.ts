@@ -200,6 +200,10 @@ export class SavingProductAccountingStepComponent implements OnInit {
     }
   }
 
+  existCharges(): boolean {
+    return (this.chargeData.length > 0);
+  }
+
   add(formType: string, formArray: UntypedFormArray) {
     const data = { ...this.getData(formType), pristine: false };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });

@@ -1,6 +1,6 @@
 <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-  <h4 class="m-b-15 right" fxFlex="90%">You can drag and drop the rows to set a Payment Allocations order</h4>
+  <h4 class="m-b-15 right" fxFlex="90%">{{'labels.heading.You can drag and drop the rows to set a Payment Allocations order' | translate}}</h4>
 
   <div class="right" fxFlex="4%" *ngIf="!isDefault()">
     <button mat-button color="warn" (click)="removeTransaction()">

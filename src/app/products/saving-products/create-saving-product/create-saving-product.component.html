@@ -24,7 +24,7 @@
 
     <mat-step [stepControl]="savingProductDetailsForm">
 
-      <ng-template matStepLabel>DETAILS</ng-template>
+      <ng-template matStepLabel>{{'labels.inputs.Details' | translate}}</ng-template>
 
       <mifosx-saving-product-details-step></mifosx-saving-product-details-step>
 
@@ -32,7 +32,7 @@
 
     <mat-step [stepControl]="savingProductCurrencyForm">
 
-      <ng-template matStepLabel>CURRENCY</ng-template>
+      <ng-template matStepLabel>{{'labels.inputs.Currency' | translate}}</ng-template>
 
       <mifosx-saving-product-currency-step [savingProductsTemplate]="savingProductsTemplate"></mifosx-saving-product-currency-step>
 
@@ -40,7 +40,7 @@
 
     <mat-step [stepControl]="savingProductTermsForm">
 
-      <ng-template matStepLabel>TERMS</ng-template>
+      <ng-template matStepLabel>{{'labels.inputs.TERMS' | translate}}</ng-template>
 
       <mifosx-saving-product-terms-step [savingProductsTemplate]="savingProductsTemplate"></mifosx-saving-product-terms-step>
 
@@ -48,7 +48,7 @@
 
     <mat-step [stepControl]="savingProductSettingsForm">
 
-      <ng-template matStepLabel>SETTINGS</ng-template>
+      <ng-template matStepLabel>{{'labels.inputs.SETTINGS' | translate}}</ng-template>
 
       <mifosx-saving-product-settings-step [savingProductsTemplate]="savingProductsTemplate"></mifosx-saving-product-settings-step>
 
@@ -56,7 +56,7 @@
 
     <mat-step>
 
-      <ng-template matStepLabel>CHARGES</ng-template>
+      <ng-template matStepLabel>{{'labels.inputs.CHARGES' | translate}}</ng-template>
 
       <mifosx-saving-product-charges-step
         [savingProductsTemplate]="savingProductsTemplate"
@@ -68,7 +68,7 @@
 
     <mat-step [stepControl]="savingProductAccountingForm">
 
-      <ng-template matStepLabel>ACCOUNTING</ng-template>
+      <ng-template matStepLabel>{{'labels.inputs.ACCOUNTING' | translate}}</ng-template>
 
       <mifosx-saving-product-accounting-step
         [savingProductsTemplate]="savingProductsTemplate"
@@ -82,7 +82,7 @@
 
     <mat-step state="preview" *ngIf="savingProductFormValid" completed>
 
-      <ng-template matStepLabel>PREVIEW</ng-template>
+      <ng-template matStepLabel>{{'labels.inputs.PREVIEW' | translate}}</ng-template>
 
       <mifosx-saving-product-preview-step
         [savingProductsTemplate]="savingProductsTemplate"
