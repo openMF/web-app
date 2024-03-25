@@ -24,7 +24,7 @@
 
       <mat-step [stepControl]="loanProductDetailsForm" completed>
 
-        <ng-template matStepLabel>DETAILS</ng-template>
+        <ng-template matStepLabel>{{'labels.inputs.DETAILS' | translate}}</ng-template>
 
         <mifosx-loan-product-details-step [loanProductsTemplate]="loanProductAndTemplate"></mifosx-loan-product-details-step>
 
@@ -32,7 +32,7 @@
 
       <mat-step [stepControl]="loanProductCurrencyForm" completed>
 
-        <ng-template matStepLabel>CURRENCY</ng-template>
+        <ng-template matStepLabel>{{'labels.inputs.CURRENCY' | translate}}</ng-template>
 
         <mifosx-loan-product-currency-step [loanProductsTemplate]="loanProductAndTemplate"></mifosx-loan-product-currency-step>
 
@@ -40,7 +40,7 @@
 
       <mat-step [stepControl]="loanProductSettingsForm" completed>
 
-        <ng-template matStepLabel>SETTINGS</ng-template>
+        <ng-template matStepLabel>{{'labels.inputs.SETTINGS' | translate}}</ng-template>
 
         <mifosx-loan-product-settings-step
           [loanProductsTemplate]="loanProductAndTemplate"
@@ -53,7 +53,7 @@
 
       <mat-step *ngIf="isAdvancedPaymentStrategy" completed>
 
-        <ng-template matStepLabel>PAYMENT ALLOCATION</ng-template>
+        <ng-template matStepLabel>{{'labels.inputs.PAYMENT ALLOCATION' | translate}}</ng-template>
 
         <mifosx-loan-product-payment-strategy-step
           [advancedPaymentAllocations]="advancedPaymentAllocations"
@@ -73,7 +73,7 @@
 
       <mat-step [stepControl]="loanProductTermsForm" completed>
 
-        <ng-template matStepLabel>TERMS</ng-template>
+        <ng-template matStepLabel>{{'labels.inputs.TERMS' | translate}}</ng-template>
 
         <mifosx-loan-product-terms-step [loanProductsTemplate]="loanProductAndTemplate"></mifosx-loan-product-terms-step>
 
@@ -81,7 +81,7 @@
 
       <mat-step completed>
 
-        <ng-template matStepLabel>CHARGES</ng-template>
+        <ng-template matStepLabel>{{'labels.inputs.CHARGES' | translate}}</ng-template>
 
         <mifosx-loan-product-charges-step
           [loanProductsTemplate]="loanProductAndTemplate"
@@ -94,7 +94,7 @@
 
       <mat-step [stepControl]="loanProductAccountingForm" completed>
 
-        <ng-template matStepLabel>ACCOUNTING</ng-template>
+        <ng-template matStepLabel>{{'labels.inputs.ACCOUNTING' | translate}}</ng-template>
 
         <mifosx-loan-product-accounting-step
           [loanProductsTemplate]="loanProductAndTemplate"
@@ -107,7 +107,7 @@
 
       <mat-step state="preview" *ngIf="loanProductFormValidAndNotPristine" completed>
 
-        <ng-template matStepLabel>PREVIEW</ng-template>
+        <ng-template matStepLabel>{{'labels.inputs.PREVIEW' | translate}}</ng-template>
 
         <mifosx-loan-product-preview-step
           [loanProductsTemplate]="loanProductAndTemplate"

@@ -3,32 +3,32 @@
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Currency</mat-label>
+      <mat-label>{{'labels.inputs.Currency' | translate}}</mat-label>
       <mat-select formControlName="currencyCode" matTooltip="The currency in which the loan will be disbursed." required>
         <mat-option *ngFor="let currency of currencyData" [value]="currency.code">
           {{ currency.name }}
         </mat-option>
       </mat-select>
       <mat-error>
-        Currency is <strong>required</strong>
+        {{'labels.inputs.Currency' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Decimal Places</mat-label>
+      <mat-label>{{'labels.inputs.Decimal Places' | translate}}</mat-label>
       <input type="number" matTooltip="The number of decimal places to be used to track and report on loans." matInput formControlName="digitsAfterDecimal" required>
       <mat-error>
-        Decimal Places is <strong>required</strong>
+        {{'labels.inputs.Decimal Places' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Currency in multiples of</mat-label>
+      <mat-label>{{'labels.inputs.Currency in multiples of' | translate}}</mat-label>
       <input type="number" matInput matTooltip="You can enter multiples of currency value. For example, if you put multiples of 100, the currency value will be rounded off to 200, 300, 400, etc." formControlName="inMultiplesOf">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Installment in multiples of</mat-label>
+      <mat-label>{{'labels.inputs.Installment in multiples of' | translate}}</mat-label>
       <input type="number" matInput formControlName="installmentAmountInMultiplesOf">
     </mat-form-field>
 
@@ -37,10 +37,10 @@
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-      Previous
+      {{'labels.buttons.Previous' | translate}}
     </button>
     <button mat-raised-button matStepperNext>
-      Next
+      {{'labels.buttons.Next' | translate}}
       <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
     </button>
   </div>

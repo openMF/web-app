@@ -95,3 +95,17 @@ $error-log: #ffa726;
 .cdk-drag-placeholder {
   background: $peter-river;
 }
+
+.yes {
+  color: $status-active !important;
+  background-color: $status-active;
+  height: 4px;
+  cursor: none;
+}
+
+.no {
+  color: $status-active-overdue;
+  background-color: $status-active-overdue;
+  height: 4px;
+  cursor: none;
+}

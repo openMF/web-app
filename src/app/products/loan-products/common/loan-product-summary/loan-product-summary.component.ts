@@ -4,6 +4,7 @@ import { AccountingMapping, Charge, ChargeToIncomeAccountMapping, GLAccount, Pay
 import { AdvancePaymentAllocationData, CreditAllocation, PaymentAllocation } from '../../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 import { LoanProducts } from '../../loan-products';
 import { CodeName, OptionData } from '../../../../shared/models/option-data.model';
+import { Accounting } from 'app/core/utils/accounting';
 
 @Component({
   selector: 'mifosx-loan-product-summary',
@@ -23,7 +24,7 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
   chargesDisplayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType'];
   paymentFundSourceDisplayedColumns: string[] = ['paymentTypeId', 'fundSourceAccountId'];
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId'];
-  accountingRuleData = ['None', 'Cash', 'Accrual (periodic)', 'Accrual (upfront)'];
+  accountingRuleData: string[] = [];
 
   isAdvancedPaymentAllocation = false;
 
@@ -34,9 +35,10 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
   feeToIncomeAccountMappings: ChargeToIncomeAccountMapping[] = [];
   penaltyToIncomeAccountMappings: ChargeToIncomeAccountMapping[] = [];
 
-  constructor() { }
+  constructor(private accounting: Accounting) { }
 
   ngOnInit() {
+    this.accountingRuleData = this.accounting.getAccountingRulesForLoans();
     this.setCurrentValues();
   }
 

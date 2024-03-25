@@ -14,6 +14,7 @@ import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan
 import { ProductsService } from 'app/products/products.service';
 import { LoanProducts } from '../loan-products';
 import { AdvancedPaymentAllocation, AdvancedPaymentStrategy, PaymentAllocation } from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
+import { Accounting } from 'app/core/utils/accounting';
 
 @Component({
   selector: 'mifosx-create-loan-product',
@@ -30,7 +31,7 @@ export class CreateLoanProductComponent implements OnInit {
   @ViewChild(LoanProductAccountingStepComponent, { static: true }) loanProductAccountingStep: LoanProductAccountingStepComponent;
 
   loanProductsTemplate: any;
-  accountingRuleData = ['None', 'Cash', 'Accrual (periodic)', 'Accrual (upfront)'];
+  accountingRuleData: string[] = [];
   itemsByDefault: any[] = [];
 
   isAdvancedPaymentStrategy = false;
@@ -49,6 +50,7 @@ export class CreateLoanProductComponent implements OnInit {
               private productsService: ProductsService,
               private loanProducts: LoanProducts,
               private router: Router,
+              private accounting: Accounting,
               private advancedPaymentStrategy: AdvancedPaymentStrategy) {
     this.route.data.subscribe((data: { loanProductsTemplate: any, configurations: any }) => {
       this.loanProductsTemplate = data.loanProductsTemplate;
@@ -63,6 +65,7 @@ export class CreateLoanProductComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.accountingRuleData = this.accounting.getAccountingRulesForLoans();
     this.buildAdvancedPaymentAllocation();
   }
 
