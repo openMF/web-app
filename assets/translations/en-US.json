@@ -544,7 +544,8 @@
             "numeral": "numeral",
             "required": "required",
             "required and cannot be negative": "required and cannot be negative",
-            "should": "should"
+            "should": "should",
+            "on": "on"
         },
         "heading": {
             "Account Linked Financial": "List of accounts linked to different financial activities. To know more click:",
@@ -1319,6 +1320,7 @@
             "Fixed Deposit Products": "Fixed Deposit Products",
             "Fixed EMI amount": "Fixed EMI amount",
             "Fixed Length": "Fixed Length",
+            "Principal Percentage Per Installment": "Principal Percentage Per Installment",
             "Floating Interest Rate": "Floating Interest Rate",
             "Floating Interest Rate Calculation Allowed": "Floating Interest Rate Calculation Allowed",
             "Floating Interest Rates": "Floating Interest Rates",
@@ -1462,7 +1464,7 @@
             "Is Dependent": "Is Dependent",
             "Is Dependent?": "Is Dependent",
             "Is Differential": "Is Differential",
-            "Is Equal Amortization": "Is Equal Amortization",
+            "Is Equal Amortization": "Is Equal Amortization?",
             "Is Floating Rate": "Is Floating Rate",
             "Is Floating calculation allowed?": "Is Floating calculation allowed?",
             "Is Interest Posting required on closure date": "Is Interest Posting required on closure date",

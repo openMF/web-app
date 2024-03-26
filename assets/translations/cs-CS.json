@@ -544,7 +544,8 @@
       "numeral": "číslice",
       "required": "Požadované",
       "required and cannot be negative": "požadováno a nemůže být záporné",
-      "should": "by měl"
+      "should": "by měl",
+      "on": "na"
     },
     "heading": {
       "Account Linked Financial": "Seznam účtů spojených s různými finančními aktivitami. Chcete-li vědět více, klikněte:",
@@ -1320,6 +1321,7 @@
       "Fixed Deposit Products": "Produkty s pevným vkladem",
       "Fixed EMI amount": "Pevná částka EMI",
       "Fixed Length": "Pevná délka",
+      "Principal Percentage Per Installment": "Pevné procento jistiny na splátku",
       "Floating Interest Rate": "Pohyblivá úroková sazba",
       "Floating Interest Rate Calculation Allowed": "Výpočet pohyblivé úrokové sazby povolen",
       "Floating Interest Rates": "Pohyblivé úrokové sazby",

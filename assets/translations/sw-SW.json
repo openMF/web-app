@@ -544,7 +544,8 @@
       "numeral": "nambari",
       "required": "inahitajika",
       "required and cannot be negative": "inahitajika na haiwezi kuwa hasi",
-      "should": "lazima"
+      "should": "lazima",
+      "on": "juu"
     },
     "heading": {
       "Account Linked Financial": "Orodha ya akaunti zilizounganishwa na shughuli tofauti za kifedha. Kujua zaidi bofya:",
@@ -1320,6 +1321,7 @@
       "Fixed Deposit Products": "Bidhaa za Amana zisizohamishika",
       "Fixed EMI amount": "Kiasi cha EMI kisichobadilika",
       "Fixed Length": "Urefu uliowekwa",
+      "Principal Percentage Per Installment": "Asilimia Kuu Iliyowekwa Kwa Kila Awamu",
       "Floating Interest Rate": "Kiwango cha Riba kinachoelea",
       "Floating Interest Rate Calculation Allowed": "Ukokotoaji wa Kiwango cha Riba Unaoelea Unaruhusiwa",
       "Floating Interest Rates": "Viwango vya Riba vinavyoelea",

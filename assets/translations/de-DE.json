@@ -544,7 +544,8 @@
       "numeral": "Ziffer",
       "required": "erforderlich",
       "required and cannot be negative": "erforderlich und darf nicht negativ sein",
-      "should": "sollen"
+      "should": "sollen",
+      "on": "An"
     },
     "heading": {
       "Account Linked Financial": "Liste der Konten, die mit verschiedenen Finanzaktivitäten verknüpft sind. Um mehr zu erfahren, klicken Sie:",
@@ -1320,6 +1321,7 @@
       "Fixed Deposit Products": "Festgeldprodukte",
       "Fixed EMI amount": "Fester EMI-Betrag",
       "Fixed Length": "Feste Länge",
+      "Principal Percentage Per Installment": "Fester Kapitalprozentsatz pro Rate",
       "Floating Interest Rate": "Variabler Zinssatz",
       "Floating Interest Rate Calculation Allowed": "Variable Zinssatzberechnung zulässig",
       "Floating Interest Rates": "Variable Zinssätze",

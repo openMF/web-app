@@ -544,7 +544,8 @@
       "numeral": "संख्यात्मक",
       "required": "आवश्यक छ",
       "required and cannot be negative": "आवश्यक छ र नकारात्मक हुन सक्दैन",
-      "should": "गर्नुपर्छ"
+      "should": "गर्नुपर्छ",
+      "on": "मा"
     },
     "heading": {
       "Account Linked Financial": "विभिन्न वित्तीय गतिविधिहरु संग जोडिएको खाताहरु को सूची। थप जान्नको लागि क्लिक गर्नुहोस्:",
@@ -1320,6 +1321,7 @@
       "Fixed Deposit Products": "फिक्स्ड डिपोजिट उत्पादनहरू",
       "Fixed EMI amount": "निश्चित EMI रकम",
       "Fixed Length": "निश्चित लम्बाई",
+      "Principal Percentage Per Installment": "निश्चित प्रिन्सिपल प्रतिशत प्रति किस्ता",
       "Floating Interest Rate": "फ्लोटिंग ब्याज दर",
       "Floating Interest Rate Calculation Allowed": "फ्लोटिंग ब्याज दर गणना अनुमति छ",
       "Floating Interest Rates": "फ्लोटिंग ब्याज दर",

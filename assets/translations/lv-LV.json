@@ -544,7 +544,8 @@
       "numeral": "cipars",
       "required": "nepieciešams",
       "required and cannot be negative": "obligāti un nevar būt negatīvs",
-      "should": "vajadzētu"
+      "should": "vajadzētu",
+      "on": "ieslēgts"
     },
     "heading": {
       "Account Linked Financial": "Ar dažādām finanšu darbībām saistīto kontu saraksts. Lai uzzinātu vairāk, noklikšķiniet:",
@@ -1320,6 +1321,7 @@
       "Fixed Deposit Products": "Fiksētā depozīta produkti",
       "Fixed EMI amount": "Fiksēta EMI summa",
       "Fixed Length": "Fiksēts garums",
+      "Principal Percentage Per Installment": "Fiksēta pamatprocenti par iemaksu",
       "Floating Interest Rate": "Peldošā procentu likme",
       "Floating Interest Rate Calculation Allowed": "Atļauts mainīgās procentu likmes aprēķināšana",
       "Floating Interest Rates": "Peldošās procentu likmes",
