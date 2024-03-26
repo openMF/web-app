@@ -544,7 +544,8 @@
       "numeral": "skaičius",
       "required": "reikalaujama",
       "required and cannot be negative": "privaloma ir negali būti neigiama",
-      "should": "turėtų"
+      "should": "turėtų",
+      "on": "įjungta"
     },
     "heading": {
       "Account Linked Financial": "Sąskaitų, susietų su įvairia finansine veikla, sąrašas. Norėdami sužinoti daugiau, spustelėkite:",
@@ -1320,6 +1321,7 @@
       "Fixed Deposit Products": "Fiksuoto indėlio produktai",
       "Fixed EMI amount": "Fiksuota EMI suma",
       "Fixed Length": "Fiksuotas ilgis",
+      "Principal Percentage Per Installment": "Fiksuota pagrindinės įmokos procentinė dalis",
       "Floating Interest Rate": "Slankioji palūkanų norma",
       "Floating Interest Rate Calculation Allowed": "Leidžiamas kintamos palūkanų normos skaičiavimas",
       "Floating Interest Rates": "Kintamos palūkanų normos",

@@ -37,7 +37,7 @@ export class ViewChargeComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
-    private translateService:TranslateService) {
+    private translateService: TranslateService) {
     this.route.data.subscribe((data: { charge: any }) => {
       this.chargeData = data.charge;
       if (this.chargeData.minCap) {
@@ -57,7 +57,7 @@ export class ViewChargeComponent implements OnInit {
    */
   deleteCharge() {
     const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.inputs.Charge') + " " + this.chargeData.id}
+      data: { deleteContext: this.translateService.instant('labels.inputs.Charge') + ' ' + this.chargeData.id}
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

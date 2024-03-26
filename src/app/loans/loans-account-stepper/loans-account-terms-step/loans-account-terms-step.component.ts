@@ -269,10 +269,19 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         this.calculateLoanTerm(numberOfRepayments, repaymentEvery);
       });
 
-      this.loansAccountTermsForm.get('loanTermFrequencyType').valueChanges
+    this.loansAccountTermsForm.get('loanTermFrequencyType').valueChanges
         .subscribe(loanTermFrequencyType => {
           this.loansAccountTermsForm.patchValue({'repaymentFrequencyType': loanTermFrequencyType});
       });
+
+    this.loansAccountTermsForm.get('amortizationType').valueChanges
+      .subscribe(amortizationType => {
+        if (amortizationType === 0) {  // Equal Principal Payments
+          this.loansAccountTermsForm.addControl('fixedPrincipalPercentagePerInstallment', new UntypedFormControl(''));
+        } else {  // Equal Installments
+          this.loansAccountTermsForm.removeControl('fixedPrincipalPercentagePerInstallment');
+        }
+    });
   }
 
   setAdvancedPaymentStrategyControls(): void {
@@ -282,7 +291,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         this.loansAccountTermsForm.removeControl('fixedLength');
         if (this.loansAccountTermsData.product.fixedLength) {
           this.loansAccountTermsForm.addControl('interestRatePerPeriod', new UntypedFormControl({value: 0, disabled: true}, Validators.required));
-          this.loansAccountTermsForm.addControl('fixedLength', new UntypedFormControl({value: this.loansAccountTermsData.product.fixedLength, disabled: true}));
+          this.loansAccountTermsForm.addControl('fixedLength', new UntypedFormControl(this.loansAccountTermsData.product.fixedLength));
         } else {
           this.loansAccountTermsForm.addControl('interestRatePerPeriod', new UntypedFormControl(this.loansAccountTermsData.interestRatePerPeriod, Validators.required));
         }
@@ -294,6 +303,10 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       return this.loansAccountTermsData.product.fixedLength ? true : false;
     }
     return false;
+  }
+
+  isEqualPrincipalPayments(): boolean {
+    return (this.loansAccountTermsForm.value.amortizationType === 0);
   }
 
   /** Create Loans Account Terms Form */
@@ -493,9 +506,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
    * Returns loans account terms form value.
    */
   get loansAccountTerms() {
-    const terms = this.loansAccountTermsForm.getRawValue();
-    delete terms['fixedLength'];
-    return terms;
+    return this.loansAccountTermsForm.getRawValue();
   }
 
   get loanCollateral() {

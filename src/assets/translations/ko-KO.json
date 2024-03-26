@@ -544,7 +544,8 @@
       "numeral": "숫자",
       "required": "필수의",
       "required and cannot be negative": "필수이며 음수일 수 없습니다.",
-      "should": "~해야 한다"
+      "should": "~해야 한다",
+      "on": "~에"
     },
     "heading": {
       "Account Linked Financial": "다양한 금융 활동과 연결된 계정 목록입니다. 자세한 내용을 보려면 다음을 클릭하세요.",
@@ -1321,6 +1322,7 @@
       "Fixed Deposit Products": "정기예금 상품",
       "Fixed EMI amount": "고정 EMI 양",
       "Fixed Length": "고정 길이",
+      "Principal Percentage Per Installment": "할부당 고정 원금 비율",
       "Floating Interest Rate": "변동금리",
       "Floating Interest Rate Calculation Allowed": "변동금리 계산 허용",
       "Floating Interest Rates": "변동금리",

@@ -86,7 +86,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field fxFlex="20%" *ngIf="loansAccountTermsForm.controls.repaymentFrequencyType.value == 2">
+    <mat-form-field fxFlex="14%" *ngIf="loansAccountTermsForm.controls.repaymentFrequencyType.value == 2">
       <mat-label>{{"labels.inputs.Select On" | translate}}</mat-label>
       <mat-select formControlName="repaymentFrequencyNthDayType">
         <mat-option *ngFor="let repaymentFrequencyNthDayType of repaymentFrequencyNthDayTypeData"
@@ -96,7 +96,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field fxFlex="20%" *ngIf="loansAccountTermsForm.controls.repaymentFrequencyType.value == 2">
+    <mat-form-field fxFlex="14%" *ngIf="loansAccountTermsForm.controls.repaymentFrequencyType.value == 2">
       <mat-label>{{"labels.inputs.Select Day" | translate}}</mat-label>
       <mat-select formControlName="repaymentFrequencyDayOfWeekType">
         <mat-option *ngFor="let repaymentFrequencyDayOfWeekType of repaymentFrequencyDaysOfWeekTypeData"
@@ -124,7 +124,7 @@
         </mat-select>
       </mat-form-field>
     
-      <mat-form-field fxFlex="23%">
+      <mat-form-field fxFlex="14%">
         <mat-label>{{"labels.inputs.Amortization" | translate}}</mat-label>
         <mat-select required matTooltip="{{ 'tooltips.The Amortization value' | translate}}" formControlName="amortizationType">
           <mat-option *ngFor="let amortizationType of amortizationTypeData" [value]="amortizationType.id">
@@ -135,8 +135,13 @@
           {{"labels.inputs.Amortization Type" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
         </mat-error>
       </mat-form-field>
+      
+      <mat-form-field fxFlex="14%" *ngIf="isEqualPrincipalPayments()">
+        <mat-label>{{"labels.inputs.Principal Percentage Per Installment" | translate}}</mat-label>
+        <input type="number" matInput formControlName="fixedPrincipalPercentagePerInstallment">
+      </mat-form-field>
 
-      <mat-checkbox fxFlex="23%" formControlName="isEqualAmortization"
+      <mat-checkbox fxFlex="14%" formControlName="isEqualAmortization"
         [checked]="loansAccountTermsData?.isEqualAmortization">
         <p>{{"labels.inputs.Is Equal Amortization" | translate}}</p>
       </mat-checkbox>
@@ -175,6 +180,7 @@
       </div>
 
     </ng-container>
+    <h4 fxFlex="98%" class="mat-h4">{{"labels.inputs.Loan Schedule" | translate}}</h4>
 
     <div fxFlex="48%" *ngIf="loanScheduleType">
       <span fxFlex="40%"><p>{{"labels.inputs.Loan Schedule Type" | translate}}</p></span>
