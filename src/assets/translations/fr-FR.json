@@ -544,7 +544,8 @@
       "numeral": "numéral",
       "required": "requis",
       "required and cannot be negative": "obligatoire et ne peut pas être négatif",
-      "should": "devrait"
+      "should": "devrait",
+      "on": "sur"
     },
     "heading": {
       "Account Linked Financial": "Liste des comptes liés aux différentes activités financières. Pour en savoir plus cliquez :",
@@ -1320,6 +1321,7 @@
       "Fixed Deposit Products": "Produits de dépôt fixe",
       "Fixed EMI amount": "Montant EMI fixe",
       "Fixed Length": "Longueur fixe",
+      "Principal Percentage Per Installment": "Pourcentage de capital fixe par versement",
       "Floating Interest Rate": "Taux d'intérêt flottant",
       "Floating Interest Rate Calculation Allowed": "Calcul du taux d'intérêt flottant autorisé",
       "Floating Interest Rates": "Taux d'intérêt flottants",

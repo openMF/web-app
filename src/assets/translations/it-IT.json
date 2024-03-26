@@ -544,7 +544,8 @@
       "numeral": "numero",
       "required": "necessario",
       "required and cannot be negative": "obbligatorio e non può essere negativo",
-      "should": "Dovrebbe"
+      "should": "Dovrebbe",
+      "on": "SU"
     },
     "heading": {
       "Account Linked Financial": "Elenco dei conti collegati a diverse attività finanziarie. Per saperne di più clicca:",
@@ -1320,6 +1321,7 @@
       "Fixed Deposit Products": "Prodotti a deposito fisso",
       "Fixed EMI amount": "Importo EMI fisso",
       "Fixed Length": "Lunghezza fissa",
+      "Principal Percentage Per Installment": "Percentuale capitale fissa per rata",
       "Floating Interest Rate": "Tasso di interesse variabile",
       "Floating Interest Rate Calculation Allowed": "Calcolo del tasso di interesse variabile consentito",
       "Floating Interest Rates": "Tassi di interesse variabili",
