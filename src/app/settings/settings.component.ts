@@ -2,8 +2,9 @@
 import { Component, OnInit } from '@angular/core';
 
 /** Custom Service */
-import { SettingsService } from './settings.service';
 import { UntypedFormControl } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
+import { SettingsService } from './settings.service';
 
 /**
  * Settings component.
@@ -15,13 +16,6 @@ import { UntypedFormControl } from '@angular/forms';
 })
 export class SettingsComponent implements OnInit {
 
-  /** Placeholder for languages. update once translations are set up */
-  languages: any[] = [
-    {
-      name: 'English',
-      code: 'en'
-    }
-  ];
   /** Date formats. */
   dateFormats: string[] = [
     'dd MMMM yyyy',
@@ -59,13 +53,16 @@ export class SettingsComponent implements OnInit {
   /**
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private settingsService: SettingsService) { }
+  constructor(private settingsService: SettingsService,
+              private translateService: TranslateService) { }
 
   ngOnInit() {
     this.language.patchValue(this.settingsService.language);
     this.dateFormat.patchValue(this.settingsService.dateFormat);
     this.decimalsToDisplay.patchValue(this.settingsService.decimals);
     this.buildDependencies();
+    this.language.setValue(this.currentLanguage);
+
   }
 
   /**
@@ -91,6 +88,22 @@ export class SettingsComponent implements OnInit {
    */
   compareOptions(option1: any, option2: any) {
     return option1 && option2 && option1.code === option2.code;
+  }
+
+  /**
+   * Returns the current language used by the application.
+   * @returns {string} Current language.
+   */
+  get currentLanguage(): string {
+    return this.translateService.currentLang;
+  }
+
+  /**
+   * Returns all the languages supported by the application.
+   * @return {string[]} Supported languages.
+   */
+  get languages(): string[] {
+    return this.translateService.getLangs();
   }
 
 }
