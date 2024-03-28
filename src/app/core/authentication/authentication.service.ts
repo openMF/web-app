@@ -93,7 +93,6 @@ export class AuthenticationService {
       let httpParams = new HttpParams();
       httpParams = httpParams.set('client_id', 'community-app');
       httpParams = httpParams.set('grant_type', 'password');
-      httpParams = httpParams.set('client_secret', '123');
       return this.http.disableApiPrefix().post(`${environment.oauth.serverUrl}/oauth/token`, {}, { params: httpParams })
         .pipe(
           map((tokenResponse: OAuth2Token) => {
@@ -147,7 +146,6 @@ export class AuthenticationService {
     let httpParams = new HttpParams();
     httpParams = httpParams.set('client_id', 'community-app');
     httpParams = httpParams.set('grant_type', 'refresh_token');
-    httpParams = httpParams.set('client_secret', '123');
     httpParams = httpParams.set('refresh_token', oAuthRefreshToken);
     this.http.disableApiPrefix().post(`${environment.oauth.serverUrl}/oauth/token`, {}, { params: httpParams })
       .subscribe((tokenResponse: OAuth2Token) => {
