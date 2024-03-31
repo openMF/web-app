@@ -109,3 +109,20 @@ $error-log: #ffa726;
   height: 4px;
   cursor: none;
 }
+
+.strike {
+  text-decoration: line-through;
+  color: red;
+}
+
+.transfer {
+  color: $status-transfer;
+}
+
+.linked {
+  color: $status-approved;
+}
+
+.accrual {
+  color: $msg-default;
+}
