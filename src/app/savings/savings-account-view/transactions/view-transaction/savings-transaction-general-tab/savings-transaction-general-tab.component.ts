@@ -71,4 +71,10 @@ export class SavingsTransactionGeneralTabComponent implements OnInit {
     });
   }
 
+  transactionColor(): string {
+    if (this.transactionData.reversed) {
+      return 'undo';
+    }
+    return 'active';
+  }
 }

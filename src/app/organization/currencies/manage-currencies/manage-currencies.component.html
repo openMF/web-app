@@ -10,8 +10,11 @@
         <mat-form-field fxFlex="calc(90%-20px)">
             <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
             <mat-select required formControlName="currency">
-              <mat-option *ngFor="let currency of currencyData" [value]="currency">
-                {{ currency.name }}
+              <mat-option>
+                <ngx-mat-select-search [formControl]="filterFormCtrl"></ngx-mat-select-search>
+              </mat-option>
+              <mat-option *ngFor="let currency of currencyData | async" [value]="currency">
+                ({{currency.code}}) {{ currency.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="currencyForm.controls.currency.hasError('required')">

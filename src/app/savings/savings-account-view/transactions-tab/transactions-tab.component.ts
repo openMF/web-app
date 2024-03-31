@@ -26,8 +26,6 @@ export class TransactionsTabComponent implements OnInit {
   status: any;
   /** Transactions Data */
   transactionsData: SavingsAccountTransaction[] = [];
-  /** Temporary Transaction Data */
-  tempTransaction: any;
   /** Form control to handle accural parameter */
   hideAccrualsParam: UntypedFormControl;
   hideReversedParam: UntypedFormControl;
@@ -54,7 +52,6 @@ export class TransactionsTabComponent implements OnInit {
               private dateUtils: Dates) {
     this.route.parent.parent.data.subscribe((data: { savingsAccountData: any }) => {
       this.transactionsData = data.savingsAccountData.transactions;
-      this.tempTransaction = this.transactionsData;
       this.status = data.savingsAccountData.status.value;
     });
     this.accountId = this.route.parent.parent.snapshot.params['savingAccountId'];
@@ -71,17 +68,6 @@ export class TransactionsTabComponent implements OnInit {
     this.accountWithTransactions = (this.transactionsData && this.transactionsData.length > 0);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    if (this.tempTransaction) {
-      this.tempTransaction.forEach((element: any) => {
-        if (this.isAccrual(element.transactionType)) {
-          this.tempTransaction = this.removeItem(this.tempTransaction, element);
-        }
-      });
-    }
-  }
-
-  private removeItem(arr: any, item: any) {
-    return arr.filter((f: any) => f !== item);
   }
 
   /**
@@ -129,21 +115,19 @@ export class TransactionsTabComponent implements OnInit {
   }
 
   hideAccruals() {
-    if (!this.hideAccrualsParam.value) {
-      this.dataSource = new MatTableDataSource(this.tempTransaction);
-    } else {
-      this.dataSource = new MatTableDataSource(this.transactionsData);
-    }
+    this.filterTransactions(this.hideReversedParam.value, !this.hideAccrualsParam.value);
   }
 
   hideReversed() {
+    this.filterTransactions(!this.hideReversedParam.value, this.hideAccrualsParam.value);
+  }
+
+  filterTransactions(hideReversed: boolean, hideAccrual: boolean): void {
     let transactions: SavingsAccountTransaction[] = this.transactionsData;
-    if (!this.hideReversedParam.value) {
-      transactions = [];
-      this.transactionsData.forEach((t: SavingsAccountTransaction) => {
-        if (!t.reversed) {
-          transactions.push(t);
-        }
+
+    if (hideAccrual || hideReversed) {
+      transactions = this.transactionsData.filter((t: SavingsAccountTransaction) => {
+        return (!(hideReversed && t.reversed) && !(hideAccrual && t.transactionType.accrual));
       });
     }
     this.dataSource = new MatTableDataSource(transactions);
@@ -154,11 +138,13 @@ export class TransactionsTabComponent implements OnInit {
   savingsTransactionColor(transaction: SavingsAccountTransaction): string {
     if (transaction.reversed) {
       return 'strike';
-    }
-    if (transaction.transfer) {
+    } else if (transaction.transfer) {
       return 'transfer';
+    } else if (transaction.transactionType.accrual) {
+      return 'accrual';
+    } else {
+      return '';
     }
-    return '';
   }
 
   undoTransaction(transactionData: SavingsAccountTransaction): void {

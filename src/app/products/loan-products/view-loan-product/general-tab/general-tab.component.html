@@ -1,6 +1,14 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+  <!--
+  <button mat-raised-button color="primary" *mifosxHasPermission="'UPDATE_LOANPRODUCT'" (click)="copyProduct()">
+    <fa-icon icon="copy" class="m-r-10"></fa-icon>{{'labels.buttons.Create' | translate}} {{'labels.text.Copy' | translate}}
+  </button>
+  -->
+  <button mat-raised-button color="primary" *mifosxHasPermission="'UPDATE_LOANPRODUCT'" (click)="exportDefinition()">
+    <fa-icon icon="download" class="m-r-10"></fa-icon>{{'labels.buttons.Export' | translate}}
+  </button>
   <button mat-raised-button color="primary" [routerLink]="['../edit']" *mifosxHasPermission="'UPDATE_LOANPRODUCT'">
-    <fa-icon icon="edit" class="m-r-10"></fa-icon>Edit
+    <fa-icon icon="edit" class="m-r-10"></fa-icon>{{'labels.buttons.Edit' | translate}}
   </button>
 </div>
 

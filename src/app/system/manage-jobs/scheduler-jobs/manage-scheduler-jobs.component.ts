@@ -17,6 +17,8 @@ import { ConfigurationWizardService } from '../../../configuration-wizard/config
 /** Custom Dialog Component */
 import { NextStepDialogComponent } from '../../../configuration-wizard/next-step-dialog/next-step-dialog.component';
 import { CustomParametersPopoverComponent } from './custom-parameters-popover/custom-parameters-popover.component';
+import { SchedulerJob } from './models/scheduler-job.model';
+import { ErrorLogPopoverComponent } from './error-log-popover/error-log-popover.component';
 
 /**
  * Manage scheduler jobs component.
@@ -33,7 +35,7 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
   /** Scheduler data */
   schedulerData: any;
   /** Columns to be displayed in manage scheduler jobs table. */
-  displayedColumns: string[] = ['select', 'displayName', 'active', 'nextRunTime', 'previousRunTime', 'previousRunStatus', 'currentlyRunning', 'errorLog'];
+  displayedColumns: string[] = ['select', 'displayName', 'active', 'previousRunTime', 'currentlyRunning', 'nextRunTime', 'errorLog'];
   /** Data source for manage scheduler jobs table. */
   dataSource: MatTableDataSource<any>;
   /** Initialize Selection */
@@ -250,6 +252,16 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
         selectedJobs: this.selection
       }
     });
+  }
+
+  showErrorLog(job: SchedulerJob): void {
+    if (job.lastRunHistory) {
+      this.dialog.open(ErrorLogPopoverComponent, {
+        data: {
+          job: job
+        }
+      });
+    }
   }
 
 }

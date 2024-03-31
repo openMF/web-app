@@ -29,6 +29,8 @@
     <mat-card-content>
 
       <div fxLayout="row wrap" class="content">
+        <div fxFlex="100%" [ngClass]="transactionColor()">
+        </div>
 
         <div fxFlex="50%" class="mat-body-strong">
           {{"labels.inputs.Id" | translate}}
@@ -59,15 +61,15 @@
         </div>
 
         <div fxFlex="50%">
-          {{ transactionData.currency.name }}
+          {{ transactionData.currency.displayLabel }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Amount" | translate}}
+          {{"labels.inputs.Amount" | translate }}
         </div>
 
         <div fxFlex="50%">
-          {{ transactionData.amount | currency:transactionData.currency.code }}
+          {{ transactionData.amount | currency:transactionData.currency.code:'symbol-narrow':'1.2-2' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="transactionData.note">
