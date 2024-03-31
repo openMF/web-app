@@ -39,3 +39,8 @@ table {
 .space-top {
   margin-top: 30px;
 }
+
+.cdk-column-displayName,
+.mat-column-displayName {
+  flex: 0 0 5px !important;
+}

@@ -16,6 +16,19 @@ import { OptionData } from 'app/shared/models/option-data.model';
         return ['NONE', 'Cash', 'Accrual (periodic)', 'Accrual (upfront)'];
     }
 
+    public getAccountRuleName(value: string): string {
+        if (value === 'ACCRUAL PERIODIC') {
+            return 'Accrual (periodic)';
+        } else if (value === 'ACCRUAL UPFRONT') {
+            return 'Accrual (upfront)';
+        } else if (value === 'CASH BASED') {
+            return 'Cash';
+        } else if (value === 'NONE') {
+            return 'None';
+        }
+        return '';
+    }
+
     public isNoneAccounting(accountingRule: OptionData): boolean {
         return (accountingRule.id === 1);
     }

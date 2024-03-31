@@ -64,57 +64,9 @@
           {{ transactionData.note }}
         </div>
 
-        <ng-container *ngIf="transactionData.paymentDetailData">
-
-          <div *ngIf="transactionData.paymentDetailData.paymentType" fxFlex="50%" class="mat-body-strong">
-            {{"labels.inputs.Payment Type" | translate }}
-          </div>
-
-          <div *ngIf="transactionData.paymentDetailData.paymentType" fxFlex="50%">
-            {{ transactionData.paymentDetailData.paymentType.name }}
-          </div>
-
-          <div *ngIf="transactionData.paymentDetailData.accountNumber" fxFlex="50%" class="mat-body-strong">
-            {{"labels.inputs.Account No" | translate }}.
-          </div>
-
-          <div *ngIf="transactionData.paymentDetailData.accountNumber" fxFlex="50%">
-            {{ transactionData.paymentDetailData.accountNumber }}
-          </div>
-
-          <div *ngIf="transactionData.paymentDetailData.checkNumber" fxFlex="50%" class="mat-body-strong">
-            {{"labels.inputs.Cheque Number" | translate }}
-          </div>
-
-          <div *ngIf="transactionData.paymentDetailData.checkNumber" fxFlex="50%">
-            {{ transactionData.paymentDetailData.checkNumber }}
-          </div>
-
-          <div *ngIf="transactionData.paymentDetailData.routingCode" fxFlex="50%" class="mat-body-strong">
-            {{"labels.inputs.Routing Code" | translate }}
-          </div>
-
-          <div *ngIf="transactionData.paymentDetailData.routingCode" fxFlex="50%">
-            {{ transactionData.paymentDetailData.routingCode }}
-          </div>
-
-          <div *ngIf="transactionData.paymentDetailData.receiptNumber" fxFlex="50%" class="mat-body-strong">
-            {{"labels.inputs.Receipt No" | translate }}.
-          </div>
-
-          <div *ngIf="transactionData.paymentDetailData.receiptNumber" fxFlex="50%">
-            {{ transactionData.paymentDetailData.receiptNumber }}
-          </div>
-
-          <div *ngIf="transactionData.paymentDetailData.bankNumber" fxFlex="50%" class="mat-body-strong">
-            {{"labels.inputs.Bank No" | translate }}.
-          </div>
-
-          <div *ngIf="transactionData.paymentDetailData.bankNumber" fxFlex="50%">
-            {{ transactionData.paymentDetailData.bankNumber }}
-          </div>
-
-        </ng-container>
+        <mifosx-transaction-payment-detail *ngIf="transactionData.paymentDetailData"
+          [paymentDetailData]="transactionData.paymentDetailData">
+        </mifosx-transaction-payment-detail>
 
       </div>
 

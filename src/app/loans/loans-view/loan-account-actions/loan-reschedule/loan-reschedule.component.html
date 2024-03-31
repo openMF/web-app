@@ -49,8 +49,8 @@
 
           <mat-checkbox [formControl]="changeRepaymentDate"> {{"labels.inputs.Change Repayment Date" | translate}} </mat-checkbox>
 
-          <ng-container *ngIf="changeRepaymentDate.value" (click)="installmentrescheduledDatePicker.open()">
-            <mat-form-field>
+          <ng-container *ngIf="changeRepaymentDate.value">
+            <mat-form-field (click)="installmentrescheduledDatePicker.open()">
               <mat-label>{{"labels.inputs.Installment Rescheduled to" | translate}}</mat-label>
               <input matInput [min]="minDate" [matDatepicker]="installmentrescheduledDatePicker"
                 formControlName="adjustedDueDate">

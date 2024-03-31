@@ -1,8 +1,8 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 
 /** Custom Dialogs */
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
@@ -14,6 +14,9 @@ import { ConfigurationWizardService } from '../../../configuration-wizard/config
 
 /** Custom Dialog Component */
 import { ContinueSetupDialogComponent } from '../../../configuration-wizard/continue-setup-dialog/continue-setup-dialog.component';
+import { takeUntil } from 'rxjs/operators';
+import { ReplaySubject, Subject } from 'rxjs';
+import { Currency } from 'app/shared/models/general.model';
 
 /**
  * Manage Currencies component.
@@ -23,12 +26,12 @@ import { ContinueSetupDialogComponent } from '../../../configuration-wizard/cont
   templateUrl: './manage-currencies.component.html',
   styleUrls: ['./manage-currencies.component.scss']
 })
-export class ManageCurrenciesComponent implements OnInit, AfterViewInit {
+export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   /** Selected Currencies data. */
   selectedCurrencies: any[];
   /** Currency options data */
-  currencyData: any;
+  currencyList: Currency[] = [];
   /** Currency form */
   currencyForm: any;
 
@@ -36,6 +39,15 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit {
   @ViewChild('formRef', { static: true }) formRef: any;
   @ViewChild('currencyFormRef') currencyFormRef: ElementRef<any>;
   @ViewChild('templateCurrencyFormRef') templateCurrencyFormRef: TemplateRef<any>;
+
+  /** Currency data. */
+  protected currencyData: ReplaySubject<Currency[]> = new ReplaySubject<Currency[]>(1);
+
+  /** control for the filter select */
+  protected filterFormCtrl: UntypedFormControl = new UntypedFormControl('');
+
+  /** Subject that emits when the component has been destroyed. */
+  protected _onDestroy = new Subject<void>();
 
   /**
    * Retrieves the currency data from `resolve`.
@@ -53,12 +65,28 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit {
               private popoverService: PopoverService) {
     this.route.parent.data.subscribe(( data: { currencies: any }) => {
       this.selectedCurrencies = data.currencies.selectedCurrencyOptions;
-      this.currencyData = data.currencies.currencyOptions;
+      this.currencyList = data.currencies.currencyOptions;
     });
   }
 
   ngOnInit() {
+    this.filterFormCtrl.valueChanges
+    .pipe(takeUntil(this._onDestroy))
+    .subscribe(() => {
+      this.searchItem();
+    });
     this.createCurrencyForm();
+  }
+
+  ngOnDestroy(): void {
+    this._onDestroy.next();
+    this._onDestroy.complete();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.currencyList) {
+      this.currencyData.next(this.currencyList.slice());
+    }
   }
 
   /**
@@ -68,6 +96,20 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit {
     this.currencyForm = this.formBuilder.group({
       'currency': ['', Validators.required]
     });
+  }
+
+  searchItem(): void {
+    if (this.currencyList) {
+      const search: string = this.filterFormCtrl.value.toLowerCase();
+
+      if (!search) {
+          this.currencyData.next(this.currencyList.slice());
+      } else {
+        this.currencyData.next(this.currencyList.filter((option: Currency) => {
+          return option.name.toLowerCase().indexOf(search) >= 0 || option.code.toLowerCase().indexOf(search) >= 0;
+        }));
+      }
+    }
   }
 
   /**

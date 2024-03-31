@@ -1,8 +1,8 @@
 <div>
-  <h2>Job: {{ displayName }}</h2>
+  <h2>{{'labels.inputs.Job' | translate}}: {{ displayName }}</h2>
   <table mat-table [dataSource]="updatedJobParameters">
     <ng-container matColumnDef="parameterName">
-      <th mat-header-cell *matHeaderCellDef>Parameter Name</th>
+      <th mat-header-cell *matHeaderCellDef>{{'labels.inputs.Parameter Name' | translate}}</th>
       <td mat-cell *matCellDef="let element; index as i">
         <mat-form-field>
           <input matInput type="text" placeholder="Parameter Name" [(ngModel)]="element.parameterName" />
@@ -11,7 +11,7 @@
     </ng-container>
 
     <ng-container matColumnDef="parameterValue">
-      <th mat-header-cell *matHeaderCellDef>Parameter Value</th>
+      <th mat-header-cell *matHeaderCellDef>{{'labels.inputs.Parameter Value' | translate}}</th>
       <td mat-cell *matCellDef="let element; index as i">
         <mat-form-field>
           <input matInput type="text" placeholder="Parameter Value" [(ngModel)]="element.parameterValue" />
@@ -36,6 +36,6 @@
 
   <button mat-button (click)="addParameter()">
     <fa-icon icon="plus" class="m-r-10"></fa-icon>
-    Add Parameter
+    {{'labels.buttons.Add Parameter' | translate}}
   </button>
 </div>

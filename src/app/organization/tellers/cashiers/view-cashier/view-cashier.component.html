@@ -1,11 +1,11 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CASHIER'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    Edit
+    {{'labels.buttons.Edit' | translate}}
   </button>
   <button mat-raised-button color="warn" (click)="deleteCashier()" *mifosxHasPermission="'DELETECASHIER_TELLER'">
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    Delete
+    {{'labels.buttons.Delete' | translate}}
   </button>
 </div>
 
@@ -19,7 +19,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="header">
-          Name
+          {{'labels.inputs.Name' | translate}}
         </div>
 
         <div fxFlex="50%">
@@ -27,7 +27,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Teller
+          {{'labels.inputs.Teller' | translate}}
         </div>
 
         <div fxFlex="50%">
@@ -35,7 +35,7 @@
         </div>
 
         <div fxFlex="50%" class="header" *ngIf="cashierData.description !== ''">
-          Description
+          {{'labels.inputs.Description' | translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="cashierData.description !== ''">
@@ -43,7 +43,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Start Date
+          {{'labels.inputs.Start Date' | translate}}
         </div>
 
         <div fxFlex="50%">
@@ -51,7 +51,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          End Date
+          {{'labels.inputs.End Date' | translate}}
         </div>
 
         <div fxFlex="50%">
@@ -59,7 +59,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Full Day?
+          {{'labels.inputs.Full Day?' | translate}}
         </div>
 
         <div fxFlex="50%">
@@ -69,7 +69,9 @@
       </div>
 
     </mat-card-content>
-
+    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <button type="button" mat-raised-button [routerLink]="['..']">{{"labels.buttons.Back" | translate}}</button>
+    </mat-card-actions>
   </mat-card>
 
 </div>

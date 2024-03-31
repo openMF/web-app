@@ -1,8 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SavingsAccountTransaction } from 'app/savings/models/savings-account-transaction.model';
 
 /**
  * Transactions Tab Component.
@@ -13,18 +17,19 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./transactions-tab.component.scss']
 })
 export class TransactionsTabComponent implements OnInit {
-
+  accountId: string;
   status: any;
   /** Transactions Data */
   transactionsData: any;
-  /** Temporary Transaction Data */
-  tempTransaction: any;
   /** Form control to handle accural parameter */
   hideAccrualsParam: UntypedFormControl;
+  hideReversedParam: UntypedFormControl;
   /** Columns to be displayed in transactions table. */
   displayedColumns: string[] = ['row', 'id', 'transactionDate', 'transactionType', 'debit', 'credit', 'balance', 'actions'];
   /** Data source for transactions table. */
   dataSource: MatTableDataSource<any>;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /**
    * Retrieves fixed deposits account data from `resolve`.
@@ -32,28 +37,19 @@ export class TransactionsTabComponent implements OnInit {
    * @param {Router} router Router
    */
   constructor(private route: ActivatedRoute,
-              private router: Router) {
+    private router: Router,
+    public dialog: MatDialog) {
     this.route.parent.data.subscribe((data: { fixedDepositsAccountData: any }) => {
       this.transactionsData = data.fixedDepositsAccountData.transactions;
-      this.tempTransaction = this.transactionsData;
+      this.accountId = this.route.parent.snapshot.params['fixedDepositAccountId'];
       this.status = data.fixedDepositsAccountData.status.value;
     });
   }
 
   ngOnInit() {
     this.hideAccrualsParam = new UntypedFormControl(false);
+    this.hideReversedParam = new UntypedFormControl(false);
     this.dataSource = new MatTableDataSource(this.transactionsData);
-    if (this.tempTransaction) {
-      this.tempTransaction.forEach((element: any) => {
-        if (this.isAccrual(element.transactionType)) {
-          this.tempTransaction = this.removeItem(this.tempTransaction, element);
-        }
-      });
-    }
-  }
-
-  private removeItem(arr: any, item: any) {
-    return arr.filter((f: any) => f !== item);
   }
 
   /**
@@ -88,25 +84,36 @@ export class TransactionsTabComponent implements OnInit {
     }
   }
 
-  transactionColor(transaction: any): string {
+  hideAccruals() {
+    this.filterTransactions(this.hideReversedParam.value, !this.hideAccrualsParam.value);
+  }
+
+  hideReversed() {
+    this.filterTransactions(!this.hideReversedParam.value, this.hideAccrualsParam.value);
+  }
+
+  filterTransactions(hideReversed: boolean, hideAccrual: boolean): void {
+    let transactions: SavingsAccountTransaction[] = this.transactionsData;
+
+    if (hideAccrual || hideReversed) {
+      transactions = this.transactionsData.filter((t: SavingsAccountTransaction) => {
+        return (!(hideReversed && t.reversed) && !(hideAccrual && t.transactionType.accrual));
+      });
+    }
+    this.dataSource = new MatTableDataSource(transactions);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  savingsTransactionColor(transaction: SavingsAccountTransaction): string {
     if (transaction.reversed) {
       return 'strike';
-    }
-    if (this.isAccrual(transaction.transactionType)) {
+    } else if (transaction.transfer) {
+      return 'transfer';
+    } else if (transaction.transactionType.accrual) {
       return 'accrual';
-    }
-    return '';
-  }
-
-  private isAccrual(transactionType: any): boolean  {
-    return (transactionType.accrual);
-  }
-
-  hideAccruals() {
-    if (!this.hideAccrualsParam.value) {
-      this.dataSource = new MatTableDataSource(this.tempTransaction);
     } else {
-      this.dataSource = new MatTableDataSource(this.transactionsData);
+      return '';
     }
   }
 
@@ -118,4 +125,7 @@ export class TransactionsTabComponent implements OnInit {
     $event.stopPropagation();
   }
 
+  undoTransaction(transactionData: SavingsAccountTransaction): void {
+
+  }
 }

@@ -33,18 +33,3 @@
     }
   }
 }
-
-.active {
-  background-color: $status-active;
-  height: 4px;
-}
-
-.linked {
-  background-color: $status-approved;
-  height: 4px;
-}
-
-.undo {
-  background-color: $status-active-overdue;
-  height: 4px;
-}

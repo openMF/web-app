@@ -73,7 +73,7 @@ export class ViewTransactionComponent {
   }
 
   transactionColor(): string {
-    if (this.transactionData.manuallyReversed) {
+    if (this.transactionData.reversed) {
       return 'undo';
     }
     return 'active';

@@ -1,3 +1,5 @@
+@import "assets/styles/helper";
+
 .container {
   max-width: 37rem;
   .content {
@@ -11,4 +13,19 @@
       margin-bottom: 20px;
     }
   }
+}
+
+.active {
+  background-color: $status-active;
+  height: 4px;
+}
+
+.linked {
+  background-color: $status-approved;
+  height: 4px;
+}
+
+.undo {
+  background-color: $status-active-overdue;
+  height: 4px;
 }

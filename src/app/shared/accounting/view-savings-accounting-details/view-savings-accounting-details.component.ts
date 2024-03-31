@@ -31,4 +31,8 @@ export class ViewSavingsAccountingDetailsComponent implements OnInit {
     return false;
   }
 
+  getAccountingRuleName(value: string): string {
+    return this.accounting.getAccountRuleName(value);
+  }
+
 }

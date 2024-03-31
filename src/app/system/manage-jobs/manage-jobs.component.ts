@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { SystemService } from '../system.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'mifosx-manage-jobs',
@@ -11,7 +12,8 @@ export class ManageJobsComponent implements OnInit {
   /** Process running flag */
   isCatchUpRunning = true;
 
-  constructor(private systemService: SystemService) { }
+  constructor(private systemService: SystemService,
+    private translateService: TranslateService) { }
 
   ngOnInit(): void {
   }
@@ -22,6 +24,10 @@ export class ManageJobsComponent implements OnInit {
         this.isCatchUpRunning = response.isCatchUpRunning;
       });
     }
+  }
+
+  title(label: string) {
+    return this.translateService.instant('labels.inputs.' + label);
   }
 
 }

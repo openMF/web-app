@@ -6,6 +6,8 @@
         <h3>{{"labels.heading.All Transactions" | translate }}</h3>
       </div>
       <div class="action-button m-b-20" fxLayout="row" fxLayoutGap="20px" *ngIf="checkStatus()">
+        <mat-checkbox [formControl]="hideReversedParam" (click)="hideReversed()" class="accruals">
+          {{"labels.inputs.Hide Reversed" | translate}}</mat-checkbox>
         <mat-checkbox [formControl]="hideAccrualsParam" (click)="hideAccruals()" class="accruals">
           {{"labels.inputs.Hide Accruals" | translate}}</mat-checkbox>
       </div>
@@ -20,38 +22,57 @@
 
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.ID" | translate }} </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="{'strike': transaction.reversed}"> {{ transaction.id }} </td>
+        <td mat-cell *matCellDef="let transaction" [ngClass]="savingsTransactionColor(transaction)" (click)="showTransactions(transaction)"> {{ transaction.id }} </td>
       </ng-container>
 
       <ng-container matColumnDef="transactionDate">
         <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Transaction Date" | translate }} </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="{'strike': transaction.reversed}"> {{ transaction.date  | dateFormat }} </td>
+        <td mat-cell *matCellDef="let transaction" [ngClass]="savingsTransactionColor(transaction)"> {{ transaction.date  | dateFormat }} </td>
       </ng-container>
 
       <ng-container matColumnDef="transactionType">
         <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Transaction Type" | translate }} </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="{'strike': transaction.reversed}"> {{ transaction.transactionType.value  }} </td>
+        <td mat-cell *matCellDef="let transaction" [ngClass]="savingsTransactionColor(transaction)"> {{ transaction.transactionType.value  }} </td>
       </ng-container>
 
       <ng-container matColumnDef="debit">
-        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Debit" | translate }} </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="{'strike': transaction.reversed}">
+        <th mat-header-cell *matHeaderCellDef class="center"> {{"labels.inputs.Debit" | translate }} </th>
+        <td mat-cell *matCellDef="let transaction" class="r-amount" [ngClass]="savingsTransactionColor(transaction)">
           {{ isDebit(transaction.transactionType) ? transaction.amount : 'N/A'}} </td>
       </ng-container>
 
       <ng-container matColumnDef="credit">
-        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Credit" | translate }} </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="{'strike': transaction.reversed}">
+        <th mat-header-cell *matHeaderCellDef class="center"> {{"labels.inputs.Credit" | translate }} </th>
+        <td mat-cell *matCellDef="let transaction" class="r-amount" [ngClass]="savingsTransactionColor(transaction)">
           {{ !isDebit(transaction.transactionType) ? transaction.amount : 'N/A' }} </td>
       </ng-container>
 
       <ng-container matColumnDef="balance">
-        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Balance" | translate }} </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="{'strike': transaction.reversed}"> {{ transaction.runningBalance }} </td>
+        <th mat-header-cell *matHeaderCellDef class="center"> {{"labels.inputs.Balance" | translate }} </th>
+        <td mat-cell *matCellDef="let transaction" class="r-amount" [ngClass]="savingsTransactionColor(transaction)"> {{ transaction.runningBalance | formatNumber }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Actions" | translate }} </th>
+        <td mat-cell class="center" *matCellDef="let transaction">
+          <button mat-icon-button [matMenuTriggerFor]="transactionMenu" aria-label="" class="action-button">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #transactionMenu="matMenu">
+            <button mat-menu-item (click)="showTransactions(transaction)">
+              <mat-icon><fa-icon icon="eye" size="sm"></fa-icon></mat-icon>
+              <span>{{ 'labels.text.View Transaction' | translate}}</span>
+            </button>
+            <button mat-menu-item (click)="routeEdit($event)" [routerLink]="['/','journal-entry', 'view', 'S'+transaction.id ]">
+              <mat-icon><fa-icon icon="table-cells" size="sm"></fa-icon></mat-icon>
+              <span>{{ 'tooltips.View Journal Entries' | translate}}</span>
+            </button>
+          </mat-menu>
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row" (click)="showTransactions(row)"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row" ></tr>
 
     </table>
 

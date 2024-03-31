@@ -74,6 +74,7 @@ import { CobWorkflowComponent } from './manage-jobs/cob-workflow/cob-workflow.co
 import { LoanLockedComponent } from './manage-jobs/cob-workflow/loan-locked/loan-locked.component';
 import { CustomParametersPopoverComponent } from './manage-jobs/scheduler-jobs/custom-parameters-popover/custom-parameters-popover.component';
 import { CustomParametersTableComponent } from './manage-jobs/scheduler-jobs/custom-parameters-popover/custom-parameters-table/custom-parameters-table.component';
+import { ErrorLogPopoverComponent } from './manage-jobs/scheduler-jobs/error-log-popover/error-log-popover.component';
 
 @NgModule({
   imports: [
@@ -147,7 +148,8 @@ import { CustomParametersTableComponent } from './manage-jobs/scheduler-jobs/cus
     CobWorkflowComponent,
     LoanLockedComponent,
     CustomParametersPopoverComponent,
-    CustomParametersTableComponent
+    CustomParametersTableComponent,
+    ErrorLogPopoverComponent
   ],
 })
 export class SystemModule { }
