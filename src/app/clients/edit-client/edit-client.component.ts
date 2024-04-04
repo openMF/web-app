@@ -158,6 +158,10 @@ export class EditClientComponent implements OnInit {
     });
   }
 
+  getDateLabel(legalFormId: number, values: string[]): string {
+    return legalFormId === 1 ? values[0] : values[1];
+  }
+
   /**
    * Submits the edit client form.
    */

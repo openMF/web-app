@@ -21,9 +21,7 @@ import { LoanTransactionType } from 'app/loans/models/loan-transaction-type.mode
 export class TransactionsTabComponent implements OnInit {
 
   /** Loan Details Data */
-  transactions: any;
-  /** Temporary Transaction Data */
-  tempTransaction: any;
+  transactionsData: LoanTransaction[] = [];
   /** Form control to handle accural parameter */
   hideAccrualsParam: UntypedFormControl;
   hideReversedParam: UntypedFormControl;
@@ -51,8 +49,7 @@ export class TransactionsTabComponent implements OnInit {
     private translateService: TranslateService,
     private settingsService: SettingsService) {
     this.route.parent.parent.data.subscribe((data: { loanDetailsData: any }) => {
-      this.transactions = data.loanDetailsData.transactions;
-      this.tempTransaction = data.loanDetailsData.transactions;
+      this.transactionsData = data.loanDetailsData.transactions;
       this.status = data.loanDetailsData.status.value;
     });
     this.loanId = this.route.parent.parent.snapshot.params['loanId'];
@@ -61,24 +58,16 @@ export class TransactionsTabComponent implements OnInit {
   ngOnInit() {
     this.hideAccrualsParam = new UntypedFormControl(false);
     this.hideReversedParam = new UntypedFormControl(false);
-    this.setLoanTransactions(this.transactions);
+    this.setLoanTransactions();
   }
 
-  setLoanTransactions(transactions: any) {
-    this.transactions = transactions;
-    this.transactions.forEach((element: any) => {
+  setLoanTransactions() {
+    this.transactionsData.forEach((element: any) => {
       element.date = this.dateUtils.parseDate(element.date);
     });
-    this.dataSource = new MatTableDataSource(this.transactions);
+    this.dataSource = new MatTableDataSource(this.transactionsData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    if (this.tempTransaction) {
-      this.tempTransaction.forEach((element: LoanTransaction) => {
-        if (this.isAccrual(element.type)) {
-          this.tempTransaction = this.removeItem(this.tempTransaction, element);
-        }
-      });
-    }
   }
 
   /**
@@ -93,11 +82,24 @@ export class TransactionsTabComponent implements OnInit {
   }
 
   hideAccruals() {
-    if (!this.hideAccrualsParam.value) {
-      this.dataSource = new MatTableDataSource(this.tempTransaction);
-    } else {
-      this.dataSource = new MatTableDataSource(this.transactions);
+    this.filterTransactions(this.hideReversedParam.value, !this.hideAccrualsParam.value);
+  }
+
+  hideReversed() {
+    this.filterTransactions(!this.hideReversedParam.value, this.hideAccrualsParam.value);
+  }
+
+  filterTransactions(hideReversed: boolean, hideAccrual: boolean): void {
+    let transactions: LoanTransaction[] = this.transactionsData;
+
+    if (hideAccrual || hideReversed) {
+      transactions = this.transactionsData.filter((t: LoanTransaction) => {
+        return (!(hideReversed && t.manuallyReversed) && !(hideAccrual && t.type.accrual));
+      });
     }
+    this.dataSource = new MatTableDataSource(transactions);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   applyFilter(filterValue: string = '') {
@@ -275,25 +277,11 @@ export class TransactionsTabComponent implements OnInit {
       .then(() => this.router.navigate([url]));
   }
 
-  hideReversed() {
-    let transactions: LoanTransaction[] = this.transactions;
-    if (!this.hideReversedParam.value) {
-      transactions = [];
-      this.transactions.forEach((t: LoanTransaction) => {
-        if (!t.manuallyReversed) {
-          transactions.push(t);
-        }
-      });
-    }
-    this.dataSource = new MatTableDataSource(transactions);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
   displaySubMenu(transaction: LoanTransaction): boolean {
     if (this.isReAgoeOrReAmortize(transaction.type) && transaction.manuallyReversed) {
       return false;
     }
     return true;
   }
+
 }

@@ -153,6 +153,10 @@ export class ClientGeneralStepComponent implements OnInit {
     });
   }
 
+  getDateLabel(legalFormId: number, values: string[]): string {
+    return legalFormId === 1 ? values[0] : values[1];
+  }
+
   /**
    * Client General Details
    */
