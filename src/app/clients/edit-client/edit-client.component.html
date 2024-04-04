@@ -8,7 +8,7 @@
 
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field fxFlex="23%">
             <mat-label>{{"labels.inputs.Office" | translate}}</mat-label>
             <mat-select required formControlName="officeId">
               <mat-option *ngFor="let office of officeOptions" [value]="office.id">
@@ -20,7 +20,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field fxFlex="23%">
             <mat-label>{{"labels.inputs.Legal Form" | translate}}</mat-label>
             <mat-select formControlName="legalFormId">
               <mat-option *ngFor="let legalForm of legalFormOptions" [value]="legalForm.id">
@@ -29,22 +29,18 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field fxFlex="23%">
             <mat-label>{{"labels.inputs.Account No" | translate}}</mat-label>
             <input matInput formControlName="accountNo">
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
-            <mat-label>{{"labels.inputs.Staff" | translate}}</mat-label>
-            <mat-select formControlName="staffId">
-              <mat-option *ngFor="let staff of staffOptions" [value]="staff.id">
-                {{ staff.displayName }}
-              </mat-option>
-            </mat-select>
+          <mat-form-field fxFlex="23%">
+            <mat-label>{{"labels.inputs.External Id" | translate}}</mat-label>
+            <input matInput formControlName="externalId">
           </mat-form-field>
 
           <mat-form-field *ngIf="editClientForm.contains('fullname')" fxFlex="48%">
-            <mat-label>{{ legalFormId === 1 ? 'Name' : 'Entity Name' }}</mat-label>
+            <mat-label>{{ 'labels.inputs.' + getDateLabel(legalFormId, ['Name', 'Entity Name']) | translate }}</mat-label>
             <input matInput required formControlName="fullname">
             <mat-error *ngIf="editClientForm.controls.fullname.hasError('required')">
               {{"labels.inputs.Client name" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
@@ -72,6 +68,15 @@
             </mat-error>
           </mat-form-field>
 
+          <mat-divider></mat-divider>
+
+          <mat-form-field fxFlex="48%" (click)="dateOfBirthDatePicker.open()">
+            <mat-label>{{ 'labels.inputs.' + getDateLabel(legalFormId, ['Date of Birth', 'Incorporation Date']) | translate }}</mat-label>
+            <input matInput [max]="maxDate" [matDatepicker]="dateOfBirthDatePicker" formControlName="dateOfBirth">
+            <mat-datepicker-toggle matSuffix [for]="dateOfBirthDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #dateOfBirthDatePicker></mat-datepicker>
+          </mat-form-field>
+
           <mat-form-field *ngIf="legalFormId === 1" fxFlex="48%">
             <mat-label>{{"labels.inputs.Gender" | translate}}</mat-label>
             <mat-select formControlName="genderId">
@@ -81,11 +86,13 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%" (click)="dateOfBirthDatePicker.open()">
-            <mat-label>{{ legalFormId === 1 ? 'Date of Birth' : 'Incorporation Date' }}</mat-label>
-            <input matInput [max]="maxDate" [matDatepicker]="dateOfBirthDatePicker" formControlName="dateOfBirth">
-            <mat-datepicker-toggle matSuffix [for]="dateOfBirthDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #dateOfBirthDatePicker></mat-datepicker>
+          <mat-form-field fxFlex="48%">
+            <mat-label>{{"labels.inputs.Staff" | translate}}</mat-label>
+            <mat-select formControlName="staffId">
+              <mat-option *ngFor="let staff of staffOptions" [value]="staff.id">
+                {{ staff.displayName }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
 
           <div fxFlex="100%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" formGroupName="clientNonPersonDetails"
@@ -126,11 +133,6 @@
               <textarea matInput formControlName="remarks" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
             </mat-form-field>
           </div>
-
-          <mat-form-field fxFlex="48%">
-            <mat-label>{{"labels.inputs.External Id" | translate}}</mat-label>
-            <input matInput formControlName="externalId">
-          </mat-form-field>
 
           <mat-checkbox *ngIf="legalFormId === 1" fxFlex="48%" labelPosition="before" formControlName="isStaff" class="margin-v">
             {{"labels.inputs.Is staff" | translate}}?

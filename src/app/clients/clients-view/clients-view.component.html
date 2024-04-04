@@ -60,6 +60,13 @@
               </span>
             </span>
             <br />
+            <span *ngIf="clientViewData.mobileNo">
+              <b>{{"labels.inputs.Mobile Number" | translate}}:</b><mifosx-external-identifier externalId="{{clientViewData.mobileNo}}" completed="true"></mifosx-external-identifier><br />
+            </span>
+            <span *ngIf="clientViewData.emailAddress">
+              <b>{{"labels.inputs.Email" | translate}}:</b><mifosx-external-identifier externalId="{{clientViewData.emailAddress}}" completed="true"></mifosx-external-identifier><br />
+            </span>
+            <br />
           </p>
         </mat-card-subtitle>
 
