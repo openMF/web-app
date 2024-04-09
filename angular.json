@@ -110,6 +110,20 @@
                 }
               ]
             },
+            "test": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.test.ts"
+                }
+              ]
+            },
             "qa": {
               "budgets": [
                 {
@@ -140,6 +154,9 @@
             },
             "qa": {
               "browserTarget": "mifosx-web-app:build:qa"
+            },
+            "test": {
+              "browserTarget": "mifosx-web-app:build:test"
             }
           }
         },

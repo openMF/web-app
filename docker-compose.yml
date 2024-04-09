@@ -5,7 +5,10 @@ services:
   mifosx-web-app:
     build:
       context: .
+      args:
+        - BUILD_ENV=${BUILD_ENV:-test}
       dockerfile: Dockerfile
+    #platform: linux/amd64 # For mac
     ports:
       - '4200:80'
     environment:
@@ -16,3 +19,4 @@ services:
       - FINERACT_PLATFORM_TENANT_IDENTIFIER=default
       - MIFOS_DEFAULT_LANGUAGE=en-US
       - MIFOS_SUPPORTED_LANGUAGES=en-US,fr-FR
+      - BUILD_ENV=test

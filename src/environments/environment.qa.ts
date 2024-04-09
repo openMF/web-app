@@ -14,7 +14,7 @@ export const environment = {
   fineractPlatformTenantId: window['env']['fineractPlatformTenantId'] || 'default',
   // For connecting to others servers running elsewhere update the base API URL
   baseApiUrls: window['env']['fineractApiUrls'] ||
-    'https://dev.mifos.io,https://demo.mifos.io,https://qa.mifos.io,https://staging.mifos.io,https://mobile.mifos.io,https://loans.test.oneacrefund.org,https://localhost:8443',
+    'https://dev.mifos.io,https://demo.mifos.io,https://qa.mifos.io,https://staging.mifos.io,https://mobile.mifos.io,https://loans.qa.oneacrefund.org,https://localhost:8443',
   // For connecting to server running elsewhere set the base API URL
   baseApiUrl: window['env']['baseApiUrl'] || 'https://loans.qa.oneacrefund.org',
   allowServerSwitch: env.allow_switching_backend_instance,

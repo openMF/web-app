@@ -19,7 +19,7 @@ RUN npm cache clear --force &&\
 
   npm install &&\
 
-  ng build --configuration production --output-path=/dist
+  ng build --configuration test --output-path=/dist
 
 ###############
 ### STAGE 2: Serve app with nginx ###
