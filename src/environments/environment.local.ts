@@ -23,7 +23,7 @@ export const environment = {
   serverUrl: '',
   oauth: {
     enabled: true,  // For connecting to Mifos X using OAuth2 Authentication change the value to true
-    serverUrl: 'http://localhost:8080/auth',
+    serverUrl: window['env']['authServerUrl'] || 'http://localhost:8080/auth',
     realm: 'Fineract',
     client_id: 'login-app',
     tokenUrl: `http://localhost:8080/auth/realms/Fineract/protocol/openid-connect/token`,

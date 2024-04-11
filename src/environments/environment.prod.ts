@@ -18,7 +18,7 @@ export const environment = {
   serverUrl: '',
   oauth: {
     enabled: true,  // For connecting to Mifos X using OAuth2 Authentication change the value to true
-    serverUrl: 'https://accounts.oneacrefund.org',
+    serverUrl: window['env']['authServerUrl'] || 'https://accounts.oneacrefund.org',
     realm:'OneAcreFund',
     client_id:'fineract',
     tokenUrl: `https://loans.oneacrefund.org/auth/realms/OneAcreFund/protocol/openid-connect/token`,
