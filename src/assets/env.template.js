@@ -10,6 +10,8 @@
 
   window["env"]["fineractPlatformTenantId"]  = '$FINERACT_PLATFORM_TENANT_IDENTIFIER';
 
+  window['env']['authServerUrl'] ='$AUTH_SERVER_URL';
+
   // Language Environment variables
   window["env"]["defaultLanguage"] = '$MIFOS_DEFAULT_LANGUAGE';
   window["env"]["supportedLanguages"] = '$MIFOS_SUPPORTED_LANGUAGES';
