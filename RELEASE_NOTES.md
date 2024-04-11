@@ -28,6 +28,8 @@ Release Notes
     * [SER-1521] - As a country admin, I should be able to add an extension charge
     * [SER-2030] - Implement loan terms and conditions
     * [SER-2045] - Add delete button for loan product 
+    * [SER-2093] - Add qualification rules on loan products
+    * [SER-2438] - Fix view client details
     * [SER-2093] - Add qualification rules on loan products    
     * [SER-2396] - Deploy fineract UI v2 on the integration cluster (Added missing envs)
     * [SER-2440] - Revise the country selection option to check for the Head Office instead of roles

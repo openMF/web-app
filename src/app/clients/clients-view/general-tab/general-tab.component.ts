@@ -71,7 +71,7 @@ export class GeneralTabComponent {
       this.clientAccountData = data.clientAccountsData;
       this.savingAccounts = data.clientAccountsData.savingsAccounts;
       this.loanAccounts = data.clientAccountsData.loanAccounts;
-      this.shareAccounts = data.clientAccountsData.shareAccounts;
+     // this.shareAccounts = data.clientAccountsData.shareAccounts;
       this.upcomingCharges = data.clientChargesData.pageItems;
       this.clientSummary = data.clientSummary ? data.clientSummary[0] : [];
       this.clientid = this.route.parent.snapshot.params['clientId'];

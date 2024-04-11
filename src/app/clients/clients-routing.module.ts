@@ -74,7 +74,7 @@ const routes: Routes = [
         resolve: {
           clientViewData: ClientViewResolver,
           clientTemplateData: ClientTemplateResolver,
-          clientDatatables: ClientDatatablesResolver
+          //clientDatatables: ClientDatatablesResolver, no need to loa data tables.
         },
         children: [
           {

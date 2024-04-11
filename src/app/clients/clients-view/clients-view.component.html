@@ -1,154 +1,258 @@
 <mat-card class="client-card">
-
   <mat-card-header fxLayout="column" class="header">
-
     <mat-card-title-group class="header-title-group">
-
       <div class="profile-image-container">
         <div>
-          <img mat-card-md-image class="profile-image"
-            [src]="(clientImage)?clientImage:'assets/images/user_placeholder.png'">
+          <img
+            mat-card-md-image
+            class="profile-image"
+            [src]="clientImage ? clientImage : 'assets/images/user_placeholder.png'"
+          />
         </div>
         <div fxLayoutAlign="center center" class="m-b-5">
-          <button class="client-image-button" mat-raised-button (click)="doAction('Upload Image')" matTooltip="Upload Image" *mifosxHasPermission="'CREATE_CLIENTIMAGE'">
+          <button
+            class="client-image-button"
+            mat-raised-button
+            (click)="doAction('Upload Image')"
+            matTooltip="Upload Image"
+            *mifosxHasPermission="'CREATE_CLIENTIMAGE'"
+          >
             <i class="fa fa-upload"></i>
           </button>
-          <button class="client-image-button" mat-raised-button (click)="doAction('Capture Image')" matTooltip="Capture Image" *mifosxHasPermission="'CREATE_CLIENTIMAGE'">
+          <button
+            class="client-image-button"
+            mat-raised-button
+            (click)="doAction('Capture Image')"
+            matTooltip="Capture Image"
+            *mifosxHasPermission="'CREATE_CLIENTIMAGE'"
+          >
             <i class="fa fa-camera"></i>
           </button>
-          <button class="client-image-button" mat-raised-button (click)="doAction('Delete Image')" matTooltip="Delete Image" *mifosxHasPermission="'DELETE_CLIENTIMAGE'">
+          <button
+            class="client-image-button"
+            mat-raised-button
+            (click)="doAction('Delete Image')"
+            matTooltip="Delete Image"
+            *mifosxHasPermission="'DELETE_CLIENTIMAGE'"
+          >
             <i class="fa fa-trash"></i>
           </button>
-          <br>
+          <br />
         </div>
         <p (click)="doAction('View Signature')" class="signature">View Signature</p>
       </div>
 
       <div class="mat-typography client-card-title">
-
         <mat-card-title>
           <h3>
-            <i class="fa fa-stop" [ngClass]="clientViewData.status.code|statusLookup" [matTooltip]="clientViewData.status.value"></i>
-            Client Name : {{clientViewData.displayName}}
+            <i
+              class="fa fa-stop"
+              [ngClass]="clientViewData.status.code | statusLookup"
+              [matTooltip]="clientViewData.status.value"
+            ></i>
+            Client Name : {{ clientViewData.displayName }}
           </h3>
         </mat-card-title>
 
         <mat-card-subtitle>
           <p>
-            Client #:{{clientViewData.accountNo}} | External
-            Id: {{clientViewData.externalId}} | Staff:{{clientViewData.staffName || 'Unassigned'}}<br />
+            Client #:{{ clientViewData.accountNo }} | External Id: {{ clientViewData.externalId }} | Staff:{{
+              clientViewData.staffName || "Unassigned"
+            }}<br />
             Activation Date :
-            {{(clientViewData.activation)?(clientViewData.activationDate | dateFormat) :'Not Activated'}}<br />
+            {{ clientViewData.activation ? (clientViewData.activationDate | dateFormat) : "Not Activated" }}<br />
             Member Of :
             <span *ngFor="let group of clientViewData.groups">
-              <a>{{group.name}}</a>&nbsp;
+              <a>{{ group.name }}</a
+              >&nbsp;
             </span>
             <span *ngIf="!clientViewData.groups">Unassigned</span>
-            <br/>
+            <br />
           </p>
         </mat-card-subtitle>
-
       </div>
-
     </mat-card-title-group>
 
     <mat-card-actions class="client-actions">
-
       <span *mifosxHasPermission="'UPDATE_CLIENT'">
-        <button mat-raised-button [routerLink]="['edit']">
-          <i class="fa fa-edit"></i>Edit</button>
+        <button mat-raised-button [routerLink]="['edit']"><i class="fa fa-edit"></i>Edit</button>
       </span>
 
-      <button mat-raised-button [matMenuTriggerFor]="Applications">
-        <i class="fa fa-file"></i>Applications</button>
+      <button mat-raised-button [matMenuTriggerFor]="Applications"><i class="fa fa-file"></i>Applications</button>
       <mat-menu #Applications="matMenu">
         <button mat-menu-item [routerLink]="['loans-accounts', 'create']">New Loan Account</button>
         <button mat-menu-item [routerLink]="['savings-accounts', 'create']">New Savings Account</button>
-        <button mat-menu-item *mifosxHasPermission="'CREATE_SHAREACCOUNT'" [routerLink]="['shares-accounts', 'create']">New Share Account</button>
-        <button mat-menu-item *mifosxHasPermission="'CREATE_RECURRINGDEPOSITACCOUNT'" [routerLink]="['recurringdeposits', 'create-recurring-deposits-account']">New Recurring Deposit Account</button>
-        <button mat-menu-item *mifosxHasPermission="'CREATE_FIXEDDEPOSITACCOUNT'" [routerLink]="['fixed-deposits-accounts', 'create']">New Fixed Deposits Account</button>
+        <button mat-menu-item *mifosxHasPermission="'CREATE_SHAREACCOUNT'" [routerLink]="['shares-accounts', 'create']">
+          New Share Account
+        </button>
+        <button
+          mat-menu-item
+          *mifosxHasPermission="'CREATE_RECURRINGDEPOSITACCOUNT'"
+          [routerLink]="['recurringdeposits', 'create-recurring-deposits-account']"
+        >
+          New Recurring Deposit Account
+        </button>
+        <button
+          mat-menu-item
+          *mifosxHasPermission="'CREATE_FIXEDDEPOSITACCOUNT'"
+          [routerLink]="['fixed-deposits-accounts', 'create']"
+        >
+          New Fixed Deposits Account
+        </button>
       </mat-menu>
 
-      <button mat-raised-button [matMenuTriggerFor]="Actions">
-        <i class="fa fa-tasks"></i>Actions</button>
+      <button mat-raised-button [matMenuTriggerFor]="Actions"><i class="fa fa-tasks"></i>Actions</button>
       <mat-menu #Actions="matMenu">
         <button mat-menu-item (click)="doAction('Close')">Close</button>
         <button mat-menu-item (click)="doAction('Transfer Client')">Transfer Client</button>
-        <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item (click)="doAction('Activate')">Activate</button></span>
-        <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item (click)="doAction('Withdraw')">Withdraw</button></span>
-        <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item (click)="doAction('Reject')">Reject</button></span>
-        <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item *mifosxHasPermission="'DELETE_CLIENT'" (click)="doAction('Delete')">Delete</button></span>
-        <span *ngIf="clientViewData.status.value === 'Closed'"><button mat-menu-item (click)="doAction('Reactivate')">Reactivate</button></span>
-        <span *ngIf="clientViewData.status.value === 'Rejected'"><button mat-menu-item (click)="doAction('Undo Rejection')">Undo Rejection</button></span>
-        <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item (click)="doAction('Undo Transfer')">Undo Transfer</button></span>
-        <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item (click)="doAction('Accept Transfer')">Accept Transfer</button></span>
-        <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item (click)="doAction('Reject Transfer')">Reject transfer</button></span>
+        <span *ngIf="clientViewData.status.value === 'Pending'"
+          ><button mat-menu-item (click)="doAction('Activate')">Activate</button></span
+        >
+        <span *ngIf="clientViewData.status.value === 'Pending'"
+          ><button mat-menu-item (click)="doAction('Withdraw')">Withdraw</button></span
+        >
+        <span *ngIf="clientViewData.status.value === 'Pending'"
+          ><button mat-menu-item (click)="doAction('Reject')">Reject</button></span
+        >
+        <span *ngIf="clientViewData.status.value === 'Pending'"
+          ><button mat-menu-item *mifosxHasPermission="'DELETE_CLIENT'" (click)="doAction('Delete')">
+            Delete
+          </button></span
+        >
+        <span *ngIf="clientViewData.status.value === 'Closed'"
+          ><button mat-menu-item (click)="doAction('Reactivate')">Reactivate</button></span
+        >
+        <span *ngIf="clientViewData.status.value === 'Rejected'"
+          ><button mat-menu-item (click)="doAction('Undo Rejection')">Undo Rejection</button></span
+        >
+        <span *ngIf="clientViewData.status.value === 'Transfer in progress'"
+          ><button mat-menu-item (click)="doAction('Undo Transfer')">Undo Transfer</button></span
+        >
+        <span *ngIf="clientViewData.status.value === 'Transfer in progress'"
+          ><button mat-menu-item (click)="doAction('Accept Transfer')">Accept Transfer</button></span
+        >
+        <span *ngIf="clientViewData.status.value === 'Transfer in progress'"
+          ><button mat-menu-item (click)="doAction('Reject Transfer')">Reject transfer</button></span
+        >
       </mat-menu>
 
       <span *ngIf="!clientViewData.staffId">
-        <button mat-raised-button (click)="doAction('Assign Staff')">
-          <i class="fa fa-user"></i>Assign Staff</button>
+        <button mat-raised-button (click)="doAction('Assign Staff')"><i class="fa fa-user"></i>Assign Staff</button>
       </span>
       <span *ngIf="clientViewData.staffId">
         <button mat-raised-button *mifosxHasPermission="'UNASSIGNSTAFF_CLIENT'" (click)="doAction('Unassign Staff')">
-          <i class="fa fa-user"></i>Unassign Staff</button>
+          <i class="fa fa-user"></i>Unassign Staff
+        </button>
       </span>
 
       <button mat-raised-button [matMenuTriggerFor]="More">More</button>
       <mat-menu #More="matMenu">
-        <button mat-menu-item (click)="doAction('Add Charge')" *mifosxHasPermission="'CREATE_CLIENTCHARGE'"> Add Charge </button>
+        <button mat-menu-item (click)="doAction('Add Charge')" *mifosxHasPermission="'CREATE_CLIENTCHARGE'">
+          Add Charge
+        </button>
         <button mat-menu-item (click)="doAction('Survey')">Survey</button>
-        <button mat-menu-item (click)="doAction('Update Default Savings')" *mifosxHasPermission="'UPDATESAVINGSACCOUNT_CLIENT'"> Update Default Savings </button>
-        <button mat-menu-item (click)="doAction('Upload Signature')" *mifosxHasPermission="'CREATE_CLIENTIMAGE'"> Upload Signature </button>
-        <button mat-menu-item (click)="doAction('Delete Signature')" *mifosxHasPermission="'DELETE_CLIENTIMAGE'"> Delete Signature </button>
-        <button mat-menu-item (click)="doAction('Client Screen Reports')"> Client Screen Reports </button>
-        <button mat-menu-item (click)="doAction('Create Standing Instructions')" *mifosxHasPermission="'READ_STANDINGINSTRUCTION'">Create Standing Instructions</button>
-        <span *ngIf="clientViewData.status.value!='Transfer on hold'">
-          <button mat-menu-item (click)="doAction('View Standing Instructions')" *mifosxHasPermission="'CREATE_STANDINGINSTRUCTION'">View Standing Instructions</button>
+        <button
+          mat-menu-item
+          (click)="doAction('Update Default Savings')"
+          *mifosxHasPermission="'UPDATESAVINGSACCOUNT_CLIENT'"
+        >
+          Update Default Savings
+        </button>
+        <button mat-menu-item (click)="doAction('Upload Signature')" *mifosxHasPermission="'CREATE_CLIENTIMAGE'">
+          Upload Signature
+        </button>
+        <button mat-menu-item (click)="doAction('Delete Signature')" *mifosxHasPermission="'DELETE_CLIENTIMAGE'">
+          Delete Signature
+        </button>
+        <button mat-menu-item (click)="doAction('Client Screen Reports')">Client Screen Reports</button>
+        <button
+          mat-menu-item
+          (click)="doAction('Create Standing Instructions')"
+          *mifosxHasPermission="'READ_STANDINGINSTRUCTION'"
+        >
+          Create Standing Instructions
+        </button>
+        <span *ngIf="clientViewData.status.value != 'Transfer on hold'">
+          <button
+            mat-menu-item
+            (click)="doAction('View Standing Instructions')"
+            *mifosxHasPermission="'CREATE_STANDINGINSTRUCTION'"
+          >
+            View Standing Instructions
+          </button>
         </span>
         <button mat-menu-item (click)="doAction('Create Self Service User')">Create Self Service User</button>
       </mat-menu>
-
     </mat-card-actions>
-
   </mat-card-header>
 
   <mat-card-content>
     <nav mat-tab-nav-bar class="navigation-tabs">
-      <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive"
-        [active]="general.isActive">
+      <a
+        mat-tab-link
+        [routerLink]="['./general']"
+        routerLinkActive
+        #general="routerLinkActive"
+        [active]="general.isActive"
+      >
         General
       </a>
-      <a mat-tab-link [routerLink]="['./address']" routerLinkActive #address="routerLinkActive"
-        [active]="address.isActive">
+      <a
+        mat-tab-link
+        [routerLink]="['./address']"
+        routerLinkActive
+        #address="routerLinkActive"
+        [active]="address.isActive"
+      >
         Address
       </a>
-      <a mat-tab-link [routerLink]="['./family-members']" routerLinkActive #familyMembers="routerLinkActive"
-        [active]="familyMembers.isActive">
+      <a
+        mat-tab-link
+        [routerLink]="['./family-members']"
+        routerLinkActive
+        #familyMembers="routerLinkActive"
+        [active]="familyMembers.isActive"
+      >
         Family Members
       </a>
-      <a mat-tab-link [routerLink]="['./identities']" routerLinkActive #identities="routerLinkActive"
-        [active]="identities.isActive" *mifosxHasPermission="'READ_CLIENTIDENTIFIER'">
+      <a
+        mat-tab-link
+        [routerLink]="['./identities']"
+        routerLinkActive
+        #identities="routerLinkActive"
+        [active]="identities.isActive"
+        *mifosxHasPermission="'READ_CLIENTIDENTIFIER'"
+      >
         Identities
       </a>
-      <a mat-tab-link [routerLink]="['./documents']" routerLinkActive #documents="routerLinkActive"
-        [active]="documents.isActive" *mifosxHasPermission="'READ_DOCUMENT'">
+      <a
+        mat-tab-link
+        [routerLink]="['./documents']"
+        routerLinkActive
+        #documents="routerLinkActive"
+        [active]="documents.isActive"
+        *mifosxHasPermission="'READ_DOCUMENT'"
+      >
         Documents
       </a>
-      <a mat-tab-link [routerLink]="['./notes']" routerLinkActive #notes="routerLinkActive"
-        [active]="notes.isActive" *mifosxHasPermission="'READ_CLIENTNOTE'">
+      <a
+        mat-tab-link
+        [routerLink]="['./notes']"
+        routerLinkActive
+        #notes="routerLinkActive"
+        [active]="notes.isActive"
+        *mifosxHasPermission="'READ_CLIENTNOTE'"
+      >
         Notes
       </a>
-      <ng-container *ngFor="let clientDatatable of clientDatatables">
+      <!--  <ng-container *ngFor="let clientDatatable of clientDatatables">
         <a mat-tab-link [routerLink]="['./datatables',clientDatatable.registeredTableName]"
           routerLinkActive #datatable="routerLinkActive" [active]="datatable.isActive" *mifosxHasPermission="'READ_' + clientDatatable.registeredTableName">
           {{clientDatatable.registeredTableName}}
         </a>
-      </ng-container>
+      </ng-container> -->
     </nav>
 
     <router-outlet></router-outlet>
-
   </mat-card-content>
-
 </mat-card>
