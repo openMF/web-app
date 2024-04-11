@@ -11,18 +11,20 @@
 
   <nav mat-tab-nav-bar backgroundColor="primary" class="ml-1" *ngIf="hasChecked">
 
+    <a mat-tab-link class="tab-link" *ngIf="displayAdminOptions && activeCountries.length>0">
+      <mat-form-field appearance="standard"> 
+        <mat-select class="mr-2" #countryId required>
+          <mat-option *ngFor="let country of activeCountries" [value]="country.id" (click)="saveTheSelectedCountry(country)">
+            {{country.name}}
+          </mat-option>
+        </mat-select>
+        <mat-label *ngIf="!selectedCountryName">{{ 'Country' | translate }}</mat-label>
+      </mat-form-field> 
+    </a>
+
     <a mat-tab-link class="tab-link" [matMenuTriggerFor]="institutionMenu" #institutionMenuTrigger="matMenuTrigger" *ngIf="(selectedCountryName && displayAdminOptions) || !displayAdminOptions">
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       {{ 'Institution' | translate }}
-    </a>
-    <a mat-tab-link class="tab-link" *ngIf="displayAdminOptions && activeCountries.length>0">
-      <mat-select class="mr-2" #countryId required>
-        <mat-option *ngFor="let country of activeCountries" [value]="country.id" (click)="saveTheSelectedCountry(country)">
-          {{country.name}}
-        </mat-option>
-      </mat-select>
-      <mat-label *ngIf="!selectedCountryName">{{ 'Country' | translate }}</mat-label>
-      <mat-label *ngIf="selectedCountryName">{{selectedCountryName}}</mat-label>
     </a>
 
     <span fxHide.lt-lg="true" *ngIf="(selectedCountryName && displayAdminOptions) || !displayAdminOptions">

@@ -26,6 +26,7 @@ export const environment = {
   },
   defaultLanguage: window['env']['defaultLanguage'] || 'en-US',
   supportedLanguages: window['env']['supportedLanguages'] || 'en-US,fr-FR',
+  headOfficeID: window['env']['headOfficeID'] || '1',
 };
 
 // Server URL
