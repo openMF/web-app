@@ -107,8 +107,8 @@ export class ToolbarComponent implements OnInit {
   /**
    * Saves the selected country details in the session storage.
    */
-  saveTheSelectedCountry(countryName: string) {
-    const selectedCountry = this.activeCountries.find(country => country.name === countryName);
+  saveTheSelectedCountry(countryId: any) {
+    const selectedCountry = this.activeCountries.find(country => country.id == countryId);
     sessionStorage.setItem('selectedCountry', JSON.stringify(selectedCountry));
   }
 

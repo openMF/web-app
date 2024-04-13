@@ -15,7 +15,7 @@
       <div class="form-group">
         <select class="form-control" id="countryId" (change)="saveTheSelectedCountry($event.target.value)">
           <option value="" selected disabled hidden>{{ selectedCountryName ? selectedCountryName : 'Select Country'}}</option>
-          <option *ngFor="let country of activeCountries" [value]="country.name">{{ country.name }}</option>
+          <option *ngFor="let country of activeCountries" [value]="country.id">{{ country.name }}</option>
         </select>
       </div>  
     </a>

@@ -43,9 +43,13 @@ export class HomeComponent implements OnInit {
    * Set Form.
    */
   ngOnInit() {
-    this.username = this.authenticationService.getConnectedUsername();
-
     this.setFilteredActivities();
+  }
+
+  ngDoCheck() {
+    if(!this.username) {
+      this.username = this.authenticationService.getConnectedUsername();
+    }
   }
 
   /**
