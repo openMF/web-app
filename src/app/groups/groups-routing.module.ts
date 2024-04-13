@@ -62,7 +62,7 @@ const routes: Routes = [
               component: GroupsViewComponent,
               resolve: {
                 groupViewData: GroupViewResolver,
-                groupDatatables: GroupDatatablesResolver
+                //groupDatatables: GroupDatatablesResolver
               },
               children: [
                 {

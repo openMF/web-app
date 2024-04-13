@@ -108,13 +108,13 @@
       [active]="committee.isActive">
         Committee
       </a>
-      <span *ngFor="let groupDatatable of groupDatatables">
+      <!-- <span *ngFor="let groupDatatable of groupDatatables">
         <a mat-tab-link *mifosxHasPermission="'READ_' + groupDatatable.registeredTableName"
           [routerLink]="['./datatables',groupDatatable.registeredTableName]"
           routerLinkActive #datatable="routerLinkActive" [active]="datatable.isActive">
           {{groupDatatable.registeredTableName}}
         </a>
-      </span>
+      </span> -->
     </nav>
 
     <router-outlet></router-outlet>

@@ -60,13 +60,19 @@
               clientViewData.staffName || "Unassigned"
             }}<br />
             Activation Date :
-            {{ clientViewData.activation ? (clientViewData.activationDate | dateFormat) : "Not Activated" }}<br />
+            {{ clientViewData.active ? (clientViewData.activationDate | dateFormat) : "Not Activated" }}<br />
             Member Of :
-            <span *ngFor="let group of clientViewData.groups">
-              <a>{{ group.name }}</a
+
+            <span>
+              <a>{{ clientViewData?.group?.name }}</a
               >&nbsp;
             </span>
-            <span *ngIf="!clientViewData.groups">Unassigned</span>
+
+            <!-- <span *ngFor="let group of clientViewData.groups">
+              <a>{{ group.name }}</a
+              >&nbsp;
+            </span> -->
+            <span *ngIf="!clientViewData.group">Unassigned</span>
             <br />
           </p>
         </mat-card-subtitle>
@@ -82,7 +88,7 @@
       <mat-menu #Applications="matMenu">
         <button mat-menu-item [routerLink]="['loans-accounts', 'create']">New Loan Account</button>
         <button mat-menu-item [routerLink]="['savings-accounts', 'create']">New Savings Account</button>
-        <button mat-menu-item *mifosxHasPermission="'CREATE_SHAREACCOUNT'" [routerLink]="['shares-accounts', 'create']">
+        <!--   <button mat-menu-item *mifosxHasPermission="'CREATE_SHAREACCOUNT'" [routerLink]="['shares-accounts', 'create']">
           New Share Account
         </button>
         <button
@@ -98,7 +104,7 @@
           [routerLink]="['fixed-deposits-accounts', 'create']"
         >
           New Fixed Deposits Account
-        </button>
+        </button> -->
       </mat-menu>
 
       <button mat-raised-button [matMenuTriggerFor]="Actions"><i class="fa fa-tasks"></i>Actions</button>

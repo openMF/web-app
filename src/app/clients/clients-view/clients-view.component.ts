@@ -40,7 +40,7 @@ export class ClientsViewComponent implements OnInit {
     }) => {
       this.clientViewData = data.clientViewData;
       this.clientDatatables = data.clientDatatables;
-      this.clientTemplateData = data.clientTemplateData;
+     // this.clientTemplateData = data.clientTemplateData;
     });
   }
 

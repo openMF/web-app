@@ -10,6 +10,7 @@
 @import '../../app/deposits/fixed-deposits/fixed-deposit-account-view/fixed-deposit-account-view.component-theme.scss';
 @import '../../app/deposits/recurring-deposits/recurring-deposits-account-view/recurring-deposits-account-view.component-theme.scss';
 
+@import "~@ng-select/ng-select/themes/default.theme.css";
 // Custom material palette
 $mat-denim: (
   100: #5ba2ec,

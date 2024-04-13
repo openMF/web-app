@@ -46,6 +46,7 @@
     "@fortawesome/angular-fontawesome": "^0.10.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "5.15.4",
+    "@ng-select/ng-select": "^8.2.0",
     "@ngx-translate/core": "13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
     "chart.js": "3.0.0-alpha",
