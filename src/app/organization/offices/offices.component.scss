@@ -5,3 +5,11 @@ table {
     cursor: pointer;
   }
 }
+
+
+.example-viewport {
+  height: 400px;
+  width: 100%;
+  border: 1px solid black;
+  overflow: auto;
+}

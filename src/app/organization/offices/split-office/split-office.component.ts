@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AlertService } from 'app/core/alert/alert.service';
-import { Dates } from 'app/core/utils/dates';
-import { OrganizationService } from 'app/organization/organization.service';
-import { SettingsService } from 'app/settings/settings.service';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { AlertService } from "app/core/alert/alert.service";
+import { Dates } from "app/core/utils/dates";
+import { OrganizationService } from "app/organization/organization.service";
+import { SettingsService } from "app/settings/settings.service";
 
 @Component({
-  selector: 'mifosx-split-office',
-  templateUrl: './split-office.component.html',
-  styleUrls: ['./split-office.component.scss'],
+  selector: "mifosx-split-office",
+  templateUrl: "./split-office.component.html",
+  styleUrls: ["./split-office.component.scss"],
 })
 export class SplitOfficeComponent implements OnInit {
   /** Office Data */
@@ -56,15 +56,15 @@ export class SplitOfficeComponent implements OnInit {
   }
   public isFiltered(office: any, type: number) {
     if (type === 0) {
-    return this.splitOfficesSliced.find(item => item.id === office.id);
+      return this.splitOfficesSliced.find((item) => item.id === office.id);
     } else if (type === 1) {
-      return this.firstParentOfficesSliced.find(item => item.id === office.id);
+      return this.firstParentOfficesSliced.find((item) => item.id === office.id);
     } else if (type === 2) {
-      return this.secondParentOfficesSliced.find(item => item.id === office.id);
+      return this.secondParentOfficesSliced.find((item) => item.id === office.id);
     } else if (type === 3) {
-      return this.firstChildOfficeSliced.find(item => item.id === office.id);
+      return this.firstChildOfficeSliced.find((item) => item.id === office.id);
     } else {
-      return this.secondChildOfficeSliced.find(item => item.id === office.id);
+      return this.secondChildOfficeSliced.find((item) => item.id === office.id);
     }
   }
   createSplitOfficeForm() {
@@ -76,8 +76,8 @@ export class SplitOfficeComponent implements OnInit {
       secondParentId: [null, Validators.required],
       firstOfficeName: [null, Validators.required],
       secondOfficeName: [null, Validators.required],
-      firstOpeningDate: ['', Validators.required],
-      secondOpeningDate: ['', Validators.required],
+      firstOpeningDate: ["", Validators.required],
+      secondOpeningDate: ["", Validators.required],
       firstExternalId: [null],
       secondExternalId: [null],
     });
@@ -91,22 +91,23 @@ export class SplitOfficeComponent implements OnInit {
     this.secondChildOfficeSliced = this.firstchildOfficeData;
   }
 
-  filterSelectedChildOffices()  {
+  filterSelectedChildOffices() {
     const allChildOfficeData = this.splitOffices.filter((x) => x.parentId === this.splitOfficeForm.value.splitId);
-    this.firstchildOfficeData = (!this.splitOfficeForm.value.secondOfficeChildIds
-      || this.splitOfficeForm.value.secondOfficeChildIds?.length === 0)
-      ? allChildOfficeData : allChildOfficeData.filter(el => !this.splitOfficeForm.value.secondOfficeChildIds?.includes(el.id));
-    this.secondchildOfficeData = (!this.splitOfficeForm.value.firstOfficeChildIds ||
-      this.splitOfficeForm.value.firstOfficeChildIds?.length === 0)
-      ? allChildOfficeData : allChildOfficeData
-      .filter(el => !this.splitOfficeForm.value.firstOfficeChildIds?.includes(el.id));
+    this.firstchildOfficeData =
+      !this.splitOfficeForm.value.secondOfficeChildIds || this.splitOfficeForm.value.secondOfficeChildIds?.length === 0
+        ? allChildOfficeData
+        : allChildOfficeData.filter((el) => !this.splitOfficeForm.value.secondOfficeChildIds?.includes(el.id));
+    this.secondchildOfficeData =
+      !this.splitOfficeForm.value.firstOfficeChildIds || this.splitOfficeForm.value.firstOfficeChildIds?.length === 0
+        ? allChildOfficeData
+        : allChildOfficeData.filter((el) => !this.splitOfficeForm.value.firstOfficeChildIds?.includes(el.id));
     this.secondChildOfficeSliced = this.secondchildOfficeData;
     this.firstChildOfficeSliced = this.firstchildOfficeData;
-}
+  }
 
   filterparentOffices(event: any) {
-    const officeId = +event.value;
-    const level = 'UPPER';
+    const officeId = +event.id;
+    const level = "UPPER";
     this.filterChildOffices(officeId);
     this.organizationService.fetchByHierarchyLevel(officeId, level).subscribe((response) => {
       const parentOfficeData = response?.filter((x) => x?.status === true);
@@ -141,7 +142,7 @@ export class SplitOfficeComponent implements OnInit {
       delete data.secondExternalId;
     }
     this.organizationService.splitOffice(data).subscribe((response) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.router.navigate(["../"], { relativeTo: this.route });
     });
   }
 }

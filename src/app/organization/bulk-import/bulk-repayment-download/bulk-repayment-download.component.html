@@ -1,13 +1,13 @@
 <div class="container">
-    <div fxLayoutGap="2%" class="m-b-20">
-      <mat-card fxLayout="column" fxLayoutGap="2%" fxFlex="100%">
-        <h3>
-          <strong>Repayments Download</strong>
-        </h3>
-  
-        <form [formGroup]="repaymentDownloadForm">
-          <mat-card-content fxLayout="row wrap">
-            <div fxFlex="48%">
+  <div fxLayoutGap="2%" class="m-b-20">
+    <mat-card fxLayout="column" fxLayoutGap="2%" fxFlex="100%">
+      <h3>
+        <strong>Repayments Download</strong>
+      </h3>
+
+      <form [formGroup]="repaymentDownloadForm">
+        <mat-card-content fxLayout="row wrap">
+          <!--  <div fxFlex="48%">
               <mat-form-field fxFlex="90%">
                 <mat-label>Country</mat-label>
                 <mat-select required formControlName="countryId" #country>
@@ -18,37 +18,48 @@
                     [displayMember]="'name'"
                   >
                   </mat-select-filter>
-  
+
                   <mat-option *ngFor="let country of countriesData" [value]="country.id" [class.hide]="!isFiltered(country)">
                     {{ country.name }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-            </div>
-  
-            <div fxFlex="48%">
-              <mat-form-field fxFlex="90%" (click)="repaymentDatePicker.open()">
-                <mat-label>Date</mat-label>
-                <input matInput [matDatepicker]="repaymentDatePicker" formControlName="repaymentsDate">
-                <mat-datepicker-toggle matSuffix [for]="repaymentDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #repaymentDatePicker></mat-datepicker>
-              </mat-form-field>
-            </div>
+            </div> -->
 
-          </mat-card-content>
-        </form>
-  
-        <button
-            mat-raised-button
-            color="primary"
-            (click)="downloadRepaymentDownload()"
-            *mifosxHasPermission="'READ_CLIENT'"
-          >
-            <i class="fa fa-download"></i>&nbsp;&nbsp;Download
-        </button>
+          <div fxFlex="48%">
+            <label for="officeId">Country</label>
+            <ng-select
+              #country
+              [items]="countriesData"
+              bindLabel="name"
+              bindValue="id"
+              placeholder="Select Country"
+              formControlName="countryId"
+              aria-labelledby="officeId"
+              [virtualScroll]="true"
+            >
+            </ng-select>
+          </div>
 
-      </mat-card>
-    </div>
+          <div fxFlex="48%">
+            <mat-form-field fxFlex="90%" (click)="repaymentDatePicker.open()">
+              <mat-label>Date</mat-label>
+              <input matInput [matDatepicker]="repaymentDatePicker" formControlName="repaymentsDate" />
+              <mat-datepicker-toggle matSuffix [for]="repaymentDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #repaymentDatePicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </form>
 
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="downloadRepaymentDownload()"
+        *mifosxHasPermission="'READ_CLIENT'"
+      >
+        <i class="fa fa-download"></i>&nbsp;&nbsp;Download
+      </button>
+    </mat-card>
   </div>
-  
+</div>

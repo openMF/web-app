@@ -1,11 +1,24 @@
 <div class="container">
-
-    <mat-card>
-        <form [formGroup]="combineOfficeForm" (ngSubmit)="submit()">
-
-            <mat-card-content>
-              <div fxLayout="column">
-                <mat-form-field>
+  <mat-card>
+    <form [formGroup]="combineOfficeForm" (ngSubmit)="submit()">
+      <mat-card-content>
+        <div fxLayout="column">
+          <div>
+            <label for="parentId">Parent Office</label>
+            <ng-select
+              #office
+              [items]="officeData"
+              bindLabel="name"
+              bindValue="id"
+              placeholder="Select Office"
+              formControlName="parentId"
+              aria-labelledby="parentId"
+              (change)="fetchByHierarchyLevelByOfficeId($event)"
+              [virtualScroll]="true"
+            >
+            </ng-select>
+          </div>
+          <!--   <mat-form-field>
                   <mat-label>Parent Office</mat-label>
                   <mat-select placeholder="Search" #parentOffice required formControlName="parentId" (selectionChange)="fetchByHierarchyLevelByOfficeId($event)">
                     <mat-select-filter *ngIf="parentOffice.focused" [array]="officeData" (filteredReturn)="officeDataSliced=$event"
@@ -19,9 +32,9 @@
                   <mat-error *ngIf="combineOfficeForm.controls.parentId.hasError('required')">
                     Parent Office is <strong>required</strong>
                   </mat-error>
-                </mat-form-field>
+                </mat-form-field> -->
 
-                <mat-form-field>
+          <!--  <mat-form-field>
 
                     <mat-label>Source Office</mat-label>
                     <mat-select placeholder="Search" #sourceOffice multiple required formControlName="mergingOfficeIds" >
@@ -36,39 +49,67 @@
                     <mat-error *ngIf="combineOfficeForm.controls.mergingOfficeIds.hasError('required')">
                         Source Office is <strong>required</strong>
                     </mat-error>
-                  </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Destination Office</mat-label>
-                    <input required matInput formControlName="name">
-                    <mat-error *ngIf="combineOfficeForm.controls.name.hasError('required')">
-                      Office is <strong>required</strong>
-                    </mat-error>
-                  </mat-form-field>
+                  </mat-form-field> -->
 
-                <mat-form-field (click)="openedOnDatePicker.open()">
-                  <mat-label>Opened On</mat-label>
-                  <input matInput [min]="minDate" [max]="maxDate" formControlName="openingDate" required [matDatepicker]="openedOnDatePicker">
-                  <mat-datepicker-toggle matSuffix [for]="openedOnDatePicker"></mat-datepicker-toggle>
-                  <mat-datepicker #openedOnDatePicker></mat-datepicker>
-                  <mat-error *ngIf="combineOfficeForm.controls.openingDate.hasError('required')">
-                    Opening Date is <strong>required</strong>
-                  </mat-error>
-                </mat-form-field>
+          <div>
+            <label for="sourceOffice">Source Office</label>
+            <ng-select
+              #sourceOffice
+              [items]="sourceOfficeData"
+              bindLabel="name"
+              bindValue="id"
+              placeholder="Select Office"
+              formControlName="mergingOfficeIds"
+              aria-labelledby="sourceOffice"
+              [virtualScroll]="true"
+              [multiple]="true"
+            >
+            </ng-select>
+          </div>
 
-                <mat-form-field>
-                  <mat-label>External ID</mat-label>
-                  <input matInput formControlName="externalId">
-                </mat-form-field>
-              </div>
+          <mat-form-field>
+            <mat-label>Destination Office</mat-label>
+            <input required matInput formControlName="name" />
+            <mat-error *ngIf="combineOfficeForm.controls.name.hasError('required')">
+              Office is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
 
-            </mat-card-content>
+          <mat-form-field (click)="openedOnDatePicker.open()">
+            <mat-label>Opened On</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              formControlName="openingDate"
+              required
+              [matDatepicker]="openedOnDatePicker"
+            />
+            <mat-datepicker-toggle matSuffix [for]="openedOnDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #openedOnDatePicker></mat-datepicker>
+            <mat-error *ngIf="combineOfficeForm.controls.openingDate.hasError('required')">
+              Opening Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
 
-            <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-              <button type="button" mat-raised-button [routerLink]="['/organization/offices']">Cancel</button>
-              <button mat-raised-button color="primary" [disabled]="!combineOfficeForm.valid" *mifosxHasPermission="'CREATE_OFFICE'">Submit</button>
-            </mat-card-actions>
+          <mat-form-field>
+            <mat-label>External ID</mat-label>
+            <input matInput formControlName="externalId" />
+          </mat-form-field>
+        </div>
+      </mat-card-content>
 
-          </form>
-    </mat-card>
-
-  </div>
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['/organization/offices']">Cancel</button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!combineOfficeForm.valid"
+          *mifosxHasPermission="'CREATE_OFFICE'"
+        >
+          Submit
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>

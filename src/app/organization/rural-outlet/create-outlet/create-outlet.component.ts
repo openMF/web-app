@@ -56,7 +56,7 @@ export class CreateOutletComponent implements OnInit {
   }
 
   search(event: any) {
-    const countryId = event.value;
+    const countryId = event.id;
     this.organizationService.searchCountryById(countryId).subscribe((res: any) => {
       const data = res
         .filter((x) => x.status === true)

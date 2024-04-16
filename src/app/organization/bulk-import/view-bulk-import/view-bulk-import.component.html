@@ -8,7 +8,7 @@
       <form [formGroup]="bulkImportForm">
         <mat-card-content>
           <div *ngIf="bulkImport.formFields >= 0">
-            <mat-form-field fxFlex>
+            <!--  <mat-form-field fxFlex>
               <mat-label>Country</mat-label>
               <mat-select required formControlName="countryId" (selectionChange)="onCountryChange($event.value)" #country>
                 <mat-select-filter
@@ -23,11 +23,29 @@
                   {{ country.name }}
                 </mat-option>
               </mat-select>
-            </mat-form-field>
+            </mat-form-field> -->
+
+            <label for="countryId">Country</label>
+            <ng-select
+              #country
+              [items]="countriesData"
+              bindLabel="name"
+              bindValue="id"
+              placeholder="Select Country"
+              formControlName="countryId"
+              aria-labelledby="countryId"
+              (change)="onCountryChange($event.id)"
+              [virtualScroll]="true"
+            >
+            </ng-select>
           </div>
 
-          <div *ngIf="bulkImport.formFields >= 0 && bulkImport.name != 'Healthy Path' && bulkImport.name != 'Loan Repayments'">
-            <mat-form-field fxFlex>
+          <div
+            *ngIf="
+              bulkImport.formFields >= 0 && bulkImport.name != 'Healthy Path' && bulkImport.name != 'Loan Repayments'
+            "
+          >
+            <!--  <mat-form-field fxFlex>
               <mat-label>Office</mat-label>
               <mat-select required formControlName="officeId" (selectionChange)="retrieveStaffData($event.value)" #office>
                 <mat-select-filter
@@ -42,7 +60,21 @@
                   {{ office.name }}
                 </mat-option>
               </mat-select>
-            </mat-form-field>
+            </mat-form-field> -->
+
+            <label for="officeId">Office</label>
+            <ng-select
+              #office
+              [items]="officeData"
+              bindLabel="name"
+              bindValue="id"
+              placeholder="Select Office"
+              formControlName="officeId"
+              aria-labelledby="officeId"
+              (change)="retrieveStaffData($event.id)"
+              [virtualScroll]="true"
+            >
+            </ng-select>
           </div>
 
           <div *ngIf="bulkImport.formFields >= 2 || bulkImport.name == 'Healthy Path'">

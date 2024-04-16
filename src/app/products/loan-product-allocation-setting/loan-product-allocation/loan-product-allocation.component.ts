@@ -94,10 +94,10 @@ export class LoanProductAllocationComponent implements OnInit {
   }
 
   search(event: any) {
-    if (!event.value) {
+    if (!event.id) {
       this.countryId = this.allocationForm.get["countryId"];
     } else {
-      this.countryId = event.value;
+      this.countryId = event.id;
       this.productService.countryId = event.value;
     }
     this.selectedUnits = [];

@@ -1,7 +1,7 @@
 <form [formGroup]="loanProductOrganizationForm">
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-        <mat-form-field fxFlex="52%">
-            <mat-label>Country</mat-label>
+          <!-- <mat-form-field fxFlex="52%">
+          <mat-label>Country</mat-label>
             <mat-select placeholder="Search" #countryId required formControlName="countryId" (selectionChange)="search($event)">
               <mat-select-filter
                 *ngIf="countryId.focused"
@@ -16,7 +16,26 @@
             <mat-error>
               Country is <strong>required</strong>
             </mat-error>
-          </mat-form-field>
+          </mat-form-field> -->
+
+          <div fxFlex="52%">
+            <label for="country">Country</label>
+            <ng-select
+              #country
+              [items]="countries"
+              bindLabel="name"
+              bindValue="id"
+              placeholder="Select Country"
+              formControlName="countryId"
+              aria-labelledby="country"
+              (change)="search($event)"
+              [virtualScroll]="true"
+            >
+            </ng-select>
+          </div>
+
+
+
           <div fxFlex="50%">
             Organization Units:
             <mifosx-country-tree-view

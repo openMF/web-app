@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AlertService } from 'app/core/alert/alert.service';
-import { Dates } from 'app/core/utils/dates';
-import { OrganizationService } from 'app/organization/organization.service';
-import { SettingsService } from 'app/settings/settings.service';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { AlertService } from "app/core/alert/alert.service";
+import { Dates } from "app/core/utils/dates";
+import { OrganizationService } from "app/organization/organization.service";
+import { SettingsService } from "app/settings/settings.service";
 
 @Component({
-  selector: 'mifosx-combine-office',
-  templateUrl: './combine-office.component.html',
-  styleUrls: ['./combine-office.component.scss'],
+  selector: "mifosx-combine-office",
+  templateUrl: "./combine-office.component.html",
+  styleUrls: ["./combine-office.component.scss"],
 })
 export class CombineOfficeComponent implements OnInit {
   /** Office Data */
@@ -33,7 +33,7 @@ export class CombineOfficeComponent implements OnInit {
     private alertService: AlertService
   ) {
     this.route.data.subscribe((data: { offices: any }) => {
-      this.officeData = data.offices?.filter(x => x.status === true);
+      this.officeData = data.offices?.filter((x) => x.status === true);
       this.officeDataSliced = this.officeData;
     });
   }
@@ -43,25 +43,25 @@ export class CombineOfficeComponent implements OnInit {
   }
   public isFiltered(office: any, type: number) {
     if (type === 0) {
-    return this.officeDataSliced.find(item => item.id === office.id);
+      return this.officeDataSliced.find((item) => item.id === office.id);
     } else {
-      return this.sourceOfficeDataSliced.find(item => item.id === office.id);
+      return this.sourceOfficeDataSliced.find((item) => item.id === office.id);
     }
   }
   createCombineOfficeForm() {
     this.combineOfficeForm = this.formBuilder.group({
       parentId: [null, Validators.required],
       mergingOfficeIds: [null, Validators.required],
-      name: ['', Validators.required],
-      openingDate: ['', Validators.required],
-      externalId: [''],
+      name: ["", Validators.required],
+      openingDate: ["", Validators.required],
+      externalId: [""],
     });
   }
 
   fetchByHierarchyLevelByOfficeId(event: any) {
-    const officeId = +event.value;
-    this.organizationService.fetchByHierarchyLevel(officeId, 'LOWER').subscribe((response) => {
-      this.sourceOfficeData = response?.filter(x => x.status === true);
+    const officeId = +event.id;
+    this.organizationService.fetchByHierarchyLevel(officeId, "LOWER").subscribe((response) => {
+      this.sourceOfficeData = response?.filter((x) => x.status === true);
       this.sourceOfficeDataSliced = this.sourceOfficeData;
     });
   }
@@ -79,15 +79,19 @@ export class CombineOfficeComponent implements OnInit {
       dateFormat,
       locale,
     };
-   if (data.mergingOfficeIds.length <= 1) {
-    this.alertService.alert({
-      type: 'Source Office Required',
-      message: 'Two offices should be selected for merging'
-    });
-    return;
-   }
-    this.organizationService.mergeOffice(data).subscribe(response => {
-      this.router.navigate(['../'], { relativeTo: this.route });
+    if (data.mergingOfficeIds.length <= 1) {
+      this.alertService.alert({
+        type: "Source Office Required",
+        message: "Two offices should be selected for merging",
+      });
+      return;
+    }
+
+    //just to get the id part of the object
+   // data.mergingOfficeIds = data.mergingOfficeIds.map((x: any) => x.id);
+
+    this.organizationService.mergeOffice(data).subscribe((response) => {
+      this.router.navigate(["../"], { relativeTo: this.route });
     });
   }
 }

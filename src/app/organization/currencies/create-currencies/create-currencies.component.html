@@ -1,9 +1,9 @@
 <div class="container">
-    <mat-card>
-        <form [formGroup]="currencyForm" (ngSubmit)="submit()">
-            <mat-card-content>
-                <div fxLayout="column">
-                  <mat-form-field fxFlex="48%">
+  <mat-card>
+    <form [formGroup]="currencyForm" (ngSubmit)="submit()">
+      <mat-card-content>
+        <div fxLayout="column">
+          <!--  <mat-form-field fxFlex="48%">
                     <mat-label>Country</mat-label>
                     <mat-select placeholder="Search" #countryId required formControlName="countryId">
                       <mat-select-filter
@@ -20,8 +20,38 @@
                     <mat-error *ngIf="currencyForm.controls.countryId.hasError('required')">
                       Country is <strong>required</strong>
                     </mat-error>
-                  </mat-form-field>
-                  <mat-form-field fxFlex="48%">
+                  </mat-form-field> -->
+          <div fxFlex="48%">
+            <label for="countryId">Country</label>
+            <ng-select
+              #countryId
+              [items]="countries"
+              bindLabel="name"
+              bindValue="id"
+              placeholder="Select Office"
+              formControlName="countryId"
+              aria-labelledby="countryId"
+              [virtualScroll]="true"
+            >
+            </ng-select>
+          </div>
+
+          <div fxFlex="48%">
+            <label for="currencyCode">Currency Name</label>
+            <ng-select
+              #currencyCode
+              [items]="currencyTemplateData.currencyOptions"
+              bindLabel="name"
+              bindValue="code"
+              placeholder="Select Currency"
+              formControlName="currencyCode"
+              aria-labelledby="currencyCode"
+              [virtualScroll]="true"
+            >
+            </ng-select>
+          </div>
+
+          <!--  <mat-form-field fxFlex="48%">
                     <mat-label>Currency Name</mat-label>
                     <mat-select placeholder="Search" #currencyCode required formControlName="currencyCode">
                       <mat-select-filter
@@ -38,18 +68,21 @@
                     <mat-error *ngIf="currencyForm.controls.currencyCode.hasError('required')">
                       Currency Name is <strong>required</strong>
                     </mat-error>
-                  </mat-form-field>
-                      <mat-checkbox labelPosition="before" formControlName="active">
-                        Active
-                      </mat-checkbox>
-                </div>
-            </mat-card-content>
-            <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-                <button type="button" mat-raised-button [routerLink]="['../']" >Cancel</button>
-                <button mat-raised-button color="primary" [disabled]="!currencyForm.valid" *mifosxHasPermission="'UPDATE_CURRENCY'">
-                  Submit
-                </button>
-              </mat-card-actions>
-        </form>
-    </mat-card>
+                  </mat-form-field> -->
+          <mat-checkbox labelPosition="before" formControlName="active"> Active </mat-checkbox>
+        </div>
+      </mat-card-content>
+      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!currencyForm.valid"
+          *mifosxHasPermission="'UPDATE_CURRENCY'"
+        >
+          Submit
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
 </div>

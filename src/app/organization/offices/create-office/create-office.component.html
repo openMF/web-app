@@ -1,29 +1,39 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="officeForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
           <div floatLabel="always" appearance="outline" class="full-width radio-container">
             <mat-label class="ou-label">Is the OU a country</mat-label>
-            <input class="custom-radio" (change)="change_country(true)" formControlName="country" type="radio"  value="Yes" id="yes">
+            <input
+              class="custom-radio"
+              (change)="change_country(true)"
+              formControlName="country"
+              type="radio"
+              value="Yes"
+              id="yes"
+            />
             <label class="mat-label-for" for="yes">Yes</label>
-            <input class="custom-radio" (change)="change_country(false)" formControlName="country" type="radio"  value="No" id="no">
+            <input
+              class="custom-radio"
+              (change)="change_country(false)"
+              formControlName="country"
+              type="radio"
+              value="No"
+              id="no"
+            />
             <label class="mat-label-for" for="no">No</label>
           </div>
 
           <mat-form-field>
             <mat-label>Office</mat-label>
-            <input required matInput formControlName="name">
+            <input required matInput formControlName="name" />
             <mat-error *ngIf="officeForm.controls.name.hasError('required')">
               Office is <strong>required</strong>
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field>
+          <!--  <mat-form-field>
             <mat-label>Parent Office</mat-label>
             <mat-select placeholder="Search" #parentOffice required formControlName="parentId">
               <mat-select-filter *ngIf="parentOffice.focused" [array]="officeData" (filteredReturn)="officeDataSliced=$event"
@@ -37,11 +47,33 @@
             <mat-error *ngIf="officeForm.controls.parentId.hasError('required')">
               Parent Office is <strong>required</strong>
             </mat-error>
-          </mat-form-field>
+          </mat-form-field> -->
+
+          <div>
+            <label for="parentId">Parent Office</label>
+            <ng-select
+              #office
+              [items]="officeData"
+              bindLabel="name"
+              bindValue="id"
+              placeholder="Select Office"
+              formControlName="parentId"
+              aria-labelledby="parentId"
+              [virtualScroll]="true"
+            >
+            </ng-select>
+          </div>
 
           <mat-form-field (click)="openedOnDatePicker.open()">
             <mat-label>Opened On</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" formControlName="openingDate" required [matDatepicker]="openedOnDatePicker">
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              formControlName="openingDate"
+              required
+              [matDatepicker]="openedOnDatePicker"
+            />
             <mat-datepicker-toggle matSuffix [for]="openedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #openedOnDatePicker></mat-datepicker>
             <mat-error *ngIf="officeForm.controls.openingDate.hasError('required')">
@@ -51,24 +83,21 @@
 
           <mat-form-field>
             <mat-label>External ID</mat-label>
-            <input matInput formControlName="externalId">
+            <input matInput formControlName="externalId" />
           </mat-form-field>
-
         </div>
 
         <div fxLayout="column" *ngIf="showHierarchy">
           <mifosx-office-hierarchy #officeHierarchy></mifosx-office-hierarchy>
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
         <button type="button" mat-raised-button [routerLink]="['/organization/offices']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!officeForm.valid" *mifosxHasPermission="'CREATE_OFFICE'">Submit</button>
+        <button mat-raised-button color="primary" [disabled]="!officeForm.valid" *mifosxHasPermission="'CREATE_OFFICE'">
+          Submit
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

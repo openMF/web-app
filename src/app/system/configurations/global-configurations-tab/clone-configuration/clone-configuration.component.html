@@ -14,7 +14,7 @@
                 Value is <strong>required</strong>
               </mat-error>
             </mat-form-field>
-            <mat-form-field>
+            <!-- <mat-form-field>
                 <mat-label>Country</mat-label>
                 <mat-select placeholder="Search" #country required formControlName="countryId">
                   <mat-select-filter *ngIf="country.focused" [array]="listCountries" (filteredReturn)="listCountriesSliced=$event"
@@ -28,7 +28,24 @@
                 <mat-error *ngIf="configurationForm.controls.countryId.hasError('required')">
                   Country is <strong>required</strong>
                 </mat-error>
-              </mat-form-field>
+              </mat-form-field> -->
+
+              <div >
+                <label for="country">Country</label>
+                <ng-select
+                  #country
+                  [items]="listCountries"
+                  bindLabel="name"
+                  bindValue="id"
+                  placeholder="Select Country"
+                  formControlName="countryId"
+                  aria-labelledby="country"
+                  [virtualScroll]="true"
+                >
+                </ng-select>
+              </div>
+
+
           </div>
         </mat-card-content>
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">

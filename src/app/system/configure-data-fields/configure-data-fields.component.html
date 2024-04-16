@@ -1,44 +1,68 @@
-  <div class="container">
-
-    <div fxLayout="row" fxLayoutGap="20px">
-      <mat-form-field fxFlex>
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event.target.value)">
-      </mat-form-field>
-    </div>
-
-    <div class="mat-elevation-z8">
-        <div class="country-search">
-        <mat-form-field class="country-search">
-            <mat-label>Country</mat-label>
-            <mat-select placeholder="Search" #countryddl required [(ngModel)]="countryId">
-              <mat-select-filter *ngIf="countryddl.focused" [array]="countryList" (filteredReturn)="countryListSliced=$event"
-                [displayMember]="'name'">
-              </mat-select-filter>
-              <mat-option *ngFor="let country of countryList" [value]="country.id"
-                [class.hidesearch]="!isFiltered(country)">
-                {{country.name}}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="!countryId">
-              Country is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-      <table mat-table [dataSource]="dataSource" matSort matSortActive="entity" matSortDirection="asc">
-        <caption class="display-none">Manage Configuration</caption>
-        <ng-container matColumnDef="entity">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Module </th>
-            <td mat-cell *matCellDef="let config"> {{ config.entity }} </td>
-          </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="routeEntity(row.entity)" class="select-row"></tr>
-
-      </table>
-
-      <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-
-    </div>
-
+<div class="container">
+  <div fxLayout="row" fxLayoutGap="20px">
+    <mat-form-field fxFlex>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event.target.value)" />
+    </mat-form-field>
   </div>
+
+  <div class="mat-elevation-z8">
+    <div class="country-search">
+      <!--  <mat-form-field class="country-search">
+        <mat-label>Country</mat-label>
+        <mat-select placeholder="Search" #countryddl required [(ngModel)]="countryId">
+          <mat-select-filter
+            *ngIf="countryddl.focused"
+            [array]="countryList"
+            (filteredReturn)="countryListSliced = $event"
+            [displayMember]="'name'"
+          >
+          </mat-select-filter>
+          <mat-option
+            *ngFor="let country of countryList"
+            [value]="country.id"
+            [class.hidesearch]="!isFiltered(country)"
+          >
+            {{ country.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="!countryId"> Country is <strong>required</strong> </mat-error>
+      </mat-form-field> -->
+
+      <div class="country-search">
+        <label for="country">Country</label>
+        <ng-select
+          #countryddl
+          [items]="countryList"
+          bindLabel="name"
+          bindValue="id"
+          placeholder="Select Country"
+          [(ngModel)]="countryId"
+          aria-labelledby="country"
+          [virtualScroll]="true"
+        >
+        </ng-select>
+        <mat-error *ngIf="!countryId"> Country is <strong>required</strong> </mat-error>
+      </div>
+    </div>
+    <table mat-table [dataSource]="dataSource" matSort matSortActive="entity" matSortDirection="asc">
+      <caption class="display-none">
+        Manage Configuration
+      </caption>
+      <ng-container matColumnDef="entity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Module</th>
+        <td mat-cell *matCellDef="let config">{{ config.entity }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        (click)="routeEntity(row.entity)"
+        class="select-row"
+      ></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>
