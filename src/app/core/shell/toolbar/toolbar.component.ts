@@ -69,6 +69,9 @@ export class ToolbarComponent implements OnInit {
    * Subscribes to breakpoint for handset.
    */
   ngOnInit() {
+    const savedCountry = sessionStorage.getItem('selectedCountry');
+    this.selectedCountryName = savedCountry ? JSON.parse(savedCountry)?.name : null;
+
     this.isHandset$.subscribe(isHandset => {
       if (isHandset && this.sidenavCollapsed) {
         this.toggleSidenavCollapse(false);
@@ -104,8 +107,9 @@ export class ToolbarComponent implements OnInit {
   /**
    * Saves the selected country details in the session storage.
    */
-  saveTheSelectedCountry(country: any) {
-    sessionStorage.setItem('selectedCountry', JSON.stringify(country));
+  saveTheSelectedCountry(countryId: any) {
+    const selectedCountry = this.activeCountries.find(country => country.id == countryId);
+    sessionStorage.setItem('selectedCountry', JSON.stringify(selectedCountry));
   }
 
   /**

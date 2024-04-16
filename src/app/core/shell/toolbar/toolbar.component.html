@@ -12,14 +12,12 @@
   <nav mat-tab-nav-bar backgroundColor="primary" class="ml-1" *ngIf="hasChecked">
 
     <a mat-tab-link class="tab-link" *ngIf="displayAdminOptions && activeCountries.length>0">
-      <mat-form-field appearance="standard"> 
-        <mat-select class="mr-2" #countryId required>
-          <mat-option *ngFor="let country of activeCountries" [value]="country.id" (click)="saveTheSelectedCountry(country)">
-            {{country.name}}
-          </mat-option>
-        </mat-select>
-        <mat-label *ngIf="!selectedCountryName">{{ 'Country' | translate }}</mat-label>
-      </mat-form-field> 
+      <div class="form-group">
+        <select class="form-control" id="countryId" (change)="saveTheSelectedCountry($event.target.value)">
+          <option value="" selected disabled hidden>{{ selectedCountryName ? selectedCountryName : 'Select Country'}}</option>
+          <option *ngFor="let country of activeCountries" [value]="country.id">{{ country.name }}</option>
+        </select>
+      </div>  
     </a>
 
     <a mat-tab-link class="tab-link" [matMenuTriggerFor]="institutionMenu" #institutionMenuTrigger="matMenuTrigger" *ngIf="(selectedCountryName && displayAdminOptions) || !displayAdminOptions">
