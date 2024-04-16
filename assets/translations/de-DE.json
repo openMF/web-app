@@ -638,6 +638,8 @@
       "Dashboard": "Armaturenbrett",
       "Default Shares per Client": "Standardanteile pro Kunde",
       "Define New Mapping": "Definieren Sie eine neue Zuordnung",
+      "Define Tax Components": "Steuerkomponenten definieren",
+      "Define Tax Groups": "Steuergruppen definieren",
       "Delete": "Löschen",
       "Delete Client Signature": "Client-Signatur löschen",
       "Delete Checker": "Überprüfung löschen",
@@ -892,6 +894,13 @@
       "successfully select option": "erfolgreich. Bitte wählen Sie eine der folgenden Optionen aus, um fortzufahren."
     },
     "inputs": {
+      "accounting": {
+        "ASSET": "VERMÖGENSWERT",
+        "LIABILITY": "HAFTUNG",
+        "EQUITY": "EIGENKAPITAL",
+        "INCOME": "EINKOMMEN",
+        "EXPENSE": "KOSTEN"
+      },
       "ACCOUNTING": "BUCHHALTUNG",
       "ADDRESS": "ADRESSE",
       "Above Changes are Effective from": "Die oben genannten Änderungen gelten ab",
@@ -1190,6 +1199,7 @@
       "Debit": "Lastschrift",
       "Debit Account": "Sollkonto",
       "Debit Account Name": "Name des Lastschriftkontos",
+      "Debit Account Type": "Typ debetního účtu",
       "Debit Amount": "Sollbetrag",
       "Debit Tags": "Debit-Tags",
       "Decimal Places": "Nachkommastellen",
@@ -1973,6 +1983,8 @@
       "Table Fields": "Tabellenfelder",
       "Tag": "Etikett",
       "Tax Group": "Steuergruppe",
+      "Tax Component": "Steuerkomponente",
+      "Tax Components": "Steuerkomponenten",
       "Tax-Component Name": "Name der Steuerkomponente",
       "Teller": "Erzähler",
       "Teller Name": "Name des Kassierers",

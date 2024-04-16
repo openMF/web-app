@@ -638,6 +638,8 @@
             "Dashboard": "Tableros",
             "Default Shares per Client": "Acciones predeterminadas por cliente",
             "Define New Mapping": "Definir nueva asignación",
+            "Define Tax Components": "Definir impuestos",
+            "Define Tax Groups": "Definir grupos de impuestos",
             "Delete": "Borrar",
             "Delete Client Signature": "Eliminar firma del cliente",
             "Delete Checker": "Boldeador de eliminación",
@@ -892,6 +894,13 @@
             "successfully select option": "exitosamente. Seleccione una de las opciones siguientes para continuar."
         },
         "inputs": {
+            "accounting": {
+                "ASSET": "ACTIVO",
+                "LIABILITY": "PASIVO",
+                "EQUITY": "CAPITAL",
+                "INCOME": "INGRESO",
+                "EXPENSE": "EGRESO"      
+            },
             "ACCOUNTING": "CONTABILIDAD",
             "ADDRESS": "DOMICILIO",
             "Above Changes are Effective from": "Los cambios anteriores son efectivos desde",
@@ -1190,6 +1199,7 @@
             "Debit": "Débito",
             "Debit Account": "Cuenta de debito",
             "Debit Account Name": "Nombre de la cuenta de débito",
+            "Debit Account Type": "Tipo de cuenta de débito",
             "Debit Amount": "Monto del Débito",
             "Debit Tags": "Etiquetas de débito",
             "Decimal Places": "Lugares decimales",
@@ -1973,6 +1983,8 @@
             "Table Fields": "Campos de tabla",
             "Tag": "Etiqueta",
             "Tax Group": "Grupo de Impuesto",
+            "Tax Component": "Componente Impuesto",
+            "Tax Components": "Componentes Impuestos",
             "Tax-Component Name": "Nombre del componente de impuesto",
             "Teller": "Ventanilla",
             "Teller Name": "Nombre del cajero",

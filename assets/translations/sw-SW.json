@@ -638,6 +638,8 @@
       "Dashboard": "Dashibodi",
       "Default Shares per Client": "Hisa Chaguomsingi kwa kila Mteja",
       "Define New Mapping": "Bainisha Ramani Mpya",
+      "Define Tax Components": "Bainisha Vipengee vya Ushuru",
+      "Define Tax Groups": "Bainisha Vikundi vya Ushuru",
       "Delete": "Futa",
       "Delete Client Signature": "Futa Sahihi ya Mteja",
       "Delete Checker": "Futa ukaguzi",
@@ -892,6 +894,13 @@
       "successfully select option": "kwa mafanikio. Tafadhali chagua kutoka kwa chaguo zilizo hapa chini ili kuendelea zaidi."
     },
     "inputs": {
+      "accounting": {
+        "ASSET": "ASSET",
+        "LIABILITY": "DHIMA",
+        "EQUITY": "USAWA",
+        "INCOME": "MAPATO",
+        "EXPENSE": "GHARAMA"
+      },
       "ACCOUNTING": "UHASIBU",
       "ADDRESS": "ANWANI",
       "Above Changes are Effective from": "Mabadiliko Hapo Juu yanatumika kutoka",
@@ -1190,6 +1199,7 @@
       "Debit": "Debit",
       "Debit Account": "Akaunti ya Debit",
       "Debit Account Name": "Jina la Akaunti ya Debit",
+      "Debit Account Type": "Aina ya Akaunti ya Debit",
       "Debit Amount": "Kiasi cha Debit",
       "Debit Tags": "Lebo za Debit",
       "Decimal Places": "Maeneo ya decimal",
@@ -1973,6 +1983,8 @@
       "Table Fields": "Viwanja vya Jedwali",
       "Tag": "Lebo",
       "Tax Group": "Kikundi cha Ushuru",
+      "Tax Component": "Sehemu ya Ushuru",
+      "Tax Components": "Vipengele vya Ushuru",
       "Tax-Component Name": "Jina la Sehemu ya Ushuru",
       "Teller": "Mtangazaji",
       "Teller Name": "Jina la Mtangazaji",

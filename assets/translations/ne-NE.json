@@ -638,6 +638,8 @@
       "Dashboard": "ड्यासबोर्ड",
       "Default Shares per Client": "प्रति ग्राहक पूर्वनिर्धारित शेयरहरू",
       "Define New Mapping": "नयाँ म्यापिङ परिभाषित गर्नुहोस्",
+      "Define Tax Components": "कर अवयवहरू परिभाषित गर्नुहोस्",
+      "Define Tax Groups": "कर समूहहरू परिभाषित गर्नुहोस्",
       "Delete": "मेटाउन",
       "Delete Client Signature": "ग्राहक हस्ताक्षर मेटाउनुहोस्",
       "Delete Checker": "चोर्क परीक्षक",
@@ -892,6 +894,13 @@
       "successfully select option": "सफलतापूर्वक। अगाडि बढ्नको लागि कृपया तलका विकल्पहरूबाट चयन गर्नुहोस्।"
     },
     "inputs": {
+      "accounting": {
+        "ASSET": "सम्पत्ति",
+        "LIABILITY": "दायित्व",
+        "EQUITY": "इक्विटी",
+        "INCOME": "आय",
+        "EXPENSE": "खर्च"
+      },
       "ACCOUNTING": "लेखा",
       "ADDRESS": "ठेगाना",
       "Above Changes are Effective from": "माथिका परिवर्तनहरू बाट प्रभावकारी छन्",
@@ -1190,6 +1199,7 @@
       "Debit": "डेबिट",
       "Debit Account": "डेबिट खाता",
       "Debit Account Name": "डेबिट खाता नाम",
+      "Debit Account Type": "डेबिट खाता प्रकार",
       "Debit Amount": "डेबिट रकम",
       "Debit Tags": "डेबिट ट्यागहरू",
       "Decimal Places": "दशमलव स्थानहरू",
@@ -1973,6 +1983,8 @@
       "Table Fields": "तालिका क्षेत्रहरू",
       "Tag": "ट्याग",
       "Tax Group": "कर समूह",
+      "Tax Component": "कर घटक",
+      "Tax Components": "कर अवयवहरू",
       "Tax-Component Name": "कर-घटक नाम",
       "Teller": "टेलर",
       "Teller Name": "टेलरको नाम",

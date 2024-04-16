@@ -638,6 +638,8 @@
       "Dashboard": "Prietaisų skydelis",
       "Default Shares per Client": "Numatytosios akcijos vienam klientui",
       "Define New Mapping": "Apibrėžkite naują atvaizdavimą",
+      "Define Tax Components": "Apibrėžkite mokesčių komponentus",
+      "Define Tax Groups": "Apibrėžkite mokesčių grupes",
       "Delete": "Ištrinti",
       "Delete Client Signature": "Ištrinkite kliento parašą",
       "Delete Checker": "Ištrinkite tikrintuvą",
@@ -892,6 +894,13 @@
       "successfully select option": "sėkmingai. Jei norite tęsti, pasirinkite iš toliau pateiktų parinkčių."
     },
     "inputs": {
+      "accounting": {
+        "ASSET": "TURTAS",
+        "LIABILITY": "ATSAKOMYBĖ",
+        "EQUITY": "NUOSAVYBĖ",
+        "INCOME": "PAJAMOS",
+        "EXPENSE": "IŠLAIDOS"
+      },
       "ACCOUNTING": "APSKAITA",
       "ADDRESS": "ADRESAS",
       "Above Changes are Effective from": "Aukščiau pateikti pakeitimai galioja nuo",
@@ -1190,6 +1199,7 @@
       "Debit": "Debetas",
       "Debit Account": "Debeto sąskaita",
       "Debit Account Name": "Debeto sąskaitos pavadinimas",
+      "Debit Account Type": "Debeto sąskaitos tipas",
       "Debit Amount": "Debeto suma",
       "Debit Tags": "Debeto žymos",
       "Decimal Places": "Dešimtainės vietos",
@@ -1973,6 +1983,8 @@
       "Table Fields": "Lentelės laukai",
       "Tag": "Žyma",
       "Tax Group": "Mokesčių grupė",
+      "Tax Component": "Mokesčių komponentas",
+      "Tax Components": "Mokesčių komponentai",
       "Tax-Component Name": "Mokesčių komponento pavadinimas",
       "Teller": "Teikėjas",
       "Teller Name": "Teikėjo vardas",
