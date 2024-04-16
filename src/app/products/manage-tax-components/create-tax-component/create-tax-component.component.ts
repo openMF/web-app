@@ -29,11 +29,11 @@ export class CreateTaxComponentComponent implements OnInit {
   /** Credit Account Type data. */
   creditAccountTypeData: any;
   /** Credit Account data. */
-  creditAccountData: any;
+  creditAccountData: any[] = [];
   /** Debit Account Type data. */
   debitAccountTypeData: any;
   /** Debit Account data. */
-  debitAccountData: any;
+  debitAccountData: any[] = [];
 
   /**
    * Retrieves the tax Component template data from `resolve`.

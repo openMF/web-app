@@ -16,6 +16,7 @@ export class DateFormatPipe implements PipeTransform {
       return '';
     }
     let dateVal;
+    moment.locale(this.settingsService.language.code);
     if (value instanceof Array) {
       dateVal = moment(value.join('-'), 'YYYY-MM-DD');
     } else {

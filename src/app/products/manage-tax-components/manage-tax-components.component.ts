@@ -21,7 +21,7 @@ export class ManageTaxComponentsComponent implements OnInit {
   /** Tax Components data. */
   taxComponentData: any;
   /** Columns to be displayed in tax component table. */
-  displayedColumns: string[] = ['name', 'percentage'];
+  displayedColumns: string[] = ['name', 'percentage', 'startDate', 'glAccount'];
   /** Data source for tax component table. */
   dataSource: MatTableDataSource<any>;
 
