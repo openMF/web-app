@@ -638,6 +638,8 @@
       "Dashboard": "계기반",
       "Default Shares per Client": "클라이언트당 기본 공유",
       "Define New Mapping": "새 매핑 정의",
+      "Define Tax Components": "세금 요소 정의",
+      "Define Tax Groups": "세금 그룹 정의",
       "Delete": "삭제",
       "Delete Client Signature": "클라이언트 서명 삭제",
       "Delete Checker": "체커 삭제",
@@ -893,6 +895,13 @@
       "successfully select option": "성공적으로. 계속 진행하려면 아래 옵션 중에서 선택하세요."
     },
     "inputs": {
+      "accounting": {
+        "ASSET": "유산",
+        "LIABILITY": "책임",
+        "EQUITY": "형평성",
+        "INCOME": "소득",
+        "EXPENSE": "비용"
+      },
       "ACCOUNTING": "회계",
       "ADDRESS": "주소",
       "Above Changes are Effective from": "위 변경사항은 다음부터 적용됩니다.",
@@ -1191,6 +1200,7 @@
       "Debit": "직불",
       "Debit Account": "직불 계좌",
       "Debit Account Name": "직불 계좌 이름",
+      "Debit Account Type": "차변 계좌 유형",
       "Debit Amount": "차변 금액",
       "Debit Tags": "직불 태그",
       "Decimal Places": "소수점 자리",
@@ -1975,6 +1985,8 @@
       "Tag": "꼬리표",
       "Tax Group": "세금 그룹",
       "Tax-Component Name": "세금 구성요소 이름",
+      "Tax Component": "세금 구성요소",	
+      "Tax Components": "세금 구성요소",
       "Teller": "말하는 사람",
       "Teller Name": "출납원 이름",
       "Template Message": "템플릿 메시지",

@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Edit tax component.
@@ -41,7 +42,8 @@ export class EditTaxComponentComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private dateUtils: Dates,
-              private settingsService: SettingsService) {
+              private settingsService: SettingsService,
+              private translateService: TranslateService) {
     this.route.data.subscribe((data: { taxComponent: any }) => {
       this.taxComponentData = data.taxComponent;
     });
@@ -64,7 +66,7 @@ export class EditTaxComponentComponent implements OnInit {
       'name': [this.taxComponentData.name, [Validators.required]],
       'percentage': [this.taxComponentData.percentage, [Validators.required, Validators.pattern('^(0*[1-9][0-9]*(\\.[0-9]+)?|0+\\.[0-9]*[1-9][0-9]*)$'), Validators.max(100)]],
       'startDate': [this.taxComponentData.startDate && new Date(this.taxComponentData.startDate)],
-      'creditAccountType': [{ value: this.taxComponentData.creditAccountType.value, disabled: true }],
+      'creditAccountType': [{ value: this.translateService.instant('labels.inputs.accounting.' + this.taxComponentData.creditAccountType.value), disabled: true }],
       'creditAccount': [{ value: this.taxComponentData.creditAccount.name, disabled: true }]
     });
   }

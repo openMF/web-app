@@ -638,6 +638,8 @@
             "Dashboard": "Dashboard",
             "Default Shares per Client": "Default Shares per Client",
             "Define New Mapping": "Define New Mapping",
+            "Define Tax Components": "Define Tax Components",
+            "Define Tax Groups": "Define Tax Groups",	
             "Delete": "Delete",
             "Delete Client Signature": "Delete Client Signature",
             "Delete Checker": "Delete Checker",
@@ -891,6 +893,13 @@
             "successfully select option": "successfully. Please select from the options below to proceed furthur."
         },
         "inputs": {
+            "accounting": {
+                "ASSET": "ASSET",
+                "LIABILITY": "LIABILITY",
+                "EQUITY": "EQUITY",
+                "INCOME": "INCOME",
+                "EXPENSE": "EXPENSE"
+            },
             "ACCOUNTING": "ACCOUNTING",
             "ADDRESS": "ADDRESS",
             "Above Changes are Effective from": "Above Changes are Effective from",
@@ -1189,6 +1198,7 @@
             "Debit": "Debit",
             "Debit Account": "Debit Account",
             "Debit Account Name": "Debit Account Name",
+            "Debit Account Type": "Debit Account Type",
             "Debit Amount": "Debit Amount",
             "Debit Tags": "Debit Tags",
             "Decimal Places": "Decimal Places",
@@ -1972,6 +1982,8 @@
             "Table Fields": "Table Fields",
             "Tag": "Tag",
             "Tax Group": "Tax Group",
+            "Tax Component": "Tax Component",
+            "Tax Components": "Tax Components",
             "Tax-Component Name": "Tax-Component Name",
             "Teller": "Teller",
             "Teller Name": "Teller Name",

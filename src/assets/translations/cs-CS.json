@@ -637,6 +637,8 @@
       "Dashboard": "Přístrojová deska",
       "Default Shares per Client": "Výchozí podíly na klienta",
       "Define New Mapping": "Definujte nové mapování",
+      "Define Tax Components": "Definujte daňové složky",
+      "Define Tax Groups": "Definujte daňové skupiny",
       "Delete": "Vymazat",
       "Delete Client Signature": "Smazat podpis klienta",
       "Delete Checker": "Odstranit kontrolu",
@@ -891,6 +893,13 @@
       "successfully select option": "úspěšně. Chcete-li pokračovat dále, vyberte si z níže uvedených možností."
     },
     "inputs": {
+      "accounting": {
+        "ASSET": "AKTIVUM",
+        "LIABILITY": "ODPOVĚDNOST",
+        "EQUITY": "SPRAVEDLNOST",
+        "INCOME": "PŘÍJEM",
+        "EXPENSE": "NÁKLADY"
+      },
       "ACCOUNTING": "ÚČETNICTVÍ",
       "ADDRESS": "ADRESA",
       "Above Changes are Effective from": "Výše uvedené změny jsou účinné od",
@@ -1190,6 +1199,7 @@
       "Debit": "Debetní",
       "Debit Account": "Debetní účet",
       "Debit Account Name": "Název debetního účtu",
+      "Debit Account Type": "Typ debetního účtu",
       "Debit Amount": "Debetní částka",
       "Debit Tags": "Debetní štítky",
       "Decimal Places": "Desetinná místa",
@@ -1973,6 +1983,8 @@
       "Table Fields": "Pole tabulky",
       "Tag": "Štítek",
       "Tax Group": "Daňová skupina",
+      "Tax Component": "Daňová složka",
+      "Tax Components": "Složky daně",
       "Tax-Component Name": "Název daňové složky",
       "Teller": "Pokladník",
       "Teller Name": "Jméno Teller",

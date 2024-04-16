@@ -638,6 +638,8 @@
       "Dashboard": "Pannello di controllo",
       "Default Shares per Client": "Condivisioni predefinite per cliente",
       "Define New Mapping": "Definire nuova mappatura",
+      "Define Tax Components": "Definire le componenti fiscali",
+      "Define Tax Groups": "Definire i gruppi fiscali",
       "Delete": "Eliminare",
       "Delete Client Signature": "Elimina firma cliente",
       "Delete Checker": "Elimina Checker",
@@ -892,6 +894,13 @@
       "successfully select option": "con successo. Seleziona una delle opzioni seguenti per procedere ulteriormente."
     },
     "inputs": {
+      "accounting": {
+        "ASSET": "RISORSA",
+        "LIABILITY": "RESPONSABILITÀ",
+        "EQUITY": "EQUITÀ",
+        "INCOME": "REDDITO",
+        "EXPENSE": "SPESE"
+      },
       "ACCOUNTING": "CONTABILITÀ",
       "ADDRESS": "INDIRIZZO",
       "Above Changes are Effective from": "Le modifiche di cui sopra entrano in vigore a partire dal",
@@ -1190,6 +1199,7 @@
       "Debit": "Addebito",
       "Debit Account": "Conto di debito",
       "Debit Account Name": "Nome del conto di addebito",
+      "Debit Account Type": "Tipo di conto di addebito",
       "Debit Amount": "Importo del debito",
       "Debit Tags": "Tag di debito",
       "Decimal Places": "Decimali",
@@ -1973,6 +1983,8 @@
       "Table Fields": "Campi della tabella",
       "Tag": "Etichetta",
       "Tax Group": "Gruppo fiscale",
+      "Tax Component": "Componente fiscale",	
+      "Tax Components": "Componenti fiscali",
       "Tax-Component Name": "Nome della componente fiscale",
       "Teller": "Cassiere",
       "Teller Name": "Nome del cassiere",

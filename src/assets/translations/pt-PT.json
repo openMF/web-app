@@ -638,6 +638,8 @@
       "Dashboard": "Painel",
       "Default Shares per Client": "Compartilhamentos padrão por cliente",
       "Define New Mapping": "Definir novo mapeamento",
+      "Define Tax Components": "Definir componentes fiscais",
+      "Define Tax Groups": "Definir grupos fiscais",
       "Delete": "Excluir",
       "Delete Client Signature": "Excluir assinatura do cliente",
       "Delete Checker": "Exclua verificador",
@@ -892,6 +894,13 @@
       "successfully select option": "com sucesso. Selecione uma das opções abaixo para prosseguir."
     },
     "inputs": {
+      "accounting": {
+        "ASSET": "ATIVO",
+        "LIABILITY": "RESPONSABILIDADE",
+        "EQUITY": "EQUIDADE",
+        "INCOME": "RENDA",
+        "EXPENSE": "DESPESA"
+      },
       "ACCOUNTING": "CONTABILIDADE",
       "ADDRESS": "ENDEREÇO",
       "Above Changes are Effective from": "As alterações acima entram em vigor a partir de",
@@ -1190,6 +1199,7 @@
       "Debit": "Débito",
       "Debit Account": "Conta de débito",
       "Debit Account Name": "Nome da conta de débito",
+      "Debit Account Type": "Tipo de conta de débito",
       "Debit Amount": "Valor do débito",
       "Debit Tags": "Tags de débito",
       "Decimal Places": "Casas decimais",
@@ -1973,6 +1983,8 @@
       "Table Fields": "Campos da tabela",
       "Tag": "Marcação",
       "Tax Group": "Grupo Fiscal",
+      "Tax Component": "Componente Fiscal",
+      "Tax Components": "Componentes fiscais",
       "Tax-Component Name": "Nome do componente fiscal",
       "Teller": "Caixa",
       "Teller Name": "Nome do caixa",

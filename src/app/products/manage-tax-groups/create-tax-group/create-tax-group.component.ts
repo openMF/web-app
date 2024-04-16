@@ -15,6 +15,7 @@ import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicke
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { Dates } from 'app/core/utils/dates';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Create Tax Group component.
@@ -57,8 +58,9 @@ export class CreateTaxGroupComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private dateUtils: Dates,
-              public dialog: MatDialog,
-              private settingsService: SettingsService) {
+              private dialog: MatDialog,
+              private settingsService: SettingsService,
+              private translateService: TranslateService) {
     this.route.data.subscribe((data: { taxGroupTemplate: any }) => {
       this.taxGroupTemplateData = data.taxGroupTemplate;
       this.taxComponentOptions = this.taxGroupTemplateData.taxComponents;
@@ -86,20 +88,20 @@ export class CreateTaxGroupComponent implements OnInit {
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'taxComponentId',
-        label: 'Tax Component',
+        label: this.translateService.instant('labels.inputs.Tax Component'),
         options: { label: 'name', value: 'id', data: this.taxComponentOptions },
         order: 1
       }),
       new DatepickerBase({
         controlName: 'startDate',
-        label: 'Start Date',
+        label: this.translateService.instant('labels.inputs.Start Date'),
         minDate: this.minDate,
         maxDate: this.maxDate,
         order: 2
       })
     ];
     const data = {
-      title: 'Add Tax Component',
+      title: this.translateService.instant('labels.buttons.Add') + ' ' + this.translateService.instant('labels.inputs.Tax Component'),
       layout: { addButtonText: 'Add' },
       formfields: formfields
     };

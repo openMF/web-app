@@ -638,6 +638,8 @@
       "Dashboard": "Tableau de bord",
       "Default Shares per Client": "Actions par défaut par client",
       "Define New Mapping": "Définir un nouveau mappage",
+      "Define Tax Components": "Définir les composants fiscaux",
+      "Define Tax Groups": "Définir des groupes de taxes",
       "Delete": "Supprimer",
       "Delete Client Signature": "Supprimer la signature du client",
       "Delete Checker": "Supprimer un vérificateur",
@@ -892,6 +894,13 @@
       "successfully select option": "avec succès. Veuillez sélectionner parmi les options ci-dessous pour continuer."
     },
     "inputs": {
+      "accounting": {
+        "ASSET": "ACTIF",
+        "LIABILITY": "RESPONSABILITÉ",
+        "EQUITY": "ÉQUITÉ",
+        "INCOME": "REVENU",
+        "EXPENSE": "FRAIS"
+      },
       "ACCOUNTING": "COMPTABILITÉ",
       "ADDRESS": "ADRESSE",
       "Above Changes are Effective from": "Les modifications ci-dessus entrent en vigueur à partir de",
@@ -1190,6 +1199,7 @@
       "Debit": "Débit",
       "Debit Account": "Compte de débit",
       "Debit Account Name": "Nom du compte de débit",
+      "Debit Account Type": "Type de compte de débit",
       "Debit Amount": "Montant du débit",
       "Debit Tags": "Étiquettes de débit",
       "Decimal Places": "Décimales",
@@ -1973,6 +1983,8 @@
       "Table Fields": "Champs du tableau",
       "Tag": "Étiqueter",
       "Tax Group": "Groupe fiscal",
+      "Tax Component": "Composante fiscale",
+      "Tax Components": "Composantes fiscales",
       "Tax-Component Name": "Nom du composant fiscal",
       "Teller": "Caissier",
       "Teller Name": "Nom du caissier",

@@ -638,6 +638,8 @@
       "Dashboard": "Mērinstrumentu panelis",
       "Default Shares per Client": "Noklusējuma akcijas vienam klientam",
       "Define New Mapping": "Definējiet jaunu kartēšanu",
+      "Define Tax Components": "Definējiet nodokļu sastāvdaļas",
+      "Define Tax Groups": "Definējiet nodokļu grupas",
       "Delete": "Dzēst",
       "Delete Client Signature": "Dzēst klienta parakstu",
       "Delinquency Buckets": "Noziedzības spaiņi",
@@ -892,6 +894,13 @@
       "successfully select option": "veiksmīgi. Lūdzu, atlasiet kādu no tālāk norādītajām opcijām, lai turpinātu."
     },
     "inputs": {
+      "accounting": {
+        "ASSET": "AKTĪVS",
+        "LIABILITY": "ATBILDĪBA",
+        "EQUITY": "KAPITĀLS",
+        "INCOME": "IENĀKUMI",
+        "EXPENSE": "IZDEVUMI"
+      },
       "ACCOUNTING": "GRĀMATVEDĪBA",
       "ADDRESS": "ADRESE",
       "Above Changes are Effective from": "Iepriekš minētās izmaiņas ir spēkā no",
@@ -1190,6 +1199,7 @@
       "Debit": "Debets",
       "Debit Account": "Debeta konts",
       "Debit Account Name": "Debeta konta nosaukums",
+      "Debit Account Type": "Debeta konta veids",
       "Debit Amount": "Debeta summa",
       "Debit Tags": "Debeta tagi",
       "Decimal Places": "Decimālzīmes",
@@ -1973,6 +1983,8 @@
       "Table Fields": "Tabulas lauki",
       "Tag": "Tag",
       "Tax Group": "Nodokļu grupa",
+      "Tax Component": "Nodokļu sastāvdaļa",
+      "Tax Components": "Nodokļu sastāvdaļas",
       "Tax-Component Name": "Nodokļa komponenta nosaukums",
       "Teller": "Teicējs",
       "Teller Name": "Teicēja vārds",
