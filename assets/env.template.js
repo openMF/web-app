@@ -28,4 +28,8 @@
 
   // Time in seconds for COB Catch-Up, default 30 seconds
   window['env']['waitTimeForCOBCatchUp'] = '$MIFOS_WAIT_TIME_FOR_CATCHUP';
+
+  // Time in milliseconds for Session idle timeout, default 300000 seconds
+  window['env']['sessionIdleTimeout'] = '$MIFOS_SESSION_IDLE_TIMEOUT';
+
 })(this);
