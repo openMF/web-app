@@ -275,7 +275,16 @@
       "Accrual (periodic)": "Accrual (mara kwa mara)",
       "Accrual (upfront)": "Accrual (mbele)",
       "Cash": "Fedha taslimu",
-      "NONE": "Hakuna"
+      "NONE": "Hakuna",
+      "financialActivity": {
+        "assetTransfer": "Uhamisho wa mali",
+        "cashAtMainVault": "fedha Katika Vault Kuu",
+        "cashAtTeller": "pesa kwa Teller",
+        "fundSource": "Chanzo cha mfuko",
+        "liabilityTransfer": "Uhamisho wa dhima",
+        "openingBalancesTransferContra": "kufungua Mizani Uhamisho Contra",
+        "payableDividends": "Gawio linalolipwa"
+      }
     },
     "breadcrumbs": {
       "Home": "Nyumbani"

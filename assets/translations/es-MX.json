@@ -275,7 +275,16 @@
             "Accrual (periodic)": "Devengo (periódico)",
             "Accrual (upfront)": "Devengo (adelantado)",
             "Cash": "Efectivo",
-            "NONE": "Ninguno"
+            "NONE": "Ninguno",
+            "financialActivity": {
+                "assetTransfer": "Transferencia de Activos",
+                "cashAtMainVault": "Efectivo en la bóveda principal",
+                "cashAtTeller": "Efectivo en el cajero",
+                "fundSource": "Fuente del Fondo",
+                "liabilityTransfer": "Transferencia de Pasivo",
+                "openingBalancesTransferContra": "Saldos de Apertura Transferencia Contra",
+                "payableDividends": "Dividendos a pagar"
+            }
         },
         "breadcrumbs": {
             "Home": "Inicio"

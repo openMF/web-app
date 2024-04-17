@@ -275,7 +275,16 @@
       "Accrual (periodic)": "उपार्जन (आवधिक)",
       "Accrual (upfront)": "उपार्जन (अगाडि)",
       "Cash": "नगद",
-      "NONE": "कुनै पनि छैन"
+      "NONE": "कुनै पनि छैन",
+      "financialActivity": {
+        "assetTransfer": "सम्पत्ति स्थानान्तरण",
+        "cashAtMainVault": "मुख्य भल्ट मा नगद",
+        "cashAtTeller": "टेलर मा नगद",
+        "fundSource": "कोष स्रोत",
+        "liabilityTransfer": "दायित्व स्थानान्तरण",
+        "openingBalancesTransferContra": "ब्यालेन्स ट्रान्सफर कन्ट्रा खोल्दै",
+        "payableDividends": "भुक्तानी योग्य लाभांश"
+      }
     },
     "breadcrumbs": {
       "Home": "घर"

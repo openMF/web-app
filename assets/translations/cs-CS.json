@@ -275,7 +275,16 @@
       "Accrual (periodic)": "Akruální (periodické)",
       "Accrual (upfront)": "Akruální (předem)",
       "Cash": "Hotovost",
-      "NONE": "Žádný"
+      "NONE": "Žádný",
+      "financialActivity": {
+        "assetTransfer": "převod aktiv",
+        "cashAtMainVault": "hotovost v hlavním trezoru",
+        "cashAtTeller": "hotovost u Tellera",
+        "fundSource": "fond Zdroj",
+        "liabilityTransfer": "Převod odpovědnosti",
+        "openingBalancesTransferContra": "otevření zůstatků Převod proti",
+        "payableDividends": "splatné dividendy"
+      }
     },
     "breadcrumbs": {
       "Home": "Domov"

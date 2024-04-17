@@ -275,7 +275,16 @@
       "Accrual (periodic)": "Abgrenzung (periodisch)",
       "Accrual (upfront)": "Rückstellung (im Voraus)",
       "Cash": "Kasse",
-      "NONE": "Keiner"
+      "NONE": "Keiner",
+      "financialActivity": {
+        "assetTransfer": "Vermögensübertragung",
+        "cashAtMainVault": "Bargeld im Haupttresor",
+        "cashAtTeller": "Bargeld beim Teller",
+        "fundSource": "Fondsquelle",
+        "liabilityTransfer": "Haftungsübertragung",
+        "openingBalancesTransferContra": "Eröffnungssalden Transferkontra",
+        "payableDividends": "zahlbare Dividenden"
+      }
     },
     "breadcrumbs": {
       "Home": "Heim"
