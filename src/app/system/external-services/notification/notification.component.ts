@@ -49,4 +49,12 @@ export class NotificationComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  getConfigurationValue(configuration: any): string {
+    const value = configuration.value;
+    if (configuration.name === 'server_key') {
+      return value.replace(value.substr(1, value.length - 3), value.substr(1, value.length - 3).replace(/./g, '*'));
+    }
+    return value;
+  }
+
 }
