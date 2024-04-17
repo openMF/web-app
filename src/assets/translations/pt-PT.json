@@ -275,7 +275,16 @@
       "Accrual (periodic)": "Acumulação (periódica)",
       "Accrual (upfront)": "Acumulação (antecipada)",
       "Cash": "Dinheiro",
-      "NONE": "Nenhum"
+      "NONE": "Nenhum",
+      "financialActivity": {
+        "assetTransfer": "Transferência de Ativos",
+        "cashAtMainVault": "dinheiro no cofre principal",
+        "cashAtTeller": "dinheiro no caixa",
+        "fundSource": "fonte do fundo",
+        "liabilityTransfer": "Transferência de responsabilidade",
+        "openingBalancesTransferContra": "abertura de transferência de saldos contra",
+        "payableDividends": "Dividendos a pagar"
+      }
     },
     "breadcrumbs": {
       "Home": "Lar"

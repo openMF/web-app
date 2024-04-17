@@ -8,6 +8,7 @@ import { AccountingService } from '../../accounting.service';
 
 /** Custom Components */
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
+import { Location } from '@angular/common';
 
 /**
  * View financial activity mapping component.
@@ -34,7 +35,8 @@ export class ViewFinancialActivityMappingComponent implements OnInit {
   constructor(private accountingService: AccountingService,
               private route: ActivatedRoute,
               private router: Router,
-              public dialog: MatDialog) {
+              private dialog: MatDialog,
+              private location: Location) {
     this.route.data.subscribe((data: { financialActivityAccount: any }) => {
       this.financialActivityAccount = data.financialActivityAccount;
       this.financialActivityAccountId = data.financialActivityAccount.id;
@@ -59,6 +61,10 @@ export class ViewFinancialActivityMappingComponent implements OnInit {
           });
       }
     });
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
 }

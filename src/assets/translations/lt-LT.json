@@ -275,7 +275,16 @@
       "Accrual (periodic)": "Kaupiamasis (periodinis)",
       "Accrual (upfront)": "Sukaupimas (išankstinis)",
       "Cash": "Grynieji pinigai",
-      "NONE": "Nė vienas"
+      "NONE": "Nė vienas",
+      "financialActivity": {
+        "assetTransfer": "turto perdavimas",
+        "cashAtMainVault": "grynieji pinigai Pagrindiniame saugykloje",
+        "cashAtTeller": "grynieji „Teller“.",	
+        "fundSource": "fondas Šaltinis",
+        "liabilityTransfer": "atsakomybės perdavimas",
+        "openingBalancesTransferContra": "atidarymo likučių pervedimo kontraktas",
+        "payableDividends": "mokėtini Dividendai"
+      }
     },
     "breadcrumbs": {
       "Home": "Namai"

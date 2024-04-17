@@ -275,7 +275,16 @@
       "Accrual (periodic)": "Accantonamento (periodico)",
       "Accrual (upfront)": "Accantonamento (in anticipo)",
       "Cash": "Contanti",
-      "NONE": "Nessuno"
+      "NONE": "Nessuno",
+      "financialActivity": {
+        "assetTransfer": "Trasferimento di beni",
+        "cashAtMainVault": "contanti nel caveau principale",
+        "cashAtTeller": "contanti al cassiere",
+        "fundSource": "Fonte del fondo",
+        "liabilityTransfer": "Trasferimento di responsabilità",
+        "openingBalancesTransferContra": "Saldi iniziali Trasferimento Contra",
+        "payableDividends": "dividendi pagabili"
+      }
     },
     "breadcrumbs": {
       "Home": "Casa"

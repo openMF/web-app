@@ -275,7 +275,16 @@
       "Accrual (periodic)": "Uzkrāšana (periodiski)",
       "Accrual (upfront)": "Uzkrāšana (iepriekšēja)",
       "Cash": "Skaidra nauda",
-      "NONE": "Nav"
+      "NONE": "Nav",
+      "financialActivity": {
+        "assetTransfer": "aktīvu nodošana",
+        "cashAtMainVault": "skaidra nauda Galvenajā seifā",
+        "cashAtTeller": "skaidra nauda Teller",
+        "fundSource": "fonds Avots",
+        "liabilityTransfer": "atbildības nodošana",
+        "openingBalancesTransferContra": "atverot Atlikumu pārskaitījumu Contra",
+        "payableDividends": "izmaksājamās dividendes"
+      }
     },
     "breadcrumbs": {
       "Home": "Mājas"

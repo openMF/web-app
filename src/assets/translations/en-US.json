@@ -275,7 +275,16 @@
             "Accrual (periodic)": "Accrual (periodic)",
             "Accrual (upfront)": "Accrual (upfront)",
             "Cash": "Cash",
-            "NONE": "None"
+            "NONE": "None",
+            "financialActivity": {
+                "assetTransfer": "Asset Transfer",
+                "cashAtMainVault": "Cash At Main Vault",
+                "cashAtTeller": "Cash At Teller",
+                "fundSource": "Fund Source",
+                "liabilityTransfer": "Liability Transfer",
+                "openingBalancesTransferContra": "Opening Balances Transfer Contra",
+                "payableDividends": "Payable Dividends"
+            }
         },
         "breadcrumbs": {
             "Home": "Home"

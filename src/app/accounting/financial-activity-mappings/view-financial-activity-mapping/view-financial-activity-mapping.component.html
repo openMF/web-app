@@ -22,7 +22,15 @@
         </div>
 
         <div fxFlex="50%">
-          {{ financialActivityAccount?.financialActivityData.name }}
+          ({{financialActivityAccount?.financialActivityData.id}}) {{ 'labels.accounting.financialActivity.' + financialActivityAccount?.financialActivityData.name | translate }}
+        </div>
+
+        <div fxFlex="50%" class="header">
+          {{"labels.inputs.Account Type" | translate}}
+        </div>
+
+        <div fxFlex="50%">
+          {{ 'labels.inputs.accounting.' + financialActivityAccount?.financialActivityData.mappedGLAccountType | translate }}
         </div>
 
         <mifosx-gl-account-display fxFlex="100%"
@@ -35,6 +43,9 @@
 
     </mat-card-content>
 
+    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <button type="button" color="primary" mat-raised-button [routerLink]="['../..']">{{  "labels.buttons.Back" | translate}}</button>
+    </mat-card-actions>
   </mat-card>
 
 </div>

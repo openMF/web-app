@@ -275,7 +275,16 @@
       "Accrual (periodic)": "발생(정기적)",
       "Accrual (upfront)": "발생(선불)",
       "Cash": "현금",
-      "NONE": "없음"
+      "NONE": "없음",
+      "financialActivity": {
+        "assetTransfer": "자산 이전",
+        "cashAtMainVault": "메인 볼트에서 현금",
+        "cashAtTeller": "텔러에서 현금",
+        "fundSource": "자금 출처",
+        "liabilityTransfer": "책임 이전",
+        "openingBalancesTransferContra": "기초 잔액 이체 대조",
+        "payableDividends": "지급 배당금"
+      }
     },
     "breadcrumbs": {
       "Home": "집"
