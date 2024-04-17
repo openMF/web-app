@@ -22,7 +22,7 @@ export class FinancialActivityMappingsComponent implements OnInit, AfterViewInit
   /** Financial activity account data. */
   financialActivityAccountData: any;
   /** Columns to be displayed in financial activity mappings table. */
-  displayedColumns: string[] = ['financialActivity', 'glAccountName', 'glAccountCode'];
+  displayedColumns: string[] = ['financialActivity', 'glAccountType', 'glAccountCode', 'glAccountName'];
   /** Data source for financial activity mappings table. */
   dataSource: MatTableDataSource<any>;
 

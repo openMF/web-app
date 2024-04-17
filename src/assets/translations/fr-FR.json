@@ -275,7 +275,16 @@
       "Accrual (periodic)": "Accumulation (périodique)",
       "Accrual (upfront)": "Accumulation (d'avance)",
       "Cash": "Espèces",
-      "NONE": "Aucun"
+      "NONE": "Aucun",
+      "financialActivity": {
+        "assetTransfer": "Transfert d'actif",
+        "cashAtMainVault": "espèces dans le coffre-fort principal",
+        "cashAtTeller": "en espèces au caissier",
+        "fundSource": "Source du fonds",
+        "liabilityTransfer": "Transfert de responsabilité",
+        "openingBalancesTransferContra": "Soldes d'ouverture Transfert Contrat",
+        "payableDividends": "Dividendes payables"
+      }
     },
     "breadcrumbs": {
       "Home": "Maison"
