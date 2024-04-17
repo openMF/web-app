@@ -10,6 +10,9 @@ ARG BUILD_ENVIRONMENT_OPTIONS="--configuration production"
 ARG PUPPETEER_DOWNLOAD_HOST_ARG=https://storage.googleapis.com
 ARG PUPPETEER_CHROMIUM_REVISION_ARG=1011831
 
+# Set the environment variable to increase Node.js memory limit
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+
 RUN apk add --no-cache git
 
 WORKDIR /usr/src/app
