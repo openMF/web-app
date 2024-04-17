@@ -1,14 +1,14 @@
 {
   "id": 1600,
-  "username": "abhaychawla",
+  "username": "username",
   "status": "status",
-  "firstName": "Abhay",
-  "lastName": "Chawla",
+  "firstName": "firstname",
+  "lastName": "lastname",
   "gender": "Male",
-  "dateOfBirth": "18/06/1997",
-  "email": "abhay.chawla97@gmail.com",
-  "mobile": "9871105236",
+  "dateOfBirth": "01/01/1999",
+  "email": "test.user@example.com",
+  "mobile": "1234567890",
   "office": "Head Office",
-  "staff": "Smith W",
+  "staff": "Smith",
   "activationDate": "12/03/2018"
 }
