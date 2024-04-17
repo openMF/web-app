@@ -36,7 +36,12 @@ export const environment = {
   // Time in seconds, default 60 seconds
   waitTimeForNotifications: window['env']['waitTimeForNotifications'] || 60,
   // Time in seconds, default 30 seconds
-  waitTimeForCOBCatchUp: window['env']['waitTimeForCOBCatchUp'] || 30
+  waitTimeForCOBCatchUp: window['env']['waitTimeForCOBCatchUp'] || 30,
+  session: {
+    timeout: {
+      idleTimeout: window['env']['sessionIdleTimeout'] || 300000, // 5 minutes
+    }
+  }
 };
 
 // Server URL

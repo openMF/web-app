@@ -25,6 +25,8 @@ import { OAuth2Token } from './o-auth2-token.model';
  */
 @Injectable()
 export class AuthenticationService {
+  // User logged in boolean
+  private userLoggedIn: boolean;
 
   /** Denotes whether the user credentials should persist through sessions. */
   private rememberMe: boolean;
@@ -57,6 +59,7 @@ export class AuthenticationService {
   constructor(private http: HttpClient,
               private alertService: AlertService,
               private authenticationInterceptor: AuthenticationInterceptor) {
+    this.userLoggedIn = false;
     this.rememberMe = false;
     this.storage = sessionStorage;
     const savedCredentials = JSON.parse(
@@ -169,6 +172,7 @@ export class AuthenticationService {
    * @param {Credentials} credentials Authenticated user credentials.
    */
   private onLoginSuccess(credentials: Credentials) {
+    this.userLoggedIn = true;
     if (environment.oauth.enabled) {
       this.authenticationInterceptor.setAuthorizationToken(credentials.accessToken);
     } else {
@@ -202,6 +206,7 @@ export class AuthenticationService {
     this.authenticationInterceptor.removeAuthorization();
     this.setCredentials();
     this.resetDialog();
+    this.userLoggedIn = false;
     return of(true);
   }
 
@@ -342,6 +347,13 @@ export class AuthenticationService {
         this.login(loginContext).subscribe();
       })
     );
+  }
+
+  /*
+   * Get user logged in
+   */
+  getUserLoggedIn(): boolean {
+    return this.userLoggedIn;
   }
 
 }

@@ -15,6 +15,7 @@ import { AmountDisbursedPieComponent } from './dashboard/amount-disbursed-pie/am
 import { ClientTrendsBarComponent } from './dashboard/client-trends-bar/client-trends-bar.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { WarningDialogComponent } from './warning-dialog/warning-dialog.component';
+import { SessionTimeoutDialogComponent } from './timeout-dialog/session-timeout-dialog.component';
 
 /**
  * Home Component
@@ -35,7 +36,8 @@ import { WarningDialogComponent } from './warning-dialog/warning-dialog.componen
     AmountCollectedPieComponent,
     AmountDisbursedPieComponent,
     ClientTrendsBarComponent,
-    WarningDialogComponent
+    WarningDialogComponent,
+    SessionTimeoutDialogComponent
   ],
   providers: [ ]
 })
