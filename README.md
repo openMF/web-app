@@ -153,6 +153,12 @@ MIFOS_SUPPORTED_LANGUAGES=cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,
 ```
 These are the Language available now:
 
+```
+MIFOS_SESSION_IDLE_TIMEOUT=300000
+```
+Time in milliseconds for Session idle timeout, default 300000 seconds
+
+
 |  Language  | Code |    File    |
 |:----------:|:----:|:----------:|
 | Czech      |  cs  | cs-CS.json |
