@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services */
 import { LoansService } from '../../loans.service';
@@ -35,7 +35,7 @@ export class LoansAccountDetailsStepComponent implements OnInit {
   /** For edit loan accounts form */
   isFieldOfficerPatched = false;
   /** Loans Account Details Form */
-  loansAccountDetailsForm: FormGroup;
+  loansAccountDetailsForm: UntypedFormGroup;
 
   /** Loans Account Template with product data  */
   @Output() loansAccountProductTemplate = new EventEmitter();
@@ -44,7 +44,7 @@ export class LoansAccountDetailsStepComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {LoansService} loansService Loans Service.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private loansService: LoansService) {
     this.createLoansAccountDetailsForm();
   }

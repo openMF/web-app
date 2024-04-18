@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -17,7 +17,7 @@ import { OrganizationService } from 'app/organization/organization.service';
 export class EditPaymentTypeComponent implements OnInit {
 
   /** Payment Type form. */
-  paymentTypeForm: FormGroup;
+  paymentTypeForm: UntypedFormGroup;
   /** Payment Type Data. */
   paymentTypeData: any;
 
@@ -28,7 +28,7 @@ export class EditPaymentTypeComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private organizationService: OrganizationService,
               private router: Router,
               private route: ActivatedRoute) {

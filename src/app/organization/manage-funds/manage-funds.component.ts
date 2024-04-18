@@ -2,7 +2,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** Custom Dialogs */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -39,7 +39,7 @@ export class ManageFundsComponent implements OnInit {
    * @param {MatDialog} dialog Mat Dialog
    */
   constructor(private route: ActivatedRoute,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private organizationservice: OrganizationService,
               public dialog: MatDialog) {
     this.route.data.subscribe(( data: { funds: any }) => {

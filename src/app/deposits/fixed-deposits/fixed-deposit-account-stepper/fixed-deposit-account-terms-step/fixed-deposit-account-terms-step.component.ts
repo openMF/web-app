@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { FormGroup, FormBuilder, Validators} from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators} from '@angular/forms';
 
 /**
  * Fixed Deposits Terms Step
@@ -22,7 +22,7 @@ export class FixedDepositAccountTermsStepComponent implements OnInit, OnChanges 
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Fixed Deposits Account Terms Form */
-  fixedDepositAccountTermsForm: FormGroup;
+  fixedDepositAccountTermsForm: UntypedFormGroup;
   /** Interest Compounding Period Type Data */
   interestCompoundingPeriodTypeData: any;
   /** Interest Posting Period Type Data */
@@ -37,7 +37,7 @@ export class FixedDepositAccountTermsStepComponent implements OnInit, OnChanges 
   /**
    * @param {FormBuilder} formBuilder Form Builder
    */
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createFixedDepositsAccountTermsForm();
   }
 

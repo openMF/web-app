@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -23,7 +23,7 @@ export class EditTransactionComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Recurring Deposits transaction form. */
-  editTransactionForm: FormGroup;
+  editTransactionForm: UntypedFormGroup;
   /** Recurring Deposits transaction payment options. */
   paymentTypeOptions: {
     id: number,
@@ -48,7 +48,7 @@ export class EditTransactionComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
@@ -90,11 +90,11 @@ export class EditTransactionComponent implements OnInit {
   addPaymentDetails() {
     this.addPaymentDetailsFlag = !this.addPaymentDetailsFlag;
     if (this.addPaymentDetailsFlag) {
-      this.editTransactionForm.addControl('accountNumber', new FormControl(''));
-      this.editTransactionForm.addControl('checkNumber', new FormControl(''));
-      this.editTransactionForm.addControl('routingCode', new FormControl(''));
-      this.editTransactionForm.addControl('receiptNumber', new FormControl(''));
-      this.editTransactionForm.addControl('bankNumber', new FormControl(''));
+      this.editTransactionForm.addControl('accountNumber', new UntypedFormControl(''));
+      this.editTransactionForm.addControl('checkNumber', new UntypedFormControl(''));
+      this.editTransactionForm.addControl('routingCode', new UntypedFormControl(''));
+      this.editTransactionForm.addControl('receiptNumber', new UntypedFormControl(''));
+      this.editTransactionForm.addControl('bankNumber', new UntypedFormControl(''));
     } else {
       this.editTransactionForm.removeControl('accountNumber');
       this.editTransactionForm.removeControl('checkNumber');

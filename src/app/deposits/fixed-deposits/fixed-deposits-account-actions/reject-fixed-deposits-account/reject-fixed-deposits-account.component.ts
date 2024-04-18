@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -23,7 +23,7 @@ export class RejectFixedDepositsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Reject Fixed Deposit Account form. */
-  rejectFixedDepositsAccountForm: FormGroup;
+  rejectFixedDepositsAccountForm: UntypedFormGroup;
   /** Fixed Deposits Account Id */
   accountId: any;
 
@@ -35,7 +35,7 @@ export class RejectFixedDepositsAccountComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private fixedDepositsService: FixedDepositsService,
               private dateUtils: Dates,
               private route: ActivatedRoute,

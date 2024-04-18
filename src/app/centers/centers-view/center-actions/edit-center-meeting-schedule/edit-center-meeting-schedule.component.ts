@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -23,7 +23,7 @@ export class EditCenterMeetingScheduleComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Center Meeting form. */
-  centerEditMeetingScheduleForm: FormGroup;
+  centerEditMeetingScheduleForm: UntypedFormGroup;
   /** Calendar Template Data */
   calendarTemplate: any;
   /** Center Id */
@@ -42,7 +42,7 @@ export class EditCenterMeetingScheduleComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private centersService: CentersService,
               private settingsService: SettingsService,
               private dateUtils: Dates,

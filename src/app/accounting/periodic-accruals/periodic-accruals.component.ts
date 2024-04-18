@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -22,7 +22,7 @@ export class PeriodicAccrualsComponent implements OnInit {
   /** Maximum accrue date allowed. */
   maxDate = new Date();
   /** Periodic accruals form. */
-  periodicAccrualsForm: FormGroup;
+  periodicAccrualsForm: UntypedFormGroup;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -31,7 +31,7 @@ export class PeriodicAccrualsComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private accountingService: AccountingService,
               private settingsService: SettingsService,
               private dateUtils: Dates,

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -14,7 +14,7 @@ import { SystemService } from '../../system.service';
 export class CreateCodeComponent implements OnInit {
 
   /** Code form. */
-  codeForm: FormGroup;
+  codeForm: UntypedFormGroup;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -22,7 +22,7 @@ export class CreateCodeComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private systemService: SystemService,
               private route: ActivatedRoute,
               private router: Router) { }

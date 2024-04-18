@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -23,7 +23,7 @@ export class EditCenterMeetingComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Center Meeting form. */
-  centerEditMeetingForm: FormGroup;
+  centerEditMeetingForm: UntypedFormGroup;
   /** Calendar Template Data */
   calendarTemplate: any;
   /** Center Id */
@@ -46,7 +46,7 @@ export class EditCenterMeetingComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private centersService: CentersService,
               private settingsService: SettingsService,
               private dateUtils: Dates,
@@ -89,7 +89,7 @@ export class EditCenterMeetingComponent implements OnInit {
         break;
         case 2: // Weekly
           this.repetitionIntervals = ['1', '2', '3'];
-          this.centerEditMeetingForm.addControl('repeatsOnDay', new FormControl('', Validators.required));
+          this.centerEditMeetingForm.addControl('repeatsOnDay', new UntypedFormControl('', Validators.required));
           this.centerEditMeetingForm.get('repeatsOnDay').patchValue(this.calendarTemplate.repeatsOnDay.id);
         break;
         case 3: // Monthly

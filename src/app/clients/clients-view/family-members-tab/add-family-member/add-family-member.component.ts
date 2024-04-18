@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -23,7 +23,7 @@ export class AddFamilyMemberComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Add family member form. */
-  addFamilyMemberForm: FormGroup;
+  addFamilyMemberForm: UntypedFormGroup;
   /** Add family member template. */
   addFamilyMemberTemplate: any;
   /** Client ID */
@@ -37,7 +37,7 @@ export class AddFamilyMemberComponent implements OnInit {
    * @param {ClientsService} clientsService Clients Service
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private dateUtils: Dates,
               private router: Router,
               private route: ActivatedRoute,

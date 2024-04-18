@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -26,7 +26,7 @@ export class WithdrawnByClientComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Withdrawn By Applicant Loan Form */
-  withdrawnByClientLoanForm: FormGroup;
+  withdrawnByClientLoanForm: UntypedFormGroup;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -35,7 +35,7 @@ export class WithdrawnByClientComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,

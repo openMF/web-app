@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -21,7 +21,7 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
 
   @Input() dataObject: any;
   /** New Guarantor Form */
-  newGuarantorForm: FormGroup;
+  newGuarantorForm: UntypedFormGroup;
   /** Loan ID */
   loanId: string;
   /** Relation Types */
@@ -44,7 +44,7 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
@@ -86,22 +86,22 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
     this.newGuarantorForm.get('existingClient').valueChanges.subscribe(() => {
       this.showClientDetailsForm = !this.showClientDetailsForm;
       if (this.showClientDetailsForm) {
-        this.newGuarantorForm.addControl('firstname', new FormControl(''));
-        this.newGuarantorForm.addControl('lastname', new FormControl(''));
-        this.newGuarantorForm.addControl('dob', new FormControl(''));
-        this.newGuarantorForm.addControl('addressLine1', new FormControl(''));
-        this.newGuarantorForm.addControl('addressLine2', new FormControl(''));
-        this.newGuarantorForm.addControl('city', new FormControl(''));
-        this.newGuarantorForm.addControl('zip', new FormControl(''));
-        this.newGuarantorForm.addControl('mobileNumber', new FormControl(''));
-        this.newGuarantorForm.addControl('housePhoneNumber', new FormControl(''));
+        this.newGuarantorForm.addControl('firstname', new UntypedFormControl(''));
+        this.newGuarantorForm.addControl('lastname', new UntypedFormControl(''));
+        this.newGuarantorForm.addControl('dob', new UntypedFormControl(''));
+        this.newGuarantorForm.addControl('addressLine1', new UntypedFormControl(''));
+        this.newGuarantorForm.addControl('addressLine2', new UntypedFormControl(''));
+        this.newGuarantorForm.addControl('city', new UntypedFormControl(''));
+        this.newGuarantorForm.addControl('zip', new UntypedFormControl(''));
+        this.newGuarantorForm.addControl('mobileNumber', new UntypedFormControl(''));
+        this.newGuarantorForm.addControl('housePhoneNumber', new UntypedFormControl(''));
         this.newGuarantorForm.removeControl('name');
         this.newGuarantorForm.removeControl('savingsId');
         this.newGuarantorForm.removeControl('amount');
       } else {
-        this.newGuarantorForm.addControl('name', new FormControl(''));
-        this.newGuarantorForm.addControl('savingsId', new FormControl(''));
-        this.newGuarantorForm.addControl('amount', new FormControl(''));
+        this.newGuarantorForm.addControl('name', new UntypedFormControl(''));
+        this.newGuarantorForm.addControl('savingsId', new UntypedFormControl(''));
+        this.newGuarantorForm.addControl('amount', new UntypedFormControl(''));
         this.newGuarantorForm.removeControl('firstname');
         this.newGuarantorForm.removeControl('lastname');
         this.newGuarantorForm.removeControl('dob');

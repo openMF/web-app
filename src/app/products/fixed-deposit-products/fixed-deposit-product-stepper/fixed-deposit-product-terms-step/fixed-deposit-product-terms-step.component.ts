@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'mifosx-fixed-deposit-product-terms-step',
@@ -10,14 +10,14 @@ export class FixedDepositProductTermsStepComponent implements OnInit {
 
   @Input() fixedDepositProductsTemplate: any;
 
-  fixedDepositProductTermsForm: FormGroup;
+  fixedDepositProductTermsForm: UntypedFormGroup;
 
   interestCompoundingPeriodTypeData: any;
   interestPostingPeriodTypeData: any;
   interestCalculationTypeData: any;
   interestCalculationDaysInYearTypeData: any;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createFixedDepositProductTermsForm();
   }
 

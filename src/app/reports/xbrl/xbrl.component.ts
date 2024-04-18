@@ -2,7 +2,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
 import { ReportsService } from '../reports.service';
@@ -80,7 +80,7 @@ export class XBRLComponent implements OnInit, AfterViewInit {
   createMappings() {
     this.mixtaxonomyArray.forEach((taxonomy: any) => {
       const mapping = JSON.parse(this.mixMappingJson)[taxonomy.id];
-        taxonomy.mapping = new FormControl('');
+        taxonomy.mapping = new UntypedFormControl('');
         taxonomy.mapping.value = mapping || '';
     });
   }

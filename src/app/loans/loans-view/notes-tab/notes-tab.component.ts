@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** Custom Components */
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
@@ -21,12 +21,12 @@ export class NotesTabComponent implements OnInit {
   loanId: string;
   username: string;
   loanNotes: any;
-  noteForm: FormGroup;
+  noteForm: UntypedFormGroup;
   @ViewChild('formRef', { static: true }) formRef: any;
 
 
   constructor(private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private loansService: LoansService,
     private authenticationService: AuthenticationService,
     private dialog: MatDialog) {

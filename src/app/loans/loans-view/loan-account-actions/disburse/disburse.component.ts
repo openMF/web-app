@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -30,7 +30,7 @@ export class DisburseComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Disbursement Loan Form */
-  disbursementLoanForm: FormGroup;
+  disbursementLoanForm: UntypedFormGroup;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -39,7 +39,7 @@ export class DisburseComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
@@ -84,11 +84,11 @@ export class DisburseComponent implements OnInit {
   addPaymentDetails() {
     this.showPaymentDetails = !this.showPaymentDetails;
     if (this.showPaymentDetails) {
-      this.disbursementLoanForm.addControl('accountNumber', new FormControl(''));
-      this.disbursementLoanForm.addControl('checkNumber', new FormControl(''));
-      this.disbursementLoanForm.addControl('routingCode', new FormControl(''));
-      this.disbursementLoanForm.addControl('receiptNumber', new FormControl(''));
-      this.disbursementLoanForm.addControl('bankNumber', new FormControl(''));
+      this.disbursementLoanForm.addControl('accountNumber', new UntypedFormControl(''));
+      this.disbursementLoanForm.addControl('checkNumber', new UntypedFormControl(''));
+      this.disbursementLoanForm.addControl('routingCode', new UntypedFormControl(''));
+      this.disbursementLoanForm.addControl('receiptNumber', new UntypedFormControl(''));
+      this.disbursementLoanForm.addControl('bankNumber', new UntypedFormControl(''));
     } else {
       this.disbursementLoanForm.removeControl('accountNumber');
       this.disbursementLoanForm.removeControl('checkNumber');

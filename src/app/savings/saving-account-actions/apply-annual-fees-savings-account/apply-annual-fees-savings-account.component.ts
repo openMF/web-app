@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -23,7 +23,7 @@ export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Apply annual fees form. */
-  applyAnnualFeesForm: FormGroup;
+  applyAnnualFeesForm: UntypedFormGroup;
   /** Savings Account Id */
   accountId: any;
   /** Annual Fees charge Id */
@@ -39,7 +39,7 @@ export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private savingsService: SavingsService,
               private dateUtils: Dates,
               private route: ActivatedRoute,

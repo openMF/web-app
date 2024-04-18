@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder } from "@angular/forms";
+import { UntypedFormGroup, UntypedFormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 
 /** Custom Services */
@@ -18,7 +18,7 @@ import { SettingsService } from "app/settings/settings.service";
 })
 export class AcceptClientTransferComponent implements OnInit {
   /** Accept Client Transfer form. */
-  acceptClientTransferForm: FormGroup;
+  acceptClientTransferForm: UntypedFormGroup;
   /** Client Id */
   clientId: any;
   /** Transfer Date */
@@ -33,7 +33,7 @@ export class AcceptClientTransferComponent implements OnInit {
    * @param {Router} router Router
    */
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private clientsService: ClientsService,
     private settingsService: SettingsService,
     private dateUtils: Dates,

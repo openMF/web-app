@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {FormControl} from '@angular/forms';
+import {UntypedFormControl} from '@angular/forms';
 
 @Component({
   selector: 'mifosx-transactions-tab',
@@ -16,7 +16,7 @@ export class TransactionsTabComponent implements OnInit {
   /** Temporary Transaction Data */
   tempTransaction: any;
   /** Form control to handle accural parameter */
-  hideAccrualsParam: FormControl;
+  hideAccrualsParam: UntypedFormControl;
   /** Stores the status of the loan account */
   status: string;
   /** Columns to be displayed in original schedule table. */
@@ -36,7 +36,7 @@ export class TransactionsTabComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.hideAccrualsParam = new FormControl(false);
+    this.hideAccrualsParam = new UntypedFormControl(false);
     this.tempTransaction.forEach((element: any) => {
       if (element.type.accrual) {
         this.tempTransaction = this.removeItem(this.tempTransaction, element);

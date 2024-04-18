@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 /** rxjs Imports */
@@ -28,7 +28,7 @@ import { GlAccountTreeService } from './gl-account-tree.service';
 export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
 
   /** Button toggle group form control for type of view. (list/tree) */
-  viewGroup = new FormControl('listView');
+  viewGroup = new UntypedFormControl('listView');
   /** GL Account data. */
   glAccountData: any;
   /** Columns to be displayed in chart of accounts table. */

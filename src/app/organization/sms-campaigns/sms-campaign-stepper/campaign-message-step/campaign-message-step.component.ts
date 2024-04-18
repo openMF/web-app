@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, Input, OnChanges } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 /**
  * Campaign Message Step
@@ -20,7 +20,7 @@ export class CampaignMessageStepComponent implements OnChanges {
   @Input() editCampaignMessage: any;
 
   /** Camapaign Message */
-  message = new FormControl('');
+  message = new UntypedFormControl('');
   /** Column header names */
   parameterLabels: any[];
 

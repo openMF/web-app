@@ -17,13 +17,13 @@
         [active]="general.isActive">
           General
         </a>
-        <span *ngFor="let officeDatatable of officeDatatables">
+     <!--    <span *ngFor="let officeDatatable of officeDatatables">
           <a mat-tab-link *mifosxHasPermission="'READ_' + officeDatatable.registeredTableName"
             [routerLink]="['./datatables',officeDatatable.registeredTableName]"
             routerLinkActive #datatable="routerLinkActive" [active]="datatable.isActive">
             {{officeDatatable.registeredTableName}}
           </a>
-        </span>
+        </span> -->
       </nav>
 
       <router-outlet></router-outlet>

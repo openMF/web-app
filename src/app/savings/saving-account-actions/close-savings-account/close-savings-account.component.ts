@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -23,7 +23,7 @@ export class CloseSavingsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Close Savings Account form. */
-  closeSavingsAccountForm: FormGroup;
+  closeSavingsAccountForm: UntypedFormGroup;
   /** Savings Account Id */
   accountId: any;
   /** Flag to enable payment details fields. */
@@ -41,7 +41,7 @@ export class CloseSavingsAccountComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private savingsService: SavingsService,
               private dateUtils: Dates,
               private route: ActivatedRoute,
@@ -80,8 +80,8 @@ export class CloseSavingsAccountComponent implements OnInit {
   buildDependencies() {
     this.closeSavingsAccountForm.get('withdrawBalance').valueChanges.subscribe((value: boolean) => {
       if (value) {
-        this.closeSavingsAccountForm.addControl('amount', new FormControl({value: this.transactionAmount, disabled: true}));
-        this.closeSavingsAccountForm.addControl('paymentTypeId', new FormControl(''));
+        this.closeSavingsAccountForm.addControl('amount', new UntypedFormControl({value: this.transactionAmount, disabled: true}));
+        this.closeSavingsAccountForm.addControl('paymentTypeId', new UntypedFormControl(''));
       } else {
         this.closeSavingsAccountForm.removeControl('amount');
         this.closeSavingsAccountForm.removeControl('paymentTypeId');
@@ -95,11 +95,11 @@ export class CloseSavingsAccountComponent implements OnInit {
   addPaymentDetails() {
     this.addPaymentDetailsFlag = !this.addPaymentDetailsFlag;
     if (this.addPaymentDetailsFlag) {
-      this.closeSavingsAccountForm.addControl('accountNumber', new FormControl(''));
-      this.closeSavingsAccountForm.addControl('checkNumber', new FormControl(''));
-      this.closeSavingsAccountForm.addControl('routingCode', new FormControl(''));
-      this.closeSavingsAccountForm.addControl('receiptNumber', new FormControl(''));
-      this.closeSavingsAccountForm.addControl('bankNumber', new FormControl(''));
+      this.closeSavingsAccountForm.addControl('accountNumber', new UntypedFormControl(''));
+      this.closeSavingsAccountForm.addControl('checkNumber', new UntypedFormControl(''));
+      this.closeSavingsAccountForm.addControl('routingCode', new UntypedFormControl(''));
+      this.closeSavingsAccountForm.addControl('receiptNumber', new UntypedFormControl(''));
+      this.closeSavingsAccountForm.addControl('bankNumber', new UntypedFormControl(''));
     } else {
       this.closeSavingsAccountForm.removeControl('accountNumber');
       this.closeSavingsAccountForm.removeControl('checkNumber');

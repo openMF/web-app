@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -24,7 +24,7 @@ export class CreateCenterComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Center form. */
-  centerForm: FormGroup;
+  centerForm: UntypedFormGroup;
   /** Office data. */
   officeData: any;
   /** Group data. */
@@ -34,7 +34,7 @@ export class CreateCenterComponent implements OnInit {
   /** Group Members. */
   groupMembers: any[] = [];
   /** Group Choice. */
-  groupChoice = new FormControl('');
+  groupChoice = new UntypedFormControl('');
 
   /**
    * Retrieves the offices data from `resolve`.
@@ -46,7 +46,7 @@ export class CreateCenterComponent implements OnInit {
    * @param {GroupsService} groupService GroupsService.
    * @param {Dates} dateUtils Date Utils to format date.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private centerService: CentersService,
@@ -105,7 +105,7 @@ export class CreateCenterComponent implements OnInit {
     });
     this.centerForm.get('active').valueChanges.subscribe((bool: boolean) => {
       if (bool) {
-        this.centerForm.addControl('activationDate', new FormControl('', Validators.required));
+        this.centerForm.addControl('activationDate', new UntypedFormControl('', Validators.required));
       } else {
         this.centerForm.removeControl('activationDate');
       }

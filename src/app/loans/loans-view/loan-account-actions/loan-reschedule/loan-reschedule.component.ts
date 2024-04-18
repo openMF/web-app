@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { LoansService } from 'app/loans/loans.service';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -16,7 +16,7 @@ export class LoanRescheduleComponent implements OnInit {
 
   @Input() dataObject: any;
   loanId: any;
-  rescheduleLoanForm: FormGroup;
+  rescheduleLoanForm: UntypedFormGroup;
 
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -24,10 +24,10 @@ export class LoanRescheduleComponent implements OnInit {
   maxDate = new Date();
   codes: any;
 
-  changeRepaymentDate = new FormControl(false);
-  introduceGracePeriods = new FormControl(false);
-  extendRepaymentPeriod = new FormControl(false);
-  adjustinterestrates = new FormControl(false);
+  changeRepaymentDate = new UntypedFormControl(false);
+  introduceGracePeriods = new UntypedFormControl(false);
+  extendRepaymentPeriod = new UntypedFormControl(false);
+  adjustinterestrates = new UntypedFormControl(false);
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -36,7 +36,7 @@ export class LoanRescheduleComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
   /** Activity Form. */
   activityForm: any;
   /** Search Text. */
-  searchText: FormControl = new FormControl();
+  searchText: UntypedFormControl = new UntypedFormControl();
   /** Filtered Activities. */
   filteredActivities: Observable<any[]>;
   /** All User Activities. */

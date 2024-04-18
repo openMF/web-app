@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormArray, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -22,7 +22,7 @@ import { CancelDialogComponent } from '../../../shared/cancel-dialog/cancel-dial
 export class CreateSurveyComponent implements OnInit {
 
   /** Survey form. */
-  surveyForm: FormGroup;
+  surveyForm: UntypedFormGroup;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -31,7 +31,7 @@ export class CreateSurveyComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private systemService: SystemService,
               private route: ActivatedRoute,
               private router: Router,
@@ -61,8 +61,8 @@ export class CreateSurveyComponent implements OnInit {
    * Gets the questions form array.
    * @returns {FormArray} Questions form array.
    */
-  get questionDatas(): FormArray {
-    return this.surveyForm.get('questionDatas') as FormArray;
+  get questionDatas(): UntypedFormArray {
+    return this.surveyForm.get('questionDatas') as UntypedFormArray;
   }
 
   /**
@@ -70,15 +70,15 @@ export class CreateSurveyComponent implements OnInit {
    * @param {number} questionIndex Index of question to retrieve responses from.
    * @returns {FormArray} Responses form array.
    */
-  getResponseDatas(questionIndex: number): FormArray {
-    return this.surveyForm.get(['questionDatas', questionIndex, 'responseDatas']) as FormArray;
+  getResponseDatas(questionIndex: number): UntypedFormArray {
+    return this.surveyForm.get(['questionDatas', questionIndex, 'responseDatas']) as UntypedFormArray;
   }
 
   /**
    * Creates a question form group
    * @returns {FormGroup} Question form group.
    */
-  createQuestionForm(): FormGroup {
+  createQuestionForm(): UntypedFormGroup {
     return this.formBuilder.group({
       'key': ['', Validators.required],
       'text': ['', Validators.required],
@@ -109,7 +109,7 @@ export class CreateSurveyComponent implements OnInit {
    * Creates a response form group
    * @returns {FormGroup} Response form group.
    */
-  createResponseForm(): FormGroup {
+  createResponseForm(): UntypedFormGroup {
     return this.formBuilder.group({
       'text': ['', Validators.required],
       'value': ['', [Validators.required, Validators.pattern('^\\s*[-]?\\d{0,4}\\s*$')]],
@@ -131,7 +131,7 @@ export class CreateSurveyComponent implements OnInit {
    * @param {FormArray} responseFormArray Given responses form array.
    * @param {number} index Array index from where response form needs to be removed.
    */
-  removeResponse(responseFormArray: FormArray, index: number) {
+  removeResponse(responseFormArray: UntypedFormArray, index: number) {
     responseFormArray.removeAt(index);
     this.updateSequenceNumber();
   }

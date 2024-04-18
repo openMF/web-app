@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Dates } from 'app/core/utils/dates';
 import { ProductsService } from 'app/products/products.service';
 
@@ -16,7 +16,7 @@ export class LoanProductDetailsStepComponent implements OnInit {
 
   @Input() loanProductsTemplate: any;
 
-  loanProductDetailsForm: FormGroup;
+  loanProductDetailsForm: UntypedFormGroup;
 
   minDate = new Date(2000, 0, 1);
   maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 10));
@@ -29,7 +29,7 @@ export class LoanProductDetailsStepComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    */
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private dateUtils: Dates,
               private settingsService: SettingsService,
               private productService: ProductsService) {

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
 import { TranslateService } from '@ngx-translate/core';
@@ -20,7 +20,7 @@ import { SettingsService } from 'app/settings/settings.service';
 export class LanguageSelectorComponent implements OnInit {
 
   /** Language selector form control. */
-  languageSelector = new FormControl();
+  languageSelector = new UntypedFormControl();
 
   /**
    * Sets the language of the application in the selector on initial setup.

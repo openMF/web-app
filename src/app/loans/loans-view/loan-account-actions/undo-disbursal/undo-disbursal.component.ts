@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormBuilder } from '@angular/forms';
+import { UntypedFormControl, UntypedFormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -19,7 +19,7 @@ export class UndoDisbursalComponent implements OnInit {
   /** Loan ID. */
   loanId: any;
   /** Undo disbursal form. */
-  note: FormControl;
+  note: UntypedFormControl;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -27,7 +27,7 @@ export class UndoDisbursalComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private loansService: LoansService,
               private router: Router,
               private route: ActivatedRoute) {

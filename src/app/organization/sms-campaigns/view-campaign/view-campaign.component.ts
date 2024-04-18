@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -33,7 +33,7 @@ export class ViewCampaignComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** SMS form. */
-  smsForm: FormGroup;
+  smsForm: UntypedFormGroup;
   /** SMS Campaign data. */
   smsCampaignData: any;
   /** Message Status */
@@ -83,7 +83,7 @@ export class ViewCampaignComponent implements OnInit {
   constructor(private router: Router,
               private route: ActivatedRoute,
               public dialog: MatDialog,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private dateUtils: Dates,
               private organizationService: OrganizationService,
               private settingsService: SettingsService) {

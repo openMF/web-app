@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 
 /** Custom Services */
@@ -18,7 +18,7 @@ import { Dates } from "app/core/utils/dates";
 })
 export class TopUpLoanComponent implements OnInit {
   /** Top Up Loan form. */
-  topUpLoanForm: FormGroup;
+  topUpLoanForm: UntypedFormGroup;
 
   /** loan Id to top-up. */
   loanId: string;
@@ -45,7 +45,7 @@ export class TopUpLoanComponent implements OnInit {
   defaultPrincipal: number;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,

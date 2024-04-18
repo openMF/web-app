@@ -2,7 +2,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** rxjs Imports */
@@ -31,19 +31,19 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
   /** Maximum transaction date allowed. */
   maxDate = new Date();
   /** Office name filter form control.  */
-  officeName = new FormControl();
+  officeName = new UntypedFormControl();
   /** Office data. */
   officeData: any;
   /** Filtered office data for autocomplete. */
   filteredOfficeData: any;
   /** Gl Account filter form control. */
-  glAccount = new FormControl();
+  glAccount = new UntypedFormControl();
   /** Gl Account data. */
   glAccountData: any;
   /** Filtered gl account data. */
   filteredGLAccountData: any;
   /** Entry type filter form control. */
-  entryTypeFilter = new FormControl('');
+  entryTypeFilter = new UntypedFormControl('');
   /** Entry type filter data. */
   entryTypeFilterData = [
     {
@@ -60,11 +60,11 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
     }
   ];
   /** Transaction date from form control. */
-  transactionDateFrom = new FormControl(new Date(new Date().setMonth(new Date().getMonth() - 1)));
+  transactionDateFrom = new UntypedFormControl(new Date(new Date().setMonth(new Date().getMonth() - 1)));
   /** Transaction date to form control. */
-  transactionDateTo = new FormControl(new Date());
+  transactionDateTo = new UntypedFormControl(new Date());
   /** Transaction ID form control. */
-  transactionId = new FormControl();
+  transactionId = new UntypedFormControl();
   /** Columns to be displayed in journal entries table. */
   displayedColumns: string[] = ['id', 'officeName', 'transactionId', 'transactionDate', 'glAccountType', 'createdByUserName', 'glAccountCode', 'glAccountName', 'debit', 'credit'];
   /** Data source for journal entries table. */

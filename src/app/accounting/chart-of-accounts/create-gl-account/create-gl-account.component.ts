@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -17,7 +17,7 @@ import { AccountingService } from '../../accounting.service';
 export class CreateGlAccountComponent implements OnInit {
 
   /** GL account form. */
-  glAccountForm: FormGroup;
+  glAccountForm: UntypedFormGroup;
   /** Chart of accounts data. */
   chartOfAccountsData: any;
   /** Account type data. */
@@ -42,7 +42,7 @@ export class CreateGlAccountComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private accountingService: AccountingService,
               private route: ActivatedRoute,
               private router: Router) {

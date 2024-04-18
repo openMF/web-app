@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'mifosx-deposit-product-incentive-form-dialog',
@@ -15,7 +15,7 @@ export class DepositProductIncentiveFormDialogComponent implements OnInit {
     addButtonText: 'Add'
   };
 
-  depositProductIncentiveForm: FormGroup;
+  depositProductIncentiveForm: UntypedFormGroup;
 
   title: string;
 
@@ -27,7 +27,7 @@ export class DepositProductIncentiveFormDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<DepositProductIncentiveFormDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
-              private formBuilder: FormBuilder) {
+              private formBuilder: UntypedFormBuilder) {
     this.createDepositProductIncentiveForm();
     this.setConditionalControls();
     this.layout = { ...this.layout, ...data.layout };

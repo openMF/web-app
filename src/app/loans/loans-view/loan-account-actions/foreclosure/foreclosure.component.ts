@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { LoansService } from 'app/loans/loans.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -14,7 +14,7 @@ import { Dates } from 'app/core/utils/dates';
 })
 export class ForeclosureComponent implements OnInit {
   loanId: any;
-  foreclosureForm: FormGroup;
+  foreclosureForm: UntypedFormGroup;
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -29,7 +29,7 @@ export class ForeclosureComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,

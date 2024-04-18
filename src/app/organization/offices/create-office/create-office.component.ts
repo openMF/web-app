@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -19,7 +19,7 @@ import { OfficeHierarchy } from 'app/shared/office-tree-view/office-tree-node';
 })
 export class CreateOfficeComponent implements OnInit {
   /** Office form. */
-  officeForm: FormGroup;
+  officeForm: UntypedFormGroup;
   /** Office Data */
   officeData: any;
   officeDataSliced: any;
@@ -39,7 +39,7 @@ export class CreateOfficeComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils to format date.
    */
   constructor (
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private organizationService: OrganizationService,
     private settingsService: SettingsService,
     private router: Router,

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -24,7 +24,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Group form. */
-  groupForm: FormGroup;
+  groupForm: UntypedFormGroup;
   /** Office data. */
   officeData: any;
   /** Client data. */
@@ -34,7 +34,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
   /** Client Members. */
   clientMembers: any[] = [];
   /** ClientChoice. */
-  clientChoice = new FormControl('');
+  clientChoice = new UntypedFormControl('');
 
   /**
    * Retrieves the offices data from `resolve`.
@@ -46,7 +46,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    * @param {Dates} dateUtils Date Utils to format date.
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private clientsService: ClientsService,
@@ -111,7 +111,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     });
     this.groupForm.get('active').valueChanges.subscribe((bool: boolean) => {
       if (bool) {
-        this.groupForm.addControl('activationDate', new FormControl('', Validators.required));
+        this.groupForm.addControl('activationDate', new UntypedFormControl('', Validators.required));
       } else {
         this.groupForm.removeControl('activationDate');
       }

@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'mifosx-loan-account-load-documents-dialog',
@@ -10,7 +10,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 export class LoanAccountLoadDocumentsDialogComponent implements OnInit {
 
   /** Upload Document form. */
-  uploadDocumentForm: FormGroup;
+  uploadDocumentForm: UntypedFormGroup;
 
   /**
    * @param {MatDialogRef} dialogRef Dialog reference element
@@ -18,7 +18,7 @@ export class LoanAccountLoadDocumentsDialogComponent implements OnInit {
    * @param {any} data Dialog Data
    */
   constructor(public dialogRef: MatDialogRef<LoanAccountLoadDocumentsDialogComponent>,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 

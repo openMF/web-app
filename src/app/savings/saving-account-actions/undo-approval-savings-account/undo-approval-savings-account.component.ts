@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -17,7 +17,7 @@ import { SavingsService } from 'app/savings/savings.service';
 export class UndoApprovalSavingsAccountComponent implements OnInit {
 
   /** Undo Approval Savings Account form. */
-  undoApprovalSavingsAccountForm: FormGroup;
+  undoApprovalSavingsAccountForm: UntypedFormGroup;
   /** Savings Account Id */
   accountId: any;
 
@@ -27,7 +27,7 @@ export class UndoApprovalSavingsAccountComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private savingsService: SavingsService,
               private route: ActivatedRoute,
               private router: Router) {

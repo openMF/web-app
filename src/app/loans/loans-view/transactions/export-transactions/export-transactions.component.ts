@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -41,7 +41,7 @@ export class ExportTransactionsComponent implements OnInit {
    */
   constructor(private sanitizer: DomSanitizer,
               private reportsService: ReportsService,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private dateUtils: Dates,
               private route: ActivatedRoute) {
     this.route.parent.parent.data.subscribe((data: { loanDetailsData: any }) => {

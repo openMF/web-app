@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -23,7 +23,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Savings account transaction form. */
-  savingAccountTransactionForm: FormGroup;
+  savingAccountTransactionForm: UntypedFormGroup;
   /** savings account transaction payment options. */
   paymentTypeOptions: {
     id: number,
@@ -50,7 +50,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private dateUtils: Dates,
@@ -89,11 +89,11 @@ export class SavingsAccountTransactionsComponent implements OnInit {
   addPaymentDetails() {
     this.addPaymentDetailsFlag = !this.addPaymentDetailsFlag;
     if (this.addPaymentDetailsFlag) {
-      this.savingAccountTransactionForm.addControl('accountNumber', new FormControl(''));
-      this.savingAccountTransactionForm.addControl('checkNumber', new FormControl(''));
-      this.savingAccountTransactionForm.addControl('routingCode', new FormControl(''));
-      this.savingAccountTransactionForm.addControl('receiptNumber', new FormControl(''));
-      this.savingAccountTransactionForm.addControl('bankNumber', new FormControl(''));
+      this.savingAccountTransactionForm.addControl('accountNumber', new UntypedFormControl(''));
+      this.savingAccountTransactionForm.addControl('checkNumber', new UntypedFormControl(''));
+      this.savingAccountTransactionForm.addControl('routingCode', new UntypedFormControl(''));
+      this.savingAccountTransactionForm.addControl('receiptNumber', new UntypedFormControl(''));
+      this.savingAccountTransactionForm.addControl('bankNumber', new UntypedFormControl(''));
     } else {
       this.savingAccountTransactionForm.removeControl('accountNumber');
       this.savingAccountTransactionForm.removeControl('checkNumber');

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LoansService } from 'app/loans/loans.service';
 
@@ -18,7 +18,7 @@ export class LoansAccountCloseComponent implements OnInit {
   @Input() dataObject: any;
 
   /** Close form. */
-  closeLoanForm: FormGroup;
+  closeLoanForm: UntypedFormGroup;
   /** Loan Id */
   loanId: any;
   /** Minimum Date allowed. */
@@ -33,7 +33,7 @@ export class LoansAccountCloseComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,

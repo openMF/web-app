@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -33,7 +33,7 @@ export class NotesTabComponent implements OnInit {
   /** User Name */
   username: string;
   /** Note form */
-  noteForm: FormGroup;
+  noteForm: UntypedFormGroup;
 
   /** Note Form Reference */
   @ViewChild('formRef', { static: true }) formRef: any;
@@ -47,7 +47,7 @@ export class NotesTabComponent implements OnInit {
    * @param {AuthenticationService} authenticationService Authentication Service.
    */
   constructor(private route: ActivatedRoute,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private authenticationService: AuthenticationService,
               private groupsService: GroupsService,
               public dialog: MatDialog) {

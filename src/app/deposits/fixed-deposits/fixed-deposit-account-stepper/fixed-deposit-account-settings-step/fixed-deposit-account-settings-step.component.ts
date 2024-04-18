@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 
 /**
  * Fixed Deposits Account Settings Step
@@ -22,7 +22,7 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Fixed Deposits Account Settings Form */
-  fixedDepositAccountSettingsForm: FormGroup;
+  fixedDepositAccountSettingsForm: UntypedFormGroup;
   /** Lockin Period Frequency Type Data */
   lockinPeriodFrequencyTypeData: any;
   /** Period Frequency Type Data */
@@ -35,7 +35,7 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
   /**
    * @param {FormBuilder} formBuilder Form Builder
    */
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createFixedDepositAccountSettingsForm();
     this.buildDependencies();
   }
@@ -54,10 +54,10 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
         'preClosurePenalInterestOnTypeId': this.fixedDepositsAccountProductTemplate.preClosurePenalInterestOnType ? this.fixedDepositsAccountProductTemplate.preClosurePenalInterestOnType.id : ''
       });
       if (this.fixedDepositsAccountProductTemplate.withHoldTax) {
-        this.fixedDepositAccountSettingsForm.addControl('withHoldTax', new FormControl(false));
+        this.fixedDepositAccountSettingsForm.addControl('withHoldTax', new UntypedFormControl(false));
         this.fixedDepositAccountSettingsForm.get('withHoldTax').valueChanges.subscribe((value: boolean) => {
           if (value) {
-            this.fixedDepositAccountSettingsForm.addControl('taxGroupId', new FormControl({ value: '', disabled: true }));
+            this.fixedDepositAccountSettingsForm.addControl('taxGroupId', new UntypedFormControl({ value: '', disabled: true }));
             this.fixedDepositAccountSettingsForm.get('taxGroupId').patchValue(this.fixedDepositsAccountProductTemplate.taxGroup && this.fixedDepositsAccountProductTemplate.taxGroup.name);
           } else {
             this.fixedDepositAccountSettingsForm.removeControl('taxGroupId');
@@ -107,7 +107,7 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
   buildDependencies() {
     this.fixedDepositAccountSettingsForm.get('transferInterestToSavings').valueChanges.subscribe((value: boolean) => {
       if (value) {
-        this.fixedDepositAccountSettingsForm.addControl('linkAccountId', new FormControl('', Validators.required));
+        this.fixedDepositAccountSettingsForm.addControl('linkAccountId', new UntypedFormControl('', Validators.required));
         this.fixedDepositAccountSettingsForm.get('linkAccountId').patchValue(this.fixedDepositsAccountTemplate.linkedAccount && this.fixedDepositsAccountTemplate.linkedAccount.id);
       } else {
         this.fixedDepositAccountSettingsForm.removeControl('linkAccountId');

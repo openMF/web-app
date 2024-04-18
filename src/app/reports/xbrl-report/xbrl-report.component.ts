@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl} from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -24,7 +24,7 @@ export class XBRLReportComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** XBRL Form */
-  xbrlForm: FormGroup;
+  xbrlForm: UntypedFormGroup;
   /** XML response from API */
   rawXml: any;
   /** Parsed xml data */
@@ -45,7 +45,7 @@ export class XBRLReportComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(private reportService: ReportsService,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private settingsService: SettingsService,
               private dateUtils: Dates,
               private sanitizer: DomSanitizer) {}
@@ -78,7 +78,7 @@ export class XBRLReportComponent implements OnInit {
       const entry = {
         name: element.tagName,
         dimension: context,
-        value: new FormControl(element.textContent)
+        value: new UntypedFormControl(element.textContent)
       };
       this.xmlData.push(entry);
     });

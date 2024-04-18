@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 /** Custom Service */
 import { SettingsService } from './settings.service';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 /**
  * Settings component.
@@ -38,9 +38,9 @@ export class SettingsComponent implements OnInit {
   fonts: any;
 
   /** Language Setting */
-  language = new FormControl('');
+  language = new UntypedFormControl('');
   /** Date Format Setting */
-  dateFormat =  new FormControl('');
+  dateFormat =  new UntypedFormControl('');
 
   /**
    * @param {SettingsService} settingsService Settings Service

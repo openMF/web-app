@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 /** Custom Dialogs */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -27,7 +27,7 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
   /** Savings Account Template */
   @Input() savingsAccountTemplate: any;
   /** Currency Code */
-  @Input() currencyCode: FormControl;
+  @Input() currencyCode: UntypedFormControl;
 
   /** Charge Data */
   chargeData: any = [];

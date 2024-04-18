@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Dialogs */
@@ -28,7 +28,7 @@ export class ManageGroupMembersComponent implements AfterViewInit {
   /** Client Members. */
   clientMembers: any[] = [];
   /** Client Choice. */
-  clientChoice = new FormControl('');
+  clientChoice = new UntypedFormControl('');
 
   /**
    * Fetches group action data from `resolve`

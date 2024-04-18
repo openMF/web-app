@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductsService } from 'app/products/products.service';
 
@@ -13,11 +13,11 @@ export class LoanProductClientEligibilityStepComponent implements OnInit {
   @Input() loanProduct: any;
 
   amountCalculationTypeOptions: any;
-  loanProductClientEligibilityForm: FormGroup;
+  loanProductClientEligibilityForm: UntypedFormGroup;
 
   loanTypeId: any;
 
-  constructor( private formBuilder: FormBuilder, private router: Router, private productService: ProductsService ) {
+  constructor( private formBuilder: UntypedFormBuilder, private router: Router, private productService: ProductsService ) {
     this.productService.loanTypeId.subscribe(val => {
       this.loanTypeId = val;
     });

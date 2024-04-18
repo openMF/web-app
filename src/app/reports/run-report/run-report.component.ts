@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 
 /** Custom Services */
 import { ReportsService } from '../reports.service';
@@ -39,9 +39,9 @@ export class RunReportComponent implements OnInit {
   dataObject: any;
 
   /** Initializes new form group eportForm */
-  reportForm = new FormGroup({});
+  reportForm = new UntypedFormGroup({});
   /** Static Form control for decimal places in output */
-  decimalChoice = new FormControl();
+  decimalChoice = new UntypedFormControl();
 
   /** Toggles Report form */
   isCollapsed = false;
@@ -88,7 +88,7 @@ export class RunReportComponent implements OnInit {
     this.paramData.forEach(
       (param: ReportParameter) => {
         if (!param.parentParameterName) { // Non Child Parameter
-          this.reportForm.addControl(param.name, new FormControl('', Validators.required));
+          this.reportForm.addControl(param.name, new UntypedFormControl('', Validators.required));
           if (param.displayType === 'select') {
             this.fetchSelectOptions(param, param.name);
           }
@@ -100,7 +100,7 @@ export class RunReportComponent implements OnInit {
         }
       });
     if (this.report.type === 'Pentaho') {
-      this.reportForm.addControl('outputType', new FormControl(''));
+      this.reportForm.addControl('outputType', new UntypedFormControl(''));
       this.mapPentahoParams();
     }
     this.decimalChoice.patchValue('0');
@@ -142,9 +142,9 @@ export class RunReportComponent implements OnInit {
       this.reportForm.get(param.name).valueChanges.subscribe((option: any) => {
         param.childParameters.forEach((child: ReportParameter) => {
           if (child.displayType === 'none') {
-            this.reportForm.addControl(child.name, new FormControl(child.defaultVal));
+            this.reportForm.addControl(child.name, new UntypedFormControl(child.defaultVal));
           } else {
-            this.reportForm.addControl(child.name, new FormControl('', Validators.required));
+            this.reportForm.addControl(child.name, new UntypedFormControl('', Validators.required));
           }
           if (child.displayType === 'select') {
             const inputstring = `${child.name}?${param.inputName}=${option.id}`;

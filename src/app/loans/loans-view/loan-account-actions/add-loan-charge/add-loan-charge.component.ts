@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -23,7 +23,7 @@ export class AddLoanChargeComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Add Loan Charge form. */
-  loanChargeForm: FormGroup;
+  loanChargeForm: UntypedFormGroup;
   /** loan charge options. */
   loanChargeOptions: {
     id: number;
@@ -51,7 +51,7 @@ export class AddLoanChargeComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private dateUtils: Dates,
@@ -73,7 +73,7 @@ export class AddLoanChargeComponent implements OnInit {
         return option.id === chargeId;
       });
       if (chargeDetails.chargeTimeType.id === 2) {
-        this.loanChargeForm.addControl('dueDate', new FormControl('', Validators.required));
+        this.loanChargeForm.addControl('dueDate', new UntypedFormControl('', Validators.required));
       } else {
         this.loanChargeForm.removeControl('dueDate');
       }

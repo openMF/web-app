@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -17,7 +17,7 @@ import { SystemService } from 'app/system/system.service';
 export class EditAccountNumberPreferenceComponent implements OnInit {
 
   /** Account Number Preference Form */
-  accountNumberPreferenceForm: FormGroup;
+  accountNumberPreferenceForm: UntypedFormGroup;
   /** Account Number Preference Data */
   accountNumberPreferenceData: any;
   /** Account Number Preferences Template Data */
@@ -33,7 +33,7 @@ export class EditAccountNumberPreferenceComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor(private route: ActivatedRoute,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private systemService: SystemService,
               private router: Router) {
     this.route.data.subscribe((data: { accountNumberPreference: any, accountNumberPreferencesTemplate: any }) => {

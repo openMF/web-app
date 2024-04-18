@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Dialog Components */
@@ -26,7 +26,7 @@ export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnC
 
   @Input() recurringDepositsAccountTemplate: any;
   @Input() recurringDepositsAccountProductTemplate: any;
-  @Input() currencyCode: FormControl;
+  @Input() currencyCode: UntypedFormControl;
   @Input() recurringDepositAccountFormValid: boolean;
 
   /** Charges Data */

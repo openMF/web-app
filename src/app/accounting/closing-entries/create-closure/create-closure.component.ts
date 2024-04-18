@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -22,7 +22,7 @@ export class CreateClosureComponent implements OnInit {
   /** Maximum closing date allowed. */
   maxDate = new Date();
   /** Accounting closure form. */
-  accountingClosureForm: FormGroup;
+  accountingClosureForm: UntypedFormGroup;
   /** Office data. */
   officeData: any;
 
@@ -34,7 +34,7 @@ export class CreateClosureComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private accountingService: AccountingService,
               private settingsService: SettingsService,
               private dateUtils: Dates,

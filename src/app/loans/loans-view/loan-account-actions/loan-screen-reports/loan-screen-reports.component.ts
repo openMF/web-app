@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Renderer2, ViewChild, ElementRef, SecurityContext, Input } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -19,7 +19,7 @@ export class LoanScreenReportsComponent implements OnInit {
 
   @Input() dataObject: any;
   /** Loan Screen Reportform. */
-  loanScreenReportForm: FormGroup;
+  loanScreenReportForm: UntypedFormGroup;
   /** Templates Data */
   templatesData: any;
   /** Loan Id */
@@ -38,7 +38,7 @@ export class LoanScreenReportsComponent implements OnInit {
    * @param {DomSanitizer} sanitizer DOM Sanitizer
    * @param {Renderer2} renderer Renderer 2
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private loansService: LoansService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,

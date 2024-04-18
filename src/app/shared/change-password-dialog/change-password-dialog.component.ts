@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { UntypedFormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 /**
@@ -23,7 +23,7 @@ export class ChangePasswordDialogComponent implements OnInit {
    */
   constructor(public dialogRef: MatDialogRef<ChangePasswordDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
-              private formBuilder: FormBuilder) { }
+              private formBuilder: UntypedFormBuilder) { }
 
   ngOnInit() {
     this.createChangePasswordForm();

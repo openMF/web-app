@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { Router } from '@angular/router';
@@ -13,8 +13,8 @@ import { ProductsService } from 'app/products/products.service';
 })
 export class LoanProductChargesStepComponent implements OnInit {
   @Input() loanProductsTemplate: any;
-  @Input() currencyCode: FormControl;
-  @Input() multiDisburseLoan: FormControl;
+  @Input() currencyCode: UntypedFormControl;
+  @Input() multiDisburseLoan: UntypedFormControl;
 
   chargeData: any;
   overdueChargeData: any;

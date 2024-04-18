@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -27,7 +27,7 @@ export class EditCenterComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Activate center form. */
-  editCenterForm: FormGroup;
+  editCenterForm: UntypedFormGroup;
 
   /**
    * Retrieves the center and template data from `resolve`.
@@ -38,7 +38,7 @@ export class EditCenterComponent implements OnInit {
    * @param {GroupsService} groupService GroupsService.
    * @param {Dates} dateUtils Date Utils to format date.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private centersService: CentersService,
@@ -68,7 +68,7 @@ export class EditCenterComponent implements OnInit {
       'externalId': [this.centerData.externalId]
     });
     if (this.centerData.status.value === 'Pending') {
-      this.editCenterForm.addControl('activationDate', new FormControl(this.centerData.activationDate ? this.centerData.activationDate : new Date(), Validators.required));
+      this.editCenterForm.addControl('activationDate', new UntypedFormControl(this.centerData.activationDate ? this.centerData.activationDate : new Date(), Validators.required));
     }
   }
 

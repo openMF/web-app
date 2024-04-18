@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnChanges, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /**
  * Shares Account Terms Step
@@ -22,7 +22,7 @@ export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Shares Account Terms Form */
-  sharesAccountTermsForm: FormGroup;
+  sharesAccountTermsForm: UntypedFormGroup;
   /** Minimum Active Period Frequency Type Data */
   minimumActivePeriodFrequencyTypeData: any;
   /** Lockin Period Frequency Type Data */
@@ -35,7 +35,7 @@ export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder
    */
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createSharesAccountTermsForm();
   }
 

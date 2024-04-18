@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AlertService } from "app/core/alert/alert.service";
 import { Dates } from "app/core/utils/dates";
@@ -16,7 +16,7 @@ export class CombineOfficeComponent implements OnInit {
   officeData: any;
   officeDataSliced: any;
   /** Office form. */
-  combineOfficeForm: FormGroup;
+  combineOfficeForm: UntypedFormGroup;
   sourceOfficeData: any;
   sourceOfficeDataSliced: any;
   /** Minimum Date allowed. */
@@ -26,7 +26,7 @@ export class CombineOfficeComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private organizationService: OrganizationService,
     private settingsService: SettingsService,
     private dateUtils: Dates,

@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -31,7 +31,7 @@ export class CreateFloatingRateComponent implements OnInit {
   /** Minimum floating rate period date allowed. */
   minDate = new Date();
   /** Floating Rate Form. */
-  floatingRateForm: FormGroup;
+  floatingRateForm: UntypedFormGroup;
   /** Columns to be displayed in floating rate periods table. */
   displayedColumns: string[] = ['fromDate', 'interestRate', 'isDifferential', 'actions'];
   /** Data source for floating rate periods table. */
@@ -54,7 +54,7 @@ export class CreateFloatingRateComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor(private router: Router,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private productsService: ProductsService,
               private route: ActivatedRoute,
               private dateUtils: Dates,
@@ -93,7 +93,7 @@ export class CreateFloatingRateComponent implements OnInit {
    * Creates the Floating Rate Periods Form.
    * @returns {FormGroup} Floating Rate Period Form.
    */
-  createFloatingRatePeriodsForm(): FormGroup {
+  createFloatingRatePeriodsForm(): UntypedFormGroup {
     return this.formBuilder.group({
       'fromDate': ['', Validators.required],
       'interestRate': ['', Validators.required],

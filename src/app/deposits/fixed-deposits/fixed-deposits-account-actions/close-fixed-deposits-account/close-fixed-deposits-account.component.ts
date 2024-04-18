@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -23,7 +23,7 @@ export class CloseFixedDepositsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Close on maturity FD Account form. */
-  closeOnMaturityAccountForm: FormGroup;
+  closeOnMaturityAccountForm: UntypedFormGroup;
   /** Savings Account Data */
   savingsAccountsData: any;
   /** On account Closure Options */
@@ -42,7 +42,7 @@ export class CloseFixedDepositsAccountComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private fixedDepositsService: FixedDepositsService,
               private dateUtils: Dates,
               private route: ActivatedRoute,
@@ -82,8 +82,8 @@ export class CloseFixedDepositsAccountComponent implements OnInit {
   addTransferDetails() {
     this.closeOnMaturityAccountForm.get('onAccountClosureId').valueChanges.subscribe((id: any) => {
       if (id === 200) {
-        this.closeOnMaturityAccountForm.addControl('toSavingsAccountId', new FormControl('', Validators.required));
-        this.closeOnMaturityAccountForm.addControl('transferDescription', new FormControl(''));
+        this.closeOnMaturityAccountForm.addControl('toSavingsAccountId', new UntypedFormControl('', Validators.required));
+        this.closeOnMaturityAccountForm.addControl('transferDescription', new UntypedFormControl(''));
       } else {
         this.closeOnMaturityAccountForm.removeControl('toSavingsAccountId');
         this.closeOnMaturityAccountForm.removeControl('transferDescription');

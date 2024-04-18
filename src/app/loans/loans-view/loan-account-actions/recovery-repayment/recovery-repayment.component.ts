@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -30,7 +30,7 @@ export class RecoveryRepaymentComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Recovery Repayment Loan Form */
-  recoveryRepaymentLoanForm: FormGroup;
+  recoveryRepaymentLoanForm: UntypedFormGroup;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -39,7 +39,7 @@ export class RecoveryRepaymentComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
@@ -84,11 +84,11 @@ export class RecoveryRepaymentComponent implements OnInit {
   addPaymentDetails() {
     this.showPaymentDetails = !this.showPaymentDetails;
     if (this.showPaymentDetails) {
-      this.recoveryRepaymentLoanForm.addControl('accountNumber', new FormControl(''));
-      this.recoveryRepaymentLoanForm.addControl('checkNumber', new FormControl(''));
-      this.recoveryRepaymentLoanForm.addControl('routingCode', new FormControl(''));
-      this.recoveryRepaymentLoanForm.addControl('receiptNumber', new FormControl(''));
-      this.recoveryRepaymentLoanForm.addControl('bankNumber', new FormControl(''));
+      this.recoveryRepaymentLoanForm.addControl('accountNumber', new UntypedFormControl(''));
+      this.recoveryRepaymentLoanForm.addControl('checkNumber', new UntypedFormControl(''));
+      this.recoveryRepaymentLoanForm.addControl('routingCode', new UntypedFormControl(''));
+      this.recoveryRepaymentLoanForm.addControl('receiptNumber', new UntypedFormControl(''));
+      this.recoveryRepaymentLoanForm.addControl('bankNumber', new UntypedFormControl(''));
     } else {
       this.recoveryRepaymentLoanForm.removeControl('accountNumber');
       this.recoveryRepaymentLoanForm.removeControl('checkNumber');

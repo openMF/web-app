@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -27,7 +27,7 @@ import { Dates } from 'app/core/utils/dates';
 export class EditFloatingRateComponent implements OnInit {
 
   /** Floating Rate Form. */
-  floatingRateForm: FormGroup;
+  floatingRateForm: UntypedFormGroup;
   /** Floating Rate Data. */
   floatingRateData: any;
   /** Minimum floating rate period date allowed. */
@@ -59,7 +59,7 @@ export class EditFloatingRateComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor(private router: Router,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private productsService: ProductsService,
               private route: ActivatedRoute,
               private dateUtils: Dates,

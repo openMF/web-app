@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -28,7 +28,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 export class CreateDataTableComponent implements OnInit {
 
   /** Data Table Form */
-  dataTableForm: FormGroup;
+  dataTableForm: UntypedFormGroup;
   /** Application Table Data */
   appTableData = appTableData;
   entitySubTypeData = entitySubTypeData;
@@ -70,7 +70,7 @@ export class CreateDataTableComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog Reference.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private systemService: SystemService,
               private route: ActivatedRoute,
               private router: Router,

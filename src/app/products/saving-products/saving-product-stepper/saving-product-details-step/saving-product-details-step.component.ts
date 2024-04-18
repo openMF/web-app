@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'mifosx-saving-product-details-step',
@@ -10,9 +10,9 @@ export class SavingProductDetailsStepComponent implements OnInit {
 
   @Input() savingProductsTemplate: any;
 
-  savingProductDetailsForm: FormGroup;
+  savingProductDetailsForm: UntypedFormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createSavingProductDetailsForm();
   }
 

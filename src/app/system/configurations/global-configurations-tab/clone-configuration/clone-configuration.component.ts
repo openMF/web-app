@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrganizationService } from 'app/organization/organization.service';
 import { SystemService } from 'app/system/system.service';
@@ -11,7 +11,7 @@ import { SystemService } from 'app/system/system.service';
 })
 export class CloneConfigurationComponent implements OnInit {
   /** Global Configuration form. */
-  configurationForm: FormGroup;
+  configurationForm: UntypedFormGroup;
   /** Configuration. */
   configuration: any;
 
@@ -26,7 +26,7 @@ export class CloneConfigurationComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor (
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private systemService: SystemService,
     private route: ActivatedRoute,
     private router: Router,

@@ -35,6 +35,7 @@ Release Notes
     * [SER-2440] - Revise the country selection option to check for the Head Office instead of roles
     * [SER-2446] - Add ng-select as drop down in client and group creation
     * [SER-2458] - Replace mat-select-filter in all interfaces with ng select
+    * [SER-2304] - Upgrade to angular 14
 
 ## Version 1.0.0 - for use with Fineract Web App
 

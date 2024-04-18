@@ -1,6 +1,6 @@
 /** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -19,7 +19,7 @@ import { SettingsService } from 'app/settings/settings.service';
 export class EditHolidayComponent implements OnInit {
 
   /** Edit Holiday form. */
-  holidayForm: FormGroup;
+  holidayForm: UntypedFormGroup;
   /** Holiday data. */
   holidayData: any;
   /** Rescheduling Type. */
@@ -39,7 +39,7 @@ export class EditHolidayComponent implements OnInit {
    * @param {OrganizationService} organizatioService Organization Service.
    * @param {Router} router Router.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private dateUtils: Dates,
               private organizatioService: OrganizationService,
@@ -73,11 +73,11 @@ export class EditHolidayComponent implements OnInit {
       'description': [this.holidayData.description]
     });
     if (!this.isActiveHoliday) {
-      this.holidayForm.addControl('fromDate', new FormControl(this.holidayData.fromDate && new Date(this.holidayData.fromDate), Validators.required));
-      this.holidayForm.addControl('toDate', new FormControl(this.holidayData.toDate && new Date(this.holidayData.toDate), Validators.required));
-      this.holidayForm.addControl('reschedulingType', new FormControl(this.holidayData.reschedulingType, Validators.required));
+      this.holidayForm.addControl('fromDate', new UntypedFormControl(this.holidayData.fromDate && new Date(this.holidayData.fromDate), Validators.required));
+      this.holidayForm.addControl('toDate', new UntypedFormControl(this.holidayData.toDate && new Date(this.holidayData.toDate), Validators.required));
+      this.holidayForm.addControl('reschedulingType', new UntypedFormControl(this.holidayData.reschedulingType, Validators.required));
       if (this.reSchedulingType === 2) {
-        this.holidayForm.addControl('repaymentsRescheduledTo', new FormControl(this.holidayData.repaymentsRescheduledTo && new Date(this.holidayData.repaymentsRescheduledTo), Validators.required));
+        this.holidayForm.addControl('repaymentsRescheduledTo', new UntypedFormControl(this.holidayData.repaymentsRescheduledTo && new Date(this.holidayData.repaymentsRescheduledTo), Validators.required));
       }
     }
   }
@@ -89,7 +89,7 @@ export class EditHolidayComponent implements OnInit {
     this.holidayForm.get('reschedulingType').valueChanges.subscribe( (option: any) => {
       this.reSchedulingType = option;
       if (option === 2) {
-        this.holidayForm.addControl('repaymentsRescheduledTo', new FormControl(new Date(), Validators.required));
+        this.holidayForm.addControl('repaymentsRescheduledTo', new UntypedFormControl(new Date(), Validators.required));
       } else {
         this.holidayForm.removeControl('repaymentsRescheduledTo');
       }

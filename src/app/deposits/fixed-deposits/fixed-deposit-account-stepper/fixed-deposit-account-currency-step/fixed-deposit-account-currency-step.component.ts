@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnChanges, Input } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 
 /**
  * Fixed Deposit Account Currency Step
@@ -18,14 +18,14 @@ export class FixedDepositAccountCurrencyStepComponent implements OnChanges {
   @Input() fixedDepositsAccountProductTemplate: any;
 
   /** Fixed Deposit Account Currency Form */
-  fixedDepositAccountCurrencyForm: FormGroup;
+  fixedDepositAccountCurrencyForm: UntypedFormGroup;
   /** Currency Data */
   currencyData: any;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
    */
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createFixedDepositAccountCurrencyForm();
   }
 

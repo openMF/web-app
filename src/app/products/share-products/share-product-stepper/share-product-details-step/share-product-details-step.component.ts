@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'mifosx-share-product-details-step',
@@ -10,9 +10,9 @@ export class ShareProductDetailsStepComponent implements OnInit {
 
   @Input() shareProductsTemplate: any;
 
-  shareProductDetailsForm: FormGroup;
+  shareProductDetailsForm: UntypedFormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createShareProductDetailsForm();
   }
 

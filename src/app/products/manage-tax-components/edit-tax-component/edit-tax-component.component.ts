@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -21,7 +21,7 @@ export class EditTaxComponentComponent implements OnInit {
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Tax Component form. */
-  taxComponentForm: FormGroup;
+  taxComponentForm: UntypedFormGroup;
   /** Tax Component data. */
   taxComponentData: any;
 
@@ -34,7 +34,7 @@ export class EditTaxComponentComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils to format date.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private productsService: ProductsService,
               private route: ActivatedRoute,
               private router: Router,

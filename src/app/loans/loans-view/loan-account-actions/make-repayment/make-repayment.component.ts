@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -30,7 +30,7 @@ export class MakeRepaymentComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Repayment Loan Form */
-  repaymentLoanForm: FormGroup;
+  repaymentLoanForm: UntypedFormGroup;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -39,7 +39,7 @@ export class MakeRepaymentComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
@@ -82,11 +82,11 @@ export class MakeRepaymentComponent implements OnInit {
   addPaymentDetails() {
     this.showPaymentDetails = !this.showPaymentDetails;
     if (this.showPaymentDetails) {
-      this.repaymentLoanForm.addControl('accountNumber', new FormControl(''));
-      this.repaymentLoanForm.addControl('checkNumber', new FormControl(''));
-      this.repaymentLoanForm.addControl('routingCode', new FormControl(''));
-      this.repaymentLoanForm.addControl('receiptNumber', new FormControl(''));
-      this.repaymentLoanForm.addControl('bankNumber', new FormControl(''));
+      this.repaymentLoanForm.addControl('accountNumber', new UntypedFormControl(''));
+      this.repaymentLoanForm.addControl('checkNumber', new UntypedFormControl(''));
+      this.repaymentLoanForm.addControl('routingCode', new UntypedFormControl(''));
+      this.repaymentLoanForm.addControl('receiptNumber', new UntypedFormControl(''));
+      this.repaymentLoanForm.addControl('bankNumber', new UntypedFormControl(''));
     } else {
       this.repaymentLoanForm.removeControl('accountNumber');
       this.repaymentLoanForm.removeControl('checkNumber');

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -24,7 +24,7 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Add Fixed Deposits Charge form. */
-  fixedDepositsChargeForm: FormGroup;
+  fixedDepositsChargeForm: UntypedFormGroup;
   /** savings charge options. */
   savingsChargeOptions: any;
   /** savings Id of the savings account. */
@@ -42,7 +42,7 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
@@ -75,17 +75,17 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
           this.chargeDetails.chargeTimeTypeAnnualOrMonth = true;
         }
         if (!this.chargeDetails.dueDateNotRequired && !this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
-          this.fixedDepositsChargeForm.addControl('dueDate', new FormControl('', Validators.required));
+          this.fixedDepositsChargeForm.addControl('dueDate', new UntypedFormControl('', Validators.required));
         } else {
           this.fixedDepositsChargeForm.removeControl('dueDate');
         }
         if (!this.chargeDetails.dueDateNotRequired && this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
-          this.fixedDepositsChargeForm.addControl('feeOnMonthDay', new FormControl('', Validators.required));
+          this.fixedDepositsChargeForm.addControl('feeOnMonthDay', new UntypedFormControl('', Validators.required));
         } else {
           this.fixedDepositsChargeForm.removeControl('feeOnMonthDay');
         }
         if (chargeTimeType.value === 'Monthly Fee') {
-          this.fixedDepositsChargeForm.addControl('feeInterval', new FormControl(data.feeInterval, Validators.required));
+          this.fixedDepositsChargeForm.addControl('feeInterval', new UntypedFormControl(data.feeInterval, Validators.required));
         } else {
           this.fixedDepositsChargeForm.removeControl('feeInterval');
         }

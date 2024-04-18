@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 import { ActivatedRoute } from '@angular/router';
 import { Alert } from 'app/core/alert/alert.model';
@@ -30,7 +30,7 @@ export class BusinessDateTabComponent implements OnInit {
   /** COB date */
   cobDate = new Date();
   /** business Date form. */
-  businessDateForm: FormGroup;
+  businessDateForm: UntypedFormGroup;
   /** Business data. */
   businessDateData: any;
 
@@ -49,7 +49,7 @@ export class BusinessDateTabComponent implements OnInit {
   constructor(
     private systemService: SystemService,
     private settingsService: SettingsService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private dateUtils: Dates,
     private alertService: AlertService) {}
 

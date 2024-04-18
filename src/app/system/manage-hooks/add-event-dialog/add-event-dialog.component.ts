@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 /**
  * Add Event Dialog Component.
@@ -14,7 +14,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class AddEventDialogComponent implements OnInit {
 
   /** Event Form. */
-  eventForm: FormGroup;
+  eventForm: UntypedFormGroup;
   /** Entity Data. */
   entityData: Array<any> = new Array<any>();
   /** Action Data. */
@@ -26,7 +26,7 @@ export class AddEventDialogComponent implements OnInit {
    * @param {any} data Provides grouping, entities and actions data to fill dropdowns.
    */
   constructor(public dialogRef: MatDialogRef<AddEventDialogComponent>,
-              public formBuilder: FormBuilder,
+              public formBuilder: UntypedFormBuilder,
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 

@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
 import { AccountTransfersService } from '../account-transfers.service';
@@ -28,13 +28,13 @@ export class ListStandingInstructionsComponent implements OnInit {
   /** Instructions Data */
   instructionsData: any[];
   /** Name form control. */
-  transferType = new FormControl();
+  transferType = new UntypedFormControl();
   /** ExternalId form control. */
-  fromAccountId = new FormControl();
+  fromAccountId = new UntypedFormControl();
   /** Name form control. */
-  clientNameControl = new FormControl();
+  clientNameControl = new UntypedFormControl();
   /** ExternalId form control. */
-  fromClientId = new FormControl();
+  fromClientId = new UntypedFormControl();
   /** Client Name */
   clientName: any;
   /** Transfer Type Options Data */

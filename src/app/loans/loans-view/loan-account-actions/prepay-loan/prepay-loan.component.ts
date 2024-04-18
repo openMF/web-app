@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -35,7 +35,7 @@ export class PrepayLoanComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Prepay Loan form. */
-  prepayLoanForm: FormGroup;
+  prepayLoanForm: UntypedFormGroup;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -44,7 +44,7 @@ export class PrepayLoanComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
@@ -94,11 +94,11 @@ export class PrepayLoanComponent implements OnInit {
   addPaymentDetails() {
     this.showPaymentDetails = !this.showPaymentDetails;
     if (this.showPaymentDetails) {
-      this.prepayLoanForm.addControl('accountNumber', new FormControl(''));
-      this.prepayLoanForm.addControl('checkNumber', new FormControl(''));
-      this.prepayLoanForm.addControl('routingCode', new FormControl(''));
-      this.prepayLoanForm.addControl('receiptNumber', new FormControl(''));
-      this.prepayLoanForm.addControl('bankNumber', new FormControl(''));
+      this.prepayLoanForm.addControl('accountNumber', new UntypedFormControl(''));
+      this.prepayLoanForm.addControl('checkNumber', new UntypedFormControl(''));
+      this.prepayLoanForm.addControl('routingCode', new UntypedFormControl(''));
+      this.prepayLoanForm.addControl('receiptNumber', new UntypedFormControl(''));
+      this.prepayLoanForm.addControl('bankNumber', new UntypedFormControl(''));
     } else {
       this.prepayLoanForm.removeControl('accountNumber');
       this.prepayLoanForm.removeControl('checkNumber');

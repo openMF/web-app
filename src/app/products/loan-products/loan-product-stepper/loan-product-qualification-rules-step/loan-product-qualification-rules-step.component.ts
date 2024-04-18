@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductsService } from 'app/products/products.service';
 
@@ -17,9 +17,9 @@ export class LoanProductQualificationRulesStepComponent implements OnInit {
   amountCalculationTypeOptions: any;
   repaymentFrequencyTypeOptions: any;
 
-  loanProductQualificationRuleForm: FormGroup;
+  loanProductQualificationRuleForm: UntypedFormGroup;
 
-  constructor(private productService: ProductsService, private formBuilder: FormBuilder, private router: Router) {
+  constructor(private productService: ProductsService, private formBuilder: UntypedFormBuilder, private router: Router) {
     this.productService.loanTypeId.subscribe(val => {
       this.loanTypeId = val;
     });

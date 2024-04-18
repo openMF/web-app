@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -20,7 +20,7 @@ export class CreateChargeComponent implements OnInit {
   /** Selected Data. */
   chargeData: any;
   /** Charge form. */
-  chargeForm: FormGroup;
+  chargeForm: UntypedFormGroup;
   /** Charges template data. */
   chargesTemplateData: any;
   /** Charge time type data. */
@@ -62,7 +62,7 @@ export class CreateChargeComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private productsService: ProductsService,
     private route: ActivatedRoute,
     private router: Router,

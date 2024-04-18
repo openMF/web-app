@@ -1,6 +1,6 @@
 /** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services. */
@@ -19,7 +19,7 @@ import { Dates } from 'app/core/utils/dates';
 export class BulkLoanReassignmnetComponent implements OnInit {
 
   /** Bulk Loan form. */
-  bulkLoanForm: FormGroup;
+  bulkLoanForm: UntypedFormGroup;
   /** Office data. */
   offices: any;
   /** To Loan Officers. */
@@ -45,7 +45,7 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    * @param {Router} router Router.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private organizationSevice: OrganizationService,
               private settingsService: SettingsService,
@@ -78,7 +78,7 @@ export class BulkLoanReassignmnetComponent implements OnInit {
     this.organizationSevice.getOfficeTemplate(officeId).subscribe((response: any) => {
       this.officeTemplate = response;
       this.fromLoanOfficers = this.officeTemplate.loanOfficerOptions;
-      this.bulkLoanForm.addControl('fromLoanOfficerId', new FormControl('', Validators.required));
+      this.bulkLoanForm.addControl('fromLoanOfficerId', new UntypedFormControl('', Validators.required));
     });
   }
 

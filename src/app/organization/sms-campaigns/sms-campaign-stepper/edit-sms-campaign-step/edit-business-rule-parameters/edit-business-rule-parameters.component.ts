@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
-import { Validators, FormGroup, FormControl } from '@angular/forms';
+import { Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 
 /** Rxjs Imports */
 import { distinctUntilChanged } from 'rxjs/operators';
@@ -32,7 +32,7 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
   @Output() templateParameters = new EventEmitter();
 
   /** Initializes new form group ReportForm */
-  ReportForm = new FormGroup({});
+  ReportForm = new UntypedFormGroup({});
   /** Array of all parent parameters */
   parentParameters: any[] = [];
   /** Displayed user choices */
@@ -51,7 +51,7 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
 
   ngOnChanges() {
     if (this.paramData) {
-      this.ReportForm = new FormGroup({});
+      this.ReportForm = new UntypedFormGroup({});
       this.paramValue = JSON.parse(this.smsCampaign.paramValue);
       this.createRunReportForm();
       this.disableFormWhenValid();
@@ -67,7 +67,7 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
     this.paramData.forEach(
       (param: any) => {
         if (!param.parentParameterName) { // Non Child Parameter
-          this.ReportForm.addControl(param.name, new FormControl('', Validators.required));
+          this.ReportForm.addControl(param.name, new UntypedFormControl('', Validators.required));
           const controlValue = this.paramValue[param.variable].toString();
           switch (param.displayType) {
             case 'text':
@@ -114,9 +114,9 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
       this.ReportForm.get(param.name).valueChanges.subscribe((option: any) => {
         param.childParameters.forEach((child: ReportParameter) => {
           if (child.displayType === 'none') {
-            this.ReportForm.addControl(child.name, new FormControl(child.defaultVal));
+            this.ReportForm.addControl(child.name, new UntypedFormControl(child.defaultVal));
           } else {
-            this.ReportForm.addControl(child.name, new FormControl('', Validators.required));
+            this.ReportForm.addControl(child.name, new UntypedFormControl('', Validators.required));
           }
           if (child.displayType === 'select') {
             const inputstring = `${child.name}?${param.inputName}=${option.id}`;

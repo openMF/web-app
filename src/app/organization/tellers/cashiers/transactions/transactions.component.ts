@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
 import { OrganizationService } from 'app/organization/organization.service';
@@ -20,7 +20,7 @@ import { OrganizationService } from 'app/organization/organization.service';
 export class TransactionsComponent implements OnInit {
 
   /** Currency selector. */
-  currencySelector = new FormControl();
+  currencySelector = new UntypedFormControl();
   /** Cashier Id */
   cashierId: any;
   /** Teller Id */

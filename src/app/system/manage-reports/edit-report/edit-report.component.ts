@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -38,7 +38,7 @@ export class EditReportComponent implements OnInit {
       reportParameterName: undefined
     };
   /** Report Form. */
-  reportForm: FormGroup;
+  reportForm: UntypedFormGroup;
   /** Columns to be displayed in report parameters table. */
   displayedColumns: string[] = ['parameterName', 'parameterNamePassed', 'actions'];
   /** Data source for report parameters table. */
@@ -59,7 +59,7 @@ export class EditReportComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog Reference.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private systemService: SystemService,

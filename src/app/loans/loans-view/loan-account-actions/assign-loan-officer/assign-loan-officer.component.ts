@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoansService } from 'app/loans/loans.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
@@ -23,7 +23,7 @@ export class AssignLoanOfficerComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Assign loan Officer form. */
-  assignOfficerForm: FormGroup;
+  assignOfficerForm: UntypedFormGroup;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -32,7 +32,7 @@ export class AssignLoanOfficerComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,

@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
@@ -23,7 +23,7 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
   maxDate = new Date();
 
   /** Add/Edit family member form. */
-  familyMemberForm: FormGroup;
+  familyMemberForm: UntypedFormGroup;
 
   /**
    * @param {MatDialogRef} dialogRef Client Family Member Dialog Reference
@@ -33,7 +33,7 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
    * @param {SettingsService} settingsService Setting service
    */
   constructor(public dialogRef: MatDialogRef<ClientFamilyMemberDialogComponent>,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private dateUtils: Dates,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private settingsService: SettingsService) { }

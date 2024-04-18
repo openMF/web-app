@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'mifosx-share-product-settings-step',
@@ -10,12 +10,12 @@ export class ShareProductSettingsStepComponent implements OnInit {
 
   @Input() shareProductsTemplate: any;
 
-  shareProductSettingsForm: FormGroup;
+  shareProductSettingsForm: UntypedFormGroup;
 
   minimumActivePeriodFrequencyTypeData: any;
   lockinPeriodFrequencyTypeData: any;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createShareProductSettingsForm();
   }
 

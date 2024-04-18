@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -23,7 +23,7 @@ export class AttachGroupMeetingComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Group Meeting form. */
-  groupMeetingForm: FormGroup;
+  groupMeetingForm: UntypedFormGroup;
   /** Calnedar Template Data */
   calendarTemplate: any;
   /** Group Id */
@@ -44,7 +44,7 @@ export class AttachGroupMeetingComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private groupsService: GroupsService,
               private dateUtils: Dates,
               private route: ActivatedRoute,
@@ -79,8 +79,8 @@ export class AttachGroupMeetingComponent implements OnInit {
   buildDependencies() {
     this.groupMeetingForm.get('repeating').valueChanges.subscribe((value: boolean) => {
       if (value) {
-        this.groupMeetingForm.addControl('frequency', new FormControl());
-        this.groupMeetingForm.addControl('interval', new FormControl());
+        this.groupMeetingForm.addControl('frequency', new UntypedFormControl());
+        this.groupMeetingForm.addControl('interval', new UntypedFormControl());
         this.groupMeetingForm.get('frequency').valueChanges.subscribe((frequency: any) => {
           this.groupMeetingForm.removeControl('repeatsOnDay');
           switch (frequency) {
@@ -89,7 +89,7 @@ export class AttachGroupMeetingComponent implements OnInit {
             break;
             case 2: // Weekly
               this.repetitionIntervals = ['1', '2', '3'];
-              this.groupMeetingForm.addControl('repeatsOnDay', new FormControl('', Validators.required));
+              this.groupMeetingForm.addControl('repeatsOnDay', new UntypedFormControl('', Validators.required));
             break;
             case 3: // Monthly
               this.repetitionIntervals = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];

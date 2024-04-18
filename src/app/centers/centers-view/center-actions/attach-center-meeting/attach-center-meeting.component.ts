@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -23,7 +23,7 @@ export class AttachCenterMeetingComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Center Meeting form. */
-  centerMeetingForm: FormGroup;
+  centerMeetingForm: UntypedFormGroup;
   /** Calnedar Template Data */
   calendarTemplate: any;
   /** Center Id */
@@ -44,7 +44,7 @@ export class AttachCenterMeetingComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private centersService: CentersService,
               private settingsService: SettingsService,
               private dateUtils: Dates,
@@ -79,8 +79,8 @@ export class AttachCenterMeetingComponent implements OnInit {
   buildDependencies() {
     this.centerMeetingForm.get('repeating').valueChanges.subscribe((value: boolean) => {
       if (value) {
-        this.centerMeetingForm.addControl('frequency', new FormControl());
-        this.centerMeetingForm.addControl('interval', new FormControl());
+        this.centerMeetingForm.addControl('frequency', new UntypedFormControl());
+        this.centerMeetingForm.addControl('interval', new UntypedFormControl());
         this.centerMeetingForm.get('frequency').valueChanges.subscribe((frequency: any) => {
           this.centerMeetingForm.removeControl('repeatsOnDay');
           switch (frequency) {
@@ -89,7 +89,7 @@ export class AttachCenterMeetingComponent implements OnInit {
             break;
             case 2: // Weekly
               this.repetitionIntervals = ['1', '2', '3'];
-              this.centerMeetingForm.addControl('repeatsOnDay', new FormControl('', Validators.required));
+              this.centerMeetingForm.addControl('repeatsOnDay', new UntypedFormControl('', Validators.required));
             break;
             case 3: // Monthly
               this.repetitionIntervals = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];

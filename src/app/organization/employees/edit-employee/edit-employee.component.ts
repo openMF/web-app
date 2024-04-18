@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
@@ -25,7 +25,7 @@ export class EditEmployeeComponent implements OnInit {
   /** Maximum joining date allowed. */
   maxDate = new Date();
   /** Employee form. */
-  editEmployeeForm: FormGroup;
+  editEmployeeForm: UntypedFormGroup;
   /** Office data. */
   officeData: any;
 
@@ -38,7 +38,7 @@ export class EditEmployeeComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {Dates} dateUtils Date Utils to format date.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private organizationService: OrganizationService,
               private settingsService: SettingsService,
               private route: ActivatedRoute,

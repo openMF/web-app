@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import DataFlattner from "app/core/utils/data-flattner";
 import { OrganizationService } from "app/organization/organization.service";
@@ -19,7 +19,7 @@ export class LoanProductAllocationComponent implements OnInit {
   data: any;
   treeDataSource: any;
   selectedUnits: any = [];
-  allocationForm: FormGroup;
+  allocationForm: UntypedFormGroup;
   loanTypeOptions: any;
   loanTypeOptionsModel: any;
   @ViewChild(CountryTreeViewComponent) countryTreeComponent: CountryTreeViewComponent;
@@ -30,7 +30,7 @@ export class LoanProductAllocationComponent implements OnInit {
     private organizationService: OrganizationService,
     private router: Router,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private dragulaService: DragulaService
   ) {
     if (this.router.url.includes("edit")) {

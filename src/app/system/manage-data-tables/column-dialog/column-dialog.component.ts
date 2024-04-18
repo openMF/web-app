@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** Data Imports */
 import { columnTypeData } from '../column-type-data';
@@ -17,7 +17,7 @@ import { columnTypeData } from '../column-type-data';
 export class ColumnDialogComponent implements OnInit {
 
   /** Column Form. */
-  columnForm: FormGroup;
+  columnForm: UntypedFormGroup;
   /** Column Type Data */
   columnTypeData = columnTypeData;
 
@@ -27,7 +27,7 @@ export class ColumnDialogComponent implements OnInit {
    * @param {any} data Provides the column codes and values for the form (if available).
    */
   constructor(public dialogRef: MatDialogRef<ColumnDialogComponent>,
-              public formBuilder: FormBuilder,
+              public formBuilder: UntypedFormBuilder,
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   /**

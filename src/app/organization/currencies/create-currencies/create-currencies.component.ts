@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 
@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
 export class CreateCurrenciesComponent implements OnInit {
 
   /** Currency form. */
-  currencyForm: FormGroup;
+  currencyForm: UntypedFormGroup;
   currencyTemplateData: any;
 
   countries: any = [];
@@ -22,7 +22,7 @@ export class CreateCurrenciesComponent implements OnInit {
   currencyDataSliced: any = [];
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private organizationService: OrganizationService,
     private router: Router,
     private route: ActivatedRoute,

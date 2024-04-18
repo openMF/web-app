@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, NgModel } from "@angular/forms";
+import { AbstractControl, UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, NgModel } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AlertService } from "app/core/alert/alert.service";
 import { SystemService } from "app/system/system.service";
@@ -42,8 +42,8 @@ export class DataFieldsComponent implements OnInit {
   addDisplayedColumns = ["name", "type", "mandatory", "isUnique", "length", "code", "actions"];
 
   addDataSource = new BehaviorSubject<AbstractControl[]>([]);
-  rows: FormArray = this.fb.array([]);
-  form: FormGroup = this.fb.group({ tableArray: this.rows });
+  rows: UntypedFormArray = this.fb.array([]);
+  form: UntypedFormGroup = this.fb.group({ tableArray: this.rows });
   @ViewChild(NgModel, { static: true }) addField: NgModel;
   toggleMatTable: boolean = false;
 
@@ -51,7 +51,7 @@ export class DataFieldsComponent implements OnInit {
     private route: ActivatedRoute,
     private systemService: SystemService,
     private router: Router,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private alertService: AlertService
   ) {
     this.route.data.subscribe((data: { columnCodes: any }) => {
@@ -117,8 +117,8 @@ export class DataFieldsComponent implements OnInit {
         type: [this.columnType],
         mandatory: [false],
         isUnique: [false],
-        length: new FormControl({ value: null, disabled: this.columnType !== "String" }),
-        code: new FormControl({ value: null, disabled: this.columnType !== "Dropdown" }),
+        length: new UntypedFormControl({ value: null, disabled: this.columnType !== "String" }),
+        code: new UntypedFormControl({ value: null, disabled: this.columnType !== "Dropdown" }),
         subEntity: this.subEntity,
         entity: this.entity,
       });
@@ -137,13 +137,13 @@ export class DataFieldsComponent implements OnInit {
   }
 
   removeNode(index: number, flag = false) {
-    const control = this.form.get("tableArray") as FormArray;
+    const control = this.form.get("tableArray") as UntypedFormArray;
     control.removeAt(index);
     this.updateView();
   }
 
   changeType(index: number, value: any) {
-    const controls = this.form.get("tableArray") as FormArray;
+    const controls = this.form.get("tableArray") as UntypedFormArray;
     if (controls) {
       let control: any = controls.controls[index];
       control.value.type = value;

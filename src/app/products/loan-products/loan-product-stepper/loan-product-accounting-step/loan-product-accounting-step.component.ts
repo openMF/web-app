@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormArray, Validators, UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -19,7 +19,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
   @Input() accountingRuleData: any;
   @Input() loanProductFormValid: boolean;
 
-  loanProductAccountingForm: FormGroup;
+  loanProductAccountingForm: UntypedFormGroup;
 
   chargeData: any;
   penaltyData: any;
@@ -33,7 +33,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
   paymentFundSourceDisplayedColumns: string[] = ['paymentTypeId', 'fundSourceAccountId', 'actions'];
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId', 'actions'];
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               public dialog: MatDialog) {
     this.createLoanProductAccountingForm();
     this.setConditionalControls();
@@ -98,16 +98,16 @@ export class LoanProductAccountingStepComponent implements OnInit {
     this.loanProductAccountingForm.get('accountingRule').valueChanges
       .subscribe((accountingRule: any) => {
         if (accountingRule >= 2 && accountingRule <= 4) {
-          this.loanProductAccountingForm.addControl('fundSourceAccountId', new FormControl('', Validators.required));
-          this.loanProductAccountingForm.addControl('loanPortfolioAccountId', new FormControl('', Validators.required));
-          this.loanProductAccountingForm.addControl('transfersInSuspenseAccountId', new FormControl('', Validators.required));
-          this.loanProductAccountingForm.addControl('interestOnLoanAccountId', new FormControl('', Validators.required));
-          this.loanProductAccountingForm.addControl('incomeFromFeeAccountId', new FormControl('', Validators.required));
-          this.loanProductAccountingForm.addControl('incomeFromPenaltyAccountId', new FormControl('', Validators.required));
-          this.loanProductAccountingForm.addControl('incomeFromRecoveryAccountId', new FormControl('', Validators.required));
-          this.loanProductAccountingForm.addControl('writeOffAccountId', new FormControl('', Validators.required));
-          this.loanProductAccountingForm.addControl('overpaymentLiabilityAccountId', new FormControl('', Validators.required));
-          this.loanProductAccountingForm.addControl('advancedAccountingRules', new FormControl(false));
+          this.loanProductAccountingForm.addControl('fundSourceAccountId', new UntypedFormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('loanPortfolioAccountId', new UntypedFormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('transfersInSuspenseAccountId', new UntypedFormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('interestOnLoanAccountId', new UntypedFormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('incomeFromFeeAccountId', new UntypedFormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('incomeFromPenaltyAccountId', new UntypedFormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('incomeFromRecoveryAccountId', new UntypedFormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('writeOffAccountId', new UntypedFormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('overpaymentLiabilityAccountId', new UntypedFormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('advancedAccountingRules', new UntypedFormControl(false));
 
           this.loanProductAccountingForm.get('advancedAccountingRules').valueChanges
             .subscribe((advancedAccountingRules: boolean) => {
@@ -135,9 +135,9 @@ export class LoanProductAccountingStepComponent implements OnInit {
         }
 
         if (accountingRule === 3 || accountingRule === 4) {
-          this.loanProductAccountingForm.addControl('receivableInterestAccountId', new FormControl('', Validators.required));
-          this.loanProductAccountingForm.addControl('receivableFeeAccountId', new FormControl('', Validators.required));
-          this.loanProductAccountingForm.addControl('receivablePenaltyAccountId', new FormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('receivableInterestAccountId', new UntypedFormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('receivableFeeAccountId', new UntypedFormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('receivablePenaltyAccountId', new UntypedFormControl('', Validators.required));
         } else {
           this.loanProductAccountingForm.removeControl('receivableInterestAccountId');
           this.loanProductAccountingForm.removeControl('receivableFeeAccountId');
@@ -146,16 +146,16 @@ export class LoanProductAccountingStepComponent implements OnInit {
       });
   }
 
-  get paymentChannelToFundSourceMappings(): FormArray {
-    return this.loanProductAccountingForm.get('paymentChannelToFundSourceMappings') as FormArray;
+  get paymentChannelToFundSourceMappings(): UntypedFormArray {
+    return this.loanProductAccountingForm.get('paymentChannelToFundSourceMappings') as UntypedFormArray;
   }
 
-  get feeToIncomeAccountMappings(): FormArray {
-    return this.loanProductAccountingForm.get('feeToIncomeAccountMappings') as FormArray;
+  get feeToIncomeAccountMappings(): UntypedFormArray {
+    return this.loanProductAccountingForm.get('feeToIncomeAccountMappings') as UntypedFormArray;
   }
 
-  get penaltyToIncomeAccountMappings(): FormArray {
-    return this.loanProductAccountingForm.get('penaltyToIncomeAccountMappings') as FormArray;
+  get penaltyToIncomeAccountMappings(): UntypedFormArray {
+    return this.loanProductAccountingForm.get('penaltyToIncomeAccountMappings') as UntypedFormArray;
   }
 
   setLoanProductAccountingFormDirty() {
@@ -164,7 +164,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
     }
   }
 
-  add(formType: string, formArray: FormArray) {
+  add(formType: string, formArray: UntypedFormArray) {
     const data = { ...this.getData(formType), pristine: false };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -175,7 +175,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
     });
   }
 
-  edit(formType: string, formArray: FormArray, index: number) {
+  edit(formType: string, formArray: UntypedFormArray, index: number) {
     const data = { ...this.getData(formType, formArray.at(index).value), layout: { addButtonText: 'Edit' } };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -186,7 +186,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
     });
   }
 
-  delete(formArray: FormArray, index: number) {
+  delete(formArray: UntypedFormArray, index: number) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `this` }
     });

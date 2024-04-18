@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'mifosx-upload-document-dialog',
@@ -10,7 +10,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 export class UploadDocumentDialogComponent implements OnInit {
 
   /** Upload Document form. */
-  uploadDocumentForm: FormGroup;
+  uploadDocumentForm: UntypedFormGroup;
   /** Upload Document Data */
   uploadDocumentData: any = [];
   /** Triggers description field */
@@ -22,7 +22,7 @@ export class UploadDocumentDialogComponent implements OnInit {
    * @param {any} data Dialog Data
    */
   constructor(public dialogRef: MatDialogRef<UploadDocumentDialogComponent>,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               @Inject(MAT_DIALOG_DATA) public data: any) {
     this.documentIdentifier = data.documentIdentifier;
   }

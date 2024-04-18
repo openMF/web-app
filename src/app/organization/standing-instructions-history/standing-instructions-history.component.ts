@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -26,7 +26,7 @@ export class StandingInstructionsHistoryComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Instruction  form. */
-  instructionForm: FormGroup;
+  instructionForm: UntypedFormGroup;
   /** Standing Instructions Template */
   standingInstructionsTemplate: any;
   /** Toggles b/w form and table */
@@ -51,7 +51,7 @@ export class StandingInstructionsHistoryComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {Dates} dateUtils Date Utils to format date.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private organizationService: OrganizationService,
               private settingsService: SettingsService,
               private router: Router,
@@ -86,7 +86,7 @@ export class StandingInstructionsHistoryComponent implements OnInit {
    */
   buildDependencies() {
     this.instructionForm.get('fromAccountType').valueChanges.subscribe(() => {
-      this.instructionForm.addControl('fromAccountId', new FormControl(''));
+      this.instructionForm.addControl('fromAccountId', new UntypedFormControl(''));
     });
   }
 

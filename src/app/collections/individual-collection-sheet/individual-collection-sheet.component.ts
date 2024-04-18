@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Services Import */
@@ -45,7 +45,7 @@ export class IndividualCollectionSheetComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Collection Sheet form. */
-  collectionSheetForm: FormGroup;
+  collectionSheetForm: UntypedFormGroup;
   /** Toggles b/w form and table */
   isCollapsed = false;
   /** Collections Sheet Data */
@@ -87,7 +87,7 @@ export class IndividualCollectionSheetComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private collectionsService: CollectionsService,
               private route: ActivatedRoute,
               private dateUtils: Dates,

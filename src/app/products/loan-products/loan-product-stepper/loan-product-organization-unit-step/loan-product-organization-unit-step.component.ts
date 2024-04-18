@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 /** Custom Services */
 import { ProductsService } from '../../../products.service';
@@ -22,7 +22,7 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
 
   countries: any = [];
   countriesDataSliced: any = [];
-  loanProductOrganizationForm: FormGroup;
+  loanProductOrganizationForm: UntypedFormGroup;
   treeDataSource: any = [];
   selectedUnits: any = [];
   data: any;
@@ -36,11 +36,11 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
 
   isQualificationRequired: boolean = false;
 
-  loanProductTemplateForm: FormGroup;
+  loanProductTemplateForm: UntypedFormGroup;
 
   constructor(
     private productsService: ProductsService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private organizationService: OrganizationService,
     private alertService: AlertService,
     private router: Router,

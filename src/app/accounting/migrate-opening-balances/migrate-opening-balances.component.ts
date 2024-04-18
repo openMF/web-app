@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -25,7 +25,7 @@ export class MigrateOpeningBalancesComponent implements OnInit {
   /** Maximum opening balances date allowed. */
   maxDate = new Date();
   /** Opening balances form. */
-  openingBalancesForm: FormGroup;
+  openingBalancesForm: UntypedFormGroup;
   /** Opening balances data. */
   openingBalancesData: any;
   /** Office data. */
@@ -45,7 +45,7 @@ export class MigrateOpeningBalancesComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private accountingService: AccountingService,
               private settingsService: SettingsService,
               private dateUtils: Dates,
@@ -84,7 +84,7 @@ export class MigrateOpeningBalancesComponent implements OnInit {
    * @param glAccount GL Account for which form is returned.
    * @returns {FormGroup} GL Account entry form.
    */
-  createGLAccountEntryForm(glAccount: any): FormGroup {
+  createGLAccountEntryForm(glAccount: any): UntypedFormGroup {
     return this.formBuilder.group({
       'glAccountId': [glAccount.glAccountId],
       'debit': [null],
@@ -96,8 +96,8 @@ export class MigrateOpeningBalancesComponent implements OnInit {
    * Gets the gl account entries form array.
    * @returns {FormArray} GL Account entries form array.
    */
-  get glAccountEntries(): FormArray {
-    return this.openingBalancesForm.get('glAccountEntries') as FormArray;
+  get glAccountEntries(): UntypedFormArray {
+    return this.openingBalancesForm.get('glAccountEntries') as UntypedFormArray;
   }
 
   /**
@@ -106,7 +106,7 @@ export class MigrateOpeningBalancesComponent implements OnInit {
   retrieveOpeningBalances() {
     this.accountingService.retrieveOpeningBalances(this.openingBalancesForm.value.officeId)
       .subscribe((openingBalancesData: any) => {
-        const entry = this.openingBalancesForm.get('glAccountEntries') as FormArray;
+        const entry = this.openingBalancesForm.get('glAccountEntries') as UntypedFormArray;
 
         openingBalancesData.glAccounts = openingBalancesData.assetAccountOpeningBalances
           .concat(openingBalancesData.liabityAccountOpeningBalances,

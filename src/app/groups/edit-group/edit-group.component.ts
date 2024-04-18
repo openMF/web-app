@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -23,7 +23,7 @@ export class EditGroupComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Edit Group form. */
-  editGroupForm: FormGroup;
+  editGroupForm: UntypedFormGroup;
   /** Staff data. */
   staffData: any;
   /** Group Data */
@@ -40,7 +40,7 @@ export class EditGroupComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils to format date.
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private groupService: GroupsService,
@@ -84,7 +84,7 @@ export class EditGroupComponent implements OnInit {
    */
   buildDependencies() {
     if (this.groupData.active) {
-      this.editGroupForm.addControl('activationDate', new FormControl('', Validators.required));
+      this.editGroupForm.addControl('activationDate', new UntypedFormControl('', Validators.required));
       this.editGroupForm.get('activationDate').patchValue(this.groupData.activationDate && new Date(this.groupData.activationDate));
     } else {
       this.editGroupForm.removeControl('activationDate');

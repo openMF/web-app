@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -17,7 +17,7 @@ import { OrganizationService } from '../../organization.service';
 export class CreateAdhocQueryComponent implements OnInit {
 
   /** Adhoc Query form. */
-  adhocQueryForm: FormGroup;
+  adhocQueryForm: UntypedFormGroup;
   /** Adhoc Query template data. */
   adhocQueryTemplateData: any;
   /** Report run frequencies data. */
@@ -30,7 +30,7 @@ export class CreateAdhocQueryComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private organizationService: OrganizationService,
               private route: ActivatedRoute,
               private router: Router) {
@@ -69,7 +69,7 @@ export class CreateAdhocQueryComponent implements OnInit {
   setConditionalControls() {
     this.adhocQueryForm.get('reportRunFrequency').valueChanges.subscribe(reportRunFrequencyId => {
       if (reportRunFrequencyId === 5) {
-        this.adhocQueryForm.addControl('reportRunEvery', new FormControl('', [Validators.required, Validators.min(1)]));
+        this.adhocQueryForm.addControl('reportRunEvery', new UntypedFormControl('', [Validators.required, Validators.min(1)]));
       } else {
         this.adhocQueryForm.removeControl('reportRunEvery');
       }

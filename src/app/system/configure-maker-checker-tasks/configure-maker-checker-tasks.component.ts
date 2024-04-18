@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 import { SystemService } from '../system.service';
 
@@ -20,8 +20,8 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit {
   previousGrouping = '';
   checkboxesChanged: Boolean = false;
   currentGrouping: string;
-  formGroup: FormGroup;
-  backupform: FormGroup;
+  formGroup: UntypedFormGroup;
+  backupform: UntypedFormGroup;
 
   permissions: {
     permissions: { code: string, id: number }[]
@@ -32,7 +32,7 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private systemService: SystemService,
-    private formBuilder: FormBuilder, ) {
+    private formBuilder: UntypedFormBuilder, ) {
     this.route.data.subscribe((data: { permissions: any }) => {
       this.permissionsData = data.permissions;
     });
@@ -54,7 +54,7 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit {
     });
   }
 
-  createMemberGroup(permission: any): FormGroup {
+  createMemberGroup(permission: any): UntypedFormGroup {
     return this.formBuilder.group({
       ...permission,
       ...{
@@ -116,14 +116,14 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit {
    * Backups the valued
    */
   backupCheckValues() {
-    this.backupform = _.cloneDeep(this.formGroup) as FormGroup;
+    this.backupform = _.cloneDeep(this.formGroup) as UntypedFormGroup;
   }
 
   /**
    * Restores the checkboxes to previous data on clicking cancel
    */
   restoreCheckboxes() {
-    this.formGroup = _.cloneDeep(this.backupform) as FormGroup;
+    this.formGroup = _.cloneDeep(this.backupform) as UntypedFormGroup;
   }
 
   isTaskEnable(value: any) {

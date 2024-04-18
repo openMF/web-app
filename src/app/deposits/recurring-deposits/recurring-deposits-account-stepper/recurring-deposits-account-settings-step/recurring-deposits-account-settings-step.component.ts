@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
 
@@ -18,7 +18,7 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
   @Input() recurringDepositsAccountProductTemplate: any;
 
   /** Recurring Deposits Account Settings Form */
-  recurringDepositAccountSettingsForm: FormGroup;
+  recurringDepositAccountSettingsForm: UntypedFormGroup;
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -35,7 +35,7 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
   /**
    * @param {FormBuilder} formBuilder Form Builder
    */
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createRecurringDepositAccountSettingsForm();
     this.buildDependencies();
   }
@@ -60,10 +60,10 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
         'minBalanceForInterestCalculation': this.recurringDepositsAccountProductTemplate.minBalanceForInterestCalculation,
       });
       if (this.recurringDepositsAccountProductTemplate.withHoldTax) {
-        this.recurringDepositAccountSettingsForm.addControl('withHoldTax', new FormControl(false));
+        this.recurringDepositAccountSettingsForm.addControl('withHoldTax', new UntypedFormControl(false));
         this.recurringDepositAccountSettingsForm.get('withHoldTax').valueChanges.subscribe((value: boolean) => {
           if (value) {
-            this.recurringDepositAccountSettingsForm.addControl('taxGroupId', new FormControl({ value: '', disabled: true }));
+            this.recurringDepositAccountSettingsForm.addControl('taxGroupId', new UntypedFormControl({ value: '', disabled: true }));
             this.recurringDepositAccountSettingsForm.get('taxGroupId').patchValue(this.recurringDepositsAccountProductTemplate.taxGroup && this.recurringDepositsAccountProductTemplate.taxGroup.name);
           } else {
             this.recurringDepositAccountSettingsForm.removeControl('taxGroupId');
@@ -137,9 +137,9 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
         this.recurringDepositAccountSettingsForm.removeControl('recurringFrequency');
         this.recurringDepositAccountSettingsForm.removeControl('recurringFrequencyType');
       } else {
-        this.recurringDepositAccountSettingsForm.addControl('expectedFirstDepositOnDate', new FormControl());
-        this.recurringDepositAccountSettingsForm.addControl('recurringFrequency', new FormControl(''));
-        this.recurringDepositAccountSettingsForm.addControl('recurringFrequencyType', new FormControl(''));
+        this.recurringDepositAccountSettingsForm.addControl('expectedFirstDepositOnDate', new UntypedFormControl());
+        this.recurringDepositAccountSettingsForm.addControl('recurringFrequency', new UntypedFormControl(''));
+        this.recurringDepositAccountSettingsForm.addControl('recurringFrequencyType', new UntypedFormControl(''));
       }
     });
   }

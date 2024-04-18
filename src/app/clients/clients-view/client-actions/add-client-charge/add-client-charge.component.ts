@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -23,7 +23,7 @@ export class AddClientChargeComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Add Clients Charge form. */
-  clientChargeForm: FormGroup;
+  clientChargeForm: UntypedFormGroup;
   /** clients charge options. */
   clientChargeOptions: any;
   /** clients Id */
@@ -41,7 +41,7 @@ export class AddClientChargeComponent implements OnInit {
    * @param {SettingsService} settingsService Setting service
    */
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
@@ -74,17 +74,17 @@ export class AddClientChargeComponent implements OnInit {
           this.chargeDetails.chargeTimeTypeAnnualOrMonth = true;
         }
         if (!this.chargeDetails.dueDateNotRequired && !this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
-          this.clientChargeForm.addControl('dueDate', new FormControl('', Validators.required));
+          this.clientChargeForm.addControl('dueDate', new UntypedFormControl('', Validators.required));
         } else {
           this.clientChargeForm.removeControl('dueDate');
         }
         if (!this.chargeDetails.dueDateNotRequired && this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
-          this.clientChargeForm.addControl('feeOnMonthDay', new FormControl('', Validators.required));
+          this.clientChargeForm.addControl('feeOnMonthDay', new UntypedFormControl('', Validators.required));
         } else {
           this.clientChargeForm.removeControl('feeOnMonthDay');
         }
         if (chargeTimeType.value === 'Monthly Fee') {
-          this.clientChargeForm.addControl('feeInterval', new FormControl(data.feeInterval, Validators.required));
+          this.clientChargeForm.addControl('feeInterval', new UntypedFormControl(data.feeInterval, Validators.required));
         } else {
           this.clientChargeForm.removeControl('feeInterval');
         }

@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
@@ -26,7 +26,7 @@ export class EditClientComponent implements OnInit {
   /** Client Data and Template */
   clientDataAndTemplate: any;
   /** Edit Client Form */
-  editClientForm: FormGroup;
+  editClientForm: UntypedFormGroup;
 
   /** Office Options */
   officeOptions: any;
@@ -54,7 +54,7 @@ export class EditClientComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private clientsService: ClientsService,
@@ -133,14 +133,14 @@ export class EditClientComponent implements OnInit {
       if (legalFormId === 1) {
         this.editClientForm.removeControl('fullname');
         this.editClientForm.removeControl('clientNonPersonDetails');
-        this.editClientForm.addControl('firstname', new FormControl(this.clientDataAndTemplate.firstname, Validators.required));
-        this.editClientForm.addControl('middlename', new FormControl(this.clientDataAndTemplate.middlename));
-        this.editClientForm.addControl('lastname', new FormControl(this.clientDataAndTemplate.lastname, Validators.required));
+        this.editClientForm.addControl('firstname', new UntypedFormControl(this.clientDataAndTemplate.firstname, Validators.required));
+        this.editClientForm.addControl('middlename', new UntypedFormControl(this.clientDataAndTemplate.middlename));
+        this.editClientForm.addControl('lastname', new UntypedFormControl(this.clientDataAndTemplate.lastname, Validators.required));
       } else {
         this.editClientForm.removeControl('firstname');
         this.editClientForm.removeControl('middlename');
         this.editClientForm.removeControl('lastname');
-        this.editClientForm.addControl('fullname', new FormControl(this.clientDataAndTemplate.fullname, Validators.required));
+        this.editClientForm.addControl('fullname', new UntypedFormControl(this.clientDataAndTemplate.fullname, Validators.required));
         this.editClientForm.addControl('clientNonPersonDetails', this.formBuilder.group({
           'constitutionId': [this.clientDataAndTemplate.clientNonPersonDetails.constitution && this.clientDataAndTemplate.clientNonPersonDetails.constitution.id],
           'incorpValidityTillDate': [this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate && new Date(this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate)],

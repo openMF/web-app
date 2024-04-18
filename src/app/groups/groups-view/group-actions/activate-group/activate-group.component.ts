@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -23,7 +23,7 @@ export class ActivateGroupComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Activate group form. */
-  activateGroupForm: FormGroup;
+  activateGroupForm: UntypedFormGroup;
   /** Group Id */
   groupId: any;
 
@@ -35,7 +35,7 @@ export class ActivateGroupComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private groupsService: GroupsService,
               private dateUtils: Dates,
               private route: ActivatedRoute,

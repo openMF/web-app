@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder,  FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder,  UntypedFormGroup, Validators } from '@angular/forms';
 import { OrganizationService } from 'app/organization/organization.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SettingsService } from 'app/settings/settings.service';
@@ -17,7 +17,7 @@ export class CreateOutletComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private organizationService: OrganizationService,
     private router: Router,
     private route: ActivatedRoute,
@@ -29,7 +29,7 @@ export class CreateOutletComponent implements OnInit {
 
   listCountries: any = [];
   listCountriesSliced: any = [];
-  outletForm: FormGroup;
+  outletForm: UntypedFormGroup;
   treeDataSource: any = [];
   selectedOffices: any = [];
   @ViewChild(CountryTreeViewComponent) countryTreeComponent: CountryTreeViewComponent;

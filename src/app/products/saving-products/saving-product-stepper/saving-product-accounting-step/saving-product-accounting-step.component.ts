@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormArray, Validators, UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -17,10 +17,10 @@ export class SavingProductAccountingStepComponent implements OnInit {
 
   @Input() savingProductsTemplate: any;
   @Input() accountingRuleData: any;
-  @Input() isDormancyTrackingActive: FormControl;
+  @Input() isDormancyTrackingActive: UntypedFormControl;
   @Input() savingProductFormValid: boolean;
 
-  savingProductAccountingForm: FormGroup;
+  savingProductAccountingForm: UntypedFormGroup;
 
   chargeData: any;
   penaltyData: any;
@@ -34,7 +34,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
   paymentFundSourceDisplayedColumns: string[] = ['paymentTypeId', 'fundSourceAccountId', 'actions'];
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId', 'actions'];
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               public dialog: MatDialog) {
     this.createsavingProductAccountingForm();
     this.setConditionalControls();
@@ -90,25 +90,25 @@ export class SavingProductAccountingStepComponent implements OnInit {
     this.savingProductAccountingForm.get('accountingRule').valueChanges
       .subscribe((accountingRule: any) => {
         if (accountingRule === 2) {
-          this.savingProductAccountingForm.addControl('savingsReferenceAccountId', new FormControl('', Validators.required));
-          this.savingProductAccountingForm.addControl('overdraftPortfolioControlId', new FormControl('', Validators.required));
-          this.savingProductAccountingForm.addControl('savingsControlAccountId', new FormControl('', Validators.required));
-          this.savingProductAccountingForm.addControl('transfersInSuspenseAccountId', new FormControl('', Validators.required));
-          this.savingProductAccountingForm.addControl('interestOnSavingsAccountId', new FormControl('', Validators.required));
-          this.savingProductAccountingForm.addControl('writeOffAccountId', new FormControl('', Validators.required));
-          this.savingProductAccountingForm.addControl('incomeFromFeeAccountId', new FormControl('', Validators.required));
-          this.savingProductAccountingForm.addControl('incomeFromPenaltyAccountId', new FormControl('', Validators.required));
-          this.savingProductAccountingForm.addControl('incomeFromInterestId', new FormControl('', Validators.required));
-          this.savingProductAccountingForm.addControl('advancedAccountingRules', new FormControl(false));
+          this.savingProductAccountingForm.addControl('savingsReferenceAccountId', new UntypedFormControl('', Validators.required));
+          this.savingProductAccountingForm.addControl('overdraftPortfolioControlId', new UntypedFormControl('', Validators.required));
+          this.savingProductAccountingForm.addControl('savingsControlAccountId', new UntypedFormControl('', Validators.required));
+          this.savingProductAccountingForm.addControl('transfersInSuspenseAccountId', new UntypedFormControl('', Validators.required));
+          this.savingProductAccountingForm.addControl('interestOnSavingsAccountId', new UntypedFormControl('', Validators.required));
+          this.savingProductAccountingForm.addControl('writeOffAccountId', new UntypedFormControl('', Validators.required));
+          this.savingProductAccountingForm.addControl('incomeFromFeeAccountId', new UntypedFormControl('', Validators.required));
+          this.savingProductAccountingForm.addControl('incomeFromPenaltyAccountId', new UntypedFormControl('', Validators.required));
+          this.savingProductAccountingForm.addControl('incomeFromInterestId', new UntypedFormControl('', Validators.required));
+          this.savingProductAccountingForm.addControl('advancedAccountingRules', new UntypedFormControl(false));
 
           if (this.isDormancyTrackingActive.value) {
-            this.savingProductAccountingForm.addControl('escheatLiabilityId', new FormControl('', Validators.required));
+            this.savingProductAccountingForm.addControl('escheatLiabilityId', new UntypedFormControl('', Validators.required));
           }
 
           this.isDormancyTrackingActive.valueChanges
             .subscribe((isDormancyTrackingActive: boolean) => {
               if (isDormancyTrackingActive) {
-                this.savingProductAccountingForm.addControl('escheatLiabilityId', new FormControl('', Validators.required));
+                this.savingProductAccountingForm.addControl('escheatLiabilityId', new UntypedFormControl('', Validators.required));
               } else {
                 this.savingProductAccountingForm.removeControl('escheatLiabilityId');
               }
@@ -142,16 +142,16 @@ export class SavingProductAccountingStepComponent implements OnInit {
       });
   }
 
-  get paymentChannelToFundSourceMappings(): FormArray {
-    return this.savingProductAccountingForm.get('paymentChannelToFundSourceMappings') as FormArray;
+  get paymentChannelToFundSourceMappings(): UntypedFormArray {
+    return this.savingProductAccountingForm.get('paymentChannelToFundSourceMappings') as UntypedFormArray;
   }
 
-  get feeToIncomeAccountMappings(): FormArray {
-    return this.savingProductAccountingForm.get('feeToIncomeAccountMappings') as FormArray;
+  get feeToIncomeAccountMappings(): UntypedFormArray {
+    return this.savingProductAccountingForm.get('feeToIncomeAccountMappings') as UntypedFormArray;
   }
 
-  get penaltyToIncomeAccountMappings(): FormArray {
-    return this.savingProductAccountingForm.get('penaltyToIncomeAccountMappings') as FormArray;
+  get penaltyToIncomeAccountMappings(): UntypedFormArray {
+    return this.savingProductAccountingForm.get('penaltyToIncomeAccountMappings') as UntypedFormArray;
   }
 
   setSavingProductAccountingFormDirty() {
@@ -160,7 +160,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
     }
   }
 
-  add(formType: string, formArray: FormArray) {
+  add(formType: string, formArray: UntypedFormArray) {
     const data = { ...this.getData(formType), pristine: false };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -171,7 +171,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
     });
   }
 
-  edit(formType: string, formArray: FormArray, index: number) {
+  edit(formType: string, formArray: UntypedFormArray, index: number) {
     const data = { ...this.getData(formType, formArray.at(index).value), layout: { addButtonText: 'Edit' } };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -182,7 +182,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
     });
   }
 
-  delete(formArray: FormArray, index: number) {
+  delete(formArray: UntypedFormArray, index: number) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `this` }
     });

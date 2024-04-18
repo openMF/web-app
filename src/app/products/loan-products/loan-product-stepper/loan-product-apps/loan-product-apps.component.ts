@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductsService } from 'app/products/products.service';
 
@@ -13,15 +13,15 @@ export class LoanProductAppsComponent implements OnInit {
   @Input() loanProduct: any;
 
 
-  loanProductAppsForm: FormGroup;
+  loanProductAppsForm: UntypedFormGroup;
   channelData: any = [];
   dataNew: any = [];
 
   get channelFormArray() {
-    return this.loanProductAppsForm.controls.channels as FormArray;
+    return this.loanProductAppsForm.controls.channels as UntypedFormArray;
   }
 
-  constructor(private productService: ProductsService, private formBuilder: FormBuilder, private router: Router) {
+  constructor(private productService: ProductsService, private formBuilder: UntypedFormBuilder, private router: Router) {
 
     this.createloanProductAppsForm();
     this.getChannels();
@@ -35,7 +35,7 @@ export class LoanProductAppsComponent implements OnInit {
 
   }
 
-  get line(): FormGroup {
+  get line(): UntypedFormGroup {
     return this.formBuilder.group({
         channels: this.formBuilder.array([
          ]),
@@ -44,7 +44,7 @@ export class LoanProductAppsComponent implements OnInit {
 
   loadForm(data: any) {
     data?.channels.forEach(element => {
-      const linesFormArray = this.loanProductAppsForm.get('channels') as FormArray;
+      const linesFormArray = this.loanProductAppsForm.get('channels') as UntypedFormArray;
       linesFormArray.push(this.line);
     });
 
@@ -53,12 +53,12 @@ export class LoanProductAppsComponent implements OnInit {
 
   createloanProductAppsForm() {
     this.loanProductAppsForm = this.formBuilder.group({
-      channels: new FormArray([])
+      channels: new UntypedFormArray([])
     });
   }
 
   private addCheckboxes() {
-    this.channelData.forEach(() => this.channelFormArray.push(new FormControl(false)));
+    this.channelData.forEach(() => this.channelFormArray.push(new UntypedFormControl(false)));
   }
 
   getChannels() {

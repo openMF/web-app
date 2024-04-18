@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -17,7 +17,7 @@ import { SystemService } from '../../../system.service';
 export class EditConfigurationComponent implements OnInit {
 
   /** Global Configuration form. */
-  configurationForm: FormGroup;
+  configurationForm: UntypedFormGroup;
   /** Configuration. */
   configuration: any;
 
@@ -28,7 +28,7 @@ export class EditConfigurationComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private systemService: SystemService,
               private route: ActivatedRoute,
               private router: Router) {

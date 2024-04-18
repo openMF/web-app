@@ -1,6 +1,6 @@
 /** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -22,7 +22,7 @@ export class SettleCashComponent implements OnInit {
   /** Cashier data. */
   cashierData: any;
   /** Cashier Form. */
-  settleCashForm: FormGroup;
+  settleCashForm: UntypedFormGroup;
 
   /**
    * Get cashier data from `Resolver`.
@@ -33,7 +33,7 @@ export class SettleCashComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    * @param {Router} router Router.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private dateUtils: Dates,
               private organizationService: OrganizationService,

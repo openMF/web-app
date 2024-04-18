@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -23,7 +23,7 @@ export class EditGroupMeetingComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Group Meeting form. */
-  groupEditMeetingForm: FormGroup;
+  groupEditMeetingForm: UntypedFormGroup;
   /** Calendar Template Data */
   calendarTemplate: any;
   /** Group Id */
@@ -46,7 +46,7 @@ export class EditGroupMeetingComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private groupsService: GroupsService,
               private dateUtils: Dates,
               private route: ActivatedRoute,
@@ -89,7 +89,7 @@ export class EditGroupMeetingComponent implements OnInit {
         break;
         case 2: // Weekly
           this.repetitionIntervals = ['1', '2', '3'];
-          this.groupEditMeetingForm.addControl('repeatsOnDay', new FormControl('', Validators.required));
+          this.groupEditMeetingForm.addControl('repeatsOnDay', new UntypedFormControl('', Validators.required));
           this.groupEditMeetingForm.get('repeatsOnDay').patchValue(this.calendarTemplate.repeatsOnDay.id);
         break;
         case 3: // Monthly

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -23,7 +23,7 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Premature Close FD Account form. */
-  prematureCloseAccountForm: FormGroup;
+  prematureCloseAccountForm: UntypedFormGroup;
   /** Savings Account Data */
   savingsAccountsData: any;
   /** On account Closure Options */
@@ -42,7 +42,7 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private fixedDepositsService: FixedDepositsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
@@ -95,9 +95,9 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
       .subscribe((response: any) => {
         this.savingsAccountsData = response.savingsAccounts;
         this.onAccountClosureOptions = response.onAccountClosureOptions;
-        this.prematureCloseAccountForm.addControl('maturityAmount', new FormControl({ value: '', disabled: true }));
-        this.prematureCloseAccountForm.addControl('onAccountClosureId', new FormControl('', Validators.required));
-        this.prematureCloseAccountForm.addControl('note', new FormControl(''));
+        this.prematureCloseAccountForm.addControl('maturityAmount', new UntypedFormControl({ value: '', disabled: true }));
+        this.prematureCloseAccountForm.addControl('onAccountClosureId', new UntypedFormControl('', Validators.required));
+        this.prematureCloseAccountForm.addControl('note', new UntypedFormControl(''));
         this.prematureCloseAccountForm.get('maturityAmount').patchValue(response.maturityAmount);
         this.addTransferDetails();
       });
@@ -110,8 +110,8 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
   addTransferDetails() {
     this.prematureCloseAccountForm.get('onAccountClosureId').valueChanges.subscribe((id: any) => {
       if (id === 200) {
-        this.prematureCloseAccountForm.addControl('toSavingsAccountId', new FormControl('', Validators.required));
-        this.prematureCloseAccountForm.addControl('transferDescription', new FormControl(''));
+        this.prematureCloseAccountForm.addControl('toSavingsAccountId', new UntypedFormControl('', Validators.required));
+        this.prematureCloseAccountForm.addControl('transferDescription', new UntypedFormControl(''));
       } else {
         this.prematureCloseAccountForm.removeControl('toSavingsAccountId');
         this.prematureCloseAccountForm.removeControl('transferDescription');

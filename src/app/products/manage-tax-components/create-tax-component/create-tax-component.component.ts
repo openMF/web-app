@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -23,7 +23,7 @@ export class CreateTaxComponentComponent implements OnInit {
   /** Maximum start date allowed. */
   maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 10));
   /** Tax Component form. */
-  taxComponentForm: FormGroup;
+  taxComponentForm: UntypedFormGroup;
   /** Tax Component template data. */
   taxComponentTemplateData: any;
   /** Credit Account Type data. */
@@ -44,7 +44,7 @@ export class CreateTaxComponentComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils to format date.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private productsService: ProductsService,
               private route: ActivatedRoute,
               private router: Router,
@@ -83,11 +83,11 @@ export class CreateTaxComponentComponent implements OnInit {
   setConditionalControls() {
     this.taxComponentForm.get('debitAccountType').valueChanges.subscribe(debitAccountTypeId => {
       this.debitAccountData = this.getAccountsData(debitAccountTypeId);
-      this.taxComponentForm.addControl('debitAcountId', new FormControl('', Validators.required));
+      this.taxComponentForm.addControl('debitAcountId', new UntypedFormControl('', Validators.required));
     });
     this.taxComponentForm.get('creditAccountType').valueChanges.subscribe(creditAccountTypeId => {
       this.creditAccountData = this.getAccountsData(creditAccountTypeId);
-      this.taxComponentForm.addControl('creditAcountId', new FormControl('', Validators.required));
+      this.taxComponentForm.addControl('creditAcountId', new UntypedFormControl('', Validators.required));
     });
   }
 

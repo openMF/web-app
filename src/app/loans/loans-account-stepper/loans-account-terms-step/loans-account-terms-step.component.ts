@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl, UntypedFormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /**
@@ -25,7 +25,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Loans Account Terms Form */
-  loansAccountTermsForm: FormGroup;
+  loansAccountTermsForm: UntypedFormGroup;
   /** Term Frequency Type Data */
   termFrequencyTypeData: any;
   /** Repayment Frequency Nth Day Type Data */
@@ -49,7 +49,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
    * @param route Route
    * @param router Router
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router) {
     this.createloansAccountTermsForm();
@@ -158,7 +158,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
    * Creates the Disbursement Data form.
    * @returns {FormGroup} Disbursement Data form.
    */
-  createDisbursementDataForm(): FormGroup {
+  createDisbursementDataForm(): UntypedFormGroup {
     return this.formBuilder.group({
       'expectedDisbursementDate': [new Date()],
       'principal': ['']
@@ -169,15 +169,15 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
    * Gets the Disbursement Data form array.
    * @returns {FormArray} Disbursement Data form array.
    */
-    get disbursementData(): FormArray {
-    return this.loansAccountTermsForm.get('disbursementData') as FormArray;
+    get disbursementData(): UntypedFormArray {
+    return this.loansAccountTermsForm.get('disbursementData') as UntypedFormArray;
   }
 
   /**
    * Adds the Disbursement Data entry form to given Disbursement Data entry form array.
    * @param {FormArray} disbursementDataFormArray Given affected gl entry form array (debit/credit).
    */
-   addDisbursementDataEntry(disbursementDataFormArray: FormArray) {
+   addDisbursementDataEntry(disbursementDataFormArray: UntypedFormArray) {
     disbursementDataFormArray.push(this.createDisbursementDataForm());
   }
 
@@ -186,7 +186,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
    * @param {FormArray} disbursementDataFormArray Given Disbursement Data entry form array.
    * @param {number} index Array index from where Disbursement Data entry form needs to be removed.
    */
-   removeDisbursementDataEntry(disbursementDataFormArray: FormArray, index: number) {
+   removeDisbursementDataEntry(disbursementDataFormArray: UntypedFormArray, index: number) {
     disbursementDataFormArray.removeAt(index);
   }
 

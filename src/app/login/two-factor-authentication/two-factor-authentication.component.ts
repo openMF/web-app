@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** rxjs Imports */
 import { finalize } from 'rxjs/operators';
@@ -27,9 +27,9 @@ export class TwoFactorAuthenticationComponent implements OnInit {
   /** Time for which OTP is valid. */
   tokenValidityTime: number;
   /** Two factor authentication delivery method form group. */
-  twoFactorAuthenticationDeliveryMethodForm: FormGroup;
+  twoFactorAuthenticationDeliveryMethodForm: UntypedFormGroup;
   /** Two factor authentication form group. */
-  twoFactorAuthenticationForm: FormGroup;
+  twoFactorAuthenticationForm: UntypedFormGroup;
   /** True if loading. */
   loading = false;
   /** True if loading. */
@@ -39,7 +39,7 @@ export class TwoFactorAuthenticationComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {AuthenticationService} authenticationService Authentication Service.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private authenticationService: AuthenticationService) {  }
 
   /**

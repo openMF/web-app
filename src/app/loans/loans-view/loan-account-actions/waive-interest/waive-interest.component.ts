@@ -1,6 +1,6 @@
 /** Angular Imports. */
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services. */
@@ -21,7 +21,7 @@ export class WaiveInterestComponent implements OnInit {
   @Input() dataObject: any;
 
   /** Loan Interest form. */
-  loanInterestForm: FormGroup;
+  loanInterestForm: UntypedFormGroup;
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -34,7 +34,7 @@ export class WaiveInterestComponent implements OnInit {
    * @param {LoansService} loanService Loan Service.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private router: Router,
               private settingsService: SettingsService,
               private dateUtils: Dates,

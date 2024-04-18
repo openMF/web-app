@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -23,7 +23,7 @@ export class ActivateCenterComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Activate center form. */
-  activateCenterForm: FormGroup;
+  activateCenterForm: UntypedFormGroup;
   /** Group Account Id */
   centerId: any;
 
@@ -35,7 +35,7 @@ export class ActivateCenterComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private centersService: CentersService,
               private settingsService: SettingsService,
               private dateUtils: Dates,

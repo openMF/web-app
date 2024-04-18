@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 /** rxjs Imports */
 import { of } from 'rxjs';
@@ -23,7 +23,7 @@ import { OrganizationService } from '../organization.service';
 export class HolidaysComponent implements OnInit {
 
   /** Office selector. */
-  officeSelector = new FormControl();
+  officeSelector = new UntypedFormControl();
   /** Holidays data. */
   holidaysData: any;
   /** Offices data. */

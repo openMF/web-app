@@ -12,8 +12,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "noImplicitAny": false,
-    "suppressImplicitAnyIndexErrors": true,
-    "target": "es5",
+    "target": "es2020",
     "typeRoots": [
       "node_modules/@types",
       "src/typings.d.ts"

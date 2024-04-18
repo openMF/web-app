@@ -1,6 +1,6 @@
 /** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom services. */
@@ -21,7 +21,7 @@ export class RejectLoanComponent implements OnInit {
   /** Loan Id. */
   loanId: any;
   /** Reject Loan form. */
-  rejectLoanForm: FormGroup;
+  rejectLoanForm: UntypedFormGroup;
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -34,7 +34,7 @@ export class RejectLoanComponent implements OnInit {
    * @param route Activated Route.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private router: Router,
               private route: ActivatedRoute,
               private loanService: LoansService,

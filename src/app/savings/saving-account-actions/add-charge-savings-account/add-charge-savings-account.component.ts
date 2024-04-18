@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -23,7 +23,7 @@ export class AddChargeSavingsAccountComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Add Savings Charge form. */
-  savingsChargeForm: FormGroup;
+  savingsChargeForm: UntypedFormGroup;
   /** savings charge options. */
   savingsChargeOptions: any;
   /** savings Id of the savings account. */
@@ -40,7 +40,7 @@ export class AddChargeSavingsAccountComponent implements OnInit {
    * @param {SavingsService} savingsService Savings Service
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private dateUtils: Dates,
@@ -72,17 +72,17 @@ export class AddChargeSavingsAccountComponent implements OnInit {
           this.chargeDetails.chargeTimeTypeAnnualOrMonth = true;
         }
         if (!this.chargeDetails.dueDateNotRequired && !this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
-          this.savingsChargeForm.addControl('dueDate', new FormControl('', Validators.required));
+          this.savingsChargeForm.addControl('dueDate', new UntypedFormControl('', Validators.required));
         } else {
           this.savingsChargeForm.removeControl('dueDate');
         }
         if (!this.chargeDetails.dueDateNotRequired && this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
-          this.savingsChargeForm.addControl('feeOnMonthDay', new FormControl('', Validators.required));
+          this.savingsChargeForm.addControl('feeOnMonthDay', new UntypedFormControl('', Validators.required));
         } else {
           this.savingsChargeForm.removeControl('feeOnMonthDay');
         }
         if (chargeTimeType.value === 'Monthly Fee') {
-          this.savingsChargeForm.addControl('feeInterval', new FormControl(data.feeInterval, Validators.required));
+          this.savingsChargeForm.addControl('feeInterval', new UntypedFormControl(data.feeInterval, Validators.required));
         } else {
           this.savingsChargeForm.removeControl('feeInterval');
         }

@@ -1,49 +1,50 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { OrganizationService } from 'app/organization/organization.service';
-import { SettingsService } from 'app/settings/settings.service';
-import { Dates } from 'app/core/utils/dates';
-import DataFlattner from 'app/core/utils/data-flattner';
+import { Component, OnInit } from "@angular/core";
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { OrganizationService } from "app/organization/organization.service";
+import { SettingsService } from "app/settings/settings.service";
+import { Dates } from "app/core/utils/dates";
+import DataFlattner from "app/core/utils/data-flattner";
 
 @Component({
-  selector: 'mifosx-edit-outlet',
-  templateUrl: './edit-outlet.component.html',
-  styleUrls: ['./edit-outlet.component.scss'],
+  selector: "mifosx-edit-outlet",
+  templateUrl: "./edit-outlet.component.html",
+  styleUrls: ["./edit-outlet.component.scss"],
 })
 export class EditOutletComponent implements OnInit {
   retailOutletData: any;
-  outletForm: FormGroup;
+  outletForm: UntypedFormGroup;
   listCountries: any = [];
   treeDataSource: any;
   selectedOffices: any = [];
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private organizationService: OrganizationService,
     private router: Router,
     private settingsService: SettingsService,
     private dateUtils: Dates
   ) {
-    const outletId = +this.route.snapshot.paramMap.get('id');
-    this.organizationService.getRuralOutletByOutletId(outletId).subscribe((res: any) => {
-      this.retailOutletData = res;
-      this.search(res.countryId);
-
-      this.createOutletForm();
-      this.getCountries();
+    this.outletForm = this.formBuilder.group({
+      countryId: "",
+      name: ["", Validators.required],
+      openingDate: "",
+      externalId: "",
+      offices: "",
     });
   }
 
   ngOnInit(): void {
-    this.outletForm = this.formBuilder.group({
-      countryId: '',
-      name: ['', Validators.required],
-      openingDate: '',
-      externalId: '',
-      offices: '',
+    const outletId = +this.route.snapshot.paramMap.get("id");
+    this.organizationService.getRuralOutletByOutletId(outletId).subscribe((res: any) => {
+      this.retailOutletData = res;
+      this.search(res.countryId);
+
+      this.getCountries();
     });
+
+    this.createOutletForm();
   }
 
   getCountries() {
@@ -81,7 +82,7 @@ export class EditOutletComponent implements OnInit {
   }
 
   submit() {
-    const outletId = +this.route.snapshot.paramMap.get('id');
+    const outletId = +this.route.snapshot.paramMap.get("id");
     const outletFormData = this.outletForm.value;
 
     const data = {
@@ -103,7 +104,7 @@ export class EditOutletComponent implements OnInit {
       delete data.openingDate;
     }
     this.organizationService.updateOutlet(outletId, data).subscribe((resp) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.router.navigate(["../"], { relativeTo: this.route });
     });
   }
 }

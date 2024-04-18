@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl } from '@angular/forms';
 
 /**
  * Recurring Deposits Terms Step
@@ -20,7 +20,7 @@ export class RecurringDepositsAccountTermsStepComponent implements OnInit, OnCha
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Recurring Deposits Account Terms Form */
-  recurringDepositAccountTermsForm: FormGroup;
+  recurringDepositAccountTermsForm: UntypedFormGroup;
   /** Interest Compounding Period Type Data */
   interestCompoundingPeriodTypeData: any;
   /** Interest Posting Period Type Data */
@@ -33,7 +33,7 @@ export class RecurringDepositsAccountTermsStepComponent implements OnInit, OnCha
   /**
    * @param {FormBuilder} formBuilder Form Builder
    */
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createRecurringDepositsAccountTermsForm();
   }
 

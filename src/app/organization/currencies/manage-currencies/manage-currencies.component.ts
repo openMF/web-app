@@ -2,7 +2,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** Custom Dialogs */
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
@@ -38,7 +38,7 @@ export class ManageCurrenciesComponent implements OnInit {
    * @param {MatDialog} dialog Mat Dialog
    */
   constructor(private route: ActivatedRoute,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private organizationservice: OrganizationService,
               public dialog: MatDialog) {
     this.route.parent.data.subscribe(( data: { currencies: any }) => {

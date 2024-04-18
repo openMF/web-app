@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from "@angular/forms";
+import { UntypedFormGroup, UntypedFormBuilder } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 
 
@@ -16,11 +16,11 @@ export class BulkRepaymentDownloadComponent implements OnInit {
   countriesData: any;
   countriesDataSliced: any;
    /** Repayment download form. */
-   repaymentDownloadForm: FormGroup;
+   repaymentDownloadForm: UntypedFormGroup;
  
   constructor(
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private organizationService: OrganizationService, 
     private settingsService: SettingsService
   ) {
