@@ -138,6 +138,21 @@ export class CreateChargeComponent implements OnInit {
     });
   }
 
+  showMinMaxCap(): boolean {
+    const chargeAppliesTo = this.chargeForm.controls.chargeAppliesTo.value;
+    const chargeCalculationType = this.chargeForm.controls.chargeCalculationType.value;
+    const chargeTimeType = this.chargeForm.controls.chargeTimeType.value;
+
+    if (chargeAppliesTo === 1) {
+      return (chargeCalculationType === 2 || chargeCalculationType === 3 || chargeCalculationType === 4 || chargeCalculationType === 5);
+    } else if (chargeAppliesTo === 2) {
+      return (chargeTimeType === 16 || chargeTimeType === 5) && (chargeCalculationType === 2);
+    } else if (chargeAppliesTo === 4) {
+      return ((chargeTimeType === 14 || chargeTimeType === 15) && chargeCalculationType === 2);
+    }
+    return false;
+  }
+
   /**
    * Sets the conditional controls of the user form
    */
