@@ -20,6 +20,7 @@ export interface GLAccount {
   manualEntriesAllowed:   boolean;
   type:                   OptionData;
   usage:                  OptionData;
+  parentId?:              number;
 }
 
 export interface AccountingMapping {

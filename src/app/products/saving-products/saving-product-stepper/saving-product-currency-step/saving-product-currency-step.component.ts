@@ -25,7 +25,7 @@ export class SavingProductCurrencyStepComponent implements OnInit {
     this.savingProductCurrencyForm.patchValue({
       'currencyCode': this.savingProductsTemplate.currency.code || this.currencyData[0].code,
       'digitsAfterDecimal': this.savingProductsTemplate.currency.code ? this.savingProductsTemplate.currency.decimalPlaces : 2,
-      'inMultiplesOf': this.savingProductsTemplate.currency.inMultiplesOf || 1
+      'inMultiplesOf': this.savingProductsTemplate.currency.inMultiplesOf || ''
     });
   }
 
@@ -33,7 +33,7 @@ export class SavingProductCurrencyStepComponent implements OnInit {
     this.savingProductCurrencyForm = this.formBuilder.group({
       'currencyCode': ['', Validators.required],
       'digitsAfterDecimal': ['', Validators.required],
-      'inMultiplesOf': ['', Validators.required]
+      'inMultiplesOf': ['']
     });
   }
 

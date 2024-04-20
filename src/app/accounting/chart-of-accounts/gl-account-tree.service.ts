@@ -6,6 +6,8 @@ import { BehaviorSubject } from 'rxjs';
 
 /** Custom Components */
 import { GLAccountNode } from './gl-account-node.model';
+import { TranslateService } from '@ngx-translate/core';
+import { GLAccount } from 'app/shared/models/general.model';
 
 /**
  * GL Account tree service.
@@ -25,7 +27,8 @@ export class GlAccountTreeService {
    */
   get treeData(): GLAccountNode[] { return this.treeDataChange.value; }
 
-  constructor() {  }
+  constructor(
+    private translateService: TranslateService) {  }
 
   /**
    * Builds the chart of accounts tree and emits the value.
@@ -41,19 +44,22 @@ export class GlAccountTreeService {
    * @param {any} glAccountData Chart of accounts data.
    * @returns {GLAccountNode[]} Chart of accounts tree nodes.
    */
-  buildGLAccountTree(glAccountData: any): GLAccountNode[] {
+  buildGLAccountTree(glAccountData: GLAccount[]): GLAccountNode[] {
     const glAccountTree: GLAccountNode[] = [];
 
     // Header nodes
-    glAccountTree.push(new GLAccountNode('GL ACCOUNTS'));
-    glAccountTree[0].children.push(new GLAccountNode('ASSET'));
-    glAccountTree[0].children.push(new GLAccountNode('EQUITY'));
-    glAccountTree[0].children.push(new GLAccountNode('EXPENSE'));
-    glAccountTree[0].children.push(new GLAccountNode('INCOME'));
-    glAccountTree[0].children.push(new GLAccountNode('LIABILITY'));
+    glAccountTree.push(new GLAccountNode('ACCOUNTS'));
+    glAccountTree[0].children.push(new GLAccountNode(this.translateService.instant('labels.inputs.accounting.ASSET')));
+    glAccountTree[0].children.push(new GLAccountNode(this.translateService.instant('labels.inputs.accounting.EQUITY')));
+    glAccountTree[0].children.push(new GLAccountNode(this.translateService.instant('labels.inputs.accounting.EXPENSE')));
+    glAccountTree[0].children.push(new GLAccountNode(this.translateService.instant('labels.inputs.accounting.INCOME')));
+    glAccountTree[0].children.push(new GLAccountNode(this.translateService.instant('labels.inputs.accounting.LIABILITY')));
 
     // Sort by parent id (so that child nodes can be added properly)
-    glAccountData.sort((glAccountOne: any, glAccountTwo: any) => {
+    if (!glAccountData[0].parentId) {
+      glAccountData[0].parentId = 0;
+    }
+    glAccountData.sort((glAccountOne: GLAccount, glAccountTwo: GLAccount) => {
       if (!glAccountOne.parentId) {
         glAccountOne.parentId = 0;
       }
@@ -72,6 +78,7 @@ export class GlAccountTreeService {
     // and rest as children to respective parent nodes.
     for (const glAccount of glAccountData) {
       if (glAccount.parentId === 0) {
+        console.log(glAccount.type.value);
         if (glAccount.type.value === 'ASSET') {
           glAccountTree[0].children[0].children.push(glAccounts[glAccount.id]);
         } else if (glAccount.type.value === 'EQUITY') {

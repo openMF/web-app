@@ -2,7 +2,8 @@
 
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-    <mat-radio-group fxFlex="98%" fxLayout="row" fxLayoutGap="5%" fxLayout.lt-md="column" formControlName="accountingRule">
+    <mat-radio-group fxFlex="98%" fxLayout="row" fxLayoutGap="5%" fxLayout.lt-md="column"
+      formControlName="accountingRule">
       <mat-radio-button *ngFor="let accountingRule of accountingRuleData; let i =  index" [value]="i+1">
         {{ 'labels.accounting.' + accountingRule | translate }}
       </mat-radio-button>
@@ -16,34 +17,22 @@
 
       <mifosx-gl-account-selector fxFlex="48%"
         [inputFormControl]="savingProductAccountingForm.controls.savingsReferenceAccountId"
-        [glAccountList]="assetAccountData"
-        [required]="true"
-        [inputLabel]="'Saving reference'"
-      >
+        [glAccountList]="assetAccountData" [required]="true" [inputLabel]="'Saving reference'">
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector fxFlex="48%"
         [inputFormControl]="savingProductAccountingForm.controls.overdraftPortfolioControlId"
-        [glAccountList]="assetAccountData"
-        [required]="true"
-        [inputLabel]="'Overdraft portfolio'"
-      >
+        [glAccountList]="assetAccountData" [required]="true" [inputLabel]="'Overdraft portfolio'">
       </mifosx-gl-account-selector>
 
-      <mifosx-gl-account-selector fxFlex="48%" *ngIf="isAccrualAccounting()" 
+      <mifosx-gl-account-selector fxFlex="48%" *ngIf="isAccrualAccounting()"
         [inputFormControl]="savingProductAccountingForm.controls.feesReceivableAccountId"
-        [glAccountList]="assetAccountData"
-        [required]="true"
-        [inputLabel]="'Fees Receivable'"
-      >
+        [glAccountList]="assetAccountData" [required]="true" [inputLabel]="'Fees Receivable'">
       </mifosx-gl-account-selector>
 
-      <mifosx-gl-account-selector fxFlex="48%" *ngIf="isAccrualAccounting()" 
+      <mifosx-gl-account-selector fxFlex="48%" *ngIf="isAccrualAccounting()"
         [inputFormControl]="savingProductAccountingForm.controls.penaltiesReceivableAccountId"
-        [glAccountList]="assetAccountData"
-        [required]="true"
-        [inputLabel]="'Penalties Receivable'"
-      >
+        [glAccountList]="assetAccountData" [required]="true" [inputLabel]="'Penalties Receivable'">
       </mifosx-gl-account-selector>
 
       <mat-divider fxFlex="98%"></mat-divider>
@@ -52,52 +41,34 @@
 
       <mifosx-gl-account-selector fxFlex="48%"
         [inputFormControl]="savingProductAccountingForm.controls.savingsControlAccountId"
-        [glAccountList]="liabilityAccountData"
-        [required]="true"
-        [inputLabel]="'Saving control'"
-      >
+        [glAccountList]="liabilityAccountData" [required]="true" [inputLabel]="'Saving control'">
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector fxFlex="48%"
         [inputFormControl]="savingProductAccountingForm.controls.transfersInSuspenseAccountId"
-        [glAccountList]="liabilityAccountData"
-        [required]="true"
-        [inputLabel]="'Savings transfers in suspense'"
-      >
+        [glAccountList]="liabilityAccountData" [required]="true" [inputLabel]="'Savings transfers in suspense'">
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector fxFlex="48%" *ngIf="isAccrualAccounting()"
         [inputFormControl]="savingProductAccountingForm.controls.interestPayableAccountId"
-        [glAccountList]="liabilityAccountData"
-        [required]="true"
-        [inputLabel]="'Interest Payable'"
-      >
+        [glAccountList]="liabilityAccountData" [required]="true" [inputLabel]="'Interest Payable'">
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector fxFlex="48%" *ngIf="isDormancyTrackingActive.value"
         [inputFormControl]="savingProductAccountingForm.controls.escheatLiabilityId"
-        [glAccountList]="liabilityAccountData"
-        [required]="true"
-        [inputLabel]="'Escheat liability'"
-      >
+        [glAccountList]="liabilityAccountData" [required]="true" [inputLabel]="'Escheat liability'">
       </mifosx-gl-account-selector>
 
       <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.Expenses' | translate}}</h4>
 
       <mifosx-gl-account-selector fxFlex="48%"
         [inputFormControl]="savingProductAccountingForm.controls.interestOnSavingsAccountId"
-        [glAccountList]="expenseAccountData"
-        [required]="true"
-        [inputLabel]="'Interest on savings'"
-      >
+        [glAccountList]="expenseAccountData" [required]="true" [inputLabel]="'Interest on savings'">
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector fxFlex="48%"
-        [inputFormControl]="savingProductAccountingForm.controls.writeOffAccountId"
-        [glAccountList]="expenseAccountData"
-        [required]="true"
-        [inputLabel]="'Write-off'"
-      >
+        [inputFormControl]="savingProductAccountingForm.controls.writeOffAccountId" [glAccountList]="expenseAccountData"
+        [required]="true" [inputLabel]="'Write-off'">
       </mifosx-gl-account-selector>
 
       <mat-divider fxFlex="98%"></mat-divider>
@@ -106,44 +77,42 @@
 
       <mifosx-gl-account-selector fxFlex="48%"
         [inputFormControl]="savingProductAccountingForm.controls.incomeFromFeeAccountId"
-        [glAccountList]="incomeAccountData"
-        [required]="true"
-        [inputLabel]="'Income from fees'"
-      >
+        [glAccountList]="incomeAccountData" [required]="true" [inputLabel]="'Income from fees'">
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector fxFlex="48%"
         [inputFormControl]="savingProductAccountingForm.controls.incomeFromPenaltyAccountId"
-        [glAccountList]="incomeAccountData"
-        [required]="true"
-        [inputLabel]="'Income from penalties'"
-      >
+        [glAccountList]="incomeAccountData" [required]="true" [inputLabel]="'Income from penalties'">
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector fxFlex="48%"
         [inputFormControl]="savingProductAccountingForm.controls.incomeFromInterestId"
-        [glAccountList]="incomeAccountData"
-        [required]="true"
-        [inputLabel]="'Overdraft Interest Income'"
-      >
+        [glAccountList]="incomeAccountData" [required]="true" [inputLabel]="'Overdraft Interest Income'">
       </mifosx-gl-account-selector>
 
       <mat-divider fxFlex="98%"></mat-divider>
 
-      <mat-checkbox fxFlex="73%" formControlName="advancedAccountingRules">{{'labels.heading.Advanced Accounting Rules' | translate}}</mat-checkbox>
+      <mat-checkbox fxFlex="73%" formControlName="advancedAccountingRules">{{'labels.heading.Advanced Accounting Rules'
+        | translate}}</mat-checkbox>
 
-      <div *ngIf="savingProductAccountingForm.value.advancedAccountingRules" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+      <div *ngIf="savingProductAccountingForm.value.advancedAccountingRules" fxFlexFill fxLayout="row wrap"
+        fxLayoutGap="2%" fxLayout.lt-md="column">
 
-        <h4 fxFlex="33%" class="mat-h4">{{'labels.heading.Configure Fund Sources for Payment Channels' | translate}}</h4>
+        <div fxFlex="100%">
 
-        <div fxFlex="63%">
-          <button type="button" mat-raised-button color="primary" (click)="add('PaymentFundSource', paymentChannelToFundSourceMappings)">
+        <h4 fxFlex="63%" class="mat-h4">{{'labels.heading.Configure Fund Sources for Payment Channels' | translate}}
+        </h4>
+
+        <div fxFlex="33%">
+          <button type="button" mat-raised-button color="primary"
+            (click)="add('PaymentFundSource', paymentChannelToFundSourceMappings)">
             <fa-icon icon="plus" class="m-r-10"></fa-icon>
             {{'labels.buttons.Add' | translate}}
           </button>
         </div>
 
-        <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="paymentChannelToFundSourceMappings.value" *ngIf="paymentChannelToFundSourceMappings.value.length !== 0">
+        <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="paymentChannelToFundSourceMappings.value"
+          *ngIf="paymentChannelToFundSourceMappings.value.length !== 0">
 
           <ng-container matColumnDef="paymentTypeId">
             <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Payment Type' | translate}} </th>
@@ -160,9 +129,10 @@
           </ng-container>
 
           <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>  {{'labels.inputs.Actions' | translate}} </th>
+            <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Actions' | translate}} </th>
             <td mat-cell *matCellDef="let paymentFundSource; let i = index">
-              <button mat-icon-button color="primary" (click)="edit('PaymentFundSource', paymentChannelToFundSourceMappings, i)">
+              <button mat-icon-button color="primary"
+                (click)="edit('PaymentFundSource', paymentChannelToFundSourceMappings, i)">
                 <fa-icon icon="edit"></fa-icon>
               </button>
               <button mat-icon-button color="warn" (click)="delete(paymentChannelToFundSourceMappings, i)">
@@ -175,91 +145,103 @@
           <tr mat-row *matRowDef="let row; columns: paymentFundSourceDisplayedColumns;"></tr>
 
         </table>
-
-        <h4 fxFlex="33%" class="mat-h4">{{'labels.heading.Map Fees to Specific Income Accounts' | translate}}</h4>
-
-        <div fxFlex="63%" *ngIf="existCharges()">
-          <button type="button" mat-raised-button color="primary" (click)="add('FeesIncome', feeToIncomeAccountMappings)">
-            <fa-icon icon="plus" class="m-r-10"></fa-icon>
-            {{'labels.buttons.Add' | translate}}
-          </button>
         </div>
 
-        <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="feeToIncomeAccountMappings.value" *ngIf="feeToIncomeAccountMappings.value.length !== 0">
+        <div fxFlex="100%" *ngIf="existCharges()">
 
-          <ng-container matColumnDef="chargeId">
-            <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Fees' | translate}} </th>
-            <td mat-cell *matCellDef="let feesIncome">
-              {{ feesIncome.chargeId | find:chargeData:'id':'name' }}
-            </td>
-          </ng-container>
+          <h4 fxFlex="63%" class="mat-h4">{{'labels.heading.Map Fees to Specific Income Accounts' | translate}}</h4>
 
-          <ng-container matColumnDef="incomeAccountId">
-            <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Income Account' | translate}} </th>
-            <td mat-cell *matCellDef="let feesIncome">
-              {{ feesIncome.incomeAccountId | find:incomeAccountData:'id':'name' }}
-            </td>
-          </ng-container>
+          <div fxFlex="33%" *ngIf="existCharges()">
+            <button type="button" mat-raised-button color="primary"
+              (click)="add('FeesIncome', feeToIncomeAccountMappings)">
+              <fa-icon icon="plus" class="m-r-10"></fa-icon>
+              {{'labels.buttons.Add' | translate}}
+            </button>
+          </div>
 
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Actions' | translate}} </th>
-            <td mat-cell *matCellDef="let feesIncome; let i = index">
-              <button mat-icon-button color="primary" (click)="edit('FeesIncome', feeToIncomeAccountMappings, i)">
-                <fa-icon icon="edit"></fa-icon>
-              </button>
-              <button mat-icon-button color="warn" (click)="delete(feeToIncomeAccountMappings, i)">
-                <fa-icon icon="trash"></fa-icon>
-              </button>
-            </td>
-          </ng-container>
+          <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="feeToIncomeAccountMappings.value"
+            *ngIf="feeToIncomeAccountMappings.value.length !== 0">
 
-          <tr mat-header-row *matHeaderRowDef="feesPenaltyIncomeDisplayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns;"></tr>
+            <ng-container matColumnDef="chargeId">
+              <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Fees' | translate}} </th>
+              <td mat-cell *matCellDef="let feesIncome">
+                {{ feesIncome.chargeId | find:chargeData:'id':'name' }}
+              </td>
+            </ng-container>
 
-        </table>
+            <ng-container matColumnDef="incomeAccountId">
+              <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Income Account' | translate}} </th>
+              <td mat-cell *matCellDef="let feesIncome">
+                {{ feesIncome.incomeAccountId | find:incomeAccountData:'id':'name' }}
+              </td>
+            </ng-container>
 
-        <h4 fxFlex="33%" class="mat-h4">{{'labels.heading.Map Penalties to Specific Income Accounts' | translate}}</h4>
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Actions' | translate}} </th>
+              <td mat-cell *matCellDef="let feesIncome; let i = index">
+                <button mat-icon-button color="primary" (click)="edit('FeesIncome', feeToIncomeAccountMappings, i)">
+                  <fa-icon icon="edit"></fa-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="delete(feeToIncomeAccountMappings, i)">
+                  <fa-icon icon="trash"></fa-icon>
+                </button>
+              </td>
+            </ng-container>
 
-        <div fxFlex="63%" *ngIf="existCharges()">
-          <button type="button" mat-raised-button color="primary" (click)="add('PenaltyIncome', penaltyToIncomeAccountMappings)">
-            <fa-icon icon="plus" class="m-r-10"></fa-icon>
-            {{'labels.buttons.Add' | translate}}
-          </button>
+            <tr mat-header-row *matHeaderRowDef="feesPenaltyIncomeDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns;"></tr>
+
+          </table>
         </div>
 
+        <div fxFlex="100%" *ngIf="existCharges()">
 
-        <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="penaltyToIncomeAccountMappings.value" *ngIf="penaltyToIncomeAccountMappings.value.length !== 0">
+          <h4 fxFlex="63%" class="mat-h4">{{'labels.heading.Map Penalties to Specific Income Accounts' | translate}}
+          </h4>
 
-          <ng-container matColumnDef="chargeId">
-            <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Penalty' | translate}} </th>
-            <td mat-cell *matCellDef="let penaltyIncome">
-              {{ penaltyIncome.chargeId | find:penaltyData:'id':'name' }}
-            </td>
-          </ng-container>
+          <div fxFlex="33%">
+            <button type="button" mat-raised-button color="primary"
+              (click)="add('PenaltyIncome', penaltyToIncomeAccountMappings)">
+              <fa-icon icon="plus" class="m-r-10"></fa-icon>
+              {{'labels.buttons.Add' | translate}}
+            </button>
+          </div>
 
-          <ng-container matColumnDef="incomeAccountId">
-            <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Income Account' | translate}} </th>
-            <td mat-cell *matCellDef="let penaltyIncome">
-              {{ penaltyIncome.incomeAccountId | find:incomeAccountData:'id':'name' }}
-            </td>
-          </ng-container>
+          <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="penaltyToIncomeAccountMappings.value"
+            *ngIf="penaltyToIncomeAccountMappings.value.length !== 0">
 
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Actions </th>
-            <td mat-cell *matCellDef="let penaltyIncome; let i = index">
-              <button mat-icon-button color="primary" (click)="edit('PenaltyIncome', penaltyToIncomeAccountMappings, i)">
-                <fa-icon icon="edit"></fa-icon>
-              </button>
-              <button mat-icon-button color="warn" (click)="delete(penaltyToIncomeAccountMappings, i)">
-                <fa-icon icon="trash"></fa-icon>
-              </button>
-            </td>
-          </ng-container>
+            <ng-container matColumnDef="chargeId">
+              <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Penalty' | translate}} </th>
+              <td mat-cell *matCellDef="let penaltyIncome">
+                {{ penaltyIncome.chargeId | find:penaltyData:'id':'name' }}
+              </td>
+            </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="feesPenaltyIncomeDisplayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns;"></tr>
+            <ng-container matColumnDef="incomeAccountId">
+              <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Income Account' | translate}} </th>
+              <td mat-cell *matCellDef="let penaltyIncome">
+                {{ penaltyIncome.incomeAccountId | find:incomeAccountData:'id':'name' }}
+              </td>
+            </ng-container>
 
-        </table>
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Actions' | translate}} </th>
+              <td mat-cell *matCellDef="let penaltyIncome; let i = index">
+                <button mat-icon-button color="primary"
+                  (click)="edit('PenaltyIncome', penaltyToIncomeAccountMappings, i)">
+                  <fa-icon icon="edit"></fa-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="delete(penaltyToIncomeAccountMappings, i)">
+                  <fa-icon icon="trash"></fa-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="feesPenaltyIncomeDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns;"></tr>
+
+          </table>
+        </div>
 
       </div>
 

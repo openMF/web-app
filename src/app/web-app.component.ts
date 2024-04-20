@@ -126,15 +126,14 @@ export class WebAppComponent implements OnInit {
    *
    * 3) Page Title
    *
-   * 4) Theme
-   *
-   * 5) Alerts
+   * 4) Alerts
    */
   ngOnInit() {
     this.themingService.theme.subscribe((value: string) => {
       this.cssClass = value;
     });
     this.themingService.setInitialDarkMode();
+    this.themingService.setDarkMode((this.settingsService.themeDarkEnabled === 'true'));
 
     // Setup logger
     if (environment.production) {
@@ -144,7 +143,11 @@ export class WebAppComponent implements OnInit {
 
     // Setup translations
     this.translateService.addLangs(environment.supportedLanguages.split(','));
-    this.translateService.use(environment.defaultLanguage);
+    if (this.settingsService.language) {
+      this.translateService.use(this.settingsService.languageCode);
+    } else {
+      this.translateService.use(environment.defaultLanguage);
+    }
 
     this.i18nService = new I18nService(this.translateService);
 
@@ -184,12 +187,6 @@ export class WebAppComponent implements OnInit {
       activities.push(this.router.url);
       localStorage.setItem('mifosXLocation', JSON.stringify(activities));
     });
-
-    // Setup theme
-    const theme = this.themeStorageService.getTheme();
-    if (theme) {
-      this.themeStorageService.installTheme(theme);
-    }
 
     // Setup alerts
     this.alertService.alertEvent.subscribe((alertEvent: Alert) => {

@@ -21,6 +21,10 @@ export class Dates {
     return datePipe.transform(timestamp, dateFormat);
   }
 
+  public formatDateAsString(value: Date, dateFormat: string): string {
+    return moment(value).format(dateFormat);
+  }
+
   public parseDate(value: any): Date {
     if (value instanceof Array) {
       return moment(value.join('-'), 'YYYY-MM-DD').toDate();

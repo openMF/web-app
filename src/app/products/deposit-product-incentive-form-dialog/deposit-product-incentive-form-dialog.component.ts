@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'mifosx-deposit-product-incentive-form-dialog',
@@ -27,7 +28,8 @@ export class DepositProductIncentiveFormDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<DepositProductIncentiveFormDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
-              private formBuilder: UntypedFormBuilder) {
+              private formBuilder: UntypedFormBuilder,
+            private translateService: TranslateService) {
     this.createDepositProductIncentiveForm();
     this.setConditionalControls();
     this.layout = { ...this.layout, ...data.layout };
@@ -56,8 +58,7 @@ export class DepositProductIncentiveFormDialogComponent implements OnInit {
         'entityType': this.data.entityType
       });
     }
-
-    this.title = `Incentives: ${this.entityTypeData.find((entityType: any) => this.depositProductIncentiveForm.get('entityType').value === entityType.id).value} Attributes`;
+    this.title = this.translateService.instant('labels.heading.Incentives');
   }
 
   setConditionalControls() {
