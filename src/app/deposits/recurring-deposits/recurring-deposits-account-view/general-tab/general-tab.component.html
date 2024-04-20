@@ -60,15 +60,6 @@
     <table>
       <tbody>
         <tr>
-          <td>{{"labels.inputs.External Id" | translate }}</td>
-          <td>
-            <span *ngIf="recurringDepositsAccountData.externalId">
-              <mifosx-external-identifier externalId="{{recurringDepositsAccountData.externalId}}" completed="true"></mifosx-external-identifier>
-            </span>
-            <span *ngIf="!recurringDepositsAccountData.externalId"> {{"labels.inputs.Not Available" | translate}} </span>
-          </td>
-        </tr>
-        <tr>
           <td>{{"labels.inputs.Principal Amount" | translate }}</td>
           <td class="r-amount">
             <span>{{recurringDepositsAccountData.depositAmount | currency:currency.code:'symbol-narrow':'1.2-2'}}</span>

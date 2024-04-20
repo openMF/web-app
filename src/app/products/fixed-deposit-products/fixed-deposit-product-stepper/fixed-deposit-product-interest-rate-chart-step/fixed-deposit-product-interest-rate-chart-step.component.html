@@ -2,14 +2,14 @@
 
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-    <h4 fxFlex="13%" class="mat-h3">Interest Rate Chart<i class='fas fa-question'
+    <h4 fxFlex="83%" class="mat-h3">{{ 'labels.inputs.Interest Rate Chart' | translate}} <i class='fas fa-question'
         matTooltip="The interest rate chart provides the information required to calculate the interest payable on a fixed deposit account based on the fixed deposit product."></i>
     </h4>
 
-    <div fxFlex="83%" fxLayout="row" fxLayoutAlign="start center">
+    <div fxFlex="13%" fxLayout="row" fxLayoutAlign="start center">
       <button type="button" mat-raised-button color="primary" (click)="addChart()">
         <fa-icon icon="plus" class="m-r-10"></fa-icon>
-        Add
+        {{'labels.buttons.Add' | translate}}
       </button>
     </div>
 
@@ -28,52 +28,55 @@
         </div>
 
         <mat-form-field fxFlex="32%">
-          <mat-label>Name</mat-label>
+          <mat-label>{{ 'labels.inputs.Name' | translate}}</mat-label>
           <input matInput formControlName="name" required>
         </mat-form-field>
 
         <mat-form-field fxFlex="31%" (click)="validFromDatePicker.open()">
-          <mat-label>Valid from Date</mat-label>
+          <mat-label>{{ 'labels.inputs.From Date' | translate}}</mat-label>
           <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="validFromDatePicker"
             formControlName="fromDate" required>
           <mat-datepicker-toggle matSuffix [for]="validFromDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #validFromDatePicker></mat-datepicker>
           <mat-error>
-            Valid from Date is <strong>required</strong>
+            Valid from Date {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
           </mat-error>
         </mat-form-field>
 
         <mat-form-field fxFlex="31%" (click)="endDatePicker.open()">
-          <mat-label>End Date</mat-label>
+          <mat-label>{{ 'labels.inputs.End Date' | translate}}</mat-label>
           <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="endDatePicker" formControlName="endDate">
           <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #endDatePicker></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field fxFlex="65%">
-          <mat-label>Description</mat-label>
+          <mat-label>{{ 'labels.inputs.Description' | translate}}</mat-label>
           <textarea matInput formControlName="description" required></textarea>
         </mat-form-field>
 
         <div fxFlex="31%" fxLayout="row" fxLayoutAlign="space-between center">
           <mat-checkbox labelPosition="before" formControlName="isPrimaryGroupingByAmount">
-            Is primary grouping by amount?
+            {{ 'labels.inputs.Is primary grouping by amount?' | translate}}
           </mat-checkbox>
+        </div>
+
+        <div fxFlex="100%" class="center">
           <button type="button" mat-raised-button color="primary" (click)="addChartSlab(chart.controls.chartSlabs)">
             <fa-icon icon="plus" class="m-r-10"></fa-icon>
-            Add Slab
+            {{ 'labels.buttons.Add Slab' | translate}}
           </button>
         </div>
 
         <div fxFlex="100%" *ngIf="chart.value.chartSlabs.length === 0">
-          <h3 class="mat-h3">It is required to add at least one Slab</h3>
+          <h3 class="mat-h3">{{ 'labels.heading.It is required to add at least one Slab' | translate}}</h3>
         </div>
 
         <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="chart.value.chartSlabs"
           *ngIf="chart.value.chartSlabs.length !== 0" multiTemplateDataRows>
 
           <ng-container matColumnDef="period">
-            <th mat-header-cell *matHeaderCellDef> Period </th>
+            <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Period' | translate}} </th>
             <td mat-cell *matCellDef="let chartSlab">
               {{ chartSlab.fromPeriod + ' - ' + chartSlab.toPeriod + ' ' + (chartSlab.periodType |
               find:periodTypeData:'id':'value') }}
@@ -81,28 +84,28 @@
           </ng-container>
 
           <ng-container matColumnDef="amountRange">
-            <th mat-header-cell *matHeaderCellDef> Amount Range </th>
+            <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Amount Range' | translate}} </th>
             <td mat-cell *matCellDef="let chartSlab">
               {{ chartSlab.amountRangeFrom + ' - ' + chartSlab.amountRangeTo }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="annualInterestRate">
-            <th mat-header-cell *matHeaderCellDef> Interest </th>
+            <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Interest' | translate}} </th>
             <td mat-cell *matCellDef="let chartSlab">
               {{ chartSlab.annualInterestRate }} %
             </td>
           </ng-container>
 
           <ng-container matColumnDef="description">
-            <th mat-header-cell *matHeaderCellDef> Description </th>
+            <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Description' | translate}} </th>
             <td mat-cell *matCellDef="let chartSlab">
               {{ chartSlab.description }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Actions' | translate}} </th>
             <td mat-cell *matCellDef="let chartSlab; let chartSlabIndex = dataIndex">
               <button mat-icon-button color="primary"
                 (click)="editChartSlab(chart.controls.chartSlabs, chartSlabIndex)">
@@ -115,11 +118,11 @@
                 (click)="expandChartSlabIndex[chartIndex] = expandChartSlabIndex[chartIndex] === chartSlabIndex ? null : chartSlabIndex">
                 <span *ngIf="expandChartSlabIndex[chartIndex] !== chartSlabIndex">
                   <fa-icon icon="eye" class="m-r-10"></fa-icon>
-                  View Incentives
+                  {{ 'labels.buttons.View Incentives' | translate}}
                 </span>
                 <span *ngIf="expandChartSlabIndex[chartIndex] === chartSlabIndex">
                   <fa-icon icon="eye-slash" class="m-r-10"></fa-icon>
-                  Hide Incentives
+                  {{ 'labels.buttons.Hide Incentives' | translate}}
                 </span>
               </button>
             </td>
@@ -134,15 +137,15 @@
 
                 <mat-card fxLayout="row wrap" fxFlexFill>
 
-                  <h4 class="mat-h4" fxFlex="13%">
-                    Incentives
+                  <h4 class="mat-h4" fxFlex="63%">
+                    {{ 'labels.heading.Incentives' | translate}}
                   </h4>
 
-                  <div fxFlex="83%">
+                  <div fxFlex="13%">
                     <button mat-raised-button color="primary"
                       (click)="addIncentive(getIncentives(chart.controls.chartSlabs, chartSlabIndex))">
                       <fa-icon icon="plus" class="m-r-10"></fa-icon>
-                      Add
+                      {{ 'labels.buttons.Add' | translate}}
                     </button>
                   </div>
 
@@ -150,28 +153,28 @@
                     *ngIf="chartSlab.incentives.length">
 
                     <ng-container matColumnDef="entityType">
-                      <th mat-header-cell *matHeaderCellDef> Entity Type </th>
+                      <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Entity Type' | translate}} </th>
                       <td mat-cell *matCellDef="let incentive">
                         {{ incentive.entityType | find:entityTypeData:'id':'value' }}
                       </td>
                     </ng-container>
 
                     <ng-container matColumnDef="attributeName">
-                      <th mat-header-cell *matHeaderCellDef> Attribute Name </th>
+                      <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Attribute Name' | translate}} </th>
                       <td mat-cell *matCellDef="let incentive">
                         {{ incentive.attributeName | find:attributeNameData:'id':'value' }}
                       </td>
                     </ng-container>
 
                     <ng-container matColumnDef="conditionType">
-                      <th mat-header-cell *matHeaderCellDef> Condition Type </th>
+                      <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Condition Type' | translate}} </th>
                       <td mat-cell *matCellDef="let incentive">
                         {{ incentive.conditionType | find:conditionTypeData:'id':'value' }}
                       </td>
                     </ng-container>
 
                     <ng-container matColumnDef="attributeValue">
-                      <th mat-header-cell *matHeaderCellDef> Attribute Value </th>
+                      <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Attribute Value' | translate}} </th>
                       <td mat-cell *matCellDef="let incentive" [ngSwitch]="incentive.attributeName">
                         <span *ngSwitchCase="2">{{ incentive.attributeValue | find:genderData:'id':'name' }}</span>
                         <span *ngSwitchCase="3">{{ incentive.attributeValue }}</span>
@@ -182,21 +185,21 @@
                     </ng-container>
 
                     <ng-container matColumnDef="incentiveType">
-                      <th mat-header-cell *matHeaderCellDef> Incentive Type </th>
+                      <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Incentive Type' | translate}} </th>
                       <td mat-cell *matCellDef="let incentive">
                         {{ incentive.incentiveType | find:incentiveTypeData:'id':'value'}}
                       </td>
                     </ng-container>
 
                     <ng-container matColumnDef="amount">
-                      <th mat-header-cell *matHeaderCellDef> Interest </th>
+                      <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Interest' | translate}} </th>
                       <td mat-cell *matCellDef="let incentive">
                         {{ incentive.amount }}
                       </td>
                     </ng-container>
 
                     <ng-container matColumnDef="actions">
-                      <th mat-header-cell *matHeaderCellDef> Actions </th>
+                      <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Actions' | translate}} </th>
                       <td mat-cell *matCellDef="let incentive; let incentiveIndex = index">
                         <button mat-icon-button color="primary"
                           (click)="editIncentive(getIncentives(chart.controls.chartSlabs, chartSlabIndex), incentiveIndex)">
@@ -234,10 +237,10 @@
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-      Previous
+      {{'labels.buttons.Previous' | translate}}
     </button>
     <button mat-raised-button matStepperNext>
-      Next
+      {{'labels.buttons.Next' | translate}}
       <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
     </button>
   </div>

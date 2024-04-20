@@ -119,6 +119,10 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
     });
   }
 
+  existCharges(): boolean {
+    return (this.chargeData.length > 0);
+  }
+
   setConditionalControls() {
     this.fixedDepositProductAccountingForm.get('accountingRule').valueChanges
       .subscribe((accountingRule: any) => {

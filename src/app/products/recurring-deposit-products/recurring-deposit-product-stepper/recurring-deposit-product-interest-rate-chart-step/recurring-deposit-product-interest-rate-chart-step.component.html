@@ -2,9 +2,9 @@
 
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-    <h3 fxFlex="63%" class="mat-h3">{{ 'labels.heading.Interest Rate Charts' | translate}}</h3>
+    <h3 fxFlex="83%" class="mat-h3">{{ 'labels.heading.Interest Rate Charts' | translate}}</h3>
 
-    <div fxFlex="33%" fxLayout="row" fxLayoutAlign="start center">
+    <div fxFlex="13%" fxLayout="row" fxLayoutAlign="start center">
       <button type="button" mat-raised-button color="primary" (click)="addChart()">
         <fa-icon icon="plus" class="m-r-10"></fa-icon>
         {{ 'labels.buttons.Add' | translate}}
@@ -137,11 +137,11 @@
 
                 <mat-card fxLayout="row wrap" fxFlexFill>
 
-                  <h4 class="mat-h4" fxFlex="63%">
+                  <h4 class="mat-h4" fxFlex="83%">
                     {{ 'labels.heading.Incentives' | translate}}
                   </h4>
 
-                  <div fxFlex="33%">
+                  <div fxFlex="13%">
                     <button mat-raised-button color="primary"
                       (click)="addIncentive(getIncentives(chart.controls.chartSlabs, chartSlabIndex))">
                       <fa-icon icon="plus" class="m-r-10"></fa-icon>

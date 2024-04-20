@@ -18,6 +18,7 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'mifosx-fixed-deposit-product-interest-rate-chart-step',
@@ -67,7 +68,8 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
   constructor(private formBuilder: UntypedFormBuilder,
               public dialog: MatDialog,
               private dateUtils: Dates,
-              private settingsService: SettingsService) {
+              private settingsService: SettingsService,
+            private translateService: TranslateService) {
     this.createFixedDepositProductInterestRateChartForm();
   }
 
@@ -314,7 +316,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
 
   getData(formType: string, values?: any) {
     switch (formType) {
-      case 'Slab': return { title: 'Slab', formfields: this.getSlabFormfields(values) };
+      case 'Slab': return { title: this.translateService.instant('labels.inputs.Slab'), formfields: this.getSlabFormfields(values) };
       case 'Incentive': return { values, chartTemplate: this.fixedDepositProductsTemplate.chartTemplate };
     }
   }
@@ -323,7 +325,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'periodType',
-        label: 'Period Type',
+        label: this.translateService.instant('labels.inputs.Period Type'),
         value: values ? values.periodType : this.periodTypeData[0].id,
         options: { label: 'value', value: 'id', data: this.periodTypeData },
         required: true,
@@ -331,7 +333,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
       }),
       new InputBase({
         controlName: 'fromPeriod',
-        label: 'Period From',
+        label: this.translateService.instant('labels.inputs.Period From'),
         value: values ? values.fromPeriod : undefined,
         type: 'number',
         required: true,
@@ -339,28 +341,28 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
       }),
       new InputBase({
         controlName: 'toPeriod',
-        label: 'Period To',
+        label: this.translateService.instant('labels.inputs.Period To'),
         value: values ? values.toPeriod : undefined,
         type: 'number',
         order: 3
       }),
       new InputBase({
         controlName: 'amountRangeFrom',
-        label: 'Amount Range From',
+        label: this.translateService.instant('labels.inputs.Amount Range From'),
         value: values ? values.amountRangeFrom : undefined,
         type: 'number',
         order: 4
       }),
       new InputBase({
         controlName: 'amountRangeTo',
-        label: 'Amount Range To',
+        label: this.translateService.instant('labels.inputs.Amount Range To'),
         value: values ? values.amountRangeTo : undefined,
         type: 'number',
         order: 5
       }),
       new InputBase({
         controlName: 'annualInterestRate',
-        label: 'Interest',
+        label: this.translateService.instant('labels.inputs.Interest'),
         value: values ? values.annualInterestRate : undefined,
         type: 'number',
         required: true,
@@ -368,7 +370,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
       }),
       new InputBase({
         controlName: 'description',
-        label: 'Description',
+        label: this.translateService.instant('labels.inputs.Description'),
         value: values ? values.description : undefined,
         required: true,
         order: 7
@@ -380,13 +382,19 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
   get fixedDepositProductInterestRateChart() {
     // TODO: Update once language and date settings are setup
     const locale = this.settingsService.language.code;
-    const dateFormat = this.settingsService.dateFormat;
+    const dateFormat = 'YYYY-MM-DD';
     const fixedDepositProductInterestRateChart = this.fixedDepositProductInterestRateChartForm.value;
     for (const chart of fixedDepositProductInterestRateChart.charts) {
-      chart.dateFormat = dateFormat;
       chart.locale = locale;
-      chart.fromDate = this.dateUtils.formatDate(chart.fromDate, dateFormat) || '';
-      chart.endDate = this.dateUtils.formatDate(chart.endDate, dateFormat) || '';
+      chart.dateFormat = 'yyyy-MM-dd';
+      if (chart.fromDate instanceof Date) {
+        chart.fromDate = this.dateUtils.formatDateAsString(chart.fromDate, dateFormat);
+      }
+      if (chart.endDate) {
+        if (chart.endDate instanceof Date) {
+          chart.endDate = this.dateUtils.formatDateAsString(chart.endDate, dateFormat);
+        }
+      }
       if (chart.endDate === '') {
         delete chart.endDate;
       }

@@ -1,7 +1,7 @@
 <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
   <mat-form-field fxFlex="48%">
-    <mat-label>Charge</mat-label>
+    <mat-label>{{'labels.inputs.Charge' | translate }}</mat-label>
     <mat-select #charge>
       <mat-option *ngFor="let charge of chargeData | chargesFilter:chargesDataSource:currencyCode.value"
         [value]="charge">
@@ -13,7 +13,7 @@
   <div fxFlex="48%" fxFlexAlign="center">
     <button type="button" mat-raised-button color="primary" (click)="addCharge(charge)" [disabled]="!charge.value">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
-      Add
+      {{'labels.buttons.Add' | translate }}
     </button>
   </div>
 
@@ -21,23 +21,23 @@
     *ngIf="chargesDataSource.length > 0">
 
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Name' | translate }} </th>
       <td mat-cell *matCellDef="let charge">
         {{ charge.name + ', ' + charge.currency.displaySymbol }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="chargeCalculationType">
-      <th mat-header-cell *matHeaderCellDef> Type </th>
+      <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Type' | translate }} </th>
       <td mat-cell *matCellDef="let charge">
         {{ charge.chargeCalculationType.value }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="amount">
-      <th mat-header-cell *matHeaderCellDef> Amount </th>
+      <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Amount' | translate }} </th>
       <td mat-cell *matCellDef="let charge">
-        {{ charge.amount }}
+        {{ charge.amount | formatNumber }}
         <button mat-icon-button color="primary" (click)="editChargeAmount(charge)">
           <fa-icon icon="pen"></fa-icon>
         </button>
@@ -45,14 +45,14 @@
     </ng-container>
 
     <ng-container matColumnDef="chargeTimeType">
-      <th mat-header-cell *matHeaderCellDef> Collected On </th>
+      <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Collected On' | translate }} </th>
       <td mat-cell *matCellDef="let charge">
         {{ charge.chargeTimeType.value }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef> Date </th>
+      <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Date' | translate }} </th>
       <td mat-cell *matCellDef="let charge">
         <span
           *ngIf="charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee'">
@@ -73,9 +73,10 @@
     </ng-container>
 
     <ng-container matColumnDef="repaymentsEvery">
-      <th mat-header-cell *matHeaderCellDef> Repayments Every </th>
+      <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Repayments Every' | translate }} </th>
       <td mat-cell *matCellDef="let charge">
-        {{ charge.feeInterval || 'Not Provided' }}
+        <span *ngIf="charge.feeInterval">{{ charge.feeInterval}}</span>
+        <span *ngIf="!charge.feeInterval">{{'labels.inputs.Not Provided' | translate }}</span>
         <button mat-icon-button color="primary"
           *ngIf="charge.chargeTimeType.value === 'Weekly Fee' || charge.chargeTimeType.value === 'Monthly Fee'"
           (click)="editChargeFeeInterval(charge)">
@@ -85,7 +86,7 @@
     </ng-container>
 
     <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Actions' | translate }} </th>
       <td mat-cell *matCellDef="let charge">
         <button mat-icon-button color="warn" (click)="deleteCharge(charge)">
           <fa-icon icon="trash"></fa-icon>
@@ -103,23 +104,23 @@
 
       <!-- Check Column -->
       <ng-container matColumnDef="check">
-          <th mat-header-cell *matHeaderCellDef>
-              <mat-checkbox (change)="toggleSelects()" [(ngModel)]="selectAllItems"></mat-checkbox>
-          </th>
-          <td mat-cell *matCellDef="let element">
-              <mat-checkbox (change)="toggleSelect()" [(ngModel)]="element.selected"></mat-checkbox>
-          </td>
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="toggleSelects()" [(ngModel)]="selectAllItems"></mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-checkbox (change)="toggleSelect()" [(ngModel)]="element.selected"></mat-checkbox>
+        </td>
       </ng-container>
 
       <!-- Position Column -->
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> Client ID </th>
+        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Client ID' | translate }} </th>
         <td mat-cell *matCellDef="let element"> {{element.id}} </td>
       </ng-container>
 
       <!-- Name Column -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Client Name </th>
+        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Client Name' | translate }} </th>
         <td mat-cell *matCellDef="let element"> {{element.displayName}} </td>
       </ng-container>
 
@@ -135,10 +136,10 @@
 <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button matStepperPrevious>
     <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-    Previous
+    {{"labels.buttons.Previous" | translate }}
   </button>
   <button mat-raised-button matStepperNext>
-    Next
+    {{"labels.buttons.Next" | translate }}
     <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
   </button>
 </div>
