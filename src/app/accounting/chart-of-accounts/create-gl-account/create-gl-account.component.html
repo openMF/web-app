@@ -12,7 +12,7 @@
             <mat-label>{{"labels.inputs.Account Type" | translate}}</mat-label>
             <mat-select required formControlName="type">
               <mat-option *ngFor="let accountType of accountTypeData" [value]="accountType.id">
-                {{ accountType.value }}
+                {{ 'labels.inputs.accounting.' + accountType.value | translate }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="glAccountForm.controls.type.hasError('required')">

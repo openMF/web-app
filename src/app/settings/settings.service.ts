@@ -121,6 +121,17 @@ export class SettingsService {
     return JSON.parse(localStorage.getItem('mifosXLanguage'));
   }
 
+  get languageCode() {
+    const currentLanguage = this.language.code;
+    if (currentLanguage === 'es') {
+      return 'es-MX';
+    }
+    if (currentLanguage === 'en') {
+      return 'en-US';
+    }
+    return currentLanguage + '-' + currentLanguage.toUpperCase();
+  }
+
   /**
    * Returns Decimals to Display setting
    */
@@ -236,4 +247,13 @@ export class SettingsService {
       }
     });
   }
+
+  setThemeDarkEnabled(enabled: string) {
+    localStorage.setItem('mifosXThemeDarkEnabled', enabled);
+  }
+
+  get themeDarkEnabled() {
+    return JSON.parse(localStorage.getItem('mifosXThemeDarkEnabled'));
+  }
+
 }

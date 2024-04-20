@@ -24,7 +24,7 @@
 
     <mat-step [stepControl]="recurringDepositProductDetailsForm">
 
-      <ng-template matStepLabel>DETAILS</ng-template>
+      <ng-template matStepLabel>{{'labels.inputs.DETAILS' | translate}}</ng-template>
 
       <mifosx-recurring-deposit-product-details-step  [recurringDepositProductsTemplate]="recurringDepositProductsTemplate">
         
@@ -34,7 +34,7 @@
 
     <mat-step [stepControl]="recurringDepositProductCurrencyForm">
 
-      <ng-template matStepLabel>CURRENCY</ng-template>
+      <ng-template matStepLabel>{{'labels.inputs.CURRENCY' | translate}}</ng-template>
 
       <mifosx-recurring-deposit-product-currency-step
         [recurringDepositProductsTemplate]="recurringDepositProductsTemplate">
@@ -44,7 +44,7 @@
 
     <mat-step [stepControl]="recurringDepositProductTermsForm">
 
-      <ng-template matStepLabel>TERMS</ng-template>
+      <ng-template matStepLabel>{{'labels.inputs.TERMS' | translate}}</ng-template>
 
       <mifosx-recurring-deposit-product-terms-step
         [recurringDepositProductsTemplate]="recurringDepositProductsTemplate">
@@ -54,7 +54,7 @@
 
     <mat-step [stepControl]="recurringDepositProductSettingsForm">
 
-      <ng-template matStepLabel>SETTINGS</ng-template>
+      <ng-template matStepLabel>{{'labels.inputs.SETTINGS' | translate}}</ng-template>
 
       <mifosx-recurring-deposit-product-settings-step
         [recurringDepositProductsTemplate]="recurringDepositProductsTemplate">
@@ -64,7 +64,7 @@
 
     <mat-step [stepControl]="recurringDepositProductInterestRateChartForm">
 
-      <ng-template matStepLabel>INTEREST RATE CHART</ng-template>
+      <ng-template matStepLabel>{{'labels.inputs.INTEREST RATE CHART' | translate}}</ng-template>
 
       <mifosx-recurring-deposit-product-interest-rate-chart-step
         [recurringDepositProductsTemplate]="recurringDepositProductsTemplate">
@@ -74,7 +74,7 @@
 
     <mat-step>
 
-      <ng-template matStepLabel>CHARGES</ng-template>
+      <ng-template matStepLabel>{{'labels.inputs.CHARGES' | translate}}</ng-template>
 
       <mifosx-recurring-deposit-product-charges-step
         [recurringDepositProductsTemplate]="recurringDepositProductsTemplate"
@@ -85,7 +85,7 @@
 
     <mat-step [stepControl]="recurringDepositProductAccountingForm">
 
-      <ng-template matStepLabel>ACCOUNTING</ng-template>
+      <ng-template matStepLabel>{{'labels.inputs.ACCOUNTING' | translate}}</ng-template>
 
       <mifosx-recurring-deposit-product-accounting-step
         [recurringDepositProductsTemplate]="recurringDepositProductsTemplate" [accountingRuleData]="accountingRuleData"
@@ -96,7 +96,7 @@
 
     <mat-step state="preview" *ngIf="recurringDepositProductFormValid" completed>
 
-      <ng-template matStepLabel>PREVIEW</ng-template>
+      <ng-template matStepLabel>{{'labels.inputs.PREVIEW' | translate}}</ng-template>
 
       <mifosx-recurring-deposit-product-preview-step
         [recurringDepositProductsTemplate]="recurringDepositProductsTemplate"

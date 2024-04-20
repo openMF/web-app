@@ -17,6 +17,7 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'mifosx-recurring-deposit-product-interest-rate-chart-step',
@@ -66,7 +67,8 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
   constructor(private formBuilder: UntypedFormBuilder,
               public dialog: MatDialog,
               private dateUtils: Dates,
-              private settingsService: SettingsService) {
+              private settingsService: SettingsService,
+              private translateService: TranslateService) {
     this.createrecurringDepositProductInterestRateChartForm();
   }
 
@@ -313,7 +315,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
 
   getData(formType: string, values?: any) {
     switch (formType) {
-      case 'Slab': return { title: 'Slab', formfields: this.getSlabFormfields(values) };
+      case 'Slab': return { title: this.translateService.instant('labels.inputs.Slab'), formfields: this.getSlabFormfields(values) };
       case 'Incentive': return { values, chartTemplate: this.recurringDepositProductsTemplate.chartTemplate };
     }
   }
@@ -322,7 +324,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'periodType',
-        label: 'Period Type',
+        label: this.translateService.instant('labels.inputs.Period Type'),
         value: values ? values.periodType : this.periodTypeData[0].id,
         options: { label: 'value', value: 'id', data: this.periodTypeData },
         required: true,
@@ -330,7 +332,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
       }),
       new InputBase({
         controlName: 'fromPeriod',
-        label: 'Period From',
+        label: this.translateService.instant('labels.inputs.Period From'),
         value: values ? values.fromPeriod : undefined,
         type: 'number',
         required: true,
@@ -338,28 +340,28 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
       }),
       new InputBase({
         controlName: 'toPeriod',
-        label: 'Period To',
+        label: this.translateService.instant('labels.inputs.Period To'),
         value: values ? values.toPeriod : undefined,
         type: 'number',
         order: 3
       }),
       new InputBase({
         controlName: 'amountRangeFrom',
-        label: 'Amount Range From',
+        label: this.translateService.instant('labels.inputs.Amount Range From'),
         value: values ? values.amountRangeFrom : undefined,
         type: 'number',
         order: 4
       }),
       new InputBase({
         controlName: 'amountRangeTo',
-        label: 'Amount Range To',
+        label: this.translateService.instant('labels.inputs.Amount Range To'),
         value: values ? values.amountRangeTo : undefined,
         type: 'number',
         order: 5
       }),
       new InputBase({
         controlName: 'annualInterestRate',
-        label: 'Interest',
+        label: this.translateService.instant('labels.inputs.Interest'),
         value: values ? values.annualInterestRate : undefined,
         type: 'number',
         required: true,
@@ -367,7 +369,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
       }),
       new InputBase({
         controlName: 'description',
-        label: 'Description',
+        label: this.translateService.instant('labels.inputs.Description'),
         value: values ? values.description : undefined,
         required: true,
         order: 7
@@ -378,14 +380,20 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
 
   get recurringDepositProductInterestRateChart() {
     // TODO: Update once language and date settings are setup
-    const dateFormat = this.settingsService.dateFormat;
+    const dateFormat = 'YYYY-MM-DD';
     const locale = this.settingsService.language.code;
     const recurringDepositProductInterestRateChart = this.recurringDepositProductInterestRateChartForm.value;
     for (const chart of recurringDepositProductInterestRateChart.charts) {
-      chart.dateFormat = dateFormat;
       chart.locale = locale;
-      chart.fromDate = this.dateUtils.formatDate(chart.fromDate, dateFormat);
-      chart.endDate = this.dateUtils.formatDate(chart.endDate, dateFormat) || '';
+      chart.dateFormat = 'yyyy-MM-dd';
+      if (chart.fromDate instanceof Date) {
+        chart.fromDate = this.dateUtils.formatDateAsString(chart.fromDate, dateFormat);
+      }
+      if (chart.endDate) {
+        if (chart.endDate instanceof Date) {
+          chart.endDate = this.dateUtils.formatDateAsString(chart.endDate, dateFormat);
+        }
+      }
       if (chart.endDate === '') {
         delete chart.endDate;
       }

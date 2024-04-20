@@ -8,6 +8,7 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
 
 /** Custom Services */
 import { AccountingService } from '../../accounting.service';
+import { Location } from '@angular/common';
 
 /**
  * View gl account component.
@@ -32,7 +33,8 @@ export class ViewGlAccountComponent implements OnInit {
   constructor(private accountingService: AccountingService,
               private route: ActivatedRoute,
               private router: Router,
-              public dialog: MatDialog) {
+              private dialog: MatDialog,
+              private location: Location) {
     this.route.data.subscribe((data: { glAccountAndChartOfAccountsTemplate: any }) => {
       this.glAccount = data.glAccountAndChartOfAccountsTemplate;
     });
@@ -66,6 +68,10 @@ export class ViewGlAccountComponent implements OnInit {
       .subscribe((response: any) => {
         this.glAccount.disabled = response.changes.disabled;
       });
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
 }

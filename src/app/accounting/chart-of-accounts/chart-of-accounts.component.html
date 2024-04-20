@@ -44,7 +44,7 @@
 
       <ng-container matColumnDef="glAccountType">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Type" | translate}} </th>
-        <td mat-cell *matCellDef="let glAccount"> {{ glAccount.type.value }} </td>
+        <td mat-cell *matCellDef="let glAccount"> {{ 'labels.inputs.accounting.' + glAccount.type.value | translate }} </td>
       </ng-container>
 
       <ng-container matColumnDef="disabled">
@@ -104,7 +104,7 @@
           <li class="mat-tree-node">
             <button mat-icon-button disabled></button>
             <span (click)="viewGLAccountNode(node)">
-              <span *ngIf="node.glCode">{{ '(' + node.glCode + ')' }}</span>&nbsp;&nbsp;
+              <span *ngIf="node.glCode" class="m-r-10">{{ '(' + node.glCode + ')' }}</span>
               {{ node.name }}
             </span>
           </li>
@@ -117,7 +117,7 @@
                 <fa-icon class="mat-icon-rtl-mirror" icon="{{ nestedTreeControl.isExpanded(node) ? 'chevron-down' : 'chevron-right' }}"></fa-icon>
               </button>
               <span (click)="viewGLAccountNode(node)">
-                <span *ngIf="node.glCode">{{ '(' + node.glCode + ')' }}</span>&nbsp;&nbsp;
+                <span *ngIf="node.glCode" class="m-r-10">{{ '(' + node.glCode + ')' }}</span>
                 {{ node.name }}
               </span>
             </div>
@@ -160,7 +160,7 @@
             </div>
 
             <div fxFlex="50%">
-              {{ glAccount.type }}
+              {{ 'labels.inputs.accounting.' + glAccount.type | translate }}
             </div>
 
             <div fxFlex="50%" class="header">

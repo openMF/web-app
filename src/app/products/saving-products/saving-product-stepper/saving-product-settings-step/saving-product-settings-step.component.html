@@ -41,7 +41,7 @@
     </mat-form-field>
 
     <mat-checkbox fxFlex="48%" labelPosition="before" matTooltip="An boolean flag to attach  taxes to interest posting" formControlName="withHoldTax" class="margin-v">
-      {{'labels.inputs.Is Withhold Tax Applicable' | translate}}?
+      {{'labels.inputs.Is Withhold Tax Applicable' | translate}}
     </mat-checkbox>
 
     <mat-form-field fxFlex="48%" *ngIf="savingProductSettingsForm.value.withHoldTax">
@@ -61,7 +61,7 @@
     <h3 fxFlex="23%" class="mat-h3">{{'labels.inputs.Overdraft' | translate}}</h3>
 
     <mat-checkbox fxFlex="73%" labelPosition="before" matTooltip="Indicates whether saving accounts based on this saving product may have an overdraft" formControlName="allowOverdraft" class="margin-b">
-      {{'labels.inputs.Is Overdraft Allowed' | translate}}?
+      {{'labels.inputs.Is Overdraft Allowed' | translate}}
     </mat-checkbox>
 
     <div *ngIf="savingProductSettingsForm.value.allowOverdraft" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">

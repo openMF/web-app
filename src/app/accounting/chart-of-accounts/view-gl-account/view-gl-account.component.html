@@ -42,7 +42,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ glAccount.type?.value }}
+          {{ 'labels.inputs.accounting.' + glAccount.type?.value | translate }}
         </div>
 
         <div fxFlex="50%" class="header">
@@ -99,6 +99,9 @@
 
     </mat-card-content>
 
+    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <button type="button" color="primary" mat-raised-button (click)="goBack()">{{  "labels.buttons.Back" | translate}}</button>
+    </mat-card-actions>
   </mat-card>
 
 </div>
