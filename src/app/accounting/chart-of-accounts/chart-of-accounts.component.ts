@@ -18,6 +18,7 @@ import { GLAccountNode } from './gl-account-node.model';
 import { GlAccountTreeService } from './gl-account-tree.service';
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
+import { TreeControlService } from 'app/shared/common-logic/tree-control.service';
 
 /**
  * Chart of accounts component.
@@ -43,6 +44,8 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
   nestedTreeDataSource: MatTreeNestedDataSource<GLAccountNode>;
   /** Selected GL Account. */
   glAccount: GLAccountNode;
+  /** Flag to check if tree is expanded or collapsed. */
+  isTreeExpanded: boolean = true;
 
   /** Paginator for chart of accounts table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -69,6 +72,7 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
   constructor(private glAccountTreeService: GlAccountTreeService,
               private route: ActivatedRoute,
               private router: Router,
+              private treeControlService: TreeControlService,
               private configurationWizardService: ConfigurationWizardService,
               private popoverService: PopoverService) {
     this.route.data.subscribe((data: { chartOfAccounts: any }) => {
@@ -177,4 +181,12 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
     this.configurationWizardService.showChartofAccounts = true;
     this.router.navigate(['/accounting']);
   }
+
+  /** 
+   * Expand and Collapse the tree
+  */
+  toggleExpandCollapse() {
+    this.isTreeExpanded = this.treeControlService.toggleExpandCollapse(this.nestedTreeControl, this.isTreeExpanded);
+  }
+
 }

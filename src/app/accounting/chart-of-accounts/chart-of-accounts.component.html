@@ -85,12 +85,9 @@
 
 <div class="container" [hidden]="viewGroup.value !== 'treeView'">
 
-  <div class="m-b-20"  fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
-    <button mat-raised-button (click)="nestedTreeControl.expandAll()">  <!-- Bug(angular-material): https://github.com/angular/material2/issues/12170 -->
-      {{"labels.buttons.Expand All" | translate}}
-    </button>
-    <button mat-raised-button (click)="nestedTreeControl.collapseAll()">
-      {{"labels.buttons.Collapse All" | translate}}
+  <div class="m-b-20" fxLayout="row" fxLayoutAlign="start" fxLayoutGap="20px">
+    <button mat-raised-button (click)="toggleExpandCollapse()">
+      {{ (isTreeExpanded ? "labels.buttons.Collapse All" : "labels.buttons.Expand All") | translate }}
     </button>
   </div>
 
