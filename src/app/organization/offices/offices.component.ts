@@ -16,6 +16,7 @@ import { OfficeNode } from './office-node.model';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { OfficeTreeService } from './office-tree-service.service';
+import { TreeControlService } from 'app/shared/common-logic/tree-control.service';
 
 /**
  * Offices component.
@@ -43,6 +44,8 @@ export class OfficesComponent implements OnInit, AfterViewInit {
   office: OfficeNode;
   /** Office data tables. */
   dataTablesData: any;
+  /** Flag to check if tree is expanded or collapsed. */
+  isTreeExpanded: boolean = true;
 
   /** Paginator for offices table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -70,6 +73,7 @@ export class OfficesComponent implements OnInit, AfterViewInit {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private officeTreeService: OfficeTreeService,
+    private treeControlService: TreeControlService,
     private configurationWizardService: ConfigurationWizardService,
     private popoverService: PopoverService) {
     this.route.data.subscribe(( data: { offices: any, officeDataTables: any }) => {
@@ -184,6 +188,13 @@ export class OfficesComponent implements OnInit, AfterViewInit {
     this.configurationWizardService.showOfficeTable = false;
     this.configurationWizardService.showCreateOffice = true;
     this.router.navigate(['/organization']);
+  }
+
+  /** 
+   * Expand and Collapse the tree
+  */
+  toggleExpandCollapse() {
+    this.isTreeExpanded = this.treeControlService.toggleExpandCollapse(this.nestedTreeControl, this.isTreeExpanded);
   }
 
 }

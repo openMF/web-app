@@ -75,11 +75,8 @@
 <div class="container" [hidden]="viewGroup.value !== 'treeView'">
 
   <div class="m-b-20" fxLayout="row" fxLayoutAlign="start" fxLayoutGap="20px">
-    <button mat-raised-button (click)="nestedTreeControl.expandAll()">
-      {{'Expand All'|translate}}
-    </button>
-    <button mat-raised-button (click)="nestedTreeControl.collapseAll()">
-      {{'Collapse All'|translate}}
+    <button mat-raised-button (click)="toggleExpandCollapse()">
+      {{ (isTreeExpanded ? "labels.buttons.Collapse All" : "labels.buttons.Expand All") | translate }}
     </button>
   </div>
 
