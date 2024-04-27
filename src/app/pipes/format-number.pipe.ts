@@ -11,9 +11,9 @@ export class FormatNumberPipe implements PipeTransform {
     private settingsService: SettingsService) {
   }
 
-  transform(value: string | number, ...args: unknown[]): string {
+  transform(value: string | number, defaultValue: any): string {
     if (!value) {
-     return '';
+      return defaultValue ? defaultValue : '';
     }
     const locale = this.settingsService.language.code;
     const decimals = this.settingsService.decimals;

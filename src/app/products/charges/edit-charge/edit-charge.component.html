@@ -13,7 +13,7 @@
             <mat-select required formControlName="chargeAppliesTo">
               <mat-option *ngFor="let chargeAppliesTo of chargeData.chargeAppliesToOptions"
                 [value]="chargeAppliesTo.id">
-                {{ chargeAppliesTo.value }}
+                {{ chargeAppliesTo.value | translateCatalog }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -47,7 +47,7 @@
             <mat-label>{{"labels.inputs.Charge Time Type" | translate}}</mat-label>
             <mat-select required formControlName="chargeTimeType">
               <mat-option *ngFor="let chargeTime of chargeTimeTypeOptions" [value]="chargeTime.id">
-                {{ chargeTime.value }}
+                {{ chargeTime.value | translateCatalog }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="chargeForm.controls.chargeTimeType.hasError('required')">
@@ -60,7 +60,7 @@
             <mat-label>{{"labels.inputs.Charge Calculation" | translate}}</mat-label>
             <mat-select required formControlName="chargeCalculationType">
               <mat-option *ngFor="let chargeCalculation of chargeCalculationTypeOptions" [value]="chargeCalculation.id">
-                {{ chargeCalculation.value }}
+                {{ chargeCalculation.value | translateCatalog }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="chargeForm.controls.chargeCalculationType.hasError('required')">
@@ -73,7 +73,7 @@
             <mat-select required formControlName="chargePaymentMode">
               <mat-option *ngFor="let chargePaymentMode of chargeData.chargePaymetModeOptions"
                 [value]="chargePaymentMode.id">
-                {{ chargePaymentMode.value }}
+                {{ chargePaymentMode.value | translateCatalog }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="chargeForm.controls.chargePaymentMode.hasError('required')">
@@ -152,7 +152,7 @@
             <mat-label>{{"labels.inputs.Charge Frequency" | translate}}</mat-label>
             <mat-select required formControlName="feeFrequency">
               <mat-option *ngFor="let chargeFrequency of chargeData.feeFrequencyOptions" [value]="chargeFrequency.id">
-                {{ chargeFrequency.value }}
+                {{ chargeFrequency.value | translateCatalog }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="chargeForm.controls.feeFrequency.hasError('required')">

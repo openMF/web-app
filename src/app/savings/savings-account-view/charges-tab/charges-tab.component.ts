@@ -19,6 +19,7 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { Dates } from 'app/core/utils/dates';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Charges Tab Component
@@ -69,8 +70,9 @@ export class ChargesTabComponent implements OnInit {
               private route: ActivatedRoute,
               private dateUtils: Dates,
               private router: Router,
-              public dialog: MatDialog,
-              private settingsService: SettingsService) {
+              private dialog: MatDialog,
+              private settingsService: SettingsService,
+            private translateService: TranslateService) {
     this.route.parent.data.subscribe((data: { savingsAccountData: any }) => {
       this.savingsAccountData = data.savingsAccountData;
       this.chargesData = this.savingsAccountData.charges;
@@ -255,6 +257,10 @@ export class ChargesTabComponent implements OnInit {
     const refreshUrl: string = this.router.url.slice(0, this.router.url.indexOf('savings-accounts') + 'savings-accounts'.length);
     this.router.navigateByUrl(refreshUrl, {skipLocationChange: true})
       .then(() => this.router.navigate([url]));
+  }
+
+  viewAllChargeButtons(text: string): string {
+    return this.translateService.instant('labels.buttons.' + text);
   }
 
 }

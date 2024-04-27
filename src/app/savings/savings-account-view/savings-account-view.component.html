@@ -102,7 +102,7 @@
       </a>
       <a mat-tab-link [routerLink]="['./documents']" routerLinkActive #savingsDocuments="routerLinkActive"
         [active]="savingsDocuments.isActive">
-        {{'labels.inputs.Savings Documents' | translate}}
+        {{'labels.inputs.Documents' | translate}}
       </a>
       <a mat-tab-link *mifosxHasPermission="'READ_SAVINGSNOTE'" [routerLink]="['./notes']" routerLinkActive #notes="routerLinkActive"
         [active]="notes.isActive">

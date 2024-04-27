@@ -26,11 +26,19 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Charge Type" | translate}}
+          {{"labels.inputs.Charge Applies To" | translate}}
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.penalty === true ? 'Penalty' : 'Charge' }}
+          {{ chargeData.chargeAppliesTo.value | translateCatalog }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          {{"labels.inputs.Penalty" | translate}}
+        </div>
+
+        <div fxFlex="50%">
+          {{ chargeData.penalty === true | yesNo }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
@@ -46,7 +54,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.amount }}
+          {{ chargeData.amount | formatNumber }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="minCap">
@@ -70,15 +78,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.chargeTimeType.value }}
-        </div>
-
-        <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Charge Applies To" | translate}}
-        </div>
-
-        <div fxFlex="50%">
-          {{ chargeData.chargeAppliesTo.value }}
+          {{ chargeData.chargeTimeType.value | translateCatalog }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
@@ -86,7 +86,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.chargeCalculationType.value }}
+          {{ chargeData.chargeCalculationType.value | translateCatalog }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
@@ -94,7 +94,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.chargePaymentMode.value }}
+          {{ chargeData.chargePaymentMode.value | translateCatalog }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
@@ -111,7 +111,7 @@
 
         <div fxFlex="50%"
           *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeFrequency && chargeData.feeFrequency">
-          {{ chargeData.feeFrequency.value }}
+          {{ chargeData.feeFrequency.value | translateCatalog }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeInterval">

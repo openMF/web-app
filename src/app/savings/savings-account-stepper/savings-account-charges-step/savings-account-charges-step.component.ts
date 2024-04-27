@@ -12,6 +12,7 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { Dates } from 'app/core/utils/dates';
 import { MatTableDataSource } from '@angular/material/table';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Savings Account Charges Step
@@ -55,8 +56,9 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
   /**
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(public dialog: MatDialog,
-              private dateUtils: Dates) {}
+  constructor(private dialog: MatDialog,
+              private dateUtils: Dates,
+            private translateService: TranslateService) {}
 
    ngOnInit() {
     if (this.savingsAccountTemplate) {
@@ -95,14 +97,14 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
     const formfields: FormfieldBase[] = [
       new InputBase({
         controlName: 'amount',
-        label: 'Amount',
+        label: this.translateService.instant('labels.inputs.Amount'),
         value: charge.amount,
         type: 'number',
         required: false
       }),
     ];
     const data = {
-      title: 'Edit Charge Amount',
+      title: this.translateService.instant('labels.heading.Edit Charge Amount'),
       layout: { addButtonText: 'Confirm' },
       formfields: formfields
     };
@@ -125,14 +127,14 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
     const formfields: FormfieldBase[] = [
       new DatepickerBase({
         controlName: 'date',
-        label: 'Date',
+        label: this.translateService.instant('labels.inputs.Date'),
         value: charge.dueDate || charge.feeOnMonthDay || '',
         type: 'datetime-local',
         required: false
       }),
     ];
     const data = {
-      title: 'Edit Charge Date',
+      title: this.translateService.instant('labels.heading.Edit Charge Date'),
       layout: { addButtonText: 'Confirm' },
       formfields: formfields
     };
@@ -145,12 +147,15 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
         switch (charge.chargeTimeType.value) {
           case 'Specified due date':
           case 'Weekly Fee':
-          newCharge = { ...charge, dueDate: date };
+            newCharge = { ...charge, dueDate: date };
           break;
           case 'Annual Fee':
-          newCharge = { ...charge, feeOnMonthDay: date };
+          case 'Monthly Fee':
+            const dateMonthDay = this.dateUtils.formatDate(response.data.value.date, 'dd MMMM');
+            newCharge = { ...charge, feeOnMonthDay: dateMonthDay };
           break;
         }
+        console.log(newCharge);
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1, newCharge);
         this.chargesDataSource = this.chargesDataSource.concat([]);
       }

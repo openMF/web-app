@@ -32,7 +32,7 @@ export class ViewSavingsAccountingDetailsComponent implements OnInit {
   }
 
   getAccountingRuleName(value: string): string {
-    return this.accounting.getAccountRuleName(value);
+    return this.accounting.getAccountRuleName(value.toUpperCase());
   }
 
 }

@@ -30,6 +30,6 @@
   window['env']['waitTimeForCOBCatchUp'] = '';
 
   // Time in milliseconds for Session idle timeout, default 300000 seconds
-  window['env']['sessionIdleTimeout'] = '60000';
+  window['env']['sessionIdleTimeout'] = '0';
 
 })(this);
