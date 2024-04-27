@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray, UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { TooltipPosition } from '@angular/material/tooltip';
 
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -9,8 +8,8 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
-import { LoanProducts } from '../../loan-products';
 import { ProcessingStrategyService } from '../../services/processing-strategy.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'mifosx-loan-product-terms-step',
@@ -38,7 +37,8 @@ export class LoanProductTermsStepComponent implements OnInit, OnChanges {
 
   constructor(private formBuilder: UntypedFormBuilder,
     private processingStrategyService: ProcessingStrategyService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private translateService: TranslateService) {
     this.createLoanProductTermsForm();
     this.setConditionalControls();
   }
@@ -255,9 +255,15 @@ export class LoanProductTermsStepComponent implements OnInit, OnChanges {
 
   getData(formType: string, values?: any) {
     switch (formType) {
-      case 'Principal': return { title: 'Principal by loan cycle', formfields: this.getFormfields(values) };
-      case 'NumberOfRepayments': return { title: 'Number of repayments by loan cycle', formfields: this.getFormfields(values) };
-      case 'NominalInterestRate': return { title: 'Nominal interest rate by loan cycle', formfields: this.getFormfields(values) };
+      case 'Principal': return {
+        title: this.translateService.instant('labels.heading.Principal by loan cycle'), formfields: this.getFormfields(values)
+      };
+      case 'NumberOfRepayments': return {
+        title: this.translateService.instant('labels.heading.Number of Repayments by loan cycle'), formfields: this.getFormfields(values)
+      };
+      case 'NominalInterestRate': return {
+        title: this.translateService.instant('labels.heading.Nominal Interest Rate by loan cycle'), formfields: this.getFormfields(values)
+      };
     }
   }
 
@@ -265,7 +271,7 @@ export class LoanProductTermsStepComponent implements OnInit, OnChanges {
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'valueConditionType',
-        label: 'Condition',
+        label: this.translateService.instant('labels.inputs.Condition'),
         value: values ? values.valueConditionType : this.valueConditionTypeData[0].id,
         options: { label: 'value', value: 'id', data: this.valueConditionTypeData },
         required: true,
@@ -273,7 +279,7 @@ export class LoanProductTermsStepComponent implements OnInit, OnChanges {
       }),
       new InputBase({
         controlName: 'borrowerCycleNumber',
-        label: 'Loan Cycle',
+        label: this.translateService.instant('labels.inputs.Loan Cycle'),
         value: values ? values.borrowerCycleNumber : undefined,
         type: 'number',
         required: true,
@@ -281,14 +287,14 @@ export class LoanProductTermsStepComponent implements OnInit, OnChanges {
       }),
       new InputBase({
         controlName: 'minValue',
-        label: 'Minimum',
+        label: this.translateService.instant('labels.inputs.Minimum'),
         value: values ? values.minValue : undefined,
         type: 'number',
         order: 3
       }),
       new InputBase({
         controlName: 'defaultValue',
-        label: 'Default',
+        label: this.translateService.instant('labels.inputs.Default'),
         value: values ? values.defaultValue : undefined,
         type: 'number',
         required: true,
@@ -296,7 +302,7 @@ export class LoanProductTermsStepComponent implements OnInit, OnChanges {
       }),
       new InputBase({
         controlName: 'maxValue',
-        label: 'Maximum',
+        label: this.translateService.instant('labels.inputs.Maximum'),
         value: values ? values.maxValue : undefined,
         type: 'number',
         order: 5

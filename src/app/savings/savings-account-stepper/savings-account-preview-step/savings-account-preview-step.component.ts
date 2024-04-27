@@ -1,5 +1,6 @@
 /** Angular Imports */
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Savings account preview step
@@ -26,6 +27,9 @@ export class SavingsAccountPreviewStepComponent {
   /** Form submission event */
   @Output() submit = new EventEmitter();
 
-  constructor() { }
+  constructor(private translateService: TranslateService) { }
 
+  getCatalogTranslation(text: string): string {
+    return this.translateService.instant('labels.catalogs.' + text);
+  }
 }

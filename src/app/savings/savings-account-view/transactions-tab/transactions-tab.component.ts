@@ -30,7 +30,7 @@ export class TransactionsTabComponent implements OnInit {
   hideAccrualsParam: UntypedFormControl;
   hideReversedParam: UntypedFormControl;
   /** Columns to be displayed in transactions table. */
-  displayedColumns: string[] = ['row', 'id', 'date', 'transactionType', 'debit', 'credit', 'balance', 'actions'];
+  displayedColumns: string[] = ['row', 'id', 'date', 'externalId', 'transactionType', 'debit', 'credit', 'balance', 'actions'];
   /** Data source for transactions table. */
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;

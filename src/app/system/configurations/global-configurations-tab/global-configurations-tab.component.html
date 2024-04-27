@@ -46,7 +46,7 @@
       </ng-container>
 
       <ng-container matColumnDef="edit">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Edit' | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Actions' | translate}} </th>
         <td mat-cell *matCellDef="let configuration">
           <button mat-button color="primary" [routerLink]="[configuration.id, 'edit']">
             <fa-icon icon="edit"></fa-icon>

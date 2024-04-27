@@ -57,22 +57,22 @@
 
     <div fxFlexFill>
       <span fxFlex="40%">{{'labels.inputs.Interest Compounding Period' | translate}}:</span>
-      <span fxFlex="60%">{{ savingProduct.interestCompoundingPeriodType.value }}</span>
+      <span fxFlex="60%">{{ savingProduct.interestCompoundingPeriodType.value | translateCatalog }}</span>
     </div>
 
     <div fxFlexFill>
       <span fxFlex="40%">{{'labels.inputs.Interest Posting Period' | translate}}:</span>
-      <span fxFlex="60%">{{ savingProduct.interestPostingPeriodType.value }}</span>
+      <span fxFlex="60%">{{ savingProduct.interestPostingPeriodType.value | translateCatalog }}</span>
     </div>
 
     <div fxFlexFill>
       <span fxFlex="40%">{{'labels.inputs.Interest Calculated using' | translate}}:</span>
-      <span fxFlex="60%">{{ savingProduct.interestCalculationType.value }}</span>
+      <span fxFlex="60%">{{ savingProduct.interestCalculationType.value | translateCatalog }}</span>
     </div>
 
     <div fxFlexFill>
       <span fxFlex="40%">{{'labels.inputs.Days in Year' | translate}}:</span>
-      <span fxFlex="60%">{{ savingProduct.interestCalculationDaysInYearType.value }}</span>
+      <span fxFlex="60%">{{ savingProduct.interestCalculationDaysInYearType.value | translateCatalog }}</span>
     </div>
 
     <h3 class="mat-h3" fxFlexFill>{{'labels.heading.Settings' | translate}}</h3>
@@ -81,7 +81,7 @@
 
     <div fxFlexFill *ngIf="savingProduct.minRequiredOpeningBalance">
       <span fxFlex="40%">{{'labels.inputs.Minimum Opening Balance' | translate}}:</span>
-      <span fxFlex="60%">{{ savingProduct.minRequiredOpeningBalance }}</span>
+      <span fxFlex="60%">{{ savingProduct.minRequiredOpeningBalance | formatNumber }}</span>
     </div>
 
     <div fxFlexFill *ngIf="savingProduct.lockinPeriodFrequency">
@@ -97,7 +97,7 @@
 
     <div fxFlexFill *ngIf="savingProduct.minBalanceForInterestCalculation">
       <span fxFlex="40%">{{'labels.inputs.Balance Required for Interest Calculation' | translate}}:</span>
-      <span fxFlex="60%">{{ savingProduct.minBalanceForInterestCalculation }}</span>
+      <span fxFlex="60%">{{ savingProduct.minBalanceForInterestCalculation | formatNumber }}</span>
     </div>
 
     <div fxFlexFill>
@@ -107,7 +107,7 @@
 
     <div fxFlexFill *ngIf="savingProduct.minRequiredBalance">
       <span fxFlex="40%">{{'labels.inputs.Minimum Balance' | translate}}:</span>
-      <span fxFlex="60%">{{ savingProduct.minRequiredBalance }}</span>
+      <span fxFlex="60%">{{ savingProduct.minRequiredBalance | formatNumber }}</span>
     </div>
 
     <div fxFlexFill>
@@ -132,12 +132,12 @@
 
     <div fxFlexFill *ngIf="savingProduct.nominalAnnualInterestRateOverdraft">
       <span fxFlex="40%">{{'labels.inputs.Nominal Annual Interest for Overdraft' | translate}}:</span>
-      <span fxFlex="60%">{{ savingProduct.nominalAnnualInterestRateOverdraft }}</span>
+      <span fxFlex="60%">{{ savingProduct.nominalAnnualInterestRateOverdraft }} %</span>
     </div>
 
     <div fxFlexFill *ngIf="savingProduct.overdraftLimit">
       <span fxFlex="40%">{{'labels.inputs.Maximum Overdraft Amount Limit' | translate}}:</span>
-      <span fxFlex="60%">{{ savingProduct.overdraftLimit }}</span>
+      <span fxFlex="60%">{{ savingProduct.overdraftLimit | formatNumber }}</span>
     </div>
 
     <div fxFlexFill>
@@ -172,21 +172,21 @@
         <ng-container matColumnDef="chargeCalculationType">
           <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Type' | translate}} </th>
           <td mat-cell *matCellDef="let charge">
-            {{ charge.chargeCalculationType.value }}
+            {{ charge.chargeCalculationType.value | translateCatalog }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="amount">
           <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Amount' | translate}} </th>
           <td mat-cell *matCellDef="let charge">
-            {{ charge.amount }}
+            {{ charge.amount | formatNumber }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="chargeTimeType">
           <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Collected On' | translate}} </th>
           <td mat-cell *matCellDef="let charge">
-            {{ charge.chargeTimeType.value }}
+            {{ charge.chargeTimeType.value | translateCatalog }}
           </td>
         </ng-container>
 

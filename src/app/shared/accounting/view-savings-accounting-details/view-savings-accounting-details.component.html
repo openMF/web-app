@@ -1,6 +1,6 @@
 <div fxLayout="row wrap" fxLayout.lt-md="column">
 
-    <div fxFlexFill *ngIf="accountingRule" fxLayout="row wrap" fxLayout.lt-md="column">
+    <div fxFlexFill fxFlex="98%" *ngIf="accountingRule" fxLayout="row wrap" fxLayout.lt-md="column">
         <span fxFlex="40%">{{'labels.inputs.Type' | translate}}:</span>
         <span fxFlex="60%">{{'labels.accounting.' + getAccountingRuleName(accountingRule.value) | translate}}</span>
     </div>

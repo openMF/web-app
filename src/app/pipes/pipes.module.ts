@@ -12,13 +12,50 @@ import { ExternalIdentifierPipe } from './external-identifier.pipe';
 import { FormatNumberPipe } from './format-number.pipe';
 import { YesnoPipe } from './yesno.pipe';
 import { PrettyPrintPipe } from './pretty-print.pipe';
+import { TranslateCatalogPipe } from './translate-catalog.pipe';
 
 @NgModule({
   imports: [
     CommonModule
   ],
-  declarations: [StatusLookupPipe, AccountsFilterPipe, ChargesFilterPipe, ChargesPenaltyFilterPipe, FindPipe, UrlToStringPipe, DateFormatPipe, DatetimeFormatPipe, ExternalIdentifierPipe, FormatNumberPipe, YesnoPipe, PrettyPrintPipe ],
-  providers: [StatusLookupPipe, AccountsFilterPipe, ChargesFilterPipe, ChargesPenaltyFilterPipe, FindPipe, UrlToStringPipe, DateFormatPipe, DatetimeFormatPipe, ExternalIdentifierPipe, FormatNumberPipe, YesnoPipe, PrettyPrintPipe ],
-  exports: [StatusLookupPipe, AccountsFilterPipe, ChargesFilterPipe, ChargesPenaltyFilterPipe, FindPipe, UrlToStringPipe, DateFormatPipe, DatetimeFormatPipe, ExternalIdentifierPipe, FormatNumberPipe, YesnoPipe, PrettyPrintPipe ]
+  declarations: [StatusLookupPipe,
+  AccountsFilterPipe,
+  ChargesFilterPipe,
+  ChargesPenaltyFilterPipe,
+  FindPipe,
+  UrlToStringPipe,
+  DateFormatPipe,
+  DatetimeFormatPipe,
+  ExternalIdentifierPipe,
+  FormatNumberPipe,
+  YesnoPipe,
+  PrettyPrintPipe,
+  TranslateCatalogPipe],
+  providers: [StatusLookupPipe,
+  AccountsFilterPipe,
+  ChargesFilterPipe,
+  ChargesPenaltyFilterPipe,
+  FindPipe,
+  UrlToStringPipe,
+  DateFormatPipe,
+  DatetimeFormatPipe,
+  ExternalIdentifierPipe,
+  FormatNumberPipe,
+  YesnoPipe,
+  PrettyPrintPipe,
+  TranslateCatalogPipe],
+  exports: [StatusLookupPipe,
+  AccountsFilterPipe,
+  ChargesFilterPipe,
+  ChargesPenaltyFilterPipe,
+  FindPipe,
+  UrlToStringPipe,
+  DateFormatPipe,
+  DatetimeFormatPipe,
+  ExternalIdentifierPipe,
+  FormatNumberPipe,
+  YesnoPipe,
+  PrettyPrintPipe,
+  TranslateCatalogPipe]
 })
 export class PipesModule { }

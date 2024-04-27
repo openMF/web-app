@@ -39,7 +39,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="mat-body-strong">
-          Name
+          {{ 'labels.inputs.Name' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -47,15 +47,15 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Charge Type
+          {{ 'labels.inputs.Charge Type' | translate }}
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.penalty ? 'Penalty' : 'Fees' }}
+          {{ chargeData.penalty ? 'Penalty' : 'Fee' | translateCatalog }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Currency
+          {{ 'labels.inputs.Currency' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -63,15 +63,15 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Payment due at
+          {{ 'labels.inputs.Payment due at' | translate }}
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.chargeTimeType.value }}
+          {{ chargeData.chargeTimeType.value | translateCatalog }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Payment due as of
+          {{ 'labels.inputs.Payment due as of' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -79,15 +79,15 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Calculation Type
+          {{ 'labels.inputs.Calculation Type' | translate }}
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.chargeCalculationType.value }}
+          {{ chargeData.chargeCalculationType.value | translateCatalog }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Due
+          {{ 'labels.inputs.Due' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -95,7 +95,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Paid
+          {{ 'labels.inputs.Paid' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -103,7 +103,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Waived
+          {{ 'labels.inputs.Waived' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -111,7 +111,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Outstanding
+          {{ 'labels.inputs.Outstanding' | translate }}
         </div>
 
         <div fxFlex="50%">

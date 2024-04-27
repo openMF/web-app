@@ -323,4 +323,8 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
       || this.loanProduct.penaltyToIncomeAccountMappings?.length > 0);
   }
 
+  getAccountingRuleName(value: string): string {
+    return this.accounting.getAccountRuleName(value.toUpperCase());
+  }
+
 }

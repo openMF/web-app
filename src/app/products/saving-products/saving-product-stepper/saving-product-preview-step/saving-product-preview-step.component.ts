@@ -33,9 +33,8 @@ export class SavingProductPreviewStepComponent implements OnInit, OnChanges {
   }
 
   setCurrentValues(): void {
-
+    this.accountingRule = this.accounting.getAccountingRuleFrom(this.savingProduct.accountingRule);
     if (this.isCashOrAccrualAccounting()) {
-      this.accountingRule = this.accounting.getAccountingRuleFrom(this.savingProduct.accountingRule);
 
       const assetAccountData = this.savingProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
       const incomeAccountData = this.savingProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];

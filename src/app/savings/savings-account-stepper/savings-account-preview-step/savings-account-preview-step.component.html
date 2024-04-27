@@ -51,26 +51,26 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">{{'labels.inputs.Interest Compounding Period' | translate}}:</span>
-    <span fxFlex="60%">{{ savingsAccount.interestCompoundingPeriodType |
-      find:savingsAccountProductTemplate.interestCompoundingPeriodTypeOptions:'id':'value' }}</span>
+    <span fxFlex="60%">{{ getCatalogTranslation(savingsAccount.interestCompoundingPeriodType |
+      find:savingsAccountProductTemplate.interestCompoundingPeriodTypeOptions:'id':'value') }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">{{'labels.inputs.Interest Posting Period' | translate}}:</span>
-    <span fxFlex="60%">{{ savingsAccount.interestPostingPeriodType |
-      find:savingsAccountProductTemplate.interestPostingPeriodTypeOptions:'id':'value' }}</span>
+    <span fxFlex="60%">{{ getCatalogTranslation(savingsAccount.interestPostingPeriodType |
+      find:savingsAccountProductTemplate.interestPostingPeriodTypeOptions:'id':'value') }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">{{'labels.inputs.Interest Calculated using' | translate}}:</span>
-    <span fxFlex="60%">{{ savingsAccount.interestCalculationType |
-      find:savingsAccountProductTemplate.interestCalculationTypeOptions:'id':'value' }}</span>
+    <span fxFlex="60%">{{ getCatalogTranslation(savingsAccount.interestCalculationType |
+      find:savingsAccountProductTemplate.interestCalculationTypeOptions:'id':'value') }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">{{'labels.inputs.Days in Year' | translate}}:</span>
-    <span fxFlex="60%">{{ savingsAccount.interestCalculationDaysInYearType |
-      find:savingsAccountProductTemplate.interestCalculationDaysInYearTypeOptions:'id':'value' }}</span>
+    <span fxFlex="60%">{{ getCatalogTranslation(savingsAccount.interestCalculationDaysInYearType |
+      find:savingsAccountProductTemplate.interestCalculationDaysInYearTypeOptions:'id':'value') }}</span>
   </div>
 
   <div fxFlexFill *ngIf="savingsAccount.minRequiredOpeningBalance">
@@ -85,8 +85,8 @@
 
   <div fxFlexFill *ngIf="savingsAccount.lockinPeriodFrequency">
     <span fxFlex="40%">{{'labels.inputs.Lock-in Period' | translate}}:</span>
-    <span fxFlex="60%">{{ savingsAccount.lockinPeriodFrequency + ' ' + (savingsAccount.lockinPeriodFrequencyType |
-      find:savingsAccountProductTemplate.lockinPeriodFrequencyTypeOptions:'id':'value') }}</span>
+    <span fxFlex="60%">{{ getCatalogTranslation(savingsAccount.lockinPeriodFrequency + ' ' + (savingsAccount.lockinPeriodFrequencyType |
+      find:savingsAccountProductTemplate.lockinPeriodFrequencyTypeOptions:'id':'value')) }}</span>
   </div>
 
   <div fxFlexFill>
@@ -137,7 +137,7 @@
       <ng-container matColumnDef="chargeCalculationType">
         <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Type' | translate}} </th>
         <td mat-cell *matCellDef="let charge">
-          {{ charge.chargeCalculationType.value }}
+          {{ charge.chargeCalculationType.value | translateCatalog }}
         </td>
       </ng-container>
 
