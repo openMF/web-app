@@ -19,7 +19,7 @@
           <mat-label>{{'labels.inputs.Default Language' | translate}}</mat-label>
           <mat-select [formControl]="language" [compareWith]="compareOptions">
             <mat-option *ngFor="let language of languages" [value]="language">
-              {{ language.name }}
+              {{ 'languages.' + language | translate}}
             </mat-option>
           </mat-select>
         </mat-form-field>
