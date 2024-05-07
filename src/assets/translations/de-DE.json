@@ -644,6 +644,8 @@
 	    "THURSDAY": "DONNERSTAG",
 	    "FRIDAY": "FREITAG",
 	    "SATURDAY": "SAMSTAG",
+      "Interest posting": "Zinsbuchung",
+      "Amount on hold": "Zurückgestellter Betrag",
       "Invalid": "Ungültig"
     },
     "commons": {

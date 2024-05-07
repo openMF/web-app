@@ -8,13 +8,12 @@ import { MatDialog } from '@angular/material/dialog';
 /** Custom Services */
 import { UsersService } from '../users.service';
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
-import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
-
-/** Custom Validators */
-import { confirmPasswordValidator } from '../../login/reset-password/confirm-password.validator';
 
 /** Custom Dialog Component */
-import { ContinueSetupDialogComponent } from '../../configuration-wizard/continue-setup-dialog/continue-setup-dialog.component';
+import { PasswordsUtility } from 'app/core/utils/passwords-utility';
+import { confirmPasswordValidator } from 'app/login/reset-password/confirm-password.validator';
+import { ConfigurationWizardService } from 'app/configuration-wizard/configuration-wizard.service';
+import { ContinueSetupDialogComponent } from 'app/configuration-wizard/continue-setup-dialog/continue-setup-dialog.component';
 
 /**
  * Create user component.
@@ -55,7 +54,8 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
               private router: Router,
               private popoverService: PopoverService,
               private configurationWizardService: ConfigurationWizardService,
-              public dialog: MatDialog) {
+              private dialog: MatDialog,
+              private passwordsUtility: PasswordsUtility) {
     this.route.data.subscribe((data: {
         usersTemplate: any
       }) => {
@@ -112,8 +112,8 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
         this.userForm.removeControl('repeatPassword');
         this.userForm.get('email').setValidators([Validators.required, Validators.email]);
       } else {
-        this.userForm.addControl('password', new UntypedFormControl('', Validators.required));
-        this.userForm.addControl('repeatPassword', new UntypedFormControl('', Validators.required));
+        this.userForm.addControl('password', new UntypedFormControl('', this.passwordsUtility.getPasswordValidators()));
+        this.userForm.addControl('repeatPassword', new UntypedFormControl('', [Validators.required, this.passwordsUtility.confirmPassword('password')]));
         this.userForm.get('email').setValidators([Validators.email]);
       }
       this.userForm.get('email').updateValueAndValidity();

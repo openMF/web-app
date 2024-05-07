@@ -51,6 +51,9 @@ export class SearchPageComponent {
       case 'CLIENT':
         this.router.navigate(['clients', entity.entityId, 'general']);
         break;
+      case 'CLIENTIDENTIFIER':
+        this.router.navigate(['clients', entity.parentId, 'general']);
+        break;
       case 'CENTER':
         this.router.navigate(['centers', entity.entityId]);
         break;

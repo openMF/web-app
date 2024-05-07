@@ -50,7 +50,7 @@
         </div>
 
         <div fxFlex="50%" *ngIf="taxComponentData.creditAccountType">
-          {{ 'labels.inputs.accounting.' + taxComponentData.creditAccountType.value | translate }}
+          {{ taxComponentData.creditAccountType.value | translateCatalog }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="taxComponentData.creditAccount">

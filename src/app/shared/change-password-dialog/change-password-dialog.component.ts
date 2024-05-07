@@ -3,6 +3,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UntypedFormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { PasswordsUtility } from 'app/core/utils/passwords-utility';
 
 /**
  * Change Password Dialog component.
@@ -23,7 +24,8 @@ export class ChangePasswordDialogComponent implements OnInit {
    */
   constructor(public dialogRef: MatDialogRef<ChangePasswordDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
-              private formBuilder: UntypedFormBuilder) { }
+              private formBuilder: UntypedFormBuilder,
+              private passwordsUtility: PasswordsUtility) { }
 
   ngOnInit() {
     this.createChangePasswordForm();
@@ -32,7 +34,7 @@ export class ChangePasswordDialogComponent implements OnInit {
   /** Change Password form */
   createChangePasswordForm() {
     this.changePasswordForm = this.formBuilder.group({
-      'password': ['', [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*[#$@$!%*?&])[A-Za-z\d#$@$!%*?&].{8,}$'), Validators.maxLength(50), Validators.minLength(8)]],
+      'password': ['', this.passwordsUtility.getPasswordValidators()],
       'repeatPassword': ['', [Validators.required, this.confirmPassword('password')]]
     });
   }

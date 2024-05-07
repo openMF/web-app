@@ -644,6 +644,8 @@
 	    "THURSDAY": "GIOVEDÌ",
 	    "FRIDAY": "VENERDÌ",
 	    "SATURDAY": "SABATO",
+      "Interest posting": "Pubblicazione di interessi",
+      "Amount on hold": "Importo sospeso",
       "Invalid": "Non valido"
     },
     "commons": {

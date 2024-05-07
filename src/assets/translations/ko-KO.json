@@ -644,6 +644,8 @@
 	    "THURSDAY": "목요일",
 	    "FRIDAY": "금요일",
 	    "SATURDAY": "토요일",
+      "Interest posting": "관심 게시",
+      "Amount on hold": "보류 금액",
       "Invalid": "유효하지 않은"
     },
     "commons": {

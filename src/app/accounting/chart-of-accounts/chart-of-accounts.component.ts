@@ -45,7 +45,7 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
   /** Selected GL Account. */
   glAccount: GLAccountNode;
   /** Flag to check if tree is expanded or collapsed. */
-  isTreeExpanded: boolean = true;
+  isTreeExpanded = true;
 
   /** Paginator for chart of accounts table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -182,9 +182,9 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
     this.router.navigate(['/accounting']);
   }
 
-  /** 
+  /**
    * Expand and Collapse the tree
-  */
+   */
   toggleExpandCollapse() {
     this.isTreeExpanded = this.treeControlService.toggleExpandCollapse(this.nestedTreeControl, this.isTreeExpanded);
   }

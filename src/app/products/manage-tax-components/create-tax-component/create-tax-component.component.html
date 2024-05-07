@@ -34,7 +34,7 @@
             <mat-label>{{'labels.inputs.Debit Account Type' | translate}}</mat-label>
             <mat-select formControlName="debitAccountType">
               <mat-option *ngFor="let debitAccountType of debitAccountTypeData" [value]="debitAccountType.id">
-                {{ 'labels.inputs.accounting.' + debitAccountType.value | translate }}
+                {{ debitAccountType.value | translateCatalog }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -48,7 +48,7 @@
             <mat-label>{{'labels.inputs.Credit Account Type' | translate}}</mat-label>
             <mat-select formControlName="creditAccountType">
               <mat-option *ngFor="let creditAccountType of creditAccountTypeData" [value]="creditAccountType.id">
-                {{ 'labels.inputs.accounting.' + creditAccountType.value | translate }}
+                {{ creditAccountType.value | translateCatalog }}
               </mat-option>
             </mat-select>
           </mat-form-field>
