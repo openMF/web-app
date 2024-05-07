@@ -644,6 +644,8 @@
 	    "THURSDAY": "CETURTDIENA",
 	    "FRIDAY": "PIEKTDIENA",
 	    "SATURDAY": "SESTDIENA",
+      "Interest posting": "Interešu publicēšana",
+      "Amount on hold": "Aizturētā summa",
       "Invalid": "Nederīgs"
     },
     "commons": {

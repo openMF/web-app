@@ -19,8 +19,9 @@
                 [matTooltip]="savingsAccountData.status.value" *ngIf="!savingsAccountData.subStatus.block"></i>
               <i class="fa fa-stop" [ngClass]="savingsAccountData.subStatus.value | statusLookup"
                 [matTooltip]="savingsAccountData.subStatus.value" *ngIf="savingsAccountData.subStatus.block"></i>
-                {{'labels.inputs.Savings Product' | translate}} : {{savingsAccountData.savingsProductName}}<span class="m-l-10">
-                <mifosx-account-number accountNo="{{savingsAccountData.accountNo}}"></mifosx-account-number></span>
+                <span class="m-r-5">{{'labels.inputs.Savings Product' | translate}} :</span> 
+                <span class="m-r-5"><mifosx-long-text textValue="{{savingsAccountData.savingsProductName}}"></mifosx-long-text></span>
+                <mifosx-account-number accountNo="{{savingsAccountData.accountNo}}" display="left"></mifosx-account-number>
             </h3>
             <span class="account-overview">
               {{'labels.text.' + entityType | translate}} {{"labels.inputs.name" | translate}}: {{savingsAccountData.clientName ||

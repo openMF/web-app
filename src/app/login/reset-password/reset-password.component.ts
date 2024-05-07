@@ -10,6 +10,7 @@ import { AuthenticationService } from '../../core/authentication/authentication.
 
 /** Custom Validators */
 import { confirmPasswordValidator } from './confirm-password.validator';
+import { PasswordsUtility } from 'app/core/utils/passwords-utility';
 
 /**
  * Reset password component.
@@ -33,7 +34,8 @@ export class ResetPasswordComponent implements OnInit {
    * @param {AuthenticationService} authenticationService Authentication Service.
    */
   constructor(private formBuilder: UntypedFormBuilder,
-              private authenticationService: AuthenticationService) {  }
+              private authenticationService: AuthenticationService,
+              private passwordsUtility: PasswordsUtility) {  }
 
   /**
    * Creates reset password form.
@@ -66,7 +68,7 @@ export class ResetPasswordComponent implements OnInit {
    */
   private createResetPasswordForm() {
     this.resetPasswordForm = this.formBuilder.group({
-      'password': ['', Validators.required],
+      'password': ['', this.passwordsUtility.getPasswordValidators()],
       'repeatPassword': ['', Validators.required]
     }, { validator: confirmPasswordValidator });
   }

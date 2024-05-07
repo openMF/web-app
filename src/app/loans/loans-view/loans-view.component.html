@@ -20,8 +20,9 @@
               <h3>
                 <i class="fa fa-stop" matTooltip="{{'labels.status.' + loanDetailsData.status.value | translate}}"
                   [ngClass]="loanDetailsData.inArrears?'status-active-overdue':( iconLoanStatusColor() | statusLookup)"></i>
-                <span class="m-r-10">{{'labels.heading.Loan Product' | translate}}:</span> {{loanDetailsData.loanProductName}}
-                <mifosx-account-number accountNo="{{loanDetailsData.accountNo}}"></mifosx-account-number>
+                <span class="m-r-5">{{'labels.heading.Loan Product' | translate}} :</span> 
+                <span class="m-r-5"><mifosx-long-text textValue="{{loanDetailsData.loanProductName}}"></mifosx-long-text></span>
+                <mifosx-account-number accountNo="{{loanDetailsData.accountNo}}" display="left"></mifosx-account-number>
               </h3>
               <span class="loans-overview">
                 <span class="m-r-10">{{'labels.text.' + entityType | translate}} {{"labels.inputs.name" | translate}} :</span> {{loanDetailsData.clientName ||

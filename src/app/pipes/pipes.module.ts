@@ -13,6 +13,7 @@ import { FormatNumberPipe } from './format-number.pipe';
 import { YesnoPipe } from './yesno.pipe';
 import { PrettyPrintPipe } from './pretty-print.pipe';
 import { TranslateCatalogPipe } from './translate-catalog.pipe';
+import { TruncateTextPipe } from './truncate-text.pipe';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { TranslateCatalogPipe } from './translate-catalog.pipe';
   FormatNumberPipe,
   YesnoPipe,
   PrettyPrintPipe,
-  TranslateCatalogPipe],
+  TranslateCatalogPipe,
+  TruncateTextPipe],
   providers: [StatusLookupPipe,
   AccountsFilterPipe,
   ChargesFilterPipe,
@@ -43,7 +45,8 @@ import { TranslateCatalogPipe } from './translate-catalog.pipe';
   FormatNumberPipe,
   YesnoPipe,
   PrettyPrintPipe,
-  TranslateCatalogPipe],
+  TranslateCatalogPipe,
+  TruncateTextPipe],
   exports: [StatusLookupPipe,
   AccountsFilterPipe,
   ChargesFilterPipe,
@@ -56,6 +59,7 @@ import { TranslateCatalogPipe } from './translate-catalog.pipe';
   FormatNumberPipe,
   YesnoPipe,
   PrettyPrintPipe,
-  TranslateCatalogPipe]
+  TranslateCatalogPipe,
+  TruncateTextPipe]
 })
 export class PipesModule { }

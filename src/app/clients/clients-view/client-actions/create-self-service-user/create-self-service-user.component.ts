@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 
 /** Client Services. */
 import { ClientsService } from 'app/clients/clients.service';
+import { PasswordsUtility } from 'app/core/utils/passwords-utility';
 
 @Component({
   selector: 'mifosx-create-self-service-user',
@@ -21,7 +22,8 @@ export class CreateSelfServiceUserComponent implements OnInit {
   constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private clientService: ClientsService,
-              private router: Router) {
+              private router: Router,
+              private passwordsUtility: PasswordsUtility) {
     this.route.data.subscribe((data: { clientActionData: any}) => {
       this.clientData = data.clientActionData;
     });
@@ -43,8 +45,8 @@ export class CreateSelfServiceUserComponent implements OnInit {
         this.createSelfServiceForm.removeControl('repeatPassword');
       } else {
         this.hidePasswordField = false;
-        this.createSelfServiceForm.addControl('password', new UntypedFormControl('', [Validators.required]));
-        this.createSelfServiceForm.addControl('repeatPassword', new UntypedFormControl('', [Validators.required, this.confirmPassword('password')]));
+        this.createSelfServiceForm.addControl('password', new UntypedFormControl('', this.passwordsUtility.getPasswordValidators()));
+        this.createSelfServiceForm.addControl('repeatPassword', new UntypedFormControl('', [Validators.required, this.passwordsUtility.confirmPassword('password')]));
       }
     });
   }
@@ -81,26 +83,6 @@ export class CreateSelfServiceUserComponent implements OnInit {
     this.clientService.createSelfServiceUser(selfServiceForm).subscribe(() => {
       this.router.navigate(['../../general'], { relativeTo: this.route });
     });
-  }
-
-  /**
-   * Confirm Change Password of Users
-   * @param controlNameToCompare Form Control Name to be compared.
-   */
-  confirmPassword(controlNameToCompare: string): ValidatorFn {
-    return (c: AbstractControl): ValidationErrors|null => {
-        if (c.value == null || c.value.length === 0) {
-            return null;
-        }
-        const controlToCompare = c.root.get(controlNameToCompare);
-        if (controlToCompare) {
-            const subscription: Subscription = controlToCompare.valueChanges.subscribe(() => {
-                c.updateValueAndValidity();
-                subscription.unsubscribe();
-            });
-        }
-        return controlToCompare && controlToCompare.value !== c.value ? {'notequal': true} : null;
-    };
   }
 
 }

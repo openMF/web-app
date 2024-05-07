@@ -12,7 +12,8 @@
                         <mat-label> {{"labels.inputs.User Name" | translate}} </mat-label>
                         <input matInput required formControlName="username">
                         <mat-error *ngIf="createSelfServiceForm.controls.username.hasError('required')">
-                            {{"labels.inputs.User Name" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+                            {{"labels.inputs.User Name" | translate}} {{"labels.commons.is" | translate}}
+                            <strong>{{"labels.commons.required" | translate}}</strong>
                         </mat-error>
                     </mat-form-field>
 
@@ -20,7 +21,8 @@
                         <mat-label> {{"labels.inputs.First Name" | translate}} </mat-label>
                         <input matInput required formControlName="firstname">
                         <mat-error *ngIf="createSelfServiceForm.controls.firstname.hasError('required')">
-                            {{"labels.inputs.First Name" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+                            {{"labels.inputs.First Name" | translate}} {{"labels.commons.is" | translate}}
+                            <strong>{{"labels.commons.required" | translate}}</strong>
                         </mat-error>
                     </mat-form-field>
 
@@ -28,7 +30,8 @@
                         <mat-label> {{"labels.inputs.Last Name" | translate}} </mat-label>
                         <input matInput required formControlName="lastname">
                         <mat-error *ngIf="createSelfServiceForm.controls.lastname.hasError('required')">
-                            {{"labels.inputs.Last Name" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+                            {{"labels.inputs.Last Name" | translate}} {{"labels.commons.is" | translate}}
+                            <strong>{{"labels.commons.required" | translate}}</strong>
                         </mat-error>
                     </mat-form-field>
 
@@ -36,10 +39,12 @@
                         <mat-label> {{"labels.inputs.Email" | translate}} </mat-label>
                         <input matInput required formControlName="email">
                         <mat-error *ngIf="createSelfServiceForm.controls.email.hasError('required')">
-                            {{"labels.inputs.Email" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+                            {{"labels.inputs.Email" | translate}} {{"labels.commons.is" | translate}}
+                            <strong>{{"labels.commons.required" | translate}}</strong>
                         </mat-error>
                         <mat-error *ngIf="createSelfServiceForm.controls.email.hasError('email')">
-                            {{"labels.inputs.Email should be a" | translate}} <strong>{{"labels.inputs.valid" | translate}}</strong> {{"labels.inputs.email" | translate}}.
+                            {{"labels.inputs.Email should be a" | translate}} <strong>{{"labels.inputs.valid" |
+                                translate}}</strong> {{"labels.inputs.email" | translate}}.
                         </mat-error>
                     </mat-form-field>
 
@@ -53,15 +58,30 @@
                             {{"labels.inputs.Override Password Expire Policy" | translate}} ?
                         </mat-checkbox>
 
-                        <i class="fa fa-question-circle fa fa-align-left" title="Determines if passwords do not expire for this user even if global configuration for password expiry is enabled"></i>
+                        <i class="fa fa-question-circle fa fa-align-left"
+                            title="Determines if passwords do not expire for this user even if global configuration for password expiry is enabled"></i>
 
                     </div>
 
                     <mat-form-field fxFlex="48%" *ngIf="!hidePasswordField">
-                        <mat-label> {{"labels.inputs.Password" | translate}} </mat-label>
-                        <input matInput required formControlName="password" type="password">
+                        <mat-label>{{ 'labels.inputs.Password' | translate }}</mat-label>
+                        <input matInput formControlName="password" type="password">
                         <mat-error *ngIf="createSelfServiceForm.controls.password.hasError('required')">
-                            {{"labels.inputs.Password" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+                            {{ 'labels.inputs.Password' | translate }} <strong>{{'labels.commons.is required' | translate }}</strong>
+                        </mat-error>
+                        <mat-error *ngIf="createSelfServiceForm.controls.password.hasError('minlength')">
+                            {{'labels.commons.Password should be at least' | translate }} <strong>{{'labels.commons.8 characters long' | translate }}</strong>
+                        </mat-error>
+                        <mat-error *ngIf="createSelfServiceForm.controls.password.hasError('maxlength')">
+                            {{'labels.commons.Password should not be more than' | translate }}
+                            <strong>{{'labels.commons.50 characters long' | translate }}</strong>
+                        </mat-error>
+                        <mat-error
+                            *ngIf="createSelfServiceForm.controls.password.hasError('pattern') && !(createSelfServiceForm.controls.password.hasError('minlength') || createSelfServiceForm.controls.password.hasError('maxlength'))">
+                            {{'labels.commons.Password should include a' | translate }}
+                            <strong>{{'labels.commons.numeral' | translate }}</strong> {{'labels.commons.and at' | translate }} 
+                            <strong>{{'labels.commons.least one uppercase' | translate }}</strong>
+                            ,<strong>{{'labels.commons.lowercase and special character' | translate }}</strong>
                         </mat-error>
                     </mat-form-field>
 
@@ -69,10 +89,12 @@
                         <mat-label> {{"labels.inputs.Repeat Password" | translate}} </mat-label>
                         <input matInput required formControlName="repeatPassword" type="password">
                         <mat-error *ngIf="createSelfServiceForm.controls.repeatPassword.hasError('required')">
-                            {{"labels.inputs.Repeat password" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+                            {{"labels.inputs.Repeat password" | translate}} {{"labels.commons.is" | translate}}
+                            <strong>{{"labels.commons.required" | translate}}</strong>
                         </mat-error>
                         <mat-error *ngIf="createSelfServiceForm.controls.repeatPassword.hasError('notequal')">
-                            {{"labels.inputs.Passwords should be" | translate}} <strong>{{"labels.inputs.matched" | translate}}</strong>
+                            {{"labels.inputs.Passwords should be" | translate}} <strong>{{"labels.inputs.matched" |
+                                translate}}</strong>
                         </mat-error>
                     </mat-form-field>
 
@@ -84,9 +106,12 @@
                 </div>
 
                 <mat-card-actions fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
-                  <button type="button" mat-raised-button [routerLink]="['../../']">{{"labels.buttons.Cancel" | translate}}</button>
-                  <button mat-raised-button color="primary" [disabled]="!createSelfServiceForm.valid">{{"labels.buttons.Activate Self Service User" | translate}}</button>
-                  <i class="fa fa-question-circle fa-2x" title="Activate Self Service User Help"></i>
+                    <button type="button" mat-raised-button [routerLink]="['../../']">{{"labels.buttons.Cancel" |
+                        translate}}</button>
+                    <button mat-raised-button color="primary"
+                        [disabled]="!createSelfServiceForm.valid">{{"labels.buttons.Activate Self Service User" |
+                        translate}}</button>
+                    <i class="fa fa-question-circle fa-2x" title="Activate Self Service User Help"></i>
                 </mat-card-actions>
 
             </mat-card-content>

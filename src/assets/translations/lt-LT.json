@@ -644,6 +644,8 @@
 	    "THURSDAY": "KETVIRTADIENIS",
 	    "FRIDAY": "PENKTADIENIS",
 	    "SATURDAY": "ŠEŠTADIENIS",
+      "Interest posting": "Interesų skelbimas",
+      "Amount on hold": "Sulaikyta suma",
       "Invalid": "Neteisinga"
     },
     "commons": {

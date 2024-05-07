@@ -644,6 +644,8 @@
 	    "THURSDAY": "ČTVRTEK",
 	    "FRIDAY": "PÁTEK",
 	    "SATURDAY": "SOBOTA",
+      "Interest posting": "Zveřejnění zájmu",
+      "Amount on hold": "Částka na počkání",
       "Invalid": "Neplatný"
     },
     "commons": {
