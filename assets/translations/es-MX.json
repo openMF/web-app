@@ -644,6 +644,8 @@
             "THURSDAY": "JUEVES",
             "FRIDAY": "VIERNES",
             "SATURDAY": "SÁBADO",
+            "Interest posting": "Intereses",	
+            "Amount on hold": "Retención",
             "Invalid": "Inválido"
         },
         "commons": {

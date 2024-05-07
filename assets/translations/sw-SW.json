@@ -644,6 +644,8 @@
 	    "THURSDAY": "ALHAMISI",
 	    "FRIDAY": "IJUMAA",
 	    "SATURDAY": "JUMAMOSI",
+      "Interest posting": "Nia ya kuchapisha",
+      "Amount on hold": "Kiasi kilichohifadhiwa",
       "Invalid": "Batili"
     },
     "commons": {

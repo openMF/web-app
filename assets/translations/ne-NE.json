@@ -644,6 +644,8 @@
 	    "THURSDAY": "बिहीबार",
 	    "FRIDAY": "शुक्रबार",
 	    "SATURDAY": "शनिबार",
+      "Interest posting": "चासो पोस्टिंग",
+      "Amount on hold": "होल्डमा रहेको रकम",
       "Invalid": "अवैध"
     },
     "commons": {
