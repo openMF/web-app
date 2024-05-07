@@ -18,4 +18,8 @@
   window["env"]["supportedLanguages"] = "";
   // Head Office ID
   window["env"]["headOfficeID"] = "";
+  //Matomo web analytics
+  window["env"]["matomoSiteId"] = "";
+  window["env"]["matomoSiteUrl"] = "";
+
 })(this);

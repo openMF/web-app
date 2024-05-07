@@ -6,6 +6,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 /** Environment Configuration */
+import { environment } from '../environments/environment';
 
 /** Main Component */
 import { WebAppComponent } from './web-app.component';
@@ -47,6 +48,8 @@ import { AuthenticationService } from './core/authentication/authentication.serv
 import { FormsModule } from '@angular/forms';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { DragulaModule } from 'ng2-dragula';
+/** Matomo module */
+import { MatomoModule } from 'ngx-matomo';
 
 /**
  * App Module
@@ -97,6 +100,18 @@ import { DragulaModule } from 'ng2-dragula';
     TasksModule,
     AppRoutingModule,
     DragulaModule.forRoot(),
+    MatomoModule.forRoot({
+      scriptUrl: `${environment.matomoSiteUrl}/matomo.js}`, // Matomo's site handler frontend URI
+      trackers: [
+        {
+          trackerUrl:  `${environment.matomoSiteUrl}/matomo.php`, // Matomo's site handler backend URI
+          siteId: environment.matomoSiteId , // Matomo's site ID (find it in your Matomo's settings)
+        }
+      ],
+      routeTracking: {
+        enable: true
+      }
+    }),
   ],
   declarations: [WebAppComponent, NotFoundComponent],
   providers: [

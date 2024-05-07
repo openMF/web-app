@@ -28,6 +28,8 @@ export const environment = {
   defaultLanguage: window["env"]["defaultLanguage"] || "en-US",
   supportedLanguages: window["env"]["supportedLanguages"] || "en-US,fr-FR",
   headOfficeID: window["env"]["headOfficeID"] || "1",
+  matomoSiteId: 1,
+  matomoSiteUrl: "https://analytics.test.oneacrefund.org"
 };
 
 // Server URL
