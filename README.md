@@ -197,6 +197,10 @@ Setting for Wait time in seconds for reading the COB Catch-Up status, Default 30
 MIFOS_WAIT_TIME_FOR_CATCHUP=30
 ```
 
+Disable server switching drop down
+```
+ALLOW_SWITCHING_BACKEND_INSTANCE=false
+```
 
 For more information look the env.sample file in the root directory of the project
 
