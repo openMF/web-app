@@ -1,51 +1,86 @@
 <mat-toolbar fxLayout="row" color="primary" id="mifosx-toolbar">
-
   <button mat-icon-button *ngIf="!sidenavCollapsed" (click)="toggleSidenav()" matTooltip="Toggle Hide/Open">
     <fa-icon icon="bars" size="lg"></fa-icon>
   </button>
 
-  <button mat-icon-button *ngIf="sidenav.opened" (click)="toggleSidenavCollapse()" matTooltip="Toggle Collapse" fxHide.lt-md="true">
+  <button
+    mat-icon-button
+    *ngIf="sidenav.opened"
+    (click)="toggleSidenavCollapse()"
+    matTooltip="Toggle Collapse"
+    fxHide.lt-md="true"
+  >
     <fa-icon *ngIf="!sidenavCollapsed" icon="chevron-left"></fa-icon>
     <fa-icon *ngIf="sidenavCollapsed" icon="chevron-right"></fa-icon>
   </button>
 
   <nav mat-tab-nav-bar backgroundColor="primary" class="ml-1" *ngIf="hasChecked">
-
-    <a mat-tab-link class="tab-link" *ngIf="displayAdminOptions && activeCountries.length>0">
+    <a mat-tab-link class="tab-link" *ngIf="displayAdminOptions && activeCountries.length > 0">
       <div class="form-group">
         <select class="form-control" id="countryId" (change)="saveTheSelectedCountry($event.target.value)">
-          <option value="" selected disabled hidden>{{ selectedCountryName ? selectedCountryName : 'Select Country'}}</option>
+          <option value="" selected disabled hidden>
+            {{ selectedCountryName ? selectedCountryName : "Select Country" }}
+          </option>
           <option *ngFor="let country of activeCountries" [value]="country.id">{{ country.name }}</option>
         </select>
-      </div>  
+      </div>
     </a>
 
-    <a mat-tab-link class="tab-link" [matMenuTriggerFor]="institutionMenu" #institutionMenuTrigger="matMenuTrigger" *ngIf="(selectedCountryName && displayAdminOptions) || !displayAdminOptions">
+    <a
+      mat-tab-link
+      class="tab-link"
+      [matMenuTriggerFor]="institutionMenu"
+      #institutionMenuTrigger="matMenuTrigger"
+      *ngIf="(selectedCountryName && displayAdminOptions) || !displayAdminOptions"
+    >
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
-      {{ 'Institution' | translate }}
+      {{ "Institution" | translate }}
+    </a>
+
+    <a
+      mat-tab-link
+      class="tab-link"
+      *ngIf="(selectedCountryName && displayAdminOptions) || !displayAdminOptions"
+      [routerLink]="['/organization']"
+    >
+      <fa-icon class="mr-05" icon="building" size="lg"></fa-icon>
+      {{ "Organization" | translate }}
+    </a>
+
+    <a
+      mat-tab-link
+      class="tab-link"
+      *ngIf="(selectedCountryName && displayAdminOptions) || !displayAdminOptions"
+      [routerLink]="['/products']"
+    >
+      <fa-icon class="mr-05" icon="book" size="lg"></fa-icon>
+      {{ "Products" | translate }}
     </a>
 
     <span fxHide.lt-lg="true" *ngIf="(selectedCountryName && displayAdminOptions) || !displayAdminOptions">
-
-      <a mat-tab-link class="tab-link" [routerLink]="['/accounting']">
+      <!--   <a mat-tab-link class="tab-link" [routerLink]="['/accounting']">
         <fa-icon class="mr-05" icon="money-bill-alt" size="lg"></fa-icon>
         {{ 'Accounting' | translate }}
-      </a>
-      <a mat-tab-link class="tab-link" [matMenuTriggerFor]="reportsMenu" #reportsMenuTrigger="matMenuTrigger" >
+      </a> -->
+      <!--   <a mat-tab-link class="tab-link" [matMenuTriggerFor]="reportsMenu" #reportsMenuTrigger="matMenuTrigger" >
         <fa-icon class="mr-05" icon="chart-bar" size="lg"></fa-icon>
         {{ 'Reports' | translate }}
-      </a>
-      <a mat-tab-link class="tab-link" [matMenuTriggerFor]="adminMenu" #adminMenuTrigger="matMenuTrigger" *ngIf="displayAdminOptions">
+      </a> -->
+      <a
+        mat-tab-link
+        class="tab-link"
+        [matMenuTriggerFor]="adminMenu"
+        #adminMenuTrigger="matMenuTrigger"
+        *ngIf="displayAdminOptions"
+      >
         <fa-icon class="mr-05" icon="shield-alt" size="lg"></fa-icon>
-        {{ 'Admin' | translate }}
+        {{ "Admin" | translate }}
       </a>
-      <a mat-tab-link class="tab-link" [matMenuTriggerFor]="selfServiceMenu" #selfServiceMenuTrigger="matMenuTrigger">
+      <!--   <a mat-tab-link class="tab-link" [matMenuTriggerFor]="selfServiceMenu" #selfServiceMenuTrigger="matMenuTrigger">
         <fa-icon class="mr-05" icon="users" size="lg"></fa-icon>
         {{ 'Self Service' | translate }}
-      </a>
-
+      </a> -->
     </span>
-
   </nav>
 
   <span fxFlex="auto"></span>
@@ -59,20 +94,19 @@
   <mifosx-notifications-tray fxHide.lt-md></mifosx-notifications-tray>
 
   <button mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu">
-    <img src="assets/images/user_placeholder.png">
+    <img src="assets/images/user_placeholder.png" />
   </button>
-
 </mat-toolbar>
 
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item routerLink="/clients">Clients</button>
   <button mat-menu-item routerLink="/groups">Groups</button>
-  <button mat-menu-item routerLink="/centers">Centers</button>
+  <!--   <button mat-menu-item routerLink="/centers">Centers</button> -->
   <span fxHide.lg>
-    <button mat-menu-item [routerLink]="['/accounting']">Accounting</button>
-    <button mat-menu-item [matMenuTriggerFor]="reportsMenu">Reports</button>
+    <!--   <button mat-menu-item [routerLink]="['/accounting']">Accounting</button>
+    <button mat-menu-item [matMenuTriggerFor]="reportsMenu">Reports</button> -->
     <button mat-menu-item [matMenuTriggerFor]="adminMenu">Admin</button>
-    <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">Self Service</button>
+    <!--     <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">Self Service</button> -->
   </span>
 </mat-menu>
 
@@ -89,9 +123,9 @@
 
 <mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item [routerLink]="['/users']">Users</button>
-  <button mat-menu-item [routerLink]="['/organization']">Organization</button>
+  <!-- <button mat-menu-item [routerLink]="['/organization']">Organization</button> -->
   <button mat-menu-item [routerLink]="['/system']">System</button>
-  <button mat-menu-item [routerLink]="['/products']">Products</button>
+  <!--  <button mat-menu-item [routerLink]="['/products']">Products</button> -->
   <button mat-menu-item [routerLink]="['/templates']">Templates</button>
 </mat-menu>
 

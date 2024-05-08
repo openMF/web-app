@@ -3,7 +3,7 @@
     <form [formGroup]="transferClientForm" (ngSubmit)="submit()">
       <mat-card-content>
         <div fxLayout="column">
-         <!--  <mat-form-field>
+          <!--  <mat-form-field>
             <mat-label>Office</mat-label>
             <mat-select required formControlName="destinationOfficeId" #office>
               <mat-select-filter
@@ -27,7 +27,7 @@
             <label for="officeId">Office</label>
             <ng-select
               [items]="officeData"
-              bindLabel="name"
+              bindLabel="officeHierarchyPath"
               bindValue="id"
               placeholder="Select Office"
               formControlName="destinationOfficeId"

@@ -11,3 +11,8 @@
   font-size: 80%;
   margin: 0;
 }
+
+::ng-deep .ng-select .ng-option .ng-option-label {
+  white-space: normal !important;
+  line-height: normal !important;
+}

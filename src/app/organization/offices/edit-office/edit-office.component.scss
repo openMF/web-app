@@ -15,3 +15,7 @@
   .mat-label-for{
     padding: 2px 5px;
   }
+  ::ng-deep .ng-select .ng-option .ng-option-label {
+    white-space: normal !important;
+    line-height: normal !important;
+  }

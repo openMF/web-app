@@ -24,7 +24,7 @@
             <ng-select
               #splitOffice
               [items]="splitOffices"
-              bindLabel="name"
+              bindLabel="officeHierarchyPath"
               bindValue="id"
               placeholder="Select Office"
               formControlName="splitId"
@@ -251,7 +251,7 @@
               (change)="filterSelectedChildOffices()"
             >
             </ng-select>
-          </div> 
+          </div>
 
 
           <mat-form-field (click)="openedOnDatePicker.open()">

@@ -1,6 +1,6 @@
 {
   "sonarlint.connectedMode.project": {
-    "connectionId": "<default>",
+    "connectionId": "one-acre-fund",
     "projectKey": "one-acre-fund_fineract-frontend-v2"
   }
 }

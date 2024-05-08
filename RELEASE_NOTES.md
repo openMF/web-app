@@ -36,6 +36,7 @@ Release Notes
     * [SER-2446] - Add ng-select as drop down in client and group creation
     * [SER-2458] - Replace mat-select-filter in all interfaces with ng select
     * [SER-2304] - Upgrade to angular 14
+    * [SER-2510] - show office hierrachy path name, show only required menus.
 
 ## Version 1.0.0 - for use with Fineract Web App
 
