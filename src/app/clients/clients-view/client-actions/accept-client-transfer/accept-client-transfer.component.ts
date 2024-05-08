@@ -8,6 +8,9 @@ import { ClientsService } from "app/clients/clients.service";
 import { Dates } from "app/core/utils/dates";
 import { SettingsService } from "app/settings/settings.service";
 
+import { AuthenticationService } from '../../../../core/authentication/authentication.service';
+import { MatomoTracker } from 'ngx-matomo';
+
 /**
  * Accept Client Transfer Component
  */
@@ -31,6 +34,8 @@ export class AcceptClientTransferComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
+   * @param {AuthenticationService} authenticationService Authentication service.
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -38,7 +43,9 @@ export class AcceptClientTransferComponent implements OnInit {
     private settingsService: SettingsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private authenticationService: AuthenticationService,
+    private matomoTracker: MatomoTracker
   ) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.transferDate = data.clientActionData;
@@ -51,6 +58,13 @@ export class AcceptClientTransferComponent implements OnInit {
    */
   ngOnInit() {
     this.createAcceptClientTransferForm();
+
+    //set Matomo page info
+    let title = document.title;
+    let userName = this.authenticationService.getConnectedUsername() ? this.authenticationService.getConnectedUsername() : "";
+
+    this.matomoTracker.setUserId(userName); //tracker user ID
+    this.matomoTracker.setDocumentTitle(`${title}`);
   }
 
   /**
@@ -83,5 +97,8 @@ export class AcceptClientTransferComponent implements OnInit {
     this.clientsService.executeClientCommand(this.clientId, "acceptTransfer", data).subscribe(() => {
       this.router.navigate(["../../"], { relativeTo: this.route });
     });
+
+    //Track Matomo event for transferring client
+    this.matomoTracker.trackEvent('clients', 'transfer', this.clientId);
   }
 }

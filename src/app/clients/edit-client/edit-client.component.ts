@@ -7,6 +7,8 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormControl } 
 import { ClientsService } from '../clients.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { AuthenticationService } from '../../core/authentication/authentication.service';
+import { MatomoTracker } from 'ngx-matomo';
 
 /**
  * Edit Client Component
@@ -53,13 +55,17 @@ export class EditClientComponent implements OnInit {
    * @param {ClientsService} clientsService Clients Service
    * @param {Dates} dateUtils Date Utils
    * @param {SettingsService} settingsService Settings Service
+   * @param {AuthenticationService} authenticationService Authentication service.
+   * @param {MatomoTracker} matomoTracker Matomo tracker service.
    */
   constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private clientsService: ClientsService,
               private dateUtils: Dates,
-              private settingsService: SettingsService) {
+              private settingsService: SettingsService,
+              private authenticationService: AuthenticationService,
+              private matomoTracker: MatomoTracker) {
     this.route.data.subscribe((data: { clientDataAndTemplate: any }) => {
       this.clientDataAndTemplate = data.clientDataAndTemplate;
     });
@@ -86,6 +92,13 @@ export class EditClientComponent implements OnInit {
       'submittedOnDate': this.clientDataAndTemplate.timeline.submittedOnDate && new Date(this.clientDataAndTemplate.timeline.submittedOnDate),
       'activationDate': this.clientDataAndTemplate.timeline.activatedOnDate && new Date(this.clientDataAndTemplate.timeline.activatedOnDate)
     });
+
+    //set Matomo page info
+   let title = document.title;
+   let userName = this.authenticationService.getConnectedUsername() ? this.authenticationService.getConnectedUsername() : "";
+
+   this.matomoTracker.setUserId(userName); //tracker user ID
+   this.matomoTracker.setDocumentTitle(`${title}`);
   }
 
   /**
@@ -178,9 +191,14 @@ export class EditClientComponent implements OnInit {
     } else {
       clientData.clientNonPersonDetails = {};
     }
+    //Track Matomo event for editing client
+    this.matomoTracker.trackEvent('clients', 'edit', clientData.id);
+
     this.clientsService.updateClient(this.clientDataAndTemplate.id, clientData).subscribe(() => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
+
+
   }
 
 }

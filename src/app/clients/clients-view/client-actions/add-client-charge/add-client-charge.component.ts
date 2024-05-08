@@ -8,6 +8,9 @@ import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 
+import { AuthenticationService } from '../../../../core/authentication/authentication.service';
+import { MatomoTracker } from 'ngx-matomo';
+
 /**
  * Add Clients Charge component.
  */
@@ -39,6 +42,8 @@ export class AddClientChargeComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils
    * @param {ClientsService} clientsService Clients Service
    * @param {SettingsService} settingsService Setting service
+   * @param {AuthenticationService} authenticationService Authentication service.
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -46,7 +51,9 @@ export class AddClientChargeComponent implements OnInit {
     private router: Router,
     private dateUtils: Dates,
     private clientsService: ClientsService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private authenticationService: AuthenticationService,
+    private matomoTracker: MatomoTracker
   ) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.clientChargeOptions = data.clientActionData.chargeOptions;
@@ -57,6 +64,14 @@ export class AddClientChargeComponent implements OnInit {
   ngOnInit() {
     this.createClientsChargeForm();
     this.buildDependencies();
+
+    //set Matomo page info
+    let title = document.title;
+    let userName = this.authenticationService.getConnectedUsername() ? this.authenticationService.getConnectedUsername() : "";
+
+    this.matomoTracker.setUserId(userName); //tracker user ID
+    this.matomoTracker.setDocumentTitle(`${title}`);
+
   }
 
   /**
@@ -138,6 +153,9 @@ export class AddClientChargeComponent implements OnInit {
     this.clientsService.createClientCharge(this.clientId, clientCharge).subscribe( () => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
+
+    //Track Matomo event for adding client charge
+    this.matomoTracker.trackEvent('clients', 'add.charges', this.clientId);
   }
 
 }

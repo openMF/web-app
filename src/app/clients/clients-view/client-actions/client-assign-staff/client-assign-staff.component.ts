@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
+import { AuthenticationService } from '../../../../core/authentication/authentication.service';
+import { MatomoTracker } from 'ngx-matomo';
 
 /**
  * Clients Assign Staff Component
@@ -29,11 +31,16 @@ export class ClientAssignStaffComponent implements OnInit {
    * @param {SavingsService} savingsService Savings Service
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
+   * @param {AuthenticationService} authenticationService Authentication service.
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
   constructor(private formBuilder: UntypedFormBuilder,
               private clientsService: ClientsService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private authenticationService: AuthenticationService,
+              private matomoTracker: MatomoTracker
+            ) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.clientData = data.clientActionData;
     });
@@ -45,6 +52,13 @@ export class ClientAssignStaffComponent implements OnInit {
   ngOnInit() {
     this.staffData = this.clientData.staffOptions;
     this.createClientAssignStaffForm();
+
+     //set Matomo page info
+     let title = document.title;
+     let userName = this.authenticationService.getConnectedUsername() ? this.authenticationService.getConnectedUsername() : "";
+
+     this.matomoTracker.setUserId(userName); //tracker user ID
+     this.matomoTracker.setDocumentTitle(`${title}`);
   }
 
   /**
@@ -64,6 +78,9 @@ export class ClientAssignStaffComponent implements OnInit {
       .subscribe(() => {
         this.router.navigate(['../../'], { relativeTo: this.route });
       });
+
+    //Track Matomo event for assigning client staff
+    this.matomoTracker.trackEvent('clients', 'assign.staff', this.clientData.id);
   }
 
 }

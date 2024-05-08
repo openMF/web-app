@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AuthenticationService } from '../../../../core/authentication/authentication.service';
+import { MatomoTracker } from 'ngx-matomo';
 
 /**
  * Client Screen Reports Component.
@@ -36,12 +38,16 @@ export class ClientScreenReportsComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {DomSanitizer} sanitizer DOM Sanitizer
    * @param {Renderer2} renderer Renderer 2
+   * @param {AuthenticationService} authenticationService Authentication service.
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
   constructor(private formBuilder: UntypedFormBuilder,
-              private clientsService: ClientsService,
-              private route: ActivatedRoute,
-              private sanitizer: DomSanitizer,
-              private renderer: Renderer2) {
+    private clientsService: ClientsService,
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer,
+    private renderer: Renderer2,
+    private authenticationService: AuthenticationService,
+    private matomoTracker: MatomoTracker) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.templatesData = data.clientActionData;
     });
@@ -53,6 +59,13 @@ export class ClientScreenReportsComponent implements OnInit {
    */
   ngOnInit() {
     this.createClientScreenReportForm();
+
+    //set Matomo page info
+    let title = document.title;
+    let userName = this.authenticationService.getConnectedUsername() ? this.authenticationService.getConnectedUsername() : "";
+
+    this.matomoTracker.setUserId(userName); //tracker user ID
+    this.matomoTracker.setDocumentTitle(`${title}`);
   }
 
   /**
@@ -62,12 +75,18 @@ export class ClientScreenReportsComponent implements OnInit {
     this.clientScreenReportForm = this.formBuilder.group({
       'templateId': ['']
     });
+    //Track Matomo event for creating client report
+    this.matomoTracker.trackEvent('clients', 'create.report',this.clientId);
+
   }
 
   /**
    * Prints client screen report
    */
   print() {
+    //Track Matomo event for printing client report
+    this.matomoTracker.trackEvent('clients', 'print.report',this.clientId);
+
     const templateWindow = window.open('', 'Screen Report', 'height=400,width=600');
     templateWindow.document.write('<html><head>');
     templateWindow.document.write('</head><body>');
@@ -86,6 +105,9 @@ export class ClientScreenReportsComponent implements OnInit {
       this.template = this.sanitizer.sanitize(SecurityContext.HTML, response);
       this.renderer.setProperty(this.screenReportRef.nativeElement, 'innerHTML', this.template);
     });
+
+    //Track Matomo event for generating client report
+    this.matomoTracker.trackEvent('clients', 'generate.report',this.clientId);
   }
 
 }

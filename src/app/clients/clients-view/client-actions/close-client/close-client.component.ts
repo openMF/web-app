@@ -7,6 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
+import { AuthenticationService } from '../../../../core/authentication/authentication.service';
+import { MatomoTracker } from 'ngx-matomo';
 
 /**
  * Close Client Component
@@ -36,13 +38,17 @@ export class CloseClientComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
+   * @param {AuthenticationService} authenticationService Authentication service.
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
   constructor(private formBuilder: UntypedFormBuilder,
               private clientsService: ClientsService,
               private dateUtils: Dates,
               private route: ActivatedRoute,
               private router: Router,
-              private settingsService: SettingsService) {
+              private settingsService: SettingsService,
+              private authenticationService: AuthenticationService,
+              private matomoTracker: MatomoTracker) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.closureData = data.clientActionData.narrations;
     });
@@ -51,6 +57,13 @@ export class CloseClientComponent implements OnInit {
 
   ngOnInit() {
     this.createCloseClientForm();
+
+     //set Matomo page info
+     let title = document.title;
+     let userName = this.authenticationService.getConnectedUsername() ? this.authenticationService.getConnectedUsername() : "";
+
+     this.matomoTracker.setUserId(userName); //tracker user ID
+     this.matomoTracker.setDocumentTitle(`${title}`);
   }
 
   /**
@@ -82,6 +95,9 @@ export class CloseClientComponent implements OnInit {
     this.clientsService.executeClientCommand(this.clientId, 'close', data).subscribe(() => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
+
+    //Track Matomo event for closing client
+    this.matomoTracker.trackEvent('clients', 'close',this.clientId);
   }
 
 }

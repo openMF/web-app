@@ -12,6 +12,8 @@ import { tap } from 'rxjs/operators';
 /** Custom Services */
 import { ClientsService } from './clients.service';
 import { SearchService } from '../search/search.service';
+import { AuthenticationService } from '../core/authentication/authentication.service';
+import { MatomoTracker } from 'ngx-matomo';
 
 @Component({
   selector: 'mifosx-clients',
@@ -30,11 +32,29 @@ export class ClientsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private clientsService: ClientsService, private searchService: SearchService) {
+  /**
+   * Fetches paginated client list
+   * @param {ClientsService} clientsService Clients Service
+   * @param {SearchService} searchService Search service
+   * @param {AuthenticationService} authenticationService Authentication service.
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
+   */
+  constructor(private clientsService: ClientsService,
+    private searchService: SearchService,
+    private authenticationService: AuthenticationService,
+    private matomoTracker: MatomoTracker
+  ) {
 
   }
 
   ngOnInit() {
+    //set Matomo page info
+    let title = document.title;
+    let userName = this.authenticationService.getConnectedUsername() ? this.authenticationService.getConnectedUsername() : "";
+
+    this.matomoTracker.setUserId(userName); //tracker user ID
+    this.matomoTracker.setDocumentTitle(`${title}`);
+
     this.getClients();
   }
 
@@ -54,8 +74,11 @@ export class ClientsComponent implements OnInit, AfterViewInit {
     if (!this.sort.direction) {
       delete this.sort.active;
     }
-
+    //Matomo log activity
+    this.matomoTracker.trackEvent('clients', 'list', this.sort.active, this.paginator.pageIndex);// change to track right info
     if (this.searchValue !== '') {
+      //Matomo track search
+      this.matomoTracker.trackSiteSearch(this.searchValue, 'clients');
       this.applyFilter(this.searchValue);
     } else {
       this.dataSource.getClients(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, this.showClosedAccounts.checked);
@@ -68,6 +91,7 @@ export class ClientsComponent implements OnInit, AfterViewInit {
   getClients() {
     this.dataSource = new ClientsDataSource(this.clientsService, this.searchService);
     this.dataSource.getClients(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, this.showClosedAccounts.checked);
+
   }
 
   /**
@@ -82,7 +106,7 @@ export class ClientsComponent implements OnInit, AfterViewInit {
    * Search Client Data
    * @param {string} searchValue Value to filter data.
    */
-   applySearch(searchValue: string = '') {
+  applySearch(searchValue: string = '') {
     if (searchValue.length > 0) {
       this.dataSource = new ClientsDataSource(this.clientsService, this.searchService);
       this.searchValue = searchValue;

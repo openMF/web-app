@@ -15,6 +15,8 @@ import { CaptureImageDialogComponent } from './custom-dialogs/capture-image-dial
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
+import { AuthenticationService } from '../../core/authentication/authentication.service';
+import { MatomoTracker } from 'ngx-matomo';
 
 @Component({
   selector: 'mifosx-clients-view',
@@ -27,12 +29,23 @@ export class ClientsViewComponent implements OnInit {
   clientDatatables: any;
   clientImage: any;
   clientTemplateData: any;
-
-  constructor(private route: ActivatedRoute,
+ /**
+   * Retrieves the client information for view.
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {Router} router Activated Route.
+   * @param {ClientsService} clientsService clients service.
+   * @param {DomSanitizer} _sanitizer DOM I/O validation & cleanup.
+   * @param {MatDialog} dialog DOM popup.
+   * @param {AuthenticationService} authenticationService Authentication service.
+   * @param {MatomoTracker} matomoTracker Matomo tracker service.
+   */  constructor(private route: ActivatedRoute,
               private router: Router,
               private clientsService: ClientsService,
               private _sanitizer: DomSanitizer,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private authenticationService: AuthenticationService,
+              private matomoTracker: MatomoTracker
+            ) {
     this.route.data.subscribe((data: {
       clientViewData: any,
       clientTemplateData: any,
@@ -50,6 +63,14 @@ export class ClientsViewComponent implements OnInit {
         this.clientImage = this._sanitizer.bypassSecurityTrustResourceUrl(base64Image);
       }, (error: any) => {}
     );
+
+     //set Matomo page info
+   let title = document.title;
+   let userName = this.authenticationService.getConnectedUsername() ? this.authenticationService.getConnectedUsername() : "";
+
+   this.matomoTracker.setUserId(userName); //tracker user ID
+   this.matomoTracker.setDocumentTitle(`${title}`);
+
   }
 
   /**
@@ -136,6 +157,7 @@ export class ClientsViewComponent implements OnInit {
         });
       }
     });
+    //handle client
   }
 
   /**

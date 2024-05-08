@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -12,6 +12,8 @@ import { ClientAddressStepComponent } from '../client-stepper/client-address-ste
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
+import { AuthenticationService } from '../../core/authentication/authentication.service';
+import { MatomoTracker } from 'ngx-matomo';
 
 
 /**
@@ -22,7 +24,7 @@ import { SettingsService } from 'app/settings/settings.service';
   templateUrl: './create-client.component.html',
   styleUrls: ['./create-client.component.scss']
 })
-export class CreateClientComponent {
+export class CreateClientComponent implements OnInit {
 
   /** Client General Step */
   @ViewChild(ClientGeneralStepComponent, { static: true }) clientGeneralStep: ClientGeneralStepComponent;
@@ -41,16 +43,29 @@ export class CreateClientComponent {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {ClientsService} clientsService Clients Service
-   * @param {SettingsService} settingsService Setting service
+   * @param {AuthenticationService} authenticationService Authentication service.
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
   constructor(private route: ActivatedRoute,
     private router: Router,
     private clientsService: ClientsService,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService,
+    private authenticationService: AuthenticationService,
+    private matomoTracker: MatomoTracker) {
     this.route.data.subscribe((data: { clientTemplate: any, clientAddressFieldConfig: any }) => {
       this.clientTemplate = data.clientTemplate;
       this.clientAddressFieldConfig = data.clientAddressFieldConfig;
     });
+  }
+
+  ngOnInit() {
+
+    //set Matomo page info
+   let title = document.title;
+   let userName = this.authenticationService.getConnectedUsername() ? this.authenticationService.getConnectedUsername() : "";
+
+   this.matomoTracker.setUserId(userName); //tracker user ID
+   this.matomoTracker.setDocumentTitle(`${title}`);
   }
 
   /**
@@ -89,9 +104,14 @@ export class CreateClientComponent {
       dateFormat,
       locale
     };
+    //Track Matomo event for creating a client
+    this.matomoTracker.trackEvent('clients', 'edit', clientData.id);
+
     this.clientsService.createClient(clientData).subscribe((response: any) => {
       this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
     });
+
+
   }
 
 }

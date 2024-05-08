@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { AuthenticationService } from '../../../../core/authentication/authentication.service';
+import { MatomoTracker } from 'ngx-matomo';
 
 /**
  * Client Charge Overview component.
@@ -29,16 +31,27 @@ export class ChargesOverviewComponent implements OnInit {
    * Retrieves the charge overview data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    * @param {MatDialog} dialog Dialog reference.
+   * @param {AuthenticationService} authenticationService Authentication service.
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
   constructor(private route: ActivatedRoute,
-              public dialog: MatDialog) {
-      this.route.data.subscribe((data: { clientChargesData: any }) => {
-        this.chargeOverviewData = data.clientChargesData;
+    public dialog: MatDialog,
+    private authenticationService: AuthenticationService,
+    private matomoTracker: MatomoTracker
+  ) {
+    this.route.data.subscribe((data: { clientChargesData: any }) => {
+      this.chargeOverviewData = data.clientChargesData;
     });
   }
 
   ngOnInit() {
     this.setLoanClientChargeOverview();
+    //set Matomo page info
+    let title = document.title;
+    let userName = this.authenticationService.getConnectedUsername() ? this.authenticationService.getConnectedUsername() : "";
+
+    this.matomoTracker.setUserId(userName); //tracker user ID
+    this.matomoTracker.setDocumentTitle(`${title}`);
   }
 
   /**

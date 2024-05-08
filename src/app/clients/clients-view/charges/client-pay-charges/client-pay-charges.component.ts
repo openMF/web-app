@@ -7,6 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
+import { AuthenticationService } from '../../../../core/authentication/authentication.service';
+import { MatomoTracker } from 'ngx-matomo';
 
 /**
  * Client Pay Charge component.
@@ -25,21 +27,25 @@ export class ClientPayChargesComponent implements OnInit {
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
 
-    /**
-     * Retrieves the charge data from `resolve`.
-     * @param {ClientService} clientService Products Service.
-     * @param {FormBuilder} formBuilder Form Builder.
-     * @param {ActivatedRoute} route Activated Route.
-     * @param {Router} router Router for navigation.
-     * @param {SettingsService} settingsService Setting service
-     */
+  /**
+   * Retrieves the charge data from `resolve`.
+   * @param {ClientService} clientService Products Service.
+   * @param {FormBuilder} formBuilder Form Builder.
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {Router} router Router for navigation.
+   * @param {SettingsService} settingsService Setting service
+   * @param {AuthenticationService} authenticationService Authentication service.
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
+   */
   constructor(
     private clientsService: ClientsService,
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private authenticationService: AuthenticationService,
+    private matomoTracker: MatomoTracker
   ) {
     this.route.data.subscribe((data: { transactionData: any }) => {
       this.transactionData = data.transactionData;
@@ -48,6 +54,13 @@ export class ClientPayChargesComponent implements OnInit {
 
   ngOnInit() {
     this.setTransactionForm();
+
+    //set Matomo page info
+    let title = document.title;
+    let userName = this.authenticationService.getConnectedUsername() ? this.authenticationService.getConnectedUsername() : "";
+
+    this.matomoTracker.setUserId(userName); //tracker user ID
+    this.matomoTracker.setDocumentTitle(`${title}`);
   }
 
   /**
@@ -76,6 +89,9 @@ export class ClientPayChargesComponent implements OnInit {
       dateFormat,
       locale
     };
+     //Track Matomo event for paying client charges
+     this.matomoTracker.trackEvent('clients', 'pay.charges', this.transactionData.id);
+
     this.clientsService.payClientCharge(this.transactionData.clientId, this.transactionData.id, data).subscribe(() => {
       this.router.navigate(['../../..', 'general'], { relativeTo: this.route });
     });

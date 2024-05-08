@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
@@ -11,6 +11,8 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 
 /** Custom Services */
 import { ClientsService } from '../../clients.service';
+import { AuthenticationService } from '../../../core/authentication/authentication.service';
+import { MatomoTracker } from 'ngx-matomo';
 
 /**
  * Clients Address Tab Component
@@ -20,7 +22,7 @@ import { ClientsService } from '../../clients.service';
   templateUrl: './address-tab.component.html',
   styleUrls: ['./address-tab.component.scss']
 })
-export class AddressTabComponent {
+export class AddressTabComponent implements OnInit {
 
   /** Client Address Data */
   clientAddressData: any;
@@ -35,10 +37,15 @@ export class AddressTabComponent {
    * @param {ActivatedRoute} route Activated Route
    * @param {ClientsService} clientService Clients Service
    * @param {MatDialog} dialog Mat Dialog
+   * @param {AuthenticationService} authenticationService Authentication service.
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
   constructor(private route: ActivatedRoute,
-              private clientService: ClientsService,
-              private dialog: MatDialog) {
+    private clientService: ClientsService,
+    private dialog: MatDialog,
+    private authenticationService: AuthenticationService,
+    private matomoTracker: MatomoTracker
+  ) {
     this.route.data.subscribe((data: {
       clientAddressData: any,
       clientAddressFieldConfig: any,
@@ -49,6 +56,16 @@ export class AddressTabComponent {
       this.clientAddressTemplate = data.clientAddressTemplateData;
       this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
     });
+  }
+
+
+  ngOnInit() {
+    //set Matomo page info
+    let title = document.title;
+    let userName = this.authenticationService.getConnectedUsername() ? this.authenticationService.getConnectedUsername() : "";
+
+    this.matomoTracker.setUserId(userName); //tracker user ID
+    this.matomoTracker.setDocumentTitle(`${title}`);
   }
 
   /**
@@ -73,6 +90,9 @@ export class AddressTabComponent {
 
       }
     });
+
+    //Matomo log activity
+    this.matomoTracker.trackEvent('clients', 'add.address');// change to track right info
   }
 
   /**
@@ -100,6 +120,9 @@ export class AddressTabComponent {
         });
       }
     });
+
+    //Matomo log activity
+    this.matomoTracker.trackEvent('clients', 'edit.address');// change to track right info
   }
 
   /**
