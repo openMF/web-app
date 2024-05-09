@@ -603,9 +603,9 @@
             "Due fee": "Due fee",
             "Due principal": "Due principal",
             "Due interest": "Due interest",
-            "In advanced penalty": "In advanced penalty",
-            "In advanced fee": "In advanced fee",
-            "In advanced principal": "In advanced principal",
+            "In advance penalty": "In advance penalty",
+            "In advance fee": "In advance fee",
+            "In advance principal": "In advance principal",
             "In advanced interest": "In advanced interest",
             "Next installment": "Next installment",
 	        "Last installment": "Last installment",
@@ -646,6 +646,8 @@
             "SATURDAY": "SATURDAY",
             "Interest posting": "Interest posting",	
             "Amount on hold": "Amount on hold",
+            "Percentage": "Percentage",
+            "Fixed Amount": "Fixed Amount",
             "Invalid": "Invalid"
         },
         "commons": {
@@ -2407,7 +2409,7 @@
             "View Guarantors": "View Guarantors",
             "Waive Interest": "Waive Interest",
             "Withdrawal": "Withdrawal",
-            "Withdrawn by client": "Withdrawn by client",
+            "Withdrawn by Client": "Withdrawn by Client",
             "Write Off": "Write Off",
             "XBRL": "XBRL"
         },

@@ -101,7 +101,7 @@ export class FixedDepositsButtonsConfiguration {
             name: 'Reject'
           },
           {
-            name: 'Withdraw By Client'
+            name: 'Withdrawn by Client'
           },
           {
             name: 'Add Charge'

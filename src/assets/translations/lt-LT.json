@@ -603,9 +603,9 @@
 	    "Due fee": "Mokamas mokestis",
 	    "Due principal": "Mokėtas pagrindinis",
 	    "Due interest": "Deramas palūkanas",
-	    "In advanced penalty": "Išankstinė bauda",
-	    "In advanced fee": "Išankstinis mokestis",
-	    "In advanced principal": "Iš anksto pagrindinis",
+	    "In advance penalty": "Išankstinė bauda",
+	    "In advance fee": "Išankstinis mokestis",
+	    "In advance principal": "Iš anksto pagrindinis",
 	    "In advanced interest": "Iš anksto palūkanas",
       "Next installment": "Kita įmoka",
 	    "Last installment": "Paskutinė įmoka",
@@ -646,6 +646,8 @@
 	    "SATURDAY": "ŠEŠTADIENIS",
       "Interest posting": "Interesų skelbimas",
       "Amount on hold": "Sulaikyta suma",
+      "Percentage": "Procentas",
+      "Fixed Amount": "Nustatyta suma",
       "Invalid": "Neteisinga"
     },
     "commons": {
@@ -2408,7 +2410,7 @@
       "View Guarantors": "Žiūrėti garantus",
       "Waive Interest": "Atsisakyti palūkanų",
       "Withdrawal": "Pasitraukimas",
-      "Withdrawn by client": "Atsiėmė klientas",
+      "Withdrawn by Client": "Atsiėmė klientas",
       "Write Off": "Nusirašinėti",
       "XBRL": "XBRL"
     },

@@ -247,6 +247,12 @@
       <input type="number" matInput formControlName="fixedEmiAmount">
     </mat-form-field>
 
+    <ng-container *ngIf="isDelinquencyEnabled()">
+      <mat-checkbox fxFlex="48%" formControlName="enableInstallmentLevelDelinquency">
+        <p>{{'labels.inputs.Enable installment level Delinquency' | translate}}</p>
+      </mat-checkbox>
+    </ng-container>
+
     <ng-container *ngIf="loansAccountTermsData?.isTopup">
 
       <mat-checkbox fxFlex="20%" formControlName="isTopup">

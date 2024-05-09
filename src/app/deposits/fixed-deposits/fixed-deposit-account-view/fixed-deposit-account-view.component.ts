@@ -114,7 +114,7 @@ export class FixedDepositAccountViewComponent implements OnInit {
       case 'Undo Approval':
       case 'Undo Activation':
       case 'Add Charge':
-      case 'Withdraw By Client':
+      case 'Withdrawn by Client':
       case 'Premature Close':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;

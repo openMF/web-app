@@ -8,7 +8,7 @@ import { Dates } from 'app/core/utils/dates';
 import { RecurringDepositsService } from 'app/deposits/recurring-deposits/recurring-deposits.service';
 import { SettingsService } from 'app/settings/settings.service';
 /**
- * Withdraw By Client Recurring Deposits Account Component
+ * Withdrawn by Client Recurring Deposits Account Component
  */
 @Component({
   selector: 'mifosx-withdraw-by-client-recurring-deposits-account',

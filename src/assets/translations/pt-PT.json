@@ -603,9 +603,9 @@
 	    "Due fee": "Taxa devida",
 	    "Due principal": "Principal devido",
 	    "Due interest": "Juros devidos",
-	    "In advanced penalty": "Penalidade antecipada",
-	    "In advanced fee": "Taxa antecipada",
-	    "In advanced principal": "Antecipadamente principal",
+	    "In advance penalty": "Penalidade antecipada",
+	    "In advance fee": "Taxa antecipada",
+	    "In advance principal": "Antecipadamente principal",
 	    "In advanced interest": "Juros antecipados",
       "Next installment": "Próxima parcela",
 	    "Last installment": "Última parcela",
@@ -646,6 +646,8 @@
 	    "SATURDAY": "SÁBADO",
       "Interest posting": "Postagem de interesse",
       "Amount on hold": "Valor retido",
+      "Percentage": "Percentagem",
+      "Fixed Amount": "Quantia fixa",
       "Invalid": "Inválido"
     },
     "commons": {
@@ -2408,7 +2410,7 @@
       "View Guarantors": "Ver Fiadores",
       "Waive Interest": "Renunciar a juros",
       "Withdrawal": "Cancelamento",
-      "Withdrawn by client": "Retirado pelo cliente",
+      "Withdrawn by Client": "Retirado pelo cliente",
       "Write Off": "Eliminar",
       "XBRL": "XBRL"
     },

@@ -603,9 +603,9 @@
 	    "Due fee": "देय शुल्क",
 	    "Due principal": "देय प्रिन्सिपल",
 	    "Due interest": "देय ब्याज",
-	    "In advanced penalty": "अग्रिम जरिवाना",
-	    "In advanced fee": "अग्रिम शुल्कमा",
-	    "In advanced principal": "अग्रिम प्रिन्सिपल",
+	    "In advance penalty": "अग्रिम जरिवाना",
+	    "In advance fee": "अग्रिम शुल्कमा",
+	    "In advance principal": "अग्रिम प्रिन्सिपल",
 	    "In advanced interest": "अग्रिम ब्याजमा",
       "Next installment": "अर्को किस्ता",
 	    "Last installment": "अन्तिम किस्ता",
@@ -646,6 +646,8 @@
 	    "SATURDAY": "शनिबार",
       "Interest posting": "चासो पोस्टिंग",
       "Amount on hold": "होल्डमा रहेको रकम",
+      "Percentage": "प्रतिशत",
+      "Fixed Amount": "निश्चित रकम",
       "Invalid": "अवैध"
     },
     "commons": {
@@ -2408,7 +2410,7 @@
       "View Guarantors": "ग्यारेन्टरहरू हेर्नुहोस्",
       "Waive Interest": "ब्याज माफ गर्नुहोस्",
       "Withdrawal": "फिर्ता",
-      "Withdrawn by client": "ग्राहक द्वारा फिर्ता",
+      "Withdrawn by Client": "ग्राहक द्वारा फिर्ता",
       "Write Off": "लेख्नुहोस्",
       "XBRL": "XBRL"
     },

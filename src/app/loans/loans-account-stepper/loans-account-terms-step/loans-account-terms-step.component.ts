@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { LoansAccountAddCollateralDialogComponent } from 'app/loans/custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
 import { LoanProducts } from 'app/products/loan-products/loan-products';
+import { LoanProduct } from 'app/products/loan-products/models/loan-product.model';
 import { SettingsService } from 'app/settings/settings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -86,6 +87,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   loanId: any = null;
 
   loanScheduleType: OptionData | null = null;
+  loanProduct: LoanProduct | null = null;
 
   /**
    * Create Loans Account Terms Form
@@ -108,6 +110,10 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       this.currencyDisplaySymbol = this.loansAccountTermsData.currency.displaySymbol;
       if (this.loanId != null && this.loansAccountTemplate.accountNo) {
         this.loansAccountTermsData = this.loansAccountTemplate;
+      }
+
+      if (this.loansAccountTermsData.product) {
+        this.loanProduct = this.loansAccountTermsData.product;
       }
 
       this.loansAccountTermsForm.patchValue({
@@ -149,7 +155,9 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
           this.totalMultiDisbursed += item.principal;
         });
       }
-
+      if (this.isDelinquencyEnabled()) {
+        this.loansAccountTermsForm.addControl('enableInstallmentLevelDelinquency', new UntypedFormControl(this.loanProduct.enableInstallmentLevelDelinquency));
+      }
       this.collateralDataSource = this.loansAccountTermsData.collateral || [];
 
       const allowAttributeOverrides = this.loansAccountTermsData.product.allowAttributeOverrides;
@@ -500,6 +508,13 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       });
       this.repaymentStrategyDisabled = true;
     }
+  }
+
+  isDelinquencyEnabled(): boolean {
+    if (!this.loanProduct || !this.loanProduct.delinquencyBucket) {
+      return false;
+    }
+    return true;
   }
 
   /**
