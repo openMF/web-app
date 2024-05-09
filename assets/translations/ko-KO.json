@@ -603,9 +603,9 @@
 	    "Due fee": "납부 수수료",
 	    "Due principal": "교장",
 	    "Due interest": "정당한 관심",
-	    "In advanced penalty": "사전 패널티",
-	    "In advanced fee": "선불요금",
-	    "In advanced principal": "사전 교장",
+	    "In advance penalty": "사전 패널티",
+	    "In advance fee": "선불요금",
+	    "In advance principal": "사전 교장",
 	    "In advanced interest": "사전이자",
       "Next installment": "다음 편",
 	    "Last installment": "마지막 할부",
@@ -646,6 +646,8 @@
 	    "SATURDAY": "토요일",
       "Interest posting": "관심 게시",
       "Amount on hold": "보류 금액",
+      "Percentage": "백분율",
+      "Fixed Amount": "정액",
       "Invalid": "유효하지 않은"
     },
     "commons": {
@@ -2408,7 +2410,7 @@
       "View Guarantors": "보증인 보기",
       "Waive Interest": "이자 면제",
       "Withdrawal": "철수",
-      "Withdrawn by client": "고객이 철회함",
+      "Withdrawn by Client": "고객이 철회함",
       "Write Off": "상각",
       "XBRL": "XBRL"
     },

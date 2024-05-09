@@ -603,9 +603,9 @@
 	    "Due fee": "Dlužný poplatek",
 	    "Due principal": "Splatná jistina",
 	    "Due interest": "Přiměřený zájem",
-	    "In advanced penalty": "Pokuta předem",
-	    "In advanced fee": "Poplatek předem",
-	    "In advanced principal": "Předem ředitel",
+	    "In advance penalty": "Pokuta předem",
+	    "In advance fee": "Poplatek předem",
+	    "In advance principal": "Předem ředitel",
 	    "In advanced interest": "Zájem předem",
       "Next installment": "Další splátka",
 	    "Last installment": "Poslední splátka",
@@ -646,6 +646,8 @@
 	    "SATURDAY": "SOBOTA",
       "Interest posting": "Zveřejnění zájmu",
       "Amount on hold": "Částka na počkání",
+      "Percentage": "Procento",
+      "Fixed Amount": "Pevná částka",
       "Invalid": "Neplatný"
     },
     "commons": {
@@ -2408,7 +2410,7 @@
       "View Guarantors": "Zobrazit garanty",
       "Waive Interest": "Vzdát se úroků",
       "Withdrawal": "Vybrání",
-      "Withdrawn by client": "Staženo klientem",
+      "Withdrawn by Client": "Staženo klientem",
       "Write Off": "Odepsat",
       "XBRL": "XBRL"
     },
