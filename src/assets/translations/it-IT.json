@@ -603,9 +603,9 @@
 	    "Due fee": "Tariffa dovuta",
 	    "Due principal": "Principale dovuto",
 	    "Due interest": "Interessi dovuti",
-	    "In advanced penalty": "Pena anticipata",
-	    "In advanced fee": "Pagamento anticipato",
-	    "In advanced principal": "In anticipo principale",
+	    "In advance penalty": "Pena anticipata",
+	    "In advance fee": "Pagamento anticipato",
+	    "In advance principal": "In anticipo principale",
 	    "In advanced interest": "Interessi anticipati",
       "Next installment": "Prossima puntata",
 	    "Last installment": "Ultima puntata",
@@ -646,6 +646,8 @@
 	    "SATURDAY": "SABATO",
       "Interest posting": "Pubblicazione di interessi",
       "Amount on hold": "Importo sospeso",
+      "Percentage": "Percentuale",
+      "Fixed Amount": "Importo fisso",
       "Invalid": "Non valido"
     },
     "commons": {
@@ -2408,7 +2410,7 @@
       "View Guarantors": "Visualizza i Garanti",
       "Waive Interest": "Rinuncia agli interessi",
       "Withdrawal": "Ritiro",
-      "Withdrawn by client": "Ritirato dal cliente",
+      "Withdrawn by Client": "Ritirato dal cliente",
       "Write Off": "Cancellare",
       "XBRL": "XBRL"
     },

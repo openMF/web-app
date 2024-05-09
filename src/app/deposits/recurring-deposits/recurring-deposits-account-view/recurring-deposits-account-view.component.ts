@@ -164,7 +164,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
       case 'Reject':
       case 'Undo Approval':
       case 'Add Charge':
-      case 'Withdrawn by client':
+      case 'Withdrawn by Client':
       case 'Premature Close':
       case 'Close':
       case 'Deposit':

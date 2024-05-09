@@ -213,7 +213,7 @@ export class LoansAccountButtonConfiguration {
       case 'Submitted and pending approval':
         this.optionArray = [
           {
-            name: 'Withdrawn by client',
+            name: 'Withdrawn by Client',
             taskPermissionName: 'WITHDRAW_LOAN',
           },
           {

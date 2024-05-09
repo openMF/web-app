@@ -603,9 +603,9 @@
 	    "Due fee": "Fällige Gebühr",
 	    "Due principal": "Fälliger Auftraggeber",
 	    "Due interest": "Geschuldete Zinsen",
-	    "In advanced penalty": "Vorabstrafe",
-	    "In advanced fee": "Gebühr im Voraus",
-	    "In advanced principal": "Im Voraus Auftraggeber",
+	    "In advance penalty": "Vorabstrafe",
+	    "In advance fee": "Gebühr im Voraus",
+	    "In advance principal": "Im Voraus Auftraggeber",
 	    "In advanced interest": "Im Voraus Zinsen",
       "Next installment": "Nächste Folge",
 	    "Last installment": "Letzte Rate",
@@ -646,6 +646,8 @@
 	    "SATURDAY": "SAMSTAG",
       "Interest posting": "Zinsbuchung",
       "Amount on hold": "Zurückgestellter Betrag",
+      "Percentage": "Prozentsatz",
+      "Fixed Amount": "Fester Betrag",
       "Invalid": "Ungültig"
     },
     "commons": {
@@ -2408,7 +2410,7 @@
       "View Guarantors": "Garanten anzeigen",
       "Waive Interest": "Verzichten Sie auf Zinsen",
       "Withdrawal": "Rückzug",
-      "Withdrawn by client": "Vom Kunden zurückgezogen",
+      "Withdrawn by Client": "Vom Kunden zurückgezogen",
       "Write Off": "Abschreiben",
       "XBRL": "XBRL"
     },

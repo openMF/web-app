@@ -603,9 +603,9 @@
 	    "Due fee": "Frais dus",
 	    "Due principal": "Principal dû",
 	    "Due interest": "Intérêts dus",
-	    "In advanced penalty": "Pénalité anticipée",
-	    "In advanced fee": "Frais d'avance",
-	    "In advanced principal": "À l'avance, le principal",
+	    "In advance penalty": "Pénalité anticipée",
+	    "In advance fee": "Frais d'avance",
+	    "In advance principal": "À l'avance, le principal",
 	    "In advanced interest": "Intérêts d'avance",
       "Next installment": "Prochain versement",
 	    "Last installment": "Dernier versement",
@@ -646,6 +646,8 @@
 	    "SATURDAY": "SAMEDI",
       "Interest posting": "Publication d'intérêt",
       "Amount on hold": "Montant retenu",
+      "Percentage": "Pourcentage",
+      "Fixed Amount": "Montant fixé",
       "Invalid": "Invalide"
     },
     "commons": {
@@ -2408,7 +2410,7 @@
       "View Guarantors": "Voir les garants",
       "Waive Interest": "Renoncer aux intérêts",
       "Withdrawal": "Retrait",
-      "Withdrawn by client": "Retiré par le client",
+      "Withdrawn by Client": "Retiré par le client",
       "Write Off": "Radier",
       "XBRL": "XBRL"
     },

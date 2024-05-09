@@ -149,7 +149,7 @@ export class SavingsAccountViewComponent implements OnInit {
       case 'Block Deposit':
       case 'Block Withdrawal':
       case 'Unassign Staff':
-      case 'Withdraw By Client':
+      case 'Withdrawn by Client':
       case 'Apply Annual Fees':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;

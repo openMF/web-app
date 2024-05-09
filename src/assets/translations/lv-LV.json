@@ -603,9 +603,9 @@
 	    "Due fee": "Maksājamā maksa",
 	    "Due principal": "Maksājamais pamatsumma",
 	    "Due interest": "Pienācīgi procenti",
-	    "In advanced penalty": "Priekšsods",
-	    "In advanced fee": "Iepriekš samaksā",
-	    "In advanced principal": "Avansā galvenais",
+	    "In advance penalty": "Priekšsods",
+	    "In advance fee": "Iepriekš samaksā",
+	    "In advance principal": "Avansā galvenais",
 	    "In advanced interest": "Iepriekš procentos",
       "Next installment": "Nākamā iemaksa",
 	    "Last installment": "Pēdējā iemaksa",
@@ -646,6 +646,8 @@
 	    "SATURDAY": "SESTDIENA",
       "Interest posting": "Interešu publicēšana",
       "Amount on hold": "Aizturētā summa",
+      "Percentage": "Procenti",
+      "Fixed Amount": "Fiksēta summa",
       "Invalid": "Nederīgs"
     },
     "commons": {
@@ -2408,7 +2410,7 @@
       "View Guarantors": "Skatīt galvotājus",
       "Waive Interest": "Atteikties no procentiem",
       "Withdrawal": "Izņemšana",
-      "Withdrawn by client": "Izņēmis klients",
+      "Withdrawn by Client": "Izņēmis klients",
       "Write Off": "Norakstīt",
       "XBRL": "XBRL"
     },

@@ -169,7 +169,7 @@ export class SavingsButtonsConfiguration {
             taskPermissionName: 'REJECT_SAVINGSACCOUNT'
           },
           {
-            name: 'Withdraw By Client',
+            name: 'Withdrawn by Client',
             taskPermissionName: 'WITHDRAW_SAVINGSACCOUNT'
           },
           {

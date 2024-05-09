@@ -167,7 +167,7 @@
       </button>
     </mat-form-field>
 
-    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="enableInstallmentLevelDelinquency" class="margin-v">
+    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="enableInstallmentLevelDelinquency" class="margin-v" *ngIf="loanProductSettingsForm.value.delinquencyBucketId">
       {{'labels.inputs.Enable installment level Delinquency' | translate}}
     </mat-checkbox>
 

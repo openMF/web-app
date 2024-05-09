@@ -603,9 +603,9 @@
 	    "Due fee": "Ada inayodaiwa",
 	    "Due principal": "Malipo mkuu",
 	    "Due interest": "Nia inayostahili",
-	    "In advanced penalty": "Adhabu ya mapema",
-	    "In advanced fee": "Ada ya mapema",
-	    "In advanced principal": "Mapema mkuu",
+	    "In advance penalty": "Adhabu ya mapema",
+	    "In advance fee": "Ada ya mapema",
+	    "In advance principal": "Mapema mkuu",
 	    "In advanced interest": "Maslahi ya mapema",
       "Next installment": "Awamu inayofuata",
 	    "Last installment": "Awamu ya mwisho",
@@ -646,6 +646,8 @@
 	    "SATURDAY": "JUMAMOSI",
       "Interest posting": "Nia ya kuchapisha",
       "Amount on hold": "Kiasi kilichohifadhiwa",
+      "Percentage": "Asilimia",
+      "Fixed Amount": "Kiasi kisichobadilika",
       "Invalid": "Batili"
     },
     "commons": {
@@ -2408,7 +2410,7 @@
       "View Guarantors": "Tazama Wadhamini",
       "Waive Interest": "Ondoa Maslahi",
       "Withdrawal": "Uondoaji",
-      "Withdrawn by client": "Imetolewa na mteja",
+      "Withdrawn by Client": "Imetolewa na mteja",
       "Write Off": "Andika",
       "XBRL": "XBRL"
     },

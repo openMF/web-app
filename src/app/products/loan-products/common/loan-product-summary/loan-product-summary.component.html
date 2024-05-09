@@ -340,7 +340,7 @@
 
   <div fxFlexFill>
     <span fxFlex="47%">{{ 'labels.inputs.Repayment Strategy' | translate}}:</span>
-    <span  fxFlex="53%" class="repayment-strategy">{{ loanProduct.transactionProcessingStrategyName }}</span>
+    <span  fxFlex="53%" class="repayment-strategy">{{ loanProduct.transactionProcessingStrategyName | translateCatalog }}</span>
   </div>
 
   <div fxFlexFill *ngIf="isAdvancedPaymentAllocation">
@@ -404,7 +404,7 @@
     <span fxFlex="53%">{{ 'labels.inputs.Unassigned' | translate }}</span>
   </div>
 
-  <div fxFlexFill>
+  <div fxFlexFill *ngIf="loanProduct.delinquencyBucket">
     <span fxFlex="47%">{{ 'labels.inputs.Enable installment level Delinquency' | translate}}:</span>
     <span  fxFlex="53%">{{ loanProduct.enableInstallmentLevelDelinquency | yesNo }}</span>
   </div>
