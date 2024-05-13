@@ -151,6 +151,11 @@
     <span fxFlex="60%">{{ loansAccount.graceOnArrearsAgeing }}</span>
   </div>
 
+  <div fxFlexFill>
+    <span fxFlex="40%"> {{"labels.inputs.Enable installment level Delinquency" | translate}} </span>
+    <span fxFlex="60%"> {{ loansAccount.enableInstallmentLevelDelinquency | yesNo }} </span>
+  </div>
+
   <div fxFlexFill *ngIf="loansAccount.isTopup">
     <span fxFlex="40%">{{"labels.inputs.Is Topup Loan" | translate}}? </span>
     <span fxFlex="60%">{{ loansAccount.isTopup }}</span>

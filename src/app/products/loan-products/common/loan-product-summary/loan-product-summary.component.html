@@ -15,7 +15,7 @@
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.fundId">
-    <span fxFlex="47%">{{ 'labels.inputs.Fund Name' | translate}}:</span>
+    <span fxFlex="47%">{{ 'labels.inputs.Fund' | translate}}:</span>
     <span  fxFlex="53%">{{ loanProduct.fundName }}</span>
   </div>
 
@@ -86,7 +86,7 @@
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.allowApprovedDisbursedAmountsOverApplied">
-    <span fxFlex="47%">{{ 'labels.inputs.Over Applied Amount' | translate}}:</span>
+    <span fxFlex="47%">{{ 'labels.inputs.Over Amount' | translate}}:</span>
     <span fxFlex="53%" *ngIf="loanProduct.overAppliedCalculationType === 'percentage'">{{ loanProduct.overAppliedNumber
       | formatNumber:0
       }} %</span>

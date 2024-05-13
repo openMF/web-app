@@ -156,7 +156,8 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         });
       }
       if (this.isDelinquencyEnabled()) {
-        this.loansAccountTermsForm.addControl('enableInstallmentLevelDelinquency', new UntypedFormControl(this.loanProduct.enableInstallmentLevelDelinquency));
+        console.log("TEST " + this.loansAccountTermsData.enableInstallmentLevelDelinquency);
+        this.loansAccountTermsForm.addControl('enableInstallmentLevelDelinquency', new UntypedFormControl(this.loansAccountTermsData.enableInstallmentLevelDelinquency || this.loanProduct.enableInstallmentLevelDelinquency));
       }
       this.collateralDataSource = this.loansAccountTermsData.collateral || [];
 
