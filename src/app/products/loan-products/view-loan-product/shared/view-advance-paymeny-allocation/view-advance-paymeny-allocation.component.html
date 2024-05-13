@@ -12,7 +12,7 @@
 
     <div fxFlexFill>
       <span fxFlex="40%">{{ 'labels.inputs.Future Installment Allocation Rule' | translate }}:</span>
-      <span fxFlex="60%">{{ futureInstallmentRuleValue(paymentAllocation.futureInstallmentAllocationRule) }}</span>
+      <span fxFlex="60%">{{ futureInstallmentRuleValue(paymentAllocation.futureInstallmentAllocationRule) | translateCatalog }}</span>
     </div>
 
     <div fxFlexFill>
@@ -28,7 +28,7 @@
           <tbody>
             <tr *ngFor="let paymentAllocation of paymentAllocation.paymentAllocationOrder; let idx = index;">
               <td>{{ (idx + 1) }}</td>
-              <td>{{ allocationRuleValue(paymentAllocation.paymentAllocationRule) }}</td>
+              <td>{{ allocationRuleValue(paymentAllocation.paymentAllocationRule) | translateCatalog }}</td>
             </tr>
           </tbody>
         </table>
@@ -61,7 +61,7 @@
           <tbody>
             <tr *ngFor="let creditAllocation of creditAllocation.creditAllocationOrder; let idx = index;">
               <td>{{ (idx + 1) }}</td>
-              <td>{{ allocationRuleValue(creditAllocation.creditAllocationRule) }}</td>
+              <td>{{ allocationRuleValue(creditAllocation.creditAllocationRule) | translateCatalog}}</td>
             </tr>
           </tbody>
         </table>
