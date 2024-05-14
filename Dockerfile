@@ -15,7 +15,7 @@ RUN npm cache clear --force &&\
 
   npm config set fetch-retry-maxtimeout 120000 &&\
 
-  npm install --location=global @angular/cli@13.3.10 &&\
+  npm install --location=global @angular/cli@14.2.13 &&\
 
   npm install &&\
 

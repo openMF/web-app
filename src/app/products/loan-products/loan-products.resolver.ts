@@ -1,19 +1,18 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
+import { Injectable } from "@angular/core";
+import { Resolve } from "@angular/router";
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs";
 
 /** Custom Services */
-import { ProductsService } from '../products.service';
+import { ProductsService } from "../products.service";
 
 /**
  * Loan products data resolver.
  */
 @Injectable()
 export class LoanProductsResolver implements Resolve<Object> {
-
   /**
    *
    * @param {ProductsService} productsService Products service.
@@ -25,7 +24,11 @@ export class LoanProductsResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.productsService.getLoanProducts();
+    let countryId = JSON.parse(sessionStorage.getItem("selectedCountry"))?.id;
+    if (countryId) {
+      return this.productsService.getLoanProductWithCountryId(countryId);
+    } else {
+      return this.productsService.getLoanProducts();
+    }
   }
-
 }
