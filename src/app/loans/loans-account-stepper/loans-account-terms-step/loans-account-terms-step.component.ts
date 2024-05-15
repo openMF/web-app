@@ -89,6 +89,8 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   loanScheduleType: OptionData | null = null;
   loanProduct: LoanProduct | null = null;
 
+  interestRateFrequencyTypeData: any[] = [];
+
   /**
    * Create Loans Account Terms Form
    * @param formBuilder FormBuilder
@@ -116,6 +118,10 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         this.loanProduct = this.loansAccountTermsData.product;
       }
 
+      this.interestRateFrequencyTypeData = this.loansAccountTermsData.interestRateFrequencyTypeOptions;
+      console.log(this.loansAccountTermsData);
+      console.log(this.loanProduct);
+
       this.loansAccountTermsForm.patchValue({
         'principalAmount': this.loansAccountTermsData.principal,
         'loanTermFrequency': this.loansAccountTermsData.termFrequency,
@@ -138,7 +144,8 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         'maxOutstandingLoanBalance': this.loansAccountTermsData.maxOutstandingLoanBalance,
         'transactionProcessingStrategyCode': this.loansAccountTermsData.transactionProcessingStrategyCode,
         'interestRateDifferential': this.loansAccountTermsData.interestRateDifferential,
-        'multiDisburseLoan': this.loansAccountTermsData.multiDisburseLoan
+        'multiDisburseLoan': this.loansAccountTermsData.multiDisburseLoan,
+        'interestRateFrequencyType': this.loansAccountTermsData.interestRateFrequencyType.id
       });
 
       this.setAdvancedPaymentStrategyControls();
@@ -156,7 +163,6 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         });
       }
       if (this.isDelinquencyEnabled()) {
-        console.log("TEST " + this.loansAccountTermsData.enableInstallmentLevelDelinquency);
         this.loansAccountTermsForm.addControl('enableInstallmentLevelDelinquency', new UntypedFormControl(this.loansAccountTermsData.enableInstallmentLevelDelinquency || this.loanProduct.enableInstallmentLevelDelinquency));
       }
       this.collateralDataSource = this.loansAccountTermsData.collateral || [];
@@ -230,7 +236,8 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         'maxOutstandingLoanBalance': this.loansAccountTermsData.maxOutstandingLoanBalance,
         'transactionProcessingStrategyCode': this.loansAccountTermsData.transactionProcessingStrategyCode,
         'interestRateDifferential': this.loansAccountTermsData.interestRateDifferential,
-        'multiDisburseLoan': this.loansAccountTermsData.multiDisburseLoan
+        'multiDisburseLoan': this.loansAccountTermsData.multiDisburseLoan,
+        'interestRateFrequencyType': this.loansAccountTermsData.interestRateFrequencyType.id
       });
     }
     this.createloansAccountTermsForm();
@@ -349,7 +356,8 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       'maxOutstandingLoanBalance': [''],
       'interestRateDifferential': [''],
       'transactionProcessingStrategyCode': ['', Validators.required],
-      'multiDisburseLoan': [false]
+      'multiDisburseLoan': [false],
+      'interestRateFrequencyType': ['']
     });
   }
 

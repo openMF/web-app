@@ -5,26 +5,26 @@
 
         <div fxFlexFill>
             <span fxFlex="50%">{{"labels.inputs.Repayment Strategy" | translate}}</span>
-            <span fxFlex="50%">{{ loanDetails.transactionProcessingStrategyName }}</span>
+            <span fxFlex="50%">{{ loanDetails.transactionProcessingStrategyName | translateCatalog }}</span>
         </div>
 
         <div fxFlexFill>
             <span fxFlex="50%">{{"labels.inputs.Repayments" | translate}}</span>
-            <span fxFlex="50%">{{loanDetails.numberOfRepayments}} every {{loanDetails.repaymentEvery}}&nbsp;{{loanDetails.repaymentFrequencyType.value}}
+            <span fxFlex="50%">{{loanDetails.numberOfRepayments}} every {{loanDetails.repaymentEvery}}&nbsp;{{loanDetails.repaymentFrequencyType.value | translateCatalog }}
             <span *ngIf="loanDetails.repaymentFrequencyType?.id == 2 && loanDetails.repaymentFrequencyNthDayType?.id != 0 && loanDetails.repaymentFrequencyDayOfWeekType?.id != 0" class="m-l-10">
-              <span class="m-l-10">{{"labels.commons.on" | translate}}</span>{{loanDetails.repaymentFrequencyNthDayType?.value}}&nbsp;{{loanDetails.repaymentFrequencyDayOfWeekType?.value}}
+              <span class="m-l-10">{{"labels.commons.on" | translate}}</span>{{loanDetails.repaymentFrequencyNthDayType?.value}}&nbsp;{{loanDetails.repaymentFrequencyDayOfWeekType?.value | translateCatalog }}
             </span>
             </span>
         </div>
 
         <div fxFlexFill *ngIf="loanDetails.fixedLength">
             <span fxFlex="50%"> {{"labels.inputs.Fixed Length" | translate}} </span>
-            <span fxFlex="50%"> {{loanDetails.fixedLength}} {{loanDetails.repaymentFrequencyType.value}}</span>
+            <span fxFlex="50%"> {{loanDetails.fixedLength}} {{loanDetails.repaymentFrequencyType.value | translateCatalog }}</span>
         </div>
 
         <div fxFlexFill>
             <span fxFlex="50%"> {{"labels.inputs.Amortization" | translate}} </span>
-            <span fxFlex="50%"> {{loanDetails.amortizationType.value}} </span>
+            <span fxFlex="50%"> {{loanDetails.amortizationType.value | translateCatalog }} </span>
         </div>
 
         <div fxFlexFill *ngIf="loanDetails.fixedPrincipalPercentagePerInstallment">
@@ -39,7 +39,7 @@
 
         <div fxFlexFill>
             <span fxFlex="50%"> {{"labels.inputs.Interest" | translate}} </span>
-            <span fxFlex="50%"> {{loanDetails.annualInterestRate | formatNumber}} % {{"labels.text.per annum" | translate}} ({{loanDetails.interestRatePerPeriod}} %&nbsp; {{loanDetails.interestRateFrequencyType.value}}) </span>
+            <span fxFlex="50%"> {{loanDetails.annualInterestRate | formatNumber}} % {{"labels.text.per annum" | translate}} ({{loanDetails.interestRatePerPeriod}} %&nbsp; {{loanDetails.interestRateFrequencyType.value | translateCatalog }}) </span>
         </div>
 
         <div fxFlexFill>
@@ -80,7 +80,7 @@
 
         <div fxFlexFill>
             <span fxFlex="50%"> {{"labels.inputs.Interest Calculation Period" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.interestCalculationPeriodType.value}} </span>
+            <span fxFlex="50%"> {{loanDetails.interestCalculationPeriodType.value | translateCatalog }} </span>
         </div>
 
         <div fxFlexFill>
@@ -135,22 +135,22 @@
 
         <div fxFlexFill>
             <span fxFlex="50%"> {{"labels.inputs.Days in year" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.daysInYearType.value}} </span>
+            <span fxFlex="50%"> {{loanDetails.daysInYearType.value | translateCatalog }} </span>
         </div>
 
         <div fxFlexFill>
             <span fxFlex="50%"> {{"labels.inputs.Days in month" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.daysInMonthType.value }} </span>
+            <span fxFlex="50%"> {{loanDetails.daysInMonthType.value | translateCatalog }} </span>
         </div>
 
         <div fxFlexFill *ngIf="loanDetails.isInterestRecalculationEnabled">
             <span fxFlex="50%"> {{"labels.inputs.Interest recalculation compounding on" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.interestRecalculationData.interestRecalculationCompoundingType.value}} </span>
+            <span fxFlex="50%"> {{loanDetails.interestRecalculationData.interestRecalculationCompoundingType.value | translateCatalog }} </span>
         </div>
 
         <div fxFlexFill *ngIf="loanDetails.isInterestRecalculationEnabled">
             <span fxFlex="50%"> {{"labels.inputs.Advance payments adjustment type" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.interestRecalculationData.rescheduleStrategyType.value}} </span>
+            <span fxFlex="50%"> {{loanDetails.interestRecalculationData.rescheduleStrategyType.value | translateCatalog }} </span>
         </div>
 
         <div fxFlexFill *ngIf="loanDetails.isInterestRecalculationEnabled">
