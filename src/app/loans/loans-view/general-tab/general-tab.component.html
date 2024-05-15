@@ -81,7 +81,7 @@
     <table mat-table [dataSource]="detailsDataSource">
 
       <ng-container matColumnDef="Key">
-        <td mat-cell *matCellDef="let ele"> {{ ele.key }} </td>
+        <td mat-cell *matCellDef="let ele"> {{ 'labels.inputs.' + ele.key | translate }} </td>
       </ng-container>
 
       <ng-container matColumnDef="Value">
@@ -133,7 +133,7 @@
     <table mat-table [dataSource]="detailsDataSource">
 
       <ng-container matColumnDef="Key">
-        <td mat-cell *matCellDef="let ele"> {{ ele.key }} </td>
+        <td mat-cell *matCellDef="let ele"> {{ 'labels.inputs.' + ele.key | translate }} </td>
       </ng-container>
 
       <ng-container matColumnDef="Value">
