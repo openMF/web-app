@@ -1,39 +1,62 @@
 <form [formGroup]="savingProductDetailsForm">
-
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
     <mat-form-field fxFlex="48%">
       <mat-label>Product Name</mat-label>
-      <input matInput formControlName="name" required>
-      <mat-error>
-        Product Name is <strong>required</strong>
-      </mat-error>
+      <input matInput formControlName="name" required />
+      <mat-error> Product Name is <strong>required</strong> </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Short Name</mat-label>
-      <input matInput formControlName="shortName" maxlength="4" required>
-      <mat-error>
-        Short Name is <strong>required</strong>
-      </mat-error>
+      <input matInput formControlName="shortName" maxlength="4" required />
+      <mat-error> Short Name is <strong>required</strong> </mat-error>
     </mat-form-field>
+
+    <div fxFlex="48%">
+      <label for="countryId">Country</label>
+      <ng-select
+        [items]="countriesData"
+        bindLabel="name"
+        bindValue="id"
+        placeholder="Select Country"
+        formControlName="countryId"
+        aria-labelledby="countryId"
+        [virtualScroll]="true"
+      >
+      </ng-select>
+    </div>
+
+    <div fxFlex="48%">
+      <mat-checkbox [(ngModel)]="isLinkedToLoanProduct" [ngModelOptions]="{ standalone: true }"
+        >Link to a loan product</mat-checkbox
+      >
+      <!-- Other form controls here -->
+      <ng-select
+        *ngIf="isLinkedToLoanProduct"
+        [items]="loanProductsData"
+        bindLabel="name"
+        bindValue="id"
+        placeholder="Select Loan Product"
+        formControlName="savingsLoanProductId"
+        aria-labelledby="savingsLoanProductId"
+        [virtualScroll]="true"
+      >
+      </ng-select>
+    </div>
 
     <mat-form-field fxFlex="98%">
       <mat-label>Description</mat-label>
       <textarea matInput formControlName="description"></textarea>
     </mat-form-field>
-
   </div>
 
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious disabled>
-      <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
-      Previous
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp; Previous
     </button>
     <button mat-raised-button matStepperNext>
       Next&nbsp;&nbsp;
       <fa-icon icon="arrow-right"></fa-icon>
     </button>
   </div>
-
 </form>
