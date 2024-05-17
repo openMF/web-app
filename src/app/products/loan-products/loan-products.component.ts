@@ -13,7 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 export class LoanProductsComponent implements OnInit {
 
   loanProductsData: any;
-  displayedColumns: string[] = ['name', 'shortName', 'closeDate', 'status'];
+  displayedColumns: string[] = ['name', 'shortName', 'closeDate', 'status','loanType'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;

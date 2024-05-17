@@ -7,7 +7,7 @@ import { UntypedFormControl } from '@angular/forms';
 
 /** rxjs Imports */
 import { merge } from 'rxjs';
-import { tap, startWith, map, distinctUntilChanged, debounceTime} from 'rxjs/operators';
+import { tap, startWith, map, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
 /** Custom Services */
 import { GroupsService } from './groups.service';
@@ -21,7 +21,7 @@ import { GroupsDataSource } from './groups.datasource';
 @Component({
   selector: 'mifosx-app-groups',
   templateUrl: './groups.component.html',
-  styleUrls: ['./groups.component.scss']
+  styleUrls: ['./groups.component.scss'],
 })
 export class GroupsComponent implements OnInit, AfterViewInit {
   @ViewChild('showClosedGroups', { static: true }) showClosedGroups: MatCheckbox;
@@ -29,15 +29,15 @@ export class GroupsComponent implements OnInit, AfterViewInit {
   /** Name form control. */
   name = new UntypedFormControl();
   /** Columns to be displayed in groups table. */
-  displayedColumns =  ['name', 'accountNo', 'externalId', 'status', 'officeName'];
+  displayedColumns = ['name', 'accountNo', 'status', 'officeName','officeHierarchyPath'];
   /** Data source for groups table. */
   dataSource: GroupsDataSource;
   /** Groups filter. */
   filterGroupsBy = [
     {
       type: 'name',
-      value: ''
-    }
+      value: '',
+    },
   ];
 
   /** Paginator for groups table. */
@@ -48,7 +48,7 @@ export class GroupsComponent implements OnInit, AfterViewInit {
   /**
    * @param {GroupsService} groupsService Groups Service
    */
-  constructor(private groupsService: GroupsService) { }
+  constructor(private groupsService: GroupsService) {}
 
   ngOnInit() {
     this.getGroups();
@@ -60,7 +60,6 @@ export class GroupsComponent implements OnInit, AfterViewInit {
    * sort change and page change.
    */
   ngAfterViewInit() {
-
     this.name.valueChanges
       .pipe(
         debounceTime(500),
@@ -71,12 +70,10 @@ export class GroupsComponent implements OnInit, AfterViewInit {
       )
       .subscribe();
 
-    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
     merge(this.sort.sortChange, this.paginator.page)
-      .pipe(
-        tap(() => this.loadGroupsPage())
-      )
+      .pipe(tap(() => this.loadGroupsPage()))
       .subscribe();
   }
 
@@ -91,7 +88,14 @@ export class GroupsComponent implements OnInit, AfterViewInit {
     if (!this.sort.direction) {
       delete this.sort.active;
     }
-    this.dataSource.getGroups(this.filterGroupsBy, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedGroups.checked);
+    this.dataSource.getGroups(
+      this.filterGroupsBy,
+      this.sort.active,
+      this.sort.direction,
+      this.paginator.pageIndex,
+      this.paginator.pageSize,
+      !this.showClosedGroups.checked
+    );
   }
 
   /**
@@ -101,7 +105,7 @@ export class GroupsComponent implements OnInit, AfterViewInit {
    */
   applyFilter(filterValue: string, property: string) {
     this.paginator.pageIndex = 0;
-    const findIndex = this.filterGroupsBy.findIndex(filter => filter.type === property);
+    const findIndex = this.filterGroupsBy.findIndex((filter) => filter.type === property);
     this.filterGroupsBy[findIndex].value = filterValue;
     this.loadGroupsPage();
   }
@@ -111,7 +115,12 @@ export class GroupsComponent implements OnInit, AfterViewInit {
    */
   getGroups() {
     this.dataSource = new GroupsDataSource(this.groupsService);
-    this.dataSource.getGroups(this.filterGroupsBy, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+    this.dataSource.getGroups(
+      this.filterGroupsBy,
+      this.sort.active,
+      this.sort.direction,
+      this.paginator.pageIndex,
+      this.paginator.pageSize
+    );
   }
-
 }
