@@ -4,7 +4,7 @@
 
     <mat-radio-group fxFlex="98%" fxLayout="row" fxLayoutGap="5%" fxLayout.lt-md="column" formControlName="accountingRule">
       <mat-radio-button *ngFor="let accountingRule of accountingRuleData; let i =  index" [value]="i+1">
-        {{ accountingRule }}
+        {{ 'labels.accounting.' + accountingRule | translate }}
       </mat-radio-button>
     </mat-radio-group>
 
@@ -12,67 +12,39 @@
 
     <div *ngIf="shareProductAccountingForm.value.accountingRule === 2" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-      <h4 fxFlex="98%" class="mat-h4">Assets</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.Assets' | translate}}</h4>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Share reference</mat-label>
-        <mat-select formControlName="shareReferenceId" required>
-          <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
-            ({{ assetAccount.glCode }}) {{ assetAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Share reference is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="shareProductAccountingForm.controls.shareReferenceId"
+        [glAccountList]="assetAccountData" [required]="true" [inputLabel]="'Share reference'">
+      </mifosx-gl-account-selector>
 
       <mat-divider fxFlex="98%"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">Liabilities</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.Liabilities' | translate}}</h4>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Share suspense control</mat-label>
-        <mat-select formControlName="shareSuspenseId" required>
-          <mat-option *ngFor="let liabilityAccount of liabilityAccountData" [value]="liabilityAccount.id">
-            ({{ liabilityAccount.glCode }}) {{ liabilityAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Share suspense control is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="shareProductAccountingForm.controls.shareSuspenseId"
+        [glAccountList]="liabilityAccountData" [required]="true" [inputLabel]="'Share suspense control'">
+      </mifosx-gl-account-selector>
 
       <mat-divider fxFlex="98%"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">Share Equity</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.Share Equity' | translate}}</h4>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Equity</mat-label>
-        <mat-select formControlName="shareEquityId" required>
-          <mat-option *ngFor="let equityAccount of equityAccountData" [value]="equityAccount.id">
-            ({{ equityAccount.glCode }}) {{ equityAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Equity is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="shareProductAccountingForm.controls.shareEquityId"
+        [glAccountList]="equityAccountData" [required]="true" [inputLabel]="'Equity'">
+      </mifosx-gl-account-selector>
 
       <mat-divider fxFlex="98%"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">Income</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.Income' | translate}}</h4>
 
-      <mat-form-field fxFlex="48%">
-        <mat-label>Income from fees</mat-label>
-        <mat-select formControlName="incomeFromFeeAccountId" required>
-          <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
-            ({{ incomeAccount.glCode }}) {{ incomeAccount.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error>
-          Income from fees is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <mifosx-gl-account-selector fxFlex="48%"
+        [inputFormControl]="shareProductAccountingForm.controls.incomeFromFeeAccountId"
+        [glAccountList]="incomeAccountData" [required]="true" [inputLabel]="'Income from fees'">
+      </mifosx-gl-account-selector>
 
     </div>
 
@@ -81,10 +53,10 @@
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-      Previous
+      {{'labels.buttons.Previous' | translate}}
     </button>
     <button mat-raised-button matStepperNext [disabled]="!shareProductFormValid">
-      Next
+      {{'labels.buttons.Next' | translate}}
       <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
     </button>
   </div>

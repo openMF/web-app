@@ -5,8 +5,12 @@ import { OptionData } from 'app/shared/models/option-data.model';
 
 @Injectable({
     providedIn: 'root'
-  })
-  export class Accounting {
+})
+export class Accounting {
+
+    public getAccountingRulesForShares(): string[] {
+        return ['NONE', 'Cash'];
+    }
 
     public getAccountingRulesForSavings(): string[] {
         return ['NONE', 'Cash', 'Accrual (periodic)'];

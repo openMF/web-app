@@ -605,7 +605,7 @@
 
     <tr mat-header-row *matHeaderRowDef="openSharesColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: openSharesColumns;"
-      [routerLink]="['../', 'shares-accounts', row.id, 'transactions']"></tr>
+      [routerLink]="['../', 'shares-accounts', row.id, 'general']"></tr>
 
   </table>
 
@@ -640,7 +640,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="closedSharesColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: closedSharesColumns;" [routerLink]="['../', 'shares-accounts', row.id, 'transactions']"></tr>
+    <tr mat-row *matRowDef="let row; columns: closedSharesColumns;" [routerLink]="['../', 'shares-accounts', row.id, 'general']"></tr>
 
   </table>
 

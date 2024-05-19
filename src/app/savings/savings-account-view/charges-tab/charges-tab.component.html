@@ -6,13 +6,14 @@
     </div>
     <div class="action-button m-b-20" *ngIf="this.chargesData">
       <button mat-raised-button color="primary" (click)="toggleCharges()">
-        {{showInactiveCharges ? viewAllChargeButtons('View Active Charges') : viewAllChargeButtons('View Inactive Charges')}}</button>
+        {{showInactiveCharges ? viewAllChargeButtons('View Active Charges') : viewAllChargeButtons('View Inactive
+        Charges')}}</button>
     </div>
   </div>
 
   <div class="mat-elevation-z1 m-b-25">
 
-    <table mat-table #chargesTable [dataSource]="dataSource" >
+    <table mat-table #chargesTable [dataSource]="dataSource">
 
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Name' | translate}} </th>
@@ -46,22 +47,26 @@
 
       <ng-container matColumnDef="due">
         <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Due' | translate}} </th>
-        <td mat-cell *matCellDef="let charge"> {{charge.amount | currency:charge.currency.code:'symbol-narrow':'1.2-2'}} </td>
+        <td mat-cell *matCellDef="let charge"> {{charge.amount | currency:charge.currency.code:'symbol-narrow':'1.2-2'}}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="paid">
         <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Paid' | translate}} </th>
-        <td mat-cell *matCellDef="let charge"> {{charge.amountPaid | currency:charge.currency.code:'symbol-narrow':'1.2-2'}} </td>
+        <td mat-cell *matCellDef="let charge"> {{charge.amountPaid |
+          currency:charge.currency.code:'symbol-narrow':'1.2-2'}} </td>
       </ng-container>
 
       <ng-container matColumnDef="waived">
         <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Waived' | translate}} </th>
-        <td mat-cell *matCellDef="let charge"> {{charge.amountWaived | currency:charge.currency.code:'symbol-narrow':'1.2-2'}} </td>
+        <td mat-cell *matCellDef="let charge"> {{charge.amountWaived |
+          currency:charge.currency.code:'symbol-narrow':'1.2-2'}} </td>
       </ng-container>
 
       <ng-container matColumnDef="outstanding">
         <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Outstanding' | translate}} </th>
-        <td mat-cell *matCellDef="let charge"> {{charge.amountOutstanding | currency:charge.currency.code:'symbol-narrow':'1.2-2'}} </td>
+        <td mat-cell *matCellDef="let charge"> {{charge.amountOutstanding |
+          currency:charge.currency.code:'symbol-narrow':'1.2-2'}} </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
@@ -88,7 +93,8 @@
             </button>
             <ng-container *ngIf="isRecurringCharge(charge)">
               <button class="account-action-button" mat-raised-button color="primary" matTooltip="Inactivate Charge"
-                *mifosxHasPermission="'INACTIVATE_SAVINGSACCOUNTCHARGE'" (click)="routeEdit($event); inactivateCharge(charge.id)">
+                *mifosxHasPermission="'INACTIVATE_SAVINGSACCOUNTCHARGE'"
+                (click)="routeEdit($event); inactivateCharge(charge.id)">
                 <i class="fa fa-ban"></i>
               </button>
             </ng-container>

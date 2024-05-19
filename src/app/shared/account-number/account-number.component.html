@@ -1,5 +1,8 @@
 <span (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()">
   <span class="m-l-5" *ngIf="displayL && iconVisible" (click)="copyValue()"><b><fa-icon icon="copy" size="sm" title="{{'labels.text.Copy Account Number' | translate }}"></fa-icon></b></span>
-  <span class="m-l-5">{{ accountNo }}</span>
+  <span class="m-l-5" *ngIf="accountType">
+    <a href="{{getAccountLink()}}">{{ accountNo }}</a>
+  </span>
+  <span class="m-l-5" *ngIf="!accountType">{{ accountNo }}</span>
   <span class="m-l-3" *ngIf="displayR && iconVisible" (click)="copyValue()"><b><fa-icon icon="copy" size="sm" title="{{'labels.text.Copy Account Number' | translate }}"></fa-icon></b></span>
 </span>

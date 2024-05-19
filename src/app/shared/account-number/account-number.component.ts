@@ -9,6 +9,9 @@ import { Clipboard } from '@angular/cdk/clipboard';
 export class AccountNumberComponent implements OnInit {
   @Input() accountNo: string;
   @Input() display = 'right';
+  @Input() clientId: number | null = null;
+  @Input() accountId: number | null = null;
+  @Input() accountType: string | null = null;
 
   iconVisible = false;
   displayL = false;
@@ -31,5 +34,20 @@ export class AccountNumberComponent implements OnInit {
 
   mouseLeave() {
     this.iconVisible = false;
+  }
+
+  getAccountLink(): string {
+    if (this.accountType) {
+      return `/#/clients/${this.clientId}/${this.getAccountType()}/${this.accountId}`;
+    }
+    return '';
+  }
+
+  private getAccountType(): string {
+    if (this.accountType === '1') {
+      return 'loan-accounts';
+    } else if (this.accountType === '2') {
+      return 'savings-accounts';
+    }
   }
 }

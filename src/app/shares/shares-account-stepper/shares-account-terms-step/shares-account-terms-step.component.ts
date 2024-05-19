@@ -2,6 +2,7 @@
 import { Component, OnChanges, OnInit, Input } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
+import { Currency } from 'app/shared/models/general.model';
 
 /**
  * Shares Account Terms Step
@@ -33,6 +34,8 @@ export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
   /** For Edit Shares Account Form */
   isSavingsPatched = false;
 
+  currency: Currency | null = null;
+
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {SettingsService} settingsService Settings Service
@@ -44,6 +47,7 @@ export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
 
   ngOnChanges() {
     if (this.sharesAccountProductTemplate) {
+      this.currency = this.sharesAccountProductTemplate.currency;
       this.sharesAccountTermsForm.patchValue({
         'currencyCode': this.sharesAccountProductTemplate.currency.code,
         'decimal': this.sharesAccountProductTemplate.currency.decimalPlaces,
@@ -110,6 +114,13 @@ export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
    */
   get sharesAccountTerms() {
     return this.sharesAccountTermsForm.value;
+  }
+
+  calculateCurrenValue(): number {
+    if (this.sharesAccountTermsForm.value.requestedShares && this.sharesAccountProductTemplate.currentMarketPrice) {
+      return this.sharesAccountProductTemplate.currentMarketPrice * this.sharesAccountTermsForm.value.requestedShares;
+    }
+    return 0;
   }
 
 }

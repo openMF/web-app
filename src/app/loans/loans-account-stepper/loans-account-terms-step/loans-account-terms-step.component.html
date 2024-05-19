@@ -209,6 +209,16 @@
       </mat-error>
     </mat-form-field>
 
+    <mat-form-field fxFlex="48%" *ngIf="loansAccountTermsData?.canDefineInstallmentAmount">
+      <mat-label>{{"labels.inputs.Installment Amount" | translate}}</mat-label>
+      <input type="number" matInput formControlName="fixedEmiAmount">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>{{"labels.inputs.Balloon Repayment Amount" | translate}}</mat-label>
+      <input type="number" matInput formControlName="balloonRepaymentAmount">
+    </mat-form-field>
+
     <h4 fxFlex="98%" class="mat-h4">{{"labels.heading.Interest Calculations" | translate}}</h4>
 
     <mat-form-field fxFlex="48%">
@@ -279,11 +289,6 @@
       </mat-form-field>
 
     </ng-container>
-
-    <mat-form-field fxFlex="48%" *ngIf="loansAccountTermsData?.canDefineInstallmentAmount">
-      <mat-label>{{"labels.inputs.Installment Amount" | translate}}</mat-label>
-      <input type="number" matInput formControlName="fixedEmiAmount">
-    </mat-form-field>
 
     <mat-divider fxFlex="98%"></mat-divider>
 

@@ -24,7 +24,7 @@
 
     <mat-step [stepControl]="shareProductDetailsForm" completed>
 
-      <ng-template matStepLabel>DETAILS</ng-template>
+      <ng-template matStepLabel>{{'labels.inputs.DETAILS' | translate}}</ng-template>
 
       <mifosx-share-product-details-step [shareProductsTemplate]="shareProductAndTemplate"></mifosx-share-product-details-step>
 
@@ -32,7 +32,7 @@
 
     <mat-step [stepControl]="shareProductCurrencyForm" completed>
 
-      <ng-template matStepLabel>CURRENCY</ng-template>
+      <ng-template matStepLabel>{{'labels.inputs.CURRENCY' | translate}}</ng-template>
 
       <mifosx-share-product-currency-step [shareProductsTemplate]="shareProductAndTemplate"></mifosx-share-product-currency-step>
 
@@ -40,7 +40,7 @@
 
     <mat-step [stepControl]="shareProductTermsForm" completed>
 
-      <ng-template matStepLabel>TERMS</ng-template>
+      <ng-template matStepLabel>{{'labels.inputs.TERMS' | translate}}</ng-template>
 
       <mifosx-share-product-terms-step [shareProductsTemplate]="shareProductAndTemplate"></mifosx-share-product-terms-step>
 
@@ -48,7 +48,7 @@
 
     <mat-step [stepControl]="shareProductSettingsForm" completed>
 
-      <ng-template matStepLabel>SETTINGS</ng-template>
+      <ng-template matStepLabel>{{'labels.inputs.SETTINGS' | translate}}</ng-template>
 
       <mifosx-share-product-settings-step [shareProductsTemplate]="shareProductAndTemplate"></mifosx-share-product-settings-step>
 
@@ -56,7 +56,7 @@
 
     <mat-step [stepControl]="shareProductMarketPriceForm" completed>
 
-      <ng-template matStepLabel>MARKET PRICE</ng-template>
+      <ng-template matStepLabel>{{'labels.inputs.MARKET PRICE' | translate}}</ng-template>
 
       <mifosx-share-product-market-price-step [shareProductsTemplate]="shareProductAndTemplate"></mifosx-share-product-market-price-step>
 
@@ -64,7 +64,7 @@
 
     <mat-step completed>
 
-      <ng-template matStepLabel>CHARGES</ng-template>
+      <ng-template matStepLabel>{{'labels.inputs.CHARGES' | translate}}</ng-template>
 
       <mifosx-share-product-charges-step
         [shareProductsTemplate]="shareProductAndTemplate"
@@ -76,7 +76,7 @@
 
     <mat-step [stepControl]="shareProductAccountingForm" completed>
 
-      <ng-template matStepLabel>ACCOUNTING</ng-template>
+      <ng-template matStepLabel>{{'labels.inputs.ACCOUNTING' | translate}}</ng-template>
 
       <mifosx-share-product-accounting-step
         [shareProductsTemplate]="shareProductAndTemplate"
@@ -89,7 +89,7 @@
 
     <mat-step state="preview" *ngIf="shareProductFormValidAndNotPristine" completed>
 
-      <ng-template matStepLabel>PREVIEW</ng-template>
+      <ng-template matStepLabel>{{'labels.inputs.PREVIEW' | translate}}</ng-template>
 
       <mifosx-share-product-preview-step
         [shareProductsTemplate]="shareProductAndTemplate"
