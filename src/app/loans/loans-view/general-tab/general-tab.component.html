@@ -200,6 +200,11 @@
           <span fxFlex="50%">{{ loanDetails.principal | currency:currencyCode:'symbol-narrow':'1.2-2' }}</span>
         </div>
 
+        <div fxFlexFill *ngIf="loanDetails.balloonRepaymentAmount > 0">
+          <span fxFlex="50%">{{"labels.inputs.Balloon Repayment Amount" | translate}}:</span>
+          <span fxFlex="50%">{{ loanDetails.balloonRepaymentAmount | currency:currencyCode:'symbol-narrow':'1.2-2' }}</span>
+        </div>
+
         <div fxFlexFill>
           <span fxFlex="50%">{{"labels.inputs.Arrears By" | translate}}:</span>
           <span fxFlex="50%">{{"labels.inputs.Not Provided" | translate}}</span>

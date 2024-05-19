@@ -145,7 +145,8 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         'transactionProcessingStrategyCode': this.loansAccountTermsData.transactionProcessingStrategyCode,
         'interestRateDifferential': this.loansAccountTermsData.interestRateDifferential,
         'multiDisburseLoan': this.loansAccountTermsData.multiDisburseLoan,
-        'interestRateFrequencyType': this.loansAccountTermsData.interestRateFrequencyType.id
+        'interestRateFrequencyType': this.loansAccountTermsData.interestRateFrequencyType.id,
+        'balloonRepaymentAmount': this.loansAccountTermsData.balloonRepaymentAmount,
       });
 
       this.setAdvancedPaymentStrategyControls();
@@ -237,7 +238,8 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         'transactionProcessingStrategyCode': this.loansAccountTermsData.transactionProcessingStrategyCode,
         'interestRateDifferential': this.loansAccountTermsData.interestRateDifferential,
         'multiDisburseLoan': this.loansAccountTermsData.multiDisburseLoan,
-        'interestRateFrequencyType': this.loansAccountTermsData.interestRateFrequencyType.id
+        'interestRateFrequencyType': this.loansAccountTermsData.interestRateFrequencyType.id,
+        'balloonRepaymentAmount': this.loansAccountTermsData.balloonRepaymentAmount
       });
     }
     this.createloansAccountTermsForm();
@@ -357,7 +359,8 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       'interestRateDifferential': [''],
       'transactionProcessingStrategyCode': ['', Validators.required],
       'multiDisburseLoan': [false],
-      'interestRateFrequencyType': ['']
+      'interestRateFrequencyType': [''],
+      'balloonRepaymentAmount': ['']
     });
   }
 

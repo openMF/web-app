@@ -3,30 +3,30 @@
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Currency</mat-label>
+      <mat-label>{{'labels.inputs.Currency' | translate}}</mat-label>
       <mat-select matTooltip="The currency to be used" formControlName="currencyCode" required>
         <mat-option *ngFor="let currency of currencyData" [value]="currency.code">
           {{ currency.name }}
         </mat-option>
       </mat-select>
       <mat-error>
-        Currency is <strong>required</strong>
+        {{'labels.inputs.Currency' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Decimal Places</mat-label>
+      <mat-label>{{'labels.inputs.Decimal Places' | translate}}</mat-label>
       <input type="number" matTooltip="The number of decimal places to be used to track and report on share accounts" matInput formControlName="digitsAfterDecimal" required>
       <mat-error>
-        Decimal Places is <strong>required</strong>
+        {{'labels.inputs.Decimal Places' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Currency in multiples of</mat-label>
+      <mat-label>{{'labels.inputs.Currency in multiples of' | translate}}</mat-label>
       <input type="number" matInput matTooltip="The amount to be rounded off (example: 100 rounds off to 200, 300, 400, etc)" formControlName="inMultiplesOf" required>
       <mat-error>
-        Currency in multiples of is <strong>required</strong>
+        {{'labels.inputs.Currency in multiples of' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
       </mat-error>
     </mat-form-field>
 
@@ -35,10 +35,10 @@
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-      Previous
+      {{'labels.buttons.Previous' | translate}}
     </button>
     <button mat-raised-button matStepperNext>
-      Next
+      {{'labels.buttons.Next' | translate}}
       <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
     </button>
   </div>

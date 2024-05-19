@@ -48,6 +48,7 @@ import { GlAccountDisplayComponent } from './accounting/gl-account-display/gl-ac
 import { ViewSavingsAccountingDetailsComponent } from './accounting/view-savings-accounting-details/view-savings-accounting-details.component';
 import { ThemeToggleComponent } from './theme-toggle/theme-toggle.component';
 import { LongTextComponent } from './long-text/long-text.component';
+import { DropdownComponent } from './dropdown/dropdown.component';
 
 /**
  * Shared Module
@@ -102,7 +103,8 @@ import { LongTextComponent } from './long-text/long-text.component';
     GlAccountDisplayComponent,
     ViewSavingsAccountingDetailsComponent,
     ThemeToggleComponent,
-    LongTextComponent
+    LongTextComponent,
+    DropdownComponent
   ],
   exports: [
     FileUploadComponent,

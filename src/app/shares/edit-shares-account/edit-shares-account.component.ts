@@ -110,7 +110,7 @@ export class EditSharesAccountComponent {
     const sharesAccount = {
       ...this.sharesAccount,
       clientId: this.sharesAccountAndTemplate.clientId,
-      charges: this.sharesAccount.charges.map((charge: any) => ({ chargeId: charge.chargeId, amount: charge.amount })),
+      charges: this.sharesAccount.charges.map((charge: any) => ({ chargeId: charge.id, amount: charge.amount })),
       applicationDate: this.dateUtils.formatDate(this.sharesAccount.applicationDate, dateFormat),
       submittedDate: this.dateUtils.formatDate(this.sharesAccount.submittedDate, dateFormat),
       unitPrice: this.sharesAccountTermsForm.get('unitPrice').value,

@@ -11,6 +11,9 @@ import { of } from 'rxjs';
 /** Custom Services */
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
+import { Charges } from 'app/core/utils/charges';
+import { OptionData } from 'app/shared/models/option-data.model';
+import { Charge } from './models/charge.model';
 
 /**
  * Charges component.
@@ -23,7 +26,7 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
 export class ChargesComponent implements OnInit, AfterViewInit {
 
   /** Charge data. */
-  chargeData: any;
+  chargeData: Charge[] = [];
   /** Columns to be displayed in charges table. */
   displayedColumns: string[] = ['name', 'chargeAppliesTo', 'chargeTimeType', 'chargeCalculationType', 'amount', 'penalty', 'active'];
   /** Data source for charges table. */
@@ -43,6 +46,8 @@ export class ChargesComponent implements OnInit, AfterViewInit {
   /* Template for popover on charges table */
   @ViewChild('templateChargesTable') templateChargesTable: TemplateRef<any>;
 
+  chargeAppliesToOptions: OptionData[] = [];
+
   /**
    * Retrieves the charges data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
@@ -53,10 +58,12 @@ export class ChargesComponent implements OnInit, AfterViewInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) {
+              private popoverService: PopoverService,
+              private charges: Charges) {
     this.route.data.subscribe(( data: { charges: any }) => {
       this.chargeData = data.charges;
     });
+    this.chargeAppliesToOptions = this.charges.getChargeAppliesToOptions();
   }
 
   /**
@@ -136,4 +143,13 @@ export class ChargesComponent implements OnInit, AfterViewInit {
     this.configurationWizardService.showCharges = true;
     this.router.navigate(['/products']);
   }
+
+  filterByAppliesTo(chargeAppliesTo: number) {
+    console.log(chargeAppliesTo);
+    const filteredCharges: Charge[] = this.chargeData.filter((charge: Charge) => {
+      return (charge.chargeAppliesTo.id === chargeAppliesTo);
+    });
+    this.dataSource = new MatTableDataSource(filteredCharges);
+  }
+
 }

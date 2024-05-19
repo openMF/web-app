@@ -14,6 +14,7 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'mifosx-share-product-market-price-step',
@@ -38,7 +39,8 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
   constructor(private formBuilder: UntypedFormBuilder,
               public dialog: MatDialog,
               private dateUtils: Dates,
-              private settingsService: SettingsService) {
+              private settingsService: SettingsService,
+              private translateService: TranslateService) {
     this.createShareProductMarketPriceForm();
   }
 
@@ -99,14 +101,14 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
   }
 
   getData(values?: any) {
-    return { title: 'Market Price Period', formfields: this.getFormfields(values) };
+    return { title: this.translateService.instant('labels.inputs.Market Price Period'), formfields: this.getFormfields(values) };
   }
 
   getFormfields(values?: any) {
     const formfields: FormfieldBase[] = [
       new DatepickerBase({
         controlName: 'fromDate',
-        label: 'From Date',
+        label: this.translateService.instant('labels.inputs.From Date'),
         value: values ? values.fromDate : undefined,
         maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 10)),
         required: true,
@@ -114,7 +116,7 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
       }),
       new InputBase({
         controlName: 'shareValue',
-        label: 'Nominal/Unit Price',
+        label: this.translateService.instant('labels.inputs.Nominal/Unit Price'),
         value: values ? values.shareValue : undefined,
         type: 'number',
         required: true,

@@ -5,7 +5,7 @@
     <nav mat-tab-nav-bar class="navigation-tabs">
       <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive"
         [active]="general.isActive">
-        General
+        {{'labels.inputs.General' | translate}}
       </a>
       <ng-container *ngFor="let shareProductDatatable of shareProductDatatables">
         <a mat-tab-link [routerLink]="['./datatables',shareProductDatatable.registeredTableName]" routerLinkActive
