@@ -1,23 +1,20 @@
 <div class="tab-container mat-typography">
-
   <mat-list>
+    <mat-list-item> Parent Office : {{ officeData.parentName ? officeData.parentName : 'N/A' }} </mat-list-item>
 
     <mat-list-item>
-      Parent Office : {{ officeData.parentName ? officeData.parentName : 'N/A' }}
+      Opened On : {{ officeData.openingDate ? (officeData.openingDate | dateFormat) : 'Unassigned' }}
+    </mat-list-item>
+
+    <mat-list-item> Name : {{ officeData.name ? officeData.name : 'Unassigned' }} </mat-list-item>
+
+    <mat-list-item>
+      Hierarchy Level :
+      {{ officeData.officeCountryHierarchyLevelName ? officeData.officeCountryHierarchyLevelName : 'Unassigned' }}
     </mat-list-item>
 
     <mat-list-item>
-      Opened On : {{ officeData.openingDate ? (officeData.openingDate  | dateFormat) : 'Unassigned' }}
+      OU Path: {{ officeData.officeHierarchyPath ? officeData.officeHierarchyPath : 'Unassigned' }}
     </mat-list-item>
-
-    <mat-list-item>
-      Name Decorated : {{ officeData.nameDecorated ? officeData.nameDecorated : 'Unassigned' }}
-    </mat-list-item>
-
-    <mat-list-item>
-      External Id : {{ officeData.externalId ? officeData.externalId : 'Unassigned' }}
-    </mat-list-item>
-    
   </mat-list>
-
 </div>
