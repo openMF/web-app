@@ -7,7 +7,7 @@
       <form [formGroup]="configurationForm" (ngSubmit)="submit()">
         <mat-card-content>
           <div fxLayout="column">
-            <mat-form-field>
+            <mat-form-field *ngIf="!configuration.codeId">
               <mat-label>Value</mat-label>
               <input type="number" matInput required formControlName="value">
               <mat-error *ngIf="configurationForm.controls.value.hasError('required')">
@@ -30,6 +30,21 @@
                 </mat-error>
               </mat-form-field> -->
 
+              <div *ngIf="configuration.codeId" class="mb-1">
+                <label for="codeValue">Value</label>
+                <ng-select
+                  #codeValue
+                  [items]="configuration.options"
+                  bindLabel="name"
+                  bindValue="id"
+                  placeholder="Value"
+                  formControlName="codeValueId"
+                  aria-labelledby="codeValue"
+                  [virtualScroll]="true"
+                >
+                </ng-select>
+              </div>
+
               <div >
                 <label for="country">Country</label>
                 <ng-select
@@ -40,6 +55,22 @@
                   placeholder="Select Country"
                   formControlName="countryId"
                   aria-labelledby="country"
+                  [virtualScroll]="true"
+                  (change)="onCountryChange($event.id)"
+                >
+                </ng-select>
+              </div>
+
+              <div *ngIf="offices.length > 0" class="mt-1">
+                <label for="office">OU</label>
+                <ng-select
+                  #office
+                  [items]="offices"
+                  bindLabel="name"
+                  bindValue="id"
+                  placeholder="Select OU"
+                  formControlName="officeId"
+                  aria-labelledby="office"
                   [virtualScroll]="true"
                 >
                 </ng-select>

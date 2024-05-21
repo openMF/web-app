@@ -12,10 +12,21 @@
             <input matInput required formControlName="name" />
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field *ngIf="!configuration.codeId">
             <mat-label>Configuration Value</mat-label>
             <input matInput required type="number" formControlName="value" />
             <mat-error *ngIf="configurationForm.controls.value.hasError('required')">
+              Configuration Value is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field *ngIf="configuration.codeId">
+            <mat-label>Configuration Value</mat-label>
+            <mat-select required formControlName="codeValueId">
+              <mat-option *ngFor="let option of configuration.options" [value]="option.id">
+                {{ option.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="configurationForm.controls.codeValueId.hasError('required')">
               Configuration Value is <strong>required</strong>
             </mat-error>
           </mat-form-field>

@@ -44,6 +44,7 @@ Release Notes
     * [SER-1912] - Fineract v2  - Show OU Location Hierarchy Details When Displaying Clients
     * [SER-1911] - Fineract v2  - Show OU Location Hierarchy Details When Displaying Groups
     * [SER-2486] - Creating savings account and mapping it to loans and country
+    * [SER-2523] - Implementation of payment channel selection in configuration
     * [SER-1896] - Hide the add button on the lowest level OU in the tree.
     * [SER-1561] - show the proper office name instead of the name decorated.
     * [SER-1908] - Include Phone Number in Repayment Transaction Details

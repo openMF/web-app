@@ -906,5 +906,16 @@ export class OrganizationService {
         observe: 'response'
       });
     }
-    
+
+
+    /**
+     * Searches for offices based on the provided parameters.
+     * @param params - The parameters to search for offices.
+     * @returns {Observable<any>} - An observable that emits the search results.
+     */
+    searchOffices(params: Record<string, any>): Observable<any> {
+      return this.http.get('/offices/search', { params });
+
+    }
+
 }
