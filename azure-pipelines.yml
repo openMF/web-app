@@ -1,6 +1,8 @@
 trigger:
   - master
   - develop
+  - release/*
+  - hotfix/*
 
 pr:
   - master
@@ -10,22 +12,65 @@ pr:
 pool:
   vmImage: "ubuntu-latest"
 
+name: Oaf-Fineract_$(Build.SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
+
 variables:
   # Exposes GITGUARDIAN_API_KEY and GITHUB_TOKEN
   # WARNING, on first run of the pipeline, access to this variable group will need to be approved by Devops in Azure
   - group: CodeScanningTools
 
 steps:
+  - checkout: self
+    # This is required to allow MegaLinter to run git commands
+    persistCredentials: true
+
+  - script: env
+    displayName: List Environment Variables
+
+  - task: GetRevision@1
+    displayName: "Get Revision"
+    inputs:
+      VariableName: Revision
+
   - script: |
-      VERSION_TAG=`git describe --abbrev=0 --tags`
+      VERSION_TAG=`sed 's/.*"version": "\(.*\)".*/\1/;t;d' ./package.json`
       echo "##vso[task.setvariable variable=VERSION_TAG]$VERSION_TAG"
-      IMAGE_TAGS="$(Build.SourceVersion)"
+      IMAGE_TAGS="${VERSION_TAG}.$(date '+%Y.%m.%d').$(Revision)"
       echo "##vso[task.setvariable variable=IMAGE_SEMANTIC_HASH]$IMAGE_TAGS"
       echo Tags: $IMAGE_TAGS
       echo "##vso[task.setvariable variable=IMAGE_TAGS]$IMAGE_TAGS"
-      if [[ "$(Build.SourceBranch)" == "refs/heads/master" ]]; then IMAGE_TAGS="$IMAGE_TAGS,latest"; fi;
-      echo Tags: $IMAGE_TAGS
-    displayName: Set tag variables
+    displayName: Set image tag
+
+  - script: |
+      # Determine linting scope
+      if [[ "${BUILD_REASON}" == "PullRequest" ]]; then
+        echo "This is a PR build, scanning delta only"
+        export VALIDATE_ALL_CODEBASE=false
+        export GITHUB_SHA=$(git log -1 --pretty=%B | sed -e 's/^Merge //' -e 's/ into.*//')
+      else
+        echo "This is a regular build"
+        export VALIDATE_ALL_CODEBASE=true
+        export GITHUB_SHA=${BUILD_SOURCEVERSION}
+      fi
+
+      echo "VALIDATE_ALL_CODEBASE=${VALIDATE_ALL_CODEBASE}"
+      echo "GITHUB_SHA=${GITHUB_SHA}"
+
+      docker run -v "$(System.DefaultWorkingDirectory):/tmp/lint" \
+        -e GITHUB_TOKEN \
+        -e VALIDATE_ALL_CODEBASE \
+        -e APPLY_FIXES=none \
+        -e GITHUB_STATUS_REPORTER=true \
+        -e GITHUB_COMMENT_REPORTER=true \
+        -e CI=true \
+        -e GITHUB_REF="$(Build.SourceBranch)" \
+        -e GITHUB_REPOSITORY="$(Build.Repository.ID)" \
+        -e GITHUB_TARGET_URL="$(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)&view=logs&j=$(System.JobId)&t=$(System.TaskInstanceId)" \
+        -e GITHUB_SHA \
+        oxsecurity/megalinter-cupcake:latest
+    displayName: Lint with MegaLinter
+    env:
+      GITHUB_TOKEN: $(GITHUB_TOKEN)
 
   - script: |
       docker run \
@@ -118,6 +163,7 @@ steps:
 
   - task: Docker@2
     displayName: Build and push an image to container registry
+    condition: and(succeeded(), or(eq(variables['Build.SourceBranchName'], 'main'), eq(variables['Build.SourceBranchName'], 'develop'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'), startsWith(variables['Build.SourceBranch'], 'refs/heads/hotfix/')))
     inputs:
       command: buildAndPush
       repository: "oneacrefund/fineract-frontend-v2"
