@@ -1,33 +1,32 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
-import { ActivatedRoute } from "@angular/router";
-import { OfficeTreeNode } from "app/shared/office-tree-view/office-tree-node";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { ActivatedRoute } from '@angular/router';
+import { OfficeTreeNode } from 'app/shared/office-tree-view/office-tree-node';
 
 /** rxjs Imports */
-import { of } from "rxjs";
-import { OrganizationService } from "app/organization/organization.service";
-import { TableVirtualScrollDataSource } from "ng-table-virtual-scroll";
+import { of } from 'rxjs';
+import { OrganizationService } from 'app/organization/organization.service';
+import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 
 /**
  * Offices component.
  */
 @Component({
-  selector: "mifosx-offices",
-  templateUrl: "./offices.component.html",
-  styleUrls: ["./offices.component.scss"],
+  selector: 'mifosx-offices',
+  templateUrl: './offices.component.html',
+  styleUrls: ['./offices.component.scss'],
 })
 export class OfficesComponent implements OnInit {
   /** Offices data. */
   officesData: any;
   /** Columns to be displayed in offices table. */
-  displayedColumns: string[] = ["name", "officeHierarchyPath", "parentName", "openingDate"];
+  displayedColumns: string[] = ['name', 'officeHierarchyPath', 'parentName', 'openingDate'];
   /** Data source for offices table. */
   dataSource: TableVirtualScrollDataSource<any>;
   treeDataSource: OfficeTreeNode[] = [];
-  toggleText = "Tree View";
+  toggleText = 'Tree View';
   treeView = false;
   /** Paginator for offices table. */
   // @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator
@@ -93,18 +92,20 @@ export class OfficesComponent implements OnInit {
       if (!item.parentId || item.parentId === null) {
         const displayName = [item.levelName, item.name]
           .filter((word) => undefined !== word && word.length > 0)
-          .join(" - ");
+          .join(' - ');
         item.name = displayName;
         roots.push(item);
       } else if (item.parentId in all) {
         const displayName = [item.levelName, item.name]
           .filter((word) => undefined !== word && word.length > 0)
-          .join(" - ");
+          .join(' - ');
         item.name = displayName;
+
         const p = all[item.parentId];
-        if (!("children" in p)) {
+        if (!('children' in p)) {
           p.children = [];
         }
+
         p.children.push(item);
       }
     });
@@ -112,7 +113,7 @@ export class OfficesComponent implements OnInit {
   }
 
   searchTreeViewOffices() {
-    this.organizationService.searchOfficeTreeHierarchy(true, "OAF").subscribe((response) => {
+    this.organizationService.searchOfficeTreeHierarchy(true, 'OAF').subscribe((response) => {
       if (response) {
         const data = response
           .filter((x) => x.status === true)
@@ -120,7 +121,8 @@ export class OfficesComponent implements OnInit {
             name: item.name,
             id: item.id,
             parentId: item.parentId,
-            levelName: item.isCountry ? "Country" : item.officeCountryHierarchyLevelName,
+            levelName: item.isCountry ? 'Country' : item.officeCountryHierarchyLevelName,
+            isLowestOU: item.isLowestOU,
           }));
         this.treeDataSource = this.flatToHierarchy(data);
       }
@@ -128,12 +130,12 @@ export class OfficesComponent implements OnInit {
   }
 
   makeOfficeTreeNode(btntext: string) {
-    this.treeView = btntext === "Tree View" ? true : false;
+    this.treeView = btntext === 'Tree View';
     if (this.treeView) {
-      this.toggleText = "List View";
+      this.toggleText = 'List View';
       this.searchTreeViewOffices();
     } else {
-      this.toggleText = "Tree View";
+      this.toggleText = 'Tree View';
     }
   }
 }
