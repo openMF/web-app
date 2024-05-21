@@ -44,6 +44,7 @@ Release Notes
     * [SER-1912] - Fineract v2  - Show OU Location Hierarchy Details When Displaying Clients
     * [SER-1911] - Fineract v2  - Show OU Location Hierarchy Details When Displaying Groups
     * [SER-2486] - Creating savings account and mapping it to loans and country
+    * [SER-2523] - Implementation of payment channel selection in configuration
 
 ## Version 1.0.0 - for use with Fineract Web App
 

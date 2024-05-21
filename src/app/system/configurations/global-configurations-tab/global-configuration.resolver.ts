@@ -3,10 +3,11 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 /** Custom Services */
 import { SystemService } from '../../system.service';
+import { map, switchMap } from 'rxjs/operators';
 
 /**
  * Configurations data resolver.
@@ -25,7 +26,16 @@ export class GlobalConfigurationResolver implements Resolve<Object> {
     */
    resolve(route: ActivatedRouteSnapshot): Observable<any> {
      const configurationId = route.paramMap.get('id');
-     return this.systemService.getConfiguration(configurationId);
+     return this.systemService.getConfiguration(configurationId).pipe(
+      switchMap((config: any) => {
+        if (config.codeId) {
+          return this.systemService.getCodeValues(config.codeId).pipe(
+            map(options => ({ ...config, options }))
+          );
+        }
+        return of(config);
+      }
+     ));
    }
 
 }
