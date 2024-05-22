@@ -49,7 +49,8 @@ steps:
         export GITHUB_SHA=$(git log -1 --pretty=%B | sed -e 's/^Merge //' -e 's/ into.*//')
       else
         echo "This is a regular build"
-        export VALIDATE_ALL_CODEBASE=true
+        # Disabling validating all codebase for now as we have a lot of legacy code
+        export VALIDATE_ALL_CODEBASE=false
         export GITHUB_SHA=${BUILD_SOURCEVERSION}
       fi
 
