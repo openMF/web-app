@@ -52,7 +52,7 @@
       <mat-label>{{'labels.inputs.Installment day calculation from' | translate}} <i class="fas fa-question" matTooltip="Repayment schedule will start the installment dates from the submitted date or the disbursement date"></i></mat-label>
       <mat-select formControlName="repaymentStartDateType" required>
         <mat-option *ngFor="let repaymentStartDateType of repaymentStartDateTypeOptions" [value]="repaymentStartDateType.id">
-          {{ repaymentStartDateType.value | translate}}
+          {{ repaymentStartDateType.value | translateCatalog}}
         </mat-option>
       </mat-select>
     </mat-form-field>

@@ -128,7 +128,7 @@ export class RecurringDepositsButtonsConfiguration {
             taskPermissionName: 'REJECT_RECURRINGDEPOSITACCOUNT'
           },
           {
-            name: 'Withdrawn by client',
+            name: 'Withdrawn by Client',
             icon: 'arrow-down',
             taskPermissionName: 'WITHDRAW_RECURRINGDEPOSITACCOUNT'
           },

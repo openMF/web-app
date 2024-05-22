@@ -81,7 +81,7 @@
     <table mat-table [dataSource]="detailsDataSource">
 
       <ng-container matColumnDef="Key">
-        <td mat-cell *matCellDef="let ele"> {{ ele.key }} </td>
+        <td mat-cell *matCellDef="let ele"> {{ 'labels.inputs.' + ele.key | translate }} </td>
       </ng-container>
 
       <ng-container matColumnDef="Value">
@@ -133,7 +133,7 @@
     <table mat-table [dataSource]="detailsDataSource">
 
       <ng-container matColumnDef="Key">
-        <td mat-cell *matCellDef="let ele"> {{ ele.key }} </td>
+        <td mat-cell *matCellDef="let ele"> {{ 'labels.inputs.' + ele.key | translate }} </td>
       </ng-container>
 
       <ng-container matColumnDef="Value">
@@ -198,6 +198,11 @@
         <div fxFlexFill *ngIf="showDisbursedAmountBasedOnStatus()">
           <span fxFlex="50%">{{"labels.inputs.Disburse Amount" | translate}}:</span>
           <span fxFlex="50%">{{ loanDetails.principal | currency:currencyCode:'symbol-narrow':'1.2-2' }}</span>
+        </div>
+
+        <div fxFlexFill *ngIf="loanDetails.balloonRepaymentAmount > 0">
+          <span fxFlex="50%">{{"labels.inputs.Balloon Repayment Amount" | translate}}:</span>
+          <span fxFlex="50%">{{ loanDetails.balloonRepaymentAmount | currency:currencyCode:'symbol-narrow':'1.2-2' }}</span>
         </div>
 
         <div fxFlexFill>

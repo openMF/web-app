@@ -9,7 +9,7 @@ import { FixedDepositsService } from 'app/deposits/fixed-deposits/fixed-deposits
 import { SettingsService } from 'app/settings/settings.service';
 
 /**
- * Withdraw By Client Fixed Deposits Account Component
+ * Withdrawn by Client Fixed Deposits Account Component
  */
 @Component({
   selector: 'mifosx-withdraw-by-client-fixed-deposits-account',

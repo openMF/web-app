@@ -27,6 +27,8 @@ export class SharesAccountViewComponent implements OnInit {
   /** Button Configurations */
   buttonConfig: SharesButtonsConfiguration;
 
+  entityType: string;
+
   /**
    * Fetches shares account data from `resolve`
    * @param {ActivatedRoute} route Activated Route
@@ -45,6 +47,13 @@ export class SharesAccountViewComponent implements OnInit {
 
   ngOnInit() {
     this.setConditionalButtons();
+    if (this.router.url.includes('clients')) {
+      this.entityType = 'Client';
+    } else if (this.router.url.includes('groups')) {
+      this.entityType = 'Group';
+    } else if (this.router.url.includes('centers')) {
+      this.entityType = 'Center';
+    }
   }
 
   /**

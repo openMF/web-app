@@ -16,6 +16,7 @@ import { SharesAccountViewResolver } from './common-resolvers/share-account-view
 import { ShareAccountActionsResolver } from './common-resolvers/share-account-actions.resolver';
 import { SharesAccountTemplateResolver } from './common-resolvers/shares-account-template.resolver';
 import { SharesAccountAndTemplateResolver } from './common-resolvers/share-account-and-template.resolver';
+import { GeneralTabComponent } from './shares-account-view/general-tab/general-tab.component';
 
 /** Shares Routes */
 const routes: Routes = [
@@ -42,6 +43,19 @@ const routes: Routes = [
               sharesAccountData: SharesAccountViewResolver
             },
             children: [
+              {
+                path: '',
+                redirectTo: 'general',
+                pathMatch: 'full'
+              },
+              {
+                path: 'general',
+                component: GeneralTabComponent,
+                data: { title: 'Shares Account General', breadcrumb: 'General', routeParamBreadcrumb: false },
+                resolve: {
+                  sharesAccountData: SharesAccountViewResolver
+                },
+              },
               {
                 path: 'transactions',
                 component: TransactionsTabComponent,

@@ -9,7 +9,7 @@ import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 /**
- * Withdraw By Client Savings Account Component
+ * Withdrawn by Client Savings Account Component
  */
 @Component({
   selector: 'mifosx-withdraw-by-client-savings-account',

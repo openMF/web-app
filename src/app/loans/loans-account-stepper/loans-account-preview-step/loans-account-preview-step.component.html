@@ -132,6 +132,16 @@
       fxFlex="60%">{{ loansAccount.transactionProcessingStrategyCode | find:loansAccountProductTemplate.transactionProcessingStrategyOptions:'code':'name' }}</span>
   </div>
 
+  <div fxFlexFill>
+    <span fxFlex="40%"> {{"labels.inputs.Installment Amount" | translate}} </span>
+    <span fxFlex="60%"> {{ loansAccount.fixedEmiAmount | formatNumber }} </span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%"> {{"labels.inputs.Balloon Repayment Amount" | translate}} </span>
+    <span fxFlex="60%"> {{ loansAccount.balloonRepaymentAmount | formatNumber }} </span>
+  </div>
+
   <h3 class="mat-h3" fxFlexFill>{{"labels.heading.Moratorium" | translate}}</h3>
 
   <mat-divider fxFlexFill></mat-divider>
@@ -149,6 +159,11 @@
   <div fxFlexFill *ngIf="loansAccount.graceOnArrearsAgeing">
     <span fxFlex="40%">{{"labels.inputs.On Arrears Aging" | translate}}: </span>
     <span fxFlex="60%">{{ loansAccount.graceOnArrearsAgeing }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%"> {{"labels.inputs.Enable installment level Delinquency" | translate}} </span>
+    <span fxFlex="60%"> {{ loansAccount.enableInstallmentLevelDelinquency | yesNo }} </span>
   </div>
 
   <div fxFlexFill *ngIf="loansAccount.isTopup">

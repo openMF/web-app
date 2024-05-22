@@ -10,6 +10,7 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 /** Custom Models */
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Shares Account Charges Step
@@ -42,7 +43,8 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
   /**
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(public dialog: MatDialog) { }
+  constructor(private dialog: MatDialog,
+      private translateService: TranslateService) { }
 
   ngOnInit() {
     this.currencyCode.valueChanges.subscribe(() => {
@@ -80,15 +82,15 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
     const formfields: FormfieldBase[] = [
       new InputBase({
         controlName: 'amount',
-        label: 'Amount',
+        label: this.translateService.instant('labels.inputs.Amount'),
         value: charge.amount || charge.amountOrPercentage,
         type: 'number',
         required: false,
       }),
     ];
     const data = {
-      title: 'Edit Charge',
-      layout: { addButtonText: 'Confirm' },
+      title: this.translateService.instant('labels.heading.Edit Charge'),
+      layout: { addButtonText: 'Submit' },
       formfields: formfields
     };
     const editNoteDialogRef = this.dialog.open(FormDialogComponent, { data });

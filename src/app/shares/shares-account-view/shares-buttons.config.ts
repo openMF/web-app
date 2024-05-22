@@ -31,22 +31,22 @@ export class SharesButtonsConfiguration {
         this.buttonsArray = [
           {
             name: 'Apply Additional Shares',
-            icon: 'fa fa-arrow-right',
+            icon: 'arrow-right',
             taskPermissionName: 'APPLYADDITIONAL_SHAREACCOUNT'
           },
           {
             name: 'Approve Additional Shares',
-            icon: 'fa fa-arrow-right',
+            icon: 'arrow-right',
             taskPermissionName: 'APPROVEADDITIONAL_SHAREACCOUNT'
           },
           {
             name: 'Reject Additional Shares',
-            icon: 'fa fa-arrow-left',
+            icon: 'arrow-left',
             taskPermissionName: 'REJECTADDITIONAL_SHAREACCOUNT'
           },
           {
             name: 'Redeem Shares',
-            icon: 'fa fa-arrow-left',
+            icon: 'arrow-left',
             taskPermissionName: 'WITHDRAW_SAVINGSACCOUNT'
           }
         ];
@@ -55,12 +55,12 @@ export class SharesButtonsConfiguration {
         this.buttonsArray = [
           {
             name: 'Modify Application',
-            icon: 'fa fa-pencil ',
+            icon: 'pencil',
             taskPermissionName: 'UPDATE_SHAREACCOUNT'
           },
           {
             name: 'Approve',
-            icon: 'fa fa-check',
+            icon: 'check',
             taskPermissionName: 'APPROVE_SHAREACCOUNT'
           }
         ];
@@ -69,12 +69,12 @@ export class SharesButtonsConfiguration {
         this.buttonsArray = [
           {
             name: 'Undo Approval',
-            icon: 'fa fa-undo',
+            icon: 'undo',
             taskPermissionName: 'APPROVALUNDO_SHAREACCOUNT'
           },
           {
             name: 'Activate',
-            icon: 'fa fa-check',
+            icon: 'check',
             taskPermissionName: 'ACTIVATE_SHAREACCOUNT'
           }
         ];

@@ -37,6 +37,7 @@ export class LoansAccountScheduleStepComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const payload = this.loansService.buildLoanRequestPayload(this.loansAccount, this.loansAccountTemplate,
       this.loansAccountProductTemplate.calendarOptions, locale, dateFormat);
+    delete payload['enableInstallmentLevelDelinquency'];
 
     this.loansService.calculateLoanSchedule(payload).subscribe((response: any) => {
       this.repaymentScheduleDetails = response;

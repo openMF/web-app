@@ -20,16 +20,7 @@ export class ChargesTabComponent implements OnInit {
   /** Data source for charges table. */
   dataSource: MatTableDataSource<any>;
   /** Columns to be displayed in charges table. */
-  displayedColumns: string[] = [
-    'name',
-    'feeOrPenalty',
-    'paymentDueAt',
-    'calculationType',
-    'due',
-    'paid',
-    'waived',
-    'outstanding',
-  ];
+  displayedColumns: string[] = ['name', 'feeOrPenalty', 'paymentDueAt', 'calculationType', 'due', 'paid', 'waived', 'outstanding', 'actions' ];
 
   /**
    * Retrieves shares account aata from `resolve`.
@@ -40,6 +31,7 @@ export class ChargesTabComponent implements OnInit {
       this.sharesAccountData = data.sharesAccountData;
       this.chargesData = this.sharesAccountData.charges;
     });
+    console.log(this.sharesAccountData);
   }
 
   ngOnInit() {

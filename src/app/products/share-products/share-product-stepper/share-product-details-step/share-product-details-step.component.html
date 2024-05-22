@@ -3,23 +3,23 @@
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Product Name</mat-label>
+      <mat-label>{{'labels.inputs.Product Name' | translate}}</mat-label>
       <input matInput formControlName="name" matTooltip="A unique identifier for the share product" required>
       <mat-error>
-        Product Name is <strong>required</strong>
+        {{'labels.inputs.Product Name' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Short Name</mat-label>
+      <mat-label>{{'labels.inputs.Short Name' | translate}}</mat-label>
       <input matInput formControlName="shortName" matTooltip="A unique identifier for the share product" maxlength="4" required>
       <mat-error>
-        Short Name is <strong>required</strong>
+        {{'labels.inputs.Short Name' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="98%">
-      <mat-label>Description</mat-label>
+      <mat-label>{{'labels.inputs.Description' | translate}}</mat-label>
       <textarea matInput formControlName="description" matTooltip="Provides additional information regarding the purpose and characteristics of the share product" required></textarea>
     </mat-form-field>
 
@@ -28,10 +28,10 @@
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious disabled>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-      Previous
+      {{'labels.buttons.Previous' | translate}}
     </button>
     <button mat-raised-button matStepperNext>
-      Next
+      {{'labels.buttons.Next' | translate}}
       <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
     </button>
   </div>
