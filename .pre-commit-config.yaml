@@ -1,0 +1,35 @@
+repos:
+  # Commenting temporary due to issue https://github.com/one-acre-fund/oaf-pre-commit-hooks/issues/18
+  # - repo: https://github.com/one-acre-fund/oaf-pre-commit-hooks
+  #   rev: v1.3.1
+  #   hooks:
+  #     - id: oaf-tech-pre-commit-hook
+  #       pass_filenames: false
+  #       always_run: true
+  #       args: []
+  - repo: https://github.com/jorisroovers/gitlint
+    rev: v0.19.1
+    hooks:
+      - id: gitlint
+        pass_filenames: false
+        always_run: true
+        args: []
+        stages: [prepare-commit-msg, commit-msg, commit]
+  - repo: https://github.com/gitguardian/ggshield
+    rev: v1.14.4
+    hooks:
+      - id: ggshield
+        name: GitGuardian secret scan
+        description: Scan codebase for secrets. Add GITGUARDIAN_API_KEY={personal_access_token} in .env
+        language_version: python3
+        stages: [commit]
+  - repo: https://github.com/fabasoad/pre-commit-snyk
+    rev: v0.2
+    hooks:
+      - id: snyk-test
+        stages: [push]
+  - repo: https://github.com/oxsecurity/megalinter
+    rev: v7.11.1 # Git tag specifying the hook, not mega-linter-runner, version
+    hooks:
+      - id: megalinter-incremental # Faster, less thorough
+        stages: [prepare-commit-msg, commit-msg, commit]
