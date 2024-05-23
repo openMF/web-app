@@ -3,7 +3,7 @@
 
     <mat-tab *ngFor="let advancedPaymentAllocation of advancedPaymentAllocations">
         <ng-template mat-tab-label>
-            {{advancedPaymentAllocation.transaction.code}}
+            {{advancedPaymentAllocation.transaction.value | translateCatalog}}
         </ng-template>
         <mifosx-advance-payment-allocation-tab [advancedPaymentAllocation]="advancedPaymentAllocation"
             (allocationChanged)="allocationChanged($event)"
@@ -13,7 +13,7 @@
 
     <mat-tab *ngFor="let advancedCreditAllocation of advancedCreditAllocations">
         <ng-template mat-tab-label>
-            {{advancedCreditAllocation.transaction.code}}
+            {{advancedCreditAllocation.transaction.value | translateCatalog}}
         </ng-template>
         <mifosx-advance-payment-allocation-tab [advancedCreditAllocation]="advancedCreditAllocation"
             (allocationChanged)="allocationChanged($event)"
