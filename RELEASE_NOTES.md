@@ -49,6 +49,7 @@ Release Notes
     * [SER-1561] - show the proper office name instead of the name decorated.
     * [SER-1908] - Include Phone Number in Repayment Transaction Details
     * [SER-1913] - Exclude the ability to Edit Repayments in Fineract
+    * [SER-2549] - Implement Loan Account Bulk Upload in Fineract v2
 
 ## Version 1.0.0 - for use with Fineract Web App
 
