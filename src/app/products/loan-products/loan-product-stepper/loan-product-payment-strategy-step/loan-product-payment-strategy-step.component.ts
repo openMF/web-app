@@ -58,12 +58,14 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
     this.advancedPaymentAllocationTransactionTypes.forEach((option: PaymentAllocationTransactionType) => {
       if (!this.advancedPaymentStrategy.isDefault(option) && transactionTypesCurrent.indexOf(option.code) < 0) {
         option.credit = false;
+        option.value = this.translateService.instant('labels.catalogs.' + option.value);
         transactionTypesOptions.push(option);
       }
     });
     this.advancedCreditAllocationTransactionTypes.forEach((option: PaymentAllocationTransactionType) => {
       if (transactionTypesCurrent.indexOf(option.code) < 0) {
         option.credit = true;
+        option.value = this.translateService.instant('labels.catalogs.' + option.value);
         transactionTypesOptions.push(option);
       }
     });
@@ -72,7 +74,7 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
       new SelectBase({
         controlName: 'code',
         label: this.translateService.instant('labels.inputs.Transaction Type'),
-        options: { label: 'code', value: 'code', data: transactionTypesOptions },
+        options: { label: 'value', value: 'code', data: transactionTypesOptions },
         order: 1
       })
     ];

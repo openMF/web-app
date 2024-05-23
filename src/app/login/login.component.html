@@ -37,7 +37,7 @@
       <mifosx-language-selector class="p-r-10 p-t-10"></mifosx-language-selector>
       <mifosx-theme-toggle class="p-r-10 p-t-10"></mifosx-theme-toggle>
       <div fxFlex></div>
-      <mifosx-server-selector class="p-l-10 p-t-10" *ngIf="environment.allowServerSwitch"></mifosx-server-selector>
+      <mifosx-server-selector class="p-l-10 p-t-10" *ngIf="!environment.production && environment.allowServerSwitch"></mifosx-server-selector>
     </div>
 
     <!-- Logo with Organization Name -->
@@ -46,7 +46,7 @@
     </div>
 
     <!-- Tenant Identifier Name -->
-    <div fxLayout="row" fxLayoutAlign="center center" fxFlex="1 0 auto">
+    <div fxLayout="row" fxLayoutAlign="center center" fxFlex="1 0 auto" *ngIf="!environment.production">
       <mifosx-tenant-selector></mifosx-tenant-selector>
     </div>
 
