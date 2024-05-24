@@ -55,7 +55,7 @@ export class AddClientChargeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.maxDate = this.settingsService.businessDate;
+    this.maxDate = this.settingsService.maxFutureDate;
     this.createClientsChargeForm();
     this.buildDependencies();
   }
