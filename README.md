@@ -198,6 +198,18 @@ MIFOS_WAIT_TIME_FOR_CATCHUP=30
 ```
 
 
+Setting for display or hide the Tenant selector in the Login view (mainly for Production environments and for security reasons), Default true
+```
+MIFOS_DISPLAY_TENANT_SELECTOR=false
+```
+
+
+Setting for display or hide the Backend info (url) in the footer part (mainly for security reasons), Default true
+```
+MIFOS_DISPLAY_BACKEND_INFO=false
+```
+
+
 For more information look the env.sample file in the root directory of the project
 
 ## Want to help? [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/openMF/web-app/issues)
