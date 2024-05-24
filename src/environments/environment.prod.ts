@@ -33,6 +33,7 @@ export const environment = {
   defaultCharDelimiter: window['env']['defaultCharDelimiter'] || ',',
 
   displayBackEndInfo: window['env']['displayBackEndInfo'] || 'true',
+  displayTenantSelector: window['env']['displayTenantSelector'] || 'true',
   // Time in seconds, default 60 seconds
   waitTimeForNotifications: window['env']['waitTimeForNotifications'] || 60,
   // Time in seconds, default 30 seconds
