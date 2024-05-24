@@ -23,6 +23,9 @@
   // Display or not the BackEnd Info
   window['env']['displayBackEndInfo'] = '';
 
+  // Display or not the Tenant Selector
+  window['env']['displayTenantSelector'] = '';
+
   // Time in seconds for Notifications, default 60 seconds
   window['env']['waitTimeForNotifications'] = '';
 
