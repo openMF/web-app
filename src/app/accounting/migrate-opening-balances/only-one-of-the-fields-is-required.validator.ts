@@ -5,5 +5,10 @@ import { UntypedFormGroup, ValidatorFn, ValidationErrors } from '@angular/forms'
 export const onlyOneOfTheFieldsIsRequiredValidator: ValidatorFn = (glAccountEntriesForm: UntypedFormGroup): ValidationErrors | null => {
   const debit = glAccountEntriesForm.controls.debit.value;
   const credit = glAccountEntriesForm.controls.credit.value;
-  return ((debit || credit) && !(debit && credit)) ? null : { 'error': true };
+  if (debit && credit) {
+    if (debit > 0 && credit > 0) {
+      return { 'error': true };
+    }
+  }
+  return null;
 };
