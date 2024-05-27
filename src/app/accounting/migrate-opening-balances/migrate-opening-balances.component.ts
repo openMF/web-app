@@ -12,6 +12,7 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
 /** Custom Validators */
 import { onlyOneOfTheFieldsIsRequiredValidator } from './only-one-of-the-fields-is-required.validator';
 import { Dates } from 'app/core/utils/dates';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Migrate opening balances component.
@@ -35,6 +36,7 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
   officeData: any;
   /** Currency data. */
   currencyData: any;
+  currencyCode: string;
   /** Sum total of debits. */
   debitsSum = 0;
   /** Sum total of credits. */
@@ -62,7 +64,8 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService) {
+    private popoverService: PopoverService,
+    private translateService: TranslateService) {
     this.route.data.subscribe((data: {
       offices: any,
       currencies: any
@@ -89,6 +92,10 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
       'currencyCode': ['', Validators.required],
       'transactionDate': ['', Validators.required],
       'glAccountEntries': this.formBuilder.array([])
+    });
+
+    this.openingBalancesForm.controls.currencyCode.valueChanges.subscribe((value: string) => {
+      this.currencyCode = value;
     });
   }
 
@@ -149,27 +156,28 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
    * if successful redirects to view created transaction.
    */
   submit() {
-    const openingBalances = this.openingBalancesForm.value;
-    // TODO: Update once language and date settings are setup
-    openingBalances.locale = this.settingsService.language.code;
-    openingBalances.dateFormat = this.settingsService.dateFormat;
-    if (openingBalances.transactionDate instanceof Date) {
-      openingBalances.transactionDate = this.dateUtils.formatDate(openingBalances.transactionDate, this.settingsService.dateFormat);
+    if (this.amountsAreOK()) {
+      const openingBalances = this.openingBalancesForm.value;
+      openingBalances.locale = this.settingsService.language.code;
+      openingBalances.dateFormat = this.settingsService.dateFormat;
+      if (openingBalances.transactionDate instanceof Date) {
+        openingBalances.transactionDate = this.dateUtils.formatDate(openingBalances.transactionDate, this.settingsService.dateFormat);
+      }
+      openingBalances.debits = [];
+      openingBalances.credits = [];
+      this.openingBalancesForm.value.glAccountEntries.forEach((entry: any) => {
+        if (entry.debit) {
+          openingBalances.debits.push({ glAccountId: entry.glAccountId, amount: entry.debit });
+        }
+        if (entry.credit) {
+          openingBalances.credits.push({ glAccountId: entry.glAccountId, amount: entry.credit });
+        }
+      });
+      delete openingBalances.glAccountEntries;
+      this.accountingService.defineOpeningBalances(openingBalances).subscribe((response: any) => {
+        this.router.navigate(['/accounting/journal-entries/transactions/view', response.transactionId]);
+      });
     }
-    openingBalances.debits = [];
-    openingBalances.credits = [];
-    this.openingBalancesForm.value.glAccountEntries.forEach((entry: any) => {
-      if (entry.debit) {
-        openingBalances.debits.push({ glAccountId: entry.glAccountId, amount: entry.debit });
-      }
-      if (entry.credit) {
-        openingBalances.credits.push({ glAccountId: entry.glAccountId, amount: entry.credit });
-      }
-    });
-    delete openingBalances.glAccountEntries;
-    this.accountingService.defineOpeningBalances(openingBalances).subscribe((response: any) => {
-      this.router.navigate(['/accounting/journal-entries/transactions/view', response.transactionId]);
-    });
   }
 
   /**
@@ -208,6 +216,24 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
    */
   previousStep() {
     this.router.navigate(['/accounting']);
+  }
+
+  amountsAreOK(): boolean {
+    let debitsSum = 0;
+    let creditsSum = 0;
+    this.openingBalancesForm.value.glAccountEntries.forEach((entry: any) => {
+      if (entry.debit) {
+        debitsSum = debitsSum + entry.debit;
+      }
+      if (entry.credit) {
+        creditsSum = creditsSum + entry.credit;
+      }
+    });
+    return (debitsSum > 0 && debitsSum === creditsSum);
+  }
+
+  glAccountTypeLabel(accountType: string): string {
+    return this.translateService.instant('labels.inputs.accounting.' + accountType);
   }
 
 }

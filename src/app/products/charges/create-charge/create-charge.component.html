@@ -191,15 +191,10 @@
               </div>
             </div>
 
-            <mat-form-field *ngIf="chargeForm.controls.chargeAppliesTo.value === 3" fxFlex="48%">
-              <mat-label>{{"labels.inputs.Income from Charge" | translate}} </mat-label>
-              <mat-select formControlName="incomeAccountId">
-                <mat-option *ngFor="let incomeOrLiabilityAccount of incomeAndLiabilityAccountData"
-                  [value]="incomeOrLiabilityAccount.id">
-                  {{ incomeOrLiabilityAccount.name }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+            <mifosx-gl-account-selector fxFlex="48%" *ngIf="chargeForm.controls.chargeAppliesTo.value === 3"
+              [inputFormControl]="chargeForm.controls.incomeAccountId"
+              [glAccountList]="incomeAndLiabilityAccountData" [inputLabel]="'Income from Charge'">
+            </mifosx-gl-account-selector>
 
             <mat-form-field fxFlex="48%">
               <mat-label>{{"labels.inputs.Tax Group" | translate}}</mat-label>

@@ -105,18 +105,10 @@
             <input matInput autofocus formControlName="maxCap">
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%" *ngIf="showGLAccount">
-            <mat-label>{{"labels.inputs.Income from charge" | translate}}</mat-label>
-            <mat-select required formControlName="incomeAccountId">
-              <mat-option *ngFor="let income of chargeData.incomeOrLiabilityAccountOptions.incomeAccountOptions"
-                [value]="income.id">
-                {{ income.name }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="chargeForm.controls.incomeAccountId.hasError('required')">
-              {{"labels.inputs.Income from charge" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
-            </mat-error>
-          </mat-form-field>
+          <mifosx-gl-account-selector fxFlex="48%" *ngIf="showGLAccount"
+            [inputFormControl]="chargeForm.controls.incomeAccountId"
+            [glAccountList]="chargeData.incomeOrLiabilityAccountOptions.incomeAccountOptions" [required]="true" [inputLabel]="'Income from Charge'">
+          </mifosx-gl-account-selector>
 
           <mat-form-field fxFlex="48%">
             <mat-label>{{"labels.inputs.Tax Group" | translate}}</mat-label>

@@ -122,13 +122,9 @@
           {{ chargeData.feeInterval }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.incomeOrLiabilityAccount">
-          {{"labels.heading.Income" | translate}} {{"labels.inputs.From" | translate}} {{"labels.heading.Charges" | translate}}
-        </div>
-
-        <div fxFlex="50%" *ngIf="chargeData.incomeOrLiabilityAccount">
-          {{ chargeData.incomeOrLiabilityAccount.name + ' (' + chargeData.incomeOrLiabilityAccount.glCode + ')' }}
-        </div>
+        <mifosx-gl-account-display fxFlex="100%" [accountTitle]="'Income From Charges'" *ngIf="chargeData.incomeOrLiabilityAccount"
+            [glAccount]="chargeData.incomeOrLiabilityAccount" [withTitle]="'50%'">
+        </mifosx-gl-account-display>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.taxGroup">
           {{"labels.inputs.Tax Group" | translate}}
