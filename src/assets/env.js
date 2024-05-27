@@ -11,6 +11,8 @@
   window["env"]["fineractPlatformTenantId"]  = '';
   window["env"]["fineractPlatformTenantIds"]  = '';
 
+  window["env"]["allowSwitchingBackendInstance"] = '';
+
   // Language Environment variables
   window["env"]["defaultLanguage"] = '';
   window["env"]["supportedLanguages"] = '';
