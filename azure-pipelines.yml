@@ -73,6 +73,14 @@ steps:
     env:
       GITHUB_TOKEN: $(GITHUB_TOKEN)
 
+  # Optional: upload MegaLinter reports to the Azure build for future reference
+  - task: PublishPipelineArtifact@1
+    condition: succeededOrFailed()
+    displayName: Publish MegaLinter reports
+    inputs:
+      targetPath: "$(System.DefaultWorkingDirectory)/megalinter-reports/"
+      artifactName: MegaLinterReport
+
   - script: |
       docker run \
         -v $(pwd):/data \
@@ -172,3 +180,25 @@ steps:
       containerRegistry: "azurecr-oaf"
       tags: |
         $(IMAGE_TAGS)
+
+  - task: Bash@3
+    displayName: Use latest image tag
+    inputs:
+      targetType: "inline"
+      script: |
+        sed -i 's/tag:.*/tag: $(IMAGE_TAGS)/' values.yaml
+
+  - task: CopyFiles@2
+    displayName: Copying source files
+    inputs:
+      SourceFolder: "./"
+      Contents: "*.yaml"
+      TargetFolder: "$(Build.ArtifactStagingDirectory)"
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish configuration package
+    condition: and(succeeded(), or(eq(variables['Build.SourceBranchName'], 'main'), eq(variables['Build.SourceBranchName'], 'develop'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'), startsWith(variables['Build.SourceBranch'], 'refs/heads/hotfix/')))
+    inputs:
+      PathtoPublish: $(Build.ArtifactStagingDirectory)
+      ArtifactName: "fineract-frontend-v2"
+      publishLocation: "Container"
