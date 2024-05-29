@@ -181,19 +181,19 @@ steps:
       tags: |
         $(IMAGE_TAGS)
 
-  - task: Bash@3
-    displayName: Use latest image tag
-    inputs:
-      targetType: "inline"
-      script: |
-        sed -i 's/tag:.*/tag: $(IMAGE_TAGS)/' values.yaml
-
   - task: CopyFiles@2
     displayName: Copying source files
     inputs:
       SourceFolder: "./"
       Contents: "*.yaml"
       TargetFolder: "$(Build.ArtifactStagingDirectory)"
+
+  - task: Bash@3
+    displayName: Use latest image tag
+    inputs:
+      targetType: "inline"
+      script: |
+        sed -i 's/tag:.*/tag: $(IMAGE_TAGS)/' values.yaml
 
   - task: PublishBuildArtifacts@1
     displayName: Publish configuration package
