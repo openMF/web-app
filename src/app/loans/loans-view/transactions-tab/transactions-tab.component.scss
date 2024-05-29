@@ -19,9 +19,7 @@
       margin: 0 2%;
       line-height: 25px;
     }
-    .select-row:hover {
-      cursor: pointer;
-    }
+
     .strike {
       text-decoration: line-through;
       color: $status-active-overdue;
@@ -45,6 +43,11 @@
       color: $status-reamortize;
     }
   }
+}
+
+.td-select:hover {
+  cursor: pointer;
+  font-weight: 800;
 }
 
 .td-min-space {
