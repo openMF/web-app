@@ -1,0 +1,5 @@
+image:
+  # Fineract frontend v2 image name
+  name: "oaftech.azurecr.io/oneacrefund/fineract-frontend-v2"
+  # Fineract Frontend v2 image tag placeholder that will be replaced in Azure pipeline task
+  tag: "oneacrefund"
