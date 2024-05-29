@@ -1,14 +1,9 @@
 <!-- TODO: Refactor Permissions -->
 <div class="container">
-
   <mat-card>
-
     <div fxLayout="row" fxLayout.lt-md="column">
-
       <div fxFlex="50%">
-
         <mat-nav-list>
-
           <mat-list-item [routerLink]="['Offices']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="building" size="sm"></fa-icon>
@@ -30,13 +25,13 @@
             <h4 matLine>Groups</h4>
           </mat-list-item>
 
-          <!-- <mat-list-item [routerLink]="['Loan Accounts']" *mifosxHasPermission="'READ_OFFICE'">
+          <mat-list-item [routerLink]="['Loan Accounts']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
             </mat-icon>
             <h4 matLine>Loan Accounts</h4>
           </mat-list-item>
-
+          <!--
           <mat-list-item [routerLink]="['Savings Accounts']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
@@ -71,22 +66,17 @@
             </mat-icon>
             <h4 matLine>Repayments Download</h4>
           </mat-list-item>
-
         </mat-nav-list>
-
       </div>
 
       <div fxFlex="50%">
-
         <mat-nav-list>
-
           <!-- <mat-list-item [routerLink]="['Employees']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="user" size="sm"></fa-icon>
             </mat-icon>
             <h4 matLine>Employees</h4>
           </mat-list-item> -->
-
 
           <mat-list-item [routerLink]="['Clients']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
@@ -150,13 +140,8 @@
             </mat-icon>
             <h4 matLine>Healthy Path</h4>
           </mat-list-item>
-
         </mat-nav-list>
-
       </div>
-
     </div>
-
   </mat-card>
-
 </div>

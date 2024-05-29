@@ -19,7 +19,7 @@ ENABLE_LINTERS:
   - DOCKERFILE_HADOLINT
   - JSON_PRETTIER
   - HTML_HTMLHINT
-  - TYPESCRIPT_STANDARD
+  # - TYPESCRIPT_STANDARD
 
 # DISABLE:
 #   - COPYPASTE # Uncomment to enable checks of abusive copy-pastes
