@@ -72,7 +72,7 @@ steps:
     displayName: Lint with MegaLinter
     env:
       GITHUB_TOKEN: $(GITHUB_TOKEN)
-  
+
   # Optional: upload MegaLinter reports to the Azure build for future reference
   - task: PublishPipelineArtifact@1
     condition: succeededOrFailed()
@@ -180,7 +180,7 @@ steps:
       containerRegistry: "azurecr-oaf"
       tags: |
         $(IMAGE_TAGS)
-  
+
   - task: Bash@3
     displayName: Use latest image tag
     inputs:
