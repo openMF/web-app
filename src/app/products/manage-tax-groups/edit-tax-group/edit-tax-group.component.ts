@@ -1,20 +1,21 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
-import { ProductsService } from '../../products.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { ProductsService } from '../../products.service';
 
 /** Dialog Components */
+import { TranslateService } from '@ngx-translate/core';
+import { Dates } from 'app/core/utils/dates';
+import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
+import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
-import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
-import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
-import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
-import { Dates } from 'app/core/utils/dates';
 
 /**
  * Edit Tax Group component.
@@ -51,6 +52,7 @@ export class EditTaxGroupComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils to format date.
    * @param {MatDialog} dialog Dialog reference.
    * @param {SettingsService} settingsService Settings Service.
+   * @param {TranslateService} translateService translate Service.
    */
   constructor(private formBuilder: UntypedFormBuilder,
               private productsService: ProductsService,
@@ -58,7 +60,8 @@ export class EditTaxGroupComponent implements OnInit {
               private router: Router,
               private dateUtils: Dates,
               public dialog: MatDialog,
-              private settingsService: SettingsService) {
+              private settingsService: SettingsService,
+              private translateService:TranslateService) {
     this.route.data.subscribe((data: { taxGroup: any }) => {
       this.taxGroupData = data.taxGroup;
       this.taxComponentOptions = this.taxGroupData.taxComponents;
@@ -182,7 +185,7 @@ export class EditTaxGroupComponent implements OnInit {
    */
   delete(index: number) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `this` }
+      data: { deleteContext: this.translateService.instant('labels.text.this') }
     });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

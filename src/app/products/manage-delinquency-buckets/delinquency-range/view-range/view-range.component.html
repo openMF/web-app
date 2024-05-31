@@ -1,11 +1,11 @@
 <div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="2%">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_DELINQUENCY_RANGE'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    Edit
+    {{'labels.buttons.Edit' | translate }}
   </button>
   <button mat-raised-button color="warn" (click)="deleteDelinquencyRange()" *mifosxHasPermission="'DELETE_DELINQUENCY_RANGE'">
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    Delete
+    {{'labels.buttons.Delete' | translate }}
   </button>
 </div>
 
@@ -18,7 +18,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="mat-body-strong">
-          Classification
+          {{"labels.inputs.Classification" | translate}}
         </div>
 
         <div fxFlex="50%">
@@ -26,7 +26,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Days From
+          {{"labels.inputs.Days From" | translate}}
         </div>
 
         <div fxFlex="50%">
@@ -34,7 +34,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Days Till
+          {{"labels.inputs.Days Till" | translate}}
         </div>
 
         <div fxFlex="50%">

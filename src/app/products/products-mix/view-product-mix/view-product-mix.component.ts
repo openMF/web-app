@@ -1,13 +1,14 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 /** Custom Services */
+import { TranslateService } from '@ngx-translate/core';
 import { ProductsService } from 'app/products/products.service';
 
 /**
@@ -43,11 +44,13 @@ export class ViewProductMixComponent implements OnInit {
   /**
    * Retrieves the product mix data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
+   * @param {TranslateService} translateService Translate Service.
    */
   constructor(private route: ActivatedRoute,
               private dialog: MatDialog,
               private productsService: ProductsService,
-              private router: Router ) {
+              private router: Router,
+              private translateService:TranslateService ) {
     this.route.data.subscribe((data: { productMix: any }) => {
       this.productMixData = data.productMix;
     });
@@ -84,7 +87,7 @@ export class ViewProductMixComponent implements OnInit {
    */
   delete() {
     const deleteProductMixDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `the productmix component with id ${this.productMixData.productId}` }
+      data: { deleteContext: this.translateService.instant('labels.dialogContext.the productmix component with id') + ' ' + this.productMixData.productId}
     });
     deleteProductMixDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

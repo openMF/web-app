@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 
+import { TranslateService } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 @Component({
@@ -21,7 +22,7 @@ export class SavingProductChargesStepComponent implements OnInit {
 
   pristine = true;
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, private translateService:TranslateService) {
   }
 
   ngOnInit() {
@@ -41,7 +42,7 @@ export class SavingProductChargesStepComponent implements OnInit {
 
   deleteCharge(charge: any) {
     const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `charge ${charge.name}` }
+      data: { deleteContext: this.translateService.instant('labels.inputs.Charge') + ' ' + charge.name }
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

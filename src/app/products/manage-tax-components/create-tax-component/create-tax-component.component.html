@@ -26,7 +26,7 @@
             </mat-error>
             <mat-error *ngIf="taxComponentForm.controls.percentage.hasError('pattern') ||
             taxComponentForm.controls.percentage.hasError('max')">
-              {{'labels.inputs.Percentage' | translate}} <strong>should</strong> be larger than 0 and at most 100
+              {{'labels.inputs.Percentage' | translate}} <strong>{{'labels.commons.should' | translate}}</strong> {{'labels.commons.be larger than 0 and at most 100' | translate}}
             </mat-error>
           </mat-form-field>
 

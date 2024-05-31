@@ -9,26 +9,26 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Product</mat-label>
+            <mat-label>{{ 'labels.inputs.Product' | translate }}</mat-label>
             <mat-select required formControlName="productId">
               <mat-option *ngFor="let productOption of productOptionData" [value]="productOption.id">
                 {{ productOption.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="productMixForm.controls.productId.hasError('required')">
-              Product is <strong>required</strong>
+              {{ 'labels.inputs.Product' | translate }} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field *ngIf="productData">
-            <mat-label>Restricted products</mat-label>
+            <mat-label>{{ 'labels.inputs.Restricted products' | translate }}</mat-label>
             <mat-select required formControlName="restrictedProducts" multiple>
               <mat-option *ngFor="let product of productData" [value]="product.id">
                 {{ product.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="productMixForm.controls.restrictedProducts.hasError('required')" >
-              At least one restricted product <strong>must be selected</strong>
+              {{'labels.commons.At least one restricted product' | translate }} <strong>{{'labels.commons.must be selected' | translate }}</strong>
             </mat-error>
           </mat-form-field>
         </div>
@@ -36,8 +36,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!productMixForm.valid" *mifosxHasPermission="'CREATE_PRODUCTMIX'">Submit</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate }}</button>
+        <button mat-raised-button color="primary" [disabled]="!productMixForm.valid" *mifosxHasPermission="'CREATE_PRODUCTMIX'">{{'labels.buttons.Submit' | translate }}</button>
       </mat-card-actions>
 
     </form>

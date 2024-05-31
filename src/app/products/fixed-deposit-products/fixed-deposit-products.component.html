@@ -42,8 +42,8 @@
 </div>
 
 <ng-template #templateButtonCreateFixedProduct let-popover="popover">
-  <h2>Create fixed deposit product</h2>
-  <p class="mw300">This option allows you to create new fixed deposit product.</p>
+  <h2>{{'labels.buttons.Create Fixed Deposit Product' | translate}}</h2>
+  <p class="mw300">{{'labels.text.Allows you to create new fixed deposit product' | translate}}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{'labels.buttons.Back' | translate}}</button>
@@ -52,7 +52,7 @@
 </ng-template>
 
 <ng-template #templateFilter let-popover="popover">
-  <h4>Search bar to filter fixed deposit products.</h4>
+  <h4>{{'labels.text.Search bar to filter fixed deposit products.' | translate}}</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonCreateFixedProduct,buttonCreateFixedProduct , 'bottom', true)">{{'labels.buttons.Back' | translate}}</button>
@@ -61,7 +61,7 @@
 </ng-template>
 
 <ng-template #templateFixedProductsTable let-popover="popover">
-  <h4 class="mw300">List of fixed deposit products in the organization. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102629544/Fixed+Deposit+Products" target="_blank">{{'labels.inputs.Fixed Deposit Products' | translate}}</a></h4>
+  <h4 class="mw300">{{'labels.text.List of fixed deposit products in the organization' | translate}}: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102629544/Fixed+Deposit+Products" target="_blank">{{'labels.inputs.Fixed Deposit Products' | translate}}</a></h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">{{'labels.buttons.Back' | translate}}</button>

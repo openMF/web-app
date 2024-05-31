@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, UntypedFormArray, Validators, UntypedFormControl } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
-import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 
+import { TranslateService } from '@ngx-translate/core';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 
@@ -35,7 +36,8 @@ export class LoanProductAccountingStepComponent implements OnInit {
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId', 'actions'];
 
   constructor(private formBuilder: UntypedFormBuilder,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private translateService: TranslateService) {
     this.createLoanProductAccountingForm();
     this.setConditionalControls();
   }
@@ -218,7 +220,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
 
   delete(formArray: UntypedFormArray, index: number) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `this` }
+      data: { deleteContext:  this.translateService.instant('labels.text.this') }
     });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

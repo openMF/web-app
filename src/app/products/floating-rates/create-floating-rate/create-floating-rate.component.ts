@@ -1,21 +1,21 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, FormArray } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { TooltipPosition } from '@angular/material/tooltip';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
-import { ProductsService } from '../../products.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { ProductsService } from '../../products.service';
 
 /** Custom Components */
-import { FloatingRatePeriodDialogComponent } from '../floating-rate-period-dialog/floating-rate-period-dialog.component';
-import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
+import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { FloatingRatePeriodDialogComponent } from '../floating-rate-period-dialog/floating-rate-period-dialog.component';
 
 /**
  * Create Floating Rate Component.
@@ -53,6 +53,7 @@ export class CreateFloatingRateComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils.
    * @param {MatDialog} dialog Dialog reference.
    * @param {SettingsService} settingsService Settings Service.
+   * @param {TranslateService} translateService Translate Service.
    */
   constructor(private router: Router,
               private formBuilder: UntypedFormBuilder,
@@ -60,7 +61,8 @@ export class CreateFloatingRateComponent implements OnInit {
               private route: ActivatedRoute,
               private dateUtils: Dates,
               private dialog: MatDialog,
-              private settingsService: SettingsService) { }
+              private settingsService: SettingsService,
+              private translateService:TranslateService) { }
 
   /**
    * Sets the floating rate periods table.
@@ -158,7 +160,7 @@ export class CreateFloatingRateComponent implements OnInit {
    */
   deleteFloatingRatePeriod(ratePeriod: any) {
     const deleteFloatingRatePeriodRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `floating rate period with from date as ${ratePeriod.fromDate}` }
+      data: { deleteContext:  this.translateService.instant('labels.inputs.floating rate period with from date as') + ' ' + ratePeriod.fromDate }
     });
     deleteFloatingRatePeriodRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

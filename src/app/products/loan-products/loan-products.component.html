@@ -57,7 +57,7 @@
 
 <ng-template #templateButtonCreateLoanProduct let-popover="popover">
   <h2>{{'labels.heading.Create Loan Product' | translate}}t</h2>
-  <p class="mw300">This option allows you to create new loan product.</p>
+  <p class="mw300">{{'labels.text.This option allows you to create new loan product.' | translate}}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{'labels.buttons.Back' | translate}}</button>
@@ -75,7 +75,7 @@
 </ng-template>
 
 <ng-template #templateLoanProductsTable let-popover="popover">
-  <h4 class="mw300">List of loan products in the organization. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102039585/Loan+Products" target="_blank">Loan Products</a></h4>
+  <h4 class="mw300">{{'labels.heading.List of loan products in the organization' | translate}}: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102039585/Loan+Products" target="_blank">Loan Products</a></h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">{{'labels.buttons.Back' | translate}}</button>

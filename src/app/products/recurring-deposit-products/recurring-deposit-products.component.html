@@ -43,8 +43,8 @@
 </div>
 
 <ng-template #templateButtonCreateRecurringProduct let-popover="popover">
-  <h2>Create recurring deposit product</h2>
-  <p class="mw300">This option allows you to create new recurring product.</p>
+  <h2>{{'labels.heading.Create recurring deposit product' | translate}}</h2>
+  <p class="mw300">{{'labels.text.This option allows you to create new recurring product.' | translate}}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{'labels.buttons.Back' | translate}}</button>
@@ -53,7 +53,7 @@
 </ng-template>
 
 <ng-template #templateFilter let-popover="popover">
-  <h4>Search bar to filter recurring deposit products.</h4>
+  <h4>{{'labels.heading.Search bar to filter recurring deposit products.' | translate}}</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonCreateRecurringProduct,buttonCreateRecurringProduct , 'bottom', true)">{{'labels.buttons.Back' | translate}}</button>
@@ -62,7 +62,7 @@
 </ng-template>
 
 <ng-template #templateRecurringProductsTable let-popover="popover">
-  <h4 class="mw300">List of recurring deposit products in the organization. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102629552/Recurring+Deposit" target="_blank">{{'labels.heading.Recurring Deposit Products' | translate}}</a></h4>
+  <h4 class="mw300">{{'labels.heading.List of recurring deposit products in the organization' | translate}}: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102629552/Recurring+Deposit" target="_blank">{{'labels.heading.Recurring Deposit Products' | translate}}</a></h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">{{'labels.buttons.Back' | translate}}</button>

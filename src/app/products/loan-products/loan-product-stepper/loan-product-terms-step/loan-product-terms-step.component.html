@@ -8,7 +8,7 @@
       <mat-label>{{'labels.inputs.Minimum' | translate}}</mat-label>
       <input type="number" matInput formControlName="minPrincipal" [min]="0">
       <mat-error>
-        Minimum Value must be <strong>greater equal to than 0</strong>
+        {{'labels.commons.Minimum Value must be' | translate}} <strong>{{'labels.commons.greater equal to than 0' | translate}}</strong>
       </mat-error>
     </mat-form-field>
 
@@ -24,7 +24,7 @@
       <mat-label>{{'labels.inputs.Maximum' | translate}}</mat-label>
       <input type="number" matInput formControlName="maxPrincipal" [min]="0">
       <mat-error>
-        Maximum Value must be <strong>greater equal to than 0</strong> and must be greater than <strong>Minimum Principal</strong>
+        {{'labels.commons.Minimum Value must be' | translate}} <strong>{{'labels.commons.greater equal to than 0' | translate}}</strong> {{'labels.commons.and must be greater than' | translate}} <strong>{{'labels.commons.Minimum Principal' | translate}}</strong>
       </mat-error>
     </mat-form-field>
 
@@ -63,7 +63,7 @@
       <mat-label>{{'labels.inputs.Minimum' | translate}}</mat-label>
       <input type="number" matInput formControlName="minNumberOfRepayments" [min]="1">
       <mat-error>
-        Minimum Value must be <strong>greater equal to than 0</strong>
+        {{'labels.commons.Minimum Value must be' | translate}} <strong>{{'labels.commons.greater equal to than 0' | translate}}</strong>
         </mat-error>
     </mat-form-field>
 
@@ -79,7 +79,7 @@
       <mat-label>{{'labels.inputs.Maximum' | translate}}</mat-label>
       <input type="number" matInput formControlName="maxNumberOfRepayments" [min]="0">
       <mat-error>
-        {{'labels.inputs.Maximum' | translate}} Value must be <strong>greater equal to than 0</strong> and must be greater than <strong>Minimum Principal</strong>
+        {{'labels.commons.Maximum Value must be' | translate}} <strong>{{'labels.commons.greater equal to than 0' | translate}}</strong> {{'labels.commons.and must be greater than' | translate}} <strong>{{'labels.commons.Minimum Principal' | translate}}</strong>
       </mat-error>
     </mat-form-field>
 
@@ -103,7 +103,7 @@
         <mat-label>{{'labels.inputs.Minimum' | translate}}</mat-label>
         <input type="number" matInput formControlName="minInterestRatePerPeriod" [min]="0" [attr.disabled]="isZeroInterest()">
         <mat-error>
-          Minimum Value must be <strong>greater than 0</strong>
+          {{'labels.commons.Minimum Value must be' | translate}} <strong>{{'labels.commons.greater equal to than 0' | translate}}</strong>
           </mat-error>
       </mat-form-field>
 
@@ -119,7 +119,7 @@
         <mat-label>{{'labels.inputs.Maximum' | translate}}</mat-label>
         <input type="number" matInput formControlName="maxInterestRatePerPeriod" [min]="0" [attr.disabled]="isZeroInterest()">
         <mat-error>
-          {{'labels.inputs.Maximum' | translate}} Value must be <strong>greater equal to than 0</strong> and must be greater than <strong>Minimum Principal</strong>
+          {{'labels.commons.Maximum Value must be' | translate}} <strong>{{'labels.commons.greater equal to than 0' | translate}}</strong> {{'labels.commons.and must be greater than' | translate}} <strong>{{'labels.commons.Minimum Principal' | translate}}</strong>
         </mat-error>
       </mat-form-field>
 
@@ -416,7 +416,7 @@
       </mat-error>
     </mat-form-field>
 
-    <h4 fxFlex="33%" class="mat-h4" *ngIf="allowFixedLength()">{{'labels.inputs.Fixed Length' | translate}} <i class="fas fa-question" 
+    <h4 fxFlex="33%" class="mat-h4" *ngIf="allowFixedLength()">{{'labels.inputs.Fixed Length' | translate}} <i class="fas fa-question"
       matTooltip="Due to regulatory requirements in some countries, the loans cannot exceed X days, the Fineract SOR needs to be extended to support defining that a loan has a maximum length and the maximum length of that loan defines the length of the last installment which will be a shorter period than the first installments."></i></h4>
 
     <mat-form-field fxFlex="30%" *ngIf="allowFixedLength()">
@@ -424,7 +424,7 @@
       <input type="number" matInput formControlName="fixedLength">
     </mat-form-field>
     <span fxFlex="30%" *ngIf="allowFixedLength()" class="label-field">{{ loanProductTermsForm.value.repaymentFrequencyType | find:repaymentFrequencyTypeData:'id':'value' | translateCatalog }}</span>
-  
+
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Minimum days between disbursal and first repayment date' | translate}}</mat-label>
       <input type="number" matInput formControlName="minimumDaysBetweenDisbursalAndFirstRepayment">

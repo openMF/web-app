@@ -43,7 +43,7 @@
 
 <ng-template #templateButtonSavingProduct let-popover="popover">
   <h2>{{'labels.text.Create Savings Product' | translate}}</h2>
-  <p class="mw300">This option allows you to create new savings product.</p>
+  <p class="mw300">{{'labels.text.This option allows you to create new savings product.' | translate}}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{'labels.buttons.Back' | translate}}</button>
@@ -61,7 +61,7 @@
 </ng-template>
 
 <ng-template #templateSavingProductTable let-popover="popover">
-  <h4 class="mw300">List of saving products in the organization. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102629497/Savings+Products" target="_blank">{{'labels.heading.Savings Products' | translate}}</a></h4>
+  <h4 class="mw300">{{'labels.heading.List of saving products in the organization' | translate}}: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102629497/Savings+Products" target="_blank">{{'labels.heading.Savings Products' | translate}}</a></h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">{{'labels.buttons.Back' | translate}}</button>
