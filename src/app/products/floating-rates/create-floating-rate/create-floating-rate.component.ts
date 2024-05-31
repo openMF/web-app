@@ -62,7 +62,7 @@ export class CreateFloatingRateComponent implements OnInit {
               private dateUtils: Dates,
               private dialog: MatDialog,
               private settingsService: SettingsService,
-              private translateService:TranslateService) { }
+              private translateService: TranslateService) { }
 
   /**
    * Sets the floating rate periods table.

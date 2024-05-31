@@ -22,7 +22,7 @@ export class SavingProductChargesStepComponent implements OnInit {
 
   pristine = true;
 
-  constructor(public dialog: MatDialog, private translateService:TranslateService) {
+  constructor(public dialog: MatDialog, private translateService: TranslateService) {
   }
 
   ngOnInit() {

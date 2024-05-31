@@ -33,7 +33,7 @@ export class CreateBucketComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private translateService:TranslateService) {
+    private translateService: TranslateService) {
       this.route.data.subscribe((data: { delinquencyRanges: any }) => {
       this.delinquencyRangesData = data.delinquencyRanges;
       this.delinquencyRangesData = this.delinquencyRangesData.sort(

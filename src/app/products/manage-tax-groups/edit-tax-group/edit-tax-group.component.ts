@@ -61,7 +61,7 @@ export class EditTaxGroupComponent implements OnInit {
               private dateUtils: Dates,
               public dialog: MatDialog,
               private settingsService: SettingsService,
-              private translateService:TranslateService) {
+              private translateService: TranslateService) {
     this.route.data.subscribe((data: { taxGroup: any }) => {
       this.taxGroupData = data.taxGroup;
       this.taxComponentOptions = this.taxGroupData.taxComponents;
