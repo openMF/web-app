@@ -164,11 +164,11 @@
           </td>
         </tr>
         <tr *ngIf="savingsAccountData.allowOverdraft">
-          <td>{{'labels.inputs.Over Draft Limit' | translate}}</td>
+          <td>{{'labels.inputs.Overdraft Limit' | translate}}</td>
           <td class="r-amount">{{savingsAccountData.overdraftLimit | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
         </tr>
         <tr *ngIf="savingsAccountData.allowOverdraft">
-          <td>{{'labels.inputs.Min Overdraft Required for Interest Calculation' | translate}}</td>
+          <td>{{'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate}}</td>
           <td>{{savingsAccountData.minOverdraftForInterestCalculation | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
         </tr>
         <tr *ngIf="savingsAccountData.minBalanceForInterestCalculation">
