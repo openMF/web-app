@@ -1881,6 +1881,8 @@
       "Overdue days for NPA": "NPA 연체 일수",
       "OverDue days for repayment event": "상환 이벤트 연체 일수",
       "Overdraft Interest Income": "초과인출 이자소득",
+      "Overdraft Interest Not Posted": "초과인월 이자가 게시되지 않음",
+      "Overdraft Limit": "초과인월 한도",
       "Overdraft portfolio": "초과인월 포트폴리오",
       "Overdue Charge": "연체료",
       "Overdue Charges": "연체료",
