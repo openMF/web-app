@@ -1,24 +1,23 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { TooltipPosition } from '@angular/material/tooltip';
+import { Component, Input, OnInit } from '@angular/core';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Components */
-import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DepositProductIncentiveFormDialogComponent } from 'app/products/deposit-product-incentive-form-dialog/deposit-product-incentive-form-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 
 /** Dialog Components */
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
-import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
+import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 
 /** Custom Services */
-import { SettingsService } from 'app/settings/settings.service';
-import { Dates } from 'app/core/utils/dates';
 import { TranslateService } from '@ngx-translate/core';
+import { Dates } from 'app/core/utils/dates';
+import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
   selector: 'mifosx-fixed-deposit-product-interest-rate-chart-step',
@@ -284,7 +283,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
   }
 
   editChartSlab(chartSlabs: UntypedFormArray, chartSlabIndex: number) {
-    const data = { ...this.getData('Slab', chartSlabs.at(chartSlabIndex).value), layout: { addButtonText: 'Edit' } };
+    const data = { ...this.getData('Slab', chartSlabs.at(chartSlabIndex).value), layout: { addButtonText: this.translateService.instant('labels.text.this') } };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
@@ -294,7 +293,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
   }
 
   editIncentive(incentives: UntypedFormArray, incentiveIndex: number) {
-    const data = { ...this.getData('Incentive', incentives.at(incentiveIndex).value), layout: { addButtonText: 'Edit' } };
+    const data = { ...this.getData('Incentive', incentives.at(incentiveIndex).value), layout: { addButtonText: this.translateService.instant('labels.text.this') } };
     const dialogRef = this.dialog.open(DepositProductIncentiveFormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
@@ -305,7 +304,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
 
   delete(formArray: UntypedFormArray, index: number) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `this` }
+      data: { deleteContext: this.translateService.instant('labels.text.this') }
     });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

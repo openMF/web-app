@@ -97,21 +97,21 @@
             *ngIf="paymentChannelToFundSourceMappings.value.length !== 0">
 
             <ng-container matColumnDef="paymentTypeId">
-              <th mat-header-cell *matHeaderCellDef> Payment Type </th>
+              <th mat-header-cell *matHeaderCellDef> {{'labels.heading.Payment Type' | translate}} </th>
               <td mat-cell *matCellDef="let paymentFundSource">
                 {{ paymentFundSource.paymentTypeId | find:paymentTypeData:'id':'name' }}
               </td>
             </ng-container>
 
             <ng-container matColumnDef="fundSourceAccountId">
-              <th mat-header-cell *matHeaderCellDef> Fund Source </th>
+              <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Fund Source' | translate}} </th>
               <td mat-cell *matCellDef="let paymentFundSource">
                 {{ paymentFundSource.fundSourceAccountId | find:assetAccountData:'id':'name' }}
               </td>
             </ng-container>
 
             <ng-container matColumnDef="actions">
-              <th mat-header-cell *matHeaderCellDef> Actions </th>
+              <th mat-header-cell *matHeaderCellDef> {{'labels.buttons.Actions' | translate}} </th>
               <td mat-cell *matCellDef="let paymentFundSource; let i = index">
                 <button mat-icon-button color="primary"
                   (click)="edit('PaymentFundSource', paymentChannelToFundSourceMappings, i)">
@@ -144,21 +144,21 @@
             *ngIf="feeToIncomeAccountMappings.value.length !== 0">
 
             <ng-container matColumnDef="chargeId">
-              <th mat-header-cell *matHeaderCellDef> Fees </th>
+              <th mat-header-cell *matHeaderCellDef> {{'labels.catalogs.Fees' | translate}} </th>
               <td mat-cell *matCellDef="let feesIncome">
                 {{ feesIncome.chargeId | find:chargeData:'id':'name' }}
               </td>
             </ng-container>
 
             <ng-container matColumnDef="incomeAccountId">
-              <th mat-header-cell *matHeaderCellDef> Income Account </th>
+              <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Income Account' | translate}} </th>
               <td mat-cell *matCellDef="let feesIncome">
                 {{ feesIncome.incomeAccountId | find:incomeAccountData:'id':'name' }}
               </td>
             </ng-container>
 
             <ng-container matColumnDef="actions">
-              <th mat-header-cell *matHeaderCellDef> Actions </th>
+              <th mat-header-cell *matHeaderCellDef> {{'labels.buttons.Actions' | translate}} </th>
               <td mat-cell *matCellDef="let feesIncome; let i = index">
                 <button mat-icon-button color="primary" (click)="edit('FeesIncome', feeToIncomeAccountMappings, i)">
                   <fa-icon icon="edit"></fa-icon>
@@ -193,21 +193,21 @@
             *ngIf="penaltyToIncomeAccountMappings.value.length !== 0">
 
             <ng-container matColumnDef="chargeId">
-              <th mat-header-cell *matHeaderCellDef> Penalty </th>
+              <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Penalty' | translate}} </th>
               <td mat-cell *matCellDef="let penaltyIncome">
                 {{ penaltyIncome.chargeId | find:penaltyData:'id':'name' }}
               </td>
             </ng-container>
 
             <ng-container matColumnDef="incomeAccountId">
-              <th mat-header-cell *matHeaderCellDef> Income Account </th>
+              <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Income Account' | translate}} </th>
               <td mat-cell *matCellDef="let penaltyIncome">
                 {{ penaltyIncome.incomeAccountId | find:incomeAccountData:'id':'name' }}
               </td>
             </ng-container>
 
             <ng-container matColumnDef="actions">
-              <th mat-header-cell *matHeaderCellDef> Actions </th>
+              <th mat-header-cell *matHeaderCellDef> {{'labels.buttons.Actions' | translate}} </th>
               <td mat-cell *matCellDef="let penaltyIncome; let i = index">
                 <button mat-icon-button color="primary"
                   (click)="edit('PenaltyIncome', penaltyToIncomeAccountMappings, i)">

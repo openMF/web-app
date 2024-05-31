@@ -1,13 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, UntypedFormArray, Validators, UntypedFormControl } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
-import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 
+import { TranslateService } from '@ngx-translate/core';
+import { Accounting } from 'app/core/utils/accounting';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
-import { Accounting } from 'app/core/utils/accounting';
 
 @Component({
   selector: 'mifosx-fixed-deposit-product-accounting-step',
@@ -35,7 +36,8 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
 
   constructor(private formBuilder: UntypedFormBuilder,
               public dialog: MatDialog,
-              private accounting: Accounting) {
+              private accounting: Accounting,
+              private translateService: TranslateService) {
     this.createfixedDepositProductAccountingForm();
     this.setConditionalControls();
   }
@@ -206,7 +208,7 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
 
   delete(formArray: UntypedFormArray, index: number) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `this` }
+      data: { deleteContext: this.translateService.instant('labels.text.this') }
     });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

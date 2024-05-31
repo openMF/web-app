@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { ProductsService } from 'app/products/products.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -37,7 +38,8 @@ export class EditBucketComponent implements OnInit {
     private productsService: ProductsService,
     private router: Router,
     private route: ActivatedRoute,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    private translateService:TranslateService) {
       this.route.data.subscribe((data: { delinquencyBucket: any, delinquencyRanges: any }) => {
         this.delinquencyRangesData = data.delinquencyRanges;
         this.rangesDataSource = [];
@@ -109,7 +111,7 @@ export class EditBucketComponent implements OnInit {
    */
    deleteDelinquencyRange(index: number) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `this` }
+      data: { deleteContext: this.translateService.instant('labels.text.this') }
     });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

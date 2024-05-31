@@ -1,11 +1,11 @@
 <div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="20px">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_PRODUCTMIX'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    Edit
+    {{ 'labels.buttons.Edit' | translate}}
   </button>
   <button mat-raised-button color="warn" (click)="delete()" *mifosxHasPermission="'DELETE_PRODUCTMIX'">
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    Delete
+    {{ 'labels.buttons.Delete' | translate}}
   </button>
 </div>
 
@@ -16,7 +16,7 @@
       <table mat-table [dataSource]="allowedProductsDatasource" matSort>
 
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'"> Allowed Products </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'">{{ 'labels.inputs.Allowed Products' | translate}}</th>
           <td mat-cell *matCellDef="let product" [ngClass]="'customWidthClass'"> {{ product.name }} </td>
         </ng-container>
 
@@ -33,7 +33,7 @@
       <table mat-table [dataSource]="restrictedProductsDatasource" matSort>
 
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Restricted Products </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Restricted products' | translate }}</th>
           <td mat-cell *matCellDef="let product"> {{ product.name }} </td>
         </ng-container>
 

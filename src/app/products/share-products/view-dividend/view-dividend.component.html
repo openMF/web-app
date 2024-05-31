@@ -1,7 +1,7 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px" *ngIf="!isdividendPosted">
   <button mat-raised-button color="primary" *mifosxHasPermission='"POST_DIVIDENDS"' (click)="postDividends()">
     <fa-icon icon="plus" class="m-r-10"></fa-icon>
-    Post Dividend
+    {{'labels.buttons.buttons' | translate}}
   </button>
 </div>
 
@@ -19,22 +19,22 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="clientName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Client Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Client Name' | translate }} </th>
         <td mat-cell *matCellDef="let dividend"> {{ dividend.accountData.clientName }} </td>
       </ng-container>
 
       <ng-container matColumnDef="shareAccount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Share Account </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Share Account' | translate}} </th>
         <td mat-cell *matCellDef="let dividend"> {{ dividend.accountData.accountNo }} </td>
       </ng-container>
 
       <ng-container matColumnDef="dividendAmount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Dividend Amount </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Dividend Amount' | translate}} </th>
         <td mat-cell *matCellDef="let dividend"> {{ dividend.amount }} </td>
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Status' | translate }} </th>
         <td mat-cell *matCellDef="let dividend"> {{ dividend.status.value }} </td>
       </ng-container>
 
