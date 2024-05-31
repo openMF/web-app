@@ -32,7 +32,7 @@ export class AdvancePaymentAllocationTabComponent implements OnInit {
 
   constructor(private dialog: MatDialog,
     private advancedPaymentStrategy: AdvancedPaymentStrategy,
-    private translateService:TranslateService) { }
+    private translateService: TranslateService) { }
 
   ngOnInit(): void {
     if (this.advancedCreditAllocation) {

@@ -67,7 +67,7 @@ export class EditFloatingRateComponent implements OnInit {
               private dateUtils: Dates,
               private dialog: MatDialog,
               private settingsService: SettingsService,
-              private translateService:TranslateService) {
+              private translateService: TranslateService) {
     this.route.data.subscribe((data: { floatingRate: any }) => {
       this.floatingRateData = data.floatingRate;
       this.floatingRatePeriodsData = data.floatingRate.ratePeriods ? data.floatingRate.ratePeriods : [];

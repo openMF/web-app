@@ -39,7 +39,7 @@ export class EditBucketComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private translateService:TranslateService) {
+    private translateService: TranslateService) {
       this.route.data.subscribe((data: { delinquencyBucket: any, delinquencyRanges: any }) => {
         this.delinquencyRangesData = data.delinquencyRanges;
         this.rangesDataSource = [];

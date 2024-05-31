@@ -50,7 +50,7 @@ export class ViewProductMixComponent implements OnInit {
               private dialog: MatDialog,
               private productsService: ProductsService,
               private router: Router,
-              private translateService:TranslateService ) {
+              private translateService: TranslateService ) {
     this.route.data.subscribe((data: { productMix: any }) => {
       this.productMixData = data.productMix;
     });
