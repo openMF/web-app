@@ -1879,6 +1879,8 @@
             "OverDue days for repayment event": "Días vencidos para evento de pago",
             "Overdue days for NPA": "Días vencidos para NPA",
             "Overdraft Interest Income": "Ingresos por intereses de sobregiro",
+            "Overdraft Interest Not Posted": "Intereses de sobregiro no contabilizados",
+            "Overdraft Limit": "Límite de sobregiro",
             "Overdraft portfolio": "Cartera de Sobregiro",
             "Overdue Charge": "Comisión Moratoria",
             "Overdue Charges": "Comisiones Moratorias",
