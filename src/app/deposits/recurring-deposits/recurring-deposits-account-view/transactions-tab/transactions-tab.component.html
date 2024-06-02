@@ -17,7 +17,7 @@
 
       <ng-container matColumnDef="row">
         <th mat-header-cell *matHeaderCellDef> # </th>
-        <td mat-cell *matCellDef="let idx = index;">{{(idx + 1)}}</td>
+        <td mat-cell *matCellDef="let transaction; let idx = index;" (click)="showTransactions(transaction)">{{(idx + 1)}}</td>
       </ng-container>
 
       <ng-container matColumnDef="id">
@@ -27,29 +27,37 @@
 
       <ng-container matColumnDef="transactionDate">
         <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Transaction Date" | translate }} </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="savingsTransactionColor(transaction)"> {{ transaction.date  | dateFormat }} </td>
+        <td mat-cell *matCellDef="let transaction" [ngClass]="savingsTransactionColor(transaction)" (click)="showTransactions(transaction)">
+          {{ transaction.date  | dateFormat }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="transactionType">
         <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Transaction Type" | translate }} </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="savingsTransactionColor(transaction)"> {{ transaction.transactionType.value  }} </td>
+        <td mat-cell *matCellDef="let transaction" [ngClass]="savingsTransactionColor(transaction)" (click)="showTransactions(transaction)">
+          {{ transaction.transactionType.value  }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="debit">
         <th mat-header-cell *matHeaderCellDef class="center"> {{"labels.inputs.Debit" | translate }} </th>
-        <td mat-cell *matCellDef="let transaction" class="r-amount" [ngClass]="savingsTransactionColor(transaction)">
-          {{ isDebit(transaction.transactionType) ? transaction.amount : 'N/A'}} </td>
+        <td mat-cell *matCellDef="let transaction" class="r-amount" [ngClass]="savingsTransactionColor(transaction)" (click)="showTransactions(transaction)">
+          {{ isDebit(transaction.transactionType) ? transaction.amount : 'N/A'}}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="credit">
         <th mat-header-cell *matHeaderCellDef class="center"> {{"labels.inputs.Credit" | translate }} </th>
-        <td mat-cell *matCellDef="let transaction" class="r-amount" [ngClass]="savingsTransactionColor(transaction)">
-          {{ !isDebit(transaction.transactionType) ? transaction.amount : 'N/A' }} </td>
+        <td mat-cell *matCellDef="let transaction" class="r-amount" [ngClass]="savingsTransactionColor(transaction)" (click)="showTransactions(transaction)">
+          {{ !isDebit(transaction.transactionType) ? transaction.amount : 'N/A' }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="balance">
         <th mat-header-cell *matHeaderCellDef class="center"> {{"labels.inputs.Balance" | translate }} </th>
-        <td mat-cell *matCellDef="let transaction" class="r-amount" [ngClass]="savingsTransactionColor(transaction)"> {{ transaction.runningBalance | formatNumber }} </td>
+        <td mat-cell *matCellDef="let transaction" class="r-amount" [ngClass]="savingsTransactionColor(transaction)" (click)="showTransactions(transaction)">
+          {{ transaction.runningBalance | formatNumber }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">

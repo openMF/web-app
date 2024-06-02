@@ -81,7 +81,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
       if (this.loansAccountProductTemplate.overdueCharges) {
         this.overDueChargesDataSource = this.loansAccountProductTemplate.overdueCharges;
       }
-      if (this.loansAccountProductTemplate.charges) {
+      if (this.loansAccountProductTemplate.charges && this.loansAccountProductTemplate.charges.length > 0 && this.chargesDataSource.length === 0) {
         this.chargesDataSource = this.loansAccountProductTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
       }
     }
