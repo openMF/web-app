@@ -150,7 +150,7 @@ export class EditLoansAccountComponent implements OnInit {
     if (loansAccountData.interestCalculationPeriodType === 0) {
       loansAccountData.allowPartialPeriodInterestCalcualtion = false;
     }
-    if (!(loansAccountData.isFloatingInterestRate === false)) {
+    if (!loansAccountData.isLoanProductLinkedToFloatingRate || loansAccountData.isLoanProductLinkedToFloatingRate === false) {
       delete loansAccountData.isFloatingInterestRate;
     }
     loansAccountData.principal = loansAccountData.principalAmount;

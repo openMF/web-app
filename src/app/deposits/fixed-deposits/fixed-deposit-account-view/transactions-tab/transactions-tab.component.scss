@@ -18,9 +18,6 @@
       margin: 0 2%;
       line-height: 25px;
     }
-    .select-row:hover {
-      cursor: pointer;
-    }
     .strike {
       text-decoration: line-through;
       color: $status-active-overdue;
@@ -32,4 +29,9 @@
       color: $msg-default;
     }
   }
+}
+
+.select-row:hover {
+  cursor: pointer;
+  font-weight: 800;
 }
