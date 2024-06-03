@@ -26,7 +26,7 @@
 
       <ng-container matColumnDef="allocationRule">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Payment Allocation Rule' | translate }}</th>
-        <td mat-cell *matCellDef="let paymentAllocation"> {{ paymentAllocation.value | translateCatalog }} </td>
+        <td mat-cell *matCellDef="let paymentAllocation"> {{ paymentAllocation.value | translateKey:'catalogs' }} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -52,7 +52,7 @@
 
       <ng-container matColumnDef="allocationRule">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Credit Allocation Rule' | translate }}</th>
-        <td mat-cell *matCellDef="let creditAllocation"> {{ creditAllocation.value | translateCatalog }} </td>
+        <td mat-cell *matCellDef="let creditAllocation"> {{ creditAllocation.value | translateKey:'catalogs' }} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -65,7 +65,7 @@
     <mat-select [formControl]="futureInstallmentAllocationRule">
       <mat-option *ngFor="let futureInstallmentAllocationRule of advancedPaymentAllocation.futureInstallmentAllocationRules"
         [value]="futureInstallmentAllocationRule.code">
-        {{ futureInstallmentAllocationRule.value | translateCatalog }}
+        {{ futureInstallmentAllocationRule.value | translateKey:'catalogs' }}
       </mat-option>
     </mat-select>
   </mat-form-field>

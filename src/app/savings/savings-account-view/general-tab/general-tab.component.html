@@ -14,7 +14,7 @@
             <td *ngIf="savingsAccountData.externalId">
               <mifosx-external-identifier externalId="{{savingsAccountData.externalId}}"></mifosx-external-identifier>
             </td>
-            <td *ngIf="!savingsAccountData.externalId">{{'labels.inputs.Not Provided' | translate}}</td>              
+            <td *ngIf="!savingsAccountData.externalId">{{'labels.inputs.Not Provided' | translate}}</td>
           </tr>
           <tr>
             <td>{{'labels.inputs.Activated On' | translate}}</td>
@@ -119,19 +119,19 @@
         </tr>
         <tr>
           <td>{{'labels.inputs.Interest Compounding Period' | translate}}</td>
-          <td>{{savingsAccountData.interestCompoundingPeriodType.value | translateCatalog}}</td>
+          <td>{{savingsAccountData.interestCompoundingPeriodType.value | translateKey:'catalogs'}}</td>
         </tr>
         <tr>
           <td>{{'labels.inputs.Interest Posting Period' | translate}}</td>
-          <td>{{savingsAccountData.interestPostingPeriodType.value | translateCatalog}}</td>
+          <td>{{savingsAccountData.interestPostingPeriodType.value | translateKey:'catalogs'}}</td>
         </tr>
         <tr>
           <td>{{'labels.inputs.Interest Calculated Using' | translate}}</td>
-          <td>{{savingsAccountData.interestCalculationType.value | translateCatalog}}</td>
+          <td>{{savingsAccountData.interestCalculationType.value | translateKey:'catalogs'}}</td>
         </tr>
         <tr>
           <td>{{'labels.inputs.Days in Year' | translate}}</td>
-          <td>{{savingsAccountData.interestCalculationDaysInYearType.value | translateCatalog}}</td>
+          <td>{{savingsAccountData.interestCalculationDaysInYearType.value | translateKey:'catalogs'}}</td>
         </tr>
         <tr *ngIf="savingsAccountData.withdrawalFee">
           <td>{{'labels.inputs.Withdrawal Fee' | translate}}</td>

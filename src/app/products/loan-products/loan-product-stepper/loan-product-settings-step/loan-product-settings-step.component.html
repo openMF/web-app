@@ -18,7 +18,7 @@
       <mat-label>{{'labels.inputs.Interest Method' | translate}}</mat-label>
       <mat-select formControlName="interestType" matTooltip="The Interest method value is input to calculating the payments amount for repayment of the loan. " required>
         <mat-option *ngFor="let interestType of interestTypeData" [value]="interestType.id">
-          {{ interestType.value | translateCatalog }}
+          {{ interestType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
       <mat-error>
@@ -31,7 +31,7 @@
       <mat-select formControlName="interestCalculationPeriodType" matTooltip="Daily - Will Calculate the interest on DAILY basis ex: Month of February has 28days
       and it will calculate interest for 28days, SAME AS REPAYMENT PERIOD- it calculates for the month,that is, 30days." required>
         <mat-option *ngFor="let interestCalculationPeriodType of interestCalculationPeriodTypeData" [value]="interestCalculationPeriodType.id">
-          {{ interestCalculationPeriodType.value | translateCatalog }}
+          {{ interestCalculationPeriodType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
       <mat-error>
@@ -58,7 +58,7 @@
       <mat-label>{{'labels.inputs.Loan Schedule Type' | translate}}</mat-label>
       <mat-select formControlName="loanScheduleType" required>
         <mat-option *ngFor="let loanScheduleType of loanScheduleTypeData" [value]="loanScheduleType.code">
-          {{ loanScheduleType.value | translateCatalog }}
+          {{ loanScheduleType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -68,7 +68,7 @@
       <mat-select formControlName="transactionProcessingStrategyCode" matTooltip="The repayment strategy determines the sequence in which each of the components is paid."
         required [disabled]="advancedTransactionProcessingStrategyDisabled">
         <mat-option *ngFor="let transactionProcessingStrategy of transactionProcessingStrategyData" [value]="transactionProcessingStrategy.code">
-          {{ transactionProcessingStrategy.name | translateCatalog }}
+          {{ transactionProcessingStrategy.name | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
       <mat-error>
@@ -80,7 +80,7 @@
       <mat-label>{{'labels.inputs.Loan Schedule Processing Type' | translate}}</mat-label>
       <mat-select formControlName="loanScheduleProcessingType" required>
         <mat-option *ngFor="let loanScheduleProcessingType of loanScheduleProcessingTypeData" [value]="loanScheduleProcessingType.code">
-          {{ loanScheduleProcessingType.value | translateCatalog }}
+          {{ loanScheduleProcessingType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -189,7 +189,7 @@
       <mat-label>{{'labels.inputs.Days in year' | translate}}</mat-label>
       <mat-select matTooltip="The setting for number of days in year to use to calculate interest" formControlName="daysInYearType" required>
         <mat-option *ngFor="let daysInYearType of daysInYearTypeData" [value]="daysInYearType.id">
-          {{ daysInYearType.value | translateCatalog }}
+          {{ daysInYearType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
       <mat-error>
@@ -201,7 +201,7 @@
       <mat-label>{{'labels.inputs.Days in month' | translate}}</mat-label>
       <mat-select matTooltip="Number of days in month." formControlName="daysInMonthType" required>
         <mat-option *ngFor="let daysInMonthType of daysInMonthTypeData" [value]="daysInMonthType.id">
-          {{ daysInMonthType.value | translateCatalog }}
+          {{ daysInMonthType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
       <mat-error>
@@ -282,7 +282,7 @@
         <mat-label>{{'labels.inputs.Pre-closure interest calculation rule' | translate}}</mat-label>
         <mat-select formControlName="preClosureInterestCalculationStrategy" required>
           <mat-option *ngFor="let preClosureInterestCalculationStrategy of preClosureInterestCalculationStrategyData" [value]="preClosureInterestCalculationStrategy.id">
-            {{ preClosureInterestCalculationStrategy.value | translateCatalog }}
+            {{ preClosureInterestCalculationStrategy.value | translateKey:'catalogs' }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -294,7 +294,7 @@
         <mat-label>{{'labels.inputs.Advance payments adjustment type' | translate}}</mat-label>
         <mat-select formControlName="rescheduleStrategyMethod" required>
           <mat-option *ngFor="let rescheduleStrategyType of rescheduleStrategyTypeData" [value]="rescheduleStrategyType.id">
-            {{ rescheduleStrategyType.value | translateCatalog }}
+            {{ rescheduleStrategyType.value | translateKey:'catalogs' }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -306,7 +306,7 @@
         <mat-label>{{'labels.inputs.Interest recalculation compounding on' | translate}}</mat-label>
         <mat-select formControlName="interestRecalculationCompoundingMethod" required>
           <mat-option *ngFor="let interestRecalculationCompoundingType of interestRecalculationCompoundingTypeData" [value]="interestRecalculationCompoundingType.id">
-            {{ interestRecalculationCompoundingType.value | translateCatalog }}
+            {{ interestRecalculationCompoundingType.value | translateKey:'catalogs' }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -352,7 +352,7 @@
           <mat-form-field fxFlexFill>
             <mat-select formControlName="recalculationCompoundingFrequencyNthDayType">
               <mat-option *ngFor="let interestRecalculationNthDayType of interestRecalculationNthDayTypeData" [value]="interestRecalculationNthDayType.id">
-                {{ interestRecalculationNthDayType.value | translateCatalog }}
+                {{ interestRecalculationNthDayType.value | translateKey:'catalogs' }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -365,7 +365,7 @@
           <mat-form-field fxFlexFill>
               <mat-select formControlName="recalculationCompoundingFrequencyDayOfWeekType">
                 <mat-option *ngFor="let interestRecalculationDayOfWeekType of interestRecalculationDayOfWeekTypeData" [value]="interestRecalculationDayOfWeekType.id">
-                  {{ interestRecalculationDayOfWeekType.value | translateCatalog }}
+                  {{ interestRecalculationDayOfWeekType.value | translateKey:'catalogs' }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -391,7 +391,7 @@
         <mat-label>{{'labels.inputs.Frequency for recalculate Outstanding Principal' | translate}}</mat-label>
         <mat-select formControlName="recalculationRestFrequencyType" required>
           <mat-option *ngFor="let interestRecalculationFrequencyType of interestRecalculationFrequencyTypeData" [value]="interestRecalculationFrequencyType.id">
-            {{ interestRecalculationFrequencyType.value | translateCatalog }}
+            {{ interestRecalculationFrequencyType.value | translateKey:'catalogs' }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -404,7 +404,7 @@
         <mat-form-field fxFlexFill>
           <mat-select formControlName="recalculationRestFrequencyNthDayType">
             <mat-option *ngFor="let interestRecalculationNthDayType of interestRecalculationNthDayTypeData" [value]="interestRecalculationNthDayType.id">
-              {{ interestRecalculationNthDayType.value | translateCatalog }}
+              {{ interestRecalculationNthDayType.value | translateKey:'catalogs' }}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -417,7 +417,7 @@
         <mat-form-field fxFlexFill>
           <mat-select formControlName="recalculationRestFrequencyDayOfWeekType">
             <mat-option *ngFor="let interestRecalculationDayOfWeekType of interestRecalculationDayOfWeekTypeData" [value]="interestRecalculationDayOfWeekType.id">
-              {{ interestRecalculationDayOfWeekType.value | translateCatalog }}
+              {{ interestRecalculationDayOfWeekType.value | translateKey:'catalogs' }}
             </mat-option>
           </mat-select>
         </mat-form-field>

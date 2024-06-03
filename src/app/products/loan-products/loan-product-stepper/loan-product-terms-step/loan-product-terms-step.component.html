@@ -37,7 +37,7 @@
         <mat-label>{{'labels.inputs.Over Amount Calculation Type' | translate}}</mat-label>
         <mat-select formControlName="overAppliedCalculationType" required>
           <mat-option *ngFor="let overAppliedCalculationType of overAppliedCalculationTypeData" [value]="overAppliedCalculationType.id">
-            {{ overAppliedCalculationType.value | translateCatalog }}
+            {{ overAppliedCalculationType.value | translateKey:'catalogs' }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -52,7 +52,7 @@
       <mat-label>{{'labels.inputs.Installment day calculation from' | translate}} <i class="fas fa-question" matTooltip="Repayment schedule will start the installment dates from the submitted date or the disbursement date"></i></mat-label>
       <mat-select formControlName="repaymentStartDateType" required>
         <mat-option *ngFor="let repaymentStartDateType of repaymentStartDateTypeOptions" [value]="repaymentStartDateType.id">
-          {{ repaymentStartDateType.value | translateCatalog}}
+          {{ repaymentStartDateType.value | translateKey:'catalogs'}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -127,7 +127,7 @@
         <mat-label>{{'labels.inputs.Frequency' | translate}}</mat-label>
         <mat-select formControlName="interestRateFrequencyType" required [disabled]="isZeroInterest()">
           <mat-option *ngFor="let interestRateFrequencyType of interestRateFrequencyTypeData" [value]="interestRateFrequencyType.id">
-            {{ interestRateFrequencyType.value | translateCatalog }}
+            {{ interestRateFrequencyType.value | translateKey:'catalogs' }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -408,7 +408,7 @@
       <mat-label>{{'labels.inputs.Frequency Type' | translate}}</mat-label>
       <mat-select formControlName="repaymentFrequencyType" required>
         <mat-option *ngFor="let repaymentFrequencyType of repaymentFrequencyTypeData" [value]="repaymentFrequencyType.id">
-          {{ repaymentFrequencyType.value | translateCatalog }}
+          {{ repaymentFrequencyType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
       <mat-error>
@@ -423,7 +423,7 @@
       <mat-label>{{'labels.inputs.Fixed Length' | translate}}</mat-label>
       <input type="number" matInput formControlName="fixedLength">
     </mat-form-field>
-    <span fxFlex="30%" *ngIf="allowFixedLength()" class="label-field">{{ loanProductTermsForm.value.repaymentFrequencyType | find:repaymentFrequencyTypeData:'id':'value' | translateCatalog }}</span>
+    <span fxFlex="30%" *ngIf="allowFixedLength()" class="label-field">{{ loanProductTermsForm.value.repaymentFrequencyType | find:repaymentFrequencyTypeData:'id':'value' | translateKey:'catalogs' }}</span>
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Minimum days between disbursal and first repayment date' | translate}}</mat-label>

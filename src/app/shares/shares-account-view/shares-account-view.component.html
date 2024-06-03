@@ -42,7 +42,7 @@
                     <tr *ngIf="sharesAccountData.lockinPeriod">
                       <td>{{"labels.inputs.Lockin Period" | translate}} :</td>
                       <td>
-                        {{sharesAccountData.lockinPeriod}} {{sharesAccountData.lockPeriodTypeEnum.value | translateCatalog}}
+                        {{sharesAccountData.lockinPeriod}} {{sharesAccountData.lockPeriodTypeEnum.value | translateKey:'catalogs'}}
                       </td>
                     </tr>
                   </tbody>

@@ -30,7 +30,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.chargeAppliesTo.value | translateCatalog }}
+          {{ chargeData.chargeAppliesTo.value | translateKey:'catalogs' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
@@ -78,7 +78,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.chargeTimeType.value | translateCatalog }}
+          {{ chargeData.chargeTimeType.value | translateKey:'catalogs' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
@@ -86,7 +86,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.chargeCalculationType.value | translateCatalog }}
+          {{ chargeData.chargeCalculationType.value | translateKey:'catalogs' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
@@ -94,7 +94,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.chargePaymentMode.value | translateCatalog }}
+          {{ chargeData.chargePaymentMode.value | translateKey:'catalogs' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
@@ -111,7 +111,7 @@
 
         <div fxFlex="50%"
           *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeFrequency && chargeData.feeFrequency">
-          {{ chargeData.feeFrequency.value | translateCatalog }}
+          {{ chargeData.feeFrequency.value | translateKey:'catalogs' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeInterval">
