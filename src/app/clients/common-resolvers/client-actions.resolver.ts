@@ -13,11 +13,10 @@ import { ClientsService } from '../clients.service';
  */
 @Injectable()
 export class ClientActionsResolver implements Resolve<Object> {
-
   /**
    * @param {ClientsService} clientsService Clients service.
    */
-  constructor(private clientsService: ClientsService) { }
+  constructor(private clientsService: ClientsService) {}
 
   /**
    * Returns the clients actions data.
@@ -34,6 +33,8 @@ export class ClientActionsResolver implements Resolve<Object> {
         return this.clientsService.getAllSurveysType();
       case 'Close':
         return this.clientsService.getClientCommandTemplate('close');
+      case 'Reactivate':
+        return this.clientsService.getClientCommandTemplate('reactivate');
       case 'Reject':
         return this.clientsService.getClientCommandTemplate('reject');
       case 'Withdraw':
@@ -57,5 +58,4 @@ export class ClientActionsResolver implements Resolve<Object> {
         return undefined;
     }
   }
-
 }

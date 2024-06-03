@@ -1,13 +1,8 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="hookForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutGap="4%">
-
           <mat-form-field fxFlex="40%">
             <mat-label>Hook Template</mat-label>
             <mat-select required formControlName="name">
@@ -22,7 +17,7 @@
 
           <mat-form-field fxFlex="40%">
             <mat-label>Display Name</mat-label>
-            <input matInput required formControlName="displayName">
+            <input matInput required formControlName="displayName" />
             <mat-error *ngIf="hookForm.controls.displayName.hasError('required')">
               Display Name is <strong>required</strong>
             </mat-error>
@@ -33,20 +28,14 @@
               Is Active?
             </mat-checkbox>
           </div>
-
         </div>
 
         <div fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutGap="4%">
-
           <mat-form-field fxFlex="48%" *ngIf="hookForm.controls.name.value === 'Web'">
             <mat-label>Content Type</mat-label>
             <mat-select required formControlName="contentType">
-              <mat-option [value]="'json'">
-                json
-              </mat-option>
-              <mat-option [value]="'form'">
-                form
-              </mat-option>
+              <mat-option [value]="'json'"> json </mat-option>
+              <mat-option [value]="'form'"> form </mat-option>
             </mat-select>
             <mat-error *ngIf="hookForm.controls.contentType.hasError('required')">
               Content Type is <strong>required</strong>
@@ -55,29 +44,34 @@
 
           <mat-form-field fxFlex="48%" *ngIf="hookForm.controls.name.value === 'SMS Bridge'">
             <mat-label>Phone Number</mat-label>
-            <input matInput type="tel" #input maxlength="10" required formControlName="phoneNumber">
-            <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
+            <input matInput type="tel" #input maxlength="10" required formControlName="phoneNumber" />
+            <mat-hint align="end">{{ input.value?.length || 0 }}/10</mat-hint>
             <mat-error *ngIf="hookForm.controls.phoneNumber.hasError('required')">
               Payload URL is <strong>required</strong>
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field
+            fxFlex="48%"
+            *ngIf="hookForm.controls.name.value === 'SMS Bridge' || hookForm.controls.name.value === 'Web'"
+          >
             <mat-label>Payload URL</mat-label>
-            <input matInput required formControlName="payloadUrl">
+            <input matInput required formControlName="payloadUrl" />
             <mat-error *ngIf="hookForm.controls.payloadUrl.hasError('required')">
               Payload URL is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-
         </div>
 
-        <div fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutGap="4%"
-          *ngIf="hookForm.controls.name.value === 'SMS Bridge'">
-
+        <div
+          fxLayout="row wrap"
+          fxLayout.lt-md="column"
+          fxLayoutGap="4%"
+          *ngIf="hookForm.controls.name.value === 'SMS Bridge'"
+        >
           <mat-form-field fxFlex="30%">
             <mat-label>SMS Provider</mat-label>
-            <input matInput required formControlName="smsProvider">
+            <input matInput required formControlName="smsProvider" />
             <mat-error *ngIf="hookForm.controls.smsProvider.hasError('required')">
               SMS Provider is <strong>required</strong>
             </mat-error>
@@ -85,7 +79,7 @@
 
           <mat-form-field fxFlex="30%">
             <mat-label>SMS Provider Account ID</mat-label>
-            <input matInput required formControlName="smsProviderAccountId">
+            <input matInput required formControlName="smsProviderAccountId" />
             <mat-error *ngIf="hookForm.controls.smsProviderAccountId.hasError('required')">
               SMS Provider Account ID is <strong>required</strong>
             </mat-error>
@@ -93,67 +87,86 @@
 
           <mat-form-field fxFlex="30%">
             <mat-label>SMS Provider Token</mat-label>
-            <input matInput required formControlName="smsProviderToken">
+            <input matInput required formControlName="smsProviderToken" />
             <mat-error *ngIf="hookForm.controls.smsProviderToken.hasError('required')">
               SMS Provider Token is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-
         </div>
 
-        <br>
+        <div
+          fxLayout="row wrap"
+          fxLayout.lt-md="column"
+          fxLayoutGap="4%"
+          *ngIf="hookForm.controls.name.value === 'RabbitMQ Broker'"
+        >
+          <mat-form-field fxFlex="30%">
+            <mat-label>Exchange Name</mat-label>
+            <input matInput required formControlName="exchangeName" />
+            <mat-error *ngIf="hookForm.controls.exchangeName.hasError('required')">
+              Exchange Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="30%">
+            <mat-label>Routing Key</mat-label>
+            <input matInput required formControlName="routingKey" />
+            <mat-error *ngIf="hookForm.controls.routingKey.hasError('required')">
+              Routing Key is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <br />
 
         <mat-divider [inset]="true"></mat-divider>
 
-        <br>
+        <br />
 
         <div fxLayout="row wrap" fxLayoutGap="60%" fxLayout.lt-md="column">
-
           <p fxFlex="20%" class="mat-title">Events</p>
 
           <button mat-raised-button fxFlex="20%" type="button" color="primary" (click)="addEvent()">
-            <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
-            Add Event
+            <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp; Add Event
           </button>
-
         </div>
 
         <table mat-table [dataSource]="dataSource" matSort>
-
           <ng-container matColumnDef="entityName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Entity Name </th>
-            <td mat-cell *matCellDef="let event"> {{ event.entityName }} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Entity Name</th>
+            <td mat-cell *matCellDef="let event">{{ event.entityName }}</td>
           </ng-container>
 
           <ng-container matColumnDef="actionName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Action Name </th>
-            <td mat-cell *matCellDef="let event"> {{ event.actionName }} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Action Name</th>
+            <td mat-cell *matCellDef="let event">{{ event.actionName }}</td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td mat-cell *matCellDef="let i = index">
-              <button type="button" color="warn" mat-icon-button
-                (click)="deleteEvent(i)">
+              <button type="button" color="warn" mat-icon-button (click)="deleteEvent(i)">
                 <fa-icon icon="trash" size="lg"></fa-icon>
               </button>
             </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
         <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="(!hookForm.valid || hookForm.pristine) && !eventsDataChanged" *mifosxHasPermission="'UPDATE_HOOK'">Submit</button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="(!hookForm.valid || hookForm.pristine) && !eventsDataChanged"
+          *mifosxHasPermission="'UPDATE_HOOK'"
+        >
+          Submit
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

@@ -5,7 +5,7 @@
     <form [formGroup]="reactivateClientForm" (ngSubmit)="submit()">
 
       <mat-card-content>
-
+        <div fxLayout="column">
           <mat-form-field fxFlex (click)="reactivationDatePicker.open()">
             <mat-label>Re Activation On Date</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="reactivationDatePicker" required formControlName="reactivationDate">
@@ -16,6 +16,18 @@
             </mat-error>
           </mat-form-field>
 
+          <mat-form-field fxFlex="48%">
+            <mat-label>Reactivate Reason</mat-label>
+            <mat-select formControlName="reactivationReasonId">
+              <mat-option *ngFor="let reason of reactivateData" [value]="reason.id">
+                {{ reason.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="reactivateClientForm.controls.reactivationReasonId.hasError('required')">
+              Reactivate Reason is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">

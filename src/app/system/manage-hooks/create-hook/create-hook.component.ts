@@ -14,16 +14,17 @@ import { SystemService } from '../../system.service';
 import { AddEventDialogComponent } from '../add-event-dialog/add-event-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
+const RabbitMQBrokerLabel = 'RabbitMQ Broker';
+const WebLabel = 'Web';
 /**
  * Create Hook Component.
  */
 @Component({
   selector: 'mifosx-create-hook',
   templateUrl: './create-hook.component.html',
-  styleUrls: ['./create-hook.component.scss']
+  styleUrls: ['./create-hook.component.scss'],
 })
 export class CreateHookComponent implements OnInit {
-
   /** Hooks Template Data. */
   hooksTemplateData: any;
   /** Hook Form. */
@@ -45,11 +46,13 @@ export class CreateHookComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {MatDialog} dialog Dialog Reference.
    */
-  constructor(private route: ActivatedRoute,
-              private systemService: SystemService,
-              private router: Router,
-              private formBuilder: UntypedFormBuilder,
-              private dialog: MatDialog) {
+  constructor(
+    private route: ActivatedRoute,
+    private systemService: SystemService,
+    private router: Router,
+    private formBuilder: UntypedFormBuilder,
+    private dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { hooksTemplate: any }) => {
       this.hooksTemplateData = data.hooksTemplate;
     });
@@ -60,19 +63,34 @@ export class CreateHookComponent implements OnInit {
    */
   ngOnInit() {
     this.createHookForm();
-    this.hookForm.get('name').valueChanges.subscribe(name => {
-      if (name === 'Web') {
+    this.hookForm.get('name').valueChanges.subscribe((name) => {
+      if (name === WebLabel) {
         this.hookForm.get('contentType').enable();
         this.hookForm.get('phoneNumber').disable();
         this.hookForm.get('smsProvider').disable();
         this.hookForm.get('smsProviderAccountId').disable();
         this.hookForm.get('smsProviderToken').disable();
+        this.hookForm.get('routingKey').disable();
+        this.hookForm.get('exchangeName').disable();
+        this.hookForm.get('payloadUrl').enable();
+      } else if (name === RabbitMQBrokerLabel) {
+        this.hookForm.get('contentType').disable();
+        this.hookForm.get('phoneNumber').disable();
+        this.hookForm.get('smsProvider').disable();
+        this.hookForm.get('smsProviderAccountId').disable();
+        this.hookForm.get('smsProviderToken').disable();
+        this.hookForm.get('payloadUrl').disable();
+        this.hookForm.get('routingKey').enable();
+        this.hookForm.get('exchangeName').enable();
       } else {
         this.hookForm.get('contentType').disable();
         this.hookForm.get('phoneNumber').enable();
         this.hookForm.get('smsProvider').enable();
         this.hookForm.get('smsProviderAccountId').enable();
         this.hookForm.get('smsProviderToken').enable();
+        this.hookForm.get('routingKey').disable();
+        this.hookForm.get('exchangeName').disable();
+        this.hookForm.get('payloadUrl').enable();
       }
     });
     this.setEvents();
@@ -91,15 +109,17 @@ export class CreateHookComponent implements OnInit {
    */
   createHookForm() {
     this.hookForm = this.formBuilder.group({
-      'name': ['Web', Validators.required],
-      'displayName': ['', Validators.required],
-      'isActive': [''],
-      'phoneNumber': [{ value: '', disabled: true }, Validators.required],
-      'smsProvider': [{ value: '', disabled: true }, Validators.required],
-      'smsProviderAccountId': [{ value: '', disabled: true }, Validators.required],
-      'smsProviderToken': [{ value: '', disabled: true }, Validators.required],
-      'contentType': ['', Validators.required],
-      'payloadUrl': ['', Validators.required]
+      name: ['Web', Validators.required],
+      displayName: ['', Validators.required],
+      isActive: [''],
+      phoneNumber: [{ value: '', disabled: true }, Validators.required],
+      smsProvider: [{ value: '', disabled: true }, Validators.required],
+      smsProviderAccountId: [{ value: '', disabled: true }, Validators.required],
+      smsProviderToken: [{ value: '', disabled: true }, Validators.required],
+      contentType: [{ value: '', disabled: true }, Validators.required],
+      payloadUrl: [{ value: '', disabled: true }, Validators.required],
+      exchangeName: [{ value: '', disabled: true }, Validators.required],
+      routingKey: [{ value: '', disabled: true }, Validators.required],
     });
   }
 
@@ -108,14 +128,13 @@ export class CreateHookComponent implements OnInit {
    */
   addEvent() {
     const addEventDialogRef = this.dialog.open(AddEventDialogComponent, {
-      data: this.hooksTemplateData
+      data: this.hooksTemplateData,
     });
     addEventDialogRef.afterClosed().subscribe((response: any) => {
-    if (response) {
-      this.eventsData.push({ entityName: response.entity,
-                             actionName: response.action  });
-      this.dataSource.connect().next(this.eventsData);
-    }
+      if (response) {
+        this.eventsData.push({ entityName: response.entity, actionName: response.action });
+        this.dataSource.connect().next(this.eventsData);
+      }
     });
   }
 
@@ -125,7 +144,7 @@ export class CreateHookComponent implements OnInit {
    */
   deleteEvent(index: number) {
     const deleteEventDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `event with entity name of ${this.eventsData[index].entityName}` }
+      data: { deleteContext: `event with entity name of ${this.eventsData[index].entityName}` },
     });
     deleteEventDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -141,11 +160,19 @@ export class CreateHookComponent implements OnInit {
    */
   submit() {
     const hook: {
-      name: string, isActive: boolean, displayName: string, events: any,
+      name: string;
+      isActive: boolean;
+      displayName: string;
+      events: any;
       config: {
-        'Payload URL': string, 'Content Type'?: string, 'SMS Provider'?: string,
-        'SMS Provider Account Id'?: string, 'SMS Provider Token'?: string
-      }
+        'Payload URL': string;
+        'Content Type'?: string;
+        'SMS Provider'?: string;
+        'SMS Provider Account Id'?: string;
+        'SMS Provider Token'?: string;
+        'Exchange Name'?: string;
+        'Routing Key'?: string;
+      };
     } = {
       name: this.hookForm.get('name').value,
       isActive: this.hookForm.get('isActive').value,
@@ -155,13 +182,20 @@ export class CreateHookComponent implements OnInit {
         'Payload URL': this.hookForm.get('payloadUrl').value,
         'Content Type': this.hookForm.get('contentType').enabled ? this.hookForm.get('contentType').value : undefined,
         'SMS Provider': this.hookForm.get('smsProvider').enabled ? this.hookForm.get('smsProvider').value : undefined,
-        'SMS Provider Account Id': this.hookForm.get('smsProviderAccountId').enabled ? this.hookForm.get('smsProviderAccountId').value : undefined,
-        'SMS Provider Token': this.hookForm.get('smsProviderToken').enabled ? this.hookForm.get('smsProviderToken').value : undefined
-      }
+        'SMS Provider Account Id': this.hookForm.get('smsProviderAccountId').enabled
+          ? this.hookForm.get('smsProviderAccountId').value
+          : undefined,
+        'SMS Provider Token': this.hookForm.get('smsProviderToken').enabled
+          ? this.hookForm.get('smsProviderToken').value
+          : undefined,
+        'Exchange Name': this.hookForm.get('exchangeName').enabled
+          ? this.hookForm.get('exchangeName').value
+          : undefined,
+        'Routing Key': this.hookForm.get('routingKey').enabled ? this.hookForm.get('routingKey').value : undefined,
+      },
     };
-    this.systemService.createHook(hook)
-      .subscribe((response: any) => {
-        this.router.navigate(['../', response.resourceId], {relativeTo: this.route});
-      });
+    this.systemService.createHook(hook).subscribe((response: any) => {
+      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+    });
   }
 }
