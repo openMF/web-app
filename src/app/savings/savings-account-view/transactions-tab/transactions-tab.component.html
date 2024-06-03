@@ -35,7 +35,7 @@
 
       <ng-container matColumnDef="externalId">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.External Id" | translate}} </th>
-        <td mat-cell *matCellDef="let transaction" [ngClass]="savingsTransactionColor(transaction)"> 
+        <td mat-cell *matCellDef="let transaction" [ngClass]="savingsTransactionColor(transaction)">
           <mifosx-external-identifier externalId="{{transaction.externalId}}"></mifosx-external-identifier>
         </td>
       </ng-container>
@@ -43,7 +43,7 @@
       <ng-container matColumnDef="transactionType">
         <th mat-header-cell class="center" *matHeaderCellDef> {{"labels.inputs.Transaction Type" | translate}} </th>
         <td mat-cell *matCellDef="let transaction" [ngClass]="savingsTransactionColor(transaction)" (click)="showTransactions(transaction)">
-          {{ transaction.transactionType.value | translateCatalog }}
+          {{ transaction.transactionType.value | translateKey:'catalogs' }}
         </td>
       </ng-container>
 
@@ -82,7 +82,7 @@
             <button mat-menu-item *mifosxHasPermission="'ADJUST_LOAN'" (click)="undoTransaction(transaction, $event)">
               <mat-icon><fa-icon icon="undo" size="sm"></fa-icon></mat-icon>
               <span>{{ 'tooltips.Undo Transaction' | translate}}</span>
-            </button>  
+            </button>
             <button mat-menu-item class="account-action-button" (click)="routeEdit($event)" [routerLink]="[transaction.id, 'reciept']">
               <mat-icon><fa-icon icon="receipt" size="sm"></fa-icon></mat-icon>
               <span>{{ 'tooltips.View Receipts' | translate}}</span>

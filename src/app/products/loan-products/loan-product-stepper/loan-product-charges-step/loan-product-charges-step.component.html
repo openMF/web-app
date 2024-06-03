@@ -31,7 +31,7 @@
     <ng-container matColumnDef="chargeCalculationType">
       <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Type' | translate}} </th>
       <td mat-cell *matCellDef="let charge">
-        {{ charge.chargeCalculationType.value | translateCatalog }}
+        {{ charge.chargeCalculationType.value | translateKey:'catalogs' }}
       </td>
     </ng-container>
 
@@ -45,7 +45,7 @@
     <ng-container matColumnDef="chargeTimeType">
       <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Collected On' | translate}} </th>
       <td mat-cell *matCellDef="let charge">
-        {{ charge.chargeTimeType.value | translateCatalog }}
+        {{ charge.chargeTimeType.value | translateKey:'catalogs' }}
       </td>
     </ng-container>
 
@@ -100,7 +100,7 @@
     <ng-container matColumnDef="chargeCalculationType">
       <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Type' | translate}} </th>
       <td mat-cell *matCellDef="let overdueCharge">
-        {{ overdueCharge.chargeCalculationType.value | translateCatalog }}
+        {{ overdueCharge.chargeCalculationType.value | translateKey:'catalogs' }}
       </td>
     </ng-container>
 
@@ -114,7 +114,7 @@
     <ng-container matColumnDef="chargeTimeType">
       <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Collected On' | translate}} </th>
       <td mat-cell *matCellDef="let overdueCharge">
-        {{ overdueCharge.chargeTimeType.value | translateCatalog }}
+        {{ overdueCharge.chargeTimeType.value | translateKey:'catalogs' }}
       </td>
     </ng-container>
 

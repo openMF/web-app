@@ -96,7 +96,7 @@
 
   <div fxFlexFill>
     <span fxFlex="47%">{{ 'labels.inputs.Installment day calculation from' | translate}}:</span>
-    <span  fxFlex="53%">{{ loanProduct.repaymentStartDateType?.value | translateCatalog }}</span>
+    <span  fxFlex="53%">{{ loanProduct.repaymentStartDateType?.value | translateKey:'catalogs' }}</span>
   </div>
 
   <div fxFlexFill>
@@ -117,7 +117,7 @@
     <span  fxFlex="53%">{{ loanProduct.interestRatePerPeriod + ' (Min: ' + (loanProduct.minInterestRatePerPeriod ?
       loanProduct.minInterestRatePerPeriod : loanProduct.interestRatePerPeriod) + ', Max: ' +
       (loanProduct.maxInterestRatePerPeriod ? loanProduct.maxInterestRatePerPeriod : loanProduct.interestRatePerPeriod)
-      + ')'}} {{ loanProduct.interestRateFrequencyType?.value | translateCatalog }}</span>
+      + ')'}} {{ loanProduct.interestRateFrequencyType?.value | translateKey:'catalogs' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.isLinkedToFloatingInterestRates" fxLayout="row wrap" fxLayout.lt-md="column">
@@ -148,7 +148,7 @@
       <ng-container matColumnDef="valueConditionType">
         <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Condition' | translate}} </th>
         <td mat-cell *matCellDef="let variation">
-          {{ variation.valueConditionType.value | translateCatalog }}
+          {{ variation.valueConditionType.value | translateKey:'catalogs' }}
         </td>
       </ng-container>
 
@@ -197,7 +197,7 @@
       <ng-container matColumnDef="valueConditionType">
         <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Condition' | translate}} </th>
         <td mat-cell *matCellDef="let variation">
-          {{ variation.valueConditionType.value | translateCatalog }}
+          {{ variation.valueConditionType.value | translateKey:'catalogs' }}
         </td>
       </ng-container>
 
@@ -246,7 +246,7 @@
       <ng-container matColumnDef="valueConditionType">
         <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Condition' | translate}} </th>
         <td mat-cell *matCellDef="let variation">
-          {{ variation.valueConditionType.value | translateCatalog }}
+          {{ variation.valueConditionType.value | translateKey:'catalogs' }}
         </td>
       </ng-container>
 
@@ -287,12 +287,12 @@
 
   <div fxFlexFill>
     <span fxFlex="47%">{{ 'labels.inputs.Repay Every' | translate}}:</span>
-    <span  fxFlex="53%">{{ loanProduct.repaymentEvery }} {{ loanProduct.repaymentFrequencyType.value | translateCatalog }}</span>
+    <span  fxFlex="53%">{{ loanProduct.repaymentEvery }} {{ loanProduct.repaymentFrequencyType.value | translateKey:'catalogs' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.fixedLength">
     <span fxFlex="47%">{{ 'labels.inputs.Fixed Length' | translate}}:</span>
-    <span  fxFlex="53%">{{ loanProduct.fixedLength }} {{ loanProduct.repaymentFrequencyType.value | translateCatalog }}</span>
+    <span  fxFlex="53%">{{ loanProduct.fixedLength }} {{ loanProduct.repaymentFrequencyType.value | translateKey:'catalogs' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.minimumDaysBetweenDisbursalAndFirstRepayment">
@@ -306,7 +306,7 @@
 
   <div fxFlexFill *ngIf="loanProduct.amortizationType?.value">
     <span fxFlex="47%">{{ 'labels.inputs.Amortization' | translate}}:</span>
-    <span  fxFlex="53%">{{ loanProduct.amortizationType.value | translateCatalog }}</span>
+    <span  fxFlex="53%">{{ loanProduct.amortizationType.value | translateKey:'catalogs' }}</span>
   </div>
 
   <div fxFlexFill>
@@ -316,12 +316,12 @@
 
   <div fxFlexFill>
     <span fxFlex="47%">{{ 'labels.inputs.Interest Method' | translate}}:</span>
-    <span  fxFlex="53%">{{ loanProduct.interestType?.value | translateCatalog }}</span>
+    <span  fxFlex="53%">{{ loanProduct.interestType?.value | translateKey:'catalogs' }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="47%">{{ 'labels.inputs.Interest Calculation Period' | translate}}:</span>
-    <span  fxFlex="53%">{{ loanProduct.interestCalculationPeriodType?.value | translateCatalog }}</span>
+    <span  fxFlex="53%">{{ loanProduct.interestCalculationPeriodType?.value | translateKey:'catalogs' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loanProduct.allowPartialPeriodInterestCalculation">
@@ -335,12 +335,12 @@
 
   <div fxFlexFill>
     <span fxFlex="47%">{{ 'labels.inputs.Loan Schedule Type' | translate}}:</span>
-    <span  fxFlex="53%">{{ loanProduct.loanScheduleType.value | translateCatalog }}</span>
+    <span  fxFlex="53%">{{ loanProduct.loanScheduleType.value | translateKey:'catalogs' }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="47%">{{ 'labels.inputs.Repayment Strategy' | translate}}:</span>
-    <span  fxFlex="53%" class="repayment-strategy">{{ loanProduct.transactionProcessingStrategyName | translateCatalog }}</span>
+    <span  fxFlex="53%" class="repayment-strategy">{{ loanProduct.transactionProcessingStrategyName | translateKey:'catalogs' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="isAdvancedPaymentAllocation">
@@ -431,12 +431,12 @@
 
   <div fxFlexFill>
     <span fxFlex="47%">{{ 'labels.inputs.Days in year' | translate}}:</span>
-    <span  fxFlex="53%">{{ loanProduct.daysInYearType?.value | translateCatalog }}</span>
+    <span  fxFlex="53%">{{ loanProduct.daysInYearType?.value | translateKey:'catalogs' }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="47%">{{ 'labels.inputs.Days in month' | translate}}:</span>
-    <span  fxFlex="53%">{{ loanProduct.daysInMonthType?.value | translateCatalog }}</span>
+    <span  fxFlex="53%">{{ loanProduct.daysInMonthType?.value | translateKey:'catalogs' }}</span>
   </div>
 
   <div fxFlexFill>
@@ -655,7 +655,7 @@
       <ng-container matColumnDef="chargeCalculationType">
         <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Charge Type' | translate }} </th>
         <td mat-cell *matCellDef="let charge">
-          {{ charge.chargeCalculationType.value | translateCatalog }}
+          {{ charge.chargeCalculationType.value | translateKey:'catalogs' }}
         </td>
       </ng-container>
 
@@ -669,7 +669,7 @@
       <ng-container matColumnDef="chargeTimeType">
         <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Collected On' | translate }} </th>
         <td mat-cell *matCellDef="let charge">
-          {{ charge.chargeTimeType.value | translateCatalog }}
+          {{ charge.chargeTimeType.value | translateKey:'catalogs' }}
         </td>
       </ng-container>
 
@@ -694,7 +694,7 @@
       <ng-container matColumnDef="chargeCalculationType">
         <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Charge Type' | translate }} </th>
         <td mat-cell *matCellDef="let overdueCharge">
-          {{ overdueCharge.chargeCalculationType.value | translateCatalog }}
+          {{ overdueCharge.chargeCalculationType.value | translateKey:'catalogs' }}
         </td>
       </ng-container>
 
@@ -708,7 +708,7 @@
       <ng-container matColumnDef="chargeTimeType">
         <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Collected On' | translate }} </th>
         <td mat-cell *matCellDef="let overdueCharge">
-          {{ overdueCharge.chargeTimeType.value | translateCatalog }}
+          {{ overdueCharge.chargeTimeType.value | translateKey:'catalogs' }}
         </td>
       </ng-container>
 

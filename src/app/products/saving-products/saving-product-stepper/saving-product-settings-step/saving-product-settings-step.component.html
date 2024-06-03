@@ -17,7 +17,7 @@
     <mat-form-field fxFlex="48%">
       <mat-select formControlName="lockinPeriodFrequencyType">
         <mat-option *ngFor="let lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData" [value]="lockinPeriodFrequencyType.id">
-          {{ lockinPeriodFrequencyType.value | translateCatalog }}
+          {{ lockinPeriodFrequencyType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
     </mat-form-field>

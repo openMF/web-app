@@ -24,7 +24,7 @@
       <mat-label>{{'labels.inputs.Interest Compounding Period' | translate}}</mat-label>
       <mat-select formControlName="interestCompoundingPeriodType" required>
         <mat-option *ngFor="let interestCompoundingPeriodType of interestCompoundingPeriodTypeData" [value]="interestCompoundingPeriodType.id">
-          {{ interestCompoundingPeriodType.value | translateCatalog }}
+          {{ interestCompoundingPeriodType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
       <mat-error>
@@ -36,7 +36,7 @@
       <mat-label>{{'labels.inputs.Interest Posting Period' | translate}}</mat-label>
       <mat-select formControlName="interestPostingPeriodType" required>
         <mat-option *ngFor="let interestPostingPeriodType of interestPostingPeriodTypeData" [value]="interestPostingPeriodType.id">
-          {{ interestPostingPeriodType.value | translateCatalog }}
+          {{ interestPostingPeriodType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
       <mat-error>
@@ -48,7 +48,7 @@
       <mat-label>{{'labels.inputs.Interest Calculated using' | translate}}</mat-label>
       <mat-select formControlName="interestCalculationType" required>
         <mat-option *ngFor="let interestCalculationType of interestCalculationTypeData" [value]="interestCalculationType.id">
-          {{ interestCalculationType.value | translateCatalog }}
+          {{ interestCalculationType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
       <mat-error>
@@ -60,7 +60,7 @@
       <mat-label>{{'labels.inputs.Days in Year' | translate}}</mat-label>
       <mat-select formControlName="interestCalculationDaysInYearType" required>
         <mat-option *ngFor="let interestCalculationDaysInYearType of interestCalculationDaysInYearTypeData" [value]="interestCalculationDaysInYearType.id">
-          {{ interestCalculationDaysInYearType.value | translateCatalog }}
+          {{ interestCalculationDaysInYearType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
       <mat-error>
@@ -88,7 +88,7 @@
       <mat-label>{{'labels.inputs.Type' | translate}}</mat-label>
       <mat-select formControlName="lockinPeriodFrequencyType">
         <mat-option *ngFor="let lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData" [value]="lockinPeriodFrequencyType.id">
-          {{ lockinPeriodFrequencyType.value | translateCatalog }}
+          {{ lockinPeriodFrequencyType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
     </mat-form-field>

@@ -2,7 +2,7 @@
     <mat-label>{{getLabelText()}}</mat-label>
     <mat-select placeholder="{{getPlaceHolderText()}}" formControlName="controlSelect">
         <mat-option *ngFor="let option of selectOptions" [value]="option.id">
-            {{ option.value | translateCatalog }}
+            {{ option.value | translateKey:'catalogs' }}
         </mat-option>
     </mat-select>
     <button mat-button *ngIf="controlSelect" matSuffix mat-icon-button

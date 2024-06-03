@@ -33,7 +33,7 @@
       <mat-label>{{'labels.inputs.Type' | translate}}</mat-label>
       <mat-select formControlName="minimumactiveperiodFrequencyType">
         <mat-option *ngFor="let minimumActivePeriodFrequencyType of minimumActivePeriodFrequencyTypeData" [value]="minimumActivePeriodFrequencyType.id">
-          {{ minimumActivePeriodFrequencyType.value | translateCatalog }}
+          {{ minimumActivePeriodFrequencyType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -49,7 +49,7 @@
       <mat-label>{{'labels.inputs.Type' | translate}}</mat-label>
       <mat-select formControlName="lockinPeriodFrequencyType">
         <mat-option *ngFor="let lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData" [value]="lockinPeriodFrequencyType.id">
-          {{ lockinPeriodFrequencyType.value | translateCatalog }}
+          {{ lockinPeriodFrequencyType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
     </mat-form-field>

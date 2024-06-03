@@ -51,7 +51,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.penalty ? 'Penalty' : 'Fee' | translateCatalog }}
+          {{ chargeData.penalty ? 'Penalty' : 'Fee' | translateKey:'catalogs' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
@@ -67,7 +67,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.chargeTimeType.value | translateCatalog }}
+          {{ chargeData.chargeTimeType.value | translateKey:'catalogs' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
@@ -83,7 +83,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.chargeCalculationType.value | translateCatalog }}
+          {{ chargeData.chargeCalculationType.value | translateKey:'catalogs' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
