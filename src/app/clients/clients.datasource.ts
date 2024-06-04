@@ -1,12 +1,12 @@
 /** Angular Imports */
-import { CollectionViewer, DataSource } from "@angular/cdk/collections";
+import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 
 /** rxjs Imports */
-import { Observable, BehaviorSubject } from "rxjs";
+import { Observable, BehaviorSubject } from 'rxjs';
 
 /** Custom Services */
-import { ClientsService } from "./clients.service";
-import { SearchService } from "app/search/search.service";
+import { ClientsService } from './clients.service';
+import { SearchService } from 'app/search/search.service';
 
 /**
  * Clients custom data source to implement server side filtering, pagination and sorting.
@@ -34,23 +34,23 @@ export class ClientsDataSource implements DataSource<any> {
    * @param {number} limit Number of clients within the page.
    */
   getClients(
-    orderBy: string = "",
-    sortOrder: string = "",
+    orderBy: string = '',
+    sortOrder: string = '',
     pageIndex: number = 0,
     limit: number = 10,
     showClosedAccounts: boolean = true
   ) {
     this.clientsSubject.next([]);
-    let countryId = JSON.parse(sessionStorage.getItem("selectedCountry"))?.id;
+    let countryId = JSON.parse(sessionStorage.getItem('selectedCountry'))?.id;
     let clientsObs: Observable<any>;
     if (countryId) {
-      clientsObs = this.clientsService.getClientsByCountry("id", "ASC", pageIndex * limit, limit, countryId);
+      clientsObs = this.clientsService.getClientsByCountry('id', 'ASC', pageIndex * limit, limit, countryId);
     } else {
-      clientsObs = this.clientsService.getClients("id", "ASC", pageIndex * limit, limit);
+      clientsObs = this.clientsService.getClients('id', 'ASC', pageIndex * limit, limit);
     }
     clientsObs.subscribe((clients: any) => {
       if (!showClosedAccounts) {
-        clients.pageItems = clients.pageItems.filter((client: any) => client.status.value !== "Closed");
+        clients.pageItems = clients.pageItems.filter((client: any) => client.status.value !== 'Closed');
       }
       this.recordsSubject.next(clients.totalFilteredRecords);
       this.clientsSubject.next(clients.pageItems);
@@ -63,13 +63,13 @@ export class ClientsDataSource implements DataSource<any> {
    */
   searchClients(searchValue: string, showClosedAccounts: boolean = true) {
     this.clientsSubject.next([]);
-    this.searchService.getSearchResults(searchValue, "clients,clientIdentifiers").subscribe((data: any) => {
+    this.searchService.getSearchResults(searchValue, 'clients,clientIdentifiers').subscribe((data: any) => {
       if (!showClosedAccounts) {
-        data = data.filter((client: any) => client.entityStatus && client.entityStatus.value !== "Closed");
+        data = data.filter((client: any) => client.entityStatus && client.entityStatus.value !== 'Closed');
       }
       this.recordsSubject.next(data.length);
       const clients = data
-        .filter((result) => result.entityType === "CLIENT" || result.entityType === "CLIENTIDENTIFIER")
+        .filter((result) => result.entityType === 'CLIENT' || result.entityType === 'CLIENTIDENTIFIER')
         .map(
           ({
             entityStatus,
@@ -82,15 +82,17 @@ export class ClientsDataSource implements DataSource<any> {
             entityType,
             parentId,
             parentExternalId,
+            entityOUPath,
           }) => ({
             status: { ...entityStatus },
-            gender: { name: "" },
+            gender: { name: '' },
             mobileNo: entityMobileNo,
-            displayName: entityType === "CLIENT" ? entityName : parentName,
+            displayName: entityType === 'CLIENT' ? entityName : parentName,
             accountNo: entityAccountNo,
-            id: entityType === "CLIENT" ? entityId : parentId,
-            externalId: entityType === "CLIENT" ? entityExternalId : parentExternalId,
-            officeName: entityType === "CLIENT" ? parentName : null,
+            id: entityType === 'CLIENT' ? entityId : parentId,
+            externalId: entityType === 'CLIENT' ? entityExternalId : parentExternalId,
+            officeName: entityType === 'CLIENT' ? parentName : null,
+            officeHierarchyPath: entityType === 'CLIENT' ? entityOUPath : null,
           })
         );
       this.clientsSubject.next(clients);
@@ -121,21 +123,21 @@ export class ClientsDataSource implements DataSource<any> {
    */
   filterClients(
     filter: string,
-    orderBy: string = "",
-    sortOrder: string = "",
+    orderBy: string = '',
+    sortOrder: string = '',
     pageIndex: number = 0,
     limit: number = 10,
     showClosedAccounts: boolean = true
   ) {
     this.clientsSubject.next([]);
-    this.clientsService.getClients("id", "ASC", pageIndex * limit, limit).subscribe((clients: any) => {
+    this.clientsService.getClients('id', 'ASC', pageIndex * limit, limit).subscribe((clients: any) => {
       if (showClosedAccounts) {
         clients.pageItems = clients.pageItems.filter((client: any) =>
           client.displayName.toLowerCase().includes(filter)
         );
       } else {
         clients.pageItems = clients.pageItems.filter(
-          (client: any) => client.status.value !== "Closed" && client.displayName.toLowerCase().includes(filter)
+          (client: any) => client.status.value !== 'Closed' && client.displayName.toLowerCase().includes(filter)
         );
       }
       this.recordsSubject.next(clients.totalFilteredRecords);

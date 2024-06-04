@@ -57,14 +57,14 @@
         <mat-card-subtitle>
           <p>
             Client #:{{ clientViewData.accountNo }} | External Id: {{ clientViewData.externalId }} | Staff:{{
-              clientViewData.staffName || "Unassigned"
+              clientViewData.staffName || 'Unassigned'
             }}<br />
             <span *ngIf="clientViewData.status?.value">Status: {{ clientViewData.status?.value }} &nbsp;</span>
 
             <span *ngIf="clientViewData.subStatus?.name">Sub Status: {{ clientViewData.subStatus?.name }} &nbsp;</span>
             <br />
             Activation Date :
-            {{ clientViewData.active ? (clientViewData.activationDate | dateFormat) : "Not Activated" }}<br />
+            {{ clientViewData.active ? (clientViewData.activationDate | dateFormat) : 'Not Activated' }}<br />
 
             Member Of :
 
@@ -79,6 +79,15 @@
             </span> -->
             <span *ngIf="!clientViewData.group">Unassigned</span>
             <br />
+          </p>
+        </mat-card-subtitle>
+        <mat-card-subtitle *ngIf="clientViewData.creditScoreData?.length > 0">
+          <p>
+            Credit Score Data : <br />
+            <span *ngFor="let score of clientViewData.creditScoreData">
+              {{ score.loanProductType }} : {{ score.score }}&nbsp;
+              <br />
+            </span>
           </p>
         </mat-card-subtitle>
       </div>
