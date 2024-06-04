@@ -143,6 +143,9 @@ export class EditLoanProductComponent implements OnInit {
         repaymentStartPeriod: this.loanProduct.repaymentStartPeriod, repaymentStartPeriodFrequencyType: this.loanProduct.repaymentStartPeriodFrequencyType,
       },
     };
+    if(loanProduct.templateForTermsAndConditions == undefined || loanProduct.templateForTermsAndConditions == null || loanProduct.templateForTermsAndConditions == ""){
+      delete loanProduct.templateForTermsAndConditions;
+    }
     delete loanProduct.allowAttributeConfiguration;
     delete loanProduct.advancedAccountingRules;
     delete loanProduct.prepaidAmount;
