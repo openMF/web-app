@@ -137,10 +137,18 @@ export class EditLoanProductComponent implements OnInit {
       ...this.loanProduct,
       charges: this.loanProduct.charges.map((charge: any) => ({ id: charge.id })),
       dateFormat,
-      locale: this.settingsService.language.code
+      locale: this.settingsService.language.code,
+      terms : {
+        prepaidAmount: this.loanProduct.prepaidAmount, prepaidAmountCalculationType: this.loanProduct.prepaidAmountCalculationType,
+        repaymentStartPeriod: this.loanProduct.repaymentStartPeriod, repaymentStartPeriodFrequencyType: this.loanProduct.repaymentStartPeriodFrequencyType,
+      },
     };
     delete loanProduct.allowAttributeConfiguration;
     delete loanProduct.advancedAccountingRules;
+    delete loanProduct.prepaidAmount;
+    delete loanProduct.prepaidAmountCalculationType;
+    delete loanProduct.repaymentStartPeriod;
+    delete loanProduct.repaymentStartPeriodFrequencyType;
     this.productsService.updateLoanProduct(this.loanProductAndTemplate.id, loanProduct)
       .subscribe((response: any) => {
         this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
