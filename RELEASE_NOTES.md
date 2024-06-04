@@ -51,6 +51,7 @@
     * [SER-1913] - Exclude the ability to Edit Repayments in Fineract
     * [SER-2549] - Implement Loan Account Bulk Upload in Fineract v2
     * [SER-2595] - Fix Add hooks interface for Rabbit MQ template, also clears cached data when there is a PUT,POST or DELETE request, a fix for the reacitvate interface.
+    * [SER-2601] - Show credit score data if available for a client, show client identity value, show OU path when you search for a client.
 
 ## Version 1.0.0 - for use with Fineract Web App
 

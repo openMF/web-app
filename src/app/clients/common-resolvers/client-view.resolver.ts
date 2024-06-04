@@ -25,7 +25,7 @@ export class ClientViewResolver implements Resolve<Object> {
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
         const clientId = route.paramMap.get('clientId');
-        return this.clientsService.getClientData(clientId);
+        return this.clientsService.getClientDatawithCreditScore(clientId);
     }
 
 }
