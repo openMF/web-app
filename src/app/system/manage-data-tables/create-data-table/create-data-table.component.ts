@@ -1,25 +1,26 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit  } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
-import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
+import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
+import { SystemService } from '../../system.service';
 
 /** Data Imports */
 import { appTableData, entitySubTypeData, savingsSubTypeData } from '../app-table-data';
 
 /** Custom Components */
-import { ColumnDialogComponent } from '../column-dialog/column-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { ColumnDialogComponent } from '../column-dialog/column-dialog.component';
 
 /** Custom Dialog Component */
+import { TranslateService } from '@ngx-translate/core';
 import { ContinueSetupDialogComponent } from '../../../configuration-wizard/continue-setup-dialog/continue-setup-dialog.component';
 import { DatatableColumn } from '../datatable-column.model';
 
@@ -78,6 +79,7 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
    * @param {MatDialog} dialog Dialog Reference.
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
+   * @param {TranslateService} translateService Translate Service.
    */
   constructor(private formBuilder: UntypedFormBuilder,
               private systemService: SystemService,
@@ -85,7 +87,8 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
               private router: Router,
               private dialog: MatDialog,
               private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) {
+              private popoverService: PopoverService,
+              private translateService: TranslateService) {
     this.route.data.subscribe((data: { columnCodes: any }) => {
       this.dataForDialog.columnCodes = data.columnCodes;
     });
@@ -199,7 +202,7 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
    */
   deleteColumn(column: any) {
     const deleteColumnDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `column ${column.name}` }
+      data: { deleteContext:  this.translateService.instant('labels.inputs.Column') + ' ' + column.name}
     });
     deleteColumnDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

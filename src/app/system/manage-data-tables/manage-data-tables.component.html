@@ -2,7 +2,7 @@
   <div #createDatatableRef class="in-block">
     <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_DATATABLE'">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
-      Create Data Table
+      {{'labels.buttons.Create Data Table' | translate}}
     </button>
   </div>
 </div>
@@ -21,17 +21,17 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="registeredTableName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Data Table Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Data Table Name' | translate}} </th>
         <td mat-cell *matCellDef="let dataTable"> {{ dataTable.registeredTableName }} </td>
       </ng-container>
 
       <ng-container matColumnDef="applicationTableName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Associated With </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Associated With' | translate}} </th>
         <td mat-cell *matCellDef="let dataTable"> {{ dataTable.applicationTableName }} </td>
       </ng-container>
 
       <ng-container matColumnDef="entitySubType">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Sub Type </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Sub Type' | translate}} </th>
         <td mat-cell *matCellDef="let dataTable"> {{ dataTable.entitySubType }} </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -46,8 +46,8 @@
 </div>
 
 <ng-template #templateCreateDatatableRef let-popover="popover">
-  <h2>Create Data Table</h2>
-  <p class="mw300">This will launch a page that will allow you to create a new data table.</p>
+  <h2>{{'labels.buttons.Create Data Table' | translate}}</h2>
+  <p class="mw300">{{'labels.text.Launch a page that create new data table' | translate}}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();previousStep();">Back</button>
@@ -56,7 +56,7 @@
 </ng-template>
 
 <ng-template #templateFilter let-popover="popover">
-  <h4>Search bar to filter datatables.</h4>
+  <h4>{{'labels.heading.Search bar to filter datatables' | translate}}</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateCreateDatatableRef,createDatatableRef,'bottom', true);">Back</button>
@@ -65,10 +65,10 @@
 </ng-template>
 
 <ng-template #templateDatatablesList let-popover="popover">
-  <h4>List of all currently available data tables.</h4>
+  <h4>{{'labels.heading.List of all currently available data tables' | translate}}</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter,'bottom', true);">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep();">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{ 'labels.buttons.Close' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter,'bottom', true);">{{'labels.buttons.Back' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep();">{{'labels.buttons.Next' | translate }}</button>
   </div>
 </ng-template>

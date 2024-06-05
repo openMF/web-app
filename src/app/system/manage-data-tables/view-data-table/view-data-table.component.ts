@@ -1,15 +1,16 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { SystemService } from '../../system.service';
 
 /** Custom Components */
+import { TranslateService } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 /**
@@ -42,11 +43,13 @@ export class ViewDataTableComponent implements OnInit {
    * @param {SystemService} systemService System Service.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
+   *  @param {TranslateService} translateService Translate Service.
    */
   constructor(private route: ActivatedRoute,
               private systemService: SystemService,
               private router: Router,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private translateService: TranslateService) {
     this.route.data.subscribe((data: { dataTable: any }) => {
       this.dataTableData = data.dataTable;
       this.columnsData = this.dataTableData.columnHeaderData;
@@ -76,7 +79,7 @@ export class ViewDataTableComponent implements OnInit {
    */
   delete() {
     const deleteDataTableDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `data table ${this.dataTableData.registeredTableName}` }
+      data: { deleteContext:  this.translateService.instant('labels.inputs.Data Table') + ' ' + this.dataTableData.registeredTableName}
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
