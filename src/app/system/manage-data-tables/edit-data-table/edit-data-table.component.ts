@@ -1,11 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { SystemService } from '../../system.service';
@@ -14,8 +14,9 @@ import { SystemService } from '../../system.service';
 import { appTableData, entitySubTypeData } from '../app-table-data';
 
 /** Custom Components */
-import { ColumnDialogComponent } from '../column-dialog/column-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { ColumnDialogComponent } from '../column-dialog/column-dialog.component';
 import { DatatableColumn } from '../datatable-column.model';
 
 /**
@@ -84,7 +85,8 @@ export class EditDataTableComponent implements OnInit {
               private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private translateService: TranslateService) {
     this.route.data.subscribe((data: { dataTable: any, columnCodes: any }) => {
       this.dataTableData = data.dataTable;
       this.dataTableData.columnHeaderData.forEach((item: any) => {
@@ -282,7 +284,7 @@ export class EditDataTableComponent implements OnInit {
    */
   deleteColumn(column: any) {
     const deleteColumnDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `column ${column.columnName}` }
+      data: { deleteContext:  this.translateService.instant('labels.inputs.Column') + ' ' + column.columnName}
     });
     deleteColumnDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

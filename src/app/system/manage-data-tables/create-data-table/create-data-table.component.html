@@ -9,45 +9,45 @@
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
           <mat-form-field fxFlex="40%">
-            <mat-label>Data Table Name</mat-label>
+            <mat-label>{{'labels.inputs.Data Table Name' | translate}}</mat-label>
             <input matInput required formControlName="datatableName">
             <mat-error *ngIf="dataTableForm.controls.datatableName.hasError('required')">
-              Data Table Name is <strong>required</strong>
+              {{'labels.inputs.Data Table Name' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="20%">
-            <mat-label>Entity Type</mat-label>
+            <mat-label>{{'labels.inputs.Entity Type' | translate}}</mat-label>
             <mat-select required formControlName="apptableName">
               <mat-option *ngFor="let appTable of appTableData" [value]="appTable.value">
-                {{ appTable.displayValue }}
+                {{ appTable.displayValue | translateKey:'inputs'}}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="dataTableForm.controls.apptableName.hasError('required')">
-              Application Table Name is <strong>required</strong>
+              {{'labels.inputs.Application Table Name' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="20%" *ngIf="showEntitySubType">
-            <mat-label>Entity SubType</mat-label>
+            <mat-label>{{'labels.inputs.Entity SubType' | translate}}</mat-label>
             <mat-select formControlName="entitySubType">
               <mat-option *ngFor="let entitySubType of entitySubTypeData" [value]="entitySubType.value">
-                {{ entitySubType.displayValue }}
+                {{ entitySubType.displayValue | translateKey:'inputs' }}
               </mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field fxFlex="20%" *ngIf="showSavingsSubType">
-            <mat-label>Savings SubType</mat-label>
+            <mat-label>{{ 'labels.inputs.Savings SubType' | translate }}</mat-label>
             <mat-select formControlName="entitySubType">
               <mat-option *ngFor="let savingsSubType of savingsSubTypeData" [value]="savingsSubType.value">
-                {{ savingsSubType.displayValue }}
+                {{ savingsSubType.displayValue | translateKey:'inputs'}}
               </mat-option>
             </mat-select>
           </mat-form-field>
 
           <div fxFlex="14%" class="multi-row-wrapper">
-            <mat-checkbox labelPosition="before" formControlName="multiRow" class="multi-row">Multi Row</mat-checkbox>
+            <mat-checkbox labelPosition="before" formControlName="multiRow" class="multi-row">{{'labels.inputs.Multi Row' | translate }}</mat-checkbox>
           </div>
 
         </div>
@@ -55,11 +55,11 @@
 
         <div fxLayout="row wrap" fxLayoutGap="60%" fxLayout.lt-md="column">
 
-          <p fxFlex="20%" class="mat-title">Columns</p>
+          <p fxFlex="20%" class="mat-title">{{'labels.inputs.Columns' | translate}}</p>
 
           <button mat-raised-button fxFlex="20%" type="button" color="primary" (click)="addColumn()">
             <fa-icon icon="plus" class="m-r-10"></fa-icon>
-            Add Column
+            {{'labels.buttons.Add' | translate}} {{'labels.inputs.Columns' | translate}}
           </button>
 
         </div>
@@ -69,7 +69,7 @@
         <table mat-table [dataSource]="dataSource" matSort>
 
           <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Name' | translate}} </th>
             <td mat-cell *matCellDef="let column"> {{ column.columnName }}
               <fa-icon *ngIf="column.isColumnPrimaryKey" icon="check-circle" size="lg" class="column-mandatory"
                 matTooltip="Primary Key" matTooltipPosition="right"></fa-icon>
@@ -77,22 +77,22 @@
           </ng-container>
 
           <ng-container matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Type' | translate}} </th>
             <td mat-cell *matCellDef="let column"> {{ column.columnDisplayType }} </td>
           </ng-container>
 
           <ng-container matColumnDef="length">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Length </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Length' | translate}} </th>
             <td mat-cell *matCellDef="let column"> {{ column.columnLength }} </td>
           </ng-container>
 
           <ng-container matColumnDef="code">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Code </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Code' | translate }} </th>
             <td mat-cell *matCellDef="let column"> {{ column.columnCode }} </td>
           </ng-container>
 
           <ng-container matColumnDef="mandatory">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Mandatory </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.text.Mandatory' | translate}} </th>
             <td mat-cell *matCellDef="let column" class="left">
               <fa-icon *ngIf="!column.isColumnNullable" icon="check-circle" size="lg" class="column-mandatory"
                 matTooltip="Yes" matTooltipPosition="right"></fa-icon>
@@ -102,7 +102,7 @@
           </ng-container>
 
           <ng-container matColumnDef="unique">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="center"> Unique </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="center"> {{'labels.inputs.Unique' | translate}} </th>
             <td mat-cell *matCellDef="let column">
               <fa-icon *ngIf="column.isColumnUnique" icon="check-circle" size="lg" class="column-mandatory"
                 matTooltip="Yes" matTooltipPosition="right"></fa-icon>
@@ -112,7 +112,7 @@
           </ng-container>
 
           <ng-container matColumnDef="indexed">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="center"> Indexed </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="center"> {{'labels.inputs.Indexed' | translate}} </th>
             <td mat-cell *matCellDef="let column">
               <fa-icon *ngIf="column.isColumnIndexed" icon="check-circle" size="lg" class="column-mandatory"
                 matTooltip="Yes" matTooltipPosition="right"></fa-icon>
@@ -122,7 +122,7 @@
           </ng-container>
 
           <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Actions' | translate }} </th>
             <td mat-cell *matCellDef="let column" fxLayoutGap="15%">
               <button type="button" color="primary" mat-icon-button (click)="editColumn(column)">
                 <fa-icon icon="edit" size="lg"></fa-icon>
@@ -143,9 +143,9 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate }}</button>
         <button mat-raised-button color="primary"
-          [disabled]="!dataTableForm.valid || columnData.length === 0">Submit</button>
+          [disabled]="!dataTableForm.valid || columnData.length === 0">{{'labels.buttons.Submit' | translate }}</button>
       </mat-card-actions>
 
     </form>
@@ -155,12 +155,12 @@
 </div>
 
 <ng-template #templateDataTableFormRef let-popover="popover">
-  <h2>Create Datatable</h2>
-  <p class="mw400">Click to start filling the details. * mark fields are neccessary. For more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/52592760/Manage+Data+Tables" target="_blank">Manage Datatables</a></p>
+  <h2>{{'labels.buttons.Create Datatable' | translate }}</h2>
+  <p class="mw400">{{'labels.text.Filling Details' | translate }} <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/52592760/Manage+Data+Tables" target="_blank">Manage Datatables</a></p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();">Create Datatable</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();">{{'labels.buttons.Create Datatable' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{'labels.buttons.Back' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{'labels.buttons.Next' | translate }}</button>
   </div>
 </ng-template>
