@@ -53,6 +53,7 @@
     * [SER-2595] - Fix Add hooks interface for Rabbit MQ template, also clears cached data when there is a PUT,POST or DELETE request, a fix for the reacitvate interface.
     * [SER-2600] - Fix edit loan product failing due to unsupported fields being submitted
     * [SER-2601] - Show credit score data if available for a client, show client identity value, show OU path when you search for a client.
+    * [SER-2606] - Remove staff id from payload when creating users.
 
 ## Version 1.0.0 - for use with Fineract Web App
 

@@ -15,10 +15,9 @@ import { confirmPasswordValidator } from '../../login/reset-password/confirm-pas
 @Component({
   selector: 'mifosx-create-user',
   templateUrl: './create-user.component.html',
-  styleUrls: ['./create-user.component.scss']
+  styleUrls: ['./create-user.component.scss'],
 })
 export class CreateUserComponent implements OnInit {
-
   /** User form. */
   userForm: UntypedFormGroup;
   /** Offices data. */
@@ -35,16 +34,16 @@ export class CreateUserComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private usersService: UsersService,
-              private route: ActivatedRoute,
-              private router: Router) {
-    this.route.data.subscribe((data: {
-        usersTemplate: any
-      }) => {
-        this.officesData = data.usersTemplate.allowedOffices;
-        this.rolesData = data.usersTemplate.availableRoles;
-      });
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private usersService: UsersService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.route.data.subscribe((data: { usersTemplate: any }) => {
+      this.officesData = data.usersTemplate.allowedOffices;
+      this.rolesData = data.usersTemplate.availableRoles;
+    });
   }
 
   /**
@@ -60,17 +59,20 @@ export class CreateUserComponent implements OnInit {
    * Creates the user form.
    */
   createUserForm() {
-    this.userForm = this.formBuilder.group({
-      'username': ['', Validators.required],
-      'email': ['', [Validators.required, Validators.email]],
-      'firstname': ['', [Validators.required, Validators.pattern('(^[A-z]).*')]],
-      'lastname': ['', [Validators.required, Validators.pattern('(^[A-z]).*')]],
-      'sendPasswordToEmail': [true],
-      'passwordNeverExpires': [false],
-      'officeId': ['', Validators.required],
-      'staffId': [''],
-      'roles': ['', Validators.required]
-    }, { validator: confirmPasswordValidator });
+    this.userForm = this.formBuilder.group(
+      {
+        username: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        firstname: ['', [Validators.required, Validators.pattern('(^[A-z]).*')]],
+        lastname: ['', [Validators.required, Validators.pattern('(^[A-z]).*')]],
+        sendPasswordToEmail: [true],
+        passwordNeverExpires: [false],
+        officeId: ['', Validators.required],
+        staffId: [''],
+        roles: ['', Validators.required],
+      },
+      { validator: confirmPasswordValidator }
+    );
   }
 
   /**
@@ -109,9 +111,11 @@ export class CreateUserComponent implements OnInit {
    */
   submit() {
     const user = this.userForm.value;
+    if (this.userForm.value.staffId == null || this.userForm.value.staffId === '') {
+      delete user.staffId;
+    }
     this.usersService.createUser(user).subscribe((response: any) => {
       this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
     });
   }
-
 }
