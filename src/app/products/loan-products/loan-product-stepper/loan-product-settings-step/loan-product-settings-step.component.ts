@@ -11,6 +11,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
   @Input() loanProductsTemplate: any;
   @Input() isLinkedToFloatingInterestRates: UntypedFormControl;
   @Input() loanProductTemplates: any;
+  @Input() enableTermsAndConditions: boolean;
 
   loanProductSettingsForm: UntypedFormGroup;
 
@@ -29,7 +30,6 @@ export class LoanProductSettingsStepComponent implements OnInit {
   interestRecalculationOnDayTypeData: any;
   // terms and conditions template
   templateForTermsAndConditions: any;
-  showTermsAndConditions = false;
 
   constructor(private formBuilder: UntypedFormBuilder) {
     this.createLoanProductSettingsForm();
@@ -85,7 +85,9 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'holdGuaranteeFunds': this.loanProductsTemplate.holdGuaranteeFunds,
       'multiDisburseLoan': this.loanProductsTemplate.multiDisburseLoan,
       'maxTrancheCount': this.loanProductsTemplate.maxTrancheCount,
-      'outstandingLoanBalance': this.loanProductsTemplate.outstandingLoanBalance
+      'outstandingLoanBalance': this.loanProductsTemplate.outstandingLoanBalance,
+      'showTermsAndConditions': this.loanProductsTemplate.settings?.loanProductTemplate != null || this.loanProductsTemplate.settings?.loanProductTemplate != undefined,
+      'templateForTermsAndConditions': this.loanProductsTemplate.settings?.loanProductTemplate?.id
     });
 
     if (this.loanProductsTemplate.isInterestRecalculationEnabled) {
@@ -173,7 +175,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
         'graceOnPrincipalAndInterestPayment': [true],
         'graceOnArrearsAgeing': [true]
       }),
-      'templateForTermsAndConditions': ['']
+      'templateForTermsAndConditions': [''],
+      'showTermsAndConditions': [false]
     });
   }
 
@@ -345,10 +348,6 @@ export class LoanProductSettingsStepComponent implements OnInit {
           });
         }
       });
-  }
-
-  toggleTermsAndConditions() {
-    this.showTermsAndConditions = !this.showTermsAndConditions;
   }
 
   get loanProductSettings() {

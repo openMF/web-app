@@ -70,7 +70,7 @@ export class LoanProductAppsComponent implements OnInit {
 
   get loanProductApps() {
     const selectedChannelIds = this.loanProductAppsForm.value.channels
-      .map((checked, i) => checked ? this.channelData[i].code : null)
+      .map((checked, i) => checked ? this.channelData[i]?.code : null)
       .filter(v => v !== null);
     return {channels: selectedChannelIds};
 

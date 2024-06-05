@@ -125,11 +125,13 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
 
     this.productsService.getLoanProductWithCountryOptions(this.countryId).subscribe((res: any) => {
       this.enableTermsAndConditions = res.configurations?.enableTermsAndConditions;
+      this.productsService.enableTermsAndConditions = this.enableTermsAndConditions;
       this.isQualificationRequired = res.configurations?.isQualificationRequired;
       this.loanProductTemplates = res.loanProductTemplates;
       this.productsService.isQualificationRequired = this.isQualificationRequired;
       this.loanProductTemplateForm.patchValue({
         'loanProductTemplates': this.loanProductTemplates,
+        'enableTermsAndConditions': this.enableTermsAndConditions,
         
       });   
     })
@@ -149,7 +151,8 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
       'installmentAmountInMultiplesOf': ['', Validators.required]
     });
     this.loanProductTemplateForm = this.formBuilder.group({
-      'loanProductTemplates': ['']
+      'loanProductTemplates': [''],
+      'enableTermsAndConditions': false,
     });
   }
 

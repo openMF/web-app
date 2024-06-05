@@ -123,6 +123,10 @@ export class CreateLoanProductComponent implements OnInit {
     return this.loanProductOrganizationStep.isQualificationRequired;
   }
 
+  get enableTermsAndConditions(){
+    return this.loanProductOrganizationStep.enableTermsAndConditions;
+  }
+
   submit() {
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
@@ -146,6 +150,7 @@ export class CreateLoanProductComponent implements OnInit {
     delete loanProductToSave.prepaidAmountCalculationType;
     delete loanProductToSave.repaymentStartPeriod;
     delete loanProductToSave.repaymentStartPeriodFrequencyType;
+    delete loanProductToSave.showTermsAndConditions;
     this.productsService.createLoanProduct(loanProductToSave)
       .subscribe((response: any) => {
         this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
