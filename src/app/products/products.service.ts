@@ -20,6 +20,7 @@ export class ProductsService {
   private prepaidAmount$ = new BehaviorSubject<any>(null);
   private prepaidAmountCalculationType$ = new BehaviorSubject<any>(null);
   private isQualificationRequired$ = new BehaviorSubject<boolean>(false);
+  private enableTermsAndConditions$ = new BehaviorSubject<boolean>(false);
 
   /**
    * @param {HttpClient} http Http Client to send requests.
@@ -65,6 +66,14 @@ export class ProductsService {
 
   set isQualificationRequired(val: any) {
     this.isQualificationRequired$.next(val);
+  }
+
+  get enableTermsAndConditions(): any {
+    return this.enableTermsAndConditions$.asObservable();
+  }
+
+  set enableTermsAndConditions(val: any) {
+    this.enableTermsAndConditions$.next(val);
   }
 
   /**

@@ -37,6 +37,8 @@ export class EditLoanProductComponent implements OnInit {
   loanProductAndTemplate: any;
   accountingRuleData = ['None', 'Cash', 'Accrual (periodic)', 'Accrual (upfront)'];
   isQualificationRequired: boolean = false;
+  enableTermsAndConditions: boolean = false;
+  
 
   /**
    * @param {ActivatedRoute} route Activated Route.
@@ -52,6 +54,8 @@ export class EditLoanProductComponent implements OnInit {
     this.route.data.subscribe((data: { loanProductAndTemplate: any }) => {
       this.loanProductAndTemplate = data.loanProductAndTemplate;
       this.isQualificationRequired = this.loanProductAndTemplate.configurations?.isQualificationRequired;
+      this.enableTermsAndConditions = this.loanProductAndTemplate.configurations?.enableTermsAndConditions;
+      // this.addTermsAndConditions = this.loanProductAndTemplate.settings?.loanProductTemplate != null || this.loanProductAndTemplate.settings?.loanProductTemplate != undefined;
     });
   }
 
@@ -152,6 +156,7 @@ export class EditLoanProductComponent implements OnInit {
     delete loanProduct.prepaidAmountCalculationType;
     delete loanProduct.repaymentStartPeriod;
     delete loanProduct.repaymentStartPeriodFrequencyType;
+    delete loanProduct.showTermsAndConditions;
     this.productsService.updateLoanProduct(this.loanProductAndTemplate.id, loanProduct)
       .subscribe((response: any) => {
         this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
