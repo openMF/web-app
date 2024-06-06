@@ -114,6 +114,7 @@ export class CreateUserComponent implements OnInit {
     if (this.userForm.value.staffId == null || this.userForm.value.staffId === '') {
       delete user.staffId;
     }
+    user.sendPasswordToEmail = false;
     this.usersService.createUser(user).subscribe((response: any) => {
       this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
     });
