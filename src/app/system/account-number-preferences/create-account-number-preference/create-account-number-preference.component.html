@@ -12,7 +12,7 @@
             <mat-label>{{'labels.inputs.Account Type' | translate}}</mat-label>
             <mat-select required formControlName="accountType">
               <mat-option *ngFor="let accountType of accountNumberPreferencesTemplateData.accountTypeOptions" [value]="accountType.id">
-                {{ accountType.value }}
+                {{ accountType.value | translateKey:'catalogs' }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="accountNumberPreferenceForm.controls.accountType.hasError('required')">
@@ -24,7 +24,7 @@
             <mat-label>{{'labels.inputs.Prefix Field' | translate}}</mat-label>
             <mat-select formControlName="prefixType">
               <mat-option *ngFor="let prefixType of prefixTypeData" [value]="prefixType.id">
-                {{ prefixType.value }}
+                {{ prefixType.value}}
               </mat-option>
             </mat-select>
           </mat-form-field>
