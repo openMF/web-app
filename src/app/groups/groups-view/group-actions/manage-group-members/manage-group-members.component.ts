@@ -43,7 +43,7 @@ export class ManageGroupMembersComponent implements AfterViewInit {
               public dialog: MatDialog) {
     this.route.data.subscribe((data: { groupActionData: any }) => {
       this.groupData = data.groupActionData;
-      this.clientMembers = data.groupActionData.clientMembers;
+      this.clientMembers = data.groupActionData.clientMembers || [];;
     });
   }
 
@@ -66,7 +66,7 @@ export class ManageGroupMembersComponent implements AfterViewInit {
    * Add client.
    */
   addClient() {
-    if (!this.clientMembers.includes(this.clientChoice.value)) {
+    if (!this.clientMembers?.includes(this.clientChoice.value)) {
       this.groupsService.executeGroupCommand(this.groupData.id, 'associateClients', {clientMembers: [this.clientChoice.value.id]})
         .subscribe(() => { this.clientMembers.push(this.clientChoice.value); });
     }
