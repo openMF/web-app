@@ -25,7 +25,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ accountNumberPreferenceData.accountType.value }}
+          {{ accountNumberPreferenceData.accountType.value | translateKey:'catalogs' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="accountNumberPreferenceData.prefixType">
