@@ -54,6 +54,7 @@
     * [SER-2600] - Fix edit loan product failing due to unsupported fields being submitted
     * [SER-2600] - Fix terms and conditions not being populated correctly on create & edit loan product pages
     * [SER-2600] - User creation: Set sendPasswordToEmail to always be false
+    * [SER-2600] - Group management: Fix adding client to a group failing due to initialization error.
     * [SER-2601] - Show credit score data if available for a client, show client identity value, show OU path when you search for a client.
     * [SER-2606] - Remove staff id from payload when creating users.
 
