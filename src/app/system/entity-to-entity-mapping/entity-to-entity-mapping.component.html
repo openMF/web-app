@@ -33,13 +33,13 @@
       <mat-card>
 
         <form [formGroup]="filterPreferenceForm" (ngSubmit)="showFilteredData()">
-          <mat-card-title> {{firstMappingEntity}} {{'labels.text.access to' | translate}} {{secondMappingEntity}} </mat-card-title>
+          <mat-card-title> {{firstMappingEntity| translateKey:'inputs'}} {{'labels.text.access to' | translate}} {{secondMappingEntity | translateKey:'text'}} </mat-card-title>
           <mat-card-content>
 
             <div fxLayout="row" fxLayoutAlign="space-evenly center">
 
               <mat-form-field>
-                <mat-label>{{firstMappingEntity}}</mat-label>
+                <mat-label>{{firstMappingEntity | translateKey:'inputs'}}</mat-label>
                 <mat-select required formControlName="mappingFirstParamId">
                   <mat-option [value]="0">
                     {{'labels.inputs.All' | translate}}
@@ -49,12 +49,12 @@
                   </mat-option>
                 </mat-select>
                 <mat-error *ngIf="filterPreferenceForm.controls.mappingFirstParamId.hasError('required')">
-                  {{firstMappingEntity}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+                  {{firstMappingEntity | translateKey:'inputs'}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
                 </mat-error>
               </mat-form-field>
 
               <mat-form-field>
-                <mat-label>{{secondMappingEntity}}</mat-label>
+                <mat-label>{{secondMappingEntity | translateKey:'text'}}</mat-label>
                 <mat-select required formControlName="mappingSecondParamId">
                   <mat-option [value]="0">
                     {{'labels.inputs.All' | translate}}
@@ -64,7 +64,7 @@
                   </mat-option>
                 </mat-select>
                 <mat-error *ngIf="filterPreferenceForm.controls.mappingSecondParamId.hasError('required')">
-                  {{secondMappingEntity}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+                  {{secondMappingEntity | translateKey:'text'}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
                 </mat-error>
               </mat-form-field>
 
@@ -82,12 +82,12 @@
           <div>
             <table mat-table [dataSource]="entityMappingsListData">
               <ng-container matColumnDef="fromentity">
-                <th mat-header-cell *matHeaderCellDef> {{firstMappingEntity}} </th>
+                <th mat-header-cell *matHeaderCellDef> {{firstMappingEntity | translateKey:'inputs'}} </th>
                 <td mat-cell *matCellDef="let listdata"> {{ listdata.fromEntity }} </td>
               </ng-container>
 
               <ng-container matColumnDef="toentity">
-                <th mat-header-cell *matHeaderCellDef> {{secondMappingEntity}} </th>
+                <th mat-header-cell *matHeaderCellDef> {{secondMappingEntity | translateKey:'text'}} </th>
                 <td mat-cell *matCellDef="let listdata"> {{ listdata.toEntity }} </td>
               </ng-container>
 

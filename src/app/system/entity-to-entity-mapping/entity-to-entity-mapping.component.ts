@@ -7,17 +7,18 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
-import { SystemService } from 'app/system/system.service';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
+import { SystemService } from 'app/system/system.service';
 
 /** Custom Components */
-import { DeleteDialogComponent } from '../../shared/delete-dialog/delete-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
+import { Dates } from 'app/core/utils/dates';
+import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
+import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
-import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
-import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
-import { Dates } from 'app/core/utils/dates';
+import { DeleteDialogComponent } from '../../shared/delete-dialog/delete-dialog.component';
 
 /**
  * Entity to Entity Mapping Component
@@ -78,13 +79,15 @@ export class EntityToEntityMappingComponent implements OnInit {
   /**
    * Retrieves the codes data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
+   * @param {TranslateService} translateService Translate Service.
    */
   constructor(private route: ActivatedRoute,
-    private formBuilder: UntypedFormBuilder,
-    private systemService: SystemService,
-    private dateUtils: Dates,
-    private dialog: MatDialog,
-    private settingsService: SettingsService) {
+              private formBuilder: UntypedFormBuilder,
+              private systemService: SystemService,
+              private dateUtils: Dates,
+              private dialog: MatDialog,
+              private settingsService: SettingsService,
+              private translateService: TranslateService) {
     this.route.data.subscribe((data: { entityMappings: any }) => {
       this.entityMappings = data.entityMappings;
     });
@@ -215,31 +218,31 @@ export class EntityToEntityMappingComponent implements OnInit {
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'fromId',
-        label: this.firstMappingEntity,
+        label:  this.translateService.instant(`labels.inputs.${this.firstMappingEntity}`),
         options: { label: 'name', value: 'id', data: this.firstEntityData },
         required: true
       }),
       new SelectBase({
         controlName: 'toId',
-        label: this.secondMappingEntity,
+        label: this.translateService.instant(`labels.text.${this.secondMappingEntity}`),
         options: { label: 'name', value: 'id', data: this.secondEntityData },
         required: true
       }),
       new DatepickerBase({
         controlName: 'startDate',
-        label: 'Start Date',
+        label: this.translateService.instant('labels.inputs.Start Date'),
         type: 'date',
         required: false
       }),
       new DatepickerBase({
         controlName: 'endDate',
-        label: 'End Date',
+        label: this.translateService.instant('labels.inputs.End Date'),
         type: 'date',
         required: false
       })
     ];
     const data = {
-      title: 'Add Entity to Entity Mapping',
+      title: this.translateService.instant('labels.buttons.Add') +' '+this.translateService.instant('labels.heading.Entity to Entity Mapping'),
       layout: { addButtonText: 'Confirm' },
       formfields: formfields
     };
@@ -266,31 +269,31 @@ export class EntityToEntityMappingComponent implements OnInit {
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'fromId',
-        label: this.firstMappingEntity,
+        label: this.translateService.instant(`labels.inputs.${this.firstMappingEntity}`),
         options: { label: 'name', value: 'id', data: this.firstEntityData },
         required: true
       }),
       new SelectBase({
         controlName: 'toId',
-        label: this.secondMappingEntity,
+        label: this.translateService.instant(`labels.text.${this.secondMappingEntity}`),
         options: { label: 'name', value: 'id', data: this.secondEntityData },
         required: true
       }),
       new DatepickerBase({
         controlName: 'startDate',
-        label: 'Start Date',
+        label: this.translateService.instant('labels.inputs.Start Date'),
         type: 'date',
         required: false
       }),
       new DatepickerBase({
         controlName: 'endDate',
-        label: 'End Date',
+        label: this.translateService.instant('labels.inputs.End Date'),
         type: 'date',
         required: false
       })
     ];
     const data = {
-      title: 'Edit Entity to Entity Mapping',
+      title: this.translateService.instant('labels.buttons.Edit') +' '+this.translateService.instant('labels.heading.Entity to Entity Mapping'),
       layout: { addButtonText: 'Confirm' },
       formfields: formfields
     };
@@ -358,7 +361,7 @@ export class EntityToEntityMappingComponent implements OnInit {
    */
   delete(id: number) {
     const deleteNoteDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `Mapping id: ${id}` }
+      data: { deleteContext: this.translateService.instant('labels.inputs.Mapping id') + ' ' + id }
     });
     deleteNoteDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
