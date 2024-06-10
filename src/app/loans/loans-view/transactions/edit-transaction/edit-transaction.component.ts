@@ -7,6 +7,7 @@ import { Dates } from 'app/core/utils/dates';
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Currency } from 'app/shared/models/general.model';
 
 /**
  * Edit Transaction component.
@@ -38,6 +39,7 @@ export class EditTransactionComponent implements OnInit {
   loanAccountId: string;
   /** Transaction Template */
   transactionTemplateData: any;
+  currency: Currency;
 
   /**
    * Retrieves the Loan Account transaction template data from `resolve`.
@@ -56,6 +58,9 @@ export class EditTransactionComponent implements OnInit {
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { loansAccountTransactionTemplate: any }) => {
       this.transactionTemplateData = data.loansAccountTransactionTemplate;
+      if (data.loansAccountTransactionTemplate.currency) {
+        this.currency = data.loansAccountTransactionTemplate.currency;
+      }
       this.paymentTypeOptions = this.transactionTemplateData.paymentTypeOptions;
     });
     this.loanAccountId = this.route.snapshot.params['loanId'];
@@ -123,6 +128,7 @@ export class EditTransactionComponent implements OnInit {
       dateFormat,
       locale
     };
+    data['transactionAmount'] = data['transactionAmount'] * 1;
     this.loansService.executeLoansAccountTransactionsCommand(this.loanAccountId, 'modify', data, this.transactionTemplateData.id)
       .subscribe((res: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });

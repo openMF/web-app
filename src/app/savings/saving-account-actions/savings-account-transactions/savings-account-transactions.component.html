@@ -20,15 +20,10 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>{{'labels.inputs.Transaction Amount' | translate}}</mat-label>
-          <span matTextSuffix class="m-l-10">{{ currencyCode }}</span>
-          <span fxFlex="auto"></span>
-          <input type="number" class="right-input" formControlName="transactionAmount" required matInput />
-          <mat-error *ngIf="savingAccountTransactionForm.controls.transactionAmount.hasError('required')">
-            {{'labels.inputs.Transaction Amount' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
-          </mat-error>
-        </mat-form-field>
+        <mifosx-input-amount [currency]="currency" [isRequired]="true"
+          [inputFormControl]="savingAccountTransactionForm.controls.transactionAmount"
+          [inputLabel]="'Transaction Amount'">
+        </mifosx-input-amount>
 
         <mat-form-field>
           <mat-label>{{'labels.inputs.Payment Type' | translate}}</mat-label>

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Currency } from 'app/shared/models/general.model';
 import { SystemService } from 'app/system/system.service';
 
 @Component({
@@ -13,6 +14,7 @@ import { SystemService } from 'app/system/system.service';
 })
 export class ManageSavingsAccountComponent implements OnInit {
 
+  @Input() currency: Currency;
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -127,6 +129,7 @@ export class ManageSavingsAccountComponent implements OnInit {
         locale
       };
       command = 'holdAmount';
+      payload['transactionAmount'] = payload['transactionAmount'] * 1;
 
       this.savingsService.executeSavingsAccountTransactionsCommand(this.savingAccountId, command, payload).subscribe((response: any) => {
         this.router.navigate(['../../transactions'], { relativeTo: this.route });

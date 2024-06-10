@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { Currency } from 'app/shared/models/general.model';
 
 /**
  * Disburse Loan Option
@@ -31,6 +32,7 @@ export class DisburseComponent implements OnInit {
   maxDate = new Date();
   /** Disbursement Loan Form */
   disbursementLoanForm: UntypedFormGroup;
+  currency: Currency;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -57,6 +59,9 @@ export class DisburseComponent implements OnInit {
     this.maxDate = this.settingsService.maxFutureDate;
     this.createDisbursementLoanForm();
     this.setDisbursementLoanDetails();
+    if (this.dataObject.currency) {
+      this.currency = this.dataObject.currency;
+    }
   }
 
   /**
@@ -114,6 +119,7 @@ export class DisburseComponent implements OnInit {
       dateFormat,
       locale
     };
+    data['transactionAmount'] = data['transactionAmount'] * 1;
     this.loanService.loanActionButtons(this.loanId, 'disburse', data )
       .subscribe((response: any) => {
         this.router.navigate(['../../general'], { relativeTo: this.route });

@@ -19,13 +19,10 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field>
-            <mat-label>{{"labels.inputs.Transaction Amount" | translate}}</mat-label>
-            <input matInput type="number" required formControlName="transactionAmount">
-            <mat-error *ngIf="disbursementForm.controls.transactionAmount.hasError('required')">
-              {{"labels.inputs.Transaction Amount" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
-            </mat-error>
-          </mat-form-field>
+          <mifosx-input-amount [currency]="currency" [isRequired]="true"
+            [inputFormControl]="disbursementForm.controls.transactionAmount"
+            [inputLabel]="'Transaction Amount'">
+          </mifosx-input-amount>
 
           <mat-form-field *ngIf="dataObject.fixedEmiAmount">
             <mat-label>{{"labels.inputs.Fixed EMI amount" | translate}}</mat-label>

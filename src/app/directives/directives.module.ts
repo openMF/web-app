@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 /** Custom Directives */
 import { HasPermissionDirective } from './has-permission/has-permission.directive';
+import { FormatAmountDirective } from './format-amount.directive';
 
 /**
  *  Directives Module
@@ -14,7 +15,7 @@ import { HasPermissionDirective } from './has-permission/has-permission.directiv
   imports: [
     CommonModule
   ],
-  declarations: [HasPermissionDirective],
-  exports: [HasPermissionDirective]
+  declarations: [HasPermissionDirective, FormatAmountDirective],
+  exports: [HasPermissionDirective, FormatAmountDirective]
 })
 export class DirectivesModule { }
