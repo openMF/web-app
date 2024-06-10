@@ -17,13 +17,10 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>{{"labels.inputs.Transaction Amount" | translate }}</mat-label>
-          <input type="number" formControlName="transactionAmount" required matInput />
-          <mat-error *ngIf="editTransactionForm.controls.transactionAmount.hasError('required')">
-            {{"labels.inputs.Transaction Amount" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
-          </mat-error>
-        </mat-form-field>
+        <mifosx-input-amount [currency]="currency" [isRequired]="true"
+          [inputFormControl]="editTransactionForm.controls.transactionAmount"
+          [inputLabel]="'Transaction Amount'">
+        </mifosx-input-amount>
 
         <mat-form-field>
           <mat-label>{{"labels.inputs.Payment Type" | translate }}</mat-label>
@@ -33,12 +30,15 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-
-        <div fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column">
-          <mat-label fxFlexAlign="center">{{"labels.inputs.Show Payment Details" | translate }}</mat-label>
-          <button type="button" mat-mini-fab color="primary" (click)="addPaymentDetails()">
-            <fa-icon [icon]="!addPaymentDetailsFlag ? 'plus-circle' : 'minus-circle'" size="lg"></fa-icon>
-          </button>
+  
+        <div fxFlexFill>
+          <span fxFlex="75%" class="expandcollapsebutton m-l-10 m-t-40" (click)="addPaymentDetails()">
+            <mat-slide-toggle>
+              <div [className]="addPaymentDetailsFlag ? 'enabled' : 'disabled'">
+                <span class="m-l-10">{{'labels.inputs.Show Payment Details' | translate}}</span>
+              </div>
+            </mat-slide-toggle>
+          </span>
         </div>
 
         <mat-form-field *ngIf="editTransactionForm.controls['accountNumber']">

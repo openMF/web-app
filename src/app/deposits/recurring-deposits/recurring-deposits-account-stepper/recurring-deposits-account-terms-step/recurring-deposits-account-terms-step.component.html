@@ -7,7 +7,7 @@
       <mat-select formControlName="interestCompoundingPeriodType" required>
         <mat-option *ngFor="let interestCompoundingPeriodType of interestCompoundingPeriodTypeData"
           [value]="interestCompoundingPeriodType.id">
-          {{ interestCompoundingPeriodType.value }}
+          {{ interestCompoundingPeriodType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
       <mat-error>
@@ -20,7 +20,7 @@
       <mat-select formControlName="interestPostingPeriodType" required>
         <mat-option *ngFor="let interestPostingPeriodType of interestPostingPeriodTypeData"
           [value]="interestPostingPeriodType.id">
-          {{ interestPostingPeriodType.value }}
+          {{ interestPostingPeriodType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
       <mat-error>
@@ -33,7 +33,7 @@
       <mat-select formControlName="interestCalculationType" required>
         <mat-option *ngFor="let interestCalculationType of interestCalculationTypeData"
           [value]="interestCalculationType.id">
-          {{ interestCalculationType.value }}
+          {{ interestCalculationType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
       <mat-error>
@@ -46,7 +46,7 @@
       <mat-select formControlName="interestCalculationDaysInYearType" required>
         <mat-option *ngFor="let interestCalculationDaysInYearType of interestCalculationDaysInYearTypeData"
           [value]="interestCalculationDaysInYearType.id">
-          {{ interestCalculationDaysInYearType.value }}
+          {{ interestCalculationDaysInYearType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
       <mat-error>

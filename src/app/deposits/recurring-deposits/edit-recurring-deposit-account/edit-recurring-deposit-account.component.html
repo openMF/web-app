@@ -47,7 +47,7 @@
 
       <ng-template matStepLabel>{{"labels.inputs.SETTINGS" | translate }}</ng-template>
 
-      <mifosx-recurring-deposits-account-settings-step
+      <mifosx-recurring-deposits-account-settings-step [isNew]="false"
         [recurringDepositsAccountTemplate]="recurringDepositsAccountAndTemplate"
         [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate">
       </mifosx-recurring-deposits-account-settings-step>
