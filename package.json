@@ -63,7 +63,7 @@
     "ng2-dragula": "^2.1.1",
     "rxjs": "6.6.2",
     "tslib": "^2.4.1",
-    "zone.js": "0.11.6"
+    "zone.js": "0.14.5"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "14.2.13",
