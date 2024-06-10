@@ -38,9 +38,9 @@
         </tr>
         <tr>
           <td>{{"labels.inputs.Deposit Frequency" | translate }}</td>
-          <td><span>{{recurringDepositsAccountData.recurringFrequency}}
-              &nbsp;{{recurringDepositsAccountData.recurringFrequencyType.value}}
-            </span></td>
+          <td><span class="m-r-5">{{recurringDepositsAccountData.recurringFrequency}}</span>
+            {{recurringDepositsAccountData.recurringFrequencyType.value | translateKey:'catalogs'}}
+          </td>
         </tr>
         <tr *ngIf="recurringDepositsAccountData.minBalanceForInterestCalculation">
           <td> {{"labels.inputs.Balance Required for Interest Calculation" | translate }}</td>
@@ -189,13 +189,13 @@
         </tr>
         <tr>
           <td>{{"labels.inputs.Rate of Interest" | translate }}</td>
-          <td>
-            <span>{{recurringDepositsAccountData.nominalAnnualInterestRate}}</span>
+          <td class="r-amount">
+            <span>{{recurringDepositsAccountData.nominalAnnualInterestRate | formatNumber}} %</span>
           </td>
         </tr>
         <tr *ngIf="recurringDepositsAccountData.maturityDate">
           <td>{{"labels.inputs.Maturity Amount" | translate }}</td>
-          <td>
+          <td class="r-amount">
             <span>{{ recurringDepositsAccountData.maturityAmount | currency:currency.code:'symbol-narrow':'1.2-2'}}</span>
           </td>
         </tr>
@@ -217,7 +217,7 @@
         <tr>
           <td> {{"labels.inputs.Deposits Frequency" | translate }} </td>
           <td>
-            {{ recurringDepositsAccountData.recurringFrequency }}&nbsp;{{ recurringDepositsAccountData.recurringFrequencyType.value }}
+            {{ recurringDepositsAccountData.recurringFrequency }}&nbsp;{{ recurringDepositsAccountData.recurringFrequencyType.value | translateKey:'catalogs' }}
           </td>
         </tr>
         <tr *ngIf="recurringDepositsAccountData.summary.totalInterestEarned">
@@ -242,28 +242,28 @@
       <tbody>
         <tr>
           <td>{{"labels.inputs.Interest Rate" | translate }}</td>
-          <td class="r-amount">{{recurringDepositsAccountData.nominalAnnualInterestRate}}%</td>
+          <td class="r-amount">{{recurringDepositsAccountData.nominalAnnualInterestRate | formatNumber}} %</td>
         </tr>
         <tr>
           <td>{{"labels.inputs.Interest Compounding Period" | translate }}</td>
-          <td><span>{{recurringDepositsAccountData.interestCompoundingPeriodType.value}}</span></td>
+          <td><span>{{recurringDepositsAccountData.interestCompoundingPeriodType.value | translateKey:'catalogs'}}</span></td>
         </tr>
         <tr>
           <td>{{"labels.inputs.Interest Posting Period" | translate }}</td>
-          <td><span>{{recurringDepositsAccountData.interestPostingPeriodType.value}}</span></td>
+          <td><span>{{recurringDepositsAccountData.interestPostingPeriodType.value | translateKey:'catalogs'}}</span></td>
         </tr>
         <tr>
           <td>{{"labels.inputs.Interest calculated using" | translate }}</td>
-          <td><span>{{recurringDepositsAccountData.interestCalculationType.value}}</span></td>
+          <td><span>{{recurringDepositsAccountData.interestCalculationType.value | translateKey:'catalogs'}}</span></td>
         </tr>
         <tr>
           <td>{{"labels.inputs.Days in Year" | translate }}</td>
-          <td><span>{{recurringDepositsAccountData.interestCalculationDaysInYearType.value}}</span></td>
+          <td><span>{{recurringDepositsAccountData.interestCalculationDaysInYearType.value | translateKey:'catalogs'}}</span></td>
         </tr>
         <tr *ngIf="recurringDepositsAccountData.preClosurePenalApplicable">
           <td>{{"labels.inputs.Pre-closure penal Interest (less)" | translate }}</td>
           <td><span>{{recurringDepositsAccountData.preClosurePenalInterest}} % on
-              {{recurringDepositsAccountData.preClosurePenalInterestOnType.value}}</span></td>
+              {{recurringDepositsAccountData.preClosurePenalInterestOnType.value | translateKey:'catalogs'}}</span></td>
         </tr>
       </tbody>
     </table>
@@ -275,24 +275,24 @@
       <tbody>
         <tr>
           <td>{{"labels.inputs.Interest Compounding Period" | translate }}</td>
-          <td><span>{{recurringDepositsAccountData.interestCompoundingPeriodType.value}}</span></td>
+          <td><span>{{recurringDepositsAccountData.interestCompoundingPeriodType.value | translateKey:'catalogs'}}</span></td>
         </tr>
         <tr>
           <td>{{"labels.inputs.Interest Posting Period" | translate }}</td>
-          <td><span>{{recurringDepositsAccountData.interestPostingPeriodType.value}}</span></td>
+          <td><span>{{recurringDepositsAccountData.interestPostingPeriodType.value | translateKey:'catalogs'}}</span></td>
         </tr>
         <tr>
           <td>{{"labels.inputs.Interest calculated using" | translate }}</td>
-          <td><span>{{recurringDepositsAccountData.interestCalculationType.value}}</span></td>
+          <td><span>{{recurringDepositsAccountData.interestCalculationType.value | translateKey:'catalogs'}}</span></td>
         </tr>
         <tr>
           <td>{{"labels.inputs.Days in Year" | translate }}</td>
-          <td><span>{{recurringDepositsAccountData.interestCalculationDaysInYearType.value}}</span></td>
+          <td><span>{{recurringDepositsAccountData.interestCalculationDaysInYearType.value | translateKey:'catalogs'}}</span></td>
         </tr>
         <tr *ngIf="recurringDepositsAccountData.preClosurePenalApplicable">
           <td>{{"labels.inputs.Pre-closure penal Interest (less)" | translate }}</td>
           <td><span>{{recurringDepositsAccountData.preClosurePenalInterest}} % on
-              {{recurringDepositsAccountData.preClosurePenalInterestOnType.value}}</span></td>
+              {{recurringDepositsAccountData.preClosurePenalInterestOnType.value | translateKey:'catalogs'}}</span></td>
         </tr>
         <tr *ngIf="recurringDepositsAccountData.witdHoldTax">
           <td> {{"labels.inputs.Witdhold Tax Group" | translate }} </td>

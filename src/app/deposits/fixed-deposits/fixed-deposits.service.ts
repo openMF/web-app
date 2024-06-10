@@ -77,6 +77,14 @@ export class FixedDepositsService {
   }
 
   /**
+   * @param {string} accountId Fixed Deposits Account Id
+   * @returns {Observable<any>}
+   */
+  getFixedDepositsAccountTransactionTemplate(accountId: string): Observable<any> {
+    return this.http.get(`/fixeddepositaccounts/${accountId}/transactions/template`);
+  }
+
+  /**
    * @param clientId Client Id assosciated with fixed deposits account.
    * @returns {Observable<any>} Fixed Deposits account template.
    */

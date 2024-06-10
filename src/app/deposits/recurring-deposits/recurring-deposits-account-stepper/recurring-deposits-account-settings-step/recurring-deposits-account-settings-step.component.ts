@@ -15,6 +15,7 @@ import { SettingsService } from 'app/settings/settings.service';
 })
 export class RecurringDepositsAccountSettingsStepComponent implements OnInit, OnChanges {
 
+  @Input() isNew = true;
   @Input() recurringDepositsAccountTemplate: any;
   @Input() recurringDepositsAccountProductTemplate: any;
 
@@ -44,32 +45,36 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
   }
 
   ngOnChanges() {
-    if (this.recurringDepositsAccountProductTemplate) {
+    const recurringDepositsAccount: any = this.isNew ? this.recurringDepositsAccountProductTemplate : this.recurringDepositsAccountTemplate;
+    if (recurringDepositsAccount) {
       this.recurringDepositAccountSettingsForm.patchValue({
-        'isMandatoryDeposit': this.recurringDepositsAccountProductTemplate.isMandatoryDeposit,
-        'adjustAdvanceTowardsFuturePayments': this.recurringDepositsAccountProductTemplate.adjustAdvanceTowardsFuturePayments,
-        'allowWithdrawal': this.recurringDepositsAccountProductTemplate.allowWithdrawal,
-        'lockinPeriodFrequency': this.recurringDepositsAccountProductTemplate.lockinPeriodFrequency,
-        'lockinPeriodFrequencyType': this.recurringDepositsAccountProductTemplate.lockinPeriodFrequencyType ? this.recurringDepositsAccountProductTemplate.lockinPeriodFrequencyType.id : '',
-        'minDepositTerm': this.recurringDepositsAccountProductTemplate.minDepositTerm,
-        'minDepositTermTypeId': this.recurringDepositsAccountProductTemplate.minDepositTermType ? this.recurringDepositsAccountProductTemplate.minDepositTermType.id : '',
-        'inMultiplesOfDepositTerm': this.recurringDepositsAccountProductTemplate.inMultiplesOfDepositTerm,
-        'inMultiplesOfDepositTermTypeId': this.recurringDepositsAccountProductTemplate.inMultiplesOfDepositTermType ? this.recurringDepositsAccountProductTemplate.inMultiplesOfDepositTermType.id : '',
-        'maxDepositTerm': this.recurringDepositsAccountProductTemplate.maxDepositTerm,
-        'maxDepositTermTypeId': this.recurringDepositsAccountProductTemplate.maxDepositTermType ? this.recurringDepositsAccountProductTemplate.maxDepositTermType.id : '',
-        'preClosurePenalApplicable': this.recurringDepositsAccountProductTemplate.preClosurePenalApplicable,
-        'preClosurePenalInterest': this.recurringDepositsAccountProductTemplate.preClosurePenalInterest,
-        'preClosurePenalInterestOnTypeId': this.recurringDepositsAccountProductTemplate.preClosurePenalInterestOnType ? this.recurringDepositsAccountProductTemplate.preClosurePenalInterestOnType.id : '',
-        'minBalanceForInterestCalculation': this.recurringDepositsAccountProductTemplate.minBalanceForInterestCalculation,
-        'depositPeriod': this.recurringDepositsAccountProductTemplate.minDepositTerm,
-        'depositPeriodFrequencyId': this.recurringDepositsAccountProductTemplate.minDepositTermType.id
+        'isMandatoryDeposit': recurringDepositsAccount.isMandatoryDeposit,
+        'adjustAdvanceTowardsFuturePayments': recurringDepositsAccount.adjustAdvanceTowardsFuturePayments,
+        'allowWithdrawal': recurringDepositsAccount.allowWithdrawal,
+        'lockinPeriodFrequency': recurringDepositsAccount.lockinPeriodFrequency,
+        'lockinPeriodFrequencyType': recurringDepositsAccount.lockinPeriodFrequencyType ? recurringDepositsAccount.lockinPeriodFrequencyType.id : '',
+        'minDepositTerm': recurringDepositsAccount.minDepositTerm,
+        'minDepositTermTypeId': recurringDepositsAccount.minDepositTermType ? recurringDepositsAccount.minDepositTermType.id : '',
+        'inMultiplesOfDepositTerm': recurringDepositsAccount.inMultiplesOfDepositTerm,
+        'inMultiplesOfDepositTermTypeId': recurringDepositsAccount.inMultiplesOfDepositTermType ? recurringDepositsAccount.inMultiplesOfDepositTermType.id : '',
+        'maxDepositTerm': recurringDepositsAccount.maxDepositTerm,
+        'maxDepositTermTypeId': recurringDepositsAccount.maxDepositTermType ? recurringDepositsAccount.maxDepositTermType.id : '',
+        'preClosurePenalApplicable': recurringDepositsAccount.preClosurePenalApplicable,
+        'preClosurePenalInterest': recurringDepositsAccount.preClosurePenalInterest,
+        'preClosurePenalInterestOnTypeId': recurringDepositsAccount.preClosurePenalInterestOnType ? recurringDepositsAccount.preClosurePenalInterestOnType.id : '',
+        'minBalanceForInterestCalculation': recurringDepositsAccount.minBalanceForInterestCalculation,
+        'depositPeriod': recurringDepositsAccount.minDepositTerm,
+        'depositPeriodFrequencyId': recurringDepositsAccount.minDepositTermType.id,
+        'expectedFirstDepositOnDate': recurringDepositsAccount.expectedFirstDepositOnDate && new Date(recurringDepositsAccount.expectedFirstDepositOnDate),
+        'recurringFrequency': recurringDepositsAccount.recurringFrequency,
+        'recurringFrequencyType': recurringDepositsAccount.recurringFrequencyType ? recurringDepositsAccount.recurringFrequencyType.id : ''
       });
-      if (this.recurringDepositsAccountProductTemplate.withHoldTax) {
+      if (recurringDepositsAccount.withHoldTax) {
         this.recurringDepositAccountSettingsForm.addControl('withHoldTax', new UntypedFormControl(false));
         this.recurringDepositAccountSettingsForm.get('withHoldTax').valueChanges.subscribe((value: boolean) => {
           if (value) {
             this.recurringDepositAccountSettingsForm.addControl('taxGroupId', new UntypedFormControl({ value: '', disabled: true }));
-            this.recurringDepositAccountSettingsForm.get('taxGroupId').patchValue(this.recurringDepositsAccountProductTemplate.taxGroup && this.recurringDepositsAccountProductTemplate.taxGroup.name);
+            this.recurringDepositAccountSettingsForm.get('taxGroupId').patchValue(recurringDepositsAccount.taxGroup && recurringDepositsAccount.taxGroup.name);
           } else {
             this.recurringDepositAccountSettingsForm.removeControl('taxGroupId');
           }
@@ -78,8 +83,8 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
       } else {
         this.recurringDepositAccountSettingsForm.removeControl('withHoldTax');
       }
-      this.taxGroup = this.recurringDepositsAccountProductTemplate.taxGroup;
-      this.setOptions();
+      this.taxGroup = recurringDepositsAccount.taxGroup;
+      this.setOptions(recurringDepositsAccount);
     }
   }
 
@@ -127,10 +132,10 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
   /**
    * Sets all select dropdown options.
    */
-  setOptions() {
-    this.lockinPeriodFrequencyTypeData = this.recurringDepositsAccountProductTemplate.lockinPeriodFrequencyTypeOptions;
-    this.periodFrequencyTypeData = this.recurringDepositsAccountProductTemplate.periodFrequencyTypeOptions;
-    this.preClosurePenalInterestOnTypeData = this.recurringDepositsAccountProductTemplate.preClosurePenalInterestOnTypeOptions;
+  setOptions(recurringDepositsAccount: any) {
+    this.lockinPeriodFrequencyTypeData = recurringDepositsAccount.lockinPeriodFrequencyTypeOptions;
+    this.periodFrequencyTypeData = recurringDepositsAccount.periodFrequencyTypeOptions;
+    this.preClosurePenalInterestOnTypeData = recurringDepositsAccount.preClosurePenalInterestOnTypeOptions;
   }
 
   /**

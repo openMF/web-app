@@ -38,6 +38,7 @@ import { FixedDepositAccountInterestRateChartStepComponent } from './fixed-depos
 import { FixedDepositAccountPreviewStepComponent } from './fixed-deposit-account-stepper/fixed-deposit-account-preview-step/fixed-deposit-account-preview-step.component';
 import { EditFixedDepositAccountComponent } from './edit-fixed-deposit-account/edit-fixed-deposit-account.component';
 import { GeneralTabComponent } from './fixed-deposit-account-view/general-tab/general-tab.component';
+import { FixedDepositsCashTransactionComponent } from './fixed-deposits-account-actions/fixed-deposits-cash-transaction/fixed-deposits-cash-transaction.component';
 
 /**
  * Fixed Deposits Module
@@ -75,7 +76,8 @@ import { GeneralTabComponent } from './fixed-deposit-account-view/general-tab/ge
     FixedDepositAccountInterestRateChartStepComponent,
     FixedDepositAccountPreviewStepComponent,
     EditFixedDepositAccountComponent,
-    GeneralTabComponent
+    GeneralTabComponent,
+    FixedDepositsCashTransactionComponent
   ],
   imports: [
     SharedModule,

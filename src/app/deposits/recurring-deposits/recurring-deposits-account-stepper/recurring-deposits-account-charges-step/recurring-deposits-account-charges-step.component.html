@@ -29,14 +29,14 @@
     <ng-container matColumnDef="chargeCalculationType">
       <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Type" | translate }} </th>
       <td mat-cell *matCellDef="let charge">
-        {{ charge.chargeCalculationType.value }}
+        {{ charge.chargeCalculationType.value | translateKey:'catalogs' }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="amount">
       <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Amount" | translate }} </th>
       <td mat-cell *matCellDef="let charge">
-        {{ charge.amount }}
+        {{ charge.amount | formatNumber }}
         <button mat-icon-button color="primary" (click)="editChargeAmount(charge)">
           <fa-icon icon="pen"></fa-icon>
         </button>
@@ -46,7 +46,7 @@
     <ng-container matColumnDef="chargeTimeType">
       <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Collected On" | translate }} </th>
       <td mat-cell *matCellDef="let charge">
-        {{ charge.chargeTimeType.value }}
+        {{ charge.chargeTimeType.value | translateKey:'catalogs' }}
       </td>
     </ng-container>
 

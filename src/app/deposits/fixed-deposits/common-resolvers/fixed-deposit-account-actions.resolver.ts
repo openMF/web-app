@@ -35,6 +35,8 @@ export class FixedDepositsAccountActionsResolver implements Resolve<Object> {
         return this.savingsService.getSavingsChargeTemplateResource(fixedDepositAccountId);
       case 'Close':
         return this.fixedDepositsService.getFixedDepositsAccountClosureTemplate(fixedDepositAccountId);
+      case 'Withdrawal':
+        return this.fixedDepositsService.getFixedDepositsAccountTransactionTemplate(fixedDepositAccountId);
       default:
         return undefined;
     }

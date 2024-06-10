@@ -7,6 +7,7 @@ import { Dates } from 'app/core/utils/dates';
 /** Custom Services */
 import { RecurringDepositsService } from 'app/deposits/recurring-deposits/recurring-deposits.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Currency } from 'app/shared/models/general.model';
 
 /**
  * Edit Transaction component.
@@ -38,6 +39,7 @@ export class EditTransactionComponent implements OnInit {
   recurringDepositAccountId: string;
   /** Transaction Template */
   transactionTemplateData: any;
+  currency: Currency | null = null;
 
   /**
    * Retrieves the Recurring Deposit Account transaction template data from `resolve`.
@@ -56,6 +58,9 @@ export class EditTransactionComponent implements OnInit {
     private settingsService: SettingsService, ) {
     this.route.data.subscribe((data: { recurringDepositsAccountTransactionTemplate: any }) => {
       this.transactionTemplateData = data.recurringDepositsAccountTransactionTemplate;
+      if (this.transactionTemplateData.currency) {
+        this.currency = this.transactionTemplateData.currency;
+      }
       this.paymentTypeOptions = this.transactionTemplateData.paymentTypeOptions;
     });
     this.recurringDepositAccountId = this.route.parent.parent.snapshot.params['recurringDepositAccountId'];
@@ -121,6 +126,7 @@ export class EditTransactionComponent implements OnInit {
       dateFormat,
       locale
     };
+    data['transactionAmount'] = data['transactionAmount'] * 1;
     this.recurringDepositsService.executeRecurringDepositsAccountTransactionsCommand(this.recurringDepositAccountId, 'modify', data, this.transactionTemplateData.id)
       .subscribe(res => {
         this.router.navigate(['../'], { relativeTo: this.route });

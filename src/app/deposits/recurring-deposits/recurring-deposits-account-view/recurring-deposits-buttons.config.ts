@@ -32,17 +32,22 @@ export class RecurringDepositsButtonsConfiguration {
         this.buttonsArray = [
           {
             name: 'Deposit',
-            icon: 'arrow-up',
+            icon: 'fa fa-arrow-up',
             taskPermissionName: 'DEPOSIT_RECURRINGDEPOSITACCOUNT'
           },
           {
+            name: 'Withdrawal',
+            icon: 'fa fa-arrow-down',
+            taskPermissionName: 'WITHDRAWAL_RECURRINGDEPOSITACCOUNT'
+          },
+          {
             name: 'Premature Close',
-            icon: 'arrow-left',
+            icon: 'fa fa-arrow-left',
             taskPermissionName: 'PREMATURECLOSE_RECURRINGDEPOSITACCOUNT'
           },
           {
             name: 'Calculate Interest',
-            icon: 'calculator',
+            icon: 'fa fa-calculator',
             taskPermissionName: 'CALCULATEINTEREST_RECURRINGDEPOSITACCOUNT'
           },
           {
@@ -56,12 +61,12 @@ export class RecurringDepositsButtonsConfiguration {
         this.buttonsArray = [
           {
             name: 'Modify Application',
-            icon: 'edit',
+            icon: 'fa fa-edit',
             taskPermissionName: 'UPDATE_RECURRINGDEPOSITACCOUNT'
           },
           {
             name: 'Approve',
-            icon: 'check',
+            icon: 'fa fa-check',
             taskPermissionName: 'APPROVE_RECURRINGDEPOSITACCOUNT'
           }
         ];
@@ -70,12 +75,12 @@ export class RecurringDepositsButtonsConfiguration {
         this.buttonsArray = [
           {
             name: 'Undo Approval',
-            icon: 'undo',
+            icon: 'fa fa-undo',
             taskPermissionName: 'APPROVALUNDO_RECURRINGDEPOSITACCOUNT'
           },
           {
             name: 'Activate',
-            icon: 'check',
+            icon: 'fa fa-check',
             taskPermissionName: 'ACTIVATE_RECURRINGDEPOSITACCOUNT'
           }
         ];
@@ -84,17 +89,17 @@ export class RecurringDepositsButtonsConfiguration {
         this.buttonsArray = [
           {
             name: 'Close',
-            icon: 'arrow-right',
+            icon: 'fa fa-arrow-right',
             taskPermissionName: 'CLOSE_RECURRINGDEPOSITACCOUNT'
           },
           {
             name: 'Calculate Interest',
-            icon: 'calculator',
+            icon: 'fa fa-calculator',
             taskPermissionName: 'CALCULATEINTEREST_RECURRINGDEPOSITACCOUNT'
           },
           {
             name: 'Post Interest',
-            icon: 'money',
+            icon: 'fa fa-money',
             taskPermissionName: 'POSTINTEREST_RECURRINGDEPOSITACCOUNT'
           }
         ];
