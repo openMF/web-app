@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Currency } from 'app/shared/models/general.model';
 
 @Component({
   selector: 'mifosx-loan-credit-balance-refund',
@@ -21,6 +22,7 @@ export class LoanCreditBalanceRefundComponent implements OnInit {
   maxDate = new Date();
   /** Credit Balance Loan Form */
   creditBalanceLoanForm: UntypedFormGroup;
+  currency: Currency;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -46,6 +48,9 @@ export class LoanCreditBalanceRefundComponent implements OnInit {
     this.maxDate = this.settingsService.businessDate;
     this.createCreditBalanceLoanForm();
     this.setCreditBalanceLoanDetails();
+    if (this.dataObject.currency) {
+      this.currency = this.dataObject.currency;
+    }
   }
 
   /**
@@ -81,6 +86,7 @@ export class LoanCreditBalanceRefundComponent implements OnInit {
       locale
     };
     const command = this.dataObject.type.code.split('.')[1];
+    data['transactionAmount'] = data['transactionAmount'] * 1;
     this.loanService.submitLoanActionButton(this.loanId, data, command)
       .subscribe((response: any) => {
         this.router.navigate(['../../transactions'], { relativeTo: this.route });

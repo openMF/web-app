@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Currency } from 'app/shared/models/general.model';
 
 @Component({
   selector: 'mifosx-disburse-to-savings-account',
@@ -20,6 +21,7 @@ export class DisburseToSavingsAccountComponent implements OnInit {
   maxDate = new Date();
   /** Disbursement Loan form. */
   disbursementForm: UntypedFormGroup;
+  currency: Currency;
 
   /**
    * Get data from `Resolver`.
@@ -40,6 +42,9 @@ export class DisburseToSavingsAccountComponent implements OnInit {
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
     this.setDisbursementToSavingsForm();
+    if (this.dataObject.currency) {
+      this.currency = this.dataObject.currency;
+    }
   }
 
   /**
@@ -73,6 +78,7 @@ export class DisburseToSavingsAccountComponent implements OnInit {
       locale
     };
     const loanId = this.route.snapshot.params['loanId'];
+    data['transactionAmount'] = data['transactionAmount'] * 1;
     this.loanService.loanActionButtons(loanId, 'disbursetosavings', data).subscribe((response: any) => {
       this.router.navigate(['../../general'], { relativeTo: this.route });
     });

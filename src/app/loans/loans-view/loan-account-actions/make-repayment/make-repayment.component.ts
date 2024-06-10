@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { Currency } from 'app/shared/models/general.model';
 
 /**
  * Loan Make Repayment Component
@@ -31,6 +32,7 @@ export class MakeRepaymentComponent implements OnInit, OnDestroy {
   maxDate = new Date();
   /** Repayment Loan Form */
   repaymentLoanForm: UntypedFormGroup;
+  currency: Currency | null = null;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -56,6 +58,9 @@ export class MakeRepaymentComponent implements OnInit, OnDestroy {
     this.maxDate = this.settingsService.businessDate;
     this.createRepaymentLoanForm();
     this.setRepaymentLoanDetails();
+    if (this.dataObject.currency) {
+      this.currency = this.dataObject.currency;
+    }
   }
 
   ngOnDestroy(): void {
@@ -117,6 +122,7 @@ export class MakeRepaymentComponent implements OnInit, OnDestroy {
       locale
     };
     const command = this.dataObject.type.code.split('.')[1];
+    data['transactionAmount'] = data['transactionAmount'] * 1;
     this.loanService.submitLoanActionButton(this.loanId, data, command)
       .subscribe((response: any) => {
         this.router.navigate(['../../transactions'], { relativeTo: this.route });

@@ -7,6 +7,7 @@ import { Dates } from 'app/core/utils/dates';
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Currency } from 'app/shared/models/general.model';
 
 /**
  * Edit Transaction component.
@@ -38,6 +39,7 @@ export class EditTransactionComponent implements OnInit {
   savingAccountId: string;
   /** Transaction Template */
   transactionTemplateData: any;
+  currency: Currency;
 
   /**
    * Retrieves the Saving Account transaction template data from `resolve`.
@@ -56,6 +58,9 @@ export class EditTransactionComponent implements OnInit {
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { savingsAccountTransactionTemplate: any }) => {
       this.transactionTemplateData = data.savingsAccountTransactionTemplate;
+      if (data.savingsAccountTransactionTemplate.currency) {
+        this.currency = data.savingsAccountTransactionTemplate.currency;
+      }
       this.paymentTypeOptions = this.transactionTemplateData.paymentTypeOptions;
     });
     this.savingAccountId = this.route.snapshot.params['savingAccountId'];

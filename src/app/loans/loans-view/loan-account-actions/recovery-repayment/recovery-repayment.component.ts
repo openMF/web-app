@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { Currency } from 'app/shared/models/general.model';
 
 /**
  * Loan Recovery Repayment Action
@@ -31,6 +32,7 @@ export class RecoveryRepaymentComponent implements OnInit {
   maxDate = new Date();
   /** Recovery Repayment Loan Form */
   recoveryRepaymentLoanForm: UntypedFormGroup;
+  currency: Currency | null = null;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -56,6 +58,9 @@ export class RecoveryRepaymentComponent implements OnInit {
     this.maxDate = this.settingsService.businessDate;
     this.createRecoveryRepaymentLoanForm();
     this.setRecoveryRepaymentLoanDetails();
+    if (this.dataObject.currency) {
+      this.currency = this.dataObject.currency;
+    }
   }
 
   /**
@@ -114,6 +119,7 @@ export class RecoveryRepaymentComponent implements OnInit {
       dateFormat,
       locale
     };
+    data['transactionAmount'] = data['transactionAmount'] * 1;
     this.loanService.submitLoanActionButton(this.loanId, data, 'recoverypayment')
       .subscribe((response: any) => {
         this.router.navigate(['../../general'], { relativeTo: this.route });

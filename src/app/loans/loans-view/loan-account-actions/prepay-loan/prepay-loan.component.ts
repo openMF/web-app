@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { Currency } from 'app/shared/models/general.model';
 
 
 /**
@@ -38,6 +39,7 @@ export class PrepayLoanComponent implements OnInit, OnDestroy {
   prepayLoanForm: UntypedFormGroup;
 
   prepayData: any;
+  currency: Currency | null = null;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -64,6 +66,9 @@ export class PrepayLoanComponent implements OnInit, OnDestroy {
     this.createprepayLoanForm();
     this.setPrepayLoanDetails();
     this.prepayData = this.dataObject;
+    if (this.dataObject.currency) {
+      this.currency = this.dataObject.currency;
+    }
   }
 
   ngOnDestroy(): void {
@@ -139,6 +144,7 @@ export class PrepayLoanComponent implements OnInit, OnDestroy {
       dateFormat,
       locale
     };
+    data['transactionAmount'] = data['transactionAmount'] * 1;
     this.loanService.submitLoanActionButton(this.loanId, data, 'repayment')
       .subscribe((response: any) => {
         this.router.navigate(['../../general'], { relativeTo: this.route });

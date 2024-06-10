@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SavingsService } from '../../savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { Currency } from 'app/shared/models/general.model';
 
 /**
  * Create savings account transactions component.
@@ -17,8 +18,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./savings-account-transactions.component.scss']
 })
 export class SavingsAccountTransactionsComponent implements OnInit {
-
-  @Input() currencyCode: string;
 
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -42,6 +41,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
   transactionCommand: string;
   /** saving account's Id */
   savingAccountId: string;
+  currency: Currency | null = null;
 
   /**
    * Retrieves the Saving Account transaction template data from `resolve`.
@@ -60,6 +60,9 @@ export class SavingsAccountTransactionsComponent implements OnInit {
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
       this.paymentTypeOptions = data.savingsAccountActionData.paymentTypeOptions;
+      if (data.savingsAccountActionData.currency) {
+        this.currency = data.savingsAccountActionData.currency;
+      }
     });
     this.transactionCommand = this.route.snapshot.params['name'].toLowerCase();
     this.transactionType[this.transactionCommand] = true;
@@ -122,6 +125,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
       dateFormat,
       locale
     };
+    data['transactionAmount'] = data['transactionAmount'] * 1;
     this.savingsService.executeSavingsAccountTransactionsCommand(this.savingAccountId, this.transactionCommand, data).subscribe(res => {
       this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });

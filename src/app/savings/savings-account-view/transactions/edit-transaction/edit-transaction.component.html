@@ -17,13 +17,10 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>Transaction Amount</mat-label>
-          <input type="number" formControlName="transactionAmount" required matInput />
-          <mat-error *ngIf="editTransactionForm.controls.transactionAmount.hasError('required')">
-            Transaction Amount is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+        <mifosx-input-amount [currency]="currency" [isRequired]="true"
+          [inputFormControl]="editTransactionForm.controls.transactionAmount"
+          [inputLabel]="'Transaction Amount'">
+        </mifosx-input-amount>
 
         <mat-form-field>
           <mat-label>Payment Type</mat-label>

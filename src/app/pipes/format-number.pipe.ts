@@ -15,10 +15,9 @@ export class FormatNumberPipe implements PipeTransform {
     if (!value) {
       return defaultValue ? defaultValue : '';
     }
-    const locale = this.settingsService.language.code;
     const decimals = this.settingsService.decimals;
     const format = `1.${decimals}-${decimals}`;
-    return this.decimalFormat.transform(value, format, locale);
+    return this.decimalFormat.transform(value, format);
   }
 
 }

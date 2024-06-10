@@ -49,6 +49,7 @@ import { ViewSavingsAccountingDetailsComponent } from './accounting/view-savings
 import { ThemeToggleComponent } from './theme-toggle/theme-toggle.component';
 import { LongTextComponent } from './long-text/long-text.component';
 import { DropdownComponent } from './dropdown/dropdown.component';
+import { InputAmountComponent } from './input-amount/input-amount.component';
 
 /**
  * Shared Module
@@ -104,7 +105,8 @@ import { DropdownComponent } from './dropdown/dropdown.component';
     ViewSavingsAccountingDetailsComponent,
     ThemeToggleComponent,
     LongTextComponent,
-    DropdownComponent
+    DropdownComponent,
+    InputAmountComponent
   ],
   exports: [
     FileUploadComponent,
@@ -137,7 +139,9 @@ import { DropdownComponent } from './dropdown/dropdown.component';
     GlAccountDisplayComponent,
     ViewSavingsAccountingDetailsComponent,
     ThemeToggleComponent,
-    LongTextComponent
+    LongTextComponent,
+    DropdownComponent,
+    InputAmountComponent
   ]
 })
 export class SharedModule { }

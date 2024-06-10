@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Currency } from 'app/shared/models/general.model';
 
 /**
  * Savings account actions component.
@@ -57,7 +58,7 @@ export class SavingAccountActionsComponent {
     'Unblock Withdrawal': false
   };
 
-  currencyCode: string;
+  currency: Currency;
 
   /**
    * @param {ActivatedRoute} route Activated Route
@@ -65,7 +66,7 @@ export class SavingAccountActionsComponent {
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
       if (data.savingsAccountActionData) {
-        this.currencyCode = data.savingsAccountActionData.currency.code;
+        this.currency = data.savingsAccountActionData.currency;
       }
     });
     const name = this.route.snapshot.params['name'];

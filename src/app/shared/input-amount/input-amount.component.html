@@ -1,0 +1,21 @@
+<mat-form-field appearance="fill" fxFlex="100%" *ngIf="isRequired">
+    <mat-label>{{'labels.inputs.' + inputLabel | translate}}</mat-label>
+    <span matTextSuffix class="m-l-10">{{ currency.code }}</span>
+    <span fxFlex="auto"></span>
+    <input mifosxFormatAmount="{{currency.code}}:{{currency.displaySymbol}}" class="right-input"
+        [formControl]="inputFormControl"  (keypress)="numberOnly($event)"
+        required matInput (blur)="displayHint = false;" (focus)="displayHint = true;" />
+    <mat-error *ngIf="inputFormControl.hasError('required')">
+        {{'labels.inputs.' + inputLabel | translate}} {{ "labels.commons.is" | translate}} <strong>{{
+            "labels.commons.required" | translate}}</strong>
+    </mat-error>
+    <mat-hint class="right-hint" *ngIf="displayHint">{{inputFormControl.value | currency:currency.code:currency.displaySymbol:'1.2-2'}}</mat-hint>
+</mat-form-field>
+<mat-form-field appearance="fill" fxFlex="100%" *ngIf="!isRequired">
+    <mat-label>{{'labels.inputs.' + inputLabel | translate}}</mat-label>
+    <span matTextSuffix class="m-l-10">{{ currency.code }}</span>
+    <span fxFlex="auto"></span>
+    <input mifosxFormatAmount="{{currency.code}}:{{currency.displaySymbol}}" class="right-input"
+        [formControl]="inputFormControl"  (keypress)="numberOnly($event)" matInput (blur)="displayHint = false;" (focus)="displayHint = true;" />
+    <mat-hint class="right-hint" *ngIf="displayHint">{{inputFormControl.value | currency:currency.code:currency.displaySymbol:'1.2-2'}}</mat-hint>
+</mat-form-field>

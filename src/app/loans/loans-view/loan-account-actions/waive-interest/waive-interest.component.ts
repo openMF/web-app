@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { LoansService } from 'app/loans/loans.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
+import { Currency } from 'app/shared/models/general.model';
 
 /**
  * Waive Interest component.
@@ -26,6 +27,7 @@ export class WaiveInterestComponent implements OnInit {
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
   maxDate = new Date();
+  currency: Currency;
 
   /**
    * Get data from `Resolver`.
@@ -44,6 +46,9 @@ export class WaiveInterestComponent implements OnInit {
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
     this.setLoanInterestForm();
+    if (this.dataObject.currency) {
+      this.currency = this.dataObject.currency;
+    }
   }
 
   /**
@@ -73,6 +78,7 @@ export class WaiveInterestComponent implements OnInit {
       dateFormat,
       locale
     };
+    data['transactionAmount'] = data['transactionAmount'] * 1;
     const loanId = this.route.snapshot.params['loanId'];
     this.loanService.submitLoanActionButton(loanId, data, 'waiveinterest').subscribe((response: any) => {
       this.router.navigate(['../../general'], {relativeTo: this.route});

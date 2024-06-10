@@ -53,15 +53,10 @@
             </div>
           </div>
 
-          <mat-form-field appearance="fill">
-            <mat-label>{{"labels.inputs.Transaction Amount" | translate}}</mat-label>
-            <span matTextSuffix class="m-l-10">{{ dataObject.currency.code }}</span>
-            <span fxFlex="auto"></span>
-            <input type="number" matInput required class="right-input" formControlName="transactionAmount">
-            <mat-error *ngIf="repaymentLoanForm.controls.transactionAmount.hasError('required')">
-              {{"labels.inputs.Transaction Amount" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
-            </mat-error>
-          </mat-form-field>
+          <mifosx-input-amount [currency]="currency" [isRequired]="true"
+            [inputFormControl]="repaymentLoanForm.controls.transactionAmount"
+            [inputLabel]="'Transaction Amount'">
+          </mifosx-input-amount>
 
           <mat-form-field>
             <mat-label>{{"labels.inputs.External Id" | translate}}</mat-label>
