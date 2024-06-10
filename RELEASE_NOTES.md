@@ -57,6 +57,7 @@
     * [SER-2600] - Group management: Fix adding client to a group failing due to initialization error.
     * [SER-2601] - Show credit score data if available for a client, show client identity value, show OU path when you search for a client.
     * [SER-2606] - Remove staff id from payload when creating users.
+    * [SER-2663] - Show overpaid amount if possible on the account summary and also removing the interests sub-column from the transactions interface.
 
 ## Version 1.0.0 - for use with Fineract Web App
 

@@ -11,7 +11,7 @@
   "tag-self-close": false,
   "head-script-disabled": true,
   "doctype-html5": true,
-  "id-class-value": "dash",
+  "id-class-value": false,
   "style-disabled": true,
   "inline-style-disabled": true,
   "inline-script-disabled": true,
