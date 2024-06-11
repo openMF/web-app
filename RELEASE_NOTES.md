@@ -58,6 +58,7 @@
     * [SER-2601] - Show credit score data if available for a client, show client identity value, show OU path when you search for a client.
     * [SER-2606] - Remove staff id from payload when creating users.
     * [SER-2663] - Show overpaid amount if possible on the account summary and also removing the interests sub-column from the transactions interface.
+    * [SER-2680] - change input type for mobile number field from number to tel to client create and edit interfaces
 
 ## Version 1.0.0 - for use with Fineract Web App
 
