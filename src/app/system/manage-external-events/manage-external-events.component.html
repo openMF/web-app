@@ -9,7 +9,7 @@
     <div class="action-button" fxLayoutGap="25px">
       <button mat-raised-button color="primary" (click)="applyChanges()"
         [disabled]="!existAnyUpdate" *mifosxHasPermission="'UPDATE_EXTERNAL_EVENT_CONFIGURATION'">
-        Apply Changes
+        {{"labels.buttons.Apply Changes" | translate}}
       </button>
     </div>
   </div>
@@ -19,17 +19,17 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="eventType">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Event Type </th>
-        <td mat-cell *matCellDef="let event"> {{ event.type }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Event Type" | translate}} </th>
+        <td mat-cell *matCellDef="let event"> {{ event.type | translateKey:'text'}} </td>
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Status" | translate}} </th>
         <td mat-cell *matCellDef="let event">
           <mat-slide-toggle [(ngModel)]="event.enabled" name="{{event.type}}" (click)="toggleStatus(event)">
             <div [className]="event.enabled ? 'enabled' : 'disabled'">
-              <span *ngIf="event.enabled">Enabled</span>
-              <span *ngIf="!event.enabled">Disabled</span>
+              <span *ngIf="event.enabled">{{'labels.inputs.Enabled' | translate}}</span>
+              <span *ngIf="!event.enabled">{{'labels.inputs.Disabled' | translate}}</span>
             </div>
           </mat-slide-toggle>
         </td>
