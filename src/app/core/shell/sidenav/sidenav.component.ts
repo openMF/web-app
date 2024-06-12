@@ -19,10 +19,9 @@ import { frequentActivities } from './frequent-activities';
 @Component({
   selector: 'mifosx-sidenav',
   templateUrl: './sidenav.component.html',
-  styleUrls: ['./sidenav.component.scss']
+  styleUrls: ['./sidenav.component.scss'],
 })
 export class SidenavComponent implements OnInit {
-
   /** True if sidenav is in collapsed state. */
   @Input() sidenavCollapsed: boolean;
 
@@ -40,10 +39,12 @@ export class SidenavComponent implements OnInit {
    * @param {MatDialog} dialog Mat Dialog
    * @param {AuthenticationService} authenticationService Authentication Service.
    */
-  constructor(private router: Router,
-              public dialog: MatDialog,
-              private authenticationService: AuthenticationService,
-              private keyCloakService: KeycloakService) {
+  constructor(
+    private router: Router,
+    public dialog: MatDialog,
+    private authenticationService: AuthenticationService,
+    private keyCloakService: KeycloakService
+  ) {
     this.userActivity = JSON.parse(localStorage.getItem('mifosXLocation'));
   }
 
@@ -51,12 +52,7 @@ export class SidenavComponent implements OnInit {
    * Sets the username of the authenticated user.
    */
   ngOnInit() {
-    const credentials = this.authenticationService.getCredentials();
-    if (credentials) {
-    this.username = credentials.username;
-    } else {
-    this.username = this.keyCloakService.getUsername();
-    }
+    this.username = this.authenticationService.getConnectedUsername();
     this.setMappedAcitivites();
   }
 
@@ -65,7 +61,7 @@ export class SidenavComponent implements OnInit {
    */
   logout() {
     this.authenticationService.logout();
-      // .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+    // .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }
 
   /**
@@ -87,18 +83,17 @@ export class SidenavComponent implements OnInit {
    * Returns top three frequent activities.
    */
   getFrequentActivities() {
-    const frequencyCounts: any  = {};
-    let index  = this.userActivity.length;
+    const frequencyCounts: any = {};
+    let index = this.userActivity.length;
     while (index) {
       frequencyCounts[this.userActivity[--index]] = (frequencyCounts[this.userActivity[index]] || 0) + 1;
     }
     const frequencyCountsArray = Object.entries(frequencyCounts);
-    const topThreeFrequentActivities =
-      frequencyCountsArray
-        .sort((a: any, b: any) => b[1] - a[1])
-        .map((entry: any[]) => entry[0])
-        .filter((activity: string) => !['/', '/login', '/home', '/dashboard'].includes(activity))
-        .slice(0, 3);
+    const topThreeFrequentActivities = frequencyCountsArray
+      .sort((a: any, b: any) => b[1] - a[1])
+      .map((entry: any[]) => entry[0])
+      .filter((activity: string) => !['/', '/login', '/home', '/dashboard'].includes(activity))
+      .slice(0, 3);
     return topThreeFrequentActivities;
   }
 
@@ -145,5 +140,4 @@ export class SidenavComponent implements OnInit {
       this.mappedActivities.push(activity);
     }
   }
-
 }

@@ -59,6 +59,7 @@
     * [SER-2606] - Remove staff id from payload when creating users.
     * [SER-2663] - Show overpaid amount if possible on the account summary and also removing the interests sub-column from the transactions interface.
     * [SER-2680] - change input type for mobile number field from number to tel to client create and edit interfaces
+    * [SER-2686] - fix hook editing bug, fix resetting the selected office parent when you select radio button, and fix keycloak error.
 
 ## Version 1.0.0 - for use with Fineract Web App
 

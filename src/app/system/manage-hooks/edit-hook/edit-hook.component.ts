@@ -140,7 +140,7 @@ export class EditHookComponent implements OnInit {
       ],
       routingKey: [
         {
-          value: this.hookData.name === RabbitMQBrokerLabel ? this.hookData.config[2]?.fieldValue : '',
+          value: this.hookData.name === RabbitMQBrokerLabel ? this.hookData.config[2]?.fieldValue || this.hookData.config[1]?.fieldValue : '',
           disabled: this.hookData.name !== RabbitMQBrokerLabel,
         },
         Validators.required,

@@ -16,7 +16,7 @@
   <mat-tree #officeTree [dataSource]="dataSource" [treeControl]="treeControl">
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
       <button mat-icon-button disabled></button>
-      <btn class="normal"></btn> ( ) {{ node.name }}
+      <btn class="normal"></btn> {{ node.name }}
       <btn *ngIf="!node.isLowestOU" class="add-office" title="Add Office" (click)="createOffice(node.id)">
         <i class="fa fa-plus"></i>
       </btn>
@@ -27,7 +27,7 @@
           {{ treeControl.isExpanded(node) ? 'remove_circle_outline' : 'add_circle_outline' }}
         </mat-icon>
       </button>
-      ( ) {{ node.name }}
+      {{ node.name }}
       <btn *ngIf="!node.isLowestOU" class="add-office" title="Add Office" (click)="createOffice(node.id)">
         <i class="fa fa-plus"></i>
       </btn>
