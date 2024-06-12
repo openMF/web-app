@@ -15,7 +15,7 @@ import { OfficeHierarchy } from 'app/shared/office-tree-view/office-tree-node';
 @Component({
   selector: 'mifosx-create-office',
   templateUrl: './create-office.component.html',
-  styleUrls: ['./create-office.component.scss']
+  styleUrls: ['./create-office.component.scss'],
 })
 export class CreateOfficeComponent implements OnInit {
   /** Office form. */
@@ -38,7 +38,7 @@ export class CreateOfficeComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {Dates} dateUtils Date Utils to format date.
    */
-  constructor (
+  constructor(
     private formBuilder: UntypedFormBuilder,
     private organizationService: OrganizationService,
     private settingsService: SettingsService,
@@ -47,63 +47,63 @@ export class CreateOfficeComponent implements OnInit {
     private dateUtils: Dates
   ) {
     this.route.data.subscribe((data: { offices: any }) => {
-      this.officeData = data.offices?.filter(x => x.status === true);
+      this.officeData = data.offices?.filter((x) => x.status === true);
       this.officeDataSliced = this.officeData;
     });
     this.parentId = this.router.getCurrentNavigation().extras?.state?.id;
   }
   choices: any = [
     { id: 1, tag: 'Yes' },
-    { id: 2, tag: 'No' }
+    { id: 2, tag: 'No' },
   ];
   showHierarchy = false;
   @ViewChild('officeHierarchy') officeHierarchy;
-  ngOnInit () {
+  ngOnInit() {
     this.createofficeForm();
   }
   public isFiltered(office: any) {
-    return this.officeDataSliced.find(item => item.id === office.id);
+    return this.officeDataSliced.find((item) => item.id === office.id);
   }
   /**
    * Creates the Office Form
    */
-  createofficeForm () {
+  createofficeForm() {
     this.officeForm = this.formBuilder.group({
       name: ['', Validators.required],
       parentId: [this.parentId, Validators.required],
       openingDate: ['', Validators.required],
       externalId: [''],
       countryHierarchy: [],
-      country: [true]
+      country: [false],
     });
   }
 
-  convertArray(data:any){
+  convertArray(data: any) {
     return Object.assign({}, data);
   }
 
-  convertArrayToObject (hierarchyData: any) {
+  convertArrayToObject(hierarchyData: any) {
     for (let i = 0; i < hierarchyData.descendant.length; i++) {
-      if (hierarchyData.descendant[i].descendant && hierarchyData.descendant[i].descendant.length>0) {
+      if (hierarchyData.descendant[i].descendant && hierarchyData.descendant[i].descendant.length > 0) {
         this.convertArrayToObject(hierarchyData.descendant[i]);
-        hierarchyData.descendant[i].descendant=Object.assign({}, hierarchyData.descendant[i].descendant[0]);
-     } else {
-      delete hierarchyData.descendant[i].descendant
-     }
-   }
-   return hierarchyData;
+        hierarchyData.descendant[i].descendant = Object.assign({}, hierarchyData.descendant[i].descendant[0]);
+      } else {
+        delete hierarchyData.descendant[i].descendant;
+      }
+    }
+    return hierarchyData;
   }
   /**
    * Submits the office form and creates office.
    * if successful redirects to offices
    */
-  submit () {
+  submit() {
     const hierarchyData = this.officeHierarchy?._database.data;
     if (hierarchyData && hierarchyData.length > 0 && this.showHierarchy) {
       let hierarchalData = this.convertArrayToObject(hierarchyData[0]);
-      hierarchalData.descendant=Object.assign({}, hierarchalData.descendant[0]);
+      hierarchalData.descendant = Object.assign({}, hierarchalData.descendant[0]);
       this.officeForm.patchValue({
-        countryHierarchy: hierarchalData
+        countryHierarchy: hierarchalData,
       });
     }
     const officeFormData = this.officeForm.value;
@@ -116,17 +116,17 @@ export class CreateOfficeComponent implements OnInit {
     const data = {
       ...officeFormData,
       dateFormat,
-      locale
+      locale,
     };
     if (this.showHierarchy) {
       data.country = data.country === 'Yes' ? 'true' : 'false';
-      this.organizationService.createOfficeHierarchy(data).subscribe(response => {
+      this.organizationService.createOfficeHierarchy(data).subscribe((response) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
     } else {
       delete data.country;
       delete data.countryHierarchy;
-      this.organizationService.createOffice(data).subscribe(response => {
+      this.organizationService.createOffice(data).subscribe((response) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
     }
@@ -134,16 +134,13 @@ export class CreateOfficeComponent implements OnInit {
   change_country(value: boolean) {
     this.showHierarchy = value;
     if (value === true) {
-      const parent = this.officeData.filter(x => !x.parentId);
+      const parent = this.officeData.filter((x) => !x.parentId);
       if (parent && parent.length > 0) {
         this.officeForm.patchValue({
-        parentId: parent[0].id
+          parentId: parent[0].id,
         });
       }
     } else {
-      this.officeForm.patchValue({
-        parentId: null
-        });
     }
   }
 }

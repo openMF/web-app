@@ -1,25 +1,25 @@
 /** Angular Imports */
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
-import { EMPTY, Observable, of } from "rxjs";
-import { catchError, map } from "rxjs/operators";
+import { EMPTY, Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 /** Custom Services */
-import { AlertService } from "../alert/alert.service";
+import { AlertService } from '../alert/alert.service';
 
 /** Custom Interceptors */
-import { AuthenticationInterceptor } from "./authentication.interceptor";
+import { AuthenticationInterceptor } from './authentication.interceptor';
 
 /** Environment Configuration */
-import { environment } from "../../../environments/environment";
+import { environment } from '../../../environments/environment';
 
 /** Custom Models */
-import { LoginContext } from "./login-context.model";
-import { Credentials } from "./credentials.model";
-import { OAuth2Token } from "./o-auth2-token.model";
-import { KeycloakService } from "keycloak-angular";
+import { LoginContext } from './login-context.model';
+import { Credentials } from './credentials.model';
+import { OAuth2Token } from './o-auth2-token.model';
+import { KeycloakService } from 'keycloak-angular';
 
 /**
  * Authentication workflow.
@@ -40,11 +40,11 @@ export class AuthenticationService {
 
   private credentials: Credentials;
   /** Key to store credentials in storage. */
-  private credentialsStorageKey = "mifosXCredentials";
+  private credentialsStorageKey = 'mifosXCredentials';
   /** Key to store oauth token details in storage. */
-  private oAuthTokenDetailsStorageKey = "mifosXOAuthTokenDetails";
+  private oAuthTokenDetailsStorageKey = 'mifosXOAuthTokenDetails';
   /** Key to store two factor authentication token in storage. */
-  private twoFactorAuthenticationTokenStorageKey = "mifosXTwoFactorAuthenticationToken";
+  private twoFactorAuthenticationTokenStorageKey = 'mifosXTwoFactorAuthenticationToken';
 
   /**
    * Initializes the type of storage and authorization headers depending on whether
@@ -85,8 +85,8 @@ export class AuthenticationService {
         if (isLoggedIn) {
           this.keyCloak.getToken().then((token: any) => {
             const context: OAuth2Token = {
-              scope: "openid email profile",
-              token_type: "Bearer",
+              scope: 'openid email profile',
+              token_type: 'Bearer',
               access_token: token,
               expires_in: 12955743,
               refresh_token: token,
@@ -104,16 +104,16 @@ export class AuthenticationService {
    * @returns {Observable<boolean>} True if authentication is successful.
    */
   login(loginContext: LoginContext) {
-    this.alertService.alert({ type: "Authentication Start", message: "Please wait..." });
+    this.alertService.alert({ type: 'Authentication Start', message: 'Please wait...' });
     this.rememberMe = loginContext.remember;
     this.storage = this.rememberMe ? localStorage : sessionStorage;
     if (environment.oauth.enabled) {
       let httpParams = new HttpParams();
-      httpParams = httpParams.set("client_id", "fineract");
-      httpParams = httpParams.set("grant_type", "authorization_code");
+      httpParams = httpParams.set('client_id', 'fineract');
+      httpParams = httpParams.set('grant_type', 'authorization_code');
       httpParams = httpParams.set(
-        "client_secret",
-        "f2e81653-95c7-46cb-85a4-1b3610fae490.c2660c9e-323c-417c-8cad-e8738bbb73f2.f5b27bf0-ab30-4952-9f68-d746ad6f9ecd"
+        'client_secret',
+        'f2e81653-95c7-46cb-85a4-1b3610fae490.c2660c9e-323c-417c-8cad-e8738bbb73f2.f5b27bf0-ab30-4952-9f68-d746ad6f9ecd'
       );
       return this.http
         .disableApiPrefix()
@@ -129,7 +129,7 @@ export class AuthenticationService {
         );
     } else {
       return this.http
-        .post("/authentication", { username: loginContext.username, password: loginContext.password })
+        .post('/authentication', { username: loginContext.username, password: loginContext.password })
         .pipe(
           map((credentials: Credentials) => {
             this.onLoginSuccess(credentials);
@@ -147,11 +147,11 @@ export class AuthenticationService {
    */
   public getUserDetails(tokenResponse: OAuth2Token) {
     const accessToken = tokenResponse.access_token;
-    const httpParams = new HttpParams().set("access_token", tokenResponse.access_token);
+    const httpParams = new HttpParams().set('access_token', tokenResponse.access_token);
     this.refreshTokenOnExpiry(tokenResponse.expires_in);
 
     const userName = `${tokenResponse.username}/username`;
-    this.http.get("/users/" + userName, { params: httpParams }).subscribe((credentials: Credentials) => {
+    this.http.get('/users/' + userName, { params: httpParams }).subscribe((credentials: Credentials) => {
       credentials.accessToken = accessToken;
       this.onLoginSuccess(credentials);
 
@@ -161,9 +161,8 @@ export class AuthenticationService {
           id: credentials.countryId,
           name: credentials.countryName,
         };
-        sessionStorage.setItem("selectedCountry", JSON.stringify(selectedCountry));
+        sessionStorage.setItem('selectedCountry', JSON.stringify(selectedCountry));
       }
-
 
       if (!credentials.shouldRenewPassword) {
         this.storage.setItem(this.oAuthTokenDetailsStorageKey, JSON.stringify(tokenResponse));
@@ -190,12 +189,12 @@ export class AuthenticationService {
     const oAuthRefreshToken = JSON.parse(this.storage.getItem(this.oAuthTokenDetailsStorageKey)).refresh_token;
     this.authenticationInterceptor.removeAuthorization();
     let httpParams = new HttpParams();
-    httpParams = httpParams.set("client_id", "fineract");
+    httpParams = httpParams.set('client_id', 'fineract');
     // httpParams = httpParams.set('grant_type', 'authorization_code');
     // httpParams = httpParams.set('client_id', 'community-app');
-    httpParams = httpParams.set("grant_type", "refresh_token");
-    httpParams = httpParams.set("client_secret", "123");
-    httpParams = httpParams.set("refresh_token", oAuthRefreshToken);
+    httpParams = httpParams.set('grant_type', 'refresh_token');
+    httpParams = httpParams.set('client_secret', '123');
+    httpParams = httpParams.set('refresh_token', oAuthRefreshToken);
     this.http
       .post(`${environment.oauth.serverUrl}/oauth/token`, {}, { params: httpParams })
       .subscribe((tokenResponse: OAuth2Token) => {
@@ -227,20 +226,20 @@ export class AuthenticationService {
     if (credentials.isTwoFactorAuthenticationRequired) {
       this.credentials = credentials;
       this.alertService.alert({
-        type: "Two Factor Authentication Required",
-        message: "Two Factor Authentication Required",
+        type: 'Two Factor Authentication Required',
+        message: 'Two Factor Authentication Required',
       });
     } else {
       if (credentials.shouldRenewPassword) {
         this.credentials = credentials;
         this.alertService.alert({
-          type: "Password Expired",
-          message: "Your password has expired, please reset your password!",
+          type: 'Password Expired',
+          message: 'Your password has expired, please reset your password!',
         });
       } else {
         this.setCredentials(credentials);
         this.alertService.alert({
-          type: "Authentication Success",
+          type: 'Authentication Success',
           message: `${credentials.username} successfully logged in!`,
         });
         delete this.credentials;
@@ -325,7 +324,7 @@ export class AuthenticationService {
    * Gets the two factor authentication delivery methods available for the user.
    */
   getDeliveryMethods() {
-    return this.http.get("/twofactor");
+    return this.http.get('/twofactor');
   }
 
   /**
@@ -334,8 +333,8 @@ export class AuthenticationService {
    */
   requestOTP(deliveryMethod: any) {
     let httpParams = new HttpParams();
-    httpParams = httpParams.set("deliveryMethod", deliveryMethod.name);
-    httpParams = httpParams.set("extendedToken", this.rememberMe.toString());
+    httpParams = httpParams.set('deliveryMethod', deliveryMethod.name);
+    httpParams = httpParams.set('extendedToken', this.rememberMe.toString());
     return this.http.post(`/twofactor`, {}, { params: httpParams });
   }
 
@@ -344,7 +343,7 @@ export class AuthenticationService {
    * @param {string} otp
    */
   validateOTP(otp: string) {
-    const httpParams = new HttpParams().set("token", otp);
+    const httpParams = new HttpParams().set('token', otp);
     return this.http.post(`/twofactor/validate`, {}, { params: httpParams }).pipe(
       map((response) => {
         this.onOTPValidateSuccess(response);
@@ -364,13 +363,13 @@ export class AuthenticationService {
     this.authenticationInterceptor.setTwoFactorAccessToken(response.token);
     if (this.credentials.shouldRenewPassword) {
       this.alertService.alert({
-        type: "Password Expired",
-        message: "Your password has expired, please reset your password!",
+        type: 'Password Expired',
+        message: 'Your password has expired, please reset your password!',
       });
     } else {
       this.setCredentials(this.credentials);
       this.alertService.alert({
-        type: "Authentication Success",
+        type: 'Authentication Success',
         message: `${this.credentials.username} successfully logged in!`,
       });
       delete this.credentials;
@@ -385,7 +384,7 @@ export class AuthenticationService {
   resetPassword(passwordDetails: any) {
     return this.http.put(`/users/${this.credentials.userId}`, passwordDetails).pipe(
       map(() => {
-        this.alertService.alert({ type: "Password Reset Success", message: `Your password was sucessfully reset!` });
+        this.alertService.alert({ type: 'Password Reset Success', message: `Your password was sucessfully reset!` });
         this.authenticationInterceptor.removeAuthorization();
         this.authenticationInterceptor.removeTwoFactorAuthorization();
         const loginContext: LoginContext = {
@@ -401,34 +400,36 @@ export class AuthenticationService {
   getConnectedUsername(): string {
     const credentials = this.getCredentials();
     if (credentials) {
-      console.debug("Getting the connected username from the storage");
+      console.debug('Getting the connected username from the storage');
       return credentials.username;
     } else {
-      console.debug("Getting the connected username from Keycloak");
-      return this.keyCloak.getUsername();
+      console.debug('Getting the connected username from Keycloak');
+      if (this.isAuthenticated() === true) {
+        return  (this.isAuthenticated())? this.keyCloak.getUsername(): '';
+      }
     }
   }
 
   decodeToken(str) {
-    str = str.split(".")[1];
+    str = str.split('.')[1];
 
-    str = str.replace("/-/g", "+");
-    str = str.replace("/_/g", "/");
+    str = str.replace('/-/g', '+');
+    str = str.replace('/_/g', '/');
     switch (str.length % 4) {
       case 0:
         break;
       case 2:
-        str += "==";
+        str += '==';
         break;
       case 3:
-        str += "=";
+        str += '=';
         break;
       default:
-        throw "Invalid token";
+        throw 'Invalid token';
     }
 
-    str = (str + "===").slice(0, str.length + (str.length % 4));
-    str = str.replace(/-/g, "+").replace(/_/g, "/");
+    str = (str + '===').slice(0, str.length + (str.length % 4));
+    str = str.replace(/-/g, '+').replace(/_/g, '/');
 
     str = decodeURIComponent(escape(atob(str)));
 
