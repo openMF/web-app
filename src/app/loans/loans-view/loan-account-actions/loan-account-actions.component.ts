@@ -89,8 +89,9 @@ export class LoanAccountActionsComponent {
    * @param route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-      this.route.data.subscribe(( data: { actionButtonData: any }) => {
+      this.route.data.subscribe(( data: { actionButtonData: any, loanDetailsData: any }) => {
         this.actionButtonData = data.actionButtonData;
+        this.actionButtonData.currency = data.loanDetailsData.currency;
       });
 
     this.route.params.subscribe(params => {
