@@ -1,4 +1,18 @@
 <div class="tab-container mat-typography">
+  <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+    <button *ngIf="officeData.status === false" mat-raised-button color="primary" (click)="activateOffice()">
+      <i class="fa fa-power-off"></i>&nbsp;&nbsp;Activate
+    </button>
+
+    <button *ngIf="officeData.status === true" mat-raised-button color="info" (click)="deActivateOffice()">
+      <fa-icon icon="times"></fa-icon>&nbsp;&nbsp;Deactivate
+    </button>
+
+    <button mat-raised-button color="warn" (click)="deleteOffice()">
+      <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;Delete
+    </button>
+  </div>
+
   <mat-list>
     <mat-list-item> Parent Office : {{ officeData.parentName ? officeData.parentName : 'N/A' }} </mat-list-item>
 

@@ -83,9 +83,9 @@
         </mat-card-subtitle>
         <mat-card-subtitle *ngIf="clientViewData.creditScoreData?.length > 0">
           <p>
-            Credit Score Data : <br />
+            Credit Score Limits : <br />
             <span *ngFor="let score of clientViewData.creditScoreData">
-              {{ score.loanProductType }} : {{ score.score }}&nbsp;
+              {{ score.loanProductType }} Limit : {{ score.score }}&nbsp;
               <br />
             </span>
           </p>
