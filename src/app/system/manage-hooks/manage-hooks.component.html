@@ -1,7 +1,7 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
   <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_HOOK'">
     <fa-icon icon="plus" class="m-r-10"></fa-icon>
-    Create Hook
+    {{"labels.buttons.Create Hook" | translate}}
   </button>
 </div>
 
@@ -19,17 +19,17 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Hook Template </th>
-        <td mat-cell *matCellDef="let hook"> {{ hook.name }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Hook Template" | translate}} </th>
+        <td mat-cell *matCellDef="let hook"> {{ hook.name | translateKey:'text' }} </td>
       </ng-container>
 
       <ng-container matColumnDef="displayName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Hook Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Hook Name" | translate}} </th>
         <td mat-cell *matCellDef="let hook"> {{ hook.displayName }} </td>
       </ng-container>
 
       <ng-container matColumnDef="isActive">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Status' | translate }} </th>
         <td mat-cell *matCellDef="let hook">
           <div [className]="hook.isActive === true ? 'true' : 'false'">
             <fa-icon matTooltip="{{ hook.isActive === true ? 'Active' : 'Inactive' }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>

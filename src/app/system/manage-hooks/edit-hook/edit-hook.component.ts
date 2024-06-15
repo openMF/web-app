@@ -1,18 +1,18 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { SystemService } from '../../system.service';
 
 /** Custom Components */
-import { AddEventDialogComponent } from '../add-event-dialog/add-event-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { AddEventDialogComponent } from '../add-event-dialog/add-event-dialog.component';
 
 /**
  * Edit Hook Component.
@@ -48,12 +48,14 @@ export class EditHookComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {MatDialog} dialog Dialog Reference.
+   * @param {TranslateService} translateService Translate Service.
    */
   constructor(private route: ActivatedRoute,
               private systemService: SystemService,
               private router: Router,
               private formBuilder: UntypedFormBuilder,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private translateService:TranslateService) {
     this.route.data.subscribe(( data: { hooksTemplate: any, hook: any }) => {
       this.hooksTemplateData = data.hooksTemplate;
       this.hookData = data.hook;
@@ -117,7 +119,7 @@ export class EditHookComponent implements OnInit {
    */
   deleteEvent(index: number) {
     const deleteEventDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `event with entity name of ${this.eventsData[index].entityName}` }
+      data: { deleteContext: this.translateService.instant('labels.inputs.event with entity name of') +' '+this.eventsData[index].entityName }
     });
     deleteEventDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
