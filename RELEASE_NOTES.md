@@ -61,6 +61,7 @@
     * [SER-2680] - change input type for mobile number field from number to tel to client create and edit interfaces
     * [SER-2686] - fix hook routing key editing bug, fix resetting the selected office parent when you select radio button, and fix keycloak error.
     * [SER-2701] - fix credit score label data, ability to activate, deactivate and delete and office from UI
+    * [SER-2742] - show activate button when a group has been deactivated.
 
 ## Version 1.0.0 - for use with Fineract Web App
 
