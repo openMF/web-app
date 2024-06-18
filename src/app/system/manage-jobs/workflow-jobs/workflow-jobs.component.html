@@ -1,17 +1,17 @@
 <div class="container space-top" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
   <mat-form-field fxFlex="31%">
-    <mat-label>Job Name</mat-label>
+    <mat-label>{{'labels.inputs.Job Name' | translate}}</mat-label>
     <mat-select [formControl]="jobName" (selectionChange)="getWorkflowJobSteps($event.value)">
       <mat-option *ngFor="let job of jobNameOptions" [value]="job">
-        {{ job }}
+        {{ job | translateKey:'catalogs' }}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
   <div class="action-button" fxLayoutGap="25px" *ngIf="jobStepsData.length > 0">
     <button mat-raised-button color="primary" (click)="addJobStep()">
-      <fa-icon icon="plus" class="m-r-10"></fa-icon>Link Job Step
+      <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Link Job Step' | translate}}
     </button>
   </div>
 
@@ -21,17 +21,17 @@
       (cdkDropListDropped)="dropTable($event)">
 
       <ng-container matColumnDef="stepName">
-        <th mat-header-cell *matHeaderCellDef> Step Name </th>
+        <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Step Name' | translate}} </th>
         <td mat-cell *matCellDef="let jobStep"> {{ jobStep.stepName }} </td>
       </ng-container>
 
       <ng-container matColumnDef="stepOrder">
-        <th mat-header-cell *matHeaderCellDef> Order </th>
+        <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Order' | translate }} </th>
         <td mat-cell *matCellDef="let jobStep"> {{ jobStep.order }} </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <th mat-header-cell *matHeaderCellDef> {{ "labels.inputs.Actions" | translate}} </th>
         <td mat-cell *matCellDef="let row; let rowIndex = index">
           <button type="button" mat-icon-button color="warn" (click)="removeJobStep(rowIndex)" matTooltip="Delete"
             matTooltipPosition="left">
@@ -48,10 +48,10 @@
   <div *ngIf="stepOrderHasChanged" fxLayout="row" class="container margin-t space-top" fxLayout.xs="column"
     fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button [routerLink]="['../']">
-      Cancel
+      {{"labels.buttons.Cancel" | translate}}
     </button>
     <button mat-raised-button color="primary" (click)="saveChanges()">
-      Apply Changes
+      {{"labels.buttons.Apply Changes" | translate}}
     </button>
   </div>
 

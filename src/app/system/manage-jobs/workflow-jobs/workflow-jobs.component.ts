@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
+import { TranslateService } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
@@ -32,7 +33,8 @@ export class WorkflowJobsComponent implements OnInit {
   displayedColumns: string[] = ['stepName', 'stepOrder', 'actions'];
 
   constructor(private systemService: SystemService,
-    public dialog: MatDialog) {}
+              public dialog: MatDialog,
+              private translateService:TranslateService) {}
 
   ngOnInit(): void {
     this.systemService.getWorkflowJobNames().toPromise()
@@ -71,7 +73,7 @@ export class WorkflowJobsComponent implements OnInit {
    */
   removeJobStep(index: number) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `this` }
+      data: { deleteContext: this.translateService.instant('labels.text.this') }
     });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -108,16 +110,19 @@ export class WorkflowJobsComponent implements OnInit {
         }
 
         if (this.jobAvailableStepsData.length > 0) {
+          for (let index = 0; index < this.jobAvailableStepsData.length; index++) {
+            this.jobAvailableStepsData[index].stepDescription = this.translateService.instant(`labels.catalogs.${this.jobAvailableStepsData[index].stepDescription}`)
+          }
           const frmFields: FormfieldBase[] = [
             new SelectBase({
               controlName: 'stepName',
-              label: 'Step',
+              label: this.translateService.instant('labels.text.Step'),
               options: { label: 'stepDescription', value: 'stepName', data: this.jobAvailableStepsData },
               order: 1
             })
           ];
           const data = {
-            title: 'Add Job Step to Workflow',
+            title: this.translateService.instant('labels.text.Add Job Step to Workflow'),
             layout: { addButtonText: 'Add' },
             formfields: frmFields
           };
