@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { LoansService } from 'app/loans/loans.service';
 import { ErrorDialogComponent } from 'app/shared/error-dialog/error-dialog.component';
 import { SystemService } from 'app/system/system.service';
@@ -49,13 +50,15 @@ export class LoanLockedComponent implements OnInit {
    * @param {LoansService} loansService Loans Service
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
+   * @param {TranslateService} translateService Translate Service.
    */
   constructor(private route: ActivatedRoute,
     private router: Router,
     private loansService: LoansService,
     private systemService: SystemService,
     private tasksService: TasksService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private translateService:TranslateService) {
   }
 
   ngOnInit(): void {
@@ -107,9 +110,9 @@ export class LoanLockedComponent implements OnInit {
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: any): string {
     if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+      return `${this.isAllSelected() ? this.translateService.instant('labels.text.select') : this.translateService.instant('labels.text.deselect')} ${this.translateService.instant('labels.text.All')}`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+    return `${this.selection.isSelected(row) ? this.translateService.instant('labels.text.deselect') : this.translateService.instant('labels.text.select')} ${this.translateService.instant('labels.text.row')} ${row.position + 1}`;
   }
 
   showDetails(loan: any) {
