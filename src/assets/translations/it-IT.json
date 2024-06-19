@@ -519,6 +519,7 @@
       "Yes": "SÌ"
     },
     "catalogs": {
+      "Interest payment waiver": "Rinuncia al pagamento degli interessi",
       "Active": "Attivo",
       "account_transfer": "trasferimento_account",
       "accounting": "contabilità",
@@ -2444,6 +2445,7 @@
       "Navigation": "Navigazione",
       "Notifications": "Notifiche",
       "Organization": "Organizzazione",
+      "Interest Payment Waiver": "Rinuncia al pagamento degli interessi",
       "Payments": "Pagamenti",
       "Payout Refund": "Rimborso del pagamento",
       "Post Interest": "Pubblica interesse",

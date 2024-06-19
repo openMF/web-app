@@ -519,6 +519,7 @@
       "Yes": "예"
     },
     "catalogs": {
+      "Interest payment waiver": "이자 지급 면제",
       "Active": "활동적인",
       "account_transfer": "계좌_이체",
       "accounting": "회계",
@@ -2445,6 +2446,7 @@
       "Navigation": "항해",
       "Notifications": "알림",
       "Organization": "조직",
+      "Interest Payment Waiver": "이자 지급 면제",
       "Payments": "결제",
       "Payout Refund": "지불금 환불",
       "Post Interest": "관심 게시",

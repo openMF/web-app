@@ -135,7 +135,7 @@ export class TransactionsTabComponent implements OnInit {
    * REAMORTIZE:30
    */
   showTransactions(transactionsData: LoanTransaction) {
-    if ([1, 2, 4, 9, 20, 21, 22, 23, 26, 28, 29, 30].includes(transactionsData.type.id)) {
+    if ([1, 2, 4, 9, 20, 21, 22, 23, 26, 28, 29, 30, 31].includes(transactionsData.type.id)) {
       this.router.navigate([transactionsData.id], { relativeTo: this.route });
     }
   }

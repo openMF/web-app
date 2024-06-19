@@ -519,6 +519,7 @@
       "Yes": "Ano"
     },
     "catalogs": {
+      "Interest payment waiver": "Prominutí platby úroků",
       "Active": "Aktivní",
       "account_transfer": "převod_účtu",
       "accounting": "účetnictví",
@@ -2444,6 +2445,7 @@
       "Navigation": "Navigace",
       "Notifications": "Oznámení",
       "Organization": "Organizace",
+      "Interest Payment Waiver": "Prominutí platby úroků",
       "Payments": "Platby",
       "Payout Refund": "Vrácení platby",
       "Post Interest": "Post Interest",
