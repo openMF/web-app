@@ -519,6 +519,7 @@
       "Yes": "Taip"
     },
     "catalogs": {
+      "Interest payment waiver": "Palūkanų mokėjimo atsisakymas",
       "Active": "Aktyvus",
       "account_transfer": "account_transfer",
       "accounting": "buhalterinė apskaita",
@@ -2444,6 +2445,7 @@
       "Navigation": "Navigacija",
       "Notifications": "Pranešimai",
       "Organization": "Organizacija",
+      "Interest Payment Waiver": "Palūkanų mokėjimo atsisakymas",
       "Payments": "Mokėjimai",
       "Payout Refund": "Išmokų grąžinimas",
       "Post Interest": "Paskelbti susidomėjimą",

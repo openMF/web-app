@@ -519,6 +519,7 @@
       "Yes": "Ndiyo"
     },
     "catalogs": {
+      "Interest payment waiver": "Msamaha wa Malipo ya Riba",
       "Active": "Inayotumika",
       "account_transfer": "akaunti_uhamisho",
       "accounting": "uhasibu",
@@ -2444,6 +2445,7 @@
       "Navigation": "Urambazaji",
       "Notifications": "Arifa",
       "Organization": "Shirika",
+      "Interest Payment Waiver": "Msamaha wa Malipo ya Riba",
       "Payments": "Malipo",
       "Payout Refund": "Marejesho ya Malipo",
       "Post Interest": "Chapisha Maslahi",
