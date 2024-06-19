@@ -519,6 +519,7 @@
       "Yes": "Sim"
     },
     "catalogs": {
+      "Interest payment waiver": "Isenção de pagamento de juros",
       "Active": "Ativo",
       "account_transfer": "transferência de conta",
       "accounting": "contabilidade",
@@ -2444,6 +2445,7 @@
       "Navigation": "Navegação",
       "Notifications": "Notificações",
       "Organization": "Organização",
+      "Interest Payment Waiver": "Isenção de pagamento de juros",
       "Payments": "Pagamentos",
       "Payout Refund": "Reembolso de pagamento",
       "Post Interest": "Publicar interesse",

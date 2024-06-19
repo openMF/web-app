@@ -519,6 +519,7 @@
             "Yes": "Yes"
         },
         "catalogs": {
+            "Interest payment waiver": "Interest Payment Waiver",
             "Active": "Active",
             "account_transfer": "account_transfer",
             "accounting": "accounting",
@@ -2445,6 +2446,7 @@
             "Navigation": "Navigation",
             "Notifications": "Notifications",
             "Organization": "Organization",
+            "Interest Payment Waiver": "Interest Payment Waiver",
             "Payments": "Payments",
             "Payout Refund": "Payout Refund",
             "Post Interest": "Post Interest",

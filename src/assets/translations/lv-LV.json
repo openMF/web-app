@@ -519,6 +519,7 @@
       "Yes": "Jā"
     },
     "catalogs": {
+      "Interest payment waiver": "Atteikšanās no procentu maksājumiem",
       "Active": "Aktīvs",
       "account_transfer": "account_transfer",
       "accounting": "grāmatvedība",
@@ -2444,6 +2445,7 @@
       "Navigation": "Navigācija",
       "Notifications": "Paziņojumi",
       "Organization": "Organizācija",
+      "Interest Payment Waiver": "Atteikšanās no procentu maksājumiem",
       "Payments": "Maksājumi",
       "Payout Refund": "Izmaksas atmaksa",
       "Post Interest": "Post Interese",

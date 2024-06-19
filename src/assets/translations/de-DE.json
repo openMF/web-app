@@ -519,6 +519,7 @@
       "Yes": "Ja"
     },
     "catalogs": {
+      "Interest payment waiver": "Zinszahlungsverzicht",
       "Active": "Aktiv",
       "account_transfer": "account_transfer",
       "accounting": "Buchhaltung",
@@ -2444,6 +2445,7 @@
       "Navigation": "Navigation",
       "Notifications": "Benachrichtigungen",
       "Organization": "Organisation",
+      "Interest Payment Waiver": "Zinszahlungsverzicht",
       "Payments": "Zahlungen",
       "Payout Refund": "Auszahlungsrückerstattung",
       "Post Interest": "Interesse posten",

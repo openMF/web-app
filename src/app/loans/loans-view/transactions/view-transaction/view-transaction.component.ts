@@ -124,7 +124,7 @@ export class ViewTransactionComponent implements OnInit {
   }
 
   allowChargebackTransaction(transactionType: LoanTransactionType): boolean {
-    return (transactionType.repayment
+    return (transactionType.repayment || transactionType.interestPaymentWaiver
       || transactionType.goodwillCredit || transactionType.payoutRefund
       || transactionType.merchantIssuedRefund || transactionType.downPayment);
   }

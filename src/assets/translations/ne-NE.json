@@ -519,6 +519,7 @@
       "Yes": "हो"
     },
     "catalogs": {
+      "Interest payment waiver": "ब्याज भुक्तानी माफी",
       "Active": "सक्रिय",
       "account_transfer": "account_transfer",
       "accounting": "लेखा",
@@ -2444,6 +2445,7 @@
       "Navigation": "नेभिगेसन",
       "Notifications": "सूचनाहरू",
       "Organization": "संगठन",
+      "Interest Payment Waiver": "ब्याज भुक्तानी माफी",
       "Payments": "भुक्तानीहरू",
       "Payout Refund": "भुक्तानी फिर्ता",
       "Post Interest": "पोस्ट ब्याज",

@@ -134,6 +134,11 @@ export class LoansAccountButtonConfiguration {
             taskPermissionName: 'CREATE_GOODWILL_TRANSACTION',
           },
           {
+            name: 'Interest Payment Waiver',
+            icon: 'coins',
+            taskPermissionName: 'CREATE_INTERESTPAYMENTWAIVER_TRANSACTION',
+          },
+          {
             name: 'Payout Refund',
             icon: 'coins',
             taskPermissionName: 'CREATE_PAYOUT_REFUND',
@@ -199,6 +204,10 @@ export class LoansAccountButtonConfiguration {
           {
             name: 'Goodwill Credit',
             taskPermissionName: 'CREATE_GOODWILL_TRANSACTION',
+          },
+          {
+            name: 'Interest Payment Waiver',
+            taskPermissionName: 'CREATE_INTERESTPAYMENTWAIVER_TRANSACTION',
           },
           {
             name: 'Payout Refund',
