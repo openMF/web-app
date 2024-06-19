@@ -13,6 +13,9 @@
 
   window["env"]["fineractPlatformTenantId"] = "";
 
+  window['env']['keycloakRealm'] = "";
+  window['env']['keycloakClientId'] = "";
+
   // Language Environment variables
   window["env"]["defaultLanguage"] = "";
   window["env"]["supportedLanguages"] = "";

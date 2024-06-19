@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    #platform: linux/amd64 # For mac
+    # platform: linux/amd64 # For mac
     ports:
       - '4200:80'
     environment:
@@ -18,3 +18,5 @@ services:
       - MIFOS_DEFAULT_LANGUAGE=en-US
       - MIFOS_SUPPORTED_LANGUAGES=en-US,fr-FR
       - AUTH_SERVER_URL=https://accounts.test.oneacrefund.org
+      - KEYCLOAK_REALM=OneAcreFund
+      - KEYCLOAK_CLIENT_ID=fineract

@@ -1,153 +1,155 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_SAVINGSPRODUCT'">
-    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
-    Edit
+    <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp; Edit
   </button>
 </div>
 
 <div class="container">
-
   <mat-card>
-
     <mat-card-content>
-
       <div fxLayout="row wrap" fxLayout.lt-md="column">
-
         <h2 class="mat-h2" fxFlexFill>{{ savingProduct.name }}</h2>
-      
+
         <mat-divider [inset]="true"></mat-divider>
-      
+
         <h3 class="mat-h3" fxFlexFill>Details</h3>
-      
+
         <mat-divider [inset]="true"></mat-divider>
-      
+
         <div fxFlexFill>
           <span fxFlex="40%">Short Name:</span>
           <span fxFlex="60%">{{ savingProduct.shortName }}</span>
         </div>
-      
+
+        <div fxFlexFill *ngIf="savingProduct.loanProductName">
+          <span fxFlex="40%">Loan Product Name:</span>
+          <span fxFlex="60%">{{ savingProduct.loanProductName }}</span>
+        </div>
+
         <div fxFlexFill *ngIf="savingProduct.description">
           <span fxFlex="40%">Description:</span>
           <span fxFlex="60%">{{ savingProduct.description }}</span>
         </div>
-      
+
         <h3 class="mat-h3" fxFlexFill>Currency</h3>
-      
+
         <mat-divider [inset]="true"></mat-divider>
-      
+
         <div fxFlexFill>
           <span fxFlex="40%">Currency:</span>
           <span fxFlex="60%">{{ savingProduct.currency.name }}</span>
         </div>
-      
+
         <div fxFlexFill>
           <span fxFlex="40%">Decimal Places:</span>
           <span fxFlex="60%">{{ savingProduct.currency.decimalPlaces }}</span>
         </div>
-      
+
         <div fxFlexFill>
           <span fxFlex="40%">Currency in multiples of:</span>
           <span fxFlex="60%">{{ savingProduct.currency.inMultiplesOf }}</span>
         </div>
-      
+
         <h3 class="mat-h3" fxFlexFill>Terms</h3>
-      
+
         <mat-divider [inset]="true"></mat-divider>
-      
+
         <div fxFlexFill>
           <span fxFlex="40%">Nominal Annual Interest Rate:</span>
           <span fxFlex="60%">{{ savingProduct.nominalAnnualInterestRate }}</span>
         </div>
-      
+
         <div fxFlexFill>
           <span fxFlex="40%">Interest Compounding Period:</span>
           <span fxFlex="60%">{{ savingProduct.interestCompoundingPeriodType.value }}</span>
         </div>
-      
+
         <div fxFlexFill>
           <span fxFlex="40%">Interest Posting Period:</span>
           <span fxFlex="60%">{{ savingProduct.interestPostingPeriodType.value }}</span>
         </div>
-      
+
         <div fxFlexFill>
           <span fxFlex="40%">Interest Calculated using:</span>
           <span fxFlex="60%">{{ savingProduct.interestCalculationType.value }}</span>
         </div>
-      
+
         <div fxFlexFill>
           <span fxFlex="40%">Days in Year:</span>
           <span fxFlex="60%">{{ savingProduct.interestCalculationDaysInYearType.value }}</span>
         </div>
-      
+
         <h3 class="mat-h3" fxFlexFill>Settings</h3>
-      
+
         <mat-divider [inset]="true"></mat-divider>
-      
+
         <div fxFlexFill *ngIf="savingProduct.minRequiredOpeningBalance">
           <span fxFlex="40%">Minimum Opening Balance:</span>
           <span fxFlex="60%">{{ savingProduct.minRequiredOpeningBalance }}</span>
         </div>
-      
+
         <div fxFlexFill *ngIf="savingProduct.lockinPeriodFrequency">
           <span fxFlex="40%">Lock-in Period:</span>
-          <span fxFlex="60%">{{ savingProduct.lockinPeriodFrequency + ' ' + savingProduct.lockinPeriodFrequencyType.value }}</span>
+          <span fxFlex="60%">{{
+            savingProduct.lockinPeriodFrequency + ' ' + savingProduct.lockinPeriodFrequencyType.value
+          }}</span>
         </div>
-      
+
         <div fxFlexFill>
           <span fxFlex="40%">Apply Withdrawal Fee for Transfers:</span>
           <span fxFlex="60%">{{ savingProduct.withdrawalFeeForTransfers ? 'Yes' : 'No' }}</span>
         </div>
-      
+
         <div fxFlexFill *ngIf="savingProduct.minBalanceForInterestCalculation">
           <span fxFlex="40%">Balance Required for Interest Calculation:</span>
           <span fxFlex="60%">{{ savingProduct.minBalanceForInterestCalculation }}</span>
         </div>
-      
+
         <div fxFlexFill>
           <span fxFlex="40%">Enforce Minimum Balance:</span>
           <span fxFlex="60%">{{ savingProduct.enforceMinRequiredBalance ? 'Yes' : 'No' }}</span>
         </div>
-      
+
         <div fxFlexFill *ngIf="savingProduct.minRequiredBalance">
           <span fxFlex="40%">Minimum Balance:</span>
           <span fxFlex="60%">{{ savingProduct.minRequiredBalance }}</span>
         </div>
-      
+
         <div fxFlexFill>
           <span fxFlex="40%">Withhold Tax is Applicable:</span>
           <span fxFlex="60%">{{ savingProduct.withHoldTax ? 'Yes' : 'No' }}</span>
         </div>
-      
+
         <div fxFlexFill *ngIf="savingProduct.withHoldTax">
           <span fxFlex="40%">Tax Group:</span>
           <span fxFlex="60%">{{ savingProduct.taxGroup.name }}</span>
         </div>
-      
+
         <div fxFlexFill>
           <span fxFlex="40%">Is Overdraft Allowed:</span>
           <span fxFlex="60%">{{ savingProduct.allowOverdraft ? 'Yes' : 'No' }}</span>
         </div>
-      
+
         <div fxFlexFill *ngIf="savingProduct.minOverdraftForInterestCalculation">
           <span fxFlex="40%">Minimum Overdraft Required for Interest Calculation:</span>
           <span fxFlex="60%">{{ savingProduct.minOverdraftForInterestCalculation }}</span>
         </div>
-      
+
         <div fxFlexFill *ngIf="savingProduct.nominalAnnualInterestRateOverdraft">
           <span fxFlex="40%">Nominal Annual Interest for Overdraft:</span>
           <span fxFlex="60%">{{ savingProduct.nominalAnnualInterestRateOverdraft }}</span>
         </div>
-      
+
         <div fxFlexFill *ngIf="savingProduct.overdraftLimit">
           <span fxFlex="40%">Maximum Overdraft Amount Limit:</span>
           <span fxFlex="60%">{{ savingProduct.overdraftLimit }}</span>
         </div>
-      
+
         <div fxFlexFill>
           <span fxFlex="40%">Enable Dormancy Tracking:</span>
           <span fxFlex="60%">{{ savingProduct.isDormancyTrackingActive ? 'Yes' : 'No' }}</span>
         </div>
-      
+
         <div fxFlexFill *ngIf="savingProduct.isDormancyTrackingActive" fxLayout="row wrap" fxLayout.lt-md="column">
           <span fxFlex="40%">Number of Days to Inactive sub-status:</span>
           <span fxFlex="60%">{{ savingProduct.daysToInactive }}</span>
@@ -156,72 +158,67 @@
           <span fxFlex="40%">Number of Days to Escheat:</span>
           <span fxFlex="60%">{{ savingProduct.daysToEscheat }}</span>
         </div>
-      
+
         <div fxFlexFill *ngIf="savingProduct.charges.length" fxLayout="row wrap" fxLayout.lt-md="column">
-      
           <h3 class="mat-h3" fxFlexFill>Charges</h3>
-      
+
           <mat-divider [inset]="true"></mat-divider>
-      
+
           <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="savingProduct.charges">
-      
             <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef> Name </th>
+              <th mat-header-cell *matHeaderCellDef>Name</th>
               <td mat-cell *matCellDef="let charge">
                 {{ charge.name + ', ' + charge.currency.displaySymbol }}
               </td>
             </ng-container>
-      
+
             <ng-container matColumnDef="chargeCalculationType">
-              <th mat-header-cell *matHeaderCellDef> Type </th>
+              <th mat-header-cell *matHeaderCellDef>Type</th>
               <td mat-cell *matCellDef="let charge">
                 {{ charge.chargeCalculationType.value }}
               </td>
             </ng-container>
-      
+
             <ng-container matColumnDef="amount">
-              <th mat-header-cell *matHeaderCellDef> Amount </th>
+              <th mat-header-cell *matHeaderCellDef>Amount</th>
               <td mat-cell *matCellDef="let charge">
-                {{ charge.amount  }}
+                {{ charge.amount }}
               </td>
             </ng-container>
-      
+
             <ng-container matColumnDef="chargeTimeType">
-              <th mat-header-cell *matHeaderCellDef> Collected On </th>
+              <th mat-header-cell *matHeaderCellDef>Collected On</th>
               <td mat-cell *matCellDef="let charge">
                 {{ charge.chargeTimeType.value }}
               </td>
             </ng-container>
-      
+
             <tr mat-header-row *matHeaderRowDef="chargesDisplayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: chargesDisplayedColumns;"></tr>
-      
+            <tr mat-row *matRowDef="let row; columns: chargesDisplayedColumns"></tr>
           </table>
-      
         </div>
-      
+
         <h3 class="mat-h3" fxFlexFill>Accounting</h3>
-      
+
         <mat-divider [inset]="true"></mat-divider>
-      
+
         <div fxFlexFill>
           <span fxFlex="40%">Type:</span>
           <span fxFlex="60%">{{ savingProduct.accountingRule.value }}</span>
         </div>
-      
+
         <div fxFlexFill *ngIf="savingProduct.accountingRule.id === 2" fxLayout="row wrap" fxLayout.lt-md="column">
-      
           <h4 fxFlexFill class="mat-h4">Assets</h4>
-      
+
           <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
             <span fxFlex="40%">Saving reference:</span>
             <span fxFlex="60%">{{ savingProduct.accountingMappings.savingsReferenceAccount.name }}</span>
             <span fxFlex="40%">Overdraft portfolio:</span>
             <span fxFlex="60%">{{ savingProduct.accountingMappings.overdraftPortfolioControl.name }}</span>
           </div>
-      
+
           <h4 fxFlexFill class="mat-h4">Liabilities</h4>
-      
+
           <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
             <span fxFlex="40%">Saving control:</span>
             <span fxFlex="60%">{{ savingProduct.accountingMappings.savingsControlAccount.name }}</span>
@@ -232,18 +229,18 @@
               <span fxFlex="60%">{{ savingProduct.accountingMappings.escheatLiabilityAccount.name }}</span>
             </div>
           </div>
-      
+
           <h4 fxFlexFill class="mat-h4">Expenses</h4>
-      
+
           <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
             <span fxFlex="40%">Interest on savings:</span>
             <span fxFlex="60%">{{ savingProduct.accountingMappings.interestOnSavingsAccount.name }}</span>
             <span fxFlex="40%">Write-off:</span>
             <span fxFlex="60%">{{ savingProduct.accountingMappings.writeOffAccount.name }}</span>
           </div>
-      
+
           <h4 fxFlexFill class="mat-h4">Income</h4>
-      
+
           <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
             <span fxFlex="40%">Income from fees:</span>
             <span fxFlex="60%">{{ savingProduct.accountingMappings.incomeFromFeeAccount.name }}</span>
@@ -252,102 +249,122 @@
             <span fxFlex="40%">Overdraft Interest Income:</span>
             <span fxFlex="60%">{{ savingProduct.accountingMappings.incomeFromInterest.name }}</span>
           </div>
-      
-          <div *ngIf="savingProduct.paymentChannelToFundSourceMappings?.length || savingProduct.feeToIncomeAccountMappings?.length || savingProduct.penaltyToIncomeAccountMappings?.length" fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
-      
+
+          <div
+            *ngIf="
+              savingProduct.paymentChannelToFundSourceMappings?.length ||
+              savingProduct.feeToIncomeAccountMappings?.length ||
+              savingProduct.penaltyToIncomeAccountMappings?.length
+            "
+            fxFlexFill
+            fxLayout="row wrap"
+            fxLayout.lt-md="column"
+          >
             <h3 class="mat-h3" fxFlexFill>Advanced Accounting Rules</h3>
-      
+
             <mat-divider [inset]="true"></mat-divider>
-      
-            <div *ngIf="savingProduct.paymentChannelToFundSourceMappings?.length" fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
-      
+
+            <div
+              *ngIf="savingProduct.paymentChannelToFundSourceMappings?.length"
+              fxFlexFill
+              fxLayout="row wrap"
+              fxLayout.lt-md="column"
+            >
               <h4 class="mat-h4" fxFlexFill>Fund Sources for Payment Channels</h4>
-      
-              <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="savingProduct.paymentChannelToFundSourceMappings">
-      
+
+              <table
+                fxFlexFill
+                class="mat-elevation-z1"
+                mat-table
+                [dataSource]="savingProduct.paymentChannelToFundSourceMappings"
+              >
                 <ng-container matColumnDef="paymentTypeId">
-                  <th mat-header-cell *matHeaderCellDef> Payment Type </th>
+                  <th mat-header-cell *matHeaderCellDef>Payment Type</th>
                   <td mat-cell *matCellDef="let paymentFundSource">
                     {{ paymentFundSource.paymentType.name }}
                   </td>
                 </ng-container>
-      
+
                 <ng-container matColumnDef="fundSourceAccountId">
-                  <th mat-header-cell *matHeaderCellDef> Fund Source </th>
+                  <th mat-header-cell *matHeaderCellDef>Fund Source</th>
                   <td mat-cell *matCellDef="let paymentFundSource">
                     {{ paymentFundSource.fundSourceAccount.name }}
                   </td>
                 </ng-container>
-      
+
                 <tr mat-header-row *matHeaderRowDef="paymentFundSourceDisplayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: paymentFundSourceDisplayedColumns;"></tr>
-      
+                <tr mat-row *matRowDef="let row; columns: paymentFundSourceDisplayedColumns"></tr>
               </table>
-      
             </div>
-      
-            <div *ngIf="savingProduct.feeToIncomeAccountMappings?.length" fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
-      
+
+            <div
+              *ngIf="savingProduct.feeToIncomeAccountMappings?.length"
+              fxFlexFill
+              fxLayout="row wrap"
+              fxLayout.lt-md="column"
+            >
               <h4 class="mat-h4" fxFlexFill>Fees to Specific Income Accounts</h4>
-      
-              <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="savingProduct.feeToIncomeAccountMappings">
-      
+
+              <table
+                fxFlexFill
+                class="mat-elevation-z1"
+                mat-table
+                [dataSource]="savingProduct.feeToIncomeAccountMappings"
+              >
                 <ng-container matColumnDef="chargeId">
-                  <th mat-header-cell *matHeaderCellDef> Fees </th>
+                  <th mat-header-cell *matHeaderCellDef>Fees</th>
                   <td mat-cell *matCellDef="let feesIncome">
                     {{ feesIncome.charge.name }}
                   </td>
                 </ng-container>
-      
+
                 <ng-container matColumnDef="incomeAccountId">
-                  <th mat-header-cell *matHeaderCellDef> Income Account </th>
+                  <th mat-header-cell *matHeaderCellDef>Income Account</th>
                   <td mat-cell *matCellDef="let feesIncome">
                     {{ feesIncome.incomeAccount.name }}
                   </td>
                 </ng-container>
-      
+
                 <tr mat-header-row *matHeaderRowDef="feesPenaltyIncomeDisplayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns;"></tr>
-      
+                <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns"></tr>
               </table>
-      
             </div>
-      
-            <div *ngIf="savingProduct.penaltyToIncomeAccountMappings?.length" fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
-      
+
+            <div
+              *ngIf="savingProduct.penaltyToIncomeAccountMappings?.length"
+              fxFlexFill
+              fxLayout="row wrap"
+              fxLayout.lt-md="column"
+            >
               <h4 class="mat-h4" fxFlexFill>Penalties to Specific Income Accounts</h4>
-      
-              <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="savingProduct.penaltyToIncomeAccountMappings">
-      
+
+              <table
+                fxFlexFill
+                class="mat-elevation-z1"
+                mat-table
+                [dataSource]="savingProduct.penaltyToIncomeAccountMappings"
+              >
                 <ng-container matColumnDef="chargeId">
-                  <th mat-header-cell *matHeaderCellDef> Penalty </th>
+                  <th mat-header-cell *matHeaderCellDef>Penalty</th>
                   <td mat-cell *matCellDef="let penaltyIncome">
                     {{ penaltyIncome.charge.name }}
                   </td>
                 </ng-container>
-      
+
                 <ng-container matColumnDef="incomeAccountId">
-                  <th mat-header-cell *matHeaderCellDef> Income Account </th>
+                  <th mat-header-cell *matHeaderCellDef>Income Account</th>
                   <td mat-cell *matCellDef="let penaltyIncome">
                     {{ penaltyIncome.incomeAccount.name }}
                   </td>
                 </ng-container>
-      
+
                 <tr mat-header-row *matHeaderRowDef="feesPenaltyIncomeDisplayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns;"></tr>
-      
+                <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns"></tr>
               </table>
-      
             </div>
-      
           </div>
-      
         </div>
-      
-      </div>     
-
+      </div>
     </mat-card-content>
-
   </mat-card>
-
 </div>
