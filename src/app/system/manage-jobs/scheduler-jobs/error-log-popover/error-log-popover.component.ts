@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { SchedulerJob } from '../models/scheduler-job.model';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
+import { SchedulerJob } from '../models/scheduler-job.model';
 
 
 interface ErrorJobDataType {
@@ -27,7 +27,7 @@ export class ErrorLogPopoverComponent implements OnInit {
   }
 
   buttonLabel(): string {
-    const label: string = this.show ? 'Show less' : 'Show more';
+    const label: string = this.show ? this.translateService.instant('labels.buttons.Show less'): this.translateService.instant('labels.buttons.Show more');
     return this.translateService.instant('labels.buttons.' + label);
   }
 
