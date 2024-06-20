@@ -69,7 +69,7 @@
             Member Of :
 
             <span>
-              <a>{{ clientViewData?.group?.name }}</a
+              <a [routerLink]="['/groups', clientViewData?.group?.id, 'general']">{{ clientViewData?.group?.name }}</a
               >&nbsp;
             </span>
 

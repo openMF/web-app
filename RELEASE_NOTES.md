@@ -63,6 +63,7 @@
     * [SER-2701] - fix credit score label data, ability to activate, deactivate and delete and office from UI
     * [SER-2735] - show currency and loan product name when displaying savings products in list, view and edit view.
     * [SER-2742] - show activate button when a group has been deactivated.
+    * [SER-2763] - fix for view client signature and click group name from client view
 
 ## Version 1.0.0 - for use with Fineract Web App
 
