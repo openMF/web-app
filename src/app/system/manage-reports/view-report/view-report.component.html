@@ -2,13 +2,13 @@
 
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_REPORT'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    Edit
+    {{'labels.buttons.Edit' | translate }}
   </button>
 
   <span *ngIf="!reportData.coreReport">
     <button mat-raised-button color="warn" (click)="delete()" *mifosxHasPermission="'DELETE_REPORT'">
       <fa-icon icon="trash" class="m-r-10"></fa-icon>
-      Delete
+      {{'labels.buttons.Delete' | translate }}
     </button>
   </span>
 
@@ -25,31 +25,31 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="mat-body-strong">
-          Report Type:
+          {{ 'labels.inputs.Report Type' | translate }}:
         </div>
 
         <div fxFlex="50%">
-          {{ reportData.reportType }}
+          {{ reportData.reportType | translateKey:'text' }}
         </div>
 
         <div *ngIf="reportData.reportSubType" fxFlex="50%" class="mat-body-strong">
-          Report Subtype:
+          {{ 'labels.inputs.Report Sub Type' | translate }}:
         </div>
 
         <div *ngIf="reportData.reportSubType" fxFlex="50%">
-          {{ reportData.reportSubType }}
+          {{ reportData.reportSubType | translateKey:'text' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Report Category:
+          {{ 'labels.inputs.Report Category' | translate }}:
         </div>
 
         <div fxFlex="50%">
-          {{ reportData.reportCategory }}
+          {{ reportData.reportCategory | translateKey:'catalogs' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Core Report:
+          {{ 'labels.inputs.Core Report' | translate }}:
         </div>
 
         <div fxFlex="50%">
@@ -57,7 +57,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          User Report:
+          {{ 'labels.inputs.User Report' | translate }}:
         </div>
 
         <div fxFlex="50%">
