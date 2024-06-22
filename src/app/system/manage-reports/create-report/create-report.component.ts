@@ -1,18 +1,19 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, FormArray } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
 
 /** Custom Components */
-import { ReportParameterDialogComponent } from '../report-parameter-dialog/report-parameter-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { ReportParameterDialogComponent } from '../report-parameter-dialog/report-parameter-dialog.component';
 
 /**
  * Create Report Component.
@@ -55,12 +56,14 @@ export class CreateReportComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog Reference.
+   * @param {TranslateService} translateService Translate Service.
    */
   constructor(private formBuilder: UntypedFormBuilder,
               private systemService: SystemService,
               private route: ActivatedRoute,
               private router: Router,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private translateServices:TranslateService) {
     this.route.data.subscribe((data: { reportTemplate: any }) => {
       this.reportTemplateData = data.reportTemplate;
       this.dataForDialog.allowedParameters = this.reportTemplateData.allowedParameters;
@@ -147,7 +150,7 @@ export class CreateReportComponent implements OnInit {
    */
   deleteReportParameter(reportParameter: any) {
     const deleteReportDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `report parameter ${reportParameter.parameterName}` }
+      data: { deleteContext: this.translateServices.instant('labels.heading.Report Parameter') + ' ' + reportParameter.parameterName }
     });
     deleteReportDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
