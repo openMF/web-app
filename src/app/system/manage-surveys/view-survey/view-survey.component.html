@@ -1,21 +1,21 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" *mifosxHasPermission="'UPDATE_REPORT'" (click)="onEdit()">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    Edit
+    {{'labels.buttons.Edit' | translate }}
   </button>
 </div>
 
 <div class="container m-b-20">
   <mat-card>
     <mat-card-header fxLayout="column">
-      <mat-card-title>Survey</mat-card-title>
+      <mat-card-title>{{'labels.buttons.Survey' | translate }}</mat-card-title>
       <mat-divider [inset]="true"></mat-divider>
     </mat-card-header>
     <mat-card-content>
 
       <div fxLayout="row wrap" class="content">
         <div fxFlex="40%" fxFlex.lt-md="50%" class="header">
-          <b>Key:</b>
+          <b>{{'labels.inputs.Key' | translate}}:</b>
         </div>
 
         <div fxFlex="60%" fxFlex.lt-md="50%">
@@ -23,7 +23,7 @@
         </div>
 
         <div fxFlex="40%" fxFlex.lt-md="50%" class="header">
-          <b>Name:</b>
+          <b>{{'labels.inputs.Name' | translate}}:</b>
         </div>
 
         <div fxFlex="60%" fxFlex.lt-md="50%">
@@ -31,7 +31,7 @@
         </div>
 
         <div fxFlex="40%" fxFlex.lt-md="50%" class="header">
-          <b>Country Code:</b>
+          <b>{{ 'labels.inputs.Country Code' | translate }}:</b>
         </div>
 
         <div fxFlex="60%" fxFlex.lt-md="50%">
@@ -39,7 +39,7 @@
         </div>
 
         <div fxFlex="40%" fxFlex.lt-md="50%" class="header">
-          <b>Description:</b>
+          <b>{{ 'labels.inputs.Description' | translate }}:</b>
         </div>
 
         <div fxFlex="60%" fxFlex.lt-md="50%">
@@ -57,24 +57,24 @@
 <div class="container m-b-20">
   <mat-card class="questions">
     <mat-card-header fxLayout="column">
-      <mat-card-title>Questions</mat-card-title>
+      <mat-card-title>{{ 'labels.inputs.Questions' | translate }}</mat-card-title>
       <mat-divider [inset]="true"></mat-divider>
     </mat-card-header>
     <mat-card-content>
       <div class="survey_questions" *ngFor="let questionData of surveyData.questionDatas; index as i">
         <mat-card>
           <mat-card-content>
-            <div>Question: {{i+1}}</div>
+            <div>{{'labels.heading.Question' | translate}}: {{i+1}}</div>
             <div fxLayout="row" id="key_text">
               <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
-                <b>Key:</b>
+                <b>{{'labels.inputs.Key' | translate}}:</b>
               </div>
 
               <div fxFlex="40%" fxFlex.lt-md="50%">
                 {{questionData.key}}
               </div>
               <div fxFlex="40%" fxFlex.lt-md="50%" class="header">
-                <b>Text:</b>
+                <b>{{'labels.inputs.Text' | translate}}:</b>
               </div>
 
               <div fxFlex="40%" fxFlex.lt-md="50%">
@@ -83,7 +83,7 @@
             </div>
             <div fxLayout="row" id="description">
               <div fxFlex="20%" fxFlex.lt-md="50%" class="header">
-                <b>Description:</b>
+                <b>{{ 'labels.inputs.Description' | translate }}:</b>
               </div>
 
               <div fxFlex="40%" fxFlex.lt-md="50%">
@@ -91,7 +91,7 @@
               </div>
             </div>
             <div fxLayout="column" id="questionaire">
-              <div><b>Option: </b></div>
+              <div><b>{{'labels.inputs.Option' | translate}}: </b></div>
               <table id="response">
                 <tr>
                   <th *ngFor="let column of displayedColumns">{{column | titlecase}}</th>
