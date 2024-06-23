@@ -11,41 +11,41 @@
           <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
             <mat-form-field fxFlex="48%">
-              <mat-label>Key</mat-label>
+              <mat-label>{{'labels.inputs.Key' | translate}}</mat-label>
               <input matInput maxlength="32" required formControlName="key">
               <mat-error *ngIf="surveyForm.controls.key.hasError('required')">
-                Key is <strong>required</strong>
+                {{'labels.inputs.Key' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
               </mat-error>
             </mat-form-field>
 
             <mat-form-field fxFlex="48%">
-              <mat-label>Name</mat-label>
+              <mat-label>{{'labels.inputs.Name' | translate}}</mat-label>
               <input matInput maxlength="255" required formControlName="name">
               <mat-error *ngIf="surveyForm.controls.name.hasError('required')">
-                Name is <strong>required</strong>
+                {{'labels.inputs.Name' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
               </mat-error>
             </mat-form-field>
 
             <mat-form-field fxFlex="48%">
-              <mat-label>Country Code</mat-label>
+              <mat-label>{{ 'labels.inputs.Country Code' | translate }}</mat-label>
               <input matInput maxlength="2" required formControlName="countryCode">
               <mat-error *ngIf="surveyForm.controls.countryCode.hasError('required')">
-                Country Code is <strong>required</strong>
+                {{ 'labels.inputs.Country Code' | translate }} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
               </mat-error>
               <mat-error *ngIf="surveyForm.controls.countryCode.hasError('pattern')">
-                Country Code <strong>must consist of 2 alphabetic characters</strong>
+                {{ 'labels.inputs.Country Code' | translate }} <strong>{{ 'labels.commons.must consist of 2 alphabetic characters' | translate }}</strong>
               </mat-error>
             </mat-form-field>
 
             <mat-form-field fxFlex="98%">
-              <mat-label>Description</mat-label>
+              <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
               <textarea matInput formControlName="description" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
             </mat-form-field>
 
             <div fxFlexFill fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px" *ngIf="!questionDatas.length">
-              <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+              <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate}}</button>
               <button type="button" mat-raised-button color="primary" [disabled]="!(this.surveyForm.get('key').valid && this.surveyForm.get('name').valid && this.surveyForm.get('countryCode').valid)" (click)="addQuestion()">
-                Proceed
+                {{'labels.buttons.Proceed' | translate}}
               </button>
             </div>
 
@@ -64,41 +64,41 @@
             <div fxFlexFill fxLayoutGap="2%" fxLayout.lt-md="column" fxLayout="row wrap" [formGroupName]="questionIndex">
 
               <div fxFlex="98%" fxLayout="row wrap" fxLayoutGap="2%" fxLayoutAlign="space-between center">
-                <h2 class="mat-h2">Question {{ questionIndex + 1 }}</h2>
+                <h2 class="mat-h2">{{'labels.heading.Question' | translate}} {{ questionIndex + 1 }}</h2>
                 <button mat-raised-button color="warn" (click)="removeQuestion(questionIndex)" [disabled]="questionDatas.controls.length === 1">
                   <fa-icon icon="trash" class="m-r-10"></fa-icon>
-                  Delete Question
+                  {{'labels.buttons.Delete' | translate }} {{'labels.heading.Question' | translate}}
                 </button>
               </div>
 
               <mat-form-field fxFlex="48%">
-                <mat-label>Key</mat-label>
+                <mat-label>{{'labels.inputs.Key' | translate}}</mat-label>
                 <input matInput maxlength="32" required formControlName="key">
                 <mat-error *ngIf="question.controls.key.hasError('required')">
-                  Key is <strong>required</strong>
+                  {{'labels.inputs.Key' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
                 </mat-error>
               </mat-form-field>
 
               <mat-form-field fxFlex="48">
-                <mat-label>Text</mat-label>
+                <mat-label>{{'labels.inputs.Text' | translate}}</mat-label>
                 <input matInput maxlength="255" required formControlName="text">
                 <mat-error *ngIf="question.controls.text.hasError('required')">
-                  Text is <strong>required</strong>
+                  {{'labels.inputs.Text' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
                 </mat-error>
               </mat-form-field>
 
               <mat-form-field fxFlex="98%">
-                <mat-label>Description</mat-label>
+                <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
                 <textarea matInput formControlName="description" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
               </mat-form-field>
 
               <mat-divider [inset]="true"></mat-divider>
 
               <div fxFlex="98%" fxLayout="row" fxLayoutAlign="space-between center">
-                <h4 class="mat-h4">Options</h4>
+                <h4 class="mat-h4">{{'labels.heading.Options' | translate}}</h4>
                 <button type="button" mat-raised-button color="primary" (click)="addResponse(questionIndex)">
                   <fa-icon icon="plus" class="m-r-10"></fa-icon>
-                  Add Option
+                  {{'labels.buttons.Add' | translate}} {{'labels.inputs.Option' | translate}}
                 </button>
               </div>
 
@@ -109,27 +109,27 @@
                   <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" [formGroupName]="responseIndex">
 
                     <mat-form-field fxFlex="43%">
-                      <mat-label>Text</mat-label>
+                      <mat-label>{{'labels.inputs.Text' | translate}}</mat-label>
                       <input matInput required formControlName="text">
                       <mat-error *ngIf="response.controls.text.hasError('required')">
-                        Text is <strong>required</strong>
+                        {{'labels.inputs.Text' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
                       </mat-error>
                     </mat-form-field>
 
                     <mat-form-field fxFlex="43%">
-                      <mat-label>Value</mat-label>
+                      <mat-label>{{'labels.inputs.Value' | translate}}</mat-label>
                       <input matInput required formControlName="value">
                       <mat-error *ngIf="response.controls.value.hasError('required')">
-                        Value is <strong>required</strong>
+                        {{'labels.inputs.Value' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
                       </mat-error>
                       <mat-error *ngIf="response.controls.value.hasError('pattern')">
-                        Value <strong>must be an integer between -9999 and 9999</strong>
+                        {{'labels.inputs.Value' | translate}} <strong>{{'labels.commons.must be an integer between -9999 and 9999' | translate}}</strong>
                       </mat-error>
                     </mat-form-field>
 
                     <div fxFlex="8%">
                       <div class="delete-wrapper">
-                        <button type="button" color="warn" mat-icon-button matTooltip="Delete" matTooltipPosition="above" (click)="removeResponse(getResponseDatas(questionIndex), responseIndex)" [disabled]="getResponseDatas(questionIndex).controls.length === 1">
+                        <button type="button" color="warn" mat-icon-button  [matTooltip]="('labels.buttons.Delete' | translate)" matTooltipPosition="above" (click)="removeResponse(getResponseDatas(questionIndex), responseIndex)" [disabled]="getResponseDatas(questionIndex).controls.length === 1">
                           <fa-icon icon="trash" size="lg"></fa-icon>
                         </button>
                       </div>
@@ -148,12 +148,12 @@
           <div>
 
             <mat-card-actions *ngIf="isLast" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-              <button type="button" mat-raised-button (click)="cancelSurvey()">Cancel</button>
+              <button type="button" mat-raised-button (click)="cancelSurvey()">{{'labels.buttons.Cancel' | translate}}</button>
               <button type="button" mat-raised-button color="primary"(click)="addQuestion()">
                 <fa-icon icon="plus" class="m-r-10"></fa-icon>
-                Add Question
+                {{'labels.buttons.Add' | translate}} {{'labels.heading.Question' | translate}}
               </button>
-              <button mat-raised-button color="primary" [disabled]="!surveyForm.valid">Submit</button>
+              <button mat-raised-button color="primary" [disabled]="!surveyForm.valid">{{'labels.buttons.Submit' | translate}}</button>
             </mat-card-actions>
 
           </div>
