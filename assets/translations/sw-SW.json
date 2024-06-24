@@ -701,7 +701,11 @@
       "Amount on hold": "Kiasi kilichohifadhiwa",
       "Percentage": "Asilimia",
       "Fixed Amount": "Kiasi kisichobadilika",
-      "Invalid": "Batili"
+      "Invalid": "Batili",
+      "Withdraw Deposit": "Toa Amana",
+      "Re-Invest Maturity Amount": "Wekeza Tena Kiasi cha Ukomavu",
+      "Re-Invest Principal Only": "Wekeza tena Mkuu Pekee",
+      "Transfer to Savings": "Hamisha kwa Akiba"
     },
     "commons": {
       "50 characters long": "Urefu wa herufi 50",

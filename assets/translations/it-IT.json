@@ -701,7 +701,11 @@
       "Amount on hold": "Importo sospeso",
       "Percentage": "Percentuale",
       "Fixed Amount": "Importo fisso",
-      "Invalid": "Non valido"
+      "Invalid": "Non valido",
+      "Withdraw Deposit": "Prelevare il deposito",
+      "Re-Invest Maturity Amount": "Reinvestimento dell'importo a scadenza",
+      "Re-Invest Principal Only": "Reinvestire solo il capitale",
+      "Transfer to Savings": "Trasferimento al risparmio"
     },
     "commons": {
       "50 characters long": "50 caratteri di lunghezza",

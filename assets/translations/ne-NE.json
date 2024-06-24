@@ -701,7 +701,11 @@
       "Amount on hold": "होल्डमा रहेको रकम",
       "Percentage": "प्रतिशत",
       "Fixed Amount": "निश्चित रकम",
-      "Invalid": "अवैध"
+      "Invalid": "अवैध",
+      "Withdraw Deposit": "निक्षेप फिर्ता लिनुहोस्",
+      "Re-Invest Maturity Amount": "परिपक्वता रकम पुन: लगानी गर्नुहोस्",
+      "Re-Invest Principal Only": "पुन: लगानी प्रिन्सिपल मात्र",
+      "Transfer to Savings": "बचतमा स्थानान्तरण गर्नुहोस्"
     },
     "commons": {
       "50 characters long": "५० वर्ण लामो",

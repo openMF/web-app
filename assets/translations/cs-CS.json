@@ -701,7 +701,11 @@
       "Amount on hold": "Částka na počkání",
       "Percentage": "Procento",
       "Fixed Amount": "Pevná částka",
-      "Invalid": "Neplatný"
+      "Invalid": "Neplatný",
+      "Withdraw Deposit": "Vybrat vklad",
+      "Re-Invest Maturity Amount": "Částka splatnosti znovu investovat",
+      "Re-Invest Principal Only": "Pouze reinvestice jistiny",
+      "Transfer to Savings": "Převod do Úspory"
     },
     "commons": {
       "50 characters long": "50 znaků dlouhé",
