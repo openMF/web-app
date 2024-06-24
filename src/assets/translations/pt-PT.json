@@ -701,7 +701,11 @@
       "Amount on hold": "Valor retido",
       "Percentage": "Percentagem",
       "Fixed Amount": "Quantia fixa",
-      "Invalid": "Inválido"
+      "Invalid": "Inválido",
+      "Withdraw Deposit": "Retirar Depósito",
+      "Re-Invest Maturity Amount": "Reinvestir o valor do vencimento",
+      "Re-Invest Principal Only": "Reinvestir apenas o principal",
+      "Transfer to Savings": "Transferência para Poupança"
     },
     "commons": {
       "50 characters long": "50 caracteres",

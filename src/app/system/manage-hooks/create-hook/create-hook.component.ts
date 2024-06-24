@@ -47,11 +47,11 @@ export class CreateHookComponent implements OnInit {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor(private route: ActivatedRoute,
-              private systemService: SystemService,
-              private router: Router,
-              private formBuilder: UntypedFormBuilder,
-              private dialog: MatDialog,
-              private translateService:TranslateService) {
+    private systemService: SystemService,
+    private router: Router,
+    private formBuilder: UntypedFormBuilder,
+    private dialog: MatDialog,
+    private translateService: TranslateService) {
     this.route.data.subscribe((data: { hooksTemplate: any }) => {
       this.hooksTemplateData = data.hooksTemplate;
     });
@@ -115,11 +115,13 @@ export class CreateHookComponent implements OnInit {
     console.log(this.hooksTemplateData);
 
     addEventDialogRef.afterClosed().subscribe((response: any) => {
-    if (response) {
-      this.eventsData.push({ entityName: response.entity,
-                             actionName: response.action  });
-      this.dataSource.connect().next(this.eventsData);
-    }
+      if (response) {
+        this.eventsData.push({
+          entityName: response.entity,
+          actionName: response.action
+        });
+        this.dataSource.connect().next(this.eventsData);
+      }
     });
   }
 
@@ -129,7 +131,7 @@ export class CreateHookComponent implements OnInit {
    */
   deleteEvent(index: number) {
     const deleteEventDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.inputs.event with entity name of') +' '+this.eventsData[index].entityName }
+      data: { deleteContext: this.translateService.instant('labels.inputs.event with entity name of') + ' ' + this.eventsData[index].entityName }
     });
     deleteEventDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -165,7 +167,7 @@ export class CreateHookComponent implements OnInit {
     };
     this.systemService.createHook(hook)
       .subscribe((response: any) => {
-        this.router.navigate(['../', response.resourceId], {relativeTo: this.route});
+        this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
       });
   }
 }

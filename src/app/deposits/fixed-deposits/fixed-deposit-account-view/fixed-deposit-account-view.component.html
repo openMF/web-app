@@ -22,25 +22,24 @@
               <mifosx-account-number accountNo="{{fixedDepositsAccountData.accountNo}}"></mifosx-account-number>
             </h3>
             <span class="account-overview">
-              {{'labels.text.' + entityType | translate}} {{"labels.inputs.name" | translate}}: {{fixedDepositsAccountData.clientName ||
-              fixedDepositsAccountData.groupName}}
+              <span class="m-r-10">{{'labels.text.' + entityType | translate}} :</span> {{fixedDepositsAccountData.clientName || fixedDepositsAccountData.groupName}}
               <span class="m-l-10" *ngIf="fixedDepositsAccountData.clientAccountNo">
                 <mifosx-account-number accountNo="{{fixedDepositsAccountData.clientAccountNo}}"></mifosx-account-number>
               </span>
             </span>
           </div>
 
-          <div *ngIf="!fixedDepositsAccountData.status.rejected && !fixedDepositsAccountData.status.submittedAndPendingApproval">
-            <h3> {{"labels.heading.Account Overview" | translate}} </h3>
-            <table class="account-overview">
+          <div *ngIf="!fixedDepositsAccountData.status.rejected && !fixedDepositsAccountData.status.submittedAndPendingApproval" fxFlex="30%"  fxLayout="column">
+            <h3 fxFlex="100%"> {{"labels.heading.Account Overview" | translate}} </h3>
+            <table class="account-overview" fxFlex="100%">
               <tbody>
                 <tr>
-                  <td>{{"labels.inputs.Current Balance" | translate }}</td>
-                  <td class="r-amount">{{fixedDepositsAccountData.summary.accountBalance | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+                  <td fxFlex="70%">{{"labels.inputs.Current Balance" | translate }}</td>
+                  <td fxFlex="30%" class="r-amount">{{fixedDepositsAccountData.summary.accountBalance | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
                 </tr>
                 <tr>
-                  <td>{{"labels.inputs.Deposit Amount" | translate }}</td>
-                  <td class="r-amount">{{fixedDepositsAccountData.depositAmount | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+                  <td fxFlex="70%">{{"labels.inputs.Deposit Amount" | translate }}</td>
+                  <td fxFlex="30%" class="r-amount">{{fixedDepositsAccountData.depositAmount | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
                 </tr>
               </tbody>
             </table>
@@ -62,14 +61,14 @@
       <mat-menu #accountMenu="matMenu">
         <ng-container *ngFor="let button of buttonConfig.singleButtons">
           <button mat-menu-item (click)="doAction(button.name)">
-            <i ngClass="{{button.icon}}"></i> {{button.name}}</button>
+            <i ngClass="{{button.icon}}"></i> {{button.name | translateKey:'menus'}}</button>
         </ng-container>
 
         <ng-container *ngIf="buttonConfig.options.length">
-          <button mat-menu-item [matMenuTriggerFor]="More">More</button>
+          <button mat-menu-item [matMenuTriggerFor]="More">{{'More' | translateKey:'menus'}}</button>
           <mat-menu #More="matMenu">
             <span *ngFor="let option of buttonConfig.options">
-              <button mat-menu-item (click)="doAction(option.name)">{{option.name}}</button>
+              <button mat-menu-item (click)="doAction(option.name)">{{option.name | translateKey:'menus'}}</button>
             </span>
           </mat-menu>
         </ng-container>

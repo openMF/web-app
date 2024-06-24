@@ -24,7 +24,11 @@ export class FormatAmountDirective implements OnInit {
         target.value = this.parse(target.value);
     }
     @HostListener('focus', ['$event.target']) focus(target: any) {
-        target.value = this.control.value;
+        if (typeof this.control.value == 'undefined') {
+            target.value = '';
+        } else {
+            target.value = this.control.value;
+        }
     }
 
     ngOnInit() {

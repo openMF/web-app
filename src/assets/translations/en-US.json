@@ -703,7 +703,11 @@
             "Goodwill credit": "Goodwill credit",
             "Payout refund": "Payout refund",
             "Merchant issued refund": "Merchant issued refund",
-            "Invalid": "Invalid"
+            "Invalid": "Invalid",
+            "Withdraw Deposit": "Withdraw Deposit",
+            "Re-Invest Maturity Amount": "Re-Invest Maturity Amount",
+            "Re-Invest Principal Only": "Re-Invest Principal Only",
+            "Transfer to Savings": "Transfer to Savings"
         },
         "commons": {
             "50 characters long": "50 characters long",

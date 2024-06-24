@@ -37,28 +37,28 @@
       <ng-container matColumnDef="transactionType">
         <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Transaction Type" | translate }} </th>
         <td mat-cell *matCellDef="let transaction" [ngClass]="savingsTransactionColor(transaction)" (click)="showTransactions(transaction)">
-          {{ transaction.transactionType.value  }}
+          {{ transaction.transactionType.value | translateKey:'catalogs' }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="debit">
         <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Debit" | translate }} </th>
         <td mat-cell *matCellDef="let transaction" [ngClass]="savingsTransactionColor(transaction)" (click)="showTransactions(transaction)">
-          {{ isDebit(transaction.transactionType) ? transaction.amount : 'N/A'}}
+          {{ isDebit(transaction.transactionType) ? (transaction.amount | formatNumber) : 'N/A'}}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="credit">
         <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Credit" | translate }} </th>
         <td mat-cell *matCellDef="let transaction" [ngClass]="savingsTransactionColor(transaction)" (click)="showTransactions(transaction)">
-          {{ !isDebit(transaction.transactionType) ? transaction.amount : 'N/A' }}
+          {{ !isDebit(transaction.transactionType) ? (transaction.amount | formatNumber) : 'N/A' }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="balance">
         <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Balance" | translate }} </th>
         <td mat-cell *matCellDef="let transaction" [ngClass]="savingsTransactionColor(transaction)" (click)="showTransactions(transaction)">
-          {{ transaction.runningBalance }}
+          {{ transaction.runningBalance | formatNumber }}
         </td>
       </ng-container>
 

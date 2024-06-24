@@ -13,17 +13,17 @@
       <ng-container matColumnDef="period">
         <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Period" | translate }} </th>
         <td mat-cell *matCellDef="let chartSlab">
-          {{chartSlab.fromPeriod}}-{{chartSlab.toPeriod}}&nbsp;{{chartSlab.periodType.value}}</td>
+          {{chartSlab.fromPeriod}} - {{chartSlab.toPeriod}}&nbsp;{{chartSlab.periodType.value | translateKey:'catalogs'}}</td>
       </ng-container>
 
       <ng-container matColumnDef="amountRange">
         <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Amount Range" | translate }} </th>
-        <td mat-cell *matCellDef="let chartSlab">{{chartSlab.amountRangeFrom}}-{{chartSlab.amountRangeTo}}</td>
+        <td mat-cell *matCellDef="let chartSlab">{{chartSlab.amountRangeFrom | formatNumber}} - {{chartSlab.amountRangeTo | formatNumber}}</td>
       </ng-container>
 
       <ng-container matColumnDef="interest">
         <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Interest" | translate }} </th>
-        <td mat-cell *matCellDef="let chartSlab"> {{ chartSlab.annualInterestRate }} </td>
+        <td mat-cell *matCellDef="let chartSlab"> {{ chartSlab.annualInterestRate | formatNumber }} %</td>
       </ng-container>
 
       <ng-container matColumnDef="description">
@@ -98,7 +98,7 @@
                 <ng-container matColumnDef="amount">
                   <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Interest" | translate }} </th>
                   <td mat-cell *matCellDef="let incentive">
-                    {{ incentive.amount }}
+                    {{ incentive.amount | formatNumber }}
                   </td>
                 </ng-container>
 
