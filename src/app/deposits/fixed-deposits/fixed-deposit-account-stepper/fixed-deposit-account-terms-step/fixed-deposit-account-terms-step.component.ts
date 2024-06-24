@@ -2,6 +2,7 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators} from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
+import { Currency } from 'app/shared/models/general.model';
 
 /**
  * Fixed Deposits Terms Step
@@ -34,6 +35,7 @@ export class FixedDepositAccountTermsStepComponent implements OnInit, OnChanges 
   interestCalculationDaysInYearTypeData: any;
    /** Period Frequency Type Data */
   periodFrequencyTypeData: any;
+  currency: Currency | null = null;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
@@ -46,6 +48,7 @@ export class FixedDepositAccountTermsStepComponent implements OnInit, OnChanges 
 
   ngOnChanges() {
     if (this.fixedDepositsAccountProductTemplate) {
+      this.currency = this.fixedDepositsAccountProductTemplate.currency;
       this.setOptions();
     }
   }
@@ -58,10 +61,11 @@ export class FixedDepositAccountTermsStepComponent implements OnInit, OnChanges 
         'interestPostingPeriodType': this.fixedDepositsAccountTemplate.interestPostingPeriodType.id,
         'interestCalculationType': this.fixedDepositsAccountTemplate.interestCalculationType.id,
         'interestCalculationDaysInYearType': this.fixedDepositsAccountTemplate.interestCalculationDaysInYearType.id,
-        'depositAmount': this.fixedDepositsAccountTemplate.depositAmount,
+        'depositAmount': this.fixedDepositsAccountTemplate.depositAmount ? this.fixedDepositsAccountTemplate.depositAmount : 0,
         'depositPeriod': this.fixedDepositsAccountTemplate.depositPeriod,
         'depositPeriodFrequencyId': this.fixedDepositsAccountTemplate.depositPeriodFrequency.id,
       });
+      console.log(this.fixedDepositAccountTermsForm.value);
     }
   }
 
@@ -74,7 +78,7 @@ export class FixedDepositAccountTermsStepComponent implements OnInit, OnChanges 
       'interestPostingPeriodType': ['', Validators.required],
       'interestCalculationType': ['', Validators.required],
       'interestCalculationDaysInYearType': ['', Validators.required],
-      'depositAmount': ['', Validators.required],
+      'depositAmount': [0, Validators.required],
       'depositPeriod': ['', Validators.required],
       'depositPeriodFrequencyId': ['', Validators.required]
     });

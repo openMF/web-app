@@ -11,7 +11,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">{{"labels.inputs.Submitted On" | translate }}</span>
-    <span fxFlex="60%">{{ fixedDepositAccountData.submittedOnDate  | dateFormat }}</span>
+    <span fxFlex="60%">{{ fixedDepositAccountData.submittedOnDate | dateFormat }}</span>
   </div>
 
   <div fxFlexFill *ngIf="fixedDepositAccountData.externalId">
@@ -21,7 +21,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">{{"labels.inputs.Field Officer" | translate }}</span>
-    <span fxFlex="60%">{{ (fixedDepositAccountData.fieldOfficerId | find:fixedDepositsAccountProductTemplate.fieldOfficerOptions:'id':'displayName') || 'Unassigned' }}</span>
+    <span fxFlex="60%">{{ (fixedDepositAccountData.fieldOfficerId | find:fixedDepositsAccountProductTemplate.fieldOfficerOptions:'id':'displayName') || 'Unassigned' | translateKey:'inputs' }}</span>
   </div>
 
   <h3 class="mat-h3" fxFlexFill>{{"labels.heading.Currency" | translate }}</h3>
@@ -49,32 +49,32 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">{{"labels.inputs.Fixed Deposit Amount" | translate }}:</span>
-    <span fxFlex="60%">{{ fixedDepositAccountData.depositAmount }}</span>
+    <span fxFlex="60%">{{ fixedDepositAccountData.depositAmount | currency:fixedDepositsAccountProductTemplate.currency.code:'symbol-narrow':'1.2-2' }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">{{"labels.inputs.Deposit Period" | translate }}:</span>
-    <span fxFlex="60%">{{ fixedDepositAccountData.depositPeriod + ' ' + (fixedDepositAccountData.depositPeriodFrequencyId | find:fixedDepositsAccountProductTemplate.periodFrequencyTypeOptions:'id':'value') }}</span>
+    <span fxFlex="60%">{{ fixedDepositAccountData.depositPeriod }} {{(fixedDepositAccountData.depositPeriodFrequencyId | find:fixedDepositsAccountProductTemplate.periodFrequencyTypeOptions:'id':'value') | translateKey:'catalogs' }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">{{"labels.inputs.Interest Compounding Period" | translate }}:</span>
-    <span fxFlex="60%">{{ fixedDepositAccountData.interestCompoundingPeriodType | find:fixedDepositsAccountProductTemplate.interestCompoundingPeriodTypeOptions:'id':'value' }}</span>
+    <span fxFlex="60%">{{ (fixedDepositAccountData.interestCompoundingPeriodType | find:fixedDepositsAccountProductTemplate.interestCompoundingPeriodTypeOptions:'id':'value') | translateKey:'catalogs' }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">{{"labels.inputs.Interest Posting Period" | translate }}:</span>
-    <span fxFlex="60%">{{ fixedDepositAccountData.interestPostingPeriodType | find:fixedDepositsAccountProductTemplate.interestPostingPeriodTypeOptions:'id':'value' }}</span>
+    <span fxFlex="60%">{{ (fixedDepositAccountData.interestPostingPeriodType | find:fixedDepositsAccountProductTemplate.interestPostingPeriodTypeOptions:'id':'value') | translateKey:'catalogs' }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">{{"labels.inputs.Interest Calculated using" | translate }}:</span>
-    <span fxFlex="60%">{{ fixedDepositAccountData.interestCalculationType | find:fixedDepositsAccountProductTemplate.interestCalculationTypeOptions:'id':'value' }}</span>
+    <span fxFlex="60%">{{ (fixedDepositAccountData.interestCalculationType | find:fixedDepositsAccountProductTemplate.interestCalculationTypeOptions:'id':'value') | translateKey:'catalogs' }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">{{"labels.inputs.Days in Year" | translate }}:</span>
-    <span fxFlex="60%">{{ fixedDepositAccountData.interestCalculationDaysInYearType | find:fixedDepositsAccountProductTemplate.interestCalculationDaysInYearTypeOptions:'id':'value' }}</span>
+    <span fxFlex="60%">{{ (fixedDepositAccountData.interestCalculationDaysInYearType | find:fixedDepositsAccountProductTemplate.interestCalculationDaysInYearTypeOptions:'id':'value') | translateKey:'catalogs'  }}</span>
   </div>
 
   <h3 class="mat-h3" fxFlexFill>{{"labels.heading.Settings" | translate }}</h3>
@@ -83,27 +83,27 @@
 
   <div fxFlexFill *ngIf="fixedDepositAccountData.lockinPeriodFrequency">
     <span fxFlex="40%">{{"labels.inputs.Lock-in Period" | translate }}:</span>
-    <span fxFlex="60%">{{ fixedDepositAccountData.lockinPeriodFrequency + ' ' + (fixedDepositAccountData.lockinPeriodFrequencyType | find:fixedDepositsAccountProductTemplate.lockinPeriodFrequencyTypeOptions:'id':'value') }}</span>
+    <span fxFlex="60%">{{ fixedDepositAccountData.lockinPeriodFrequency }} {{(fixedDepositAccountData.lockinPeriodFrequencyType | find:fixedDepositsAccountProductTemplate.lockinPeriodFrequencyTypeOptions:'id':'value') | translateKey:'catalogs' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="fixedDepositsAccountProductTemplate.minDepositTerm">
     <span fxFlex="40%">{{"labels.inputs.Minimum Deposit Term" | translate }}:</span>
-    <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate.minDepositTerm + ' ' + (fixedDepositsAccountProductTemplate.minDepositTermType?.value || '') }}</span>
+    <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate.minDepositTerm }} {{fixedDepositsAccountProductTemplate.minDepositTermType?.value | translateKey:'catalogs' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="fixedDepositsAccountProductTemplate.inMultiplesOfDepositTerm">
     <span fxFlex="40%">{{"labels.inputs.In Multiples Of" | translate }}:</span>
-    <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate.inMultiplesOfDepositTerm + ' ' + (fixedDepositsAccountProductTemplate.inMultiplesOfDepositTermType?.value || '') }}</span>
+    <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate.inMultiplesOfDepositTerm }} {{fixedDepositsAccountProductTemplate.inMultiplesOfDepositTermType?.value | translateKey:'catalogs' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="fixedDepositsAccountProductTemplate.maxDepositTerm">
     <span fxFlex="40%">{{"labels.inputs.Maximum Deposit Term" | translate }}</span>
-    <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate.maxDepositTerm + ' ' + (fixedDepositsAccountProductTemplate.maxDepositTermType?.value || '') }}</span>
+    <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate.maxDepositTerm }} {{fixedDepositsAccountProductTemplate.maxDepositTermType?.value | translateKey:'catalogs' }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">{{"labels.inputs.Transfer Interest to Savings Account" | translate }}?</span>
-    <span fxFlex="60%">{{ fixedDepositAccountData.transferInterestToSavings ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ fixedDepositAccountData.transferInterestToSavings | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="fixedDepositAccountData.transferInterestToSavings">
@@ -113,12 +113,12 @@
 
   <div fxFlexFill *ngIf="fixedDepositAccountData.maturityInstructionId">
     <span fxFlex="40%">{{"labels.inputs.Maturity Instructions" | translate }}</span>
-    <span fxFlex="60%">{{ fixedDepositAccountData.maturityInstructionId | find:fixedDepositsAccountProductTemplate.maturityInstructionOptions:'id':'value' }}</span>
+    <span fxFlex="60%">{{ fixedDepositAccountData.maturityInstructionId | find:fixedDepositsAccountProductTemplate.maturityInstructionOptions:'id':'value' | translateKey:'catalogs'  }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">{{"labels.inputs.Apply Penal Interest (less)" | translate }}:</span>
-    <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate.preClosurePenalApplicable ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate.preClosurePenalApplicable | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="fixedDepositsAccountProductTemplate.preClosurePenalApplicable">
@@ -128,7 +128,7 @@
 
   <div fxFlexFill *ngIf="fixedDepositsAccountProductTemplate.withHoldTax">
     <span fxFlex="40%">{{"labels.inputs.Withhold Tax is Applicable" | translate }}:</span>
-    <span fxFlex="60%">{{ fixedDepositAccountData.withHoldTax ? 'Yes' : 'No' }}</span>
+    <span fxFlex="60%">{{ fixedDepositAccountData.withHoldTax | yesNo }}</span>
   </div>
 
   <h3 class="mat-h3" fxFlexFill>{{"labels.heading.Interest Rate Chart" | translate }}</h3>
@@ -144,12 +144,12 @@
 
     <div fxFlexFill>
       <span fxFlex="40%">{{"labels.inputs.Valid from Date" | translate }}:</span>
-      <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate?.accountChart.fromDate  | dateFormat }}</span>
+      <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate?.accountChart.fromDate | dateFormat }}</span>
     </div>
 
     <div fxFlexFill *ngIf="fixedDepositsAccountProductTemplate?.accountChart.endDate">
       <span fxFlex="40%">{{"labels.inputs.End Date" | translate }}:</span>
-      <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate?.accountChart.endDate  | dateFormat }}</span>
+      <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate?.accountChart.endDate | dateFormat }}</span>
     </div>
 
     <div fxFlexFill *ngIf="fixedDepositsAccountProductTemplate?.accountChart.description">
@@ -159,7 +159,7 @@
 
     <div fxFlexFill>
       <span fxFlex="40%">{{"labels.inputs.Primary Grouping by Amount" | translate }}:</span>
-      <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate?.accountChart.isPrimaryGroupingByAmount ? 'Yes' : 'No' }}</span>
+      <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate?.accountChart.isPrimaryGroupingByAmount | yesNo }}</span>
     </div>
 
     <table class="mat-elevation-z1 irc-table" mat-table [dataSource]="interestRateChartData" multiTemplateDataRows>
@@ -167,17 +167,17 @@
       <ng-container matColumnDef="period">
         <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Period" | translate }} </th>
         <td mat-cell *matCellDef="let chartSlab">
-          {{chartSlab.fromPeriod}}-{{chartSlab.toPeriod}}&nbsp;{{chartSlab.periodType.value}}</td>
+          {{chartSlab.fromPeriod}} - {{chartSlab.toPeriod}}&nbsp;{{chartSlab.periodType.value | translateKey:'catalogs' }}</td>
       </ng-container>
 
       <ng-container matColumnDef="amountRange">
         <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Amount Range" | translate }} </th>
-        <td mat-cell *matCellDef="let chartSlab">{{chartSlab.amountRangeFrom}}-{{chartSlab.amountRangeTo}}</td>
+        <td mat-cell *matCellDef="let chartSlab">{{chartSlab.amountRangeFrom | formatNumber}} - {{chartSlab.amountRangeTo | formatNumber}}</td>
       </ng-container>
 
       <ng-container matColumnDef="interest">
         <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Interest" | translate }} </th>
-        <td mat-cell *matCellDef="let chartSlab"> {{ chartSlab.annualInterestRate }} </td>
+        <td mat-cell *matCellDef="let chartSlab"> {{ chartSlab.annualInterestRate | formatNumber }} %</td>
       </ng-container>
 
       <ng-container matColumnDef="description">
@@ -252,7 +252,7 @@
                 <ng-container matColumnDef="amount">
                   <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Interest" | translate }} </th>
                   <td mat-cell *matCellDef="let incentive">
-                    {{ incentive.amount }}
+                    {{ incentive.amount | formatNumber }}
                   </td>
                 </ng-container>
 

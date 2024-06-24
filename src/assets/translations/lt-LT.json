@@ -701,7 +701,11 @@
       "Amount on hold": "Sulaikyta suma",
       "Percentage": "Procentas",
       "Fixed Amount": "Nustatyta suma",
-      "Invalid": "Neteisinga"
+      "Invalid": "Neteisinga",
+      "Withdraw Deposit": "Išsiimti indėlį",
+      "Re-Invest Maturity Amount": "Iš naujo investuokite termino sumą",
+      "Re-Invest Principal Only": "Iš naujo investuokite tik pagrindinę sumą",
+      "Transfer to Savings": "Perkėlimas į santaupas"
     },
     "commons": {
       "50 characters long": "50 simbolių ilgio",

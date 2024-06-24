@@ -701,7 +701,11 @@
       "Amount on hold": "Aizturētā summa",
       "Percentage": "Procenti",
       "Fixed Amount": "Fiksēta summa",
-      "Invalid": "Nederīgs"
+      "Invalid": "Nederīgs",
+      "Withdraw Deposit": "Izņemt depozītu",
+      "Re-Invest Maturity Amount": "Atkārtoti ieguldīt termiņa summu",
+      "Re-Invest Principal Only": "Reinvestēt tikai pamatsummu",
+      "Transfer to Savings": "Pārskaitījums uz uzkrājumiem"
     },
     "commons": {
       "50 characters long": "50 rakstzīmes garš",

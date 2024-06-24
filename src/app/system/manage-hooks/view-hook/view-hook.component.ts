@@ -32,10 +32,10 @@ export class ViewHookComponent implements OnInit {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor(private route: ActivatedRoute,
-              private dialog: MatDialog,
-              private systemService: SystemService,
-              private router: Router,
-              private translateService:TranslateService) {
+    private dialog: MatDialog,
+    private systemService: SystemService,
+    private router: Router,
+    private translateService: TranslateService) {
     this.route.data.subscribe((data: { hook: any }) => {
       this.hookData = data.hook;
     });
@@ -49,7 +49,7 @@ export class ViewHookComponent implements OnInit {
    */
   delete() {
     const deleteHookDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.inputs.hook') +' ' + this.hookData.id }
+      data: { deleteContext: this.translateService.instant('labels.inputs.hook') + ' ' + this.hookData.id }
     });
     deleteHookDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

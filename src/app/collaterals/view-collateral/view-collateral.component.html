@@ -1,9 +1,9 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
-    <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CHARGE'">
+    <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CLIENT_COLLATERAL_PRODUCT'">
       <fa-icon icon="edit" class="m-r-10"></fa-icon>
       {{"labels.buttons.Edit" |translate}}
     </button>
-    <button mat-raised-button color="warn" (click)="deleteCollateral()" *mifosxHasPermission="'DELETE_CHARGE'">
+    <button mat-raised-button color="warn" (click)="deleteCollateral()" *mifosxHasPermission="'DELETE_CLIENT_COLLATERAL_PRODUCT'">
       <fa-icon icon="trash" class="m-r-10"></fa-icon>
       {{"labels.buttons.Delete" |translate}}
     </button>
@@ -47,7 +47,7 @@
 
             <ng-container matColumnDef="Remaining Amount">
                 <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Remaining Amount" |translate}} </th>
-                <td mat-cell *matCellDef="let element"> {{element.remainingAmount}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.remainingAmount | formatNumber}} </td>
             </ng-container>
 
             <ng-container matColumnDef="Last Repayment Date">

@@ -701,7 +701,11 @@
       "Amount on hold": "Zurückgestellter Betrag",
       "Percentage": "Prozentsatz",
       "Fixed Amount": "Fester Betrag",
-      "Invalid": "Ungültig"
+      "Invalid": "Ungültig",
+      "Withdraw Deposit": "Einzahlung abheben",
+      "Re-Invest Maturity Amount": "Fälligkeitsbetrag reinvestieren",
+      "Re-Invest Principal Only": "Nur Kapital reinvestieren",
+      "Transfer to Savings": "Übertragen auf Ersparnisse"
     },
     "commons": {
       "50 characters long": "50 Zeichen lang",

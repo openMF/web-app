@@ -51,12 +51,12 @@ export class EditHookComponent implements OnInit {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor(private route: ActivatedRoute,
-              private systemService: SystemService,
-              private router: Router,
-              private formBuilder: UntypedFormBuilder,
-              private dialog: MatDialog,
-              private translateService:TranslateService) {
-    this.route.data.subscribe(( data: { hooksTemplate: any, hook: any }) => {
+    private systemService: SystemService,
+    private router: Router,
+    private formBuilder: UntypedFormBuilder,
+    private dialog: MatDialog,
+    private translateService: TranslateService) {
+    this.route.data.subscribe((data: { hooksTemplate: any, hook: any }) => {
       this.hooksTemplateData = data.hooksTemplate;
       this.hookData = data.hook;
       this.eventsData = data.hook.events ? data.hook.events : [];
@@ -104,11 +104,13 @@ export class EditHookComponent implements OnInit {
       data: this.hooksTemplateData
     });
     addEventDialogRef.afterClosed().subscribe((response: any) => {
-    if (response) {
-      this.eventsData.push({ entityName: response.entity,
-                             actionName: response.action  });
-      this.dataSource.connect().next(this.eventsData);
-      this.eventsDataChanged = true;
+      if (response) {
+        this.eventsData.push({
+          entityName: response.entity,
+          actionName: response.action
+        });
+        this.dataSource.connect().next(this.eventsData);
+        this.eventsDataChanged = true;
       }
     });
   }
@@ -119,7 +121,7 @@ export class EditHookComponent implements OnInit {
    */
   deleteEvent(index: number) {
     const deleteEventDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.inputs.event with entity name of') +' '+this.eventsData[index].entityName }
+      data: { deleteContext: this.translateService.instant('labels.inputs.event with entity name of') + ' ' + this.eventsData[index].entityName }
     });
     deleteEventDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -156,7 +158,7 @@ export class EditHookComponent implements OnInit {
     };
     this.systemService.updateHook(this.hookData.id, hook)
       .subscribe((response: any) => {
-        this.router.navigate(['../'], {relativeTo: this.route});
+        this.router.navigate(['../'], { relativeTo: this.route });
       });
   }
 

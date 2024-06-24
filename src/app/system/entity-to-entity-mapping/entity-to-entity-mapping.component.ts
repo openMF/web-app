@@ -242,7 +242,7 @@ export class EntityToEntityMappingComponent implements OnInit {
       })
     ];
     const data = {
-      title: this.translateService.instant('labels.buttons.Add') +' '+this.translateService.instant('labels.heading.Entity to Entity Mapping'),
+      title: this.translateService.instant('labels.buttons.Add') + ' ' + this.translateService.instant('labels.heading.Entity to Entity Mapping'),
       layout: { addButtonText: 'Confirm' },
       formfields: formfields
     };
@@ -293,7 +293,7 @@ export class EntityToEntityMappingComponent implements OnInit {
       })
     ];
     const data = {
-      title: this.translateService.instant('labels.buttons.Edit') +' '+this.translateService.instant('labels.heading.Entity to Entity Mapping'),
+      title: this.translateService.instant('labels.buttons.Edit') + ' ' + this.translateService.instant('labels.heading.Entity to Entity Mapping'),
       layout: { addButtonText: 'Confirm' },
       formfields: formfields
     };

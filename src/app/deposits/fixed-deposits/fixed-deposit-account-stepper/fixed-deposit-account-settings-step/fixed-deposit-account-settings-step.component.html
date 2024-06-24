@@ -14,7 +14,7 @@
       <mat-select formControlName="lockinPeriodFrequencyType">
         <mat-option *ngFor="let lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData"
           [value]="lockinPeriodFrequencyType.id">
-          {{ lockinPeriodFrequencyType.value }}
+          {{ lockinPeriodFrequencyType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -25,7 +25,7 @@
       <mat-label>{{"labels.inputs.Frequency" | translate }}</mat-label>
       <input type="number" matInput formControlName="minDepositTerm" required>
       <mat-error>
-        {{"labels.inputs.Minimum Deposit Term Frequency" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+        {{"labels.inputs.Minimum Deposit Term Frequency" | translate }} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
       </mat-error>
     </mat-form-field>
 
@@ -33,11 +33,11 @@
       <mat-label>{{"labels.inputs.Frequency Type" | translate }}</mat-label>
       <mat-select formControlName="minDepositTermTypeId" required>
         <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
-          {{ periodFrequencyType.value }}
+          {{ periodFrequencyType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
       <mat-error>
-        {{"labels.inputs.Minimum Deposit Term Frequency Type" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+        {{"labels.inputs.Minimum Deposit Term Frequency Type" | translate }} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
       </mat-error>
     </mat-form-field>
 
@@ -52,7 +52,7 @@
       <mat-label>{{"labels.inputs.Type" | translate }}</mat-label>
       <mat-select formControlName="inMultiplesOfDepositTermTypeId">
         <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
-          {{ periodFrequencyType.value }}
+          {{ periodFrequencyType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -68,7 +68,7 @@
       <mat-label>{{"labels.inputs.Type" | translate }}</mat-label>
       <mat-select formControlName="maxDepositTermTypeId">
         <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
-          {{ periodFrequencyType.value }}
+          {{ periodFrequencyType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -85,11 +85,11 @@
       <mat-label>{{"labels.inputs.Linked Savings Account" | translate }}</mat-label>
       <mat-select formControlName="linkAccountId" required>
         <mat-option *ngFor="let account of savingsAccountsData" [value]="account.id">
-          {{ account.accountNo }}
+          ({{ account.accountNo }}) {{ account.savingsProductName }}
         </mat-option>
       </mat-select>
       <mat-error>
-        {{"labels.inputs.Linked Savings Account" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+        {{"labels.inputs.Linked Savings Account" | translate }} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
       </mat-error>
     </mat-form-field>
 
@@ -99,7 +99,7 @@
       <mat-label>{{"labels.inputs.Maturity Instructions" | translate }}</mat-label>
       <mat-select formControlName="maturityInstructionId">
         <mat-option *ngFor="let maturityInstruction of maturityInstructionOptions" [value]="maturityInstruction.id">
-          {{ maturityInstruction.value }}
+          {{ maturityInstruction.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -108,11 +108,11 @@
       <mat-label>{{"labels.inputs.Transfer to savings account" | translate }}</mat-label>
       <mat-select formControlName="transferToSavingsId" required>
         <mat-option *ngFor="let account of savingsAccountsData" [value]="account.id">
-          {{ account.accountNo }}
+          ({{ account.accountNo }}) {{ account.savingsProductName }}
         </mat-option>
       </mat-select>
       <mat-error>
-        {{"labels.inputs.Transfer to savings account" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+        {{"labels.inputs.Transfer to savings account" | translate }} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
       </mat-error>
     </mat-form-field>
 
@@ -134,7 +134,7 @@
       <mat-select formControlName="preClosurePenalInterestOnTypeId">
         <mat-option *ngFor="let preClosurePenalInterestOnType of preClosurePenalInterestOnTypeData"
           [value]="preClosurePenalInterestOnType.id">
-          {{ preClosurePenalInterestOnType.value }}
+          {{ preClosurePenalInterestOnType.value | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
     </mat-form-field>

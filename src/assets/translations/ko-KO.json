@@ -701,7 +701,11 @@
       "Amount on hold": "보류 금액",
       "Percentage": "백분율",
       "Fixed Amount": "정액",
-      "Invalid": "유효하지 않은"
+      "Invalid": "유효하지 않은",
+      "Withdraw Deposit": "예치금 인출",
+      "Re-Invest Maturity Amount": "만기금액 재투자",
+      "Re-Invest Principal Only": "본인만 재투자",
+      "Transfer to Savings": "저축으로 이체"
     },
     "commons": {
       "50 characters long": "50자(영문 기준)",
