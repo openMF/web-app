@@ -1,18 +1,18 @@
 <form [formGroup]="loansAccountDetailsForm">
-
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
-    <mat-form-field fxFlex="48%">
-      <mat-label>Product Name</mat-label>
-      <mat-select formControlName="productId" required>
-        <mat-option *ngFor="let product of productData" [value]="product.id">
-          {{ product.name }}
-        </mat-option>
-      </mat-select>
-      <mat-error>
-        Product Name is <strong>required</strong>
-      </mat-error>
-    </mat-form-field>
+    <div fxFlex="48%">
+      <label for="productId">Product Name</label>
+      <ng-select
+        [items]="productData"
+        bindLabel="name"
+        bindValue="id"
+        placeholder="Select product"
+        formControlName="productId"
+        aria-labelledby="productId"
+        [virtualScroll]="true"
+      >
+      </ng-select>
+    </div>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Loan officer</mat-label>
@@ -43,8 +43,14 @@
 
     <mat-form-field fxFlex="48%" (click)="submitPicker.open()">
       <mat-label>Submitted on</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submitPicker" required
-        formControlName="submittedOnDate">
+      <input
+        matInput
+        [min]="minDate"
+        [max]="maxDate"
+        [matDatepicker]="submitPicker"
+        required
+        formControlName="submittedOnDate"
+      />
       <mat-datepicker-toggle matSuffix [for]="submitPicker"></mat-datepicker-toggle>
       <mat-datepicker #submitPicker></mat-datepicker>
       <mat-error *ngIf="loansAccountDetailsForm.controls.submittedOnDate?.hasError('required')">
@@ -54,8 +60,14 @@
 
     <mat-form-field fxFlex="48%" (click)="disbursementPicker.open()">
       <mat-label>Disbursement on</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="disbursementPicker" required
-        formControlName="expectedDisbursementDate">
+      <input
+        matInput
+        [min]="minDate"
+        [max]="maxDate"
+        [matDatepicker]="disbursementPicker"
+        required
+        formControlName="expectedDisbursementDate"
+      />
       <mat-datepicker-toggle matSuffix [for]="disbursementPicker"></mat-datepicker-toggle>
       <mat-datepicker #disbursementPicker></mat-datepicker>
       <mat-error *ngIf="loansAccountDetailsForm.controls.submittedOnDate?.hasError('required')">
@@ -65,7 +77,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>External id</mat-label>
-      <input matInput formControlName="externalId">
+      <input matInput formControlName="externalId" />
     </mat-form-field>
 
     <mat-divider fxFlex="98%"></mat-divider>
@@ -84,18 +96,15 @@
     <mat-checkbox fxFlex="48%" formControlName="createStandingInstructionAtDisbursement">
       <p>Create standing instructions at disbursement</p>
     </mat-checkbox>
-
   </div>
 
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious disabled>
-      <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
-      Previous
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp; Previous
     </button>
     <button mat-raised-button matStepperNext>
       Next&nbsp;&nbsp;
       <fa-icon icon="arrow-right"></fa-icon>
     </button>
   </div>
-
 </form>
