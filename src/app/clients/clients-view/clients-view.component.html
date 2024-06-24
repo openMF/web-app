@@ -68,16 +68,27 @@
 
             Member Of :
 
-            <span>
+            <span *ngIf="clientViewData.group">
               <a [routerLink]="['/groups', clientViewData?.group?.id, 'general']">{{ clientViewData?.group?.name }}</a
               >&nbsp;
             </span>
 
             <!-- <span *ngFor="let group of clientViewData.groups">
               <a>{{ group.name }}</a
-              >&nbsp;
+              >&nbsp;officeHierarchyPath,
+              /organization/offices/10/general
             </span> -->
             <span *ngIf="!clientViewData.group">Unassigned</span>
+            <br />
+
+            <span *ngIf="clientViewData.officeHierarchyPath">
+              Office:
+              <a [routerLink]="['/organization/offices', clientViewData?.officeId, 'general']">{{
+                clientViewData?.officeHierarchyPath
+              }}</a
+              >&nbsp;
+            </span>
+
             <br />
           </p>
         </mat-card-subtitle>

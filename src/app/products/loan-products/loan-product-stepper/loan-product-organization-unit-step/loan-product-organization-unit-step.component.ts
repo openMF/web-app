@@ -12,10 +12,9 @@ import { AlertService } from 'app/core/alert/alert.service';
 @Component({
   selector: 'mifosx-loan-product-organization-unit-step',
   templateUrl: './loan-product-organization-unit-step.component.html',
-  styleUrls: ['./loan-product-organization-unit-step.component.scss']
+  styleUrls: ['./loan-product-organization-unit-step.component.scss'],
 })
 export class LoanProductOrganizationUnitStepComponent implements OnInit {
-
   @Input() loanProductsTemplate: any;
   @Input() loanProduct: any;
   @ViewChild(CountryTreeViewComponent) countryTreeComponent: CountryTreeViewComponent;
@@ -43,7 +42,7 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private organizationService: OrganizationService,
     private alertService: AlertService,
-    private router: Router,
+    private router: Router
   ) {
     this.getCountries();
   }
@@ -56,11 +55,11 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
     }
 
     this.loanProductOrganizationForm.patchValue({
-          'countryId': this.loanProductsTemplate.countryId,
-          'officeIds': this.loanProductsTemplate.offices?.officeId,
-          'digitsAfterDecimal': 1,
-          'inMultiplesOf': 1,
-          'installmentAmountInMultiplesOf': 1
+      countryId: this.loanProductsTemplate.countryId,
+      officeIds: this.loanProductsTemplate.offices?.officeId,
+      digitsAfterDecimal: 2,
+      inMultiplesOf: 1,
+      installmentAmountInMultiplesOf: 1,
     });
   }
 
@@ -72,35 +71,34 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
   }
 
   public isFiltered(country: any) {
-    return this.countriesDataSliced.find(item => item.id === country.id);
+    return this.countriesDataSliced.find((item) => item.id === country.id);
   }
 
   search(event: any) {
     if (!event.id) {
-       this.countryId = this.loanProductsTemplate.countryId;
+      this.countryId = this.loanProductsTemplate.countryId;
     } else {
       this.countryId = event.id;
       this.productsService.countryId = event.id;
     }
     this.organizationService.getCountry(this.countryId).subscribe((res: any) => {
       this.countryName = res.name;
-      if(res.hasOwnProperty('activeCurrency') && res.activeCurrency.code){
+      if (res.hasOwnProperty('activeCurrency') && res.activeCurrency.code) {
         this.isCountryHasActiveCurrency = true;
-        this.loanProductOrganizationForm.patchValue({ 'currencyCode': res.activeCurrency.code });
-
+        this.loanProductOrganizationForm.patchValue({ currencyCode: res.activeCurrency.code });
       } else {
         this.isCountryHasActiveCurrency = false;
-        this.loanProductOrganizationForm.patchValue({ 'currencyCode': ''});
+        this.loanProductOrganizationForm.patchValue({ currencyCode: '' });
         this.alertService.alert({
           type: 'Source Country Currency Required',
-          message: `Please contact your administrator to add a currency for this country ${this.countryName}` 
+          message: `Please contact your administrator to add a currency for this country ${this.countryName}`,
         });
       }
     });
 
     this.organizationService.searchCountryById(this.countryId).subscribe((res: any) => {
       if (this.router.url.includes('edit')) {
-         this.data = res
+        this.data = res
           .filter((x) => x.status === true)
           .map((item: any) => ({
             name: item.name,
@@ -110,13 +108,13 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
           }));
       } else {
         this.data = res
-        .filter((x) => x.status === true)
-        .map((item: any) => ({
-          name: item.name,
-          id: item.id,
-          parentId: item.parentId,
-          checked: false,
-        }));
+          .filter((x) => x.status === true)
+          .map((item: any) => ({
+            name: item.name,
+            id: item.id,
+            parentId: item.parentId,
+            checked: false,
+          }));
       }
       this.treeDataSource = DataFlattner.flatToHierarchy(this.data);
       this.countryTreeComponent?.deselectAllNodes();
@@ -130,11 +128,10 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
       this.loanProductTemplates = res.loanProductTemplates;
       this.productsService.isQualificationRequired = this.isQualificationRequired;
       this.loanProductTemplateForm.patchValue({
-        'loanProductTemplates': this.loanProductTemplates,
-        'enableTermsAndConditions': this.enableTermsAndConditions,
-        
-      });   
-    })
+        loanProductTemplates: this.loanProductTemplates,
+        enableTermsAndConditions: this.enableTermsAndConditions,
+      });
+    });
   }
 
   getCheckedUnits(event: any) {
@@ -143,16 +140,16 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
 
   createLoanProductOrganizationForm() {
     this.loanProductOrganizationForm = this.formBuilder.group({
-      'countryId': ['', Validators.required],
-      'officeIds': [this.selectedUnits],
-      'currencyCode': ['', Validators.required],
-      'digitsAfterDecimal': ['', Validators.required],
-      'inMultiplesOf': ['', Validators.required],
-      'installmentAmountInMultiplesOf': ['', Validators.required]
+      countryId: ['', Validators.required],
+      officeIds: [this.selectedUnits],
+      currencyCode: ['', Validators.required],
+      digitsAfterDecimal: ['', Validators.required],
+      inMultiplesOf: ['', Validators.required],
+      installmentAmountInMultiplesOf: ['', Validators.required],
     });
     this.loanProductTemplateForm = this.formBuilder.group({
-      'loanProductTemplates': [''],
-      'enableTermsAndConditions': false,
+      loanProductTemplates: [''],
+      enableTermsAndConditions: false,
     });
   }
 
@@ -160,12 +157,11 @@ export class LoanProductOrganizationUnitStepComponent implements OnInit {
     const loanProductOrganizationFormData = this.loanProductOrganizationForm.value;
     if (this.selectedUnits && this.selectedUnits.length > 0) {
       const offices = this.selectedUnits.map((x) => {
-        const officeId =  x.id;
+        const officeId = x.id;
         return officeId;
       });
       loanProductOrganizationFormData.officeIds = offices;
     }
     return loanProductOrganizationFormData;
   }
-
 }
