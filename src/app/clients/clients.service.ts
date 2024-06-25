@@ -414,4 +414,24 @@ export class ClientsService {
   createSelfServiceUser(userData: any) {
     return this.http.post(`/users`, userData);
   }
+
+  /**
+   * Generate OTP for the client.
+   * @param countryId The client's country ID
+   * @param clientData The client's data
+   * @returns {Observable<any>} The response from the server
+   */
+  generateClientOTP(countryId: number, clientData: any) {
+    return this.http.post(`/clients/generateMobileNumberOTP/${countryId}`, clientData);
+  }
+
+  /**
+   * Validate the OTP entered by the client.
+   * @param countryId The client's country ID
+   * @param otpData The OTP data for the client
+   * @returns {Observable<any>} The response from the server
+   */
+  validateClientOTP(countryId: number, otpData: any) {
+    return this.http.post(`/clients/validateMobileNumberOTP/${countryId}`, otpData);
+  }
 }
