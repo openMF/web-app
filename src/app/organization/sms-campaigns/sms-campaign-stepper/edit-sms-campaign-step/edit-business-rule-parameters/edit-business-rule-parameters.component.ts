@@ -64,7 +64,7 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
    * Fetches dropdown options and builds child dependencies.
    */
   createRunReportForm() {
-    this.paramData.forEach(
+    this.paramData?.forEach(
       (param: any) => {
         if (!param.parentParameterName) { // Non Child Parameter
           this.ReportForm.addControl(param.name, new UntypedFormControl('', Validators.required));

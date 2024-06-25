@@ -21,7 +21,7 @@ export class SmsCampaignsComponent implements OnInit {
   /** SMS Campaigns data. */
   smsCampaignsData: any;
   /** Columns to be displayed in sms campaigns table. */
-  displayedColumns: string[] = ['campaignName', 'campaignMessage', 'campaignType.value', 'triggerType.value', 'campaignStatus.value', 'smsCampaignTimeLine.submittedByUsername'];
+  displayedColumns: string[] = ['campaignCountry', 'campaignName', 'campaignMessage', 'campaignType.value', 'triggerType.value', 'campaignStatus.value', 'smsCampaignTimeLine.submittedByUsername'];
   /** Data source for SMS campaigns table. */
   dataSource: MatTableDataSource<any>;
 
