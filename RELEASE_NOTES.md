@@ -66,6 +66,7 @@
     * [SER-2763] - fix for view client signature and click group name from client view
     * [SER-2805] - show proper error message when error status is 400, show client office in the client view,show a searchable dropdown when creating a new client loan.
     * [SER-2537] - Add country link to SMS campaigns
+    * [SER-2809] - Fix navigations in the group view interface
 
 ## Version 1.0.0 - for use with Fineract Web App
 
