@@ -2,12 +2,11 @@
 # Configuration file for Mega-Linter
 # See all available variables at https://megalinter.github.io/latest/configuration/ and in linters documentation
 
-APPLY_FIXES: none # all, none, or list of linter keys
+APPLY_FIXES: all # all, none, or list of linter keys
 VALIDATE_ALL_CODEBASE: false
 DEFAULT_BRANCH: develop
 
 # If you use ENABLE_LINTERS variable, all other linters will be disabled by default
-LINTER_RULES_PATH: .github/linters
 ENABLE_LINTERS:
   # See https://megalinter.github.io/descriptors/css_scss_lint/
   - CSS_SCSS_LINT
