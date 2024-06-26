@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientsService } from 'app/clients/clients.service';
+import { MatomoTracker } from "@ngx-matomo/tracker";
 
 /**
  * View Charge component.
@@ -22,37 +23,46 @@ export class ViewChargeComponent implements OnInit {
    * Retrieves the selected job data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
   constructor(private route: ActivatedRoute,
-              private router: Router,
-              private clientService: ClientsService) {
+    private router: Router,
+    private clientService: ClientsService,
+    private matomoTracker: MatomoTracker) {
     this.route.data.subscribe((data: { clientChargeData: any }) => {
       this.chargeData = data.clientChargeData;
     });
-   }
+  }
 
   ngOnInit() {
-
+    //set Matomo page info
+    let title = document.title;
+    this.matomoTracker.setDocumentTitle(`${title}`);
   }
 
   /**
    * Waive Charge.
    */
   waiveCharge() {
-    const waiveChargeObj = { clientId: this.chargeData.clientId, resourceType: this.chargeData.id};
+    const waiveChargeObj = { clientId: this.chargeData.clientId, resourceType: this.chargeData.id };
     this.clientService.waiveClientCharge(waiveChargeObj).subscribe(() => {
       this.getChargeData();
     });
+    //Track Matomo event for waiving client charge
+    this.matomoTracker.trackEvent('clients', 'waiveCharges', this.chargeData.id);
   }
 
   /**
    * Undo Transaction.
    */
   undoTransaction(transactionId: any) {
-    const transactionData = { clientId: this.chargeData.clientId.toString(), transactionId: transactionId};
+    const transactionData = { clientId: this.chargeData.clientId.toString(), transactionId: transactionId };
     this.clientService.undoTransaction(transactionData).subscribe(() => {
       this.getChargeData();
     });
+
+    //Track Matomo event for undoing client charge
+    this.matomoTracker.trackEvent('clients', 'undoCharges', transactionId);
   }
 
   /**
@@ -62,6 +72,9 @@ export class ViewChargeComponent implements OnInit {
     this.clientService.getSelectedChargeData(this.chargeData.clientId, this.chargeData.id).subscribe((data: any) => {
       this.chargeData = data;
     });
+
+    //Track Matomo event for listing client charge info
+    this.matomoTracker.trackEvent('clients', 'viewCharges', this.chargeData.id);
   }
 
   /**
@@ -71,6 +84,9 @@ export class ViewChargeComponent implements OnInit {
     this.clientService.deleteCharge(this.chargeData.clientId, this.chargeData.id).subscribe(() => {
       this.router.navigate(['../../clients', this.chargeData.clientId, 'general']);
     });
+
+    //Track Matomo event for deleting client charge
+    this.matomoTracker.trackEvent('clients', 'deleteCharges', this.chargeData.id);
   }
 
 }

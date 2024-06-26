@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatomoTracker } from "@ngx-matomo/tracker";
 
 /**
  * Add Clients Charge component.
@@ -46,7 +47,8 @@ export class AddClientChargeComponent implements OnInit {
     private router: Router,
     private dateUtils: Dates,
     private clientsService: ClientsService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private matomoTracker: MatomoTracker
   ) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.clientChargeOptions = data.clientActionData.chargeOptions;
@@ -55,6 +57,11 @@ export class AddClientChargeComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    //set Matomo page info
+    let title = document.title;
+    this.matomoTracker.setDocumentTitle(`${title}`);
+
     this.createClientsChargeForm();
     this.buildDependencies();
   }
@@ -135,6 +142,9 @@ export class AddClientChargeComponent implements OnInit {
         }
       }
     }
+    //Matomo log activity
+    this.matomoTracker.trackEvent('clients', 'addClientCharge',this.clientId);// change to track right info
+
     this.clientsService.createClientCharge(this.clientId, clientCharge).subscribe( () => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });

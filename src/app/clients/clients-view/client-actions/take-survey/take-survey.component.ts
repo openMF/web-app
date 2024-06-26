@@ -1,10 +1,11 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from '../../../clients.service';
 import { AuthenticationService } from '../../../../core/authentication/authentication.service';
+import { MatomoTracker } from "@ngx-matomo/tracker";
 
 /**
  * Take Survey Component
@@ -14,7 +15,7 @@ import { AuthenticationService } from '../../../../core/authentication/authentic
   templateUrl: './take-survey.component.html',
   styleUrls: ['./take-survey.component.scss']
 })
-export class TakeSurveyComponent {
+export class TakeSurveyComponent implements OnInit {
 
   /** List of all Survey Data */
   allSurveyData: any;
@@ -43,11 +44,13 @@ export class TakeSurveyComponent {
    * @param {ClientsService} clientsService ClientsService
    * @param {Router} router Router
    * @param {AuthenticationService} authenticationService AuthenticationService
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
   constructor(private route: ActivatedRoute,
-              private clientsService: ClientsService,
-              private router: Router,
-              private authenticationService: AuthenticationService) {
+    private clientsService: ClientsService,
+    private router: Router,
+    private authenticationService: AuthenticationService,
+    private matomoTracker: MatomoTracker) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.allSurveyData = data.clientActionData;
       this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
@@ -57,6 +60,11 @@ export class TakeSurveyComponent {
     this.userId = savedCredentials.userId;
   }
 
+  ngOnInit() {
+    //set Matomo page info
+    let title = document.title || "";
+    this.matomoTracker.setDocumentTitle(`${title}`);
+  }
   // TODO: document the function
   onSurveyChange(resEvent: any) {
     if (resEvent.value) {
@@ -129,6 +137,10 @@ export class TakeSurveyComponent {
         this.formData.scorecardValues.push(tmp);
       }
     });
+
+     //Track Matomo event for taking client's survey
+     this.matomoTracker.trackEvent('clients', 'takeSurvey', this.clientId);
+
     this.clientsService.createNewSurvey(this.surveyData.id, this.formData).subscribe(() => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });

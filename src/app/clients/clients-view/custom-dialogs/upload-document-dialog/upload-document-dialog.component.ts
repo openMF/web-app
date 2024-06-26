@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl } from '@angular/forms';
+import { MatomoTracker } from "@ngx-matomo/tracker";
 
 @Component({
   selector: 'mifosx-upload-document-dialog',
@@ -20,14 +21,20 @@ export class UploadDocumentDialogComponent implements OnInit {
    * @param {MatDialogRef} dialogRef Dialog reference element
    * @param {FormBuilder} formBuilder Form Builder
    * @param {any} data Dialog Data
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
   constructor(public dialogRef: MatDialogRef<UploadDocumentDialogComponent>,
-              private formBuilder: UntypedFormBuilder,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
+    private formBuilder: UntypedFormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private matomoTracker: MatomoTracker) {
     this.documentIdentifier = data.documentIdentifier;
   }
 
   ngOnInit() {
+    //set Matomo page info
+    let title = document.title || "";
+    this.matomoTracker.setDocumentTitle(`${title}`);
+
     this.createUploadDocumentForm();
   }
 
@@ -50,6 +57,9 @@ export class UploadDocumentDialogComponent implements OnInit {
     if ($event.target.files.length > 0) {
       const file = $event.target.files[0];
       this.uploadDocumentForm.get('file').setValue(file);
+
+      //Track Matomo event for selecting document
+      this.matomoTracker.trackEvent('clients', 'chooseDocumentStart');
     }
   }
 

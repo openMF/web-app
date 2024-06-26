@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-
+import { MatomoTracker } from "@ngx-matomo/tracker";
 /**
  * View Survey component.
  */
@@ -31,14 +31,19 @@ export class ViewSurveyComponent implements OnInit {
   /**
    * Retrieves the survey data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,  private matomoTracker: MatomoTracker) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.surveyData = data.clientActionData;
     });
   }
 
   ngOnInit() {
+     //set Matomo page info
+     let title = document.title || "";
+     this.matomoTracker.setDocumentTitle(`${title}`);
+
     this.constructSurveys(this.surveyData);
   }
 

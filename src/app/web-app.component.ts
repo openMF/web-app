@@ -24,6 +24,9 @@ import { SettingsService } from './settings/settings.service';
 /** Custom Items */
 import { Alert } from './core/alert/alert.model';
 import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
+/** Matomo analytics tracker */
+import { MatomoTracker } from "@ngx-matomo/tracker";
+
 
 /** Initialize Logger */
 // const log = new Logger('MifosX');
@@ -39,6 +42,7 @@ import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
 export class WebAppComponent implements OnInit {
 
   buttonConfig: KeyboardShortcutsConfiguration;
+  private userName :string;
 
   /**
    * @param {Router} router Router for navigation.
@@ -51,16 +55,19 @@ export class WebAppComponent implements OnInit {
    * @param {AlertService} alertService Alert Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {AuthenticationService} authenticationService Authentication service.
+   * @param {AuthenticationService} authenticationService Authentication service.
+   * @param {MatomoTracker} matomoTracker Matomo tracker service.
    */
   constructor(private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private titleService: Title,
-              private translateService: TranslateService,
-              private themeStorageService: ThemeStorageService,
-              public snackBar: MatSnackBar,
-              private alertService: AlertService,
-              private settingsService: SettingsService,
-              private authenticationService: AuthenticationService) { }
+    private activatedRoute: ActivatedRoute,
+    private titleService: Title,
+    private translateService: TranslateService,
+    private themeStorageService: ThemeStorageService,
+    public snackBar: MatSnackBar,
+    private alertService: AlertService,
+    private settingsService: SettingsService,
+    private authenticationService: AuthenticationService,
+    private matomoTracker: MatomoTracker) { }
 
   /**
    * Initial Setup:
@@ -105,6 +112,11 @@ export class WebAppComponent implements OnInit {
         if (title) {
           this.titleService.setTitle(`${this.translateService.instant(title)} | Mifos X`);
         }
+        //set Matomo page info
+        this.userName = this.authenticationService.getConnectedUsername() ? this.authenticationService.getConnectedUsername() : "";
+        this.matomoTracker.setUserId(this.userName); //tracker user ID
+
+        this.matomoTracker.setDocumentTitle(`${this.translateService.instant(title)} | Mifos X`);
       });
 
     // Stores top 100 user activites as local storage object.
@@ -148,8 +160,10 @@ export class WebAppComponent implements OnInit {
   }
 
   logout() {
+    //track user logout activity trough Matomo
+    this.matomoTracker.trackEvent('navigation', 'logout', this.userName);
     this.authenticationService.logout();
-      // .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+    // .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }
 
   help() {

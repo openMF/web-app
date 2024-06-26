@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatomoTracker } from "@ngx-matomo/tracker";
 
 @Component({
   selector: 'mifosx-datatable-tab',
@@ -9,7 +10,12 @@ import { ActivatedRoute } from '@angular/router';
 export class DatatableTabComponent implements OnInit {
   clientDatatable: any;
   multiRowDatatableFlag: boolean;
-  constructor(private route: ActivatedRoute) {
+  /**
+  * @param {ActivatedRoute} route Component reference to route.
+  * @param {MatomoTracker} matomoTracker Matomo tracker service
+  */
+
+  constructor(private route: ActivatedRoute, private matomoTracker: MatomoTracker) {
     this.route.data.subscribe((data: { clientDatatable: any }) => {
       this.clientDatatable = data.clientDatatable;
       this.multiRowDatatableFlag = this.clientDatatable.columnHeaders[0].columnName === 'id' ? true : false;
@@ -18,6 +24,9 @@ export class DatatableTabComponent implements OnInit {
   }
 
   ngOnInit() {
+    //set Matomo page info
+    let title = document.title || "";
+    this.matomoTracker.setDocumentTitle(`${title}`);
   }
 
 }

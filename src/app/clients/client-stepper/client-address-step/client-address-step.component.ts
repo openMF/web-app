@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Models */
@@ -10,6 +10,7 @@ import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 /** Custom Dialogs */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { MatomoTracker } from "@ngx-matomo/tracker";
 
 /**
  * Client Address Step Component
@@ -19,7 +20,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   templateUrl: './client-address-step.component.html',
   styleUrls: ['./client-address-step.component.scss']
 })
-export class ClientAddressStepComponent {
+export class ClientAddressStepComponent implements OnInit {
 
   /** Client Address Field Config */
   @Input() clientAddressFieldConfig: any;
@@ -31,12 +32,20 @@ export class ClientAddressStepComponent {
 
   /**
    * @param {MatDialog} dialog Mat Dialog
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private matomoTracker: MatomoTracker) { }
 
   /**
    * Adds a client address
    */
+
+  ngOnInit() {
+    //set Matomo page info
+    let title = document.title;
+    this.matomoTracker.setDocumentTitle(`${title}`);
+  }
+
   addAddress() {
     const data = {
       title: 'Add Client Address',
@@ -55,6 +64,8 @@ export class ClientAddressStepComponent {
         this.clientAddressData.push(addressData);
       }
     });
+    //Matomo log activity
+    this.matomoTracker.trackEvent('clients', 'addAddress');// change to track right info
   }
 
   /**
@@ -81,6 +92,8 @@ export class ClientAddressStepComponent {
         this.clientAddressData[index] = addressData;
       }
     });
+    //Matomo log activity
+    this.matomoTracker.trackEvent('clients', 'editAddress');// change to track right info
   }
 
   /**
@@ -96,6 +109,9 @@ export class ClientAddressStepComponent {
         this.clientAddressData.splice(index, 1);
       }
     });
+
+    //Matomo log activity
+    this.matomoTracker.trackEvent('clients', 'editAddress');// change to track right info
   }
 
   /**

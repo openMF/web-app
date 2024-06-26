@@ -9,6 +9,7 @@ import { ClientsService } from '../../clients.service';
 /** Custom Components */
 import { UploadDocumentDialogComponent } from '../custom-dialogs/upload-document-dialog/upload-document-dialog.component';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
+import { MatomoTracker } from "@ngx-matomo/tracker";
 
 
 @Component({
@@ -22,10 +23,18 @@ export class DocumentsTabComponent implements OnInit {
   clientDocuments: any;
   clientId: string;
 
+  /**
+    * @param {ActivatedRoute} route Component reference to route.
+    * @param {ClientsService} clientService reference to ClientsService
+    * @param {MatDialog} dialog reference to material popup
+    * @param {MatomoTracker} matomoTracker Matomo tracker service
+    */
 
   constructor(private route: ActivatedRoute,
     private clientService: ClientsService,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    private matomoTracker: MatomoTracker
+  ) {
     this.route.data.subscribe((data: { clientDocuments: any }) => {
       this.clientDocuments = data.clientDocuments;
       console.log(this.clientDocuments);
@@ -35,9 +44,15 @@ export class DocumentsTabComponent implements OnInit {
   }
 
   ngOnInit() {
+    //Track Matomo event in clients module
+    this.matomoTracker.trackEvent('clients', 'processClientDocument', this.clientId);
   }
 
   download(parentEntityId: string, documentId: string) {
+
+    //Track Matomo event in clients module
+    this.matomoTracker.trackEvent('clients', 'downloadClientDocument', documentId);
+
     this.clientService.downloadClientDocument(parentEntityId, documentId).subscribe(res => {
       const url = window.URL.createObjectURL(res);
       window.open(url);
@@ -45,6 +60,10 @@ export class DocumentsTabComponent implements OnInit {
   }
 
   deleteDocument(parentEntityId: string, documentId: string, index: number) {
+
+    //Track Matomo event in clients module
+    this.matomoTracker.trackEvent('clients', 'deleteClientDocument', documentId);
+
     const deleteDocumentDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `document id:${documentId}` }
     });
@@ -59,6 +78,10 @@ export class DocumentsTabComponent implements OnInit {
   }
 
   uploadDocument() {
+
+    //Track Matomo event in clients module
+    this.matomoTracker.trackEvent('clients', 'uploadClientDocument', this.clientId);
+
     const uploadDocumentDialogRef = this.dialog.open(UploadDocumentDialogComponent, {
       data: { documentIdentifier: false }
     });

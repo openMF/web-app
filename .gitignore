@@ -28,7 +28,7 @@ xcuserdata/
 *.sublime-workspace
 .dccache
 package-lock.json
-/environments/.env.ts
+/src/environments/.env.ts
 megalinter-reports
 
 # IDE - VSCode

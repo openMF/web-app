@@ -16,6 +16,7 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 
 /** Custom Services */
 import { ClientsService } from '../../clients.service';
+import { MatomoTracker } from "@ngx-matomo/tracker";
 
 /**
  * Identities Tab Component
@@ -43,10 +44,13 @@ export class IdentitiesTabComponent {
    * @param {ActivatedRoute} route Activated Route
    * @param {MatDialog} dialog Mat Dialog
    * @param {ClientsService} clientService Clients Service
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
   constructor(private route: ActivatedRoute,
-              public dialog: MatDialog,
-              private clientService: ClientsService) {
+    public dialog: MatDialog,
+    private clientService: ClientsService,
+    private matomoTracker: MatomoTracker
+  ) {
     this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
     this.route.data.subscribe((data: { clientIdentities: any, clientIdentifierTemplate: any }) => {
       this.clientIdentities = data.clientIdentities;
@@ -60,6 +64,10 @@ export class IdentitiesTabComponent {
    * @param {string} documentId Document ID
    */
   download(parentEntityId: string, documentId: string) {
+
+    //Track Matomo event in clients module
+    this.matomoTracker.trackEvent('clients', 'downloadClientIdentity', documentId);
+
     this.clientService.downloadClientIdentificationDocument(parentEntityId, documentId).subscribe(res => {
       const url = window.URL.createObjectURL(res);
       window.open(url);
@@ -133,6 +141,10 @@ export class IdentitiesTabComponent {
    * @param {number} index Index
    */
   deleteIdentifier(clientId: string, identifierId: string, index: number) {
+
+    //Track Matomo event in clients module
+    this.matomoTracker.trackEvent('clients', 'deleteClientIdentity', identifierId);
+
     const deleteIdentifierDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `identifier id:${identifierId}` }
     });
@@ -152,6 +164,10 @@ export class IdentitiesTabComponent {
    * @param {string} identifierId Identifier Id
    */
   uploadDocument(index: number, identifierId: string) {
+
+    //Track Matomo event in clients module
+    this.matomoTracker.trackEvent('clients', 'uploadClientIdentity', identifierId);
+
     const uploadDocumentDialogRef = this.dialog.open(UploadDocumentDialogComponent, {
       data: { documentIdentifier: true }
     });

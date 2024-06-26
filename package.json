@@ -47,6 +47,8 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "5.15.4",
     "@ng-select/ng-select": "^9.1.0",
+    "@ngx-matomo/router": "^3.2.1",
+    "@ngx-matomo/tracker": "^3.2.1",
     "@ngx-translate/core": "13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
     "@tailwindcss/forms": "^0.5.4",

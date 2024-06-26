@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ClientsService } from "app/clients/clients.service";
 import { Dates } from "app/core/utils/dates";
 import { SettingsService } from "app/settings/settings.service";
+import { MatomoTracker } from "@ngx-matomo/tracker";
 
 /**
  * Undo Client Transfer Component
@@ -29,6 +30,7 @@ export class UndoClientTransferComponent implements OnInit {
    * @param {ClientsService} clientsService Clients Service
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -36,7 +38,8 @@ export class UndoClientTransferComponent implements OnInit {
     private settingsService: SettingsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private matomoTracker: MatomoTracker
   ) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.transferDate = data.clientActionData;
@@ -48,6 +51,10 @@ export class UndoClientTransferComponent implements OnInit {
    * Creates the undo client transfer form.
    */
   ngOnInit() {
+    //set Matomo page info
+    let title = document.title || "";
+    this.matomoTracker.setDocumentTitle(`${title}`);
+
     this.createUndoClientTransferForm();
   }
 
@@ -78,6 +85,9 @@ export class UndoClientTransferComponent implements OnInit {
       /*  dateFormat,
       locale */
     };
+    //Track Matomo event for transferring client
+    this.matomoTracker.trackEvent('clients', 'undoClientTransfer', this.clientId);
+
     this.clientsService.executeClientCommand(this.clientId, "withdrawTransfer", data).subscribe(() => {
       this.router.navigate(["../../"], { relativeTo: this.route });
     });

@@ -8,6 +8,7 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
 
 /** Custom Services */
 import { ClientsService } from '../../clients.service';
+import { MatomoTracker } from "@ngx-matomo/tracker";
 
 /**
  * Client Family Members Tab
@@ -26,10 +27,13 @@ export class FamilyMembersTabComponent {
    * @param {ActivatedRoute} route Activated Route
    * @param {ClientsService} clientsService Clients Service
    * @param {MatDialog }dialog Mat Dialog
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
   constructor(private route: ActivatedRoute,
               private clientsService: ClientsService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private matomoTracker: MatomoTracker
+            ) {
     this.route.data.subscribe((data: { clientFamilyMembers: any }) => {
       this.clientFamilyMembers = data.clientFamilyMembers;
     });
@@ -39,6 +43,10 @@ export class FamilyMembersTabComponent {
    * Deletes the family member and redirects to family members tab.
    */
   deleteFamilyMember(clientId: string, id: string, name: string, index: number) {
+
+     //Track Matomo event in clients module
+     this.matomoTracker.trackEvent('clients', 'deleteFamilyMember', clientId);
+
     const deleteFamilyMemberDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `Family member id:${id} name : ${name} ${index}` }
     });

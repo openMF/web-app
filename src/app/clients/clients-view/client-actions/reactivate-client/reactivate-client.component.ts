@@ -7,6 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
+/** Matomo tracker */
+import { MatomoTracker } from '@ngx-matomo/tracker';
 
 /**
  * Reactivate Client Component
@@ -35,6 +37,7 @@ export class ReactivateClientComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -42,7 +45,8 @@ export class ReactivateClientComponent implements OnInit {
     private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private matomoTracker: MatomoTracker
   ) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.reactivateData = data.clientActionData.narrations;
@@ -54,6 +58,10 @@ export class ReactivateClientComponent implements OnInit {
    * Creates the reactivate client form.
    */
   ngOnInit() {
+    //set Matomo page info
+    let title = document.title || '';
+    this.matomoTracker.setDocumentTitle(`${title}`);
+
     this.createReactivateClientForm();
   }
 
@@ -84,6 +92,9 @@ export class ReactivateClientComponent implements OnInit {
       dateFormat,
       locale,
     };
+    //Track Matomo event for reactivating client
+    this.matomoTracker.trackEvent('clients', 'reactivate', this.clientId);
+
     this.clientsService.executeClientCommand(this.clientId, 'reactivate', data).subscribe(() => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });

@@ -7,6 +7,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormControl } 
 import { ClientsService } from '../clients.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { MatomoTracker } from "@ngx-matomo/tracker";
 
 /**
  * Edit Client Component
@@ -53,19 +54,27 @@ export class EditClientComponent implements OnInit {
    * @param {ClientsService} clientsService Clients Service
    * @param {Dates} dateUtils Date Utils
    * @param {SettingsService} settingsService Settings Service
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
   constructor(private formBuilder: UntypedFormBuilder,
-              private route: ActivatedRoute,
-              private router: Router,
-              private clientsService: ClientsService,
-              private dateUtils: Dates,
-              private settingsService: SettingsService) {
+    private route: ActivatedRoute,
+    private router: Router,
+    private clientsService: ClientsService,
+    private dateUtils: Dates,
+    private settingsService: SettingsService,
+    private matomoTracker: MatomoTracker
+  ) {
     this.route.data.subscribe((data: { clientDataAndTemplate: any }) => {
       this.clientDataAndTemplate = data.clientDataAndTemplate;
     });
   }
 
   ngOnInit() {
+
+    //set Matomo page info
+    let title = document.title;
+    this.matomoTracker.setDocumentTitle(`${title}`);
+
     this.createEditClientForm();
     this.setOptions();
     this.buildDependencies();
@@ -178,7 +187,15 @@ export class EditClientComponent implements OnInit {
     } else {
       clientData.clientNonPersonDetails = {};
     }
+
+    //Track Matomo event in clients module
+    this.matomoTracker.trackEvent('clients', 'updateClient', this.clientDataAndTemplate.id);
+
     this.clientsService.updateClient(this.clientDataAndTemplate.id, clientData).subscribe(() => {
+
+      //Track Matomo event in clients module
+      this.matomoTracker.trackEvent('clients', 'updateClientSuccess', this.clientDataAndTemplate.id);
+
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

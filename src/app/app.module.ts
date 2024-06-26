@@ -1,52 +1,56 @@
 /** Angular Imports */
-import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import { APP_INITIALIZER, NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { ServiceWorkerModule } from "@angular/service-worker";
 
 /** Environment Configuration */
+import { environment } from "../environments/environment";
 
 /** Main Component */
-import { WebAppComponent } from './web-app.component';
+import { WebAppComponent } from "./web-app.component";
 
 /** Not Found Component */
-import { NotFoundComponent } from './not-found/not-found.component';
+import { NotFoundComponent } from "./not-found/not-found.component";
 
 /** Custom Modules */
-import { CoreModule } from './core/core.module';
-import { HomeModule } from './home/home.module';
-import { LoginModule } from './login/login.module';
-import { SettingsModule } from './settings/settings.module';
-import { NavigationModule } from './navigation/navigation.module';
-import { ClientsModule } from './clients/clients.module';
-import { GroupsModule } from './groups/groups.module';
-import { CentersModule } from './centers/centers.module';
-import { AccountingModule } from './accounting/accounting.module';
-import { SelfServiceModule } from './self-service/self-service.module';
-import { SystemModule } from './system/system.module';
-import { ProductsModule } from './products/products.module';
-import { OrganizationModule } from './organization/organization.module';
-import { TemplatesModule } from './templates/templates.module';
-import { UsersModule } from './users/users.module';
-import { ReportsModule } from './reports/reports.module';
-import { SearchModule } from './search/search.module';
-import { NotificationsModule } from './notifications/notifications.module';
-import { CollectionsModule } from './collections/collections.module';
-import { ProfileModule } from './profile/profile.module';
-import { TasksModule } from './tasks/tasks.module';
+import { CoreModule } from "./core/core.module";
+import { HomeModule } from "./home/home.module";
+import { LoginModule } from "./login/login.module";
+import { SettingsModule } from "./settings/settings.module";
+import { NavigationModule } from "./navigation/navigation.module";
+import { ClientsModule } from "./clients/clients.module";
+import { GroupsModule } from "./groups/groups.module";
+import { CentersModule } from "./centers/centers.module";
+import { AccountingModule } from "./accounting/accounting.module";
+import { SelfServiceModule } from "./self-service/self-service.module";
+import { SystemModule } from "./system/system.module";
+import { ProductsModule } from "./products/products.module";
+import { OrganizationModule } from "./organization/organization.module";
+import { TemplatesModule } from "./templates/templates.module";
+import { UsersModule } from "./users/users.module";
+import { ReportsModule } from "./reports/reports.module";
+import { SearchModule } from "./search/search.module";
+import { NotificationsModule } from "./notifications/notifications.module";
+import { CollectionsModule } from "./collections/collections.module";
+import { ProfileModule } from "./profile/profile.module";
+import { TasksModule } from "./tasks/tasks.module";
 
 /** Main Routing Module */
-import { AppRoutingModule } from './app-routing.module';
-import { DatePipe, LocationStrategy } from '@angular/common';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { KeycloakService } from 'keycloak-angular';
-import { initializer } from './core/init/keycloak-init.factory';
-import { AuthenticationService } from './core/authentication/authentication.service';
-import { FormsModule } from '@angular/forms';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { DragulaModule } from 'ng2-dragula';
+import { AppRoutingModule } from "./app-routing.module";
+import { DatePipe, LocationStrategy } from "@angular/common";
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { KeycloakService } from "keycloak-angular";
+import { initializer } from "./core/init/keycloak-init.factory";
+import { AuthenticationService } from "./core/authentication/authentication.service";
+import { FormsModule } from "@angular/forms";
+import { MAT_DATE_LOCALE } from "@angular/material/core";
+import { DragulaModule } from "ng2-dragula";
+/** Matomo module */
+import { NgxMatomoRouterModule } from "@ngx-matomo/router";
+import { NgxMatomoTrackerModule } from "@ngx-matomo/tracker";
 
 /**
  * App Module
@@ -64,7 +68,7 @@ import { DragulaModule } from 'ng2-dragula';
             `${window.location.protocol}//${
               window.location.host
             }${locationStrategy.getBaseHref()}/assets/translations/`,
-            '.json'
+            ".json"
           );
         },
         deps: [HttpClient, LocationStrategy],
@@ -97,6 +101,12 @@ import { DragulaModule } from 'ng2-dragula';
     TasksModule,
     AppRoutingModule,
     DragulaModule.forRoot(),
+
+    NgxMatomoTrackerModule.forRoot({
+      siteId: environment.matomoSiteId, // your Matomo's site ID (find it in your Matomo's settings)
+      trackerUrl: environment.matomoSiteUrl, // your matomo server root url
+    }),
+    NgxMatomoRouterModule,
   ],
   declarations: [WebAppComponent, NotFoundComponent],
   providers: [
@@ -108,7 +118,7 @@ import { DragulaModule } from 'ng2-dragula';
       deps: [KeycloakService, AuthenticationService],
       multi: true,
     },
-    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    { provide: MAT_DATE_LOCALE, useValue: "en-GB" },
   ],
   bootstrap: [WebAppComponent],
 })

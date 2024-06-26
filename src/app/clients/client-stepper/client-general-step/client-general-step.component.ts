@@ -5,6 +5,7 @@ import { Dates } from "app/core/utils/dates";
 
 /** Custom Services */
 import { SettingsService } from "app/settings/settings.service";
+import { MatomoTracker } from "@ngx-matomo/tracker";
 
 /**
  * Create Client Component
@@ -49,12 +50,20 @@ export class ClientGeneralStepComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {Dates} dateUtils Date Utils
    * @param {SettingsService} settingsService Setting service
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
-  constructor(private formBuilder: UntypedFormBuilder, private dateUtils: Dates, private settingsService: SettingsService) {
+  constructor(private formBuilder: UntypedFormBuilder,
+    private dateUtils: Dates,
+    private settingsService: SettingsService,
+    private matomoTracker: MatomoTracker) {
     this.setClientForm();
   }
 
   ngOnInit() {
+    //set Matomo page info
+    let title = document.title;
+    this.matomoTracker.setDocumentTitle(`${title}`);
+
     this.setOptions();
     this.buildDependencies();
   }
@@ -163,6 +172,10 @@ export class ClientGeneralStepComponent implements OnInit {
    * Client General Details
    */
   get clientGeneralDetails() {
+
+    //Matomo log activity
+    this.matomoTracker.trackEvent('clients', 'add.general_info');// change to track right info
+
     const generalDetails = this.createClientForm.value;
     const dateFormat = this.settingsService.dateFormat;
     const locale = this.settingsService.language.code;
