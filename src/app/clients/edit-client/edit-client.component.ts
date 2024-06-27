@@ -196,7 +196,8 @@ export class EditClientComponent implements OnInit {
    * @param countryId The client's country ID
    */
   private openOtpDialog(phoneNumber: string, countryId: number): void {
-    this.systemService.getConfigurationByName('country-client-phone-number-otp-length').subscribe(config => {
+    this.systemService.getConfigurationByName('country-client-phone-number-otp-length', { countryId })
+    .subscribe(config => {
       if (config?.enabled && config?.value > 3) {
         const otpDialog = this.dialog.open(ClientOtpDialogComponent, {
           data: { mobileNo: phoneNumber,
@@ -227,9 +228,11 @@ export class EditClientComponent implements OnInit {
       this.updateClient();
       return;
     }
-    this.systemService.getConfigurationByName('country-client-identity-ocr-validation-required').subscribe(config => {
+    const countryId = this.clientDataAndTemplate.countryId;
+    this.systemService.getConfigurationByName('country-client-identity-ocr-validation-required', { countryId })
+    .subscribe(config => {
       if (config?.enabled) {
-        this.initiateOtpValidation(formMobileNo, this.clientDataAndTemplate.countryId);
+        this.initiateOtpValidation(formMobileNo, countryId);
       } else {
         this.updateClient();
       }

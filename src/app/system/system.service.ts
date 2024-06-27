@@ -436,11 +436,12 @@ export class SystemService {
   }
 
   /**
-   * @param {string} configurationId Configuration ID of configuration.
+   * @param {string} configurationName The name of the configuration.
+   * @param {Record<string, any>} params Optional query parameters to search for the configuration.
    * @returns {Observable<any>} Configuration.
    */
-   getConfigurationByName(configurationName: string): Observable<any> {
-    return this.http.get(`/configurations/name/${configurationName}`);
+   getConfigurationByName(configurationName: string, params: Record<string, any> = {}): Observable<any> {
+    return this.http.get(`/configurations/name/${configurationName}`, { params });
   }
 
   /**
