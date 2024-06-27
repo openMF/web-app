@@ -11,6 +11,7 @@ import { ClientOtpDialogComponent } from '../client-otp-dialog/client-otp-dialog
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SystemService } from 'app/system/system.service';
 import { AlertService } from 'app/core/alert/alert.service';
+import { MatomoTracker } from "@ngx-matomo/tracker";
 
 /**
  * Edit Client Component
@@ -57,22 +58,29 @@ export class EditClientComponent implements OnInit {
    * @param {ClientsService} clientsService Clients Service
    * @param {Dates} dateUtils Date Utils
    * @param {SettingsService} settingsService Settings Service
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
   constructor(private formBuilder: UntypedFormBuilder,
-              private route: ActivatedRoute,
-              private router: Router,
-              private clientsService: ClientsService,
-              private dateUtils: Dates,
-              private settingsService: SettingsService,
-            private dialog: MatDialog,
-            private systemService: SystemService,
-            private alertService: AlertService) {
+    private route: ActivatedRoute,
+    private router: Router,
+    private clientsService: ClientsService,
+    private dateUtils: Dates,
+    private settingsService: SettingsService,
+    private matomoTracker: MatomoTracker,
+    private dialog: MatDialog,
+    private systemService: SystemService,
+    private alertService: AlertService) {
     this.route.data.subscribe((data: { clientDataAndTemplate: any }) => {
       this.clientDataAndTemplate = data.clientDataAndTemplate;
     });
   }
 
   ngOnInit() {
+
+    //set Matomo page info
+    let title = document.title;
+    this.matomoTracker.setDocumentTitle(`${title}`);
+
     this.createEditClientForm();
     this.setOptions();
     this.buildDependencies();
@@ -185,7 +193,15 @@ export class EditClientComponent implements OnInit {
     } else {
       clientData.clientNonPersonDetails = {};
     }
+
+    //Track Matomo event in clients module
+    this.matomoTracker.trackEvent('clients', 'updateClient', this.clientDataAndTemplate.id);
+
     this.clientsService.updateClient(this.clientDataAndTemplate.id, clientData).subscribe(() => {
+
+      //Track Matomo event in clients module
+      this.matomoTracker.trackEvent('clients', 'updateClientSuccess', this.clientDataAndTemplate.id);
+
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

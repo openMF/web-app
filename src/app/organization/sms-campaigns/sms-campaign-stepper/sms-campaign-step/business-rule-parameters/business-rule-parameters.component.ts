@@ -23,6 +23,7 @@ export class BusinessRuleParametersComponent implements OnChanges {
 
   /** Run Report Parameters Data */
   @Input() paramData: any;
+  @Input() countryId: any;
 
   /** Report Name */
   reportName: string;
@@ -70,7 +71,7 @@ export class BusinessRuleParametersComponent implements OnChanges {
    * Fetches dropdown options and builds child dependencies.
    */
   createRunReportForm() {
-    this.paramData.forEach(
+    this.paramData?.forEach(
       (param: any) => {
         if (!param.parentParameterName) { // Non-Child Parameter
           this.ReportForm.addControl(param.name, new UntypedFormControl('', Validators.required));
@@ -106,7 +107,7 @@ export class BusinessRuleParametersComponent implements OnChanges {
     */
   setChildControls() {
     this.parentParameters.forEach((param: ReportParameter) => {
-      this.ReportForm.get(param.name).valueChanges.subscribe((option: any) => {
+      this.ReportForm.get(param.name)?.valueChanges.subscribe((option: any) => {
         param.childParameters.forEach((child: ReportParameter) => {
           if (child.displayType === 'none') {
             this.ReportForm.addControl(child.name, new UntypedFormControl(child.defaultVal));
@@ -128,7 +129,7 @@ export class BusinessRuleParametersComponent implements OnChanges {
   * @param {string} inputstring url substring for API call.
   */
   fetchSelectOptions(param: ReportParameter, inputstring: string) {
-    this.reportsService.getSelectOptions(inputstring).subscribe((options: SelectOption[]) => {
+    this.reportsService.getSelectOptions(inputstring, this.countryId).subscribe((options: SelectOption[]) => {
       param.selectOptions = options;
       if (param.selectAll === 'Y') {
         param.selectOptions.push({id: '-1', name: 'All'});
@@ -172,7 +173,7 @@ export class BusinessRuleParametersComponent implements OnChanges {
    * TODO: Replace report object with report name once reports service is refactored.
    */
   getResponseHeaders() {
-    const formattedresponse = this.formatUserResponse(this.ReportForm.value, true);
+    const formattedresponse = this.formatUserResponse(this.ReportForm.value, true);console.log("Calling getRunReportData")
     this.reportsService.getRunReportData(this.reportName, formattedresponse).subscribe(
       (response: any) => {
         this.templateParameters.emit(response.columnHeaders);

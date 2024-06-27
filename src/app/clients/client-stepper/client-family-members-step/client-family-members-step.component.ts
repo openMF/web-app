@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 /** Custom Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { ClientFamilyMemberDialogComponent } from './client-family-member-dialog/client-family-member-dialog.component';
+import { MatomoTracker } from "@ngx-matomo/tracker";
 
 /**
  * Client Family Members Step
@@ -15,7 +16,7 @@ import { ClientFamilyMemberDialogComponent } from './client-family-member-dialog
   templateUrl: './client-family-members-step.component.html',
   styleUrls: ['./client-family-members-step.component.scss']
 })
-export class ClientFamilyMembersStepComponent {
+export class ClientFamilyMembersStepComponent implements OnInit {
 
   /** Cient Template */
   @Input() clientTemplate: any;
@@ -24,8 +25,15 @@ export class ClientFamilyMembersStepComponent {
 
   /**
    * @param {MatDialog} dialog Mat Dialog
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private matomoTracker: MatomoTracker) { }
+
+  ngOnInit() {
+    //set Matomo page info
+    let title = document.title;
+    this.matomoTracker.setDocumentTitle(`${title}`);
+  }
 
   /**
    * Adds a family member.
@@ -43,6 +51,8 @@ export class ClientFamilyMembersStepComponent {
         this.clientFamilyMembers.push(response.member);
       }
     });
+    //Matomo log activity
+    this.matomoTracker.trackEvent('clients', 'addFamilyMember');// change to track right info
   }
 
   /**
@@ -64,6 +74,8 @@ export class ClientFamilyMembersStepComponent {
         this.clientFamilyMembers.splice(index, 1, response.member);
       }
     });
+    //Matomo log activity
+    this.matomoTracker.trackEvent('clients', 'editFamilyMember');// change to track right info
   }
 
   /**
@@ -78,6 +90,8 @@ export class ClientFamilyMembersStepComponent {
         this.clientFamilyMembers.splice(index, 1);
       }
     });
+    //Matomo log activity
+    this.matomoTracker.trackEvent('clients', 'deleteFamilyMember');// change to track right info
   }
 
   /**

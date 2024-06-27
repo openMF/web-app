@@ -3,11 +3,14 @@
   <mat-list>
 
     <mat-list-item>
+      Country : {{ (campaign.countryId | find:smsCampaignTemplate.countryOptions:'id':'name') || "Unassigned" }}
+    </mat-list-item>
+    <mat-list-item>
       Campaign Name : {{ campaign.campaignName }}
     </mat-list-item>
 
     <mat-list-item>
-      SMS Provider : {{ (campaign.providerId | find:smsProviders:'id':'name') || "Unassigned" }}
+      SMS Provider : {{ (campaign.providerId | find:smsProviders:'id':'providerName') || "Unassigned" }}
     </mat-list-item>
 
     <mat-list-item>

@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ClientsService } from "app/clients/clients.service";
 import { Dates } from "app/core/utils/dates";
 import { SettingsService } from "app/settings/settings.service";
+import { MatomoTracker } from "@ngx-matomo/tracker";
 
 /**
  * Transfer Client Component
@@ -36,6 +37,7 @@ export class TransferClientComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -43,7 +45,8 @@ export class TransferClientComponent implements OnInit {
     private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private matomoTracker: MatomoTracker
   ) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.officeData = data.clientActionData;
@@ -53,6 +56,10 @@ export class TransferClientComponent implements OnInit {
   }
 
   ngOnInit() {
+    //set Matomo page info
+    let title = document.title || "";
+    this.matomoTracker.setDocumentTitle(`${title}`);
+
     this.createTransferClientForm();
   }
 
@@ -87,6 +94,9 @@ export class TransferClientComponent implements OnInit {
       dateFormat,
       locale,
     };
+    //Track Matomo event for transferring client
+    this.matomoTracker.trackEvent('clients', 'proposeTransfer', this.clientId);
+
     this.clientsService.executeClientCommand(this.clientId, "proposeTransfer", data).subscribe(() => {
       this.router.navigate(["../../"], { relativeTo: this.route });
     });

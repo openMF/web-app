@@ -39,6 +39,7 @@ export class EditSmsCampaignStepComponent implements OnInit {
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
   maxDate = new Date();
+  countryOptions = [];
 
   /** Template Parameters Event Emitter */
   @Output() templateParameters = new EventEmitter();
@@ -57,6 +58,7 @@ export class EditSmsCampaignStepComponent implements OnInit {
    */
   createSMSCampaignDetailsForm() {
     this.smsCampaignDetailsForm = this.formBuilder.group({
+      'countryId': ['', Validators.required],
       'campaignName': ['', Validators.required],
       'providerId': [null],
       'triggerType': ['', Validators.required],
@@ -69,6 +71,7 @@ export class EditSmsCampaignStepComponent implements OnInit {
     this.triggerTypes = this.smsCampaignTemplate.triggerTypeOptions;
     this.smsProviders = this.smsCampaignTemplate.smsProviderOptions;
     this.businessRules = this.smsCampaignTemplate.businessRulesOptions;
+    this.countryOptions = this.smsCampaignTemplate.countryOptions || [];
     this.setControlValues();
     this.getParameters();
   }
@@ -100,7 +103,8 @@ export class EditSmsCampaignStepComponent implements OnInit {
       'providerId': this.smsCampaign.providerId,
       'triggerType': this.smsCampaign.triggerType.id,
       'runReportId': this.smsCampaign.runReportId,
-      'isNotification': this.smsCampaign.isNotification
+      'isNotification': this.smsCampaign.isNotification,
+      'countryId': this.smsCampaign.country?.id,
     });
     if (this.smsCampaign.triggerType.value === 'Schedule') {
       this.smsCampaignDetailsForm.addControl('recurrenceStartDate', new UntypedFormControl(new Date(this.smsCampaign.recurrenceStartDate)));

@@ -1,6 +1,8 @@
 /** Angular Imports */
-import { Component, ViewChild, ElementRef, AfterViewInit, Renderer2, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Renderer2, OnDestroy } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatomoTracker } from "@ngx-matomo/tracker";
+
 
 /**
  * Capture image dialog component
@@ -10,7 +12,7 @@ import { MatDialogRef } from '@angular/material/dialog';
   templateUrl: './capture-image-dialog.component.html',
   styleUrls: ['./capture-image-dialog.component.scss']
 })
-export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
+export class CaptureImageDialogComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /** Video element reference */
   @ViewChild('video', { static: true }) video: ElementRef;
@@ -29,10 +31,18 @@ export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
   /**
    * @param {MatDialogRef} dialogRef Mat Dialog Reference
    * @param {Renderer2} renderer Template Renderer
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
   constructor(public dialogRef: MatDialogRef<CaptureImageDialogComponent>,
-              private renderer: Renderer2) {}
+    private renderer: Renderer2,
+    private matomoTracker: MatomoTracker) { }
 
+  ngOnInit() {
+    //set Matomo page info
+    let title = document.title || "";
+    this.matomoTracker.setDocumentTitle(`${title}`);
+
+  }
   ngAfterViewInit() {
     this.startCamera();
   }
@@ -49,14 +59,20 @@ export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
   startCamera() {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia({ video: true })
-      .then((stream: MediaStream) => {
-        this.renderer.setProperty(this.video.nativeElement, 'srcObject', stream);
-        this.video.nativeElement.play();
-      })
-      .catch((error: Error) => {
-        this.handleError(error);
-      });
+        .then((stream: MediaStream) => {
+          this.renderer.setProperty(this.video.nativeElement, 'srcObject', stream);
+          this.video.nativeElement.play();
+
+          //Track Matomo event for camera connection success
+          this.matomoTracker.trackEvent('clients', 'cameraStarted');
+        })
+        .catch((error: Error) => {
+          this.handleError(error);
+        });
     } else {
+      //Track Matomo event for camera connection failure
+      this.matomoTracker.trackEvent('clients', 'cameraFailed');
+
       throw new Error('Cannot connect to camera');
     }
   }
@@ -66,6 +82,10 @@ export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
    * @param {Error} error Error
    */
   handleError(error: Error) {
+
+    //Track Matomo event for camera error
+    this.matomoTracker.trackEvent('clients', 'cameraError');
+
     this.renderer.removeStyle(this.fallback.nativeElement, 'display');
     const fallbackMessage = this.renderer.createText(`${error.name}: ${error.message}`);
     this.renderer.appendChild(this.fallback.nativeElement, fallbackMessage);
@@ -78,6 +98,9 @@ export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
    * See https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack for `MediaStreamTrack` properties.
    */
   stopCamera() {
+    //Track Matomo event for stopping camera
+    this.matomoTracker.trackEvent('clients', 'cameraStopped');
+
     const stream: MediaStream = this.video.nativeElement.srcObject;
     if (stream) {
       const videoStream: MediaStreamTrack = stream.getTracks()[0];
@@ -95,6 +118,9 @@ export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
     this.video.nativeElement.pause();
     this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0, 150, 150);
     this.clientImageDataURL = this.canvas.nativeElement.toDataURL();
+
+    //Track Matomo event for camera image capture
+    this.matomoTracker.trackEvent('clients', 'cameraCapture');
   }
 
   /**
@@ -103,6 +129,9 @@ export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
   recapture() {
     this.isCaptured = false;
     this.video.nativeElement.play();
+
+    //Track Matomo event for camera image capture
+    this.matomoTracker.trackEvent('clients', 'cameraReCapture');
   }
 
 }

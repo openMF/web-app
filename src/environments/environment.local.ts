@@ -32,6 +32,9 @@ export const environment = {
   defaultLanguage: window['env']['defaultLanguage'] || 'en-US',
   supportedLanguages: window['env']['supportedLanguages'] || 'en-US,fr-FR',
   headOfficeID: window['env']['headOfficeID'] || '1',
+  //Matomo instance config
+  matomoSiteId: window['env']['matomoSiteId'] || 1,
+  matomoSiteUrl: window['env']['matomoSiteUrl'] || 'http://localhost',
 };
 
 // Server URL

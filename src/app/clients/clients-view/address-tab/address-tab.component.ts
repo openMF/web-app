@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
@@ -11,6 +11,7 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 
 /** Custom Services */
 import { ClientsService } from '../../clients.service';
+import { MatomoTracker } from "@ngx-matomo/tracker";
 
 /**
  * Clients Address Tab Component
@@ -20,7 +21,7 @@ import { ClientsService } from '../../clients.service';
   templateUrl: './address-tab.component.html',
   styleUrls: ['./address-tab.component.scss']
 })
-export class AddressTabComponent {
+export class AddressTabComponent implements OnInit {
 
   /** Client Address Data */
   clientAddressData: any;
@@ -35,10 +36,12 @@ export class AddressTabComponent {
    * @param {ActivatedRoute} route Activated Route
    * @param {ClientsService} clientService Clients Service
    * @param {MatDialog} dialog Mat Dialog
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
   constructor(private route: ActivatedRoute,
               private clientService: ClientsService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private matomoTracker: MatomoTracker) {
     this.route.data.subscribe((data: {
       clientAddressData: any,
       clientAddressFieldConfig: any,
@@ -49,6 +52,12 @@ export class AddressTabComponent {
       this.clientAddressTemplate = data.clientAddressTemplateData;
       this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
     });
+  }
+
+  ngOnInit() {
+    //set Matomo page info
+    let title = document.title;
+    this.matomoTracker.setDocumentTitle(`${title}`);
   }
 
   /**
@@ -73,6 +82,8 @@ export class AddressTabComponent {
 
       }
     });
+    //Matomo log activity
+    this.matomoTracker.trackEvent('clients', 'addAddress',this.clientId);// change to track right info
   }
 
   /**
@@ -100,6 +111,8 @@ export class AddressTabComponent {
         });
       }
     });
+    //Matomo log activity
+    this.matomoTracker.trackEvent('clients', 'editAddress',this.clientId);// change to track right info
   }
 
   /**

@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ClientsService } from "app/clients/clients.service";
 import { Dates } from "app/core/utils/dates";
 import { SettingsService } from "app/settings/settings.service";
+import { MatomoTracker } from "@ngx-matomo/tracker";
 
 /**
  * Accept Client Transfer Component
@@ -31,6 +32,7 @@ export class AcceptClientTransferComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -38,7 +40,8 @@ export class AcceptClientTransferComponent implements OnInit {
     private settingsService: SettingsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private matomoTracker: MatomoTracker
   ) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.transferDate = data.clientActionData;
@@ -50,6 +53,9 @@ export class AcceptClientTransferComponent implements OnInit {
    * Creates the accept client transfer form.
    */
   ngOnInit() {
+    //Matomo log activity
+    this.matomoTracker.trackEvent('clients', 'acceptClientTransferStart',this.clientId);// change to track right info
+
     this.createAcceptClientTransferForm();
   }
 
@@ -80,6 +86,10 @@ export class AcceptClientTransferComponent implements OnInit {
       /*   dateFormat,
       locale */
     };
+
+    //Matomo log activity
+    this.matomoTracker.trackEvent('clients', 'acceptClientTransfer',this.clientId);// change to track right info
+
     this.clientsService.executeClientCommand(this.clientId, "acceptTransfer", data).subscribe(() => {
       this.router.navigate(["../../"], { relativeTo: this.route });
     });

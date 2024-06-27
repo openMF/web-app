@@ -11,6 +11,7 @@ import { EditNotesDialogComponent } from '../custom-dialogs/edit-notes-dialog/ed
 /** Custom Services */
 import { ClientsService } from '../../clients.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
+import { MatomoTracker } from "@ngx-matomo/tracker";
 
 /**
  * Notes Tab Component
@@ -40,12 +41,14 @@ export class NotesTabComponent implements OnInit {
    * @param {ClientsService} clientsService Clients Service
    * @param {AuthenticationService} authenticationService Authentication Service
    * @param {MatDialog} dialog Mat Dialog
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
   constructor(private route: ActivatedRoute,
-              private formBuilder: UntypedFormBuilder,
-              private clientsService: ClientsService,
-              private authenticationService: AuthenticationService,
-              public dialog: MatDialog) {
+    private formBuilder: UntypedFormBuilder,
+    private clientsService: ClientsService,
+    private authenticationService: AuthenticationService,
+    public dialog: MatDialog,
+    private matomoTracker: MatomoTracker) {
     const credentials = this.authenticationService.getCredentials();
     this.username = credentials.username;
     this.clientId = this.route.parent.snapshot.params['clientId'];
@@ -55,6 +58,11 @@ export class NotesTabComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    //set Matomo page info
+    let title = document.title;
+    this.matomoTracker.setDocumentTitle(`${title}`);
+
     this.createNoteForm();
   }
 
@@ -74,6 +82,10 @@ export class NotesTabComponent implements OnInit {
    * @param {number} index Index
    */
   editNote(noteId: string, noteContent: string, index: number) {
+
+    //Matomo log activity
+    this.matomoTracker.trackEvent('clients', 'updateClientNote', this.clientId);// change to track right info
+
     const editNoteDialogRef = this.dialog.open(EditNotesDialogComponent, {
       data: { noteContent: noteContent }
     });
@@ -82,6 +94,10 @@ export class NotesTabComponent implements OnInit {
         this.clientsService.editClientNote(this.clientId, noteId, response.editForm.value).subscribe(() => {
           this.clientNotes[index].note = response.editForm.value.note;
         });
+
+        //Matomo log activity
+        this.matomoTracker.trackEvent('clients', 'updateClientNoteSuccess', this.clientId);// change to track right info
+
       }
     });
   }
@@ -92,6 +108,9 @@ export class NotesTabComponent implements OnInit {
    * @param {number} index Index
    */
   deleteNote(noteId: string, index: number) {
+    //Matomo log activity
+    this.matomoTracker.trackEvent('clients', 'deleteClientNote', this.clientId);// change to track right info
+
     const deleteNoteDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `Note id:${noteId}` }
     });
@@ -101,6 +120,10 @@ export class NotesTabComponent implements OnInit {
           .subscribe(() => {
             this.clientNotes.splice(index, 1);
           });
+
+        //Matomo log activity
+        this.matomoTracker.trackEvent('clients', 'deleteClientNoteSuccess', this.clientId);// change to track right info
+
       }
     });
   }
@@ -109,7 +132,13 @@ export class NotesTabComponent implements OnInit {
    * Creates a client note.
    */
   submit() {
+    //Matomo log activity
+    this.matomoTracker.trackEvent('clients', 'createClientNote', this.clientId);// change to track right info
+
     this.clientsService.createClientNote(this.clientId, this.noteForm.value).subscribe((response: any) => {
+      //Matomo log activity
+      this.matomoTracker.trackEvent('clients', 'createClientNoteSuccess',response.resourceId);// change to track right info
+
       this.clientNotes.push({
         id: response.resourceId,
         createdByUsername: this.username,

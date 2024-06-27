@@ -80,8 +80,11 @@ export class ReportsService {
    * @param {string} inputString URL substring containing object details.
    * @returns {Observable<SelectOption[]>}
    */
-  getSelectOptions(inputString: string): Observable<SelectOption[]> {
-    const httpParams = new HttpParams().set('parameterType', 'true');
+  getSelectOptions(inputString: string, countryId?): Observable<SelectOption[]> {
+    let httpParams = new HttpParams().set('parameterType', 'true');
+    if(countryId){
+      httpParams = httpParams.set('R_countryId', countryId);
+    }
     return this.http.get(`/runreports/${inputString}`, {params: httpParams})
       .pipe(map((response: any) => response.data.map((entry: any) => new SelectOption(entry.row)) ));
   }

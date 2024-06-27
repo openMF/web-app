@@ -61,7 +61,12 @@
       <button mat-raised-button *mifosxHasPermission="'UPDATE_GROUP'" (click)="doAction('Edit')">
         <i class="fa fa-edit"></i>Edit
       </button>
-      <button mat-raised-button *mifosxHasPermission="'CREATE_CLIENT'"><i class="fa fa-plus"></i>Add Clients</button>
+     <!--  <button mat-menu-item *mifosxHasPermission="'CREATE_CLIENT'" (click)="doAction('Manage Members')">
+        <mat-icon matListIcon>
+          <fa-icon icon="plus" size="sm"></fa-icon>
+        </mat-icon>
+        <span>Add Clients</span>
+      </button> -->
       <button mat-raised-button *mifosxHasPermission="'ASSOCIATECLIENTS_GROUP'" (click)="doAction('Transfer Clients')">
         <i class="fa fa-exchange"></i>Transfer Clients
       </button>

@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 
 /** Custom Services. */
 import { ClientsService } from "app/clients/clients.service";
+import { MatomoTracker } from "@ngx-matomo/tracker";
 
 /**
  * General Tab component.
@@ -13,7 +14,7 @@ import { ClientsService } from "app/clients/clients.service";
   templateUrl: "./general-tab.component.html",
   styleUrls: ["./general-tab.component.scss"],
 })
-export class GeneralTabComponent {
+export class GeneralTabComponent implements OnInit {
   /** Open Loan Accounts Columns */
   openLoansColumns: string[] = [
     "Account No",
@@ -88,8 +89,13 @@ export class GeneralTabComponent {
    * @param {ActivatedRoute} route Activated Route
    * @param {ClientsService} clientService Clients Service
    * @param {Router} router Router
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
-  constructor(private route: ActivatedRoute, private clientService: ClientsService, private router: Router) {
+  constructor(private route: ActivatedRoute,
+    private clientService: ClientsService,
+    private router: Router,
+    private matomoTracker: MatomoTracker
+  ) {
     this.route.data.subscribe((data: { clientAccountsData: any; clientChargesData: any; clientSummary: any }) => {
       this.clientAccountData = data.clientAccountsData;
       this.savingAccounts = data.clientAccountsData.savingsAccounts;
@@ -101,6 +107,11 @@ export class GeneralTabComponent {
     });
   }
 
+  ngOnInit() {
+    //set page view info
+    let title = document.title || "";
+    this.matomoTracker.setDocumentTitle(`${title}`);
+  }
   /**
    * Toggles Loan Accounts Overview
    */

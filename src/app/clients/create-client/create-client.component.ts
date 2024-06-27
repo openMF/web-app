@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -12,6 +12,7 @@ import { ClientAddressStepComponent } from '../client-stepper/client-address-ste
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
+import { MatomoTracker } from "@ngx-matomo/tracker";
 
 
 /**
@@ -22,7 +23,7 @@ import { SettingsService } from 'app/settings/settings.service';
   templateUrl: './create-client.component.html',
   styleUrls: ['./create-client.component.scss']
 })
-export class CreateClientComponent {
+export class CreateClientComponent implements OnInit {
 
   /** Client General Step */
   @ViewChild(ClientGeneralStepComponent, { static: true }) clientGeneralStep: ClientGeneralStepComponent;
@@ -42,16 +43,25 @@ export class CreateClientComponent {
    * @param {Router} router Router
    * @param {ClientsService} clientsService Clients Service
    * @param {SettingsService} settingsService Setting service
+   * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
   constructor(private route: ActivatedRoute,
     private router: Router,
     private clientsService: ClientsService,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService,
+    private matomoTracker: MatomoTracker) {
     this.route.data.subscribe((data: { clientTemplate: any, clientAddressFieldConfig: any }) => {
       this.clientTemplate = data.clientTemplate;
       this.clientAddressFieldConfig = data.clientAddressFieldConfig;
     });
   }
+
+  ngOnInit() {
+    //set Matomo page info
+    let title = document.title;
+    this.matomoTracker.setDocumentTitle(`${title}`);
+  }
+
 
   /**
    * Retrieves general information about client.
@@ -89,7 +99,15 @@ export class CreateClientComponent {
       dateFormat,
       locale
     };
+
+    //Track Matomo event in clients module
+    this.matomoTracker.trackEvent('clients', 'createClient');
+
     this.clientsService.createClient(clientData).subscribe((response: any) => {
+
+      //Track Matomo event in clients module
+      this.matomoTracker.trackEvent('clients', 'createClientSuccess', response.resourceId);
+
       this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
     });
   }
