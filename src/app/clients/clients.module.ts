@@ -57,6 +57,7 @@ import { ClientAddressStepComponent } from './client-stepper/client-address-step
 import { ClientFamilyMemberDialogComponent } from './client-stepper/client-family-members-step/client-family-member-dialog/client-family-member-dialog.component';
 import { CaptureImageDialogComponent } from './clients-view/custom-dialogs/capture-image-dialog/capture-image-dialog.component';
 import { CreateSelfServiceUserComponent } from './clients-view/client-actions/create-self-service-user/create-self-service-user.component';
+import { ClientOtpDialogComponent } from './client-otp-dialog/client-otp-dialog.component';
 
 
 /**
@@ -120,7 +121,8 @@ import { CreateSelfServiceUserComponent } from './clients-view/client-actions/cr
     ClientAddressStepComponent,
     ClientFamilyMemberDialogComponent,
     CaptureImageDialogComponent,
-    CreateSelfServiceUserComponent
+    CreateSelfServiceUserComponent,
+    ClientOtpDialogComponent
   ],
   providers: [ ]
 

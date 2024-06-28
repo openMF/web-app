@@ -30,6 +30,7 @@ import { OfficeTreeViewComponent } from "./office-tree-view/office-tree-view.com
 import { OfficeHierarchyComponent } from "./office-hierarchy/office-hierarchy.component";
 import { CountryTreeViewComponent } from "./country-tree-view/country-tree-view.component";
 import { NgSelectModule } from "@ng-select/ng-select";
+import { NgOtpInputModule } from  'ng-otp-input';
 
 /**
  * Shared Module
@@ -37,7 +38,7 @@ import { NgSelectModule } from "@ng-select/ng-select";
  * Modules and components that are shared throughout the application should be here.
  */
 @NgModule({
-  imports: [CommonModule, IconsModule, MaterialModule, ReactiveFormsModule, NgSelectModule, TranslateModule.forRoot()],
+  imports: [CommonModule, IconsModule, MaterialModule, ReactiveFormsModule, NgSelectModule, NgOtpInputModule, TranslateModule.forRoot()],
   declarations: [
     FormfieldComponent,
     FormDialogComponent,
@@ -78,6 +79,7 @@ import { NgSelectModule } from "@ng-select/ng-select";
     OfficeTreeViewComponent,
     OfficeHierarchyComponent,
     CountryTreeViewComponent,
+    NgOtpInputModule,
   ],
 })
 export class SharedModule {}

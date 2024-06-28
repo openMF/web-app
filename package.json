@@ -61,6 +61,7 @@
     "keycloak-js": "^18.0.1",
     "lodash": "4.17.21",
     "moment": "^2.29.4",
+    "ng-otp-input": "^1.9.3",
     "ng-table-virtual-scroll": "^1.5.1",
     "ng2-dragula": "^2.1.1",
     "rxjs": "6.6.2",
