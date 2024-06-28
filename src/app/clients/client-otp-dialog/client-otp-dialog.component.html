@@ -1,0 +1,12 @@
+<h2 mat-dialog-title class="text-center">Enter OTP</h2>
+<mat-dialog-content class="content-center">
+  <p class="no-m-t">Enter the OTP sent to {{ data.mobileNo }}</p>
+  <div>
+    <ng-otp-input [config]="ngOtpConfig" (onInputChange)="onOtpChange($event)"></ng-otp-input>
+    <span [hidden]="!resendDisabled" class="f10">Resend OTP in {{countdown}}s</span>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button mat-raised-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary" [disabled]="resendDisabled" (click)="resendOtp()">Resend OTP</button>
+</mat-dialog-actions>

@@ -67,6 +67,7 @@
     * [SER-2805] - show proper error message when error status is 400, show client office in the client view,show a searchable dropdown when creating a new client loan.
     * [SER-2537] - Add country link to SMS campaigns
     * [SER-2809] - Fix navigations in the group view interface
+    * [SER-2507] - Require OTP validation when updating clients
 
 ## Version 1.0.0 - for use with Fineract Web App
 
