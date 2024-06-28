@@ -164,7 +164,7 @@ export class RunReportComponent implements OnInit {
     this.reportsService.getSelectOptions(inputstring).subscribe((options: SelectOption[]) => {
       param.selectOptions = options;
       if (param.selectAll === 'Y') {
-        param.selectOptions.push({id: '-1', name: 'All'});
+        param.selectOptions?.unshift({id: '-1', name: 'All'});
       }
     });
   }

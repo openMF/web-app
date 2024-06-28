@@ -75,6 +75,7 @@
   </div>
 
   <mifosx-edit-business-rule-parameters [paramData]="paramData" [smsCampaign]="smsCampaign"
+    [countryId] = "smsCampaignDetailsForm.controls.countryId?.value"
     (templateParameters)="passParameters($event)">
   </mifosx-edit-business-rule-parameters>
 
