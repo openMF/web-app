@@ -1,22 +1,22 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" (click)="editRoles(); backupCheckValues();" [disabled]="rolePermissionService.name === 'Super user'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    Edit Role
+    {{ 'labels.text.Edit Role' | translate }}
   </button>
 
   <button *ngIf="!isRoleEnable(rolePermissionService.disabled)" mat-raised-button color="danger" (click)="disableRolesConfirmation()" [disabled]="rolePermissionService.name === 'Super user'">
     <fa-icon icon="lock" class="m-r-10"></fa-icon>
-    Disable Role
+    {{ 'labels.buttons.Disable' | translate }} {{ 'labels.inputs.Role' | translate }}
   </button>
 
   <button *ngIf="isRoleEnable(rolePermissionService.disabled)" mat-raised-button color="primary" (click)="enableRolesConfirmation()" [disabled]="rolePermissionService.name === 'Super user'">
     <fa-icon icon="lock-open" class="m-r-10"></fa-icon>
-    Enable Role
+    {{ 'labels.buttons.Enable' | translate }} {{ 'labels.inputs.Role' | translate }}
   </button>
 
   <button mat-raised-button color="warn" (click)="deleteRole()" [disabled]="rolePermissionService.name === 'Super user'">
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    Delete Role
+    {{'labels.buttons.Delete' | translate }} {{ 'labels.inputs.Role' | translate }}
   </button>
 
 </div>
@@ -30,7 +30,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="40%" fxFlex.lt-md="50%" class="header">
-          <b>Name:</b>
+          <b>{{'labels.inputs.Name' | translate}}:</b>
         </div>
 
         <div fxFlex="60%" fxFlex.lt-md="50%">
@@ -38,7 +38,7 @@
         </div>
 
         <div fxFlex="40%" fxFlex.lt-md="50%" class="header">
-          <b>Description:</b>
+          <b>{{ 'labels.inputs.Role Description' | translate }}:</b>
         </div>
 
         <div fxFlex="60%" fxFlex.lt-md="50%">
@@ -62,13 +62,13 @@
       <div fxLayout="row" class="permissionSelected">
         <div fxFlex="75">
           <h3>
-            Permissions: <strong>{{ formatName(previousGrouping) }}</strong>
+            {{'labels.buttons.Permissions' | translate }}: <strong>{{ formatName(previousGrouping) }}</strong>
           </h3>
         </div>
 
         <div fxFlex= "25" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="5px" *ngIf="!isDisabled" class="selectDeselect">
-          <button mat-raised-button color="primary" (click)="selectAll()">Select All</button>
-          <button mat-raised-button color="default" (click)="deselectAll()">Deselect All</button>
+          <button mat-raised-button color="primary" (click)="selectAll()">{{'labels.buttons.Select All' | translate }}</button>
+          <button mat-raised-button color="default" (click)="deselectAll()">{{'labels.buttons.Deselect All' | translate }}</button>
         </div>
 
       </div>
@@ -110,8 +110,8 @@
 
     <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px" *ngIf="!isDisabled">
       <mat-card-actions>
-        <button type="button" mat-raised-button (click)="cancel(); restoreCheckboxes();">Cancel</button>
-        <button mat-raised-button color="primary" (click)="submit()">Submit</button>
+        <button type="button" mat-raised-button (click)="cancel(); restoreCheckboxes();">{{'labels.buttons.Cancel' | translate}}</button>
+        <button mat-raised-button color="primary" (click)="submit()">{{'labels.buttons.Submit' | translate}}</button>
       </mat-card-actions>
     </div>
 

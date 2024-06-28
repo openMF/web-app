@@ -2,7 +2,7 @@
   <div #buttonAddRole class="in-block">
     <button mat-raised-button color="primary">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
-      Add Role
+      {{'labels.buttons.Add Role' | translate}}
     </button>
   </div>
 </div>
@@ -21,29 +21,29 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Name' | translate}} </th>
         <td mat-cell *matCellDef="let role"> {{ role.name }} </td>
       </ng-container>
 
       <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Description' | translate }} </th>
         <td mat-cell *matCellDef="let role"> {{ role.description }} </td>
       </ng-container>
 
       <ng-container matColumnDef="disabled">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Status' | translate }} </th>
         <td mat-cell *matCellDef="let role">
           <div [className]="role.disabled === true ? 'false' : 'true'">
-            <fa-icon matTooltip="{{ role.disabled === true ? 'Disabled' : 'Enabled' }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
+            <fa-icon [matTooltip]="role.disabled === true ? (('labels.inputs.Disabled' | translate)) : (('labels.inputs.Enabled' | translate))" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
           </div>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell *matCellDef="let role;" >
           <button *ngIf="role.name !== 'Super user'" mat-icon-button color="primary" (click)="routeEdit($event)" [routerLink]="[role.id, 'edit']">
-            <fa-icon icon="edit"> Edit </fa-icon>
+            <fa-icon icon="edit"> {{'labels.buttons.Edit' | translate }} </fa-icon>
           </button>
         </td>
       </ng-container>
@@ -60,29 +60,29 @@
 </div>
 
 <ng-template #templateButtonAddRole let-popover="popover">
-  <h2>Add Role</h2>
-  <p class="mw300">To create a new role.</p>
+  <h2>{{'labels.buttons.Add Role' | translate}}</h2>
+  <p class="mw300">{{'labels.text.To create a new role' | translate}}.</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStep();">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true);">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep();">{{'labels.buttons.Back' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true);">{{'labels.buttons.Next' | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateFilter let-popover="popover">
-  <h4>Search bar to filter roles.</h4>
+  <h4>{{'labels.heading.Search bar to filter roles' | translate }}.</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonAddRole, buttonAddRole, 'bottom', true)">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateTableRolesandPermissions, tableRolesandPermissions, 'top', true)">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonAddRole, buttonAddRole, 'bottom', true)">{{'labels.buttons.Back' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateTableRolesandPermissions, tableRolesandPermissions, 'top', true)">{{'labels.buttons.Next' | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateTableRolesandPermissions let-popover="popover">
-  <h4 class="mw300">List of roles defined within the organization. or more details click: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895364/Manage+Roles+and+Permissions" target="_blank">Manage Roles and Permission</a></h4>
+  <h4 class="mw300">{{'labels.heading.List of roles defined within the organization' | translate}}: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895364/Manage+Roles+and+Permissions" target="_blank">{{'labels.inputs.Manage Roles and Permission' | translate}}</a></h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true);">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true);">{{'labels.buttons.Back' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{'labels.buttons.Next' | translate }}</button>
   </div>
 </ng-template>
