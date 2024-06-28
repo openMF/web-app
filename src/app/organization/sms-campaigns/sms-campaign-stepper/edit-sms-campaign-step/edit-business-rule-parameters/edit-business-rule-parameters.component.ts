@@ -28,6 +28,7 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
   @Input() paramData: any;
   /** SMS Campaign */
   @Input() smsCampaign: any;
+  @Input() countryId: any;
   /** Template Parameters Event Emitter */
   @Output() templateParameters = new EventEmitter();
 
@@ -133,10 +134,10 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
   * @param {string} inputstring url substring for API call.
   */
   fetchSelectOptions(param: ReportParameter, inputstring: string) {
-    this.reportsService.getSelectOptions(inputstring).subscribe((options: SelectOption[]) => {
+    this.reportsService.getSelectOptions(inputstring, this.countryId).subscribe((options: SelectOption[]) => {
       param.selectOptions = options;
       if (param.selectAll === 'Y') {
-        param.selectOptions.push({id: '-1', name: 'All'});
+        param.selectOptions?.unshift({id: '-1', name: 'All'});
       }
       const optionId = this.paramValue[param.variable].toString();
       const option = options.find(entry => entry.id === optionId);

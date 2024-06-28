@@ -132,7 +132,7 @@ export class BusinessRuleParametersComponent implements OnChanges {
     this.reportsService.getSelectOptions(inputstring, this.countryId).subscribe((options: SelectOption[]) => {
       param.selectOptions = options;
       if (param.selectAll === 'Y') {
-        param.selectOptions.push({id: '-1', name: 'All'});
+        param.selectOptions?.unshift({id: '-1', name: 'All'});
       }
     });
   }
