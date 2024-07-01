@@ -1,13 +1,8 @@
 <div class="container">
-
   <mat-card>
-
     <div fxLayout="row" fxLayout.lt-md="column">
-
       <div fxFlex="50%">
-
         <mat-nav-list>
-
           <mat-list-item [routerLink]="['offices']" *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="building" size="sm"></fa-icon>
@@ -38,7 +33,10 @@
             <p matLine>An employee represents loan officers with no access to systems</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['standing-instructions-history']" *mifosxHasPermission="'READ_STANDINGINSTRUCTION'">
+          <mat-list-item
+            [routerLink]="['standing-instructions-history']"
+            *mifosxHasPermission="'READ_STANDINGINSTRUCTION'"
+          >
             <mat-icon matListIcon>
               <fa-icon icon="book" size="sm"></fa-icon>
             </mat-icon>
@@ -54,7 +52,10 @@
             <p matLine>Bulk entry screen for mapping fund sources to loans</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['password-preferences']" *mifosxHasPermission="'READ_PASSWORD_VALIDATION_POLICY'">
+          <mat-list-item
+            [routerLink]="['password-preferences']"
+            *mifosxHasPermission="'READ_PASSWORD_VALIDATION_POLICY'"
+          >
             <mat-icon matListIcon>
               <fa-icon icon="lock" size="sm"></fa-icon>
             </mat-icon>
@@ -70,22 +71,29 @@
             <p matLine>Define Loan Provisioning Criteria for Organization</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['entity-data-table-checks']" *mifosxHasPermission="'READ_ENTITY_DATATABLE_CHECK'">
+          <mat-list-item
+            [routerLink]="['entity-data-table-checks']"
+            *mifosxHasPermission="'READ_ENTITY_DATATABLE_CHECK'"
+          >
             <mat-icon matListIcon>
               <fa-icon icon="check" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Entity Data Table Checks </h4>
+            <h4 matLine>Entity Data Table Checks</h4>
             <p matLine>Define Entity Data Table Checks for Organization</p>
           </mat-list-item>
 
+          <mat-list-item [routerLink]="['/templates']" *mifosxHasPermission="'READ_TEMPLATE'">
+            <mat-icon matListIcon>
+              <fa-icon icon="envelope" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Templates</h4>
+            <p matLine>Create terms and conditions, etc.</p>
+          </mat-list-item>
         </mat-nav-list>
-
       </div>
 
       <div fxFlex="50%">
-
         <mat-nav-list>
-
           <mat-list-item [routerLink]="['currencies']" *mifosxHasPermission="'READ_CURRENCY'">
             <mat-icon matListIcon>
               <fa-icon icon="cogs" size="sm"></fa-icon>
@@ -93,7 +101,6 @@
             <h4 matLine>Currency Configuration</h4>
             <p matLine>Currencies available across organization for different products</p>
           </mat-list-item>
-
 
           <mat-list-item [routerLink]="['manage-funds']" *mifosxHasPermission="'READ_FUND'">
             <mat-icon matListIcon>
@@ -151,20 +158,15 @@
             <p matLine>Define AdHocQuery for Organization</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['bulk-import']" *mifosxHasPermission="'VIEW_BULKIMPORT'">
+          <mat-list-item [routerLink]="['bulk-import']" *mifosxHasPermission="'READ_CLIENT'">
             <mat-icon matListIcon>
               <fa-icon icon="upload" size="sm"></fa-icon>
             </mat-icon>
             <h4 matLine>Bulk Import</h4>
             <p matLine>Bulk data import using excel spreadsheet templates for clients, offices, etc.</p>
           </mat-list-item>
-
         </mat-nav-list>
-
       </div>
-
     </div>
-
   </mat-card>
-
 </div>

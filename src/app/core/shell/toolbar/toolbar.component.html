@@ -19,7 +19,7 @@
       <div class="form-group">
         <select class="form-control" id="countryId" (change)="saveTheSelectedCountry($event.target.value)">
           <option value="" selected disabled hidden>
-            {{ selectedCountryName ? selectedCountryName : "Select Country" }}
+            {{ selectedCountryName ? selectedCountryName : 'Select Country' }}
           </option>
           <option *ngFor="let country of activeCountries" [value]="country.id">{{ country.name }}</option>
         </select>
@@ -34,7 +34,7 @@
       *ngIf="(selectedCountryName && displayAdminOptions) || !displayAdminOptions"
     >
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
-      {{ "Institution" | translate }}
+      {{ 'Institution' | translate }}
     </a>
 
     <a
@@ -44,7 +44,7 @@
       [routerLink]="['/organization']"
     >
       <fa-icon class="mr-05" icon="building" size="lg"></fa-icon>
-      {{ "Organization" | translate }}
+      {{ 'Organization' | translate }}
     </a>
 
     <a
@@ -54,7 +54,7 @@
       [routerLink]="['/products']"
     >
       <fa-icon class="mr-05" icon="book" size="lg"></fa-icon>
-      {{ "Products" | translate }}
+      {{ 'Products' | translate }}
     </a>
 
     <span fxHide.lt-lg="true" *ngIf="(selectedCountryName && displayAdminOptions) || !displayAdminOptions">
@@ -74,7 +74,7 @@
         *ngIf="displayAdminOptions"
       >
         <fa-icon class="mr-05" icon="shield-alt" size="lg"></fa-icon>
-        {{ "Admin" | translate }}
+        {{ 'Admin' | translate }}
       </a>
       <!--   <a mat-tab-link class="tab-link" [matMenuTriggerFor]="selfServiceMenu" #selfServiceMenuTrigger="matMenuTrigger">
         <fa-icon class="mr-05" icon="users" size="lg"></fa-icon>
@@ -126,7 +126,7 @@
   <!-- <button mat-menu-item [routerLink]="['/organization']">Organization</button> -->
   <button mat-menu-item [routerLink]="['/system']">System</button>
   <!--  <button mat-menu-item [routerLink]="['/products']">Products</button> -->
-  <button mat-menu-item [routerLink]="['/templates']">Templates</button>
+  <!-- <button mat-menu-item [routerLink]="['/templates']">Templates</button> -->
 </mat-menu>
 
 <mat-menu #selfServiceMenu="matMenu" [overlapTrigger]="false">
