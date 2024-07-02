@@ -74,26 +74,26 @@
   <h2>{{ 'labels.buttons.Create Report' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Create new report' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{'labels.buttons.Back' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">{{'labels.buttons.Next' | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateFilter let-popover="popover">
   <h4>{{ 'labels.heading.Filter reports by name' | translate }}</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonCreateReport, buttonCreateReport, 'bottom', true)">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateReportsTable,reportsTable, 'top', true)">Next</button>
+    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonCreateReport, buttonCreateReport, 'bottom', true)">{{'labels.buttons.Back' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateReportsTable,reportsTable, 'top', true)">{{'labels.buttons.Next' | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateReportsTable let-popover="popover">
-  <h4 class="mw300">{{ 'labels.heading.List of all currently available reports' | translate }}: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895354/Manage+Reports" target="_blank">Manage Reports</a></h4>
+  <h4 class="mw300">{{ 'labels.heading.List of all currently available reports' | translate }}: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895354/Manage+Reports" target="_blank">{{'labels.heading.Manage Reports' | translate}}</a></h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">{{'labels.buttons.Back' | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{'labels.buttons.Next' | translate }}</button>
   </div>
 </ng-template>
