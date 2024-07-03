@@ -1,6 +1,6 @@
-<h1 mat-dialog-title>{{ data.isEnable ? 'Enable' : 'Disable' }} {{"labels.heading.Withhold Tax" | translate }}</h1>
+<h1 mat-dialog-title>{{ (data.isEnable ? 'labels.heading.Enable' : 'labels.heading.Disable') | translate }} {{"labels.heading.Withhold Tax" | translate }}</h1>
 <div mat-dialog-content>
-  <p>{{"labels.text.Are you sure you want to" | translate }} {{ data.isEnable ? 'enable' : 'disable' }} {{"labels.text.withhold tax for this account" | translate }} ?</p>
+  <p>{{"labels.text.Are you sure you want to" | translate }} {{ (data.isEnable ? 'labels.heading.Enable' : 'labels.heading.Disable') | translate }} {{"labels.text.withhold tax for this account" | translate }} ?</p>
 </div>
 <mat-dialog-actions align="end">
   <button mat-raised-button mat-dialog-close>{{"labels.buttons.Cancel" | translate }}</button>
