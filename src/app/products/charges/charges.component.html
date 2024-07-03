@@ -56,9 +56,9 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.commons.Is" | translate}}
           {{"labels.inputs.Penalty" | translate}}? </th>
         <td mat-cell *matCellDef="let charge" class="center">
-          <fa-icon *ngIf="charge.penalty" icon="check-circle" size="lg" class="ispenalty" matTooltip="Yes"
+          <fa-icon *ngIf="charge.penalty" icon="check-circle" size="lg" class="ispenalty" matTooltip="{{ 'tooltips.Yes' | translate }}"
             matTooltipPosition="right"></fa-icon>
-          <fa-icon *ngIf="!charge.penalty" icon="times-circle" size="lg" class="nopenalty" matTooltip="No"
+          <fa-icon *ngIf="!charge.penalty" icon="times-circle" size="lg" class="nopenalty" matTooltip="{{ 'tooltips.No' | translate }}"
             matTooltipPosition="right"></fa-icon>
         </td>
       </ng-container>
@@ -68,7 +68,7 @@
           {{"labels.status.Active" | translate}}? </th>
         <td mat-cell *matCellDef="let charge" class="center">
           <div [className]="charge.active === true ? 'true' : 'false'">
-            <fa-icon matTooltip="{{ charge.active === true ? 'Active' : 'Inactive' }}" matTooltipPosition="right"
+            <fa-icon matTooltip="{{ charge.active === true ? ( 'labels.inputs.Active' | translate ) : ('labels.catalogs.Inactive' | translate) }}" matTooltipPosition="right"
               icon="circle" size="lg"></fa-icon>
           </div>
         </td>
@@ -90,10 +90,10 @@
   <p class="mw300">{{"labels.text.Supports Loan charges, Savings & deposits" | translate}}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn"
-      (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">Back</button>
+      (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{'labels.buttons.Back' | translate}}</button>
     <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">Next</button>
+      (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">{{'labels.buttons.Next' | translate }}</button>
   </div>
 </ng-template>
 
@@ -101,22 +101,22 @@
   <h4>{{"labels.heading.Search bar to filter charges." | translate}}</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn"
-      (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+      (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
     <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateButtonCreateCharge,buttonCreateCharge , 'bottom', true)">Back</button>
+      (click)="popover.close();showPopover(templateButtonCreateCharge,buttonCreateCharge , 'bottom', true)">{{'labels.buttons.Back' | translate}}</button>
     <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateChargesTable,chargesTable, 'top', true)">Next</button>
+      (click)="popover.close();showPopover(templateChargesTable,chargesTable, 'top', true)">{{'labels.buttons.Next' | translate }}</button>
   </div>
 </ng-template>
 
 <ng-template #templateChargesTable let-popover="popover">
   <h4 class="mw300">{{"labels.heading.List of charges in the organization. For more details click" | translate}}: <a
-      href="https://mifosforge.jira.com/wiki/spaces/docs/pages/72908813/Charges" target="_blank">Charges</a></h4>
+      href="https://mifosforge.jira.com/wiki/spaces/docs/pages/72908813/Charges" target="_blank">{{'labels.heading.Charges' | translate}}</a></h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn"
-      (click)="popover.close();configurationWizardService.closeConfigWizard()">Close</button>
+      (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
     <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">Back</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">Next</button>
+      (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">{{'labels.buttons.Back' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{'labels.buttons.Next' | translate }}</button>
   </div>
 </ng-template>
