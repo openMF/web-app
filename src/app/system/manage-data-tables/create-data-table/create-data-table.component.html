@@ -156,7 +156,7 @@
 
 <ng-template #templateDataTableFormRef let-popover="popover">
   <h2>{{'labels.buttons.Create Datatable' | translate }}</h2>
-  <p class="mw400">{{'labels.text.Filling Details' | translate }} <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/52592760/Manage+Data+Tables" target="_blank">Manage Datatables</a></p>
+  <p class="mw400">{{'labels.text.Filling Details' | translate }} <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/52592760/Manage+Data+Tables" target="_blank">{{'labels.inputs.Manage Datatables' | translate}}</a></p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
     <button mat-raised-button color="primary" (click)="popover.close();">{{'labels.buttons.Create Datatable' | translate }}</button>
