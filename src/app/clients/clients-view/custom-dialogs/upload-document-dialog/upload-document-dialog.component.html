@@ -6,7 +6,7 @@
       <mat-label>{{"labels.inputs.File Name" | translate}}</mat-label>
       <input formControlName="fileName" required matInput />
       <mat-error *ngIf="uploadDocumentForm.controls.fileName.hasError('required')">
-        {{"labels.inputs.File Name" | translate}} is <strong>required</strong>
+        {{"labels.inputs.File Name" | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
       </mat-error>
     </mat-form-field>
 

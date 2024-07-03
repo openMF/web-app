@@ -126,7 +126,7 @@
           {{'labels.inputs.Disbursed Amount Percentage Down Payment' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
         </mat-error>
         <mat-error *ngIf="loanProductSettingsForm.controls.disbursedAmountPercentageForDownPayment.errors?.range">
-          {{'labels.inputs.Disbursed Amount Percentage Down Payment' | translate}} is out <strong>percentage range</strong>
+          {{'labels.inputs.Disbursed Amount Percentage Down Payment' | translate}} {{'labels.commons.is' | translate}} {{'labels.text.out' | translate}} <strong>{{'labels.text.percentage range' | translate}}</strong>
         </mat-error>
       </mat-form-field>
 
@@ -244,7 +244,7 @@
 
     <div *ngIf="loanProductSettingsForm.value.allowVariableInstallments" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-      <h4 fxFlex="98%" class="mat-h4">Variable Installments</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{ 'labels.inputs.Variable Installments' | translate}}</h4>
 
       <mat-form-field fxFlex="48%">
         <mat-label>{{'labels.inputs.Minimum gap between Installments' | translate}}</mat-label>
@@ -474,7 +474,7 @@
 
     <mat-divider fxFlex="98%"></mat-divider>
 
-    <h3 fxFlex="23%" class="mat-h3">Event Settings <i class="fas fa-question"
+    <h3 fxFlex="23%" class="mat-h3">{{ 'labels.heading.Event Settings' | translate }}<i class="fas fa-question"
       matTooltip="Setting for event notifications to be sent before or after repayments. Blue color means default value from global configurations."></i></h3>
 
     <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="useDueForRepaymentsConfigurations" matTooltip="Use or not the Global Configurations values to the Repayment Event (notifications)" class="margin-b">

@@ -39,7 +39,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Status' | translate}} </th>
         <td mat-cell *matCellDef="let loanProduct">
           <div [className]="loanProduct.status | statusLookup">
-            <fa-icon matTooltip="{{ loanProduct.status === 'loanProduct.active' ? 'Active' : 'Inactive' }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
+            <fa-icon matTooltip="{{ loanProduct.status === 'loanProduct.active' ? ( 'labels.inputs.Active' | translate ) : ('labels.catalogs.Inactive' | translate) }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
           </div>
         </td>
       </ng-container>
@@ -75,7 +75,7 @@
 </ng-template>
 
 <ng-template #templateLoanProductsTable let-popover="popover">
-  <h4 class="mw300">{{'labels.heading.List of loan products in the organization' | translate}}: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102039585/Loan+Products" target="_blank">Loan Products</a></h4>
+  <h4 class="mw300">{{'labels.heading.List of loan products in the organization' | translate}}: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102039585/Loan+Products" target="_blank">{{'labels.heading.Loan Products' | translate}}</a></h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
     <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">{{'labels.buttons.Back' | translate}}</button>

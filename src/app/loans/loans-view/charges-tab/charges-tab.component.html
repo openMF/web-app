@@ -27,8 +27,8 @@
 
     <ng-container matColumnDef="dueDate">
       <th mat-header-cell *matHeaderCellDef mat-sort-header [hide]="useDueDate">
-        <span *ngIf="useDueDate"> Due as of </span>
-        <span *ngIf="!useDueDate"> Submitted On </span>
+        <span *ngIf="useDueDate"> {{'labels.inputs.Due As Of' | translate}} </span>
+        <span *ngIf="!useDueDate"> {{"labels.inputs.Submitted On" | translate}} </span>
       </th>
       <td mat-cell *matCellDef="let charge">
         <span *ngIf="useDueDate">{{ charge.dueDate | dateFormat }}</span>
