@@ -27,7 +27,7 @@ export class ErrorLogPopoverComponent implements OnInit {
   }
 
   buttonLabel(): string {
-    const label: string = this.show ? this.translateService.instant('labels.buttons.Show less'): this.translateService.instant('labels.buttons.Show more');
+    const label: string = this.show ? this.translateService.instant('labels.buttons.Show less') : this.translateService.instant('labels.buttons.Show more');
     return this.translateService.instant('labels.buttons.' + label);
   }
 

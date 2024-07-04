@@ -43,6 +43,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
   loanScheduleProcessingTypeData: OptionData[] = [];
   isAdvancedTransactionProcessingStrategy = false;
   advancedTransactionProcessingStrategyDisabled = true;
+  useDueForRepaymentsConfigurations = false;
 
   /** Values to Days for Repayments */
   defaultConfigValues: GlobalConfiguration[] = [];
@@ -81,6 +82,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
     this.delinquencyBucketData = this.loanProductsTemplate.delinquencyBucketOptions;
     this.loanScheduleTypeData = this.loanProductsTemplate.loanScheduleTypeOptions;
     this.loanScheduleProcessingTypeData = this.loanProductsTemplate.loanScheduleProcessingTypeOptions;
+
+    // this.useDueForRepaymentsConfigurations = (!this.loanProduct.dueDaysForRepaymentEvent && !this.loanProduct.overDueDaysForRepaymentEvent);
 
     const transactionProcessingStrategyCode: string = this.loanProductsTemplate.transactionProcessingStrategyCode || this.transactionProcessingStrategyData[0].code;
     this.loanProductSettingsForm.patchValue({
@@ -121,6 +124,9 @@ export class LoanProductSettingsStepComponent implements OnInit {
     this.isAdvancedTransactionProcessingStrategy = LoanProducts.isAdvancedPaymentAllocationStrategy(transactionProcessingStrategyCode);
     this.processingStrategyService.initialize(this.isAdvancedTransactionProcessingStrategy);
     this.validateAdvancedPaymentStrategyControls();
+
+    console.log(this.loanProductsTemplate.dueDaysForRepaymentEvent);
+    console.log(this.loanProductsTemplate.overDueDaysForRepaymentEvent);
 
     if (this.loanProductsTemplate.dueDaysForRepaymentEvent != null &&
       this.loanProductsTemplate.overDueDaysForRepaymentEvent != null) {

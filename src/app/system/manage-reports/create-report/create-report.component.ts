@@ -63,7 +63,7 @@ export class CreateReportComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private dialog: MatDialog,
-              private translateServices:TranslateService) {
+              private translateServices: TranslateService) {
     this.route.data.subscribe((data: { reportTemplate: any }) => {
       this.reportTemplateData = data.reportTemplate;
       this.dataForDialog.allowedParameters = this.reportTemplateData.allowedParameters;

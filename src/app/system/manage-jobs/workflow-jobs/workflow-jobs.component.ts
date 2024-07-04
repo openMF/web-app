@@ -34,7 +34,7 @@ export class WorkflowJobsComponent implements OnInit {
 
   constructor(private systemService: SystemService,
               public dialog: MatDialog,
-              private translateService:TranslateService) {}
+              private translateService: TranslateService) {}
 
   ngOnInit(): void {
     this.systemService.getWorkflowJobNames().toPromise()
@@ -111,7 +111,7 @@ export class WorkflowJobsComponent implements OnInit {
 
         if (this.jobAvailableStepsData.length > 0) {
           for (let index = 0; index < this.jobAvailableStepsData.length; index++) {
-            this.jobAvailableStepsData[index].stepDescription = this.translateService.instant(`labels.catalogs.${this.jobAvailableStepsData[index].stepDescription}`)
+            this.jobAvailableStepsData[index].stepDescription = this.translateService.instant(`labels.catalogs.${this.jobAvailableStepsData[index].stepDescription}`);
           }
           const frmFields: FormfieldBase[] = [
             new SelectBase({

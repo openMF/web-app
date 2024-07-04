@@ -66,7 +66,7 @@ export class ViewRoleComponent implements OnInit {
     private systemService: SystemService,
     private router: Router,
     private formBuilder: UntypedFormBuilder,
-    private translateService:TranslateService,
+    private translateService: TranslateService,
     public dialog: MatDialog) {
     this.route.data.subscribe((data: { roledetails: any }) => {
       this.rolePermissionService = data.roledetails;
