@@ -58,7 +58,7 @@ export class LoanLockedComponent implements OnInit {
     private systemService: SystemService,
     private tasksService: TasksService,
     private dialog: MatDialog,
-    private translateService:TranslateService) {
+    private translateService: TranslateService) {
   }
 
   ngOnInit(): void {

@@ -57,13 +57,16 @@ export class EditLoanProductComponent implements OnInit {
               private advancedPaymentStrategy: AdvancedPaymentStrategy) {
     this.route.data.subscribe((data: { loanProductAndTemplate: any, configurations: any }) => {
       this.loanProductAndTemplate = data.loanProductAndTemplate;
+      console.log(this.loanProductAndTemplate);
       const assetAccountData = this.loanProductAndTemplate.accountingMappingOptions.assetAccountOptions || [];
       const liabilityAccountData = this.loanProductAndTemplate.accountingMappingOptions.liabilityAccountOptions || [];
       this.loanProductAndTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions = assetAccountData.concat(liabilityAccountData);
 
       this.itemsByDefault = loanProducts.setItemsByDefault(data.configurations);
       this.loanProductAndTemplate['itemsByDefault'] = this.itemsByDefault;
-      this.loanProductAndTemplate = loanProducts.updateLoanProductDefaults(this.loanProductAndTemplate, true);
+      // this.loanProductAndTemplate = loanProducts.updateLoanProductDefaults(this.loanProductAndTemplate, true);
+
+      console.log(this.loanProductAndTemplate);
     });
   }
 
