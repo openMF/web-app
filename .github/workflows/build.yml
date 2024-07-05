@@ -23,7 +23,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    name: Run Lint and Deploy
+    name: Build and Deploy
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -47,7 +47,7 @@ jobs:
 
       - name: Set image tag
         run: |
-          VERSION_TAG=$(./gradlew properties --no-daemon --console=plain -q | grep "^version:" | awk '{printf $2}')
+          VERSION_TAG=$(sed 's/.*"version": "\(.*\)".*/\1/;t;d' ./package.json')
           echo "VERSION_TAG=$VERSION_TAG"
 
           IMAGE_TAGS="${VERSION_TAG}.$(date '+%Y.%m.%d').${{ github.run_number }}"
@@ -105,7 +105,7 @@ jobs:
           name: fineract-frontend-v2
           path: ${{ github.workspace }}/deployment
   sonarcloud:
-    name: Setup and analyze
+    name: Sonarcloud analyze
     runs-on: ubuntu-latest
     environment: dev
     steps:
