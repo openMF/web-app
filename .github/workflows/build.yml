@@ -16,7 +16,7 @@ on:
       - 'release/*'
 
 env:
-  SHOULD_PUBLISH: ${{ github.ref }} == 'refs/heads/master' ||${{ github.ref }} == 'refs/heads/develop' || startsWith(${{ github.ref }}, 'refs/heads/release/')
+  SHOULD_PUBLISH: $( ${{ github.ref }} == 'refs/heads/master' ||${{ github.ref }} == 'refs/heads/develop' || startsWith(${{ github.ref }}, 'refs/heads/release/') )
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
