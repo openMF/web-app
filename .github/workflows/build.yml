@@ -1,14 +1,23 @@
-name: CI-Lint-Build-Test
-'on':
+---
+name: build pipeline
+
+on:
   push:
     branches:
+      - master
+      - main
       - develop
       - feature/*
+      - hotfix/*
   pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
+    branches:
+      - master
+      - main
+      - develop
+      - 'release/*'
+
+env:
+  SHOULD_PUBLISH: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/release/')
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -33,29 +42,71 @@ jobs:
       - name: Angular CLI install
         run: npm install -g --silent @angular/cli@13.3.10
 
-      - name: Npm install
+      - name: Set image tag
+        run: |
+          VERSION_TAG=$(./gradlew properties --no-daemon --console=plain -q | grep "^version:" | awk '{printf $2}')
+          echo "VERSION_TAG=$VERSION_TAG"
+
+          IMAGE_TAGS="${VERSION_TAG}.$(date '+%Y.%m.%d').${{ github.run_number }}"
+          echo "IMAGE_SEMANTIC_HASH=$IMAGE_TAGS"
+          echo "Tags: $IMAGE_TAGS"
+
+          echo "VERSION_TAG=$VERSION_TAG" >> $GITHUB_ENV
+          echo "IMAGE_SEMANTIC_HASH=$IMAGE_TAGS" >> $GITHUB_ENV
+          echo "IMAGE_TAGS=$IMAGE_TAGS" >> $GITHUB_ENV
+
+      - name: Lint with MegaLinter
+        uses: oxsecurity/megalinter-cupcake:latest
+        env:
+          VALIDATE_ALL_CODEBASE: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }} # Validates all source when push on main, else just the git diff with main. Override with true if you always want to lint all sources
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish MegaLinter reports
+        if: ${{ success() }} || ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: MegaLinter reports
+          path: |
+            megalinter-reports
+            mega-linter.log
+
+      - name: Install Node Packages
         run: npm install
 
-      - name: Run tslint
+      - name: Run Lint and Unit Tests
         continue-on-error: true
-        run: npx tslint src/**/*.ts
+        run: npm run test:ci
+
+      - name: Generate Test Coverage Report
+        continue-on-error: true
+        run: npm run test:cov
 
       - name: Run build
         continue-on-error: true
         run: npm run build:prod
 
-      - name: Deploy to github pages
-        if: ${{ github.event_name == 'push' }}
-        uses: JamesIves/github-pages-deploy-action@3.7.1
+      - name: Login to Azure registry
+        uses: docker/login-action@v3.0.0
+        if: ${{ env.SHOULD_PUBLISH }}
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: dist/web-app
-          # without preserve it only builds if you have untracked files
-          PRESERVE: true
-          # github user name and email shows up in the logs,
-          # so it would be better to make it silent.
-          SILENT: true
+          registry: oaftech.azurecr.io
+          username: ${{ vars.ACR_PULL_USERNAME }}
+          password: ${{ secrets.ACR_PULL_PASSWORD }}
+
+      - name: Build and push an image to container registry
+        uses: docker/build-push-action@v6
+        if: ${{ env.SHOULD_PUBLISH }}
+        with:
+          registry: oaftech.azurecr.io
+          push: true
+          tags: oneacrefund/fineract-frontend-v2:${{ env.IMAGE_TAGS }}
+
+      - name: Publish configuration package
+        uses: actions/upload-artifact@v2
+        if: ${{ env.SHOULD_PUBLISH }}
+        with:
+          name: fineract-frontend-v2
+          path: ${{ github.workspace }}/deployment
   sonarcloud:
     name: Setup and analyze
     runs-on: ubuntu-latest
