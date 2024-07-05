@@ -16,7 +16,7 @@ on:
       - 'release/*'
 
 env:
-  SHOULD_PUBLISH: $( '${{ github.ref }}' == 'refs/heads/master' ||'${{ github.ref }}' == 'refs/heads/develop' || startsWith('${{ github.ref }}', 'refs/heads/release') )
+  SHOULD_PUBLISH: ${{ github.ref  == 'refs/heads/master' ||  github.ref == 'refs/heads/develop' || startsWith(github.ref , 'refs/heads/release') }}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -58,7 +58,7 @@ jobs:
           echo "IMAGE_SEMANTIC_HASH=$IMAGE_TAGS" >> $GITHUB_ENV
           echo "IMAGE_TAGS=$IMAGE_TAGS" >> $GITHUB_ENV
           echo "SHOULD_PUBLISH=$SHOULD_PUBLISH"
-          SHOULD_PUBLISH_1: '${{ github.ref }}' == 'refs/heads/master' || '${{ github.ref }}' == 'refs/heads/develop' 
+          SHOULD_PUBLISH_1: ${{ github.ref  == 'refs/heads/master' ||  github.ref == 'refs/heads/develop' || startsWith(github.ref , 'refs/heads/release') }}
           echo "SHOULD_PUBLISH1=$SHOULD_PUBLISH1"
 
       - name: Install Node Packages
