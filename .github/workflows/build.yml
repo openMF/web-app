@@ -64,7 +64,7 @@ jobs:
 
       - name: Login to Azure registry
         uses: docker/login-action@v3.0.0
-        if: ${{ env.SHOULD_PUBLISH }}
+        if: ${{ env.SHOULD_PUBLISH == 'true'}}
         with:
           registry: oaftech.azurecr.io
           username: ${{ vars.ACR_PULL_USERNAME }}
@@ -80,7 +80,7 @@ jobs:
 
       - name: Publish configuration package
         uses: actions/upload-artifact@v2
-        if: ${{ env.SHOULD_PUBLISH }}
+        if: ${{ env.SHOULD_PUBLISH == 'true'}}
         with:
           name: fineract-frontend-v2
           path: ${{ github.workspace }}/deployment
@@ -100,6 +100,9 @@ jobs:
           fetch-depth: 0
       - name: Install dependencies
         run: npm install
+      - name: Run Lint and Unit Tests
+        continue-on-error: true
+        run: npm run test:ci
       - name: Test and coverage
         continue-on-error: true
         run: npm run test:cov
