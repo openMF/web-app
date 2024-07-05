@@ -11,6 +11,7 @@
     <mat-divider fxFlex="98%"></mat-divider>
 
     <div *ngIf="loanProductAccountingForm.value.accountingRule >= 2 && loanProductAccountingForm.value.accountingRule <= 4" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+      <mat-checkbox *ngIf="isAccountingAccrualBased" fxFlex="73%" formControlName="enableAccrualActivityPosting">{{'labels.inputs.Enable Accrual Activity Posting on Installment Due Date' | translate}}</mat-checkbox>
 
       <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.Assets' | translate}} / {{'labels.heading.Liabilities' | translate}}</h4>
 

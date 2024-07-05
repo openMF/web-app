@@ -124,6 +124,7 @@ export interface LoanProduct {
   paymentChannelToFundSourceMappings?:                       PaymentChannelToFundSourceMapping[];
   feeToIncomeAccountMappings?:                               ChargeToIncomeAccountMapping[];
   penaltyToIncomeAccountMappings?:                           ChargeToIncomeAccountMapping[];
+  enableAccrualActivityPosting?:                             boolean;
 }
 
 
