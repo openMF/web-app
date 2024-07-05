@@ -1,4 +1,3 @@
----
 name: build pipeline
 
 on:
@@ -58,7 +57,7 @@ jobs:
       - name: Lint with MegaLinter
         uses: oxsecurity/megalinter-cupcake:latest
         env:
-          VALIDATE_ALL_CODEBASE: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }} # Validates all source when push on main, else just the git diff with main. Override with true if you always want to lint all sources
+          VALIDATE_ALL_CODEBASE: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}  # Validates all source when push on main, else just the git diff with main. Override with true if you always want to lint all sources
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish MegaLinter reports
