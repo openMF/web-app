@@ -47,7 +47,7 @@ jobs:
 
       - name: Set image tag
         run: |
-          VERSION_TAG=$(sed 's/.*"version": "\(.*\)".*/\1/;t;d' ./package.json')
+          VERSION_TAG=$(sed 's/.*"version": "\(.*\)".*/\1/;t;d' ./package.json)
           echo "VERSION_TAG=$VERSION_TAG"
 
           IMAGE_TAGS="${VERSION_TAG}.$(date '+%Y.%m.%d').${{ github.run_number }}"
