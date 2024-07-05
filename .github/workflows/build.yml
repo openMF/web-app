@@ -45,7 +45,7 @@ jobs:
       - name: Angular CLI install
         run: npm install -g --silent @angular/cli@13.3.10
 
-      - name: Set image tag
+      - name: Set image tag & other env variables
         run: |
           VERSION_TAG=$(sed 's/.*"version": "\(.*\)".*/\1/;t;d' ./package.json)
           echo "VERSION_TAG=$VERSION_TAG"
@@ -57,6 +57,9 @@ jobs:
           echo "VERSION_TAG=$VERSION_TAG" >> $GITHUB_ENV
           echo "IMAGE_SEMANTIC_HASH=$IMAGE_TAGS" >> $GITHUB_ENV
           echo "IMAGE_TAGS=$IMAGE_TAGS" >> $GITHUB_ENV
+          echo "SHOULD_PUBLISH=$SHOULD_PUBLISH"
+          SHOULD_PUBLISH_1: ${{ github.ref }} == 'refs/heads/master' ||${{ github.ref }} == 'refs/heads/develop' || startsWith(${{ github.ref }}, 'refs/heads/release/')
+          echo "SHOULD_PUBLISH1=$SHOULD_PUBLISH1"
 
       - name: Install Node Packages
         run: npm install
