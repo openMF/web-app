@@ -728,6 +728,11 @@
     <span  fxFlex="53%">{{ 'labels.accounting.' + getAccountingRuleName(accountingRuleData[accountingRule() - 1]) | translate }}</span>
   </div>
 
+  <div fxFlexFill *ngIf="isAccountingAccrualBased">
+    <span fxFlex="47%">{{ 'labels.inputs.Enable Accrual Activity Posting on Installment Due Date' | translate }}:</span>
+    <span  fxFlex="53%">{{ loanProduct.enableAccrualActivityPosting | yesNo }}</span>
+  </div>
+
   <div fxFlexFill *ngIf="isAccountingEnabled()" fxLayout="row wrap"
     fxLayout.lt-md="column">
 

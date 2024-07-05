@@ -66,6 +66,9 @@ export class LoanProductAccountingStepComponent implements OnInit {
           'receivableFeeAccountId': accountingMappings.receivableFeeAccount.id,
           'receivablePenaltyAccountId': accountingMappings.receivablePenaltyAccount.id,
         });
+        this.loanProductAccountingForm.patchValue({
+          'enableAccrualActivityPosting': this.loanProductsTemplate.enableAccrualActivityPosting
+        });
         /* falls through */
       case 2:
         this.loanProductAccountingForm.patchValue({
@@ -170,10 +173,12 @@ export class LoanProductAccountingStepComponent implements OnInit {
           this.loanProductAccountingForm.addControl('receivableInterestAccountId', new UntypedFormControl('', Validators.required));
           this.loanProductAccountingForm.addControl('receivableFeeAccountId', new UntypedFormControl('', Validators.required));
           this.loanProductAccountingForm.addControl('receivablePenaltyAccountId', new UntypedFormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('enableAccrualActivityPosting', new UntypedFormControl(false));
         } else {
           this.loanProductAccountingForm.removeControl('receivableInterestAccountId');
           this.loanProductAccountingForm.removeControl('receivableFeeAccountId');
           this.loanProductAccountingForm.removeControl('receivablePenaltyAccountId');
+          this.loanProductAccountingForm.removeControl('enableAccrualActivityPosting');
         }
       });
   }
@@ -302,6 +307,11 @@ export class LoanProductAccountingStepComponent implements OnInit {
       })
     ];
     return formfields;
+  }
+
+  get isAccountingAccrualBased() {
+    const accountingRule = this.loanProductAccountingForm.value.accountingRule;
+    return accountingRule  === 3 || accountingRule === 4;
   }
 
   get loanProductAccounting() {

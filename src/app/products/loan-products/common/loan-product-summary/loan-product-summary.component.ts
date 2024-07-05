@@ -313,6 +313,10 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
       this.loanProduct.accountingRule.id : this.loanProduct.accountingRule;
   }
 
+  get isAccountingAccrualBased(): boolean {
+    return this.accountingRule() === 3 || this.accountingRule() === 4;
+  }
+
   isAccountingEnabled(): boolean {
     return (this.accountingRule() >= 2);
   }
