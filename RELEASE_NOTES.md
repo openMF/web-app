@@ -69,6 +69,8 @@
     * [SER-2809] - Fix navigations in the group view interface
     * [SER-2507] - Require OTP validation when updating clients
     * [SER-2818] - Remove templates link to organisation.
+    * [SER-2803] - Move build from Azure pipeline to GitHub Actions
+    * [SER-2745] - Fix file name in the bulk import downloads to use file name from the API
 
 ## Version 1.0.0 - for use with Fineract Web App
 

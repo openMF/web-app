@@ -933,4 +933,39 @@ export class OrganizationService {
   searchOffices(params: Record<string, any>): Observable<any> {
     return this.http.get('/offices/search', { params });
   }
+
+
+  /**
+   * Get file name from HTTP headers
+   * @param headers the HTTP headers
+   * @returns the file name found in the headers
+   */
+  getFileNameFromHttpHeaders(headers): string {
+    var contentDispositionHeader = headers.get('Content-Disposition');
+    var result = contentDispositionHeader.split(';')[1].trim().split('=')[1];
+    return result.replace(/"/g, '');
+  }
+
+  /**
+   * Download file from API response
+   * 
+   * @param res 
+   */
+  downloadFileFromAPIResponse (res){
+    var headers = res.headers;
+    const contentType = headers.get('Content-Type');
+    const blob = new Blob([res.body], { type: contentType });
+    const fileName = this.getFileNameFromHttpHeaders(headers);
+    var fileLink = document.createElement("a");
+    document.body.appendChild(fileLink);
+    fileLink.style.display = "none";
+    const url = window.URL.createObjectURL(blob);
+    fileLink.href = url;
+    fileLink.download = fileName;
+    fileLink.click();
+    setTimeout(() => {
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(fileLink);
+    }, 0)
+}
 }
