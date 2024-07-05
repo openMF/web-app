@@ -79,13 +79,13 @@ jobs:
           password: ${{ secrets.ACR_PULL_PASSWORD }}
 
       - name: Build and push an image to container registry
-        uses: docker/build-push-action@v3.0.0
+        uses: docker/build-push-action@v5.1.0
         if: ${{ env.SHOULD_PUBLISH }}
         with:
-          context: .
-          registry: oaftech.azurecr.io
+          file: ${{ github.workspace }}/Dockerfile
           push: true
-          tags: oneacrefund/fineract-frontend-v2:${{ env.IMAGE_TAGS }}
+          tags: oaftech.azurecr.io/oneacrefund/fineract-frontend-v2:${{ env.IMAGE_TAGS }}
+          context: ${{ github.workspace }}
 
       - name: Publish configuration package
         uses: actions/upload-artifact@v2
